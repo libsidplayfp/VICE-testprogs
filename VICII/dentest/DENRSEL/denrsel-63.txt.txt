@@ -1,0 +1,1 @@
+C64 zeigt 3fff-idle im oberen/unteren Rahmen

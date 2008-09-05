@@ -1,0 +1,29 @@
+DEN löschen in Cycle 0, danach rsel passend machen
+C64, HOXS, CCS, VICE zeigt Rahmen ("Rahmen-idle") komplett
+
+.08C1 050 053    5408603  EA         NOP       A=$08 X=$00 Y=$00 SP=$E6
+.08C2 050 055    5408605  A0 03      LDY #$03  A=$08 X=$00 Y=$00 SP=$E6
+.08C4 050 057    5408607  A9 0B      LDA #$0B  A=$08 X=$00 Y=$03 SP=$E6
+.08C6 050 059    5408609  8C 11 D0   STY $D011 A=$0B X=$00 Y=$03 SP=$E6
+DEN: blank = 1
+.08C9 051 000    5408613  8D 11 D0   STA $D011 A=$0B X=$00 Y=$03 SP=$E6
+DEN: blank = 1
+.08CC 051 004    5408617  A2 05      LDX #$05  A=$0B X=$00 Y=$03 SP=$E6
+.08CE 051 006    5408619  CA         DEX       A=$0B X=$05 Y=$03 SP=$E6
+.08CF 051 008    5408621  D0 FD      BNE $08CE A=$0B X=$04 Y=$03 SP=$E6
+*** DMA VICII    5408624  43
+.08CE 051 054    5408667  CA         DEX       A=$0B X=$04 Y=$03 SP=$E6
+.08CF 051 056    5408669  D0 FD      BNE $08CE A=$0B X=$03 Y=$03 SP=$E6
+.08CE 051 059    5408672  CA         DEX       A=$0B X=$03 Y=$03 SP=$E6
+.08CF 051 061    5408674  D0 FD      BNE $08CE A=$0B X=$02 Y=$03 SP=$E6
+.08CE 052 001    5408677  CA         DEX       A=$0B X=$02 Y=$03 SP=$E6
+.08CF 052 003    5408679  D0 FD      BNE $08CE A=$0B X=$01 Y=$03 SP=$E6
+.08CE 052 006    5408682  CA         DEX       A=$0B X=$01 Y=$03 SP=$E6
+.08CF 052 008    5408684  D0 FD      BNE $08CE A=$0B X=$00 Y=$03 SP=$E6
+.08D1 052 010    5408686  EA         NOP       A=$0B X=$00 Y=$03 SP=$E6
+.08D2 052 012    5408688  EA         NOP       A=$0B X=$00 Y=$03 SP=$E6
+.08D3 052 014    5408690  EA         NOP       A=$0B X=$00 Y=$03 SP=$E6
+.08D4 052 016    5408692  A9 1B      LDA #$1B  A=$0B X=$00 Y=$03 SP=$E6
+.08D6 052 018    5408694  8D 11 D0   STA $D011 A=$1B X=$00 Y=$03 SP=$E6
+DEN: blank = 0
+.08D9 052 022    5408698  A2 13      LDX #$13  A=$1B X=$00 Y=$03 SP=$E6

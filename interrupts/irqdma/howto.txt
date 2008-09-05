@@ -1,0 +1,9 @@
+
+LOAD"IRQCn.BIN",8,1
+NEW
+LOAD"IRQn.DUMP",8,1
+SYS49152
+
+After some minutes the border gets grey (success) or flashed (failure).
+
+IRQn.BIN was used to create the memory dump on a real C64.

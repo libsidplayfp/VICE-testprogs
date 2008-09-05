@@ -1,0 +1,164 @@
+
+tmp=$fc
+addr=$fd
+add2=$f9
+
+TMP=$6000
+DATA=$8000
+
+#define	TESTLEN $40
+
+	.word $0801
+	*=$0801
+
+	.word link, 10
+	.byt $9e, "2080", 0
+link	.word 0
+	.dsb 2080-*, 0
+
+	jsr $e518
+loop	jsr $ffe4	
+	cmp #"@"
+	bne noende
+	rts
+noende
+	cmp #"A"
+	bcc loop
+	cmp #"P"+1
+	bcs loop
+	sec
+	sbc #"A"
+	sta tmp
+	jsr $e518
+
+	lda #0
+	sta addr+1
+	lda tmp
+	asl
+	rol addr+1
+	asl
+	rol addr+1
+	asl
+	rol addr+1
+	asl
+	rol addr+1
+	asl
+	rol addr+1
+	asl
+	rol addr+1
+	sta addr
+	lda #$0a
+	clc
+	adc addr+1
+	sta addr+1
+
+	sei
+	lda #$0b
+	sta $d011
+
+l0	lda $d012
+	bne l0
+l2	lda $d012
+	beq l2
+l3	lda $d012
+	bne l3
+
+	lda #0
+	sta $dc0e
+	sta $dc0f
+	lda #$7f
+	sta $dc0d
+	lda $dc0d
+	lda $dc0d
+	ldy #0
+	tya
+t1a	sta $dc04
+	sta $dc05
+	sta $dc06
+	sta $dc07
+	dey
+	bne t1a
+
+	jsr dojump
+
+	lda #$1b
+	sta $d011
+	jsr $fda3
+	cli
+
+	lda tmp
+	clc
+	adc #>TMP
+	sta addr+1
+	lda #<TMP
+	sta addr
+	lda tmp
+	clc
+	adc #>DATA
+	sta add2+1
+	lda #<DATA
+	sta add2
+	ldy #0
+ll	lda (addr),y
+	sta $0400,y
+	cmp (add2),y
+	bne rot
+	lda #5
+	.byt $2c
+rot	lda #2
+	sta $d800,y
+	iny
+	bne ll
+
+	jmp loop
+
+dojump	jmp (addr)
+
+	.dsb $0a00-*,0
+
+;------------------------------------------
+
+#define	TEST(DDRB,PRB,CR,TIMER,THIFL)				\
+	.(							:\
+test 								:\
+	lda #0							:\
+	sta $dc02						:\
+	lda #DDRB						:\
+	sta $dc03	; ddr input				:\
+	lda #PRB						:\
+	sta $dc01	; port register 0			:\
+	lda #1							:\
+	sta $dc04+TIMER+TIMER+THIFL				:\
+	lda #CR		; control reg				:\
+	sta $dc0e+TIMER						:\
+	ldx #0							:\
+t1b	lda $dc01						:\
+	sta TMP,x						:\
+	inx							:\
+	bne t1b							:\
+	rts							:\
+	.dsb test+TESTLEN-*,0					:\
+-TMP 	+=$100							:\
+	.)
+
+TEST($c0,$00,$11,0,0)
+TEST($c0,$00,$11,0,1)
+TEST($c0,$00,$11,1,0)
+TEST($c0,$00,$11,1,1)
+
+TEST($c0,$00,$13,0,0)
+TEST($c0,$00,$13,0,1)
+TEST($c0,$00,$13,1,0)
+TEST($c0,$00,$13,1,1)
+
+TEST($c0,$00,$15,0,0)
+TEST($c0,$00,$15,0,1)
+TEST($c0,$00,$15,1,0)
+TEST($c0,$00,$15,1,1)
+
+TEST($c0,$00,$17,0,0)
+TEST($c0,$00,$17,0,1)
+TEST($c0,$00,$17,1,0)
+TEST($c0,$00,$17,1,1)
+
+

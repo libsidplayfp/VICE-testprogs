@@ -1,0 +1,50 @@
+
+irq-ackn-at-irq:
+a. kein IRQ in C64, VICE und Hoxs
+.08E0 047 058  134253499  EA         NOP       A=$08 X=$01 Y=$00 SP=$E6
+.08E1 047 060  134253501  8E 19 D0   STX $D019 A=$08 X=$01 Y=$00 SP=$E6
+.08E4 048 001  134253505  EA         NOP       A=$08 X=$01 Y=$00 SP=$E6
+.08E5 048 003  134253507  EA         NOP       A=$08 X=$01 Y=$00 SP=$E6
+
+b. IRQ in CCS
+.08E0 047 058  134253499  EA         NOP       A=$08 X=$01 Y=$00 SP=$E6
+.08E1 047 060  134253501  8E 19 D0   STX $D019 A=$08 X=$01 Y=$00 SP=$E6
+.08E4 048 001  134253505  EA         NOP       A=$08 X=$01 Y=$00 SP=$E6
+*** IRQ VICII 6607442
+.FF48 048 008  xxxxxxxxx  48         PHA       A=$08 X=$01 Y=$00 SP=$E3
+.FF49 048 011  xxxxxxxxx  8A         TXA       A=$08 X=$01 Y=$00 SP=$E2
+
+
+irq-ackn-at-irq-1: IRQ in C64, VICE, CCS, HOXS
+.08DF 047 056    6607433  24 24      BIT $24   A=$08 X=$01 Y=$00 SP=$E6
+.08E1 047 059    6607436  8E 19 D0   STX $D019 A=$08 X=$01 Y=$00 SP=$E6
+.08E4 048 000    6607440  EA         NOP       A=$08 X=$01 Y=$00 SP=$E6
+*** IRQ VICII 6607442
+.FF48 048 009    6607449  48         PHA       A=$08 X=$01 Y=$00 SP=$E3
+.FF49 048 012    6607452  8A         TXA       A=$08 X=$01 Y=$00 SP=$E2
+
+irq-ackn-at-irq+1: 
+a. kein IRQ in VICE (Bandits-Bug)
+.08E0 047 058   50145475  24 24      BIT $24   A=$08 X=$01 Y=$00 SP=$E6
+.08E2 047 061   50145478  8E 19 D0   STX $D019 A=$08 X=$01 Y=$00 SP=$E6
+.08E5 048 002   50145482  EA         NOP       A=$08 X=$01 Y=$00 SP=$E6
+.08E6 048 004   50145484  EA         NOP       A=$08 X=$01 Y=$00 SP=$E6
+
+b. IRQ in C64, CCS, Hoxs
+.08E0 047 058   50145475  24 24      BIT $24   A=$08 X=$01 Y=$00 SP=$E6
+.08E2 047 061   50145478  8E 19 D0   STX $D019 A=$08 X=$01 Y=$00 SP=$E6
+*** IRQ VICII xxxxxxx
+
+ebenso kein IRQ in VICE bei +2, +3, +4 (siehe folgenden Debug)
+.08E1 047 060    4288029  EA         NOP       A=$08 X=$01 Y=$00 SP=$E6
+.08E2 047 062    4288031  EA         NOP       A=$08 X=$01 Y=$00 SP=$E6
+.08E3 048 001    4288033  8E 19 D0   STX $D019 A=$08 X=$01 Y=$00 SP=$E6
+.08E6 048 005    4288037  EA         NOP       A=$08 X=$01 Y=$00 SP=$E6
+
+
+irq-ackn-at-irq+5: IRQ in C64, VICE und Hoxs
+.08E1 047 060   92307597  EA         NOP       A=$08 X=$01 Y=$00 SP=$E6
+.08E2 047 062   92307599  24 24      BIT $24   A=$08 X=$01 Y=$00 SP=$E6
+*** IRQ VICII 92307602
+.FF48 048 009   92307609  48         PHA       A=$08 X=$01 Y=$00 SP=$E3
+.FF49 048 012   92307612  8A         TXA       A=$08 X=$01 Y=$00 SP=$E2
