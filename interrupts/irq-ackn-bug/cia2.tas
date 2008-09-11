@@ -1,0 +1,100 @@
+  processor 6502
+
+
+cinv = $314
+cnmi = $FFFA
+
+  .org $801
+basic:
+  .word 0$      ; link to next line
+  .word 1995    ; line number
+  .byte $9E     ; SYS token
+
+; SYS digits
+
+  .if (* + 8) / 10000
+  .byte $30 + (* + 8) / 10000
+  .endif
+  .if (* + 7) / 1000
+  .byte $30 + (* + 7) % 10000 / 1000
+  .endif
+  .if (* + 6) / 100
+  .byte $30 + (* + 6) % 1000 / 100
+  .endif
+  .if (* + 5) / 10
+  .byte $30 + (* + 5) % 100 / 10
+  .endif
+  .byte $30 + (* + 4) % 10
+
+0$:
+  .byte 0,0,0   ; end of BASIC program
+
+start:
+
+  sei
+  lda #$35
+  sta $01
+  ldy #$7f
+  sty $dd0d
+  lda $dd0d
+  lda #<nmi
+  ldy #>nmi
+  sta cnmi      ; set the new interrupt vector
+  sty cnmi+1
+  ldx #$00
+
+loop1:
+  lda $d011
+  bpl loop1
+loop2:
+  lda $d011
+  bmi loop2
+  lda #44
+loop3:
+  cmp $d012
+  bne loop3
+
+; now we're on rasterline 44 and avoid VICII DMA
+  ldy #$ff
+  sty $dd06
+  sty $dd07
+timer:
+  ldy #$10
+  sty $dd04
+  ldy #$00
+  sty $dd05
+  ldy #$1d
+  sty $dd0f
+  ldy #$dd
+  sty $dd0e
+  ldy #$81
+  sty $dd0d
+
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  ldy $dd0d
+  lda $dd06
+  sta $0400,x
+  tya
+  sta $0401,x
+  inc timer + 1
+  inx
+  inx
+  cpx #$10
+endloop:
+  beq endloop
+
+  jmp loop1  
+
+nmi:
+  tay
+  lda $dd0d
+  tya
+  rti
+
