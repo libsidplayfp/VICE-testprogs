@@ -79,6 +79,8 @@ timer:
   nop
   nop
   ldy $dd0d
+  nop
+  nop
   lda $dd06
   sta $0400,x
   tya
@@ -88,8 +90,14 @@ timer:
   inx
   cpx #$10
 endloop:
-  beq endloop
+  beq startagain
 
+  jmp loop1  
+
+startagain:
+  ldx #$10
+  stx timer + 1
+  ldx #$00
   jmp loop1  
 
 nmi:

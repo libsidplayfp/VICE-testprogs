@@ -78,6 +78,8 @@ timer:
   nop
   nop
   ldy $dc0d
+  nop
+  nop
   lda $dc06
   sta $0400,x
   tya
