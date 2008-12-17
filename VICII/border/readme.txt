@@ -20,7 +20,6 @@ The open border seems to prevents the VIC-II from switching to
 black as it usually does in idle state. Exploits a bug in VICE that is
 also visible in Krestology/Crest.
 
-
 border-bm-yshift(2):
 --------------------
 Creates idle lines within display area and opens side border. This exposes
@@ -28,3 +27,7 @@ bug in VICE showing that black idle color starts in display area while
 the left open border still shows bitmap background color starting in the
 open right border in the line before.
 
+border-mcbm-yshift:
+-------------------
+Another test showing that idle data in mc bitmap mode should be displayed
+the "mc way" with double sized pixels which VICE doesn't do.
