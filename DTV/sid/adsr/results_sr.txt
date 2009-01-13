@@ -1,0 +1,220 @@
+
+
+Processing data/sr0.raw
+Delay 5, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 8/8 cycles (8), $fe->$fd
+Decay: 8/16 cycles (16), $de->$dd
+Decay: 8/24 cycles (24), $be->$bd
+Decay: 8/32 cycles (32), $9e->$9d
+Decay: 8/40 cycles (40), $7e->$7d
+Decay: 8/48 cycles (48), $5e->$5d
+Decay: 8/56 cycles (56), $3e->$3d
+Decay: 8/64 cycles (64), $1e->$1d
+Decay done, switching to STOP
+
+Results for data/sr0.raw: Delay: 10, Attack: 0/0 total 0 avg 0, Top: 1736, Decay: 8/64 total 9088 avg 35
+
+
+Processing data/sr1.raw
+Delay 6, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 24/24 cycles (24), $fe->$fd
+Decay: 24/48 cycles (48), $de->$dd
+Decay: 24/72 cycles (72), $be->$bd
+Decay: 24/96 cycles (96), $9e->$9d
+Decay: 24/120 cycles (120), $7e->$7d
+Decay: 24/144 cycles (144), $5e->$5d
+Decay: 24/168 cycles (168), $3e->$3d
+Decay: 24/192 cycles (192), $1e->$1d
+Decay done, switching to STOP
+
+Results for data/sr1.raw: Delay: 12, Attack: 0/0 total 0 avg 0, Top: 1768, Decay: 24/192 total 27264 avg 107
+
+
+Processing data/sr2.raw
+Delay 4, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 40/40 cycles (40), $fe->$fd
+Decay: 40/80 cycles (80), $de->$dd
+Decay: 40/120 cycles (120), $be->$bd
+Decay: 40/160 cycles (160), $9e->$9d
+Decay: 40/200 cycles (200), $7e->$7d
+Decay: 40/240 cycles (240), $5e->$5d
+Decay: 40/280 cycles (280), $3e->$3d
+Decay: 40/320 cycles (320), $1e->$1d
+Decay done, switching to STOP
+
+Results for data/sr2.raw: Delay: 8, Attack: 0/0 total 0 avg 0, Top: 1768, Decay: 40/320 total 45440 avg 178
+
+
+Processing data/sr3.raw
+Delay 7, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 56/56 cycles (56), $fe->$fd
+Decay: 56/112 cycles (112), $de->$dd
+Decay: 56/168 cycles (168), $be->$bd
+Decay: 56/224 cycles (224), $9e->$9d
+Decay: 56/280 cycles (280), $7e->$7d
+Decay: 56/336 cycles (336), $5e->$5d
+Decay: 56/392 cycles (392), $3e->$3d
+Decay: 56/448 cycles (448), $1e->$1d
+Decay done, switching to STOP
+
+Results for data/sr3.raw: Delay: 14, Attack: 0/0 total 0 avg 0, Top: 1832, Decay: 56/448 total 63616 avg 250
+
+
+Processing data/sr4.raw
+Delay 3, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 80/80 cycles (80), $fe->$fd
+Decay: 80/160 cycles (160), $de->$dd
+Decay: 80/240 cycles (240), $be->$bd
+Decay: 80/320 cycles (320), $9e->$9d
+Decay: 80/400 cycles (400), $7e->$7d
+Decay: 80/480 cycles (480), $5e->$5d
+Decay: 80/560 cycles (560), $3e->$3d
+Decay: 80/640 cycles (640), $1e->$1d
+Decay done, switching to STOP
+
+Results for data/sr4.raw: Delay: 6, Attack: 0/0 total 0 avg 0, Top: 1808, Decay: 80/640 total 90880 avg 357
+
+
+Processing data/sr5.raw
+Delay 4, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 120/120 cycles (120), $fe->$fd
+Decay: 120/240 cycles (240), $de->$dd
+Decay: 120/360 cycles (360), $be->$bd
+Decay: 120/480 cycles (480), $9e->$9d
+Decay: 120/600 cycles (600), $7e->$7d
+Decay: 120/720 cycles (720), $5e->$5d
+Decay: 120/840 cycles (840), $3e->$3d
+Decay: 120/960 cycles (960), $1e->$1d
+Results for data/sr5.raw: Delay: 8, Attack: 0/0 total 0 avg 0, Top: 1848, Decay: 120/960 total 128640 avg 522
+
+
+Processing data/sr6.raw
+Delay 5, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 144/144 cycles (144), $fe->$fd
+Decay: 144/288 cycles (288), $de->$dd
+Decay: 144/432 cycles (432), $be->$bd
+Decay: 144/576 cycles (576), $9e->$9d
+Decay: 144/720 cycles (720), $7e->$7d
+Decay: 144/864 cycles (864), $5e->$5d
+Decay: 144/1008 cycles (1008), $3e->$3d
+Results for data/sr6.raw: Delay: 10, Attack: 0/0 total 0 avg 0, Top: 1872, Decay: 144/1008 total 129024 avg 576
+
+
+Processing data/sr7.raw
+Delay 5, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 176/176 cycles (176), $fe->$fd
+Decay: 176/352 cycles (352), $de->$dd
+Decay: 176/528 cycles (528), $be->$bd
+Decay: 176/704 cycles (704), $9e->$9d
+Decay: 176/880 cycles (880), $7e->$7d
+Decay: 176/1056 cycles (1056), $5e->$5d
+Decay: 176/1232 cycles (1232), $3e->$3d
+Results for data/sr7.raw: Delay: 10, Attack: 0/0 total 0 avg 0, Top: 1904, Decay: 176/1232 total 128128 avg 640
+
+
+Processing data/sr8.raw
+Delay 4, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 208/208 cycles (208), $fe->$fd
+Decay: 208/416 cycles (416), $de->$dd
+Decay: 208/624 cycles (624), $be->$bd
+Decay: 208/832 cycles (832), $9e->$9d
+Decay: 208/1040 cycles (1040), $7e->$7d
+Decay: 208/1248 cycles (1248), $5e->$5d
+Results for data/sr8.raw: Delay: 8, Attack: 0/0 total 0 avg 0, Top: 1936, Decay: 208/1248 total 128544 avg 702
+
+
+Processing data/sr9.raw
+Delay 4, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 504/504 cycles (504), $fe->$fd
+Decay: 504/1008 cycles (1008), $de->$dd
+Decay: 504/1512 cycles (1512), $be->$bd
+Decay: 504/2016 cycles (2016), $9e->$9d
+Results for data/sr9.raw: Delay: 8, Attack: 0/0 total 0 avg 0, Top: 2232, Decay: 504/2016 total 127008 avg 1144
+
+
+Processing data/sra.raw
+Delay 3, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 1008/1008 cycles (1008), $fe->$fd
+Decay: 1008/2016 cycles (2016), $de->$dd
+Decay: 1008/3024 cycles (3024), $be->$bd
+Results for data/sra.raw: Delay: 6, Attack: 0/0 total 0 avg 0, Top: 2736, Decay: 1008/3024 total 127008 avg 1716
+
+
+Processing data/srb.raw
+Delay 3, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 2032/2032 cycles (2032), $fe->$fd
+Decay: 2032/4064 cycles (4064), $de->$dd
+Results for data/srb.raw: Delay: 6, Attack: 0/0 total 0 avg 0, Top: 3760, Decay: 2032/4064 total 125984 avg 2680
+
+
+Processing data/src.raw
+Delay 3, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 2040/2040 cycles (2040), $fe->$fd
+Decay: 2040/4080 cycles (4080), $de->$dd
+Results for data/src.raw: Delay: 6, Attack: 0/0 total 0 avg 0, Top: 3768, Decay: 2040/4080 total 126480 avg 2691
+
+
+Processing data/srd.raw
+Delay 3, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 6008/6008 cycles (6008), $fe->$fd
+Results for data/srd.raw: Delay: 6, Attack: 0/0 total 0 avg 0, Top: 7736, Decay: 6008/6008 total 120160 avg 6008
+
+
+Processing data/sre.raw
+Delay 5, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 10008/10008 cycles (10008), $fe->$fd
+Results for data/sre.raw: Delay: 10, Attack: 0/0 total 0 avg 0, Top: 21736, Decay: 10008/10008 total 100080 avg 10008
+
+
+Processing data/srf.raw
+Delay 3, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 16024/16024 cycles (16024), $fe->$fd
+Results for data/srf.raw: Delay: 6, Attack: 0/0 total 0 avg 0, Top: 17752, Decay: 16024/16024 total 112168 avg 16024

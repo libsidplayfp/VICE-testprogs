@@ -1,0 +1,3 @@
+bank ram02
+bs "vicedata.raw" 0 0 ffff
+quit

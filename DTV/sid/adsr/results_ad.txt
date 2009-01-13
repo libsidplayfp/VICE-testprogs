@@ -1,0 +1,31 @@
+Results for data/ad00.raw: Delay: 12, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 24/24 total 6096 avg 24
+Results for data/ad01.raw: Delay: 30, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 72/72 total 18288 avg 72
+Results for data/ad02.raw: Delay: 38, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 120/120 total 30480 avg 120
+Results for data/ad03.raw: Delay: 56, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 168/168 total 42672 avg 168
+Results for data/ad04.raw: Delay: 80, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 240/240 total 60960 avg 240
+Results for data/ad05.raw: Delay: 118, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 360/360 total 91440 avg 360
+Results for data/ad06.raw: Delay: 142, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 432/432 total 109728 avg 432
+Results for data/ad07.raw: Delay: 182, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 528/528 total 130416 avg 528
+Results for data/ad08.raw: Delay: 210, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 624/624 total 130416 avg 624
+Results for data/ad09.raw: Delay: 502, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 1512/1512 total 130032 avg 1512
+Results for data/ad0a.raw: Delay: 1012, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 3024/3024 total 130032 avg 3024
+Results for data/ad0b.raw: Delay: 2036, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 6096/6096 total 128016 avg 6096
+Results for data/ad0c.raw: Delay: 2044, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 6120/6120 total 128520 avg 6120
+Results for data/ad0d.raw: Delay: 6014, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 18024/18024 total 108144 avg 18024
+Results for data/ad0e.raw: Delay: 10012, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 30024/30024 total 120096 avg 30024
+Results for data/ad0f.raw: Delay: 16022, Attack: 0/0 total 0 avg 0, Top: 8, Decay: 48072/48072 total 96144 avg 48072
+Results for data/ad10.raw: Delay: 10, Attack: 24/24 total 6096 avg 24, Top: 24, Decay: 24/24 total 6096 avg 24
+Results for data/ad20.raw: Delay: 12, Attack: 40/40 total 10160 avg 40, Top: 40, Decay: 24/24 total 6096 avg 24
+Results for data/ad30.raw: Delay: 12, Attack: 56/56 total 14224 avg 56, Top: 56, Decay: 24/24 total 6096 avg 24
+Results for data/ad40.raw: Delay: 6, Attack: 80/80 total 20320 avg 80, Top: 80, Decay: 24/24 total 6096 avg 24
+Results for data/ad50.raw: Delay: 6, Attack: 120/120 total 30480 avg 120, Top: 120, Decay: 24/24 total 6096 avg 24
+Results for data/ad60.raw: Delay: 10, Attack: 144/144 total 36576 avg 144, Top: 144, Decay: 24/24 total 6096 avg 24
+Results for data/ad70.raw: Delay: 12, Attack: 176/176 total 44704 avg 176, Top: 176, Decay: 24/24 total 6096 avg 24
+Results for data/ad80.raw: Delay: 14, Attack: 208/208 total 52832 avg 208, Top: 208, Decay: 24/24 total 6096 avg 24
+Results for data/ad90.raw: Delay: 14, Attack: 504/504 total 128016 avg 504, Top: 504, Decay: 24/24 total 2520 avg 24
+Results for data/ada0.raw: Delay: 6, Attack: 1008/1008 total 131040 avg 1008
+Results for data/adb0.raw: Delay: 8, Attack: 2032/2032 total 130048 avg 2032
+Results for data/adc0.raw: Delay: 14, Attack: 2040/2040 total 130560 avg 2040
+Results for data/add0.raw: Delay: 14, Attack: 6008/6008 total 126168 avg 6008
+Results for data/ade0.raw: Delay: 10, Attack: 10008/10008 total 130104 avg 10008
+Results for data/adf0.raw: Delay: 8, Attack: 16024/16024 total 128192 avg 16024
