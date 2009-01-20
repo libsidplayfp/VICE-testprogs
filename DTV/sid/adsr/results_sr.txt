@@ -1,7 +1,134 @@
 
 
-Processing data/sr0.raw
-Delay 5, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_41.raw
+Delay 8, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 24/24 cycles (24), $fe->$fd
+Decay: 24/56 cycles (56), $40->$3f
+Decay: 24/144 cycles (144), $3f->$3e
+Decay: 24/168 cycles (168), $3e->$3d
+Decay: 24/192 cycles (192), $1e->$1d
+Decay done, switching to STOP
+
+Results for data/dtv_rel_41.raw: Delay: 8, Attack: 0, Top: 8, Decay: 24/192 total 15896 avg 62
+
+
+Processing data/dtv_rel_42_ad_10.raw
+Delay 8
+
+Attack: 24/24 cycles (24), $01->$02
+Attack stopped before TOP, switching to DECAY
+
+Attack: 24/24 cycles (24), $40->$3f
+Decay: 240/240 cycles (240), $3f->$3e
+Decay: 240/280 cycles (280), $3e->$3d
+Decay: 240/320 cycles (320), $1e->$1d
+Decay done, switching to STOP
+
+Results for data/dtv_rel_42_ad_10.raw: Delay: 8, Attack: 24, Top: 24, Decay: 240/320 total 18800 avg 303
+
+
+Processing data/dtv_rel_4d.raw
+Delay 8, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 24/24 cycles (24), $fe->$fd
+Decay: 24/12024 cycles (12024), $40->$3f
+Decay: 24/36048 cycles (36048), $3f->$3e
+Decay: 24/42056 cycles (42056), $3e->$3d
+Results for data/dtv_rel_4d.raw: Delay: 8, Attack: 0, Top: 8, Decay: 24/42056 total 94688 avg 490
+
+
+Processing data/dtv_rel_4f.raw
+Delay 8, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 24/24 cycles (24), $fe->$fd
+Decay: 24/32056 cycles (32056), $40->$3f
+Results for data/dtv_rel_4f.raw: Delay: 8, Attack: 0, Top: 8, Decay: 24/32056 total 36616 avg 191
+
+
+Processing data/dtv_rel_e0.raw
+Delay 8, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 24/24 cycles (24), $fe->$fd
+Decay: 8/24 cycles (8), $df->$de
+Decay: 8/24 cycles (16), $de->$dd
+Decay: 8/24 cycles (24), $be->$bd
+Decay: 8/32 cycles (32), $9e->$9d
+Decay: 8/40 cycles (40), $7e->$7d
+Decay: 8/48 cycles (48), $5e->$5d
+Decay: 8/56 cycles (56), $3e->$3d
+Decay: 8/64 cycles (64), $1e->$1d
+Decay done, switching to STOP
+
+Results for data/dtv_rel_e0.raw: Delay: 8, Attack: 0, Top: 8, Decay: 8/64 total 9584 avg 37
+
+
+Processing data/dtv_rel_e1.raw
+Delay 8, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 24/24 cycles (24), $fe->$fd
+Decay: 24/56 cycles (56), $e0->$df
+Decay: 24/56 cycles (24), $df->$de
+Decay: 24/56 cycles (48), $de->$dd
+Decay: 24/72 cycles (72), $be->$bd
+Decay: 24/96 cycles (96), $9e->$9d
+Decay: 24/120 cycles (120), $7e->$7d
+Decay: 24/144 cycles (144), $5e->$5d
+Decay: 24/168 cycles (168), $3e->$3d
+Decay: 24/192 cycles (192), $1e->$1d
+Decay done, switching to STOP
+
+Results for data/dtv_rel_e1.raw: Delay: 8, Attack: 0, Top: 8, Decay: 24/192 total 27296 avg 107
+
+
+Processing data/dtv_rel_e3.raw
+Delay 8, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 24/24 cycles (24), $fe->$fd
+Decay: 24/120 cycles (120), $e0->$df
+Decay: 24/120 cycles (56), $df->$de
+Decay: 24/120 cycles (112), $de->$dd
+Decay: 24/168 cycles (168), $be->$bd
+Decay: 24/224 cycles (224), $9e->$9d
+Decay: 24/280 cycles (280), $7e->$7d
+Decay: 24/336 cycles (336), $5e->$5d
+Decay: 24/392 cycles (392), $3e->$3d
+Decay: 24/448 cycles (448), $1e->$1d
+Decay done, switching to STOP
+
+Results for data/dtv_rel_e3.raw: Delay: 8, Attack: 0, Top: 8, Decay: 24/448 total 62720 avg 246
+
+
+Processing data/dtv_rel_e8.raw
+Delay 8, attack = 0 cycles, skipping to TOP
+
+TOP done, switching to DECAY
+
+Decay: 24/24 cycles (24), $fe->$fd
+Decay: 24/424 cycles (424), $e0->$df
+Decay: 24/424 cycles (208), $df->$de
+Decay: 24/424 cycles (416), $de->$dd
+Decay: 24/624 cycles (624), $be->$bd
+Decay: 24/832 cycles (832), $9e->$9d
+Decay: 24/1040 cycles (1040), $7e->$7d
+Decay: 24/1248 cycles (1248), $5e->$5d
+Results for data/dtv_rel_e8.raw: Delay: 8, Attack: 0, Top: 8, Decay: 24/1248 total 130728 avg 691
+
+
+Processing data/dtv_rel_f0.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
@@ -15,11 +142,11 @@ Decay: 8/56 cycles (56), $3e->$3d
 Decay: 8/64 cycles (64), $1e->$1d
 Decay done, switching to STOP
 
-Results for data/sr0.raw: Delay: 10, Attack: 0/0 total 0 avg 0, Top: 1736, Decay: 8/64 total 9088 avg 35
+Results for data/dtv_rel_f0.raw: Delay: 8, Attack: 0, Top: 8, Decay: 8/64 total 9088 avg 35
 
 
-Processing data/sr1.raw
-Delay 6, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_f1.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
@@ -33,11 +160,11 @@ Decay: 24/168 cycles (168), $3e->$3d
 Decay: 24/192 cycles (192), $1e->$1d
 Decay done, switching to STOP
 
-Results for data/sr1.raw: Delay: 12, Attack: 0/0 total 0 avg 0, Top: 1768, Decay: 24/192 total 27264 avg 107
+Results for data/dtv_rel_f1.raw: Delay: 8, Attack: 0, Top: 8, Decay: 24/192 total 27264 avg 107
 
 
-Processing data/sr2.raw
-Delay 4, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_f2.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
@@ -51,11 +178,11 @@ Decay: 40/280 cycles (280), $3e->$3d
 Decay: 40/320 cycles (320), $1e->$1d
 Decay done, switching to STOP
 
-Results for data/sr2.raw: Delay: 8, Attack: 0/0 total 0 avg 0, Top: 1768, Decay: 40/320 total 45440 avg 178
+Results for data/dtv_rel_f2.raw: Delay: 8, Attack: 0, Top: 8, Decay: 40/320 total 45440 avg 178
 
 
-Processing data/sr3.raw
-Delay 7, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_f3.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
@@ -69,11 +196,11 @@ Decay: 56/392 cycles (392), $3e->$3d
 Decay: 56/448 cycles (448), $1e->$1d
 Decay done, switching to STOP
 
-Results for data/sr3.raw: Delay: 14, Attack: 0/0 total 0 avg 0, Top: 1832, Decay: 56/448 total 63616 avg 250
+Results for data/dtv_rel_f3.raw: Delay: 8, Attack: 0, Top: 8, Decay: 56/448 total 63616 avg 250
 
 
-Processing data/sr4.raw
-Delay 3, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_f4.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
@@ -87,11 +214,11 @@ Decay: 80/560 cycles (560), $3e->$3d
 Decay: 80/640 cycles (640), $1e->$1d
 Decay done, switching to STOP
 
-Results for data/sr4.raw: Delay: 6, Attack: 0/0 total 0 avg 0, Top: 1808, Decay: 80/640 total 90880 avg 357
+Results for data/dtv_rel_f4.raw: Delay: 8, Attack: 0, Top: 8, Decay: 80/640 total 90880 avg 357
 
 
-Processing data/sr5.raw
-Delay 4, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_f5.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
@@ -103,11 +230,11 @@ Decay: 120/600 cycles (600), $7e->$7d
 Decay: 120/720 cycles (720), $5e->$5d
 Decay: 120/840 cycles (840), $3e->$3d
 Decay: 120/960 cycles (960), $1e->$1d
-Results for data/sr5.raw: Delay: 8, Attack: 0/0 total 0 avg 0, Top: 1848, Decay: 120/960 total 128640 avg 522
+Results for data/dtv_rel_f5.raw: Delay: 8, Attack: 0, Top: 8, Decay: 120/960 total 130560 avg 526
 
 
-Processing data/sr6.raw
-Delay 5, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_f6.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
@@ -118,11 +245,12 @@ Decay: 144/576 cycles (576), $9e->$9d
 Decay: 144/720 cycles (720), $7e->$7d
 Decay: 144/864 cycles (864), $5e->$5d
 Decay: 144/1008 cycles (1008), $3e->$3d
-Results for data/sr6.raw: Delay: 10, Attack: 0/0 total 0 avg 0, Top: 1872, Decay: 144/1008 total 129024 avg 576
+Decay: 144/1152 cycles (1152), $1e->$1d
+Results for data/dtv_rel_f6.raw: Delay: 8, Attack: 0, Top: 8, Decay: 144/1152 total 130176 avg 578
 
 
-Processing data/sr7.raw
-Delay 5, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_f7.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
@@ -133,11 +261,11 @@ Decay: 176/704 cycles (704), $9e->$9d
 Decay: 176/880 cycles (880), $7e->$7d
 Decay: 176/1056 cycles (1056), $5e->$5d
 Decay: 176/1232 cycles (1232), $3e->$3d
-Results for data/sr7.raw: Delay: 10, Attack: 0/0 total 0 avg 0, Top: 1904, Decay: 176/1232 total 128128 avg 640
+Results for data/dtv_rel_f7.raw: Delay: 8, Attack: 0, Top: 8, Decay: 176/1232 total 130592 avg 646
 
 
-Processing data/sr8.raw
-Delay 4, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_f8.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
@@ -147,11 +275,11 @@ Decay: 208/624 cycles (624), $be->$bd
 Decay: 208/832 cycles (832), $9e->$9d
 Decay: 208/1040 cycles (1040), $7e->$7d
 Decay: 208/1248 cycles (1248), $5e->$5d
-Results for data/sr8.raw: Delay: 8, Attack: 0/0 total 0 avg 0, Top: 1936, Decay: 208/1248 total 128544 avg 702
+Results for data/dtv_rel_f8.raw: Delay: 8, Attack: 0, Top: 8, Decay: 208/1248 total 131040 avg 708
 
 
-Processing data/sr9.raw
-Delay 4, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_f9.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
@@ -159,62 +287,62 @@ Decay: 504/504 cycles (504), $fe->$fd
 Decay: 504/1008 cycles (1008), $de->$dd
 Decay: 504/1512 cycles (1512), $be->$bd
 Decay: 504/2016 cycles (2016), $9e->$9d
-Results for data/sr9.raw: Delay: 8, Attack: 0/0 total 0 avg 0, Top: 2232, Decay: 504/2016 total 127008 avg 1144
+Results for data/dtv_rel_f9.raw: Delay: 8, Attack: 0, Top: 8, Decay: 504/2016 total 131040 avg 1159
 
 
-Processing data/sra.raw
-Delay 3, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_fa.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
 Decay: 1008/1008 cycles (1008), $fe->$fd
 Decay: 1008/2016 cycles (2016), $de->$dd
 Decay: 1008/3024 cycles (3024), $be->$bd
-Results for data/sra.raw: Delay: 6, Attack: 0/0 total 0 avg 0, Top: 2736, Decay: 1008/3024 total 127008 avg 1716
+Results for data/dtv_rel_fa.raw: Delay: 8, Attack: 0, Top: 8, Decay: 1008/3024 total 130032 avg 1733
 
 
-Processing data/srb.raw
-Delay 3, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_fb.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
 Decay: 2032/2032 cycles (2032), $fe->$fd
 Decay: 2032/4064 cycles (4064), $de->$dd
-Results for data/srb.raw: Delay: 6, Attack: 0/0 total 0 avg 0, Top: 3760, Decay: 2032/4064 total 125984 avg 2680
+Results for data/dtv_rel_fb.raw: Delay: 8, Attack: 0, Top: 8, Decay: 2032/4064 total 130048 avg 2709
 
 
-Processing data/src.raw
-Delay 3, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_fc.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
 Decay: 2040/2040 cycles (2040), $fe->$fd
 Decay: 2040/4080 cycles (4080), $de->$dd
-Results for data/src.raw: Delay: 6, Attack: 0/0 total 0 avg 0, Top: 3768, Decay: 2040/4080 total 126480 avg 2691
+Results for data/dtv_rel_fc.raw: Delay: 8, Attack: 0, Top: 8, Decay: 2040/4080 total 130560 avg 2720
 
 
-Processing data/srd.raw
-Delay 3, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_fd.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
 Decay: 6008/6008 cycles (6008), $fe->$fd
-Results for data/srd.raw: Delay: 6, Attack: 0/0 total 0 avg 0, Top: 7736, Decay: 6008/6008 total 120160 avg 6008
+Results for data/dtv_rel_fd.raw: Delay: 8, Attack: 0, Top: 8, Decay: 6008
 
 
-Processing data/sre.raw
-Delay 5, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_fe.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
 Decay: 10008/10008 cycles (10008), $fe->$fd
-Results for data/sre.raw: Delay: 10, Attack: 0/0 total 0 avg 0, Top: 21736, Decay: 10008/10008 total 100080 avg 10008
+Results for data/dtv_rel_fe.raw: Delay: 8, Attack: 0, Top: 8, Decay: 10008
 
 
-Processing data/srf.raw
-Delay 3, attack = 0 cycles, skipping to TOP
+Processing data/dtv_rel_ff.raw
+Delay 8, attack = 0 cycles, skipping to TOP
 
 TOP done, switching to DECAY
 
 Decay: 16024/16024 cycles (16024), $fe->$fd
-Results for data/srf.raw: Delay: 6, Attack: 0/0 total 0 avg 0, Top: 17752, Decay: 16024/16024 total 112168 avg 16024
+Results for data/dtv_rel_ff.raw: Delay: 8, Attack: 0, Top: 8, Decay: 16024

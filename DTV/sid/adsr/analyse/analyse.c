@@ -22,6 +22,7 @@ int analyse(char *filename)
     int dec_start = 0;
     int dec_stop = 0;
     unsigned char att_max_val = 0;
+    unsigned char dec_max_val = 0xff;
     unsigned char dec_min_val = 0xff;
     int c;
     unsigned char b, prev = 0;
@@ -45,7 +46,7 @@ int analyse(char *filename)
                     prev = b;
                     delay = count - 1;
                     ++state;
-                    fprintf(stdout,"Delay %i", delay);
+                    fprintf(stdout,"Delay %i", delay*2);
                     att_start = count;
                     if(b == 0xff) {
                         att_max_val = 0xff;
@@ -63,6 +64,16 @@ int analyse(char *filename)
                 if(b != prev) {
                     att_stop = count;
                     att_max_val = b;
+
+                    if(b < prev) {
+                        state = DECAY;
+                        att_stop -= cycles;
+                        dec_start = count;
+                        prev_cycles = 0;
+                        dec_max_val = b;
+                        fprintf(stdout,"Attack stopped before TOP, switching to DECAY\n\n");
+                    }
+
                     if(cycles > att_cycles_max) {
                         att_cycles_max = cycles;
                     }
@@ -80,6 +91,7 @@ int analyse(char *filename)
                         fprintf(stdout,"Attack done, switching to TOP\n\n");
                     }
 
+
                     prev = b;
                     prev_cycles = cycles;
                     cycles = 0;
@@ -87,7 +99,7 @@ int analyse(char *filename)
                 break;
 
             case TOP:
-                if(b != 0xff) {
+                if(b != prev) {
                     prev = b;
                     cycles = 0;
                     dec_start = count;
@@ -138,20 +150,32 @@ int analyse(char *filename)
         return 0;
     }
 
-    fprintf(stdout,"Delay: %i, Attack: %i/%i total %i avg %i",
+    fprintf(stdout,"Delay: %i, Attack: %i",
                     delay*2,
-                    att_cycles_min*2, att_cycles_max*2,
-                    (att_stop-att_start)*2,
-                    (att_stop-att_start)*2/(att_max_val-1)
+                    att_cycles_min*2
            );
 
-    if(state >= DECAY) {
-        fprintf(stdout,", Top: %i, Decay: %i/%i total %i avg %i",
-                        (dec_start-att_stop)*2,
-                        dec_cycles_min*2, dec_cycles_max*2,
-                        (dec_stop-dec_start)*2,
-                        (dec_stop-dec_start)*2/(0xfe - dec_min_val)
+    if(att_cycles_min != att_cycles_max) {
+        fprintf(stdout,"/%i total %i avg %i",
+                        att_cycles_max*2,
+                        (att_stop-att_start)*2,
+                        (att_stop-att_start)*2/(att_max_val-1)
                );
+    }
+
+
+    if(state >= DECAY) {
+        fprintf(stdout,", Top: %i, Decay: %i",
+                        (dec_start-att_stop)*2,
+                        dec_cycles_min*2
+               );
+        if(dec_cycles_min != dec_cycles_max) {
+            fprintf(stdout,"/%i total %i avg %i",
+                            dec_cycles_max*2,
+                            (dec_stop-dec_start)*2,
+                            (dec_stop-dec_start)*2/(dec_max_val - dec_min_val - 1)
+                   );
+        }
     }
 
     fprintf(stdout,"\n");
