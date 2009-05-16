@@ -1,9 +1,8 @@
 ;**************************************************************************
 ;*
 ;* FILE  fulltime.asm
-;* Copyright (c) 2007 Daniel Kahlin <daniel@kahlin.net>
+;* Copyright (c) 2007, 2009 Daniel Kahlin <daniel@kahlin.net>
 ;* Written by Daniel Kahlin <daniel@kahlin.net>
-;* $Id: blittertest.asm,v 1.8 2007-05-28 07:23:16 tlr Exp $
 ;*
 ;* DESCRIPTION
 ;*   Instruction timing regression tests
@@ -11,11 +10,14 @@
 ;******
 	processor 6502
 
+; RECORD_REFDATA	set	1
+REFDATA_STORE	equ	$7000
+
+
 SKIP_CYCLE	equ	%00000001
 BURST_MODE	equ	%00000010
 BRANCH_TAKEN	equ	%00000100	
 PAGE_CROSS	equ	%00001000	
-
 	
 	MAC	sac
 	dc.b	$32,{1}
@@ -110,13 +112,18 @@ sa_lp2:
 	bne	sa_lp2
 
 	jsr	test_opcodes
-	
+	ifconst	RECORD_REFDATA
+	jsr	record_refdata
+	endif
 sa_lp3:
 	jsr	$ffe4
 	beq	sa_lp3
 	jmp	sa_lp1
 	
 sa_ex1:
+	ifconst	RECORD_REFDATA
+	jsr	record_done
+	endif
 	jmp	$a474
 
 
@@ -922,12 +929,43 @@ ph_skp1:
 ph_skp2:
 	jmp	$ffd2
 
-		
 ;**************************************************************************
 ;*
 ;* SECTION  reference data
 ;*
 ;******
+	ifconst	RECORD_REFDATA
+record_refdata:
+	ldx	#0
+rr_lp1:
+	lda	current_data,x
+rr_sm1:
+	sta	REFDATA_STORE,x
+	inx
+	bne	rr_lp1
+	inc	rr_sm1+2
+	rts
+record_done:
+	lda	#<ref_msg
+	ldy	#>ref_msg
+	jsr	print
+	lda	#>REFDATA_STORE
+	jsr	print_hex
+	lda	#<REFDATA_STORE
+	jsr	print_hex
+	lda	#"-"
+	jsr	$ffd2
+	lda	rr_sm1+2
+	jsr	print_hex
+	lda	rr_sm1+1
+	jsr	print_hex
+	lda	#13
+	jsr	$ffd2
+	rts
+ref_msg:
+	dc.b	13,13,"REFDATA RECORDED: ",0
+	endif
+			
 ; ref_data:
 ; 	incbin	"reftiming_dtv.bin"
 	
@@ -946,6 +984,7 @@ test_code:
 	align	256
 test_code_new_page:
 	echo	.
+	ds.b	256
 
 ; current timings
 	align	256

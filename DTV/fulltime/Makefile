@@ -1,6 +1,6 @@
 # Makefile
 
-all:	fulltime.prg
+all:	fulltime.prg fulltime_record.prg
 
 # rules for common
 .SUFFIXES: .prg .bin
@@ -11,8 +11,11 @@ all:	fulltime.prg
 fulltime.prg: fulltime.asm
 	dasm $< -o$@
 
+fulltime_record.prg: fulltime.asm
+	dasm $< -o$@ -DRECORD_REFDATA
+
 clean:
 	rm -f *~ \#*\#
 	rm -f a.out
-	rm -f fulltime.prg
+	rm -f fulltime.prg fulltime_record.prg
 # eof
