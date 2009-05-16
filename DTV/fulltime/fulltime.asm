@@ -111,6 +111,9 @@ sa_lp2:
 	jsr	$ffd2
 	bne	sa_lp2
 
+	ifnconst RECORD_REFDATA
+	jsr	fetch_refdata
+	endif
 	jsr	test_opcodes
 	ifconst	RECORD_REFDATA
 	jsr	record_refdata
@@ -374,6 +377,15 @@ to_skp1:
 	adc	#$30
 	ldy	#5
 to_skp2:
+	ifnconst RECORD_REFDATA
+	pha
+	lda	current_data,x
+	cmp	current_ref,x
+	beq	to_skp3
+	ldy	#2
+to_skp3:
+	pla
+	endif
 	jsr	plot_entry
 
 	inc	count_zp
@@ -929,12 +941,12 @@ ph_skp1:
 ph_skp2:
 	jmp	$ffd2
 
+	ifconst	RECORD_REFDATA
 ;**************************************************************************
 ;*
 ;* SECTION  reference data
 ;*
 ;******
-	ifconst	RECORD_REFDATA
 record_refdata:
 	ldx	#0
 rr_lp1:
@@ -964,10 +976,27 @@ record_done:
 	rts
 ref_msg:
 	dc.b	13,13,"REFDATA RECORDED: ",0
+
+	else
+;**************************************************************************
+;*
+;* SECTION  reference data
+;*
+;******
+fetch_refdata:
+	ldx	#0
+fr_lp1:
+fr_sm1:
+	lda	ref_data,x
+	sta	current_ref,x
+	inx
+	bne	fr_lp1
+	inc	fr_sm1+2
+	rts
+ref_data:
+	incbin	"reftiming_dtv.bin"
 	endif
 			
-; ref_data:
-; 	incbin	"reftiming_dtv.bin"
 	
 end_code	equ	.
 	seg.u	bss1
@@ -989,5 +1018,7 @@ test_code_new_page:
 ; current timings
 	align	256
 current_data:
+	ds.b	256
+current_ref:
 	ds.b	256
 ; eof
