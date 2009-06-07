@@ -1,0 +1,1551 @@
+; vdcattr
+; --------
+; 2009 Errol Smith
+
+; VDC demonstration of basic text & attributes
+
+; Start of project: 1.6.2009
+
+; Compiles with ACME 0.91
+; # acme --cpu 6502 -f cbm -o vdcattr.prg vdcattr.tas
+
+; Type RUN to start.
+
+; Known bugs:
+
+; TODO:
+
+; Memory map:
+; $0000-$03ff : (mostly) unused
+; $0400-$07ff : screen
+; $0801-$xxxx : code
+; $xxxx-$zzzz : data
+; $zzzz-$ffff : unused
+
+; Notes:
+
+
+; --- Constants
+
+!src "vdc2.a"
+
+
+
+
+
+
+
+DEBUG = 0
+
+; - colors
+color_back = $2
+color_border = $0
+color_text = $1
+color_hilite = $2
+
+; - keys
+key_up    = $91
+key_down  = $11
+
+key_left  = $9d ; dma on
+key_right = $1d ; dma off
+
+key_enter = $0d ; save reg
+key_s = $53     ; save all regs
+
+key_space = $20 ; start test
+key_g = $47     ; stop test
+
+key_y = $59     ; increase vol
+key_h = $48     ; decrease vol
+
+key_u = $55     ; increase env
+key_j = $4a     ; decrease env
+
+key_i = $49     ; env += $10
+key_k = $4b     ; env -= $10
+
+key_o = $4f     ; save env reg
+key_l = $4c     ; 
+
+
+; - kernal functions
+SCNKEY = $ff9f
+GETIN = $ffe4           ; ret: a = 0: no keys pressed, otherwise a = ASCII code
+
+; - hw addresses
+screen = $0400          ; screen address
+color = $d800           ; color ram address
+vicborder = $d020       ; border color register
+vicbackgnd = $d021      ; background color register
+vicraster = $d012       ; raster compare register
+keybuf = $0277          ; keyboard buffer
+keybuflen = $c6         ; keyboard buffer byte count
+sidbase = $d400         ; SID base address
+
+; - other
+rastercmp = $ff
+cursor_min = $7
+cursor_max = $e
+dmalen = 63*312/2 ; - 1
+
+; --- Zero page variables
+
+; temp variables
+tmp  = $23
+tmp2 = $24
+tmp3 = $25
+
+; - colorram pointer
+colptr = $fb
+colptrh = $fc
+
+; - temp pointer
+tmpptr = $fd
+tmpptrh = $fe
+
+
+
+
+!ct scr ; screencode
+
+; --- Main 
+
+crsrx = $ec
+crsry = $eb
+
+vdcattributehi=$08
+
+
+; start of program
+*=$1c01
+entry:
+; BASIC stub: "1 SYS 7181"
+!by $0b,$1c,$01,$00,$9e,$37,$31,$38,$31,$00,$00,$00
+
+; change some default VDC values that are wrong on early kernels (like mine)
+lda #$7f
+ldx #0
++vdc_sta_rx
+
+
+; fill char memory with stuff
+
+; set start address for vdc char write
+lda #$00	; hi address
+ldx #18
++vdc_sta_rx
+
+lda #$00	; lo address
+ldx #19
++vdc_sta_rx
+
+; fill char with codes 0-127 repeatedly
+ldx #31	;r/w register
++vdc_set_rx
+ldx #10	; 10 x 128 = 16 x 80 .. 16 lines of 80 chars
+fillcstart:
+ldy #$00
+- +vdc_sty
+iny
+bpl -
+dex
+bne fillcstart
+
+; print the menu below the test stuff
+- lda prgtxt,x
++vdc_sta
+inx
+bne -
+- lda prgtxt+$0100,x
++vdc_sta
+inx
+bne -
+- lda prgtxt+$0200,x
++vdc_sta
+inx
+bne -
+
+
+; fill attr memory with different attributes for each row
+
+; set start address for vdc char write
+lda #vdcattributehi	;hi
+ldx #18
++vdc_sta_rx
+lda #$00	;lo
+ldx #19
++vdc_sta_rx
+ldx #31		;r/w register
++vdc_set_rx
+
+ldy #$00
+fillastart:
+ldx #5	; 5 chars at same attributes  = 5 x 16 = 80 one line at each of 16 colours
+- +vdc_sty
+dex
+bne -
+iny
+bne fillastart
+
+ldy #3
+lda #$0e	;fill $300 bytes extra bytes with 'dark' white
+- +vdc_sta
+dex
+bne -
+dey
+bne -
+
+
+; put bright white markers in the corners
+ldx #0
+ldy #0
+
+; top left
+jsr vdc_setscreenxy
+lda #79
++vdc_sta
+jsr vdc_setattrxy
+lda #$0f
++vdc_sta
+
+; top right
+ldx #79
+jsr vdc_setscreenxy
+lda #80
++vdc_sta
+jsr vdc_setattrxy
+lda #$0f
++vdc_sta
+
+; bottom right
+ldy #24
+jsr vdc_setscreenxy
+lda #122
++vdc_sta
+jsr vdc_setattrxy
+lda #$0f
++vdc_sta
+
+; bottom left
+ldx #0
+jsr vdc_setscreenxy
+lda #76
++vdc_sta
+jsr vdc_setattrxy
+lda #$0f
++vdc_sta
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; put the cursor somewhere
+ldx #$20
+stx crsrx
+ldy #$11
+sty crsry
+jsr vdc_setcrsrxy
+; turn cursor on
+lda #$40	;fast blinking cursor
+ldx #10
++vdc_sta_rx
+
+
+
+
+
+; start main menu loop
+
+mainloop:
+
+jsr vblankwait
+
+jsr GETIN
+; beq handlestuff
+
+cmp #65 ; "A"
+bne +
+; switch attributes on/off
+ldx #25
++vdc_lda_rx
+eor #$40
++vdc_sta_rx
+jmp handlestuff
++
+
+cmp #66 ; "B"
+bne +
+; switch background cycle on/off
+lda backcycle
+beq bb
+lda #$00
+sta backcycle
+lda #50
+sta backcyclecount
+lda #$e0
+ldx #26
++vdc_sta_rx
+jmp handlestuff
+bb: lda #$01
+sta backcycle
+jmp handlestuff
++
+
+
+cmp #67 ; "C"
+bne +
+; cycle cursor mode
+ldx #10
++vdc_lda_rx
+clc
+adc #$20
+and #$7f
++vdc_sta_rx
+jmp handlestuff
++
+
+
+cmp #82 ; "R"
+bne +
+; switch reverse screen on/off
+ldx #24
++vdc_lda_rx
+eor #$40
++vdc_sta_rx
+jmp handlestuff
++
+
+
+cmp #86 ; "V"
+bne +
+; vblank test
+lda vblank
+eor #$ff
+sta vblank
+ldx #26
+lda #$e0
+vdc_sta_rx
+jmp handlestuff
++
+
+
+cmp #88 ; "X"
+bne +
+; switch x smooth test on/off
+lda xsmooth
+beq xx
+
+; turn xsmooth off, reset registers
+lda #$00
+sta xsmooth
+lda smoothdefault
+sta smoothcount
+lda #$00
+ldx #13	;screen address low
++vdc_sta_rx
+ldx #21	;attribute address low
++vdc_sta_rx
+ldx #25
++vdc_lda_rx
+ora #$07
++vdc_sta_rx
+lda #$60
+ldx #10	;turn on cursor
++vdc_sta_rx
+jmp handlestuff
+
+xx:	; xsmooth is off, turn it on
+lda #$20
+ldx #10	;turn off cursor
++vdc_sta_rx
+lda #$ff
+sta xsmoothdir
+sta xsmooth
+jmp handlestuff
++
+
+
+cmp #89 ; "Y"
+beq +
+jmp upbit
++
+; switch y smooth test on/off
+lda ysmooth
+beq yy
+
+; turn ysmooth off, reset registers
+lda smoothdefault
+sta smoothcount
+lda #$00
+sta ysmooth
+ldx #13	;screen address low
++vdc_sta_rx
+ldx #12	;screen address hi
++vdc_sta_rx
+ldx #21	;attribute address low
++vdc_sta_rx
+lda #vdcattributehi
+ldx #20
++vdc_sta_rx
+ldx #24
++vdc_lda_rx
+and #$f0
++vdc_sta
+lda #$60
+ldx #10	;turn on cursor
++vdc_sta_rx
+jmp handlestuff
+
+yy:	; ysmooth is off, turn it on
+lda #$20
+ldx #10	;turn off cursor
++vdc_sta_rx
+ldy #$00
+sty ysmoothdir
+iny
+sty ysmooth
+jmp handlestuff
++
+
+
+
+
+upbit:
+cmp #145 ; up cursor
+bne +
+dec crsry
+jsr setcrsr
+jmp handlestuff
++
+
+cmp #17 ; down cursor
+bne +
+inc crsry
+jsr setcrsr
+jmp handlestuff
++
+
+cmp #157 ; left cursor
+bne +
+dec crsrx
+jsr setcrsr
+jmp handlestuff
++
+
+cmp #29 ; right cursor
+bne +
+inc crsrx
+jsr setcrsr
+jmp handlestuff
++
+
+cmp #19 ; home
+bne +
+lda #0
+sta crsrx
+sta crsry
+jsr setcrsr
+jmp handlestuff
++
+
+
+
+cmp #43 ; minus
+bne +
+dec smoothdefault
+bne minus
+inc smoothdefault
+minus:
+jmp handlestuff
++
+
+cmp #45 ; plus
+bne +
+inc smoothdefault
+bpl minus
+dec smoothdefault
+jmp handlestuff
++
+
+
+
+
+cmp #27	;esc
+bne +
+jmp exit
++
+
+
+handlestuff:
+
+lda backcycle
+beq xsmoothbit
+; cycle the background
+dec backcyclecount
+bne +
+lda #50
+sta backcyclecount
+lda backcycle
+ldx #26
++vdc_sta_rx
+inc backcycle
++ ; jmp endmainloop
+
+
+
+xsmoothbit:
+ldx xsmooth
+beq ysmoothbit
+
+; xsmooth cycle
+dec smoothcount
+bne +
+lda smoothdefault
+sta smoothcount
+
+lda xsmooth
+lsr
+lsr
+lsr ; divide by 8
+eor #$1f
+ldx #13	;screen address low
++vdc_sta_rx
+ldx #21	;attribute address low
++vdc_sta_rx
+
+lda xsmooth
+and #$07
+sta tmp
+ldx #25
++vdc_lda_rx
+and #$f0
+clc
+adc tmp
++vdc_sta_rx
+
+ldx xsmooth
+lda xsmoothdir
+bne xneg
+
+inx
+bne x9
+ldx #$ff
+stx xsmoothdir
+jmp x9
+
+xneg:
+dex
+bne x9
+stx xsmoothdir
+ldx #$01
+
+x9:
+stx xsmooth
++ ;jmp endmainloop
+
+
+ysmoothbit:
+lda ysmooth
+bne +
+jmp endmainloop
++
+
+; ysmooth cycle
+dec smoothcount
+beq +
+jmp yend
++
+lda smoothdefault
+sta smoothcount
+
+lda ysmooth
+lsr
+lsr
+lsr ; divide by 8
+tay
+ldx #0
+jsr screenxy
+lda tmp
+ldx #13	;screen address low
++vdc_sta_rx
+ldx #21	;attribute address low
++vdc_sta_rx
+lda tmp2
+ldx #12	;screen address high
++vdc_sta_rx
+ldx #20	;attribute address high
+clc
+adc #vdcattributehi
++vdc_sta_rx
+
+lda ysmooth
+and #$07
+sta tmp
+ldx #24
++vdc_lda_rx
+and #$e0
+clc
+adc tmp
++vdc_sta_rx
+
+ldy ysmooth
+lda ysmoothdir
+bne yneg
+
+iny
+bpl y9
+ldy #$7f
+sty ysmoothdir
+jmp y9
+
+yneg:
+dey
+bne y9
+sty ysmoothdir
+ldy #$01
+
+y9:
+sty ysmooth
+
+yend:
+
++
+
+
+
+
+
+
+
+
+
+
+
+
+
+endmainloop:
+jmp mainloop
+
+
+exit:
+
+ldx #26
+lda #$f0
++vdc_sta_rx	; reset to white on black background
+rts	; back to basic
+
+
+
+
+; subroutines
+
+vblankwait:
+
+;setup for fore/back register
+ldx #26
++vdc_set_rx
+
+
+; wait until we are out of vblank
+- lda vdc_state
+and #$20
+bne -
+
+;if vblank test is on, set background colour to black
+ldy vblank
+beq +
++vdc_sta
++
+
+; wait until we are in vblank
+- lda vdc_state
+and #$20
+beq -
+
+lda vblank	;stick the vblank colour into background if !0
+beq +
++vdc_sta
++
+
+rts
+
+
+setcrsr:
+ldx crsrx
+ldy crsry
+jsr vdc_setcrsrxy
+rts
+
+
+vdc_setcrsrxy:
+; move the cursor to x,y (destructive to A)
+jsr screenxy
+lda #15		;crsr low byte
+sta vdc_reg
+lda tmp
++vdc_sta
+lda #14		;crsr high byte
+sta vdc_reg
+lda tmp2
++vdc_sta
+rts
+
+vdc_setscreenxy:
+; move the memory pointer to screen position x,y (destructive to A)
+jsr screenxy
+lda #19		;low byte
+sta vdc_reg
+lda tmp
++vdc_sta
+lda #18		;high byte
+sta vdc_reg
+lda tmp2
++vdc_sta
+lda #31		;r/w register
+sta vdc_reg
+rts
+
+vdc_setattrxy:
+; move the memory pointer to attribute position x,y (destructive to A)
+jsr screenxy
+lda #19		;low byte
+sta vdc_reg
+lda tmp
++vdc_sta
+lda #18		;high byte
+sta vdc_reg
+lda tmp2
+clc
+adc #vdcattributehi
++vdc_sta
+lda #31		;r/w register
+sta vdc_reg
+rts
+
+
+screenxy:	;calculate screen position into tmp1/2 from x/y
+lda #$00
+sta tmp2
+tya
+asl
+rol tmp2
+asl
+rol tmp2
+sta tmp
+;tmp1/2 now = y*4
+tya
+clc
+adc tmp
+bcc +
+inc tmp2
++ ; A / temp2 now = y*5
+asl
+rol tmp2
+asl
+rol tmp2
+asl
+rol tmp2
+asl
+rol tmp2
+sta tmp	;tmp1/2 = y*5*16 = y*80
+clc
+txa
+adc tmp
+sta tmp
+bcc +
+inc tmp2	;tmp1/2 = y*80 + x
++ rts
+
+
+
+
+
+
+
+
+; --- Variables
+
+vblank:		!by $00
+vblanktmp:	!by $00
+
+backcycle:	!by $01
+backcyclecount:	!by 50
+
+smoothcount:	!by 1
+smoothdefault:	!by 1
+
+xsmooth:	!by $00
+xsmoothdir	!by 0
+
+ysmooth:	!by $00
+ysmoothdir	!by 0
+
+;    |---------01-3-5----0----5----0----5----0----5----0----5----0----5----01234567-|
+prgtxt
+!tx "--------------------------------------------------------------------------------" ; 0
+!tx "x128 vdc tester v0.0                                                   esc: exit" ; 1
+!tx "--------------------------------------------------------------------------------" ; 2
+!tx "a: attributes on/off     r: screen reverse on/off      crsr keys: move cursor   " ; 3
+!tx "                         c: cursor mode                home:      home cursor   " ; 4
+!tx "b: background cycle on/off ('border' should match background)                   " ; 5
+!tx "x: xsmooth test - left border should be fixed, right border 'open'              " ; 6
+!tx "y: ysmooth test                                        + - adjust smooth speed  " ; 7
+!tx "      v: show vblank area - should be all border except foreground area         " ; 8
+!tx "                                                                                " ; 9
+!tx " stn/rls   xx  xx  xx  - env xx - $d4xx " ; 10
+!tx "--------------------------------- bits: " ; 11
+!tx "d7=  d6=  d5=  d4=  d3=  d2=  d1=  d0=  " ; 12
+!tx "                                        " ; 13
+!tx "----------------------------------------" ; 14
+!tx " cursor keys: move cursor               " ; 15
+!tx " 0..9, a..f : set new value             " ; 16
+!tx " enter: write value to sid              " ; 17
+!tx " s: write all values to sid             " ; 18
+!tx " space/g: start/stop note               " ; 19
+!tx " u/j, i/k: envelope inc/dec, +-$10      " ; 20
+!tx " y/h: volume up/down                    " ; 21
+!tx " crsr lt/rt: start/stop dma             " ; 22
+!tx " o: store env value                     " ; 23
+!tx "                                        " ; 24
+
+
+
+
+
+
+
+
+
+
+; end of errol's code ----------------------------------------------------
+
+
+
+!if 0 {
+
+
+mlcodeentry:
+; enable extended registers
+lda #1
+sta $d03f
+
+; enable skip+burst
+;sei
+;!by $32, $99    ; sac #$99
+;lda #3
+;!by $32, $00    ; sac #$00
+;cli
+
+; disable badlines and colorram fetch
+lda #%00110000
+sta $d03c
+
+; setup common dma
+ldx #(common_dma_values_len - 1)
+-
+lda common_dma_values,x
+sta $d300,x
+dex
+bpl -
+
+; setup screen
+lda #color_back
+sta vicbackgnd
+lda #color_border
+sta vicborder
+ldy #0
+- 
+lda prgtxt+$0000,y
+sta screen+$0000,y
+lda prgtxt+$0100,y
+sta screen+$0100,y
+lda prgtxt+$0200,y
+sta screen+$0200,y
+lda prgtxt+$02e8,y
+sta screen+$02e8,y
+lda #color_text
+sta color+$0000,y
+sta color+$0100,y
+sta color+$0200,y
+sta color+$02e8,y
+iny
+bne -
+
+ldx #0
+- lda shadowsid,x
+sta sidbase,x
+inx
+cpx #$19
+bne -
+
+menu:
+; update SID regs, redraw values
+ldx #cursor_min
+- lda shadowsid,x
+sta sidbase,x
+jsr printhexatcursor
+inx
+cpx #cursor_max
+bne -
+ldx #$18
+lda shadowsid,x
+sta sidbase,x
+jsr printhexatcursor
+
+
+menuchanged:
+lda #<envtextloc
+sta tmpptr
+lda #>envtextloc
+sta tmpptrh
+lda envelope
+jsr printhex
+
+; check if cursor is within limits
+lda cursor
+cmp #cursor_max
+bcc +
+lda #cursor_min
+sta cursor
++
+lda cursor
+cmp #cursor_min
+bcs +
+lda #cursor_max-1
+sta cursor
++
+; erase old cursor
+lda #' '
+ldx cursor_old
+jsr putcursor
+; draw cursor
+lda #'>'
+ldx cursor
+jsr putcursor
+; print addr
+lda #<addrtxtloc
+sta tmpptr
+lda #>addrtxtloc
+sta tmpptrh
+txa
+jsr printhex
+; print binary
+tax
+lda shadowsid,x
+jsr printbinary
+; print bits
+ldx cursor
+jsr printbits
+
+menuwait:
+jsr getkey     ; wait for key
+
+!if DEBUG = 1 {
+; display keycode
+pha
+stx $c000
+lda #<screen
+sta tmpptr
+lda #>screen
+sta tmpptrh
+txa
+jsr printhex
+ldx $c000
+pla
+}
+
+; process input
+
+; check for 0..9, a..f
+jsr checkhex
+cmp #16
+beq ++
+; hex char pressed, store MS4b
+asl
+asl
+asl
+asl
+sta tmp
+; get the other nibble
+jsr getkey
+jsr checkhex
+cmp #16
+beq menuwait    ; cancel if 2nd is not hex
+; add LS4b & store to shadow SID regs
+clc
+adc tmp
+ldx cursor
+sta shadowsid,x
+; display unwritten value in different color
+lda #color_hilite
+sta color_print
+jsr printhexatcursor
+lda #color_text
+sta color_print
+jmp menuchanged
+
+++ cpx #key_enter
+bne ++
+; enter pressed, update reg
+ldx cursor
+lda shadowsid,x
+sta sidbase,x
+jsr printhexatcursor
+jmp menuwait
+
+++ cpx #key_s
+bne ++
+; s pressed, update all regs
+ldx #cursor_min
+- lda shadowsid,x
+sta sidbase,x
+inx
+cpx #cursor_max
+bne -
+jmp menu
+
+++ cpx #key_space
+bne ++
+; space pressed, start test
+jsr starttest
+jmp menu
+
+++ cpx #key_g
+bne ++
+; g pressed, stop test
+jsr stoptest
+jmp menu
+
+++ cpx #key_u
+bne ++
+ldy envelope
+iny
+cpy #$00
+beq +
+sty envelope
++
+jmp menuchanged
+
+++ cpx #key_j
+bne ++
+ldy envelope
+dey
+cpy #$ff
+beq +
+sty envelope
++
+jmp menuchanged
+
+++ cpx #key_i
+bne ++
+clc
+lda envelope
+adc #$10
+cmp #$00
+beq +
+sta envelope
++
+jmp menuchanged
+
+++ cpx #key_k
+bne ++
+sec
+lda envelope
+sbc #$10
+cmp #$ff
+beq +
+sta envelope
++
+jmp menuchanged
+
+++ cpx #key_y
+bne ++
+ldy shadowsid+$18
+iny
+tya
+and #$0f
+beq +
+sty shadowsid+$18
++
+jmp menu
+
+++ cpx #key_h
+bne ++
+ldy shadowsid+$18
+dey
+tya
+and #$0f
+cmp #$0f
+beq +
+sty shadowsid+$18
++
+jmp menu
+
+++ cpx #key_right
+bne ++
+jsr dma_off
+jmp menu
+
+++ cpx #key_left
+bne ++
+jsr dma_on
+jmp menu
+
+++ cpx #key_o
+bne ++
+lda envelope
+sta $d41f
+jmp menu
+
+; store cursor position
+++ lda cursor
+sta cursor_old
+
+++ cpx #key_up
+bne ++
+; up pressed, move cursor
+dec cursor
+jmp menuchanged
+
+++ cpx #key_down
+bne ++
+; down pressed, move cursor
+inc cursor
+jmp menuchanged
+
+++
+jmp menuwait
+
+
+; --- Subroutines
+
+; - starttest
+; changes:
+;  a
+;
+starttest:
+lda shadowsid+$0b
+ora #$01
+sta shadowsid+$0b
+sta sidbase+$0b
+rts
+
+; - stoptest
+; changes:
+;  a
+;
+stoptest:
+lda shadowsid+$0b
+and #$fe
+sta shadowsid+$0b
+sta sidbase+$0b
+rts
+
+; - dma_off
+; changes:
+;  a
+;
+dma_off:
+lda #$0
+sta $d31f
+lda #' '
+sta dmatextloc
+rts
+
+; - dma_on
+; changes:
+;  a
+;
+dma_on:
+lda #$4c    ; vblank start
+sta $d31f
+lda #'x'
+sta dmatextloc
+rts
+
+; - getkey
+; returns:
+;  a = x = pressed key
+; changes:
+;  y, tmpptr
+;
+getkey:
+lda #rastercmp
+- cmp vicraster
+bne -           ; wait until raster = rastercmp
+jsr SCNKEY
+jsr GETIN       ; read keyboard
+tax             ; x = pressed key (or 0)
+beq getkey      ; if no keys pressed, no input -> wait
+rts
+
+; - putcursor
+; parameters:
+;  a = char
+;  x = location
+; changes:
+;  y, tmpptr
+;
+putcursor:
+pha
+lda txtlocl_lut,x
+sta tmpptr
+lda txtloch_lut,x
+sta tmpptrh
+pla
+ldy #0
+sta (tmpptr),y
+rts
+
+; - printhexatcursor
+; parameters:
+;  x = cursor
+; changes:
+;  a, y, tmp, tmpptr
+;
+printhexatcursor:
+stx tmp
+lda txtlocl_lut,x
+sta tmpptr
+lda txtloch_lut,x
+sta tmpptrh
+lda shadowsid,x
+jsr printhex
+ldx tmp
+rts
+
+; - printbits
+; parameters:
+;  x = location
+; changes:
+;  a, x, y, tmpptr
+;
+printbits:
+lda txtbitsl_lut,x
+sta tmpptr
+lda txtbitsh_lut,x
+sta tmpptrh
+ldy #0
+ldx #0
+- lda (tmpptr),y
+sta bitstxtloc,x
+iny
+inx
+cpx #40
+bne -
+rts
+
+; - printbinary
+; parameters:
+;  a = value
+; changes:
+;  a, x, tmp
+;
+printbinary:
+sta tmp
+ldx #0
+- lda #'0'
+rol tmp
+bcc +
+lda #'1'
++ sta bintxtloc,x
+inx
+inx
+inx
+inx
+inx
+cpx #(8*5)
+bne -
+rts
+
+; - printhex
+; parameters:
+;  tmpptr -> screen location to print to (-1)
+;  a = value to print
+; changes:
+;  x, y
+;
+printhex:
+pha
+pha
+tay
+lda tmpptr
+sta colptr
+lda tmpptrh
+clc
+adc #>(color-screen)
+sta colptrh
+tya
+; mask lower
+and #$0f
+; lookup
+tax
+lda hex_lut,x
+; print
+ldy #2
+sta (tmpptr),y
+lda color_print
+sta (colptr),y
+; lsr x4
+pla
+lsr
+lsr
+lsr
+lsr
+; lookup
+tax
+lda hex_lut,x
+; print
+ldy #1
+sta (tmpptr),y
+lda color_print
+sta (colptr),y
+pla
+rts
+
+; - checkhex
+; parameters:
+;  a = x = char to check
+; returns:
+;  a = hex value of char, or 16 if not
+; changes:
+;  tmp2
+;
+checkhex:
+stx tmp2
+ldx #0
+- lda hexchar_lut,x
+cmp tmp2
+beq +
+inx
+cpx #16
+bne -
++ txa
+ldx tmp2
+rts
+
+
+; --- Strings
+
+
+
+addrtxtloc = screen+10*40+37-1
+bintxtloc = screen+12*40+3
+bitstxtloc = screen+13*40
+osctextloc = screen+9*40+29-1
+envtextloc = screen+10*40+29-1
+dmatextloc = screen+9*40+29
+
+ch1txtoff = 4*40+11-1
+ch2txtoff = ch1txtoff+4
+ch3txtoff = ch2txtoff+4
+chxtxtoff = 4*40+36-1
+
+txt_reg0
+!tx "f7   f6   f5   f4   f3   f2   f1   f0   "
+txt_reg1
+!tx "f15  f14  f13  f12  f11  f10  f9   f8   "
+txt_reg2
+!tx "pw7  pw6  pw5  pw4  pw3  pw2  pw1  pw0  "
+txt_reg3
+!tx "-    -    -    -    pw11 pw10 pw9  pw8  "
+txt_reg4
+!tx "nois puls saw  trig test ring sync gate "
+txt_reg5
+!tx "atk3 atk2 atk1 atk0 dcy3 dcy2 dcy1 dc0  "
+txt_reg6
+!tx "stn3 stn2 stn1 stn0 rls3 rls2 rls1 rls0 "
+txt_reg15
+!tx "-    -    -    -    -    fc2  fc1  fc0  "
+txt_reg16
+!tx "fc10 fc9  fc8  fc7  fc6  fc5  fc4  fc3  "
+txt_reg17
+!tx "res3 res2 res1 res0 filx fil3 fil2 fil1 "
+txt_reg18
+!tx "3off hp   bp   lp   vol3 vol2 vol1 vol0 "
+
+
+; --- Data
+
+txtlocl_lut:
+!by <(screen+ch1txtoff+0*40)
+!by <(screen+ch1txtoff+1*40)
+!by <(screen+ch1txtoff+2*40)
+!by <(screen+ch1txtoff+3*40)
+!by <(screen+ch1txtoff+4*40)
+!by <(screen+ch1txtoff+5*40)
+!by <(screen+ch1txtoff+6*40)
+!by <(screen+ch2txtoff+0*40)
+!by <(screen+ch2txtoff+1*40)
+!by <(screen+ch2txtoff+2*40)
+!by <(screen+ch2txtoff+3*40)
+!by <(screen+ch2txtoff+4*40)
+!by <(screen+ch2txtoff+5*40)
+!by <(screen+ch2txtoff+6*40)
+!by <(screen+ch3txtoff+0*40)
+!by <(screen+ch3txtoff+1*40)
+!by <(screen+ch3txtoff+2*40)
+!by <(screen+ch3txtoff+3*40)
+!by <(screen+ch3txtoff+4*40)
+!by <(screen+ch3txtoff+5*40)
+!by <(screen+ch3txtoff+6*40)
+!by <(screen+chxtxtoff+0*40)
+!by <(screen+chxtxtoff+1*40)
+!by <(screen+chxtxtoff+2*40)
+!by <(screen+chxtxtoff+3*40)
+
+txtloch_lut:
+!by >(screen+ch1txtoff+0*40)
+!by >(screen+ch1txtoff+1*40)
+!by >(screen+ch1txtoff+2*40)
+!by >(screen+ch1txtoff+3*40)
+!by >(screen+ch1txtoff+4*40)
+!by >(screen+ch1txtoff+5*40)
+!by >(screen+ch1txtoff+6*40)
+!by >(screen+ch2txtoff+0*40)
+!by >(screen+ch2txtoff+1*40)
+!by >(screen+ch2txtoff+2*40)
+!by >(screen+ch2txtoff+3*40)
+!by >(screen+ch2txtoff+4*40)
+!by >(screen+ch2txtoff+5*40)
+!by >(screen+ch2txtoff+6*40)
+!by >(screen+ch3txtoff+0*40)
+!by >(screen+ch3txtoff+1*40)
+!by >(screen+ch3txtoff+2*40)
+!by >(screen+ch3txtoff+3*40)
+!by >(screen+ch3txtoff+4*40)
+!by >(screen+ch3txtoff+5*40)
+!by >(screen+ch3txtoff+6*40)
+!by >(screen+chxtxtoff+0*40)
+!by >(screen+chxtxtoff+1*40)
+!by >(screen+chxtxtoff+2*40)
+!by >(screen+chxtxtoff+3*40)
+
+txtbitsl_lut:
+!by <(txt_reg0)
+!by <(txt_reg1)
+!by <(txt_reg2)
+!by <(txt_reg3)
+!by <(txt_reg4)
+!by <(txt_reg5)
+!by <(txt_reg6)
+!by <(txt_reg0)
+!by <(txt_reg1)
+!by <(txt_reg2)
+!by <(txt_reg3)
+!by <(txt_reg4)
+!by <(txt_reg5)
+!by <(txt_reg6)
+!by <(txt_reg0)
+!by <(txt_reg1)
+!by <(txt_reg2)
+!by <(txt_reg3)
+!by <(txt_reg4)
+!by <(txt_reg5)
+!by <(txt_reg6)
+!by <(txt_reg15)
+!by <(txt_reg16)
+!by <(txt_reg17)
+!by <(txt_reg18)
+
+txtbitsh_lut:
+!by >(txt_reg0)
+!by >(txt_reg1)
+!by >(txt_reg2)
+!by >(txt_reg3)
+!by >(txt_reg4)
+!by >(txt_reg5)
+!by >(txt_reg6)
+!by >(txt_reg0)
+!by >(txt_reg1)
+!by >(txt_reg2)
+!by >(txt_reg3)
+!by >(txt_reg4)
+!by >(txt_reg5)
+!by >(txt_reg6)
+!by >(txt_reg0)
+!by >(txt_reg1)
+!by >(txt_reg2)
+!by >(txt_reg3)
+!by >(txt_reg4)
+!by >(txt_reg5)
+!by >(txt_reg6)
+!by >(txt_reg15)
+!by >(txt_reg16)
+!by >(txt_reg17)
+!by >(txt_reg18)
+
+; - hex lookup table
+hex_lut
+!tx "0123456789abcdef"
+
+; - hex char lookup table
+hexchar_lut
+!by $30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$41,$42,$43,$44,$45,$46
+
+; - DMA settings
+common_dma_values
+!by <envelope   ; 00 source low
+!by >envelope   ; 01 source mid
+!by $40         ; 02 source high (RAM envelope)
+!by <$d41f      ; 03 dest low
+!by >$d41f      ; 04 dest middle
+!by $80         ; 05 dest high (IO $d41f, ch2 env)
+!by 0           ; 06 source step low
+!by 0           ; 07 source step high
+!by 0           ; 08 dest step low
+!by 0           ; 09 dest step high
+!by <dmalen     ; 0a dma len low
+!by >dmalen     ; 0b dma len high
+!by 0           ; 0c source mod low
+!by 0           ; 0d source mod high
+!by 0           ; 0e dest mod low
+!by 0           ; 0f dest mod high
+!by <1          ; 10 source (line) len low
+!by >1          ; 11 source (line) len high
+!by <1          ; 12 dest (line) len low
+!by >1          ; 13 dest (line) len high
+!by 0           ; 14 ?
+!by 0           ; 15 ?
+!by 0           ; 16 ?
+!by 0           ; 17 ?
+!by 0           ; 18 ?
+!by 0           ; 19 ?
+!by 0           ; 1a ?
+!by 0           ; 1b ?
+!by 0           ; 1c ?
+!by 0           ; 1d no continue
+!by 0           ; 1e no modulos
+common_dma_values_len = * - common_dma_values
+
+
+; --- Variables
+
+cursor      !by cursor_min   ; cursor (== SID addr LSB)
+cursor_old  !by cursor_min   ; previous cursor location
+color_print !by color_text
+
+envelope !by $80    ; envelope value
+
+!align 255,0    ; align to page border
+
+shadowsid ; shadow SID registers
+!by $00, $00, $00, $00, $00, $00, $00    ; ch1
+!by $00, $20, $00, $01, $20, $00, $00    ; ch2
+!by $00, $00, $00, $00, $00, $00, $00    ; ch3
+!by $00, $00, $00, $08
+
+
+}
+
+progsize = * - entry
