@@ -390,6 +390,7 @@ testdata:
 !by 2, $03, $ff, RESULT_VBUS
 !by 1, $23, $00, RESULT_ADDR_MSB
 !by 2, $1f, $ff, RESULT_BYTE_WRAP_X
+!by 1, $91, $00, RESULT_VBUS
 !by 1, $99, $12, RESULT_ADDR_MSB
 !by 1, $9d, $34, RESULT_ADDR_MSB
 !by 0
