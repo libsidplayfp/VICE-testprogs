@@ -68,9 +68,13 @@ START_ADR  = $1200
 
 
 
+	if	0
   org START_ADR -1                   ;
 
   byte <(START_ADR +1),>(START_ADR +1)
+	else
+	org	START_ADR+1
+	endif
 loader_start:
   byte $1b,$10,$d9,$07,$9e,$c2,"(44)",$ac,"256",$aa,$c2,"(43)",$aa,"26",0,0,0     ; 2009 SYSPEEK(44)*256+PEEK(43)+28
 
