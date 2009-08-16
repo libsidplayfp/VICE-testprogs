@@ -1,4 +1,4 @@
-; VIC 20 Final Expansion Cartridge - Diagnose Programm  r001
+; VIC 20 Final Expansion Cartridge - Diagnose Programm  r002
 ; Thomas Winkler - 2009
 
 
@@ -157,7 +157,7 @@ TEST_PROGGI
   bcs TEPR_E
   jsr FE_OK
 TEPR_E
-  ldx #FEMOD_START                      ; STARAT MODE
+  ldx #FEMOD_START                      ; START MODE
   stx IO_FINAL
   ldx #0
   stx IO_FINAL +1
@@ -429,7 +429,7 @@ TERA_1
   jsr TEST_BLOCKS
   bcs TERA_ERR
 
-  lda #FEMOD_RAM +$1f                   ;PROTECTED RAM MODE
+  lda #FEMOD_RAM + $1f                  ;RAM MODE, PROTECT ALL BLOCKS
   sta IO_FINAL
 
   dec PASS
@@ -444,15 +444,25 @@ TERA_ERR
 
 
 
+  ; TEST SRAM BLOCKS MODE RAM 2
+TEST_BLOCKS2
+  lda BANK
+  clc
+  adc #65
+  jsr BSOUT
+  lda #157
+  jsr BSOUT
+  jmp TEBL_1
 
-  ; TEST SRAM BLOCKS
+
+  ; TEST SRAM BLOCKS MODE RAM 1
 TEST_BLOCKS
   inc EC                                ;EC#=1,4
   jsr SET_LORAM
   jsr TEST_BLOCK
   bcs TEBLS_ERR
 
-TEST_BLOCKS2
+TEBL_1
   inc EC                                ;EC#=2,5
   jsr SET_BLK_2
   jsr TEST_BLOCK
