@@ -379,46 +379,28 @@ bne imcon
 
 ; interlace mode off, load defaults
 +vdc_sta_rx
-;ldx #$00
-;lda #$7f
-;+vdc_sta_rx     ;R0 = 127 total horizontal (default)
 ldx #$04
 lda #$26
 +vdc_sta_rx     ;r4 = 38 total vdc rows (default)
-ldx #$05
-lda #$00
-+vdc_sta_rx     ;r5 = 6 total vertical adjust
 ldx #$06
 lda #$19
 +vdc_sta_rx     ;R6 = 25 rows displayed (default)
 ldx #$07
 lda #$20
 +vdc_sta_rx     ;R7 = 32 vertical sync at 32 (default)
-ldx #$09
-lda #$e7
-+vdc_sta_rx     ;R9 = e7 vertical char scan lines
 jmp handlestuff
 
 imcon   ;interlace mode on
 +vdc_sta_rx
-;ldx #$00
-;lda #$80
-;+vdc_sta_rx     ;R0 = 128 total horizontal
 ldx #$04
-lda #$40
-+vdc_sta_rx     ;r4 = 64 total vdc rows
-ldx #$05
-lda #$06
-+vdc_sta_rx     ;r5 = 6 total vertical adjust
+lda #$4c
++vdc_sta_rx     ;r4 = 76 total vdc rows (2*default)
 ldx #$06
 lda #$32
-+vdc_sta_rx     ;R6=50 rows displayed
++vdc_sta_rx     ;R6=50 rows displayed (2*default)
 ldx #$07
-lda #$35
-+vdc_sta_rx     ;R7=58 vertical sync at 58
-ldx #$09
-lda #$e8
-+vdc_sta_rx     ;R9=e8 vertical char scan lines
+lda #$40
++vdc_sta_rx     ;R7=58 vertical sync at 58 (2*default)
 jmp handlestuff
 ++
 
@@ -934,7 +916,7 @@ prgtxt
 !tx "b: background cycle on/off ('border' should match bckgrnd, except bitmap mode)  " ; 5
 !tx "x: xsmooth test - left border should be fixed, right border 'open'              " ; 6
 !tx "y: ysmooth test          : ; set background colour    + - adjust smooth speed   " ; 7
-!tx "      v: show vblank area       i - interlace mode test                         " ; 8
+!tx "      v: show vblank area       i - interlace mode test (50 rows)               " ; 8
 !tx "                                                                                " ; 9
 
 
