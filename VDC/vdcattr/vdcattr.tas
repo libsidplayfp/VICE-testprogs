@@ -190,6 +190,7 @@ ldx #19
 ldx #31		;r/w register
 +vdc_set_rx
 
+; fill the main test area attributes
 ldy #$00
 fillastart:
 ldx #5	; 5 chars at same attributes  = 5 x 16 = 80 one line at each of 16 colours
@@ -198,6 +199,24 @@ dex
 bne -
 iny
 bne fillastart
+
+; fill the row of colour descriptions
+ldy #$41        ;reverse grey for black
+ldx #5
+- +vdc_sty
+dex
+bne -
+
+ldy #1
+fillbstart:
+ldx #5	; 5 chars at same attributes  = 5 x 16 = 80 one line at each of 16 colours
+- +vdc_sty
+dex
+bne -
+iny
+cpy #$10
+bne fillbstart
+
 
 ldy #3
 lda #$0e	;fill $300 bytes extra bytes with 'dark' white
@@ -345,6 +364,63 @@ eor #$80
 +vdc_sta_rx
 jmp handlestuff
 +
+
+
+
+cmp #73 ; "I"
+beq +   ; switch between interlace/non interlace modes
+jmp ++
++
+ldx #8
++vdc_lda_rx
+and #$03
+eor #$03
+bne imcon
+
+; interlace mode off, load defaults
++vdc_sta_rx
+;ldx #$00
+;lda #$7f
+;+vdc_sta_rx     ;R0 = 127 total horizontal (default)
+ldx #$04
+lda #$26
++vdc_sta_rx     ;r4 = 38 total vdc rows (default)
+ldx #$05
+lda #$00
++vdc_sta_rx     ;r5 = 6 total vertical adjust
+ldx #$06
+lda #$19
++vdc_sta_rx     ;R6 = 25 rows displayed (default)
+ldx #$07
+lda #$20
++vdc_sta_rx     ;R7 = 32 vertical sync at 32 (default)
+ldx #$09
+lda #$e7
++vdc_sta_rx     ;R9 = e7 vertical char scan lines
+jmp handlestuff
+
+imcon   ;interlace mode on
++vdc_sta_rx
+;ldx #$00
+;lda #$80
+;+vdc_sta_rx     ;R0 = 128 total horizontal
+ldx #$04
+lda #$40
++vdc_sta_rx     ;r4 = 64 total vdc rows
+ldx #$05
+lda #$06
++vdc_sta_rx     ;r5 = 6 total vertical adjust
+ldx #$06
+lda #$32
++vdc_sta_rx     ;R6=50 rows displayed
+ldx #$07
+lda #$35
++vdc_sta_rx     ;R7=58 vertical sync at 58
+ldx #$09
+lda #$e8
++vdc_sta_rx     ;R9=e8 vertical char scan lines
+jmp handlestuff
+++
 
 
 cmp #82 ; "R"
@@ -510,6 +586,31 @@ jmp handlestuff
 +
 
 
+; colon - decrease background colour
+cmp #58 ; :
+bne +
+ldx #26
++vdc_lda_rx
+sec
+sbc #$01
+and #$0f
+ora #$e0
++vdc_sta_rx
+jmp handlestuff
++
+
+; semicolon - increase background colour
+cmp #59 ; ;
+bne +
+ldx #26
++vdc_lda_rx
+clc
+adc #$01
+and #$0f
+ora #$e0
++vdc_sta_rx
+jmp handlestuff
++
 
 
 cmp #27	;esc
@@ -825,33 +926,16 @@ ysmoothdir	!by 0
 
 ;    |---------01-3-5----0----5----0----5----0----5----0----5----0----5----01234567-|
 prgtxt
-!tx "--------------------------------------------------------------------------------" ; 0
-!tx "x128 vdc tester v0.0                                                   esc: exit" ; 1
+!tx "blackdkgrydkblublue dkgrngreendkcyncyan dkred red dkpplpurplbrownyelowltgrywhite" ; 0
+!tx "x128 vdc tester v0.1                                                   esc: exit" ; 1
 !tx "--------------------------------------------------------------------------------" ; 2
 !tx "a: attributes on/off     r: screen reverse on/off     crsr/home: move cursor    " ; 3
 !tx "f: character flash rate  c: cursor mode               g: text/bitmap mode toggle" ; 4
 !tx "b: background cycle on/off ('border' should match bckgrnd, except bitmap mode)  " ; 5
 !tx "x: xsmooth test - left border should be fixed, right border 'open'              " ; 6
-!tx "y: ysmooth test                                       + - adjust smooth speed   " ; 7
-!tx "      v: show vblank area - should be all border except foreground area         " ; 8
+!tx "y: ysmooth test          : ; set background colour    + - adjust smooth speed   " ; 7
+!tx "      v: show vblank area       i - interlace mode test                         " ; 8
 !tx "                                                                                " ; 9
-!tx " stn/rls   xx  xx  xx  - env xx - $d4xx " ; 10
-!tx "--------------------------------- bits: " ; 11
-!tx "d7=  d6=  d5=  d4=  d3=  d2=  d1=  d0=  " ; 12
-!tx "                                        " ; 13
-!tx "----------------------------------------" ; 14
-!tx " cursor keys: move cursor               " ; 15
-!tx " 0..9, a..f : set new value             " ; 16
-!tx " enter: write value to sid              " ; 17
-!tx " s: write all values to sid             " ; 18
-!tx " space/g: start/stop note               " ; 19
-!tx " u/j, i/k: envelope inc/dec, +-$10      " ; 20
-!tx " y/h: volume up/down                    " ; 21
-!tx " crsr lt/rt: start/stop dma             " ; 22
-!tx " o: store env value                     " ; 23
-!tx "                                        " ; 24
-
-
 
 
 
