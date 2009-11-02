@@ -41,11 +41,13 @@ CAS_BUF = 828                           ;Kassetten Buffer
 
 IO_FINAL = $9c02                        ;FINAL EXPANSION REGISTER 1 (39938,39939)
 
+
 FEMOD_START = $00                       ;MODE START
 FEMOD_ROM   = $40                       ;MODE EEPROM (READ EEPROM, WRITE RAM)
-FEMOD_ROM_P = $20                       ;MODE FLASH EEPROM (READ EEPROM, WRITE EEPROM)
-FEMOD_RAM   = $80                       ;MODE SRAM (SRAM 40KB, BANK 0 and BANK 1)
-FEMOD_RAM2  = $A0                       ;MODE BIG SRAM (SRAM 512KB, BANK 0 TO 15)
+FEMOD_FLASH = $20                       ;MODE FLASH EEPROM (READ EEPROM, WRITE EEPROM)
+FEMOD_RAM_1 = $80                       ;MODE RAM 1 (READ::BANK 1,WRITE::BANK 1/2)
+FEMOD_RAM_2 = $C0                       ;MODE RAM 2 (WRITE::BANK 1,READ::BANK 1/2)
+FEMOD_SRAM  = $A0                       ;MODE BIG SRAM (SRAM 512KB, BANK 0 TO 15)
 
 
 LOADPTR = $c3
@@ -142,25 +144,35 @@ FE1     = LOADPTR                       ; FE1 MODE
 COUNT   = FLGCOM
 
 
-TEST_PROGGI
+TEST_PROGGI subroutine
   sei
   lda #0
   sta FE1
   jsr TEST_REGISTER                     ; TEST FE3 REGISTER
-  bcs TEPR_E
+  bcs .E
   jsr TEST_ROM                          ; ROM READ MODE
-  jsr TEST_RAM                          ; RAM MODE
-  bcs TEPR_E
+  jsr TEST_RAM                          ; RAM MODE (FE3.1 RAM-1)
+  bcs .E
   jsr TEST_PROT                         ; TEST BLOCK WRITE PROTZECT
   jsr TEST_DISABLE                      ; TEST BLOCK DISABLE
-  jsr TEST_RAM2                         ; SUPER RAM MODE
-  bcs TEPR_E
+  jsr TEST_SRAM                         ; SUPER RAM MODE
+  bcs .E
+  jsr TEST_FE32
+  bcs .31
+  jsr TEST_RAM1                         ; RAM-1 MODE FE3.2
+  bcs .E
+.31
   jsr FE_OK
-TEPR_E
-  ldx #FEMOD_START                      ; START MODE
+.E
+  ldx #FEMOD_ROM                        ; ROM MODE
   stx IO_FINAL
   ldx #0
   stx IO_FINAL +1
+
+;DEBUG
+  ldx #FEMOD_SRAM +1                    ; SUPER RAM MODE
+  stx IO_FINAL
+
   cli
   rts
 
@@ -172,7 +184,7 @@ TEPR_E
 ; IO REGISTER TEST
 ; ==============================================================
 
-TEST_REGISTER
+TEST_REGISTER subroutine
   lda #1
   sta EC                                ;ERROR CODE
 
@@ -355,17 +367,109 @@ CHSI_E
 
 
 
-
 ; ==============================================================
-; RAM TEST
+; RAM 2 TEST (FE3.2 MODE)
 ; ==============================================================
 
-TEST_RAM2
+TEST_FE32 subroutine
   lda #0
   sta EC                                ;ERROR CODE
 
+  lda #FEMOD_RAM_2                      ;READ BANK 1
+  ldx #1
+  jsr .do                               ;VERIFY BANK 1
+  bcs .rts
+
+  lda #FEMOD_RAM_2 + $1e                ;READ BANK 2 FROM BLK 1,2,3,5
+  ldx #2
+  jsr .do                               ;VERIFY BANK 2
+  bcs .rts
+
   lda #<MSG_RAMTEST2
   ldy #>MSG_RAMTEST2
+  jsr STROUT
+  jsr PRINT_OK
+  clc
+.rts
+  rts
+
+
+; ==============================================================
+; RAM 2 TEST (FE3.2 MODE)
+; ==============================================================
+
+TEST_RAM1
+  lda #0
+  sta EC                                ;ERROR CODE
+
+  lda #<MSG_FE32TEST
+  ldy #>MSG_FE32TEST
+  jsr STROUT
+
+  lda #FEMOD_RAM_1 + $1e                ;READ BANK 1, WRITE BANK 2
+  ldx #1
+  jsr .do                               ;VERIFY BANK 1
+  bcs .err
+
+  lda #$55
+  sta $2000
+  ldx #FEMOD_RAM_2 + $1e                ;READ BANK 2, WRITE BANK 1
+  stx IO_FINAL
+  sta $2001
+  cmp $2000
+  bne .err
+  ldx #FEMOD_RAM_1 + $1e                ;READ BANK 1, WRITE BANK 2
+  stx IO_FINAL
+  cmp $2001
+  bne .err
+
+  jmp PRINT_OK
+
+
+.err
+  jmp PRINT_ERR
+
+
+
+.do
+  sta IO_FINAL
+  lda #1                                ;ONLY SECOND PASS (TEST)
+  sta PASS
+  jsr SET_BANK_BLOCK
+  jmp TEST_BLOCKS_2
+
+
+
+  ;XR=BANK
+SET_BANK_BLOCK subroutine
+  stx BANK
+  lda #0
+  tay
+.1
+  dex
+  bmi .e
+  clc
+  adc #$80
+  bcc .1
+  iny
+  bne .1
+.e
+  sta BLOCK
+  sty BLOCK +1
+  rts
+
+
+
+; ==============================================================
+; RAM TEST (SUPERRAM)
+; ==============================================================
+
+TEST_SRAM
+  lda #0
+  sta EC                                ;ERROR CODE
+
+  lda #<MSG_SRAMTEST
+  ldy #>MSG_SRAMTEST
   jsr STROUT
 
   lda #2
@@ -379,10 +483,10 @@ TERA_20
 
 TERA_21
   lda BANK
-  ora #FEMOD_RAM2                       ;SUPER RAM MODE
+  ora #FEMOD_SRAM                       ;SUPER RAM MODE
   sta IO_FINAL
 
-  jsr TEST_BLOCKS2
+  jsr TEST_BLOCKS_1
   bcc TERA_25
 
   lda EC
@@ -403,14 +507,14 @@ TERA_25
 
 
 ; ==============================================================
-; RAM TEST
+; RAM TEST (FE3.1 RAM-1)
 ; ==============================================================
 
-TEST_RAM
+TEST_RAM subroutine
   lda #0
   sta EC                                ;ERROR CODE
 
-  lda #FEMOD_RAM                        ;NORMAL RAM MODE
+  lda #FEMOD_RAM_1                      ;NORMAL RAM MODE
   sta IO_FINAL
 
   lda #<MSG_RAMTEST
@@ -419,21 +523,19 @@ TEST_RAM
 
   lda #2
   sta PASS
-TERA_0
-  lda #0
-  sta BANK
-  sta BLOCK
-  sta BLOCK +1
+.0
+  ldx #0
+  jsr SET_BANK_BLOCK
 
-TERA_1
-  jsr TEST_BLOCKS
+.1
+  jsr TEST_BLOCKS_0
   bcs TERA_ERR
 
-  lda #FEMOD_RAM + $1f                  ;RAM MODE, PROTECT ALL BLOCKS
+  lda #FEMOD_RAM_1 + $1f                ;RAM MODE, PROTECT ALL BLOCKS
   sta IO_FINAL
 
   dec PASS
-  bne TERA_0
+  bne .0
 
 TERA_OK
   jmp PRINT_OK
@@ -444,25 +546,26 @@ TERA_ERR
 
 
 
-  ; TEST SRAM BLOCKS MODE RAM 2
-TEST_BLOCKS2
+  ; PRINT BANK & TEST SRAM BLOCKS (Blk 1-3,5)
+TEST_BLOCKS_1 subroutine
   lda BANK
   clc
   adc #65
   jsr BSOUT
   lda #157
   jsr BSOUT
-  jmp TEBL_1
+  jmp TEST_BLOCKS_2
 
 
-  ; TEST SRAM BLOCKS MODE RAM 1
-TEST_BLOCKS
+  ; TEST SRAM BLOCKS (Blk 0-3,5)
+TEST_BLOCKS_0
   inc EC                                ;EC#=1,4
   jsr SET_LORAM
   jsr TEST_BLOCK
   bcs TEBLS_ERR
 
-TEBL_1
+  ; TEST SRAM BLOCKS (Blk 1-3,5)
+TEST_BLOCKS_2
   inc EC                                ;EC#=2,5
   jsr SET_BLK_2
   jsr TEST_BLOCK
@@ -480,7 +583,7 @@ TEBLS_ERR
 TEST_BLOCK
   lda PASS
   cmp #2
-  bne TEBL_5
+  bne TEBL_5                            ;PASS CNT (2=first, 1=second)
 
   ldx BLOCK
   jsr TEST_SECTOR                       ;TEST 256 BYTE BLOCK
@@ -535,6 +638,7 @@ TEBL_5
 
 
   ;TEST MEMORY SECTOR (256 BYTES)
+  ;TEST FOR RAM, CHECK EACH BIT
 TEST_SECTOR
   ldy #0
 TESE_1
@@ -607,7 +711,7 @@ PROT_ERR
 
   ;CHECK BLK 0,1,2,3,5
 CHECK_PROT
-  ora #FEMOD_RAM                        ;NORMAL RAM MODE
+  ora #FEMOD_RAM_1                      ;NORMAL RAM MODE
   sta IO_FINAL
   sta PASS
 
@@ -654,7 +758,7 @@ TEST_DISABLE
   lda #0
   sta EC                                ;ERROR CODE
 
-  lda #FEMOD_RAM                        ;RAM READ MODE
+  lda #FEMOD_RAM_1                      ;RAM READ MODE
   sta IO_FINAL
 
   lda #<MSG_DISABLE
@@ -830,7 +934,7 @@ PRINT_ERR
   rts
 
 
-PRINT_OK
+PRINT_OK  subroutine
   lda #0                                ;ENABLE ALL BLOCKS
   sta IO_FINAL +1
 
@@ -841,14 +945,19 @@ PRINT_OK
   rts
 
 
-FE_OK
+FE_OK subroutine
+  lda #<MSG_FE32OK
+  ldy #>MSG_FE32OK
+  bcc .ok
+.fe3
   lda #<MSG_FE3OK
   ldy #>MSG_FE3OK
   ldx FE1
-  beq FEOK_1
+  beq .ok
+.fe1
   lda #<MSG_FE1OK
   ldy #>MSG_FE1OK
-FEOK_1
+.ok
   jmp STROUT
 
 
@@ -861,10 +970,14 @@ MSG_RAMTEST
   dc.b "RAM-MODE1....",0
 MSG_RAMTEST2
   dc.b "RAM-MODE2....",0
+MSG_SRAMTEST
+  dc.b "SUPER-RAM....",0
 MSG_PROT
   dc.b "BLK-PROTECT..",0
 MSG_DISABLE
   dc.b "BLK-DISABLE..",0
+MSG_FE32TEST
+  dc.b "SPEC.MODES...",0
 
 MSG_ERROR
   dc.b RED,"ERROR#",0
@@ -879,8 +992,11 @@ MSG_HP
 MSG_OK
   dc.b GREEN,"OK.",BLUE,13,0
 
+  ;       "----------------------"
+MSG_FE32OK
+  dc.b 13,"FE-3.2 512K DETECTED.",13,0
 MSG_FE3OK
-  dc.b 13,"FE3-512KB DETECTED.",13,0
+  dc.b 13,"FE-3.1 512K DETECTED.",13,0
 MSG_FE1OK
   dc.b 13,"FE1-40KB DETECTED.",13,0
 
