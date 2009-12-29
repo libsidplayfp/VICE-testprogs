@@ -1,7 +1,10 @@
 ; gfxfetch
 ; --------
-; 2009 Hannu Nuotio
+; 2009 Hannu Nuotio, Antti Lankila
 ; based on testprogs/VICII/videomode/rmwtest.asm
+
+; Side border is opened by the test to reduce potential of any
+; VIC-CPU timing skew.
 
 ; NOTE! Only PAL tested, and the reference is based on it...
 
@@ -181,7 +184,6 @@ preloop:
   sta testptr3
 
   ldy #7    ; modify lines 1..7
-
 testloop:
 testptr1 = * + 1
   lda $2001
@@ -191,17 +193,30 @@ testptr2 = * + 1
   sta $2001
 testptr3 = * + 1
   stx $2001
-  ldx #3
-- dex
-  bne -
-; next gfx RAM addr for next line
+  ; next gfx RAM addr for next line
   inc testptr1
   inc testptr2
+  ; one inc moved below "open side border" code.
+
+  ; delay 7 cycles
+  nop
+  nop
+  bne *+2
+
+  ; enter 38 column mode
+  ldx #$0
+  stx $d016
+  ; leave 38 column mode
+  ldx #$8
+  stx $d016
+
+  ; delay 5 cycles.
+  bne *+2
+  nop
+
+  ; continue "next gfx RAM addr for next line"
   inc testptr3
-  nop
-  nop
-  nop
-  nop
+
   dey
   bne testloop
 
