@@ -27,49 +27,50 @@ screen = $400
 ; http://codebase64.org/doku.php?id=base:double_irq&s[]=stable&s[]=raster 
 
 *=$0801
-basic:
-; BASIC stub: "1 SYS 2061"
-!by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
+; "1 SYS 2061".
+basic: !by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
+; 2061 ->
+    sei         ;Disable IRQ's
+    lda #$7f    ;Disable CIA IRQ's
+    sta $dc0d
+    sta $dd0d
 
-     sei         ;Disable IRQ's
-     lda #$7f    ;Disable CIA IRQ's
-     sta $dc0d
-     sta $dd0d
-
-     lda #$35    ;Bank out kernal and basic
-     sta $01     ;$e000-$ffff
+    lda #$35    ;Bank out kernal and basic
+    sta $01     ;$e000-$ffff
  
-     lda #<irq1  ;Install RASTER IRQ
-     ldx #>irq1  ;into Hardware
-     sta $fffe   ;Interrupt Vector
-     stx $ffff
+    lda #<irq1  ;Install RASTER IRQ
+    ldx #>irq1  ;into Hardware
+    sta $fffe   ;Interrupt Vector
+    stx $ffff
  
  
-     lda #$01    ;Enable RASTER IRQs
-     sta $d01a
-     lda #raster    ;IRQ on line 52
-     sta $d012
-     lda #$1b    ;High bit (lines 256-311)
-     sta $d011
+    lda #$01    ;Enable RASTER IRQs
+    sta $d01a
+    lda #raster    ;IRQ on line 52
+    sta $d012
+    lda #$1b    ;High bit (lines 256-311)
+    sta $d011
                  ;NOTE double IRQ
                  ;cannot be on or
                  ;around a BAD LINE!
                  ;(Fast Line)
  
-     lda #$0e    ;Set Background
-     sta $d020   ;and Border colors
-     lda #$06
-     sta $d021
-     lda #$00
-     sta $d015   ;turn off sprites
+    asl $d019   ;Ack any previous
+    bit $dc0d   ;IRQ's
+    bit $dd0d
 
-     asl $d019   ;Ack any previous
-     bit $dc0d   ;IRQ's
-     bit $dd0d
+    lda #<nmi
+    ldx #>nmi
+    sta $fffa
+    stx $fffb
 
-     cli         ;Allow IRQ's
+    cli         ;Allow IRQ's
+    jmp *       ;Endless Loop
 
-     jmp *       ;Endless Loop
+nmi:
+    inc $d020
+    dec $d020
+    rti
 
 irq1:
      sta reseta1 ;Preserve A,X and Y
@@ -145,7 +146,7 @@ dostuff:
 ; 1. establish stable rasters throughout screen region,
 ;    by programming new interrupts 8 lines from now.
   lda irqpos
-  cmp #$ef
+  cmp #$f7
   bcc skiprestart
 
 ; next addition would overflow, let's just start over.
