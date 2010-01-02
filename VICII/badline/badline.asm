@@ -20,8 +20,8 @@
 cinv = $fffe
 cnmi = $fffa
 raster = 48     ; start of raster interrupt
-m = $fb         ; zero page variable
-screen = $400
+; try 7 and 71 to observe behavior at left and right edges of DMA.
+topnmidelay = 7
 
 ; --- Code, based on:
 ; http://codebase64.org/doku.php?id=base:double_irq&s[]=stable&s[]=raster 
@@ -35,6 +35,16 @@ basic: !by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
     sta $dc0d
     sta $dd0d
 
+    ldx #0
+    lda #99
+clear:
+    sta $400,x
+    sta $500,x
+    sta $600,x
+    sta $700,x
+    dex
+    bne clear
+
     lda #$35    ;Bank out kernal and basic
     sta $01     ;$e000-$ffff
  
@@ -42,7 +52,6 @@ basic: !by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
     ldx #>irq1  ;into Hardware
     sta $fffe   ;Interrupt Vector
     stx $ffff
- 
  
     lda #$01    ;Enable RASTER IRQs
     sta $d01a
@@ -69,11 +78,16 @@ basic: !by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
     jmp *       ;Endless Loop
 
 nmi:
-    dec $d020
-    inc $d020
-
     sta reseta2
-    bit $dd0d
+    lda $dd0d
+
+    sta $d020
+    stx $d020
+    sty $d020
+    stx $d020
+    sta $d020
+    stx $d020
+
     lda #$00
 reseta2 = *-1
     rti
@@ -140,7 +154,42 @@ start
   and #1
   bne *+2
 
-  ; 25 lines -> 13 nops max
+  ; enough NOPs to cover all our delay values
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
   nop
   nop
   nop
@@ -166,7 +215,7 @@ start
   sta $d012
   sta irqpos
 
-  lda #1
+  lda #topnmidelay
   sta nmipos
   jmp endirq2
 
@@ -195,5 +244,5 @@ resety1  = *-1
      rti         ;Return from IRQ
 
 irqpos: !by raster
-nmipos: !by 0
+nmipos: !by topnmidelay
  
