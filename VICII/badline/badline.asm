@@ -30,8 +30,8 @@ screen = $400
 ; "1 SYS 2061".
 basic: !by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
 ; 2061 ->
-    sei         ;Disable IRQ's
-    lda #$7f    ;Disable CIA IRQ's
+    sei         ;Disable IRQs
+    lda #$7f    ;Disable CIA IRQs
     sta $dc0d
     sta $dd0d
 
@@ -46,30 +46,36 @@ basic: !by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
  
     lda #$01    ;Enable RASTER IRQs
     sta $d01a
-    lda #raster    ;IRQ on line 52
+    lda #raster ;IRQ on line #raster
     sta $d012
     lda #$1b    ;High bit (lines 256-311)
     sta $d011
-                 ;NOTE double IRQ
-                 ;cannot be on or
-                 ;around a BAD LINE!
-                 ;(Fast Line)
  
-    asl $d019   ;Ack any previous
-    bit $dc0d   ;IRQ's
-    bit $dd0d
-
     lda #<nmi
     ldx #>nmi
     sta $fffa
     stx $fffb
 
+    lda #$81    ; allow TA interrupt on CIA at $dc
+    sta $dd0d
+    lda #0      ; clear TAH
+    sta $dd05
+
+    asl $d019   ;Ack any previous
+    bit $dc0d   ;IRQs
+    bit $dd0d
+
     cli         ;Allow IRQ's
     jmp *       ;Endless Loop
 
 nmi:
-    inc $d020
     dec $d020
+    inc $d020
+
+    sta reseta2
+    bit $dd0d
+    lda #$00
+reseta2 = *-1
     rti
 
 irq1:
@@ -110,16 +116,70 @@ irq2
      dex         ;lines worth of
      bne *-1     ;cycles for compare
      bit $ea     ;Minus compare
-;     nop         ;cycles
 
      ldx $d012
      cpx $d012
      beq start   ;If no waste 1 more
                  ;cycle
 start
-     dex
-     stx $d012
-     jsr dostuff
+
+  ; clear CRA
+  lda #0
+  sta $dd0e
+
+  ; program CIA to trigger N clocks from now
+  lda nmipos
+  sta $dd04
+
+  ; cause CIA to trigger
+  ldx #$19
+  stx $dd0e
+
+  ; cause 1-clock offset on every second NMI to allow IRQ delivery at
+  ; 1-clock increments rather than 2-clock increments.
+  and #1
+  bne *+2
+
+  ; 25 lines -> 13 nops max
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+
+; 1. establish stable rasters throughout screen region,
+;    by programming new interrupts 8 lines from now.
+  lda irqpos
+  cmp #$f7
+  bcc skiprestart
+
+; next addition would overflow, let's just start over.
+  lda #raster
+  sta $d012
+  sta irqpos
+
+  lda #1
+  sta nmipos
+  jmp endirq2
+
+skiprestart:
+  cld
+  clc
+  adc #$8
+  sta $d012
+  sta irqpos
+
+  inc nmipos
+
+endirq2:
      lda #<irq1  ;Set IRQ to point
      ldx #>irq1  ;to subsequent IRQ
      sta $fffe
@@ -135,31 +195,5 @@ resety1  = *-1
      rti         ;Return from IRQ
 
 irqpos: !by raster
+nmipos: !by 0
  
-; start action here
-dostuff:
-  inc $d021
-  inc $d020
-  dec $d021
-  dec $d020
-
-; 1. establish stable rasters throughout screen region,
-;    by programming new interrupts 8 lines from now.
-  lda irqpos
-  cmp #$f7
-  bcc skiprestart
-
-; next addition would overflow, let's just start over.
-  lda #raster
-  sta $d012
-  sta irqpos
-  rts
-
-skiprestart:
-  cld
-  clc
-  adc #$8
-  sta $d012
-  sta irqpos
-
-  rts
