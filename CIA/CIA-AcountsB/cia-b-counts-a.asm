@@ -1,5 +1,3 @@
-  processor 6502
-
 ; Select the video timing (processor clock cycles per raster line)
 ;CYCLES = 65     ; 6567R8 and above, NTSC-M
 ;CYCLES = 64    ; 6567R5 6A, NTSC-M
@@ -8,36 +6,12 @@ CYCLES = 63    ; 6569 (all revisions), PAL-B
 cinv = $314
 cnmi = $318
 raster = 30     ; start of raster interrupt
-m = $fb         ; zero page variable
 
-  .org $801
-basic:
-  .word 0$      ; link to next line
-  .word 1995    ; line number
-  .byte $9E     ; SYS token
-
-; SYS digits
-
-  .if (* + 8) / 10000
-  .byte $30 + (* + 8) / 10000
-  .endif
-  .if (* + 7) / 1000
-  .byte $30 + (* + 7) % 10000 / 1000
-  .endif
-  .if (* + 6) / 100
-  .byte $30 + (* + 6) % 1000 / 100
-  .endif
-  .if (* + 5) / 10
-  .byte $30 + (* + 5) % 100 / 10
-  .endif
-  .byte $30 + (* + 4) % 10
-
-0$:
-  .byte 0,0,0   ; end of BASIC program
+*=$0801
+basic: !by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
 
 start:
   jmp install
-  jmp deinstall
 
 install:        ; install the raster routine
   jsr restore   ; Disable the Restore key (disable NMI interrupts)
@@ -148,17 +122,17 @@ irq2:
   sta cinv+1
   ldx $d012
   nop
-#if CYCLES - 63
-#if CYCLES - 64
+!if CYCLES != 63 {
+!if CYCLES != 64 {
   nop           ; 6567R8, 65 cycles/line
   bit $24
-#else
+} else {
   nop           ; 6567R56A, 64 cycles/line
   nop
-#endif
-#else
+}
+} else {
   bit $24       ; 6569, 63 cycles/line
-#endif
+}
   cpx $d012     ; The comparison cycle is executed CYCLES or CYCLES+1 cycles
                 ; after the interrupt has occurred.
   beq *+2       ; Delay by one cycle if $d012 hadn't changed.

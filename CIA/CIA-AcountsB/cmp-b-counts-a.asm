@@ -1,5 +1,3 @@
-  processor 6502
-
 ; Select the video timing (processor clock cycles per raster line)
 ;CYCLES = 65     ; 6567R8 and above, NTSC-M
 ;CYCLES = 64    ; 6567R5 6A, NTSC-M
@@ -8,36 +6,12 @@ CYCLES = 63    ; 6569 (all revisions), PAL-B
 cinv = $314
 cnmi = $318
 raster = 30     ; start of raster interrupt
-m = $fb         ; zero page variable
 
-  .org $801
-basic:
-  .word 0$      ; link to next line
-  .word 1995    ; line number
-  .byte $9E     ; SYS token
-
-; SYS digits
-
-  .if (* + 8) / 10000
-  .byte $30 + (* + 8) / 10000
-  .endif
-  .if (* + 7) / 1000
-  .byte $30 + (* + 7) % 10000 / 1000
-  .endif
-  .if (* + 6) / 100
-  .byte $30 + (* + 6) % 1000 / 100
-  .endif
-  .if (* + 5) / 10
-  .byte $30 + (* + 5) % 100 / 10
-  .endif
-  .byte $30 + (* + 4) % 10
-
-0$:
-  .byte 0,0,0   ; end of BASIC program
+*=$801
+basic: !by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
 
 start:
   jmp install
-  jmp deinstall
 
 install:        ; install the raster routine
   jsr restore   ; Disable the Restore key (disable NMI interrupts)
@@ -148,17 +122,17 @@ irq2:
   sta cinv+1
   ldx $d012
   nop
-#if CYCLES - 63
-#if CYCLES - 64
+!if CYCLES != 63 {
+!if CYCLES != 64 {
   nop           ; 6567R8, 65 cycles/line
   bit $24
-#else
+} else {
   nop           ; 6567R56A, 64 cycles/line
   nop
-#endif
-#else
+}
+} else {
   bit $24       ; 6569, 63 cycles/line
-#endif
+}
   cpx $d012     ; The comparison cycle is executed CYCLES or CYCLES+1 cycles
                 ; after the interrupt has occurred.
   beq *+2       ; Delay by one cycle if $d012 hadn't changed.
@@ -224,7 +198,7 @@ forceloadb:
 
 readtb:
   lda $dd06
-store:
+storesta:
   sta $2fff,x
   dex
   bne readtb
@@ -235,29 +209,30 @@ waitfornmi:
   bne waitfornmi
 
   ldx #$08
-test1:
+storelda:
   lda $2fff,x
+storecmp:
   cmp $3fff,x
-  bne testfailed
+  bne cmptestfailedjump
   dex
-  bne test1
-
+  bne storelda
   rts
 
-
-testfailed:
-  inc $d020
-  jmp testfailed
-
+cmptestfailedjump:
+  jmp cmptestfailed
 
 setupnexttest:
 storeb:
   clc
-  lda store+1
+  lda storesta+1
   adc #$08
-  sta store+1
+  sta storesta+1
+  sta storelda+1
+  sta storecmp+1
   bcc nexta
-  inc store+2
+  inc storesta+2
+  inc storelda+2
+  inc storecmp+2
 nexta:
   lda forceloada+1
   eor #$10
@@ -290,6 +265,8 @@ nextb:
   sta cnmi
   lda $c001
   sta cnmi+1
+  jmp deinstall
+
 setupend:
   rts
 
@@ -298,7 +275,7 @@ nmi:
   lda $dc04
 nmistore:
   cmp $5000
-  bne testfailed
+  bne nmitestfailed
   inc nmistore+1
   bne acknmi
   inc nmistore+2
@@ -306,3 +283,76 @@ acknmi:
   bit $dd0d
   pla
   rti
+
+screenptr: !by 0
+
+printbyte:
+  stx storex+1
+  ldx screenptr
+  sta $400,x
+  inc screenptr
+storex:
+  ldx #$0
+  rts
+
+printhex:
+  pha
+  lsr
+  lsr
+  lsr
+  lsr
+  jsr printhexbyte
+  pla
+  and #$f
+printhexbyte:
+  cmp #$a
+  bcc handleletter
+  sbc #9
+  jmp printbyte
+handleletter:
+  adc #$30
+  jmp printbyte
+
+nmitestfailed:
+  jsr printhex
+  lda #' '
+  jsr printbyte
+  lda #14
+  jsr printbyte
+  lda #13
+  jsr printbyte
+  lda #9
+  jsr printbyte
+  lda #' '
+  jsr printbyte
+  lda nmistore+2
+  jsr printhex
+  lda nmistore+1
+  jsr printhex
+  jmp freeze
+
+freeze:
+  inc $d020
+  jmp freeze
+
+cmptestfailed:
+  txa
+  jsr printhex
+
+  lda #' '
+  jsr printbyte
+  lda #3
+  jsr printbyte
+  lda #14
+  jsr printbyte
+  lda #16
+  jsr printbyte
+  lda #' '
+  jsr printbyte
+
+  lda storesta+1
+  jsr printhex
+  lda storesta+2
+  jsr printhex
+
+  jmp freeze
