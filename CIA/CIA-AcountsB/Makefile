@@ -1,31 +1,14 @@
-NAME = cmp-b-counts-a
-BINARY = $(NAME).prg
-SOURCE = $(NAME).asm
+TARGETS = cmp-b-counts-a.prg cia-b-counts-a.prg
 COMPILER = acme
 CFLAGS = -v1 --cpu 6502 -f cbm -o
-DEBUGGER = x64
-DEBUGFLAGS =
-DTVTRANS = dtv2sertrans
 REMOVE = rm -f
 
-.PHONY: all test dtvtest debug dtvupload clean
+.PHONY: all clean
 
-all: $(BINARY)
+all: $(TARGETS)
 
-test: $(BINARY)
-	$(DEBUGGER) $(BINARY)
-
-dtvtest: $(BINARY)
-	$(DTVTRANS) reset + load $(BINARY) + run
-
-dtvupload: $(BINARY)
-	$(DTVTRANS) reset + wr $(BINARY)
-
-debug: $(BINARY)
-	$(DEBUGGER) $(DEBUGFLAGS) $(BINARY)
-
-$(BINARY): $(SOURCE)
+%.prg: %.asm
 	$(COMPILER) $(CFLAGS) $@ $<
 
 clean:
-	-$(REMOVE) $(BINARY)
+	-$(REMOVE) $(TARGETS)
