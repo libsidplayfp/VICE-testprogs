@@ -169,6 +169,12 @@ restore:        ; disable the Restore key
 
 
 runciatest:
+  ; CIA reset
+  ;lda #0
+  ;sta $dc0f
+  ;sta $dd0e
+  ;sta $dd0f
+
   ldx #$08
   ldy #$82
   sty $dd0d
