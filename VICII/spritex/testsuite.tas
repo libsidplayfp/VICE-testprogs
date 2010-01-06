@@ -356,8 +356,19 @@ smod:
   rts             ;6 cycles
 
 
-testtable:
+; test uses sprite#0 (completely filled with pixels)
+; and  sprite#7 (one pixel in first and one pixel in last column)
+;
+; columns of the testtable:
 ;      del xi, x1 xcmp  x2, high, reference
+; del: a cycle offset that is used to time the movement 
+; xi: index*2 of active sprite (0 or 14)
+; x1: first position of the active sprite
+; xcmp: possition of the passive sprite
+; x2: position the active sprite is moved to
+; high: value of $D010 that is used for the test
+; reference: Value of the collision that is shown on a real C64
+testtable:
 
   .byte 40, 0, 95, 119, 96, 0, 0		; test collision with new position
   .byte 40, 0, 96, 120, 97, 0, 129
