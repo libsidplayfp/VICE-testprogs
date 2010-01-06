@@ -9,6 +9,7 @@ cinv = $314
 cnmi = $318
 raster = 46     ; start of raster interrupt
 m = $fb         ; zero page variable
+testnum = $8000
 
   .org $801
 basic:
@@ -83,6 +84,8 @@ sprloop1:
   sta $3f00,x
   dex
   bne sprloop1
+; set test number to 0
+  sta testnum
   lda #$80
   sta $3f12
   lda #$01
@@ -269,13 +272,11 @@ postlooptest1:
   bne postlooptest1
   lda $d01e
   sta $d020
-scores:
-  sta $4000
-  inc scores+1
-  bne nohiscore
-  inc scores+2
-nohiscore:
-
+result:
+  ldy testnum
+  sta $4000,y
+  sta $0480,y ; display result on screen
+  inc testnum
 testend:
   rts
 
@@ -321,10 +322,15 @@ xi3:
   ; high
   lda ($fd),y
   sta $d010
-
+  iny
+  ; reference
+  lda ($fd),y
+  ldy testnum
+  sta $04a8,y ; display reference on screen
+  ; next test
   clc
   lda $fd
-  adc #$06
+  adc #$07
   sta $fd
   bcc nofe
   inc $fe
@@ -351,41 +357,41 @@ smod:
 
 
 testtable:
-;      del xi, x1 xcmp  x2, high 
+;      del xi, x1 xcmp  x2, high, reference
 
-  .byte 40, 0, 95, 119, 96, 0		; test collision with new position
-  .byte 40, 0, 96, 120, 97, 0
-  .byte 40, 0, 97, 121, 98, 0
+  .byte 40, 0, 95, 119, 96, 0, 0		; test collision with new position
+  .byte 40, 0, 96, 120, 97, 0, 129
+  .byte 40, 0, 97, 121, 98, 0, 129
 
-  .byte 40, 0, 95, 72, 96, 0		; test collision with old position
-  .byte 40, 0, 96, 73, 97, 0
-  .byte 40, 0, 97, 74, 98, 0
+  .byte 40, 0, 95, 72, 96, 0, 129		; test collision with old position
+  .byte 40, 0, 96, 73, 97, 0, 0
+  .byte 40, 0, 97, 74, 98, 0, 0
 
-  .byte 40, 0, 95, 118, 94, 0		; test collision with old position
-  .byte 40, 0, 96, 119, 95, 0
-  .byte 40, 0, 97, 120, 96, 0
+  .byte 40, 0, 95, 118, 94, 0, 129		; test collision with old position
+  .byte 40, 0, 96, 119, 95, 0, 0
+  .byte 40, 0, 97, 120, 96, 0, 0
 
-  .byte 40, 0, 95, 71, 94, 0		; test collision with new position
-  .byte 40, 0, 96, 72, 95, 0
-  .byte 40, 0, 97, 73, 96, 0
+  .byte 40, 0, 95, 71, 94, 0, 0		; test collision with new position
+  .byte 40, 0, 96, 72, 95, 0, 0
+  .byte 40, 0, 97, 73, 96, 0, 129
 
-  .byte 19, 0, 0, 111, 109, 129		; Krestage3
-  .byte 19, 0, 0, 111, 110, 129		; determine first pixel for reused sprite#0
-  .byte 19, 0, 0, 111, 111, 129		; and collide
-  .byte 19, 0, 0, 0, 111, 129		; with both
+  .byte 19, 0, 0, 111, 109, 129, 0		; Krestage3
+  .byte 19, 0, 0, 111, 110, 129, 0		; determine first pixel for reused sprite#0
+  .byte 19, 0, 0, 111, 111, 129, 129		; and collide
+  .byte 19, 0, 0, 0, 111, 129, 129		; with both
 
-  .byte 61, 14, 100, 124, 101, 0	; special test for bug introduced in 1.22++
-  .byte 60, 14, 100, 124, 101, 0	; for sprites changed before their fetch but after
-  .byte 59, 14, 100, 124, 101, 0	; VICEs drawing handler
-  .byte 61, 14, 100, 77, 101, 0		; visible in unreleased filledcube demo of Skate / Glance
-  .byte 60, 14, 100, 77, 101, 0	
-  .byte 59, 14, 100, 77, 101, 0
-  .byte 61, 14, 100, 123, 99, 0	
-  .byte 60, 14, 100, 123, 99, 0	
-  .byte 59, 14, 100, 123, 99, 0
-  .byte 61, 14, 100, 76, 99, 0	
-  .byte 60, 14, 100, 76, 99, 0	
-  .byte 59, 14, 100, 76, 99, 0
+  .byte 61, 14, 100, 124, 101, 0, 129	; special test for bug introduced in 1.22++
+  .byte 60, 14, 100, 124, 101, 0, 129	; for sprites changed before their fetch but after
+  .byte 59, 14, 100, 124, 101, 0, 129	; VICEs drawing handler
+  .byte 61, 14, 100, 77, 101, 0, 0		; visible in unreleased filledcube demo of Skate / Glance
+  .byte 60, 14, 100, 77, 101, 0, 0	
+  .byte 59, 14, 100, 77, 101, 0, 0
+  .byte 61, 14, 100, 123, 99, 0, 0	
+  .byte 60, 14, 100, 123, 99, 0, 0	
+  .byte 59, 14, 100, 123, 99, 0, 0
+  .byte 61, 14, 100, 76, 99, 0, 129
+  .byte 60, 14, 100, 76, 99, 0, 129	
+  .byte 59, 14, 100, 76, 99, 0, 129
 
 
   .byte 0, 0, 0, 0, 0, 0
