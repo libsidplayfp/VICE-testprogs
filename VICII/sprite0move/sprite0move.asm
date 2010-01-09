@@ -404,6 +404,21 @@ setup:
     lda #0
     sta zpzero
 
+    ; set screen color
+    lda 646
+    ldx #0
+col_lp:
+    sta $d800,x
+    sta $d900,x
+    sta $da00,x
+    sta $dae8,x
+    inx
+    bne col_lp
+
+    ; set key repeat on all keys.
+    lda #255
+    sta 650
+
     ; print some text
     lda #>screen
     sta scrptr+1
