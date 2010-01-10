@@ -1,8 +1,14 @@
+Either:
 
 LOAD"IRQCn.BIN",8,1
 NEW
 LOAD"IRQn.DUMP",8,1
 SYS49152
+
+Or:
+
+LOAD"TESTIRQn.PRG",8,1
+RUN
 
 After some minutes the border gets grey (success) or flashed (failure).
 
