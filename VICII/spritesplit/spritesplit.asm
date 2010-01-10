@@ -186,7 +186,11 @@ rcnt:
 ;*   
 ;******
 	ifconst	SPLIT_HIRES_TO_MC
+IDLE_PATTERN	equ	$00
 SPR_PATTERN	equ	$55
+COLOR_SPR	equ	1
+COLOR_MC1	equ	13
+COLOR_MC2	equ	0
 REGISTER_UT	equ	$d01c
 FIRST_VALUE	equ	$00
 LAST_VALUE	equ	$01
@@ -195,7 +199,11 @@ INITIAL_EXPX	equ	0
 	endif
 
 	ifconst	SPLIT_HIRES_TO_MC_EXPANDED
+IDLE_PATTERN	equ	$00
 SPR_PATTERN	equ	$55
+COLOR_SPR	equ	1
+COLOR_MC1	equ	13
+COLOR_MC2	equ	0
 REGISTER_UT	equ	$d01c
 FIRST_VALUE	equ	$00
 LAST_VALUE	equ	$01
@@ -204,7 +212,11 @@ INITIAL_EXPX	equ	1
 	endif
 
 	ifconst	SPLIT_HIRES_COLOR
+IDLE_PATTERN	equ	$00
 SPR_PATTERN	equ	$cc
+COLOR_SPR	equ	1
+COLOR_MC1	equ	13
+COLOR_MC2	equ	0
 REGISTER_UT	equ	$d027
 FIRST_VALUE	equ	$00
 LAST_VALUE	equ	$01
@@ -213,7 +225,11 @@ INITIAL_EXPX	equ	0
 	endif
 
 	ifconst	SPLIT_XPOS
+IDLE_PATTERN	equ	$00
 SPR_PATTERN	equ	$ff
+COLOR_SPR	equ	1
+COLOR_MC1	equ	13
+COLOR_MC2	equ	0
 REGISTER_UT	equ	$d000
 FIRST_VALUE	equ	116
 LAST_VALUE	equ	150
@@ -222,7 +238,11 @@ INITIAL_EXPX	equ	0
 	endif
 
 	ifconst	SPLIT_UNEXP_EXP_HIRES
+IDLE_PATTERN	equ	$00
 SPR_PATTERN	equ	$55
+COLOR_SPR	equ	1
+COLOR_MC1	equ	0
+COLOR_MC2	equ	13
 REGISTER_UT	equ	$d01d
 FIRST_VALUE	equ	0
 LAST_VALUE	equ	1
@@ -231,7 +251,11 @@ INITIAL_EXPX	equ	0
 	endif
 
 	ifconst	SPLIT_UNEXP_EXP_MC
+IDLE_PATTERN	equ	$00
 SPR_PATTERN	equ	$99
+COLOR_SPR	equ	1
+COLOR_MC1	equ	0
+COLOR_MC2	equ	13
 REGISTER_UT	equ	$d01d
 FIRST_VALUE	equ	0
 LAST_VALUE	equ	1
@@ -239,8 +263,60 @@ INITIAL_MC	equ	1
 INITIAL_EXPX	equ	0
 	endif
 
+	ifconst	SPLIT_PRI
+IDLE_PATTERN	equ	$ff
+SPR_PATTERN	equ	$55
+COLOR_SPR	equ	1
+COLOR_MC1	equ	10
+COLOR_MC2	equ	0
+REGISTER_UT	equ	$d01b
+FIRST_VALUE	equ	0
+LAST_VALUE	equ	1
+INITIAL_MC	equ	0
+INITIAL_EXPX	equ	0
+	endif
+
+	ifconst	SPLIT_PRI_EXP
+IDLE_PATTERN	equ	$ff
+SPR_PATTERN	equ	$55
+COLOR_SPR	equ	1
+COLOR_MC1	equ	10
+COLOR_MC2	equ	0
+REGISTER_UT	equ	$d01b
+FIRST_VALUE	equ	0
+LAST_VALUE	equ	1
+INITIAL_MC	equ	0
+INITIAL_EXPX	equ	1
+	endif
+
+	ifconst	SPLIT_PRI_MC
+IDLE_PATTERN	equ	$ff
+SPR_PATTERN	equ	$99
+COLOR_SPR	equ	1
+COLOR_MC1	equ	10
+COLOR_MC2	equ	0
+REGISTER_UT	equ	$d01b
+FIRST_VALUE	equ	0
+LAST_VALUE	equ	1
+INITIAL_MC	equ	1
+INITIAL_EXPX	equ	0
+	endif
+
+	ifconst	SPLIT_PRI_MC_EXP
+IDLE_PATTERN	equ	$ff
+SPR_PATTERN	equ	$99
+COLOR_SPR	equ	1
+COLOR_MC1	equ	10
+COLOR_MC2	equ	0
+REGISTER_UT	equ	$d01b
+FIRST_VALUE	equ	0
+LAST_VALUE	equ	1
+INITIAL_MC	equ	1
+INITIAL_EXPX	equ	1
+	endif
+
 prepare_test:
-	lda	#$00
+	lda	#IDLE_PATTERN
 	sta	$3fff
 	lda	#SPR_PATTERN
 	ldx	#$3f-1
@@ -251,17 +327,17 @@ pt_lp1:
 	lda	#$fc
 	sta	$07f8
 
-	lda	#1
+	lda	#COLOR_SPR
 	sta	$d027
 	lda	#INITIAL_MC
 	sta	$d01c
 	lda	#INITIAL_EXPX
 	sta	$d01d
 	lda	#0
-	sta	$d01e
-	lda	#13
+	sta	$d01b
+	lda	#COLOR_MC1
 	sta	$d025
-	lda	#0
+	lda	#COLOR_MC2
 	sta	$d026	
 	rts
 
