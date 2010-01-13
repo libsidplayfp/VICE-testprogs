@@ -21,7 +21,7 @@ cinv = $fffe
 cnmi = $fffa
 raster = 48     ; start of raster interrupt
 ; try 7 and 71 to observe behavior at left and right edges of DMA.
-topnmidelay = 7
+topnmidelay = 27
 
 ; --- Code, based on:
 ; http://codebase64.org/doku.php?id=base:double_irq&s[]=stable&s[]=raster 
