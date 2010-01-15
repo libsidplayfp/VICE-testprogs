@@ -31,16 +31,28 @@ cnmi = $0318
 screen = $0400
 sprite0ptr = $7f8    ; pointer location
 
-start_sprite_x = 320
+start_sprite0_x = 320
+start_sprite1_x = 280
+start_sprite2_x = 230
+start_sprite3_x = 180
+start_sprite4_x = 130
+start_sprite5_x = 80
+start_sprite6_x = 30
+start_sprite7_x = 0
 
 GETIN = $ffe4           ; ret: a = 0: no keys pressed, otherwise a = ASCII code
 
 key_sprite_l = $41
 key_sprite_r = $44
-key_sprite_ll = $57
-key_sprite_rr = $53
-key_sprite_next = $52
-key_sprite_prev = $46
+key_sprite_ll = $53
+key_sprite_rr = $57
+key_sprite_gfx_next = $52
+key_sprite_gfx_prev = $46
+key_sprite_next = $54
+key_sprite_prev = $47
+key_sprite_next_color = $59
+key_sprite_prev_color = $48
+key_change_3fff = $58
 
 ; --- Variables
 
@@ -264,15 +276,38 @@ testloop_newyscroll = * + 1
     dey
     bne testloop
 
+    nop
+    ; open side border once more
+    inc $d016
+    dec $d016
+
     ; restore d016
     lda #$08
     sta $d016
+
+    ; check sprite-sprite collisions
+    lda $d01e
+    beq +
+    ; collision happened -> change border
+    ldx #2
+    stx $d020
++   tax
+    ; display collision register
+    lda #<text_location_sprite_coll
+    sta tmpptr
+    lda #>text_location_sprite_coll
+    sta tmpptr+1
+    txa
+    jsr printhex
 
     lda #$80
 postloop:
     cmp $d012
     bne postloop
 endirq:
+    ; restore border color
+    lda #0
+    sta $d020
 
     jmp $ea81     ; return to the auxiliary raster interrupt
 
@@ -303,6 +338,7 @@ nmi = * + 1
 ; --  Main loop
 
 mainloop:
+    jsr print_sprite_num
     jsr print_sprite_loc
 
 mainloop_wait:
@@ -314,83 +350,112 @@ mainloop_wait:
 
 !if 0 {
     ; print pressed key
+    pha
     tax
-    lda #<text_location_sprite_0 + 5
+    lda #<text_location_sprite_x + 5
     sta tmpptr
-    lda #>text_location_sprite_0
+    lda #>text_location_sprite_x
     sta tmpptr+1
     txa
     jsr printhex
-    txa
+    pla
 }
 
-++  cmp #key_sprite_next
+++  cmp #key_sprite_gfx_next
     bne ++
-    ; next sprite
+    ; next sprite gfx
     lda #sprite_last_ptr
     cmp spriteptr
     beq mainloop_wait
     inc spriteptr
+    ldy spritenum
     jsr set_sprite_ptr
+    jmp mainloop_wait
+
+++  cmp #key_sprite_gfx_prev
+    bne ++
+    ; prev sprite gfx
+    lda #sprite_first_ptr
+    cmp spriteptr
+    beq mainloop_wait
+    dec spriteptr
+    ldy spritenum
+    jsr set_sprite_ptr
+    jmp mainloop_wait
+
+++  cmp #key_sprite_next
+    bne ++
+    ; next sprite
+    inc spritenum
+    lda #8
+    cmp spritenum
+    bne mainloop
+    dec spritenum
     jmp mainloop_wait
 
 ++  cmp #key_sprite_prev
     bne ++
     ; prev sprite
-    lda #sprite_first_ptr
-    cmp spriteptr
-    beq mainloop_wait
-    dec spriteptr
-    jsr set_sprite_ptr
+    dec spritenum
+    bpl mainloop
+    inc spritenum
+    jmp mainloop_wait
+
+++  cmp #key_sprite_next_color
+    bne ++
+    ; next sprite color
+    ldx spritenum
+    inc $d027,x
+    jmp mainloop_wait
+
+++  cmp #key_sprite_prev_color
+    bne ++
+    ; prev sprite color
+    ldx spritenum
+    dec $d027,x
     jmp mainloop_wait
 
 ++  cmp #key_sprite_l
     bne ++
     ; spritex--
-    dec sprite0x
-    lda #$ff
-    cmp sprite0x
-    bne +
-    dec sprite0xh
-+   jsr set_sprite_x
+    lda #-1
+    ldy spritenum
+    jsr move_sprite
     jmp mainloop
 
 ++  cmp #key_sprite_ll
     bne ++
     ; spritex -= 16
-    lda sprite0x
-    sec
-    sbc #$10
-    sta sprite0x
-    bcs +
-    dec sprite0xh
-+   jsr set_sprite_x
+    lda #-$10
+    ldy spritenum
+    jsr move_sprite
     jmp mainloop
 
 ++  cmp #key_sprite_r
     bne ++
     ; spritex++
-    inc sprite0x
-    bne +
-    inc sprite0xh
-+   jsr set_sprite_x
+    lda #$01
+    ldy spritenum
+    jsr move_sprite
     jmp mainloop
 
 ++  cmp #key_sprite_rr
     bne ++
     ; spritex += 16
-    lda sprite0x
-    clc
-    adc #$10
-    sta sprite0x
-    bcc +
-    inc sprite0xh
-+   jsr set_sprite_x
+    lda #$10
+    ldy spritenum
+    jsr move_sprite
+    jmp mainloop
+
+++  cmp #key_change_3fff
+    bne ++
+    ; update 3fff
+    ldy spritenum
+    lda sprite0x,y
+    sta $3fff
     jmp mainloop
 
 ++  jmp mainloop_wait
-
-    jmp mainloop
 
 
 ; -- Subroutines
@@ -431,8 +496,12 @@ col_lp:
     jsr print_text
 
     ; set sprite stuff
-    jsr set_sprite_x
+    ldy #7
+-   jsr set_sprite_x
     jsr set_sprite_ptr
+    dey
+    bpl -
+
     ; all 8 sprites at the same line
     lda #spritey
     sta $d001
@@ -443,15 +512,6 @@ col_lp:
     sta $d00b
     sta $d00d
     sta $d00f
-    ; zero other sprite X coords
-    lda #0
-    sta $d002
-    sta $d004
-    sta $d006
-    sta $d008
-    sta $d00a
-    sta $d00c
-    sta $d00e
 
     ; misc stuff
     lda #$0f
@@ -467,13 +527,15 @@ col_lp:
 
 
 ; - set_sprite_x
+;  y = sprite number
 ;
 set_sprite_x:
-    lda sprite0x
-    sta $d000
+    tya
+    asl
+    tax
+    lda sprite0x,y
+    sta $d000,x
     lda sprite0xh
-    and #1
-    sta sprite0xh
     sta $d010
     rts
 
@@ -482,7 +544,32 @@ set_sprite_x:
 ;
 set_sprite_ptr:
     lda spriteptr
-    sta sprite0ptr
+    sta sprite0ptr,y
+    rts
+
+; - move_sprite
+; parameter:
+;  a = amount (msb = direction)
+;  y = sprite number
+;
+move_sprite:
+    ldx #$90    ; opcode for bcc
+    sta move_sprite_amount
+    asl         ; test msb
+    bcc +
+    ldx #$b0    ; opcode for bcs
++   stx move_sprite_type
+    lda sprite0x,y
+    clc
+move_sprite_amount = * + 1
+    adc #$12
+    sta sprite0x,y
+move_sprite_type:
+    bcc +
+    lda sprite0xh
+    eor bitmask,y
+    sta sprite0xh
++   jsr set_sprite_x
     rts
 
 ; - print_text
@@ -514,15 +601,36 @@ print_text:
 ; - print_sprite_loc
 ;
 print_sprite_loc:
-    lda #<text_location_sprite_0
+    lda #<text_location_sprite_x
     sta tmpptr
-    lda #>text_location_sprite_0
+    lda #>text_location_sprite_x
     sta tmpptr+1
     lda sprite0xh
+    ldy spritenum
+    cpy #0
+    beq +
+-   lsr
+    dey
+    bne -
++   and #$01
     jsr printhex
-    lda sprite0x
+    ldy spritenum
+    lda sprite0x,y
     jsr printhex
-rts
+    rts
+
+; - print_sprite_num
+;
+print_sprite_num:
+    lda #<text_location_sprite_n
+    sta tmpptr
+    lda #>text_location_sprite_n
+    sta tmpptr+1
+    ldx spritenum
+    lda hex_lut,x
+    ldy #0
+    sta (tmpptr),y
+    rts
 
 ; - printhex
 ; parameters:
@@ -566,31 +674,63 @@ printhex:
 
 ; --- Data
 
-; sprite 0 X coordinate
-sprite0x:  !by <start_sprite_x
-sprite0xh: !by >start_sprite_x
+; selected sprite
+spritenum: !by 0
 
-; selected sprite 0 pointer
-spriteptr: !by sprite_first_ptr
+; sprite X coordinates
+sprite0x:
+!by <start_sprite0_x
+!by <start_sprite1_x
+!by <start_sprite2_x
+!by <start_sprite3_x
+!by <start_sprite4_x
+!by <start_sprite5_x
+!by <start_sprite6_x
+!by <start_sprite7_x
+
+; X msbs
+sprite0xh: !by >start_sprite0_x
+
+; selected sprite pointers
+spriteptr:
+!by sprite_first_ptr
+!by sprite_first_ptr
+!by sprite_first_ptr
+!by sprite_first_ptr
+!by sprite_first_ptr
+!by sprite_first_ptr
+!by sprite_first_ptr
+!by sprite_first_ptr
 
 !ct scr
 
 ; hex lookup table
-hex_lut !tx "0123456789abcdef"
+hex_lut: !tx "0123456789abcdef"
+
+; sprite msb bits
+bitmask: !by $01, $02, $04, $08, $10, $20, $40, $80
 
 ; help text
 message:
 ;    |---------0---------0---------0--------|
-!tx "sprite 0 on border testprog             "
+!tx "                                        "
+!tx "sprites on border testprog              "
 !tx "                                        "
 !tx "controls:                               "
 !tx " a/d  - move 1 pixel left/right         "
-!tx " w/s  - move 16 pixels left/right       "
-!tx " r/f  - next/previous sprite            "
+!tx " s/w  - move 16 pixels left/right       "
+!tx " r/f  - next/previous sprite gfx        "
+!tx " t/g  - next/previous sprite            "
+!tx " y/h  - next/previous color             "
+!tx " x    - copy sprite x lbs to $3fff      "
 !tx "                                        "
-!tx "current sprite location: "
-text_location_sprite_0 = * - message + screen
-!tx                           "              "
+!tx "sprite: "
+text_location_sprite_n = * - message + screen
+!tx         " , location: "
+text_location_sprite_x = * - message + screen
+!tx                      "    , collision: "
+text_location_sprite_coll = * - message + screen
+!tx                                       "  "
 !tx "                                        "
 !tx "                                        "
 
