@@ -53,6 +53,12 @@ key_sprite_prev = $47
 key_sprite_next_color = $59
 key_sprite_prev_color = $48
 key_change_3fff = $58
+key_toggle_xexp = $51
+key_toggle_mc = $45
+key_sprite_next_mc_0 = $55
+key_sprite_prev_mc_0 = $4a
+key_sprite_next_mc_1 = $49
+key_sprite_prev_mc_1 = $4b
 
 ; --- Variables
 
@@ -415,6 +421,48 @@ mainloop_wait:
     dec $d027,x
     jmp mainloop_wait
 
+++  cmp #key_sprite_next_mc_0
+    bne ++
+    ; next sprite mc 0
+    ldx spritenum
+    inc $d025,x
+    jmp mainloop_wait
+
+++  cmp #key_sprite_prev_mc_0
+    bne ++
+    ; prev sprite mc 0
+    ldx spritenum
+    dec $d025,x
+    jmp mainloop_wait
+
+++  cmp #key_sprite_next_mc_1
+    bne ++
+    ; next sprite mc 1
+    ldx spritenum
+    inc $d026,x
+    jmp mainloop_wait
+
+++  cmp #key_sprite_prev_mc_1
+    bne ++
+    ; prev sprite mc 1
+    ldx spritenum
+    dec $d026,x
+    jmp mainloop_wait
+
+++  cmp #key_toggle_xexp
+    bne ++
+    ; toggle x expand
+    ldx #$1d
+    jsr toggle_bit
+    jmp mainloop_wait
+
+++  cmp #key_toggle_mc
+    bne ++
+    ; toggle multicolor
+    ldx #$1c
+    jsr toggle_bit
+    jmp mainloop_wait
+
 ++  cmp #key_sprite_l
     bne ++
     ; spritex--
@@ -525,6 +573,16 @@ col_lp:
     sta $d015   ; enable
     rts
 
+
+; - toggle_bit
+;  x = register addr LSB
+;
+toggle_bit:
+    ldy spritenum
+    lda bitmask,y
+    eor $d000,x
+    sta $d000,x
+    rts
 
 ; - set_sprite_x
 ;  y = sprite number
@@ -707,7 +765,7 @@ spriteptr:
 ; hex lookup table
 hex_lut: !tx "0123456789abcdef"
 
-; sprite msb bits
+; sprite bits
 bitmask: !by $01, $02, $04, $08, $10, $20, $40, $80
 
 ; help text
@@ -721,8 +779,12 @@ message:
 !tx " s/w  - move 16 pixels left/right       "
 !tx " r/f  - next/previous sprite gfx        "
 !tx " t/g  - next/previous sprite            "
-!tx " y/h  - next/previous color             "
+!tx " y/h  - next/previous sprite color      "
+!tx " u/j  - next/previous multicolor 0      "
+!tx " i/k  - next/previous multicolor 1      "
 !tx " x    - copy sprite x lbs to $3fff      "
+!tx " q    - toggle x expand                 "
+!tx " e    - toggle multicolor               "
 !tx "                                        "
 !tx "sprite: "
 text_location_sprite_n = * - message + screen
@@ -765,6 +827,31 @@ sprite_first_ptr = * / 64
 !by 0
 
 ;            765432107654321076543210
++SpriteLine %#....................... ;1
++SpriteLine %#....................... ;2
++SpriteLine %.#...................... ;3
++SpriteLine %.#...................... ;4
++SpriteLine %##...................... ;5
++SpriteLine %##...................... ;6
++SpriteLine %#....................... ;7
++SpriteLine %#....................... ;8
++SpriteLine %.#...................... ;9
++SpriteLine %.#...................... ;10
++SpriteLine %##...................... ;11
++SpriteLine %##...................... ;12
++SpriteLine %........................ ;13
++SpriteLine %........................ ;14
++SpriteLine %#.#.#.#.#.#.#.#.#.#.#.#. ;15
++SpriteLine %........................ ;16
++SpriteLine %.#.#.#.#.#.#.#.#.#.#.#.# ;17
++SpriteLine %........................ ;18
++SpriteLine %######################## ;19
++SpriteLine %........................ ;20
++SpriteLine %#..####..####..###..#..# ;21
+!by 0
+
+
+;            765432107654321076543210
 +SpriteLine %#.......#.......#....... ;1
 +SpriteLine %#.......#.......#....... ;2
 +SpriteLine %#.......#.......#....... ;3
@@ -787,6 +874,31 @@ sprite_first_ptr = * / 64
 +SpriteLine %#.......#.......#....... ;20
 +SpriteLine %#.......#.......#....... ;21
 !by 0
+
+;            765432107654321076543210
++SpriteLine %######################## ;1
++SpriteLine %#....................... ;2
++SpriteLine %#....................... ;3
++SpriteLine %#....................... ;4
++SpriteLine %#....................... ;5
++SpriteLine %#....................... ;6
++SpriteLine %#....................... ;7
++SpriteLine %#....................... ;8
++SpriteLine %#....................... ;9
++SpriteLine %#....................... ;10
++SpriteLine %#....................... ;11
++SpriteLine %#....................... ;12
++SpriteLine %#....................... ;13
++SpriteLine %#....................... ;14
++SpriteLine %#....................... ;15
++SpriteLine %#....................... ;16
++SpriteLine %#....................... ;17
++SpriteLine %#....................... ;18
++SpriteLine %#....................... ;19
++SpriteLine %#....................... ;20
++SpriteLine %######################## ;21
+!by 0
+
 
 sprite_last_ptr = * / 64
 ;            765432107654321076543210
