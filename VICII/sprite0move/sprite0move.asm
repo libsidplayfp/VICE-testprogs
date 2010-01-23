@@ -424,29 +424,25 @@ mainloop_wait:
 ++  cmp #key_sprite_next_mc_0
     bne ++
     ; next sprite mc 0
-    ldx spritenum
-    inc $d025,x
+    inc $d025
     jmp mainloop_wait
 
 ++  cmp #key_sprite_prev_mc_0
     bne ++
     ; prev sprite mc 0
-    ldx spritenum
-    dec $d025,x
+    dec $d025
     jmp mainloop_wait
 
 ++  cmp #key_sprite_next_mc_1
     bne ++
     ; next sprite mc 1
-    ldx spritenum
-    inc $d026,x
+    inc $d026
     jmp mainloop_wait
 
 ++  cmp #key_sprite_prev_mc_1
     bne ++
     ; prev sprite mc 1
-    ldx spritenum
-    dec $d026,x
+    dec $d026
     jmp mainloop_wait
 
 ++  cmp #key_toggle_xexp
