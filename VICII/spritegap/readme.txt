@@ -1,5 +1,5 @@
 
-spritegap3.tas:
+spritegap3.prg:
 Testprog to determine the unusual behaviour of sprites in the border area.
 
 The prog moves sprite#n and sprite#m (n=0..6, m=n+1..7) in x-position (x=0..0x1FF)
@@ -35,3 +35,7 @@ This means:
 Sprite#0 and sprite#1 stop colliding at 0x0163, they collide again at 0x17f
 and stop colliding at 0x1f8. Sprite#0 and Sprite#2 collide at 0x001, they
 stop colliding at 0x163 and collide again at 0x18f.
+
+
+spritegap2.prg:
+Uses slightly different sprite pattern.
