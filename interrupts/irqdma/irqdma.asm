@@ -1,3 +1,8 @@
+; --- Defines
+
+reference_data = $2000
+
+
 ; --- Code
 
 *=$0801
@@ -21,9 +26,9 @@ entrypoint:
     lda $dd0d
     lda #$35
     sta $01
-    lda #<irq_handler_1
+    lda #<irq_handler
     sta $fffe
-    lda #>irq_handler_1
+    lda #>irq_handler
     sta $ffff
     lda #$1b
     sta $d011
@@ -52,20 +57,32 @@ entrypoint:
     sta $d00f
     lda #$00
     sta $d010
+
+!if B_MODE = 1 {
     lda #$40
     sta $f7
     lda #$04
+} else {
+    lda #$00
+}
     sta $f8
+
+!if B_MODE = 1 {
     lda #$30
+} else {
+    lda #$10
+}
     sta $f9
+
     lda #<reference_data
     sta $fa
     lda #>reference_data
     sta $fb
     cli
--   jmp -
+entry_loop:
+    jmp entry_loop
 
-irq_handler_1:
+irq_handler:
     lda #<irq_handler_2
     sta $fffe
     lda #>irq_handler_2
@@ -96,16 +113,19 @@ irq_handler_2:
     lda #$01
     sta $d019
     ldx #$07
--   dex
-    bne -
+irq_handler_2_wait_1:
+    dex
+    bne irq_handler_2_wait_1
     nop
     nop
     lda $d012
     cmp $d012
-    beq +
-+   ldx #$06
--   dex
-    bne -
+    beq irq_handler_2_skip_1
+irq_handler_2_skip_1:
+    ldx #$06
+irq_handler_2_wait_2:
+    dex
+    bne irq_handler_2_wait_2
     inc $d021
     dec $d021
     lda #<irq_handler_3
@@ -135,8 +155,135 @@ irq_handler_2:
     sta $dd0e
     sta $dd0f
     sta $dc0e
+
+!if B_MODE = 1 {
     lda $f7
     jsr delay
+}
+
+!if TESTNUM = 1 {
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+}
+
+!if TESTNUM = 2 {
+    ldx #$00
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+    lda ($00,x)
+}
+
+!if TESTNUM = 3 {
+    ldx #$00
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+    inc $ff00,x
+}
+
+!if TESTNUM = 4 {
+    ldx #$00
+    jsr dummy_rts
+    jsr dummy_rts
+    jsr dummy_rts
+    jsr dummy_rts
+    jsr dummy_rts
+    jsr dummy_rts
+    jsr dummy_rts
+    jsr dummy_rts
+    jsr dummy_rts
+    jsr dummy_rts
+    jsr dummy_rts
+}
+
+!if TESTNUM = 5 {
     ldx #$00
     beq lc113
 lc113:
@@ -226,37 +373,90 @@ lc165:
 lc167:
     beq lc169
 lc169:
+}
+
+!if TESTNUM = 6 {
+    ldx #$00
+    sei
+    php
+    cli
+    plp
+    cli
+    sei
+    php
+    cli
+    plp
+    cli
+    sei
+    php
+    cli
+    plp
+    cli
+    sei
+    php
+    cli
+    plp
+    cli
+    sei
+    php
+    cli
+    plp
+    cli
+    sei
+    php
+    cli
+    plp
+    cli
+    sei
+    php
+    cli
+    plp
+    cli
+    sei
+    php
+    cli
+    plp
+    cli
+}
+
     lda $dd06
     pha
+!if TESTNUM = 1 {
+    txa
+} else {
     tya
+}
     pha
     ldy #$00
-    lda #$01
+
+    ; 1 = test, 0 = record
+    lda #TEST_MODE
     cmp #$01
-    beq lc181
-lc177:
+    beq irq_handler_2_test_mode
+
     pla
     sta ($fa),y
     iny
     pla
     sta ($fa),y
-    jmp lc196
-lc181:
+    jmp irq_handler_2_next
+
+irq_handler_2_test_mode:
     pla
     cmp ($fa),y
-    bne lc18f
-lc186:
+    bne irq_handler_2_test_failed
     iny
     pla
     cmp ($fa),y
-    bne lc18f
-lc18c:
-    jmp lc196
-lc18f:
+    bne irq_handler_2_test_failed
+    jmp irq_handler_2_next
+
+irq_handler_2_test_failed:
     sei
     inc $d020
-    jmp lc18f
-lc196:
+    jmp irq_handler_2_test_failed
+
+irq_handler_2_next:
     lda $fa
     clc
     adc #$02
@@ -264,65 +464,88 @@ lc196:
     lda $fb
     adc #$00
     sta $fb
+
+!if B_MODE = 1 {
     dec $f7
     lda $f7
     cmp #$38
-    bne lc1bd
-lcf7:
+    bne irq_handler_2_finish_test
+
     lda #$40
     sta $f7
+}
+
     inc $f9
     lda $f9
+
+!if B_MODE = 1 {
     cmp #$b0
-    bne lc1bd
-lc1ab:
+} else {
+    cmp #$90
+}
+    bne irq_handler_2_finish_test
+
+!if B_MODE = 1 {
     lda #$30
+} else {
+    lda #$10
+}
     sta $f9
     inc $f8
     lda $f8
+
+!if B_MODE = 1 {
     cmp #$14
-    bne lc1bd
+} else {
+    cmp #$80
+}
+    bne irq_handler_2_finish_test
 
     inc $d020
--   jmp -
+irq_handler_2_all_tests_successful:
+    jmp irq_handler_2_all_tests_successful
 
-lc1bd:
+irq_handler_2_finish_test:
     lda #$00
     sta $dc0e
     lda #$7f
     sta $dc0d
     lda $dc0d
-    lda #<irq_handler_1
+    lda #<irq_handler
     sta $fffe
-    lda #>irq_handler_1
+    lda #>irq_handler
     sta $ffff
     rti
 
 irq_handler_3:
     bit $dc0d
+!if TESTNUM = 1 {
+    ldx $dd04
+} else {
     ldy $dd04
+}
     lda #$19
     sta $dd0f
     rti
 
-delay:            ;delay 80-accu cycles, 0<=accu<=64
-  lsr             ;2 cycles akku=akku/2 carry=1 if accu was odd, 0 otherwise
-  bcc waste1cycle ;2/3 cycles, depending on lowest bit, same operation for both
+!if TESTNUM = 4 {
+dummy_rts:
+    rts
+}
+
+!if B_MODE = 1 {
+delay:              ;delay 80-accu cycles, 0<=accu<=64
+    lsr             ;2 cycles akku=akku/2 carry=1 if accu was odd, 0 otherwise
+    bcc waste1cycle ;2/3 cycles, depending on lowest bit, same operation for both
 waste1cycle:
-  sta smod+1      ;4 cycles selfmodifies the argument of branch
-  clc             ;2 cycles 
+    sta smod+1      ;4 cycles selfmodifies the argument of branch
+    clc             ;2 cycles
 ;now we have burned 10/11 cycles.. and jumping into a nopfield 
 smod:
-  bcc *+10
+    bcc *+10
 !by $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
 !by $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
 !by $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
 !by $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
-  rts             ;6 cycles
-  
-; --- Data
-
-* = $2000
-reference_data:
-
-!bin "irq5b.dump",,2
+    rts             ;6 cycles
+}

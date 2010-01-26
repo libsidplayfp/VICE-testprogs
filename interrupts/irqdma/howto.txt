@@ -1,15 +1,9 @@
-Either:
-
-LOAD"IRQCn.BIN",8,1
-NEW
-LOAD"IRQn.DUMP",8,1
-SYS49152
-
-Or:
-
-LOAD"TESTIRQn.PRG",8,1
+LOAD"TESTx.PRG",8,1
 RUN
 
 After some minutes the border gets grey (success) or flashed (failure).
 
-IRQn.BIN was used to create the memory dump on a real C64.
+test*n.prg use reference data measured with new CIA (irqX-newcia.dump),
+the others use data measured with old CIA (irqX.dump, X = 1..6[b]).
+
+Use record*.prg to measure your own data (stored at $2000-$A000).
