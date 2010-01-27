@@ -635,8 +635,7 @@ printhex:
 
 ; hex lookup table
 hex_lut: 
-!tx "0123456789"
-!by 01,02,03,04,05,06
+!scr "0123456789abcdef"
 
 failed:
   cpy #$01
