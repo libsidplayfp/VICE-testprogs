@@ -57,6 +57,8 @@ entrypoint:
     sta $d00f
     lda #$00
     sta $d010
+    lda #$00
+    sta $f5
 
 !if B_MODE = 1 {
     lda #$40
@@ -66,13 +68,6 @@ entrypoint:
     lda #$00
 }
     sta $f8
-
-!if B_MODE = 1 {
-    lda #$30
-} else {
-    lda #$10
-}
-    sta $f9
 
     lda #<reference_data
     sta $fa
@@ -122,7 +117,15 @@ irq_handler_2_wait_1:
     cmp $d012
     beq irq_handler_2_skip_1
 irq_handler_2_skip_1:
-    ldx #$06
+    nop
+    nop
+    lda $f5
+    bne cia_ok
+    jsr testcia
+    jmp irq_handler_2_finish_test
+
+cia_ok:    
+    ldx #$04
 irq_handler_2_wait_2:
     dex
     bne irq_handler_2_wait_2
@@ -421,11 +424,7 @@ lc169:
 
     lda $dd06
     pha
-!if TESTNUM = 1 {
-    txa
-} else {
     tya
-}
     pha
     ldy #$00
 
@@ -477,19 +476,10 @@ irq_handler_2_next:
 
     inc $f9
     lda $f9
-
-!if B_MODE = 1 {
-    cmp #$b0
-} else {
-    cmp #$90
-}
+    cmp $f6
     bne irq_handler_2_finish_test
 
-!if B_MODE = 1 {
-    lda #$30
-} else {
-    lda #$10
-}
+    lda $f5
     sta $f9
     inc $f8
     lda $f8
@@ -519,11 +509,7 @@ irq_handler_2_finish_test:
 
 irq_handler_3:
     bit $dc0d
-!if TESTNUM = 1 {
-    ldx $dd04
-} else {
     ldy $dd04
-}
     lda #$19
     sta $dd0f
     rti
@@ -533,7 +519,90 @@ dummy_rts:
     rts
 }
 
+
+testcia:
+
+    lda #<irq_handler_testcia
+    sta $fffe
+    lda #>irq_handler_testcia
+    sta $ffff
+    lda #$46
+    sta $d012
+    cli
+    lda #$2b
+    sta $dd04
+    lda #$00
+    sta $dd05
+    lda #$10
+    sta $dc04
+    lda #$00
+    sta $dc05
+    lda #$81
+    sta $dc0d
+    lda #$19
+    sta $dd0e
+    sta $dd0f
+    sta $dc0e
+
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+
+    rts
+
+irq_handler_testcia:
+    bit $dc0d
+    ldy $dd04
+    lda #$19
+    sta $dd0f
+    tya
+    lsr
+    clc
 !if B_MODE = 1 {
+    adc #$30
+} else {
+    adc #$10
+}
+    sta $f5
+    sta $f9
+    clc
+    adc #$80
+    sta $f6
+    
+    tya
+    lsr
+    asl
+    asl
+    asl
+    tay
+    ldx #$00
+
+loopoutput:    
+    lda ciatype,y
+    sta $0420,x
+    lda #$01
+    sta $d820,x
+    iny
+    inx
+    cpx #$08
+    bne loopoutput
+    rti
+    
+ciatype:
+    !scr "old cia "
+    !scr "new cia "
+
+!if B_MODE = 1 {
+* = $0850
 delay:              ;delay 80-accu cycles, 0<=accu<=64
     lsr             ;2 cycles akku=akku/2 carry=1 if accu was odd, 0 otherwise
     bcc waste1cycle ;2/3 cycles, depending on lowest bit, same operation for both
