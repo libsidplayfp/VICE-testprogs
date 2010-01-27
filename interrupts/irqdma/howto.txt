@@ -2,8 +2,12 @@ LOAD"TESTx.PRG",8,1
 RUN
 
 After some minutes the border gets grey (success) or flashed (failure).
+Test number/address is shown, as is reference and measured value in case
+of failure. Detected CIA type (old/new) is also shown.
 
-test*n.prg use reference data measured with new CIA (irqX-newcia.dump),
-the others use data measured with old CIA (irqX.dump, X = 1..6[b]).
+test*.prg use reference data measured with a real C64 (irqX.dump).
+
+irqX_dtv.dump are measured with a PAL DTV3 (detected as old CIA);
+tests 3 and 3b give the same results as C64.
 
 Use record*.prg to measure your own data (stored at $2000-$A000).
