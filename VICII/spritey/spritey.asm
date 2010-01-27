@@ -51,8 +51,8 @@ SysAddress:
 	txa
 sa_lp1:
 	sta	$3f00,x
-	dex
-	bpl	sa_lp1
+	inx
+	bne	sa_lp1
 	lda	#$80
 	sta	$3f00
 
@@ -97,32 +97,36 @@ irq_server:
 	lda	#3
 	sta	$d015
 	lda	$d01e
-
-	lda	ypos+2
+	sta	$d020
+	lda	spos
 	sta	$d001
 	sta	$d003
-
-	inc	$d020
-	ldx	#100
+	ldx	#20
 is_lp1:
 	dex
 	bne	is_lp1
+	lda	#15
+	sta	$d020
+	ldx	#100
+is_lp2:
+	dex
+	bne	is_lp2
 	dec	$d020
 
-	lda	ypos+1
+	lda	spos+1
 	and	#1
 	ora	#>BUFFER
 	sta	is_sm1+2
-	ldx	ypos
+	ldx	spos
 	lda	$d01e
 is_sm1:
 	sta	BUFFER,x
 
 	sta	$d020
 	ldx	#50
-is_lp2:
+is_lp3:
 	dex
-	bne	is_lp2
+	bne	is_lp3
 	lda	#14
 	sta	$d020
 
@@ -152,7 +156,9 @@ set_raster:
 	rts
 	
 ypos:
-	dc.w	0,4
+	dc.w	128
+spos:
+	dc.w	134
 
 inc_ypos:
 	inc	ypos,x
