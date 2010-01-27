@@ -14,11 +14,7 @@ all: record1.prg record2.prg record3.prg \
      test1.prg test2.prg test3.prg \
      test4.prg test5.prg test6.prg \
      test1b.prg test2b.prg test3b.prg \
-     test4b.prg test5b.prg test6b.prg \
-     test1n.prg test2n.prg test3n.prg \
-     test4n.prg test5n.prg test6n.prg
-#     test1bn.prg test2bn.prg test3bn.prg \
-#     test4bn.prg test5bn.prg test6bn.prg
+     test4b.prg test5b.prg test6b.prg
 
 record1.prg: record1.asm irqdma.asm
 record2.prg: record2.asm irqdma.asm
@@ -47,20 +43,6 @@ test3b.prg: test3b.asm irq3b.dump irqdma.asm
 test4b.prg: test4b.asm irq4b.dump irqdma.asm
 test5b.prg: test5b.asm irq5b.dump irqdma.asm
 test6b.prg: test6b.asm irq6b.dump irqdma.asm
-
-test1n.prg: test1n.asm irq1-newcia.dump irqdma.asm
-test2n.prg: test2n.asm irq2-newcia.dump irqdma.asm
-test3n.prg: test3n.asm irq3-newcia.dump irqdma.asm
-test4n.prg: test4n.asm irq4-newcia.dump irqdma.asm
-test5n.prg: test5n.asm irq5-newcia.dump irqdma.asm
-test6n.prg: test6n.asm irq6-newcia.dump irqdma.asm
-
-#test1bn.prg: test1bn.asm irq1b-newcia.dump irqdma.asm
-#test2bn.prg: test2bn.asm irq2b-newcia.dump irqdma.asm
-#test3bn.prg: test3bn.asm irq3b-newcia.dump irqdma.asm
-#test4bn.prg: test4bn.asm irq4b-newcia.dump irqdma.asm
-#test5bn.prg: test5bn.asm irq5b-newcia.dump irqdma.asm
-#test6bn.prg: test6bn.asm irq6b-newcia.dump irqdma.asm
 
 clean:
 	-$(REMOVE) *.prg
