@@ -71,8 +71,12 @@ entrypoint:
 
     lda #<reference_data
     sta $fa
+    ldy #$03
+    jsr printhex
     lda #>reference_data
     sta $fb
+    ldy #$01
+    jsr printhex
     cli
 entry_loop:
     jmp entry_loop
@@ -453,7 +457,7 @@ irq_handler_2_test_mode:
 irq_handler_2_test_failed:
     sei
     inc $d020
-    jmp irq_handler_2_test_failed
+    jmp failed
 
 irq_handler_2_next:
     lda $fa
@@ -463,6 +467,11 @@ irq_handler_2_next:
     lda $fb
     adc #$00
     sta $fb
+    ldy #$01
+    jsr printhex
+    lda $fa
+    ldy #$03
+    jsr printhex
 
 !if B_MODE = 1 {
     dec $f7
@@ -601,6 +610,50 @@ ciatype:
     !scr "old cia "
     !scr "new cia "
 
+printhex:
+    pha
+    ; mask lower
+    and #$0f
+    ; lookup
+    tax
+    lda hex_lut,x
+    ; print
+    sta $0400,y
+    ; lsr x4
+    pla
+    lsr
+    lsr
+    lsr
+    lsr
+    ; lookup
+    tax
+    lda hex_lut,x
+    ; print
+    dey
+    sta $0400,y
+    rts
+
+; hex lookup table
+hex_lut: 
+!tx "0123456789"
+!by 01,02,03,04,05,06
+
+failed:
+  cpy #$01
+  bne failvalue
+  inc $0403
+failvalue:
+  pha
+  lda ($fa),y
+  ldy #$09
+  jsr printhex
+  pla
+  ldy #$06
+  jsr printhex
+failloop:
+  inc $d020
+  jmp failloop  
+  
 !if B_MODE = 1 {
 * = $0850
 delay:              ;delay 80-accu cycles, 0<=accu<=64
