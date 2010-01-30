@@ -1,0 +1,46 @@
+spritesplit on a C64C with 8565 compared to x64sc (r22181)
+==========================================================
+
+- ss-hires-color.prg
+looks the same on both
+
+- ss-hires-mc.prg
+looks the same on both*
+
+- ss-hires-mc-exp.prg
+looks different:
+On C64C the 3rd and 7th pattern the light green starts directly after the last white line
+
+- ss-mc-color0.prg
+looks the same on both
+
+- ss-mc-color1.prg
+looks the same on both
+
+- ss-mc-color2.prg
+looks the same on both
+
+- ss-pri.prg
+looks the same on both
+
+- ss-pri-exp.prg
+looks the same on both
+
+- ss-pri-mc.prg
+looks the same on both*
+
+- ss-pri-mc-exp.prg
+looks the same on both
+
+- ss-unexp-exp-hires.prg
+looks the same on both
+
+- ss-unexp-exp-mc.prg
+looks the same on both
+
+- ss-xpos
+looks the same on both
+
+_______
+* ...but pretty hard to see differentiated pixels/colors.
+
