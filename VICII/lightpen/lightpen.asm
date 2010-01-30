@@ -158,6 +158,8 @@ prepare_test:
 	lda	#%11111111
 	sta	$dc01
 	sta	$dc03
+	lda	#$0f
+	sta	$d019		; clear interrupts
 	rts
 
 perform_test:
@@ -177,6 +179,11 @@ pt_sm1:
 	ldx	cycle
 pt_sm2:
 	sta	BUFFER,x
+	lda	$d019
+	and	#$0f
+	sta	BUFFER+$0400,x
+	lda	#$0f
+	sta	$d019		; clear interrupts
 
 	inc	cycle
 	bne	pt_skp1
