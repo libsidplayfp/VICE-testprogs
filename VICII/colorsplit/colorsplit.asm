@@ -188,6 +188,7 @@ rcnt:
 prepare_test:
 	lda	#$f0
 	sta	$3fff
+	sta	$39ff
 	rts
 
 init_video:
