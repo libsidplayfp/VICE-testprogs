@@ -206,10 +206,10 @@ test_start:
     bne -
 
     nop
-    nop
 
     ; modify sprite y on cycle 57
     dec $d007
+    nop
 
     ; show timing
     ldx #5
