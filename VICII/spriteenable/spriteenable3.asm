@@ -206,6 +206,7 @@ test_start:
     bne -
 
     nop
+    nop
 
     ; modify sprite y on cycle 57
     dec $d007
@@ -214,7 +215,12 @@ test_start:
     ldx #5
 -   dex
     bne -
-    nop
+    inc $d021
+    dec $d021
+
+    ldx #$9
+-   dex
+    bne -
     inc $d021
     dec $d021
 

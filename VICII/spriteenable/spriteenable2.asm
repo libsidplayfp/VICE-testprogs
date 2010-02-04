@@ -219,6 +219,14 @@ test_start:
     inc $d021
     dec $d021
 
+    ldx #$7
+-   dex
+    bne -
+    nop
+    nop
+    inc $d021
+    dec $d021
+
     lda #$80
 postloop:
     cmp $d012
