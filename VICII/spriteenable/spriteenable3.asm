@@ -31,10 +31,10 @@ cnmi = $0318
 screen = $0400
 sprite0ptr = $7f8    ; pointer location
 
-start_sprite0_x = 80
-start_sprite1_x = 130
-start_sprite2_x = 180
-start_sprite3_x = 230
+start_sprite0_x = 88
+start_sprite1_x = 138
+start_sprite2_x = 188
+start_sprite3_x = 238
 start_sprite4_x = 0
 start_sprite5_x = 0
 start_sprite6_x = 0
@@ -440,7 +440,7 @@ message:
 !by 0
 
 ; sprites
-* = $2000
+!align 63,0
 spritedata:
 sprite_first_ptr = * / 64
 ;            765432107654321076543210

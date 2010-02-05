@@ -205,25 +205,22 @@ test_start:
 -   dex
     bne -
 
-    ; modify sprite enable on cycle 55
+    nop
+
+    ; modify sprite enable on cycle 57
     dec $d015
+    nop
 
     ; show timing
-    ldx #2
+    ldx #5
 -   dex
     bne -
-    nop
-    nop
-    nop
-    nop
     inc $d021
     dec $d021
 
-    ldx #$7
+    ldx #$9
 -   dex
     bne -
-    nop
-    nop
     inc $d021
     dec $d021
 
@@ -429,13 +426,13 @@ message:
 !tx "                                        "
 !tx "                                        "
 !tx "                                        "
-!tx "sprite enable testprog 2                "
+!tx "sprite enable testprog 4                "
 !tx "                                        "
-!tx "dec $d015 (->$07) on check dma cycles.  "
+!tx "dec $d015 (->$07) before check display. "
 !tx "                                        "
-!tx "you should see sprites 0-2.             "
-!tx "sprite 0 should have $ff as first byte. "
+!tx "you should see no sprites.              "
 !tx "stable line from x to y.                "
+!tx "                                        "
 
 !by 0
 
@@ -444,7 +441,7 @@ message:
 spritedata:
 sprite_first_ptr = * / 64
 ;            765432107654321076543210
-+SpriteLine %........################ ;1
++SpriteLine %######################## ;1
 +SpriteLine %#......................# ;2
 +SpriteLine %#......................# ;3
 +SpriteLine %#......##########......# ;4

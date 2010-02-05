@@ -7,11 +7,12 @@ CFLAGS = -v1 --cpu 6502 -f cbm -o
 %.prg: %.asm
 	$(COMPILER) $(CFLAGS) $@ $<
 
-all: spriteenable1.prg spriteenable2.prg spriteenable3.prg
+all: spriteenable1.prg spriteenable2.prg spriteenable3.prg spriteenable4.prg
 
 spriteenable1.prg: spriteenable1.asm
 spriteenable2.prg: spriteenable2.asm
 spriteenable3.prg: spriteenable3.asm
+spriteenable4.prg: spriteenable4.asm
 
 clean:
 	rm *.prg
