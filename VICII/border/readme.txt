@@ -31,3 +31,19 @@ border-mcbm:
 ------------
 Another test showing that idle data in mc bitmap mode should be displayed
 the "mc way" with double sized pixels which VICE doesn't do.
+
+
+vborder:
+--------
+Test to determine the correct cycle for vborder flipflop switch.
+1. Adjust the first delay for the switch to 24 row mode with keys 'A' and 'S'
+so that the upper/lower border opens. $33 should be the first value that opens it
+2. Adjust the second delay for the switch back to 25 row mode with keys 'K' and 'L'
+to determine the smallest delay with borders still open. That delay should be $09.
+
+vborder2:
+---------
+Clears RSEL for four cycles somewhere (variable delay with 'A' and 'S') at line 247.
+$00-$21 and $64-$80: Border4 closes at line 251 (complete last line visible)
+$22-$35: Border closes in line 247 just below the '-'
+$36-$63: Border closes in line 248 (another gfx line below the '-')
