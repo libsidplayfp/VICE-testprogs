@@ -1,0 +1,11 @@
+vborder.prg:
+============
+
+Test to determine the correct cycle for vborder flipflop switch.
+
+Instructions:
+1. Adjust the first delay for the switch to 24 row mode with keys 'A' and 'S'
+so that the upper/lower border opens. $33 should be the first value that opens it
+2. Adjust the second delay for the switch back to 25 row mode with keys 'K' and 'L'
+to determine the smallest delay with borders still open. That delay should be $09.
+
