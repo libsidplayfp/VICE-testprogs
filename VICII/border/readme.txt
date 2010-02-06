@@ -1,8 +1,8 @@
 
-All PRGs compiled with acme
+All border-*.PRGs compiled with acme
 Run them with
 LOAD"BORDER-....PRG",8,1
-SYS2064
+RUN
 
 
 border-<n>:
