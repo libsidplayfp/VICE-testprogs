@@ -1,0 +1,13 @@
+# Makefile
+
+all:	modesplit.prg
+
+modesplit.prg: modesplit.asm
+	dasm $< -o$@
+
+clean:
+	rm -f *~ \#*\#
+	rm -f a.out
+	rm -f modesplit.prg
+
+# eof
