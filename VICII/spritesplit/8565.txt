@@ -1,15 +1,19 @@
-spritesplit on a C64C with 8565 compared to x64sc (r22181)
+spritesplit on a C64C with 8565 compared to HOXS-1.0.5.28
 ==========================================================
+
+All ss-*.PNG show the picture visible on my C64C with 8565 VIC-II.
+
 
 - ss-hires-color.prg
 looks the same on both
 
 - ss-hires-mc.prg
-looks the same on both*
+looks the same on both
 
 - ss-hires-mc-exp.prg
 looks different:
-On C64C the 3rd and 7th pattern the light green starts directly after the last white line
+On C64C the 2nd and 6th pattern show a four pixel wide gap in dark green. Rest
+looks like 3rd/7th pattern. Screenshot from VICE-2.2 looks good.
 
 - ss-mc-color0.prg
 looks the same on both
@@ -21,26 +25,29 @@ looks the same on both
 looks the same on both
 
 - ss-pri.prg
-looks the same on both
+On C64C every pattern has one line more in the upper part than Hoxs has.
+Screenshot from x64sc (r22246, default settings) which shows same picture as the C64C.
 
 - ss-pri-exp.prg
-looks the same on both
+Looks completely different.
+Screenshot from x64sc (r22246, default settings) which shows same picture as the C64C.
 
 - ss-pri-mc.prg
-looks the same on both*
+Looks completely different.
+Screenshot from x64sc (r22246, default settings) which shows same picture as the C64C.
 
 - ss-pri-mc-exp.prg
-looks the same on both
+Looks completely different.
+Screenshot from x64sc (r22246, default settings) which shows same picture as the C64C.
 
 - ss-unexp-exp-hires.prg
-looks the same on both
+Looks completely different.
+Screenshot from x64sc (r22246, default settings) which shows same picture as the C64C.
 
 - ss-unexp-exp-mc.prg
-looks the same on both
+Looks completely different.
+Screenshot from x64sc (r22246, default settings) which shows same picture as the C64C.
 
 - ss-xpos
 looks the same on both
-
-_______
-* ...but pretty hard to see differentiated pixels/colors.
 
