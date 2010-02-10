@@ -45,5 +45,5 @@ vborder2:
 ---------
 Clears RSEL for four cycles somewhere (variable delay with 'A' and 'S') at line 247.
 $00-$21 and $64-$80: Border4 closes at line 251 (complete last line visible)
-$22-$35: Border closes in line 247 just below the '-'
-$36-$63: Border closes in line 248 (another gfx line below the '-')
+$22-$35: Border closes in line 247 (displays 4 raster lines of thee last row)
+$36-$63: Border closes in line 248 (displays 5 raster lines of thee last row)

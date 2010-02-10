@@ -86,6 +86,9 @@ instruction:
   sta $0402,y
   lda inst2,y
   sta $042a,y
+  lda #$01
+  sta $d802,y
+  sta $d82a,y
   iny
   cpy #$05
   bne instruction
@@ -329,6 +332,8 @@ printhex:
     lda hex_lut,x
     ; print
     sta $0400,y
+    lda #$01
+    sta $d800,y
     ; lsr x4
     pla
     lsr
@@ -341,6 +346,8 @@ printhex:
     ; print
     dey
     sta $0400,y
+    lda #$01
+    sta $d800,y
     rts
 
 ; hex lookup table
