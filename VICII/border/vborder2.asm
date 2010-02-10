@@ -92,6 +92,15 @@ instruction:
   iny
   cpy #$05
   bne instruction
+  ldy #$00
+lastline:
+  lda #$66
+  sta $07c0,y
+  lda #$01
+  sta $dbc0,y
+  iny
+  cpy #$28
+  bne lastline
   jmp gui
 
 inst1: 
