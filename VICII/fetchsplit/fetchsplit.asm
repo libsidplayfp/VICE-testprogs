@@ -168,11 +168,6 @@ prepare_test:
 ; setup main screen
 	ldx	#0
 prt_lp1:
-	lda	#$20
-	sta	$3c00,x
-	sta	$3c00,x
-	sta	$3c00,x
-	sta	$3ce8,x
 	lda	#14
 	sta	$d800,x
 	sta	$d900,x
@@ -200,9 +195,9 @@ prt_lp3:
 	sta	$3c00+40*9-1,x
 	lda	#$01
 	sta	$3c00+40*13-1,x
-	lda	#$00
+	lda	#$40
 	sta	$3c00+40*17-1,x
-	lda	#$01
+	lda	#$41
 	sta	$3c00+40*21-1,x
 	dex
 	bne	prt_lp3
@@ -255,7 +250,26 @@ prt_lp3:
 	jsr	push_bitmap
 	jsr	push_bitmap
 	jsr	push_bitmap
+
+	ldx	#7
+prt_lp4:
+	lda	char_a,x
+	sta	$7000,x
+	lda	char_b,x
+	sta	$7800,x
+	lda	char_0,x
+	sta	$3808,x
+	lda	char_1,x
+	sta	$7808,x
+	lda	char_2,x
+	sta	$b808,x
+	lda	char_3,x
+	sta	$f808,x
+	dex
+	bpl	prt_lp4
 	
+	lda	#0
+	sta	$d022
 	lda	#14
 	sta	$d020
 	lda	#6
@@ -356,7 +370,7 @@ char_2:
 	dc.b	%00000000
 	dc.b	%00000000
 	dc.b	%00111100
-	dc.b	%00000110
+	dc.b	%01100110
 	dc.b	%00001100
 	dc.b	%00011000
 	dc.b	%01111110
@@ -367,9 +381,9 @@ char_3:
 	dc.b	%00000000
 	dc.b	%00000000
 	dc.b	%00111100
-	dc.b	%00000110
+	dc.b	%01100110
 	dc.b	%00001100
-	dc.b	%00000110
+	dc.b	%01100110
 	dc.b	%00111100
 	dc.b	%00000000
 CHAR_3	equ	char_3-chars
@@ -381,61 +395,37 @@ perform_test:
 	ds.b	4,$ea
 	bit	$ea
 ; start 0
-	nop
 	jsr	line0
-	nop
 	jsr	line0
-	nop
 	jsr	line0
-	nop
 	jsr	line0
-	nop
 	jsr	line0b
-	nop
 	jsr	line0b
-	nop
 	jsr	line0c
-	nop
 	jsr	line0c
 ; start 1
-	ldy	#$08
 	jsr	line1
-	iny
 	jsr	line1
-	iny
 	jsr	line1
-	iny
 	jsr	line1
-	iny
-	jsr	line1
-	iny
-	jsr	line1
-	iny
-	jsr	line1
-	iny
-	jsr	line1
+	jsr	line1b
+	jsr	line1b
+	jsr	line1c
+	jsr	line1c
 ; start 2
-	ldy	#$08
 	jsr	line2
-	iny
 	jsr	line2
-	iny
 	jsr	line2
-	iny
 	jsr	line2
-	iny
-	jsr	line2
-	iny
-	jsr	line2
-	iny
-	jsr	line2
-	iny
-	jsr	line2
+	jsr	line2b
+	jsr	line2b
+	jsr	line2c
+	jsr	line2c
 
 	ds.b	6,$ea	
 	lda	#$1b
 	sta	$d011
-	lda	#$F5
+	lda	#$f5
 	sta	$d018
 	lda	#7
 	sta	$d021
@@ -451,7 +441,7 @@ perform_test:
 
 	align	256
 line0:
-	ds.b	5,$ea
+	ds.b	6,$ea
 	ldx	#$3b
 	stx	$d011
 	lda	#7
@@ -502,7 +492,7 @@ line0_do:
 	rts
 
 line0b:
-	ds.b	5,$ea
+	ds.b	6,$ea
 	ldx	#$3b
 	stx	$d011
 	lda	#7
@@ -553,7 +543,7 @@ line0b_do:
 	rts
 
 line0c:
-	ds.b	5,$ea
+	ds.b	6,$ea
 	ldx	#$3b
 	stx	$d011
 	lda	#7
@@ -606,12 +596,19 @@ line0c_do:
 	align	256
 line1:
 	ds.b	6,$ea
-	sty	$d016
+	ldx	#$1b
+	stx	$d011
 	lda	#7
 	sta	$d021
 	lda	#6
 	sta	$d021
-	ds.b	11,$ea
+	ldx	#$97
+	stx	$dd00
+	ldx	#$3f
+	stx	$dd02
+	ldx	#$fc
+	stx	$d018
+	ds.b	2,$ea
 
 	jsr	line1_do
 	jsr	line1_do
@@ -622,37 +619,150 @@ line1:
 
 	ldx	#$1b
 	stx	$d011
-	sty	$d016
-	ds.b	3,$ea
+	ldx	#$f5
+	stx	$d018
+	ds.b	2,$ea
 	bit	$ea
 	rts
 
 line1_do:
-	ldx	#$1b
-	stx	$d011
-	sty	$d016
+	ldx	#$96
+	stx	$dd00
+	ldx	#$3f
+	stx	$dd02
+	lda	#$fc
+	sta	$d018
+	lda	#$fe
+	sta	$d018
+	lda	#$fc
+	sta	$d018
+	lda	#$fe
+	sta	$d018
+	lda	#$fc
+	sta	$d018
+	lda	#$fe
+	sta	$d018
+	bit	$ea
+	rts
 
-	ldx	#$3b
-	stx	$d011
-	ldx	#$5b
-	stx	$d011
-	ldx	#$3b
-	stx	$d011
+line1b:
+	ds.b	6,$ea
 	ldx	#$1b
 	stx	$d011
-	ds.b	7,$ea
+	lda	#7
+	sta	$d021
+	lda	#6
+	sta	$d021
+	ldx	#$97
+	stx	$dd00
+	ldx	#$3f
+	stx	$dd02
+	ldx	#$fe
+	stx	$d018
+	ds.b	2,$ea
+
+	jsr	line1b_do
+	jsr	line1b_do
+	jsr	line1b_do
+	jsr	line1b_do
+	jsr	line1b_do
+	jsr	line1b_do
+
+	ldx	#$1b
+	stx	$d011
+	ldx	#$f5
+	stx	$d018
+	ds.b	2,$ea
+	bit	$ea
+	rts
+
+line1b_do:
+	ldx	#$94
+	stx	$dd00
+	ldx	#$3f
+	stx	$dd02
+	lda	#$97
+	sta	$dd00
+	lda	#$96
+	sta	$dd00
+	lda	#$95
+	sta	$dd00
+	lda	#$94
+	sta	$dd00
+	lda	#$97
+	sta	$dd00
+	lda	#$96
+	sta	$dd00
+	bit	$ea
+	rts
+
+line1c:
+	ds.b	6,$ea
+	ldx	#$1b
+	stx	$d011
+	lda	#7
+	sta	$d021
+	lda	#6
+	sta	$d021
+	ldx	#$97
+	stx	$dd00
+	ldx	#$3f
+	stx	$dd02
+	ldx	#$fe
+	stx	$d018
+	ds.b	2,$ea
+
+	jsr	line1c_do
+	jsr	line1c_do
+	jsr	line1c_do
+	jsr	line1c_do
+	jsr	line1c_do
+	jsr	line1c_do
+
+	ldx	#$1b
+	stx	$d011
+	ldx	#$f5
+	stx	$d018
+	ds.b	2,$ea
+	bit	$ea
+	rts
+
+line1c_do:
+	ldx	#$94
+	stx	$dd00
+	ldx	#$3c
+	stx	$dd02
+	lda	#$3d
+	sta	$dd02
+	lda	#$3f
+	sta	$dd02
+	lda	#$3c
+	sta	$dd02
+	lda	#$3d
+	sta	$dd02
+	lda	#$3e
+	sta	$dd02
+	lda	#$3f
+	sta	$dd02
 	bit	$ea
 	rts
 
 	align	256
 line2:
 	ds.b	6,$ea
-	sty	$d016
+	ldx	#$5b
+	stx	$d011
 	lda	#7
 	sta	$d021
 	lda	#6
 	sta	$d021
-	ds.b	11,$ea
+	ldx	#$97
+	stx	$dd00
+	ldx	#$3f
+	stx	$dd02
+	ldx	#$fc
+	stx	$d018
+	ds.b	2,$ea
 
 	jsr	line2_do
 	jsr	line2_do
@@ -663,22 +773,133 @@ line2:
 
 	ldx	#$1b
 	stx	$d011
-	sty	$d016
-	ds.b	3,$ea
+	ldx	#$f5
+	stx	$d018
+	ds.b	2,$ea
 	bit	$ea
 	rts
 
 line2_do:
-	ldx	#$1b
-	stx	$d011
-	sty	$d016
-	tya
-	ora	#%00010000
-	sta	$d016
-	and	#%11101111
-	sta	$d016
-	ds.b	12,$ea
+	ldx	#$96
+	stx	$dd00
+	ldx	#$3f
+	stx	$dd02
+	lda	#$fc
+	sta	$d018
+	lda	#$fe
+	sta	$d018
+	lda	#$fc
+	sta	$d018
+	lda	#$fe
+	sta	$d018
+	lda	#$fc
+	sta	$d018
+	lda	#$fe
+	sta	$d018
 	bit	$ea
 	rts
+
+line2b:
+	ds.b	6,$ea
+	ldx	#$5b
+	stx	$d011
+	lda	#7
+	sta	$d021
+	lda	#6
+	sta	$d021
+	ldx	#$97
+	stx	$dd00
+	ldx	#$3f
+	stx	$dd02
+	ldx	#$fe
+	stx	$d018
+	ds.b	2,$ea
+
+	jsr	line2b_do
+	jsr	line2b_do
+	jsr	line2b_do
+	jsr	line2b_do
+	jsr	line2b_do
+	jsr	line2b_do
+
+	ldx	#$1b
+	stx	$d011
+	ldx	#$f5
+	stx	$d018
+	ds.b	2,$ea
+	bit	$ea
+	rts
+
+line2b_do:
+	ldx	#$94
+	stx	$dd00
+	ldx	#$3f
+	stx	$dd02
+	lda	#$97
+	sta	$dd00
+	lda	#$96
+	sta	$dd00
+	lda	#$95
+	sta	$dd00
+	lda	#$94
+	sta	$dd00
+	lda	#$97
+	sta	$dd00
+	lda	#$96
+	sta	$dd00
+	bit	$ea
+	rts
+
+line2c:
+	ds.b	6,$ea
+	ldx	#$5b
+	stx	$d011
+	lda	#7
+	sta	$d021
+	lda	#6
+	sta	$d021
+	ldx	#$97
+	stx	$dd00
+	ldx	#$3f
+	stx	$dd02
+	ldx	#$fe
+	stx	$d018
+	ds.b	2,$ea
+
+	jsr	line2c_do
+	jsr	line2c_do
+	jsr	line2c_do
+	jsr	line2c_do
+	jsr	line2c_do
+	jsr	line2c_do
+
+	ldx	#$1b
+	stx	$d011
+	ldx	#$f5
+	stx	$d018
+	ds.b	2,$ea
+	bit	$ea
+	rts
+
+line2c_do:
+	ldx	#$94
+	stx	$dd00
+	ldx	#$3c
+	stx	$dd02
+	lda	#$3d
+	sta	$dd02
+	lda	#$3f
+	sta	$dd02
+	lda	#$3c
+	sta	$dd02
+	lda	#$3d
+	sta	$dd02
+	lda	#$3e
+	sta	$dd02
+	lda	#$3f
+	sta	$dd02
+	bit	$ea
+	rts
+
 	
 ; eof
