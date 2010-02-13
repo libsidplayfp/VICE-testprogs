@@ -11,10 +11,12 @@ all: record1.prg record2.prg record3.prg \
      record4.prg record5.prg record6.prg \
      record1b.prg record2b.prg record3b.prg \
      record4b.prg record5b.prg record6b.prg \
+     nmirecord6.prg nmirecord6b.prg \
      test1.prg test2.prg test3.prg \
      test4.prg test5.prg test6.prg \
      test1b.prg test2b.prg test3b.prg \
-     test4b.prg test5b.prg test6b.prg
+     test4b.prg test5b.prg test6b.prg \
+     nmitest6.prg nmitest6b.prg
 
 record1.prg: record1.asm irqdma.asm
 record2.prg: record2.asm irqdma.asm
@@ -30,6 +32,9 @@ record4b.prg: record4b.asm irqdma.asm
 record5b.prg: record5b.asm irqdma.asm
 record6b.prg: record6b.asm irqdma.asm
 
+nmirecord6.prg: nmirecord6.asm nmidma.asm
+nmirecord6b.prg: nmirecord6b.asm nmidma.asm
+
 test1.prg: test1.asm irq1.dump irqdma.asm
 test2.prg: test2.asm irq2.dump irqdma.asm
 test3.prg: test3.asm irq3.dump irqdma.asm
@@ -43,6 +48,9 @@ test3b.prg: test3b.asm irq3b.dump irqdma.asm
 test4b.prg: test4b.asm irq4b.dump irqdma.asm
 test5b.prg: test5b.asm irq5b.dump irqdma.asm
 test6b.prg: test6b.asm irq6b.dump irqdma.asm
+
+nmitest6.prg: nmitest6.asm nmi6.dump nmidma.asm
+nmitest6b.prg: nmitest6b.asm nmi6b.dump nmidma.asm
 
 clean:
 	-$(REMOVE) *.prg
