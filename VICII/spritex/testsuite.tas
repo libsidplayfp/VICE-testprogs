@@ -369,6 +369,7 @@ smod:
 ; high: value of $D010 that is used for the test
 ; reference: Value of the collision that is shown on a real C64
 testtable:
+  .byte 13, 14, 128, 72, 72, 129, 129
 
   .byte 40, 0, 95, 119, 96, 0, 0		; test collision with new position
   .byte 40, 0, 96, 120, 97, 0, 129
@@ -403,6 +404,7 @@ testtable:
   .byte 61, 14, 100, 76, 99, 0, 129
   .byte 60, 14, 100, 76, 99, 0, 129	
   .byte 59, 14, 100, 76, 99, 0, 129
+
 
 
   .byte 0, 0, 0, 0, 0, 0
