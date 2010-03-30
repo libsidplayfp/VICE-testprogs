@@ -34,6 +34,13 @@ key_tchar_p = $46
 key_tchar_nn = $54
 key_tchar_pp = $47
 
+key_tcharmod_n = $59
+key_tcharmod_p = $48
+key_tcharmod_nn = $55
+key_tcharmod_pp = $4a
+
+key_tmodmode = $4b
+
 key_tmode_e = $45
 key_tmode_b = $42
 
@@ -314,6 +321,7 @@ mainloop:
     ; print current settings
     jsr print_split_loc
     jsr print_test_char
+    jsr print_test_char_mod
     jsr print_test_vmode
     jsr print_colors
 
@@ -331,9 +339,9 @@ mainloop_wait:
     ; print pressed key
     pha
     tax
-    lda #<screen
+    lda #<(screen + 23*40)
     sta tmpptr
-    lda #>screen
+    lda #>(screen + 23*40)
     sta tmpptr+1
     txa
     jsr printhex
@@ -414,6 +422,42 @@ mainloop_wait:
     ; tchar += 16
     lda #$10
     jsr change_tchar
+    jmp mainloop
+
+++  cmp #key_tcharmod_p
+    bne ++
+    ; tcharmod--
+    lda #-1
+    jsr change_tcharmod
+    jmp mainloop
+
+++  cmp #key_tcharmod_pp
+    bne ++
+    ; tcharmod -= 16
+    lda #-$10
+    jsr change_tcharmod
+    jmp mainloop
+
+++  cmp #key_tcharmod_n
+    bne ++
+    ; tcharmod++
+    lda #1
+    jsr change_tcharmod
+    jmp mainloop
+
+++  cmp #key_tcharmod_nn
+    bne ++
+    ; tcharmod += 16
+    lda #$10
+    jsr change_tcharmod
+    jmp mainloop
+
+++  cmp #key_tmodmode
+    bne ++
+    ; toggle adc/eor
+    lda tmodmode
+    eor #$20    ; adc #imm = $69, eor #imm = $49
+    sta tmodmode
     jmp mainloop
 
 ++  cmp #key_tmode_e
@@ -576,6 +620,19 @@ change_tchar_amount = * + 1
     sta tchar
     rts
 
+; - change_tcharmod
+; parameter:
+;  a = amount (msb = direction)
+;
+change_tcharmod:
+    sta change_tcharmod_amount
+    lda tcharmod
+    clc
+change_tcharmod_amount = * + 1
+    adc #$12
+    sta tcharmod
+    rts
+
 ; - print_text
 ; parameters:
 ;  scrptr -> screen location to print to
@@ -610,11 +667,16 @@ print_test_line:
     sta tmpptr
     lda split_y_text_msb_lut,x
     sta tmpptr+1
-    ldy #39
+    ldy #0
     lda tchar
 -   sta (tmpptr),y
-    dey
-    bpl -
+    clc
+tmodmode = *
+tcharmod = * + 1
+    adc #$00
+    iny
+    cpy #40
+    bne -
     rts
 
 ; - print_split_loc
@@ -644,6 +706,23 @@ print_test_char:
     lda #>text_location_tchar_hex
     sta tmpptr+1
     lda tchar
+    jsr printhex
+    rts
+
+; - print_test_char_mod
+;
+print_test_char_mod:
+    lda #<text_location_tcharmod
+    sta tmpptr
+    lda #>text_location_tcharmod
+    sta tmpptr+1
+    lda tcharmod
+    jsr printhex
+    lda #<text_location_tmodmode
+    sta tmpptr
+    lda #>text_location_tmodmode
+    sta tmpptr+1
+    lda tmodmode
     jsr printhex
     rts
 
@@ -739,17 +818,23 @@ hex_lut: !scr "0123456789abcdef"
 message:
 ;     |---------0---------0---------0--------|
 !scr "                                        "
-!scr "movesplit v3 - controls:                "
+!scr "movesplit v4 - controls:                "
 !scr " a/d/w/s - move split position : "
 text_location_split_x = * - message + screen
 !scr                                  "xx/"
 text_location_split_y = * - message + screen
 !scr                                     "xx  "
-!scr " r/f/t/g - change test char    : "
+!scr " r/f/t/g - change base char    : "
 text_location_tchar_hex = * - message + screen
 !scr                                  "xx = "
 text_location_tchar = * - message + screen
 !scr                                       "x "
+!scr " y/h/u/j - change char modifier: "
+text_location_tcharmod = * - message + screen
+!scr                                  "xx     "
+!scr " k - change modifier (adc/eor) : "
+text_location_tmodmode = * - message + screen
+!scr                                  "xx     "
 !scr " (sh-)e/b - toggle ecm/bmm bit : "
 text_location_tmode_from = * - message + screen
 !scr                                  "xx->"
