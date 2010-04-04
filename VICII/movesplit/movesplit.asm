@@ -225,9 +225,10 @@ testloop_pre:
     jsr delay
 
     ; additional delay
-    ldx #4
+    ldx #3
 -   dex
     bne -
+    lda $ff
 
     ; loops
     ldy #7
@@ -250,13 +251,13 @@ test_split_to = * + 1
     ; do the split
 test_split_reg = * + 1
     sta $d011
+    nop
 test_split_reg2 = * + 1
     stx $d011
 
     ldx #7
 -   dex
     bne -
-    nop
     nop
     nop
     nop
@@ -983,7 +984,7 @@ hex_lut: !scr "0123456789abcdef"
 message:
 ;     |---------0---------0---------0--------|
 !scr "                                        "
-!scr "movesplit v5 - controls:                "
+!scr "movesplit v7 - controls:                "
 !scr " a/d/w/s - move split position : "
 text_location_split_x = * - message + screen
 !scr                                  "xx/"
