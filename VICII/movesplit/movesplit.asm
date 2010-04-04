@@ -51,6 +51,11 @@ key_tmode_e_to = $c5
 key_tmode_b_to = $c2
 key_tmode_m_to = $cd
 
+key_xscroll_from_p = $4f
+key_xscroll_from_n = $50
+key_xscroll_to_p = $cf
+key_xscroll_to_n = $d0
+
 key_split_reg = $4e
 
 key_d022_n = $5a
@@ -266,8 +271,8 @@ test_split_reg2 = * + 1
     ; restore normal mode
     ldx #vmode_stdtext
     stx $d011
-    ldx #mmode_stdtext
-    stx $d016
+    lda #mmode_stdtext
+    sta $d016
 endirq:
     jmp $ea81     ; return to the auxiliary raster interrupt
 
@@ -511,6 +516,46 @@ mainloop_wait:
     sta test_mmode_to
     jmp mainloop
 
+++  cmp #key_xscroll_from_n
+    bne ++
+    ; xscroll_from++
+    lda test_xscroll_from
+    clc
+    adc #1
+    and #$07
+    sta test_xscroll_from
+    jmp mainloop
+
+++  cmp #key_xscroll_from_p
+    bne ++
+    ; xscroll_from--
+    lda test_xscroll_from
+    sec
+    sbc #1
+    and #$07
+    sta test_xscroll_from
+    jmp mainloop
+
+++  cmp #key_xscroll_to_n
+    bne ++
+    ; xscroll_to++
+    lda test_xscroll_to
+    clc
+    adc #1
+    and #$07
+    sta test_xscroll_to
+    jmp mainloop
+
+++  cmp #key_xscroll_to_p
+    bne ++
+    ; xscroll_to--
+    lda test_xscroll_to
+    sec
+    sbc #1
+    and #$07
+    sta test_xscroll_to
+    jmp mainloop
+
 ++  cmp #key_split_reg
     bne ++
     ; toggle $d011/6
@@ -653,6 +698,16 @@ update_y:
 ; - update_split
 ;
 update_split:
+    ; update xscroll
+    lda test_mmode_from
+    and #$f8
+    ora test_xscroll_from
+    sta test_mmode_from
+    lda test_mmode_to
+    and #$f8
+    ora test_xscroll_to
+    sta test_mmode_to
+
     ; assume $d011 split
     ldx test_vmode_from
     ldy test_vmode_to
@@ -664,6 +719,7 @@ update_split:
     beq +
     ; $d016 split
     lda #mmode_stdtext
+    ora test_xscroll_from
     sta test_mmode_init
     lda test_vmode_from
     sta test_vmode_init
@@ -917,6 +973,9 @@ test_mmode_from: !by mmode_stdtext
 test_vmode_to: !by vmode_stdtext
 test_mmode_to: !by mmode_stdtext
 
+test_xscroll_from: !by 0
+test_xscroll_to: !by 0
+
 ; hex lookup table
 hex_lut: !scr "0123456789abcdef"
 
@@ -951,13 +1010,13 @@ text_location_tmmode_from = * - message + screen
 !scr                                  "xx->"
 text_location_tmmode_to = * - message + screen
 !scr                                      "xx "
+!scr " (sh-)o/p - set xscroll : (see above)   "
 !scr " n - toggle $d0xx reg to split : "
 text_location_split_reg = * - message + screen
 !scr                                  "xx     "
 !scr " z/x/c - inc $d022/3/4: "
 text_location_d02x = * - message + screen
 !scr                         "xxxxxx          "
-!scr "                                        "
 !scr "                                        "
 !scr "                                        "
 !scr "                                        "
