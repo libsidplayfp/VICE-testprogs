@@ -1,6 +1,6 @@
 ; movesplit
 ; ---------
-; Does a $d011 split at user-movable position.
+; Does a $d011/6 split at user-movable position.
 
 ; NOTE! Only PAL tested.
 
@@ -16,7 +16,9 @@ CYCLES = 63    ; 6569 (all revisions), PAL-B
 start_raster = 47       ; start of raster interrupt
 
 vmode_stdtext = $1b     ; d011 flags for normal vmode
-vmode_test = $5b        ; d011 flags for tested split
+vmode_test = $5b        ; d011 flags for initial tested split
+mmode_stdtext = $c8     ; d016 flags for normal vmode
+mmode_test = $d8        ; d016 flags for initial tested split
 
 cinv = $0314
 cnmi = $0318
@@ -43,9 +45,13 @@ key_tmodmode = $4b
 
 key_tmode_e = $45
 key_tmode_b = $42
+key_tmode_m = $4d
 
 key_tmode_e_to = $c5
 key_tmode_b_to = $c2
+key_tmode_m_to = $cd
+
+key_split_reg = $4e
 
 key_d022_n = $5a
 key_d023_n = $58
@@ -214,34 +220,34 @@ testloop_pre:
     jsr delay
 
     ; additional delay
-    ldx #6
+    ldx #4
 -   dex
     bne -
-    nop
 
     ; loops
     ldy #7
 
-testloop:
-!if 0 {
-    ; prepare split values
-    lda #2 ;#vmode_test
-    ldx #6 ;#vmode_stdtext
+    ; initial values
+test_vmode_init = * + 1
+    lda #vmode_stdtext
+test_mmode_init = * + 1
+    ldx #mmode_stdtext
+    sta $d011
+    stx $d016
 
-    ; do the split
-    sta $d021
-    stx $d021
-} else {
+testloop:
     ; prepare split values
-test_vmode_from = * + 1
+test_split_from = * + 1
     lda #vmode_test
-test_vmode_to = * + 1
+test_split_to = * + 1
     ldx #vmode_stdtext
 
     ; do the split
+test_split_reg = * + 1
     sta $d011
+test_split_reg2 = * + 1
     stx $d011
-}
+
     ldx #7
 -   dex
     bne -
@@ -257,8 +263,11 @@ test_vmode_to = * + 1
     dec $d020
     inc $d020
 
+    ; restore normal mode
     ldx #vmode_stdtext
     stx $d011
+    ldx #mmode_stdtext
+    stx $d016
 endirq:
     jmp $ea81     ; return to the auxiliary raster interrupt
 
@@ -307,22 +316,16 @@ smod:
 ; --  Main loop
 
 mainloop:
-    ; print some text
-    lda #>screen
-    sta scrptr+1
-    lda #<screen
-    sta scrptr
-    lda #>message
-    sta strptr+1
-    lda #<message
-    sta strptr
-    jsr print_text
+    ; update split variables
+    jsr update_split
 
     ; print current settings
     jsr print_split_loc
     jsr print_test_char
     jsr print_test_char_mod
     jsr print_test_vmode
+    jsr print_test_mmode
+    jsr print_split_reg
     jsr print_colors
 
     ; update the active line
@@ -476,6 +479,14 @@ mainloop_wait:
     sta test_vmode_from
     jmp mainloop
 
+++  cmp #key_tmode_m
+    bne ++
+    ; toggle mcm
+    lda test_mmode_from
+    eor #$10
+    sta test_mmode_from
+    jmp mainloop
+
 ++  cmp #key_tmode_e_to
     bne ++
     ; toggle ecm
@@ -490,6 +501,22 @@ mainloop_wait:
     lda test_vmode_to
     eor #$20
     sta test_vmode_to
+    jmp mainloop
+
+++  cmp #key_tmode_m_to
+    bne ++
+    ; toggle mcm
+    lda test_mmode_to
+    eor #$10
+    sta test_mmode_to
+    jmp mainloop
+
+++  cmp #key_split_reg
+    bne ++
+    ; toggle $d011/6
+    lda test_split_reg
+    eor #$07
+    sta test_split_reg
     jmp mainloop
 
 ++  cmp #key_d022_n
@@ -579,6 +606,17 @@ setup:
     lda #$18
     sta $d018
 
+    ; print some text
+    lda #>screen
+    sta scrptr+1
+    lda #<screen
+    sta scrptr
+    lda #>message
+    sta strptr+1
+    lda #<message
+    sta strptr
+    jsr print_text
+
     rts
 
 
@@ -594,17 +632,51 @@ update_y:
     lsr $d019     ; and video interrupts
     cli
 
-    ; erase old test line
+    ; redraw old test line
     ldx split_y_old
     lda split_y_text_lsb_lut,x
     sta scrptr
     lda split_y_text_msb_lut,x
     sta scrptr+1
-    lda #>empty_line
-    sta strptr+1
-    lda #<empty_line
+    lda message_y_lsb_lut,x
     sta strptr
-    jsr print_text
+    lda message_y_msb_lut,x
+    sta strptr+1
+
+    ldy #39
+-   lda (strptr),y
+    sta (scrptr),y
+    dey
+    bpl -
+    rts
+
+; - update_split
+;
+update_split:
+    ; assume $d011 split
+    ldx test_vmode_from
+    ldy test_vmode_to
+
+    ; update other split location
+    lda test_split_reg
+    sta test_split_reg2
+    cmp #$11
+    beq +
+    ; $d016 split
+    lda #mmode_stdtext
+    sta test_mmode_init
+    lda test_vmode_from
+    sta test_vmode_init
+    ldx test_mmode_from
+    ldy test_mmode_to
+    bne ++
++   ; $d011 split
+    lda #vmode_stdtext
+    sta test_vmode_init
+    lda test_mmode_from
+    sta test_mmode_init
+++  stx test_split_from
+    sty test_split_to
     rts
 
 ; - change_tchar
@@ -729,17 +801,45 @@ print_test_char_mod:
 ; - print_test_vmode
 ;
 print_test_vmode:
-    lda #<text_location_tmode_from
+    lda #<text_location_tvmode_from
     sta tmpptr
-    lda #>text_location_tmode_from
+    lda #>text_location_tvmode_from
     sta tmpptr+1
     lda test_vmode_from
     jsr printhex
-    lda #<text_location_tmode_to
+    lda #<text_location_tvmode_to
     sta tmpptr
-    lda #>text_location_tmode_to
+    lda #>text_location_tvmode_to
     sta tmpptr+1
     lda test_vmode_to
+    jsr printhex
+    rts
+
+; - print_test_mmode
+;
+print_test_mmode:
+    lda #<text_location_tmmode_from
+    sta tmpptr
+    lda #>text_location_tmmode_from
+    sta tmpptr+1
+    lda test_mmode_from
+    jsr printhex
+    lda #<text_location_tmmode_to
+    sta tmpptr
+    lda #>text_location_tmmode_to
+    sta tmpptr+1
+    lda test_mmode_to
+    jsr printhex
+    rts
+
+; - print_split_reg
+;
+print_split_reg:
+    lda #<text_location_split_reg
+    sta tmpptr
+    lda #>text_location_split_reg
+    sta tmpptr+1
+    lda test_split_reg
     jsr printhex
     rts
 
@@ -811,6 +911,12 @@ split_y_old: !by 0
 ; current test char
 tchar: !by 0
 
+; current splits
+test_vmode_from: !by vmode_test
+test_mmode_from: !by mmode_stdtext
+test_vmode_to: !by vmode_stdtext
+test_mmode_to: !by mmode_stdtext
+
 ; hex lookup table
 hex_lut: !scr "0123456789abcdef"
 
@@ -818,7 +924,7 @@ hex_lut: !scr "0123456789abcdef"
 message:
 ;     |---------0---------0---------0--------|
 !scr "                                        "
-!scr "movesplit v4 - controls:                "
+!scr "movesplit v5 - controls:                "
 !scr " a/d/w/s - move split position : "
 text_location_split_x = * - message + screen
 !scr                                  "xx/"
@@ -836,18 +942,43 @@ text_location_tcharmod = * - message + screen
 text_location_tmodmode = * - message + screen
 !scr                                  "xx     "
 !scr " (sh-)e/b - toggle ecm/bmm bit : "
-text_location_tmode_from = * - message + screen
+text_location_tvmode_from = * - message + screen
 !scr                                  "xx->"
-text_location_tmode_to = * - message + screen
+text_location_tvmode_to = * - message + screen
 !scr                                      "xx "
+!scr " (sh-)m - toggle mcm bit       : "
+text_location_tmmode_from = * - message + screen
+!scr                                  "xx->"
+text_location_tmmode_to = * - message + screen
+!scr                                      "xx "
+!scr " n - toggle $d0xx reg to split : "
+text_location_split_reg = * - message + screen
+!scr                                  "xx     "
 !scr " z/x/c - inc $d022/3/4: "
 text_location_d02x = * - message + screen
 !scr                         "xxxxxx          "
-empty_line
+!scr "                                        "
+!scr "                                        "
+!scr "                                        "
+!scr "                                        "
+!scr "                                        "
+!scr "                                        "
+!scr "                                        "
+!scr "                                        "
+!scr "                                        "
+!scr "                                        "
+!scr "                                        "
+!scr "                                        "
+!scr "                                        "
+!scr "                                        "
 !scr "                                        "
 !by 0
 
 ; lookup for positions
+message_y_lsb_lut:
+!for i, 25 { !by <(message + (i-1)*40) }
+message_y_msb_lut:
+!for i, 25 { !by >(message + (i-1)*40) }
 split_y_text_lsb_lut:
 !for i, 25 { !by <(screen + (i-1)*40) }
 split_y_text_msb_lut:
