@@ -58,9 +58,12 @@ key_xscroll_to_n = $d0
 
 key_split_reg = $4e
 
+key_col_fg_n = $d6
+key_d021_n = $56
 key_d022_n = $5a
 key_d023_n = $58
 key_d024_n = $43
+
 
 
 ; --- Variables
@@ -565,6 +568,18 @@ mainloop_wait:
     sta test_split_reg
     jmp mainloop
 
+++  cmp #key_col_fg_n
+    bne ++
+    ; inc fg color
+    inc tcharcol
+    jmp mainloop
+
+++  cmp #key_d021_n
+    bne ++
+    ; d021++
+    inc $d021
+    jmp mainloop
+
 ++  cmp #key_d022_n
     bne ++
     ; d022++
@@ -596,6 +611,7 @@ setup:
 
     ; set screen color
     lda 646
+    sta tcharcol
     ldx #0
 -   sta $d800,x
     sta $d900,x
@@ -682,8 +698,12 @@ update_y:
     ldx split_y_old
     lda split_y_text_lsb_lut,x
     sta scrptr
+    sta tmpptr
     lda split_y_text_msb_lut,x
     sta scrptr+1
+    clc
+    adc #>($d800 - screen)
+    sta tmpptr+1
     lda message_y_lsb_lut,x
     sta strptr
     lda message_y_msb_lut,x
@@ -692,6 +712,8 @@ update_y:
     ldy #39
 -   lda (strptr),y
     sta (scrptr),y
+    lda 646
+    sta (tmpptr),y
     dey
     bpl -
     rts
@@ -794,8 +816,12 @@ print_test_line:
     ldx split_y
     lda split_y_text_lsb_lut,x
     sta tmpptr
+    sta strptr
     lda split_y_text_msb_lut,x
     sta tmpptr+1
+    clc
+    adc #>($d800 - screen)
+    sta strptr+1
     ldy #0
     lda tchar
 -   sta (tmpptr),y
@@ -803,6 +829,11 @@ print_test_line:
 tmodmode = *
 tcharmod = * + 1
     adc #$00
+    pha
+tcharcol = * + 1
+    lda #$00
+    sta (strptr),y
+    pla
     iny
     cpy #40
     bne -
@@ -907,15 +938,13 @@ print_colors:
     sta tmpptr
     lda #>text_location_d02x
     sta tmpptr+1
-    lda $d022
-    and #$0f
-    jsr printhex
-    lda $d023
-    and #$0f
-    jsr printhex
-    lda $d024
-    and #$0f
-    jsr printhex
+    ldy #0
+    lda tcharcol
+    jsr printhexnibble
+-   lda $d020, y
+    jsr printhexnibble
+    cpy #6
+    bne -
     rts
 
 ; - printhex
@@ -956,6 +985,23 @@ printhex:
     inc tmpptr+1
 +   rts
 
+; - printhexnibble
+; parameters:
+;  tmpptr:h + y -> screen location to print to
+;  a = value to print
+; returns:
+;  y++
+;
+printhexnibble:
+    ; mask lower
+    and #$0f
+    ; lookup
+    tax
+    lda hex_lut,x
+    ; print
+    sta (tmpptr),y
+    iny
+    rts
 
 
 ; --- Data
@@ -984,7 +1030,7 @@ hex_lut: !scr "0123456789abcdef"
 message:
 ;     |---------0---------0---------0--------|
 !scr "                                        "
-!scr "movesplit v7 - controls:                "
+!scr "movesplit v8 - controls:                "
 !scr " a/d/w/s - move split position : "
 text_location_split_x = * - message + screen
 !scr                                  "xx/"
@@ -1015,9 +1061,9 @@ text_location_tmmode_to = * - message + screen
 !scr " n - toggle $d0xx reg to split : "
 text_location_split_reg = * - message + screen
 !scr                                  "xx     "
-!scr " z/x/c - inc $d022/3/4: "
+!scr " (sh)v/z/x/c - fg/$d021/2/3/4  : "
 text_location_d02x = * - message + screen
-!scr                         "xxxxxx          "
+!scr                                  "xxxxx  "
 !scr "                                        "
 !scr "                                        "
 !scr "                                        "
