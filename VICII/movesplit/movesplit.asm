@@ -58,12 +58,12 @@ key_xscroll_to_n = $d0
 
 key_split_reg = $4e
 
-key_col_fg_n = $d6
-key_d021_n = $56
-key_d022_n = $5a
-key_d023_n = $58
-key_d024_n = $43
-
+key_col_fg1_n = $5a
+key_col_fg2_n = $da
+key_d021_n = $58
+key_d022_n = $d8
+key_d023_n = $43
+key_d024_n = $c3
 
 
 ; --- Variables
@@ -568,10 +568,16 @@ mainloop_wait:
     sta test_split_reg
     jmp mainloop
 
-++  cmp #key_col_fg_n
+++  cmp #key_col_fg1_n
     bne ++
-    ; inc fg color
-    inc tcharcol
+    ; inc fg color 1
+    inc tcharcol1
+    jmp mainloop
+
+++  cmp #key_col_fg2_n
+    bne ++
+    ; inc fg color 2
+    inc tcharcol2
     jmp mainloop
 
 ++  cmp #key_d021_n
@@ -611,7 +617,9 @@ setup:
 
     ; set screen color
     lda 646
-    sta tcharcol
+    sta tcharcol1
+    sta tcharcol2
+
     ldx #0
 -   sta $d800,x
     sta $d900,x
@@ -830,9 +838,13 @@ tmodmode = *
 tcharmod = * + 1
     adc #$00
     pha
-tcharcol = * + 1
+tcharcol1 = * + 1
     lda #$00
-    sta (strptr),y
+    cpy #20
+    bcc +
+tcharcol2 = * + 1
+    lda #$00
++   sta (strptr),y
     pla
     iny
     cpy #40
@@ -934,16 +946,23 @@ print_split_reg:
 ; - print_colors
 ;
 print_colors:
+    lda #<text_location_fg
+    sta tmpptr
+    lda #>text_location_fg
+    sta tmpptr+1
+    ldy #0
+    lda tcharcol1
+    jsr printhexnibble
+    lda tcharcol2
+    jsr printhexnibble
     lda #<text_location_d02x
     sta tmpptr
     lda #>text_location_d02x
     sta tmpptr+1
     ldy #0
-    lda tcharcol
+-   lda $d021,y
     jsr printhexnibble
--   lda $d020, y
-    jsr printhexnibble
-    cpy #6
+    cpy #4
     bne -
     rts
 
@@ -1030,7 +1049,7 @@ hex_lut: !scr "0123456789abcdef"
 message:
 ;     |---------0---------0---------0--------|
 !scr "                                        "
-!scr "movesplit v8 - controls:                "
+!scr "movesplit v9 - controls:                "
 !scr " a/d/w/s - move split position : "
 text_location_split_x = * - message + screen
 !scr                                  "xx/"
@@ -1061,9 +1080,11 @@ text_location_tmmode_to = * - message + screen
 !scr " n - toggle $d0xx reg to split : "
 text_location_split_reg = * - message + screen
 !scr                                  "xx     "
-!scr " (sh)v/z/x/c - fg/$d021/2/3/4  : "
+!scr " (sh)z/x/c - fg1/2/$d021/2/3/4 : "
+text_location_fg = * - message + screen
+!scr                                  "xx"
 text_location_d02x = * - message + screen
-!scr                                  "xxxxx  "
+!scr                                    "xxxx "
 !scr "                                        "
 !scr "                                        "
 !scr "                                        "
