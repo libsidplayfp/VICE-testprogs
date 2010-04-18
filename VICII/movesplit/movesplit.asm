@@ -6,6 +6,14 @@
 
 !ct scr
 
+; --- Macros
+
+; SpriteLine - for easy definition of sprites
+; from "ddrv.a" by Marco Baye
+!macro SpriteLine .v {
+!by .v>>16, (.v>>8)&255, .v&255
+}
+
 ; --- Consts
 
 ; Select the video timing (processor clock cycles per raster line)
@@ -14,6 +22,7 @@
 CYCLES = 63    ; 6569 (all revisions), PAL-B
 
 start_raster = 47       ; start of raster interrupt
+start_probe = 50        ; start probe line
 
 vmode_stdtext = $1b     ; d011 flags for normal vmode
 vmode_test = $5b        ; d011 flags for initial tested split
@@ -23,6 +32,7 @@ mmode_test = $d8        ; d016 flags for initial tested split
 cinv = $0314
 cnmi = $0318
 screen = $0400
+spriteptr = screen + $3f8
 
 GETIN = $ffe4           ; ret: a = 0: no keys pressed, otherwise a = ASCII code
 
@@ -30,6 +40,11 @@ key_split_l = $41
 key_split_r = $44
 key_split_u = $57
 key_split_d = $53
+
+key_probe_l = $c1
+key_probe_r = $c4
+key_probe_u = $d7
+key_probe_d = $d3
 
 key_tchar_n = $52
 key_tchar_p = $46
@@ -227,11 +242,12 @@ testloop_pre:
     lda split_x_lut,x
     jsr delay
 
+
     ; additional delay
-    ldx #3
--   dex
-    bne -
     lda $ff
+    nop
+    nop
+    nop
 
     ; loops
     ldy #7
@@ -261,16 +277,17 @@ test_split_reg2 = * + 1
     ldx #7
 -   dex
     bne -
-    nop
-    nop
-    nop
-    nop
+    lda $ff
 
     dey
     bne testloop
 
-    dec $d020
-    inc $d020
+    ; check sprite-bg collisions
+    lda $d01f
+    beq +
+    ; collision happened -> red border
+    ldx #2
++   stx $d020
 
     ; restore normal mode
     ldx #vmode_stdtext
@@ -369,6 +386,7 @@ mainloop_wait:
     bne +
     ldx #62
 +   stx split_x
+    jsr update_probe
     jmp mainloop
 
 ++  cmp #key_split_r
@@ -380,6 +398,7 @@ mainloop_wait:
     bne +
     ldx #0
 +   stx split_x
+    jsr update_probe
     jmp mainloop
 
 ++  cmp #key_split_u
@@ -407,6 +426,70 @@ mainloop_wait:
 +   stx split_y
     jsr update_y
     jmp mainloop
+
+++  cmp #key_probe_l
+    bne ++
+    ; probe_x--
+    ldx probe_x
+    dex
+    cpx #$ff
+    bne +
+    lda probe_h
+    eor probe_mask
+    sta probe_h
++   stx probe_x
+    jsr update_probe
+    jmp mainloop_wait
+
+++  cmp #key_probe_r
+    bne ++
+    ; probe_x++
+    ldx probe_x
+    inx
+    bne +
+    lda probe_h
+    eor probe_mask
+    sta probe_h
++   stx probe_x
+    jsr update_probe
+    jmp mainloop_wait
+
+++  cmp #key_probe_u
+    bne ++
+    ; probe data up
+    ldx probe_y
+    lda probe_data_lut,x
+    tay
+    lda #0
+    sta spritedata,y
+    dex
+    bpl +
+    ldx #7
++   stx probe_y
+    lda probe_data_lut,x
+    tay
+    lda #$80
+    sta spritedata,y
+    jmp mainloop_wait
+
+++  cmp #key_probe_d
+    bne ++
+    ; probe data down
+    ldx probe_y
+    lda probe_data_lut,x
+    tay
+    lda #0
+    sta spritedata,y
+    inx
+    cpx #8
+    bne +
+    ldx #0
++   stx probe_y
+    lda probe_data_lut,x
+    tay
+    lda #$80
+    sta spritedata,y
+    jmp mainloop_wait
 
 ++  cmp #key_tchar_p
     bne ++
@@ -676,6 +759,23 @@ setup:
     lda #$18
     sta $d018
 
+    ; set sprite stuff
+    ldx #7
+-   lda #sprite_data_ptr
+    sta spriteptr,x
+    lda #$0f
+    sta $d027,x   ; sprite color
+    dex
+    bpl -
+    lda #0
+    sta $d01b   ; priority
+    sta $d01c   ; MCM
+    sta $d01d   ; x expand
+    sta $d017   ; y expand
+    lda probe_mask
+    sta $d015   ; enable
+    jsr update_probe
+
     ; print some text
     lda #>screen
     sta scrptr+1
@@ -694,9 +794,17 @@ setup:
 ;  x = new split y
 ;
 update_y:
+    ; update probe sprite line
+    lda probe_num
+    asl
+    tay
+    lda probe_line_lut,x
+    sta probe_line
+    sta $d001,y
+
     ; update raster IRQ line
+    lda split_y_lut,x
     sei
-    lda split_y_lsb_lut,x
     sta $d012
     lda $dc0d     ; acknowledge CIA interrupts
     lsr $d019     ; and video interrupts
@@ -764,6 +872,37 @@ update_split:
     sta test_mmode_init
 ++  stx test_split_from
     sty test_split_to
+    rts
+
+; - update_probe
+;
+update_probe:
+    ; update probe sprite number based on split position
+    ldx split_x
+    lda probe_num_lut,x
+    sta probe_num
+    tay
+    lda bitmask,y
+    sta probe_mask
+    sta $d015   ; sprite enable
+
+    ; y = probe sprite number*2
+    tya
+    asl
+    tay
+
+    ; update the probe coords
+    lda probe_x
+    sta $d000,y
+    lda probe_line
+    sta $d001,y
+
+    ; set sprite x MSB if it was on
+    ldx #0
+    lda probe_h
+    beq +
+    ldx probe_mask
++   stx $d010   ; sprite x MSB
     rts
 
 ; - change_tchar
@@ -1025,10 +1164,69 @@ printhexnibble:
 
 ; --- Data
 
+; sprite
+!align 63,0
+spritedata:
+sprite_data_ptr = * / 64
+;            765432107654321076543210
++SpriteLine %#....................... ;0
++SpriteLine %........................ ;1
++SpriteLine %........................ ;2
++SpriteLine %........................ ;3
++SpriteLine %........................ ;4
++SpriteLine %........................ ;5
++SpriteLine %........................ ;6
++SpriteLine %........................ ;7
++SpriteLine %........................ ;8
++SpriteLine %........................ ;9
++SpriteLine %........................ ;10
++SpriteLine %........................ ;11
++SpriteLine %........................ ;12
++SpriteLine %........................ ;13
++SpriteLine %........................ ;14
++SpriteLine %........................ ;15
++SpriteLine %........................ ;16
++SpriteLine %........................ ;17
++SpriteLine %........................ ;18
++SpriteLine %........................ ;19
++SpriteLine %........................ ;20
+!by 0
+
+; lookup for positions
+!align 63,0
+split_x_lut:
+!for i, 64 { !by 64-i }
+message_y_lsb_lut:
+!for i, 25 { !by <(message + (i-1)*40) }
+message_y_msb_lut:
+!for i, 25 { !by >(message + (i-1)*40) }
+split_y_text_lsb_lut:
+!for i, 25 { !by <(screen + (i-1)*40) }
+split_y_text_msb_lut:
+!for i, 25 { !by >(screen + (i-1)*40) }
+split_y_lut:
+!for i, 25 { !by <(start_raster + (i-1) * 8) }
+probe_line_lut:
+!for i, 25 { !by <(start_probe + (i-1) * 8) }
+probe_num_lut:
+!for i, $26 { !by 0 }
+!for i, 64-$26 { !by 7 }
+
 ; current position
 split_x: !by 0
 split_y: !by 0
 split_y_old: !by 0
+
+; probe sprite
+probe_x: !by 49
+probe_h: !by 0
+probe_y: !by 0
+probe_line: !by start_probe
+probe_num: !by 0
+probe_mask: !by $01
+
+probe_data_lut:
+!for i, 8 { !by <((i-1) * 3) }
 
 ; current test char
 tchar: !by 0
@@ -1045,11 +1243,14 @@ test_xscroll_to: !by 0
 ; hex lookup table
 hex_lut: !scr "0123456789abcdef"
 
+; sprite bits
+bitmask: !by $01, $02, $04, $08, $10, $20, $40, $80
+
 ; help text
 message:
 ;     |---------0---------0---------0--------|
 !scr "                                        "
-!scr "movesplit v9 - controls:                "
+!scr "movesplit v10 - controls:               "
 !scr " a/d/w/s - move split position : "
 text_location_split_x = * - message + screen
 !scr                                  "xx/"
@@ -1085,7 +1286,7 @@ text_location_fg = * - message + screen
 !scr                                  "xx"
 text_location_d02x = * - message + screen
 !scr                                    "xxxx "
-!scr "                                        "
+!scr " (sh)a/d/w/s - move probe sprite        "
 !scr "                                        "
 !scr "                                        "
 !scr "                                        "
@@ -1101,17 +1302,3 @@ text_location_d02x = * - message + screen
 !scr "                                        "
 !by 0
 
-; lookup for positions
-message_y_lsb_lut:
-!for i, 25 { !by <(message + (i-1)*40) }
-message_y_msb_lut:
-!for i, 25 { !by >(message + (i-1)*40) }
-split_y_text_lsb_lut:
-!for i, 25 { !by <(screen + (i-1)*40) }
-split_y_text_msb_lut:
-!for i, 25 { !by >(screen + (i-1)*40) }
-split_y_lsb_lut:
-!for i, 25 { !by <(start_raster + (i-1) * 8) }
-!align 63,0
-split_x_lut:
-!for i, 64 { !by 64-i }
