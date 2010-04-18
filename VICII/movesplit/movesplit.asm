@@ -46,6 +46,8 @@ key_probe_r = $c4
 key_probe_u = $d7
 key_probe_d = $d3
 
+key_priority = $51
+
 key_tchar_n = $52
 key_tchar_p = $46
 key_tchar_nn = $54
@@ -104,8 +106,6 @@ start:
     jmp mainloop
 
 install:          ; install the raster routine
-    jsr restore   ; Disable the Restore key (disable NMI interrupts)
-checkirq:
     lda cinv      ; check the original IRQ vector
     ldx cinv+1    ; (to avoid multiple installation)
     cmp #<irq1
@@ -242,7 +242,6 @@ testloop_pre:
     lda split_x_lut,x
     jsr delay
 
-
     ; additional delay
     lda $ff
     nop
@@ -260,6 +259,7 @@ test_mmode_init = * + 1
     sta $d011
     stx $d016
 
+    ; actual test loop
 testloop:
     ; prepare split values
 test_split_from = * + 1
@@ -282,6 +282,12 @@ test_split_reg2 = * + 1
     dey
     bne testloop
 
+    ; restore normal mode
+    lda #vmode_stdtext
+    sta $d011
+    lda #mmode_stdtext
+    sta $d016
+
     ; check sprite-bg collisions
     lda $d01f
     beq +
@@ -289,36 +295,14 @@ test_split_reg2 = * + 1
     ldx #2
 +   stx $d020
 
-    ; restore normal mode
-    ldx #vmode_stdtext
-    stx $d011
-    lda #mmode_stdtext
-    sta $d016
+    ; toggle probe sprite color
+    ldx probe_num
+    lda $d027,x   ; sprite color
+    eor #$01
+    sta $d027,x   ; sprite color
 endirq:
     jmp $ea81     ; return to the auxiliary raster interrupt
 
-restore:        ; disable the Restore key
-    lda cnmi
-    ldy cnmi+1
-    pha
-    lda #<nmi     ; Set the NMI vector
-    sta cnmi
-    lda #>nmi
-    sta cnmi+1
-    ldx #$81
-    stx $dd0d     ; Enable CIA 2 Timer A interrupt
-    ldx #0
-    stx $dd05
-    inx
-    stx $dd04     ; Prepare Timer A to count from 1 to 0.
-    ldx #$dd
-    stx $dd0e     ; Cause an interrupt.
-nmi = * + 1
-    lda #$40      ; RTI placeholder
-    pla
-    sta cnmi
-    sty cnmi+1    ; restore original NMI vector (although it won't be used)
-    rts
 
 ; - delay
 ;
@@ -490,6 +474,14 @@ mainloop_wait:
     lda #$80
     sta spritedata,y
     jmp mainloop_wait
+
+++  cmp #key_priority
+    bne ++
+    ; toggle probe sprite priority
+    lda $d01b
+    eor probe_mask
+    sta $d01b
+    jmp mainloop
 
 ++  cmp #key_tchar_p
     bne ++
@@ -763,7 +755,7 @@ setup:
     ldx #7
 -   lda #sprite_data_ptr
     sta spriteptr,x
-    lda #$0f
+    lda #$01
     sta $d027,x   ; sprite color
     dex
     bpl -
@@ -772,8 +764,6 @@ setup:
     sta $d01c   ; MCM
     sta $d01d   ; x expand
     sta $d017   ; y expand
-    lda probe_mask
-    sta $d015   ; enable
     jsr update_probe
 
     ; print some text
@@ -903,6 +893,13 @@ update_probe:
     beq +
     ldx probe_mask
 +   stx $d010   ; sprite x MSB
+
+    ; set priority if it was on
+    ldx #0
+    lda $d01b
+    beq +
+    ldx probe_mask
++   stx $d01b
     rts
 
 ; - change_tchar
@@ -1250,7 +1247,7 @@ bitmask: !by $01, $02, $04, $08, $10, $20, $40, $80
 message:
 ;     |---------0---------0---------0--------|
 !scr "                                        "
-!scr "movesplit v10 - controls:               "
+!scr "movesplit v11 - controls:               "
 !scr " a/d/w/s - move split position : "
 text_location_split_x = * - message + screen
 !scr                                  "xx/"
@@ -1287,9 +1284,9 @@ text_location_fg = * - message + screen
 text_location_d02x = * - message + screen
 !scr                                    "xxxx "
 !scr " (sh)a/d/w/s - move probe sprite        "
+!scr " q - toggle probe spr priority          "
 !scr "                                        "
-!scr "                                        "
-!scr "                                        "
+!scr "border shows s-bg collision (red = yes) "
 !scr "                                        "
 !scr "                                        "
 !scr "                                        "
