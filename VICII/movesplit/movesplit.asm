@@ -82,6 +82,7 @@ key_d022_n = $d8
 key_d023_n = $43
 key_d024_n = $c3
 
+key_toggle_18 = $d1
 
 ; --- Variables
 
@@ -679,6 +680,14 @@ mainloop_wait:
     inc $d024
     jmp mainloop
 
+++  cmp #key_toggle_18
+    bne ++
+    ; toggle $d018 CB12/11
+    lda $d018
+    eor #$06
+    sta $d018
+    jmp mainloop
+
 ++  jmp mainloop_wait
 
 
@@ -1247,7 +1256,7 @@ bitmask: !by $01, $02, $04, $08, $10, $20, $40, $80
 message:
 ;     |---------0---------0---------0--------|
 !scr "                                        "
-!scr "movesplit v11 - controls:               "
+!scr "movesplit v12 - controls:               "
 !scr " a/d/w/s - move split position : "
 text_location_split_x = * - message + screen
 !scr                                  "xx/"
@@ -1285,9 +1294,9 @@ text_location_d02x = * - message + screen
 !scr                                    "xxxx "
 !scr " (sh)a/d/w/s - move probe sprite        "
 !scr " q - toggle probe spr priority          "
+!scr " (sh)q - toggle cb12/11                 "
 !scr "                                        "
 !scr "border shows s-bg collision (red = yes) "
-!scr "                                        "
 !scr "                                        "
 !scr "                                        "
 !scr "                                        "
