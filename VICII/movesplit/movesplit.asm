@@ -68,6 +68,12 @@ key_tmode_e_to = $c5
 key_tmode_b_to = $c2
 key_tmode_m_to = $cd
 
+key_tmode_res_from = $49
+key_tmode_res_to = $c9
+
+key_tmode_csel_from = $4c
+key_tmode_csel_to = $cc
+
 key_xscroll_from_p = $4f
 key_xscroll_from_n = $50
 key_xscroll_to_p = $cf
@@ -301,6 +307,10 @@ test_split_reg2 = * + 1
     lda $d027,x   ; sprite color
     eor #$01
     sta $d027,x   ; sprite color
+
+    ; increase frame count
+    inc framecount
+
 endirq:
     jmp $ea81     ; return to the auxiliary raster interrupt
 
@@ -343,9 +353,9 @@ mainloop:
     jsr print_test_line
 
 mainloop_wait:
-    lda #$ff
--   cmp $d012
-    bne -
+    lda framecount
+-   cmp framecount
+    beq -
     jsr GETIN
     beq mainloop_wait
 
@@ -572,6 +582,22 @@ mainloop_wait:
     sta test_mmode_from
     jmp mainloop
 
+++  cmp #key_tmode_csel_from
+    bne ++
+    ; toggle csel
+    lda test_mmode_from
+    eor #$08
+    sta test_mmode_from
+    jmp mainloop
+
+++  cmp #key_tmode_res_from
+    bne ++
+    ; toggle res
+    lda test_mmode_from
+    eor #$20
+    sta test_mmode_from
+    jmp mainloop
+
 ++  cmp #key_tmode_e_to
     bne ++
     ; toggle ecm
@@ -593,6 +619,22 @@ mainloop_wait:
     ; toggle mcm
     lda test_mmode_to
     eor #$10
+    sta test_mmode_to
+    jmp mainloop
+
+++  cmp #key_tmode_csel_to
+    bne ++
+    ; toggle csel
+    lda test_mmode_to
+    eor #$08
+    sta test_mmode_to
+    jmp mainloop
+
+++  cmp #key_tmode_res_to
+    bne ++
+    ; toggle res
+    lda test_mmode_to
+    eor #$20
     sta test_mmode_to
     jmp mainloop
 
@@ -1252,11 +1294,14 @@ hex_lut: !scr "0123456789abcdef"
 ; sprite bits
 bitmask: !by $01, $02, $04, $08, $10, $20, $40, $80
 
+; frame counter
+framecount: !by 0
+
 ; help text
 message:
 ;     |---------0---------0---------0--------|
 !scr "                                        "
-!scr "movesplit v12 - controls:               "
+!scr "movesplit v13 - controls:               "
 !scr " a/d/w/s - move split position : "
 text_location_split_x = * - message + screen
 !scr                                  "xx/"
@@ -1284,6 +1329,7 @@ text_location_tmmode_from = * - message + screen
 text_location_tmmode_to = * - message + screen
 !scr                                      "xx "
 !scr " (sh-)o/p - set xscroll : (see above)   "
+!scr " (sh-)i/l - set res/csel: (see above)   "
 !scr " n - toggle $d0xx reg to split : "
 text_location_split_reg = * - message + screen
 !scr                                  "xx     "
@@ -1297,7 +1343,6 @@ text_location_d02x = * - message + screen
 !scr " (sh)q - toggle cb12/11                 "
 !scr "                                        "
 !scr "border shows s-bg collision (red = yes) "
-!scr "                                        "
 !scr "                                        "
 !scr "                                        "
 !scr "                                        "
