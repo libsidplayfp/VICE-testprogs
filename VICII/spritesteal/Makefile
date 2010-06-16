@@ -7,10 +7,10 @@ CFLAGS = -v1 --cpu 6502 -f cbm -o
 %.prg: %.asm
 	$(COMPILER) $(CFLAGS) $@ $<
 
-all: gfxfetch.prg gfxfetch_ntsc.prg
+all: spritesteal.prg spritesteal_ntsc.prg
 
-gfxfetch.prg: gfxfetch.asm core.asm
-gfxfetch_ntsc.prg: gfxfetch_ntsc.asm core.asm
+spritesteal.prg: spritesteal.asm core.asm
+spritesteal_ntsc.prg: spritesteal_ntsc.asm core.asm
 
 clean:
 	-rm *.prg
