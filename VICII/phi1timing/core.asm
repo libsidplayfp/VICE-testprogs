@@ -5,6 +5,7 @@
 
 ; Determines PHI1 fetch type on each cycle.
 
+; NOTE! Old NTSC untested.
 
 !ct scr
 
@@ -89,8 +90,13 @@ irq2:
                 ;Pointer
     ldx #$08    ;Wait exactly 1
     dex         ;lines worth of
-    bne *-1     ;cycles for compare
-    bit $ea     ;Minus compare
+    bne *-1     ;cycles for compare, minus compare
+!if CYCLES = 64 {
+    nop
+    nop
+} else {
+    bit $ea
+}
 !if CYCLES = 65 {
     nop
 }
@@ -139,7 +145,11 @@ irq_measure:
     bne -
     nop
     nop
+!if CYCLES = 64 {
+    bit $ea
+} else {
     nop
+}
 !if CYCLES = 65 {
     nop
 }
@@ -156,10 +166,15 @@ measure_loop:
     dec $d020
 
     ; waste time
-    ldx #7
+    ldx #6
 -   dex
     bne -
-
+    bit $ea
+!if CYCLES = 64 {
+    bit $ea
+} else {
+    nop
+}
 !if CYCLES = 65 {
     nop
 }
@@ -378,6 +393,9 @@ message:
 !if CYCLES = 65 {
 !scr "ntsc"
 }
+!if CYCLES = 64 {
+!scr "oldn"
+}
 !if CYCLES = 63 {
 !scr "pal "
 }
@@ -393,6 +411,10 @@ reference:
 !if CYCLES = 63 {
 !scr "3i4i5i6i7irrrrrggggggggggggggggggggggggg"
 !scr "gggggggggggggggii0i1i2i                 "
+}
+!if CYCLES = 64 {
+!scr "i4i5i6i7iirrrrrggggggggggggggggggggggggg"
+!scr "gggggggggggggggii0i1i2i3 (untested!)    "
 }
 !if CYCLES = 65 {
 !scr "i4i5i6i7iirrrrrggggggggggggggggggggggggg"

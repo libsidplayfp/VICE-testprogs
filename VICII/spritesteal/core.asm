@@ -5,6 +5,8 @@
 
 ; For measuring amount of stolen cycles by sprites.
 
+; NOTE! Old NTSC untested.
+
 !ct scr
 
 ; --- Consts
@@ -98,11 +100,17 @@ irq2:
                 ;Pointer
     ldx #$08    ;Wait exactly 1
     dex         ;lines worth of
-    bne *-1     ;cycles for compare
-    bit $ea     ;Minus compare
+    bne *-1     ;cycles for compare, minus compare
+!if CYCLES = 64 {
+    nop
+    nop
+} else {
+    bit $ea
+}
 !if CYCLES = 65 {
     nop
 }
+
     ldx $d012
     cpx $d012
     beq irq_test   ;If no waste 1 more cycle
@@ -128,9 +136,15 @@ irq_test:
     jsr delay
 
     ; waste a few cycles (first measure read hits cycle 51 of line 9)
-    ldy #11
+    ldy #10
 -   dey
     bne -
+    bit $ea
+!if CYCLES = 64 {
+    bit $ea
+} else {
+    nop
+}
 !if CYCLES = 65 {
     nop
 }
@@ -775,6 +789,24 @@ sprite_steal_table:
 ; cycle 9-50              20                  30                  40                  50
 !by 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 }
+!if CYCLES = 64 {
+; cycle 51-53
+!by 0,0,0
+; cycle 54-63
+!by $01,$01,$03,$03,$07,$06,$0e,$0c,$1c,$18
+; cycle 0-8
+!by $38,$30,$70,$60,$e0,$c0,$c0,$80,$80
+; cycle 9-50              20                  30                  40                  50
+!by 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+; cycle 51-53
+!by 0,0,0
+; cycle 54-63
+!by $01,$01,$03,$03,$07,$06,$0e,$0c,$1c,$18
+; cycle 0-8
+!by $38,$30,$70,$60,$e0,$c0,$c0,$80,$80
+; cycle 9-50              20                  30                  40                  50
+!by 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+}
 
 curtest_line:
 !by 0
@@ -787,6 +819,9 @@ message:
 !scr "spritesteal - sprite dma testprog v3"
 !if CYCLES = 65 {
 !scr "ntsc"
+}
+!if CYCLES = 64 {
+!scr "oldn"
 }
 !if CYCLES = 63 {
 !scr "-pal"

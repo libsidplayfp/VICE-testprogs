@@ -6,6 +6,8 @@
 ; Side border is opened by the test to reduce potential of any
 ; VIC-CPU timing skew.
 
+; NOTE! Old NTSC untested.
+
 ; --- Consts
 
 ; position and length on the modified characters (for the reference)
@@ -175,6 +177,10 @@ preloop:
   nop
   nop
 }
+!if CYCLES = 64 {
+  nop
+  nop
+}
 
 ; set lda/sta/stx gfx RAM addr to $2001 for the first modified line
   lda #1
@@ -209,11 +215,14 @@ testptr3 = * + 1
   ldx #$8
   stx $d016
 
-  ; delay 5 cycles.
+  ; delay 5(+2/+1) cycles.
   bne *+2
-  nop
-
 !if CYCLES = 65 {
+  nop
+}
+!if CYCLES = 64 {
+  bit $24
+} else {
   nop
 }
 
@@ -331,7 +340,11 @@ message:
 !tx "graphics fetch testprog v5"
 !if CYCLES = 65 {
 !tx "n"
-} else {
+}
+!if CYCLES = 64 {
+!tx "o"
+}
+!if CYCLES = 63 {
 !tx "p"
 }
 !tx                            ". test line: "
