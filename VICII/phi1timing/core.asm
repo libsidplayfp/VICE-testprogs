@@ -5,8 +5,6 @@
 
 ; Determines PHI1 fetch type on each cycle.
 
-; NOTE! Old NTSC untested.
-
 !ct scr
 
 ; --- Consts
@@ -413,8 +411,8 @@ reference:
 !scr "gggggggggggggggii0i1i2i                 "
 }
 !if CYCLES = 64 {
-!scr "i4i5i6i7iirrrrrggggggggggggggggggggggggg"
-!scr "gggggggggggggggii0i1i2i3 (untested!)    "
+!scr "3i4i5i6i7irrrrrggggggggggggggggggggggggg"
+!scr "gggggggggggggggiii0i1i2i                "
 }
 !if CYCLES = 65 {
 !scr "i4i5i6i7iirrrrrggggggggggggggggggggggggg"

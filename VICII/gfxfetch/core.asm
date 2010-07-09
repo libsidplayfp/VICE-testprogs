@@ -6,8 +6,6 @@
 ; Side border is opened by the test to reduce potential of any
 ; VIC-CPU timing skew.
 
-; NOTE! Old NTSC untested.
-
 ; --- Consts
 
 ; position and length on the modified characters (for the reference)
