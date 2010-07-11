@@ -1,3 +1,3 @@
-CYCLES = 63
+CYCLES = 65
 
 !src "core2.asm"
