@@ -210,6 +210,7 @@ label:
 
 prepare_test:
 
+; set up screen
 	ldx	#0
 prt_lp1:
 	lda	#$5f
@@ -234,66 +235,74 @@ prt_lp2:
 
 	lda	#$17
 	sta	$d018	
+
 	rts
 
 
+PAL	equ	1
+NTSC	equ	0
+	
+	mac	eol
+	if	PAL
+	cld
+	endif
+	if	NTSC
+	ds.b	2,$d8
+	endif
+	endm
+
+	mac	eol2
+	bit	$ea
+	if	NTSC
+	ds.b	1,$d8
+	endif
+	endm
+	
+	mac	chunk
+	ldy	#$08
+	bne	.+4
+.lp1:
+	ds.b	9,$ea
+	sty	$d016
+	lda	#7
+	sta	$d021
+	lda	#6
+	sta	$d021
+	ds.b	7,$ea
+	bit	$ea
+	eol
+
+	jsr	{1}
+	jsr	{1}
+	jsr	{1}
+	jsr	{1}
+	jsr	{1}
+	jsr	{1}
+
+	bit	$ea
+	ldx	#$1b
+	stx	$d011
+	sty	$d016
+	ds.b	4,$ea
+	eol
+
+	iny
+	cpy	#$10
+	bne	.lp1
+	endm
+	
 	align	256
 perform_test:
-	ds.b	4,$ea
-	bit	$ea
+	ds.b	6,$ea
 ; start 0
-	ldy	#$08
-	jsr	line0
-	iny
-	jsr	line0
-	iny
-	jsr	line0
-	iny
-	jsr	line0
-	iny
-	jsr	line0
-	iny
-	jsr	line0
-	iny
-	jsr	line0
-	iny
-	jsr	line0
+	chunk 	line0_do
 ; start 1
-	ldy	#$08
-	jsr	line1
-	iny
-	jsr	line1
-	iny
-	jsr	line1
-	iny
-	jsr	line1
-	iny
-	jsr	line1
-	iny
-	jsr	line1
-	iny
-	jsr	line1
-	iny
-	jsr	line1
+	chunk 	line1_do
 ; start 2
-	ldy	#$08
-	jsr	line2
-	iny
-	jsr	line2
-	iny
-	jsr	line2
-	iny
-	jsr	line2
-	iny
-	jsr	line2
-	iny
-	jsr	line2
-	iny
-	jsr	line2
-	iny
-	jsr	line2
-
-	ds.b	6,$ea	
+	chunk 	line2_do
+; end
+	bit	$ea
+	ds.b	4,$ea	
 	lda	#$1b
 	sta	$d011
 	lda	#$08
@@ -305,30 +314,9 @@ perform_test:
 	rts
 
 	align	256
-line0:
-	ds.b	6,$ea
-	sty	$d016
-	lda	#7
-	sta	$d021
-	lda	#6
-	sta	$d021
-	ds.b	11,$ea
-
-	jsr	line0_do
-	jsr	line0_do
-	jsr	line0_do
-	jsr	line0_do
-	jsr	line0_do
-	jsr	line0_do
-
-	ldx	#$1b
-	stx	$d011
-	sty	$d016
-	ds.b	3,$ea
-	bit	$ea
-	rts
 
 line0_do:
+	eol2
 	ldx	#$1b
 	stx	$d011
 	sty	$d016
@@ -345,34 +333,10 @@ line0_do:
 	stx	$d011		; illegal bitmap1
 	ldx	#$5b
 	stx	$d011		; ECM
-	bit	$ea
-	rts
-
-	align	256
-line1:
-	ds.b	6,$ea
-	sty	$d016
-	lda	#7
-	sta	$d021
-	lda	#6
-	sta	$d021
-	ds.b	11,$ea
-
-	jsr	line1_do
-	jsr	line1_do
-	jsr	line1_do
-	jsr	line1_do
-	jsr	line1_do
-	jsr	line1_do
-
-	ldx	#$1b
-	stx	$d011
-	sty	$d016
-	ds.b	3,$ea
-	bit	$ea
 	rts
 
 line1_do:
+	eol2
 	ldx	#$1b
 	stx	$d011
 	sty	$d016
@@ -382,34 +346,10 @@ line1_do:
 	ldx	#$1b
 	stx	$d011
 	ds.b	13,$ea
-	bit	$ea
-	rts
-
-	align	256
-line2:
-	ds.b	6,$ea
-	sty	$d016
-	lda	#7
-	sta	$d021
-	lda	#6
-	sta	$d021
-	ds.b	11,$ea
-
-	jsr	line2_do
-	jsr	line2_do
-	jsr	line2_do
-	jsr	line2_do
-	jsr	line2_do
-	jsr	line2_do
-
-	ldx	#$1b
-	stx	$d011
-	sty	$d016
-	ds.b	3,$ea
-	bit	$ea
 	rts
 
 line2_do:
+	eol2
 	ldx	#$1b
 	stx	$d011
 	sty	$d016
@@ -419,7 +359,6 @@ line2_do:
 	and	#%11101111
 	sta	$d016
 	ds.b	12,$ea
-	bit	$ea
 	rts
 	
 ; eof
