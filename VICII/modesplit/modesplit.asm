@@ -18,7 +18,13 @@ LINE		equ	56
 ;*
 ;******
 	org	$02
-
+ptr_zp:
+	ds.w	1
+tm1_zp:
+	ds.b	1
+tm2_zp:
+	ds.b	1
+	
 	seg	code
 	org	$0801
 ;**************************************************************************
@@ -63,6 +69,10 @@ sa_lp1:
 	tax
 	lda	time1,x
 	sta	is_sm1+1
+	lda	time2,x
+	sta	tm1_zp
+	lda	time3,x
+	sta	tm2_zp
 
 	jsr	prepare_test
 	
@@ -99,6 +109,10 @@ nmi_entry:
 
 time1:
 	dc.b	irq_stable2_pal, irq_stable2_ntscold, irq_stable2_ntsc
+time2:
+	dc.b	$49, $24, $d8	; eor #<abs>,  bit <zp>, cld
+time3:
+	dc.b	$00, $00, $d8
 
 ;**************************************************************************
 ;*
@@ -236,28 +250,43 @@ prt_lp2:
 	lda	#$17
 	sta	$d018	
 
+	lda	#<test_start
+	sta	ptr_zp
+	lda	#>test_start
+	sta	ptr_zp+1
+	ldx	#>[test_end-test_start+255]
+prt_lp3:
+	ldy	#0
+	lda	#$d8		; cld
+	cmp	(ptr_zp),y
+	bne	prt_skp1
+	iny
+	cmp	(ptr_zp),y
+	bne	prt_skp1
+	dey
+	lda	tm1_zp
+	sta	(ptr_zp),y
+	iny
+	lda	tm2_zp
+	sta	(ptr_zp),y
+prt_skp1:
+	inc	ptr_zp
+	bne	prt_lp3
+	inc	ptr_zp+1
+	dex
+	bne	prt_lp3
+	
 	rts
 
 
-PAL	equ	1
-NTSC	equ	0
-	
+;******
+; end of line marker
 	mac	eol
-	if	PAL
-	cld
-	endif
-	if	NTSC
 	ds.b	2,$d8
-	endif
-	endm
-
-	mac	eol2
-	bit	$ea
-	if	NTSC
-	ds.b	1,$d8
-	endif
 	endm
 	
+;******
+; One 8 char high chunk
 	mac	chunk
 	ldy	#$08
 	bne	.+4
@@ -269,21 +298,14 @@ NTSC	equ	0
 	lda	#6
 	sta	$d021
 	ds.b	7,$ea
-	bit	$ea
 	eol
 
 	jsr	{1}
-	jsr	{1}
-	jsr	{1}
-	jsr	{1}
-	jsr	{1}
-	jsr	{1}
 
-	bit	$ea
 	ldx	#$1b
 	stx	$d011
 	sty	$d016
-	ds.b	4,$ea
+	ds.b	1,$ea
 	eol
 
 	iny
@@ -292,6 +314,7 @@ NTSC	equ	0
 	endm
 	
 	align	256
+test_start:
 perform_test:
 	ds.b	6,$ea
 ; start 0
@@ -315,8 +338,10 @@ perform_test:
 
 	align	256
 
-line0_do:
-	eol2
+
+	mac	line0
+	eol
+	ds.b	2,$ea
 	ldx	#$1b
 	stx	$d011
 	sty	$d016
@@ -333,10 +358,13 @@ line0_do:
 	stx	$d011		; illegal bitmap1
 	ldx	#$5b
 	stx	$d011		; ECM
-	rts
+	ds.b	3,$ea
+	bit	$ea
+	endm
 
-line1_do:
-	eol2
+	mac	line1
+	eol
+	ds.b	2,$ea
 	ldx	#$1b
 	stx	$d011
 	sty	$d016
@@ -345,11 +373,13 @@ line1_do:
 	stx	$d011
 	ldx	#$1b
 	stx	$d011
-	ds.b	13,$ea
-	rts
+	ds.b	16,$ea
+	bit	$ea
+	endm
 
-line2_do:
-	eol2
+	mac	line2
+	eol
+	ds.b	2,$ea
 	ldx	#$1b
 	stx	$d011
 	sty	$d016
@@ -358,7 +388,34 @@ line2_do:
 	sta	$d016
 	and	#%11101111
 	sta	$d016
-	ds.b	12,$ea
+	ds.b	15,$ea
+	bit	$ea
+	endm
+
+line0_do:
+	line0
+	line0
+	line0
+	line0
+	line0
+	line0
 	rts
-	
+line1_do:
+	line1
+	line1
+	line1
+	line1
+	line1
+	line1
+	rts
+line2_do:
+	line2
+	line2
+	line2
+	line2
+	line2
+	line2
+	rts
+test_end:
+
 ; eof
