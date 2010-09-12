@@ -315,8 +315,6 @@ htab:
 ;*   
 ;******
 test_result:
-	lda	#15
-	sta	$d020
 	lda	#<done_msg
 	ldy	#>done_msg
 	jsr	$ab1e
@@ -358,6 +356,9 @@ tr_mismatch:
 	jmp	tr_lp1
 
 tr_match:
+	lda	#5
+	sta	$d020
+	
 	lda	#<matches_msg
 	ldy	#>matches_msg
 	jsr	$ab1e
@@ -374,6 +375,8 @@ tr_match:
 	jmp	tr_ex2
 	
 tr_ex1:
+	lda	#15
+	sta	$d020
 	lda	#<nomatches_msg
 	ldy	#>nomatches_msg
 	jsr	$ab1e
