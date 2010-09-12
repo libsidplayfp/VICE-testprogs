@@ -3,7 +3,6 @@
 ;* FILE  lightpen.asm
 ;* Copyright (c) 2010 Daniel Kahlin <daniel@kahlin.net>
 ;* Written by Daniel Kahlin <daniel@kahlin.net>
-;* $Id: intro.asm,v 1.101 2009-06-02 20:49:58 tlr Exp $
 ;*
 ;* DESCRIPTION
 ;*
@@ -12,7 +11,8 @@
 
 
 LINE		equ	308
-
+STATUS		equ	$0425
+	
 	seg.u	zp
 ;**************************************************************************
 ;*
@@ -45,6 +45,16 @@ EndLine:
 ;******
 SysAddress:
 	sei
+	lda	#$7f
+	sta	$dc0d
+	lda	$dc0d
+	jsr	check_time
+	sta	cycles_per_line
+	stx	num_lines
+
+	jsr	test_present
+	
+	sei
 	lda	#$35
 	sta	$01
 
@@ -55,12 +65,7 @@ sa_lp1:
 	dex
 	bne	sa_lp1
 
-	lda	#$7f
-	sta	$dc0d
-	lda	$dc0d
-	jsr	check_time
-	sta	cycles_per_line
-	stx	num_lines
+	lda	cycles_per_line
 	sec
 	sbc	#63
 	bcc	sa_fl1		;<63, fail
@@ -70,7 +75,7 @@ sa_lp1:
 	lda	time1,x
 	sta	is_sm1+1
 
-	jsr	prepare_test
+	jsr	test_prepare
 	
 	jsr	wait_vb
 
@@ -96,8 +101,15 @@ sa_lp2:
 	inc	$4080,x
 	dec	$4080,x
 	endif
-	jmp	sa_lp2
-
+	lda	test_done
+	beq	sa_lp2
+	sei
+	lda	#$37
+	sta	$01
+	jsr	test_result
+sa_lp3:
+	jmp	sa_lp3
+	
 vectors:
 	dc.w	nmi_entry,0,irq_stable
 
@@ -112,63 +124,10 @@ cycles_per_line:
 	dc.b	0
 num_lines:
 	dc.b	0
-	
+test_done:
+	dc.b	0
 time1:
 	dc.b	irq_stable2_pal, irq_stable2_ntscold, irq_stable2_ntsc
-
-;**************************************************************************
-;*
-;* NAME  wait_vb
-;*   
-;******
-wait_vb:
-wv_lp1:
-	bit	$d011
-	bpl	wv_lp1
-wv_lp2:
-	bit	$d011
-	bmi	wv_lp2
-	rts
-
-
-;**************************************************************************
-;*
-;* NAME  check_time
-;*   
-;* DESCRIPTION
-;*   Determine number of cycles per raster line.
-;*   Acc = number of cycles.
-;*   X = LSB of number of raster lines.
-;*   
-;******
-check_time:
-	lda	#0
-	sta	$dc0e
-	jsr	wait_vb
-;--- raster line 0
-	lda	#$fe
-	sta	$dc04
-	sta	$dc05		; load timer with $fefe
-	lda	#%00010001
-	sta	$dc0e		; start one shot timer
-ct_lp1:
-	bit	$d011
-	bpl	ct_lp1
-;--- raster line 256
-	lda	$dc05		; timer msb
-	eor	#$ff		; invert
-; Acc = cycles per line
-;--- scan for raster wrap
-ct_lp2:
-	ldx	$d012
-ct_lp3:
-	cpx	$d012
-	beq	ct_lp3
-	bmi	ct_lp2
-	inx
-; X = number of raster lines (LSB)
-twelve:
-	rts
 	
 ;**************************************************************************
 ;*
@@ -217,7 +176,7 @@ irq_stable2_pal:
 	beq	is2_skp1	; 2 (3)
 is2_skp1:
 
-	jsr	perform_test
+	jsr	test_perform
 		
 accstore	equ	.+1
 	lda	#0
@@ -227,13 +186,103 @@ ystore	equ	.+1
 	ldy	#0
 	rti
 
+;**************************************************************************
+;*
+;* NAME  wait_vb
+;*   
+;******
+wait_vb:
+wv_lp1:
+	bit	$d011
+	bpl	wv_lp1
+wv_lp2:
+	bit	$d011
+	bmi	wv_lp2
+	rts
 
 ;**************************************************************************
 ;*
-;* NAME  prepare_test
+;* NAME  check_time
+;*   
+;* DESCRIPTION
+;*   Determine number of cycles per raster line.
+;*   Acc = number of cycles.
+;*   X = LSB of number of raster lines.
 ;*   
 ;******
-prepare_test:
+check_time:
+	lda	#0
+	sta	$dc0e
+	jsr	wait_vb
+;--- raster line 0
+	lda	#$fe
+	sta	$dc04
+	sta	$dc05		; load timer with $fefe
+	lda	#%00010001
+	sta	$dc0e		; start one shot timer
+ct_lp1:
+	bit	$d011
+	bpl	ct_lp1
+;--- raster line 256
+	lda	$dc05		; timer msb
+	eor	#$ff		; invert
+; Acc = cycles per line
+;--- scan for raster wrap
+ct_lp2:
+	ldx	$d012
+ct_lp3:
+	cpx	$d012
+	beq	ct_lp3
+	bmi	ct_lp2
+	inx
+; X = number of raster lines (LSB)
+twelve:
+	rts
+
+;**************************************************************************
+;*
+;* NAME  test_prepare
+;*   
+;******
+test_present:
+	lda	#<timing_msg
+	ldy	#>timing_msg
+	jsr	$ab1e
+	lda	#0
+	ldx	cycles_per_line
+	jsr	$bdcd
+	lda	#<cycles_line_msg
+	ldy	#>cycles_line_msg
+	jsr	$ab1e
+	lda	#1
+	ldx	num_lines
+	jsr	$bdcd
+	lda	#<lines_msg
+	ldy	#>lines_msg
+	jsr	$ab1e
+	
+	rts
+
+timing_msg:
+	dc.b	147,"LIGHTPEN / TLR",13,13
+	dc.b	"TIMING: ",0
+cycles_line_msg:
+	dc.b	" CYCLES/LINE, ",0
+lines_msg:
+	dc.b	" LINES",13,13
+	dc.b	"MEASURING...",0
+	
+test_result:
+	lda	#<result_msg
+	ldy	#>result_msg
+	jsr	$ab1e
+	rts
+result_msg:
+	dc.b	"OK",13
+	dc.b	13,13,"RESULT AT $4000-$4500",0
+
+	
+test_prepare:
 	lda	#%11111111
 	sta	$dc00
 	lda	#%00000000
@@ -245,7 +294,8 @@ prepare_test:
 	sta	$d019		; clear interrupts
 	rts
 
-perform_test:
+	
+test_perform:
 	lda	enable
 	beq	pt_ex1
 
@@ -279,27 +329,25 @@ pt_skp1:
 	sta	$d801
 	sta	$d802
 	lda	cycle
-	sta	$0400
+	sta	STATUS+0
 	lda	pt_sm1+1
-	sta	$0401
+	sta	STATUS+1
 	cmp	#$15
 	bne	pt_ex1
 	lda	#15
 	sta	$d020
 	lda	#$60
-	sta	perform_test
-
+	sta	test_perform
+	sta	test_done
 pt_ex1:
 	lda	enable
 	eor	#1
 	sta	enable
-	sta	$0402
+	sta	STATUS+2
 
 	rts
 
 cycle:
-	dc.b	0
-test:
 	dc.b	0
 enable:
 	dc.b	0
