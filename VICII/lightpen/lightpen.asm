@@ -9,10 +9,6 @@
 ;******
 	processor 6502
 
-
-LINE		equ	308
-STATUS		equ	$0425
-	
 	seg.u	zp
 ;**************************************************************************
 ;*
@@ -241,7 +237,7 @@ twelve:
 
 ;**************************************************************************
 ;*
-;* NAME  test_prepare
+;* NAME  test_present
 ;*   
 ;******
 test_present:
@@ -270,18 +266,65 @@ cycles_line_msg:
 	dc.b	" CYCLES/LINE, ",0
 lines_msg:
 	dc.b	" LINES",13,13
-	dc.b	"MEASURING...",0
+	dc.b	"MEASURING $D011 AT CYCLE $00...",0
+
+show_params:
+	lda	$d3
+	sec
+	sbc	#18
+	tay
+	lda	pt_sm1+1
+	jsr	update_hex
+
+	lda	$d3
+	sec
+	sbc	#5
+	tay
+	lda	cycle
+	jmp	update_hex
+;	rts
 	
+update_hex:
+	pha
+	lsr
+	lsr
+	lsr
+	lsr
+	jsr	uh_common
+	pla
+	and	#$0f
+uh_common:
+	tax
+	lda	htab,x
+	sta	($d1),y
+	iny
+	rts
+
+htab:
+	dc.b	"0123456789",1,2,3,4,5,6
+
+;**************************************************************************
+;*
+;* NAME  test_result
+;*   
+;******
 test_result:
+	lda	#15
+	sta	$d020
 	lda	#<result_msg
 	ldy	#>result_msg
 	jsr	$ab1e
 	rts
 result_msg:
-	dc.b	"OK",13
+	dc.b	"DONE",13
 	dc.b	13,13,"RESULT AT $4000-$4500",0
 
 	
+;**************************************************************************
+;*
+;* NAME  test_prepare
+;*   
+;******
 test_prepare:
 	lda	#%11111111
 	sta	$dc00
@@ -295,6 +338,11 @@ test_prepare:
 	rts
 
 	
+;**************************************************************************
+;*
+;* NAME  test_preform
+;*   
+;******
 test_perform:
 	lda	enable
 	beq	pt_ex1
@@ -318,24 +366,19 @@ pt_sm2:
 	lda	#$0f
 	sta	$d019		; clear interrupts
 
+; cosmetic print out
+	jsr	show_params
+
+; increase cycle
 	inc	cycle
 	bne	pt_skp1
 	inc	pt_sm1+1
 	inc	pt_sm2+2
 pt_skp1:
-
-	lda	646
-	sta	$d800
-	sta	$d801
-	sta	$d802
-	lda	cycle
-	sta	STATUS+0
 	lda	pt_sm1+1
-	sta	STATUS+1
 	cmp	#$15
 	bne	pt_ex1
-	lda	#15
-	sta	$d020
+
 	lda	#$60
 	sta	test_perform
 	sta	test_done
@@ -343,7 +386,6 @@ pt_ex1:
 	lda	enable
 	eor	#1
 	sta	enable
-	sta	STATUS+2
 
 	rts
 
