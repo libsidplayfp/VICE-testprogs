@@ -18,6 +18,10 @@
 	org	$02
 ptr_zp:
 	ds.w	1
+rptr_zp:
+	ds.w	1
+cnt_zp:
+	ds.b	1	
 
 	seg	code
 	org	$0801
@@ -102,6 +106,8 @@ sa_lp2:
 	sei
 	lda	#$37
 	sta	$01
+	lda	#0
+	sta	$d01a
 	jsr	test_result
 sa_lp3:
 	jmp	sa_lp3
@@ -311,15 +317,87 @@ htab:
 test_result:
 	lda	#15
 	sta	$d020
+	lda	#<done_msg
+	ldy	#>done_msg
+	jsr	$ab1e
+
+	lda	#0
+tr_lp1:
+	sta	cnt_zp
+	ldx	cnt_zp
+	lda	ref_data,x
+	sta	rptr_zp
+	lda	ref_data+1,x
+	sta	rptr_zp+1
+	beq	tr_ex1
+
+	lda	#<BUFFER
+	sta	ptr_zp
+	lda	#>BUFFER
+	sta	ptr_zp+1
+
+; check for matches
+	ldx	#5
+	ldy	#0
+tr_lp2:
+	lda	(ptr_zp),y
+	cmp	(rptr_zp),y
+	bne	tr_mismatch	;Z=1
+	iny
+	bne	tr_lp2
+	inc	ptr_zp+1
+	inc	rptr_zp+1
+	dex
+	bne	tr_lp2
+	jmp	tr_match
+
+tr_mismatch:
+	lda	cnt_zp
+	clc
+	adc	#4
+	jmp	tr_lp1
+
+tr_match:
+	lda	#<matches_msg
+	ldy	#>matches_msg
+	jsr	$ab1e
+
+	ldx	cnt_zp
+	lda	ref_data+2,x
+	ldy	ref_data+3,x
+	jsr	$ab1e
+
+	lda	#<matches2_msg
+	ldy	#>matches2_msg
+	jsr	$ab1e
+
+	jmp	tr_ex2
+	
+tr_ex1:
+	lda	#<nomatches_msg
+	ldy	#>nomatches_msg
+	jsr	$ab1e
+
+tr_ex2:
 	lda	#<result_msg
 	ldy	#>result_msg
 	jsr	$ab1e
 	rts
-result_msg:
-	dc.b	"DONE",13
-	dc.b	13,13,"RESULT AT $4000-$4500",0
 
-	
+done_msg:
+	dc.b	"DONE",13,13,0
+
+matches_msg:
+	dc.b	"> MATCHES ",0
+matches2_msg:
+	dc.b	" <",0
+
+nomatches_msg:
+	dc.b	"> NO MATCHES! <",0
+
+result_msg:
+	dc.b	13,13,"(RESULT AT $4000-$4500)",0
+
 ;**************************************************************************
 ;*
 ;* NAME  test_prepare
@@ -406,7 +484,41 @@ dl_sm1:
 	ds.b	128,$ea
 	rts
 
-	
 BUFFER	equ	$4000
-	
+
+
+
+;**************************************************************************
+;*
+;* NAME  ref_data
+;*   
+;******
+ref_data:
+	dc.w	tab6569r1,msg6569r1
+	dc.w	tab6569r3,msg6569r3
+	dc.w	tab8565r2,msg8565r2
+	dc.w	tabdtv3pal,msgdtv3pal
+	dc.w	0
+;---
+msg6569r1:
+	dc.b	"6569R1",0
+tab6569r1:
+	incbin	"dump6569r1.prg",2
+;---
+msg6569r3:
+	dc.b	"6569R3",0
+tab6569r3:
+	incbin	"dump6569.prg",2
+;---
+msg8565r2:
+	dc.b	"8565R2",0
+tab8565r2:
+	incbin	"dump8565.prg",2
+;---
+msgdtv3pal:
+	dc.b	"DTV3 PAL",0
+tabdtv3pal:
+	incbin	"dumpdtv3.prg",2
+;---
+
 ; eof
