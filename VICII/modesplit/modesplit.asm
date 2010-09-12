@@ -89,7 +89,8 @@ sa_lp1:
 	cli
 	
 sa_lp2:
-	if	1
+	if	0
+; be evil to timing to provoke glitches
 	inx
 	bpl	sa_lp2
 	inc	$4080,x
@@ -109,10 +110,12 @@ nmi_entry:
 
 time1:
 	dc.b	irq_stable2_pal, irq_stable2_ntscold, irq_stable2_ntsc
+
+; eor #$00 (2),  bit $ea (3),  nop; nop (4)
 time2:
-	dc.b	$49, $24, $d8	; eor #<abs>,  bit <zp>, cld
+	dc.b	$49, $24, $ea
 time3:
-	dc.b	$00, $00, $d8
+	dc.b	$00, $ea, $ea
 
 ;**************************************************************************
 ;*
@@ -135,6 +138,7 @@ wv_lp2:
 ;*   
 ;* DESCRIPTION
 ;*   Determine number of cycles per raster line.
+;*   Acc = number of cycles.
 ;*   
 ;******
 check_time:
@@ -281,13 +285,13 @@ prt_skp1:
 
 ;******
 ; end of line marker
-	mac	eol
+	mac	EOL
 	ds.b	2,$d8
 	endm
 	
 ;******
 ; One 8 char high chunk
-	mac	chunk
+	mac	CHUNK
 	ldy	#$08
 	bne	.+4
 .lp1:
@@ -298,7 +302,7 @@ prt_skp1:
 	lda	#6
 	sta	$d021
 	ds.b	7,$ea
-	eol
+	EOL
 
 	jsr	{1}
 
@@ -306,7 +310,7 @@ prt_skp1:
 	stx	$d011
 	sty	$d016
 	ds.b	1,$ea
-	eol
+	EOL
 
 	iny
 	cpy	#$10
@@ -317,12 +321,12 @@ prt_skp1:
 test_start:
 perform_test:
 	ds.b	6,$ea
-; start 0
-	chunk 	line0_do
 ; start 1
-	chunk 	line1_do
+	CHUNK 	section1
 ; start 2
-	chunk 	line2_do
+	CHUNK 	section2
+; start 3
+	CHUNK 	section3
 ; end
 	bit	$ea
 	ds.b	4,$ea	
@@ -339,8 +343,14 @@ perform_test:
 	align	256
 
 
-	mac	line0
-	eol
+;**************************************************************************
+;*
+;* NAME  section1
+;*   
+;******
+section1:
+	repeat	6
+	EOL
 	ds.b	2,$ea
 	ldx	#$1b
 	stx	$d011
@@ -360,10 +370,17 @@ perform_test:
 	stx	$d011		; ECM
 	ds.b	3,$ea
 	bit	$ea
-	endm
+	repend
+	rts
 
-	mac	line1
-	eol
+;**************************************************************************
+;*
+;* NAME  section2
+;*   
+;******
+section2:
+	repeat	6
+	EOL
 	ds.b	2,$ea
 	ldx	#$1b
 	stx	$d011
@@ -375,10 +392,17 @@ perform_test:
 	stx	$d011
 	ds.b	16,$ea
 	bit	$ea
-	endm
+	repend
+	rts
 
-	mac	line2
-	eol
+;**************************************************************************
+;*
+;* NAME  section3
+;*   
+;******
+section3:
+	repeat	6
+	EOL
 	ds.b	2,$ea
 	ldx	#$1b
 	stx	$d011
@@ -390,32 +414,9 @@ perform_test:
 	sta	$d016
 	ds.b	15,$ea
 	bit	$ea
-	endm
+	repend
+	rts
 
-line0_do:
-	line0
-	line0
-	line0
-	line0
-	line0
-	line0
-	rts
-line1_do:
-	line1
-	line1
-	line1
-	line1
-	line1
-	line1
-	rts
-line2_do:
-	line2
-	line2
-	line2
-	line2
-	line2
-	line2
-	rts
 test_end:
 
 ; eof
