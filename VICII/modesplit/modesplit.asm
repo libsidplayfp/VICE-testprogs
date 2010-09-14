@@ -234,40 +234,66 @@ twelve:
 ;*   
 ;******
 test_present:
+	lda	#14
+	sta	646
+	sta	$d020
+	lda	#6
+	sta	$d021
+	lda	#<label_msg
+	ldy	#>label_msg
+	jsr	$ab1e
+
+	lda	#1
+	sta	646
+
+	lda	#NAME_POS
+	sta	$d3
+	lda	#<name_msg
+	ldy	#>name_msg
+	jsr	$ab1e
+	
+	lda	#CONF_POS
+	sta	$d3
+	lda	#0
+	ldx	cycles_per_line
+	jsr	$bdcd
+	
+	inc	$d3
+	lda	#1
+	ldx	num_lines
+	jsr	$bdcd
+
 	rts
+
+NAME_POS	equ	2
+CONF_POS	equ	32
+name_msg:
+	dc.b	"modesplit",29,"r01",0
+label_msg:
+	dc.b	147,"0123456789012345678901234567890123456789",19,0
 
 ;**************************************************************************
 ;*
 ;* NAME  test_prepare
 ;*   
 ;******
-label:
-	dc.b	"0123456789012345678901234567890123456789"
-
 test_prepare:
 
 ; set up screen
 	ldx	#0
 prt_lp1:
 	lda	#$5f
-	sta	$0400,x
+	sta	$0428,x
 	sta	$0500,x
 	sta	$0600,x
 	sta	$06e8,x
 	lda	#14
-	sta	$d800,x
+	sta	$d828,x
 	sta	$d900,x
 	sta	$da00,x
 	sta	$dae8,x
 	inx
 	bne	prt_lp1
-
-	ldx	#40
-prt_lp2:
-	lda	label-1,x
-	sta	$0400-1,x
-	dex
-	bne	prt_lp2
 
 	lda	#$17
 	sta	$d018	
