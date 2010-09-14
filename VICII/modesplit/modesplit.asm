@@ -47,6 +47,16 @@ EndLine:
 ;******
 SysAddress:
 	sei
+	lda	#$7f
+	sta	$dc0d
+	lda	$dc0d
+	jsr	check_time
+	sta	cycles_per_line
+	stx	num_lines
+
+	jsr	test_present
+
+	sei
 	lda	#$35
 	sta	$01
 
@@ -57,10 +67,7 @@ sa_lp1:
 	dex
 	bne	sa_lp1
 
-	lda	#$7f
-	sta	$dc0d
-	lda	$dc0d
-	jsr	check_time
+	lda	cycles_per_line
 	sec
 	sbc	#63
 	bcc	sa_fl1		;<63, fail
@@ -69,12 +76,8 @@ sa_lp1:
 	tax
 	lda	time1,x
 	sta	is_sm1+1
-	lda	time2,x
-	sta	tm1_zp
-	lda	time3,x
-	sta	tm2_zp
 
-	jsr	prepare_test
+	jsr	test_prepare
 	
 	jsr	wait_vb
 
@@ -108,58 +111,13 @@ nmi_entry:
 	sta	$01
 	jmp	$fe66
 
+cycles_per_line:
+	dc.b	0
+num_lines:
+	dc.b	0
 time1:
 	dc.b	irq_stable2_pal, irq_stable2_ntscold, irq_stable2_ntsc
 
-; eor #$00 (2),  bit $ea (3),  nop; nop (4)
-time2:
-	dc.b	$49, $24, $ea
-time3:
-	dc.b	$00, $ea, $ea
-
-;**************************************************************************
-;*
-;* NAME  wait_vb
-;*   
-;******
-wait_vb:
-wv_lp1:
-	bit	$d011
-	bpl	wv_lp1
-wv_lp2:
-	bit	$d011
-	bmi	wv_lp2
-	rts
-
-
-;**************************************************************************
-;*
-;* NAME  check_time
-;*   
-;* DESCRIPTION
-;*   Determine number of cycles per raster line.
-;*   Acc = number of cycles.
-;*   
-;******
-check_time:
-	lda	#0
-	sta	$dc0e
-	jsr	wait_vb
-;--- raster line 0
-	lda	#$fe
-	sta	$dc04
-	sta	$dc05		; load timer with $fefe
-	lda	#%00010001
-	sta	$dc0e		; start one shot timer
-ct_lp3:
-	bit	$d011
-	bpl	ct_lp3
-;--- raster line 256
-	lda	$dc05		; timer msb
-	eor	#$ff		; invert
-twelve:
-	rts
-	
 ;**************************************************************************
 ;*
 ;* NAME  irq_stable, irq_stable2
@@ -207,7 +165,7 @@ irq_stable2_pal:
 	beq	is2_skp1	; 2 (3)
 is2_skp1:
 
-	jsr	perform_test
+	jsr	test_perform
 		
 accstore	equ	.+1
 	lda	#0
@@ -217,16 +175,76 @@ ystore	equ	.+1
 	ldy	#0
 	rti
 
+;**************************************************************************
+;*
+;* NAME  wait_vb
+;*   
+;******
+wait_vb:
+wv_lp1:
+	bit	$d011
+	bpl	wv_lp1
+wv_lp2:
+	bit	$d011
+	bmi	wv_lp2
+	rts
 
 ;**************************************************************************
 ;*
-;* NAME  prepare_test
+;* NAME  check_time
+;*   
+;* DESCRIPTION
+;*   Determine number of cycles per raster line.
+;*   Acc = number of cycles.
+;*   X = LSB of number of raster lines.
+;*   
+;******
+check_time:
+	lda	#0
+	sta	$dc0e
+	jsr	wait_vb
+;--- raster line 0
+	lda	#$fe
+	sta	$dc04
+	sta	$dc05		; load timer with $fefe
+	lda	#%00010001
+	sta	$dc0e		; start one shot timer
+ct_lp1:
+	bit	$d011
+	bpl	ct_lp1
+;--- raster line 256
+	lda	$dc05		; timer msb
+	eor	#$ff		; invert
+; Acc = cycles per line
+;--- scan for raster wrap
+ct_lp2:
+	ldx	$d012
+ct_lp3:
+	cpx	$d012
+	beq	ct_lp3
+	bmi	ct_lp2
+	inx
+; X = number of raster lines (LSB)
+twelve:
+	rts
+
+;**************************************************************************
+;*
+;* NAME  test_present
+;*   
+;******
+test_present:
+	rts
+
+;**************************************************************************
+;*
+;* NAME  test_prepare
 ;*   
 ;******
 label:
 	dc.b	"0123456789012345678901234567890123456789"
 
-prepare_test:
+test_prepare:
 
 ; set up screen
 	ldx	#0
@@ -254,6 +272,15 @@ prt_lp2:
 	lda	#$17
 	sta	$d018	
 
+	lda	cycles_per_line
+	sec
+	sbc	#63
+	tax
+	lda	time2,x
+	sta	tm1_zp
+	lda	time3,x
+	sta	tm2_zp
+	
 	lda	#<test_start
 	sta	ptr_zp
 	lda	#>test_start
@@ -283,6 +310,13 @@ prt_skp1:
 	rts
 
 
+; eor #$00 (2),  bit $ea (3),  nop; nop (4)
+time2:
+	dc.b	$49, $24, $ea
+time3:
+	dc.b	$00, $ea, $ea
+
+	
 ;******
 ; end of line marker
 	mac	EOL
@@ -319,7 +353,7 @@ prt_skp1:
 	
 	align	256
 test_start:
-perform_test:
+test_perform:
 	ds.b	6,$ea
 ; start 1
 	CHUNK 	section1
