@@ -239,6 +239,7 @@ test_present:
 	sta	$d020
 	lda	#6
 	sta	$d021
+
 	lda	#<label_msg
 	ldy	#>label_msg
 	jsr	$ab1e
@@ -295,9 +296,21 @@ prt_lp1:
 	inx
 	bne	prt_lp1
 
+	jsr	adjust_timing
+
 	lda	#$17
 	sta	$d018	
 
+	rts
+
+
+
+;**************************************************************************
+;*
+;* NAME  adjust_timing
+;*   
+;******
+adjust_timing:
 	lda	cycles_per_line
 	sec
 	sbc	#63
@@ -312,29 +325,28 @@ prt_lp1:
 	lda	#>test_start
 	sta	ptr_zp+1
 	ldx	#>[test_end-test_start+255]
-prt_lp3:
+at_lp1:
 	ldy	#0
 	lda	#$d8		; cld
 	cmp	(ptr_zp),y
-	bne	prt_skp1
+	bne	at_skp1
 	iny
 	cmp	(ptr_zp),y
-	bne	prt_skp1
+	bne	at_skp1
 	dey
 	lda	tm1_zp
 	sta	(ptr_zp),y
 	iny
 	lda	tm2_zp
 	sta	(ptr_zp),y
-prt_skp1:
+at_skp1:
 	inc	ptr_zp
-	bne	prt_lp3
+	bne	at_lp1
 	inc	ptr_zp+1
 	dex
-	bne	prt_lp3
-	
-	rts
+	bne	at_lp1
 
+	rts
 
 ; eor #$00 (2),  bit $ea (3),  nop; nop (4)
 time2:
@@ -379,6 +391,11 @@ time3:
 	
 	align	256
 test_start:
+;**************************************************************************
+;*
+;* NAME  test_perform
+;*   
+;******
 test_perform:
 	ds.b	6,$ea
 ; start 1
