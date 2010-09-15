@@ -53,6 +53,16 @@ EndLine:
 ;******
 SysAddress:
 	sei
+	lda	#$7f
+	sta	$dc0d
+	lda	$dc0d
+	jsr	check_time
+	sta	cycles_per_line
+	stx	num_lines
+
+	jsr	test_present
+
+	sei
 	lda	#$35
 	sta	$01
 
@@ -63,13 +73,20 @@ sa_lp1:
 	dex
 	bne	sa_lp1
 
-	jsr	prepare_test
+	lda	cycles_per_line
+	sec
+	sbc	#63
+	bcc	sa_fl1		;<63, fail
+	cmp	#66-63		;>=66, fail
+	bcs	sa_fl1
+	tax
+	lda	time1,x
+	sta	is_sm1+1
 
+	jsr	test_prepare
+	
 	jsr	wait_vb
 
-	lda	#$7f
-	sta	$dc0d
-	lda	$dc0d
 	lda	#$1b | (>LINE << 7)
 	sta	$d011
 	lda	#<LINE
@@ -82,6 +99,7 @@ sa_lp1:
 	
 sa_lp2:
 	if	0
+; be evil to timing to provoke glitches
 	inx
 	bpl	sa_lp2
 	inc	$4080,x
@@ -92,12 +110,77 @@ sa_lp2:
 vectors:
 	dc.w	nmi_entry,0,irq_stable
 
+sa_fl1:
 nmi_entry:
 	sei
 	lda	#$37
 	sta	$01
 	jmp	$fe66
-	
+
+cycles_per_line:
+	dc.b	0
+num_lines:
+	dc.b	0
+time1:
+	dc.b	irq_stable2_pal, irq_stable2_ntscold, irq_stable2_ntsc
+
+;**************************************************************************
+;*
+;* NAME  irq_stable, irq_stable2
+;*   
+;******
+irq_stable:
+	sta	accstore	; 4
+	sty	ystore		; 4
+	stx	xstore		; 4
+	inc	$d019		; 6
+	inc	$d012		; 6
+is_sm1:
+	lda	#<irq_stable2_pal	; 2
+	sta	$fffe		; 4
+	tsx			; 2
+	cli			; 2
+;10 * nop for PAL (63)
+;11 * nop for NTSC (65)
+	ds.b	11,$ea		; 22
+; guard
+is_lp1:
+	sei
+	inc	$d020
+	jmp	is_lp1	
+
+;28 cycles for NTSC (65)
+;27 cycles for NTSCOLD (64)
+;26 cycles for PAL (63)
+irq_stable2_ntsc:
+	dc.b	$2c		; bit <abs>
+irq_stable2_ntscold:
+	dc.b	$24		; bit <zp>
+irq_stable2_pal:
+	dc.b	$ea
+	jsr	twelve		; 12
+	jsr	twelve		; 12
+;---
+	txs			; 2
+	dec	$d019		; 6
+	dec	$d012		; 6
+	lda	#<irq_stable	; 2
+	sta	$fffe		; 4	=46
+	lda	$d012		; 4
+	eor	$d012		; 4
+	beq	is2_skp1	; 2 (3)
+is2_skp1:
+
+	jsr	test_perform
+		
+accstore	equ	.+1
+	lda	#0
+xstore	equ	.+1
+	ldx	#0
+ystore	equ	.+1
+	ldy	#0
+	rti
+
 ;**************************************************************************
 ;*
 ;* NAME  wait_vb
@@ -114,62 +197,99 @@ wv_lp2:
 
 ;**************************************************************************
 ;*
-;* NAME  irq_stable, irq_stable2
+;* NAME  check_time
+;*   
+;* DESCRIPTION
+;*   Determine number of cycles per raster line.
+;*   Acc = number of cycles.
+;*   X = LSB of number of raster lines.
 ;*   
 ;******
-irq_stable:
-	sta	accstore	; 4
-	sty	ystore		; 4
-	stx	xstore		; 4
-	inc	$d019		; 6
-	inc	$d012		; 6
-is_sm1:
-	lda	#<irq_stable2	; 2
-	sta	$fffe		; 4
-	tsx			; 2
-	cli			; 2
-	ds.b	13,$ea		; 24
-	if	0
-is_lp1:
-	sei
-	inc	$d020
-	jmp	is_lp1	
-irq_stable2:
-	ds.b	13,$ea		; 26
-	else
-irq_stable2	equ	.-13
-	endif
-	txs			; 2
-	dec	$d019		; 6
-	dec	$d012		; 6
-	lda	#<irq_stable	; 2
-	sta	$fffe		; 4	=46
-	lda	$d012		; 4
-	eor	$d012		; 4
-	beq	is2_skp1	; 2 (3)
-is2_skp1:
-
-	jsr	perform_test
-		
-accstore	equ	.+1
+check_time:
 	lda	#0
-xstore	equ	.+1
-	ldx	#0
-ystore	equ	.+1
-	ldy	#0
-	rti
+	sta	$dc0e
+	jsr	wait_vb
+;--- raster line 0
+	lda	#$fe
+	sta	$dc04
+	sta	$dc05		; load timer with $fefe
+	lda	#%00010001
+	sta	$dc0e		; start one shot timer
+ct_lp1:
+	bit	$d011
+	bpl	ct_lp1
+;--- raster line 256
+	lda	$dc05		; timer msb
+	eor	#$ff		; invert
+; Acc = cycles per line
+;--- scan for raster wrap
+ct_lp2:
+	ldx	$d012
+ct_lp3:
+	cpx	$d012
+	beq	ct_lp3
+	bmi	ct_lp2
+	inx
+; X = number of raster lines (LSB)
+twelve:
+	rts
 
+;**************************************************************************
+;*
+;* NAME  test_present
+;*   
+;******
+test_present:
+	lda	#14
+	sta	646
+	sta	$d020
+	lda	#6
+	sta	$d021
 
+	lda	#<label_msg
+	ldy	#>label_msg
+	jsr	$ab1e
 
-label:
-	dc.b	"0123456789012345678901234567890123456789"
+	lda	#1
+	sta	646
 
-prepare_test:
+	lda	#NAME_POS
+	sta	$d3
+	lda	#<name_msg
+	ldy	#>name_msg
+	jsr	$ab1e
+	
+	lda	#CONF_POS
+	sta	$d3
+	lda	#0
+	ldx	cycles_per_line
+	jsr	$bdcd
+	
+	inc	$d3
+	lda	#1
+	ldx	num_lines
+	jsr	$bdcd
+
+	rts
+
+NAME_POS	equ	2
+CONF_POS	equ	32
+name_msg:
+	dc.b	"FETCHSPLIT",29,"R01",0
+label_msg:
+	dc.b	147,"0123456789012345678901234567890123456789",19,0
+
+;**************************************************************************
+;*
+;* NAME  test_prepare
+;*   
+;******
+test_prepare:
 ; setup main screen
 	ldx	#0
 prt_lp1:
 	lda	#14
-	sta	$d800,x
+	sta	$d828,x
 	sta	$d900,x
 	sta	$da00,x
 	sta	$dae8,x
@@ -178,7 +298,7 @@ prt_lp1:
 
 	ldx	#40
 prt_lp2:
-	lda	label-1,x
+	lda	$0400+40*0-1,x
 	sta	$3c00+40*0-1,x
 	dex
 	bne	prt_lp2
@@ -399,7 +519,7 @@ CHAR_3	equ	char_3-chars
 
 	
 	align	256
-perform_test:
+test_perform:
 	ds.b	4,$ea
 	bit	$ea
 ; start 0
