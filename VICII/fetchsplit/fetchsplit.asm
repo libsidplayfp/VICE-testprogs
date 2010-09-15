@@ -30,6 +30,10 @@ ptr_zp:
 	ds.w	1
 offs_zp:
 	ds.b	1
+tm1_zp:
+	ds.b	1
+tm2_zp:
+	ds.b	1
 
 	seg	code
 	org	$0801
@@ -395,6 +399,8 @@ prt_lp4:
 	sta	$f808,x
 	dex
 	bpl	prt_lp4
+
+	jsr	adjust_timing
 	
 	lda	#0
 	sta	$d022
@@ -403,10 +409,65 @@ prt_lp4:
 	lda	#6
 	sta	$d021
 	lda	#$f5
-	sta	$d018	
+	sta	$d018
+
+	rts
+	
+
+;**************************************************************************
+;*
+;* NAME  adjust_timing
+;*   
+;******
+adjust_timing:
+	lda	cycles_per_line
+	sec
+	sbc	#63
+	tax
+	lda	time2,x
+	sta	tm1_zp
+	lda	time3,x
+	sta	tm2_zp
+	
+	lda	#<test_start
+	sta	ptr_zp
+	lda	#>test_start
+	sta	ptr_zp+1
+	ldx	#>[test_end-test_start+255]
+at_lp1:
+	ldy	#0
+	lda	#$d8		; cld
+	cmp	(ptr_zp),y
+	bne	at_skp1
+	iny
+	cmp	(ptr_zp),y
+	bne	at_skp1
+	dey
+	lda	tm1_zp
+	sta	(ptr_zp),y
+	iny
+	lda	tm2_zp
+	sta	(ptr_zp),y
+at_skp1:
+	inc	ptr_zp
+	bne	at_lp1
+	inc	ptr_zp+1
+	dex
+	bne	at_lp1
+
 	rts
 
+; eor #$00 (2),  bit $ea (3),  nop; nop (4)
+time2:
+	dc.b	$49, $24, $ea
+time3:
+	dc.b	$00, $ea, $ea
 
+;**************************************************************************
+;*
+;* NAME  push_bitmap
+;*   
+;******
 push_bitmap:
 	sta	offs_zp
 	stx	ptr_zp
@@ -519,6 +580,12 @@ CHAR_3	equ	char_3-chars
 
 	
 	align	256
+test_start:
+;**************************************************************************
+;*
+;* NAME  test_perform
+;*   
+;******
 test_perform:
 	ds.b	4,$ea
 	bit	$ea
@@ -1044,4 +1111,6 @@ line2_do:
 	bit	$ea
 	rts
 	
+test_end:
+
 ; eof
