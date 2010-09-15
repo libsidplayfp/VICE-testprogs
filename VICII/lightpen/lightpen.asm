@@ -106,8 +106,11 @@ sa_lp2:
 	sei
 	lda	#$37
 	sta	$01
-	lda	#0
-	sta	$d01a
+	ldx	#0
+	stx	$d01a
+	inx
+	stx	$d019
+	jsr	$fda3
 	jsr	test_result
 sa_lp3:
 	jmp	sa_lp3
@@ -247,6 +250,12 @@ twelve:
 ;*   
 ;******
 test_present:
+	lda	#14
+	sta	646
+	sta	$d020
+	lda	#6
+	sta	$d021
+
 	lda	#<timing_msg
 	ldy	#>timing_msg
 	jsr	$ab1e
@@ -266,7 +275,7 @@ test_present:
 	rts
 
 timing_msg:
-	dc.b	147,"LIGHTPEN / TLR",13,13
+	dc.b	147,"LIGHTPEN R01 / TLR",13,13
 	dc.b	"TIMING: ",0
 cycles_line_msg:
 	dc.b	" CYCLES/LINE, ",0
@@ -385,22 +394,25 @@ tr_ex2:
 	lda	#<result_msg
 	ldy	#>result_msg
 	jsr	$ab1e
+
+
 	rts
 
 done_msg:
 	dc.b	"DONE",13,13,0
 
 matches_msg:
-	dc.b	"> MATCHES ",0
+	dc.b	5,"> MATCHES ",0
 matches2_msg:
-	dc.b	" <",0
+	dc.b	" <",154,0
 
 nomatches_msg:
-	dc.b	"> NO MATCHES! <",0
+	dc.b	5,"> NO MATCHES! <",154,0
 
 result_msg:
 	dc.b	13,13,"(RESULT AT $4000-$4500)",0
 
+	
 ;**************************************************************************
 ;*
 ;* NAME  test_prepare
