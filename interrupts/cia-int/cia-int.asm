@@ -22,6 +22,10 @@ cnt_zp:
 	ds.b	1
 test_zp:
 	ds.b	1
+irq_zp:
+	ds.b	1
+time_zp:
+	ds.b	1
 
 	seg	code
 	org	$0801
@@ -135,9 +139,9 @@ tpr_lp1:
 greet_msg:
 	dc.b	147,"CIA-INT / TLR",13,13
 	dc.b	"DC0C: A9 XX 60",13
-	dc.b	13,13,13
+	dc.b	13,13,13,13
 	dc.b	"DC0B: 0D A9 XX 60",13
-	dc.b	13,13,13
+	dc.b	13,13,13,13
 	dc.b	"DC0C: A4 XX A9 09 28 60",13
 	dc.b	0
 	
@@ -224,7 +228,9 @@ tp_lp01:
 	inc	$d020
 	lda	#$7f
 	sta	$dc0d
+	sta	$dd0d
 	lda	$dc0d
+	lda	$dd0d
 
 	ldx	test_zp
 	jsr	do_test
@@ -244,12 +250,12 @@ tp_skp1:
 
 scrtab_l:
 	dc.b	<[$0400+40*3]
-	dc.b	<[$0400+40*7]
-	dc.b	<[$0400+40*11]
+	dc.b	<[$0400+40*8]
+	dc.b	<[$0400+40*13]
 scrtab_h:
 	dc.b	>[$0400+40*3]
-	dc.b	>[$0400+40*7]
-	dc.b	>[$0400+40*11]
+	dc.b	>[$0400+40*8]
+	dc.b	>[$0400+40*13]
 addrtab:
 	dc.b	$0c
 	dc.b	$0b
@@ -315,19 +321,31 @@ dt_skp1:
 	ldy	#0
 dt_lp1:
 	sty	cnt_zp
-	
-	sty	$dc06
+
+	lda	#255
+	sta	$dd04
 	ldx	#0
+	stx	$dd05
+	sty	$dc06
 	stx	$dc07
+	stx	irq_zp
+	stx	time_zp
 	txa
 	bit	$dc0d
 	cli
 	ldy	#%00011001
+;-------------------------------
+; Test start
+;-------------------------------
+	sty	$dd0e		; measurement
 	sty	$dc0f
 dt_sm1:
 	jsr	$dc0c
 	sei
 	bit	$dc0d
+;-------------------------------
+; Test end
+;-------------------------------
 dt_sm2:
 	nop
 	ldy	cnt_zp
@@ -336,7 +354,14 @@ dt_sm2:
 	clc
 	adc	#40
 	tay
-	txa
+	lda	irq_zp
+	sta	(ptr_zp),y
+	tya
+	clc
+	adc	#40
+	tay
+	lda	time_zp
+	eor	#$ff
 	sta	(ptr_zp),y
 
 	ldy	cnt_zp
@@ -346,8 +371,10 @@ dt_sm2:
 	rts
 
 irq:
+	ldx	$dd04
 	bit	$dc0d
-	inx
+	stx	time_zp
+	inc	irq_zp
 	rti
 
 end:
