@@ -20,6 +20,8 @@ ptr_zp:
 	ds.w	1
 cnt_zp:
 	ds.b	1
+test_zp:
+	ds.b	1
 
 	seg	code
 	org	$0801
@@ -135,6 +137,8 @@ greet_msg:
 	dc.b	"DC0C: A9 XX 60",13
 	dc.b	13,13,13
 	dc.b	"DC0B: 0D A9 XX 60",13
+	dc.b	13,13,13
+	dc.b	"DC0C: A4 XX A9 09 28 60",13
 	dc.b	0
 	
 
@@ -181,9 +185,24 @@ tpp_sm1:
 	stx.w	$00a9
 	inx
 	bne	tpp_lp1
+
+; make LDA $A9xx return xx.
+	ldx	#0
+tpp_lp2:
+	txa
+	sta	$a900,x
+	inx
+	bne	tpp_lp2
 	
 	inc	$01
-	
+
+; initial test sequencer
+	lda	#0
+	sta	test_zp
+
+	lda	#$ff
+	sta	$dc02
+	sta	$dc03
 	rts
 
 	
@@ -207,38 +226,96 @@ tp_lp01:
 	sta	$dc0d
 	lda	$dc0d
 
-	ldx	#<[$0400+40*3]
-	ldy	#>[$0400+40*3]
-	lda	#$0c
+	ldx	test_zp
 	jsr	do_test
 
-	ldx	#<[$0400+40*7]
-	ldy	#>[$0400+40*7]
-	lda	#$0b
-	jsr	do_test
+	ldx	test_zp
+	inx
+	cpx	#3
+	bne	tp_skp1
+	ldx	#0
+tp_skp1:
+	stx	test_zp
 
 	dec	$d020
 
 	jmp	test_perform	; test forever
 ;	rts
 
-
-do_test:
-	sta	dt_sm1+1
-	stx	ptr_zp
-	sty	ptr_zp+1
+scrtab_l:
+	dc.b	<[$0400+40*3]
+	dc.b	<[$0400+40*7]
+	dc.b	<[$0400+40*11]
+scrtab_h:
+	dc.b	>[$0400+40*3]
+	dc.b	>[$0400+40*7]
+	dc.b	>[$0400+40*11]
+addrtab:
+	dc.b	$0c
+	dc.b	$0b
+	dc.b	$0c
+convtab:
+	dc.b	$ea		; NOP
+	dc.b	$ea		; NOP
+	dc.b	$98		; TYA
+offstab:
+	dc.b	SEQTAB1
+	dc.b	SEQTAB2
+	dc.b	SEQTAB3
 	
+seqtab:
+SEQTAB1	equ	.-seqtab
+	dc.b	$0c,$a9		; LDA #<imm>
+	dc.b	$0d,%10000010	; timer B IRQ
+	dc.b	$0e,$60		; RTS
+	dc.b	$ff
+
+SEQTAB2	equ	.-seqtab
+	dc.b	$0f,%00000000	; TOD clock mode
+	dc.b	$0b,$0d		; ORA <abs>
+	dc.b	$0c,$a9		; LDA #<imm>
+	dc.b	$0d,%10000010	; timer B IRQ
+	dc.b	$0e,$60		; RTS
+	dc.b	$ff
+
+SEQTAB3	equ	.-seqtab
+	dc.b	$0c,$ac		; LDY <abs>
+	dc.b	$0d,%10000010	; timer B IRQ
+	dc.b	$0e,$a9		;
+;	dc.b	$0f,%10000000	; ORA #<imm> or PHP 
+	dc.b	$10,$28		; PLP
+	dc.b	$11,$60		; RTS
+	dc.b	$ff
+
+	
+do_test:
+	lda	scrtab_l,x
+	sta	ptr_zp
+	lda	scrtab_h,x
+	sta	ptr_zp+1
+	lda	addrtab,x
+	sta	dt_sm1+1
+	lda	convtab,x
+	sta	dt_sm2
+
+; set up test parameters
+	ldy	offstab,x
+dt_lp0:
+	lda	seqtab,y
+	bmi	dt_skp1
+	sta	dt_sm0+1
+	lda	seqtab+1,y
+dt_sm0:
+	sta	$dc00
+	iny
+	iny
+	bne	dt_lp0
+dt_skp1:
+
 	ldy	#0
 dt_lp1:
 	sty	cnt_zp
-	lda	#$0d		;ORA #<abs>
-	sta	$dc0b
-	lda	#$a9		;LDA #<imm>
-	sta	$dc0c
-	lda	#%10000010	; timer B IRQ
-	sta	$dc0d
-	lda	#$60		;RTS
-	sta	$dc0e
+	
 	sty	$dc06
 	ldx	#0
 	stx	$dc07
@@ -248,9 +325,11 @@ dt_lp1:
 	ldy	#%00011001
 	sty	$dc0f
 dt_sm1:
-	jsr	$dc0b
+	jsr	$dc0c
 	sei
 	bit	$dc0d
+dt_sm2:
+	nop
 	ldy	cnt_zp
 	sta	(ptr_zp),y
 	tya
