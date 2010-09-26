@@ -18,6 +18,8 @@
 	org	$02
 ptr_zp:
 	ds.w	1
+cnt_zp:
+	ds.b	1
 
 	seg	code
 	org	$0801
@@ -129,7 +131,11 @@ tpr_lp1:
 	rts
 
 greet_msg:
-	dc.b	147,"CIA-INT / TLR",13,13,0
+	dc.b	147,"CIA-INT / TLR",13,13
+	dc.b	"DC0C: A9 XX 60",13
+	dc.b	13,13,13
+	dc.b	"DC0B: 0D A9 XX 60",13
+	dc.b	0
 	
 
 ;**************************************************************************
@@ -155,6 +161,29 @@ done_msg:
 ;*   
 ;******
 test_prepare:
+	lda	#$34
+	sta	$01
+
+; make LDA $xxA9 mostly return xx.
+	ldx	#0
+	stx	$00a9
+	inx
+	stx	$01a9
+	inx
+	stx	$02a9
+	inx
+	stx	$03a9
+	
+	ldx	#>[end+$ff]
+tpp_lp1:
+	stx	tpp_sm1+2
+tpp_sm1:
+	stx.w	$00a9
+	inx
+	bne	tpp_lp1
+	
+	inc	$01
+	
 	rts
 
 	
@@ -178,39 +207,69 @@ tp_lp01:
 	sta	$dc0d
 	lda	$dc0d
 
-	ldy	#0
-tp_lp1:
-	lda	#$a9
-	sta	$dc0c
-	lda	#$60
-	sta	$dc0e
-	sty	$dc06
-	ldx	#0
-	stx	$dc07
-	lda	#%10000010	; timer B IRQ
-	sta	$dc0d
-	bit	$dc0d
-	cli
-	lda	#%00011001
-	sta	$dc0f
-	jsr	$dc0c
-	sei
-	bit	$dc0d
-	sta	$0400+40*1,y
-	txa
-	sta	$0400+40*2,y
-	iny
-	cpy	#40
-	bne	tp_lp1
+	ldx	#<[$0400+40*3]
+	ldy	#>[$0400+40*3]
+	lda	#$0c
+	jsr	do_test
+
+	ldx	#<[$0400+40*7]
+	ldy	#>[$0400+40*7]
+	lda	#$0b
+	jsr	do_test
+
 	dec	$d020
 
 	jmp	test_perform	; test forever
 ;	rts
+
+
+do_test:
+	sta	dt_sm1+1
+	stx	ptr_zp
+	sty	ptr_zp+1
+	
+	ldy	#0
+dt_lp1:
+	sty	cnt_zp
+	lda	#$0d		;ORA #<abs>
+	sta	$dc0b
+	lda	#$a9		;LDA #<imm>
+	sta	$dc0c
+	lda	#%10000010	; timer B IRQ
+	sta	$dc0d
+	lda	#$60		;RTS
+	sta	$dc0e
+	sty	$dc06
+	ldx	#0
+	stx	$dc07
+	txa
+	bit	$dc0d
+	cli
+	ldy	#%00011001
+	sty	$dc0f
+dt_sm1:
+	jsr	$dc0b
+	sei
+	bit	$dc0d
+	ldy	cnt_zp
+	sta	(ptr_zp),y
+	tya
+	clc
+	adc	#40
+	tay
+	txa
+	sta	(ptr_zp),y
+
+	ldy	cnt_zp
+	iny
+	cpy	#24
+	bne	dt_lp1
+	rts
 
 irq:
 	bit	$dc0d
 	inx
 	rti
 
-
+end:
 ; eof
