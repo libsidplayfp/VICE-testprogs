@@ -139,9 +139,9 @@ tpr_lp1:
 greet_msg:
 	dc.b	147,"CIA-INT / TLR",13,13
 	dc.b	"DC0C: A9 XX 60",13
-	dc.b	13,13,13,13
+	dc.b	13,13,13
 	dc.b	"DC0B: 0D A9 XX 60",13
-	dc.b	13,13,13,13
+	dc.b	13,13,13
 	dc.b	"DC0C: A4 XX A9 09 28 60",13
 	dc.b	0
 	
@@ -250,12 +250,12 @@ tp_skp1:
 
 scrtab_l:
 	dc.b	<[$0400+40*3]
-	dc.b	<[$0400+40*8]
-	dc.b	<[$0400+40*13]
+	dc.b	<[$0400+40*7]
+	dc.b	<[$0400+40*11]
 scrtab_h:
 	dc.b	>[$0400+40*3]
-	dc.b	>[$0400+40*8]
-	dc.b	>[$0400+40*13]
+	dc.b	>[$0400+40*7]
+	dc.b	>[$0400+40*11]
 addrtab:
 	dc.b	$0c
 	dc.b	$0b
@@ -349,19 +349,23 @@ dt_sm1:
 dt_sm2:
 	nop
 	ldy	cnt_zp
-	sta	(ptr_zp),y
-	tya
-	clc
-	adc	#40
-	tay
-	lda	irq_zp
+	cmp	#0
+	bne	dt_skp2
+	lda	#"-"
+dt_skp2:
 	sta	(ptr_zp),y
 	tya
 	clc
 	adc	#40
 	tay
 	lda	time_zp
-	eor	#$ff
+	eor	#$7f
+	clc
+	sbc	#16
+	ldx	irq_zp
+	bne	dt_skp3
+	lda	#"-"
+dt_skp3:
 	sta	(ptr_zp),y
 
 	ldy	cnt_zp
