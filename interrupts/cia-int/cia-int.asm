@@ -142,7 +142,7 @@ greet_msg:
 	dc.b	13,13,13
 	dc.b	"DC0B: 0D A9 XX 60",13
 	dc.b	13,13,13
-	dc.b	"DC0C: A4 XX A9 09 28 60",13
+	dc.b	"DC0C: AC XX A9 09 28 60",13
 	dc.b	0
 	
 
@@ -237,7 +237,7 @@ tp_lp01:
 
 	ldx	test_zp
 	inx
-	cpx	#3
+	cpx	#NUM_TESTS
 	bne	tp_skp1
 	ldx	#0
 tp_skp1:
@@ -248,6 +248,7 @@ tp_skp1:
 	jmp	test_perform	; test forever
 ;	rts
 
+NUM_TESTS	equ	3
 scrtab_l:
 	dc.b	<[$0400+40*3]
 	dc.b	<[$0400+40*7]
@@ -292,7 +293,6 @@ SEQTAB3	equ	.-seqtab
 	dc.b	$10,$28		; PLP
 	dc.b	$11,$60		; RTS
 	dc.b	$ff
-
 	
 do_test:
 	lda	scrtab_l,x
@@ -331,14 +331,15 @@ dt_lp1:
 	stx	irq_zp
 	stx	time_zp
 	txa
-	bit	$dc0d
-	cli
 	ldy	#%00011001
+; X=0, Acc=0
 ;-------------------------------
 ; Test start
 ;-------------------------------
+	bit	$dc0d
+	cli
 	sty	$dd0e		; measurement
-	sty	$dc0f
+	sty	$dc0f		; actual test
 dt_sm1:
 	jsr	$dc0c
 	sei
