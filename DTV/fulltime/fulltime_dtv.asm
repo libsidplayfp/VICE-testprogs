@@ -1,6 +1,6 @@
 ;**************************************************************************
 ;*
-;* FILE  fulltime.asm
+;* FILE  fulltime_dtv.asm
 ;* Copyright (c) 2007, 2009 Daniel Kahlin <daniel@kahlin.net>
 ;* Written by Daniel Kahlin <daniel@kahlin.net>
 ;*
