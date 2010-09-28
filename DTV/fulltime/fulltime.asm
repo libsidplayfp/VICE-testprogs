@@ -691,14 +691,12 @@ prep_code:
 	php
 	lda	#$11
 	plp
-	nop
+;	nop
 	sta	$dd0e
 PREP_CODE_LEN	equ	.-prep_code
 
 		
 tcode_instr:
-
-pti_normal:
 	sty	instr_offs
 	ldx	#0
 pti_lp1:
