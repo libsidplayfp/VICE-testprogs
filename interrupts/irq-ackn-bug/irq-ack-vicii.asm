@@ -132,10 +132,12 @@ noend:
 	jmp ($c000)
 
 irq_handler_3:
+    pha
 	lda #'*'
 	sta $fb	
 	lda #$01
     sta $d019
+    pla
     rti
 	
 irq_ack_test1:
