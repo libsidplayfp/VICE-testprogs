@@ -137,7 +137,7 @@ tpr_lp1:
 	rts
 
 greet_msg:
-	dc.b	147,"CIA-INT / TLR",13,13
+	dc.b	147,"CIA-INT R03 / TLR",13,13
 	dc.b	"DC0C: A9 XX 60",13
 	dc.b	13,13,13
 	dc.b	"DC0C: A5 XX 60",13
@@ -358,6 +358,7 @@ do_test:
 	lda	convtab+1,y
 	sta	dt_sm2+1
 
+	lda	$dc08		; reset tod state
 ; set up test parameters
 	ldy	offstab,x
 dt_lp0:
