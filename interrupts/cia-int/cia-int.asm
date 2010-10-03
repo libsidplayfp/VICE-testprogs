@@ -144,6 +144,8 @@ greet_msg:
 	dc.b	13,13,13
 	dc.b	"DC0B: 0D A9 XX 60",13
 	dc.b	13,13,13
+	dc.b	"DC0B: 19 FF XX 60",13
+	dc.b	13,13,13
 	dc.b	"DC0C: AC XX A9 09 28 60",13
 	dc.b	0
 	
@@ -201,13 +203,30 @@ tpp_sm1:
 	inx
 	bne	tpp_lp2
 
+; make LDA $xxFF,Y with Y=$19 mostly return xx.
+	ldx	#0
+	stx	$00ff+$19
+	inx
+	stx	$01ff+$19
+	inx
+	stx	$02ff+$19
+	
+	ldx	#>[end+$ff]
+tpp_lp3:
+	stx	tpp_sm2+2
+	inc	tpp_sm2+2
+tpp_sm2:
+	stx.w	$00ff+$19
+	inx
+	bne	tpp_lp3
+
 ; make LDA $A9xx return xx.
 	ldx	#0
-tpp_lp3:
+tpp_lp4:
 	txa
 	sta	$a900,x
 	inx
-	bne	tpp_lp3
+	bne	tpp_lp4
 
 	inc	$01
 
@@ -259,20 +278,23 @@ tp_skp1:
 	jmp	test_perform	; test forever
 ;	rts
 
-NUM_TESTS	equ	4
+NUM_TESTS	equ	5
 scrtab:
 	dc.w	$0400+40*3
 	dc.w	$0400+40*7
 	dc.w	$0400+40*11
 	dc.w	$0400+40*15
+	dc.w	$0400+40*19
 addrtab:
 	dc.b	$0c
 	dc.b	$0c
+	dc.b	$0b
 	dc.b	$0b
 	dc.b	$0c
 convtab:
 	dc.b	$ea,$ea		; NOP
 	dc.b	$49,$2f		; EOR #$2f
+	dc.b	$ea,$ea		; NOP
 	dc.b	$ea,$ea		; NOP
 	dc.b	$98,$ea		; TYA
 offstab:
@@ -280,6 +302,7 @@ offstab:
 	dc.b	SEQTAB2
 	dc.b	SEQTAB3
 	dc.b	SEQTAB4
+	dc.b	SEQTAB5
 	
 seqtab:
 SEQTAB1	equ	.-seqtab
@@ -297,12 +320,20 @@ SEQTAB2	equ	.-seqtab
 SEQTAB3	equ	.-seqtab
 	dc.b	$0f,%00000000	; TOD clock mode
 	dc.b	$0b,$0d		; ORA <abs>
-	dc.b	$0c,$a9		; LDA #<imm>
+	dc.b	$0c,$a9		; $a9
 	dc.b	$0d,%10000010	; timer B IRQ
 	dc.b	$0e,$60		; RTS
 	dc.b	$ff
 
 SEQTAB4	equ	.-seqtab
+	dc.b	$0f,%00000000	; TOD clock mode
+	dc.b	$0b,$19		; ORA <abs>,y
+	dc.b	$0c,$ff		; $ff
+	dc.b	$0d,%10000010	; timer B IRQ
+	dc.b	$0e,$60		; RTS
+	dc.b	$ff
+
+SEQTAB5	equ	.-seqtab
 	dc.b	$0c,$ac		; LDY <abs>
 	dc.b	$0d,%10000010	; timer B IRQ
 	dc.b	$0e,$a9		;
@@ -310,6 +341,7 @@ SEQTAB4	equ	.-seqtab
 	dc.b	$10,$28		; PLP
 	dc.b	$11,$60		; RTS
 	dc.b	$ff
+
 	
 do_test:
 	txa
@@ -354,7 +386,7 @@ dt_lp1:
 	stx	time_zp
 	txa
 	ldy	#%00011001
-; X=0, Acc=0
+; X=0, Y=$19, Acc=0
 ;-------------------------------
 ; Test start
 ;-------------------------------
