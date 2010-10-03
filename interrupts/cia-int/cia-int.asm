@@ -15,7 +15,7 @@
 ;* SECTION  zero page
 ;*
 ;******
-	org	$02
+	org	$c0
 ptr_zp:
 	ds.w	1
 cnt_zp:
@@ -140,6 +140,8 @@ greet_msg:
 	dc.b	147,"CIA-INT / TLR",13,13
 	dc.b	"DC0C: A9 XX 60",13
 	dc.b	13,13,13
+	dc.b	"DC0C: A5 XX 60",13
+	dc.b	13,13,13
 	dc.b	"DC0B: 0D A9 XX 60",13
 	dc.b	13,13,13
 	dc.b	"DC0C: AC XX A9 09 28 60",13
@@ -172,6 +174,15 @@ test_prepare:
 	lda	#$34
 	sta	$01
 
+; make LDA $xx mostly return xx ^ $2f.
+	ldx	#2
+tpp_lp1:
+	txa
+	eor	#$2f
+	sta	$00,x
+	inx
+	bne	tpp_lp1
+
 ; make LDA $xxA9 mostly return xx.
 	ldx	#0
 	stx	$00a9
@@ -183,21 +194,21 @@ test_prepare:
 	stx	$03a9
 	
 	ldx	#>[end+$ff]
-tpp_lp1:
+tpp_lp2:
 	stx	tpp_sm1+2
 tpp_sm1:
 	stx.w	$00a9
 	inx
-	bne	tpp_lp1
+	bne	tpp_lp2
 
 ; make LDA $A9xx return xx.
 	ldx	#0
-tpp_lp2:
+tpp_lp3:
 	txa
 	sta	$a900,x
 	inx
-	bne	tpp_lp2
-	
+	bne	tpp_lp3
+
 	inc	$01
 
 ; initial test sequencer
@@ -248,27 +259,27 @@ tp_skp1:
 	jmp	test_perform	; test forever
 ;	rts
 
-NUM_TESTS	equ	3
-scrtab_l:
-	dc.b	<[$0400+40*3]
-	dc.b	<[$0400+40*7]
-	dc.b	<[$0400+40*11]
-scrtab_h:
-	dc.b	>[$0400+40*3]
-	dc.b	>[$0400+40*7]
-	dc.b	>[$0400+40*11]
+NUM_TESTS	equ	4
+scrtab:
+	dc.w	$0400+40*3
+	dc.w	$0400+40*7
+	dc.w	$0400+40*11
+	dc.w	$0400+40*15
 addrtab:
+	dc.b	$0c
 	dc.b	$0c
 	dc.b	$0b
 	dc.b	$0c
 convtab:
-	dc.b	$ea		; NOP
-	dc.b	$ea		; NOP
-	dc.b	$98		; TYA
+	dc.b	$ea,$ea		; NOP
+	dc.b	$49,$2f		; EOR #$2f
+	dc.b	$ea,$ea		; NOP
+	dc.b	$98,$ea		; TYA
 offstab:
 	dc.b	SEQTAB1
 	dc.b	SEQTAB2
 	dc.b	SEQTAB3
+	dc.b	SEQTAB4
 	
 seqtab:
 SEQTAB1	equ	.-seqtab
@@ -278,6 +289,12 @@ SEQTAB1	equ	.-seqtab
 	dc.b	$ff
 
 SEQTAB2	equ	.-seqtab
+	dc.b	$0c,$a5		; LDA <zp>
+	dc.b	$0d,%10000010	; timer B IRQ
+	dc.b	$0e,$60		; RTS
+	dc.b	$ff
+
+SEQTAB3	equ	.-seqtab
 	dc.b	$0f,%00000000	; TOD clock mode
 	dc.b	$0b,$0d		; ORA <abs>
 	dc.b	$0c,$a9		; LDA #<imm>
@@ -285,7 +302,7 @@ SEQTAB2	equ	.-seqtab
 	dc.b	$0e,$60		; RTS
 	dc.b	$ff
 
-SEQTAB3	equ	.-seqtab
+SEQTAB4	equ	.-seqtab
 	dc.b	$0c,$ac		; LDY <abs>
 	dc.b	$0d,%10000010	; timer B IRQ
 	dc.b	$0e,$a9		;
@@ -295,14 +312,19 @@ SEQTAB3	equ	.-seqtab
 	dc.b	$ff
 	
 do_test:
-	lda	scrtab_l,x
+	txa
+	asl
+	tay
+	lda	scrtab,y
 	sta	ptr_zp
-	lda	scrtab_h,x
+	lda	scrtab+1,y
 	sta	ptr_zp+1
 	lda	addrtab,x
 	sta	dt_sm1+1
-	lda	convtab,x
+	lda	convtab,y
 	sta	dt_sm2
+	lda	convtab+1,y
+	sta	dt_sm2+1
 
 ; set up test parameters
 	ldy	offstab,x
@@ -348,7 +370,7 @@ dt_sm1:
 ; Test end
 ;-------------------------------
 dt_sm2:
-	nop
+	ds.b	2,$ea
 	ldy	cnt_zp
 	cmp	#0
 	bne	dt_skp2
