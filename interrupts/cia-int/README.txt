@@ -3,28 +3,52 @@ Readme for cia-int
 
 Running on Breadbox ca 1983-84, regular 6526:
 
-CIA-INT R03 / TLR
+  CIA-INT R03 / TLR
 
-DC0C: A9 XX 60
---BBBb------------------
-AACC--IIIIKK------------
+  DC0C: A9 XX 60
+  --BBBb------------------
+  AACC--IIIIKK------------
 
-DC0C: A5 XX 60
---BBBb------------------
-AADDD-JJJJJLL-----------
+  DC0C: A5 XX 60
+  --BBBb------------------
+  AADDD-JJJJJLL-----------
 
-DC0B: 0D A9 XX 60
---BBBBb-----------------
-AAEEEE-KKKKKMM----------
+  DC0B: 0D A9 XX 60
+  --BBBBb-----------------
+  AAEEEE-KKKKKMM----------
 
-DC0B: 19 FF XX 60
---BBBBb-----------------
-AA-----LLLLLLNN---------
+  DC0B: 19 FF XX 60
+  --BBBBb-----------------
+  AA-----LLLLLLNN---------
 
-DC0C: AC XX A9 09 28 60
---BBBb------------------
-AA----HHHMMMMMOO--------
+  DC0C: AC XX A9 09 28 60
+  --BBBb------------------
+  AA----HHHMMMMMOO--------
 
+
+Running on C64C, 6526A:
+
+  CIA-INT / TLR
+
+  DC0C: A9 XX 60
+  ---BBB------------------
+  AAACC-IIIIIK------------
+
+  DC0C: A5 XX 60
+  ---BBB------------------
+  AAADDDJJJJJJLL----------
+
+  DC0B: 0D A9 XX 60
+  ---BBBB-----------------
+  AAAEEEEKKKKKKMM---------
+
+  DC0B: 19 FF XX 60
+  ???YYYY?????????????????
+  AAAEEEEKKKKKKMM---------
+
+  DC0C: AC XX A9 09 28 60
+  ---BBB------------------
+  AAA---HHHMMMMMMOO-------
 
 
 -----------------------------------------------------------------------
