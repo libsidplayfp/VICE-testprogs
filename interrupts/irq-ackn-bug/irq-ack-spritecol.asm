@@ -219,7 +219,7 @@ testtable:
 	!by $00, $00, $00
 
 reference:
-    !scr " ****-***  ****-***  ********"
+    !scr " ****-***  ********  ********"
 	!by $00
 
 referenceoutput:
