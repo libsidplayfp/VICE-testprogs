@@ -28,7 +28,7 @@ Running on Breadbox ca 1983-84, regular 6526:
 
 Running on C64C, 6526A:
 
-  CIA-INT / TLR
+  CIA-INT R03 / TLR
 
   DC0C: A9 XX 60
   ---BBB------------------
