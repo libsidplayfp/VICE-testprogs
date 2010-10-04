@@ -19,6 +19,20 @@ CPU
   6510 CBM
   3184
 
+Machine 2 (tlr):
+CIA1
+  MOS
+  6526
+  4682
+CIA2
+  MOS
+  6526R-4
+  2484
+CPU
+  MOS
+  6510  CBM
+  2484
+
 Machine 2 (nojoopa):
 CIA1 & CIA2
   MOS
