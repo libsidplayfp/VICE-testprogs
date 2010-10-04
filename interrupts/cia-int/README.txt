@@ -1,7 +1,34 @@
 Readme for cia-int
 ------------------
 
-Running on Breadbox ca 1983-84, regular 6526:
+-----------------------------------------------------------------------
+
+Running on Breadbox ca 1983-84:
+
+Machine 1 (tlr):
+CIA1
+  MOS
+  6526
+  3884
+CIA2
+  MOS
+  6526 R4
+  3283
+CPU
+  MOS
+  6510 CBM
+  3184
+
+Machine 2 (nojoopa):
+CIA1 & CIA2
+  MOS
+  6526
+  1685
+CPU
+  MOS
+  6510
+  1385
+
 
   CIA-INT R03 / TLR
 
@@ -25,8 +52,20 @@ Running on Breadbox ca 1983-84, regular 6526:
   --BBBb------------------
   AA----HHHMMMMMOO--------
 
+-----------------------------------------------------------------------
 
-Running on C64C, 6526A:
+Running on a C64C:
+
+Machine 1 (Rubi):
+CIA1 & CIA2
+  CSG
+  6526A
+  3590 216A
+CPU
+  CSG
+  8500
+  3390 24
+
 
   CIA-INT R03 / TLR
 
