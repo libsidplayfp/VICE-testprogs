@@ -32,7 +32,7 @@ Running on C64C, 6526A:
 
   DC0C: A9 XX 60
   ---BBB------------------
-  AAACC-IIIIIK------------
+  AAACC-IIIIIKK-----------
 
   DC0C: A5 XX 60
   ---BBB------------------
@@ -43,8 +43,8 @@ Running on C64C, 6526A:
   AAAEEEEKKKKKKMM---------
 
   DC0B: 19 FF XX 60
-  ???YYYY?????????????????
-  AAAEEEEKKKKKKMM---------
+  ---BBBB-----------------
+  AAA----LLLLLLLNN--------
 
   DC0C: AC XX A9 09 28 60
   ---BBB------------------
