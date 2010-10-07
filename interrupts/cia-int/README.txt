@@ -33,7 +33,7 @@ CPU
   6510  CBM
   2484
 
-Machine 2 (nojoopa):
+Machine 3 (nojoopa):
 CIA1 & CIA2
   MOS
   6526

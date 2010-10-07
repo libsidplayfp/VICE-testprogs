@@ -137,7 +137,7 @@ tpr_lp1:
 	rts
 
 greet_msg:
-	dc.b	147,"CIA-INT R03 / TLR",13,13
+	dc.b	147,"CIA-INT R04 / TLR",13,13
 	dc.b	"DC0C: A9 XX 60",13
 	dc.b	13,13,13
 	dc.b	"DC0C: A5 XX 60",13
@@ -234,15 +234,12 @@ tpp_lp4:
 	lda	#0
 	sta	test_zp
 
-	lda	#$ff
-	sta	$dc02
-	sta	$dc03
 	rts
 
 	
 ;**************************************************************************
 ;*
-;* NAME  test_preform
+;* NAME  test_perform
 ;*   
 ;******
 test_perform:
@@ -256,6 +253,8 @@ tp_lp01:
 ; just below the visible screen here
 	
 	inc	$d020
+
+; kill all interrupts
 	lda	#$7f
 	sta	$dc0d
 	sta	$dd0d
@@ -264,6 +263,19 @@ tp_lp01:
 
 	ldx	test_zp
 	jsr	do_test
+
+; restore data direction and ports
+	ldy	#0
+	lda	#$ff
+	sta	$dc02
+	sty	$dc03
+	lda	#$7f
+	sta	$dc00
+	lda	#$3f
+	sta	$dd02
+	sty	$dd03
+	lda	#$17
+	sta	$dd00
 
 	ldx	test_zp
 	inx
@@ -307,13 +319,13 @@ offstab:
 seqtab:
 SEQTAB1	equ	.-seqtab
 	dc.b	$0c,$a9		; LDA #<imm>
-	dc.b	$0d,%10000010	; timer B IRQ
+;	dc.b	$0d,%10000010	; timer B IRQ
 	dc.b	$0e,$60		; RTS
 	dc.b	$ff
 
 SEQTAB2	equ	.-seqtab
 	dc.b	$0c,$a5		; LDA <zp>
-	dc.b	$0d,%10000010	; timer B IRQ
+;	dc.b	$0d,%10000010	; timer B IRQ
 	dc.b	$0e,$60		; RTS
 	dc.b	$ff
 
@@ -321,7 +333,7 @@ SEQTAB3	equ	.-seqtab
 	dc.b	$0f,%00000000	; TOD clock mode
 	dc.b	$0b,$0d		; ORA <abs>
 	dc.b	$0c,$a9		; $a9
-	dc.b	$0d,%10000010	; timer B IRQ
+;	dc.b	$0d,%10000010	; timer B IRQ
 	dc.b	$0e,$60		; RTS
 	dc.b	$ff
 
@@ -329,20 +341,24 @@ SEQTAB4	equ	.-seqtab
 	dc.b	$0f,%00000000	; TOD clock mode
 	dc.b	$0b,$19		; ORA <abs>,y
 	dc.b	$0c,$ff		; $ff
-	dc.b	$0d,%10000010	; timer B IRQ
+;	dc.b	$0d,%10000010	; timer B IRQ
 	dc.b	$0e,$60		; RTS
 	dc.b	$ff
 
 SEQTAB5	equ	.-seqtab
+	dc.b	$02,%11111111   ; DDR out
+	dc.b	$03,%11111111   ; DDR out
 	dc.b	$0c,$ac		; LDY <abs>
-	dc.b	$0d,%10000010	; timer B IRQ
+;	dc.b	$0d,%10000010	; timer B IRQ
 	dc.b	$0e,$a9		;
 ;	dc.b	$0f,%10000000	; ORA #<imm> or PHP 
 	dc.b	$10,$28		; PLP
 	dc.b	$11,$60		; RTS
 	dc.b	$ff
 
-	
+	subroutine	do_test
+.cia_dut	equ	$dc00
+.cia_sec	equ	$dd00
 do_test:
 	txa
 	asl
@@ -358,7 +374,7 @@ do_test:
 	lda	convtab+1,y
 	sta	dt_sm2+1
 
-	lda	$dc08		; reset tod state
+	lda	.cia_dut+$08		; reset tod state
 ; set up test parameters
 	ldy	offstab,x
 dt_lp0:
@@ -367,7 +383,7 @@ dt_lp0:
 	sta	dt_sm0+1
 	lda	seqtab+1,y
 dt_sm0:
-	sta	$dc00
+	sta	.cia_dut
 	iny
 	iny
 	bne	dt_lp0
@@ -378,32 +394,36 @@ dt_lp1:
 	sty	cnt_zp
 
 	lda	#255
-	sta	$dd04
+	sta	.cia_sec+$04
 	ldx	#0
-	stx	$dd05
-	sty	$dc06
-	stx	$dc07
+	stx	.cia_sec+$05
+	sty	.cia_dut+$06
+	stx	.cia_dut+$07
 	stx	irq_zp
 	stx	time_zp
+	bit	.cia_dut+$0d
+	lda	#%10000010	; timer B IRQ
+	sta	.cia_dut+$0d
 	txa
 	ldy	#%00011001
 ; X=0, Y=$19, Acc=0
 ;-------------------------------
 ; Test start
 ;-------------------------------
-	bit	$dc0d
 	cli
-	sty	$dd0e		; measurement
-	sty	$dc0f		; actual test
+	sty	.cia_sec+$0e	; measurement
+	sty	.cia_dut+$0f	; actual test
 dt_sm1:
-	jsr	$dc0c
+	jsr	.cia_dut+$0c
 	sei
-	bit	$dc0d
+	ldx	#%01111111
+	stx	.cia_dut+$0d
 ;-------------------------------
 ; Test end
 ;-------------------------------
 dt_sm2:
 	ds.b	2,$ea
+; Acc=$Dx0D, irq_zp, time_zp
 	ldy	cnt_zp
 	cmp	#0
 	bne	dt_skp2
@@ -431,8 +451,8 @@ dt_skp3:
 	rts
 
 irq:
-	ldx	$dd04
-	bit	$dc0d
+	ldx	.cia_sec+$04
+	bit	.cia_dut+$0d
 	stx	time_zp
 	inc	irq_zp
 	rti
