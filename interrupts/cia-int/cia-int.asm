@@ -22,7 +22,7 @@ cnt_zp:
 	ds.b	1
 test_zp:
 	ds.b	1
-irq_zp:
+int_zp:
 	ds.b	1
 time_zp:
 	ds.b	1
@@ -83,10 +83,15 @@ enda:
 	jsr	test_result
 sa_lp3:
 	jmp	sa_lp3
-	
-vectors:
-	dc.w	nmi_entry,0,irq
 
+vectors:
+	ifconst	TEST_IRQ
+	dc.w	nmi_entry, 0, int_entry
+	endif
+	ifconst	TEST_NMI
+	dc.w	int_entry, 0, int_entry
+	endif
+	
 sa_fl1:
 nmi_entry:
 	sei
@@ -137,7 +142,8 @@ tpr_lp1:
 	rts
 
 greet_msg:
-	dc.b	147,"CIA-INT R04 / TLR",13,13
+	ifconst	TEST_IRQ
+	dc.b	147,"CIA-INT (IRQ) R04 / TLR",13,13
 	dc.b	"DC0C: A9 XX 60",13
 	dc.b	13,13,13
 	dc.b	"DC0C: A5 XX 60",13
@@ -148,7 +154,20 @@ greet_msg:
 	dc.b	13,13,13
 	dc.b	"DC0C: AC XX A9 09 28 60",13
 	dc.b	0
-	
+	endif
+	ifconst	TEST_NMI
+	dc.b	147,"CIA-INT (NMI) R04 / TLR",13,13
+	dc.b	"DD0C: A9 XX 60",13
+	dc.b	13,13,13
+	dc.b	"DD0C: A5 XX 60",13
+	dc.b	13,13,13
+	dc.b	"DD0B: 0D A9 XX 60",13
+	dc.b	13,13,13
+	dc.b	"DD0B: 19 FF XX 60",13
+	dc.b	13,13,13
+	dc.b	"DD0C: AC XX A9 09 28 60",13
+	dc.b	0
+	endif
 
 ;**************************************************************************
 ;*
@@ -357,8 +376,15 @@ SEQTAB5	equ	.-seqtab
 	dc.b	$ff
 
 	subroutine	do_test
+	ifconst	TEST_IRQ
 .cia_dut	equ	$dc00
 .cia_sec	equ	$dd00
+	endif
+	ifconst	TEST_NMI
+.cia_dut	equ	$dd00
+.cia_sec	equ	$dc00
+	endif
+
 do_test:
 	txa
 	asl
@@ -399,7 +425,7 @@ dt_lp1:
 	stx	.cia_sec+$05
 	sty	.cia_dut+$06
 	stx	.cia_dut+$07
-	stx	irq_zp
+	stx	int_zp
 	stx	time_zp
 	bit	.cia_dut+$0d
 	lda	#%10000010	; timer B IRQ
@@ -423,7 +449,7 @@ dt_sm1:
 ;-------------------------------
 dt_sm2:
 	ds.b	2,$ea
-; Acc=$Dx0D, irq_zp, time_zp
+; Acc=$Dx0D, int_zp, time_zp
 	ldy	cnt_zp
 	cmp	#0
 	bne	dt_skp2
@@ -438,7 +464,7 @@ dt_skp2:
 	eor	#$7f
 	clc
 	sbc	#16
-	ldx	irq_zp
+	ldx	int_zp
 	bne	dt_skp3
 	lda	#"-"
 dt_skp3:
@@ -450,11 +476,11 @@ dt_skp3:
 	bne	dt_lp1
 	rts
 
-irq:
+int_entry:
 	ldx	.cia_sec+$04
 	bit	.cia_dut+$0d
 	stx	time_zp
-	inc	irq_zp
+	inc	int_zp
 	rti
 
 end:
