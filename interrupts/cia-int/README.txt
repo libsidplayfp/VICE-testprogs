@@ -63,7 +63,7 @@ CPU
 
   DD0C: AC XX A9 09 28 60
   --BBBb------------------
-  AAEE--HHHMMMMMOOQQUUUUWW
+  AAEEE-HHHMMMMMOOQQUUUUWW
 
 
 Machine 2 (tlr):
