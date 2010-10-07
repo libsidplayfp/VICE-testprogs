@@ -19,6 +19,53 @@ CPU
   6510 CBM
   3184
 
+
+  CIA-INT (IRQ) R04 / TLR
+
+  DC0C: A9 XX 60
+  --BBBb------------------
+  AACC--IIIIKK------------
+
+  DC0C: A5 XX 60
+  --BBBb------------------
+  AADDD-JJJJJLL-----------
+
+  DC0B: 0D A9 XX 60
+  --BBBBb-----------------
+  AAEEEE-KKKKKMM----------
+
+  DC0B: 19 FF XX 60
+  --BBBBb-----------------
+  AA-----LLLLLLNN---------
+
+  DC0C: AC XX A9 09 28 60
+  --BBBb------------------
+  AA----HHHMMMMMOO--------
+
+
+  CIA-INT (NMI) R04 / TLR
+
+  DD0C: A9 XX 60
+  --BBBb------------------
+  AACCI-IIIIKKMMQQQQSS----
+
+  DD0C: A5 XX 60
+  --BBBb------------------
+  AADDD-JJJJJLLNNRRRRTT---
+
+  DD0B: 0D A9 XX 60
+  --BBBBb-----------------
+  AAEEEE-KKKKKMMOOSSSSUU--
+
+  DD0B: 19 FF XX 60
+  --BBBBb-----------------
+  AAFFFF-LLLLLLNNPPTTTTVV-
+
+  DD0C: AC XX A9 09 28 60
+  --BBBb------------------
+  AAEE--HHHMMMMMOOQQUUUUWW
+
+
 Machine 2 (tlr):
 CIA1
   MOS
@@ -66,11 +113,12 @@ CPU
   --BBBb------------------
   AA----HHHMMMMMOO--------
 
+
 -----------------------------------------------------------------------
 
 Running on a C64C:
 
-Machine 1 (Rubi):
+Machine 4 (Rubi):
 CIA1 & CIA2
   CSG
   6526A
