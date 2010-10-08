@@ -1,7 +1,7 @@
 ;**************************************************************************
 ;*
 ;* FILE  fulltime.asm
-;* Copyright (c) 2007, 2009 Daniel Kahlin <daniel@kahlin.net>
+;* Copyright (c) 2007, 2009, 2010 Daniel Kahlin <daniel@kahlin.net>
 ;* Written by Daniel Kahlin <daniel@kahlin.net>
 ;*
 ;* DESCRIPTION
@@ -68,6 +68,7 @@ EndLine:
 ;******
 SysAddress:
 	jsr	reset_seq	;just to be reentrant.
+	jsr	reset_refdata
 
 	ldx	#0
 sa_lp1:
@@ -281,16 +282,17 @@ test_opcodes:
 	lda	#$7f
 	sta	$dc0d
 	lda	$dc0d
-; setup cia#2 timer for cycle counting
+; setup cia#2 timer B for cycle counting
 	lda	#$7f
 	sta	$dd0d
 	lda	$dd0d
 	lda	#$00
 	sta	$dd0e
+	sta	$dd0f
 	lda	#$00
-	sta	$dd04
+	sta	$dd06
 	lda	#$01
-	sta	$dd05
+	sta	$dd07
 	
 	ldx	#0
 	stx	count_zp
@@ -371,7 +373,7 @@ to_skp3:
 	endm
 
 common_target:
-	ldy	$dd04
+	ldy	$dd06
 common_restore:
 	RESTORE
 	rts	
@@ -692,7 +694,7 @@ prep_code:
 	lda	#$11
 	plp
 ;	nop
-	sta	$dd0e
+	sta	$dd0f
 PREP_CODE_LEN	equ	.-prep_code
 
 		
@@ -720,7 +722,7 @@ ptf_lp1:
 	rts
 	
 final_code:
-	ldy	$dd04
+	ldy	$dd06
 	jmp	common_restore
 FINAL_CODE_LEN	equ	.-final_code
 
@@ -853,6 +855,12 @@ ph_skp2:
 ;* SECTION  reference data
 ;*
 ;******
+reset_refdata:
+	lda	#<REFDATA_STORE
+	sta	rr_sm1+1
+	lda	#>REFDATA_STORE
+	sta	rr_sm1+2
+	rts
 record_refdata:
 	ldx	#0
 rr_lp1:
@@ -889,6 +897,12 @@ ref_msg:
 ;* SECTION  reference data
 ;*
 ;******
+reset_refdata:
+	lda	#<ref_data
+	sta	fr_sm1+1
+	lda	#>ref_data
+	sta	fr_sm1+2
+	rts
 fetch_refdata:
 	ldx	#0
 fr_lp1:
