@@ -152,6 +152,29 @@ CPU
   AAA---HHHMMMMMMOO-------
 
 
+  CIA-INT (NMI) R04 / TLR
+
+  DD0C: A9 XX 60
+  ---BBB------------------
+  AAACCIIIIIIKKMMQQQQS----
+
+  DD0C: A5 XX 60
+  ---BBB------------------
+  AAADDDJJJJJJLLNNRRRRT---
+
+  DD0B: 0D A9 XX 60
+  ---BBBB-----------------
+  AAAEEEEKKKKKKMMOOSSSSU--
+
+  DD0B: 19 FF XX 60
+  ---BBBB-----------------
+  AAAFFFFLLLLLLLNNPPTTTTV-
+
+  DD0C: AC XX A9 09 28 60
+  ---BBB------------------
+  AAAEEEHHHMMMMMMOOQQUUUUW
+
+
 -----------------------------------------------------------------------
 It works like this:
 - start timer
