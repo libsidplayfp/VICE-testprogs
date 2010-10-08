@@ -67,6 +67,12 @@ EndLine:
 ;*
 ;******
 SysAddress:
+	lda	#14
+	sta	646
+	sta	$d020
+	lda	#6
+	sta	$d021
+
 	jsr	reset_seq	;just to be reentrant.
 	jsr	reset_refdata
 
@@ -77,10 +83,11 @@ sa_lp1:
 	beq	sa_ex1
 	sta	run_mode
 	
-	lda	#147
-	jsr	$ffd2
+	lda	#<greet_msg
+	ldy	#>greet_msg
+	jsr	$ab1e
 	ldy	#0
-	ldx	#17
+	ldx	#19
 	clc
 	jsr	$fff0
 
@@ -107,6 +114,9 @@ sa_ex1:
 	endif
 	jmp	$a474
 
+
+greet_msg:
+	dc.b	147,"FULLTIME R01 / TLR",0
 
 ;**************************************************************************
 ;*
@@ -278,14 +288,16 @@ test_opcodes:
 	sei
 	lda	#$35
 	sta	$01
-; kill vic irqs
+; kill CIA#1 interrupts
 	lda	#$7f
 	sta	$dc0d
 	lda	$dc0d
-; setup cia#2 timer B for cycle counting
+; kill CIA#2 interrupts
 	lda	#$7f
 	sta	$dd0d
 	lda	$dd0d
+
+; setup cia#2 timer B for cycle counting
 	lda	#$00
 	sta	$dd0e
 	sta	$dd0f
@@ -793,7 +805,7 @@ plot_entry:
 	ldy	ytmp_zp
 	rts
 
-SCBASE	equ	$0400+40*0+0
+SCBASE	equ	$0400+40*2+0
 ytab:
 	dc.w	SCBASE+40*0,  SCBASE+40*1,  SCBASE+40*2,  SCBASE+40*3
 	dc.w	SCBASE+40*4,  SCBASE+40*5,  SCBASE+40*6,  SCBASE+40*7
