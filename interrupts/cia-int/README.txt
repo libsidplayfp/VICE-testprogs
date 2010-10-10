@@ -6,18 +6,10 @@ Readme for cia-int
 Running on Breadbox ca 1983-84:
 
 Machine 1 (tlr):
-CIA1
-  MOS
-  6526
-  3884
-CIA2
-  MOS
-  6526 R4
-  3283
-CPU
-  MOS
-  6510 CBM
-  3184
+
+CIA1: MOS/6526/3884
+CIA2: MOS/6526 R4/3283
+CPU:  MOS/6510 CBM/3184
 
 
   CIA-INT (IRQ) R04 / TLR
@@ -67,31 +59,52 @@ CPU
 
 
 Machine 2 (tlr):
-CIA1
-  MOS
-  6526
-  4682
-CIA2
-  MOS
-  6526R-4
-  2484
-CPU
-  MOS
-  6510  CBM
-  2484
+
+CIA1: MOS/6526/4682
+CIA2: MOS/6526R-4/2484
+CPU:  MOS/6510  CBM/2484
 
 Machine 3 (nojoopa):
-CIA1 & CIA2
-  MOS
-  6526
-  1685
-CPU
-  MOS
-  6510
-  1385
+
+CIA1 & CIA2:  MOS/6526/1685
+CPU: MOS/6510/1385
 
 
   CIA-INT R03 / TLR
+
+  DC0C: A9 XX 60
+  --BBBb------------------
+  AACC--IIIIKK------------
+
+  DC0C: A5 XX 60
+  --BBBb------------------
+  AADDD-JJJJJLL-----------
+
+  DC0B: 0D A9 XX 60
+  --BBBBb-----------------
+  AAEEEE-KKKKKMM----------
+
+  DC0B: 19 FF XX 60
+  --BBBBb-----------------
+  AA-----LLLLLLNN---------
+
+  DC0C: AC XX A9 09 28 60
+  --BBBb------------------
+  AA----HHHMMMMMOO--------
+
+
+Running on Drean C64C:
+
+Machine 1 (hedning):
+
+Drean C64C (SC-136712), rev a-motherboard from 1982 (assy: 926298).
+CPU: MOS/6510/0683
+SID: MOS/6581/5182 
+CIA1: <unknown>
+CIA2: <unknown>
+
+
+  CIA-INT (IRQ) R04 / TLR
 
   DC0C: A9 XX 60
   --BBBb------------------
@@ -119,14 +132,9 @@ CPU
 Running on a C64C:
 
 Machine 4 (Rubi):
-CIA1 & CIA2
-  CSG
-  6526A
-  3590 216A
-CPU
-  CSG
-  8500
-  3390 24
+
+CIA1 & CIA2: CSG/6526A/3590 216A
+CPU: CSG/8500/3390 24
 
 
   CIA-INT R03 / TLR
