@@ -275,7 +275,7 @@ test_present:
 	rts
 
 timing_msg:
-	dc.b	147,"LIGHTPEN R01 / TLR",13,13
+	dc.b	147,"LIGHTPEN R02 / TLR",13,13
 	dc.b	"TIMING: ",0
 cycles_line_msg:
 	dc.b	" CYCLES/LINE, ",0
@@ -511,6 +511,7 @@ BUFFER	equ	$4000
 ref_data:
 	dc.w	tab6569r1,msg6569r1
 	dc.w	tab6569r3,msg6569r3
+	dc.w	tab6572r1,msg6572r1
 	dc.w	tab8565r2,msg8565r2
 	dc.w	tabdtv3pal,msgdtv3pal
 	dc.w	0
@@ -524,6 +525,11 @@ msg6569r3:
 	dc.b	"6569R3",0
 tab6569r3:
 	incbin	"dump6569.prg",2
+;---
+msg6572r1:
+	dc.b	"6572R1",0
+tab6572r1:
+	incbin	"dump6572.prg",2
 ;---
 msg8565r2:
 	dc.b	"8565R2",0
