@@ -97,7 +97,7 @@ Running on Drean C64C:
 
 Machine 1 (hedning):
 
-Drean C64C (SC-136712), rev a-motherboard from 1982 (assy: 926298).
+Drean C64C (SC-136712), rev a-motherboard from 1982 (assy: 326298).
 CPU: MOS/6510/0683
 SID: MOS/6581/5182 
 CIA1: <unknown>
