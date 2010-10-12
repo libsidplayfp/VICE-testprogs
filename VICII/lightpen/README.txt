@@ -3,6 +3,12 @@ Readme for lightpen
 
 -----------------------------------------------------------------------
 
+dump6569.prg
+------------
+Hedning reports that it matches 6569R4.
+This dump presumably matches 6569R3.
+
+
 dump6572.prg
 ------------
 Running on Drean C64C:
