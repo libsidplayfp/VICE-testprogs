@@ -216,6 +216,17 @@ test_prepare:
 	sta	$dc03
 	lda	#$0f
 	sta	$d019		; clear interrupts
+
+
+;	lda	#$1b | (>LINE << 7)
+	lda	#$9b
+	sta	$d011
+	lda	num_lines
+	sec
+	sbc	#4
+;	lda	#<LINE
+	sta	$d012
+
 	rts
 
 	

@@ -66,14 +66,6 @@ sa_lp1:
 	
 	jsr	wait_vb
 
-;	lda	#$1b | (>LINE << 7)
-	lda	#$9b
-	sta	$d011
-	lda	num_lines
-	sec
-	sbc	#4
-;	lda	#<LINE
-	sta	$d012
 	lda	#1
 	sta	$d019
 	sta	$d01a
