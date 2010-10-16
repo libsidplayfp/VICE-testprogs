@@ -335,18 +335,18 @@ cycle:
 
 	align	256
 delay:
-	ldx	#%00011001
+	ldx	#%00011001	; force timer start
 	stx	$dc0e
-	ldx	#%00000000
 	eor	#$ff
 	lsr
 	sta	dl_sm1+1
 	bcc	dl_skp1
 dl_skp1:
+	ldx	#%00000000	; value for stop timer
 dl_sm1:
-	bne	dl_skp1
+	beq	dl_skp1
 	ds.b	127,$ea
-	txa
+	txa			; always executed
 ; Acc=0, X=0
 dl_tail:
 	stx	$dc0e
