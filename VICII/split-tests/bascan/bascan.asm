@@ -123,6 +123,45 @@ test_result:
 	jsr	$ab1e
 
 
+; set device num to 8 if less than 8.
+	lda	#8
+	cmp	$ba
+	bcc	tr_skp1
+	sta	$ba
+tr_skp1:
+
+
+	lda	#<save_msg
+	ldy	#>save_msg
+	jsr	$ab1e
+tr_lp1:
+	jsr	$ffe4
+	cmp	#"Y"
+	bne	tr_lp1
+
+	lda	#$80
+	sta	$9d
+
+	lda	#1
+	ldx	$ba
+	tay
+	jsr	$ffba
+	ldx	#<filename
+	ldy	#>filename
+	lda	#FILENAME_LEN
+	jsr	$ffbd
+	ldx	#<BUFFER
+	ldy	#>BUFFER
+	stx	$fb
+	sty	$fc
+	lda	#$fb
+	ldx	#<BUFFER_END
+	ldy	#>BUFFER_END
+	jsr	$ffd8
+
+	lda	#<ok_msg
+	ldy	#>ok_msg
+	jsr	$ab1e
 	rts
 
 done_msg:
@@ -131,6 +170,14 @@ done_msg:
 result_msg:
 	dc.b	13,13,"(RESULT AT $4000-$4600)",0
 
+save_msg:
+	dc.b	13,13,"SAVE TO DISK? ",13,0
+ok_msg:
+	dc.b	13,"OK",13,0
+
+filename:
+	dc.b	"BARESULT"
+FILENAME_LEN	equ	.-filename
 	
 ;**************************************************************************
 ;*
@@ -279,7 +326,8 @@ dl_tail:
 ;*   
 ;******
 
-BUFFER	equ	$4000
+BUFFER		equ	$4000
+BUFFER_END	equ	$4600
 
 
 
