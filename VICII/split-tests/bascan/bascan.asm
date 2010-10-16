@@ -76,8 +76,10 @@ lines_msg:
 show_params:
 	lda	$d3
 	sec
-	sbc	#18
+	sbc	#20
 	tay
+	lda	curr_reg+1
+	jsr	update_hex
 	lda	curr_reg
 	jsr	update_hex
 
@@ -168,7 +170,7 @@ done_msg:
 	dc.b	"DONE",13,13,0
 
 result_msg:
-	dc.b	13,13,"(RESULT AT $4000-$4600)",0
+	dc.b	13,13,"(RESULT AT $4000-$4900)",0
 
 save_msg:
 	dc.b	13,13,"SAVE TO DISK? ",13,0
@@ -214,7 +216,6 @@ test_perform:
 	inc	$d021
 	dec	$d021
 	ldx	cycle
-	eor	#$ff
 pt_sm2:
 	sta	BUFFER,x
 
@@ -241,60 +242,92 @@ pt_ex1:
 	rts
 
 setup_test:
-	ldx	test_num
-	lda	buftab_h,x
+	lda	test_num
+	asl
+	tax
+; X=test_num * 2
+	lda	buftab,x
+	sta	pt_sm2+1
+	lda	buftab+1,x
 	sta	pt_sm2+2
 	lda	regtab,x
 	sta	curr_reg
-	txa
+	lda	regtab+1,x
+	sta	curr_reg+1
+
+	lda	test_num
 	asl
-;	clc
-	adc	test_num
+	asl
 	asl
 	tax
+; X=test_num * 8
 	ldy	#0
 st_lp1:
 	lda	tailtab,x
 	sta	dl_tail,y
 	inx
 	iny
-	cpy	#6
+	cpy	#8
 	bne	st_lp1
 	rts
 
 	
-NUM_TESTS	equ	6
-buftab_h:
-	dc.b	>[BUFFER+$0000]
-	dc.b	>[BUFFER+$0100]
-	dc.b	>[BUFFER+$0200]
-	dc.b	>[BUFFER+$0300]
-	dc.b	>[BUFFER+$0400]
-	dc.b	>[BUFFER+$0500]
+NUM_TESTS	equ	9
+buftab:
+	dc.w	BUFFER+$0000
+	dc.w	BUFFER+$0100
+	dc.w	BUFFER+$0200
+	dc.w	BUFFER+$0300
+	dc.w	BUFFER+$0400
+	dc.w	BUFFER+$0500
+	dc.w	BUFFER+$0600
+	dc.w	BUFFER+$0700
+	dc.w	BUFFER+$0800
 regtab:
-	dc.b	$04,$05,$04,$05,$04,$05
+	dc.w	$dc04,$dc05,$d012,$dc04,$dc05,$d012,$dc04,$dc05,$d012
 tailtab:
 ; test #0
 	lda	$dc04
 	stx	$dc0e
+	eor	#$ff
 ; test #1
 	lda	$dc05
 	stx	$dc0e
+	eor	#$ff
 ; test #2
+	lda	$d012
 	stx	$dc0e
-	lda	$dc04
+	nop
+	nop
 ; test #3
 	stx	$dc0e
-	lda	$dc05
+	lda	$dc04
+	eor	#$ff
 ; test #4
+	stx	$dc0e
+	lda	$dc05
+	eor	#$ff
+; test #5
+	stx	$dc0e
+	lda	$d012
+	nop
+	nop
+; test #6
 	sta	$dc0e,x
 	lda	$dc04
-; test #5
+	eor	#$ff
+; test #7
 	sta	$dc0e,x
 	lda	$dc05
+	eor	#$ff
+; test #8
+	sta	$dc0e,x
+	lda	$d012
+	nop
+	nop
 
 curr_reg:
-	dc.b	0
+	dc.w	0
 test_num:
 	dc.b	0
 cycle:
@@ -318,6 +351,8 @@ dl_sm1:
 dl_tail:
 	stx	$dc0e
 	lda	$dc04
+	nop
+	nop
 	rts
 
 ;**************************************************************************
@@ -327,7 +362,7 @@ dl_tail:
 ;******
 
 BUFFER		equ	$4000
-BUFFER_END	equ	$4600
+BUFFER_END	equ	$4900
 
 
 
