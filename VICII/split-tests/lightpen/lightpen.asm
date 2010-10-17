@@ -63,7 +63,7 @@ test_present:
 	rts
 
 timing_msg:
-	dc.b	147,"LIGHTPEN R02 / TLR",13,13
+	dc.b	147,"LIGHTPEN R03 / TLR",13,13
 	dc.b	"TIMING: ",0
 cycles_line_msg:
 	dc.b	" CYCLES/LINE, ",0
@@ -232,23 +232,19 @@ test_prepare:
 	
 ;**************************************************************************
 ;*
-;* NAME  test_preform
+;* NAME  test_perform
 ;*   
 ;******
 test_perform:
 	lda	enable
 	beq	pt_ex1
 
+	ds.b	3,$ea
 	lda	cycle
 	jsr	delay
-	ldx	#%00000000
-	stx	$dc01
-pt_sm1:
-	lda	$d011
-	ldx	#%11111111
-	stx	$dc01
 	inc	$d020
 	dec	$d020
+
 	ldx	cycle
 pt_sm2:
 	sta	BUFFER,x
@@ -293,9 +289,26 @@ delay:
 	sta	dl_sm1+1
 	bcc	dl_skp1
 dl_skp1:
+	if	0
+; fixes cycle glitch for values $fe and $ff
+	clv
+dl_sm1:
+	bvc	dl_skp1
+	else
+; has cycle glitch for values $fe and $ff
+	nop
 dl_sm1:
 	bne	dl_skp1
-	ds.b	128,$ea
+	endif
+	ds.b	127,$ea
+;******
+; start of test
+	ldx	#%00000000
+	stx	$dc01
+pt_sm1:
+	lda	$d011
+	ldx	#%11111111
+	stx	$dc01
 	rts
 
 BUFFER	equ	$4000
