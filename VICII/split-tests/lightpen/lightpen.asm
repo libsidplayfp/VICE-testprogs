@@ -22,7 +22,10 @@ rptr_zp:
 	ds.w	1
 cnt_zp:
 	ds.b	1	
-
+enable_zp:
+	ds.b	1
+cycle_zp:
+	ds.b	1
 
 ;**************************************************************************
 ;*
@@ -83,7 +86,7 @@ show_params:
 	sec
 	sbc	#5
 	tay
-	lda	cycle
+	lda	cycle_zp
 	jmp	update_hex
 ;	rts
 	
@@ -217,6 +220,9 @@ test_prepare:
 	lda	#$0f
 	sta	$d019		; clear interrupts
 
+	lda	#0
+	sta	enable_zp
+	sta	cycle_zp
 
 ;	lda	#$1b | (>LINE << 7)
 	lda	#$9b
@@ -236,16 +242,17 @@ test_prepare:
 ;*   
 ;******
 test_perform:
-	lda	enable
+	lda	enable_zp
 	beq	pt_ex1
 
-	ds.b	3,$ea
-	lda	cycle
+	ds.b	4,$ea
+
+	lda	cycle_zp
 	jsr	delay
 	inc	$d020
 	dec	$d020
 
-	ldx	cycle
+	ldx	cycle_zp
 pt_sm2:
 	sta	BUFFER,x
 	lda	$d019
@@ -258,7 +265,7 @@ pt_sm2:
 	jsr	show_params
 
 ; increase cycle
-	inc	cycle
+	inc	cycle_zp
 	bne	pt_skp1
 	inc	pt_sm1+1
 	inc	pt_sm2+2
@@ -271,16 +278,11 @@ pt_skp1:
 	sta	test_perform
 	sta	test_done
 pt_ex1:
-	lda	enable
+	lda	enable_zp
 	eor	#1
-	sta	enable
+	sta	enable_zp
 
 	rts
-
-cycle:
-	dc.b	0
-enable:
-	dc.b	0
 
 	align	256
 delay:
