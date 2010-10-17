@@ -7,9 +7,34 @@ basic:
 !by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
 
 start:
-    jmp entrypoint
+    jmp testsetup
 
 * = $0a00
+testsetup:
+	ldx #$f0
+colorloop:
+    lda #$01
+    sta $d7ff,x
+	lda #$20
+	sta $03ff,x
+	dex
+	bne colorloop
+	lda #$00
+	sta screensetup+1
+	sta spritesetup+1
+	lda #$01
+	sta irq_type+1
+	lda #$28
+	sta toscreen+1
+	lda #$03
+	sta nextrasterirq+1
+	lda #$3f
+	sta firstdelay+1
+	lda #<reference
+	sta refloop+1
+	lda #>reference
+	sta refloop+2
+	
 entrypoint:
     sei
     lda #$7f
@@ -30,7 +55,7 @@ entrypoint:
     sta $d011
     lda #$45
     sta $d012
-    lda #$01
+    lda #$05
     sta $d01a
     sta $d019
 
@@ -40,11 +65,33 @@ entrypoint:
 	sta $fe
 	lda #>testtable
 	sta $ff
-	lda #$08
+	lda #$06
 	sta $fd
+screensetup:
 	lda #$00
 	sta screenptr+1
-	sta colorptr+1
+
+spritesetup:
+	lda #$00
+	sta $d015
+	lda #$f8
+	sta $d000
+	sta $d002
+	lda #$49
+	sta $d001
+	sta $d003
+	ldx #$40
+	lda #$00
+
+spritepatternloop:
+    sta $3fc0,x
+    dex
+    bne spritepatternloop
+    lda #$80
+    sta $3fc0
+    lda #$ff
+    sta $07f8
+    sta $07f9
 	
     cli
 entry_loop:
@@ -101,14 +148,16 @@ irq_handler_2_wait_2:
 	
 	clc
 	lda $d012
+nextrasterirq:
 	adc #$03
 	sta $d012
+	lda $d01e
 	cli
     lda #<irq_handler_3
     sta $fffe
     lda #>irq_handler_3
     sta $ffff
-
+firstdelay:
 	lda #$3f
 	jsr delay
 
@@ -134,14 +183,15 @@ noend:
 irq_handler_3:
     pha
 	lda #'*'
-	sta $fb	
+	sta $fb
+irq_type:
 	lda #$01
     sta $d019
     pla
     rti
 	
 irq_ack_test1:
-    lda #$01
+    lda #$05
     sta $d019
 	jmp irq_reset_frame
 
@@ -152,19 +202,25 @@ irq_ack_test2:
 irq_ack_test3:
     asl $d019
 	jmp irq_reset_frame
+
+irq_ack_test4:
+    sei
+    lda $d019
+	and #$87
+	sta $fb
+	jmp irq_reset_frame
 	
 irq_reset_frame:
+    lda $d01e
     lda #$45
     sta $d012
-    lda #$01
+    lda #$05
 	sta $d019
     lda $fb
     ldy $fd
 screenptr:
 	sta $0400,y
 	lda #$01
-colorptr:
-	sta $d800,y
 
     lda #<irq_handler
     sta $fffe
@@ -173,7 +229,7 @@ colorptr:
 
 	dec $fd
 	bne same_test
-	lda #$08
+	lda #$06
 	sta $fd
 	clc
 	lda $fe
@@ -181,42 +237,73 @@ colorptr:
 	sta $fe
 	clc
 	lda screenptr+1
-	adc #$0a
+	adc #$08
 	sta screenptr+1
-	lda colorptr+1
-	adc #$0a
-	sta colorptr+1
-same_test
+same_test:
     rti
 	
-end_of_tests
+end_of_testset:
+    lda spritesetup+1
+	bne end_of_tests
+	clc
+	adc #$03
+	sta spritesetup+1
+	lda screensetup+1
+	clc
+	adc #$78
+	sta screensetup+1
+	lda toscreen+1
+	clc
+	adc #$78
+	sta toscreen+1
+	lda #$04
+	sta irq_type+1
+	lda #$b8
+	sta nextrasterirq+1
+	lda #$19
+	sta firstdelay+1
+	jmp entrypoint
+	
+end_of_tests:
 	jmp end_of_tests
 	
 * = $0900
 testtable:
-	!by $2b, <irq_ack_test1, >irq_ack_test1
-	!by $2b, <irq_ack_test2, >irq_ack_test2
-	!by $2b, <irq_ack_test3, >irq_ack_test3
+	!by $30, <irq_ack_test1, >irq_ack_test1
+	!by $30, <irq_ack_test2, >irq_ack_test2
+	!by $30, <irq_ack_test3, >irq_ack_test3
+	!by $30, <irq_ack_test4, >irq_ack_test4
 	
 	!by $00, $00, $00
 
 reference:
-    !scr " ****-***  ****-***  ********"
-	!by $00
+    !scr " ***-**  ***-**  ******  "
+	!by $81, $81, $81, $81, $00, $00
+    !scr "  raster "
+	!scr "  sta     inc     asl     lda"
+	!by $ff
 
+    !scr " ***-**  ******  ******  "
+	!by $84, $84, $84, $84, $00, $00
+    !scr "  ss-col "
+	!scr "  sta     inc     asl     lda"
+	!by $ff
+
+	
+	
 referenceoutput:
 	sei
-    ldy #$00
 	ldx #$00
 refloop:
-    lda reference,y
+    lda reference
+	inc refloop+1
+	bne *+5
+	inc refloop+2
+	cmp #$ff
 	bne toscreen
-	jmp end_of_tests
+	jmp end_of_testset
 toscreen:
     sta $0428,x
-    lda #$01
-    sta $d828,x
-    iny
     inx
     jmp refloop
 
