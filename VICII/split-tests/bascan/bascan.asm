@@ -9,6 +9,8 @@
 ;******
 	processor 6502
 
+LINE	equ	48+8*16+6
+
 	seg.u	zp
 ;**************************************************************************
 ;*
@@ -24,8 +26,6 @@ cnt_zp:
 	ds.b	1	
 
 
-LINE	equ	48+8*16+6
-	
 ;**************************************************************************
 ;*
 ;* common startup and raster code
@@ -187,16 +187,30 @@ FILENAME_LEN	equ	.-filename
 ;*   
 ;******
 test_prepare:
-	lda	#%00000000
-	sta	$dc0e
-	lda	#$ff
-	sta	$dc04
-	sta	$dc05
 
+; setup measurement timer
+	ldx	#%00000000
+	stx	$dc0e
+	ldx	#$ff
+	stx	$dc04
+	stx	$dc05
+
+; setup guard timer
+	ldx	#%00000000
+	stx	$dc0f
+	ldy	cycles_per_line
+	dey
+	sty	$dc06
+	stx	$dc07
+	lda	#%00010001
+	sta	$dc0f
+	
+; prepare test
 	lda	#0
 	sta	test_num
 	jsr	setup_test
 
+; setup initial raster line
 	lda	#$1b | (>LINE << 7)
 	sta	$d011
 	lda	#<LINE
@@ -211,6 +225,9 @@ test_prepare:
 ;*   
 ;******
 test_perform:
+; check guard
+	ldx	$dc06
+	inc	$0400,x
 	lda	cycle
 	jsr	delay
 	inc	$d021
@@ -313,15 +330,15 @@ tailtab:
 	nop
 	nop
 ; test #6
-	sta	$dc0e,x
+	lsr	$dc0e,x
 	lda	$dc04
 	eor	#$ff
 ; test #7
-	sta	$dc0e,x
+	lsr	$dc0e,x
 	lda	$dc05
 	eor	#$ff
 ; test #8
-	sta	$dc0e,x
+	lsr	$dc0e,x
 	lda	$d012
 	nop
 	nop
@@ -337,16 +354,18 @@ cycle:
 delay:
 	ldx	#%00011001	; force timer start
 	stx	$dc0e
+	ldx	#%00000000	; value for stop timer
 	eor	#$ff
 	lsr
 	sta	dl_sm1+1
 	bcc	dl_skp1
 dl_skp1:
-	ldx	#%00000000	; value for stop timer
+	clv
 dl_sm1:
-	beq	dl_skp1
+	bvc	dl_skp1
 	ds.b	127,$ea
-	txa			; always executed
+;--- test
+	txa
 ; Acc=0, X=0
 dl_tail:
 	stx	$dc0e
