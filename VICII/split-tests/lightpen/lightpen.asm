@@ -289,7 +289,7 @@ delay:
 	sta	dl_sm1+1
 	bcc	dl_skp1
 dl_skp1:
-	if	0
+	if	1
 ; fixes cycle glitch for values $fe and $ff
 	clv
 dl_sm1:
@@ -331,27 +331,27 @@ ref_data:
 msg6569r1:
 	dc.b	"6569R1",0
 tab6569r1:
-	incbin	"dump6569r1.prg",2
+	incbin	"dump6569r1.bin"
 ;---
 msg6569r3:
 	dc.b	"6569R3",0
 tab6569r3:
-	incbin	"dump6569.prg",2
+	incbin	"dump6569.bin"
 ;---
 msg6572r1:
 	dc.b	"6572R1",0
 tab6572r1:
-	incbin	"dump6572.prg",2
+	incbin	"dump6572.bin"
 ;---
 msg8565r2:
 	dc.b	"8565R2",0
 tab8565r2:
-	incbin	"dump8565.prg",2
+	incbin	"dump8565.bin"
 ;---
 msgdtv3pal:
 	dc.b	"DTV3 PAL",0
 tabdtv3pal:
-	incbin	"dumpdtv3.prg",2
+	incbin	"dumpdtv3.bin"
 ;---
 
 ; eof

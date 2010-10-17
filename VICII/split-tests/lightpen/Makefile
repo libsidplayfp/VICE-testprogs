@@ -2,8 +2,29 @@
 
 all:	lightpen.prg
 
-lightpen.prg: lightpen.asm
+lightpen.prg: lightpen.asm \
+	dump6569.bin dump6569r1.bin dump8565.bin \
+	dump6572.bin \
+	dumpdtv3.bin
 	dasm $< -o$@
+
+dump6569.bin:	dump6569.prg makeref
+	./makeref $< $@
+
+dump6569r1.bin:	dump6569r1.prg makeref
+	./makeref $< $@
+
+dump8565.bin:	dump8565.prg makeref
+	./makeref $< $@
+
+dump6572.bin:	dump6572.prg makeref
+	./makeref $< $@
+
+dumpdtv3.bin:	dumpdtv3.prg makeref
+	./makeref $< $@
+
+makeref: makeref.c
+	gcc -Wall -o $@ $<
 
 analyse: analyse.c
 	gcc -Wall -o $@ $<
@@ -11,6 +32,8 @@ analyse: analyse.c
 clean:
 	rm -f *~ \#*\#
 	rm -f a.out
+	rm -f *.bin
+	rm -f makeref analyse
 	rm -f lightpen.prg
 
 # eof
