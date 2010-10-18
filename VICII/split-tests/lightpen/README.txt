@@ -58,7 +58,9 @@ dumpdtv3.prg
 ------------
 Running on a C64DTV PAL:
 
-Dumped on Machine 1 (nojoopa): C64DTV DTV3
+Dumped on Machine 1 (nojoopa):
+
+C64DTV: DTV3
 
 -----------------------------------------------------------------------
 eof

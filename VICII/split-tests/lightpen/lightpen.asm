@@ -323,27 +323,39 @@ BUFFER	equ	$4000
 ;*   
 ;******
 ref_data:
+	dc.w	tab6567,msg6567
 	dc.w	tab6569r1,msg6569r1
-	dc.w	tab6569r3,msg6569r3
+	dc.w	tab6569r3r4,msg6569r3r4
 	dc.w	tab6572r1,msg6572r1
+	dc.w	tab8564,msg8564
 	dc.w	tab8565r2,msg8565r2
 	dc.w	tabdtv3pal,msgdtv3pal
 	dc.w	0
+;---
+msg6567:
+	dc.b	"6567",0
+tab6567:
+	incbin	"dump6567.bin"
 ;---
 msg6569r1:
 	dc.b	"6569R1",0
 tab6569r1:
 	incbin	"dump6569r1.bin"
 ;---
-msg6569r3:
-	dc.b	"6569R3",0
-tab6569r3:
+msg6569r3r4:
+	dc.b	"6569R3/R4",0
+tab6569r3r4:
 	incbin	"dump6569.bin"
 ;---
 msg6572r1:
 	dc.b	"6572R1",0
 tab6572r1:
 	incbin	"dump6572.bin"
+;---
+msg8564:
+	dc.b	"8564",0
+tab8564:
+	incbin	"dump8564.bin"
 ;---
 msg8565r2:
 	dc.b	"8565R2",0
