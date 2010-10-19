@@ -40,6 +40,14 @@ CIA2: MOS/6526/3086 S (CIA-U4)
 VICII: MOS/8564R5CA  V 6/4585
 SID: <unknown>
 
+Machine 4 (the_woz):
+
+Drean C64, mainboard: 1984 version (8 RAM chips, 8701 clock generator)
+
+CPU: MOS/8500 R3/5185
+CIA1: MOS/6526/4485
+CIA2: MOS/6526/4485
+VICII: 6572 R0 (ceramic)
 
   CIA-INT (IRQ) R04 / TLR
 
