@@ -9,6 +9,15 @@ Running on Breadbox NTSC.
 
 Dumped on Machine 1 (jcompton):
 
+C64: NTSC Breadbox
+Ser# P01815269
+Rev C
+
+CPU: MOS/6510 CBM/0684
+CIA-U1: MOS/6526/0884
+CIA-U2: MOS/6526/0784
+SID: MOS/6581/2484
+VIC: MOS/6567 R8/2684
 
 
 dump6569.prg
@@ -41,6 +50,15 @@ dump8564.prg
 Running on C128D NTSC.
 
 Dumped on Machine 1 (jcompton):
+
+C128D NTSC
+Ser# 045208
+
+CPU: MOS/8502R0/2688 20
+SID: MOS/8580R5/3488 25
+CIA-U1: MOS/6526A/3588 216A
+CIA-U4: <unknown> (under PSU)
+VICII: <unknown>
 
 
 dump8565.prg
