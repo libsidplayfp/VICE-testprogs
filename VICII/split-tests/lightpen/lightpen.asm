@@ -327,7 +327,9 @@ ref_data:
 	dc.w	tab6569r1,msg6569r1
 	dc.w	tab6569r3r4,msg6569r3r4
 	dc.w	tab6572r1,msg6572r1
+	dc.w	tab8562r4,msg8562r4
 	dc.w	tab8564,msg8564
+	dc.w	tab8564r5,msg8564r5
 	dc.w	tab8565r2,msg8565r2
 	dc.w	tabdtv3pal,msgdtv3pal
 	dc.w	0
@@ -352,10 +354,20 @@ msg6572r1:
 tab6572r1:
 	incbin	"dump6572.bin"
 ;---
+msg8562r4:
+	dc.b	"8562R4",0
+tab8562r4:
+	incbin	"dump8562r4.bin"
+;---
 msg8564:
 	dc.b	"8564",0
 tab8564:
 	incbin	"dump8564.bin"
+;---
+msg8564r5:
+	dc.b	"8564R5",0
+tab8564r5:
+	incbin	"dump8564r5.bin"
 ;---
 msg8565r2:
 	dc.b	"8565R2",0

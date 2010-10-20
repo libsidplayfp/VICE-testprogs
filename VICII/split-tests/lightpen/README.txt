@@ -68,7 +68,7 @@ SID: MOS/6581/5182
 
 
 dump8562r4.prg
-------------
+--------------
 Running on C64C NTSC.
 
 Dumped on Machine 1 (Jason Compton):

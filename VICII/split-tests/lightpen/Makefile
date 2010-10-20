@@ -3,7 +3,7 @@
 all:	lightpen.prg
 
 lightpen.prg: lightpen.asm \
-	dump6567.bin dump8564.bin \
+	dump6567.bin dump8562r4.bin dump8564.bin dump8564r5.bin \
 	dump6569.bin dump6569r1.bin dump8565.bin \
 	dump6572.bin \
 	dumpdtv3.bin
@@ -12,7 +12,13 @@ lightpen.prg: lightpen.asm \
 dump6567.bin:	dump6567.prg makeref
 	./makeref $< $@
 
+dump8562r4.bin:	dump8562r4.prg makeref
+	./makeref $< $@
+
 dump8564.bin:	dump8564.prg makeref
+	./makeref $< $@
+
+dump8564r5.bin:	dump8564r5.prg makeref
 	./makeref $< $@
 
 dump6569.bin:	dump6569.prg makeref
