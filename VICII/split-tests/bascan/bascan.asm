@@ -18,13 +18,12 @@ LINE	equ	48+8*16+6
 ;*
 ;******
 	org	$02
-ptr_zp:
-	ds.w	1
-rptr_zp:
-	ds.w	1
-cnt_zp:
-	ds.b	1	
-
+cycle_zp:
+	ds.b	1
+test_num_zp:
+	ds.b	1
+guard_zp:
+	ds.b	1
 
 ;**************************************************************************
 ;*
@@ -32,7 +31,7 @@ cnt_zp:
 ;*
 ;******
 HAVE_TEST_RESULT	equ	1
-;HAVE_STABILITY_GUARD	equ	1
+HAVE_STABILITY_GUARD	equ	1
 	include	"../common/startup.asm"
 
 
@@ -89,7 +88,7 @@ show_params:
 	sec
 	sbc	#5
 	tay
-	lda	cycle
+	lda	cycle_zp
 	jmp	update_hex
 ;	rts
 	
@@ -196,20 +195,11 @@ test_prepare:
 	ldx	#$ff
 	stx	$dc04
 	stx	$dc05
-
-; setup guard timer
-	ldx	#%00000000
-	stx	$dc0f
-	ldy	cycles_per_line
-	dey
-	sty	$dc06
-	stx	$dc07
-	lda	#%00010001
-	sta	$dc0f
 	
 ; prepare test
 	lda	#0
-	sta	test_num
+	sta	cycle_zp
+	sta	test_num_zp
 	jsr	setup_test
 
 ; setup initial raster line
@@ -228,25 +218,34 @@ test_prepare:
 ;******
 test_perform:
 ; check guard
-	ldx	$dc06
-	inc	$0400,x
-	lda	cycle
+	lda	$dc06
+	sta	guard_zp
+
+	lda	cycle_zp
 	jsr	delay
 	inc	$d021
 	dec	$d021
-	ldx	cycle
+	ldx	cycle_zp
 pt_sm2:
 	sta	BUFFER,x
 
+	ldy	guard_zp
+	ldx	#0
+	jsr	update_guard
+	jsr	check_guard
+	sta	$0427
+	lda	#1
+	sta	$d827
+	
 ; cosmetic print out
 	jsr	show_params
 
 ; increase cycle
-	inc	cycle
+	inc	cycle_zp
 	bne	pt_ex1
 
-	inc	test_num
-	lda	test_num
+	inc	test_num_zp
+	lda	test_num_zp
 	cmp	#NUM_TESTS
 	bne	pt_skp1
 
@@ -261,10 +260,10 @@ pt_ex1:
 	rts
 
 setup_test:
-	lda	test_num
+	lda	test_num_zp
 	asl
 	tax
-; X=test_num * 2
+; X=test_num_zp * 2
 	lda	buftab,x
 	sta	pt_sm2+1
 	lda	buftab+1,x
@@ -274,12 +273,12 @@ setup_test:
 	lda	regtab+1,x
 	sta	curr_reg+1
 
-	lda	test_num
+	lda	test_num_zp
 	asl
 	asl
 	asl
 	tax
-; X=test_num * 8
+; X=test_num_zp * 8
 	ldy	#0
 st_lp1:
 	lda	tailtab,x
@@ -347,10 +346,6 @@ tailtab:
 
 curr_reg:
 	dc.w	0
-test_num:
-	dc.b	0
-cycle:
-	dc.b	0
 
 	align	256
 delay:

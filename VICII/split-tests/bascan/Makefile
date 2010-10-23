@@ -2,7 +2,7 @@
 
 all:	bascan.prg
 
-bascan.prg: bascan.asm
+bascan.prg: bascan.asm ../common/startup.asm
 	dasm $< -o$@
 
 clean:
