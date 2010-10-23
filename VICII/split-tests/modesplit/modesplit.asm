@@ -33,6 +33,7 @@ guard_zp:
 ;*
 ;******
 HAVE_STABILITY_GUARD	equ	1
+HAVE_ADJUST		equ	1
 	include	"../common/startup.asm"
 
 
@@ -116,60 +117,6 @@ prt_lp1:
 	sta	$d012
 	rts
 
-
-
-;**************************************************************************
-;*
-;* NAME  adjust_timing
-;*
-;******
-adjust_timing:
-	ldx	cycles_per_line
-	lda	time2-63,x
-	sta	tm1_zp
-	lda	time3-63,x
-	sta	tm2_zp
-	
-	lda	#<test_start
-	sta	ptr_zp
-	lda	#>test_start
-	sta	ptr_zp+1
-	ldx	#>[test_end-test_start+255]
-at_lp1:
-	ldy	#0
-	lda	#$d8		; cld
-	cmp	(ptr_zp),y
-	bne	at_skp1
-	iny
-	cmp	(ptr_zp),y
-	bne	at_skp1
-	dey
-	lda	tm1_zp
-	sta	(ptr_zp),y
-	iny
-	lda	tm2_zp
-	sta	(ptr_zp),y
-at_skp1:
-	inc	ptr_zp
-	bne	at_lp1
-	inc	ptr_zp+1
-	dex
-	bne	at_lp1
-
-	rts
-
-; eor #$00 (2),  bit $ea (3),  nop; nop (4)
-time2:
-	dc.b	$49, $24, $ea
-time3:
-	dc.b	$00, $ea, $ea
-
-	
-;******
-; end of line marker
-	mac	EOL
-	ds.b	2,$d8
-	endm
 	
 ;******
 ; One 8 char high chunk
@@ -233,12 +180,13 @@ test_perform:
 	lda	$dc06
 	sta	guard_zp+1
 
-	ldx	#0
-	ldy	guard_zp+0
+
+	ldx	#1
+tp_lp1:
+	ldy	guard_zp,x
 	jsr	update_guard
-	inx
-	ldy	guard_zp+1
-	jsr	update_guard
+	dex
+	bpl	tp_lp1
 
 
 	lda	#1

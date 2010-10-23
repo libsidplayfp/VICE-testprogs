@@ -34,13 +34,16 @@ tm1_zp:
 	ds.b	1
 tm2_zp:
 	ds.b	1
-
+guard_zp:
+	ds.b	2
 
 ;**************************************************************************
 ;*
 ;* common startup and raster code
 ;*
 ;******
+HAVE_STABILITY_GUARD	equ	1
+HAVE_ADJUST		equ	1
 	include	"../common/startup.asm"
 
 	
@@ -89,9 +92,6 @@ name_msg:
 label_msg:
 	dc.b	147,"0123456789012345678901234567890123456789",19,0
 
-; dummy
-test_result:
-	rts
 
 ;**************************************************************************
 ;*
@@ -229,54 +229,6 @@ prt_lp4:
 	rts
 
 	
-;**************************************************************************
-;*
-;* NAME  adjust_timing
-;*
-;******
-adjust_timing:
-	lda	cycles_per_line
-	sec
-	sbc	#63
-	tax
-	lda	time2,x
-	sta	tm1_zp
-	lda	time3,x
-	sta	tm2_zp
-	
-	lda	#<test_start
-	sta	ptr_zp
-	lda	#>test_start
-	sta	ptr_zp+1
-	ldx	#>[test_end-test_start+255]
-at_lp1:
-	ldy	#0
-	lda	#$d8		; cld
-	cmp	(ptr_zp),y
-	bne	at_skp1
-	iny
-	cmp	(ptr_zp),y
-	bne	at_skp1
-	dey
-	lda	tm1_zp
-	sta	(ptr_zp),y
-	iny
-	lda	tm2_zp
-	sta	(ptr_zp),y
-at_skp1:
-	inc	ptr_zp
-	bne	at_lp1
-	inc	ptr_zp+1
-	dex
-	bne	at_lp1
-
-	rts
-
-; eor #$00 (2),  bit $ea (3),  nop; nop (4)
-time2:
-	dc.b	$49, $24, $ea
-time3:
-	dc.b	$00, $ea, $ea
 
 ;**************************************************************************
 ;*
@@ -402,8 +354,9 @@ test_start:
 ;*
 ;******
 test_perform:
-	ds.b	4,$ea
-	bit	$ea
+	lda	$dc06
+	sta	guard_zp+0
+	ds.b	2,$ea
 ; start 0
 	ldy	#$3b
 	jsr	line18bm
@@ -469,8 +422,21 @@ test_perform:
 	sta	$dd00
 	lda	#$3f
 	sta	$dd02
+	nop
+	nop
+	lda	$dc06
+	sta	guard_zp+1
 	lda	#8
 	sta	$d016
+
+
+	ldx	#1
+tp_lp1:
+	ldy	guard_zp,x
+	jsr	update_guard
+	dex
+	bpl	tp_lp1
+
 	rts
 
 	align	256

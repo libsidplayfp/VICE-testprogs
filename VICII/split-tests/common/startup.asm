@@ -331,5 +331,60 @@ check_guard:
 	lda	guard_count,x
 	rts
 
-	endif;	HAVE_STABILITY_GUARD
+	endif	;HAVE_STABILITY_GUARD
+
+	ifconst	HAVE_ADJUST
+;**************************************************************************
+;*
+;* NAME  adjust_timing
+;*
+;******
+adjust_timing:
+	ldx	cycles_per_line
+	lda	time2-63,x
+	sta	tm1_zp
+	lda	time3-63,x
+	sta	tm2_zp
+	
+	lda	#<test_start
+	sta	ptr_zp
+	lda	#>test_start
+	sta	ptr_zp+1
+	ldx	#>[test_end-test_start+255]
+at_lp1:
+	ldy	#0
+	lda	#$d8		; cld
+	cmp	(ptr_zp),y
+	bne	at_skp1
+	iny
+	cmp	(ptr_zp),y
+	bne	at_skp1
+	dey
+	lda	tm1_zp
+	sta	(ptr_zp),y
+	iny
+	lda	tm2_zp
+	sta	(ptr_zp),y
+at_skp1:
+	inc	ptr_zp
+	bne	at_lp1
+	inc	ptr_zp+1
+	dex
+	bne	at_lp1
+
+	rts
+
+; eor #$00 (2),  bit $ea (3),  nop; nop (4)
+time2:
+	dc.b	$49, $24, $ea
+time3:
+	dc.b	$00, $ea, $ea
+
+;******
+; end of line marker
+	mac	EOL
+	ds.b	2,$d8
+	endm
+
+	endif	;HAVE_ADJUST
 ; eof
