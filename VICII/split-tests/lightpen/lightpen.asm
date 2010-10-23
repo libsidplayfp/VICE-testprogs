@@ -32,6 +32,8 @@ cycle_zp:
 ;* common startup and raster code
 ;*
 ;******
+HAVE_TEST_RESULT	equ	1
+;HAVE_STABILITY_GUARD	equ	1
 	include	"../common/startup.asm"
 
 

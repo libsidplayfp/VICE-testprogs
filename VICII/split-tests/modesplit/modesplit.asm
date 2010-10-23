@@ -81,9 +81,6 @@ name_msg:
 label_msg:
 	dc.b	147,"0123456789012345678901234567890123456789",19,0
 
-; dummy
-test_result:
-	rts
 
 ;**************************************************************************
 ;*
@@ -127,13 +124,10 @@ prt_lp1:
 ;*   
 ;******
 adjust_timing:
-	lda	cycles_per_line
-	sec
-	sbc	#63
-	tax
-	lda	time2,x
+	ldx	cycles_per_line
+	lda	time2-63,x
 	sta	tm1_zp
-	lda	time3,x
+	lda	time3-63,x
 	sta	tm2_zp
 	
 	lda	#<test_start

@@ -82,6 +82,7 @@ sa_lp2:
 	inc	$4080,x
 	dec	$4080,x
 	endif
+	ifconst	HAVE_TEST_RESULT
 	lda	test_done
 	beq	sa_lp2
 	sei
@@ -95,7 +96,10 @@ sa_lp2:
 	jsr	test_result
 sa_lp3:
 	jmp	sa_lp3
-	
+	else
+	jmp	sa_lp2
+	endif
+
 vectors:
 	dc.w	nmi_entry,0,irq_stable
 
@@ -110,8 +114,10 @@ cycles_per_line:
 	dc.b	0
 num_lines:
 	dc.b	0
+	ifconst HAVE_TEST_RESULT
 test_done:
 	dc.b	0
+	endif
 time1:
 	dc.b	irq_stable2_pal, irq_stable2_ntscold, irq_stable2_ntsc
 	
