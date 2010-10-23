@@ -52,18 +52,20 @@ sa_lp1:
 	dex
 	bne	sa_lp1
 
-	lda	cycles_per_line
-	sec
-	sbc	#63
+	ldx	cycles_per_line
+	cpx	#63
 	bcc	sa_fl1		;<63, fail
-	cmp	#66-63		;>=66, fail
+	cpx	#66		;>=66, fail
 	bcs	sa_fl1
-	tax
-	lda	time1,x
+	lda	time1-63,x
 	sta	is_sm1+1
 
-	jsr	test_prepare
+	ifconst	HAVE_STABILITY_GUARD
+	jsr	start_guard
+	endif
 	
+	jsr	test_prepare
+
 	jsr	wait_vb
 
 	lda	#1
@@ -116,7 +118,7 @@ time1:
 ;**************************************************************************
 ;*
 ;* NAME  irq_stable, irq_stable2
-;*   
+;*
 ;******
 irq_stable:
 	sta	accstore	; 4
@@ -173,7 +175,7 @@ ystore	equ	.+1
 ;**************************************************************************
 ;*
 ;* NAME  wait_vb
-;*   
+;*
 ;******
 wait_vb:
 wv_lp1:
@@ -187,12 +189,12 @@ wv_lp2:
 ;**************************************************************************
 ;*
 ;* NAME  check_time
-;*   
+;*
 ;* DESCRIPTION
 ;*   Determine number of cycles per raster line.
 ;*   Acc = number of cycles.
 ;*   X = LSB of number of raster lines.
-;*   
+;*
 ;******
 check_time:
 	lda	#0
@@ -223,4 +225,105 @@ ct_lp3:
 twelve:
 	rts
 
+
+	ifconst	HAVE_STABILITY_GUARD
+;**************************************************************************
+;*
+;* NAME  start_guard
+;*
+;* DESCRIPTION
+;*   Setup a stability guard timer that counts cycles per line.
+;*   It will be check to be the same value at the same spot in the raster
+;*   routine each IRQ.
+;*
+;******
+MAX_GUARD_CYCLES	equ	65
+MAX_GUARDS		equ	4
+start_guard:
+
+; clear guard buffer
+	lda	#0
+	ldx	#MAX_GUARD_CYCLES
+sg_lp1:
+	sta	guard-1,x
+	dex
+	bne	sg_lp1
+	sta	guard_count
+
+; clear guard counters
+	ldx	#MAX_GUARDS
+sg_lp2:
+	sta	guard_count-1,x
+	sta	guard_last_cycle,x
+	dex
+	bne	sg_lp2
+
+; setup and start guard timer
+	ldx	#%00000000
+	stx	$dc0f
+	ldy	cycles_per_line
+	dey
+	sty	$dc06
+	stx	$dc07
+	lda	#%00010001
+	sta	$dc0f
+
+	rts
+
+;**************************************************************************
+;*
+;* NAME  update_guard
+;*
+;* DESCRIPTION
+;*   Update guard counts.
+;*   IN: Y=cycle, X=guard# (0-3)
+;*
+;******
+update_guard:
+	cpy	cycles_per_line ; >= cycles_per_line
+	bcs	ug_fl1		; yes, fault!
+	tya
+	sta	guard_last_cycle,x
+	lda	guard_mask,x
+	and	guard,y
+	bne	ug_ex1
+	lda	guard_mask,x
+	ora	guard,y
+	sta	guard,y
+	inc	guard_count,x
+ug_ex1:
+	rts
+ug_fl1:
+	lda	#$80
+	ora	guard_count,x
+	sta	guard_count,x
+	rts
+
+guard_mask:
+	dc.b	%00000001
+	dc.b	%00000010
+	dc.b	%00000100
+	dc.b	%00001000
+	
+guard_count:
+	ds.b	MAX_GUARDS
+guard_last_cycle:
+	ds.b	MAX_GUARDS
+guard:
+	ds.b	MAX_GUARD_CYCLES
+
+;**************************************************************************
+;*
+;* NAME  check_guard
+;*
+;* DESCRIPTION
+;*   Check guard counts.
+;*   IN: X=guard# (0-3)
+;*   
+;******
+check_guard:
+	lda	guard_count,x
+	rts
+
+	endif;	HAVE_STABILITY_GUARD
 ; eof

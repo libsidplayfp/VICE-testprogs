@@ -24,13 +24,15 @@ tm1_zp:
 	ds.b	1
 tm2_zp:
 	ds.b	1
-	
+guard_zp:
+	ds.b	2
 
 ;**************************************************************************
 ;*
 ;* common startup and raster code
 ;*
 ;******
+HAVE_STABILITY_GUARD	equ	1
 	include	"../common/startup.asm"
 
 
@@ -75,7 +77,7 @@ test_present:
 NAME_POS	equ	2
 CONF_POS	equ	32
 name_msg:
-	dc.b	"modesplit",29,"r01",0
+	dc.b	"modesplit",29,"r02",0
 label_msg:
 	dc.b	147,"0123456789012345678901234567890123456789",19,0
 
@@ -211,7 +213,10 @@ test_start:
 ;*   
 ;******
 test_perform:
-	ds.b	6,$ea
+	lda	$dc06
+	sta	guard_zp+0
+	bit	$ea
+	ds.b	1,$ea
 ; start 1
 	CHUNK 	section1
 ; start 2
@@ -229,6 +234,63 @@ test_perform:
 	sta	$d021
 	lda	#6
 	sta	$d021
+	ds.b	7,$ea
+	EOL
+	lda	$dc06
+	sta	guard_zp+1
+
+	ldx	#0
+	lda	guard_zp+0
+	jsr	update_guard
+	inx
+	lda	guard_zp+1
+	jsr	update_guard
+
+
+	lda	#1
+	sta	$d81c
+	sta	$d81d
+	sta	$d81e
+
+	ldx	#0
+	jsr	check_guard
+	tay
+	lda	#"A"
+	cpy	#1
+	beq	tp_skp1
+	ora	#"0"
+	cpy	#9+1
+	bcc	tp_skp1
+	lda	#"!"
+tp_skp1:
+	sta	$041c,x
+
+	ldx	#1
+	jsr	check_guard
+	tay
+	lda	#"B"
+	cpy	#1
+	beq	tp_skp2
+	ora	#"0"
+	cpy	#9+1
+	bcc	tp_skp1
+	lda	#"!"
+tp_skp2:
+	sta	$041c,x
+
+	lda	#"-"
+	lda	guard_count+0
+	cmp	#1
+	bne	tp_skp3
+	lda	guard_count+1
+	cmp	#1
+	bne	tp_skp3
+	lda	guard_last_cycle+0
+	cmp	guard_last_cycle+1
+	bne	tp_skp3
+	lda	#"+"
+tp_skp3:
+	sta	$041e
 	rts
 
 	align	256
