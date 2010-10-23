@@ -240,10 +240,10 @@ test_perform:
 	sta	guard_zp+1
 
 	ldx	#0
-	lda	guard_zp+0
+	ldy	guard_zp+0
 	jsr	update_guard
 	inx
-	lda	guard_zp+1
+	ldy	guard_zp+1
 	jsr	update_guard
 
 
@@ -279,14 +279,14 @@ tp_skp2:
 	sta	$041c,x
 
 	lda	#"-"
-	lda	guard_count+0
-	cmp	#1
+	ldy	guard_count+0
+	cpy	#1
 	bne	tp_skp3
-	lda	guard_count+1
-	cmp	#1
+	ldy	guard_count+1
+	cpy	#1
 	bne	tp_skp3
-	lda	guard_last_cycle+0
-	cmp	guard_last_cycle+1
+	ldy	guard_last_cycle+0
+	cpy	guard_last_cycle+1
 	bne	tp_skp3
 	lda	#"+"
 tp_skp3:
