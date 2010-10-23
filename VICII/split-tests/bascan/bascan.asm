@@ -1,6 +1,6 @@
 ;**************************************************************************
 ;*
-;* FILE  lightpen.asm
+;* FILE  bascan.asm
 ;* Copyright (c) 2010 Daniel Kahlin <daniel@kahlin.net>
 ;* Written by Daniel Kahlin <daniel@kahlin.net>
 ;*
@@ -31,6 +31,8 @@ cnt_zp:
 ;* common startup and raster code
 ;*
 ;******
+HAVE_TEST_RESULT	equ	1
+;HAVE_STABILITY_GUARD	equ	1
 	include	"../common/startup.asm"
 
 
@@ -221,7 +223,7 @@ test_prepare:
 	
 ;**************************************************************************
 ;*
-;* NAME  test_preform
+;* NAME  test_perform
 ;*   
 ;******
 test_perform:
@@ -364,7 +366,8 @@ dl_skp1:
 dl_sm1:
 	bvc	dl_skp1
 	ds.b	127,$ea
-;--- test
+;******
+; start of test
 	txa
 ; Acc=0, X=0
 dl_tail:
