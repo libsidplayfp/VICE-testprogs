@@ -2,7 +2,7 @@
 
 all:	modesplit.prg
 
-modesplit.prg: modesplit.asm ../common/startup.asm
+modesplit.prg: modesplit.asm ../common/startup.asm ../common/onescreen.asm
 	dasm $< -o$@
 
 clean:

@@ -18,6 +18,9 @@
 
 
 LINE		equ	56
+TEST_NAME	eqm	"FETCHSPLIT"
+TEST_REVISION	eqm	"R02"
+LABEL_SCRADDR	equ	$3c00
 
 	seg.u	zp
 ;**************************************************************************
@@ -46,51 +49,16 @@ HAVE_STABILITY_GUARD	equ	1
 HAVE_ADJUST		equ	1
 	include	"../common/startup.asm"
 
-	
+	include	"../common/onescreen.asm"
+
 ;**************************************************************************
 ;*
 ;* NAME  test_present
 ;*
 ;******
 test_present:
-	lda	#14
-	sta	646
-	sta	$d020
-	lda	#6
-	sta	$d021
-
-	lda	#<label_msg
-	ldy	#>label_msg
-	jsr	$ab1e
-
-	lda	#1
-	sta	646
-
-	lda	#NAME_POS
-	sta	$d3
-	lda	#<name_msg
-	ldy	#>name_msg
-	jsr	$ab1e
-	
-	lda	#CONF_POS
-	sta	$d3
-	lda	#0
-	ldx	cycles_per_line
-	jsr	$bdcd
-	
-	inc	$d3
-	lda	#1
-	ldx	num_lines
-	jsr	$bdcd
-
+	jsr	show_label_bar
 	rts
-
-NAME_POS	equ	2
-CONF_POS	equ	32
-name_msg:
-	dc.b	"FETCHSPLIT",29,"R01",0
-label_msg:
-	dc.b	147,"0123456789012345678901234567890123456789",19,0
 
 
 ;**************************************************************************
@@ -437,6 +405,7 @@ tp_lp1:
 	dex
 	bpl	tp_lp1
 
+	jsr	show_guards
 	rts
 
 	align	256

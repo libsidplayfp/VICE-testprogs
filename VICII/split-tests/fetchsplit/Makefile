@@ -2,7 +2,7 @@
 
 all:	fetchsplit.prg
 
-fetchsplit.prg: fetchsplit.asm
+fetchsplit.prg: fetchsplit.asm ../common/startup.asm ../common/onescreen.asm
 	dasm $< -o$@
 
 clean:

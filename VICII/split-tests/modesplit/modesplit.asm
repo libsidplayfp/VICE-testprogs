@@ -10,6 +10,9 @@
 	processor 6502
 
 LINE		equ	56
+TEST_NAME	eqm	"modesplit"
+TEST_REVISION	eqm	"r03"
+LABEL_LOWERCASE	equ	1
 
 	seg.u	zp
 ;**************************************************************************
@@ -36,6 +39,7 @@ HAVE_STABILITY_GUARD	equ	1
 HAVE_ADJUST		equ	1
 	include	"../common/startup.asm"
 
+	include	"../common/onescreen.asm"
 
 ;**************************************************************************
 ;*
@@ -43,44 +47,8 @@ HAVE_ADJUST		equ	1
 ;*
 ;******
 test_present:
-	lda	#14
-	sta	646
-	sta	$d020
-	lda	#6
-	sta	$d021
-
-	lda	#<label_msg
-	ldy	#>label_msg
-	jsr	$ab1e
-
-	lda	#1
-	sta	646
-
-	lda	#NAME_POS
-	sta	$d3
-	lda	#<name_msg
-	ldy	#>name_msg
-	jsr	$ab1e
-	
-	lda	#CONF_POS
-	sta	$d3
-	lda	#0
-	ldx	cycles_per_line
-	jsr	$bdcd
-	
-	inc	$d3
-	lda	#1
-	ldx	num_lines
-	jsr	$bdcd
-
+	jsr	show_label_bar
 	rts
-
-NAME_POS	equ	2
-CONF_POS	equ	32
-name_msg:
-	dc.b	"modesplit",29,"r02",0
-label_msg:
-	dc.b	147,"0123456789012345678901234567890123456789",19,0
 
 
 ;**************************************************************************
@@ -188,51 +156,7 @@ tp_lp1:
 	dex
 	bpl	tp_lp1
 
-
-	lda	#1
-	sta	$d81c
-	sta	$d81d
-	sta	$d81e
-
-	ldx	#0
-	jsr	check_guard
-	tay
-	lda	#"A"
-	cpy	#1
-	beq	tp_skp1
-	ora	#"0"
-	cpy	#9+1
-	bcc	tp_skp1
-	lda	#"!"
-tp_skp1:
-	sta	$041c,x
-
-	ldx	#1
-	jsr	check_guard
-	tay
-	lda	#"B"
-	cpy	#1
-	beq	tp_skp2
-	ora	#"0"
-	cpy	#9+1
-	bcc	tp_skp1
-	lda	#"!"
-tp_skp2:
-	sta	$041c,x
-
-	lda	#"-"
-	ldy	guard_count+0
-	cpy	#1
-	bne	tp_skp3
-	ldy	guard_count+1
-	cpy	#1
-	bne	tp_skp3
-	ldy	guard_last_cycle+0
-	cpy	guard_last_cycle+1
-	bne	tp_skp3
-	lda	#"+"
-tp_skp3:
-	sta	$041e
+	jsr	show_guards
 	rts
 
 	align	256
