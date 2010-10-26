@@ -9,6 +9,10 @@
 ;******
 	processor 6502
 
+TEST_NAME	eqm	"LIGHTPEN"
+TEST_REVISION	eqm	"R04"
+
+	
 	seg.u	zp
 ;**************************************************************************
 ;*
@@ -46,38 +50,16 @@ HAVE_STABILITY_GUARD	equ	1
 ;*
 ;******
 test_present:
-	lda	#14
-	sta	646
-	sta	$d020
-	lda	#6
-	sta	$d021
+	jsr	show_info
 
-	lda	#<timing_msg
-	ldy	#>timing_msg
-	jsr	$ab1e
-	lda	#0
-	ldx	cycles_per_line
-	jsr	$bdcd
-	lda	#<cycles_line_msg
-	ldy	#>cycles_line_msg
-	jsr	$ab1e
-	lda	#1
-	ldx	num_lines
-	jsr	$bdcd
-	lda	#<lines_msg
-	ldy	#>lines_msg
+	lda	#<measure_msg
+	ldy	#>measure_msg
 	jsr	$ab1e
 	
 	rts
 
-timing_msg:
-	dc.b	147,"LIGHTPEN R03 / TLR",13,13
-	dc.b	"TIMING: ",0
-cycles_line_msg:
-	dc.b	" CYCLES/LINE, ",0
-lines_msg:
-	dc.b	" LINES",13,13
-	dc.b	"MEASURING $D011 AT CYCLE $00...",0
+measure_msg:
+	dc.b	13,"MEASURING $D011 AT CYCLE $00...",0
 
 show_params:
 	lda	$d3

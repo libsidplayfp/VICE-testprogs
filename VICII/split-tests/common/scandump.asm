@@ -8,8 +8,47 @@
 ;*   Common code for scanning tests providing a data-dump.
 ;*
 ;******
-	processor 6502
 
+;**************************************************************************
+;*
+;* NAME  show_info
+;*
+;* DESCRIPTION
+;*   Show initial info on screen.
+;*
+;******
+show_info:
+	lda	#14
+	sta	646
+	sta	$d020
+	lda	#6
+	sta	$d021
+
+	lda	#<timing_msg
+	ldy	#>timing_msg
+	jsr	$ab1e
+	lda	#0
+	ldx	cycles_per_line
+	jsr	$bdcd
+	lda	#<cycles_line_msg
+	ldy	#>cycles_line_msg
+	jsr	$ab1e
+	lda	#1
+	ldx	num_lines
+	jsr	$bdcd
+	lda	#<lines_msg
+	ldy	#>lines_msg
+	jsr	$ab1e
+	
+	rts
+
+timing_msg:
+	dc.b	147,TEST_NAME," ",TEST_REVISION," / TLR",13,13
+	dc.b	"TIMING: ",0
+cycles_line_msg:
+	dc.b	" CYCLES/LINE, ",0
+lines_msg:
+	dc.b	" LINES",13,0
 
 ;**************************************************************************
 ;*
