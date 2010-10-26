@@ -2,7 +2,7 @@
 
 all:	lightpen.prg
 
-lightpen.prg: lightpen.asm ../common/startup.asm \
+lightpen.prg: lightpen.asm ../common/startup.asm ../common/scandump.asm \
 	dump6567.bin dump8562r4.bin dump8564.bin dump8564r5.bin \
 	dump6569.bin dump6569r1.bin dump8565.bin \
 	dump6572.bin \

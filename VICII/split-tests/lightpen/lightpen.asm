@@ -26,6 +26,8 @@ enable_zp:
 	ds.b	1
 cycle_zp:
 	ds.b	1
+guard_zp:
+	ds.b	1
 
 ;**************************************************************************
 ;*
@@ -33,9 +35,10 @@ cycle_zp:
 ;*
 ;******
 HAVE_TEST_RESULT	equ	1
-;HAVE_STABILITY_GUARD	equ	1
+HAVE_STABILITY_GUARD	equ	1
 	include	"../common/startup.asm"
 
+	include	"../common/scandump.asm"
 
 ;**************************************************************************
 ;*
@@ -92,25 +95,6 @@ show_params:
 	jmp	update_hex
 ;	rts
 	
-update_hex:
-	pha
-	lsr
-	lsr
-	lsr
-	lsr
-	jsr	uh_common
-	pla
-	and	#$0f
-uh_common:
-	tax
-	lda	htab,x
-	sta	($d1),y
-	iny
-	rts
-
-htab:
-	dc.b	"0123456789",1,2,3,4,5,6
-
 ;**************************************************************************
 ;*
 ;* NAME  test_result
@@ -188,7 +172,8 @@ tr_ex2:
 	ldy	#>result_msg
 	jsr	$ab1e
 
-
+	jsr	save_file
+	
 	rts
 
 done_msg:
@@ -205,7 +190,11 @@ nomatches_msg:
 result_msg:
 	dc.b	13,13,"(RESULT AT $4000-$4500)",0
 
-	
+
+filename:
+	dc.b	"LPDUMP"
+FILENAME_LEN	equ	.-filename
+
 ;**************************************************************************
 ;*
 ;* NAME  test_prepare
@@ -244,10 +233,10 @@ test_prepare:
 ;*
 ;******
 test_perform:
+	lda	$dc06
+	sta.w	guard_zp
 	lda	enable_zp
 	beq	pt_ex1
-
-	ds.b	4,$ea
 
 	lda	cycle_zp
 	jsr	delay
@@ -284,6 +273,10 @@ pt_ex1:
 	eor	#1
 	sta	enable_zp
 
+	ldx	#0
+	ldy	guard_zp
+	jsr	update_guard
+	
 	rts
 
 	align	256
@@ -315,7 +308,8 @@ pt_sm1:
 	stx	$dc01
 	rts
 
-BUFFER	equ	$4000
+BUFFER		equ	$4000
+BUFFER_END	equ	$4500
 
 
 
