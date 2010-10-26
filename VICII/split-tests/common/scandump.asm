@@ -106,34 +106,44 @@ sf_lp1:
 	cmp	#"Y"
 	bne	sf_lp1
 
-sf_lp3:
-	if	0
 	lda	#<filename_msg
 	ldy	#>filename_msg
 	jsr	$ab1e
-	lda	$d3
-	pha
-	lda	#<nam
-	ldy	#>nam
-	jsr	$ab1e
-	pla
-	sta	$d3
-sf_lp4:
+	ldx	$d3
+	ldy	#0
+sf_lp2:
+	cpy	$b7
+	beq	sf_skp2
+	lda	($bb),y
+	jsr	$ffd2
+	iny
+	bne	sf_lp2		; always taken
+sf_skp2:
+	stx	$d3
+
+	ldx	#<namebuf
+	ldy	#>namebuf
+;	lda	#NAMEBUF_LEN	; don't care
+	jsr	$ffbd
+
+	ldy	#0
+sf_lp3:
 	jsr	$ffcf
+	sta	($bb),y
 	cmp	#13
-	bne	sf_lp4
-	endif
-	
+	beq	sf_skp3
+	iny
+	cpy	#NAMEBUF_LEN
+	bne	sf_lp3
+sf_skp3:
+	sty	$b7
+
 	lda	#$80
 	sta	$9d
 	lda	#1
 	ldx	$ba
 	tay
 	jsr	$ffba
-	ldx	#<filename
-	ldy	#>filename
-	lda	#FILENAME_LEN
-	jsr	$ffbd
 	ldx	#<BUFFER
 	ldy	#>BUFFER
 	stx	sa_zp
@@ -165,5 +175,9 @@ filename_msg:
 	dc.b	13,"FILENAME: ",0
 ok_msg:
 	dc.b	13,"OK",13,0
+NAMEBUF_LEN	equ	32
+namebuf:
+	ds.b	NAMEBUF_LEN
+
 
 ; eof

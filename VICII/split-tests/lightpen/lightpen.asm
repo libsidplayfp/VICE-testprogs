@@ -154,6 +154,10 @@ tr_ex2:
 	ldy	#>result_msg
 	jsr	$ab1e
 
+	ldx	#<filename
+	ldy	#>filename
+	lda	#FILENAME_LEN
+	jsr	$ffbd
 	jsr	save_file
 	
 	rts
