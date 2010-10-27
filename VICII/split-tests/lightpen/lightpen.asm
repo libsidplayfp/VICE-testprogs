@@ -30,6 +30,8 @@ enable_zp:
 	ds.b	1
 cycle_zp:
 	ds.b	1
+test_num_zp:
+	ds.b	1
 guard_zp:
 	ds.b	1
 
@@ -86,6 +88,30 @@ test_result:
 	lda	#<done_msg
 	ldy	#>done_msg
 	jsr	$ab1e
+
+	lda	#<stability_msg
+	ldy	#>stability_msg
+	jsr	$ab1e
+
+	ldx	#0
+	jsr	check_guard
+	cmp	#1
+	beq	tr_skp1
+
+	tax
+	lda	#0
+	jsr	$bdcd
+	
+	lda	#<failed_msg
+	ldy	#>failed_msg
+	jsr	$ab1e
+	jmp	tr_skp2
+
+tr_skp1:
+	lda	#<passed_msg
+	ldy	#>passed_msg
+	jsr	$ab1e
+tr_skp2:
 
 	lda	#0
 tr_lp1:
@@ -163,15 +189,22 @@ tr_ex2:
 	rts
 
 done_msg:
-	dc.b	"DONE",13,13,0
+	dc.b	"DONE",13,0
+
+stability_msg:
+	dc.b	13,"STABILITY: ",0
+passed_msg:
+	dc.b	"PASSED",13,0
+failed_msg:
+	dc.b	", FAILED!",13,0
 
 matches_msg:
-	dc.b	5,"> MATCHES ",0
+	dc.b	13,5,"> MATCHES ",0
 matches2_msg:
 	dc.b	" <",154,0
 
 nomatches_msg:
-	dc.b	5,"> NO MATCHES! <",154,0
+	dc.b	13,5,"> NO MATCHES! <",154,0
 
 result_msg:
 	dc.b	13,13,"(RESULT AT $4000-$4500)",0
@@ -200,6 +233,8 @@ test_prepare:
 	lda	#0
 	sta	enable_zp
 	sta	cycle_zp
+	sta	test_num_zp
+	jsr	setup_test
 
 ;	lda	#$1b | (>LINE << 7)
 	lda	#$9b
@@ -238,32 +273,62 @@ pt_sm2:
 	lda	#$0f
 	sta	$d019		; clear interrupts
 
+	ldx	#0
+	ldy	guard_zp
+	jsr	update_guard
+
 ; cosmetic print out
 	jsr	show_params
 
 ; increase cycle
 	inc	cycle_zp
 	bne	pt_skp1
-	inc	pt_sm1+1
-	inc	pt_sm2+2
-pt_skp1:
-	lda	pt_sm1+1
-	cmp	#$15
-	bne	pt_ex1
+
+	inc	test_num_zp
+	lda	test_num_zp
+	cmp	#NUM_TESTS
+	bne	pt_skp1
 
 	lda	#$60
 	sta	test_perform
 	sta	test_done
+	bne	pt_ex1
+
+pt_skp1:
+	jsr	setup_test
+
 pt_ex1:
 	lda	enable_zp
 	eor	#1
 	sta	enable_zp
 
-	ldx	#0
-	ldy	guard_zp
-	jsr	update_guard
-	
 	rts
+
+setup_test:
+	lda	test_num_zp
+	asl
+	tax
+; X=test_num_zp * 2
+	lda	buftab,x
+	sta	pt_sm2+1
+	lda	buftab+1,x
+	sta	pt_sm2+2
+	lda	regtab,x
+	sta	pt_sm1+1
+	lda	regtab+1,x
+	sta	pt_sm1+2
+	rts
+
+	
+NUM_TESTS	equ	4
+buftab:
+	dc.w	BUFFER+$0000
+	dc.w	BUFFER+$0100
+	dc.w	BUFFER+$0200
+	dc.w	BUFFER+$0300
+regtab:
+	dc.w	$d011,$d012,$d013,$d014
+
 
 	align	256
 delay:
@@ -272,17 +337,9 @@ delay:
 	sta	dl_sm1+1
 	bcc	dl_skp1
 dl_skp1:
-	if	1
-; fixes cycle glitch for values $fe and $ff
 	clv
 dl_sm1:
 	bvc	dl_skp1
-	else
-; has cycle glitch for values $fe and $ff
-	nop
-dl_sm1:
-	bne	dl_skp1
-	endif
 	ds.b	127,$ea
 ;******
 ; start of test
