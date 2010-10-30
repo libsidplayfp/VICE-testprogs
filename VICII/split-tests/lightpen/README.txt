@@ -66,6 +66,24 @@ CIA2: <unknown>
 VICII: 6572R1 (guess)
 SID: MOS/6581/5182 
 
+Matches Machine 2 (The_Woz):
+
+Drean C64, mainboard: 1984 version (8 RAM chips, 8701 clock generator)
+
+CPU: MOS/8500 R3/5185
+CIA1: MOS/6526/4485
+CIA2: MOS/6526/4485
+VICII: 6572 R0 (ceramic)
+
+Matches Machine 3 (Thierry):
+
+Drean Commodore 64
+
+CPU: MOS/6510 CBM/4683
+CIA1: MOS/6526/4585  (U1)
+CIA2: MOS/6526A-1/0786 (U2)
+VICII: MOS/6572R0/4785 S (ceramic)
+
 
 dump8562r4.prg
 --------------
