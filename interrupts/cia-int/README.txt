@@ -40,7 +40,7 @@ CIA2: MOS/6526/3086 S (CIA-U4)
 VICII: MOS/8564R5CA  V 6/4585
 SID: <unknown>
 
-Machine 4 (the_woz):
+Machine 4 (The_Woz):
 
 Drean C64, mainboard: 1984 version (8 RAM chips, 8701 clock generator)
 
@@ -48,6 +48,15 @@ CPU: MOS/8500 R3/5185
 CIA1: MOS/6526/4485
 CIA2: MOS/6526/4485
 VICII: 6572 R0 (ceramic)
+
+Machine 5 (Thierry):
+
+Drean Commodore 64
+
+CPU: MOS/6510 CBM/4683
+CIA1: MOS/6526/4585  (U1)
+CIA2: MOS/6526A-1/0786 (U2)
+VICII: MOS/6572R0/4785 S (ceramic)
 
   CIA-INT (IRQ) R04 / TLR
 
