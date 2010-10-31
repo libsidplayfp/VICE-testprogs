@@ -376,47 +376,47 @@ ref_data:
 msg6567:
 	dc.b	"6567",0
 tab6567:
-	incbin	"dump6567.bin"
+	incbin	"dumps/dump6567.bin"
 ;---
 msg6569r1:
 	dc.b	"6569R1",0
 tab6569r1:
-	incbin	"dump6569r1.bin"
+	incbin	"dumps/dump6569r1.bin"
 ;---
 msg6569r3r4:
 	dc.b	"6569R3/R4",0
 tab6569r3r4:
-	incbin	"dump6569.bin"
+	incbin	"dumps/dump6569.bin"
 ;---
 msg6572:
 	dc.b	"6572",0
 tab6572:
-	incbin	"dump6572.bin"
+	incbin	"dumps/dump6572.bin"
 ;---
 msg8562r4:
 	dc.b	"8562R4",0
 tab8562r4:
-	incbin	"dump8562r4.bin"
+	incbin	"dumps/dump8562r4.bin"
 ;---
 msg8564:
 	dc.b	"8564",0
 tab8564:
-	incbin	"dump8564.bin"
+	incbin	"dumps/dump8564.bin"
 ;---
 msg8564r5:
 	dc.b	"8564R5",0
 tab8564r5:
-	incbin	"dump8564r5.bin"
+	incbin	"dumps/dump8564r5.bin"
 ;---
 msg8565r2:
 	dc.b	"8565R2",0
 tab8565r2:
-	incbin	"dump8565.bin"
+	incbin	"dumps/dump8565.bin"
 ;---
 msgdtv3pal:
 	dc.b	"DTV3 PAL",0
 tabdtv3pal:
-	incbin	"dumpdtv3.bin"
+	incbin	"dumps/dumpdtv3.bin"
 ;---
 
 ; eof
