@@ -21,12 +21,18 @@ SPRPOS	equ	LINE+6
 ;*
 ;******
 	org	$02
-cycle_zp:
-	ds.b	1
 test_num_zp:
 	ds.b	1
 xpos_zp:
 	ds.w	1
+bufptr_zp:
+	ds.w	1
+msbmask0_zp:
+	ds.b	1
+msbmask1_zp:
+	ds.b	1
+offs_zp:
+	ds.b	1
 
 ;**************************************************************************
 ;*
@@ -102,7 +108,7 @@ done_msg:
 	dc.b	"DONE",13,13,0
 
 result_msg:
-	dc.b	13,13,"(RESULT AT $4000-$4900)",0
+	dc.b	13,13,"(RESULT AT $4000-$5000)",0
 
 filename:
 	dc.b	"SSCRESULT"
@@ -117,31 +123,8 @@ test_prepare:
 	
 ; prepare test
 	lda	#0
-	sta	cycle_zp
 	sta	test_num_zp
-
-	lda	#0
-	sta	xpos_zp
-	sta	xpos_zp+1
-
-	lda	#%01110001
-	sta	$d015
-
-	ldx	#$fc
-	stx	$07f8
-	inx
-	stx	$07fc
-	inx
-	stx	$07fd
-	inx
-	stx	$07fe
-
-	lda	#1
-	sta	$d027
-	lda	#12
-	sta	$d027+4
-	sta	$d027+5
-	sta	$d027+6
+	jsr	setup_test
 	
 	ldx	#SPRITES_LEN&$ff
 tpr_lp2:
@@ -170,34 +153,31 @@ test_perform:
 tp_lp1:
 	inc	$d020
 	lda	sprtab,x
+tp_sm1:
+SM_SUT_YREG	equ	.+1
 	sta	$d001
+SM_SUP_YREG	equ	.+1
 	sta	$d009
-	sta	$d00b
-	sta	$d00d
 
 	lda	#0
 	ldy	xpos_zp+1
-	beq	tp_skp0
-	lda	#%01110001
-tp_skp0:
-	ldy	xpos_zp
-	sty	$d00c
-	sty	$d000
-	bne	tp_skp1
-	eor	#%00110000
+	beq	tp_skp1
+	lda	msbmask0_zp	;%00010001
 tp_skp1:
-	dey
-	sty	$d008
+	ldy	xpos_zp
+SM_SUT_XREG	equ	.+1
+	sty	$d000
 	pha
 	tya
 	sec
-	sbc	#22
+	sbc	offs_zp
 	tay
 	pla
 	bcs	tp_skp2
-	eor	#%00100000
+	eor	msbmask1_zp	;%00010000
 tp_skp2:
-	sty	$d00a
+SM_SUP_XREG	equ	.+1
+	sty	$d008
 	sta	$d010
 
 	dec	$d020
@@ -221,37 +201,117 @@ tp_lp3:
 	jsr	twelve
 ;******
 ; after measurement line
-	ldy	$d01e
-	sty	$d021
-	lda	#6
+	lda	$d01e
 	sta	$d021
+	ldy	#6
+	sty	$d021
 
-	lda	xpos_zp+1
-	ora	#>BUFFER
-	sta	tp_sm1+2
-	tya
 	ldy	xpos_zp
-tp_sm1:
-	sta	BUFFER,y
+	sta	(bufptr_zp),y
 	
 	inc	xpos_zp
 	bne	tp_skp3
-	lda	#1
-	eor	xpos_zp+1
-	sta	xpos_zp+1
+	inc	xpos_zp+1
+	inc	bufptr_zp+1
 tp_skp3:
 	
 	inx
 	cpx	#16
 	bne	tp_lp1
-	
-	
+
+	lda	xpos_zp+1
+	cmp	#2
+	bne	pt_ex1
+
+	inc	test_num_zp
+	lda	test_num_zp
+	cmp	#NUM_TESTS
+	beq	pt_ex2
+
+	jsr	setup_test
+	jmp	pt_ex1
 ; cosmetic print out
 ;	jsr	show_params
-
+pt_ex2:
+	lda	#$60
+	sta	test_perform
+	sta	test_done
 pt_ex1:
 	rts
 
+
+setup_test:
+	lda	#0
+	sta	xpos_zp
+	sta	xpos_zp+1
+
+	lda	test_num_zp
+	asl
+	adc	test_num_zp
+	asl
+	tax
+;X=test_num_zp*6
+	lda	sprmask,x
+	sta	bufptr_zp
+	lda	sprmask+1,x
+	sta	bufptr_zp+1
+	
+	lda	sprmask+3,x
+	sta	msbmask1_zp
+	ora	sprmask+2,x
+	sta	$d015
+	sta	msbmask0_zp
+
+; sprite under test
+	ldy	sprmask+4,x
+	lda	#1
+	sta	$d027,y
+	lda	#$fc
+	sta	$07f8,y
+	tya
+	asl
+	tay
+	sty	SM_SUT_XREG
+	iny
+	sty	SM_SUT_YREG
+	
+; measurement sprite
+	ldy	sprmask+5,x
+	lda	#12
+	sta	$d027,y
+	lda	#$fd
+	sta	$07f8,y
+	tya
+	asl
+	tay
+	sty	SM_SUP_XREG
+	iny
+	sty	SM_SUP_YREG
+
+	lda	#1
+	sta	offs_zp
+	rts
+
+NUM_TESTS	equ	8
+sprmask:
+	dc.w	BUFFER+$0000
+	dc.b	%00000001,%00010000,0,4
+	dc.w	BUFFER+$0200
+	dc.b	%00000010,%00100000,1,5
+	dc.w	BUFFER+$0400
+	dc.b	%00000100,%01000000,2,6
+	dc.w	BUFFER+$0600
+	dc.b	%00001000,%10000000,3,7
+	dc.w	BUFFER+$0800
+	dc.b	%00010000,%00000001,4,0
+	dc.w	BUFFER+$0a00
+	dc.b	%00100000,%00000010,5,1
+	dc.w	BUFFER+$0c00
+	dc.b	%01000000,%00000100,6,2
+	dc.w	BUFFER+$0e00
+	dc.b	%10000000,%00001000,7,3
+
+	
 SPLITPOS1	equ	SPRPOS+2
 postab1:
 	dc.b	SPLITPOS1+8*0, SPLITPOS1+8*1, SPLITPOS1+8*2, SPLITPOS1+8*3
@@ -373,7 +433,7 @@ SPRITES_LEN	equ	.-sprites
 ;******
 
 BUFFER		equ	$4000
-BUFFER_END	equ	$4900
+BUFFER_END	equ	$5000
 
 
 
