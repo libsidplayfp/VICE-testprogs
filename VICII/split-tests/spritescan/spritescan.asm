@@ -309,6 +309,7 @@ setup_test:
 	asl
 	asl
 	asl
+	asl
 	tax
 ;X=pattern_num_zp*8
 	lda	patterns+0,x
@@ -330,13 +331,13 @@ st_lp1:
 	sta	$3f80+3*2,y
 	sta	$3f80+3*10,y
 	sta	$3f80+3*18,y
-	lda	patterns+5,x
+	lda	patterns+8,x
 	sta	$3fc0+3*2,y
 	sta	$3fc0+3*10,y
 	sta	$3fc0+3*18,y
 	inx
 	iny
-	cpy	#3
+	cpy	#6
 	bne	st_lp1
 	rts
 
@@ -353,29 +354,31 @@ bittab:
 NUM_TESTS	equ	8
 sprmask:
 	dc.w	BUFFER+$0000
-	dc.b	0,1
+	dc.b	0,4
 	dc.w	BUFFER+$0200
-	dc.b	1,2
+	dc.b	1,5
 	dc.w	BUFFER+$0400
-	dc.b	2,3
+	dc.b	2,6
 	dc.w	BUFFER+$0600
-	dc.b	3,4
+	dc.b	3,7
 	dc.w	BUFFER+$0800
-	dc.b	4,5
+	dc.b	4,0
 	dc.w	BUFFER+$0a00
-	dc.b	5,6
+	dc.b	5,1
 	dc.w	BUFFER+$0c00
-	dc.b	6,7
+	dc.b	6,2
 	dc.w	BUFFER+$0e00
-	dc.b	7,0
+	dc.b	7,3
 
 NUM_PATTERNS	equ	1
 patterns:
 	dc.b	%10000001	;pattern
 	dc.b	0		;offset
-	dc.b	%10000000,%00000000,%00000000 ;SUT
-	dc.b	%10000000,%00000000,%00000000 ;SUP
-
+	dc.b	%10000000,%00000000,%00000000 ;SUT #0
+	dc.b	%10000000,%00000000,%00000000 ;SUT #1
+	dc.b	%10000000,%00000000,%00000000 ;SUP #0
+	dc.b	%10000000,%00000000,%00000000 ;SUP #1
+	dc.b	0,0 ;pad
 	
 	
 SPLITPOS1	equ	SPRPOS+2
@@ -384,7 +387,7 @@ postab1:
 	dc.b	SPLITPOS1+8*4, SPLITPOS1+8*5, SPLITPOS1+8*6, SPLITPOS1+8*7
 	dc.b	SPLITPOS1+8*8, SPLITPOS1+8*9, SPLITPOS1+8*10,SPLITPOS1+8*11
 	dc.b	SPLITPOS1+8*12,SPLITPOS1+8*13,SPLITPOS1+8*14,SPLITPOS1+8*15
-SPLITPOS2	equ	SPRPOS+4
+SPLITPOS2	equ	SPRPOS+5
 postab2:
 	dc.b	SPLITPOS2+8*0, SPLITPOS2+8*1, SPLITPOS2+8*2, SPLITPOS2+8*3
 	dc.b	SPLITPOS2+8*4, SPLITPOS2+8*5, SPLITPOS2+8*6, SPLITPOS2+8*7
