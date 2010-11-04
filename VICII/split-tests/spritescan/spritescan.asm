@@ -25,16 +25,16 @@ test_num_zp:
 	ds.b	1
 pattern_num_zp:
 	ds.b	1
-xpos_zp:
+xpos0_zp:
+	ds.w	1
+xpos1_zp:
 	ds.w	1
 bufptr_zp:
 	ds.w	1
 msbmask0_zp:
-	ds.b	1
+	ds.b	3
 msbmask1_zp:
-	ds.b	1
-offs_zp:
-	ds.b	1
+	ds.b	3
 bit_zp:
 	ds.b	1
 
@@ -166,26 +166,18 @@ SM_SUT_YREG	equ	.+1
 SM_SUP_YREG	equ	.+1
 	sta	$d009
 
-	ldy	#0
-	lda	xpos_zp+1
-	beq	tp_skp1
-	ldy	msbmask0_zp	;%00010001
-tp_skp1:
-	lda	xpos_zp
+	lda	xpos0_zp
 SM_SUT_XREG	equ	.+1
 	sta	$d000
-	sec
-	sbc	offs_zp
-	bcs	tp_skp2
-	pha
-	tya
-	eor	msbmask1_zp	;%00010000
-	tay
-	pla
-tp_skp2:
+	lda	xpos1_zp
 SM_SUP_XREG	equ	.+1
 	sta	$d008
-	sty	$d010
+
+	ldy	xpos0_zp+1
+	lda	msbmask0_zp,y
+	ldy	xpos1_zp+1
+	ora	msbmask1_zp,y
+	sta	$d010
 
 	dec	$d020
 	
@@ -209,11 +201,11 @@ tp_lp3:
 ;******
 ; after measurement line
 	lda	$d01e
-	beq	tp_skp4
+	beq	tp_skp3
 	lda	bit_zp
-tp_skp4:
+tp_skp3:
 	sta	$d021
-	ldy	xpos_zp
+	ldy	xpos0_zp
 SM_WRITEMODE	equ	.
 	ora	(bufptr_zp),y
 WM_STORE	equ	$24	; BIT <zp>
@@ -223,17 +215,24 @@ WM_OR		equ	$11	; ORA (<zp>),y
 	lda	#6
 	sta	$d021
 	
-	inc	xpos_zp
-	bne	tp_skp3
-	inc	xpos_zp+1
+	inc	xpos0_zp
+	bne	tp_skp4
+	inc	xpos0_zp+1
 	inc	bufptr_zp+1
-tp_skp3:
+tp_skp4:
+
+	inc	xpos1_zp
+	bne	tp_skp5
+	lda	#1
+	eor	xpos1_zp+1
+	sta	xpos1_zp+1
+tp_skp5:
 	
 	inx
 	cpx	#16
 	bne	tp_lp1
 
-	lda	xpos_zp+1
+	lda	xpos0_zp+1
 	cmp	#2
 	bne	pt_ex1
 
@@ -256,8 +255,10 @@ pt_ex1:
 
 setup_test:
 	lda	#0
-	sta	xpos_zp
-	sta	xpos_zp+1
+	sta	xpos0_zp
+	sta	xpos0_zp+1
+	sta	xpos1_zp
+	sta	xpos1_zp+1
 
 	lda	test_num_zp
 	asl
@@ -269,14 +270,20 @@ setup_test:
 	lda	sprmask+1,x
 	sta	bufptr_zp+1
 	
+	ldy	sprmask+2,x
+	lda	bittab,y
+	sta	msbmask0_zp+1
 	ldy	sprmask+3,x
 	lda	bittab,y
-	sta	msbmask1_zp
-	ldy	sprmask+2,x
-	ora	bittab,y
+	sta	msbmask1_zp+1
+	ora	msbmask0_zp+1
 	sta	$d015
+	lda	#0
 	sta	msbmask0_zp
-
+	sta	msbmask0_zp+2
+	sta	msbmask1_zp
+	sta	msbmask1_zp+2
+	
 ; sprite under test
 	ldy	sprmask+2,x
 	lda	#1
@@ -323,8 +330,14 @@ setup_test:
 st_skp1:
 	sta	SM_WRITEMODE
 
-	lda	patterns+1,x
-	sta	offs_zp
+	lda	xpos1_zp
+	sec
+	sbc	patterns+1,x
+	sta	xpos1_zp
+	bcs	st_skp2
+	inc	xpos1_zp+1	; (toggle msb)
+st_skp2:
+
 	ldy	#0
 st_lp1:
 	lda	patterns+2,x
