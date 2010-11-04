@@ -26,15 +26,17 @@ test_num_zp:
 pattern_num_zp:
 	ds.b	1
 xpos0_zp:
-	ds.w	1
+	ds.b	1
 xpos1_zp:
-	ds.w	1
+	ds.b	1
+xposmsb_zp:
+	ds.b	1
 bufptr_zp:
 	ds.w	1
 msbmask0_zp:
-	ds.b	3
+	ds.b	1
 msbmask1_zp:
-	ds.b	3
+	ds.b	1
 bit_zp:
 	ds.b	1
 
@@ -172,11 +174,7 @@ SM_SUT_XREG	equ	.+1
 	lda	xpos1_zp
 SM_SUP_XREG	equ	.+1
 	sta	$d008
-
-	ldy	xpos0_zp+1
-	lda	msbmask0_zp,y
-	ldy	xpos1_zp+1
-	ora	msbmask1_zp,y
+	lda	xposmsb_zp
 	sta	$d010
 
 	dec	$d020
@@ -217,23 +215,27 @@ WM_OR		equ	$11	; ORA (<zp>),y
 	
 	inc	xpos0_zp
 	bne	tp_skp4
-	inc	xpos0_zp+1
+	lda	msbmask0_zp
+	eor	xposmsb_zp
+	sta	xposmsb_zp
 	inc	bufptr_zp+1
 tp_skp4:
 
 	inc	xpos1_zp
 	bne	tp_skp5
-	lda	#1
-	eor	xpos1_zp+1
-	sta	xpos1_zp+1
+	lda	msbmask1_zp
+	eor	xposmsb_zp
+	sta	xposmsb_zp
 tp_skp5:
 	
 	inx
 	cpx	#16
 	bne	tp_lp1
 
-	lda	xpos0_zp+1
-	cmp	#2
+	lda	xpos0_zp
+	bne	pt_ex1
+	lda	xposmsb_zp
+	and	msbmask0_zp
 	bne	pt_ex1
 
 	inc	test_num_zp
@@ -256,9 +258,8 @@ pt_ex1:
 setup_test:
 	lda	#0
 	sta	xpos0_zp
-	sta	xpos0_zp+1
 	sta	xpos1_zp
-	sta	xpos1_zp+1
+	sta	xposmsb_zp
 
 	lda	test_num_zp
 	asl
@@ -272,17 +273,12 @@ setup_test:
 	
 	ldy	sprmask+2,x
 	lda	bittab,y
-	sta	msbmask0_zp+1
+	sta	msbmask0_zp
 	ldy	sprmask+3,x
 	lda	bittab,y
-	sta	msbmask1_zp+1
-	ora	msbmask0_zp+1
-	sta	$d015
-	lda	#0
-	sta	msbmask0_zp
-	sta	msbmask0_zp+2
 	sta	msbmask1_zp
-	sta	msbmask1_zp+2
+	ora	msbmask0_zp
+	sta	$d015
 	
 ; sprite under test
 	ldy	sprmask+2,x
@@ -335,7 +331,10 @@ st_skp1:
 	sbc	patterns+1,x
 	sta	xpos1_zp
 	bcs	st_skp2
-	inc	xpos1_zp+1	; (toggle msb)
+; toggle msb
+	lda	msbmask1_zp
+	eor	xposmsb_zp
+	inc	xposmsb_zp
 st_skp2:
 
 	ldy	#0
