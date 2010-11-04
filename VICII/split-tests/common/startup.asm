@@ -82,6 +82,9 @@ sa_lp2:
 	inc	$4080,x
 	dec	$4080,x
 	endif
+	ifconst	HAVE_TEST_CONTROLLER
+	jsr	test_controller
+	endif
 	ifconst	HAVE_TEST_RESULT
 	lda	test_done
 	beq	sa_lp2

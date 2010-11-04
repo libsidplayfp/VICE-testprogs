@@ -21,9 +21,7 @@ SPRPOS	equ	LINE+6
 ;*
 ;******
 	org	$02
-test_num_zp:
-	ds.b	1
-pattern_num_zp:
+enable_zp:
 	ds.b	1
 xpos0_zp:
 	ds.b	1
@@ -39,7 +37,11 @@ msbmask1_zp:
 	ds.b	1
 bit_zp:
 	ds.b	1
-
+tptr_zp:
+	ds.w	1
+offs_zp:
+	ds.b	1
+	
 ;**************************************************************************
 ;*
 ;* common startup and raster code
@@ -47,6 +49,7 @@ bit_zp:
 ;******
 HAVE_TEST_RESULT	equ	1
 ;HAVE_STABILITY_GUARD	equ	1
+HAVE_TEST_CONTROLLER	equ	1
 	include	"../common/startup.asm"
 
 	include	"../common/scandump.asm"
@@ -129,8 +132,8 @@ test_prepare:
 	
 ; prepare test
 	lda	#0
-	sta	test_num_zp
-	sta	pattern_num_zp
+	sta	enable_zp
+
 ; clear sprite area
 	ldx	#$80
 tpr_lp1:
@@ -138,10 +141,6 @@ tpr_lp1:
 	dex
 	bne	tpr_lp1
 	
-; setup the first test
-	jsr	setup_test
-
-
 ; setup initial raster line
 	lda	#$1b | (>LINE << 7)
 	sta	$d011
@@ -150,6 +149,46 @@ tpr_lp1:
 
 	rts
 
+
+;**************************************************************************
+;*
+;* NAME  test_controller
+;*
+;******
+test_controller:
+
+tc_lp1:
+	jsr	get_seq
+	asl
+	tax
+	lda	tc_tab,x
+	sta	tc_sm1+1
+	lda	tc_tab+1,x
+	sta	tc_sm1+2
+tc_sm1:
+	jsr	tc_sm1
+	jmp	tc_lp1
+
+cmd_exit:
+	pla
+	pla
+	inc	test_done
+	rts
+
+CMD_END		equ	$00
+CMD_CLEAR	equ	$01
+CMD_CLEAR_PASS	equ	$02
+CMD_PATTERN	equ	$03
+CMD_PASS	equ	$04
+CMD_ACCUMULATE	equ	$05
+tc_tab:
+	dc.w	cmd_exit
+	dc.w	cmd_clear
+	dc.w	cmd_clear_pass
+	dc.w	cmd_pattern
+	dc.w	cmd_pass
+	dc.w	cmd_accumulate
+
 	
 ;**************************************************************************
 ;*
@@ -157,6 +196,10 @@ tpr_lp1:
 ;*
 ;******
 test_perform:
+	lda	enable_zp
+	bne	tp_skp1
+	jmp	pt_ex1
+tp_skp1:
 
 	ldx	#0
 tp_lp1:
@@ -204,12 +247,8 @@ tp_lp3:
 tp_skp3:
 	sta	$d021
 	ldy	xpos0_zp
-SM_WRITEMODE	equ	.
 	ora	(bufptr_zp),y
-WM_STORE	equ	$24	; BIT <zp>
-WM_OR		equ	$11	; ORA (<zp>),y
 	sta	(bufptr_zp),y
-	sta	$d021
 	lda	#6
 	sta	$d021
 	
@@ -238,50 +277,79 @@ tp_skp5:
 	and	msbmask0_zp
 	bne	pt_ex1
 
-	inc	test_num_zp
-	lda	test_num_zp
-	cmp	#NUM_TESTS
-	beq	pt_ex2
-
-	jsr	setup_test
-	jmp	pt_ex1
-; cosmetic print out
-;	jsr	show_params
-pt_ex2:
-	lda	#$60
-	sta	test_perform
-	sta	test_done
+	lda	#0
+	sta	enable_zp
 pt_ex1:
 	rts
 
 
-setup_test:
-	lda	#0
-	sta	xpos0_zp
-	sta	xpos1_zp
-	sta	xposmsb_zp
+;**************************************************************************
+;*
+;* NAME  setup_test
+;*
+;******
+cmd_clear_pass:
+	lda	#%00000001
+	sta	bit_zp
+	lda	#<CORR_BUF
+	sta	tptr_zp
+	lda	#>CORR_BUF
+	sta	tptr_zp+1
+	jmp	ccl_common
 
-	lda	test_num_zp
-	asl
-	asl
-	tax
-;X=test_num_zp*4
-	lda	sprmask,x
-	sta	bufptr_zp
-	lda	sprmask+1,x
-	sta	bufptr_zp+1
-	
-	ldy	sprmask+2,x
+cmd_clear:
+	jsr	get_seq
+	sta	tptr_zp
+	jsr	get_seq
+	sta	tptr_zp+1
+
+ccl_common:
+	ldx	#2
+	ldy	#0
+	tya
+ccl_lp1:
+	sta	(tptr_zp),y
+	iny
+	bne	ccl_lp1
+	inc	tptr_zp+1
+	dex
+	bne	ccl_lp1
+
+	rts
+
+cmd_pattern:
+	jsr	get_seq
+	sta	offs_zp
+
+	ldy	#0
+cpt_lp1:
+	jsr	get_seq
+	sta	$3f80+3*2,y
+	sta	$3f80+3*10,y
+	sta	$3f80+3*18,y
+	iny
+	cpy	#6
+	bne	cpt_lp1
+
+	ldy	#0
+cpt_lp2:
+	jsr	get_seq
+	sta	$3fc0+3*2,y
+	sta	$3fc0+3*10,y
+	sta	$3fc0+3*18,y
+	iny
+	cpy	#6
+	bne	cpt_lp2
+
+	rts
+
+cmd_pass:
+
+; sprite under test
+	jsr	get_seq
+	tay
 	lda	bittab,y
 	sta	msbmask0_zp
-	ldy	sprmask+3,x
-	lda	bittab,y
-	sta	msbmask1_zp
-	ora	msbmask0_zp
-	sta	$d015
-	
-; sprite under test
-	ldy	sprmask+2,x
 	lda	#1
 	sta	$d027,y
 	lda	#$fe
@@ -294,7 +362,10 @@ setup_test:
 	sty	SM_SUT_YREG
 	
 ; measurement sprite
-	ldy	sprmask+3,x
+	jsr	get_seq
+	tay
+	lda	bittab,y
+	sta	msbmask1_zp
 	lda	#12
 	sta	$d027,y
 	lda	#$ff
@@ -306,52 +377,45 @@ setup_test:
 	iny
 	sty	SM_SUP_YREG
 
+; setup sprite enables
+	lda	msbmask0_zp
+	ora	msbmask1_zp
+	sta	$d015
 
-; set up specific pattern
-	lda	pattern_num_zp
-	asl
-	asl
-	asl
-	asl
-	tax
-;X=pattern_num_zp*8
-	lda	patterns+0,x
-	php
-	and	#$7f
-	sta	bit_zp
-	lda	#WM_OR
-	plp
-	bpl	st_skp1
-	lda	#WM_STORE
-st_skp1:
-	sta	SM_WRITEMODE
+; setup sprite positions
+	lda	#0
+	sta	xpos0_zp
+	sta	xpos1_zp
+	sta	xposmsb_zp
 
 	lda	xpos1_zp
 	sec
-	sbc	patterns+1,x
+	sbc	offs_zp
 	sta	xpos1_zp
 	bcs	st_skp2
 ; toggle msb
 	lda	msbmask1_zp
 	eor	xposmsb_zp
-	inc	xposmsb_zp
+	sta	xposmsb_zp
 st_skp2:
 
-	ldy	#0
+; setup pointer
+	lda	#<CORR_BUF
+	sta	bufptr_zp
+	lda	#>CORR_BUF
+	sta	bufptr_zp+1
+
+; run test
+	inc	enable_zp
 st_lp1:
-	lda	patterns+2,x
-	sta	$3f80+3*2,y
-	sta	$3f80+3*10,y
-	sta	$3f80+3*18,y
-	lda	patterns+8,x
-	sta	$3fc0+3*2,y
-	sta	$3fc0+3*10,y
-	sta	$3fc0+3*18,y
-	inx
-	iny
-	cpy	#6
+	lda	enable_zp
 	bne	st_lp1
+
+; update mask for the next pass
+	asl	bit_zp
+
 	rts
+	
 
 bittab:
 	dc.b	%00000001
@@ -363,34 +427,90 @@ bittab:
 	dc.b	%01000000
 	dc.b	%10000000
 
-NUM_TESTS	equ	8
-sprmask:
-	dc.w	BUFFER+$0000
-	dc.b	0,4
-	dc.w	BUFFER+$0200
-	dc.b	1,5
-	dc.w	BUFFER+$0400
-	dc.b	2,6
-	dc.w	BUFFER+$0600
-	dc.b	3,7
-	dc.w	BUFFER+$0800
-	dc.b	4,0
-	dc.w	BUFFER+$0a00
-	dc.b	5,1
-	dc.w	BUFFER+$0c00
-	dc.b	6,2
-	dc.w	BUFFER+$0e00
-	dc.b	7,3
+cmd_accumulate:
+	jsr	get_seq
+	sta	tptr_zp
+	jsr	get_seq
+	sta	tptr_zp+1
+	jsr	get_seq
+	sta	bit_zp
+	
+	lda	#<CORR_BUF
+	sta	bufptr_zp
+	lda	#>CORR_BUF
+	sta	bufptr_zp+1
+; accumulate result
+	ldx	#2
+	ldy	#0
+cac_lp1:
+	lda	(bufptr_zp),y
+	beq	cac_skp1
+	lda	bit_zp
+cac_skp1:
+	ora	(tptr_zp),y
+	sta	(tptr_zp),y
+	iny
+	bne	cac_lp1
+	inc	bufptr_zp+1
+	inc	tptr_zp+1
+	dex
+	bne	cac_lp1
+	
+	rts
 
-NUM_PATTERNS	equ	1
-patterns:
-	dc.b	%10000001	;pattern
+	
+get_seq:
+	inc	gs_sm1+1
+	bne	gs_skp1
+	inc	gs_sm1+2
+gs_skp1:
+gs_sm1:
+	lda	seq-1
+	rts
+
+	
+	mac	CLEAR
+	dc.b	CMD_CLEAR
+	dc.w	{1}		;BUFFER
+	endm
+	mac	CLEAR_PASS
+	dc.b	CMD_CLEAR_PASS
+	endm
+	mac	PASS
+	dc.b	CMD_PASS
+	dc.b	{1}		;SUT
+	dc.b	{2}		;SUP
+	endm
+	mac	ACCUMULATE
+	dc.b	CMD_ACCUMULATE
+	dc.w	{1}		;BUFFER
+	dc.b	{2}		;mask
+	endm
+	mac	ENDE
+	dc.b	CMD_END
+	endm
+
+seq:
+	CLEAR	BUFFER+$0000
+	dc.b	CMD_PATTERN	;PATTERN
 	dc.b	0		;offset
 	dc.b	%10000000,%00000000,%00000000 ;SUT #0
 	dc.b	%10000000,%00000000,%00000000 ;SUT #1
 	dc.b	%10000000,%00000000,%00000000 ;SUP #0
 	dc.b	%10000000,%00000000,%00000000 ;SUP #1
-	dc.b	0,0 ;pad
+	CLEAR_PASS
+	PASS	0,4
+	PASS	0,5
+	PASS	0,6
+	ACCUMULATE BUFFER+$0000,%00000001
+
+	CLEAR	BUFFER+$0200
+	CLEAR_PASS
+	PASS	1,5
+	PASS	1,6
+	PASS	1,7
+	ACCUMULATE BUFFER+$0200,%00000001
+	ENDE
 	
 	
 SPLITPOS1	equ	SPRPOS+2
@@ -418,6 +538,9 @@ sprtab:
 ;*
 ;******
 
+CORR_BUF	equ	$3000
+
+	
 BUFFER		equ	$4000
 BUFFER_END	equ	$5000
 
