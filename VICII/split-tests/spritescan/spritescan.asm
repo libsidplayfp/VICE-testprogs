@@ -23,6 +23,8 @@ SPRPOS	equ	LINE+6
 	org	$02
 test_num_zp:
 	ds.b	1
+pattern_num_zp:
+	ds.b	1
 xpos_zp:
 	ds.w	1
 bufptr_zp:
@@ -32,6 +34,8 @@ msbmask0_zp:
 msbmask1_zp:
 	ds.b	1
 offs_zp:
+	ds.b	1
+bit_zp:
 	ds.b	1
 
 ;**************************************************************************
@@ -124,14 +128,17 @@ test_prepare:
 ; prepare test
 	lda	#0
 	sta	test_num_zp
-	jsr	setup_test
-	
-	ldx	#SPRITES_LEN&$ff
-tpr_lp2:
-	lda	sprites-1,x
-	sta	$3f00-1,x
+	sta	pattern_num_zp
+; clear sprite area
+	ldx	#$80
+tpr_lp1:
+	sta	$3f80-1,x
 	dex
-	bne	tpr_lp2
+	bne	tpr_lp1
+	
+; setup the first test
+	jsr	setup_test
+
 
 ; setup initial raster line
 	lda	#$1b | (>LINE << 7)
@@ -159,26 +166,26 @@ SM_SUT_YREG	equ	.+1
 SM_SUP_YREG	equ	.+1
 	sta	$d009
 
-	lda	#0
-	ldy	xpos_zp+1
+	ldy	#0
+	lda	xpos_zp+1
 	beq	tp_skp1
-	lda	msbmask0_zp	;%00010001
+	ldy	msbmask0_zp	;%00010001
 tp_skp1:
-	ldy	xpos_zp
+	lda	xpos_zp
 SM_SUT_XREG	equ	.+1
-	sty	$d000
-	pha
-	tya
+	sta	$d000
 	sec
 	sbc	offs_zp
+	bcs	tp_skp2
+	pha
+	tya
+	eor	msbmask1_zp	;%00010000
 	tay
 	pla
-	bcs	tp_skp2
-	eor	msbmask1_zp	;%00010000
 tp_skp2:
 SM_SUP_XREG	equ	.+1
-	sty	$d008
-	sta	$d010
+	sta	$d008
+	sty	$d010
 
 	dec	$d020
 	
@@ -202,12 +209,19 @@ tp_lp3:
 ;******
 ; after measurement line
 	lda	$d01e
+	beq	tp_skp4
+	lda	bit_zp
+tp_skp4:
 	sta	$d021
-	ldy	#6
-	sty	$d021
-
 	ldy	xpos_zp
+SM_WRITEMODE	equ	.
+	ora	(bufptr_zp),y
+WM_STORE	equ	$24	; BIT <zp>
+WM_OR		equ	$11	; ORA (<zp>),y
 	sta	(bufptr_zp),y
+	sta	$d021
+	lda	#6
+	sta	$d021
 	
 	inc	xpos_zp
 	bne	tp_skp3
@@ -247,26 +261,27 @@ setup_test:
 
 	lda	test_num_zp
 	asl
-	adc	test_num_zp
 	asl
 	tax
-;X=test_num_zp*6
+;X=test_num_zp*4
 	lda	sprmask,x
 	sta	bufptr_zp
 	lda	sprmask+1,x
 	sta	bufptr_zp+1
 	
-	lda	sprmask+3,x
+	ldy	sprmask+3,x
+	lda	bittab,y
 	sta	msbmask1_zp
-	ora	sprmask+2,x
+	ldy	sprmask+2,x
+	ora	bittab,y
 	sta	$d015
 	sta	msbmask0_zp
 
 ; sprite under test
-	ldy	sprmask+4,x
+	ldy	sprmask+2,x
 	lda	#1
 	sta	$d027,y
-	lda	#$fc
+	lda	#$fe
 	sta	$07f8,y
 	tya
 	asl
@@ -276,10 +291,10 @@ setup_test:
 	sty	SM_SUT_YREG
 	
 ; measurement sprite
-	ldy	sprmask+5,x
+	ldy	sprmask+3,x
 	lda	#12
 	sta	$d027,y
-	lda	#$fd
+	lda	#$ff
 	sta	$07f8,y
 	tya
 	asl
@@ -288,29 +303,80 @@ setup_test:
 	iny
 	sty	SM_SUP_YREG
 
-	lda	#1
+
+; set up specific pattern
+	lda	pattern_num_zp
+	asl
+	asl
+	asl
+	tax
+;X=pattern_num_zp*8
+	lda	patterns+0,x
+	php
+	and	#$7f
+	sta	bit_zp
+	lda	#WM_OR
+	plp
+	bpl	st_skp1
+	lda	#WM_STORE
+st_skp1:
+	sta	SM_WRITEMODE
+
+	lda	patterns+1,x
 	sta	offs_zp
+	ldy	#0
+st_lp1:
+	lda	patterns+2,x
+	sta	$3f80+3*2,y
+	sta	$3f80+3*10,y
+	sta	$3f80+3*18,y
+	lda	patterns+5,x
+	sta	$3fc0+3*2,y
+	sta	$3fc0+3*10,y
+	sta	$3fc0+3*18,y
+	inx
+	iny
+	cpy	#3
+	bne	st_lp1
 	rts
+
+bittab:
+	dc.b	%00000001
+	dc.b	%00000010
+	dc.b	%00000100
+	dc.b	%00001000
+	dc.b	%00010000
+	dc.b	%00100000
+	dc.b	%01000000
+	dc.b	%10000000
 
 NUM_TESTS	equ	8
 sprmask:
 	dc.w	BUFFER+$0000
-	dc.b	%00000001,%00010000,0,4
+	dc.b	0,1
 	dc.w	BUFFER+$0200
-	dc.b	%00000010,%00100000,1,5
+	dc.b	1,2
 	dc.w	BUFFER+$0400
-	dc.b	%00000100,%01000000,2,6
+	dc.b	2,3
 	dc.w	BUFFER+$0600
-	dc.b	%00001000,%10000000,3,7
+	dc.b	3,4
 	dc.w	BUFFER+$0800
-	dc.b	%00010000,%00000001,4,0
+	dc.b	4,5
 	dc.w	BUFFER+$0a00
-	dc.b	%00100000,%00000010,5,1
+	dc.b	5,6
 	dc.w	BUFFER+$0c00
-	dc.b	%01000000,%00000100,6,2
+	dc.b	6,7
 	dc.w	BUFFER+$0e00
-	dc.b	%10000000,%00001000,7,3
+	dc.b	7,0
 
+NUM_PATTERNS	equ	1
+patterns:
+	dc.b	%10000001	;pattern
+	dc.b	0		;offset
+	dc.b	%10000000,%00000000,%00000000 ;SUT
+	dc.b	%10000000,%00000000,%00000000 ;SUP
+
+	
 	
 SPLITPOS1	equ	SPRPOS+2
 postab1:
@@ -331,101 +397,6 @@ sprtab:
 	dc.b	SPRPOS+8*12,   SPRPOS+8*12,   SPRPOS+8*12,   SPRPOS+8*15
 	
 
-sprites:
-
-sprite0:
-	dc.b	%00000000,%00000000,%00000000 ; 0
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%10000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ; 4
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ; 8
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%10000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ;12
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ;16
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%10000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ;20
-	dc.b	0
-sprite1:
-	dc.b	%00000000,%00000000,%00000000 ; 0
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%01000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ; 4
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ; 8
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%01000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ;12
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ;16
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%01000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ;20
-	dc.b	0
-sprite2:
-	dc.b	%00000000,%00000000,%00000000 ; 0
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%11111111,%11111111,%11111110
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ; 4
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ; 8
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%11111111,%11111111,%11111110
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ;12
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ;16
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%11111111,%11111111,%11111110
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ;20
-	dc.b	0
-sprite3:
-	dc.b	%00000000,%00000000,%00000000 ; 0
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%01111111,%11111111,%11111111
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ; 4
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ; 8
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%01111111,%11111111,%11111111
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ;12
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ;16
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%01111111,%11111111,%11111111
-	dc.b	%00000000,%00000000,%00000000
-	dc.b	%00000000,%00000000,%00000000 ;20
-	dc.b	0
-SPRITES_LEN	equ	.-sprites
 ;**************************************************************************
 ;*
 ;* NAME  ref_data
