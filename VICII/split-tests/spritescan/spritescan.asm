@@ -31,6 +31,10 @@ xposmsb_zp:
 	ds.b	1
 bufptr_zp:
 	ds.w	1
+spr0_zp:
+	ds.b	1
+spr1_zp:
+	ds.b	1
 msbmask0_zp:
 	ds.b	1
 msbmask1_zp:
@@ -45,7 +49,9 @@ tptr_zp:
 	ds.w	1
 offs_zp:
 	ds.b	1
-	
+passid_zp:
+	ds.b	1
+
 ;**************************************************************************
 ;*
 ;* common startup and raster code
@@ -72,27 +78,55 @@ test_present:
 	rts
 
 measure_msg:
-	dc.b	13,"MEASURING $DC04 AT CYCLE $00...",0
+	dc.b	13,"SCAN #.: PASS . (#.), X=$......",0
 
-	if	0
 show_params:
+; sprnum 
 	lda	$d3
 	sec
-	sbc	#20
+	sbc	#25
 	tay
-	lda	curr_reg+1
-	jsr	update_hex
-	lda	curr_reg
+	lda	spr0_zp
+	ora	#"0"
+	sta	($d1),y
+
+; pass
+	lda	$d3
+	sec
+	sbc	#17
+	tay
+	lda	passid_zp
+	and	#$3f
+	sta	($d1),y
+
+; sprnum 
+	lda	$d3
+	sec
+	sbc	#13
+	tay
+	lda	spr1_zp
+	ora	#"0"
+	sta	($d1),y
+	
+
+; coordinate
+	lda	$d3
+	sec
+	sbc	#6
+	tay
+	ldx	#"0"
+	lda	xposmsb_zp
+	and	msbmask0_zp
+	beq	sp_skp1
+	inx
+sp_skp1:
+	txa
+	sta	($d1),y
+	iny
+	lda	xpos0_zp
 	jsr	update_hex
 
-	lda	$d3
-	sec
-	sbc	#5
-	tay
-	lda	cycle_zp
-	jmp	update_hex
-;	rts
-	endif
+	rts
 	
 ;**************************************************************************
 ;*
@@ -162,7 +196,7 @@ tpr_lp1:
 test_perform:
 	lda	enable_zp
 	bne	tp_skp1
-	jmp	pt_ex1
+	rts
 tp_skp1:
 
 	ldx	#0
@@ -241,9 +275,14 @@ tp_skp5:
 	and	msbmask0_zp
 	bne	pt_ex1
 
+	dec	xpos0_zp
+	lda	msbmask0_zp
+	sta	xposmsb_zp
 	lda	#0
 	sta	enable_zp
 pt_ex1:
+	jsr	show_params
+	
 	rts
 
 
@@ -322,6 +361,7 @@ tc_tab:
 
 	mac	CLEAR_PASS
 	dc.b	CMD_CLEAR_PASS
+	dc.b	{1}		;passid
 	endm
 
 cmd_clear_pass:
@@ -331,8 +371,12 @@ cmd_clear_pass:
 	sta	tptr_zp
 	lda	#>CORR_BUF
 	sta	tptr_zp+1
-	jmp	ccl_common
+	jsr	ccl_common
+	jsr	get_seq
+	sta	passid_zp
+	rts
 
+	
 cmd_clear:
 	jsr	get_seq
 	sta	tptr_zp
@@ -408,6 +452,7 @@ cmd_pass:
 
 ; sprite under test
 	jsr	get_seq
+	sta	spr0_zp
 	tay
 	lda	bittab,y
 	sta	msbmask0_zp
@@ -424,6 +469,7 @@ cmd_pass:
 	
 ; measurement sprite
 	jsr	get_seq
+	sta	spr1_zp
 	tay
 	lda	bittab,y
 	sta	msbmask1_zp
@@ -568,7 +614,7 @@ _sup3	set	{5}
 	sprpatt	%100000000000000000000000 ;SUT #1
 	sprpatt	%100000000000000000000000 ;SUP #0
 	sprpatt	%100000000000000000000000 ;SUP #1
-	CLEAR_PASS
+	CLEAR_PASS "A"
 	PASS	_sut,_sup1
 	PASS	_sut,_sup2
 	PASS	_sut,_sup3
@@ -579,7 +625,7 @@ _sup3	set	{5}
 	sprpatt                        %100000000000000000000000 ;SUT #1
 	sprpatt %111111111111111111111110 ;SUP #0
 	sprpatt %111111111111111111111110 ;SUP #1
-	CLEAR_PASS
+	CLEAR_PASS "B"
 	PASS	_sut,_sup1
 	PASS	_sut,_sup2
 	PASS	_sut,_sup3
@@ -590,7 +636,7 @@ _sup3	set	{5}
 	sprpatt  %100000000000000000000000 ;SUT #1
 	sprpatt %001111111111111111111111 ;SUP #0
 	sprpatt %001111111111111111111111 ;SUP #1
-	CLEAR_PASS
+	CLEAR_PASS "C"
 	PASS	_sut,_sup1
 	PASS	_sut,_sup2
 	PASS	_sut,_sup3
@@ -601,7 +647,7 @@ _sup3	set	{5}
 	sprpatt %000000000000000000000001 ;SUT #1
 	sprpatt %000000000000000000000001 ;SUP #0
 	sprpatt %000000000000000000000001 ;SUP #1
-	CLEAR_PASS
+	CLEAR_PASS "D"
 	PASS	_sut,_sup1
 	PASS	_sut,_sup2
 	PASS	_sut,_sup3
