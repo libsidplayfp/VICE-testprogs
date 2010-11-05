@@ -5,12 +5,13 @@
 ;* Written by Daniel Kahlin <daniel@kahlin.net>
 ;*
 ;* DESCRIPTION
+;*   Scan for sprite coordinate related anomalies
 ;*
 ;******
 	processor 6502
 
 TEST_NAME	eqm	"SPRITESCAN"
-TEST_REVISION	eqm	"R??"
+TEST_REVISION	eqm	"R01"
 LINE	equ	48+8*7+6
 SPRPOS	equ	LINE+6
 	
@@ -155,7 +156,7 @@ done_msg:
 	dc.b	"DONE",13,13,0
 
 result_msg:
-	dc.b	13,13,"(RESULT AT $4000-$5000)",0
+	dc.b	13,13,"(RESULT AT $4F00-$6000)",0
 
 filename:
 	dc.b	"SSCRESULT"
@@ -167,6 +168,26 @@ FILENAME_LEN	equ	.-filename
 ;*
 ;******
 test_prepare:
+; setup info area
+	ldx	#0
+	txa
+tpr_lp1:
+	sta	$4f00,x
+	inx
+	bne	tpr_lp1
+
+	ldx	#IDENT_LEN
+tpr_lp2:
+	lda	ident-1,x
+	sta	$4f00-1,x
+	dex
+	bne	tpr_lp2
+	lda	cycles_per_line
+	sta	$4f00+32
+	lda	num_lines
+	sta	$4f00+33
+	lda	#1
+	sta	$4f00+34
 	
 ; prepare test
 	lda	#0
@@ -174,10 +195,10 @@ test_prepare:
 
 ; clear sprite area
 	ldx	#$80
-tpr_lp1:
+tpr_lp3:
 	sta	$3f80-1,x
 	dex
-	bne	tpr_lp1
+	bne	tpr_lp3
 	
 ; setup initial raster line
 	lda	#$1b | (>LINE << 7)
@@ -187,6 +208,9 @@ tpr_lp1:
 
 	rts
 
+ident:
+	dc.b	TEST_NAME," ",TEST_REVISION
+IDENT_LEN	equ	.-ident
 	
 ;**************************************************************************
 ;*
@@ -657,14 +681,14 @@ _sup3	set	{5}
 
 
 seq:
-	full_sprite_scan BUFFER+$0000,0,2,4,6
-	full_sprite_scan BUFFER+$0200,1,3,5,7
-	full_sprite_scan BUFFER+$0400,2,4,6,0
-	full_sprite_scan BUFFER+$0600,3,5,7,1
-	full_sprite_scan BUFFER+$0800,4,6,0,2
-	full_sprite_scan BUFFER+$0a00,5,7,1,3
-	full_sprite_scan BUFFER+$0c00,6,0,2,4
-	full_sprite_scan BUFFER+$0e00,7,1,3,5
+	full_sprite_scan BUFFER_RES+$0000,0,2,4,6
+	full_sprite_scan BUFFER_RES+$0200,1,3,5,7
+	full_sprite_scan BUFFER_RES+$0400,2,4,6,0
+	full_sprite_scan BUFFER_RES+$0600,3,5,7,1
+	full_sprite_scan BUFFER_RES+$0800,4,6,0,2
+	full_sprite_scan BUFFER_RES+$0a00,5,7,1,3
+	full_sprite_scan BUFFER_RES+$0c00,6,0,2,4
+	full_sprite_scan BUFFER_RES+$0e00,7,1,3,5
 
 	ENDE
 	
@@ -677,9 +701,10 @@ seq:
 
 CORR_BUF	equ	$3000
 
-	
-BUFFER		equ	$4000
-BUFFER_END	equ	$5000
+
+BUFFER		equ	$4f00
+BUFFER_RES	equ	$5000
+BUFFER_END	equ	$6000
 
 
 
