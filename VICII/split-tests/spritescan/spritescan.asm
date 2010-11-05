@@ -37,6 +37,10 @@ msbmask1_zp:
 	ds.b	1
 bit_zp:
 	ds.b	1
+bit2_zp:
+	ds.b	1
+polarity_zp:
+	ds.b	1
 tptr_zp:
 	ds.w	1
 offs_zp:
@@ -149,46 +153,6 @@ tpr_lp1:
 
 	rts
 
-
-;**************************************************************************
-;*
-;* NAME  test_controller
-;*
-;******
-test_controller:
-
-tc_lp1:
-	jsr	get_seq
-	asl
-	tax
-	lda	tc_tab,x
-	sta	tc_sm1+1
-	lda	tc_tab+1,x
-	sta	tc_sm1+2
-tc_sm1:
-	jsr	tc_sm1
-	jmp	tc_lp1
-
-cmd_exit:
-	pla
-	pla
-	inc	test_done
-	rts
-
-CMD_END		equ	$00
-CMD_CLEAR	equ	$01
-CMD_CLEAR_PASS	equ	$02
-CMD_PATTERN	equ	$03
-CMD_PASS	equ	$04
-CMD_ACCUMULATE	equ	$05
-tc_tab:
-	dc.w	cmd_exit
-	dc.w	cmd_clear
-	dc.w	cmd_clear_pass
-	dc.w	cmd_pattern
-	dc.w	cmd_pass
-	dc.w	cmd_accumulate
-
 	
 ;**************************************************************************
 ;*
@@ -283,11 +247,83 @@ pt_ex1:
 	rts
 
 
+	
+SPLITPOS1	equ	SPRPOS+2
+postab1:
+	dc.b	SPLITPOS1+8*0, SPLITPOS1+8*1, SPLITPOS1+8*2, SPLITPOS1+8*3
+	dc.b	SPLITPOS1+8*4, SPLITPOS1+8*5, SPLITPOS1+8*6, SPLITPOS1+8*7
+	dc.b	SPLITPOS1+8*8, SPLITPOS1+8*9, SPLITPOS1+8*10,SPLITPOS1+8*11
+	dc.b	SPLITPOS1+8*12,SPLITPOS1+8*13,SPLITPOS1+8*14,SPLITPOS1+8*15
+SPLITPOS2	equ	SPRPOS+5
+postab2:
+	dc.b	SPLITPOS2+8*0, SPLITPOS2+8*1, SPLITPOS2+8*2, SPLITPOS2+8*3
+	dc.b	SPLITPOS2+8*4, SPLITPOS2+8*5, SPLITPOS2+8*6, SPLITPOS2+8*7
+	dc.b	SPLITPOS2+8*8, SPLITPOS2+8*9, SPLITPOS2+8*10,SPLITPOS2+8*11
+	dc.b	SPLITPOS2+8*12,SPLITPOS2+8*13,SPLITPOS2+8*14,SPLITPOS2+8*15
+sprtab:
+	dc.b	SPRPOS+8*0,    SPRPOS+8*0,    SPRPOS+8*0,    SPRPOS+8*3
+	dc.b	SPRPOS+8*3,    SPRPOS+8*3,    SPRPOS+8*6,    SPRPOS+8*6
+	dc.b	SPRPOS+8*6,    SPRPOS+8*9,    SPRPOS+8*9,    SPRPOS+8*9
+	dc.b	SPRPOS+8*12,   SPRPOS+8*12,   SPRPOS+8*12,   SPRPOS+8*15
+	
+
 ;**************************************************************************
 ;*
-;* NAME  setup_test
+;* NAME  test_controller
 ;*
 ;******
+test_controller:
+
+tc_lp1:
+	jsr	get_seq
+	asl
+	tax
+	lda	tc_tab,x
+	sta	tc_sm1+1
+	lda	tc_tab+1,x
+	sta	tc_sm1+2
+tc_sm1:
+	jsr	tc_sm1
+	jmp	tc_lp1
+
+cmd_exit:
+	pla
+	pla
+	inc	test_done
+	rts
+
+CMD_END		equ	$00
+CMD_CLEAR	equ	$01
+CMD_CLEAR_PASS	equ	$02
+CMD_PATTERN	equ	$03
+CMD_PASS	equ	$04
+CMD_ACCUMULATE	equ	$05
+tc_tab:
+	dc.w	cmd_exit
+	dc.w	cmd_clear
+	dc.w	cmd_clear_pass
+	dc.w	cmd_pattern
+	dc.w	cmd_pass
+	dc.w	cmd_accumulate
+
+	mac	ENDE
+	dc.b	CMD_END
+	endm
+
+;**************************************************************************
+;*
+;* NAME  cmd_clear_pass, cmd_clear
+;*
+;******
+	mac	CLEAR
+	dc.b	CMD_CLEAR
+	dc.w	{1}		;BUFFER
+	endm
+
+	mac	CLEAR_PASS
+	dc.b	CMD_CLEAR_PASS
+	endm
+
 cmd_clear_pass:
 	lda	#%00000001
 	sta	bit_zp
@@ -317,6 +353,20 @@ ccl_lp1:
 
 	rts
 
+;**************************************************************************
+;*
+;* NAME  cmd_pattern
+;*
+;******
+	mac	PATTERN
+	dc.b	CMD_PATTERN
+	dc.b	{1}		;offset
+	endm
+
+	mac	sprpatt
+	dc.b	[{1}>>16]&$ff,[{1}>>8]&$ff,{1}&$ff
+	endm
+
 cmd_pattern:
 	jsr	get_seq
 	sta	offs_zp
@@ -342,6 +392,17 @@ cpt_lp2:
 	bne	cpt_lp2
 
 	rts
+
+;**************************************************************************
+;*
+;* NAME  cmd_pass
+;*
+;******
+	mac	PASS
+	dc.b	CMD_PASS
+	dc.b	{1}		;SUT
+	dc.b	{2}		;SUP
+	endm
 
 cmd_pass:
 
@@ -385,19 +446,14 @@ cmd_pass:
 ; setup sprite positions
 	lda	#0
 	sta	xpos0_zp
-	sta	xpos1_zp
-	sta	xposmsb_zp
-
-	lda	xpos1_zp
-	sec
-	sbc	offs_zp
-	sta	xpos1_zp
-	bcs	st_skp2
-; toggle msb
+; Acc = xposmsb
+	ldy	offs_zp
+	sty	xpos1_zp
+	bpl	st_skp2
+; sign extend toggle msb
 	lda	msbmask1_zp
-	eor	xposmsb_zp
-	sta	xposmsb_zp
 st_skp2:
+	sta	xposmsb_zp
 
 ; setup pointer
 	lda	#<CORR_BUF
@@ -427,6 +483,18 @@ bittab:
 	dc.b	%01000000
 	dc.b	%10000000
 
+;**************************************************************************
+;*
+;* NAME  cmd_accumulate
+;*
+;******
+	mac	ACCUMULATE
+	dc.b	CMD_ACCUMULATE
+	dc.w	{1}		;BUFFER
+	dc.b	{2}		;mask
+	dc.b	{3}		;polarity
+	endm
+
 cmd_accumulate:
 	jsr	get_seq
 	sta	tptr_zp
@@ -434,6 +502,12 @@ cmd_accumulate:
 	sta	tptr_zp+1
 	jsr	get_seq
 	sta	bit_zp
+	jsr	get_seq
+	sta	polarity_zp
+	beq	cac_skp1
+	lda	bit_zp
+cac_skp1:
+	sta	bit2_zp
 	
 	lda	#<CORR_BUF
 	sta	bufptr_zp
@@ -444,9 +518,11 @@ cmd_accumulate:
 	ldy	#0
 cac_lp1:
 	lda	(bufptr_zp),y
-	beq	cac_skp1
+	eor	polarity_zp
+	beq	cac_skp2
 	lda	bit_zp
-cac_skp1:
+cac_skp2:
+	eor	bit2_zp
 	ora	(tptr_zp),y
 	sta	(tptr_zp),y
 	iny
@@ -459,6 +535,11 @@ cac_skp1:
 	rts
 
 	
+;**************************************************************************
+;*
+;* NAME  get_seq
+;*
+;******
 get_seq:
 	inc	gs_sm1+1
 	bne	gs_skp1
@@ -467,69 +548,79 @@ gs_skp1:
 gs_sm1:
 	lda	seq-1
 	rts
-
 	
-	mac	CLEAR
-	dc.b	CMD_CLEAR
-	dc.w	{1}		;BUFFER
+
+;**************************************************************************
+;*
+;* NAME  test sequence
+;*
+;******
+	mac	full_sprite_scan
+_buf	set	{1}
+_sut	set	{2}
+_sup1	set	{3}
+_sup2	set	{4}
+_sup3	set	{5}
+	
+	CLEAR	_buf
+	PATTERN	0	;offset
+	sprpatt	%100000000000000000000000 ;SUT #0
+	sprpatt	%100000000000000000000000 ;SUT #1
+	sprpatt	%100000000000000000000000 ;SUP #0
+	sprpatt	%100000000000000000000000 ;SUP #1
+	CLEAR_PASS
+	PASS	_sut,_sup1
+	PASS	_sut,_sup2
+	PASS	_sut,_sup3
+	ACCUMULATE _buf,%00000001,%00000000
+
+	PATTERN	-23	;offset
+	sprpatt                        %100000000000000000000000 ;SUT #0
+	sprpatt                        %100000000000000000000000 ;SUT #1
+	sprpatt %111111111111111111111110 ;SUP #0
+	sprpatt %111111111111111111111110 ;SUP #1
+	CLEAR_PASS
+	PASS	_sut,_sup1
+	PASS	_sut,_sup2
+	PASS	_sut,_sup3
+	ACCUMULATE _buf,%00000010,%00000111
+
+	PATTERN	-1	;offset
+	sprpatt  %100000000000000000000000 ;SUT #0
+	sprpatt  %100000000000000000000000 ;SUT #1
+	sprpatt %001111111111111111111111 ;SUP #0
+	sprpatt %001111111111111111111111 ;SUP #1
+	CLEAR_PASS
+	PASS	_sut,_sup1
+	PASS	_sut,_sup2
+	PASS	_sut,_sup3
+	ACCUMULATE _buf,%00000100,%00000111
+
+	PATTERN	0	;offset
+	sprpatt %000000000000000000000001 ;SUT #0
+	sprpatt %000000000000000000000001 ;SUT #1
+	sprpatt %000000000000000000000001 ;SUP #0
+	sprpatt %000000000000000000000001 ;SUP #1
+	CLEAR_PASS
+	PASS	_sut,_sup1
+	PASS	_sut,_sup2
+	PASS	_sut,_sup3
+	ACCUMULATE _buf,%00001000,%00000000
+
 	endm
-	mac	CLEAR_PASS
-	dc.b	CMD_CLEAR_PASS
-	endm
-	mac	PASS
-	dc.b	CMD_PASS
-	dc.b	{1}		;SUT
-	dc.b	{2}		;SUP
-	endm
-	mac	ACCUMULATE
-	dc.b	CMD_ACCUMULATE
-	dc.w	{1}		;BUFFER
-	dc.b	{2}		;mask
-	endm
-	mac	ENDE
-	dc.b	CMD_END
-	endm
+
 
 seq:
-	CLEAR	BUFFER+$0000
-	dc.b	CMD_PATTERN	;PATTERN
-	dc.b	0		;offset
-	dc.b	%10000000,%00000000,%00000000 ;SUT #0
-	dc.b	%10000000,%00000000,%00000000 ;SUT #1
-	dc.b	%10000000,%00000000,%00000000 ;SUP #0
-	dc.b	%10000000,%00000000,%00000000 ;SUP #1
-	CLEAR_PASS
-	PASS	0,4
-	PASS	0,5
-	PASS	0,6
-	ACCUMULATE BUFFER+$0000,%00000001
+	full_sprite_scan BUFFER+$0000,0,2,4,6
+	full_sprite_scan BUFFER+$0200,1,3,5,7
+	full_sprite_scan BUFFER+$0400,2,4,6,0
+	full_sprite_scan BUFFER+$0600,3,5,7,1
+	full_sprite_scan BUFFER+$0800,4,6,0,2
+	full_sprite_scan BUFFER+$0a00,5,7,1,3
+	full_sprite_scan BUFFER+$0c00,6,0,2,4
+	full_sprite_scan BUFFER+$0e00,7,1,3,5
 
-	CLEAR	BUFFER+$0200
-	CLEAR_PASS
-	PASS	1,5
-	PASS	1,6
-	PASS	1,7
-	ACCUMULATE BUFFER+$0200,%00000001
 	ENDE
-	
-	
-SPLITPOS1	equ	SPRPOS+2
-postab1:
-	dc.b	SPLITPOS1+8*0, SPLITPOS1+8*1, SPLITPOS1+8*2, SPLITPOS1+8*3
-	dc.b	SPLITPOS1+8*4, SPLITPOS1+8*5, SPLITPOS1+8*6, SPLITPOS1+8*7
-	dc.b	SPLITPOS1+8*8, SPLITPOS1+8*9, SPLITPOS1+8*10,SPLITPOS1+8*11
-	dc.b	SPLITPOS1+8*12,SPLITPOS1+8*13,SPLITPOS1+8*14,SPLITPOS1+8*15
-SPLITPOS2	equ	SPRPOS+5
-postab2:
-	dc.b	SPLITPOS2+8*0, SPLITPOS2+8*1, SPLITPOS2+8*2, SPLITPOS2+8*3
-	dc.b	SPLITPOS2+8*4, SPLITPOS2+8*5, SPLITPOS2+8*6, SPLITPOS2+8*7
-	dc.b	SPLITPOS2+8*8, SPLITPOS2+8*9, SPLITPOS2+8*10,SPLITPOS2+8*11
-	dc.b	SPLITPOS2+8*12,SPLITPOS2+8*13,SPLITPOS2+8*14,SPLITPOS2+8*15
-sprtab:
-	dc.b	SPRPOS+8*0,    SPRPOS+8*0,    SPRPOS+8*0,    SPRPOS+8*3
-	dc.b	SPRPOS+8*3,    SPRPOS+8*3,    SPRPOS+8*6,    SPRPOS+8*6
-	dc.b	SPRPOS+8*6,    SPRPOS+8*9,    SPRPOS+8*9,    SPRPOS+8*9
-	dc.b	SPRPOS+8*12,   SPRPOS+8*12,   SPRPOS+8*12,   SPRPOS+8*15
 	
 
 ;**************************************************************************
