@@ -39,3 +39,63 @@ stop colliding at 0x163 and collide again at 0x18f.
 
 spritegap2.prg:
 Uses slightly different sprite pattern.
+
+
+---------------------------------------------------------------------------
+
+
+spritegap3-6569r1.prg
+---------------------
+
+Dumped on Machine 1 (tlr):
+
+C64: PAL Breadbox (silver badge)
+Ser# WG C 3264
+
+CPU:  MOS/6510 CBM/4782
+CIA1: MOS/6526/3884
+CIA2: MOS/6526R4/3583
+VICII: 6569R1 (guess)
+SID: none
+
+
+spritegap3-6569.prg
+-------------------
+
+Dumped on Machine 1 (tlr):
+
+C64: PAL Breadbox
+Ser# U.K.B 1521345
+
+CPU:  MOS/6510 CBM/3184
+CIA1: MOS/6526/3884
+CIA2: MOS/6526 R4/3283
+VICII: 6569R3 (guess)
+SID: <unknown>
+
+
+spritegap3-6572.prg
+-------------------
+
+Dumped on Machine 1 (hedning):
+
+Drean C64C (SC-136712), rev a-motherboard from 1982 (assy: 326298).
+CPU: MOS/6510/0683
+CIA1: <unknown>
+CIA2: <unknown>
+VICII: 6572R1 (guess)
+SID: MOS/6581/5182 
+
+
+spritegap2-ntsc-c128.dump
+spritegap3-ntsc-c128.dump
+-------------------------
+
+Dumped on unknown machine.
+
+spritegap3-pal-newvic.dump
+--------------------------
+
+Dumped on unknown machine. (Rubi?)
+
+---------------------------------------------------------------------------
