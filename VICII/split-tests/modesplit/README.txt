@@ -3,9 +3,8 @@ Readme for modesplit
 
 -----------------------------------------------------------------------
 
-dumps/modesplit-6569.prg
-------------------------
-
+dumps/modesplit-6569r3.prg
+--------------------------
 Dumped on Machine 1 (tlr):
 
 C64: PAL Breadbox
@@ -18,9 +17,20 @@ VICII: 6569R3 (guess)
 SID: <unknown>
 
 
-dumps/modesplit-8565.prg
-------------
+dumps/modesplit-6572.prg
+------------------------
+Dumped on Machine 1 (Thierry):
 
+Drean Commodore 64
+
+CPU: MOS/6510 CBM/4683
+CIA1: MOS/6526/4585  (U1)
+CIA2: MOS/6526A-1/0786 (U2)
+VICII: MOS/6572R0/4785 S (ceramic)
+
+
+dumps/modesplit-8565.prg
+------------------------
 Dumped on Machine 1 (Rubi):
 
 CPU: CSG/8500/3390 24
