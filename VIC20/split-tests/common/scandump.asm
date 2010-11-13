@@ -107,7 +107,7 @@ sf_skp1:
 
 	lda	#<save_to_disk_msg
 	ldy	#>save_to_disk_msg
-	jsr	$ab1e
+	jsr	$cb1e
 sf_lp1:
 	jsr	$ffe4
 	cmp	#"N"

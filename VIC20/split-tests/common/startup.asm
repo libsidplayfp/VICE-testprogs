@@ -78,13 +78,28 @@ soc_lp1:
 	cli
 	
 soc_lp2:
+	if	0
+; be evil to timing to provoke glitches
 	inx
-	txa
+	bpl	soc_lp2
+	inc	$4080,x
+	dec	$4080,x
+	endif
+	ifconst	HAVE_TEST_CONTROLLER
+	jsr	test_controller
+	endif
+	ifconst	HAVE_TEST_RESULT
+	lda	test_done
 	beq	soc_lp2
-	stx	$9400
-	lsr	$9400
-	asl	$94ff,x
+	sei
+	jsr	$fd52
+	jsr	$fdf9
+	jsr	test_result
+soc_lp3:
+	jmp	soc_lp3
+	else
 	jmp	soc_lp2
+	endif
 
 cycles_per_line:
 	dc.b	0
