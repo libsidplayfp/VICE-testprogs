@@ -91,6 +91,7 @@ test_result:
 
 	ldx	#0
 	jsr	check_guard
+	sta	BUFFER+40	; stability
 	cmp	#1
 	beq	tr_skp1
 
@@ -132,7 +133,7 @@ failed_msg:
 	dc.b	", FAILED!",13,0
 
 result_msg:
-	dc.b	13,13,"(RESULT: $1800-$1C00)",0
+	dc.b	13,13,"(RESULT: $17C0-$1C00)",0
 
 
 filename:
@@ -146,6 +147,29 @@ FILENAME_LEN	equ	.-filename
 ;******
 MEASURE_ROW	equ	21
 test_prepare:
+; setup info area
+	ldx	#HEADER_LEN
+	lda	#0
+tpr_lp1:
+	sta	BUFFER-1,x
+	dex
+	bne	tpr_lp1
+
+	ldx	#IDENT_LEN
+tpr_lp2:
+	lda	ident-1,x
+	sta	BUFFER-1,x
+	dex
+	bne	tpr_lp2
+	lda	cycles_per_line
+	sta	BUFFER+32
+	lda	num_lines
+	sta	BUFFER+33
+	lda	#1
+	sta	BUFFER+34
+
+
+; prepare the actual test
 	lda	#1
 	sta	enable_zp
 	lda	#0
@@ -156,14 +180,14 @@ test_prepare:
 ; setup measure font
 	ldx	#0
 	txa
-tpr_lp1:
+tpr_lp3:
 	sta	$1c00,x
 	sta	$1d00,x
 	inx
-	bne	tpr_lp1
+	bne	tpr_lp3
 
 	ldx	#0
-tpr_lp2:
+tpr_lp4:
 	txa
 	lsr
 	lsr
@@ -188,11 +212,11 @@ tpr_lp2:
 	adc	#8
 	tax
 	cpx	#8*22
-	bne	tpr_lp2
+	bne	tpr_lp4
 
 ; setup measure chars
 	ldx	#0
-tpr_lp3:
+tpr_lp5:
 	txa
 	clc
 	adc	#$08
@@ -201,7 +225,7 @@ tpr_lp3:
 	sta	$9400+22*MEASURE_ROW,x
 	inx
 	cpx	#22*2
-	bne	tpr_lp3
+	bne	tpr_lp5
 
 ; calculate raster line
 	lda	$9001
@@ -210,6 +234,10 @@ tpr_lp3:
 	sta	raster_line
 	
 	rts
+
+ident:
+	dc.b	TEST_NAME," ",TEST_REVISION
+IDENT_LEN	equ	.-ident
 
 ;**************************************************************************
 ;*
@@ -285,9 +313,6 @@ tp_ex1:
 
 	rts
 
-aa:
-	dc.b	0
-
 
 setup_test:
 	lda	test_num_zp
@@ -307,10 +332,10 @@ setup_test:
 	
 NUM_TESTS	equ	4
 buftab:
-	dc.w	BUFFER+$0000
-	dc.w	BUFFER+$0100
-	dc.w	BUFFER+$0200
-	dc.w	BUFFER+$0300
+	dc.w	BUFFER_RES+$0000
+	dc.w	BUFFER_RES+$0100
+	dc.w	BUFFER_RES+$0200
+	dc.w	BUFFER_RES+$0300
 regtab:
 	dc.w	$9003,$9004,$9100,$9200
 
@@ -334,7 +359,9 @@ reg_under_test	equ	.+1
 	rts
 
 
-BUFFER	equ	$1800
+HEADER_LEN	equ	$40
+BUFFER		equ	$17c0
+BUFFER_RES	equ	$1800
 BUFFER_END	equ	$1c00
 
 ; eof
