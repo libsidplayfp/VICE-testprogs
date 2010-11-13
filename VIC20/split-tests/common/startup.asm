@@ -78,9 +78,7 @@ soc_skp1:
 	dex
 ; X/Y = timer slide value
 
-	lda	$9001
-	clc
-	adc	#4*10
+	lda	raster_line
 soc_lp1:
 	cmp	$9004
 	beq	soc_lp1
@@ -131,7 +129,9 @@ adjust:
 test_done:
 	dc.b	0
 	endif
-
+raster_line:
+	dc.b	0
+	
 ;**************************************************************************
 ;*
 ;* NAME  irq_stable
@@ -154,7 +154,10 @@ is_time	equ	.+1
 	sta	$9126
 	lda	timer_stable_value+1
 	sta	$9127
+
 	jsr	test_perform
+
+	jmp	is_ex2
 
 is_ex1:
 	lda	$900f
@@ -162,6 +165,7 @@ is_ex1:
 	sta	$900f
 	eor	#$a5
 	sta	$900f
+is_ex2:
 	jmp	$eb18
 
 
