@@ -55,7 +55,7 @@ test_present:
 	rts
 
 measure_msg:
-	dc.b	13,"R=$D011,C=$00...",0
+	dc.b	13,"R=$----,C=$--...",0
 
 show_params:
 	lda	$d3
@@ -132,7 +132,7 @@ failed_msg:
 	dc.b	", FAILED!",13,0
 
 result_msg:
-	dc.b	13,13,"(RESULT AT $4000-$4500)",0
+	dc.b	13,13,"(RESULT: $1800-$1C00)",0
 
 
 filename:
@@ -144,6 +144,7 @@ FILENAME_LEN	equ	.-filename
 ;* NAME  test_prepare
 ;*
 ;******
+MEASURE_ROW	equ	21
 test_prepare:
 	lda	#1
 	sta	enable_zp
@@ -152,11 +153,62 @@ test_prepare:
 	sta	test_num_zp
 	jsr	setup_test
 
+; setup measure font
+	ldx	#0
+	txa
+tpr_lp1:
+	sta	$1c00,x
+	sta	$1d00,x
+	inx
+	bne	tpr_lp1
+
+	ldx	#0
+tpr_lp2:
+	txa
+	lsr
+	lsr
+	lsr
+	clc
+	adc	#$40
+	sta	$1c44,x
+	adc	#22
+	sta	$1c45,x
+	adc	#22
+	sta	$1c46,x
+	adc	#22
+	sta	$1c47,x
+	adc	#22
+	sta	$1c40+22*8,x
+	adc	#22
+	sta	$1c41+22*8,x
+	adc	#22
+	sta	$1c42+22*8,x
+	txa
+	clc
+	adc	#8
+	tax
+	cpx	#8*22
+	bne	tpr_lp2
+
+; setup measure chars
+	ldx	#0
+tpr_lp3:
+	txa
+	clc
+	adc	#$08
+	sta	$1c00+22*MEASURE_ROW,x
+	lda	#6
+	sta	$9400+22*MEASURE_ROW,x
+	inx
+	cpx	#22*2
+	bne	tpr_lp3
+
+; calculate raster line
 	lda	$9001
 	clc
-	adc	#4*10
+	adc	#4*MEASURE_ROW+2
 	sta	raster_line
-
+	
 	rts
 
 ;**************************************************************************
@@ -170,6 +222,11 @@ test_perform:
 	lda	enable_zp
 	beq	tp_ex1
 
+	lda	#$16
+	sta	$9002
+	lda	#$ff
+	sta	$9005
+	
 	lda	cycle_zp
 	jsr	delay
 	tax
@@ -185,7 +242,21 @@ test_perform:
 target_buf	equ	.+1
 	sta	BUFFER,x
 
+
+; wait until a fixed line
+	lda	raster_line
+	clc
+	adc	#6
+tp_lp1:
+	cmp	$9004
+	bne	tp_lp1
 	
+; restore screen and font
+	lda	#$96
+	sta	$9002
+	lda	#$f0
+	sta	$9005
+
 	ldx	#0
 	ldy	guard_zp
 	jsr	update_guard
@@ -234,13 +305,14 @@ setup_test:
 	rts
 
 	
-NUM_TESTS	equ	3
+NUM_TESTS	equ	4
 buftab:
 	dc.w	BUFFER+$0000
 	dc.w	BUFFER+$0100
 	dc.w	BUFFER+$0200
+	dc.w	BUFFER+$0300
 regtab:
-	dc.w	$9003,$9004,$9100
+	dc.w	$9003,$9004,$9100,$9100
 
 
 
@@ -263,6 +335,6 @@ reg_under_test	equ	.+1
 
 
 BUFFER	equ	$1800
-BUFFER_END	equ	$1b00
+BUFFER_END	equ	$1c00
 
 ; eof
