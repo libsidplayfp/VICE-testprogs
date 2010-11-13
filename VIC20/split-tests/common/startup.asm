@@ -59,29 +59,45 @@ startofcode:
 	sec
 	sbc	#TIMING_ADJUST
 	sta	adjust
-	
+
+; Calculate timer load value for stable point
+	lda	cycles_per_frame
+	sec
+	sbc	#2
+	sta	timer_stable_value
+	lda	cycles_per_frame+1
+	sbc	#0
+	sta	timer_stable_value+1
+
+; Calculate timer load value for slipping
+	ldy	timer_stable_value+1
+	ldx	timer_stable_value
+	bne	soc_skp1
+	dey
+soc_skp1:
+	dex
+; X/Y = timer slide value
+
 	lda	$9001
 	clc
 	adc	#4*10
 soc_lp1:
 	cmp	$9004
-	bne	soc_lp1
-	lda	cycles_per_frame
-	sec
-	sbc	#2
-	sta	$9124
-	lda	cycles_per_frame+1
-	sbc	#0
-	sta	$9125
+	beq	soc_lp1
+soc_lp2:
+	cmp	$9004
+	bne	soc_lp2
+	stx	$9124
+	sty	$9125
 	lda	#%11000000
 	sta	$912e
 	cli
 	
-soc_lp2:
+soc_lp3:
 	if	0
 ; be evil to timing to provoke glitches
 	inx
-	bpl	soc_lp2
+	bpl	soc_lp3
 	inc	$4080,x
 	dec	$4080,x
 	endif
@@ -90,15 +106,15 @@ soc_lp2:
 	endif
 	ifconst	HAVE_TEST_RESULT
 	lda	test_done
-	beq	soc_lp2
+	beq	soc_lp3
 	sei
 	jsr	$fd52
 	jsr	$fdf9
 	jsr	test_result
-soc_lp3:
-	jmp	soc_lp3
+soc_lp4:
+	jmp	soc_lp4
 	else
-	jmp	soc_lp2
+	jmp	soc_lp3
 	endif
 
 cycles_per_line:
@@ -106,6 +122,8 @@ cycles_per_line:
 num_lines:
 	dc.b	0
 cycles_per_frame:
+	dc.w	0
+timer_stable_value:
 	dc.w	0
 adjust:
 	dc.b	0
@@ -123,17 +141,27 @@ TIMING_ADJUST	equ	48
 irq_stable:
 	lda	adjust
 	sec
-	sbc	$9124
+	sbc	$9124		; ack and adjust
 	sta	is_time
 	clv
 is_time	equ	.+1
 	bvc	is_time
 	dc.b	$a2,$a2,$a2,$a2,$a2,$a2,$24,$ea
-	tax
-;	inc	$1e00,x		
-	
-	jsr	test_perform	
 
+	lda	$9003
+	bmi	is_ex1
+	lda	timer_stable_value
+	sta	$9126
+	lda	timer_stable_value+1
+	sta	$9127
+	jsr	test_perform
+
+is_ex1:
+	lda	$900f
+	eor	#$a5
+	sta	$900f
+	eor	#$a5
+	sta	$900f
 	jmp	$eb18
 
 
@@ -194,6 +222,7 @@ ct_lp5:
 	pla
 ; X = number of raster lines (LSB)
 
+twelve:
 	rts
 
 ;**************************************************************************
