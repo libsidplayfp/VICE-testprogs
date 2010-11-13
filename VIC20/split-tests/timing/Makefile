@@ -2,7 +2,7 @@
 
 all:	timing.prg
 
-timing.prg: timing.asm
+timing.prg: timing.asm ../common/scandump.asm
 	dasm $< -o$@
 
 clean:

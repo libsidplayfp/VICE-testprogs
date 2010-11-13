@@ -9,6 +9,9 @@
 ;******
 	processor 6502
 
+TEST_NAME	eqm	"TIMING"
+TEST_REVISION	eqm	"R??"
+
 	seg	code
 	org	$1001
 ;**************************************************************************
@@ -38,6 +41,7 @@ startofcode:
 	jsr	check_time
 	sta	cycles_per_line
 	stx	num_lines
+	jsr	calc_frame_time
 
 	jsr	test_present
 
@@ -114,59 +118,49 @@ ct_lp5:
 
 ;**************************************************************************
 ;*
+;* NAME  calc_frame_time
+;*   
+;* DESCRIPTION
+;*   Calculate the number of cycles per frame
+;*   
+;******
+calc_frame_time:
+	lda	#0
+	tay
+	ldx	cycles_per_line
+cft_lp1:
+	clc
+	adc	num_lines
+	bcc	cft_skp1
+	iny
+cft_skp1:
+	iny
+	dex
+	bne	cft_lp1
+	sta	cycles_per_frame
+	sty	cycles_per_frame+1
+	rts
+
+;**************************************************************************
+;*
+;* common startup and raster code
+;*
+;******
+	include	"../common/scandump.asm"
+
+
+;**************************************************************************
+;*
 ;* NAME  test_present
 ;*   
 ;******
 test_present:
-	lda	#<timing_msg
-	ldy	#>timing_msg
-	jsr	$cb1e
-	lda	#0
-	ldx	cycles_per_line
-	jsr	$ddcd
-	lda	#<cycles_line_msg
-	ldy	#>cycles_line_msg
-	jsr	$cb1e
-	lda	#1
-	ldx	num_lines
-	jsr	$ddcd
-	lda	#<lines_msg
-	ldy	#>lines_msg
-	jsr	$cb1e
+	jsr	show_info
 
-	lda	#0
-	tay
-	ldx	cycles_per_line
-tp_lp1:
-	clc
-	adc	num_lines
-	bcc	tp_skp1
-	iny
-tp_skp1:
-	iny
-	dex
-	bne	tp_lp1
-	sta	cycles_per_frame
-	sty	cycles_per_frame+1
-
-	lda	cycles_per_frame+1
-	ldx	cycles_per_frame
-	jsr	$ddcd
-	
-	lda	#<lines2_msg
-	ldy	#>lines2_msg
-	jsr	$cb1e
-	
 	rts
 
-timing_msg:
-	dc.b	147,"TIMING / TLR",13,13
-	dc.b	"L=",0
-cycles_line_msg:
-	dc.b	" R=",0
-lines_msg:
-	dc.b	" (",0
-lines2_msg:
-	dc.b	")",13,0
+
+BUFFER	equ	$1800
+BUFFER_END	equ	$1900
 
 ; eof
