@@ -34,6 +34,8 @@ startofcode:
 	lda	#$7f
 	sta	$912e
 	sta	$912d
+	sta	$911e
+	sta	$911d
 	jsr	check_time
 	sta	cycles_per_line
 	stx	num_lines
@@ -73,8 +75,6 @@ soc_lp1:
 	sta	$9125
 	lda	#%11000000
 	sta	$912e
-	lda	#%01000000
-	sta	$912b
 	cli
 	
 soc_lp2:
@@ -115,15 +115,9 @@ is_time	equ	.+1
 	bvc	is_time
 	dc.b	$a2,$a2,$a2,$a2,$a2,$a2,$24,$ea
 	tax
-	inc	$1e00,x
+;	inc	$1e00,x		
 	
-	lda	$900f
-	eor	#$f7
-	sta	$900f
-	eor	#$f7
-	sta	$900f
-	
-;	jsr	test_perform	
+	jsr	test_perform	
 
 	jmp	$eb18
 
@@ -139,8 +133,6 @@ is_time	equ	.+1
 ;*   
 ;******
 check_time:
-	lda	#%11000000
-	sta	$912e
 	lda	#%01000000
 	sta	$912b
 ;--- wait vb
@@ -248,16 +240,13 @@ sg_lp2:
 	bne	sg_lp2
 
 ; setup and start guard timer
-	if	0
-	ldx	#%00000000
-	stx	$dc0f
+	lda	#%01000000
+	sta	$911b
 	ldy	cycles_per_line
 	dey
-	sty	$dc06
-	stx	$dc07
-	lda	#%00010001
-	sta	$dc0f
-	endif
+	dey
+	sty	$9114		;T2 low order latch
+	stx	$9115		;T2 High order latch (loads and starts)
 
 	rts
 
@@ -271,6 +260,7 @@ sg_lp2:
 ;*
 ;******
 update_guard:
+	iny
 	cpy	cycles_per_line ; >= cycles_per_line
 	bcs	ug_fl1		; yes, fault!
 	tya
