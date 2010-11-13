@@ -10,7 +10,7 @@
 	processor 6502
 
 TEST_NAME	eqm	"TIMING"
-TEST_REVISION	eqm	"R??"
+TEST_REVISION	eqm	"R01"
 
 	seg.u	zp
 ;**************************************************************************
@@ -312,7 +312,7 @@ buftab:
 	dc.w	BUFFER+$0200
 	dc.w	BUFFER+$0300
 regtab:
-	dc.w	$9003,$9004,$9100,$9100
+	dc.w	$9003,$9004,$9100,$9200
 
 
 
