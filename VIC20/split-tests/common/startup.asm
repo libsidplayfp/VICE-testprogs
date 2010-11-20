@@ -83,6 +83,14 @@ soc_skp1:
 	dex
 ; X/Y = timer slide value
 
+	lda	#$30		;BMI <rel>
+	bit	raster_lsb
+	bpl	soc_skp2
+	lda	#$10		;BPL <rel>
+soc_skp2:
+	sta	SOC_SM_RASTER_LSB
+	sta	IS_SM_RASTER_LSB
+	
 	lda	raster_line
 soc_lp1:
 	cmp	$9004
@@ -90,17 +98,21 @@ soc_lp1:
 soc_lp2:
 	cmp	$9004
 	bne	soc_lp2
+soc_lp3:
+	bit	$9003
+SOC_SM_RASTER_LSB	equ	.
+	bmi	soc_lp3
 	stx	$9124
 	sty	$9125
 	lda	#%11000000
 	sta	$912e
 	cli
 	
-soc_lp3:
+soc_lp4:
 	if	0
 ; be evil to timing to provoke glitches
 	inx
-	bpl	soc_lp3
+	bpl	soc_lp4
 	inc	$4080,x
 	dec	$4080,x
 	endif
@@ -109,15 +121,15 @@ soc_lp3:
 	endif
 	ifconst	HAVE_TEST_RESULT
 	lda	test_done
-	beq	soc_lp3
+	beq	soc_lp4
 	sei
 	jsr	$fd52
 	jsr	$fdf9
 	jsr	test_result
-soc_lp4:
-	jmp	soc_lp4
+soc_lp5:
+	jmp	soc_lp5
 	else
-	jmp	soc_lp3
+	jmp	soc_lp4
 	endif
 
 cycles_per_line:
@@ -135,6 +147,8 @@ test_done:
 	dc.b	0
 	endif
 raster_line:
+	dc.b	0
+raster_lsb:
 	dc.b	0
 	
 ;**************************************************************************
@@ -154,6 +168,7 @@ is_time	equ	.+1
 	dc.b	$a2,$a2,$a2,$a2,$a2,$a2,$a2,$a2,$a2,$a2,$24,$ea
 
 	bit	$9003
+IS_SM_RASTER_LSB	equ	.
 	bmi	is_ex1
 
 	lda	timer_stable_value
