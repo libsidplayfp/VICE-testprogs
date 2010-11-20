@@ -3,6 +3,13 @@ Readme for timing
 
 -----------------------------------------------------------------------
 
+dumps/dump6560.prg (timing-r01c.prg, hardcoded NTSC timing) 
+-------------------
+Dumped on machine (vicassembly): 
+
+VIC-20: NTSC
+
+
 dumps/dump6561e.prg
 -------------------
 Dumped on machine (tlr): 
