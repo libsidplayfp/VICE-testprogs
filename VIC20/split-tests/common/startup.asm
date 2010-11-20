@@ -36,7 +36,12 @@ startofcode:
 	sta	$912d
 	sta	$911e
 	sta	$911d
+	ifconst	HARD_NTSC
+	lda	#65
+	ldx	#<261
+	else
 	jsr	check_time
+	endif
 	sta	cycles_per_line
 	stx	num_lines
 	jsr	calc_frame_time
@@ -146,10 +151,11 @@ irq_stable:
 	clv
 is_time	equ	.+1
 	bvc	is_time
-	dc.b	$a2,$a2,$a2,$a2,$a2,$a2,$24,$ea
+	dc.b	$a2,$a2,$a2,$a2,$a2,$a2,$a2,$a2,$a2,$a2,$24,$ea
 
-	lda	$9003
+	bit	$9003
 	bmi	is_ex1
+
 	lda	timer_stable_value
 	sta	$9126
 	lda	timer_stable_value+1

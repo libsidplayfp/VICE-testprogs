@@ -10,7 +10,11 @@
 	processor 6502
 
 TEST_NAME	eqm	"TIMING"
+	ifconst HARD_NTSC
+TEST_REVISION	eqm	"R01N"
+	else
 TEST_REVISION	eqm	"R01"
+	endif
 
 	seg.u	zp
 ;**************************************************************************
