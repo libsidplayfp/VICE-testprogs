@@ -19,6 +19,7 @@ VIA1: MOS/MPS 6522/4881
 VIA2: MOS/MPS 6522/4881
 VIC: MOS/6561E/4881
 
+---
 Matches machine (tlr):
 (verified with 3 successive dumps)
 
@@ -30,6 +31,16 @@ VIA1: MOS/6522/3283
 VIA2: MOS/6522/3283
 VIC: MOS/6561-101/3583
 
+---
+Matches machine (Mike):
+
+VIC-20: CR (PAL) <guess>
+Serial: <unknown>
+
+CPU: MOS/6502 B/1883
+VIA1: MOS/6522/0983
+VIA2: MOS/6522/0983
+VIC: MOS/6561-101/?  <guess>
 
 
 -----------------------------------------------------------------------
