@@ -9,6 +9,15 @@ Dumped on machine (vicassembly):
 
 VIC-20: NTSC
 
+dumps/dump6560-101.prg (timing-r01c.prg, hardcoded NTSC timing) 
+-------------------
+Dumped on machine (wilson): 
+
+VIC-20: CR (NTSC)
+Serial: P1026787
+
+VIC: MOS/6560-101 (guess)
+
 
 dumps/dump6561e.prg
 -------------------
