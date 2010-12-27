@@ -16,7 +16,10 @@ Dumped on machine (wilson):
 VIC-20: CR (NTSC)
 Serial: P1026787
 
-VIC: MOS/6560-101 (guess)
+CPU: MOS/6502 A/4682
+VIA1: MOS/6522/5082
+VIA2: MOS/6522/5082
+VIC: MOS/6560-101/4982 
 
 
 dumps/dump6561e.prg
