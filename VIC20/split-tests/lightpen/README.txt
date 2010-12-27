@@ -3,6 +3,15 @@ Readme for lightpen
 
 -----------------------------------------------------------------------
 
+dumps/dump6560.prg
+------------------
+Dumped on machine (wilson): 
+
+VIC-20: CR (NTSC)
+Serial: P1026787
+
+VIC: MOS/6560-101 (guess)
+
 
 dumps/dump6561e.prg
 -------------------
