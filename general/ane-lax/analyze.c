@@ -92,11 +92,11 @@ int main(int argc, char *argv[])
 {
     read_dump(argv[1]);
 
-    uint8_t c;
+    int c;
     int i;
     int match, found;
     found = 0;
-    for (c = 0xff; c >= 0x00; c++) {
+    for (c = 0x00; c <= 0xff; c++) {
 	for (i = 0; i < 4; i++) {
 	    match = match_ane(ane_buf + SCAN_LEN * i, ops[i], c);
 	    if (!match)
@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
 
 
     found = 0;
-    for (c = 0xff; c >= 0x00; c++) {
+    for (c = 0x00; c <= 0xff; c++) {
 	for (i = 0; i < 4; i++) {
 	    match = match_lax(lax_buf + SCAN_LEN * i, ops[i], c);
 	    if (!match)
