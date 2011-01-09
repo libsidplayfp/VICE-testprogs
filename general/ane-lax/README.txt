@@ -5,6 +5,7 @@ Readme for ane-lax
 
 dump6510_3184.prg
 -----------------
+
 Dumped on Machine (tlr):
 (four successive dumps at normal operating temperature are identical)
 (retested four successive dumps beginning with a cold start.  
@@ -19,6 +20,7 @@ CIA2: MOS/6526 R4/3283
 VICII: 6569R3 (guess)
 SID: <unknown>
 (1541U-II plugged in)
+
 
 dump8500_1588-coldstart/alresult[1-5].prg
 -----------------------------------------
@@ -41,6 +43,25 @@ VICII: MOS/8565R2/1988
 SID:  MOS/8680R5/2288
 Glue: Sharp/251715-01/8823
 (2 Mb Neoram cartridge plugged in)
+
+
+dump8500_1588-cooling/*
+-----------------------
+
+Dumped on Machine (unseen):
+(See dumps/dump8500_1588-cooling/README.txt)
+
+C64C PAL
+Assy. 250469
+
+CPU:  MOS/8500/1588
+CIA1: MOS/6526A/2088
+CIA2: MOS/6526A/2088
+VICII: MOS/8565R2/1988
+SID:  MOS/8680R5/2288
+Glue: Sharp/251715-01/8823
+(no cartridge)
+
 
 -----------------------------------------------------------------------
 eof
