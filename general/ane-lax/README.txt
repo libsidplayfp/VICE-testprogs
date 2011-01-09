@@ -40,6 +40,26 @@ VICII: 6569R1 (guess)
 SID: none
 (machine is modified with piggybacked EPROMs on ROMs and some switches)
 
+dump8500_0787-coldstart/alresult[1-5].prg
+-----------------------------------------
+Dumped on Machine (unseen):
+five successive dumps:
+- first one was directly after power up
+- second one as soon as the first finished saving
+- third 8 minutes after power up
+- fourth 13 minutes after power up
+- fifth 19 minutes after power up
+
+C64C PAL
+Assy. 250469
+
+CPU:  MOS/8500R4/0787
+CIA1: MOS/6526A/0687
+CIA2: MOS/6526A/0687
+VICII: MOS/8565R2/0787
+SID:  MOS/8680R5/0687
+Glue: MOS/251715-01/no datecode, just "S 54ZA"
+
 
 dump8500_1588-coldstart/alresult[1-5].prg
 -----------------------------------------
@@ -61,7 +81,8 @@ CIA2: MOS/6526A/2088
 VICII: MOS/8565R2/1988
 SID:  MOS/8680R5/2288
 Glue: Sharp/251715-01/8823
-(2 Mb Neoram cartridge plugged in)
+(2 Mb Neoram cartridge plugged in, machine is modified with
+piggybacked EPROM on the kernal rom)
 
 
 dump8500_1588-cooling/* & dump8500_1588-power/*
