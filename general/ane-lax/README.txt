@@ -23,7 +23,7 @@ dump8500_1588_[1-5].prg
 
 Dumped on Machine (unseen):
 (five successive dumps directly after power up)
-Unseen: "first one was cold, box was on, timestamps should be correct"
+Unseen: "first one was cold, box was kept on, timestamps should be correct"
  (00:30, 00:38, 00:42, 00:48, 00:48)
 
 C64C PAL
