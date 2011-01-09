@@ -22,6 +22,25 @@ SID: <unknown>
 (1541U-II plugged in)
 
 
+dump6510_4782-coldstart/alresult[1-5].prg
+-----------------------------------------
+Dumped on Machine (tlr):
+(five successive dumps directly after power up of a cold box, roughly 2
+ minutes between dumps)
+This machine sometime has some video glitches on char rom fetches.   
+(particularly visible on ".")
+
+C64: PAL Breadbox (silver badge)
+Ser# WG C 3264
+
+CPU:  MOS/6510 CBM/4782
+CIA1: MOS/6526/3884
+CIA2: MOS/6526R4/3583
+VICII: 6569R1 (guess)
+SID: none
+(machine is modified with piggybacked EPROMs on ROMs and some switches)
+
+
 dump8500_1588-coldstart/alresult[1-5].prg
 -----------------------------------------
 
