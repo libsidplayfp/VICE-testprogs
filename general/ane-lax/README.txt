@@ -45,11 +45,12 @@ Glue: Sharp/251715-01/8823
 (2 Mb Neoram cartridge plugged in)
 
 
-dump8500_1588-cooling/*
------------------------
+dump8500_1588-cooling/* & dump8500_1588-power/*
+-----------------------------------------------
 
 Dumped on Machine (unseen):
-(See dumps/dump8500_1588-cooling/README.txt)
+(See dumps/dump8500_1588-cooling/README.txt
+ and dumps/dump8500_1588-power/README.txt)
 
 C64C PAL
 Assy. 250469
