@@ -26,10 +26,10 @@ ff 00 ff 00  ........ *.*.....
 
 the program tests 4 cases (change with return):
 
-00 - both paddle ports selected
+00 - no paddle selected
 01 - paddle port 1 selected
 10 - paddle port 2 selected
-11 - no paddle selected
+11 - both paddle ports selected
 
 ------------------------------------------------------------------------------
 theory:
