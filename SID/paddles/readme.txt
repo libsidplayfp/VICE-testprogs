@@ -1,5 +1,13 @@
-simple paddle / SID ADC test
-----------------------------
+
+fc3test.asm - final cartridge 3 mouse detection
+-----------------------------------------------
+
+this is a copy of the mouse detection used in fc3. fc3 only calls this once at
+startup, meaning its mouse support will not work if the mouse is connected (or
+enabled in the emulation) after that.
+
+paddle.asm - simple paddle / SID ADC test
+-----------------------------------------
 
 this program tests some basic properties of the SID ADCs and the multiplexer,
 which are required for proper paddle- and mouse emulation.

@@ -13,8 +13,8 @@
 start:
 
     sei
-    lda #$35
-    sta $01
+;    lda #$35
+;    sta $01
 
     lda #6
     sta $d020
@@ -180,7 +180,7 @@ adcskp2:
     ldy #>($0400+(40*3)+13)
     jsr printbits
 
-    ; setup CIA1 to read joystick #1, port B -> port A
+    ; setup CIA1 to read joystick #2, port B -> port A
 
     lda #%11100000
     sta $dc02 ; port a ddr (all input)
