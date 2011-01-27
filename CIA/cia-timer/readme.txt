@@ -24,3 +24,15 @@ AAAA@@@@ AAAA       BBBB@@@@ BBBB
 kkkkgggg bbbb       kkkkgggg bbbb
 
 
+
+C64 tlr (2x6526):
+
+.......@abcdefgh    .......@abcdefgh  <- '.' is inverted graphics
+@@@@@@@@aaaaaaa@    @@@@@@@@bbbbbbb@
+aaaaaaaaa@@@@@@@    @bbbbbbb@@@@@@@@
+
+.......@abcdefgh    .......@abcdefgh  <- '.' is inverted graphics
+@@@@@@@@@@@@@@@@    @@@@@@@@@@@@@@@@
+@@@AAAAAa@@@@@@@    @@@BBBBBb@@@@@@@
+AAA@@@@  AAA        .BB@@@@  .BB      <- '.' is inverted '@'   
+kkkgggg  bbb        kkkgggg  bbb
