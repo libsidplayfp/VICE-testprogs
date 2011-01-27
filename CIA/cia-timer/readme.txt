@@ -11,5 +11,16 @@ cia-timer
 Results for real boxes
 ======================
 
+C64C Rubi (2x6526A):
 
-... here we go ...
+.......@abcdefgh    .......@abcdefgh
+@@@@@@@@aaaaaaa@    @@@@@@@@bbbbbbb@
+aaaaaaaaa@@@@@@@    bbbbbbbbb@@@@@@@
+
+.......@abcdefgh    .......@abcdefgh
+@@@@@@@@@@@@@@@@    @@@@@@@@@@@@@@@@
+@@@@AAAAA@@@@@@@    @@@@BBBBB@@@@@@@
+AAAA@@@@ AAAA       BBBB@@@@ BBBB   
+kkkkgggg bbbb       kkkkgggg bbbb
+
+
