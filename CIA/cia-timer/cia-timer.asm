@@ -27,11 +27,22 @@ basic:
 
 
 start:
+  lda #<greet_msg
+  ldy #>greet_msg
+  jsr $ab1e
   jsr clrscr
+
 restart:
   lda #$00
   sta $fa
 nexttest:
+  lda #$00
+  sta $dc0e
+  sta $dc0f
+  sta $dd0e
+  sta $dd0f
+  lda $dc0d
+  lda $dd0d
   ldx $fa
   lda icr,x
   sta useirc+1
@@ -39,6 +50,18 @@ nexttest:
   sta usecr+1
   lda tlow,x
   sta usetlow+1
+  lda cianr,x
+  sta usecia11+2
+  sta usecia12+2
+  sta usecia13+2
+  sta usecia14+2
+  sta usecr+2
+  sta usetlow+2
+  eor #$01
+  sta usecia21+2
+  sta usecia22+2
+  sta usecia23+2
+  sta usecia24+2
   txa
   asl
   tax
@@ -88,23 +111,24 @@ nr4:
   lda #$0e
   sta $ffff
   lda #$00
-  sta $dc0e
-  sta $dc0f
-  sta $dd0e
+  sta $fffa
+  lda #$0e
+  sta $fffb
   lda #$7f
   sta $dc0d
   sta $dd0d
 useirc:
   lda #$80
+usecia11:
   sta $dc0d
   cli
   jsr test
   inc $fa
   lda $fa
-  cmp #$04
+  cmp #$08
   bne nrst
   jmp restart
-nrst
+nrst:
   jmp nexttest
 
 
@@ -116,19 +140,24 @@ test:
   bpl test
 
   ldx #$10
-
   lda $dc0d
+  lda $dd0d
   lda #$00
   sta $dc04
   sta $dc06
+  sta $dd04
+  sta $dd06
   lda #$01
   sta $dc05
   sta $dc07
-  sta $dd04
   sta $dd05
+  sta $dd07
+usecia21:
+  inc $dd04
   lda #$11
 usecr:
   sta $dc0f
+usecia22:
   sta $dd0e
 
 lp0:
@@ -144,6 +173,7 @@ lp1:
 
   lda #$80
   sec
+usecia23:
   sbc $dd04
   jsr delay
 usetlow:
@@ -152,9 +182,11 @@ usetlow:
   sbc #$15
 output0:
   sta $0400,x
+usecia12:
   lda $dc0d
 output1:
   sta $0428,x
+usecia13:
   lda $dc0d
 output2:
   sta $0450,x
@@ -167,25 +199,23 @@ output2:
 
   .org $0e00
   pha
+usecia14:
   lda $dc0d
 output3b:
   sta $0478,x
+usecia24:
   lda $dd04
   clc
   adc #$10
 output4b:
   sta $04a0,x
   pla
+intexit:
   rti  
   
 clrscr:
   ldx #$00
 clrlp:
-  lda #$20
-  sta $0400,x
-  sta $0500,x
-  sta $0600,x
-  sta $0700,x
   lda #$01
   sta $d800,x
   sta $d900,x
@@ -212,13 +242,19 @@ smod:
 
 
 icr:
-  .byte $80,$81,$80,$82
+  .byte $80,$81,$80,$82,$80,$81,$80,$82
 
 cr:
-  .byte $0e,$0e,$0f,$0f
+  .byte $0e,$0e,$0f,$0f,$0e,$0e,$0f,$0f
 
 tlow:
-  .byte $04,$04,$06,$06
+  .byte $04,$04,$06,$06,$04,$04,$06,$06
 
+cianr:
+  .byte $dc,$dc,$dc,$dc,$dd,$dd,$dd,$dd  
+  
 out:
-  .word $0450,$0590,$0464,$05a4
+  .word $0450,$0518,$0464,$052c,$0608,$06d0,$061c,$06e4
+
+greet_msg:
+  dc.b 147,"CIA-TIMER R02 / RUBI",13,13,0

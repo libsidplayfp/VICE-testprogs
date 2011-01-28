@@ -2,16 +2,30 @@
 cia-timer
 =========
 
-- four tests using timers of CIA1 and check IRC near the timer underrun
-- tests visible on the left side use timer A, tests on the right use timer B
-- for upper tests IRQ is disabled, only the IRC is read and displayed
-- lower tests enable the timer interrupt and IRC is checked even inside the IRQ handler
+- eight tests using timers of CIA1 and check ICR near the timer underrun
+- for upper tests interrupt is disabled, only the IRC is read and displayed
+- lower tests enable the timer interrupt and IRC is checked even inside the interrupt
+  handler
+
+  CIA1TA     CIA1TB
+   ICR=0      ICR=0
+
+  CIA1TA     CIA1TB
+   ICR=1      ICR=1
+
+  CIA2TA     CIA2TB
+   ICR=0      ICR=0
+
+  CIA2TA     CIA2TB
+   ICR=1      ICR=1
 
 
 Results for real boxes
 ======================
 
 C64C Rubi (2x6526A):
+
+CIA-TIMER R02 / RUBI
 
 .......@abcdefgh    .......@abcdefgh
 @@@@@@@@aaaaaaa@    @@@@@@@@bbbbbbb@
@@ -22,6 +36,16 @@ aaaaaaaaa@@@@@@@    bbbbbbbbb@@@@@@@
 @@@@AAAAA@@@@@@@    @@@@BBBBB@@@@@@@
 AAAA@@@@ AAAA       BBBB@@@@ BBBB   
 kkkkgggg bbbb       kkkkgggg bbbb
+
+.......@abcdefgh    .......@abcdefgh
+@@@@@@@@aaaaaaa@    @@@@@@@@bbbbbbb@
+aaaaaaaaa@@@@@@@    bbbbbbbbb@@@@@@@
+
+.......@abcdefgh    .......@abcdefgh
+@@@@@@@@@@@@@@@@    @@@@@@@@@@@@@@@@
+@@@@AAAAA@@@@@@@    @@@@BBBBB@@@@@@@
+AAAA@@@@@AAAA       BBBB@@@@@BBBB   
+kkkkggggbbbbb       kkkkggggbbbbb
 
 
 
