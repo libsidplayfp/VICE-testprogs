@@ -24,6 +24,7 @@ Results for real boxes
 ======================
 
 C64C Rubi (2x6526A):
+C64C gpz (CIA1:6526A, CIA2:6526):
 
 CIA-TIMER R02 / RUBI
 
@@ -46,7 +47,6 @@ aaaaaaaaa@@@@@@@    bbbbbbbbb@@@@@@@
 @@@@AAAAA@@@@@@@    @@@@BBBBB@@@@@@@
 AAAA@@@@@AAAA       BBBB@@@@@BBBB   
 kkkkggggbbbbb       kkkkggggbbbbb
-
 
 
 C64 tlr (2x6526):

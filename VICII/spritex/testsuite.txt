@@ -49,3 +49,7 @@ Tests
 12-15:  Test for reuse of sprites after fetch; the 9-sprites-trick in Krestage3
 16-27:  Special test for bug introduced in 1.22.1 and visible in unreleased filledcube demo of Skate / Glance
 ...
+
+C64C / new VIC-II:
+
+A@AAA@@A@@@@A@@AAAAA@@@@@@AAA
