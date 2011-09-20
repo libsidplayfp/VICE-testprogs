@@ -10,5 +10,5 @@
 9 poke s2+1,130:poke s2,37
 10 poke s2+4,17:for t=1 to 200:next
 11 poke s2+4,16:for t=1 to 500:next
-12 goto 4
+12 run
 
