@@ -21,6 +21,7 @@
 ;
 
 p1		= $fb
+p2		= $fd
 
 		*= $801
 		.word sg, 2011
@@ -28,6 +29,22 @@ p1		= $fb
 sg		.word 0
 
 start
+		ldx #0
+-		txa
+		asl
+		and #14
+		sta p1
+		asl
+		asl
+		asl
+		asl
+		ora #$10
+		ora p1
+		sta const,x
+		inx
+		bne -
+		lda #11
+		sta $d011
 		ldx #0
 -		lda regs,x
 		jsr set
@@ -38,48 +55,128 @@ start
 		jsr screen
 		jsr attrib
 		sei
-		lda #11
-		sta $d011
-		ldx #13
-		lda #$00
-		jsr set
-lop
+		lda #$ff
+		sta $dc04
+		sta $dc05
 		lda #$20
 -		bit $d600
 		beq -
 -		bit $d600
 		bne -
-		ldx #13
-		lda #1
-		jsr set
-		ldx #26
-		lda #$f4
-		jsr set
-		ldy #255
-ee
-		cmp (0,x)
-		cmp (0,x)
-		cmp (0,x)
-		cmp (0,x)
-		cmp (0,x)
-		cmp (0,x)
-		cmp (0,x)
-                dey
-		bne ee
-		cmp (0,x)
-		cmp (0,x)
-		cmp (0,x)
-		cmp (0,x)
-		bit $ea
-		ldx #13
+		lda #$11
+		sta $dc0e
+		lda #$20
+-		bit $d600
+		beq -
+-		bit $d600
+		bne -
+		dec $dc0e
 		lda #0
-		jsr set
-		ldx #26
-		lda #$f2
-		jsr set
-		jmp lop
+		sec
+		sbc $dc04
+		sta p1
+		lda #0
+		sbc $dc05
+		sta p1+1
+		ldy #70
+-		dey
+                lda p1
+		sec
+		sbc #<312
+		tax
+		lda p1+1
+		sbc #>312
+		bcc +
+		sta p1+1
+		stx p1
+		bcs -
++
+		sty at+1
 
-		rts
+		ldy #0
+		ldx #255
+-		inx
+		tya
+		sec
+		sbc #<312
+		tay
+		lda p1
+		sbc #>312
+		sta p1
+		lda p1+1
+		sbc #0
+		sta p1+1
+		bcs -
+		stx p2
+
+		lda #<65476
+		sec
+		sbc $dc04
+		sta $dc04
+		lda #>65476
+		sbc $dc05
+		sta $dc05
+		lda #$20
+-		bit $d600
+		beq -
+-		bit $d600
+		bne -
+		lda #$11
+		sta $dc0e
+		lda #<irq
+		sta $314
+		lda #>irq
+		sta $315
+		bit $dc0d
+		cli
+		jmp *
+
+		.align $100
+irq
+                lda #$20
+-		bit $d600
+		bne -
+		lda #$11
+		sta $dc0e
+		cmp (0,x)
+		cmp (0,x)
+		cmp (0,x)
+		cmp (0,x)
+		cmp (0,x)
+		lda #26
+		sta $d600
+		ldx #200
+-		lda const-1,x
+		sta $d601
+		lda p1
+		clc
+		adc p2
+		sta p1
+		bcs *+2
+
+		clc
+at		bcc *+8
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		bit $ea
+		dex
+		bne -
+		jmp $ea31
 
 charset		sei
 		lda #7
@@ -100,8 +197,6 @@ lp		ldy #0
 -		lsr $01
 		lda (p1),y
 		rol $01
-		jsr set
-		jsr set
 		jsr set
 		iny
 		cpy #8
@@ -153,11 +248,13 @@ attrib
 
 		ldx #31
 
-		lda #16
+		lda #8
 		sta p1
 		ldy #0
 -		tya
+		and #$80
 		ora #15
+		jsr set
 		jsr set
 		iny
 		bne -
@@ -166,15 +263,15 @@ attrib
 		rts
 
 regs		.byte 512/8-1		;  0 horiz total
-		.byte 32		;  1 horiz display
-		.byte 52		;  2 horiz sync
+		.byte 40		;  1 horiz display
+		.byte 55		;  2 horiz sync
 		.byte $4e		;  3 sync size
-		.byte 312/24-1		;  4 vert total
-		.byte 312 // 24 +1	;  5 vert fine
-		.byte 8			;  6 vert display
-		.byte 13		;  7 vert sync
+		.byte 312/8-1		;  4 vert total
+		.byte 312 // 8		;  5 vert fine
+		.byte 25		;  6 vert display
+		.byte 33		;  7 vert sync
 		.byte 0			;  8 interlace
-		.byte 24-1		;  9 character height
+		.byte 8-1		;  9 character height
 		.byte $40		; 10 cursor start
 		.byte 31		; 11 cursor end
 		.byte >$4000		; 12 display start
@@ -190,7 +287,7 @@ regs		.byte 512/8-1		;  0 horiz total
 		.byte $89		; 22 horiz total, display stop
 		.byte 31		; 23 vertical display stop
 		.byte $00		; 24 reverse, vertical scroll
-		.byte $57		; 25 mode
+		.byte $17		; 25 mode
 		.byte $f2		; 26 fg/bg
 		.byte 0			; 27 increment
 		.byte $10		; 28 charset/ramsize
@@ -199,8 +296,8 @@ regs		.byte 512/8-1		;  0 horiz total
 		.byte 0			; 31 data
 		.byte 0			; 32 source
 		.byte 0			; 33
-		.byte 6			; 34 display begin
-		.byte 6+32+2		; 35 display end
+		.byte 3			; 34 display begin
+		.byte 6+40+5		; 35 display end
 		.byte 0			; 36 refresh
 
 set		stx $d600
@@ -208,4 +305,7 @@ set		stx $d600
 		bpl -
 		sta $d601
 		rts
-                
+
+		.align 256
+const
+

@@ -21,6 +21,7 @@
 ;
 
 p1		= $fb
+p2		= $fd
 
 		*= $801
 		.word sg, 2011
@@ -28,6 +29,24 @@ p1		= $fb
 sg		.word 0
 
 start
+		ldx #0
+-		txa
+		and #15
+		clc
+		adc #4
+		sta const,x		;const
+		txa
+		lsr
+		lsr
+		lsr
+		lsr
+		clc
+		adc #4
+		sta const2,x		;const2
+		inx
+		bne -
+		lda #11
+		sta $d011
 		ldx #0
 -		lda regs,x
 		jsr set
@@ -38,48 +57,121 @@ start
 		jsr screen
 		jsr attrib
 		sei
-		lda #11
-		sta $d011
-		ldx #13
-		lda #$00
-		jsr set
-lop
+		lda #$ff
+		sta $dc04
+		sta $dc05
 		lda #$20
 -		bit $d600
 		beq -
 -		bit $d600
 		bne -
-		ldx #13
-		lda #1
-		jsr set
-		ldx #26
-		lda #$f4
-		jsr set
-		ldy #255
-ee
-		cmp (0,x)
-		cmp (0,x)
-		cmp (0,x)
-		cmp (0,x)
-		cmp (0,x)
-		cmp (0,x)
-		cmp (0,x)
-                dey
-		bne ee
-		cmp (0,x)
-		cmp (0,x)
-		cmp (0,x)
-		cmp (0,x)
-		bit $ea
-		ldx #13
+		lda #$11
+		sta $dc0e
+		lda #$20
+-		bit $d600
+		beq -
+-		bit $d600
+		bne -
+		dec $dc0e
 		lda #0
-		jsr set
-		ldx #26
-		lda #$f2
-		jsr set
-		jmp lop
+		sec
+		sbc $dc04
+		sta p1
+		lda #0
+		sbc $dc05
+		sta p1+1
+		ldy #69
+-		dey
+                lda p1
+		sec
+		sbc #<312
+		tax
+		lda p1+1
+		sbc #>312
+		bcc +
+		sta p1+1
+		stx p1
+		bcs -
++
+		sty at+1
 
-		rts
+		ldy #0
+		ldx #255
+-		inx
+		tya
+		sec
+		sbc #<312
+		tay
+		lda p1
+		sbc #>312
+		sta p1
+		lda p1+1
+		sbc #0
+		sta p1+1
+		bcs -
+		stx p2
+
+		lda #<65476
+		sec
+		sbc $dc04
+		sta $dc04
+		lda #>65476
+		sbc $dc05
+		sta $dc05
+		lda #$20
+-		bit $d600
+		beq -
+-		bit $d600
+		bne -
+		lda #$11
+		sta $dc0e
+		lda #<irq
+		sta $314
+		lda #>irq
+		sta $315
+		bit $dc0d
+		cli
+		jmp *
+
+		.align $100
+		.page
+irq
+                lda #$20
+-		bit $d600
+		bne -
+		lda #$11
+		sta $dc0e
+		cmp (0,x)
+		cmp (0,x)
+		clc
+		ldx #0
+		stx p1+1
+-		ldx p1+1
+		lda #34
+		sta $d600
+		lda const,x
+		ldy const2,x
+		ldx #35
+		sta $d601
+		stx $d600
+		sty $d601
+		lda p1
+		adc p2
+		sta p1
+		bcs *+2
+
+		clc
+at		bcc *+8
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		lda #$a9
+		bit $ea
+		dec p1+1
+		bne -
+		jmp $ea31
+		.endp
 
 charset		sei
 		lda #7
@@ -98,10 +190,8 @@ charset		sei
 		ldx #31
 lp		ldy #0
 -		lsr $01
-		lda (p1),y
+		lda test,y
 		rol $01
-		jsr set
-		jsr set
 		jsr set
 		iny
 		cpy #8
@@ -123,6 +213,14 @@ lp		ldy #0
 		cli
 		rts
 
+test		.byte %11111111
+		.byte %10101011
+		.byte %11010101
+		.byte %10101011
+		.byte %10010101
+		.byte %10001011
+		.byte %10000101
+		.byte %11111111
 screen
 		ldx #18
 		lda #$40
@@ -153,11 +251,13 @@ attrib
 
 		ldx #31
 
-		lda #16
+		lda #8
 		sta p1
 		ldy #0
 -		tya
+		and #$80
 		ora #15
+		jsr set
 		jsr set
 		iny
 		bne -
@@ -166,16 +266,16 @@ attrib
 		rts
 
 regs		.byte 512/8-1		;  0 horiz total
-		.byte 32		;  1 horiz display
+		.byte 10		;  1 horiz display
 		.byte 52		;  2 horiz sync
 		.byte $4e		;  3 sync size
-		.byte 312/24-1		;  4 vert total
-		.byte 312 // 24 +1	;  5 vert fine
-		.byte 8			;  6 vert display
-		.byte 13		;  7 vert sync
+		.byte 312/8-1		;  4 vert total
+		.byte 312 // 8		;  5 vert fine
+		.byte 33		;  6 vert display
+		.byte 36		;  7 vert sync
 		.byte 0			;  8 interlace
-		.byte 24-1		;  9 character height
-		.byte $40		; 10 cursor start
+		.byte 8-1		;  9 character height
+		.byte $20		; 10 cursor start
 		.byte 31		; 11 cursor end
 		.byte >$4000		; 12 display start
 		.byte <$4000		; 13
@@ -187,10 +287,10 @@ regs		.byte 512/8-1		;  0 horiz total
 		.byte 0			; 19
 		.byte >$5000		; 20 attrib start
 		.byte <$5000		; 21
-		.byte $89		; 22 horiz total, display stop
+		.byte $8f		; 22 horiz total, display stop
 		.byte 31		; 23 vertical display stop
 		.byte $00		; 24 reverse, vertical scroll
-		.byte $57		; 25 mode
+		.byte $17		; 25 mode
 		.byte $f2		; 26 fg/bg
 		.byte 0			; 27 increment
 		.byte $10		; 28 charset/ramsize
@@ -200,7 +300,7 @@ regs		.byte 512/8-1		;  0 horiz total
 		.byte 0			; 32 source
 		.byte 0			; 33
 		.byte 6			; 34 display begin
-		.byte 6+32+2		; 35 display end
+		.byte 6+20+2		; 35 display end
 		.byte 0			; 36 refresh
 
 set		stx $d600
@@ -208,4 +308,9 @@ set		stx $d600
 		bpl -
 		sta $d601
 		rts
-                
+
+		.align 256
+		.fill 1
+const		.fill 256
+const2
+
