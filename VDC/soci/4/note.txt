@@ -1,0 +1,12 @@
+
+Double pixel text mode with 16x24 characters with attributes.
+64us/625 lines pal interlace timing.
+The cursor is in the top left and blinks fast.
+Every second line is blinking, even if it's looks empty or
+as a white bar on the picture or with different color,
+it's all white.
+The color bar on top is green + red flashing every other
+frame, but it's just mixed with flickering as the electron
+beam is to thick to make up individual lines.
+Attributes are applied on chars, and underline is line 7.
+This test needs a 64K VDC.
