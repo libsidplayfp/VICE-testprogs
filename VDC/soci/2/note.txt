@@ -1,0 +1,11 @@
+
+Single pixel text mode with 16x16 characters in mono.
+Exact 64us/312 lines pal timing.
+The cursor is in the top left corner inverting the top
+and bottom 4 lines of @.
+The green area is the vertical blanking. It ends at
+first line of text area and starts at first line after it.
+The raster bug has no relation to the position of horizontal
+blanking or the position of horizontal sync signal, it's
+always at the same position.
+The font is expanded using semi graphic mode.
