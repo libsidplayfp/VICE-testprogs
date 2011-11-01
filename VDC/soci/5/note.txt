@@ -1,0 +1,6 @@
+
+Single pixel text mode with 9x16 characters with attributes.
+64us/525 lines ntsc interlace timing.
+The cursor is at char 32 (space) and blinks slow.
+Text mode is 80x30. Only alternate charset attribute is applied.
+Semi graphic is enabled, but cannot trigger.
