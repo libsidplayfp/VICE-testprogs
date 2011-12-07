@@ -1,5 +1,7 @@
   processor 6502
 
+;-------------------------------------------------------------------------------
+
   .org $801
 basic:
   .word 0$      ; link to next line
@@ -25,6 +27,7 @@ basic:
 0$:
   .byte 0,0,0   ; end of BASIC program
 
+;-------------------------------------------------------------------------------
 
 start:
   lda #<greet_msg
@@ -36,6 +39,7 @@ restart:
   lda #$00
   sta $fa
 nexttest:
+  ; "clear" CIAs
   lda #$00
   sta $dc0e
   sta $dc0f
@@ -103,6 +107,7 @@ nr4:
   sty output4a+2
   sty output4b+2
 
+  ; setup irq
   sei
   lda #$35
   sta $01
@@ -122,18 +127,36 @@ useirc:
 usecia11:
   sta $dc0d
   cli
+
+  ; do test
   jsr test
+
+  ; next text or restart
   inc $fa
   lda $fa
   cmp #$08
   bne nrst
-  jmp restart
+
+  ; "clear" CIAs
+  lda #$00
+  sta $dc0e
+  sta $dc0f
+  sta $dd0e
+  sta $dd0f
+  lda $dc0d
+  lda $dd0d
+
+  jmp checkdata
+;  jmp restart
+
 nrst:
   jmp nexttest
 
 
 end:
   jmp end
+
+;-------------------------------------------------------------------------------
 
 test:
   lda $d011
@@ -196,6 +219,7 @@ output2:
 
   rts
 
+;-------------------------------------------------------------------------------
 
   .org $0e00
   pha
@@ -212,7 +236,9 @@ output4b:
   pla
 intexit:
   rti  
-  
+
+;-------------------------------------------------------------------------------
+
 clrscr:
   ldx #$00
 clrlp:
@@ -224,6 +250,9 @@ clrlp:
   inx
   bne clrlp
   rts
+
+;-------------------------------------------------------------------------------
+
   .org $1000
 delay:              ;delay 80-accu cycles, 0<=accu<=64
     lsr             ;2 cycles akku=akku/2 carry=1 if accu was odd, 0 otherwise
@@ -240,6 +269,7 @@ smod:
   .byte $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
     rts             ;6 cycles
 
+;-------------------------------------------------------------------------------
 
 icr:
   .byte $80,$81,$80,$82,$80,$81,$80,$82
@@ -257,4 +287,61 @@ out:
   .word $0450,$0518,$0464,$052c,$0608,$06d0,$061c,$06e4
 
 greet_msg:
-  dc.b 147,"CIA-TIMER R02 / RUBI",13,13,0
+    dc.b 147,"CIA-TIMER R03 / REFERENCE: "
+    if DUMP = 0
+    dc.b "OLD"
+    endif
+    if DUMP = 1
+    dc.b "NEW"
+    endif
+    dc.b " CIAS", 13,13,0
+
+;-------------------------------------------------------------------------------
+
+checkdata:
+    ldy #0
+lp
+    ldx #2
+    lda $0428,y
+    cmp data_compare+$000,y
+    bne skp1
+    ldx #5
+skp1
+    txa
+    sta $d828,y
+    ldx #2
+    lda $0528,y
+    cmp data_compare+$100,y
+    bne skp2
+    ldx #5
+skp2
+    txa
+    sta $d928,y
+    ldx #2
+    lda $0628,y
+    cmp data_compare+$200,y
+    bne skp3
+    ldx #5
+skp3
+    txa
+    sta $da28,y
+    ldx #2
+    lda $0728,y
+    cmp data_compare+$300,y
+    bne skp4
+    ldx #5
+skp4
+    txa
+    sta $db28,y
+    iny
+    bne lp
+
+  jmp restart
+
+data_compare:
+    if DUMP = 0
+    incbin "dump-oldcia.bin"
+    endif
+    if DUMP = 1
+    incbin "dump-newcia.bin"
+    endif
