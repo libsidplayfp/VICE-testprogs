@@ -1,0 +1,48 @@
+
+this is just the beginning of converting the lorenz testsuite into a format
+that can be assembled using "64tass"
+
+the org directory contains the original sourcecode and a copy of "turbo macro
+pro". to convert the sourcefiles do this:
+
+- load tmp.prg, start by sys8*4096
+- <- (arrow left) then l to load a sourcefile
+- <- (arrow left) then w to write a sourcefile in petscii format
+- convert the result to ascii using petcat
+
+some things must be manually changed since 64tass can not handle them (or its
+behaviour is not exactly like the original tass)
+
+    - the original tass evaluates expressions strictly from left to right. you
+      should double check this. sometimes you will get errors that can be solved
+      by using braces properly :)
+    - !* is used in some places to make sure the resulting address will be 16 
+      bit. its usually safe to convert it to *
+    - some test seem to abuse a bug of the original turbo assembler, which makes
+      the labels used in the first .block globally available. if you get a "not
+      defined look "jmp loop"" error move the respective label out of the .block
+
+- the original code uses the following way to wait for border area. this is not
+  very robust an unnecessary complex ....
+
+           lda $d011
+           bmi ok
+wait
+           lda $d012
+           cmp #30
+           bcs wait
+ok
+
+  ... thus replace it by the following, which is shorter (and will also work
+  for ntsc)
+
+wait
+           lda $d011
+           bpl wait
+
+--------------------------------------------------------------------------------
+unsupported pseudo ops:
+
+        .lbl (used in start.s)
+        .var (used in start.s)
+        .goto (used in start.s)
