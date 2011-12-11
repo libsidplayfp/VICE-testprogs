@@ -1,11 +1,233 @@
 
 .SILENT:
 
-# start.prg
-DISK1PROGS =
+DISK1PROGS = \
+	start.prg \
+	ldab.prg \
+	ldaz.prg \
+	ldazx.prg \
+	ldaa.prg \
+	ldaax.prg \
+	ldaay.prg \
+	ldaix.prg \
+	ldaiy.prg \
+	staz.prg \
+	stazx.prg \
+	staa.prg \
+	staax.prg \
+	staay.prg \
+	staix.prg \
+	staiy.prg \
+	ldxb.prg \
+	ldxz.prg \
+	ldxzy.prg \
+	ldxa.prg \
+	ldxay.prg \
+	stxz.prg \
+	stxzy.prg \
+	stxa.prg \
+	ldyb.prg \
+	ldyz.prg \
+	ldyzx.prg \
+	ldya.prg \
+	ldyax.prg \
+	styz.prg \
+	styzx.prg \
+	stya.prg \
+	taxn.prg \
+	tayn.prg \
+	txan.prg \
+	tyan.prg \
+	tsxn.prg \
+	txsn.prg \
+	phan.prg \
+	plan.prg \
+	phpn.prg \
+	plpn.prg \
+	inxn.prg \
+	inyn.prg \
+	dexn.prg \
+	deyn.prg \
+	incz.prg \
+	inczx.prg \
+	inca.prg \
+	incax.prg \
+	decz.prg \
+	deczx.prg \
+	deca.prg \
+	decax.prg \
+	asln.prg \
+	aslz.prg \
+	aslzx.prg \
+	asla.prg \
+	aslax.prg \
+	lsrn.prg \
+	lsrz.prg \
+	lsrzx.prg \
+	lsra.prg \
+	lsrax.prg \
+	roln.prg \
+	rolz.prg \
+	rolzx.prg \
+	rola.prg \
+	rolax.prg \
+	rorn.prg \
+	rorz.prg \
+	rorzx.prg \
+	rora.prg \
+	rorax.prg \
+	andb.prg \
+	andz.prg \
+	andzx.prg \
+	anda.prg \
+	andax.prg \
+	anday.prg \
+	andix.prg \
+	andiy.prg \
+	orab.prg \
+	oraz.prg \
+	orazx.prg \
+	oraa.prg \
+	oraax.prg \
+	oraay.prg \
+	oraix.prg \
+	oraiy.prg \
+	eorb.prg \
+	eorz.prg \
+	eorzx.prg \
+	eora.prg \
+	eorax.prg \
+	eoray.prg \
+	eorix.prg \
+	eoriy.prg \
+	clcn.prg \
+	secn.prg \
+	cldn.prg \
+	sedn.prg \
+	clin.prg \
+	sein.prg \
+	clvn.prg \
+	adcb.prg \
+	adcz.prg \
+	adczx.prg \
+	adca.prg \
+	adcax.prg \
+	adcay.prg \
+	adcix.prg \
+	adciy.prg \
+	sbcb.prg \
+	sbcz.prg \
+	sbczx.prg \
+	sbca.prg \
+	sbcax.prg \
+	sbcay.prg \
+	sbcix.prg \
+	sbciy.prg \
+	cmpb.prg \
+	cmpz.prg \
+	cmpzx.prg \
+	cmpa.prg \
+	cmpax.prg \
+	cmpay.prg \
+	cmpix.prg \
+	cmpiy.prg \
+	cpxb.prg \
+	cpxz.prg \
+	cpxa.prg \
+	cpyb.prg \
+	cpyz.prg \
+	cpya.prg \
+	bitz.prg \
+	bita.prg \
+	brkn.prg \
+	rtin.prg \
+	jsrw.prg \
+	rtsn.prg \
+	jmpw.prg \
+	jmpi.prg
+
+DISK1NEXT = beqr.prg
 
 DISK2PROGS = \
+	beqr.prg \
+	bner.prg \
+	bmir.prg \
+	bplr.prg \
+	bcsr.prg \
+	bccr.prg \
+	bvsr.prg \
+	bvcr.prg \
+	nopn.prg \
+	nopb.prg \
+	nopz.prg \
+	nopzx.prg \
+	nopa.prg \
+	nopax.prg \
+	asoz.prg \
+	asozx.prg \
+	asoa.prg \
+	asoax.prg \
+	asoay.prg \
+	asoix.prg \
+	asoiy.prg \
+	rlaz.prg \
+	rlazx.prg \
+	rlaa.prg \
+	rlaax.prg \
+	rlaay.prg \
+	rlaix.prg \
+	rlaiy.prg \
+	lsez.prg \
+	lsezx.prg \
+	lsea.prg \
+	lseax.prg \
+	lseay.prg \
+	lseix.prg \
+	lseiy.prg \
+	rraz.prg \
+	rrazx.prg \
+	rraa.prg \
+	rraax.prg \
+	rraay.prg \
+	rraix.prg \
+	rraiy.prg \
+	dcmz.prg \
+	dcmzx.prg \
+	dcma.prg \
+	dcmax.prg \
+	dcmay.prg \
+	dcmix.prg \
+	dcmiy.prg \
+	insz.prg \
+	inszx.prg \
+	insa.prg \
+	insax.prg \
+	insay.prg \
+	insix.prg \
+	insiy.prg \
+	laxz.prg \
+	laxzy.prg \
+	laxa.prg \
+	laxay.prg \
+	laxix.prg \
+	laxiy.prg \
+	axsz.prg \
+	axszy.prg \
+	axsa.prg \
+	axsix.prg \
+	alrb.prg \
+	arrb.prg \
+	aneb.prg \
+	lxab.prg \
+	sbxb.prg \
 	shaay.prg \
+	shaiy.prg \
+	shxay.prg \
+	shyax.prg \
+	shsay.prg \
+	ancb.prg \
+	lasay.prg \
+	sbcb-eb.prg \
 	trap1.prg \
 	trap2.prg \
 	trap3.prg \
@@ -23,13 +245,33 @@ DISK2PROGS = \
 	trap15.prg \
 	trap16.prg \
 	trap17.prg \
+	branchwrap.prg \
+	mmufetch.prg \
+	mmu.prg \
 	cpuport.prg \
-	irq.prg \
-	icr01.prg \
-	cia1ta.prg \
-	cia1tb.prg
+	cputiming.prg
+
+DISK2NEXT = irq.prg
 
 DISK3PROGS = \
+	irq.prg \
+	nmi.prg \
+	cia1tb123.prg \
+	cia2tb123.prg \
+	cia1pb6.prg \
+	cia1pb7.prg \
+	cia2pb6.prg \
+	cia2pb7.prg \
+	cia1tab.prg \
+	loadth.prg \
+	cnto2.prg \
+	icr01.prg \
+	imr.prg \
+	flipos.prg \
+	oneshot.prg \
+	cntdef.prg \
+	cia1ta.prg \
+	cia1tb.prg \
 	cia2ta.prg \
 	cia2tb.prg \
 	finish.prg \
@@ -37,7 +279,7 @@ DISK3PROGS = \
 	template.prg
 
 ALLPROGS = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGS)
-ALLDISKS = Disk1.d64 Disk2.d64 Disk3.d64
+ALLDISKS = Disk1.d64 Disk2.d64 Disk3.d64 Lorenz.d81
 
 ASFLAGS=-C -P -O -p -a -W -q
 
@@ -74,28 +316,44 @@ trap14.prg: trap1-15.s
 trap15.prg: trap1-15.s
 	64tass $(ASFLAGS) -D TRAP=15 -i trap1-15.s -o trap15.prg
 
-%.prg : %.s
-	64tass $(ASFLAGS) -i $*.s -o $*.prg
-#	64tass $(ASFLAGS) -i $*.s -o $*.prg
+nextdisk1.prg: nextdisk.s
+	64tass $(ASFLAGS) -D NEXT=1 -i nextdisk.s -o nextdisk1.prg
+nextdisk2.prg: nextdisk.s
+	64tass $(ASFLAGS) -D NEXT=2 -i nextdisk.s -o nextdisk2.prg
 
-Disk1.d64: $(DISK1PROGS)
+# FIXME: remove this once start.s can be assembled
+start.prg: org/Disk1.d64
+	c1541 org/Disk1.d64 -read " start" start.prg > /dev/null
+
+%.prg : %.s
+	64tass $(ASFLAGS) -i "$*.s" -o "$*.prg"
+
+Disk1.d64: $(DISK1PROGS) nextdisk1.prg
 	c1541 -format "test suite 2.15+,#1" d64 Disk1.d64 > /dev/null
 	for I in $(basename $(DISK1PROGS)); do \
 		c1541 Disk1.d64 -write "$$I.prg" "$$I" > /dev/null; \
 	done
-	c1541 Disk1.d64 -list
-Disk2.d64: $(DISK2PROGS)
+	c1541 Disk1.d64 -write "nextdisk1.prg" "$(basename $(DISK1NEXT))" > /dev/null
+#	c1541 Disk1.d64 -list
+Disk2.d64: $(DISK2PROGS) nextdisk2.prg
 	c1541 -format "test suite 2.15+,#2" d64 Disk2.d64 > /dev/null
 	for I in $(basename $(DISK2PROGS)); do \
 		c1541 Disk2.d64 -write "$$I.prg" "$$I" > /dev/null; \
 	done
-	c1541 Disk2.d64 -list
+	c1541 Disk2.d64 -write "nextdisk2.prg" "$(basename $(DISK2NEXT))" > /dev/null
+#	c1541 Disk2.d64 -list
 Disk3.d64: $(DISK3PROGS)
 	c1541 -format "test suite 2.15+,#3" d64 Disk3.d64 > /dev/null
 	for I in $(basename $(DISK3PROGS)); do \
 		c1541 Disk3.d64 -write "$$I.prg" "$$I" > /dev/null; \
 	done
-	c1541 Disk3.d64 -list
+#	c1541 Disk3.d64 -list
+Lorenz.d81: $(ALLPROGS)
+	c1541 -format "test suite 2.15+,#1" d81 Lorenz.d81 > /dev/null
+	for I in $(basename $(ALLPROGS)); do \
+		c1541 Lorenz.d81 -write "$$I.prg" "$$I" > /dev/null; \
+	done
+#	c1541 Lorenz.d81 -list
 
 clean:
 	rm -f *~
@@ -103,3 +361,4 @@ clean:
 zap: clean
 	rm -f *.prg
 	rm -f *.d64
+	rm -f *.d81

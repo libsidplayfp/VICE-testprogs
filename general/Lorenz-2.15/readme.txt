@@ -1,8 +1,4 @@
 
-disable virtual device traps for best results in VICE
-
-icr01, cia1ta, cia1tb, cia12a, cia2tb require "old" CIA
-
 ///////////////////////////////////////////////////////////////////////////////
 C64 Emulator Test Suite - Public Domain, no Copyright
 
@@ -12,20 +8,43 @@ The purpose of the C64 Emulator Test Suite is
 
 The suite are a few hundred C64 programs which check the details of the C64 they 
 are running on. The suite runs automated and stops only if it has detected an 
-error. That the suite doesn't stop on my C64-I/PAL proves that the suite has no 
+error. 
+
+"That the suite doesn't stop on my C64-I/PAL proves that the suite has no 
 bugs. That the same suite doesn't stop on an emulator proves that this 
 particular emulator is compatible to my C64 regarding every tested detail. Of 
 course, the emulator may still have bugs in parts which are not tested by the 
-suite. There may also be a difference between your C64 and my C64.
+suite. There may also be a difference between your C64 and my C64."
 
 While the Test Suite is running, the Datasette should be disconnected. Needs 
 about 80 min to complete.
 
+IMPORTANT: icr01, cia1ta, cia1tb, cia12a, cia2tb require "old" CIA and will
+           currently fail on "new" CIAs (see todo.txt)
+
+disable virtual device traps for best results in VICE
+
+///////////////////////////////////////////////////////////////////////////////
+
 The source code has been developed with MACRO(SS)ASS+ by Wolfram Roemhild. The 
 file TEMPLATE.ASM provides a starting point for adding new tests to the suite.
 
-note: the source is slowly being converted into ascii files that can be 
-      assembled using 64tass.
+note: the source has been converted into ascii files that can be assembled using 
+      64tass. (http://sourceforge.net/projects/tass64/)
+
+The converted source can be found in ./src . The original source is kept in 
+./src/org for reference, along with the original binaries of the test suite.
+
+changes from original sourcecode:
+
+  - " start" renamed to "start"
+  - "sbcb(eb)" renamed to "sbcb-eb"
+  - "branchwrap" source is broken on the available source images and was
+    recreated from a disassembly.
+  - "finish" was missing on the source images and was recreated
+  - "nextdisk" program was missing on the source images and was recreated
+  - some individual tests might be fixed/updated (see todo.txt)
+  - some individual tests output more detailed results (cia1ta)
 
 ///////////////////////////////////////////////////////////////////////////////
 Program START - some 6510 basic commands, just as an insurance
