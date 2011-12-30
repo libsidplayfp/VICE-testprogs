@@ -321,10 +321,6 @@ nextdisk1.prg: nextdisk.s
 nextdisk2.prg: nextdisk.s
 	64tass $(ASFLAGS) -D NEXT=2 -i nextdisk.s -o nextdisk2.prg
 
-# FIXME: remove this once start.s can be assembled
-start.prg: org/Disk1.d64
-	c1541 org/Disk1.d64 -read " start" start.prg > /dev/null
-
 %.prg : %.s
 	64tass $(ASFLAGS) -i "$*.s" -o "$*.prg"
 
