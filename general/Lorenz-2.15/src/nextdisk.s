@@ -24,10 +24,10 @@ wait
 
         jsr print
 name
-.if NEXT = 1
+.ifeq NEXT - 1
         .text "beqr"
 .endif
-.if NEXT = 2
+.ifeq NEXT - 2
         .text "irq"
 .endif
 namelen  = *-name

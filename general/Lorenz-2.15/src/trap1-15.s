@@ -15,105 +15,105 @@ turboass   = 780
 ; #  code  data  zd  zptr   aspect tested
 ;-----------------------------------------------------------------------------
 ; 1  2800  29C0  F7  F7/F8  basic functionality
-.if TRAP = 1
+.ifeq TRAP - 1
 code       = $2800
 data       = $29c0
 zerodata   = $f7
 zeroptr    = $f7;$f8
 .endif
 ; 2  2FFE  29C0  F7  F7/F8  4k boundary within 3 byte commands
-.if TRAP = 2
+.ifeq TRAP - 2
 code       = $2ffe
 data       = $29c0
 zerodata   = $f7
 zeroptr    = $f7;$f8
 .endif
 ; 3  2FFF  29C0  F7  F7/F8  4k boundary within 2 and 3 byte commands
-.if TRAP = 3
+.ifeq TRAP - 3
 code       = $2fff
 data       = $29c0
 zerodata   = $f7
 zeroptr    = $f7;$f8
 .endif
 ; 4  D000  29C0  F7  F7/F8  IO traps for code fetch
-.if TRAP = 4
+.ifeq TRAP - 4
 code       = $d000
 data       = $29c0
 zerodata   = $f7
 zeroptr    = $f7;$f8
 .endif
 ; 5  CFFE  29C0  F7  F7/F8  RAM/IO boundary within 3 byte commands
-.if TRAP = 5
+.ifeq TRAP - 5
 code       = $cffe
 data       = $29c0
 zerodata   = $f7
 zeroptr    = $f7;$f8
 .endif
 ; 6  CFFF  29C0  F7  F7/F8  RAM/IO boundary within 2 and 3 byte commands
-.if TRAP = 6
+.ifeq TRAP - 6
 code       = $cfff
 data       = $29c0
 zerodata   = $f7
 zeroptr    = $f7;$f8
 .endif
 ; 7  2800  D0C0  F7  F7/F8  IO traps for 16 bit data access
-.if TRAP = 7
+.ifeq TRAP - 7
 code       = $2800
 data       = $d0c0
 zerodata   = $f7
 zeroptr    = $f7;$f8
 .endif
 ; 8  2800  D000  F7  F7/F8  IO trap adjustment in ax, ay and iy addressing
-.if TRAP = 8
+.ifeq TRAP - 8
 code       = $2800
 data       = $d000
 zerodata   = $f7
 zeroptr    = $f7;$f8
 .endif
 ; 9  2800  29C0  02  F7/F8  wrap around in zx and zy addressing
-.if TRAP = 9
+.ifeq TRAP - 9
 code       = $2800
 data       = $29c0
 zerodata   = $02
 zeroptr    = $f7;$f8
 .endif
 ;10  2800  29C0  00  F7/F8  IO traps for 8 bit data access
-.if TRAP = 10
+.ifeq TRAP - 10
 code       = $2800
 data       = $29c0
 zerodata   = $00
 zeroptr    = $f7;$f8
 .endif
 ;11  2800  29C0  F7  02/03  wrap around in ix addressing
-.if TRAP = 11
+.ifeq TRAP - 11
 code       = $2800
 data       = $29c0
 zerodata   = $f7
 zeroptr    = $02;$03
 .endif
 ;12  2800  29C0  F7  FF/00  wrap around and IO trap for pointer accesses
-.if TRAP = 12
+.ifeq TRAP - 12
 code       = $2800
 data       = $29c0
 zerodata   = $f7
 zeroptr    = $ff;$00
 .endif
 ;13  2800  0002  F7  F7/F8  64k wrap around in ax, ay and iy addressing
-.if TRAP = 13
+.ifeq TRAP - 13
 code       = $2800
 data       = $0002
 zerodata   = $f7
 zeroptr    = $f7;$f8
 .endif
 ;14  2800  0000  F7  F7/F8  64k wrap around plus IO trap
-.if TRAP = 14
+.ifeq TRAP - 14
 code       = $2800
 data       = $0000
 zerodata   = $f7
 zeroptr    = $f7;$f8
 .endif
 ;15  CFFF  D0C6  00  FF/00  1-14 all together as a stress test
-.if TRAP = 15
+.ifeq TRAP - 15
 code       = $cfff
 data       = $d0c6
 zerodata   = $00
@@ -140,7 +140,7 @@ main
            jsr print
            .byte 13
            .text "{up}trap"
-           .if TRAP < 10
+           .ifmi TRAP - 10
            .byte $30 + TRAP
            .else
            .byte $31
@@ -321,7 +321,7 @@ load
            sta 0
            jsr print
 name       .text "trap"
-           .if TRAP < 9
+           .ifmi TRAP - 9
            .byte $31 + TRAP
            .else
            .byte $31
