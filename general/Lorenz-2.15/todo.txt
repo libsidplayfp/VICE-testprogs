@@ -34,13 +34,6 @@ wait
 individual TODOs:
 --------------------------------------------------------------------------------
 
-start.s:
-
-    - cant be assembled using 64tass right now because of missing directives:
-        .lbl
-        .var
-        .goto
-
 aneb.s
     - add detection for the ANE "magic constant" and fix test accordingly
 trap1-15.s
