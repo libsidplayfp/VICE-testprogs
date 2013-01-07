@@ -431,6 +431,5 @@ The code used for this test is as follows:
 	rts
 
 
-In the future the difference between the 6510 and 8500, and the difference between the 7501 and 8501 might be determined by the rate of $01
-unused bits drop-off when more information is known.
- 
+In the future the difference between the 6510 and 8500 might be determined by the rate of $01 unused bits drop-off when more information is known.
+How to determine the difference between the 7501 and 8501 is currently unknown.
