@@ -1,0 +1,52 @@
+40 columns mode test for VDC.
+
+Note,this program produces a slightly unstable picture on my capture card,
+so sync values might not be perfect, but shouldn't affect emulation.
+
+
+What's it to?
+
+Changes VDC registers as follows:
+
+$19 = $57 Enable double pixel mode by setting bit 4 (other bits default)
+Quote from "Mapping the commodore 128" p450-451:
+Bit 4: This bit controls the VDC's pixel double feature. While
+this bit is %0, pixels will be their normal size. Setting this bit
+to %1 will double the size of all horizontal screen pixels. Since
+each pixel is twice as large, there will be room for only half as
+many on the screen. Thus, you must reduce the values in the
+horizontal screen width registers (0-2/$00-$02) to half their
+normal values.
+
+Halve the registers mentioned above:
+$00 = $3f Halve total number of horizontal character positions
+(full raster width including borders/sync) from 126 (default) to 63
+$01 = $28 Halve active horizontal character positions (active screen size) from 80 (default) to 40
+$02 = $35 Halve (roughly) horizontal sync position from 102 to 53
+
+Misc:
+$03 = $49 (Don't know exactly, this is the default value for sync width)
+$16 = $89 Increase character width from 8 to 9 (why??)
+$1b = $28 Address increment per row to 40 (from 80) to match screen width
+
+Then set zero page $e7 to $27 (39) so basic thinks you have 40 columns.
+
+End
+
+
+
+(C:$0b29) d 0b00 0b40
+.C:0b00  A0 00       LDY #$00
+.C:0b02  B9 16 0B    LDA $0B16,Y
+.C:0b05  C8          INY
+.C:0b06  BE 16 0B    LDX $0B16,Y
+.C:0b09  C8          INY
+.C:0b0a  20 CC CD    JSR $CDCC
+.C:0b0d  C0 0E       CPY #$0E
+.C:0b0f  D0 F1       BNE $0B02
+.C:0b11  A9 27       LDA #$27
+.C:0b13  85 E7       STA $E7
+.C:0b15  60          RTS
+
+(C:$0b44) m 0b16
+>C:0b16  3f 00 28 01  35 02 49 03  89 16 57 19  28 1b 0d 0d  0d 0d 0d 0d   ?.(.5.I...W.(.......
