@@ -44,6 +44,8 @@ nextconfig
            sta abackup+0
            sta abackup+1
            sta laststate
+
+           ; push config<<1,config<<2,..,config<<7
            ldx #8
            lda config
 push
@@ -51,6 +53,8 @@ push
            php
            dex
            bne push
+
+           ; write 0,1 0,1 0,1
            ldx #4
 pull
            pla
@@ -62,18 +66,18 @@ pull
            sta 0,y
            sta abackup,y
 
-;inputs: keep last state
+           ;inputs: keep last state
            lda abackup+0
            eor #$ff
            and laststate
            sta or1+1
-;outputs: set new state
+           ;outputs: set new state
            lda abackup+0
            and abackup+1
 or1        ora #$11
            sta laststate
 
-;delay for larger capacitives
+           ;delay for larger capacitives
            ldy #0
 delay
            iny
@@ -82,6 +86,7 @@ delay
            dex
            bne pull
 
+           ; value in $00 should not have changed
            lda abackup+0
            cmp 0
            bne error
@@ -95,7 +100,7 @@ delay
            and #$c8
 or2        ora #$11
 
-;bit 5 is drawn low if input
+           ;bit 5 is drawn low if input
            tax
            lda #$20
            bit abackup+0
