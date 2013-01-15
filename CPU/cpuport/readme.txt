@@ -33,7 +33,7 @@ b) unused bits of $01 are also implemented and working. when a bit is
 delay times:
 ------------
 
-~$30000 == ~200000ms (gpz, new C64)
+$30000...$24000 == ~200000us (gpz, new C64)
 
 some other things that depend on correct behavior:
 --------------------------------------------------
