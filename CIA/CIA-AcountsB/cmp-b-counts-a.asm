@@ -1,7 +1,3 @@
-; Select the video timing (processor clock cycles per raster line)
-;CYCLES = 65     ; 6567R8 and above, NTSC-M
-;CYCLES = 64    ; 6567R5 6A, NTSC-M
-CYCLES = 63    ; 6569 (all revisions), PAL-B
 
 cinv = $314
 cnmi = $318
@@ -43,7 +39,9 @@ skipinit:
   lda $dc0d     ; acknowledge CIA interrupts
   lsr $d019     ; and video interrupts
   cli
-  rts
+w1:
+  inc $0400
+  jmp w1
 
 deinstall:
   sei           ; disable interrupts
@@ -59,7 +57,9 @@ deinstall:
   sta cinv+1
   bit $dd0d     ; re-enable NMI interrupts
   cli
-  rts
+w2:
+  inc $0401
+  jmp w2
 
 ; Auxiliary raster interrupt (for syncronization)
 irq1:
@@ -266,8 +266,9 @@ nexta:
   cpx #$ff
   bne setupend
 
-  ; end test: turn border gray, restore IRQ/NMI
-  inc $d020
+  ; end test: turn border green, restore IRQ/NMI
+  lda #5
+  sta $d020
   lda $c000
   sta cnmi
   lda $c001
@@ -365,8 +366,3 @@ cmptestfailed:
 
   jmp freeze
 
-!if 1 {
-*=$4000
-    ; note: this file must have the load address removed
-    !bin "c64.data"
-}
