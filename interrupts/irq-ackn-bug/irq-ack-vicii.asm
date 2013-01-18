@@ -265,7 +265,26 @@ end_of_testset:
 	jmp entrypoint
 	
 end_of_tests:
-	jmp end_of_tests
+        ldx #0
+endlp:
+        lda $0401,x
+        cmp $0401+40,x
+        bne fail
+        lda $0401+(3*40),x
+        cmp $0401+(4*40),x
+        bne fail
+;        txa
+;        sta $0401+(6*40),x
+        inx
+        cpx #30
+        bne endlp
+        lda #5
+        sta $d020
+	jmp *
+fail:
+        lda #2
+        sta $d020
+        jmp *
 	
 * = $0900
 testtable:
