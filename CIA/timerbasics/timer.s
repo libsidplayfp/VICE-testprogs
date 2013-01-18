@@ -1,6 +1,4 @@
 
-    !to "timer.prg", cbm
-
 CIA	= $dc00
 TIMER	= 0	; timer 0 or timer 1
 
@@ -112,5 +110,3 @@ sk2
 	bne lp
 	jmp *
 
-    * = $2200
-    !bin "timer-dump.bin",$2000,2
