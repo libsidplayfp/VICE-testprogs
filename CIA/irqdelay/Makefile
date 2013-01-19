@@ -1,0 +1,18 @@
+
+all:
+	cl65 -o irqdelay.prg irqdelay.s
+	cl65 --asm-define ONESHOT -o irqdelay-oneshot.prg irqdelay.s
+	cl65 -o irqdelay2.prg irqdelay2.s
+	cl65 --asm-define TESTVAL=255 -o irqdelay-cia1.prg irqdelay-cia1.s
+	cl65 --asm-define TESTVAL=255 -o irqdelay-cia2.prg irqdelay-cia2.s
+	cl65 --asm-define TESTVAL=4 -o irqdelay-cia1-4.prg irqdelay-cia1.s
+	cl65 --asm-define TESTVAL=4 -o irqdelay-cia2-4.prg irqdelay-cia2.s
+	cl65 --asm-define TESTVAL=255 --asm-define ONESHOT -o irqdelay-cia1-oneshot.prg irqdelay-cia1.s
+	cl65 --asm-define TESTVAL=255 --asm-define ONESHOT -o irqdelay-cia2-oneshot.prg irqdelay-cia2.s
+	cl65 --asm-define TESTVAL=4 --asm-define ONESHOT -o irqdelay-cia1-oneshot-4.prg irqdelay-cia1.s
+	cl65 --asm-define TESTVAL=4 --asm-define ONESHOT -o irqdelay-cia2-oneshot-4.prg irqdelay-cia2.s
+
+clean:
+	rm -f *.prg
+	rm -f *.o
+	rm -f *~
