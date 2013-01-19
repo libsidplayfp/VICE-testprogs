@@ -1,0 +1,23 @@
+
+.SILENT:
+
+all: tests
+
+tests:
+	cl65 --asm-define CIAOLD=1 -o irqnmi-old.prg test1.s
+	cl65 --asm-define CIAOLD=0 -o irqnmi-new.prg test1.s
+	cl65 -t vic20 --asm-define SHOW=0 -o irqnmi-vic20irq.prg test1vic20.s
+	cl65 -t vic20 --asm-define SHOW=1 -o irqnmi-vic20nmi.prg test1vic20.s
+	rm -f *.o
+	
+disk: tests
+	c1541 -format "test,00" d64 irqnmi.d64 \
+		-write irqnmi-old.prg old \
+		-write irqnmi-old.prg new \
+		-write irqnmi-vic20.prg vic20irq \
+		-write irqnmi-vic20.prg vic20nmi
+
+clean:
+	rm -f *~
+	rm -f *.prg
+	rm -f *.o
