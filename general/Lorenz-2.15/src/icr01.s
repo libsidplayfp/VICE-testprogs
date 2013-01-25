@@ -198,31 +198,91 @@ main
            lda #$81
            sta $dc0d
            bit $dc0d
+.ifeq NEWCIA - 1
+           lda #2 + 1
+.else
            lda #2
+.endif
            sta $dc04
            lda #0
            sta $dc05
            jsr waitborder
            lda #%00001001
            sta $dc0e
+
            lda $dc0d
            ldx $dc0d
+           ldy $dc0d
+           sta got1+1
+           stx got2+1
+           sty got3+1
+
+.ifeq NEWCIA - 1
+           cmp #$00
+           beq ok1
+           jsr print
+           .byte 13
+           .text "cia1 icr is not $00, got $"
+           .byte 0
+got1       lda #0
+           jsr printhb
+           jsr waitkey
+ok1
+           ldx got2+1
+           cpx #$81
+           beq ok2
+           jsr print
+           .byte 13
+           .text "cia1 icr is not $81, got $"
+           .byte 0
+got2       lda #0
+           jsr printhb
+ok2
+           lda got3+1
+           cmp #$00
+           beq ok3
+           jsr print
+           .byte 13
+           .text "cia1 reading icr=81 did "
+           .text "not clear int, got $"
+           .byte 0
+got3       lda #0
+           jsr printhb
+ok3
+.else
            cmp #$01
            beq ok1
            jsr print
            .byte 13
-           .text "cia1 icr is not $01"
+           .text "cia1 icr is not $01, got $"
            .byte 0
+got1       lda #0
+           jsr printhb
            jsr waitkey
 ok1
+           ldx got2+1
            cpx #$00
            beq ok2
            jsr print
            .byte 13
-           .text "reading icr=01 did "
-           .text "not clear int"
+           .text "cia1 reading icr=01 did "
+           .text "not clear int, got $"
            .byte 0
+got2       lda #0
+           jsr printhb
 ok2
+           lda got3+1
+           cmp #$00
+           beq ok3
+           jsr print
+           .byte 13
+           .text "reading icr=00 had "
+           .text "unexpected result, got $"
+           .byte 0
+got3       lda #0
+           jsr printhb
+ok3
+.endif
            .bend
 
 ;---------------------------------------
@@ -245,41 +305,100 @@ ok2
            sta $0318
            lda #>onnmi
            sta $0319
+.ifeq NEWCIA - 1
+           lda #2 + 1
+.else
            lda #2
+.endif
            sta $dd04
            lda #0
            sta $dd05
            jsr waitborder
            lda #%00001001
            sta $dd0e
+
            lda $dd0d
            ldx $dd0d
+           ldy $dd0d
+           sta got1+1
+           stx got2+1
+
+.ifeq NEWCIA - 1
+           sty got3+1
+
+           cmp #$00
+           beq ok1
+           jsr print
+           .byte 13
+           .text "cia2 icr is not $00, got $"
+           .byte 0
+got1       lda #0
+           jsr printhb
+           jsr waitkey
+ok1
+           ldx got2+1
+           cpx #$81
+           beq ok2
+           jsr print
+           .byte 13
+           .text "cia2 icr is not $81, got $"
+           .byte 0
+got2       lda #0
+           jsr printhb
+ok2
+           lda got3+1
+           cmp #$00
+           beq ok3
+           jsr print
+           .byte 13
+           .text "cia2 reading icr=81 did "
+           .text "not clear int, got $"
+           .byte 0
+got3       lda #0
+           jsr printhb
+ok3
+           lda nmiadr+1
+           bne ok4
+           jsr print
+           .byte 13
+           .text "cia2 reading icr=81 did "
+           .text "prevent nmi"
+           .byte 0
+           jsr waitkey
+ok4
+.else
            cmp #$01
            beq ok1
            jsr print
            .byte 13
-           .text "cia2 icr is not $01"
+           .text "cia2 icr is not $01, got $"
            .byte 0
+got1       lda #0
+           jsr printhb
            jsr waitkey
 ok1
+           ldx got2+1
            cpx #$00
            beq ok2
            jsr print
            .byte 13
-           .text "reading icr=01 did "
-           .text "not clear icr"
+           .text "cia2 reading icr=01 did "
+           .text "not clear icr, got $"
            .byte 0
+got2       lda #0
+           jsr printhb
            jsr waitkey
 ok2
            lda nmiadr+1
            beq ok3
            jsr print
            .byte 13
-           .text "reading icr=01 did "
+           .text "cia2 reading icr=01 did "
            .text "not prevent nmi"
            .byte 0
            jsr waitkey
 ok3
+.endif
            .bend
 
 ;---------------------------------------
@@ -302,7 +421,11 @@ ok3
            sta $0318
            lda #>onnmi
            sta $0319
+.ifeq NEWCIA - 1
+           lda #1 + 1
+.else
            lda #1
+.endif
            sta $dd04
            lda #0
            sta $dd05
@@ -360,7 +483,11 @@ ok3
            sta $0318
            lda #>onnmi
            sta $0319
+.ifeq NEWCIA - 1
+           lda #3 + 1
+.else
            lda #3
+.endif
            sta $dd04
            lda #0
            sta $dd05

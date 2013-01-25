@@ -187,7 +187,11 @@ testid     .byte 0
 main
            jsr print
            .byte 13
-           .text "{up}cia1ta"
+.ifeq NEWCIA - 1
+           .text "{up}cia1ta (new cia)"
+.else
+           .text "{up}cia1ta (old cia)"
+.endif
            .byte 0
 
             .block
@@ -259,37 +263,38 @@ loop
 jumptab
             ;                be.dc0e in.dc0e
             .word x000 ; 00    00      10
-            .word x001 ; 01    01      10
+            .word x001 ; 01    01      10  (*1)
             .word x008 ; 02    08      10
-            .word x009 ; 03    09      10
+            .word x009 ; 03    09      10  (*1)
             .word x010 ; 04    10      10
-            .word x011 ; 05    11      10
+            .word x011 ; 05    11      10  (*1)
             .word x018 ; 06    18      10
-            .word x019 ; 07    19      10
+            .word x019 ; 07    19      10  (*1)
             .word x100 ; 08    00      11
-            .word x101 ; 09    01      11
+            .word x101 ; 09    01      11  (*1)
             .word x108 ; 0a    08      11
-            .word x109 ; 0b    09      11
+            .word x109 ; 0b    09      11  (*1)
             .word x110 ; 0c    10      11
-            .word x111 ; 0d    11      11
+            .word x111 ; 0d    11      11  (*1)
             .word x118 ; 0e    18      11
-            .word x119 ; 0f    19      11
+            .word x119 ; 0f    19      11  (*1)
             .word x800 ; 10    00      18
             .word x801 ; 11    01      18
             .word x808 ; 12    08      18
             .word x809 ; 13    09      18
             .word x810 ; 14    10      18
-            .word x811 ; 15    11      18
+            .word x811 ; 15    11      18  (*1)
             .word x818 ; 16    18      18
-            .word x819 ; 17    19      18
+            .word x819 ; 17    19      18  (*1)
             .word x900 ; 18    00      19
-            .word x901 ; 19    01      19
+            .word x901 ; 19    01      19  (*1)
             .word x908 ; 1a    08      19
-            .word x909 ; 1b    09      19
+            .word x909 ; 1b    09      19  (*1)
             .word x910 ; 1c    10      19
-            .word x911 ; 1d    11      19
+            .word x911 ; 1d    11      19  (*1)
             .word x918 ; 1e    18      19
-            .word x919 ; 1f    19      19
+            .word x919 ; 1f    19      19  (*1)
+            ; (*1) different for old/new
 
 ; ------------------------------------------------------------------------------
 
@@ -309,7 +314,7 @@ x808
 
 ; ------------------------------------------------------------------------------
 
-x001
+x001 ; test $01
 x801
            .block
            lda i4
@@ -332,7 +337,11 @@ noload
            ldx i4
            cpx #7
            bcs nobit0
+.ifeq NEWCIA - 1
+           ora #$81
+.else
            ora #$01
+.endif
 nobit0
            cpx #6
            bcs nobit7
@@ -346,7 +355,7 @@ nobit7
 
 ; ------------------------------------------------------------------------------
 
-x009
+x009 ; test $03
 x809
            .block
            lda i4
@@ -362,7 +371,11 @@ noload
            ldx i4
            cpx #7
            bcs nobit0
+.ifeq NEWCIA - 1
+           ora #$81
+.else
            ora #$01
+.endif
 nobit0
            cpx #6
            bcs nobit7
@@ -398,7 +411,7 @@ x818
 
 ; ------------------------------------------------------------------------------
 
-x011
+x011 ; test 5
 x811
            .block
            ldx b4
@@ -411,7 +424,11 @@ nodec
            ldx b4
            cpx #6
            bcs nobit0
+.ifeq NEWCIA - 1
+           ora #$81
+.else
            ora #$01
+.endif
 nobit0
            cpx #5
            bcs nobit7
@@ -431,7 +448,7 @@ nobit07
 
 ; ------------------------------------------------------------------------------
 
-x019
+x019 ; test 7
 x819
            .block
            ldx b4
@@ -446,7 +463,11 @@ nodec
            ldx b4
            cpx #6
            bcs nobit0
+.ifeq NEWCIA - 1
+           ora #$81
+.else
            ora #$01
+.endif
 nobit0
            cpx #5
            bcs nobit7
@@ -525,7 +546,7 @@ corr       .byte $00,$01,$02,$00,$00
 
 ; ------------------------------------------------------------------------------
 
-x101
+x101 ; test $09
            .block
            lda i4
            sec
@@ -538,7 +559,11 @@ x101
            ldx #$00
            jmp set
 set01
+.ifeq NEWCIA - 1
+           ldx #$81
+.else
            ldx #$01
+.endif
            jmp set
 load81
            lda b4
@@ -588,7 +613,7 @@ corr       .byte $01,$02,$03,$01,$04
 
 ; ------------------------------------------------------------------------------
 
-x109
+x109 ; test $0b
            .block
            lda i4
            sec
@@ -601,7 +626,11 @@ x109
            ldx #$00
            jmp set
 set01
+.ifeq NEWCIA - 1
+           ldx #$81
+.else
            ldx #$01
+.endif
            jmp set
 load81
            lda b4
@@ -660,7 +689,7 @@ nofire
            .bend
 
 
-x111
+x111 ; test $0d
            .block
            ldx b4
            cpx #2
@@ -672,7 +701,11 @@ nodec
            ldx b4
            cpx #6
            bcs nobit0
+.ifeq NEWCIA - 1
+           ora #$81
+.else
            ora #$01
+.endif
 nobit0
            cpx #5
            bcs nobit7
@@ -696,7 +729,7 @@ nofire
 
 ; ------------------------------------------------------------------------------
 
-x119
+x119 ; test $0f
            .block
            ldx b4
            cpx #2
@@ -727,7 +760,11 @@ nodec
            ldx b4
            cpx #6
            bcs nobit0
+.ifeq NEWCIA - 1
+           ora #$81
+.else
            ora #$01
+.endif
 nobit0
            cpx #5
            bcs nobit7
@@ -784,7 +821,7 @@ noload
            .bend
 
 
-x901
+x901 ; test $19
            .block
            lda i4
            cmp #$0e
@@ -816,7 +853,11 @@ set4
            lda i4
            cmp #$11
            bne nobit0
+.ifeq NEWCIA - 1
+           ldx #$81
+.else
            ldx #$01
+.endif
 nobit0
            bcs nobit7
            ldx #$81
@@ -836,7 +877,7 @@ subtab     .byte 1,0,0,0,0,2,2,2,2,2
 
 ; ------------------------------------------------------------------------------
 
-x909
+x909 ; test $1b
            .block
            lda i4
            cmp #4
@@ -866,7 +907,11 @@ noload
            ldx i4
            cpx #$11
            bne nobit0
+.ifeq NEWCIA - 1
+           lda #$81
+.else
            lda #$01
+.endif
 nobit0
            bcs nobit7
            lda #$81
@@ -913,7 +958,7 @@ setd
            .bend
 
 
-x911
+x911 ; test $1d
            .block
            lda b4
            ldx i4
@@ -934,7 +979,11 @@ noload
            ldx b4
            cpx #$05
            bne nobit0
+.ifeq NEWCIA - 1
+           lda #$81
+.else
            lda #$01
+.endif
 nobit0
            bcs nobit7
 set81
@@ -954,7 +1003,7 @@ nostop
 
 ; ------------------------------------------------------------------------------
 
-x919
+x919 ; test $1f
            .block
            ldx i4
            beq load
@@ -978,7 +1027,11 @@ noload
            ldx b4
            cpx #$05
            bne nobit0
+.ifeq NEWCIA - 1
+           lda #$81
+.else
            lda #$01
+.endif
 nobit0
            bcs nobit7
 set81
@@ -1048,6 +1101,7 @@ error
            .byte 0
            lda testid
            jsr printhb
+
            jsr print
            .byte 13
            .text "init   " 

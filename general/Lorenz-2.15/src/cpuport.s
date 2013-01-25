@@ -14,8 +14,9 @@ turboass   = 780
 
 
 config     .byte 0
-abackup    .byte 0,0
-laststate  .byte 0
+abackup    .byte 0,0    ; copy of written values for error checking
+acheck     .byte 0,0    ; values read back
+laststate  .byte 0      ; track DATA bit 7,6,3 state
 right      .byte 0
 
 
@@ -66,6 +67,9 @@ pull
            sta 0,y
            sta abackup,y
 
+           ; laststate = ((backup0 ^ $ff) & laststate) |
+           ;             (backup0 & backup1)
+
            ;inputs: keep last state
            lda abackup+0
            eor #$ff
@@ -86,16 +90,28 @@ delay
            dex
            bne pull
 
+           lda 0
+           sta acheck+0
+           lda 1
+           sta acheck+1
+
            ; value in $00 should not have changed
            lda abackup+0
-           cmp 0
+           cmp acheck+0
            bne error
+
+           ; expected value in $01 is =
+           ;
+           ; (((backup0 ^ $ff) | backup1) & %00110111) |
+           ; (laststate & %11001000) &
+           ; ~((backup0 ^ $ff) & %00001000)
 
            lda abackup+0
            eor #$ff
            ora abackup+1
            and #$37
            sta or2+1
+           ; get bits 7,6,3 from laststate
            lda laststate
            and #$c8
 or2        ora #$11
@@ -109,19 +125,21 @@ or2        ora #$11
            and #$df
            tax
 no5low
-           stx right
-           cpx 1
+           stx right    ; remember expected value for $01
+           cpx acheck+1
            bne error
 noerror
            inc config
-           bne nextconfig
+           beq done
+           jmp nextconfig
+done
            jsr rom
            jmp ok
 
 error
-           lda 1
+           lda acheck+1
            pha
-           lda 0
+           lda acheck+0
            pha
            jsr rom
 
@@ -180,6 +198,9 @@ oldx
            jsr printhb
            lda #13
            jsr $ffd2
+
+;           sei
+;           jmp *
 
 waitk
            jsr $ffe4

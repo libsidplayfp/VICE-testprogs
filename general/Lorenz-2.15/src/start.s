@@ -397,8 +397,8 @@ namelen  = *-name
 l0tab
 x        .var 0
 l0t      .lbl
-         .byte x*2&255
-x        .var x+1&255
+         .byte (x*2)&255
+x        .var (x+1)&255
          .if x
          .goto l0t
          .endif

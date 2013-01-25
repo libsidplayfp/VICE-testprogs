@@ -1,6 +1,8 @@
 ; original file was: irq.asm
 ;-------------------------------------------------------------------------------
 
+DEBUG = 0
+
            *= $0801
            .byte $4c,$14,$08,$00,$97
 turboass   = 780
@@ -66,6 +68,10 @@ inthigh    .byte 0
 flagsbefore .byte 0
 flagsafter .byte 0
 
+;-------------------------------------------------------------------------------
+; setup timer irq
+; A: timer lowbyte - 3 (meaning when A=3 the irq will trigger right after the RTS)
+;-------------------------------------------------------------------------------
 setint
            .block
            pha
@@ -73,7 +79,11 @@ setint
            sta $dc0e
            clc
            pla
+.ifeq NEWCIA - 1
+           adc #3 + 1
+.else
            adc #3
+.endif
            sta $dc04
            lda #0
            sta $dc05
@@ -94,7 +104,7 @@ wait
 ;ok
            lda #$19
            sta $dc0e
-           rts
+           rts ; 6 cycles
            .bend
 irq
            .block
@@ -469,18 +479,46 @@ addressing
 
 cmd        .byte 0
 
-wrong
+pwrong
+.ifeq DEBUG - 0
+           lda wexp+1
+           cmp wgot+1
+           beq wok
+.endif
            jsr restoreint
            jsr print
            .byte 13
-           .text "wrong $dc0d"
+           .text "wrong $dc0d, ("
            .byte 0
+wtest      lda #0
+           jsr printhb
+           jsr print
+           .text ") expected: "
+           .byte 0
+wexp       lda #0
+           jsr printhb
+           jsr print
+           .text " got: "
+           .byte 0
+wgot       lda #0
+           jsr printhb
+.ifeq DEBUG - 0
            jmp waitk
+wok
+.endif
+           rts
+
+wrong
+           jmp pwrong
 
 main
            jsr print
            .byte 13
-           .text "{up}irq"
+.ifeq NEWCIA - 1
+           .text "{up}irq (new cia)"
+.else
+           .text "{up}irq (old cia)"
+.endif
            .byte 0
 
            tsx
@@ -488,21 +526,56 @@ main
            lda #0
            sta cmd
 
+           lda #6
+           sta wtest+1
+           jsr setint
+           lda $dc0d
+           sta wgot+1
+           ldx #$00
+           stx wexp+1
+           jsr wrong
+
            lda #5
+           sta wtest+1
            jsr setint
            lda $dc0d
-           cmp #$00
-           bne wrong
+           sta wgot+1
+           ldx #$00
+           stx wexp+1
+           jsr wrong
+
            lda #4
+           sta wtest+1
            jsr setint
            lda $dc0d
-           cmp #$01
-           bne wrong
+           sta wgot+1
+.ifeq NEWCIA - 1
+           ldx #$00
+.else
+           ldx #$01
+.endif
+           stx wexp+1
+           jsr wrong
+
            lda #3
+           sta wtest+1
            jsr setint
            lda $dc0d
-           cmp #$81
-           bne wrong
+           sta wgot+1
+           ldx #$81
+           stx wexp+1
+           jsr wrong
+
+           lda #2
+           sta wtest+1
+           jsr setint
+           lda $dc0d
+           sta wgot+1
+           ldx #$81
+           stx wexp+1
+           jsr wrong
+
+
            jsr restoreint
 
 loop

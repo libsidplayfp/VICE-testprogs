@@ -19,8 +19,12 @@ suite. There may also be a difference between your C64 and my C64."
 While the Test Suite is running, the Datasette should be disconnected. Needs 
 about 80 min to complete.
 
-IMPORTANT: icr01, cia1ta, cia1tb, cia12a, cia2tb require "old" CIA and will
-           currently fail on "new" CIAs (see todo.txt)
+IMPORTANT: some tests (irq, nmi, icr01, cia1ta, cia1tb, cia1tab, cia2ta, cia2tb)
+           depend on the type of CIAs in the C64 ("old" or "new") - use the
+           respective programs/disk images.
+
+           cia2ta, cia2tb have NOT been updated yet and currently fail on "new" 
+           CIAs (see TODO)
 
 disable virtual device traps for best results in VICE
 
@@ -43,9 +47,28 @@ changes from original sourcecode:
     recreated from a disassembly.
   - "finish" was missing on the source images and was recreated
   - "nextdisk" program was missing on the source images and was recreated
-  - some individual tests might be fixed/updated (see todo.txt)
-  - some individual tests output more detailed results (cia1ta)
+  - some individual tests output more detailed results (cia1ta, cia1tb, cia2ta, 
+    cia2tb, cia1tab)
+  - some test have been updated to work with "new" CIA (irq, nmi, icr01, cia1ta, 
+    cia1tb, cia1tab)
 
+///////////////////////////////////////////////////////////////////////////////
+  
+TODO:
+
+- make all tests run on PAL and NTSC
+- improve tests for illegal opcodes to make them work on all CPUs
+
+aneb.s
+    - add detection for the ANE "magic constant" and fix test accordingly
+trap1-15.s
+    - add detection for the ANE "magic constant" and fix test accordingly
+
+cia12a.s
+    - fix to work on "new" CIA.
+cia2tb.s
+    - fix to work on "new" CIA.
+  
 ///////////////////////////////////////////////////////////////////////////////
 Program START - some 6510 basic commands, just as an insurance
 

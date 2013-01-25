@@ -96,7 +96,11 @@ areg     .byte $04,$06,$01,$0d
 main
          jsr print
          .byte 13,145
-         .text "cia1tab"
+.ifeq NEWCIA - 1
+         .text "cia1tab (new cia)"
+.else
+         .text "cia1tab (old cia)"
+.endif
          .byte 0
 
          ldx #$7e
@@ -177,7 +181,11 @@ right    .byte $01,$02,$02,$01,$02,$02
          .byte $80,$c0,$80,$80,$c0,$80
          .byte $80,$c0,$00,$00,$40,$00
          .byte $00,$01,$01,$01,$01,$01
+.ifeq NEWCIA - 1
+         .byte $01,$01,$83,$83,$83,$83
+.else
          .byte $01,$01,$03,$83,$83,$83
+.endif
 compare
          jsr $fda3
          sei

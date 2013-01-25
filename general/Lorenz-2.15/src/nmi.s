@@ -1,3 +1,7 @@
+; original file was: nmi.asm
+;-------------------------------------------------------------------------------
+
+DEBUG = 0
 
          *= $0801
          .byte $4c,$14,$08,$00,$97
@@ -76,7 +80,11 @@ setint
          sta $dd0d
          clc
          pla
+.ifeq NEWCIA - 1
+         adc #3 + 1
+.else
          adc #3
+.endif
          sta $dd04
          lda #0
          sta $dd05
@@ -432,18 +440,46 @@ addressing
 
 cmd      .byte 0
 
+pwrong
+.ifeq DEBUG - 0
+           lda wexp+1
+           cmp wgot+1
+           beq wok
+.endif
+           jsr restoreint
+           jsr print
+           .byte 13
+           .text "wrong $dd0d, ("
+           .byte 0
+wtest      lda #0
+           jsr printhb
+           jsr print
+           .text ") expected: "
+           .byte 0
+wexp       lda #0
+           jsr printhb
+           jsr print
+           .text " got: "
+           .byte 0
+wgot       lda #0
+           jsr printhb
+.ifeq DEBUG - 0
+           jmp waitk
+wok
+.endif
+           rts
+
 wrong
-         jsr restoreint
-         jsr print
-         .byte 13
-         .text "wrong $dd0d"
-         .byte 0
-         jmp waitk
+           jmp pwrong
 
 main
          jsr print
          .byte 13
-         .text "{up}nmi"
+.ifeq NEWCIA - 1
+           .text "{up}nmi (new cia)"
+.else
+           .text "{up}nmi (old cia)"
+.endif
          .byte 0
 
          tsx
@@ -451,21 +487,55 @@ main
          lda #0
          sta cmd
 
-         lda #5
-         jsr setint
-         lda $dd0d
-         cmp #$00
-         bne wrong
-         lda #4
-         jsr setint
-         lda $dd0d
-         cmp #$01
-         bne wrong
-         lda #3
-         jsr setint
-         lda $dd0d
-         cmp #$81
-         bne wrong
+        lda #6
+        sta wtest+1
+        jsr setint
+        lda $dd0d
+        sta wgot+1
+        ldx #$00
+        stx wexp+1
+        jsr wrong
+
+        lda #5
+        sta wtest+1
+        jsr setint
+        lda $dd0d
+        sta wgot+1
+        ldx #$00
+        stx wexp+1
+        jsr wrong
+
+        lda #4
+        sta wtest+1
+        jsr setint
+        lda $dd0d
+        sta wgot+1
+.ifeq NEWCIA - 1
+        ldx #$00
+.else
+        ldx #$01
+.endif
+        stx wexp+1
+        jsr wrong
+
+        lda #3
+        sta wtest+1
+        jsr setint
+        lda $dd0d
+        sta wgot+1
+        ldx #$81
+        stx wexp+1
+        jsr wrong
+
+        lda #2
+        sta wtest+1
+        jsr setint
+        lda $dd0d
+        sta wgot+1
+        ldx #$81
+        stx wexp+1
+        jsr wrong
+
          jsr restoreint
 
 loop
@@ -1183,7 +1253,7 @@ to       = $2000
 clear
          txa
          pha
-         lda #to-from&$ff
+         lda #(to-from)&$ff
          sta from-1
          lda #$ea
          sta to
@@ -1214,7 +1284,7 @@ to       = $2000
 clear
          txa
          pha
-         lda #to-from&$ff
+         lda #(to-from)&$ff
          sta from-1
          lda #$ea
          sta to
@@ -1245,7 +1315,7 @@ to       = $2010
 clear
          txa
          pha
-         lda #to-from&$ff
+         lda #(to-from)&$ff
          sta from-1
          lda #$ea
          sta to
@@ -1276,7 +1346,7 @@ to       = $2010
 clear
          txa
          pha
-         lda #to-from&$ff
+         lda #(to-from)&$ff
          sta from-1
          lda #$ea
          sta to
@@ -1307,7 +1377,7 @@ to       = $2010
 clear
          txa
          pha
-         lda #to-from&$ff
+         lda #(to-from)&$ff
          sta from-1
          lda #$ea
          sta to
@@ -1338,7 +1408,7 @@ to       = $2010
 clear
          txa
          pha
-         lda #to-from&$ff
+         lda #(to-from)&$ff
          sta from-1
          lda #$ea
          sta to
@@ -1369,7 +1439,7 @@ to       = $2010
 clear
          txa
          pha
-         lda #to-from&$ff
+         lda #(to-from)&$ff
          sta from-1
          lda #$ea
          sta to
@@ -1400,7 +1470,7 @@ to       = $2010
 clear
          txa
          pha
-         lda #to-from&$ff
+         lda #(to-from)&$ff
          sta from-1
          lda #$ea
          sta to

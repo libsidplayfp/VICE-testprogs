@@ -62,16 +62,15 @@ printhn0
 
 waitborder
            .block
-;           lda $d011
-;           bmi ok
-;wait
-;           lda $d012
-;           cmp #30
-;           bcs wait
-;ok
-wait
+           dec $d020
+wait:
            lda $d011
-           bpl wait
+           bmi ok
+           lda $d012
+           cmp #30
+           bcs wait
+ok
+           inc $d020
            rts
            .bend
 
@@ -182,6 +181,7 @@ ae         .byte 0
 r4         .byte 0
 rd         .byte 0
 re         .byte 0
+testid     .byte 0
 
 
 nmi
@@ -190,8 +190,22 @@ nmi
 main
            jsr print
            .byte 13
-           .text "{up}cia2ta"
+.ifeq NEWCIA - 1
+           .text "{up}cia2ta (new cia)"
+.else
+           .text "{up}cia2ta (old cia)"
+.endif
            .byte 0
+
+            .block
+            ldx #0
+lp
+            lda #0
+            sta testoktab,x
+            inx
+            cpx #4*8
+            bne lp
+            .bend
 
            lda #30
            sta i4
@@ -249,6 +263,7 @@ loop
            asl a
            asl a
            ora beindex
+           sta testid
            asl a
            tax
            lda jumptab+0,x
@@ -282,7 +297,7 @@ x808
            .bend
 
 
-x001
+x001 ; test $01
 x801
            .block
            lda i4
@@ -305,7 +320,11 @@ noload
            ldx i4
            cpx #7
            bcs nobit0
+.ifeq NEWCIA - 1
+           ora #$81
+.else
            ora #$01
+.endif
 nobit0
            cpx #6
            bcs nobit7
@@ -318,7 +337,7 @@ nobit7
            .bend
 
 
-x009
+x009 ; test $03
 x809
            .block
            lda i4
@@ -334,7 +353,11 @@ noload
            ldx i4
            cpx #7
            bcs nobit0
+.ifeq NEWCIA - 1
+           ora #$81
+.else
            ora #$01
+.endif
 nobit0
            cpx #6
            bcs nobit7
@@ -368,7 +391,7 @@ x818
            .bend
 
 
-x011
+x011 ; test $05
 x811
            .block
            ldx b4
@@ -381,7 +404,11 @@ nodec
            ldx b4
            cpx #6
            bcs nobit0
+.ifeq NEWCIA - 1
+           ora #$81
+.else
            ora #$01
+.endif
 nobit0
            cpx #5
            bcs nobit7
@@ -400,7 +427,7 @@ nobit07
            .bend
 
 
-x019
+x019 ; test $07
 x819
            .block
            ldx b4
@@ -415,7 +442,11 @@ nodec
            ldx b4
            cpx #6
            bcs nobit0
+.ifeq NEWCIA - 1
+           ora #$81
+.else
            ora #$01
+.endif
 nobit0
            cpx #5
            bcs nobit7
@@ -517,7 +548,7 @@ corr       .byte $00,$01,$02,$00,$00
            .bend
 
 
-x101
+x101 ; test $09
            .block
            lda i4
            sec
@@ -530,7 +561,11 @@ x101
            ldx #$00
            jmp set
 set01
+.ifeq NEWCIA - 1
+           ldx #$81
+.else
            ldx #$01
+.endif
            jmp set
 load81
            lda b4
@@ -614,7 +649,7 @@ corr       .byte $01,$02,$03,$01,$04
            .bend
 
 
-x109
+x109 ; test $0b
            .block
            lda i4
            sec
@@ -627,7 +662,11 @@ x109
            ldx #$00
            jmp set
 set01
+.ifeq NEWCIA - 1
+           ldx #$81
+.else
            ldx #$01
+.endif
            jmp set
 load81
            lda b4
@@ -751,7 +790,7 @@ nofire
            .bend
 
 
-x111
+x111 ; test $0d
            .block
            ldx b4
            cpx #2
@@ -763,7 +802,11 @@ nodec
            ldx b4
            cpx #6
            bcs nobit0
+.ifeq NEWCIA - 1
+           ora #$81
+.else
            ora #$01
+.endif
 nobit0
            cpx #5
            bcs nobit7
@@ -811,7 +854,7 @@ nmitab     .byte $ff,$ff,$02,$ff,$ff
            .bend
 
 
-x119
+x119 ; test $0f
            .block
            ldx b4
            cpx #2
@@ -842,7 +885,11 @@ nodec
            ldx b4
            cpx #6
            bcs nobit0
+.ifeq NEWCIA - 1
+           ora #$81
+.else
            ora #$01
+.endif
 nobit0
            cpx #5
            bcs nobit7
@@ -966,7 +1013,7 @@ noload
            .bend
 
 
-x901
+x901 ; test $19
            .block
            lda i4
            cmp #$0e
@@ -998,7 +1045,11 @@ set4
            lda i4
            cmp #$11
            bne nobit0
+.ifeq NEWCIA - 1
+           ldx #$81
+.else
            ldx #$01
+.endif
 nobit0
            bcs nobit7
            ldx #$81
@@ -1042,7 +1093,7 @@ subtab     .byte 1,0,0,0,0,2,2,2,2,2
            .bend
 
 
-x909
+x909 ; test $1b
            .block
            lda i4
            cmp #4
@@ -1072,7 +1123,11 @@ noload
            ldx i4
            cpx #$11
            bne nobit0
+.ifeq NEWCIA - 1
+           lda #$81
+.else
            lda #$01
+.endif
 nobit0
            bcs nobit7
            lda #$81
@@ -1139,7 +1194,7 @@ setd
            .bend
 
 
-x911
+x911 ; test $1d
            .block
            lda b4
            ldx i4
@@ -1160,7 +1215,11 @@ noload
            ldx b4
            cpx #$05
            bne nobit0
+.ifeq NEWCIA - 1
+           lda #$81
+.else
            lda #$01
+.endif
 nobit0
            bcs nobit7
 set81
@@ -1194,7 +1253,7 @@ nmitab     .byte $ff,$ff,$02,$ff,$ff
            .bend
 
 
-x919
+x919 ; test 1f
            .block
            ldx i4
            beq load
@@ -1218,7 +1277,11 @@ noload
            ldx b4
            cpx #$05
            bne nobit0
+.ifeq NEWCIA - 1
+           lda #$81
+.else
            lda #$01
+.endif
 nobit0
            bcs nobit7
 set81
@@ -1308,27 +1371,42 @@ noerror
 jmploop
            jmp loop
 error
+           ldx testid
+           lda #1
+           sta testoktab,x
+
            jsr print
            .byte 13,13
-           .text "init  "
+           .text "failed test #"
+           .byte 0
+           lda testid
+           jsr printhb
+
+           jsr print
+           .byte 13
+           .text "init   " 
            .byte 0
            lda i4
            jsr printhb
-           lda #32
-           jsr $ffd2
-           lda b4
-           jsr printhb
-           lda #32
-           jsr $ffd2
+           jsr print
+           .text "    "
+           .byte 0
            lda ie
            jsr printhb
-           lda #32
-           jsr $ffd2
+           jsr print
+           .byte 13
+           .text "before "
+           .byte 0
+           lda b4
+           jsr printhb
+           jsr print
+           .text "    "
+           .byte 0
            lda be
            jsr printhb
            jsr print
            .byte 13
-           .text "after "
+           .text "after  "
            .byte 0
            lda a4
            jsr printhb
@@ -1342,7 +1420,7 @@ error
            jsr printhb
            jsr print
            .byte 13
-           .text "right "
+           .text "right  "
            .byte 0
            lda r4
            jsr printhb
@@ -1385,4 +1463,13 @@ namelen    = *-name
            pla
            jmp $e16f
 
+testoktab
+            .byte 0,0,0,0
+            .byte 0,0,0,0
+            .byte 0,0,0,0
+            .byte 0,0,0,0
+            .byte 0,0,0,0
+            .byte 0,0,0,0
+            .byte 0,0,0,0
+            .byte 0,0,0,0
 
