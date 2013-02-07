@@ -1,11 +1,13 @@
-This document explains the programs on the disk image cputest.d64, which contains programs that will check for the kind of cpu in your 8bit
-cbm machine.
+This document explains the programs on the disk image cputest.d64, which
+contains programs that will check for the kind of cpu in your 8bit cbm machine.
 
-Because the programs need to be loadable on all 8bit cbm machines, and the fact that the pet can only load at $0401, the programs have been
-constructed on a pet, and on other machines they will need to be loaded with ,8 (not ,8,1).
+Because the programs need to be loadable on all 8bit cbm machines, and the
+fact that the pet can only load at $0401, the programs have been constructed
+on a pet, and on other machines they will need to be loaded with ,8 (not ,8,1).
 
-There is only one program to load actually, it is called start, it loads all other programs to check for cpu specific differences, so to
-start everything off you do:
+There is only one program to load actually, it is called start, it loads all
+other programs to check for cpu specific differences, so to start everything
+off you do:
 
 load"start",8
 run
@@ -15,19 +17,23 @@ Below is a description of each program:
 START
 -----
 
-The program start just reserves enough memory space so that the variable space will not interfere with the other loaded programs, and it loads
-the first cpu-test program called 'old6502'
+The program start just reserves enough memory space so that the variable space
+will not interfere with the other loaded programs, and it loads the first
+cpu-test program called 'old6502'
 
 
 OLD6502
 -------
-CPU(s) runnable      : old6502, new6502, c64dtv, 6509, 6510, 7501, 8500, 8501, 8502, 65SC02, 65C02, 65CE02, 65802, 65816
+CPU(s) runnable      : old6502, new6502, c64dtv, 6509, 6510, 7501, 8500, 8501,
+                       8502, 65SC02, 65C02, 65CE02, 65802, 65816
 CPU(s) tested        : old6502
-CPU(s) left over     : new6502, c64dtv, 6509, 6510, 7501, 8500, 8501, 8502, 65SC02, 65C02, 65CE02, 65802, 65816
-Action when found    : Print "Your cpu is a old6502"
+CPU(s) left over     : new6502, c64dtv, 6509, 6510, 7501, 8500, 8501, 8502,
+                       65SC02, 65C02, 65CE02, 65802, 65816
+Action when found    : Print "Your cpu is an old6502"
 Action when not found: Load "65SC02ANDUP"
 
-This program tests for an old 6502, the old 6502 has a problem with the 'ROR' opcode, which gives the wrong result.
+This program tests for an old 6502, the old 6502 has a problem with the 'ROR'
+opcode, which gives the wrong result.
 
 The code used for this test is as follows:
 
@@ -49,13 +55,15 @@ The code used for this test is as follows:
 
 65SC02ANDUP
 -----------
-CPU(s) runnable      : new6502, c64dtv, 6509, 6510, 7501, 8500, 8501, 8502, 65SC02, 65C02, 65CE02, 65802, 65816
+CPU(s) runnable      : new6502, c64dtv, 6509, 6510, 7501, 8500, 8501, 8502,
+                       65SC02, 65C02, 65CE02, 65802, 65816
 CPU(s) tested        : 65SC02, 65C02, 65CE02, 65802, 65816
 CPU(s) left over     : new6502, c64dtv, 6509, 6510, 7501, 8500, 8501, 8502
 Action when found    : Load "65802OR65816"
 Action when not found: Load "6509"
 
-This program tests for a 65SC02 or up, in all of those the flags in decimal mode give the correct result.
+This program tests for a 65SC02 or up, in all of those the flags in decimal
+mode give the correct result.
 
 The code used for this test is as follows:
 
@@ -90,7 +98,8 @@ The code used for this test is as follows:
 
 * = $0201
 		clc
-.byte		$e2, $01	; NOP #$01 on 65C02/65SC02, LDA ($01,S),Y on 65CE02 and SEP #$01 on 65802/65816.
+.byte		$e2, $01	; NOP #$01 on 65C02/65SC02, LDA ($01,S),Y on
+				; 65CE02 and SEP #$01 on 65802/65816.
 		bcc @is_not_65802_or_65816
 @is_65802_or_65816:
 		lda #$01
@@ -115,7 +124,8 @@ This program tests for the extra Z register of the 65CE02.
 The code used for this test is as follows:
 
 * = $0201
-.byte		$a3, $A3	; NOP NOP on 65C02/65SC02 and LDZ #$A3 on 65CE02
+.byte		$a3, $A3	; NOP NOP on 65C02/65SC02 and
+				; LDZ #$A3 on 65CE02
 		lda #$00
 .byte		$6b		; NOP on 65C02/65SC02 and TZA on 65CE02
 		cmp #$00
@@ -138,7 +148,8 @@ CPU(s) left over     : 65C02
 Action when found    : Print "Your cpu is a 65SC02"
 Action when not found: Print "Your cpu is a 65C02"
 
-This program tests for the SMB7 opcode of the 65C02, which is missing on the 65SC02.
+This program tests for the SMB7 opcode of the 65C02, which is missing on the
+65SC02.
 
 The code used for this test is as follows:
 
@@ -173,8 +184,9 @@ Action when found    : Print "Your cpu is a 65816"
 Action when not found: Print "Your cpu is a 65802"
 
 This program tests for access to more than 64K of memory.
-Note that this works on the SuperCPU because it has 128K of memory, but it might not work on a Flash8 or Turbo Process card, so this
-test might have to be revised once more information is known.
+Note that this works on the SuperCPU because it has 128K of memory, but it
+might not work on a Flash8 or Turbo Process card, so this test might have to
+be revised once more information is known.
 
 The code used for this test is as follows:
 
@@ -208,7 +220,7 @@ CPU(s) left over     : new6502, c64dtv, 6510, 7501, 8500, 8501, 8502
 Action when found    : Print "Your cpu is a 6509"
 Action when not found: Load "NEW6502"
 
-This program tests for a the banking of the 6509.
+This program tests for the banking of the 6509.
 
 The code used for this test is as follows:
 
@@ -430,6 +442,7 @@ The code used for this test is as follows:
 	cli
 	rts
 
+In the future the difference between the 6510 and 8500 might be determined by
+the rate of $01 unused bits drop-off when more information is known.
 
-In the future the difference between the 6510 and 8500 might be determined by the rate of $01 unused bits drop-off when more information is known.
 How to determine the difference between the 7501 and 8501 is currently unknown.
