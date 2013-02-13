@@ -601,6 +601,63 @@ jmp exit
 +
 
 
+cmp #52 ; "4"
+beq +
+jmp handlestuff:
++
+; switch pixel double (40/80col mode) on/off
+lda pixeldouble
+beq pd
+
+; turn pixel double off, reset registers to default
+ldx #25
++vdc_lda_rx
+and #$ef
++vdc_sta_rx
+ldx #0 ;total horiz char positions
+stx pixeldouble
+lda #$7f
++vdc_sta_rx
+ldx #1 ; active horiz chars
+lda #$50
++vdc_sta_rx
+ldx #2 ; horiz sync position
+lda #$66
++vdc_sta_rx
+ldx #22 ; char horiz size control
+lda #$78
++vdc_sta_rx
+ldx #27 ; address inc per row
+lda #$0
++vdc_sta_rx
+jmp handlestuff
+
+pd:	; pixeldouble is off, turn it on
+ldx #25
++vdc_lda_rx
+ora #$10
++vdc_sta_rx
+sta pixeldouble
+ldx #0 ;total horiz char positions
+lda #63
++vdc_sta_rx
+ldx #1 ; active horiz chars
+lda #40
++vdc_sta_rx
+ldx #2 ; horiz sync position
+lda #55
++vdc_sta_rx
+ldx #22 ; char horiz size control
+lda #$89
++vdc_sta_rx
+ldx #27 ; address inc per row
+lda #40
++vdc_sta_rx
+jmp handlestuff
++
+
+
+
 handlestuff:
 
 lda backcycle
@@ -891,7 +948,7 @@ inc tmp2	;tmp1/2 = y*80 + x
 vblank:		!by $00
 vblanktmp:	!by $00
 
-backcycle:	!by $01
+backcycle:	!by $00
 backcyclecount:	!by 50
 
 smoothcount:	!by 1
@@ -903,7 +960,7 @@ xsmoothdir	!by 0
 ysmooth:	!by $00
 ysmoothdir	!by 0
 
-
+pixeldouble: !by 0
 
 
 ;    |---------01-3-5----0----5----0----5----0----5----0----5----0----5----01234567-|
@@ -916,7 +973,7 @@ prgtxt
 !tx "b: background cycle on/off ('border' should match bckgrnd, except bitmap mode)  " ; 5
 !tx "x: xsmooth test - left border should be fixed, right border 'open'              " ; 6
 !tx "y: ysmooth test          : ; set background colour    + - adjust smooth speed   " ; 7
-!tx "      v: show vblank area       i - interlace mode test (50 rows)               " ; 8
+!tx "  4: 40/80columns    v: show vblank area    i - interlace mode test (50 rows)   " ; 8
 !tx "                                                                                " ; 9
 
 
