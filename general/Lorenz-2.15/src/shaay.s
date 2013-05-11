@@ -31,97 +31,113 @@ main
          stx sb
 
 mem      = $2aff
+;mem      = $04ff
          lda #0
          sta ab
          sta xb
          sta yb
 
 next
-         lda db
-         sta mem
+        ; "emulate" sha abs,y
+        ; a,x,y,sp,status are not modified
+        ; data = A and X and addrhi+1
+        ; addr is always adjusted to match mem (including index)
 
-         lda ab
-         sta ar
+        lda db
+        sta mem
 
-         lda cmd+2
-         clc
-         adc #1
-         and ab
-         and xb
-         sta dr
+        lda ab
+        sta ar
 
-         lda xb
-         sta xr
+        lda cmd+2
+        clc
+        adc #1
+        and ab
+        and xb
+        sta dr
 
-         lda yb
-         sta yr
+        lda xb
+        sta xr
 
-         lda pb
-         ora #%00110000
-         sta pr
+        lda yb
+        sta yr
 
-         lda sb
-         sta sr
+        lda pb
+        ora #%00110000
+        sta pr
+
+        lda sb
+        sta sr
 
 waitborder
-         lda $d011
-         bpl waitborder
-;         bmi isborder
-;         lda $d012
-;         cmp #30
-;         bcs waitborder
-;isborder
+        lda $d011
+        bmi isborder
+        lda $d012
+        cmp #30
+        bcs waitborder
+isborder
 
-         ldx sb
-         txs
-         lda pb
-         pha
-         lda ab
-         ldx xb
-         ldy yb
-         plp
+        inc $d020
 
-cmd      .byte $9f
+        ldx sb ; stackpointer
+        txs
+        lda pb ; status
+        pha
+        lda ab
+        ldx xb
+        ldy yb
+        plp
+
+cmd      .byte $9f      ; sha abs,y
          .word mem
 
-         php
-         cld
-         sta aa
-         stx xa
-         sty ya
-         pla
-         sta pa
-         tsx
-         stx sa
-         lda mem
-         sta da
-         jsr check
+        php
+        cld
+        sta aa
+        stx xa
+        sty ya
+        pla
+        sta pa ; status
+        tsx
+        stx sa ; stackpointer
+        lda mem
+        sta da
 
-         inc cmd+1
-         bne noinc
-         inc cmd+2
-noinc    lda yb
-         bne nodec
-         dec cmd+2
-nodec    dec yb
+        dec $d020
 
-         clc
-         lda xb
-         adc #17
-         sta xb
-         bcc jmpnext
-         lda #0
-         sta xb
-         clc
-         lda ab
-         adc #17
-         sta ab
-         bcc jmpnext
-         lda #0
-         sta ab
-         inc pb
-         beq nonext
-jmpnext  jmp next
+        jsr check
+
+        inc cmd+1      ; adr lo
+        bne noinc
+        inc cmd+2      ; adr hi
+noinc
+        lda yb
+        bne nodec
+        dec cmd+2      ; adr hi
+nodec
+        dec yb
+
+        clc
+        lda xb
+        adc #17
+        sta xb
+        bcc jmpnext
+
+        lda #0
+        sta xb
+        clc
+        lda ab
+        adc #17
+        sta ab
+        bcc jmpnext
+
+        lda #0
+        sta ab
+        inc db
+        inc pb
+        beq nonext
+jmpnext  
+        jmp next
 nonext
 
          jsr print
