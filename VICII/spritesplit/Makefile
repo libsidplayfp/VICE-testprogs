@@ -3,7 +3,8 @@
 all:	ss-hires-mc.prg ss-hires-mc-exp.prg \
 	ss-hires-color.prg ss-mc-color0.prg ss-mc-color1.prg ss-mc-color2.prg \
 	ss-xpos.prg \
-	ss-unexp-exp-hires.prg ss-unexp-exp-mc.prg \
+	ss-unexp-exp-hires.prg ss-exp-unexp-hires.prg \
+	ss-unexp-exp-mc.prg ss-exp-unexp-mc.prg \
 	ss-pri.prg ss-pri-exp.prg ss-pri-mc.prg ss-pri-mc-exp.prg
 
 
@@ -31,8 +32,14 @@ ss-xpos.prg: spritesplit.asm
 ss-unexp-exp-hires.prg: spritesplit.asm
 	dasm $< -o$@ -DSPLIT_UNEXP_EXP_HIRES
 
+ss-exp-unexp-hires.prg: spritesplit.asm
+	dasm $< -o$@ -DSPLIT_EXP_UNEXP_HIRES
+
 ss-unexp-exp-mc.prg: spritesplit.asm
 	dasm $< -o$@ -DSPLIT_UNEXP_EXP_MC
+
+ss-exp-unexp-mc.prg: spritesplit.asm
+	dasm $< -o$@ -DSPLIT_EXP_UNEXP_MC
 
 ss-pri.prg: spritesplit.asm
 	dasm $< -o$@ -DSPLIT_PRI
@@ -57,7 +64,9 @@ clean:
 	rm -f ss-mc-color2.prg
 	rm -f ss-xpos.prg
 	rm -f ss-unexp-exp-hires.prg
+	rm -f ss-exp-unexp-hires.prg
 	rm -f ss-unexp-exp-mc.prg
+	rm -f ss-exp-unexp-mc.prg
 	rm -f ss-pri.prg
 	rm -f ss-pri-exp.prg
 	rm -f ss-pri-mc.prg
