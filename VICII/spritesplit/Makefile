@@ -1,6 +1,7 @@
 # Makefile
 
 all:	ss-hires-mc.prg ss-hires-mc-exp.prg \
+	ss-mc-hires.prg ss-mc-hires-exp.prg \
 	ss-hires-color.prg ss-mc-color0.prg ss-mc-color1.prg ss-mc-color2.prg \
 	ss-xpos.prg \
 	ss-unexp-exp-hires.prg ss-exp-unexp-hires.prg \
@@ -13,6 +14,12 @@ ss-hires-mc.prg: spritesplit.asm
 
 ss-hires-mc-exp.prg: spritesplit.asm
 	dasm $< -o$@ -DSPLIT_HIRES_TO_MC_EXPANDED
+
+ss-mc-hires.prg: spritesplit.asm
+	dasm $< -o$@ -DSPLIT_MC_TO_HIRES
+
+ss-mc-hires-exp.prg: spritesplit.asm
+	dasm $< -o$@ -DSPLIT_MC_TO_HIRES_EXPANDED
 
 ss-hires-color.prg: spritesplit.asm
 	dasm $< -o$@ -DSPLIT_HIRES_COLOR
@@ -56,8 +63,8 @@ ss-pri-mc-exp.prg: spritesplit.asm
 clean:
 	rm -f *~ \#*\#
 	rm -f a.out
-	rm -f ss-hires-mc.prg
-	rm -f ss-hires-mc-exp.prg
+	rm -f ss-hires-mc.prg ss-hires-mc-exp.prg
+	rm -f ss-mc-hires.prg ss-mc-hires-exp.prg
 	rm -f ss-hires-color.prg
 	rm -f ss-mc-color0.prg
 	rm -f ss-mc-color1.prg
