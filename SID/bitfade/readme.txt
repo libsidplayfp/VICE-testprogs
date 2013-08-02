@@ -16,3 +16,11 @@ test1frq0.prg - read only SID registers
 - plays a simple note on voice 0, and reads back the (read only) frequency
   register. shows bitfading of read only registers
 
+the delayXXXX.prg tests work the same, but measure the delay using a CIA timer
+and display the result.
+
+results from real C64 (new SID):
+
+delayosc3        00019
+delayenv3        00019
+delayfrq0       ~7a000 ... ~74000 (slowly going down depending on temperature)
