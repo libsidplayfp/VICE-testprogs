@@ -16,6 +16,16 @@ start:
 * = $0900
 entrypoint:
     sei
+;    lda #$20
+;    ldx #0
+;clp:
+;    sta $0400,x
+;    sta $0500,x
+;    sta $0600,x
+;    sta $06e8,x
+;    inx
+;    bne clp
+
     lda #$7f
     sta $dc0d
     sta $dd0d
@@ -58,7 +68,7 @@ entrypoint:
     lda #$00
     sta $d010
     lda #$00
-    sta $f5
+    sta $f5     ; delay depending on CIA
 
 !if B_MODE = 1 {
     lda #$40
@@ -67,7 +77,7 @@ entrypoint:
 } else {
     lda #$00
 }
-    sta $f8
+    sta $f8     ; d015 value
 
     lda #<reference_data
     sta $fa
@@ -80,6 +90,8 @@ entrypoint:
     cli
 entry_loop:
     jmp entry_loop
+
+;-------------------------------------------------------------
 
 irq_handler:
     lda #<irq_handler_2
@@ -123,7 +135,7 @@ irq_handler_2_wait_1:
 irq_handler_2_skip_1:
     nop
     nop
-    lda $f5
+    lda $f5     ; delay depending on CIA
     bne cia_ok
     jsr testcia
     jmp irq_handler_2_finish_test
@@ -142,7 +154,7 @@ irq_handler_2_wait_2:
     lda #$46
     sta $d012
     cli
-    lda $f8
+    lda $f8     ; d015 value
     sta $d015
     lda #$ff
     sta $dd04
@@ -152,7 +164,7 @@ irq_handler_2_wait_2:
     sta $dd06
     lda #$00
     sta $dd07
-    lda $f9
+    lda $f9     ; cia1 ta lo
     sta $dc04
     lda #$00
     sta $dc05
@@ -426,6 +438,8 @@ lc169:
     cli
 }
 
+;------------------------------------------------------------------
+
     lda $dd06
     pha
     tya
@@ -437,6 +451,7 @@ lc169:
     cmp #$01
     beq irq_handler_2_test_mode
 
+    ; store values
     pla
     sta ($fa),y
     iny
@@ -445,6 +460,8 @@ lc169:
     jmp irq_handler_2_next
 
 irq_handler_2_test_mode:
+
+    ; compare values with reference data
     pla
     cmp ($fa),y
     bne irq_handler_2_test_failed
@@ -467,6 +484,8 @@ irq_handler_2_next:
     lda $fb
     adc #$00
     sta $fb
+
+    ; show current addr
     ldy #$01
     jsr printhex
     lda $fa
@@ -483,14 +502,14 @@ irq_handler_2_next:
     sta $f7
 }
 
-    inc $f9
+    inc $f9     ; cia1 ta lo
     lda $f9
     cmp $f6
     bne irq_handler_2_finish_test
 
-    lda $f5
+    lda $f5     ; delay depending on CIA
     sta $f9
-    inc $f8
+    inc $f8     ; d015 value
     lda $f8
 
 !if B_MODE = 1 {
@@ -500,6 +519,7 @@ irq_handler_2_next:
 }
     bne irq_handler_2_finish_test
 
+    ; all tests done
     inc $d020
 irq_handler_2_all_tests_successful:
     jmp irq_handler_2_all_tests_successful
@@ -581,8 +601,8 @@ irq_handler_testcia:
 } else {
     adc #$10
 }
-    sta $f5
-    sta $f9
+    sta $f5     ; delay depending on CIA
+    sta $f9     ; cia1 ta lo
     clc
     adc #$80
     sta $f6
@@ -643,10 +663,12 @@ failed:
   inc $0403
 failvalue:
   pha
+  ; reference value
   lda ($fa),y
   ldy #$09
   jsr printhex
   pla
+  ; actual value
   ldy #$06
   jsr printhex
 failloop:

@@ -437,6 +437,7 @@ lc169:
     cmp #$01
     beq irq_handler_2_test_mode
 
+    ; store values
     pla
     sta ($fa),y
     iny
@@ -445,6 +446,8 @@ lc169:
     jmp irq_handler_2_next
 
 irq_handler_2_test_mode:
+
+    ; compare values with reference data
     pla
     cmp ($fa),y
     bne irq_handler_2_test_failed
@@ -467,6 +470,7 @@ irq_handler_2_next:
     lda $fb
     adc #$00
     sta $fb
+    ; show current addr
     ldy #$01
     jsr printhex
     lda $fa
