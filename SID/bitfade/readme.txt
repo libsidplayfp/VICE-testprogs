@@ -19,8 +19,16 @@ test1frq0.prg - read only SID registers
 the delayXXXX.prg tests work the same, but measure the delay using a CIA timer
 and display the result.
 
-results from real C64 (new SID):
+results from real C64:
 
-delayosc3        00019
-delayenv3        00019
-delayfrq0       ~7a000 ... ~74000 (slowly going down depending on temperature)
+(new SID) (250469/8580R5) (250469/8580R5)
+
+delayosc3     00019          00019
+delayenv3     00019          00019
+delayfrq0    ~7a000        ~108000
+
+(old SID) (250407/6581)
+
+delayosc3     00019
+delayenv3     00019
+delayfrq0    ~01d00
