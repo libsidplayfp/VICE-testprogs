@@ -30,7 +30,7 @@ basic:
   .byte 0,0,0   ; end of BASIC program
 
 start:
-
+    jsr init
   sei
   ldy #$7f
   sty $dc0d
@@ -87,7 +87,7 @@ timer:
   inc timer + 1
   inx
   inx
-  cpx #$10
+  cpx #$14
 endloop:
   beq endloop
 
@@ -97,3 +97,31 @@ irq:
   lda $dc0d
   jmp $ea81
 
+init:
+    lda #$20
+    ldx #0
+lp1:
+    sta $0400,x
+    inx
+    bne lp1
+
+    ldx #$27
+lp2:
+    lda refdata,x
+    sta $0428,x
+    dex
+    bpl lp2
+    rts
+
+refdata:
+    .if NEWCIA = 0
+    .byte $99, $00, $99, $00, $99, $81, $99, $81, $99, $81, $99, $81, $da, $81, $da, $01
+    .byte $99, $00, $99, $00
+    .byte $20, $20, $20, $20, $20, $20, $3c, $12, $05, $06, $3a, $03, $09, $01, $20, $31, $20, $0f, $0c, $04
+    .endif
+    .if NEWCIA = 1
+    .byte $99, $00, $99, $00, $99, $00, $99, $81, $99, $81, $99, $81, $99, $81, $da, $81
+    .byte $99, $00, $99, $00
+    .byte $20, $20, $20, $20, $20, $20, $3c, $12, $05, $06, $3a, $03, $09, $01, $20, $31, $20, $0e, $05, $17
+    .endif
+  
