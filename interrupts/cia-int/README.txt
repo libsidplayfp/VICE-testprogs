@@ -88,6 +88,7 @@ CIA2: MOS/6526/1685
   --BBBb------------------
   AA----HHHMMMMMOO--------
 
+  [Note: this matches reference data for "PAL/old CIA" (cia-int-irq.prg)]
 
   CIA-INT (NMI) R04 / TLR
 
@@ -111,6 +112,7 @@ CIA2: MOS/6526/1685
   --BBBb------------------
   AAEEE-HHHMMMMMOOQQUUUUWW
 
+  [Note: this matches reference data for "PAL/old CIA" (cia-int-nmi.prg)]
 
 Machine 1 (tlr):
 
@@ -147,6 +149,8 @@ CIA2: MOS/6526/1685
   --BBBb------------------
   AA----HHHMMMMMOO--------
 
+  [Note: this matches reference data for "PAL/old CIA" (cia-int-irq.prg)]
+ 
 
 Running on Drean C64C:
 
@@ -181,6 +185,7 @@ CIA2: <unknown>
   --BBBb------------------
   AA----HHHMMMMMOO--------
 
+  [Note: this matches reference data for "PAL/old CIA" (cia-int-irq.prg)]
 
 -----------------------------------------------------------------------
 
@@ -238,6 +243,7 @@ SID: MOS/8580R5/3488 25
   ---BBB------------------
   AAA---HHHMMMMMMOO-------
 
+  [Note: this matches reference data for "PAL/new CIA" (cia-int-irq-new.prg)]
 
   CIA-INT (NMI) R04 / TLR
 
@@ -261,6 +267,7 @@ SID: MOS/8580R5/3488 25
   ---BBB------------------
   AAAEEEHHHMMMMMMOOQQUUUUW
 
+  [Note: this matches reference data for "PAL/new CIA" (cia-int-nmi-new.prg)]
 
 -----------------------------------------------------------------------
 It works like this:
