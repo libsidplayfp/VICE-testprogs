@@ -2,8 +2,14 @@
     .export Start
 
 Start:
-    lda #$93
-    jsr $ffd2
+    ldx #$27
+slp:
+    lda #$20
+    sta $0400,x
+    lda #1
+    sta $d800,x
+    dex
+    bpl slp
 
     sei
 
@@ -21,6 +27,13 @@ mainloop:
     dec $d020
 
     ; test CIA1 (IRQ)
+
+    lda #$ff
+    sta $dc04
+    sta $dc05
+
+    lda #%10010000 ; stop timer
+    sta $dc0e
 
     ; Set IRQ vector
     lda #<continue2
@@ -77,4 +90,24 @@ continue1:
     sta $dc0d
 
     inc $0450
+.if (TESTVAL = 255)
+    ldx #$1e
+tstlp1:
+    ldy #2
+    lda $0400,x
+    cmp refdata,x
+    bne tstsk1
+    ldy #5
+tstsk1:
+    tya
+    sta $d800,x
+    dex
+    bpl tstlp1
+.endif
     jmp mainloop
+
+.if (TESTVAL = 255)
+refdata:
+    .byte $f6,$ee,$e6,$de,$d6,$ce,$c6,$be,$b6,$ae,$a6,$9e,$96,$8e,$86,$7e,$76,$6e,$66,$5e,$56,$4e,$46,$3e,$36,$2e,$26,$1e,$16,$0e,$06
+.endif
+    
