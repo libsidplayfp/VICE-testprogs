@@ -3,6 +3,7 @@ PROGS = \
 	cia1.prg \
 	cia2.prg \
 	cia3.prg \
+	cia3a.prg \
 	cia4.prg \
 	cia5.prg \
 	cia6.prg \
@@ -14,8 +15,7 @@ PROGS = \
 	cia12.prg \
 	cia13.prg \
 	cia14.prg \
-	cia15.prg \
-	cia3a.prg
+	cia15.prg
 
 all: $(PROGS)
 
