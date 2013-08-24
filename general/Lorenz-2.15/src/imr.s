@@ -9,6 +9,7 @@ turboass = 780
          .text "780"
          .byte $2c,$30,$3a,$9e,$32,$30
          .byte $37,$33,$00,$00,$00
+
          .block
          lda #1
          sta turboass
@@ -161,14 +162,19 @@ nextname .null "flipos"
 
 ;---------------------------------------
 
-irqadr   .word 0
+irqwait   .byte 0
 
 onirq
-         lda $0105,x
-         sta irqadr+0
-         lda $0106,x
-         sta irqadr+1
-         jmp $ea31
+         lda #1
+         sta irqwait
+
+         lda $dc0d
+         pla
+         tay
+         pla
+         tax
+         pla
+         rti
 
 ;---------------------------------------
 
@@ -184,32 +190,33 @@ main
 
          .block
          sei
+         jsr waitborder
          lda #0
-         sta irqadr+0
-         sta irqadr+1
+         sta irqwait
          sta $dc0e
-         sta $dc04
          sta $dc05
+.ifeq NEWCIA - 1
+         lda #7
+.endif
+         sta $dc04
          lda #$7f
          sta $dc0d
          bit $dc0d
-         lda #%00001001
+         lda #%00011001
          sta $dc0e
-         cli
-         jsr waitborder
-         lda #$81
-         sta $dc0d
-         lda #2
-         lda irqadr+1
-irq
+         cli            ; 2 cycles
+         lda #$81       ; 2 cycles
+         sta $dc0d      ; 4 cycles
+         sei            ; 2 cycles
+         lda irqwait
          beq ok
          jsr print
          .byte 13
-         .text "imr=$81 irq in "
-         .text "clock 2"
+         .text "imr=$81 irq in clock 2"
          .byte 0
          jsr waitkey
 ok
+         cli
          .bend
 
 ;---------------------------------------
@@ -217,29 +224,30 @@ ok
 
          .block
          sei
+         jsr waitborder
          lda #0
-         sta irqadr+0
-         sta irqadr+1
+         sta irqwait
          sta $dc0e
          sta $dc04
          sta $dc05
          lda #$7f
          sta $dc0d
          bit $dc0d
-         lda #%00001001
+         lda #%00011001
          sta $dc0e
-         cli
-         jsr waitborder
-         lda #$81
-         sta $dc0d
-         lda 2
-irq
-         lda irqadr+1
+         cli            ; 2 cycles
+         lda #$81       ; 2 cycles
+         sta $dc0d      ; 4 cycles
+.ifeq NEWCIA - 1
+         lda #2 ; 2 cycles
+.else
+         lda 2 ; 3 cycles
+.endif
+         lda irqwait
          bne ok
          jsr print
          .byte 13
-         .text "imr=$81 no irq "
-         .text "in clock 3"
+         .text "imr=$81 no irq in clock 3"
          .byte 0
          jsr waitkey
 ok
@@ -250,16 +258,16 @@ ok
 
          .block
          sei
+         jsr waitborder
          lda #0
-         sta irqadr+0
-         sta irqadr+1
+         sta irqwait
          sta $dc0e
          sta $dc04
          sta $dc05
          lda #$7f
          sta $dc0d
          bit $dc0d
-         lda #%00001001
+         lda #%00011001
          sta $dc0e
          lda #$81
          sta $dc0d
@@ -270,13 +278,17 @@ ok
          beq ok
          jsr print
          .byte 13
-         .text "imr=$7f may not "
-         .text "clear int"
+         .text "imr=$7f may not clear int"
          .byte 0
          jsr waitkey
 ok
          .bend
 
 ;---------------------------------------
-
+end
+         lda #<$ea31
+         sta $0314
+         lda #>$ea31
+         sta $0315
+         cli
          rts

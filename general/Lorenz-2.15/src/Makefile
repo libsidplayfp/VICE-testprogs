@@ -262,7 +262,6 @@ DISK3PROGS = \
 	cia2pb7.prg \
 	loadth.prg \
 	cnto2.prg \
-	imr.prg \
 	flipos.prg \
 	oneshot.prg \
 	cntdef.prg \
@@ -278,6 +277,7 @@ DISK3PROGSOLD = \
 	cia2tb.prg \
 	icr01.prg \
 	irq.prg \
+	imr.prg \
 	nmi.prg
 
 DISK3PROGSNEW = \
@@ -288,6 +288,7 @@ DISK3PROGSNEW = \
 	cia2tbnew.prg \
 	icr01new.prg \
 	irqnew.prg \
+	imrnew.prg \
 	nminew.prg
 
 ALLPROGSOLD = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGS) $(DISK3PROGSOLD)
@@ -343,6 +344,10 @@ icr01.prg: icr01.s
 	64tass $(ASFLAGS) -D NEWCIA=0 -i icr01.s -o icr01.prg
 icr01new.prg: icr01.s
 	64tass $(ASFLAGS) -D NEWCIA=1 -i icr01.s -o icr01new.prg
+imr.prg: imr.s
+	64tass $(ASFLAGS) -D NEWCIA=0 -i imr.s -o imr.prg
+imrnew.prg: imr.s
+	64tass $(ASFLAGS) -D NEWCIA=1 -i imr.s -o imrnew.prg
 cia1tab.prg: cia1tab.s
 	64tass $(ASFLAGS) -D NEWCIA=0 -i cia1tab.s -o cia1tab.prg
 cia1tabnew.prg: cia1tab.s

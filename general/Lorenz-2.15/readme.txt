@@ -19,12 +19,12 @@ suite. There may also be a difference between your C64 and my C64."
 While the Test Suite is running, the Datasette should be disconnected. Needs 
 about 80 min to complete.
 
-IMPORTANT: some tests (irq, nmi, icr01, cia1ta, cia1tb, cia1tab, cia2ta, cia2tb)
-           depend on the type of CIAs in the C64 ("old" or "new") - use the
-           respective programs/disk images.
+IMPORTANT: some tests (irq, imr, nmi, icr01, cia1ta, cia1tb, cia1tab, cia2ta, 
+           cia2tb) depend on the type of CIAs in the C64 ("old" or "new") - use 
+           the respective programs/disk images.
 
-           cia2ta, cia2tb have NOT been updated yet and currently fail on "new" 
-           CIAs (see TODO)
+           imr, cia2ta, cia2tb have NOT been (fully) updated yet and currently 
+           fail on "new" CIAs (see TODO)
 
 disable virtual device traps for best results in VICE
 
