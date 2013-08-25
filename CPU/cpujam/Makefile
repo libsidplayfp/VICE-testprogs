@@ -13,7 +13,8 @@ PROGS=\
 	cpujam92.prg \
 	cpujamb2.prg \
 	cpujamd2.prg \
-	cpujamf2.prg
+	cpujamf2.prg \
+	nojam.prg
 all:
 	cl65 --asm-define JAMCODE=2 -o cpujam02.prg cpujam.s
 	cl65 --asm-define JAMCODE=18 -o cpujam12.prg cpujam.s
@@ -27,6 +28,7 @@ all:
 	cl65 --asm-define JAMCODE=178 -o cpujamb2.prg cpujam.s
 	cl65 --asm-define JAMCODE=210 -o cpujamd2.prg cpujam.s
 	cl65 --asm-define JAMCODE=242 -o cpujamf2.prg cpujam.s
+	cl65 -o nojam.prg nojam.s
 	rm -f *.o
 
 	c1541 -format "cpujam,1" d64 cpujam.d64 > /dev/null
