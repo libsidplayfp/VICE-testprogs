@@ -1,0 +1,24 @@
+check behaviour of RAM locations $00 and $01
+
+when reading/writing memory locations $00 and $01, the 6510 CPU will instead 
+access its CPU port. the physical RAM that is present at these locations can not
+be read by the CPU (it will always read the CPU port). when writing a value to
+one of these locations, the CPU will signal write enable for the RAM, but it 
+will not put the actual value on the bus (the value goes to the CPU port 
+instead), which results in whatever value was on the bus before (usually some-
+thing fetched by the VICII) ending up in RAM location $00/$01.
+
+as the VICII will always see RAM (also at location $00/$01), those locations can
+be made visible as graphics data and eg values can be checked by using sprite-bg
+collisions.
+
+quicktest.prg:
+    0 poke53272,5:poke0,47:run
+
+simple demonstration, sets videoram to $0000 so you can see the content of RAM
+locations $00 and $01 in the top left of the screen. the basic program writes
+a constant value of $2f to $00, and the system interrupt will write a constant
+value of $37 to $01. however, on a real C64 you will see seemingly random values
+being written to RAM locations $00 and $01.
+
+TODO: write more detailed deterministic test program
