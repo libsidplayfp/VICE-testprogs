@@ -11,4 +11,7 @@ MEMTOP (9ff0-9fff, the filename of the loaded program shows up here)
 
 - green means match, red means fail
 - yellow marks areas which are undefined / may change
-- press 0, 1, 2, 3 to view the first 4 pages of memory
+
+- press + / - to select memory page shown at the bottom
+        , selects page $00
+        . selects page $de

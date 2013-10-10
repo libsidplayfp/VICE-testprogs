@@ -1,99 +1,50 @@
 
-    !to "test.prg",cbm
+sptr = $02
+mptr = $04
+refptr = $06
+maskptr = $08
+cptr = $0a
 
-    *=$0801
+xtmp = $10
+ytmp = $11
+numlines = $12
+linepos = $13
+currcol = $14
 
-    !byte $0c, $08, $00, $00, $9e, $20, $32, $35, $36, $30, $00, $00, $00
+currpage = $18
+;-------------------------------------------------------------------------------
 
-    sptr = $02
-    mptr = $04
-    refptr = $06
-    maskptr = $08
-    cptr = $0a
+cpubuf = REGBUFFER
+;            !byte 0,0,0,0,0,0,0,0
+vicbuf = REGBUFFER + (1 * 8)
+;            !byte 0,0,0,0,0,0,0,0
+;            !byte 0,0,0,0,0,0,0,0
+;            !byte 0,0,0,0,0,0,0,0
+;            !byte 0,0,0,0,0,0,0,0
+;            !byte 0,0,0,0,0,0,0,0
+;            !byte 0,0,0,0,0,0,0,0
+cia1buf = REGBUFFER + (1 * 8) + (6 * 8)
+;            !byte 0,0,0,0,0,0,0,0
+;            !byte 0,0,0,0,0,0,0,0
+cia2buf = REGBUFFER + (1 * 8) + (6 * 8) + (2 * 8)
+;            !byte 0,0,0,0,0,0,0,0
+;            !byte 0,0,0,0,0,0,0,0
+ramebuf = REGBUFFER + (1 * 8) + (6 * 8) + (2 * 8) + (2 * 8)
+;            !byte 0,0,0,0,0,0,0,0
+;            !byte 0,0,0,0,0,0,0,0
 
-            *=$0a00
-
-            jmp start
+pages = MEMBUFFER
 
 ;-------------------------------------------------------------------------------
-            
-cpubuf:
-            !byte 0,0,0,0,0,0,0,0
-vicbuf:
-            !byte 0,0,0,0,0,0,0,0
-            !byte 0,0,0,0,0,0,0,0
-            !byte 0,0,0,0,0,0,0,0
-            !byte 0,0,0,0,0,0,0,0
-            !byte 0,0,0,0,0,0,0,0
-            !byte 0,0,0,0,0,0,0,0
-            !byte 0,0,0,0,0,0,0,0
-            !byte 0,0,0,0,0,0,0,0
-cia1buf:
-            !byte 0,0,0,0,0,0,0,0
-            !byte 0,0,0,0,0,0,0,0
-cia2buf:
-            !byte 0,0,0,0,0,0,0,0
-            !byte 0,0,0,0,0,0,0,0
 
-ramebuf:
-            !byte 0,0,0,0,0,0,0,0
-            !byte 0,0,0,0,0,0,0,0
-
-;-----------------------------------------------------------
-
-cpuref:
-            !byte 0,0,0,$f5,$30,0,0,0
-vicref:
-            !byte 0,0,0,0,0,0,0,0
-            !byte 0,0,0,0,0,0,0,0
-            !byte 0,$1b,0,0,0,0,$c8,0
-            !byte $15,$71,$f0,0,0,0,0,0
-            !byte $fe,$f6,$f1,$f2,$f3,$f4,$f0,$f1
-            !byte $f2,$f3,$f4,$f5,$f6,$f7,$fc,$ff
-            !byte 0,0,0,0,0,0,0,0
-            !byte 0,0,0,0,0,0,0,0
-cia1ref:
-            !byte $7f,$ff,$ff,0,0,0,$ff,$04
-            !byte 0,0,0,$01,0,$81,$01,0
-cia2ref:
-            !byte $07,$ff,$3f,0,$ff,$ff,$ff,$ff
-            !byte 0,0,0,$01,0,0,$08,0
-
-rameref:
-            !byte $00, $00, $00, $00, $00, $00, $00, $00
-            !byte $00, $00, $00, $00, $54, $45, $53, $54
-;-----------------------------------------------------------
-
-cpumask:
-            !byte $ff, $ff, $ff, $ff, $ff, $00, $00, $00
-vicmask:
-            !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-            !byte $ff, $7f, $00, $00, $00, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-cia1mask:
-            !byte $ff, $ff, $ff, $ff, $00, $00, $ff, $ff
-            !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-cia2mask:
-            !byte $3f, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-
-ramemask:
-            !byte $00, $00, $00, $00, $00, $00, $00, $00
-            !byte $00, $00, $00, $00, $ff, $ff, $ff, $ff
+            * = CODESTART
 
 ;-------------------------------------------------------------------------------
 
 start:
-;            inc $d020
-;            jmp start
-
             php ; push status
             sei
+            cld
             sta cpubuf+0
             stx cpubuf+1
             sty cpubuf+2
@@ -102,10 +53,34 @@ start:
             pla ; get status
             sta cpubuf+4
 
-            ldy #0
-lpp1:
+            lda #0
+            sta cpubuf+5
+            sta cpubuf+6
+            sta cpubuf+7
+
+            ldx $00
+            ldy $01
+
+            lda #$2f
+            sta $00
+            lda #$37
+            sta $01
+
+            stx pages
+            sty pages+1
+
+            ldx #$ff
+            txs
+
+            ldy #2
+lpp1a:
             lda $0,y
             sta pages,y
+            iny
+            bne lpp1a
+
+            ldy #0
+lpp1:
             lda $100,y
             sta pages+$100,y
             lda $200,y
@@ -122,15 +97,25 @@ lpp2:
             iny
             cpy #$10
             bne lpp2
-;            jsr clear
 
-testlp:
+            ; delay so floppy can finish reset routine etc
+            ldx #60 * 2
+waitframes:
+            lda #$80
+            cmp $d012
+            bne *-3
+            cmp $d012
+            beq *-3
+            dex
+            bne waitframes
+
+            ; get VIC, CIA1, CIA2
             ldy #0
 lpv1:
             lda $d000,y
             sta vicbuf,y
             iny
-            cpy #$40
+            cpy #$30
             bne lpv1
 
             ldy #0
@@ -138,7 +123,7 @@ lpc1:
             lda $dc00,y
             sta cia1buf,y
             iny
-            cpy #$0f
+            cpy #$10
             bne lpc1
 
             ldy #0
@@ -146,12 +131,11 @@ lpc2:
             lda $dd00,y
             sta cia2buf,y
             iny
-            cpy #$0f
+            cpy #$10
             bne lpc2
 
             ; show results
-
-            jsr clear
+            jsr clear ; clear screen and setup VIC
 
             ; cpu
             lda #>$0400
@@ -273,38 +257,96 @@ lpc2:
             lda #2
             jsr doblock
 
-            lda #'0'
-            jmp skp
-;            lda #>(pages+$0000)
-;            sta mptr+1
-;            lda #<(pages+$0000)
-;            sta mptr
-;            jsr dopage
-;            jmp testlp
 
-;            lda #$37
-;            sta $01
-;            lda $dc0d
-;            cli
+            lda #$ff
+            sta $dc02
+            lda #0
+            sta $dc03
+
 mainlp:
+
             inc $07e5
 
-            jsr $ff9f
-            jsr $ffe4
+            lda #%11011111
+            sta $dc00
+
+wait1:
+            inc $07e6
+            jsr showpage
+
+            lda $dc01
+            cmp #$ff
+            bne wait1
+
+wait2:
+            inc $07e6
+            jsr showpage
+
+            lda $dc01
+            cmp #$ff
+            beq wait2
             sta $07e7
 
-            cmp #'0'
-            beq skp
-            cmp #'1'
-            beq skp
-            cmp #'2'
-            beq skp
-            cmp #'3'
-            beq skp
+            cmp #%11111110
+            beq plus
+            cmp #%11110111
+            beq minus
+            cmp #%01111111
+            beq firstpage
+            cmp #%11101111
+            beq iopage
             jmp mainlp
+
+minus:
+            dec currpage
+            jmp mainlp
+plus:
+            inc currpage
+            jmp mainlp
+
+firstpage:
+            lda #0
+            sta currpage
+            jmp mainlp
+iopage:
+            lda #$de
+            sta currpage
+            jmp mainlp
+
+showpage:
+            lda #>($400+(40*24))
+            sta sptr+1
+            lda #<($400+(40*24))
+            sta sptr+0
+            lda #1
+            sta currcol
+            lda #33
+            sta linepos
+            lda currpage
+            jsr puthex
+
+            lda currpage
+            cmp #4
+            bcc skp
+            
+            lda currpage
+            sta mptr+1
+            lda #0
+            sta mptr
+            
+            ldy #0
+plpa1:
+            lda (mptr),y
+            sta $0400+(18*40),y
+            lda #1
+            sta $d800+(18*40),y
+            iny
+            bne plpa1
+            
+            rts
+            
 skp:
-            sec
-            sbc #'0'
+            lda currpage
             tax
             clc
             adc #>pages
@@ -317,79 +359,91 @@ skp:
             clc
             adc #>pagesmask
             sta maskptr+1
-            lda #0
+            lda #<pages
             sta mptr
+            lda #<pagesref
             sta refptr
+            lda #<pagesmask
             sta maskptr
-            jsr dopage
 
-            jmp mainlp
+            jsr dopage
+            rts
 
 ;-------------------------------------------------------------------------------
+getcolor:
+            ; RED if val & mask != ref & mask
+            lda (mptr),y
+            eor (refptr),y
+            and (maskptr),y
+            beq nred
+            lda #10
+            rts
+nred:
+            lda (mptr),y
+            cmp (refptr),y
+            beq nyellow
+            lda #7
+            rts
+nyellow:
+            lda #5
+            rts
 dopage:
 
             ldy #0
 plpa:
             lda (mptr),y
             sta $0400+(18*40),y
+            jsr getcolor
+            sta $d800+(18*40),y
             iny
             bne plpa
 
-            ldy #0
-plpb:
-            ldx #7
-            lda (maskptr),y
-            beq grn
-            ldx #5
-
-            lda (mptr),y
-            and (maskptr),y
-            cmp (refptr),y
-            beq grn
-            ldx #10
-grn:
-            txa
-            sta $d800+(18*40),y
-            iny
-            bne plpb
+;            ldy #0
+;plpb:
+;            ldx #7
+;            lda (maskptr),y
+;            beq grn
+;            ldx #5
+;
+;            lda (mptr),y
+;            and (maskptr),y
+;            cmp (refptr),y
+;            beq grn
+;            ldx #10
+;grn:
+;            txa
+;            sta $d800+(18*40),y
+;            iny
+;            bne plpb
             rts
 
 ;-------------------------------------------------------------------------------
 
 doblock:
-            sta numlines+1
+            sta numlines
             ldx #0
 lp3:
-            stx xtmp+1
+            stx xtmp
 
             jsr startline
 
             ldy #0
 lp2:
-            sty ytmp+1
+            sty ytmp
 
-            lda #5
-            sta currcol+1
-
-            lda (maskptr),y
-            bne green1
-            lda #7
-            sta currcol+1
-green1:
-            lda (mptr),y
-            and (maskptr),y
-            cmp (refptr),y
-            beq green
-            lda #10
-            sta currcol+1
+            jsr getcolor
+            cmp #10
+            bne notred
             sta $d020
-green:
+notred:
+            sta currcol
+
             lda (mptr),y
             jsr puthex
             jsr putright
 
-ytmp:       ldy #0
-xtmp:       ldx #0
+            ldy ytmp
+            ldx xtmp
             iny
             cpy #8
             bne lp2
@@ -427,41 +481,59 @@ xtmp:       ldx #0
             sta refptr+1
 
             inx
-numlines:   cpx #6
+            cpx numlines
             bne lp3
 
             rts
             
 ;-------------------------------------------------------------------------------
 clear:
-            lda #$20
             ldy #0
 lp1:
+            lda #$20
             sta $0400,y
             sta $0500,y
             sta $0600,y
             sta $0700,y
+            lda #$01
+            sta $d800,y
+            sta $d900,y
+            sta $da00,y
+            sta $db00,y
             iny
             bne lp1
-            
+
+            lda #$1b
+            sta $d011
+            lda #$c8
+            sta $d016
+!if (USEULTIMAX = 1) {
+            lda #$1c
+} else {
+            lda #$15
+}
+            sta $d018
             lda #5
             sta $d020
             lda #0
             sta $d021
             
+            lda #3
+            sta $dd00
+
             rts
 
 startline:
             lda #0
-            sta linepos+1
+            sta linepos
             rts
 putright:
-            inc linepos+1
+            inc linepos
             rts
 
 puthex:
-linepos:    ldy #0
-            sta tmp+1
+            ldy linepos
+            pha
             lsr 
             lsr 
             lsr 
@@ -477,188 +549,22 @@ linepos:    ldy #0
             
             lda hextab,x
             sta (sptr),y
-currcol:    lda #1
+            lda currcol
             sta (cptr),y
 
             iny
-tmp:        lda #0
+            pla
             and #$0f
             tax
             lda hextab,x
             sta (sptr),y
-            lda currcol+1
+            lda currcol
             sta (cptr),y
             iny
-            sty linepos+1
+            sty linepos
             rts
 
 hextab:
             !text "0123456789"
             !byte 1,2,3,4,5,6
 
-;-------------------------------------------------------------------------------
-
-            * = $1000
-pages:
-
-            * = $1400
-pagesref:
-            !binary "dump-pages.bin"
-
-            * = $1800
-pagesmask:
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            ; $A0-$A2/160-162         Real-time jiffy Clock
-            !byte $00, $00, $00, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            ; $C5/197                 Matrix value of last Key pressed
-            !byte $ff, $ff, $ff, $ff,  $ff, $00, $ff, $ff
-            ; $C8/200                 Pointer: End of Line for Input
-            ; $C9-$CA/201-202         Cursor X/Y position at start of Input
-            ; $CB/203                 Matrix value of last Key pressed
-            ; $CC/204                 Flag: Cursor blink
-            ; $CD/205                 Timer: Count down for Cursor blink toggle
-            ; $CE/206                 Character under Cursor while Cursor Inverted            
-            !byte $00, $00, $00, $00,  $00, $00, $00, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            ; $F5-$F6/245-246         Vector: Current Keyboard decoding Table
-            ; $F7-$F8/247-248         RS232 Input Buffer Pointer            
-            !byte $ff, $ff, $ff, $ff,  $ff, $00, $00, $00
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-
-            ; $0100-$0104 seems to be always "38911" after reset
-            !byte $ff, $ff, $ff, $ff,  $ff, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-
-            ; $0200-$0258    BASIC Input Buffer (Input Line from Screen)
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $00, $00, $00, $00,  $00, $00, $00, $00
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-
-            ; $0287/647               Background Color under Cursor
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $00
-            ;  $028B   Repeat Key: Speed Counter
-            ;  $028C   Repeat Key: First repeat delay Counter
-            !byte $ff, $ff, $ff, $00,  $00, $ff, $ff, $ff
-
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff,  $ff, $ff, $ff, $ff
-
-            ; make sure the binary always ends at the same "odd" address
-            * = $1cde
-            !byte $42
