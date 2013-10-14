@@ -4,7 +4,8 @@ TESTPROGS = \
 	exos.prg \
 	mmcr.prg \
 	mmcrplugin.prg \
-	mmcr-64krom.bin
+	mmcr-64krom.bin \
+	romram.prg
 
 all: $(TESTPROGS) disk
 
@@ -18,6 +19,9 @@ mmcrplugin.prg: main-mmcr.s plugin-mmcr.s
 mmcr-64krom.bin: main-mmcr.s 64krom-mmcr.s mmcrplugin.prg
 	acme 64krom-mmcr.s
 
+romram.prg: romram.s
+	acme romram.s
+	
 disk: exos.prg mmcr.prg
 	c1541 -format test,00 d64 carttest.d64 -attach carttest.d64 \
 		-write exos.prg exos \
