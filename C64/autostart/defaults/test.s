@@ -12,26 +12,40 @@ linepos = $13
 currcol = $14
 
 currpage = $18
+
+failed = $20
 ;-------------------------------------------------------------------------------
 
+; $08 bytes
 cpubuf = REGBUFFER
 ;            !byte 0,0,0,0,0,0,0,0
-vicbuf = REGBUFFER + (1 * 8)
+; $30 bytes
+vicbuf = cpubuf + $08
 ;            !byte 0,0,0,0,0,0,0,0
 ;            !byte 0,0,0,0,0,0,0,0
 ;            !byte 0,0,0,0,0,0,0,0
 ;            !byte 0,0,0,0,0,0,0,0
 ;            !byte 0,0,0,0,0,0,0,0
 ;            !byte 0,0,0,0,0,0,0,0
-cia1buf = REGBUFFER + (1 * 8) + (6 * 8)
+; $10 + 8
+cia1buf = vicbuf + $30
 ;            !byte 0,0,0,0,0,0,0,0
 ;            !byte 0,0,0,0,0,0,0,0
-cia2buf = REGBUFFER + (1 * 8) + (6 * 8) + (2 * 8)
+; $10 + 8
+cia2buf = cia1buf + $10 + 8
 ;            !byte 0,0,0,0,0,0,0,0
 ;            !byte 0,0,0,0,0,0,0,0
-ramebuf = REGBUFFER + (1 * 8) + (6 * 8) + (2 * 8) + (2 * 8)
+; $08
+ramebuf = cia2buf + $10 + 8
 ;            !byte 0,0,0,0,0,0,0,0
 ;            !byte 0,0,0,0,0,0,0,0
+
+cpubuf_first = cpubuf + $80
+vicbuf_first = vicbuf + $80
+cia1buf_first = cia1buf + $80
+cia2buf_first = cia2buf + $80
+ramebuf_first = ramebuf + $80
+
 
 pages = MEMBUFFER
 
@@ -67,11 +81,149 @@ start:
             sta $01
 
             stx pages
+            stx cpubuf+6
             sty pages+1
+            sty cpubuf+7
 
             ldx #$ff
             txs
 
+            lda #5
+            sta failed
+
+            lda #0
+            ldy #0
+lpp1b:
+            sta vicbuf,y
+            iny
+            bne lpp1b
+
+            jsr readpages
+            jsr readrameblock
+
+            !if (1 = 1) {
+            ; delay so floppy can finish reset routine etc
+            ldx #2 * 60
+waitframes:
+            lda #$80
+            cmp $d012
+            bne *-3
+            cmp $d012
+            beq *-3
+            dex
+            bne waitframes
+            }
+
+            jsr readioblock
+
+            ldy #$7f
+lpp1c:
+            lda vicbuf,y
+            sta vicbuf_first,y
+            dey
+            bpl lpp1c
+
+            ; show results
+            jsr clear ; clear screen and setup VIC
+            jsr setupvic
+
+            jsr showcpublock
+            jsr showrameblock
+            jsr showioblock
+            jsr showpage
+
+            lda failed
+            sta $d020
+
+            ; wait until key pressed
+wait3a:
+            inc $d020
+            dec $d020
+            jsr keyscan
+            cmp #$ff
+            beq wait3a
+            ; wait until no key pressed
+wait3:
+            jsr keyscan
+            cmp #$ff
+            bne wait3
+
+mainlp:
+
+
+            ; wait until no key pressed
+wait1:
+
+            jsr restorevic
+            jsr readioblock
+            jsr setupvic
+            jsr showioblock
+            jsr showpage
+
+            jsr keyscan
+            cmp #$ff
+            bne wait1
+
+            ; wait until key pressed
+wait2:
+
+            jsr restorevic
+            jsr readioblock
+            jsr setupvic
+            jsr showioblock
+            jsr showpage
+
+            jsr keyscan
+            cmp #$ff
+            beq wait2
+
+            cmp #%11111110      ; +
+            beq plus
+            cmp #%11110111      ; -
+            beq minus
+            cmp #%01111111      ; ,
+            beq firstpage
+            cmp #%11101111      ; .
+            beq iopage
+            jmp mainlp
+
+minus:
+            dec currpage
+            jmp mainlp
+plus:
+            inc currpage
+            jmp mainlp
+
+firstpage:
+            lda #0
+            sta currpage
+            jmp mainlp
+iopage:
+            lda #$de
+            sta currpage
+            jmp mainlp
+
+keyscan:
+            lda #$ff
+            sta $dc02 ; 1 = Pin set to Output, 0 = Input 
+            lda #0
+            sta $dc03
+            lda #%11011111
+            sta $dc00
+            lda $dc01
+            pha
+            ; restore CIA1
+            lda cia1buf_first+$02
+            sta $dc02
+            lda cia1buf_first+$03
+            sta $dc03
+            lda cia1buf_first+$12
+            sta $dc00
+            pla
+            rts
+
+;-------------------------------------------------------------------------------
+readpages:
             ldy #2
 lpp1a:
             lda $0,y
@@ -89,26 +241,19 @@ lpp1:
             sta pages+$300,y
             iny
             bne lpp1
+            rts
 
+readrameblock:
             ldy #0
 lpp2:
-            lda $9ff0,y
+            lda $9ff8,y
             sta ramebuf,y
             iny
-            cpy #$10
+            cpy #$08
             bne lpp2
+            rts
 
-            ; delay so floppy can finish reset routine etc
-            ldx #60 * 2
-waitframes:
-            lda #$80
-            cmp $d012
-            bne *-3
-            cmp $d012
-            beq *-3
-            dex
-            bne waitframes
-
+readioblock:
             ; get VIC, CIA1, CIA2
             ldy #0
 lpv1:
@@ -126,6 +271,29 @@ lpc1:
             cpy #$10
             bne lpc1
 
+            lda #$00
+            sta $dc02
+            sta $dc03
+
+            lda $dc00
+            sta cia1buf+$10
+            lda $dc01
+            sta cia1buf+$11
+
+            lda #$ff
+            sta $dc02
+            sta $dc03
+
+            lda $dc00
+            sta cia1buf+$12
+            lda $dc01
+            sta cia1buf+$13
+
+            lda cia1buf+$02
+            sta $dc02
+            lda cia1buf+$03
+            sta $dc03
+
             ldy #0
 lpc2:
             lda $dd00,y
@@ -134,9 +302,33 @@ lpc2:
             cpy #$10
             bne lpc2
 
-            ; show results
-            jsr clear ; clear screen and setup VIC
+            lda #$00
+            sta $dd02
+            lda #$00
+            sta $dd03
 
+            lda $dd00
+            sta cia2buf+$10
+            lda $dd01
+            sta cia2buf+$11
+
+            lda #$ff
+            sta $dd02
+            lda #$ff
+            sta $dd03
+
+            lda $dd00
+            sta cia2buf+$12
+            lda $dd01
+            sta cia2buf+$13
+
+            lda cia2buf+$02
+            sta $dd02
+            lda cia2buf+$03
+            sta $dd03
+            rts
+
+showcpublock:
             ; cpu
             lda #>$0400
             sta sptr+1
@@ -159,8 +351,9 @@ lpc2:
             sta maskptr
 
             lda #1
-            jsr doblock
+            jmp doblock
 
+showioblock:
             ; vic
             lda #>($0400+(2*40))
             sta sptr+1
@@ -206,13 +399,13 @@ lpc2:
             lda #<cia1mask
             sta maskptr
 
-            lda #2
+            lda #3
             jsr doblock
 
             ; cia2
-            lda #>($0400+(12*40))
+            lda #>($0400+(13*40))
             sta sptr+1
-            lda #<($0400+(12*40))
+            lda #<($0400+(13*40))
             sta sptr
 
             lda #>cia2buf
@@ -230,13 +423,14 @@ lpc2:
             lda #<cia2mask
             sta maskptr
 
-            lda #2
-            jsr doblock
+            lda #3
+            jmp doblock
 
+showrameblock
             ; end of basic ram
-            lda #>($0400+(15*40))
+            lda #>($0400+(17*40))
             sta sptr+1
-            lda #<($0400+(15*40))
+            lda #<($0400+(17*40))
             sta sptr
 
             lda #>ramebuf
@@ -254,73 +448,17 @@ lpc2:
             lda #<ramemask
             sta maskptr
 
-            lda #2
-            jsr doblock
-
-
-            lda #$ff
-            sta $dc02
-            lda #0
-            sta $dc03
-
-mainlp:
-
-            inc $07e5
-
-            lda #%11011111
-            sta $dc00
-
-wait1:
-            inc $07e6
-            jsr showpage
-
-            lda $dc01
-            cmp #$ff
-            bne wait1
-
-wait2:
-            inc $07e6
-            jsr showpage
-
-            lda $dc01
-            cmp #$ff
-            beq wait2
-            sta $07e7
-
-            cmp #%11111110
-            beq plus
-            cmp #%11110111
-            beq minus
-            cmp #%01111111
-            beq firstpage
-            cmp #%11101111
-            beq iopage
-            jmp mainlp
-
-minus:
-            dec currpage
-            jmp mainlp
-plus:
-            inc currpage
-            jmp mainlp
-
-firstpage:
-            lda #0
-            sta currpage
-            jmp mainlp
-iopage:
-            lda #$de
-            sta currpage
-            jmp mainlp
+            lda #1
+            jmp doblock
 
 showpage:
-            lda #>($400+(40*24))
+            lda #>($0400+(40*16))
             sta sptr+1
-            lda #<($400+(40*24))
+            lda #<($0400+(40*16))
             sta sptr+0
             lda #1
             sta currcol
-            lda #33
+            lda #38
             sta linepos
             lda currpage
             jsr puthex
@@ -337,9 +475,9 @@ showpage:
             ldy #0
 plpa1:
             lda (mptr),y
-            sta $0400+(18*40),y
+            sta $0400+(18*40)+24,y
             lda #1
-            sta $d800+(18*40),y
+            sta $d800+(18*40)+24,y
             iny
             bne plpa1
             
@@ -392,29 +530,11 @@ dopage:
             ldy #0
 plpa:
             lda (mptr),y
-            sta $0400+(18*40),y
+            sta $0400+(18*40)+24,y
             jsr getcolor
-            sta $d800+(18*40),y
+            sta $d800+(18*40)+24,y
             iny
             bne plpa
-
-;            ldy #0
-;plpb:
-;            ldx #7
-;            lda (maskptr),y
-;            beq grn
-;            ldx #5
-;
-;            lda (mptr),y
-;            and (maskptr),y
-;            cmp (refptr),y
-;            beq grn
-;            ldx #10
-;grn:
-;            txa
-;            sta $d800+(18*40),y
-;            iny
-;            bne plpb
             rts
 
 ;-------------------------------------------------------------------------------
@@ -434,7 +554,7 @@ lp2:
             jsr getcolor
             cmp #10
             bne notred
-            sta $d020
+            sta failed
 notred:
             sta currcol
 
@@ -502,6 +622,12 @@ lp1:
             sta $db00,y
             iny
             bne lp1
+            rts
+
+setupvic:
+;            lda #$fc
+;            cmp $d012
+;            bne *-3
 
             lda #$1b
             sta $d011
@@ -513,14 +639,47 @@ lp1:
             lda #$15
 }
             sta $d018
-            lda #5
+            lda failed
             sta $d020
             lda #0
             sta $d021
-            
-            lda #3
-            sta $dd00
 
+            !if (1 = 0) {
+            lda $dd02
+            ora #%00000011
+            sta $dd02
+
+            lda $dd02 ; 1 = Pin set to Output, 0 = Input
+            and $dd00
+            ora #$03
+            sta $dd00
+            }
+
+            rts
+
+restorevic:
+            lda #$fc
+            cmp $d012
+            bne *-3
+
+            lda vicbuf_first + $11
+            and #$7f
+            sta $d011
+            lda vicbuf_first + $16
+            sta $d016
+            lda vicbuf_first + $18
+            sta $d018
+            lda vicbuf_first + $20
+            sta $d020
+            lda vicbuf_first + $21
+            sta $d021
+
+            !if (1 = 0) {
+            lda cia2buf_first + $02 ; 1 = Pin set to Output, 0 = Input
+            sta $dd02
+            and cia2buf_first + $00
+            sta $dd00
+            }
             rts
 
 startline:

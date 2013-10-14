@@ -1,5 +1,5 @@
 cpuref:
-            !byte $00, $00, $00, $f5, $30, $00, $00, $00
+            !byte $00, $00, $00, $f5, $30, $00, $2f, $37
 vicref :
             !byte $00, $00, $00, $00, $00, $00, $00, $00
             !byte $00, $00, $00, $00, $00, $00, $00, $00
@@ -10,17 +10,18 @@ vicref :
 cia1ref:
             !byte $7f, $ff, $ff, $00, $00, $00, $ff, $04
             !byte $00, $00, $00, $01, $00, $81, $01, $08
+            !byte $ff, $ff, $7f, $00, $00, $00, $00, $00
 cia2ref:
-            !byte $07, $ff, $3f, $00, $ff, $ff, $ff, $ff
+            !byte $c7, $ff, $3f, $00, $ff, $ff, $ff, $ff
             !byte $00, $00, $00, $01, $00, $00, $08, $08
+            !byte $3f, $ff, $c7, $00, $00, $00, $00, $00
 
 rameref:
-            !byte $00, $00, $00, $00, $00, $00, $00, $00
             !byte $00, $00, $00, $00, $54, $45, $53, $54
 ;-----------------------------------------------------------
 
 cpumask:
-            !byte $ff, $ff, $ff, $ff, $ff, $00, $00, $00
+            !byte $ff, $ff, $ff, $ff, $ff, $00, $ff, $ff
 vicmask:
             !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
             !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
@@ -31,11 +32,12 @@ vicmask:
 cia1mask:
             !byte $ff, $ff, $ff, $ff, $00, $00, $ff, $ff
             !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
+            !byte $ff, $ff, $ff, $ff, $00, $00, $00, $00
 cia2mask:
             !byte $3f, $ff, $ff, $ff, $ff, $ff, $ff, $ff
             !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
+            !byte $ff, $ff, $ff, $ff, $00, $00, $00, $00
 
 ramemask:
-            !byte $00, $00, $00, $00, $00, $00, $00, $00
             !byte $00, $00, $00, $00, $ff, $ff, $ff, $ff
 
