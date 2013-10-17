@@ -18,6 +18,10 @@ CODESTART = $0a00
     !src "refio.s"
     !src "refmem.s"
 
+testname:
+          ;1234567890123456
+    !text "PRG DEFAULTS    "
+    
     ; make sure the binary always ends at the same "odd" address
     * = $1cde
     !byte $42

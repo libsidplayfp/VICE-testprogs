@@ -1,5 +1,12 @@
+; proper RSID environment:
+; VIC - IRQ set to raster 0, but not enabled.
+; CIA 1 timer A - set to 60Hz with the counter running and IRQs active.
+; Other timers - disabled and loaded with $FFFF.
+; Bank register - $37
+
+
 cpuref:
-            !byte $00, $00, $00, $00, $00, $00, $00, $1f
+            !byte $01, $01, $01, $00, $00, $00, $2f, $37
 
 vicref:
             !byte $00, $00, $00, $00, $00, $00, $00, $00
@@ -9,8 +16,8 @@ vicref:
             !byte $f0, $f0, $f0, $f0, $f0, $f0, $f0, $f0
             !byte $f0, $f0, $f0, $f0, $f0, $f0, $f0, $ff
 cia1ref:
-            !byte $ff, $ff, $00, $00, $ff, $ff, $ff, $ff
-            !byte $00, $00, $00, $01, $00, $00, $00, $00
+            !byte $ff, $ff, $00, $00, $04, $25, $ff, $ff
+            !byte $00, $00, $00, $01, $00, $81, $01, $00
             !byte $ff, $ff, $00, $00, $00, $00, $00, $00
 cia2ref:
             !byte $ff, $ff, $00, $00, $ff, $ff, $ff, $ff
@@ -22,7 +29,7 @@ rameref:
 ;-----------------------------------------------------------
 
 cpumask:
-            !byte $00, $00, $00, $00, $00, $00, $00, $17
+            !byte $ff, $ff, $ff, $00, $00, $00, $ff, $ff
 
 vicmask:
             !byte $00, $00, $00, $00, $00, $00, $00, $00
@@ -32,13 +39,13 @@ vicmask:
             !byte $f0, $f0, $f0, $f0, $f0, $f0, $f0, $f0
             !byte $f0, $f0, $f0, $f0, $f0, $f0, $f0, $ff
 cia1mask:
-            !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
+            !byte $00, $00, $00, $00, $00, $00, $ff, $ff
             !byte $ff, $ff, $fe, $6f, $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff, $00, $00, $00, $00
+            !byte $00, $00, $00, $00, $00, $00, $00, $00
 cia2mask:
-            !byte $3f, $ff, $ff, $ff, $ff, $ff, $ff, $ff
+            !byte $00, $00, $00, $00, $ff, $ff, $ff, $ff
             !byte $ff, $ff, $fe, $6f, $ff, $ff, $ff, $ff
-            !byte $3f, $ff, $3f, $ff, $00, $00, $00, $00
+            !byte $00, $00, $00, $00, $00, $00, $00, $00
 
 ramemask:
             !byte $00, $00, $00, $00, $00, $00, $00, $00

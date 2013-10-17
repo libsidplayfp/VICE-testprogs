@@ -31,11 +31,11 @@ vicmask:
             !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
 cia1mask:
             !byte $ff, $ff, $ff, $ff, $00, $00, $ff, $ff
-            !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
+            !byte $ff, $ff, $fe, $6f, $ff, $ff, $ff, $ff
             !byte $ff, $ff, $ff, $ff, $00, $00, $00, $00
 cia2mask:
             !byte $3f, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-            !byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
+            !byte $ff, $ff, $fe, $6f, $ff, $ff, $ff, $ff
             !byte $ff, $ff, $ff, $ff, $00, $00, $00, $00
 
 ramemask:

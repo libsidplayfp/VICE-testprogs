@@ -45,8 +45,12 @@ REGBUFFER = $c000 + $0400
 CODESTART = $0a00
     !src "test.s"
 
-    !src "refio.s"
+    !src "refiosid.s"
     !src "refmem.s"
+
+testname:
+          ;1234567890123456
+    !text "SID DEFAULTS    "
 
     ; make sure the binary always ends at the same "odd" address
     * = $1cde

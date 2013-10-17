@@ -622,6 +622,14 @@ lp1:
             sta $db00,y
             iny
             bne lp1
+    
+            ldy #15
+lp1a:            
+            lda testname,y
+            and #$3f
+            sta $0400+24,y
+            dey
+            bpl lp1a
             rts
 
 setupvic:

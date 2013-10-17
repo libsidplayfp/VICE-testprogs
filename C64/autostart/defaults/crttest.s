@@ -54,6 +54,10 @@ CODESTART = ROMSTART
     !src "refioreset.s"
     !src "refmemreset.s"
 
+testname:
+          ;1234567890123456
+    !text "CRT DEFAULTS    "
+    
 ; when using ultimax mode, add character set in the ROM
 !if (USEULTIMAX = 1) {
     * = ROMSTART + $1000
