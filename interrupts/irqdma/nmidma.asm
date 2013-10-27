@@ -16,6 +16,8 @@ start:
 * = $0900
 entrypoint:
     sei
+    lda #4 ; start with 4 so we will see green (=5) on success
+    sta $d020
     lda #$7f
     sta $dc0d
     sta $dd0d

@@ -34,6 +34,8 @@ basic:
 ; -- Main
 
 entrypoint:
+    lda #4 ; start with 4 so we will see green (=5) on success
+    sta $d020
     ; setup
     jsr setup
 main_testloop:
