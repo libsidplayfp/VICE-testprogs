@@ -253,48 +253,63 @@ DISK2PROGS = \
 
 DISK2NEXT = irq.prg
 
-DISK3PROGS = \
+DISK3PROGSOLD = \
+	  irq.prg \
+	  nmi.prg \
+	cia1tb123.prg \
+	cia2tb123.prg \
+	cia1pb6.prg \
+	cia1pb7.prg \
+	cia2pb6.prg \
+	\
+	cia2pb7.prg \
+	  cia1tab.prg \
+	loadth.prg \
+	cnto2.prg \
+	  icr01.prg \
+	  imr.prg \
+	flipos.prg \
+	oneshot.prg \
+	cntdef.prg \
+	  cia1ta.prg \
+	  cia1tb.prg \
+	  cia2ta.prg \
+	  cia2tb.prg \
+	\
+	finish.prg \
+	\
+	template.prg
+
+DISK3PROGSNEW = \
+	  irqnew.prg \
+	  nminew.prg \
 	cia1tb123.prg \
 	cia2tb123.prg \
 	cia1pb6.prg \
 	cia1pb7.prg \
 	cia2pb6.prg \
 	cia2pb7.prg \
+	  cia1tabnew.prg \
 	loadth.prg \
 	cnto2.prg \
+	  icr01new.prg \
+	  imrnew.prg \
 	flipos.prg \
 	oneshot.prg \
 	cntdef.prg \
+	  cia1tanew.prg \
+	  cia1tbnew.prg \
+	  cia2tanew.prg \
+	  cia2tbnew.prg \
+	\
 	finish.prg \
 	\
 	template.prg
 
-DISK3PROGSOLD = \
-	cia1tab.prg \
-	cia1ta.prg \
-	cia1tb.prg \
-	cia2ta.prg \
-	cia2tb.prg \
-	icr01.prg \
-	irq.prg \
-	imr.prg \
-	nmi.prg
-
-DISK3PROGSNEW = \
-	cia1tabnew.prg \
-	cia1tanew.prg \
-	cia1tbnew.prg \
-	cia2tanew.prg \
-	cia2tbnew.prg \
-	icr01new.prg \
-	irqnew.prg \
-	imrnew.prg \
-	nminew.prg
-
-ALLPROGSOLD = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGS) $(DISK3PROGSOLD)
-ALLPROGSNEW = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGS) $(DISK3PROGSNEW)
+ALLPROGSOLD = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSOLD)
+ALLPROGSNEW = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSNEW)
 	
-ALLPROGS = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGS) $(DISK3PROGSOLD) $(DISK3PROGSNEW)
+ALLPROGS = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSOLD) $(DISK3PROGSNEW)
 ALLDISKS = Disk1.d64 Disk2.d64 Disk3.d64 Disk3new.d64 Lorenz.d81 Lorenznew.d81
 
 ASFLAGS=-C -T -a -W -q
@@ -391,20 +406,14 @@ Disk2.d64: $(DISK2PROGS) nextdisk2.prg
 	done
 	c1541 Disk2.d64 -write "nextdisk2.prg" "$(basename $(DISK2NEXT))" > /dev/null
 #	c1541 Disk2.d64 -list
-Disk3.d64: $(DISK3PROGS) $(DISK3PROGSOLD)
+Disk3.d64: $(DISK3PROGSOLD)
 	c1541 -format "test suite 2.15+,#3" d64 Disk3.d64 > /dev/null
-	for I in $(basename $(DISK3PROGS)); do \
-		c1541 Disk3.d64 -write "$$I.prg" "$$I" > /dev/null; \
-	done
 	for I in $(basename $(DISK3PROGSOLD)); do \
 		c1541 Disk3.d64 -write "$$I.prg" "$$I" > /dev/null; \
 	done
 #	c1541 Disk3.d64 -list
-Disk3new.d64: $(DISK3PROGS) $(DISK3PROGSNEW)
+Disk3new.d64: $(DISK3PROGSNEW)
 	c1541 -format "test suite 2.15+,#3" d64 Disk3new.d64 > /dev/null
-	for I in $(basename $(DISK3PROGS)); do \
-		c1541 Disk3new.d64 -write "$$I.prg" "$$I" > /dev/null; \
-	done
 	for I in $(basename $(DISK3PROGSNEW)); do \
 		c1541 Disk3new.d64 -write "$$I.prg" `echo "$$I" | sed -e 's:new$$::'`; \
 	done
@@ -417,10 +426,7 @@ Lorenz.d81: $(ALLPROGSOLD)
 #	c1541 Lorenz.d81 -list
 Lorenznew.d81: $(ALLPROGSNEW)
 	c1541 -format "test suite 2.15+,#1" d81 Lorenznew.d81 > /dev/null
-	for I in $(basename $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGS)); do \
-		c1541 Lorenznew.d81 -write "$$I.prg" "$$I" > /dev/null; \
-	done
-	for I in $(basename $(DISK3PROGSNEW)); do \
+	for I in $(basename $(ALLPROGSNEW)); do \
 		c1541 Lorenznew.d81 -write "$$I.prg" `echo "$$I" | sed -e 's:new$$::'`; \
 	done
 #	c1541 Lorenznew.d81 -list
