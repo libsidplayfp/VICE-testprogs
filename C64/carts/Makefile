@@ -6,7 +6,8 @@ TESTPROGS = \
 	mmcrplugin.prg \
 	mmcr-64krom.bin \
 	romram.crt \
-	writeram.crt
+	writeram.crt \
+	16kgame.crt
 
 all: $(TESTPROGS) disk
 
@@ -26,6 +27,10 @@ romram.crt: romram.s
 writeram.crt: writeram.s
 	acme writeram.s
 	cartconv -t pf -i writeram.bin -o writeram.crt
+
+16kgame.crt: main-16kgame.s
+	acme main-16kgame.s
+	cartconv -t normal -i 16kgame.bin -o 16kgame.crt
 	
 disk: exos.prg mmcr.prg
 	c1541 -format test,00 d64 carttest.d64 -attach carttest.d64 \
