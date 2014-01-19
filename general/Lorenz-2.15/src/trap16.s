@@ -406,7 +406,7 @@ zy
            sta da
            rts
 
-_a
+ac
            ldy #1
            lda #<da
            sta (pcode),y
@@ -1098,16 +1098,16 @@ table
            .word b
            .byte $1b,$02,$b1,$6c,$30
            .text "nop"
-           .word _a
+           .word ac
            .byte $1b,$c6,$b1,$6c,$30
            .text "ora"
-           .word _a
+           .word ac
            .byte $1b,$df,$b1,$6c,$b0
            .text "asl"
-           .word _a
+           .word ac
            .byte $36,$c6,$b1,$6c,$30
            .text "aso"
-           .word _a
+           .word ac
            .byte $36,$f6,$b1,$6c,$b0
            .text "bpl"
            .word r
@@ -1194,16 +1194,16 @@ table
            .word b
            .byte $1b,$02,$b1,$6c,$30
            .text "bit"
-           .word _a
+           .word ac
            .byte $1b,$c6,$b1,$6c,$30
            .text "and"
-           .word _a
+           .word ac
            .byte $1b,$02,$b1,$6c,$30
            .text "rol"
-           .word _a
+           .word ac
            .byte $36,$c6,$b1,$6c,$30
            .text "rla"
-           .word _a
+           .word ac
            .byte $36,$06,$b1,$6c,$30
            .text "bmi"
            .word r
@@ -1293,13 +1293,13 @@ table
            .word jmpw
            .byte $1b,$c6,$b1,$6c,$30
            .text "eor"
-           .word _a
+           .word ac
            .byte $1b,$dd,$b1,$6c,$b0
            .text "lsr"
-           .word _a
+           .word ac
            .byte $0d,$c6,$b1,$6c,$31
            .text "lse"
-           .word _a
+           .word ac
            .byte $0d,$cb,$b1,$6c,$b1
            .text "bvc"
            .word r
@@ -1389,13 +1389,13 @@ table
            .word jmpi
            .byte $1b,$c6,$b1,$6c,$30
            .text "adc"
-           .word _a
+           .word ac
            .byte $1b,$e1,$b1,$6c,$b0
            .text "ror"
-           .word _a
+           .word ac
            .byte $0d,$c6,$b1,$6c,$31
            .text "rra"
-           .word _a
+           .word ac
            .byte $0d,$d4,$b1,$6c,$b0
            .text "bvs"
            .word r
@@ -1482,16 +1482,16 @@ table
            .word b
            .byte $1b,$00,$b1,$6c,$32
            .text "sty"
-           .word _a
+           .word ac
            .byte $6c,$c6,$b1,$6c,$30
            .text "sta"
-           .word _a
+           .word ac
            .byte $c6,$c6,$b1,$6c,$30
            .text "stx"
-           .word _a
+           .word ac
            .byte $b1,$c6,$b1,$6c,$30
            .text "axs"
-           .word _a
+           .word ac
            .byte $80,$c6,$b1,$6c,$30
            .text "bcc"
            .word r
@@ -1578,16 +1578,16 @@ table
            .word b
            .byte $1b,$0a,$0a,$6c,$30
            .text "ldy"
-           .word _a
+           .word ac
            .byte $1b,$c6,$b1,$1b,$30
            .text "lda"
-           .word _a
+           .word ac
            .byte $1b,$1b,$b1,$6c,$30
            .text "ldx"
-           .word _a
+           .word ac
            .byte $1b,$c6,$1b,$6c,$30
            .text "lax"
-           .word _a
+           .word ac
            .byte $1b,$1b,$1b,$6c,$30
            .text "bcs"
            .word r
@@ -1674,16 +1674,16 @@ table
            .word b
            .byte $1b,$c6,$65,$6c,$31
            .text "cpy"
-           .word _a
+           .word ac
            .byte $1b,$c6,$b1,$6c,$31
            .text "cmp"
-           .word _a
+           .word ac
            .byte $1b,$c6,$b1,$6c,$b1
            .text "dec"
-           .word _a
+           .word ac
            .byte $1a,$c6,$b1,$6c,$30
            .text "dcm"
-           .word _a
+           .word ac
            .byte $1a,$c6,$b1,$6c,$b1
            .text "bne"
            .word r
@@ -1770,16 +1770,16 @@ table
            .word b
            .byte $1b,$aa,$b1,$6c,$b1
            .text "cpx"
-           .word _a
+           .word ac
            .byte $1b,$c6,$b1,$6c,$b1
            .text "sbc"
-           .word _a
+           .word ac
            .byte $1b,$aa,$b1,$6c,$b1
            .text "inc"
-           .word _a
+           .word ac
            .byte $1c,$c6,$b1,$6c,$30
            .text "ins"
-           .word _a
+           .word ac
            .byte $1c,$a9,$b1,$6c,$b1
            .text "beq"
            .word r
