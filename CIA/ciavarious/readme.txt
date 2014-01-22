@@ -24,10 +24,11 @@ additional reference data for new CIA has been added.
 alternatively this directory contains packed/linked prg files of each test that
 can be loaded and run directly.
 
+NOTE:
+- Test C of CIA15 was missing it's reference data in the original source
+  archive. It was recreated and cross checked on a real C64.
+
 FIXME:
-- Test C of CIA15 fails on both of my machines, with "old" and "new" CIA. This
-  is either a bug in the original test, or the reference data was dumped on a
-  machine with some strange CIA (gpz)
 - verify new CIA tests on real C64s
 
 
