@@ -21,4 +21,10 @@ a constant value of $2f to $00, and the system interrupt will write a constant
 value of $37 to $01. however, on a real C64 you will see seemingly random values
 being written to RAM locations $00 and $01.
 
-TODO: write more detailed deterministic test program
+test1.prg:
+
+writes to 0/1 by first writing the desired value to $3fff (last byte of the
+current bank, which is fetched by the VICII in the border) and then to 0/1 in
+the border area. it then reads the respective ram locations using sprite
+collisions and compares to the original value(s). the border will turn red when
+an error occurs.
