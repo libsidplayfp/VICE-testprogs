@@ -1,0 +1,19 @@
+MEMORY {
+	ROMBANK0:
+		start $E000
+		size $1FF8
+		fill yes;
+	ROMVECT0:
+		start $FFF8
+		size $0008;
+	RAM8000:
+		start $8000
+		size $2000;
+}
+
+SEGMENTS {
+	CODE:		load = ROMBANK0, type = rw;
+	VECTORS0:	load = ROMVECT0, type = rw;
+	BSS:		load = RAM8000, type = bss;
+}
+

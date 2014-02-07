@@ -1,0 +1,11 @@
+MEMORY {
+	ROMBANK0:
+		start $0000
+		size $2000
+		fill yes;
+}
+
+SEGMENTS {
+	CODE:		load = ROMBANK0, type = rw;
+}
+
