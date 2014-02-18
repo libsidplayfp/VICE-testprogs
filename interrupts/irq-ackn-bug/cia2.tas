@@ -95,6 +95,19 @@ endloop:
   jmp loop1  
 
 startagain:
+
+    ldy #10
+    ldx #25
+lp3:
+    lda $0400,x
+    cmp $0428,x
+    bne sk3
+    dex
+    bpl lp3
+    ldy #5
+sk3:
+    sty $d020
+
   ldx #$10
   stx timer + 1
   ldx #$00

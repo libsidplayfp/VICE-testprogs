@@ -88,10 +88,23 @@ timer:
   inx
   inx
   cpx #$14
-endloop:
   beq endloop
 
   jmp loop1  
+
+endloop:
+    ldy #10
+    ldx #25
+lp3:
+    lda $0400,x
+    cmp $0428,x
+    bne sk3
+    dex
+    bpl lp3
+    ldy #5
+sk3:
+    sty $d020
+    jmp *
 
 irq:
   lda $dc0d
