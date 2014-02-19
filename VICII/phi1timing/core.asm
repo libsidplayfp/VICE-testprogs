@@ -212,6 +212,19 @@ main:
     cpy #CYCLES
     bne -
 
+    ; check measurements
+    ldx #5
+    ldy #0
+-   lda result_buffer,y
+    cmp reference,y
+    beq +
+    ldx #10
++
+    iny
+    cpy #CYCLES
+    bne -
+    stx $d020
+
     ; print message and results
     lda #<screen
     sta scrptr
