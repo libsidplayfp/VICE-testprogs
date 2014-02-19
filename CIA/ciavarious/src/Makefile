@@ -19,7 +19,7 @@ PROGS = \
 
 all: $(PROGS)
 
-%.prg:%.a65
+%.prg:%.a65 common.a65
 	xa -o $*.prg $*.a65
 
 clean:

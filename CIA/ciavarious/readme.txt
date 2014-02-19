@@ -12,6 +12,8 @@ Last key varies but Last+1 key won't change screen.
 
 Green characters indicate success, red characters indicate failure.
 
+The border will turn red when any test fails.
+
 the following tests depend on old vs new CIA:
 
 CIA3    K, L
@@ -27,8 +29,5 @@ can be loaded and run directly.
 NOTE:
 - Test C of CIA15 was missing it's reference data in the original source
   archive. It was recreated and cross checked on a real C64.
-
-FIXME:
-- verify new CIA tests on real C64s
 
 
