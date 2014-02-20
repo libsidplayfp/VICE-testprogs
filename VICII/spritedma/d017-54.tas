@@ -78,6 +78,7 @@ skipinit:
   sta $d009
   lda #$f8
   sta $07fC
+
   ldx #$3f
 sprloop:
   txa
@@ -85,8 +86,12 @@ sprloop:
   dex
   bne sprloop
 
-  rts
+  jsr setupscreen
 
+  jmp *
+  
+;-------------------------------------------------------------------------------
+  
 deinstall:
   sei           ; disable interrupts
   lda #$1b
@@ -234,3 +239,149 @@ nmi = * + 1
   sta cnmi
   sty cnmi+1    ; restore original NMI vector (although it won't be used)
   rts
+
+;-------------------------------------------------------------------------------
+  
+setupscreen:
+  ldy #0
+
+  ldx #0
+chrlp1:
+
+  tya
+  sta $3000+0*8,x
+  iny
+  tya
+  sta $3000+1*8,x
+  iny
+  tya
+  sta $3000+2*8,x
+  iny
+
+  inx
+  cpx #$02
+  bne chrlp1
+
+  ldy #1*3
+
+  ;ldx #0
+chrlp1a:
+
+  tya
+  sta $3000+0*8,x
+  iny
+  tya
+  sta $3000+1*8,x
+  iny
+  tya
+  sta $3000+2*8,x
+  iny
+
+  inx
+  cpx #$04
+  bne chrlp1a
+
+  ldy #2*3
+
+  ;ldx #0
+chrlp1b:
+
+  tya
+  sta $3000+0*8,x
+  iny
+  tya
+  sta $3000+1*8,x
+  iny
+  tya
+  sta $3000+2*8,x
+  iny
+
+  inx
+  cpx #$08
+  bne chrlp1b
+
+  
+  ldx #0
+chrlp2:
+
+  tya
+  sta $3000+3*8,x
+  iny
+  tya
+  sta $3000+4*8,x
+  iny
+  tya
+  sta $3000+5*8,x
+  iny
+
+  inx
+  cpx #$08
+  bne chrlp2
+
+  ldx #0
+chrlp3:
+
+  tya
+  sta $3000+6*8,x
+  iny
+  tya
+  sta $3000+7*8,x
+  iny
+  tya
+  sta $3000+8*8,x
+  iny
+
+  inx
+  cpx #$07
+  bne chrlp3
+
+  lda #$00
+  ldx #0
+chrlp3a:
+  sta $3000+8*8+7,x
+  inx
+  bne chrlp3a
+
+  ldx #0
+chrlp4a:
+  lda #$0f
+  sta $0400,x
+  sta $0500,x
+  sta $0600,x
+  sta $06e8,x
+  ;lda #$0f
+  sta $d800,x
+  sta $d900,x
+  sta $da00,x
+  sta $db00,x
+  inx
+  bne chrlp4a
+  
+  ldx #0
+chrlp4:
+  lda scr,x
+  sta $0400,x
+  lda #$0f
+  sta $d800,x
+  inx
+  cpx #40*3
+  bne chrlp4
+
+  lda #$1c
+  sta $d018
+  
+  lda #$0c
+  sta $d027+4
+  
+  lda #0
+  sta $d021
+  lda #$0b
+  sta $d020
+  
+  rts
+
+scr:
+    .byte $f,$f,$f,$f,$f,$f,$0,$1,$2,$f,$f,$f,$f,$0,$1,$2,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f
+    .byte $f,$f,$f,$f,$f,$f,$3,$4,$5,$f,$f,$f,$f,$3,$4,$5,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f
+    .byte $f,$f,$f,$f,$f,$f,$6,$7,$8,$f,$f,$f,$f,$6,$7,$8,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f,$f
+  
