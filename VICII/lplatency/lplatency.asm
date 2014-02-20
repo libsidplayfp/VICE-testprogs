@@ -113,6 +113,17 @@ sa_lp2:
 	dey
 	sta	($d1),y
 	
+	ldx     #10
+        lda     $0400+40*7+8
+        cmp     $0400+40*8+8
+        bne     err
+        lda     $0400+40*7+10
+        cmp     $0400+40*8+10
+        bne     err
+	ldx     #5
+err:
+        stx     $d020
+
 	jmp	sa_lp1
 
 
