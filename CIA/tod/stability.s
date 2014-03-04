@@ -28,7 +28,7 @@ alarmirq:
 
             ; stop timer
             lda #%10000000
-            sta $dc0e           ;1 (timer stops in last cycle)
+            sta $dc0e
 
             ; read timer values and save them
             lda $dc04           ;4
@@ -39,12 +39,17 @@ curroff1:   sta timebuf         ;4
 curroff4:   sta timebuf+$0300   ;4
 
             ; start timer
+    !if SYNC = 0 {
             lda #%10000001      ;2
+    }
+    !if SYNC > 0 {
+            lda #%00000001      ;2
+    }
             sta $dc0e           ;4
-                                ;-> 31
-                                
-timererrorcycles = 31
-                                
+                                ;-> 30
+
+timererrorcycles = 30
+
 curroff2:   stx timebuf+$0100
 curroff3:   sty timebuf+$0200
 
@@ -127,7 +132,12 @@ start:
             sta $dc0d
 
             ; stop timer
+    !if SYNC = 0 {
             lda #%10000000
+    }
+    !if SYNC > 0 {
+            lda #%00000000
+    }
             sta $dc0e
             lda #%01000000
             sta $dc0f
@@ -139,7 +149,12 @@ start:
             sta $dc07
 
             ; start timer
+    !if SYNC = 0 {
             lda #%10010001
+    }
+    !if SYNC > 0 {
+            lda #%00010001
+    }
             sta $dc0e
             lda #%01010001      ; set clock
             sta $dc0f
@@ -301,7 +316,7 @@ lp2:
 lp8:
             clc
             lda diffbuf,x
-            adc #timererrorcycles
+            adc #timererrorcycles - 2 ; sub 2 to compensate for IRQ latency
             sta diffbuf,x
             lda diffbuf+$0100,x
             adc #0
@@ -580,29 +595,47 @@ hextab:
             !byte $30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$01,$02,$03,$04,$05,$06
 
 videosystem:
+    !if SYNC = 0 {
             !scr "pal "
+    }
+    !if SYNC = 1 {
             !scr "ntsc"
+    }
             !scr "ntsc"
             !scr "paln"
 
 powerfreq:
+    !if SYNC = 0 {
             !scr "50hz"
+    }
+    !if SYNC > 0 {
             !scr "60hz"
-            !scr "60hz"
-            !scr "60hz"
+    }
 
 descr:
             !scr "min      max      diff average  ideal   "
 space:
-            !scr "space to measure again                  "
+            !scr "                  space to measure again"
+
 ;timing:
-; ~1.000.000 cycles per second
-; ~  100.000 cycles per 10th sec
-;#define C64_PAL_CYCLES_PER_SEC       985248
-;#define C64_NTSC_CYCLES_PER_SEC     1022730
-;#define C64_NTSCOLD_CYCLES_PER_SEC  1022730
-;#define C64_PALN_CYCLES_PER_SEC     1023440
 idealtime:
+    !if SYNC = 0 {
         ; PAL
         !word 98525 & $ffff
         !word 98525 >> 16
+    }
+    !if SYNC = 1 {
+        ; NTSC
+        !word 102273 & $ffff
+        !word 102273 >> 16
+    }
+    !if SYNC = 2 {
+        ; NTSCOLD
+        !word 102273 & $ffff
+        !word 102273 >> 16
+    }
+    !if SYNC = 3 {
+        ; PALN
+        !word 102344 & $ffff
+        !word 102344 >> 16
+    }
