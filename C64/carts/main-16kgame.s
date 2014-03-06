@@ -966,5 +966,3 @@ tagexp07: !scr "ra03ra70ca80caa0rac0iod0crd8........kern"
     !scr "caa0"
     * = ROMSTART + (12 * 1024) + $80
     !scr "cab0"
-
-    * = ROMSTART + (16 * 1024)

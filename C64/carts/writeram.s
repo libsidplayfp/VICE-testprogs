@@ -165,4 +165,3 @@ done
     beq done
     bne done
 
-    * = ROMSTART + (64 * 1024)
