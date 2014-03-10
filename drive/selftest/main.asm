@@ -23,6 +23,13 @@ start:
         jsr start_code
 
         sei
+        jsr rcv_init
+
+        ; some arbitrary delay
+        ldx #0
+        dex
+        bne *-1
+
         jsr rcv_wait
 
         ; recieve the result data

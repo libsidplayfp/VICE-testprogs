@@ -5,6 +5,31 @@
         jmp start
 
 ;-------------------------------------------------------------------------------
+rcv_init:
+        lda #$3f
+        sta $dd02
+        lda #$03
+        sta $dd00
+
+        rts
+
+rcv_wait:
+.wait1
+        lda $dd00       ; wait for DATA = 0 CLOCK = 0 (1 on drive side)
+        and #%11000000
+        bne .wait1
+
+        ; ack start
+        lda #%00001011 ; ATN=1
+        sta $dd00
+        ;nop
+        nop
+        lda #%00000011 ; ATN=0
+        sta $dd00
+
+        rts
+
+;-------------------------------------------------------------------------------
 
 rcv_1byte
 !if (0) {
@@ -25,8 +50,12 @@ rcv_1byte
         cmp $d012
         bcc -
 }
-
         inc $d020
+
+.wait2
+        lda $dd00       ; wait for DATA = 0 CLOCK = 0 (1 on drive side)
+        and #%11000000
+        bne .wait2
 
         lda #%00001011 ; ATN=1
         sta $dd00
@@ -50,16 +79,6 @@ rcv_1byte
         dec $d020
         rts
 
-
-rcv_wait:
-.wait1
-        bit $dd00       ; wait for DATA = 0 (1 on drive side)
-        bmi .wait1
-.wait2
-        bit $dd00       ; wait for DATA = 1 (0 on drive side)
-        bpl .wait2
-        rts
-         
 ;-------------------------------------------------------------------------------
 
 .listen
@@ -76,6 +95,13 @@ upload_code:
         sta $90
         lda #$08
         sta $ba
+
+        ; send "i" command
+        jsr .listen
+
+        lda #'i'
+        jsr $ffa8
+        jsr $ffae
 
         ;ldx #$08   ;upload 8 * $20 bytes to 1541
 .l0
@@ -131,11 +157,7 @@ start_code
         bne -
         jsr $ffae
 
-        lda #$3f
-        sta $dd02
-        lda #$03
-        sta $dd00
-        rts
+        jmp rcv_init
 
 mw_comm
         !text "m-w"

@@ -22,6 +22,13 @@ start:
         jsr start_code
 
         sei
+        jsr rcv_init
+
+        lda #1
+        sta rtrk
+        lda #17
+        sta rsec
+
 lp:
 
         jsr rcv_wait
@@ -29,14 +36,19 @@ lp:
         jsr rcv_1byte           ; get track nr
         cmp #$ff
         beq recend
+        sta rtrk
         tax
-        inc $0400+(40*23)-1,x
+        lda #'*'
+        sta $0400+(40*13)-1,x
 
         jsr rcv_1byte           ; get sector nr
+        sta rsec
         jsr rcv_1byte           ; get result code
+        ;clc
+        ;adc #$30 ; '0'
+        sta $0400+(40*11)-1,x
 
-        sta $0400+(40*21)-1,x
-
+        ; get block
         ldx #$00
 -
         jsr rcv_1byte
@@ -44,13 +56,64 @@ lp:
         inx
         bne -
 
+    !if (0) {
+        ; we skip track 17/18 because this program and the directory 
+        ; will be there
+        lda rtrk
+        cmp #17
+        beq lp
+        cmp #18
+        beq lp
+    }
+
+        ; compare block
+
+        ldx #$00
+-
+        lda #10
+        sta $d800,x
+        inx
+        sta $d800,x
+        dex
+
+        txa
+        eor rtrk
+        cmp $0400,x
+        bne recerr
+        lda #5
+        sta $d800,x
+
+        inx
+        txa
+        eor rsec
+        cmp $0400,x
+        bne recerr
+        lda #5
+        sta $d800,x
+
+        inx
+        bne -
+
+        ldx rtrk
+        lda #5
+        sta $d800+(40*13)-1,x
+
+        jmp lp
+
+recerr:
+        lda #10
+        sta rescol
         jmp lp
 
 recend:
-        lda #5
+        lda rescol
         sta $d020
         jmp *
 
+rtrk: !byte 0
+rsec: !byte 0
+
+rescol: !byte 5
 ;-------------------------------------------------------------------------------
 
 drivecode:
@@ -66,20 +129,11 @@ drvstart
         ldy #$00
         sty $1800
 
-drvlp
+drvlp:
 
-sect    lda #0
-        sta $0f         ; sector
 trk     lda #1
-        sta $0e         ; track
-        lda #$80        ; read block
-        sta $04
-
-        ; execute jobcode
-        cli
-        lda $04
-        bmi *-2
-        sei
+sect    ldx #16
+        jsr read
 
         pha
 
@@ -105,9 +159,83 @@ trk     lda #1
         beq drvend
         jmp drvlp
 drvend:
+        ; for some odd reason it hangs here
+        lda #18
+        lda #0
+        jsr read
+
         jsr snd_start
         lda #$ff
         jsr snd_1byte
         rts
+
+read:
+        cmp #36
+        bcs read36
+
+;sect    ldx #0
+        stx $0f         ; sector
+;trk     lda #1
+        sta $0e         ; track
+        lda #$80        ; read block
+        sta $04
+
+        ; execute jobcode
+        cli
+        lda $04
+        bmi *-2
+        sei
+        rts
+read36:
+;        lda #36         ; track nr
+        sta $08  
+;        ldx #$00        ; sector nr
+        stx $09  
+        lda #$e0        ; seek and start program at $0400
+        sta $01
+        cli
+        lda $01  
+        bmi *-2
+        sei
+        rts
+
+        ; irq/jobcode routine for loading tracks > 35
+        ;* = $0400
+        !align $ff, 0, 0
+
+        lda $1c00
+        and #$9F
+        ora #$00
+        sta $1c00        ; set speedzone
+
+        lda #$11         ; nr of sectors
+        sta $43
+        lda #>.data1     ; highbyte of target buffer
+        sta $31
+        jmp $F4d1        ; load sector
+;
+; code from data beckers "anti cracker book" (page 248):
+;
+; 0600 lda $1c00          Control-Port laden
+; 0603 and #$9F           Bits für Speed löschen
+; 0605 ora #$00           und mit neuern Speed verknüpfen
+; 0607 sta $1c00          Wert wieder speichern
+; 060A lda #$11           Anzahl der Sektoren laden
+; 060C sta $43            und übergeben
+; 060E lda #$05           HIGH-Byte der Pufferadresse, in den
+; 0610 sta $31            geladen werden soll, angeben.
+; 0612 jmp $F4d1          zur laderoutine springen
+; 
+; Das Programm wird hier gestartet
+; 
+; 0615 lda #$24           zu ladenden Track für
+; 0617 sta $0c            den Job übergeben
+; 06I9 lda #$00           Sektor-Nl.I11I'Ier an
+; 061B sta $0d            den Job übergeben
+; 0610 lda #$e0           Job·Code für Programm ausführen in den
+; 061F sta $03            Job-Speicher schreiben
+; 0621 lda $03            Rückmeldung abwarten
+; 0623 bmi $0621          verzweige, wenn noch nicht fertig
+; 0625 rts                Rücksprung
 } 
 drivecode_end:
