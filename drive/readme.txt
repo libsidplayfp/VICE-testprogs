@@ -17,11 +17,16 @@ scanner:
 - reads through the entire disk contents (track 1-42) and shows available
   tracks
 
+pwm:
+- simple drive-led pwm test
+
+interrupts:
+- interrupt related tests
+
 --------------------------------------------------------------------------------
 
 TODO:
 - various VIA tests (similar to ciavarious)
-- drive LED pwm test
 - physical limits test (check for highest and lowest reachable track)
 
 ..?

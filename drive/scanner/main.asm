@@ -159,7 +159,6 @@ sect    ldx #16
         beq drvend
         jmp drvlp
 drvend:
-        ; for some odd reason it hangs here
         lda #18
         lda #0
         jsr read
