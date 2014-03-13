@@ -53,12 +53,18 @@ start:
 
         lda #5
         sta $d020
-        jmp *
+        jmp waitkey
 chkerr:
         lda #10
         sta $d020
-        jmp *
+        jmp waitkey
 
+waitkey:
+        cli
+        jsr $ffe4
+        cmp #" "
+        bne waitkey
+        jmp start
 ;-------------------------------------------------------------------------------
 
 drivecode:
@@ -89,6 +95,9 @@ drvstart
         jsr snd_1byte
         iny
         bne -
-        rts
+
+        ;rts
+        sei
+        jmp $eaa0       ; drive reset
 } 
 drivecode_end:

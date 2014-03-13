@@ -23,10 +23,12 @@ pwm:
 interrupts:
 - interrupt related tests
 
+viavarious:
+- various tests, ported from andre fachats ciavarious (WIP)
+
 --------------------------------------------------------------------------------
 
 TODO:
-- various VIA tests (similar to ciavarious)
 - physical limits test (check for highest and lowest reachable track)
 
 ..?

@@ -88,6 +88,7 @@ rcv_1byte
         jmp $ff93
 
 upload_code:
+        stx .cnt+1
         sta dc_addr+1
         sty dc_addr+2
 
@@ -99,11 +100,16 @@ upload_code:
         ; send "i" command
         jsr .listen
 
-        lda #'i'
+        lda #"i"
         jsr $ffa8
         jsr $ffae
 
-        ;ldx #$08   ;upload 8 * $20 bytes to 1541
+        lda #<drivecode_start
+        sta mw_dest+0
+        lda #>drivecode_start
+        sta mw_dest+1
+
+.cnt:   ldx #$08   ;upload 8 * $20 bytes to 1541
 .l0
         jsr .listen
 
