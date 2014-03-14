@@ -26,15 +26,15 @@ TESTSLOC = $1000
 ;------------------------------------------
 	!zone {		; A
 .test 	lda #1
-	sta $dc04
-	lda #$11
-	sta $dc0e
+	sta $1804       ; Timer A lo
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc04
+.t1b	lda $1804       ; Timer A lo
 	sta DTMP,x
-	lda $dc0e
-	eor #$10
-	sta $dc0e
+	;lda $dc0e
+	;eor #$10
+	;sta $dc0e       ; toggle timer A force reload
 	inx
 	bne .t1b
 	rts
@@ -43,15 +43,15 @@ TESTSLOC = $1000
 
 	!zone {		; B
 .test 	lda #1
-	sta $dc04
-	lda #$11
-	sta $dc0e
+	sta $1804       ; Timer A lo
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc05
+.t1b	lda $1805       ; Timer A hi
 	sta DTMP,x
-	lda $dc0e
-	eor #$10
-	sta $dc0e
+	;lda $dc0e
+	;eor #$10
+	;sta $dc0e       ; toggle timer A force reload
 	inx
 	bne .t1b
 	rts
@@ -60,15 +60,15 @@ TESTSLOC = $1000
 
 	!zone {		; C
 .test 	lda #1
-	sta $dc05
-	lda #$11
-	sta $dc0e
+	sta $1805       ; Timer A hi
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc04
+.t1b	lda $1804       ; Timer A lo
 	sta DTMP,x
-	lda $dc0e
-	eor #$10
-	sta $dc0e
+	;lda $dc0e
+	;eor #$10
+	;sta $dc0e       ; toggle timer A force reload
 	inx
 	bne .t1b
 	rts
@@ -77,15 +77,15 @@ TESTSLOC = $1000
 
 	!zone {		; D
 .test 	lda #1
-	sta $dc05
-	lda #$11
-	sta $dc0e
+	sta $1805       ; Timer A hi
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc05
+.t1b	lda $1805       ; Timer A hi
 	sta DTMP,x
-	lda $dc0e
-	eor #$10
-	sta $dc0e
+	;lda $dc0e
+	;eor #$10
+	;sta $dc0e       ; toggle timer A force reload
 	inx
 	bne .t1b
 	rts
@@ -94,15 +94,15 @@ TESTSLOC = $1000
 
 	!zone {		; E
 .test 	lda #1
-	sta $dc04
-	lda #$11
-	sta $dc0e
+	sta $1804       ; Timer A lo
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
-	lda $dc0e
-	eor #$10
-	sta $dc0e
+	;lda $dc0e
+	;eor #$10
+	;sta $dc0e       ; toggle timer A force reload
 	inx
 	bne .t1b
 	rts
@@ -111,15 +111,15 @@ TESTSLOC = $1000
 
 	!zone {		; F
 .test 	lda #1
-	sta $dc05
-	lda #$11
-	sta $dc0e
+	sta $1805       ; Timer A hi
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
-	lda $dc0e
-	eor #$10
-	sta $dc0e
+	;lda $dc0e
+	;eor #$10
+	;sta $dc0e       ; toggle timer A force reload
 	inx
 	bne .t1b
 	rts
@@ -129,15 +129,15 @@ TESTSLOC = $1000
 ;------------------------------------------
 	!zone {		; G
 .test 	lda #1
-	sta $dc06
+	sta $1808       ; Timer B lo
 	lda #$11
 	sta $dc0f
 	ldx #0
-.t1b	lda $dc06
+.t1b	lda $1808       ; Timer B lo
 	sta DTMP,x
-	lda $dc0f
-	eor #$10
-	sta $dc0f
+	;lda $dc0f
+	;eor #$10
+	;sta $dc0f       ; toggle timer B force reload
 	inx
 	bne .t1b
 	rts
@@ -146,15 +146,15 @@ TESTSLOC = $1000
 
 	!zone {		; H
 .test 	lda #1
-	sta $dc06
+	sta $1808       ; Timer B lo
 	lda #$11
 	sta $dc0f
 	ldx #0
-.t1b	lda $dc07
+.t1b	lda $1809       ; Timer B hi
 	sta DTMP,x
-	lda $dc0f
-	eor #$10
-	sta $dc0f
+	;lda $dc0f
+	;eor #$10
+	;sta $dc0f       ; toggle timer B force reload
 	inx
 	bne .t1b
 	rts
@@ -163,15 +163,15 @@ TESTSLOC = $1000
 
 	!zone {		; I
 .test 	lda #1
-	sta $dc07
+	sta $1809       ; Timer B hi
 	lda #$11
 	sta $dc0f
 	ldx #0
-.t1b	lda $dc06
+.t1b	lda $1808       ; Timer B lo
 	sta DTMP,x
-	lda $dc0f
-	eor #$10
-	sta $dc0f
+	;lda $dc0f
+	;eor #$10
+	;sta $dc0f       ; toggle timer B force reload
 	inx
 	bne .t1b
 	rts
@@ -180,15 +180,15 @@ TESTSLOC = $1000
 
 	!zone {		; J
 .test 	lda #1
-	sta $dc07
+	sta $1809       ; Timer B hi
 	lda #$11
 	sta $dc0f
 	ldx #0
-.t1b	lda $dc07
+.t1b	lda $1809       ; Timer B hi
 	sta DTMP,x
-	lda $dc0f
-	eor #$10
-	sta $dc0f
+	;lda $dc0f
+	;eor #$10
+	;sta $dc0f       ; toggle timer B force reload
 	inx
 	bne .t1b
 	rts
@@ -197,15 +197,15 @@ TESTSLOC = $1000
 
 	!zone {		; K
 .test 	lda #1
-	sta $dc06
+	sta $1808       ; Timer B lo
 	lda #$11
 	sta $dc0f
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
-	lda $dc0f
-	eor #$10
-	sta $dc0f
+	;lda $dc0f
+	;eor #$10
+	;sta $dc0f       ; toggle timer B force reload
 	inx
 	bne .t1b
 	rts
@@ -214,15 +214,15 @@ TESTSLOC = $1000
 
 	!zone {		; L
 .test 	lda #1
-	sta $dc07
+	sta $1809       ; Timer B hi
 	lda #$11
 	sta $dc0f
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
-	lda $dc0f
-	eor #$10
-	sta $dc0f
+	;lda $dc0f
+	;eor #$10
+	;sta $dc0f       ; toggle timer B force reload
 	inx
 	bne .t1b
 	rts
@@ -234,10 +234,10 @@ TESTSLOC = $1000
 ;------------------------------------------
 	!zone {		; M
 .test 	ldx #0
-.l1	stx $dc04
-	lda #$11
-	sta $dc0e
-	lda $dc04
+.l1	stx $1804       ; Timer A lo
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
+	lda $1804       ; Timer A lo
 	sta DTMP,x
 	inx
 	bne .l1
@@ -247,10 +247,10 @@ TESTSLOC = $1000
 
 	!zone {		; N
 .test 	ldx #0
-.l1	stx $dc04
-	lda #$11
-	sta $dc0e
-	lda $dc05
+.l1	stx $1804       ; Timer A lo
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
+	lda $1805       ; Timer A hi
 	sta DTMP,x
 	inx
 	bne .l1
@@ -260,10 +260,10 @@ TESTSLOC = $1000
 
 	!zone {		; O
 .test 	ldx #0
-.l1	stx $dc05
-	lda #$11
-	sta $dc0e
-	lda $dc04
+.l1	stx $1805       ; Timer A hi
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
+	lda $1804       ; Timer A lo
 	sta DTMP,x
 	inx
 	bne .l1
@@ -273,10 +273,10 @@ TESTSLOC = $1000
 
 	!zone {		; P
 .test 	ldx #0
-.l1	stx $dc05
-	lda #$11
-	sta $dc0e
-	lda $dc05
+.l1	stx $1805       ; Timer A hi
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
+	lda $1805       ; Timer A hi
 	sta DTMP,x
 	inx
 	bne .l1
@@ -286,10 +286,10 @@ TESTSLOC = $1000
 
 	!zone {		; Q
 .test 	ldx #0
-.l1	stx $dc05
-	lda #$11
-	sta $dc0e
-	lda $dc0d
+.l1	stx $1805       ; Timer A hi
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
+	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .l1
@@ -299,10 +299,10 @@ TESTSLOC = $1000
 
 	!zone {		; R
 .test 	ldx #0
-.l1	stx $dc05
-	lda #$11
-	sta $dc0e
-	lda $dc0d
+.l1	stx $1805       ; Timer A hi
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
+	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .l1
@@ -314,10 +314,10 @@ TESTSLOC = $1000
 
 	!zone {		; S
 .test 	ldx #0
-.l1	stx $dc06
-	lda #$11
-	sta $dc0f
-	lda $dc06
+.l1	stx $1808       ; Timer B lo
+	;lda #$11
+	;sta $dc0f       ; start timer B continuous, force reload
+	lda $1808       ; Timer B lo
 	sta DTMP,x
 	inx
 	bne .l1
@@ -327,10 +327,10 @@ TESTSLOC = $1000
 
 	!zone {		; T
 .test 	ldx #0
-.l1	stx $dc06
-	lda #$11
-	sta $dc0f
-	lda $dc07
+.l1	stx $1808       ; Timer B lo
+	;lda #$11
+	;sta $dc0f       ; start timer B continuous, force reload
+	lda $1809       ; Timer B hi
 	sta DTMP,x
 	inx
 	bne .l1
@@ -340,10 +340,10 @@ TESTSLOC = $1000
 
 	!zone {		; U
 .test 	ldx #0
-.l1	stx $dc07
-	lda #$11
-	sta $dc0f
-	lda $dc06
+.l1	stx $1809       ; Timer B hi
+	;lda #$11
+	;sta $dc0f       ; start timer B continuous, force reload
+	lda $1808       ; Timer B lo
 	sta DTMP,x
 	inx
 	bne .l1
@@ -353,10 +353,10 @@ TESTSLOC = $1000
 
 	!zone {		; V
 .test 	ldx #0
-.l1	stx $dc07
-	lda #$11
-	sta $dc0f
-	lda $dc07
+.l1	stx $1809       ; Timer B hi
+	;lda #$11
+	;sta $dc0f       ; start timer B continuous, force reload
+	lda $1809       ; Timer B hi
 	sta DTMP,x
 	inx
 	bne .l1
@@ -366,10 +366,10 @@ TESTSLOC = $1000
 
 	!zone {		; W
 .test 	ldx #0
-.l1	stx $dc07
-	lda #$11
-	sta $dc0f
-	lda $dc0d
+.l1	stx $1809       ; Timer B hi
+	;lda #$11
+	;sta $dc0f       ; start timer B continuous, force reload
+	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .l1
@@ -379,10 +379,10 @@ TESTSLOC = $1000
 
 	!zone {		; X
 .test 	ldx #0
-.l1	stx $dc07
-	lda #$11
-	sta $dc0f
-	lda $dc0d
+.l1	stx $1809       ; Timer B hi
+	;lda #$11
+	;sta $dc0f       ; start timer B continuous, force reload
+	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .l1

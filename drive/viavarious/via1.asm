@@ -13,7 +13,6 @@ DATA   = $9000
 TESTLEN = $20
 
 NUMTESTS = 12
-;NUMTESTS = 1
 
 DTMP   = $0700          ; measured data on drive side
 TESTSLOC = $1000
@@ -64,7 +63,7 @@ TESTSLOC = $1000
 
         !zone {
 .test   ;lda #$1
-        ;sta $dc0e       ; start timer A continues
+        ;sta $dc0e       ; start timer A continuous
         ldx #0
 .t1b     lda $1804       ; Timer A lo
         sta DTMP,x
@@ -76,7 +75,7 @@ TESTSLOC = $1000
 
         !zone {
 .test   ;lda #$1
-        ;sta $dc0e       ; start timer A continues
+        ;sta $dc0e       ; start timer A continuous
         ldx #0
 .t1b     lda $1805       ; Timer A hi
         sta DTMP,x
@@ -88,7 +87,7 @@ TESTSLOC = $1000
 
         !zone {
 .test   ;lda #$1
-        ;sta $dc0f       ; start timer B continues
+        ;sta $dc0f       ; start timer B continuous
         ldx #0
 .t1b     lda $1808       ; Timer B lo
         sta DTMP,x
@@ -100,7 +99,7 @@ TESTSLOC = $1000
 
         !zone {
 .test   ;lda #$1
-        ;sta $dc0f       ; start timer B continues
+        ;sta $dc0f       ; start timer B continuous
         ldx #0
 .t1b     lda $1809       ; Timer B hi
         sta DTMP,x
@@ -111,8 +110,8 @@ TESTSLOC = $1000
         }
 
         !zone {
-.test    lda #$11
-        sta $dc0e
+.test   ;lda #$11
+        ;sta $dc0e       ; start timer A continuous, force reload
         ldx #0
 .t1b     lda $1804       ; Timer A lo
         sta DTMP,x
@@ -123,8 +122,8 @@ TESTSLOC = $1000
         }
 
         !zone {
-.test    lda #$11
-        sta $dc0e
+.test   ;lda #$11
+        ;sta $dc0e       ; start timer A continuous, force reload
         ldx #0
 .t1b     lda $1805       ; Timer A hi
         sta DTMP,x
@@ -135,8 +134,8 @@ TESTSLOC = $1000
         }
 
         !zone {
-.test    lda #$11
-        sta $dc0f
+.test   ;lda #$11
+        ;sta $dc0f       ; start timer B continuous, force reload
         ldx #0
 .t1b     lda $1808       ; Timer B lo
         sta DTMP,x
@@ -147,8 +146,8 @@ TESTSLOC = $1000
         }
 
         !zone {
-.test    lda #$11
-        sta $dc0f
+.test   ;lda #$11
+        ;sta $dc0f       ; start timer B continuous, force reload
         ldx #0
 .t1b     lda $1809       ; Timer B hi
         sta DTMP,x

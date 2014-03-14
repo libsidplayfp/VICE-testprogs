@@ -17,7 +17,7 @@ start:
         lda #5
         sta ERRBUF+$ff
 
-        !if (0) {
+        !if (1) {
         ; run all tests once
         ldx #0
 clp1b
@@ -185,6 +185,21 @@ rot
         iny
         bne ll
 
+        inc $d020
+
+        ; delay here long enough so the floppy is done resetting itself
+        ldx #$50
+-
+        lda #$f0
+        cmp $d012
+        bne *-3
+        cmp $d012
+        beq *-3
+
+        dex
+        bne -
+
+        dec $d020
         dec $d020
         cli
         rts
@@ -232,16 +247,6 @@ t1a     sta $1804
         dey
         bne t1a
 
-!if (TESTID = 15) {
-        lda $dc0e
-        ora #$80
-        sta $dc0e
-        ; disable active IRQs
-        lda $180e
-        and #$7f
-        sta $180e
-        lda $dc08
-}
 }
         ; call actual test
         jsr ddotest
@@ -266,44 +271,6 @@ t1a     sta $1804
         dey
         bpl -
 }
-!if (0) {
-        ldy #$00
--
-        sta 0,y
-        sta $400,y
-        sta $500,y
-        sta $600,y
-        sta $700,y
-        iny
-        bne -
-
-        lda #0
-        sta $1804
-        sta $1804
-        sta $1805
-        sta $1805
-        sta $1806
-        sta $1806
-}
-!if (0) {
-        lda #$ff
-        sta $1803       ; VIA1 DDR A
-        lda #$02
-        sta $1800       ; VIA1 DATA B
-        lda #$1a
-        sta $1802       ; VIA1 DDR B
-
-        lda #$01
-        STA $180C
-        lda #$82
-        STA $180D
-        ;lda #$82
-        STA $180E
-
-        lda $180d       ; ack irq
-}
-;        cli
-;        rts
         sei
         jmp $eaa0       ; drive reset
 

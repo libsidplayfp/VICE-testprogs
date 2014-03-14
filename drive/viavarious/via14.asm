@@ -28,15 +28,15 @@ TESTSLOC = $1000
 .test 	lda #$00
 	sta $dc0f
 	lda #1
-	sta $dc07
+	sta $1809       ; Timer B hi
 	lda #$51	; cascade mode
 	sta $dc0f
 	lda #1
-	sta $dc04
-	lda #$11
-	sta $dc0e
+	sta $1804       ; Timer A lo
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc06
+.t1b	lda $1808       ; Timer B lo
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -48,15 +48,15 @@ TESTSLOC = $1000
 .test 	lda #$20
 	sta $dc0f
 	lda #1
-	sta $dc07
+	sta $1809       ; Timer B hi
 	lda #$51	; cascade mode
 	sta $dc0f
 	lda #1
-	sta $dc04
-	lda #$11
-	sta $dc0e
+	sta $1804       ; Timer A lo
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc06
+.t1b	lda $1808       ; Timer B lo
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -68,15 +68,15 @@ TESTSLOC = $1000
 .test 	lda #$40
 	sta $dc0f
 	lda #1
-	sta $dc07
+	sta $1809       ; Timer B hi
 	lda #$51	; cascade mode
 	sta $dc0f
 	lda #1
-	sta $dc04
-	lda #$11
-	sta $dc0e
+	sta $1804       ; Timer A lo
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc06
+.t1b	lda $1808       ; Timer B lo
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -88,15 +88,15 @@ TESTSLOC = $1000
 .test 	lda #$60
 	sta $dc0f
 	lda #1
-	sta $dc07
+	sta $1809       ; Timer B hi
 	lda #$51	; cascade mode
 	sta $dc0f
 	lda #1
-	sta $dc04
-	lda #$11
-	sta $dc0e
+	sta $1804       ; Timer A lo
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc06
+.t1b	lda $1808       ; Timer B lo
 	sta DTMP,x
 	inx
 	bne .t1b

@@ -26,11 +26,11 @@ TESTSLOC = $1000
 
 	!zone {		; A
 .test 	lda #1
-	sta $dc04
+	sta $1804       ; Timer A lo
 	lda #$1
 	sta $dc0e
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -40,11 +40,11 @@ TESTSLOC = $1000
 
 	!zone {		; B
 .test 	lda #1
-	sta $dc05
+	sta $1805       ; Timer A hi
 	lda #$1
 	sta $dc0e
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -54,11 +54,11 @@ TESTSLOC = $1000
 
 	!zone {		; C
 .test 	lda #1
-	sta $dc06
+	sta $1808       ; Timer B lo
 	lda #$1
 	sta $dc0f
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -68,11 +68,11 @@ TESTSLOC = $1000
 
 	!zone {		; D
 .test	lda #1
-	sta $dc07
+	sta $1809       ; Timer B hi
 	lda #$1
 	sta $dc0f
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -82,11 +82,11 @@ TESTSLOC = $1000
 
 	!zone {		; E
 .test	lda #1
-	sta $dc04
+	sta $1804       ; Timer A lo
 	lda #$11
 	sta $dc0e
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -96,11 +96,11 @@ TESTSLOC = $1000
 
 	!zone {		; F
 .test	lda #1
-	sta $dc05
+	sta $1805       ; Timer A hi
 	lda #$11
 	sta $dc0e
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -110,11 +110,11 @@ TESTSLOC = $1000
 
 	!zone {		; G
 .test	lda #1
-	sta $dc06
+	sta $1808       ; Timer B lo
 	lda #$11
 	sta $dc0f
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -124,11 +124,11 @@ TESTSLOC = $1000
 
 	!zone {		; H
 .test	lda #1
-	sta $dc07
+	sta $1809       ; Timer B hi
 	lda #$11
 	sta $dc0f
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -138,11 +138,11 @@ TESTSLOC = $1000
 
 	!zone {		; I
 .test 	lda #1
-	sta $dc04
+	sta $1804       ; Timer A lo
 	lda #$9
 	sta $dc0e
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -152,11 +152,11 @@ TESTSLOC = $1000
 
 	!zone {		; J
 .test 	lda #1
-	sta $dc05
+	sta $1805       ; Timer A hi
 	lda #$9
 	sta $dc0e
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -166,11 +166,11 @@ TESTSLOC = $1000
 
 	!zone {		; K
 .test 	lda #1
-	sta $dc06
+	sta $1808       ; Timer B lo
 	lda #$9
 	sta $dc0f
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -180,11 +180,11 @@ TESTSLOC = $1000
 
 	!zone {		; L
 .test	lda #1
-	sta $dc07
+	sta $1809       ; Timer B hi
 	lda #$9
 	sta $dc0f
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -194,11 +194,11 @@ TESTSLOC = $1000
 
 	!zone {		; M
 .test	lda #1
-	sta $dc04
+	sta $1804       ; Timer A lo
 	lda #$19
 	sta $dc0e
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -208,11 +208,11 @@ TESTSLOC = $1000
 
 	!zone {		; N
 .test	lda #1
-	sta $dc05
+	sta $1805       ; Timer A hi
 	lda #$19
 	sta $dc0e
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -222,11 +222,11 @@ TESTSLOC = $1000
 
 	!zone {		; O
 .test	lda #1
-	sta $dc06
+	sta $1808       ; Timer B lo
 	lda #$19
 	sta $dc0f
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b
@@ -236,11 +236,11 @@ TESTSLOC = $1000
 
 	!zone {		; P
 .test	lda #1
-	sta $dc06
+	sta $1808       ; Timer B lo
 	lda #$19
 	sta $dc0f
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
 	bne .t1b

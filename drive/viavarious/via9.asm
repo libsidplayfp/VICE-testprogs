@@ -26,15 +26,15 @@ TESTSLOC = $1000
 ;------------------------------------------
 	!zone {		; A
 .test 	lda #1
-	sta $dc04
-	lda #$11
-	sta $dc0e
+	sta $1804       ; Timer A lo
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc04
+.t1b	lda $1804       ; Timer A lo
 	sta DTMP,x
-	lda $dc0e
-	eor #$20
-	sta $dc0e
+	;lda $dc0e
+	;eor #$20
+	;sta $dc0e       ; toggle timer A counts CNT/Clock
 	inx
 	bne .t1b
 	rts
@@ -43,15 +43,15 @@ TESTSLOC = $1000
 
 	!zone {		; B
 .test 	lda #1
-	sta $dc04
-	lda #$11
-	sta $dc0e
+	sta $1804       ; Timer A lo
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc05
+.t1b	lda $1805       ; Timer A hi
 	sta DTMP,x
-	lda $dc0e
-	eor #$20
-	sta $dc0e
+	;lda $dc0e
+	;eor #$20
+	;sta $dc0e       ; toggle timer A counts CNT/Clock
 	inx
 	bne .t1b
 	rts
@@ -60,15 +60,15 @@ TESTSLOC = $1000
 
 	!zone {		; C
 .test 	lda #1
-	sta $dc04
-	lda #$11
-	sta $dc0e
+	sta $1804       ; Timer A lo
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
-	lda $dc0e
-	eor #$20
-	sta $dc0e
+	;lda $dc0e
+	;eor #$20
+	;sta $dc0e       ; toggle timer A counts CNT/Clock
 	inx
 	bne .t1b
 	rts
@@ -77,15 +77,15 @@ TESTSLOC = $1000
 
 	!zone {		; D
 .test 	lda #1
-	sta $dc05
-	lda #$11
-	sta $dc0e
+	sta $1805       ; Timer A hi
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc04
+.t1b	lda $1804       ; Timer A lo
 	sta DTMP,x
-	lda $dc0e
-	eor #$20
-	sta $dc0e
+	;lda $dc0e
+	;eor #$20
+	;sta $dc0e       ; toggle timer A counts CNT/Clock
 	inx
 	bne .t1b
 	rts
@@ -94,15 +94,15 @@ TESTSLOC = $1000
 
 	!zone {		; E
 .test 	lda #1
-	sta $dc05
-	lda #$11
-	sta $dc0e
+	sta $1805       ; Timer A hi
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc05
+.t1b	lda $1805       ; Timer A hi
 	sta DTMP,x
-	lda $dc0e
-	eor #$20
-	sta $dc0e
+	;lda $dc0e
+	;eor #$20
+	;sta $dc0e       ; toggle timer A counts CNT/Clock
 	inx
 	bne .t1b
 	rts
@@ -111,15 +111,15 @@ TESTSLOC = $1000
 
 	!zone {		; F
 .test 	lda #1
-	sta $dc05
-	lda #$11
-	sta $dc0e
+	sta $1805       ; Timer A hi
+	;lda #$11
+	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $dc0d
+.t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
-	lda $dc0e
-	eor #$20
-	sta $dc0e
+	;lda $dc0e
+	;eor #$20
+	;sta $dc0e       ; toggle timer A counts CNT/Clock
 	inx
 	bne .t1b
 	rts

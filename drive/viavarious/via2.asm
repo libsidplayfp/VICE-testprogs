@@ -12,8 +12,7 @@ DATA=$9000
 
 TESTLEN =        $20
 
-;NUMTESTS =       16
-NUMTESTS = 1
+NUMTESTS =       16
 
 DTMP   = $0700          ; measured data on drive side
 TESTSLOC = $1000
@@ -29,7 +28,7 @@ TESTSLOC = $1000
 .test    lda #1
         sta $1804       ; Timer A lo
         ;lda #$1
-        ;sta $dc0e       ; start timer A continues
+        ;sta $dc0e       ; start timer A continuous
         ldx #0
 .t1b     lda $1804      ; Timer A lo
         sta DTMP,x
@@ -43,7 +42,7 @@ TESTSLOC = $1000
 .test    lda #1
         sta $1804
         ;lda #$1
-        ;sta $dc0e       ; start timer A continues
+        ;sta $dc0e       ; start timer A continuous
         ldx #0
 .t1b     lda $1805
         sta DTMP,x
@@ -57,7 +56,7 @@ TESTSLOC = $1000
 .test    lda #1
         sta $1808
         ;lda #$1
-        ;sta $dc0f       ; start timer B continues
+        ;sta $dc0f       ; start timer B continuous
         ldx #0
 .t1b     lda $1808
         sta DTMP,x
@@ -71,7 +70,7 @@ TESTSLOC = $1000
 .test    lda #1
         sta $1808
         ;lda #$1
-        ;sta $dc0f       ; start timer B continues
+        ;sta $dc0f       ; start timer B continuous
         ldx #0
 .t1b     lda $1809
         sta DTMP,x
@@ -84,8 +83,8 @@ TESTSLOC = $1000
         !zone {
 .test    lda #1
         sta $1804
-        lda #$11
-        sta $dc0e
+        ;lda #$11
+        ;sta $dc0e       ; start timer A continuous, force reload
         ldx #0
 .t1b     lda $1804
         sta DTMP,x
@@ -98,8 +97,8 @@ TESTSLOC = $1000
         !zone {
 .test    lda #1
         sta $1804
-        lda #$11
-        sta $dc0e
+        ;lda #$11
+        ;sta $dc0e       ; start timer A continuous, force reload
         ldx #0
 .t1b     lda $1805
         sta DTMP,x
@@ -112,8 +111,8 @@ TESTSLOC = $1000
         !zone {
 .test    lda #1
         sta $1808
-        lda #$11
-        sta $dc0f
+        ;lda #$11
+        ;sta $dc0f       ; start timer B continuous, force reload
         ldx #0
 .t1b     lda $1808
         sta DTMP,x
@@ -126,8 +125,8 @@ TESTSLOC = $1000
         !zone {
 .test    lda #1
         sta $1808
-        lda #$11
-        sta $dc0f
+        ;lda #$11
+        ;sta $dc0f       ; start timer B continuous, force reload
         ldx #0
 .t1b     lda $1809
         sta DTMP,x
@@ -141,7 +140,7 @@ TESTSLOC = $1000
 .test    lda #1
         sta $1805
         ;lda #$1
-        ;sta $dc0e       ; start timer A continues
+        ;sta $dc0e       ; start timer A continuous
         ldx #0
 .t1b     lda $1804
         sta DTMP,x
@@ -155,7 +154,7 @@ TESTSLOC = $1000
 .test    lda #1
         sta $1805
         ;lda #$1
-        ;sta $dc0e       ; start timer A continues
+        ;sta $dc0e       ; start timer A continuous
         ldx #0
 .t1b     lda $1805
         sta DTMP,x
@@ -169,7 +168,7 @@ TESTSLOC = $1000
 .test    lda #1
         sta $1809
         ;lda #$1
-        ;sta $dc0f       ; start timer B continues
+        ;sta $dc0f       ; start timer B continuous
         ldx #0
 .t1b     lda $1808
         sta DTMP,x
@@ -183,7 +182,7 @@ TESTSLOC = $1000
 .test    lda #1
         sta $1809
         ;lda #$1
-        ;sta $dc0f       ; start timer B continues
+        ;sta $dc0f       ; start timer B continuous
         ldx #0
 .t1b     lda $1809
         sta DTMP,x
@@ -196,8 +195,8 @@ TESTSLOC = $1000
         !zone {
 .test    lda #1
         sta $1805
-        lda #$11
-        sta $dc0e
+        ;lda #$11
+        ;sta $dc0e       ; start timer A continuous, force reload
         ldx #0
 .t1b     lda $1804
         sta DTMP,x
@@ -210,8 +209,8 @@ TESTSLOC = $1000
         !zone {
 .test    lda #1
         sta $1805
-        lda #$11
-        sta $dc0e
+        ;lda #$11
+        ;sta $dc0e       ; start timer A continuous, force reload
         ldx #0
 .t1b     lda $1805
         sta DTMP,x
@@ -224,8 +223,8 @@ TESTSLOC = $1000
         !zone {
 .test    lda #1
         sta $1808
-        lda #$11
-        sta $dc0f
+        ;lda #$11
+        ;sta $dc0f       ; start timer B continuous, force reload
         ldx #0
 .t1b     lda $1808
         sta DTMP,x
@@ -238,8 +237,8 @@ TESTSLOC = $1000
         !zone {
 .test    lda #1
         sta $1808
-        lda #$11
-        sta $dc0f
+        ;lda #$11
+        ;sta $dc0f       ; start timer B continuous, force reload
         ldx #0
 .t1b     lda $1809
         sta DTMP,x
