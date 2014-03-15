@@ -143,7 +143,7 @@ clp2:
         inx
         bne -
 
-        jsr $fda3
+        ;jsr $fda3
         ;cli
 
         lda #5
@@ -225,9 +225,22 @@ drvstart
 !if (1) {
         sei
 
-        lda #0
+        ; serial port: disabled
+        ; timer A: count clk, continuous, Timed Interrupt when Timer 1 is loaded, no PB7
+        ; timer B: count PB6 pulses (=stop)
+        ; port A latching disabled
+        ; port B latching disabled
+        lda #%00100000
         sta $180b
+        ; CB2 Control: Input negative active edge 
+        ; CB1 Interrupt Control: Negative active edge
+        ; CA2 Control: Input negative active edge 
+        ; CA1 Interrupt Control: Negative active edge
+        lda #0
         sta $180c
+
+        lda #$a5
+        sta $180a ; serial shift register
 
         ; disable IRQs
         lda #$7f
@@ -238,15 +251,17 @@ drvstart
         lda $180d
 
         ; init timers
+        ; after this all timer values will be = $0000
         ldy #0
         tya
 t1a     sta $1804
         sta $1805
+        sta $1806
+        sta $1807
         sta $1808
         sta $1809
         dey
         bne t1a
-
 }
         ; call actual test
         jsr ddotest
@@ -263,14 +278,6 @@ t1a     sta $1804
         bne -
 
         ; (more or less) reset VIA regs and drive
-!if (0) {
-        lda #0
-        ldy #$0f
--
-        sta $1800,y
-        dey
-        bpl -
-}
         sei
         jmp $eaa0       ; drive reset
 

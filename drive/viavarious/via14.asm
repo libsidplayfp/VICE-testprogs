@@ -25,12 +25,12 @@ TESTSLOC = $1000
 
 ;------------------------------------------
 	!zone {		; A
-.test 	lda #$00
-	sta $dc0f
+.test 	;lda #$00
+	;sta $dc0f       ; stop timer B
 	lda #1
 	sta $1809       ; Timer B hi
-	lda #$51	; cascade mode
-	sta $dc0f
+        ;lda #$51
+        ;sta $dc0f       ; start timer B continuous, force reload, count Timer A (cascade mode)
 	lda #1
 	sta $1804       ; Timer A lo
 	;lda #$11
@@ -45,12 +45,12 @@ TESTSLOC = $1000
         }
 
 	!zone {		; B
-.test 	lda #$20
-	sta $dc0f
+.test 	;lda #$20
+	;sta $dc0f       ; stop timer B, count CNT transitions
 	lda #1
 	sta $1809       ; Timer B hi
-	lda #$51	; cascade mode
-	sta $dc0f
+        ;lda #$51
+        ;sta $dc0f       ; start timer B continuous, force reload, count Timer A (cascade mode)
 	lda #1
 	sta $1804       ; Timer A lo
 	;lda #$11
@@ -65,12 +65,12 @@ TESTSLOC = $1000
         }
 
 	!zone {		; C
-.test 	lda #$40
-	sta $dc0f
+.test 	;lda #$40
+	;sta $dc0f       ; stop timer B, count timer A underflows
 	lda #1
 	sta $1809       ; Timer B hi
-	lda #$51	; cascade mode
-	sta $dc0f
+        ;lda #$51
+        ;sta $dc0f       ; start timer B continuous, force reload, count Timer A (cascade mode)
 	lda #1
 	sta $1804       ; Timer A lo
 	;lda #$11
@@ -85,12 +85,12 @@ TESTSLOC = $1000
         }
 
 	!zone {		; D
-.test 	lda #$60
-	sta $dc0f
+.test 	;lda #$60
+	;sta $dc0f       ; stop timer B, count timer A underflows while CNT=1
 	lda #1
 	sta $1809       ; Timer B hi
-	lda #$51	; cascade mode
-	sta $dc0f
+        ;lda #$51
+        ;sta $dc0f       ; start timer B continuous, force reload, count Timer A (cascade mode)
 	lda #1
 	sta $1804       ; Timer A lo
 	;lda #$11

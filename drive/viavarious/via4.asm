@@ -240,9 +240,9 @@ TESTSLOC = $1000
 	ldx #0
 .t1b	lda $1804       ; Timer A lo
 	sta DTMP,x
-	lda $dc0e
-	eor #$9
-	sta $dc0e
+	;lda $dc0e
+	;eor #$9
+	;sta $dc0e       ; toggle timer A oneshot, start/stop
 	inx
 	bne .t1b
 	rts
