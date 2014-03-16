@@ -18,6 +18,7 @@ DATA=$8000
 	.dsb $0a00-*,0
 
 ;------------------------------------------
+; output timer(s) at PB6/PB7 and read back PB
 
 #define	TEST(DDRB,PRB,CR,TIMER,THIFL)				\
 	.(							:\
