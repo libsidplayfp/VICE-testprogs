@@ -1,15 +1,30 @@
-This directory contains various VIA tests, ported from andre fachats 
-ciavarious.
+This directory contains various VIA tests, ported from Andre Fachats 
+"ciavarious" programs.
 
-The idea is that andres programs cover a bunch of things that likely matter for
-the VIA too. the respective tests have been reworked to match what the original
-test want to do as close as possible.
+The idea is that Andres programs cover a bunch of things that likely matter for
+the VIA too. The respective tests have been reworked to match what the original
+tests want to do as close as possible.
 --------------------------------------------------------------------------------
 
 THIS IS WORK IN PROGRESS, THE TESTS DO NOT ACTUALLY WORK PROPERLY YET, AND NO
 REFERENCE DATA IS ATTACHED SO THEY WILL ALWAYS SHOW RANDOM ERRORS/RED
 
+working so far:
+
+VIA1:   Timer A / B
+
+VIA10:  Port B (output timer at PB7 and read back PB)
+VIA11:  Port B (output timer at PB7 and read back PB)
+VIA12:  Port B (output timer at PB7 and read back PB)
+VIA13:  Port B (output timer at PB7 and read back PB)
+
+reference data comes from my 1541C, more testing on other drives is needed (gpz)
+
 --------------------------------------------------------------------------------
+Following is a brief overview of how certain CIA features are related to the
+respective VIA features (in reality it can be assumed that CIA was actually
+developed by using the VIA masks and extending them - simply because that would
+save a lot of time and eventually very expensive test runs).
 
 CIA      VIA
 
@@ -44,6 +59,7 @@ $dc0f ->        CTRL B (TimerB)
 
 - no cascade mode for timers
 - timers run always
+- only first timer can be output at port B
 - no TOD clock
 + seperate register for the Timer A latch
 
@@ -61,5 +77,12 @@ VIA3a:  Timer A / B IRQ Flags
 VIA6:   Timer A / B (Cascade)
 VIA7:   Timer A / B (Cascade)
 VIA8:   Timer A / B (Cascade) IRQ Flags
+
+VIA9:   Timer A (toggle count CNT or Clock)
+
+VIA10:  Port B (output timer at PB7 and read back PB)
+VIA11:  Port B (output timer at PB7 and read back PB)
+VIA12:  Port B (output timer at PB7 and read back PB)
+VIA13:  Port B (output timer at PB7 and read back PB)
 
 VIA14:   Timer A / B (Cascade)

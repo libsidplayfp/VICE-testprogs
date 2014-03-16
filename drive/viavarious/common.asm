@@ -31,7 +31,8 @@ clp1b
         inx
         cpx #NUMTESTS
         bne clp1b
-        } else {
+        }
+        !if (0) {
         ; run only first test
         lda #0
         sta tmp
@@ -128,10 +129,19 @@ clp2:
         sei
         jsr rcv_init
 
-        ; some arbitrary delay
-        ldx #0
+        dec $d020
+        ; delay here long enough so the floppy is done testing
+        ldx #$a0
+-
+        lda #$f0
+        cmp $d012
+        bne *-3
+        cmp $d012
+        beq *-3
+
         dex
-        bne *-1
+        bne -
+        inc $d020
 
         jsr rcv_wait
 
@@ -152,6 +162,8 @@ clp2:
 
         ldy #0
 lla     sta $d800,y
+        sta $d800+(8*40),y
+        sta $d800+(16*40),y
         iny
         bne lla
 
@@ -179,16 +191,22 @@ ll      ;lda (addr),y
         beq rot
         lda #10
         sta $d800,y
+        sta $d800+(8*40),y
+        sta $d800+(16*40),y
         sta ERRBUF,x
         sta ERRBUF+$ff
 rot
+        lda (add2),y
+        sta $0400+(8*40),y
+        eor (addr),y
+        sta $0400+(16*40),y
         iny
         bne ll
 
         inc $d020
 
         ; delay here long enough so the floppy is done resetting itself
-        ldx #$50
+        ldx #$80
 -
         lda #$f0
         cmp $d012
@@ -213,6 +231,7 @@ drivecode:
         !src "../framework-drive.asm"
 drvstart
         sei
+        jsr .setdefaults
         jsr snd_init
 
         lda #0
@@ -222,9 +241,28 @@ drvstart
         iny
         bne -
 
-!if (1) {
-        sei
+        ; call actual test
+        jsr ddotest
 
+        sei
+        jsr .setdefaults
+        jsr snd_init    ; call init again, because the test may have changed VIA1 port B
+        jsr snd_start
+
+        ; send test data
+        ldy #$00
+-
+        lda DTMP,y
+        jsr snd_1byte
+        iny
+        bne -
+
+        ; (more or less) reset VIA regs and drive
+        sei
+        jmp $eaa0       ; drive reset
+
+.setdefaults:
+!if (1) {
         ; serial port: disabled
         ; timer A: count clk, continuous, Timed Interrupt when Timer 1 is loaded, no PB7
         ; timer B: count PB6 pulses (=stop)
@@ -262,24 +300,8 @@ t1a     sta $1804
         sta $1809
         dey
         bne t1a
+        rts
 }
-        ; call actual test
-        jsr ddotest
-
-        sei
-        jsr snd_start
-
-        ; send test data
-        ldy #$00
--
-        lda DTMP,y
-        jsr snd_1byte
-        iny
-        bne -
-
-        ; (more or less) reset VIA regs and drive
-        sei
-        jmp $eaa0       ; drive reset
 
 ddotest:
         * = ddotest+TESTLEN
