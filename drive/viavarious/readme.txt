@@ -3,7 +3,9 @@ This directory contains various VIA tests, ported from Andre Fachats
 
 The idea is that Andres programs cover a bunch of things that likely matter for
 the VIA too. The respective tests have been reworked to match what the original
-tests want to do as close as possible.
+tests want to do as close as possible. Consequently tests for cascaded timers,
+and TOD clock tests, have been removed, as VIAs dont have these features.
+
 --------------------------------------------------------------------------------
 
 THIS IS WORK IN PROGRESS, THE TESTS DO NOT ACTUALLY WORK PROPERLY YET, AND NO
@@ -18,7 +20,8 @@ VIA11:  Port B (output timer at PB7 and read back PB)
 VIA12:  Port B (output timer at PB7 and read back PB)
 VIA13:  Port B (output timer at PB7 and read back PB)
 
-reference data comes from my 1541C, more testing on other drives is needed (gpz)
+reference data comes from my 1541C and is also checked against my 1541-II, 
+more testing on other drives is needed (gpz)
 
 --------------------------------------------------------------------------------
 Following is a brief overview of how certain CIA features are related to the
@@ -68,21 +71,11 @@ http://www.zimmers.net/anonftp/pub/cbm/schematics/drives/new/1541/1541-II.gif
 
 --------------------------------------------------------------------------------
 
-VIA1:   Timer A / B
 VIA2:   Timer A / B
 
 VIA3:   Timer A / B IRQ Flags
 VIA3a:  Timer A / B IRQ Flags
-
-VIA6:   Timer A / B (Cascade)
-VIA7:   Timer A / B (Cascade)
-VIA8:   Timer A / B (Cascade) IRQ Flags
+VIA4:   Timer A / B IRQ Flags
+VIA5:   Timer A / B IRQ Flags
 
 VIA9:   Timer A (toggle count CNT or Clock)
-
-VIA10:  Port B (output timer at PB7 and read back PB)
-VIA11:  Port B (output timer at PB7 and read back PB)
-VIA12:  Port B (output timer at PB7 and read back PB)
-VIA13:  Port B (output timer at PB7 and read back PB)
-
-VIA14:   Timer A / B (Cascade)

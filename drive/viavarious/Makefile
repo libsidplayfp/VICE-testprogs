@@ -8,15 +8,11 @@ PROGS = \
 	via3a.prg \
 	via4.prg \
 	via5.prg \
-	via6.prg \
-	via7.prg \
-	via8.prg \
 	via9.prg \
 	via10.prg \
 	via11.prg \
 	via12.prg \
-	via13.prg \
-	via14.prg
+	via13.prg
 
 all: $(PROGS)
 
