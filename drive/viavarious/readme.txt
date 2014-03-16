@@ -6,6 +6,8 @@ the VIA too. The respective tests have been reworked to match what the original
 tests want to do as close as possible. Consequently tests for cascaded timers,
 and TOD clock tests, have been removed, as VIAs dont have these features.
 
+the tests should be run on a 1541 compatible drive with drive #8
+
 --------------------------------------------------------------------------------
 
 THIS IS WORK IN PROGRESS, THE TESTS DO NOT ACTUALLY WORK PROPERLY YET, AND NO
@@ -14,6 +16,9 @@ REFERENCE DATA IS ATTACHED SO THEY WILL ALWAYS SHOW RANDOM ERRORS/RED
 working so far:
 
 VIA1:   Timer A / B
+VIA2:   Timer A / B
+
+VIA9:   Timer B (toggle timer B counts PB6/Clock)
 
 VIA10:  Port B (output timer at PB7 and read back PB)
 VIA11:  Port B (output timer at PB7 and read back PB)
@@ -22,6 +27,13 @@ VIA13:  Port B (output timer at PB7 and read back PB)
 
 reference data comes from my 1541C and is also checked against my 1541-II, 
 more testing on other drives is needed (gpz)
+
+TODO:
+
+VIA3:   Timer A / B IRQ Flags
+VIA3a:  Timer A / B IRQ Flags
+VIA4:   Timer A / B IRQ Flags
+VIA5:   Timer A / B IRQ Flags
 
 --------------------------------------------------------------------------------
 Following is a brief overview of how certain CIA features are related to the
@@ -62,6 +74,8 @@ $dc0f ->        CTRL B (TimerB)
 
 - no cascade mode for timers
 - timers run always
+  - VIA1 timer B can be stopped by configuring it to count PB6 transitions. 
+    since the drive-number jumpers are wired there, it will not count.
 - only first timer can be output at port B
 - no TOD clock
 + seperate register for the Timer A latch
@@ -70,12 +84,3 @@ http://www.zimmers.net/anonftp/pub/cbm/documents/chipdata/6522-VIA.txt
 http://www.zimmers.net/anonftp/pub/cbm/schematics/drives/new/1541/1541-II.gif
 
 --------------------------------------------------------------------------------
-
-VIA2:   Timer A / B
-
-VIA3:   Timer A / B IRQ Flags
-VIA3a:  Timer A / B IRQ Flags
-VIA4:   Timer A / B IRQ Flags
-VIA5:   Timer A / B IRQ Flags
-
-VIA9:   Timer A (toggle count CNT or Clock)

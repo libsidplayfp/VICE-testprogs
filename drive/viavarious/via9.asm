@@ -7,7 +7,7 @@ addr=$fd
 add2=$f9
 
 ERRBUF=$5f00
-TMP=$6000
+TMP=$6000          ; measured data on C64 side
 DATA=$8000
 
 TESTLEN =         $20
@@ -26,15 +26,18 @@ TESTSLOC = $1000
 ;------------------------------------------
 	!zone {		; A
 .test 	lda #1
-	sta $1804       ; Timer A lo
+	sta $1808       ; Timer B lo
 	;lda #$11
 	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $1804       ; Timer A lo
+.t1b	lda $1808       ; Timer B lo
 	sta DTMP,x
-	;lda $dc0e
-	;eor #$20
-	;sta $dc0e       ; toggle timer A counts CNT/Clock
+        ;lda $dc0e
+        ;eor #$20
+        ;sta $dc0e       ; toggle timer A counts CNT/Clock
+        lda $180b
+        eor #$20
+        sta $180b       ; toggle timer B counts PB6/Clock
 	inx
 	bne .t1b
 	rts
@@ -43,15 +46,18 @@ TESTSLOC = $1000
 
 	!zone {		; B
 .test 	lda #1
-	sta $1804       ; Timer A lo
+	sta $1808       ; Timer B lo
 	;lda #$11
 	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $1805       ; Timer A hi
+.t1b	lda $1809       ; Timer B hi
 	sta DTMP,x
 	;lda $dc0e
 	;eor #$20
 	;sta $dc0e       ; toggle timer A counts CNT/Clock
+        lda $180b
+        eor #$20
+        sta $180b       ; toggle timer B counts PB6/Clock
 	inx
 	bne .t1b
 	rts
@@ -60,7 +66,7 @@ TESTSLOC = $1000
 
 	!zone {		; C
 .test 	lda #1
-	sta $1804       ; Timer A lo
+	sta $1808       ; Timer B lo
 	;lda #$11
 	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
@@ -69,6 +75,9 @@ TESTSLOC = $1000
 	;lda $dc0e
 	;eor #$20
 	;sta $dc0e       ; toggle timer A counts CNT/Clock
+        lda $180b
+        eor #$20
+        sta $180b       ; toggle timer B counts PB6/Clock
 	inx
 	bne .t1b
 	rts
@@ -77,15 +86,18 @@ TESTSLOC = $1000
 
 	!zone {		; D
 .test 	lda #1
-	sta $1805       ; Timer A hi
+	sta $1809       ; Timer B hi
 	;lda #$11
 	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $1804       ; Timer A lo
+.t1b	lda $1808       ; Timer B lo
 	sta DTMP,x
 	;lda $dc0e
 	;eor #$20
 	;sta $dc0e       ; toggle timer A counts CNT/Clock
+        lda $180b
+        eor #$20
+        sta $180b       ; toggle timer B counts PB6/Clock
 	inx
 	bne .t1b
 	rts
@@ -94,15 +106,18 @@ TESTSLOC = $1000
 
 	!zone {		; E
 .test 	lda #1
-	sta $1805       ; Timer A hi
+	sta $1809       ; Timer B hi
 	;lda #$11
 	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
-.t1b	lda $1805       ; Timer A hi
+.t1b	lda $1809       ; Timer B hi
 	sta DTMP,x
 	;lda $dc0e
 	;eor #$20
 	;sta $dc0e       ; toggle timer A counts CNT/Clock
+        lda $180b
+        eor #$20
+        sta $180b       ; toggle timer B counts PB6/Clock
 	inx
 	bne .t1b
 	rts
@@ -111,7 +126,7 @@ TESTSLOC = $1000
 
 	!zone {		; F
 .test 	lda #1
-	sta $1805       ; Timer A hi
+	sta $1809       ; Timer B hi
 	;lda #$11
 	;sta $dc0e       ; start timer A continuous, force reload
 	ldx #0
@@ -120,9 +135,14 @@ TESTSLOC = $1000
 	;lda $dc0e
 	;eor #$20
 	;sta $dc0e       ; toggle timer A counts CNT/Clock
+        lda $180b
+        eor #$20
+        sta $180b       ; toggle timer B counts PB6/Clock
 	inx
 	bne .t1b
 	rts
         * = .test+TESTLEN
         }
 
+        * = DATA
+        !bin "via9ref.bin", NUMTESTS * $0100, 2

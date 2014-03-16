@@ -7,7 +7,7 @@ addr=$fd
 add2=$f9
 
 ERRBUF=$5f00
-TMP=$6000
+TMP=$6000          ; measured data on C64 side
 DATA=$8000
 
 TESTLEN =         $20
@@ -247,3 +247,7 @@ TESTSLOC = $1000
 	rts
         * = .test+TESTLEN
         }
+
+;        * = DATA
+;        !bin "via3aref.bin", NUMTESTS * $0100, 2
+        
