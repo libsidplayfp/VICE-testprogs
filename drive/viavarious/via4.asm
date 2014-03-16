@@ -132,6 +132,8 @@ TESTSLOC = $1000
 	sta $1808       ; Timer B lo
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	ldx #0
 .t1b	lda $1808       ; Timer B lo
 	sta DTMP,x
@@ -149,6 +151,8 @@ TESTSLOC = $1000
 	sta $1808       ; Timer B lo
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	ldx #0
 .t1b	lda $1809       ; Timer B hi
 	sta DTMP,x
@@ -166,6 +170,8 @@ TESTSLOC = $1000
 	sta $1809       ; Timer B hi
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	ldx #0
 .t1b	lda $1808       ; Timer B lo
 	sta DTMP,x
@@ -183,6 +189,8 @@ TESTSLOC = $1000
 	sta $1809       ; Timer B hi
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	ldx #0
 .t1b	lda $1809       ; Timer B hi
 	sta DTMP,x
@@ -200,6 +208,8 @@ TESTSLOC = $1000
 	sta $1808       ; Timer B lo
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	ldx #0
 .t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
@@ -217,6 +227,8 @@ TESTSLOC = $1000
 	sta $1809       ; Timer B hi
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	ldx #0
 .t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
@@ -346,6 +358,9 @@ TESTSLOC = $1000
 	;lda $dc0f
 	;eor #$9
 	;sta $dc0f       ; toggle timer B oneshot, start/stop
+        lda $180b
+        eor #%00100000
+        sta $180b       ; toggle timer B count PB6
 	inx
 	bne .t1b
 	rts
@@ -363,6 +378,9 @@ TESTSLOC = $1000
 	;lda $dc0f
 	;eor #$9
 	;sta $dc0f       ; toggle timer B oneshot, start/stop
+        lda $180b
+        eor #%00100000
+        sta $180b       ; toggle timer B count PB6
 	inx
 	bne .t1b
 	rts
@@ -380,6 +398,9 @@ TESTSLOC = $1000
 	;lda $dc0f
 	;eor #$9
 	;sta $dc0f       ; toggle timer B oneshot, start/stop
+        lda $180b
+        eor #%00100000
+        sta $180b       ; toggle timer B count PB6
 	inx
 	bne .t1b
 	rts
@@ -397,6 +418,9 @@ TESTSLOC = $1000
 	;lda $dc0f
 	;eor #$9
 	;sta $dc0f       ; toggle timer B oneshot, start/stop
+        lda $180b
+        eor #%00100000
+        sta $180b       ; toggle timer B count PB6
 	inx
 	bne .t1b
 	rts
@@ -414,6 +438,9 @@ TESTSLOC = $1000
 	;lda $dc0f
 	;eor #$9
 	;sta $dc0f       ; toggle timer B oneshot, start/stop
+        lda $180b
+        eor #%00100000
+        sta $180b       ; toggle timer B count PB6
 	inx
 	bne .t1b
 	rts
@@ -431,6 +458,9 @@ TESTSLOC = $1000
 	;lda $dc0f
 	;eor #$9
 	;sta $dc0f       ; toggle timer B oneshot, start/stop
+        lda $180b
+        eor #%00100000
+        sta $180b       ; toggle timer B count PB6
 	inx
 	bne .t1b
 	rts

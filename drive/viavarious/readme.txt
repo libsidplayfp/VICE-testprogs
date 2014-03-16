@@ -18,6 +18,9 @@ working so far:
 VIA1:   Timer A / B
 VIA2:   Timer A / B
 
+VIA3:   Timer A / B IRQ Flags
+VIA3a:  Timer A / B IRQ Flags
+
 VIA9:   Timer B (toggle timer B counts PB6/Clock)
 
 VIA10:  Port B (output timer at PB7 and read back PB)
@@ -30,10 +33,10 @@ more testing on other drives is needed (gpz)
 
 TODO:
 
-VIA3:   Timer A / B IRQ Flags
-VIA3a:  Timer A / B IRQ Flags
 VIA4:   Timer A / B IRQ Flags
 VIA5:   Timer A / B IRQ Flags
+
+- add reading Timer A latches to all tests
 
 --------------------------------------------------------------------------------
 Following is a brief overview of how certain CIA features are related to the

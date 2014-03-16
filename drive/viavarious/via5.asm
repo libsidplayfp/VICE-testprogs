@@ -132,6 +132,8 @@ TESTSLOC = $1000
 	sta $1808       ; Timer B lo
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	ldx #0
 .t1b	lda $1808       ; Timer B lo
 	sta DTMP,x
@@ -149,6 +151,8 @@ TESTSLOC = $1000
 	sta $1808       ; Timer B lo
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	ldx #0
 .t1b	lda $1809       ; Timer B hi
 	sta DTMP,x
@@ -166,6 +170,8 @@ TESTSLOC = $1000
 	sta $1809       ; Timer B hi
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	ldx #0
 .t1b	lda $1808       ; Timer B lo
 	sta DTMP,x
@@ -183,6 +189,8 @@ TESTSLOC = $1000
 	sta $1809       ; Timer B hi
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	ldx #0
 .t1b	lda $1809       ; Timer B hi
 	sta DTMP,x
@@ -200,6 +208,8 @@ TESTSLOC = $1000
 	sta $1808       ; Timer B lo
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	ldx #0
 .t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
@@ -217,6 +227,8 @@ TESTSLOC = $1000
 	sta $1809       ; Timer B hi
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	ldx #0
 .t1b	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
@@ -317,6 +329,8 @@ TESTSLOC = $1000
 .l1	stx $1808       ; Timer B lo
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	lda $1808       ; Timer B lo
 	sta DTMP,x
 	inx
@@ -330,6 +344,8 @@ TESTSLOC = $1000
 .l1	stx $1808       ; Timer B lo
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	lda $1809       ; Timer B hi
 	sta DTMP,x
 	inx
@@ -343,6 +359,8 @@ TESTSLOC = $1000
 .l1	stx $1809       ; Timer B hi
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	lda $1808       ; Timer B lo
 	sta DTMP,x
 	inx
@@ -356,6 +374,8 @@ TESTSLOC = $1000
 .l1	stx $1809       ; Timer B hi
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	lda $1809       ; Timer B hi
 	sta DTMP,x
 	inx
@@ -369,6 +389,8 @@ TESTSLOC = $1000
 .l1	stx $1809       ; Timer B hi
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
@@ -382,6 +404,8 @@ TESTSLOC = $1000
 .l1	stx $1809       ; Timer B hi
 	;lda #$11
 	;sta $dc0f       ; start timer B continuous, force reload
+        lda #%00000000
+        sta $180b
 	lda $180d       ; IRQ Flags / ACK
 	sta DTMP,x
 	inx
