@@ -8,33 +8,41 @@ and TOD clock tests, have been removed, as VIAs dont have these features.
 
 the tests should be run on a 1541 compatible drive with drive #8
 
+when run, each program will cycle through all sub tests once and then display
+the results. red/green characters at bottom left indicate success/failure of
+the sub tests. red/green border indicates success/failure of the complete test
+(shows red if one of the sub tests failed). at the top of the screen you can
+see the data recieved from the drive, in the middle the reference data, and at
+the bottom both XORed so you can spot bit errors easily.
+
 --------------------------------------------------------------------------------
 
-THIS IS WORK IN PROGRESS, THE TESTS DO NOT ACTUALLY WORK PROPERLY YET, AND NO
-REFERENCE DATA IS ATTACHED SO THEY WILL ALWAYS SHOW RANDOM ERRORS/RED
+      (r27982)
 
-working so far:
+VIA1:   works   Timer A / B
+VIA2:   works   Timer A / B
 
-VIA1:   Timer A / B
-VIA2:   Timer A / B
+VIA3:   fail    Timer A / B IRQ Flags
+VIA3a:  fail    Timer A IRQ Flags
 
-VIA3:   Timer A / B IRQ Flags
-VIA3a:  Timer A / B IRQ Flags
+VIA4:   fail    Timer A (toggle timer A timed/continous irq)
 
-VIA9:   Timer B (toggle timer B counts PB6/Clock)
+VIA9:   fail    Timer B (toggle timer B counts PB6/Clock)
 
-VIA10:  Port B (output timer at PB7 and read back PB)
-VIA11:  Port B (output timer at PB7 and read back PB)
-VIA12:  Port B (output timer at PB7 and read back PB)
-VIA13:  Port B (output timer at PB7 and read back PB)
+VIA10:  fail    Port B (output timer at PB7 and read back PB)
+VIA11:  fail    Port B (output timer at PB7 and read back PB)
+VIA12:  fail    Port B (output timer at PB7 and read back PB)
+VIA13:  fail    Port B (output timer at PB7 and read back PB)
 
 reference data comes from my 1541C and is also checked against my 1541-II, 
 more testing on other drives is needed (gpz)
 
 TODO:
 
-VIA4:   Timer A / B IRQ Flags
-VIA5:   Timer A / B IRQ Flags
+VIA5:   Timer A / B IRQ Flags (not working)
+VIA10-13 (clean up)
+
+- clean out more redundant stuff, add comments, etc
 
 - add reading Timer A latches to all tests
 

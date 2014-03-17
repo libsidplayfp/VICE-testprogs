@@ -22,8 +22,12 @@ TESTSLOC = $1000
         * = TESTSLOC
 
 ;-------------------------------------------------------------------------------
+; before:
+;       ---
+; in the loop:
+;       read [Timer A lo | Timer A hi | Timer A lo latch | Timer A hi latch | Timer B lo | Timer B hi]
 
-        !zone {
+        !zone {         ; A
 .test    ldx #0
 .t1b     lda $1804       ; Timer A lo
         sta DTMP,x
@@ -33,7 +37,7 @@ TESTSLOC = $1000
         * = .test+TESTLEN
         }
 
-        !zone {
+        !zone {         ; B
 .test    ldx #0
 .t1b     lda $1805       ; Timer A hi
         sta DTMP,x
@@ -43,7 +47,7 @@ TESTSLOC = $1000
         * = .test+TESTLEN
         }
 
-        !zone {
+        !zone {         ; C
 .test    ldx #0
 .t1b     lda $1806       ; Timer A latch lo
         sta DTMP,x
@@ -53,7 +57,7 @@ TESTSLOC = $1000
         * = .test+TESTLEN
         }
 
-        !zone {
+        !zone {         ; D
 .test    ldx #0
 .t1b     lda $1807       ; Timer A latch hi
         sta DTMP,x
@@ -63,7 +67,7 @@ TESTSLOC = $1000
         * = .test+TESTLEN
         }
 
-        !zone {
+        !zone {         ; E
 .test    ldx #0
 .t1b     lda $1808       ; Timer B lo
         sta DTMP,x
@@ -73,7 +77,7 @@ TESTSLOC = $1000
         * = .test+TESTLEN
         }
 
-        !zone {
+        !zone {         ; F
 .test    ldx #0
 .t1b     lda $1809       ; Timer B hi
         sta DTMP,x
@@ -84,33 +88,12 @@ TESTSLOC = $1000
         }
 
 ;-------------------------------------------------------------------------------
+; before:
+;       start Timer B (switch to count clock cycles)
+; in the loop:
+;       read [Timer B lo | Timer B hi]
 
-!if (0) {
-        !zone {
-.test   ;lda #$1
-        ;sta $dc0e       ; start timer A continuous
-        ldx #0
-.t1b     lda $1804       ; Timer A lo
-        sta DTMP,x
-        inx
-        bne .t1b
-        rts
-        * = .test+TESTLEN
-        }
-
-        !zone {
-.test   ;lda #$1
-        ;sta $dc0e       ; start timer A continuous
-        ldx #0
-.t1b     lda $1805       ; Timer A hi
-        sta DTMP,x
-        inx
-        bne .t1b
-        rts
-        * = .test+TESTLEN
-        }
-}
-        !zone {
+        !zone {         ; G
 .test   ;lda #$1
         ;sta $dc0f       ; start timer B continuous
         lda #%00000000
@@ -125,7 +108,7 @@ TESTSLOC = $1000
         * = .test+TESTLEN
         }
 
-        !zone {
+        !zone {         ; H
 .test   ;lda #$1
         ;sta $dc0f       ; start timer B continuous
         lda #%00000000
@@ -142,62 +125,6 @@ TESTSLOC = $1000
 
 ;-------------------------------------------------------------------------------
 
-!if (0) {
-        !zone {
-.test   ;lda #$11
-        ;sta $dc0e       ; start timer A continuous, force reload
-
-        ldx #0
-.t1b     lda $1804       ; Timer A lo
-        sta DTMP,x
-        inx
-        bne .t1b
-        rts
-        * = .test+TESTLEN
-        }
-
-        !zone {
-.test   ;lda #$11
-        ;sta $dc0e       ; start timer A continuous, force reload
-        ldx #0
-.t1b     lda $1805       ; Timer A hi
-        sta DTMP,x
-        inx
-        bne .t1b
-        rts
-        * = .test+TESTLEN
-        }
-
-        !zone {
-.test   ;lda #$11
-        ;sta $dc0f       ; start timer B continuous, force reload
-        lda #%00000000
-        sta $180b
-
-        ldx #0
-.t1b     lda $1808       ; Timer B lo
-        sta DTMP,x
-        inx
-        bne .t1b
-        rts
-        * = .test+TESTLEN
-        }
-
-        !zone {
-.test   ;lda #$11
-        ;sta $dc0f       ; start timer B continuous, force reload
-        lda #%00000000
-        sta $180b
-
-        ldx #0
-.t1b     lda $1809       ; Timer B hi
-        sta DTMP,x
-        inx
-        bne .t1b
-        rts
-        * = .test+TESTLEN
-        }
-}
         * = DATA
         !bin "via1ref.bin", NUMTESTS * $0100, 2
  

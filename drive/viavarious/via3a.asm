@@ -12,7 +12,7 @@ DATA=$8000
 
 TESTLEN =         $20
 
-NUMTESTS =        16
+NUMTESTS =        8
 
 DTMP   = $0700          ; measured data on drive side
 TESTSLOC = $1000
@@ -24,275 +24,149 @@ TESTSLOC = $1000
         * = TESTSLOC
 
 
-	!zone {		; A
-.test 	lda #1
-	sta $1804       ; Timer A lo
-	;lda #$1
-	;sta $dc0e       ; start timer A continuous
+;------------------------------------------
+; before:
+;       [Timer A latch lo | Timer A latch hi] = 1
+;       Timer A CTRL = [Timed Interrupt when Timer 1 is loaded, no PB7 |
+;                       Continuous Interrupts, no PB7 |
+;                       Timed Interrupt when Timer 1 is loaded, one-shot on PB7 |
+;                       Continuous Interrupts, square-wave on PB7]
+; in the loop:
+;       read IRQ Flags
+
+        !zone {         ; A
+.test   lda #1
+        sta $1806       ; Timer A lo
+        ;lda #$1
+        ;sta $dc0e       ; start timer A continuous
+        lda #%00000000
+        sta $180b       ; Timed Interrupt when Timer 1 is loaded, no PB7
+
+        ldx #0
+.t1b    lda $180d       ; IRQ Flags / ACK
+        sta DTMP,x
+        inx
+        bne .t1b
+        rts
+        * = .test+TESTLEN
+        }
+
+        !zone {         ; B
+.test   lda #1
+        sta $1806       ; Timer A lo
+        ;lda #$1
+        ;sta $dc0e       ; start timer A continuous
         lda #%01000000
-        sta $180b       ; continuous IRQs
+        sta $180b       ; Continuous Interrupts, no PB7
 
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
+        ldx #0
+.t1b    lda $180d       ; IRQ Flags / ACK
+        sta DTMP,x
+        inx
+        bne .t1b
+        rts
         * = .test+TESTLEN
         }
 
-	!zone {		; B
-.test 	lda #1
-	sta $1805       ; Timer A hi
-	;lda #$1
-	;sta $dc0e       ; start timer A continuous
+        !zone {         ; C
+.test   lda #1
+        sta $1806       ; Timer A lo
+        ;lda #$11
+        ;sta $dc0e       ; start timer A continuous, force reload
+        lda #%10000000
+        sta $180b       ; Timed Interrupt when Timer 1 is loaded, one-shot on PB7
+
+        ldx #0
+.t1b    lda $180d       ; IRQ Flags / ACK
+        sta DTMP,x
+        inx
+        bne .t1b
+        rts
+        * = .test+TESTLEN
+        }
+
+        !zone {         ; D
+.test   lda #1
+        sta $1806       ; Timer A lo
+        ;lda #$11
+        ;sta $dc0e       ; start timer A continuous, force reload
+        lda #%11000000
+        sta $180b       ; Continuous Interrupts, square-wave on PB7
+
+        ldx #0
+.t1b    lda $180d       ; IRQ Flags / ACK
+        sta DTMP,x
+        inx
+        bne .t1b
+        rts
+        * = .test+TESTLEN
+        }
+
+        !zone {         ; E
+.test   lda #1
+        sta $1807       ; Timer A hi
+        ;lda #$1
+        ;sta $dc0e       ; start timer A continuous
+        lda #%00000000
+        sta $180b       ; Timed Interrupt when Timer 1 is loaded, no PB7
+
+        ldx #0
+.t1b    lda $180d       ; IRQ Flags / ACK
+        sta DTMP,x
+        inx
+        bne .t1b
+        rts
+        * = .test+TESTLEN
+        }
+
+        !zone {         ; F
+.test   lda #1
+        sta $1807       ; Timer A hi
+        ;lda #$1
+        ;sta $dc0e       ; start timer A continuous
         lda #%01000000
-        sta $180b       ; continuous IRQs
+        sta $180b       ; Continuous Interrupts, no PB7
 
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
+        ldx #0
+.t1b    lda $180d       ; IRQ Flags / ACK
+        sta DTMP,x
+        inx
+        bne .t1b
+        rts
         * = .test+TESTLEN
         }
 
-	!zone {		; C
-.test 	lda #1
-	sta $1808       ; Timer B lo
-	;lda #$1
-	;sta $dc0f       ; start timer B continuous
-        lda #%00000000
-        sta $180b
+        !zone {         ; G
+.test   lda #1
+        sta $1807       ; Timer A hi
+        ;lda #$11
+        ;sta $dc0e       ; start timer A continuous, force reload
+        lda #%10000000
+        sta $180b       ; Timed Interrupt when Timer 1 is loaded, one-shot on PB7
 
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
+        ldx #0
+.t1b    lda $180d       ; IRQ Flags / ACK
+        sta DTMP,x
+        inx
+        bne .t1b
+        rts
         * = .test+TESTLEN
         }
 
-	!zone {		; D
-.test	lda #1
-	sta $1809       ; Timer B hi
-	;lda #$1
-	;sta $dc0f       ; start timer B continuous
-        lda #%00000000
-        sta $180b
+        !zone {         ; H
+.test   lda #1
+        sta $1807       ; Timer A hi
+        ;lda #$11
+        ;sta $dc0e       ; start timer A continuous, force reload
+        lda #%11000000
+        sta $180b       ; Continuous Interrupts, square-wave on PB7
 
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
-        * = .test+TESTLEN
-        }
-
-	!zone {		; E
-.test	lda #1
-	sta $1804       ; Timer A lo
-	;lda #$11
-	;sta $dc0e       ; start timer A continuous, force reload
-        lda #%01000000
-        sta $180b       ; continuous IRQs
-
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
-        * = .test+TESTLEN
-        }
-
-	!zone {		; F
-.test	lda #1
-	sta $1805       ; Timer A hi
-	;lda #$11
-	;sta $dc0e       ; start timer A continuous, force reload
-        lda #%01000000
-        sta $180b       ; continuous IRQs
-
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
-        * = .test+TESTLEN
-        }
-
-	!zone {		; G
-.test	lda #1
-	sta $1808       ; Timer B lo
-	;lda #$11
-	;sta $dc0f       ; start timer B continuous, force reload
-        lda #%00000000
-        sta $180b
-
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
-        * = .test+TESTLEN
-        }
-
-	!zone {		; H
-.test	lda #1
-	sta $1809       ; Timer B hi
-	;lda #$11
-	;sta $dc0f       ; start timer B continuous, force reload
-        lda #%00000000
-        sta $180b
-
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
-        * = .test+TESTLEN
-        }
-
-	!zone {		; I
-.test 	lda #1
-	sta $1804       ; Timer A lo
-	;lda #$9
-	;sta $dc0e       ; start timer A oneshot
-        lda #%00000000
-        sta $180b       ; timed IRQ
-
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
-        * = .test+TESTLEN
-        }
-
-	!zone {		; J
-.test 	lda #1
-	sta $1805       ; Timer A hi
-	;lda #$9
-	;sta $dc0e       ; start timer A oneshot
-        lda #%00000000
-        sta $180b       ; timed IRQ
-
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
-        * = .test+TESTLEN
-        }
-
-	!zone {		; K
-.test 	lda #1
-	sta $1808       ; Timer B lo
-	;lda #$9
-	;sta $dc0f       ; start timer B oneshot
-        lda #%00000000
-        sta $180b
-
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
-        * = .test+TESTLEN
-        }
-
-	!zone {		; L
-.test	lda #1
-	sta $1809       ; Timer B hi
-	;lda #$9
-	;sta $dc0f       ; start timer B oneshot
-        lda #%00000000
-        sta $180b
-
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
-        * = .test+TESTLEN
-        }
-
-	!zone {		; M
-.test	lda #1
-	sta $1804       ; Timer A lo
-	;lda #$19
-	;sta $dc0e       ; start timer A oneshot, force reload
-        lda #%00000000
-        sta $180b       ; timed IRQ
-
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
-        * = .test+TESTLEN
-        }
-
-	!zone {		; N
-.test	lda #1
-	sta $1805       ; Timer A hi
-	;lda #$19
-	;sta $dc0e       ; start timer A oneshot, force reload
-        lda #%00000000
-        sta $180b       ; timed IRQ
-
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
-        * = .test+TESTLEN
-        }
-
-	!zone {		; O
-.test	lda #1
-	sta $1808       ; Timer B lo
-	;lda #$19
-	;sta $dc0f       ; start timer B oneshot, force reload
-        lda #%00000000
-        sta $180b
-
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
-        * = .test+TESTLEN
-        }
-
-	!zone {		; P
-.test	lda #1
-	sta $1808       ; Timer B lo
-	;lda #$19
-	;sta $dc0f       ; start timer B oneshot, force reload
-        lda #%00000000
-        sta $180b
-
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
-	rts
+        ldx #0
+.t1b    lda $180d       ; IRQ Flags / ACK
+        sta DTMP,x
+        inx
+        bne .t1b
+        rts
         * = .test+TESTLEN
         }
 

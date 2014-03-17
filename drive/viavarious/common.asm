@@ -14,6 +14,13 @@ start:
 
         jsr clrscr
 
+        lda #6
+        ldx #$ff
+-
+        dex
+        sta ERRBUF,x
+        bne -
+        
         lda #5
         sta ERRBUF+$ff
 
@@ -25,6 +32,8 @@ clp1b
         sta tmp
         pha
         jsr $e518       ; init I/O
+        jsr calcaddr
+        jsr displayprepare
         jsr dotest
         pla
         tax
@@ -37,34 +46,23 @@ clp1b
         lda #0
         sta tmp
         jsr $e518       ; init I/O
+        jsr calcaddr
+        jsr displayprepare
         jsr dotest
         }
 
 loop
-        ; show errors
-        ldx #0
-clp1a
-        txa
-        clc
-        adc #"a"
-        and #$3f
-        sta $0400+(24*40),x
-        lda ERRBUF,x
-        sta $d800+(24*40),x
-        inx
-        cpx #NUMTESTS
-        bne clp1a
+;        jsr calcaddr
+;        jsr displayresults
 
-        lda ERRBUF+$ff
-        sta $d020
-        lda #0
-        sta $d021
+        ; wait for keypress
 wkey
         jsr $ffe4
         cmp #"a"
         bcc wkey
         cmp #"a"+NUMTESTS
         bcs wkey
+
         tax
         sec
         sbc #"a"
@@ -74,8 +72,14 @@ wkey
         sta $0400+(24*40)+39
 
         jsr $e518       ; init I/O
+        jsr calcaddr
+        jsr displayprepare
         jsr dotest
+;        jsr calcaddr
+;        jsr displayresults
         jmp loop
+
+;-------------------------------------------------------------------------------
 
 dotest
         inc $d020
@@ -116,7 +120,7 @@ clp2:
         iny
         cpy #TESTLEN
         bne clp2
-        
+
         lda #<drivecode
         ldy #>drivecode
         ldx #((drivecode_end - drivecode) + $1f) / $20 ; upload x * $20 bytes to 1541
@@ -156,52 +160,19 @@ clp2:
         ;jsr $fda3
         ;cli
 
-        lda #5
-        ldx tmp
-        sta ERRBUF,x
+        jsr calcaddr
 
+        ; copy data from screen to TMP
         ldy #0
-lla     sta $d800,y
-        sta $d800+(8*40),y
-        sta $d800+(16*40),y
-        iny
-        bne lla
-
-        lda tmp
-        clc
-        adc #>TMP
-        sta addr+1
-        lda #<TMP
-        sta addr
-
-        lda tmp
-        clc
-        adc #>DATA
-        sta add2+1
-        lda #<DATA
-        sta add2
-
-        ; copy data from screen to TMP and check errors
-        ldy #0
-ll      ;lda (addr),y
-        ;sta $0400,y
+-
         lda $0400,y
         sta (addr),y
-        cmp (add2),y
-        beq rot
-        lda #10
-        sta $d800,y
-        sta $d800+(8*40),y
-        sta $d800+(16*40),y
-        sta ERRBUF,x
-        sta ERRBUF+$ff
-rot
-        lda (add2),y
-        sta $0400+(8*40),y
-        eor (addr),y
-        sta $0400+(16*40),y
         iny
-        bne ll
+        bne -
+
+        dec $d020
+
+        jsr displayresults
 
         inc $d020
 
@@ -218,8 +189,146 @@ rot
         bne -
 
         dec $d020
-        dec $d020
         cli
+        rts
+
+calcaddr:
+        lda tmp
+        clc
+        adc #>TMP
+        sta addr+1
+        lda #<TMP
+        sta addr
+
+        lda tmp
+        clc
+        adc #>DATA
+        sta add2+1
+        lda #<DATA
+        sta add2
+        rts
+
+displayprepare:
+        lda #0
+        sta $d020
+        sta $d021
+
+        ldy #0
+-
+        lda #$20
+        sta $0400,y
+        sta $0400+(16*40),y
+        lda (add2),y
+        sta $0400+(8*40),y
+        iny
+        bne -
+
+        ldx tmp
+        lda #1
+        sta ERRBUF,x
+        
+        jsr .displaytestid
+        jsr .displayerrlog
+        jsr .displaytext
+
+        rts
+
+.displaytestid:
+        ; test id in bottom right corner
+        ldx tmp
+        txa
+        clc
+        adc #"a"
+        and #$3f
+        sta $0400+(24*40)+39
+        rts
+
+
+.displayerrlog:
+        ; show errors
+        ldy #0
+clp1a
+        tya
+        clc
+        adc #"a"
+        and #$3f
+        sta $0400+(24*40),y
+        lda ERRBUF,y
+        sta $d800+(24*40),y
+        iny
+        cpy #NUMTESTS
+        bne clp1a
+        rts
+
+
+.displaytext:
+        ldy #14
+-
+        lda line0,y
+        sta $0400+((0+6)*40)+23,y
+        lda line1,y
+        sta $0400+((8+6)*40)+23,y
+        lda line2,y
+        sta $0400+((16+6)*40)+23,y
+        dey
+        bpl -
+
+        ldy #5
+-
+        lda line3,y
+        sta $0400+(24*40)+30,y
+        lda #1
+        sta $d800+(24*40)+30,y
+        dey
+        bpl -
+        rts
+        
+displayresults:
+
+        jsr .displaytestid
+
+        ldx tmp
+        lda #5
+        sta ERRBUF,x
+
+        ; check TMP for errors, display screen
+        lda #5
+        ldy #0
+lla     sta $d800,y
+        sta $d800+(8*40),y
+        sta $d800+(16*40),y
+        iny
+        bne lla
+
+        ldy #0
+ll      lda (addr),y
+        sta $0400,y
+        ;lda $0400,y
+        ;sta (addr),y
+        cmp (add2),y
+        beq rot
+        lda #10
+        sta $d800,y
+        sta $d800+(8*40),y
+        sta $d800+(16*40),y
+        sta ERRBUF,x
+        sta ERRBUF+$ff
+rot
+        lda (add2),y
+        sta $0400+(8*40),y
+        eor (addr),y
+        sta $0400+(16*40),y
+        iny
+        bne ll
+
+        jsr .displaytext
+        jsr .displayerrlog
+
+        lda ERRBUF+$ff
+        sta $d020
+        lda #0
+        sta $d021
+
         rts
 
 ;-------------------------------------------------------------------------------
@@ -286,7 +395,7 @@ drvstart
 
         ; acknowledge pending IRQs
         lda $180d
-        lda $180d
+        sta $180d
 
         ; init timers
         ; after this all timer values will be = $0000
@@ -310,3 +419,19 @@ ddotest:
 drivecode_end:
 
 drivecode_dotest = (ddotest - drivecode_start) + drivecode
+
+line0:  !scr "<measured data>"
+line1:  !scr "<expected data>"
+line2:  !scr "        <xored>"
+line3:  !scr "via "
+!if (TESTID = $3a) {
+        !scr "3a"
+} else {
+    !if (TESTID < 10) {
+        !byte $30 + TESTID
+        !byte $20
+    } else {
+        !byte $30 + (TESTID / 10)
+        !byte $30 + (TESTID % 10)
+    }
+}
