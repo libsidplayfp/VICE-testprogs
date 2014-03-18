@@ -27,6 +27,8 @@ VIA3a:  fail    Timer A IRQ Flags
 
 VIA4:   fail    Timer A (toggle timer A timed/continous irq)
 
+VIA5:   fail    Timer A / B IRQ Flags
+
 VIA9:   fail    Timer B (toggle timer B counts PB6/Clock)
 
 VIA10:  fail    Port B (output timer at PB7 and read back PB)
@@ -39,7 +41,6 @@ more testing on other drives is needed (gpz)
 
 TODO:
 
-VIA5:   Timer A / B IRQ Flags (not working)
 VIA10-13 (clean up)
 
 - clean out more redundant stuff, add comments, etc
