@@ -8,7 +8,24 @@ timera.asm:
 - hooks a timer interrupt (VIA2 timer A) and reads from another timer (VIA1
   timer A) which creates a typical pattern.
 
-for quick reference the ROM interrupt handler is shown below:
+watchdog.asm
+- a timer interrupt is reset by the c64 periodically polling the drive, so it
+  never occurs. this is mostly a test for "freezers", run the test, then freeze
+  and restart - the drive will time out and the c64 side will hang.
+
+;-------------------------------------------------------------------------------
+
+CAUTION: when writing IRQ routines for the 1541, keep in mind the system handler
+         will already do some things:
+
+         - for VIA1, only CA1 interrupts are handled
+
+         - for VIA2, all types of interrupts can be handled
+         - the system handler will read timer a lo, which results in clearing
+           the related interrupt flag
+         - the system handler will configure CB2 for high output
+  
+for quick reference (part of) the ROM interrupt handler is shown below:
 
 ;-------------------------------------------------------------------------------
 ; $FE67/65127:   Interrupt routine
@@ -19,12 +36,12 @@ FE69: 48        PHA             ; save registers
 FE6A: 98        TYA
 FE6B: 48        PHA
 
-FE6C: AD 0D 18  LDA $180D       ; interrupt from serial bus?
+FE6C: AD 0D 18  LDA $180D       ; interrupt from VIA2? (CA1: serial bus)
 FE6F: 29 02     AND #$02
 FE71: F0 03     BEQ $FE76       ; no
 FE73: 20 53 E8  JSR $E853       ; serve serial bus
 
-FE76: AD 0D 1C  LDA $1C0D       ; interrupt from timer 1?
+FE76: AD 0D 1C  LDA $1C0D       ; interrupt from VIA1? (Timer)
 FE79: 0A        ASL
 FE7A: 10 03     BPL $FE7F       ; no
 FE7C: 20 B0 F2  JSR $F2B0       ; IRQ routine for disk controller           <=-
@@ -41,8 +58,8 @@ FE84: 40        RTI
 
 F2B0: BA        TSX
 F2B1: 86 49     STX $49         ; save stack pointer
-F2B3: AD 04 1C  LDA $1C04
-F2B6: AD 0C 1C  LDA $1C0C       ; erase interrupt flag from timer
+F2B3: AD 04 1C  LDA $1C04       ; erase interrupt flag from timer
+F2B6: AD 0C 1C  LDA $1C0C       ; CB2 Output = Hi, IRQ on negative edge
 F2B9: 09 0E     ORA #$0E
 F2BB: 8D 0C 1C  STA $1C0C
 
