@@ -1,5 +1,6 @@
 
 all:
+	make -C diskchange
 	make -C util
 	make -C selftest
 	make -C pwm
@@ -8,6 +9,7 @@ all:
 	make -C viavarious
 
 clean:
+	make -C diskchange clean
 	make -C util clean
 	make -C selftest clean
 	make -C pwm clean
