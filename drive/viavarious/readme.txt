@@ -41,11 +41,9 @@ more testing on other drives is needed (gpz)
 
 TODO:
 
-VIA10-13 (clean up)
-
-- clean out more redundant stuff, add comments, etc
-
-- add reading Timer A latches to all tests
+- add reading and/or writing Timer A latches to all tests
+- test input latching
+- test serial shift register
 
 --------------------------------------------------------------------------------
 Following is a brief overview of how certain CIA features are related to the

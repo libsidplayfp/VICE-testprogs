@@ -48,26 +48,18 @@ TESTSLOC = $1000
 ; timer A force-load, start, no output at PB7 (pulse)
 +TEST $00,$00,$00,0,0 
 +TEST $00,$00,$00,0,1 
-;+TEST $00,$00,$11,1,0 
-;+TEST $00,$00,$11,1,1 
 
 ; timer A force-load, start, output at PB7 (pulse)
 +TEST $00,$00,$80,0,0 
 +TEST $00,$00,$80,0,1 
-;+TEST $00,$00,$13,1,0 
-;+TEST $00,$00,$13,1,1 
 
 ; timer A force-load, start, no output at PB7 (toggle)
 +TEST $00,$00,$40,0,0 
 +TEST $00,$00,$40,0,1 
-;+TEST $00,$00,$15,1,0 
-;+TEST $00,$00,$15,1,1 
 
 ; timer A force-load, start, output at PB7 (toggle)
 +TEST $00,$00,$c0,0,0 
 +TEST $00,$00,$c0,0,1 
-;+TEST $00,$00,$17,1,0 
-;+TEST $00,$00,$17,1,1 
 
         * = DATA
         !bin "via10ref.bin", NUMTESTS * $0100, 2
