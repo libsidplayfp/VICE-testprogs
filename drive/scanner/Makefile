@@ -30,4 +30,7 @@ clean:
 	rm -f scan35.d64
 	rm -f scan40.d64
 	rm -f scan42.d64
+	rm -f scan35.g64
+	rm -f scan40.g64
+	rm -f scan42.g64
 	
