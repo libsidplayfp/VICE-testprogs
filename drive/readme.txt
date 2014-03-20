@@ -27,7 +27,7 @@ scanner:
   tracks
 
 viavarious:
-- various tests, ported from andre fachats ciavarious
+- various tests, ported from andre fachats "ciavarious"
 
 --------------------------------------------------------------------------------
 
@@ -35,6 +35,6 @@ TODO:
 - physical limits test (check for highest and lowest reachable track)
 - VIA serial shift register test
 - measure drive RPM
-- add G64 generation so G64s for "scanner" can be made
+- test if half-tracks behave correctly
 
 ..?
