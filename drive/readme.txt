@@ -19,6 +19,9 @@ interrupts:
 pwm:
 - simple drive-led pwm test
 
+rpm:
+- drive rotation speed measurement
+
 selftest:
 - simple test of the framework, transfer routines, etc
 
@@ -34,7 +37,6 @@ viavarious:
 TODO:
 - physical limits test (check for highest and lowest reachable track)
 - VIA serial shift register test
-- measure drive RPM
 - test if half-tracks behave correctly
 
 ..?
