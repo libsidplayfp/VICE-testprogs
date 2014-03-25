@@ -29,6 +29,8 @@ snd_start:
 ;-------------------------------------------------------------------------------
 
 snd_1byte:
+        stx .xtmp+1
+
         ldx #$0f
         sbx #$00
         lsr
@@ -64,4 +66,6 @@ snd_1byte:
         nop
         lda #%00000000 ; CLOCK = 0 DATA = 0
         sta $1800
+
+.xtmp:  ldx #0
         rts
