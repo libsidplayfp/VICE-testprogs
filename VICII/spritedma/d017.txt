@@ -5,4 +5,4 @@ the first line of the sprite data contains 0,1,2
 the last line contains $fc, $fd, $fe
 
 left and right (light grey) the same pattern is shown using characters, the
-sprite in the moddle (dark grey) should look exactly the same.
+sprite in the middle (dark grey) should look exactly the same.
