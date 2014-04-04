@@ -13,6 +13,9 @@ images
 diskchange:
 - various methods of detecting disk changes
 
+iecdelay:
+- iec bus delay test, original program by Jochen Adler
+
 interrupts:
 - interrupt related tests
 
