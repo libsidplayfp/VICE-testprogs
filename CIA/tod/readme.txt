@@ -1,6 +1,11 @@
 
 alarm.prg:      check if ALARMTIME = TIME sets bit 2 of ICR
 
+alarm-cond.prg:  checks exact conditions for when bit 2 if ICR gets set 
+                 (set time to current alarm time)
+alarm-cond2.prg: checks exact conditions for when bit 2 if ICR gets set 
+                 (set alarm time to current time)
+
 hour-test.prg:  check AM/PM flag of the hour register
 
 --------------------------------------------------------------------------------
