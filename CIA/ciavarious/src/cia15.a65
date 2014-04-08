@@ -17,7 +17,7 @@ DATA=$8000
 
 	/* wait for TOD .1 sec change */
 waitchange .(
-	cmp $dc08
+	cmp $dc08 ; .1 sec
 	beq waitchange
 	rts
 	.)
@@ -28,14 +28,14 @@ waitchange .(
 	.(		; A
 test
 	ldx #0
-t1b	stx $dc0b
+t1b	stx $dc0b ; hour
 	lda #$59
-	sta $dc0a
-	sta $dc09
+	sta $dc0a ; min
+	sta $dc09 ; sec
 	lda #$08
-	sta $dc08
+	sta $dc08 ; .1 sec
 	jsr waitchange
-	lda $dc0b
+	lda $dc0b ; hour
 	sta TMP,x
 	inx
 	bne t1b
@@ -47,16 +47,16 @@ t1b	stx $dc0b
 	.(		; B
 test
 	ldx #0
-t1b	stx $dc0b
+t1b	stx $dc0b ; hour
 	lda #$59
-	sta $dc0a
-	sta $dc09
+	sta $dc0a ; min
+	sta $dc09 ; sec
 	lda #$08
-	sta $dc08
+	sta $dc08 ; .1 sec
 	jsr waitchange
 	lda #$09
 	jsr waitchange
-	lda $dc0b
+	lda $dc0b ; hour
 	sta TMP,x
 	inx
 	bne t1b
@@ -68,18 +68,18 @@ t1b	stx $dc0b
 	.(		; C
 test
 	ldx #0
-t1b	stx $dc0b
+t1b	stx $dc0b ; hour
 	lda #$59
-	sta $dc0a
-	sta $dc09
+	sta $dc0a ; min
+	sta $dc09 ; sec
 	lda #$08
-	sta $dc08
+	sta $dc08 ; .1 sec
 	jsr waitchange
 	lda #$09
 	jsr waitchange
 	lda #$00
 	jsr waitchange
-	lda $dc0b
+	lda $dc0b ; hour
 	sta TMP,x
 	inx
 	bne t1b
