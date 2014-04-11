@@ -8,10 +8,11 @@ datasheet, nor was it ever investigated in detail by anyone else until now - the
 following is an attempt to collect the available info and prove it piece by
 piece in seperated test programs.
 
+a (*) before a sentence/paragraph indicates parts that still need to be backed 
+up by a test
 --------------------------------------------------------------------------------
 
-First, this is what the datasheet says: (a (*) before a sentence/paragraph 
-indicates parts that still need to be backed up by a test)
+First, this is what the datasheet says:
 
 The TOD clock is a special purpose timer for real-time applications. TOD 
 consists of a 24-hour (AM/PM) clock with 1/10th second resolution. It is 
@@ -25,7 +26,7 @@ a programmable ALARM is provided for generating an interrupt at a desired time.
 The ALARM registers or located at the same addresses as the corresponding TOD 
 registers. Access to the ALARM is governed by a Control Register bit. The ALARM 
 is write-only; any read of a TOD address will read time regardless of the state 
-of the ALARM access bit. (->poweron.prg)
+of the ALARM access bit. (->powerup.prg)
 
 (*) A specific sequence of events must be followed for proper setting and reading 
 of TOD. TOD is automatically stopped whenever a write to the Hours register 
@@ -55,6 +56,8 @@ Write: CRB7=0 TOD       CRB7=1 ALARM
 
 additionally:
 
+REG D (ICR) bit2 (TODIRQ)  1=alarm time reached
+
 REG E (CRA) bit7 (TODIN)   1=50 Hz clock required on TOD pin for accurate time,
                            0=60 Hz clock required on TOD pin for accurate time.
 REG F (CRB) bit7 (ALARM)   1=writing to TOD registers sets ALARM,
@@ -62,32 +65,34 @@ REG F (CRB) bit7 (ALARM)   1=writing to TOD registers sets ALARM,
 
 --------------------------------------------------------------------------------
 
-More facts about the TOD clocks that are not in the datasheet: (a (*) before a 
-sentence/paragraph indicates parts that still need to be backed up by a test)
+More facts about the TOD clocks that are not in the datasheet:
 
-- C64 kernal does not initialize or touch them in any way (not really a property
-  of the CIA, but it means they can be tested completely without the kernal
-  interfering)
 - (*) hours register is autofixed if nonsense-values get poked in. writing 0 instead 
   of 12am is possible, though
 - (*) minutes and seconds registers will fix any nonsense values when carry over 
   from next lower register occurs. Seems to always inc the next higher register, 
   too.
-- bug/feature: poking 12 pm into hours register turns to 12 am and vice versa.
+- writing 12 pm into hour register turns to 12 am and vice versa.
   apparently cia constantly monitors writes to hour register and mechanically
   flips am/pm bit whenever hour value changes to 12, no matter whether value
   is poked in from outside or is result of carryover from minutes register.
+  (->hour-test.prg)
 - (*) Wikipedia says: Due to a bug in many 6526s, the alarm IRQ would not always 
   occur when the seconds component of the alarm time is exactly zero. The 
   workaround is to set the alarm's tenths value to 0.1 seconds.
-- reading the clock (hour to tenths) does not start it
+- reading the clock (hour to tenths) does not start it when it is stopped
+  (->powerup.prg)
 
-- at powerup 
+- at powerup (->powerup.prg)
   - the clock is not running
   - the time value read from the latch is 01:00:00.0 (mostly, hour might be $11 ...)
   - the am/pm flag is random
   - the alarm is set to 00:00:00.0 by default, and because of that does not
     trigger unless the time is forced to 00:00:00.0 too
+
+Also note that the C64 kernal does not initialize or touch the TOD clock in any 
+way (the BASIC RND function will read it), which means it can be tested without 
+the kernal interfering.
 
 --------------------------------------------------------------------------------
 
@@ -168,7 +173,5 @@ TODO:
 
 - test the "autocorrection" for the time and alarm-time values (when do they
   happen, what exactly happens)
-- test whether MSB of ctrlB makes reading of alarm time possible or not (it
-  should always be the time)
 - test if time stops updating when writing the hour register when either time or
   alarm is selected ("mapping the 64" claims it does)
