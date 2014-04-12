@@ -1,7 +1,7 @@
 
 TESTS=\
 	alarm.prg alarm-cond.prg alarm-cond2.prg hour-test.prg stability.prg stability-ntsc.prg \
-	4tod.prg 4todcia1.prg 5tod.prg 6tod.prg powerup.prg
+	4tod.prg 4todcia1.prg 5tod.prg 6tod.prg powerup.prg fix-hour.prg fix-min.prg fix-sec.prg fix-tsec.prg
 
 all: $(TESTS)
 	
@@ -21,6 +21,15 @@ stability-ntsc.prg: stability.s
 powerup.prg: powerup.s
 	acme -o powerup.prg powerup.s
 	
+fix-hour.prg: fix-hour.s
+	acme -o fix-hour.prg fix-hour.s
+fix-min.prg: fix-min.s
+	acme -o fix-min.prg fix-min.s
+fix-sec.prg: fix-sec.s
+	acme -o fix-sec.prg fix-sec.s
+fix-tsec.prg: fix-tsec.s
+	acme -o fix-tsec.prg fix-tsec.s
+	
 4tod.prg: 4tod.asm
 	64tass -a -o 4tod.prg 4tod.asm
 4todcia1.prg: 4todcia1.asm
@@ -32,3 +41,6 @@ powerup.prg: powerup.s
 	
 hour-test.prg: hour-test.bas
 	petcat -w2 -o hour-test.prg -- hour-test.bas
+	
+clean:
+	rm -f *.prg

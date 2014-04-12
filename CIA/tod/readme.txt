@@ -20,10 +20,12 @@ organized into 4 registers: 10ths of seconds, Seconds, Minutes and Hours. The
 AM/PM flag is in the MSB of the Hours register for easy bit testing. Each 
 register reads out in BCD format to simplify conversion for driving displays, 
 etc. The clock requires an external 60 Hz or 50 Hz (programmable) TTL level 
-input on the TOD pin for accurate time-keeping. In addition to time-keeping, 
-a programmable ALARM is provided for generating an interrupt at a desired time. 
+input on the TOD pin for accurate time-keeping. 
 
-The ALARM registers or located at the same addresses as the corresponding TOD 
+In addition to time-keeping, a programmable ALARM is provided for generating an 
+interrupt at a desired time. (->alarm.prg, alarm-cond.prg, alarm-cond2.prg)
+
+The ALARM registers are located at the same addresses as the corresponding TOD 
 registers. Access to the ALARM is governed by a Control Register bit. The ALARM 
 is write-only; any read of a TOD address will read time regardless of the state 
 of the ALARM access bit. (->powerup.prg)
@@ -43,6 +45,8 @@ clock continues to count when the output registers are latched.
 can be read "on the fly," provided that any read of Hours is followed by a read 
 of 10ths of seconds to disable the latching.
 
+--------------------------------------------------------------------------------
+
 Register format:
 
 REG  NAME           D7      D6      D5      D4      D3      D2      D1      D0
@@ -54,12 +58,10 @@ B    TOD HR         AM/PM   0       0       HH      HL8     HL4     HL2     HL1
 Read:  always TOD
 Write: CRB7=0 TOD       CRB7=1 ALARM
 
-additionally:
-
-REG D (ICR) bit2 (TODIRQ)  1=alarm time reached
-
-REG E (CRA) bit7 (TODIN)   1=50 Hz clock required on TOD pin for accurate time,
-                           0=60 Hz clock required on TOD pin for accurate time.
+REG D (ICR) bit2 (TODIRQ)  (read)  1=alarm time reached (->alarm.prg)
+                           (write) 1=enable/disable alarm irq
+REG E (CRA) bit7 (TODIN)   1=50Hz clock input
+                           0=60Hz clock input
 REG F (CRB) bit7 (ALARM)   1=writing to TOD registers sets ALARM,
                            0=writing to TOD registers sets TOD clock.
 
@@ -67,11 +69,11 @@ REG F (CRB) bit7 (ALARM)   1=writing to TOD registers sets ALARM,
 
 More facts about the TOD clocks that are not in the datasheet:
 
-- (*) hours register is autofixed if nonsense-values get poked in. writing 0 instead 
-  of 12am is possible, though
-- (*) minutes and seconds registers will fix any nonsense values when carry over 
-  from next lower register occurs. Seems to always inc the next higher register, 
-  too.
+- the individual digits of the hour, min, sec and tsec registers are binary
+  counters, and the carry over to the next digit is performed by a direct
+  comparison by value. "invalid" values work and will be counted up as expected
+  within the limits of the respective register (->fix-hour.prg, fix-min.prg, 
+  fix-sec.prg, fix-tsec.prg)
 - writing 12 pm into hour register turns to 12 am and vice versa.
   apparently cia constantly monitors writes to hour register and mechanically
   flips am/pm bit whenever hour value changes to 12, no matter whether value
@@ -86,9 +88,14 @@ More facts about the TOD clocks that are not in the datasheet:
 - at powerup (->powerup.prg)
   - the clock is not running
   - the time value read from the latch is 01:00:00.0 (mostly, hour might be $11 ...)
-  - the am/pm flag is random
+  - the am/pm flag is random (mostly 0)
   - the alarm is set to 00:00:00.0 by default, and because of that does not
     trigger unless the time is forced to 00:00:00.0 too
+
+- after reset (->powerup.prg)
+  - the clock is not running
+  - the time value read from the latch is 01:00:00.0
+  ...(?)
 
 Also note that the C64 kernal does not initialize or touch the TOD clock in any 
 way (the BASIC RND function will read it), which means it can be tested without 
@@ -102,6 +109,13 @@ alarm-cond.prg:  checks exact conditions for when bit 2 if ICR gets set
                  (set time to current alarm time)
 alarm-cond2.prg: checks exact conditions for when bit 2 if ICR gets set 
                  (set alarm time to current time)
+
+--------------------------------------------------------------------------------
+
+fix-hour.prg, fix-min.prg, fix-sec.prg, fix-tsec.prg:
+
+these test check the behaviour of the respective registers when invalid values
+have been written to them.
 
 --------------------------------------------------------------------------------
 
@@ -171,7 +185,5 @@ in reality these values may vary surprisingly much. infact, anything between
 
 TODO:
 
-- test the "autocorrection" for the time and alarm-time values (when do they
-  happen, what exactly happens)
 - test if time stops updating when writing the hour register when either time or
   alarm is selected ("mapping the 64" claims it does)
