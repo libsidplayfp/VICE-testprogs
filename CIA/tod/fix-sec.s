@@ -70,10 +70,13 @@ start:
 loop:
             stx loopcnt
 
-            ; first read the time, starting with tenth secs to avoid latching
+            jsr inittod
+
+            ; start clock at 01:01:nn.01
             lda #$01
             sta $dd0b
             sta $dd0a
+            ldx loopcnt
             lda tabsecs,x
             pha
             sta $dd09
@@ -107,6 +110,11 @@ loop:
             jsr check59
             jsr printtime
 
+            ; wait some frames to make sure the clock tick occurred at least once
+            ldx #10
+            jsr waitframes
+            
+            ; wait until 10th seconds == 0
 -           lda $dd08
             bne -
 
@@ -122,11 +130,6 @@ loop:
             jsr printtime
             jsr nextline
 
-            ; wait one second again to make sure the above procedure did not
-            ; start the clock
-            ldx #50*1
-            jsr waitframes
-
             ldx loopcnt
             inx
             cpx #24
@@ -137,6 +140,27 @@ bcol:       lda #5
 
             jmp *
 
+inittod:
+            ; make sure the time register and latch is always 01:00:00.0
+            ; before the actual measurement
+            lda #$00
+            sta $dd0b
+            lda #$59
+            sta $dd0a
+            lda #$59
+            sta $dd09
+            lda #$01
+            sta $dd08
+
+            ; wait some frames to make sure the clock tick occurred at least once
+            ldx #10
+            jsr waitframes
+
+            ; wait until 10th seconds == 0
+-           lda $dd08
+            bne -
+            rts
+            
 tabsecs:
             !byte $00,$09
             !byte $0a,$0b,$0c,$0d,$0e,$0f,$10,$59,$69
