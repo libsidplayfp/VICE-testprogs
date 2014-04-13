@@ -82,11 +82,13 @@ More facts about the TOD clocks that are not in the datasheet:
   flips am/pm bit whenever hour value changes to 12, no matter whether value
   is poked in from outside or is result of carry from minutes register.
   (->hour-test.prg)
-- (*) Wikipedia says: Due to a bug in many 6526s, the alarm IRQ would not always 
+- (*) Wikipedia says: "Due to a bug in many 6526s, the alarm IRQ would not always 
   occur when the seconds component of the alarm time is exactly zero. The 
-  workaround is to set the alarm's tenths value to 0.1 seconds.
+  workaround is to set the alarm's tenths value to 0.1 seconds."
 - reading the clock (hour to tenths) does not start it when it is stopped
   (->powerup.prg)
+- the frequency counter is being reset to 0 when the clock was stopped and is
+  restarted (->hzsync0.prg, hzsync1.prg)
 
 - at powerup (->powerup.prg)
   - the clock is not running
@@ -162,6 +164,22 @@ hour-test.prg:  check AM/PM flag of the hour register
 
 --------------------------------------------------------------------------------
 
+hzsync0.prg, hzsync1.prg:
+
+find out if the 50/60Hz counter is running freely or somehow synchronized with 
+writes to TOD-time:
+in the latter case .1secs should change roughly 5 frames after last rewrite
+in the former case .1secs should change about 2 frames after last rewrite
+
+(slight variations of +/-1 frames can be expected as neither frame rate nor ToD 
+input are exactly 50 Hz.)
+
+expected for hzsync0: all "synced" (mostly 5s, some 6s)
+
+expected for hzsync1: all "free running" (mostly 1s, some 2s)
+
+--------------------------------------------------------------------------------
+
 powerup.prg
 
 checks the state of the TOD clock at power-on
@@ -195,3 +213,8 @@ also checks that writing to the tod registers does neither start nor stop the
 clock when alarm is selected. ("mapping the 64" claims it does)
 
 --------------------------------------------------------------------------------
+
+TODO: 
+
+- investigate "slurpy"
+- test behaviour of the latch in more detail
