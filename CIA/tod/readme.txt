@@ -19,8 +19,10 @@ consists of a 24-hour (AM/PM) clock with 1/10th second resolution. It is
 organized into 4 registers: 10ths of seconds, Seconds, Minutes and Hours. The 
 AM/PM flag is in the MSB of the Hours register for easy bit testing. Each 
 register reads out in BCD format to simplify conversion for driving displays, 
-etc. The clock requires an external 60 Hz or 50 Hz (programmable) TTL level 
-input on the TOD pin for accurate time-keeping. 
+etc. 
+
+The clock requires an external 60 Hz or 50 Hz (programmable) TTL level input on 
+the TOD pin for accurate time-keeping. (->stability.prg, stability-ntsc.prg)
 
 In addition to time-keeping, a programmable ALARM is provided for generating an 
 interrupt at a desired time. (->alarm.prg, alarm-cond.prg, alarm-cond2.prg)
@@ -30,10 +32,11 @@ registers. Access to the ALARM is governed by a Control Register bit. The ALARM
 is write-only; any read of a TOD address will read time regardless of the state 
 of the ALARM access bit. (->powerup.prg)
 
-(*) A specific sequence of events must be followed for proper setting and reading 
+A specific sequence of events must be followed for proper setting and reading 
 of TOD. TOD is automatically stopped whenever a write to the Hours register 
 occurs. The clock will not start again until after a write to the 10ths of 
 seconds register. This assures TOD will always start at the desired time. 
+(->write-stop.prg)
 
 (*) Since a carry from one stage to the next can occur at any time with respect to a 
 read operation, a latching function is included to keep all Time Of Day 
@@ -53,7 +56,7 @@ REG  NAME           D7      D6      D5      D4      D3      D2      D1      D0
 8    TOD 10THS      0       0       0       0       T8      T4      T2      T1
 9    TOD SEC        0       SH4     SH2     SH1     SL8     SL4     SL2     SL1
 A    TOD MIN        0       MH4     MH2     MH1     ML8     ML4     ML2     ML1
-B    TOD HR         AM/PM   0       0       HH      HL8     HL4     HL2     HL1
+B    TOD HR         AM/PM   0       0       HH1     HL8     HL4     HL2     HL1
 
 Read:  always TOD
 Write: CRB7=0 TOD       CRB7=1 ALARM
@@ -77,7 +80,7 @@ More facts about the TOD clocks that are not in the datasheet:
 - writing 12 pm into hour register turns to 12 am and vice versa.
   apparently cia constantly monitors writes to hour register and mechanically
   flips am/pm bit whenever hour value changes to 12, no matter whether value
-  is poked in from outside or is result of carryover from minutes register.
+  is poked in from outside or is result of carry from minutes register.
   (->hour-test.prg)
 - (*) Wikipedia says: Due to a bug in many 6526s, the alarm IRQ would not always 
   occur when the seconds component of the alarm time is exactly zero. The 
@@ -183,7 +186,12 @@ in reality these values may vary surprisingly much. infact, anything between
 
 --------------------------------------------------------------------------------
 
-TODO:
+write-stop.prg
 
-- test if time stops updating when writing the hour register when either time or
-  alarm is selected ("mapping the 64" claims it does)
+checks if the clock stops (only) when writing to the hour register, and restarts
+(only) when writing to tsec register.
+
+also checks that writing to the tod registers does neither start nor stop the
+clock when alarm is selected. ("mapping the 64" claims it does)
+
+--------------------------------------------------------------------------------
