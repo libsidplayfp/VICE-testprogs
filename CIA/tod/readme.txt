@@ -8,8 +8,6 @@ datasheet, nor was it ever investigated in detail by anyone else until now - the
 following is an attempt to collect the available info and prove it piece by
 piece in seperated test programs.
 
-a (*) before a sentence/paragraph indicates parts that still need to be backed 
-up by a test
 --------------------------------------------------------------------------------
 
 First, this is what the datasheet says:
@@ -38,15 +36,15 @@ occurs. The clock will not start again until after a write to the 10ths of
 seconds register. This assures TOD will always start at the desired time. 
 (->write-stop.prg)
 
-(*) Since a carry from one stage to the next can occur at any time with respect to a 
+Since a carry from one stage to the next can occur at any time with respect to a 
 read operation, a latching function is included to keep all Time Of Day 
 information constant during a read sequence. All four TOD registers latch on a 
 read of Hours and remain latched until after a read of 10ths of seconds. The TOD 
-clock continues to count when the output registers are latched. 
+clock continues to count when the output registers are latched. (->read-latch.prg)
 
-(*) If only one register is to be read, there is no carry problem and the register 
+If only one register is to be read, there is no carry problem and the register 
 can be read "on the fly," provided that any read of Hours is followed by a read 
-of 10ths of seconds to disable the latching.
+of 10ths of seconds to disable the latching. (->read-latch.prg)
 
 --------------------------------------------------------------------------------
 
@@ -82,13 +80,14 @@ More facts about the TOD clocks that are not in the datasheet:
   flips am/pm bit whenever hour value changes to 12, no matter whether value
   is poked in from outside or is result of carry from minutes register.
   (->hour-test.prg)
-- (*) Wikipedia says: "Due to a bug in many 6526s, the alarm IRQ would not always 
-  occur when the seconds component of the alarm time is exactly zero. The 
-  workaround is to set the alarm's tenths value to 0.1 seconds."
 - reading the clock (hour to tenths) does not start it when it is stopped
   (->powerup.prg)
 - the frequency counter is being reset to 0 when the clock was stopped and is
   restarted (->hzsync0.prg, hzsync1.prg)
+- Wikipedia says: "Due to a bug in many 6526s, the alarm IRQ would not always 
+  occur when the seconds component of the alarm time is exactly zero. The 
+  workaround is to set the alarm's tenths value to 0.1 seconds."
+  TODO: make test!
 
 - at powerup (->powerup.prg)
   - the clock is not running
@@ -132,6 +131,8 @@ whether an alarm-nmi occured or not.
 
 expected: NO alarm in 2nd run
 
+NOTE: this test fails in VICE (r28032)
+
 --------------------------------------------------------------------------------
 
 5tod.prg:
@@ -145,6 +146,8 @@ test that didn't trigger an alarm, to see if the weird behaviour of the 2nd pass
 can be repeated.
 
 expected: first run alarm, second NO alarm, third alarm, etc
+
+NOTE: this test fails in VICE (r28032)
 
 --------------------------------------------------------------------------------
 
@@ -189,6 +192,15 @@ note: i have seen $01 (mostly) but also $11 (rare) in the hour register when
 
 --------------------------------------------------------------------------------
 
+read-latch.prg
+
+checks that reading the hour register latches the current time, further reads
+will neither "unlatch" nor "relatch" until tenths are read.
+
+checks that min-tsec can be read "on the fly"
+
+--------------------------------------------------------------------------------
+
 stability.prg, stability-ntsc.prg
 
 measures time between 10th seconds alarms, and shows the result. values shown
@@ -210,7 +222,8 @@ checks if the clock stops (only) when writing to the hour register, and restarts
 (only) when writing to tsec register.
 
 also checks that writing to the tod registers does neither start nor stop the
-clock when alarm is selected. ("mapping the 64" claims it does)
+clock when alarm is selected by setting CRB bit 7. ("mapping the 64" claims it 
+does)
 
 --------------------------------------------------------------------------------
 
@@ -218,3 +231,8 @@ TODO:
 
 - investigate "slurpy"
 - test behaviour of the latch in more detail
+ - test writing time while time is latched
+ - test when exactly the value is copied into the latch (synced to freq. count?)
+- test reset condition(s) of the frequency counter in more detail
+- investigate/test what exactly is tied to the frequency counter, what to the
+  system clock, and how both interacts/how certain border cases work.

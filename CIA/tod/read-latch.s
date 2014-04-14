@@ -1,6 +1,11 @@
 
-; check how nonsense values are handled
-; -> 10th seconds register
+; "All four TOD registers latch on a read of Hours and remain latched until 
+;  after a read of 10ths of seconds. The TOD clock continues to count when the 
+;  output registers are latched."
+;
+; "If only one register is to be read, there is no carry problem and the register 
+;  can be read "on the fly," provided that any read of Hours is followed by a read 
+;  of 10ths of seconds to disable the latching."
 
 ;-------------------------------------------------------------------------------
             *=$07ff
@@ -49,6 +54,9 @@ start:
             inx
             bne -
 
+            ldx #0
+            stx loopcnt
+
             ; disable alarm irq
             lda #$04
             sta $dd0d
@@ -66,86 +74,145 @@ start:
             lda #$00    ; set clock
             sta $dd0f
 
-            ldx #0
-loop:
-            stx loopcnt
-
             jsr inittod
 
-            ; start clock at 01:01:01.nn
-            lda #$01
-            sta $dd0b
-            sta $dd0a
-            lda #$01
-            sta $dd09
-            ldx loopcnt
-            lda tabsecs,x
-            pha
-            sta $dd08
-            and #$0f
-            sta tsec+1
+;            ; wait a bit
+;            ldx #20*1
+;            jsr waitframes
 
-            jsr readtime_nolatch
+            ; sync to the TOD. this "unlatches" and waits for tsec to change
+            lda $dd08
+-           cmp $dd08
+            beq -
+            lda $dd08
+            sta timebuf+3
 
-            lda #1
-            sta ccol+1
-            
-            pla
-            jsr printhex
-            lda #' '
-            jsr printchr
+            ; now read the time hour->secs so it will latch, and NOT get
+            ; "unlatched" after that (because tsec is not read)
+            jsr waitandprint3s
 
-            lda #5
-            sta ccol+1
-            
-            ldx loopcnt
-            lda cmptab1,x
-            jsr check59
-            jsr printtime
-
-            lda #5
-            sta ccol+1
-            
-            jsr readtime
-            ldx loopcnt
-            lda cmptab2,x
-            jsr check59
-            jsr printtime
-
-            ; wait some frames to make sure the clock tick occurred at least once
-            ldx #5 
+            ; wait about 1 second
+            ldx #50*1
             jsr waitframes
+
+            jsr waitandprint3s
+
+            ; wait about 1 second
+            ldx #50*1
+            jsr waitframes
+
+            jsr waitandprint3s
+
+            ; "unlatch" by reading tsec
+            jsr nextline
             
-            ; wait until 10th seconds changed
-tsec:       lda #0
+            ; wait about 1 second
+            ldx #50*1
+            jsr waitframes
+
+            jsr waitandprint4s
+
+            ; read time min->tsec "on the fly"
+            jsr nextline
+
+            ; wait about 1 second
+            ldx #50*1
+            jsr waitframes
+
+            ; sync to the TOD
+            lda $dd08
 -           cmp $dd08
             beq -
 
-            lda #5
-            sta ccol+1
-
-            jsr readtime
-            ldx loopcnt
-            lda cmptab3h,x
-            tay
-            lda cmptab3,x
-            jsr check00
-            jsr printtime
-            jsr nextline
-
-            ldx loopcnt
-            inx
-            cpx #24
-            beq +
-            jmp loop
-+
+            jsr waitandprint3m
+            jsr waitandprint3m
+            jsr waitandprint3m
 
 bcol:       lda #5
             sta $d020
 
             jmp *
 
+
+
+waitandprint3s:
+            jsr readtime3
+            jsr printtime
+
+            ; wait about 0.2 seconds
+            ldx #20*1
+            jsr waitframes
+
+            jsr readtime3
+            jsr printtime
+
+            ; wait about 0.2 seconds
+            ldx #20*1
+            jsr waitframes
+
+            jsr readtime3
+            jsr printtime
+
+            jsr nextline
+            rts
+            
+waitandprint3m:
+            jsr readtime3m
+            jsr printtime
+
+            ; wait about 0.2 seconds
+            ldx #20*1
+            jsr waitframes
+
+            jsr readtime3m
+            jsr printtime
+
+            ; wait about 0.2 seconds
+            ldx #20*1
+            jsr waitframes
+
+            jsr readtime3m
+            jsr printtime
+
+            jsr nextline
+            rts
+            
+waitandprint4s:
+            jsr readtime
+            jsr printtime
+
+            ; wait about 0.2 seconds
+            ldx #20*1
+            jsr waitframes
+
+            jsr readtime
+            jsr printtime
+
+            ; wait about 0.2 seconds
+            ldx #20*1
+            jsr waitframes
+
+            jsr readtime
+            jsr printtime
+
+            jsr nextline
+            rts
+
+
+cmptab:
+
+            !byte $01,$00,$00,$01, $01,$00,$00,$01, $01,$00,$00,$01
+            !byte $01,$00,$00,$01, $01,$00,$00,$01, $01,$00,$00,$01
+            !byte $01,$00,$00,$01, $01,$00,$00,$01, $01,$00,$00,$01
+
+            !byte $01,$00,$00,$01, $01,$00,$05,$08, $01,$00,$06,$02
+
+            !byte $01,$00,$07,$03, $01,$00,$07,$06, $01,$00,$08,$00
+            !byte $01,$00,$08,$00, $01,$00,$08,$04, $01,$00,$08,$08
+            !byte $01,$00,$08,$08, $01,$00,$09,$02, $01,$00,$09,$06
+
 inittod:
+            lda $dd08 ; unlatch
             ; make sure the time register and latch is always 01:00:00.0
             ; before the actual measurement
             lda #$00
@@ -158,70 +225,46 @@ inittod:
             sta $dd08
 
             ; wait some frames to make sure the clock tick occurred at least once
-            ldx #10
+            ldx #20 * 1
             jsr waitframes
 
             ; wait until 10th seconds == 0
 -           lda $dd08
             bne -
+
+            lda $dd0b ; copy time to latch
+            lda $dd08 ; unlatch
             rts
-            
-tabsecs:
-            !byte $00,$09
-            !byte $0a,$0b,$0c,$0d,$0e,$0f,$10,$59,$69
-            !byte $79,$89,$99,$a9,$b9,$c9,$d9
-            !byte $e9,$f9,$f0,$f9,$ff,$5f
-cmptab1:
-cmptab2:
-            !byte $00,$09
-            !byte $0a,$0b,$0c,$0d,$0e,$0f,$00,$09,$09
-            !byte $09,$09,$09,$09,$09,$09,$09
-            !byte $09,$09,$00,$09,$0f,$0f
-cmptab3h:
-            !byte $01,$02
-            !byte $01,$01,$01,$01,$01,$01,$01,$02,$02
-            !byte $02,$02,$02,$02,$02,$02,$02
-            !byte $02,$02,$01,$02,$01,$01
-cmptab3:
-            !byte $01,$00
-            !byte $0b,$0c,$0d,$0e,$0f,$00,$01,$00,$00
-            !byte $00,$00,$00,$00,$00,$00,$00
-            !byte $00,$00,$01,$00,$00,$00
+
 ;-------------------------------------------------------------------------------
 
 fail:
             lda #10
             sta bcol+1
             sta ccol+1
+
+            inc loopcnt
             rts
 
-check59:
-            cmp timebuf+3
-            bne fail
+checktime:
+            lda loopcnt
+            asl
+            asl
+            tax
             lda timebuf+0
-            cmp #$01
+            cmp cmptab+0,x
             bne fail
             lda timebuf+1
-            cmp #$01
+            cmp cmptab+1,x
             bne fail
             lda timebuf+2
-            cmp #$01
+            cmp cmptab+2,x
             bne fail
-            rts
+            lda timebuf+3
+            cmp cmptab+3,x
+            bne fail
 
-check00:
-            sty chky+1
-            cmp timebuf+3
-            bne fail
-            lda timebuf+2
-chky:       cmp #$01
-            bne fail
-            lda timebuf+0
-            cmp #$01
-            bne fail
-            lda timebuf+1
-            cmp #$01
-            bne fail
+            inc loopcnt
             rts
 
 readtime:
@@ -236,22 +279,37 @@ readtime:
             sta timebuf+3
             rts
 
-readtime_nolatch:
-            lda $dd08
-            sta timebuf+3
-            lda $dd09
-            sta timebuf+2
-            lda $dd0a
-            sta timebuf+1
+readtime3:
             lda $dd0b
             sta timebuf+0
+            lda $dd0a
+            sta timebuf+1
+            lda $dd09
+            sta timebuf+2
+;            lda #0
+;            sta timebuf+3
             rts
-            
+
+readtime3m:
+;            lda $dd0b
+;            sta timebuf+0
+            lda $dd0a
+            sta timebuf+1
+            lda $dd09
+            sta timebuf+2
+            lda $dd08
+            sta timebuf+3
+            rts
+
 timebuf:
             !byte $de, $ad, $ba, $be
 
 printtime:
+            lda #5
+            sta ccol+1
 
+            jsr checktime
+            
             lda timebuf+0
             jsr printhex
             lda #':'

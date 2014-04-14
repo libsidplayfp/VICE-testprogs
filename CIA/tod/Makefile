@@ -2,7 +2,7 @@
 TESTS=\
 	alarm.prg alarm-cond.prg alarm-cond2.prg hour-test.prg stability.prg stability-ntsc.prg \
 	4tod.prg 4todcia1.prg 5tod.prg 6tod.prg powerup.prg fix-hour.prg fix-min.prg fix-sec.prg fix-tsec.prg \
-	write-stop.prg hzsync0.prg hzsync1.prg
+	write-stop.prg read-latch.prg hzsync0.prg hzsync1.prg
 
 all: $(TESTS)
 	
@@ -27,6 +27,8 @@ stability-ntsc.prg: stability.s
 powerup.prg: powerup.s
 	acme -o powerup.prg powerup.s
 	
+read-latch.prg: read-latch.s
+	acme -o read-latch.prg read-latch.s
 write-stop.prg: write-stop.s
 	acme -o write-stop.prg write-stop.s
 	

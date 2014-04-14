@@ -1,4 +1,4 @@
-;Clock-Test #2b: 50Hz counter sync test (PAL only). Source for 64Tass
+;Clock-Test #2b: 50Hz counter sync test (PAL only). Source for 64Tass (Cold Sewers)
 ;simplified version ignoring hrs, min and secs to see if that makes any difference
 
 ;find out if the 50/60Hz counter is running freely
