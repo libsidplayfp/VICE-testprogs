@@ -107,23 +107,30 @@ the kernal interfering.
 
 --------------------------------------------------------------------------------
 
-alarm.prg:       check if ALARMTIME = TIME sets bit 2 of ICR
+* alarm.prg:
 
-alarm-cond.prg:  checks exact conditions for when bit 2 if ICR gets set 
-                 (set time to current alarm time)
-alarm-cond2.prg: checks exact conditions for when bit 2 if ICR gets set 
-                 (set alarm time to current time)
+check if ALARMTIME = TIME sets bit 2 of ICR
+
+* alarm-cond.prg:  
+
+checks exact conditions for when bit 2 if ICR gets set (set time to current 
+alarm time)
+
+* alarm-cond2.prg: 
+
+checks exact conditions for when bit 2 if ICR gets set (set alarm time to 
+current time)
 
 --------------------------------------------------------------------------------
 
-fix-hour.prg, fix-min.prg, fix-sec.prg, fix-tsec.prg:
+* fix-hour.prg, fix-min.prg, fix-sec.prg, fix-tsec.prg:
 
 these test check the behaviour of the respective registers when invalid values
 have been written to them.
 
 --------------------------------------------------------------------------------
 
-4tod.prg, 4todcia.prg:
+* 4tod.prg, 4todcia.prg:
 
 this one repeatedly starts tod at 0:00:00.0 with alarm-nmi enabled
 when either the alarm is triggerd or tod ran for 1 second it will print out
@@ -135,7 +142,7 @@ NOTE: this test fails in VICE (r28032)
 
 --------------------------------------------------------------------------------
 
-5tod.prg:
+* 5tod.prg:
 
 this one repeatedly starts tod at 0:00:00.0 with alarm-nmi enabled
 when either the alarm is triggerd or tod ran for 1 second it will print out
@@ -151,7 +158,7 @@ NOTE: this test fails in VICE (r28032)
 
 --------------------------------------------------------------------------------
 
-6tod.prg:
+* 6tod.prg:
 
 this one repeatedly starts tod at 0:00:00.0 with alarm-nmi enabled
 when either the alarm is triggerd or tod ran for 1 second it will print out
@@ -163,11 +170,14 @@ expected: always alarm
 
 --------------------------------------------------------------------------------
 
-hour-test.prg:  check AM/PM flag of the hour register
+* hour-test.prg:  
+
+check AM/PM flag of the hour register (see hour-test.txt for details)
 
 --------------------------------------------------------------------------------
+following tests check the reset condition(s) of the frequency counter:
 
-hzsync0.prg, hzsync1.prg:
+* hzsync0.prg:
 
 find out if the 50/60Hz counter is running freely or somehow synchronized with 
 writes to TOD-time:
@@ -177,13 +187,41 @@ in the former case .1secs should change about 2 frames after last rewrite
 (slight variations of +/-1 frames can be expected as neither frame rate nor ToD 
 input are exactly 50 Hz.)
 
-expected for hzsync0: all "synced" (mostly 5s, some 6s)
+expected: all "synced" (mostly 5s, some 6s)
 
-expected for hzsync1: all "free running" (mostly 1s, some 2s)
+* hzsync1.prg:
+
+expected: all "free running" (mostly 1s, some 2s)
+
+* hzsync2.prg:
+
+writing to seconds/minutes while clock is running 
+
+expected: no reset (5s)
+
+* hzsync3.prg:
+
+omitting writing to seconds/minutes while clock is stopped
+
+expected: counter still resets (mostly 1s, some 2s)
+ 
+* hzsync4.prg:
+
+changing the input frequency (50/60Hz) while clock is running
+ 
+expected: no reset (mostly 3s, some 4s)
+
+* hzsync5.prg:
+
+stopping the clock for a few frames, then restaring it (to see if the counter is 
+reset by write to hour reg, but still running while clock is stopped)
+
+expected: counter is either not running while clock is stopped or reset when 
+          clock is restarted (which pretty much has the same outcome). (5s)
 
 --------------------------------------------------------------------------------
 
-powerup.prg
+* powerup.prg
 
 checks the state of the TOD clock at power-on
 
@@ -192,7 +230,7 @@ note: i have seen $01 (mostly) but also $11 (rare) in the hour register when
 
 --------------------------------------------------------------------------------
 
-read-latch.prg
+* read-latch.prg
 
 checks that reading the hour register latches the current time, further reads
 will neither "unlatch" nor "relatch" until tenths are read.
@@ -201,7 +239,7 @@ checks that min-tsec can be read "on the fly"
 
 --------------------------------------------------------------------------------
 
-stability.prg, stability-ntsc.prg
+* stability.prg, stability-ntsc.prg
 
 measures time between 10th seconds alarms, and shows the result. values shown
 are the minimum and maximum amount of cycles between 10th second ticks, the
@@ -216,7 +254,7 @@ in reality these values may vary surprisingly much. infact, anything between
 
 --------------------------------------------------------------------------------
 
-write-stop.prg
+* write-stop.prg
 
 checks if the clock stops (only) when writing to the hour register, and restarts
 (only) when writing to tsec register.
@@ -229,10 +267,12 @@ does)
 
 TODO: 
 
-- investigate "slurpy"
+- investigate "slurpy", try to create a testcase from it (see bug #514)
 - test behaviour of the latch in more detail
  - test writing time while time is latched
  - test when exactly the value is copied into the latch (synced to freq. count?)
-- test reset condition(s) of the frequency counter in more detail
+- what happens if the frequency counter is switched from 60 to 50 hz when it has
+  reached the value 6 ? will it count further to 7 ?
 - investigate/test what exactly is tied to the frequency counter, what to the
   system clock, and how both interacts/how certain border cases work.
+- check if/when IRQs are generated when the clock is stopped
