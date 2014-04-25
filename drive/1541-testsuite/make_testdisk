@@ -1,0 +1,54 @@
+#! /bin/bash
+
+if [ $# -eq 0 ]; then
+	echo "make_testdisk V0.11 by Wolfram Sang (Ninja / The Dreams) in 2008"
+	echo "Create a testdisk from a specific list-file."
+	echo "Part of the 1541-Testsuite."
+	echo "Usage: 'make_testdisk <listfile1> [<listfile2> ...]'"
+	exit 1
+fi
+
+for listfile in $*; do
+        if [ ! -f $listfile ]; then
+        	echo "Error: $1 not found"
+        	continue
+        fi
+        
+        imagename=${listfile%.*}.d64
+        
+        c1541 -format 1541-testsuite,41 d64 $imagename
+        c1541 $imagename -write 1541-testsuite.prg 1541-testsuite
+        
+        i=0
+        step=1
+        
+        while read name arg; do
+        
+        	[ "${name:0:1}" != '#' ] && case $name in
+        
+        	'&')
+        		(( i = arg ))
+        		if (( i == 0 )); then
+        			echo "Warning: i set 0"
+        		fi
+        		;;
+        	'&+')
+        		(( step = arg ))
+        		if (( step == 0 )); then
+        			echo "Warning: Step set 0! Defaulting to 1."
+        			step=1
+        		fi
+        		;;
+        	*)
+        		if [ $name ]; then
+        			usrname=`printf '&%02x>%.12s,u' $i $name`
+        			./prg2ul tests/$name.prg $name.usr
+        			c1541 $imagename -write $name.usr $usrname
+        			rm -f $name.usr
+        			(( i+= step ))
+        		fi
+        		;;
+        	esac
+        	
+        done < $listfile;
+done;

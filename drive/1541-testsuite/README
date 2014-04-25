@@ -1,0 +1,172 @@
+1541-Testsuite
+by Wolfram Sang (Ninja / The Dreams) in 2008
+ninja@the-dreams.de
+--------------------------------------------
+
+This project wants to provide tests and a test framework for the Commodore 1541
+and compatible floppy-drives. It can also be used by emulators and emulating
+hardware which strive for maximum compatibility.
+
+
+USER DOCUMENTATION
+==================
+
+Where to get the test disks
+---------------------------
+
+You can download prebuild test disks here:
+
+https://developer.berlios.de/project/showfiles.php?group_id=7602
+
+The version number will be the commit number on which the build is based. There
+won't be anything like V1.0 or such. Keep also in mind that the prebuild disks
+might not be fully up to date. It is recommended to checkout the repository and
+build it on your own. Alternatively, nag me for a newer version ;)
+
+Anonymous SVN access is here:
+
+http://svn.berlios.de/svnroot/repos/rrtools/1541-testsuite
+
+How to run tests
+----------------
+
+Simply start "1541-TESTSUITE" from a test disk. You will be asked if the test
+run should be stopped when an error occured. This is good if you instantly want
+to debug that error. Otherwise all tests are run, so you can get an overview of
+all tests. For that, you will be given a matrix with the test results at the
+end. For more detailed information, the addresses of the maps containing all
+results and errcodes are also printed.
+
+Note that disk changes are not supported. Only tests on the current disk are
+used. This means you need to have the C64 executable on every disk containing
+tests. That way, you can easily create sub- or supersets from existing test
+packages by simply copying the relevant files.
+
+The framework (general remarks)
+-------------------------------
+
+The 1541-Testsuite consists of one executable for the C64 (the framework) and
+lots of tests for the 1541. These are stored as "utility loaders", i.e.
+usr-files starting with "&" and are immediately executed within the drive.
+
+First, the framework scans the current disk for valid tests. Such a test has a
+filename like
+
+"&xxMYTEST"  USR
+
+with "xx" being a hexadecimal number ("00"-"FF"). Tests are applied in a
+sequential row according to this initial number (a bit like unix-startup
+scripts).
+
+After the test, the framework will read addresses $14+$15 from the floppy,
+protected by a watchdog. If it cannot retrieve a test result after 45 seconds,
+then the test run will be stopped as the drive is assumed to hang.
+
+Addresses $14+$15 have the following meaning:
+
+$14 (result)
+
+ $00-$7F: OK
+   Test passed. Different values are allowed in case something was measured
+   during the test.
+
+ $80	: Internal error (TIMEOUT or DISK ERROR)
+   Test failed. Drive may even hang, so test run is stopped.
+
+ $81-$FF: FAILED
+   Test failed. The assignment of values depends on the test. Idea is a bit
+   like -Esomething in unix' error handling.
+
+$15 (errcode)
+   whatever the test specified to get more details about the result.
+
+So, to get more information about the error, you have to look up in the
+sourcecode for the failing test. Let's hope it is documented there!
+
+DEVELOPER DOCUMENTATION
+=======================
+
+Utility loader
+--------------
+
+For now, I simply add a textfile from the net to explain the utility loaders. I
+also include the C-source for a generator of such files (prg2ul). It cannot
+handle non-sequential chunks (yet?). Still, it enables you to use a cross-dev
+system for coding own tests by simply converting prg files after assembly.
+
+Compile yourself
+----------------
+
+To compile 1541-Testsuite, you will need a standard unixish dev-toolchain
+(bash, make, cc...). Furthermore, you will need DreamAss by Christoph Thelen
+(Doc Bacardi/The Dreams) available at:
+
+http://developer.berlios.de/projects/rrtools
+
+Furthermore, you will need the c1541 tool from the VICE emulator.
+
+http://www.viceteam.org
+
+If you got all these tools, simply run 'make' in the root dir of the project.
+This will compile all source codes and create the disk images.
+
+Adding tests
+------------
+
+Generally, you add a test by copying a vaild testfile to the test-disk (valid
+testfiles are described in 'The framework'). That means, you could even develop
+a test on the C64, make a proper USR-file from it and copy it to some
+destination disk. However, it is recommended to use the build system of the
+1541-Testsuite, as this will improve maintainability a lot. That means, you
+develop the test using DreamAss and have the source file in the 'tests/'
+directory of the testsuite. Just a few rules:
+
+- Please, include the file '1541-tests.inc' and use the labels defined there.
+  This will make future changes a lot easier.
+
+- Mark your entry point with '.start_test' and your exit point with '.end_test'.
+
+- Don't use RTS to exit. This will be done by '.end_test'.
+
+You might simply take some dummy-*.asm file as a template. You can use the
+'make tests' target to compile just the tests. Please make sure you add
+documentation for your test: What is tested? How is it tested (roughly)? What
+do error codes indicate? Then add your test to a test disk. Just browse around
+in the repository and you will easily get the picture. If not, mail me and we
+surely can work out something.
+
+Generating test disks
+---------------------
+
+Test disks are generated from lists stored in the 'disks/' directory. Every
+list file will produce a d64-disk image with the same name. This image will
+contain the C64 executable and all tests from the list, properly renamed. It is
+ready to run.
+
+The list files are pretty simple. Just write the name of the tests to be added,
+one at a line, without extension. Tests will be numbered from "&00..." upwards
+with a step size of 1 on the disk image. If you want to set a specific number,
+use the command "& <number>", e.g. "& 0x20" (next test will start with
+"&20..."). Be careful to not assign numbers twice! To increase the step size
+between test numbers, use the command "&+", e.g. "&+ 4". That way, you have
+room to put a test inbetween others later.
+
+Comments in list files have to be on seperate lines and must start with "#".
+Blank lines are ignored.
+
+Sending upstream
+----------------
+
+If you are done, send the test to me and I will review it and add it to the
+repository. (ninja@the-dreams.de).
+
+Generating simulation files
+---------------------------
+
+This is a special target which can be issued with 'make vhdl-simulation-tests'.
+It will produce standard .prg-like files of the tests, just renamed to .sim.
+Those files are intended for vhdl-debuggers or alike. The idea is that those
+files can be loaded into 1541 RAM directly and started by changing the reset
+vector. At the end of the test, successful or not, they currently BRK which can
+be easily trapped. If you need more for easier debugging, mail me.
+

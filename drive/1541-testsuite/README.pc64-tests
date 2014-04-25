@@ -1,0 +1,24 @@
+Notes about the tests from the PC64-Testsuite
+---------------------------------------------
+
+These tests check all 6502-opcodes and were mass converted using TMPView[1] and
+a shell script utilizing sed and awk. With 2.5 KB of script code, I managed to
+batch "port" all but two tests from the c64 to the 1541! (I am still amazed
+myself). The necessary files for that conversion are stored in the
+'extra' directory.
+
+The converted code is still not pretty, but it seems to work nicely and already
+spotted some bugs in the 1541 Ultimate. An error code of $FF means that the
+resulting flags or registers are not the way they were expected by the test.
+$FE usually means the stack was not as expected. You have to dive into the
+source code to get a better picture, batch documenting was too much ;)
+
+Most problematic were opcodes which change the PC. This is why JMP ($xxxx) and
+BRK could not be mass converted. And the other opcodes (JMP, JSR, branches)
+will most likely crash if they don't behave as expected. So, you won't get an
+error, but a timeout. If you know a better method for these tests, I am happy
+to learn about it! Same goes for any other comment.
+
+   ninja@the-dreams.de
+
+[1] http://www.style64.org/index.php?cid=rele

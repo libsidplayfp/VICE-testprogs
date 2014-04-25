@@ -1,0 +1,10 @@
+# Set step size 2 (number is 0)
+&+ 2
+dummy-true0
+dummy-true23
+dummy-false
+
+# Set test-number to $10 with step size 1
+& 0x10
+&+ 1
+dummy-wait4

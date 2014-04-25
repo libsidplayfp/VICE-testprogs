@@ -1,0 +1,25 @@
+#! /bin/bash
+[ ! -e /tmp/pc64 ] && mkdir -p /tmp/pc64
+for file in *.tasm; do
+	temp=${file/\.tasm/.txt}
+	dest=${file/\.tasm/.asm}
+	final=pc64-$dest
+	[ -e $temp ] && rm $temp
+	./TMPview -w 16 -i $file -o $temp >/dev/null
+	cat > $dest <<- EOF
+		; $final: specialized opcode test - Public Domain
+		; converted for the 1541-Testsuite by Wolfram Sang (Ninja/The Dreams)
+		; original PC64-Testsuite by Wolfgang Lorenz
+		EOF
+	unexpand -a $temp | sed -f _pc64.sed | awk -f _pc64.awk >> $dest
+	echo $file
+	dreamass -o ${dest/\.asm/.prg} $dest
+	if [ $? -lt 1 ]; then
+		cp $dest /tmp/pc64/$final
+	fi
+done
+
+#TMPVIEW bugs:
+# - -o always in append mode?
+# - -w BAH? (annoying when redirecting)
+# - missed the last .bend
