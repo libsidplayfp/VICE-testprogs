@@ -90,14 +90,14 @@ More facts about the TOD clocks that are not in the datasheet:
   TODO: make test!
 
 - at powerup (->powerup.prg)
-  - the clock is not running
+  - the clock is not running (must be started by writing to 10th second register)
   - the time value read from the latch is 01:00:00.0 (mostly, hour might be $11 ...)
   - the am/pm flag is random (mostly 0)
   - the alarm is set to 00:00:00.0 by default, and because of that does not
     trigger unless the time is forced to 00:00:00.0 too
 
 - after reset (->powerup.prg)
-  - the clock is not running
+  - the clock is not running (must be started by writing to 10th second register)
   - the time value read from the latch is 01:00:00.0
   ...(?)
 
@@ -127,6 +127,16 @@ current time)
 
 these test check the behaviour of the respective registers when invalid values
 have been written to them.
+
+--------------------------------------------------------------------------------
+
+* 0alarm.prg, 1alarm.prg
+
+tests that reproduce how the game "slurpy" uses the TOD clock.
+
+expected: exactly one alarm per test pass
+
+NOTE: this test fails in VICE (r28032)
 
 --------------------------------------------------------------------------------
 
