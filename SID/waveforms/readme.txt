@@ -42,10 +42,3 @@ note: test I (waveform 8) will always fail, since the noise generator is free
       test J (waveform 9) will likely fail on first (automatic) run, the exact
       reason for this is not exactly clear yet.
 
---------------------------------------------------------------------------------
-TODO:
-- ringmod test
-- sync test
-- envelope test
-- pulse width test
-- envelope test
