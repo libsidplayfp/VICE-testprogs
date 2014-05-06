@@ -15,4 +15,4 @@ underkernal.sid: underkernal.asm header.asm
 	acme -Dheaderversion=2 -o underkernal.sid underkernal.asm
 
 clean:
-	rm -f *.prg
+	rm -f *.sid
