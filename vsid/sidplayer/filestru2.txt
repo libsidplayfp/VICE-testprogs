@@ -1,0 +1,223 @@
+               Sidplayer Music File Contents
+                      by Dick Thornton
+
+Sidplayer music files are prOgRAM type files which contain the musical notes &
+command directives for playing a song, as well as the text lines intended for
+the song name & credit lines for the composer & sid arranger.
+
+On disk, the file consists of one or more sectors written in standard prOgRAM
+format. Characteristics of this file type can be found in your disk manual, or
+other books on disk file management. From here on, we will consider the file
+data as it resides in memory after being loaded. the general format of the .mus
+file in memory is:
+
+  (1) Two-byte length of voice 1 in low-byte, high-byte form.
+  (2) Two-byte length of voice 2 in low-byte, high-byte form.
+  (3) Two-byte length of voice 3 in low-byte, high-byte form.
+  (4) The data for voice 1 always ending with a hlt command.
+  (5) The data for voice 2 always ending with a hlt command.
+  (6) The data for voice 3 always ending with a hlt command.
+  (7) The text lines for song name, etc. THere are five lines, each
+      containing 0-32 bytes and ending with a carriage return. The text
+      data information is in upper-case Commodore pet ascii. A hex zero byte
+      follows the last byte of the last line of text.
+
+The effect of this is that each .mus file is actually four files packed end
+to end in a single prg file with three little two-byte lengths in the front to
+help you find things. Voice 1 begins at the sixth byte of the data file as
+loaded into memory. Voice 2 starts at a point 6 + length of voice 1 from the
+beginning of the file in memory. Voice 3 is at 6 + length of voice 1 + length
+of voice 2 from the file start, and the text lines begin at 6 + length of voice
+1 + length of voice 2 + length of voice 3. Each voice ends with a hlt command
+(hex 014f), & if there is no data for a voice that is all it will contain. The
+text area ends with a hex zero after the carriage return for the final line.
+
+Each voice contains data in two-byte pairs that contain the musical notes &
+commands needed to play the song. The first byte of each pair will have bits
+1 and 0 both set to zero if the byte pair describes a musical note otherwise
+the byte-pair describes a sid chip command or sidplayer command.
+
+In the following, commands are identified by the three character abbreviation
+used by the sid editor program described in the books All about the Commodore 64
+Volume 2, and Compute!'s Music System for the Commodore 128 & 64. Both books
+are published by Compute! Books.
+
+
+             
+     Musical Note Data Pairs
+
+Musical note data pairs will contain 00 in the lower-order two bits of the
+first byte of the pair. Each musical note byte-pair contains duration in its
+first byte, & frequency (pitch) in the second. This data is coded as follows,
+where the parenthetic number following a bit number is the hex value of that
+bit:
+
+               Byte 1 - Tie and Duration
+
+  bit 7 (80)     always 0
+  bit 6 (40)     1=tie to next note. 0=not tied
+  bit 5 (20)     1=dotted note duration. 0=not dotted
+  bit 4 (10)     bits 4 3 2  note duration
+  bit 3 (08)     .    1 1 1    32nd note
+  bit 2 (04)     .    1 1 0    16th note
+                 .    1 0 1    8th note
+                 .    1 0 0    quarter note
+                 .    0 1 1    half note
+                 .    0 1 0    whole note
+                 .    0 0 1    utility duration
+                 .    0 0 0    absolute pitch
+  bit 1 (02)     always 0 for note pairs
+  bit 0 (01)     always 0 for note pairs
+
+               Byte 2 - Frequency (Pitch) and Rests
+
+  bit 7 (80)     bits 7 6    pitch modification
+  bit 6 (40)     .    1 1      flatted note
+                 .    1 0      natural note
+                 .    0 1      sharped note
+  bit 5 (20)     bits 5 4 3  octave number
+  bit 4 (10)     .    1 1 1    octave 0
+  bit 3 (08)     .    1 1 0    octave 1
+                 .    1 0 1    octave 2
+                 .    1 0 0    octave 3
+                 .    0 1 1    octave 4
+                 .    0 1 0    octave 5
+                 .    0 0 1    octave 6
+                 .    0 0 0    octave 7
+  bit 2 (04)     bits 2 1 0  note letter identifier
+  bit 1 (02)     .    1 1 1    b note
+  bit 0 (01)     .    1 1 0    a note
+                 .    1 0 1    g note
+                 .    1 0 0    f note
+                 .    0 1 1    e note
+                 .    0 1 0    d note
+                 .    0 0 1    c note
+                 .    0 0 0    rest
+
+
+                   Command Data Pairs
+
+Commands contain information other than musical note pitch and duration. For
+commands, the low-order two bits of the first byte are not 00. A whole set of
+commands are identified with a first byte value of hex 01. For these commands the low-order four bits of the second
+byte can be used as a gross identifier, while the high order four bits often
+contain a numeric value. These commands are described by their second bytes
+below:
+
+               Commands With First Byte = hex 01
+
+  * byte2 *   hex  command  value
+  7654 3210        name
+  nnnn 0000   n0   dcy      bits 7654 contain a value, 0-f
+  nnnn 0010   n2   cal      bits 7654 contain a value, 0-f
+  0000 0011   03   bmp      up
+  0001 0011   13   flt      no
+  0010 0011   23   rng      no
+  0011 0011   33   snc      no
+  0100 0011   43   f-x      no
+  0101 0011   53   3-0      no
+  0nnn n100        atk      bits 6543 contain a value, 0-f
+  1nnn n100        sus      bits 6543 contain a value, 0-f
+  nnnn 0110   n6   def      bits 7654 contain a value, 0-f
+  nnn0 0111   n7   wav      bits 7 6 5  waveform
+                             
+    0 0 0  noise
+                                 0 0 1  triangle
+                                 0 1 0  sawtooth
+                                 0 1 1  triangle + sawtooth
+                                 1 0 0  pulse
+                                 1 0 1  pulse + triangle
+                                 1 1 0  pulse + sawtooth
+                                 1 1 1  puls+triang+sawtooTH
+  nnn1 0111   n7   f-m      bits 7 6 5  filter mode
+                                 0 0 0  off
+                    
+             0 0 1  low pass
+                                 0 1 0  band pass
+                                 0 1 1  low + band
+                                 1 0 0  high pass
+                                 1 0 1  high + low
+                                 1 1 0  high + band
+                                 1 1 1  high + band + low
+  nnnn 1000   n8   rls      bits 7654 contain a value, 0-f
+  nnnn 1010   na   res      bits 7654 contain a value, 0-f
+  0000 1011   0b   bmp      down
+  0001 1011   1b   flt      yes
+  0010 1011   2b   rng      yes
+  0011 1011   3b   snc      yes
+  0100 1011   4b   f-x      yes
+  0101 1011   5b   3-0      yes
+  nnnn 1110   ne   vol      bits 7654 contain a value, 0-f
+  0000 1111   0f   tal      n/a
+  0010 1111   2f   end      n/a
+  0100 1111   4f   hlt      n/a
+
+          Commands Whose First Byte is Not Hex 01
+
+This group of command pairs generally has a first byte that defines the
+command, and the second byte gives a numeric value from hex 00 to ff (decimal
+range 0 to 255). There are a few variations, however, where the value range
+exceeds 255 (dtn and por), and where negative values must be available (aut,
+p-s, tps, and dtn).
+
+  byte1  * byte2 *   cmd
+   hex   7654 3210   name value
+
+    n2   nnnn nnnn   p-w  the 12-bit number composed of byte 1, bits 7-4 and
+                          all 8 bits of byte 2 give a range oF 0-4,095.
+
+    06   nnnn nnnn   tem  if the second byte is zero, it is replaced by 256
+                          (hex 100). the second byte value is then divided
+                          into 14,400. the whole number quotient is the number
+                          of quarter notes per minute.
+
+    16   nnnn nnnn   utl  second byte is the value.
+
+    26   nnnn nnnn   pnt  second byte is the value.
+
+    36   nnnn nnnn   hed  second byte is the value.
+
+    46   nnnn nnnn   flg  second byte is the value.
+
+    56   snnn nnnn   p-s  second byte contains the value as a signed number
+                          with range -127 (hex 81) to +127 (hex 7f)
+
+    66   snnn nnnn   f-s  second byte contains the value as a signed number
+                          with range -127 (hex 81) to +127 (hex 7f)
+
+    76   0nnn nnnn   vdp  byte 2 bits 6-0 contain the value, 0-127.
+
+    86   nnnn nnnn   vrt  second byte is the value.
+
+    96   snnn nnnn   aut  second byte contains the value as a signed number
+                          with range -127 (hex 81) to +127 (hex 7f)
+
+    a6   hhhh ooos   tps  the second byte contains the number of half-steps
+                          to transpose, from -95 to +95. bit 0 is the sign,
+                          0=+. 1=-. bits 3-1 give the number of whole
+                          octaves for negative values. For positive numbers,
+                          the number of octaves is 7 minus the number in bits
+                          3-1. bits 7-4 give the additional halfsteps less than
+                          an octave (0- 11) for positive numbers. for negative
+                          numbers, the excess half-steps are 11 minus the
+                          number in bits 7-4.
+
+    b6   nnnn nnnn   aux  second byte is the value.
+
+    0e   nnnn nnnn   f-c  second byte is the value.
+
+    ne   nnnn nnnn   mea  the 10-bit number composed oF bits 7-6 of the 1st
+                          byte and all 8 bits of the second byte give a value
+                          of 0-1,024. bit 5 and 4 are always 01 for this 
+                          command, so the first byte may be 1e, 5e, 9e, or de.
+
+    na   nnnn nnnn   dtn  the 11-bit number composed of byte 1, bits 7-5 and
+                          all 8 bits of byte 2 produces a value of 0-2,048. if
+                          byte 1, bit 4 is 1, the number is negative, and is
+                          reduced by 2,048 for an effective range of -2,048
+                          to +2,048.
+
+    nn   nnnn nnnn   por  the 14-bit number composed of byte 1, bits 7-3 and
+                          all 8 bits of the second byte. value range is 0 to
+                          16,383. bits 1 and 0 of byte 1 are always 11 for
+                          this command, all other bits may be any value.

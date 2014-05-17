@@ -5,6 +5,8 @@ comes with VICE).
 
 tunes - "real world" test cases, from HVSC
 
+sidplayer - compute sidplayer, tunes and tests and player code
+
 environment - artificial tests for checking the environment tunes run in
 
 --------------------------------------------------------------------------------
