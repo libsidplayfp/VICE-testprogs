@@ -18,4 +18,5 @@ underio.sid: underio.asm header.asm
 	acme -Dheaderversion=2 -o underio.sid underio.asm
 
 clean:
-	rm -f *.sid
+	rm -f $(TESTS)
+	
