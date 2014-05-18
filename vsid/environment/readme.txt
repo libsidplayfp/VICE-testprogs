@@ -24,12 +24,30 @@ uses memory from $0800 to $fff8
 
 init/play are in kernal ROM area
 
+* underio.sid
+
+uses memory from $0800 to $f000
+
+init/play are in I/O area
+
 --------------------------------------------------------------------------------
+following are some notes on the environment that should be used when playing
+PSID files:
 
 * PSID (regular)
 
 - init/play may actually be located under ROM or I/O - the caller is expected to
   set up $01 correctly.
+  - init on <a000 or c000-cfff, $01 is 37
+  - if it's under a000-bfff it's set to $36 prior to calling init. 
+  - if under e000-ffff it is set to $35
+
+  note: this implies that the caller sets $01 to $3x before calling either init
+        or play. however both of these functions may for example re-enable the 
+        i/o area and thus change $01 again (although this is considered bad 
+        practise and fixed if found in .sid files)
+
+- the caller is responsible for SEI/CLI before/after init
 
 * RSID (regular)
 
@@ -48,7 +66,8 @@ init/play are in kernal ROM area
 * PSID v1 and v2 (compute sidplayer)
 
 These tunes can not be played directly, as no player is included - so a proper
-"sidplayer" binary must be injected first.
+"sidplayer" binary must be injected first. see the sidplayer subdirectory for
+some specific tests.
 
 * RSID (BASIC tunes)
 

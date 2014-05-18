@@ -1,4 +1,4 @@
-TESTS=basicram-v1.sid basicram-v2.sid underbasic.sid underkernal.sid
+TESTS=basicram-v1.sid basicram-v2.sid underbasic.sid underkernal.sid underio.sid
 
 all: $(TESTS)
 
@@ -13,6 +13,9 @@ underbasic.sid: underbasic.asm header.asm
 
 underkernal.sid: underkernal.asm header.asm
 	acme -Dheaderversion=2 -o underkernal.sid underkernal.asm
+
+underio.sid: underio.asm header.asm
+	acme -Dheaderversion=2 -o underio.sid underio.asm
 
 clean:
 	rm -f *.sid
