@@ -585,12 +585,12 @@ sproc:
 ;            lda ciaicr ;clear irq
 ;.endif 
             lda status
-            bmi err5 ;branch if clobbered
-            ora #$80 ;show processing
+            bmi err5                    ;branch if clobbered
+            ora #$80                    ;show processing
             tay
             and #$07
-            beq exit7 ;branch if all stopped
-            cld ;very important!!!
+            beq exit7                   ;branch if all stopped
+;            cld ;very important!!!
             sty status
 
 ;.if ORIGINALBINARY = 1
@@ -652,23 +652,23 @@ sloop2:
             sta vptr
             lda sfreql,x
             clc
-            adc vibcml,x ;***
-            tay ;save
+            adc vibcml,x                        ;***
+            tay                                 ;save
             lda sfreqh,x
             adc vibcmh,x
             pha
-            tya ;ret
+            tya                                 ;ret
             clc
             adc lfofrl,x
             ldy #vfreql
             sta (vptr),y
             pla
-            adc lfofrh,x ;***
+            adc lfofrh,x                        ;***
             iny
             sta (vptr),y
             lda spwl,x
             clc
-            adc pwvcml,x ;***
+            adc pwvcml,x                        ;***
             sta temp
             lda spwh,x
             adc pwvcmh,x
@@ -679,7 +679,7 @@ sloop2:
             iny
             sta (vptr),y
             pla
-            adc lfopwh,x ;***
+            adc lfopwh,x                        ;***
             iny
             sta (vptr),y
             lda satdc,x
@@ -725,12 +725,12 @@ audsk6:
 sloop:
             lda status
             and bitab,x
-            beq skip11 ;voice not active
-            stx vnum ;save voice number
-            jsr vproc ;process voice ;***vvproc
+            beq skip11                          ;voice not active
+            stx vnum                            ;save voice number
+            jsr vproc                           ;process voice ;***vvproc
             lda status
             and #$78
-            beq skip11 ;no error
+            beq skip11                          ;no error
             jmp lfos20
 skip11:
             inx
@@ -852,7 +852,7 @@ lfos17:
             bne lfolp1
 
             lda status
-            and #$7f ;turn off processing bit
+            and #$7f                    ;turn off processing bit
 lfos20:
             sta status
 lfos21:
@@ -2098,7 +2098,7 @@ exit3:
             rts
 err7:
             lda #$38
-            sta status ;hed in wrong voice
+            sta status                          ;hed in wrong voice
             rts
 
 ; phrase end
@@ -2106,12 +2106,12 @@ err7:
 pend:
             lda stkptr,x
             cmp stkmin,x
-            beq err4 ;branch if stack empty
+            beq err4                            ;branch if stack empty
             dec stkptr,x
             tay
             dey
             lda stackh,y
-            beq exit4 ;in definition mode
+            beq exit4                           ;in definition mode
             sta comptr+1
             lda stackl,y
             sta comptr
@@ -2120,7 +2120,7 @@ pend:
 exit4:
             rts
 err4:
-            lda #$20 ;stack underflow
+            lda #$20                            ;stack underflow
             sta status
             rts
 
@@ -2131,7 +2131,7 @@ phlt:
             eor bitab,x
             sta status
             lda #1
-            sta durctr,x ;ready to continue
+            sta durctr,x                        ;ready to continue
             rts
 
 ; ---------------------------------------------------------------------------
