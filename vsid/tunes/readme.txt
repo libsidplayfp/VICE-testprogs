@@ -10,9 +10,15 @@ recent copy of HVSC.
 MUSICIANS/R/Rayden/Boot_Zak_v2.sid - relies on exact emulation of the cpu port, 
  (see CPU/cpuport)
 
-MUSICIANS/B/Bjerregaard_Johannes/Fruitbank.sid - image loads from $0400 - ...
+--------------------------------------------------------------------------------
 
-GAMES/S-Z/Triango.sid - init copies code to $0400 - ...
+"image loads from $0400 - ... (below $07e8)"
+MUSICIANS/B/Bjerregaard_Johannes/Fruitbank.sid
+GAMES/M-R/Paradroid.sid
+MUSICIANS/F/FAME/Hendriks_Michael/X-Out.sid
+
+"init copies code to $0400 - ... (below $07e8)"
+GAMES/S-Z/Triango.sid
 
 "tunes using low memory like at $0200 or $0340 onward"
 MUSICIANS/D/Deenen_Charles/Double_Dragon.sid
@@ -20,9 +26,18 @@ MUSICIANS/R/Rowlands_Steve/Cyberdyne_Warrior.sid
 MUSICIANS/R/Rowlands_Steve/Fuzzy_Wuzzy.sid
 MUSICIANS/R/Rowlands_Steve/Retrograde_tapeloader.sid
 
-GAMES/M-R/Ms_Pacman.sid - image located "under" BASIC ROM
+--------------------------------------------------------------------------------
 
-GAMES/M-R/Mean_City.sid - image located "under" KERNAL ROM
+"image located "under" BASIC ROM"
+GAMES/M-R/Ms_Pacman.sid
+GAMES/S-Z/Wizardry.sid
+
+--------------------------------------------------------------------------------
+
+"image located "under" KERNAL ROM"
+GAMES/M-R/Mean_City.sid
+
+--------------------------------------------------------------------------------
 
 "tunes overwriting d000-dfff, sometimes with code or data there, sometimes 
  nothing"
@@ -32,6 +47,8 @@ MUSICIANS/T/Tel_Jeroen/Hotrod.sid
 "tunes where init/play are under $d000-$dfff"
 MUSICIANS/F/Follin_Tim/Qix.sid
 
+--------------------------------------------------------------------------------
+
 "Some other fixes is about sids overwriting $fffa-ffff. Usually it's just
  garbage to be removed, sometimes it needs to be relocated if the bytes
  at $fffa-ffff are actually used and there is no actual bankswitching."
@@ -39,11 +56,28 @@ MUSICIANS/D/DOS/Tales_of_Mystery_end_tune.sid
 "the extra bytes at $fffa aren't used."
 MUSICIANS/D/Dunn_Jonathan/Red_Heat.sid
 
+GAMES/S-Z/Young_Ones.sid
+
+"end address $0000 (overwrites $fffa-$ffff) ..  doesnt crash but feels unsafe"
+MUSICIANS/D/Daglish_Ben/Artura.sid
+
+"end address $ffff (overwrites $fffa-$fffe) ..  doesnt crash but feels unsafe"
+MUSICIANS/D/Daglish_Ben/Northstar.sid
+
+********************************************************************************
 * BASIC tunes
+********************************************************************************
 
+DEMOS/Commodore/C_PRG_ex_01_BASIC.sid
 DEMOS/Commodore/C64_Christmas_Album_BASIC.sid - BASIC tune with sub tunes
+GAMES/M-R/Othello_BASIC.sid - BASIC tune with sub tunes
 
+********************************************************************************
 * technically broken rips
+********************************************************************************
+
+"default tune is out of range (incorrectly set to 0 instead of 1)"
+GAMES/M-R/Masters_of_Time.sid
 
 "Tunes that write outside their range can overwrite the sid player code if the 
 freepages aren't set.
@@ -52,7 +86,9 @@ freepages aren't set.
  there will be problems sooner or later."
 DEMOS/0-9/3_Oversample.sid (freepages: 08,39)
 
+********************************************************************************
 * sidplayer tunes
+********************************************************************************
 
 Rendez-vous.mus (Rendez-vous.sid is a regular file including player)
 Star_Wars.mus, Star_Wars.str
