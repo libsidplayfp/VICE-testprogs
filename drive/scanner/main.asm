@@ -11,6 +11,14 @@ drivecode_exec = drvstart ; skip $10 bytes table
 
 start:
         jsr clrscr
+        
+        ldx #1
+.lp:
+        lda hextab,x
+        sta $0400+(40*10)-1,x
+        inx
+        cpx #$10
+        bne .lp
 
         lda #<drivecode
         ldy #>drivecode
@@ -46,6 +54,8 @@ lp:
         jsr rcv_1byte           ; get result code
         ;clc
         ;adc #$30 ; '0'
+        tay
+        lda hextab,y
         sta $0400+(40*11)-1,x
 
         ; get block
@@ -131,6 +141,13 @@ drvstart
 
 drvlp:
 
+
+        ldy #$00
+-       tya
+        sta .data1,y
+        iny
+        bne -
+
 trk     lda #1
 sect    ldx #16
         jsr read
@@ -146,6 +163,7 @@ sect    ldx #16
         pla
         jsr snd_1byte   ; send result code
 
+        ; send the buffer
         ldy #$00
 -
         lda .data1,y

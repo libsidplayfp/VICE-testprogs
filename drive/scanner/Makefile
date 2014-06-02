@@ -1,4 +1,10 @@
-all: scanner.prg scan35.d64 scan40.d64 scan42.d64 scan35.g64 scan40.g64 scan42.g64
+TESTS=\
+	scanner.prg \
+	scan35.d64 scan40.d64 scan42.d64 \
+	scan35.g64 scan40.g64 scan42.g64 \
+	scan35err.d64 scan40err.d64 scan42err.d64 
+
+all: $(TESTS)
 
 scanner.prg: main.asm
 	acme main.asm
@@ -13,6 +19,16 @@ scan42.d64: scanner.prg
 	./../util/imggen tagd64 scan42.d64 42
 	c1541 -attach scan42.d64 -@ n:scanner -write "scanner.prg" "scanner"
 
+scan35err.d64: scanner.prg
+	./../util/imggen tagd64err scan35err.d64 35
+	c1541 -attach scan35err.d64 -@ n:scanner -write "scanner.prg" "scanner"
+scan40err.d64: scanner.prg
+	./../util/imggen tagd64err scan40err.d64 40
+	c1541 -attach scan40err.d64 -@ n:scanner -write "scanner.prg" "scanner"
+scan42err.d64: scanner.prg
+	./../util/imggen tagd64err scan42err.d64 42
+	c1541 -attach scan42err.d64 -@ n:scanner -write "scanner.prg" "scanner"
+	
 scan35.g64: scan35.d64
 	./../util/imggen d64tog64 scan35.d64 scan35.g64 35
 scan40.g64: scan40.d64
@@ -26,11 +42,5 @@ test: scanner.prg
  
 clean:
 	rm -f *~
-	rm -f scanner.prg
-	rm -f scan35.d64
-	rm -f scan40.d64
-	rm -f scan42.d64
-	rm -f scan35.g64
-	rm -f scan40.g64
-	rm -f scan42.g64
+	rm -f $(TESTS)
 	

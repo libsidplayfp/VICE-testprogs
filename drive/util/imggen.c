@@ -98,9 +98,11 @@ static const unsigned int trkoffs[1+40] =
 
 /******************************************************************************/
 
-#define D64MAXSIZE (0x100 * 42 * 21)
+#define D64MAXSECTORS   (42 * 21)
+#define D64MAXSIZE (0x100 * D64MAXSECTORS)
 
 unsigned char d64buffer[D64MAXSIZE];
+unsigned char d64errors[D64MAXSECTORS];
 
 #define GCRMAXTRACKLEN 0x2000
 
@@ -436,7 +438,7 @@ void loadd64(char *name)
 
     fclose(out);
 }
-void saved64(char *name, int tracks)
+void saved64(char *name, int tracks, int errors)
 {
     FILE *out;
     int t, s, i, ts;
@@ -452,12 +454,23 @@ void saved64(char *name, int tracks)
         }
     }
 
+    if (errors) {
+        buf = &d64errors[0];
+        for (t = 1; t <= tracks; t++) {
+            ts = sectors[trkzone[t]];
+            for (s = 0; s < ts; s++) {
+                fwrite(buf, 1, 1, out);
+                buf++;
+            }
+        }
+    }
+
     fclose(out);
 }
 
 /******************************************************************************/
 
-void gentestimg(int tracks)
+void gentestimg(int tracks, int errors)
 {
     int t, s, i, ts;
     unsigned char *buf = &d64buffer[0];
@@ -473,6 +486,19 @@ void gentestimg(int tracks)
             buf += 0x100;
         }
     }
+
+    if (errors) {
+        buf = &d64errors[0];
+        for (t = 1; t < 0x10; t++) {
+            ts = sectors[trkzone[t]];
+            for (s = 0; s < ts; s++) {
+                *buf = t;
+                buf++;
+            }
+        }
+    } else {
+        memset(d64errors, 1, D64MAXSECTORS);
+    }
 }
 
 /******************************************************************************/
@@ -487,8 +513,14 @@ int main(int argc, char *argv[])
         outname = argv[2];
         tracks = atoi(argv[3]);
         memset(d64buffer, 0, D64MAXSIZE);
-        gentestimg(tracks);
-        saved64(outname, tracks);
+        gentestimg(tracks, 0);
+        saved64(outname, tracks, 0);
+    } else if (!strcmp(argv[1], "tagd64err")) {
+        outname = argv[2];
+        tracks = atoi(argv[3]);
+        memset(d64buffer, 0, D64MAXSIZE);
+        gentestimg(tracks, 1);
+        saved64(outname, tracks, 1);
     } else if (!strcmp(argv[1], "d64tog64")) {
         inname = argv[2];
         outname = argv[3];
