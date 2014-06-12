@@ -35,7 +35,7 @@ Lib_C128_vdc_a = 1
 }
 
 !macro vdc_set_ra {
-	stx vdc_reg
+	sta vdc_reg
 }
 
 !macro vdc_set_rx {

@@ -293,12 +293,116 @@ ldx #10
 
 
 
-
+; =========================================================================
 ; start main menu loop
-
 mainloop:
 
-jsr vblankwait
+; Handle the vblank area / text area stuff
+
+;setup for fore/back register
+ldx #26
++vdc_set_rx
+
+; wait until we are out of vblank
+-
+lda vdc_state
+and #$20
+bne -
+
+; **** we are now in the screen/text area ****
+
+;if vblank test is on, set background colour to black
+ldy vblank
+beq +
++vdc_sta_rx
++
+
+; We need to store the _upcoming_ text memory offset here because it latches at the bottom of the screen
+
+lda xsmooth
+beq +	;skip this if we're not doing it
+lsr
+lsr
+lsr ; divide by 8
+eor #$1f
++
+tax
+
+lda ysmooth   ;if this is zero (disabled) it won't make any difference
+lsr
+lsr
+lsr ; divide by 8
+tay
+;ldx #0   ; we set X further up
+jsr screenxy  ;calculate the in memory screen position from X/Y
+lda tmp
+ldx #13	;screen address low
++vdc_sta_rx
+ldx #21	;attribute address low
++vdc_sta_rx
+lda tmp2
+ldx #12	;screen address high
++vdc_sta_rx
+ldx #20	;attribute address high
+clc
+adc #vdcattributehi
++vdc_sta_rx
+
+
+
+
+
+;setup for fore/back register
+ldx #26
++vdc_set_rx
+
+; wait until we are in vblank
+-
+lda vdc_state
+and #$20
+beq -
+
+; **** We are now in the lower border area ****
+
+lda vblank	;stick the vblank colour into background if !0
+beq +
++vdc_sta_rx
++
+
+
+; Here we need to store the _upcoming_ x smooth value
+lda xsmooth
+beq +	;skip this if we're not doing it
+and #$07
+sta tmp
+ldx #25
++vdc_lda_rx
+and #$f0
+clc
+adc tmp
++vdc_sta_rx
++
+
+
+lda ysmooth
+beq +	;skip this if we're not doing it
+and #$07
+sta tmp
+ldx #24
++vdc_lda_rx
+and #$e0
+clc
+adc tmp
++vdc_sta_rx
++
+
+
+
+
+
+
+
+
 
 jsr GETIN
 ; beq handlestuff
@@ -683,26 +787,6 @@ bne +
 lda smoothdefault
 sta smoothcount
 
-lda xsmooth
-lsr
-lsr
-lsr ; divide by 8
-eor #$1f
-ldx #13	;screen address low
-+vdc_sta_rx
-ldx #21	;attribute address low
-+vdc_sta_rx
-
-lda xsmooth
-and #$07
-sta tmp
-ldx #25
-+vdc_lda_rx
-and #$f0
-clc
-adc tmp
-+vdc_sta_rx
-
 ldx xsmooth
 lda xsmoothdir
 bne xneg
@@ -738,35 +822,6 @@ jmp yend
 lda smoothdefault
 sta smoothcount
 
-lda ysmooth
-lsr
-lsr
-lsr ; divide by 8
-tay
-ldx #0
-jsr screenxy
-lda tmp
-ldx #13	;screen address low
-+vdc_sta_rx
-ldx #21	;attribute address low
-+vdc_sta_rx
-lda tmp2
-ldx #12	;screen address high
-+vdc_sta_rx
-ldx #20	;attribute address high
-clc
-adc #vdcattributehi
-+vdc_sta_rx
-
-lda ysmooth
-and #$07
-sta tmp
-ldx #24
-+vdc_lda_rx
-and #$e0
-clc
-adc tmp
-+vdc_sta_rx
 
 ldy ysmooth
 lda ysmoothdir
@@ -945,22 +1000,22 @@ inc tmp2	;tmp1/2 = y*80 + x
 
 ; --- Variables
 
-vblank:		!by $00
-vblanktmp:	!by $00
+vblank:         !by $00
+vblanktmp:      !by $00
 
-backcycle:	!by $00
-backcyclecount:	!by 50
+backcycle:      !by $00
+backcyclecount: !by 50
 
-smoothcount:	!by 1
-smoothdefault:	!by 1
+smoothcount:    !by 1
+smoothdefault:  !by 1
 
-xsmooth:	!by $00
-xsmoothdir	!by 0
+xsmooth:        !by $00
+xsmoothdir      !by 0
 
-ysmooth:	!by $00
-ysmoothdir	!by 0
+ysmooth:        !by $00
+ysmoothdir      !by 0
 
-pixeldouble: !by 0
+pixeldouble:    !by 0
 
 
 ;    |---------01-3-5----0----5----0----5----0----5----0----5----0----5----01234567-|
