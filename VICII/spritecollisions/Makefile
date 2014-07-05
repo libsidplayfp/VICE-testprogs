@@ -1,15 +1,24 @@
-all:	sprite-sprite.prg sprite-sprite-collision-cycle.prg sprite-gfx-collision-cycle.prg 
 
-sprite-sprite.prg: sprite-sprite.tas
-	dasm $< -o$@
-sprite-sprite-collision-cycle.prg: sprite-sprite-collision-cycle.tas
-	dasm $< -o$@
-sprite-gfx-collision-cycle.prg: sprite-gfx-collision-cycle.tas
-	dasm $< -o$@
+TESTS=\
+	sprite-gfx-collision-cycle.prg \
+	sprite-sprite-collision-cycle.prg \
+	sprite-sprite.prg
 
-clean:
-	rm -f *~
-	rm -f sprite-sprite.prg
-	rm -f sprite-sprite-collision-cycle.prg
-	rm -f sprite-gfx-collision-cycle.prg
- 
+TESTSNTSC=\
+	sprite-gfx-collision-cycle_ntsc.prg \
+	sprite-sprite-collision-cycle_ntsc.prg \
+	sprite-sprite_ntsc.prg
+
+TESTSNTSCOLD=\
+	sprite-gfx-collision-cycle_ntscold.prg \
+	sprite-sprite-collision-cycle_ntscold.prg \
+	sprite-sprite_ntscold.prg
+
+all: $(TESTS) $(TESTSNTSC) $(TESTSNTSCOLD)
+
+%.prg:%.tas
+	dasm $*.tas -o$*.prg -DCYCLES=63
+%_ntsc.prg:%.tas
+	dasm $*.tas -o$*_ntsc.prg -DCYCLES=65
+%_ntscold.prg:%.tas
+	dasm $*.tas -o$*_ntscold.prg -DCYCLES=64
