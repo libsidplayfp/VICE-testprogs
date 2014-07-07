@@ -1,24 +1,10 @@
-NAME = movesplit
-BINARY = $(NAME).prg
-SOURCE = $(NAME).asm
-COMPILER = acme
-CFLAGS = -v1 --cpu 6502 -f cbm -o
-DEBUGGER = x64sc
-DEBUGFLAGS =
-REMOVE = rm -f
 
-.PHONY: all test debug clean
-
-all: $(BINARY)
-
-test: $(BINARY)
-	$(DEBUGGER) $(BINARY)
-
-debug: $(BINARY)
-	$(DEBUGGER) $(DEBUGFLAGS) $(BINARY)
-
-$(BINARY): $(SOURCE)
-	$(COMPILER) $(CFLAGS) $@ $<
-
-clean:
-	-$(REMOVE) $(BINARY)
+all: movesplit.prg movesplit_ntsc.prg movesplit_ntscold.prg
+	
+%.prg: %.asm
+	acme -DCYCLES=63 -v1 --cpu 6502 -f cbm -o $@ $<
+%_ntsc.prg:%.asm
+	acme -DCYCLES=65 -v1 --cpu 6502 -f cbm -o $@ $<
+%_ntscold.prg:%.asm
+	acme -DCYCLES=64 -v1 --cpu 6502 -f cbm -o $@ $<
+	
