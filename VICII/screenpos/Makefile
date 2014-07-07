@@ -1,31 +1,9 @@
-NAME = screenpos
-BINARY = $(NAME).prg
-SOURCE = $(NAME).asm
-COMPILER = acme
-CFLAGS = -v1 --cpu 6502 -f cbm -o
-DEBUGGER = x64
-DEBUGFLAGS =
-DTVTRANS = dtv2sertrans
-REMOVE = rm -f
-
-.PHONY: all test dtvtest debug dtvupload clean
-
-all: $(BINARY)
-
-test: $(BINARY)
-	$(DEBUGGER) $(BINARY)
-
-dtvtest: $(BINARY)
-	$(DTVTRANS) reset + load $(BINARY) + run
-
-dtvupload: $(BINARY)
-	$(DTVTRANS) reset + wr $(BINARY)
-
-debug: $(BINARY)
-	$(DEBUGGER) $(DEBUGFLAGS) $(BINARY)
-
-$(BINARY): $(SOURCE)
-	$(COMPILER) $(CFLAGS) $@ $<
-
-clean:
-	-$(REMOVE) $(BINARY)
+all: screenpos.prg screenpos_ntsc.prg screenpos_ntscold.prg
+	
+%.prg: %.asm
+	acme -DCYCLES=63 -v1 --cpu 6502 -f cbm -o $@ $<
+%_ntsc.prg:%.asm
+	acme -DCYCLES=65 -v1 --cpu 6502 -f cbm -o $@ $<
+%_ntscold.prg:%.asm
+	acme -DCYCLES=64 -v1 --cpu 6502 -f cbm -o $@ $<
+	
