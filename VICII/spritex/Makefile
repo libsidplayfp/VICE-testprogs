@@ -1,9 +1,10 @@
-NAME=testsuite
 
-all:	$(NAME).prg
-
-$(NAME).prg: $(NAME).tas
-	dasm $< -o$@
-
-clean:
-	rm -f $(NAME).prg
+all: testsuite.prg testsuite_ntsc.prg testsuite_ntscold.prg
+	
+%.prg: %.tas
+	dasm $< -o$@ -DCYCLES=63
+%_ntsc.prg:%.tas
+	dasm $*.tas -o$*_ntsc.prg -DCYCLES=65
+%_ntscold.prg:%.tas
+	dasm $*.tas -o$*_ntscold.prg -DCYCLES=64
+	
