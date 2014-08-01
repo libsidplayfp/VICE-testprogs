@@ -42,8 +42,6 @@ start:
                 * = basicstart + $0100
 ;-------------------------------------------------------------------------------
 start2:
-;        jsr $e518       ; init I/O
-
         jsr screen_enable
         jsr clrscr
 
@@ -64,7 +62,6 @@ clp1b
         txa
         sta tmp
         pha
-;        jsr $e518       ; init I/O
         jsr calcaddr
         jsr displayprepare
         jsr dotest
@@ -74,15 +71,6 @@ clp1b
         cpx #NUMTESTS
         bne clp1b
         }
-        !if (0) {
-        ; run only first test
-        lda #0
-        sta tmp
-;        jsr $e518       ; init I/O
-        jsr calcaddr
-        jsr displayprepare
-        jsr dotest
-        }
 
 loop
 ;        jsr calcaddr
@@ -91,11 +79,18 @@ loop
         ; wait for keypress
 wkey
         cli
+
         jsr $ffe4
+        cmp #$20
+        bne +
+        jmp $fd22
++
         cmp #"a"
         bcc wkey
         cmp #"a"+NUMTESTS
         bcs wkey
+
+        sei
 
         tax
         sec
@@ -156,30 +151,9 @@ clp1    sta screenmem,x
         sta addr+1
         sta jumpaddr+2
 
-;        ldy #0
-;clp2:
-;        lda (addr),y
-;        sta drivecode_dotest,y
-;        iny
-;        cpy #TESTLEN
-;        bne clp2
 
-;        lda #<drivecode
-;        ldy #>drivecode
-;        ldx #((drivecode_end - drivecode) + $1f) / $20 ; upload x * $20 bytes to 1541
-;        jsr upload_code
-
-;        lda #<drivecode_exec
-;        ldy #>drivecode_exec
-;        jsr start_code
-test:
         sei
-;        jsr rcv_init
 
-;        dec $900F
-
-;        ldx #$a0
-;-
 
         jsr screen_disable
 
@@ -200,22 +174,6 @@ test:
 
         jsr screen_enable
 
-;jmp test
-;        jsr rcv_wait
-
-        ; recieve the result data
-;        jsr calcaddr
-;        ldy #$00
-;-
-;        jsr rcv_1byte
-;        lda (addr),y
-;        sta screenmem,y
-;        iny
-;        bne -
-
-        ;jsr $fda3
-        ;cli
-
         jsr calcaddr
 
         ; copy data from screen to TMP
@@ -226,26 +184,12 @@ test:
         iny
         bne -
 
- ;       dec $900F
+;        dec $900F
 
         jsr displayresults
 
 ;        inc $900F
 
-        ; delay here long enough so the floppy is done resetting itself
-;        ldx #$80
-;-
-;        lda #$0f
-;        cmp $9004
-;        bne *-3
-;        cmp $9004
-;        beq *-3
-
-;        dex
-;        bne -
-
-;        dec $900F
-;        cli
         rts
 
 calcaddr:
@@ -346,8 +290,6 @@ ll      lda (addr),y
 rot
         lda (add2),y
         sta screenmem+refdataoffs,y
-;        eor (addr),y
-;        sta screenmem+(16*charsperline),y
         iny
         bne ll
 
@@ -355,7 +297,8 @@ rot
 
         lda ERRBUF+$ff
 ;        sta $900F
-        lda #0
+
+;        lda #0
 ;        sta $d021
 
         rts
@@ -405,10 +348,6 @@ jumpaddr:
         lda #$7f
         sta viabase+$e
 
-        ; acknowledge pending IRQs
-        lda viabase+$d
-        sta viabase+$d
-
         ; DDR output
         lda #$ff
         sta viabase+$2
@@ -435,6 +374,11 @@ t1a     sta viabase+$5  ; Timer A lo
         sta viabase+$8
         dey
         bne t1a
+
+        ; acknowledge pending IRQs
+        lda viabase+$d
+        sta viabase+$d
+
         rts
 }
 
@@ -485,5 +429,5 @@ screen_enable:
         sta $9001
         rts
 
-hextab:
-        !byte $30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$01,$02,$03,$04,$05,$06
+;hextab:
+;        !byte $30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$01,$02,$03,$04,$05,$06

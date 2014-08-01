@@ -22,25 +22,23 @@ VIA1:   works   Timer A / B
 VIA2:   works   Timer A / B
 
 VIA3:   fail    Timer A / B IRQ Flags
-VIA3a:  fail    Timer A IRQ Flags
+VIA3a:  works   Timer A IRQ Flags
 
-VIA4:   fail    Timer A (toggle timer A timed/continous irq)
-VIA4a:  fail    Timer A (toggle timer A timed/continous irq)
+VIA4:   works   Timer A (toggle timer A timed/continous irq)
+VIA4a:  works   Timer A (toggle timer A timed/continous irq)
 
-VIA5:   fail    Timer A / B IRQ Flags
-VIA5a:  fail    Timer A / B IRQ Flags
+VIA5:   works   Timer A / B IRQ Flags
+VIA5a:  works   Timer A / B IRQ Flags
 
 VIA9:   fail    Timer B (toggle timer B counts PB6/Clock)
-
-TODO: these need proper reference data:
 
 VIA10:  fail    Port B (output timer at PB7 and read back PB)
 VIA11:  fail    Port B (output timer at PB7 and read back PB)
 VIA12:  fail    Port B (output timer at PB7 and read back PB)
 VIA13:  fail    Port B (output timer at PB7 and read back PB)
 
-(gpz) reference data comes from the respective 1541 tests, VIA1-VIA9 are ok on
-      my actual VIC20, VIA10-13 need reference data fixed!
+(gpz) reference data comes from the respective 1541 tests, was tweaked and
+      checked against my VIC20
 
 TODO:
 
