@@ -1,5 +1,5 @@
 ;----------------------------------------------------------------------------
-; SHA "unstable" behaviour check
+; SHX/SHY "unstable" behaviour check
 ; inspired by emulamers "bad copy"
 ;----------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ testpatternlen = $18
 
 ;----------------------------------------------------------------------------
 
-zp_textbase = $f0
+zp_testbase = $f0
 patternbase = $f3
 
 start:
@@ -98,10 +98,10 @@ start:
                 lda     #>testpattern
                 STA     patternbase+1
 
-                lda     #<textbase
-                sta     zp_textbase
-                lda     #>textbase
-                sta     zp_textbase+1
+                lda     #<testbase
+                sta     zp_testbase
+                lda     #>testbase
+                sta     zp_testbase+1
 
                 LDA     #0
                 STA     $D010
@@ -202,46 +202,71 @@ irq1:
                 INC     $D007-1
 
 ; second test
-                LDY     #0
-
+                !if (opcode = $9c) {
+                LDX     #0
 testlp:
-                !if (opcode = $93) {
-                nop     ; 2 cycles
+                ;BIT     $ea     ; 3 cycles
+                nop
+
+                LDY     #6
+-
+                DEY
+                BPL     -
+
+                ;LDA     (patternbase),Y    ; 5
+                lda     testpattern,x   ;4
+                tay                     ;2
+                ; addr + X     = Y   & H+1
+                ; testbase + X = Y & $11
+
+                ; in cycles where sprite dma stops the opcode the & H+1 drops off
+                ; addr + X     = Y
+                ; textbase + X = Y
+
+                ; SHY     testbase,X    ; 5 cycles
+                !byte $9c, <testbase, >testbase
+
+                NOP
+                INX
+                CPX     #testpatternlen
+                BNE     testlp
                 }
-                !if (opcode = $9f) {
-                BIT     $ea     ; 3 cycles
-                }
+                !if (opcode = $9e) {
+                LDY     #0
+testlp:
+                ;BIT     $ea     ; 3 cycles
+                nop
+
                 LDX     #6
 -
                 DEX
                 BPL     -
 
-                LDA     (patternbase),Y    ; 5
-                ; addr + Y     = A & X   & H+1
-                ; textbase + Y = A & $ff & $11
+                ;LDA     (patternbase),Y    ; 5
+                lda     testpattern,y   ;4
+                tax                     ;2
+
+                ; addr + Y     = X   & H+1
+                ; textbase + Y = X & $11
 
                 ; in cycles where sprite dma stops the opcode the & H+1 drops off
-                ; addr + Y     = A & X
-                ; textbase + Y = A & $ff
+                ; addr + Y     = X
+                ; textbase + Y = X
 
-                !if (opcode = $93) {
-                ; SHA   (zp),y
-                !byte $93, zp_textbase  ; 6 cycles
-                }
-                !if (opcode = $9f) {
-                ; SHA     textbase,Y    ; 5 cycles
-                !byte $9f, <textbase, >textbase
-                }
+                ; SHX     testbase,Y    ; 5 cycles
+                !byte $9e, <testbase, >testbase
+
                 NOP
                 INY
                 CPY     #testpatternlen
                 BNE     testlp
+                }
 
                 inc $d020
 
                 ldx #0
 -
-                lda textbase,x
+                lda testbase,x
                 sta $0400+(40*10),x
 
                 ldy #5
@@ -314,4 +339,4 @@ testpattern:
                 !byte $78, $79, $7a, $7b, $7c, $7d, $7e, $7f
 
                 * = $1080
-textbase:
+testbase:
