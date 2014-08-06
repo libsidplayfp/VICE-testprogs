@@ -48,4 +48,13 @@ DMA (?: TODO: exact description, accurate timings)
 works in x64sc, fails in x64
 --------------------------------------------------------------------------------
 
+shaabsy3.prg shazpy3.prg
+
+checks the timing of the above tested behaviour
+
+the top dump is the reference data, the bottom shows the measured values
+
+fails in x64sc, fails in x64
+--------------------------------------------------------------------------------
+
 TODO: test for page boundary crossing bug
