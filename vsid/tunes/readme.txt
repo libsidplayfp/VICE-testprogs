@@ -39,6 +39,11 @@ GAMES/M-R/Mean_City.sid
 
 --------------------------------------------------------------------------------
 
+"image under KERNAL ROM, but play _not_ under ROM (copied at init)"
+GAMES/M-R/Magicians_Ball.sid
+
+--------------------------------------------------------------------------------
+
 "tunes overwriting d000-dfff, sometimes with code or data there, sometimes 
  nothing"
 MUSICIANS/D/Dunn_Jonathan/Daley_Thompsons_Olympic_Challenge.sid
@@ -85,6 +90,13 @@ freepages aren't set.
  freepages set the sid player is free to use memory from $0400 onward, and 
  there will be problems sooner or later."
 DEMOS/0-9/3_Oversample.sid (freepages: 08,39)
+
+"Tunes that require a certain $01 value to work correctly"
+code in play routine does this
+3AFC  A5 01     LDA $01
+3AFE  29 FD     AND #$FD
+3B00  85 01     STA $01
+/MUSICIANS/C/Cooksey_Mark/Airwolf.sid
 
 ********************************************************************************
 * sidplayer tunes
