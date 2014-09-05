@@ -32,6 +32,9 @@ MUSICIANS/R/Rowlands_Steve/Retrograde_tapeloader.sid
 GAMES/M-R/Ms_Pacman.sid
 GAMES/S-Z/Wizardry.sid
 
+"partially under BASIC, requires $01=$36 although play/init is in $Cxxx area"
+DEMOS/A-F/Burger.sid
+
 --------------------------------------------------------------------------------
 
 "image located "under" KERNAL ROM"
