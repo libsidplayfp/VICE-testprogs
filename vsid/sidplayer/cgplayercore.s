@@ -78,11 +78,15 @@ doinit1:
                 ;STY     oldvec+1
                 JSR     initcall
 .if SIDNUM = 0
-                LDX     #<musdata
-                LDY     #>musdata
+                ;LDX     #<musdata
+                ;LDY     #>musdata
+                LDX     musaddr
+                LDY     musaddr+1
 .else
-                LDX     #<strdata
-                LDY     #>strdata
+                ;LDX     #<strdata
+                ;LDY     #>strdata
+                LDX     straddr
+                LDY     straddr+1
 .endif
                 JSR     play
                 LDA     #7

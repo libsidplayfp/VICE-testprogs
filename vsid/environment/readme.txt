@@ -36,18 +36,41 @@ PSID files:
 
 * PSID (regular)
 
-- init/play may actually be located under ROM or I/O - the caller is expected to
-  set up $01 correctly.
-  - init on <a000 or c000-cfff, $01 is 37
-  - if it's under a000-bfff it's set to $36 prior to calling init. 
-  - if under e000-ffff it is set to $35
+Note: The original playsid program for the Amiga used a flat 64k RAM space, and
+      ignored the layered memory map of the C64. However, with the advent of
+      SD-card based storage solutions for the C64 (such as the 1541ultimate and
+      the Chameleon) players for .sid files that run on the real hardware be-
+      came common. The following rules are a compromise between following a
+      strict pattern (related to the original psid specification) and what is
+      (sometimes) required to play the existing rips on a real C64.
 
-  note: this implies that the caller sets $01 to $3x before calling either init
+- init/play may actually be located under ROM or I/O - the caller is expected to
+  set up $01 correctly. the following rules proved to be mostly working in
+  practise:
+
+  - if init/play is in range $d000 - $dfff, set $01 to $34
+  - else if init/play is in range $e000 - $fffa, set $01 to $35
+  - else if last occupied address/play is in range $a000 - $fffa, set $01 to $36
+  - else set $01 to $37
+
+  Note: this implies that the caller sets $01 to $3x before calling either init
         or play. however both of these functions may for example re-enable the 
         i/o area and thus change $01 again (although this is considered bad 
         practise and fixed if found in .sid files)
 
+- the player should restore $01 to $37 after init/play, because of that
+  - the relocated player should not be placed under ROM or I/O
+  - the player can not use the hardware vectors at $fffe/$ffff (It is however
+    recommended to implement the IRQ handling in a way that BOTH the "soft"
+    ($0314/$0315) and the hardware vectors point to a valid IRQ handler, since
+    some tunes may change the value of $01 and bank in/out the kernal)
+
+- when play is $0000, then do NOT set $01 to another value after init (as the
+  init call is responsible to do it in that case)
+
 - the caller is responsible for SEI/CLI before/after init
+
+- tunes should not load over the vectors ($fffa-$ffff)
 
 * RSID (regular)
 

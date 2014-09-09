@@ -32,7 +32,7 @@ _play
         lda #$35
         sta $01
         jmp realplay
-    
+
     * = $df00
 init
         jmp _init
