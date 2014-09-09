@@ -50,7 +50,7 @@ Note: The original playsid program for the Amiga used a flat 64k RAM space, and
 
   - if init/play is in range $d000 - $dfff, set $01 to $34
   - else if init/play is in range $e000 - $fffa, set $01 to $35
-  - else if last occupied address/play is in range $a000 - $fffa, set $01 to $36
+  - else if load end address/play is in range $a000 - $cfff, set $01 to $36
   - else set $01 to $37
 
   Note: this implies that the caller sets $01 to $3x before calling either init
@@ -99,5 +99,5 @@ interpreter.
 
 - reset emulated machine
 - inject tune into RAM
-- set 780 to sub tune nr (starting with 0)
+- set 780/781/782 (A/X/Y) to sub tune nr (starting with 0)
 - start by "RUN"
