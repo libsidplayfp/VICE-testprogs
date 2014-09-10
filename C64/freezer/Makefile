@@ -2,7 +2,7 @@
 
 INCLUDE=-I ../include
 
-all: freeze-test.prg freeze-raster.prg freeze-cia1.prg freeze-cia2.prg freeze-combined.prg
+all: freeze-test.prg freeze-raster.prg freeze-cia1.prg freeze-cia2.prg freeze-combined.prg freezeblock.prg
 	rm -f *.o
 
 freeze-test.prg: freeze-test.s
@@ -19,6 +19,9 @@ freeze-cia2.prg: freeze-test-cia2.s
 
 freeze-combined.prg: freeze-test-combined.s
 	cl65 $(INCLUDE) -t c64 -o freeze-combined.prg freeze-test-combined.s
+
+freezeblock.prg: freezeblock.asm
+	acme -f cbm -o freezeblock.prg freezeblock.asm
 
 clean:
 	rm -f *~
