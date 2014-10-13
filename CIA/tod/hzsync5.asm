@@ -88,6 +88,12 @@ sync            ldy #$ff        ;wait til raster #$100
                 rts
 
 text            .byte 147,13,13,13,13,13,13,13
+                      ;1234567890123456789012345678901234567890
+                .text "hzsync5",13,13
                 .text "tod input frequency counter test:",13
                 .text "1-3 = reset on hr write, running",13
-                .text "4-6 = reset&stopped or reset by .1 secs",0
+                .text "4-6 = reset&stopped or reset by .1 secs",13,13
+                .text "expected: counter is either not running",13
+                .text "while clock is stopped or reset when",13
+                .text "clock is restarted. (5s)"
+                .byte 0
