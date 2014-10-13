@@ -72,12 +72,17 @@ Note: The original playsid program for the Amiga used a flat 64k RAM space, and
 
 - tunes should not load over the vectors ($fffa-$ffff)
 
+- the PAL/NTSC flag in memory ($02a6) should be initialized according to the
+  respective flag in the .sid file prior calling init
+
 * RSID (regular)
 
 - VIC - IRQ set to raster $137, but not enabled.
 - CIA 1 timer A - set to 60Hz with the counter running and IRQs active.
 - Other timers - disabled and loaded with $FFFF.
 - Bank register $01 - $37
+- the PAL/NTSC flag in memory ($02a6) should be initialized according to the
+  respective flag in the .sid file prior calling init
 
 - A side effect of the bank register is that init MUST NOT be located under a
   ROM/IO memory area (addresses $A000-$BFFF and $D000-$FFFF) or outside the
