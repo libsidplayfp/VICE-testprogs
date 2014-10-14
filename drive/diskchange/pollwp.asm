@@ -119,16 +119,16 @@ printhex:
         lsr
         lsr
         tax
-        lda hextab,x
+        lda hextab1,x
         jsr $ffd2
         pla
         and #$0f
         tax
-        lda hextab,x
+        lda hextab1,x
         jsr $ffd2
         sei
         rts
-hextab:
+hextab1:
         !pet "0123456789abcdef"
         
 printstr:
