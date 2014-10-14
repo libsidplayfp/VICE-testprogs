@@ -487,6 +487,7 @@ void gentestimg(int tracks, int errors)
         }
     }
 
+    memset(d64errors, 1, D64MAXSECTORS);
     if (errors) {
         buf = &d64errors[0];
         for (t = 1; t < 0x10; t++) {
@@ -496,8 +497,6 @@ void gentestimg(int tracks, int errors)
                 buf++;
             }
         }
-    } else {
-        memset(d64errors, 1, D64MAXSECTORS);
     }
 }
 
