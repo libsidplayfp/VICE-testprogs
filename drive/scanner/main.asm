@@ -1,6 +1,5 @@
         !convtab pet
         !cpu 6510
-        !to "scanner.prg", cbm
 
 ;-------------------------------------------------------------------------------
 
@@ -11,7 +10,7 @@ drivecode_exec = drvstart ; skip $10 bytes table
 
 start:
         jsr clrscr
-        
+
         ldx #1
 .lp:
         lda hextab,x
@@ -19,6 +18,15 @@ start:
         inx
         cpx #$10
         bne .lp
+
+        ldx #0
+-
+        lda info,x
+        beq +
+        sta $0400+(40*20),x
+        inx
+        bne -
++
 
         lda #<drivecode
         ldy #>drivecode
@@ -77,14 +85,17 @@ lp:
     }
 
         ; compare block
+        ldx rtrk
+        lda #10
+        sta $d800+(40*13)-1,x
 
         ldx #$00
 -
         lda #10
         sta $d800,x
-        inx
-        sta $d800,x
-        dex
+;        inx
+;        sta $d800,x
+;        dex
 
         txa
         eor rtrk
@@ -111,8 +122,24 @@ lp:
         jmp lp
 
 recerr:
+        lda rtrk
+        cmp #TRACKS+1
+        bcs skp
+
+        !if (ERRORS = 1) {
+        cmp #2
+        beq skp
+        cmp #3
+        beq skp
+        cmp #9
+        beq skp
+        cmp #$b
+        beq skp
+        }
+
         lda #10
         sta rescol
+skp:
         jmp lp
 
 recend:
@@ -124,6 +151,24 @@ rtrk: !byte 0
 rsec: !byte 0
 
 rescol: !byte 5
+
+info:
+    !scr "scanning "
+    !if (TRACKS = 35) {
+        !scr "35"
+    }
+    !if (TRACKS = 40) {
+        !scr "40"
+    }
+    !if (TRACKS = 42) {
+        !scr "42"
+    }
+    !scr " tracks"
+    !if (ERRORS = 1) {
+        !scr " (with error map)"
+    }
+    !byte 0
+
 ;-------------------------------------------------------------------------------
 
 drivecode:
@@ -141,7 +186,7 @@ drvstart
 
 drvlp:
 
-
+        ; clear the buffer
         ldy #$00
 -       tya
         sta .data1,y
@@ -149,6 +194,7 @@ drvlp:
         bne -
 
 trk     lda #1
+;trk     lda #4
 sect    ldx #16
         jsr read
 
@@ -174,6 +220,7 @@ sect    ldx #16
         inc trk+1
         lda trk+1
         cmp #43
+;        cmp #5
         beq drvend
         jmp drvlp
 drvend:
