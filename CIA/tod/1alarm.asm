@@ -116,7 +116,7 @@ alarm0          lda #$7f
 
 text            .text 147,"# tests:  xxxx",13
                 .text "# alarms: xxxx",13,13
-                .text "more alarms then test passes:",13
+                .text "more alarms than test passes:",13
                 .text "there's something wrong!",0
 
 hexout          pha

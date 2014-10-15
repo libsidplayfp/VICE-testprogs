@@ -181,7 +181,14 @@ coffset         .byte 9,6,3,0                   ; display offset for .1sec, sec,
 maxval          .byte $09,$59,$59,$24           ; .1sec, sec, min, hrs in bcd!
 dfttime         .byte $00,$00,$00,$00           ; dito
 
-text            .byte 19,13,13
+text            .byte 19,13,13,5
+                      ;1234567890123456789012345678901234567890
                 .text "continous alarm test:",13,13
-                .text "test#:    alarm (1=occured):",0
+                .text "test#:    alarm (1=occured):",13,13
+                .text 29,29,29,29,29,29,29,29,29,29,29,29,29,29,29
+                .text "expected:",13
+                .text 29,29,29,29,29,29,29,29,29,29,29,29,29,29,29
+                .text "no alarm on second run",13
+                .byte 31,19,0
+                .byte 0
 
