@@ -36,6 +36,7 @@ basic:
   .byte 0,0,0   ; end of BASIC program
 
 start:
+  jsr preparescreen
   jmp install
   jmp deinstall
 
@@ -69,6 +70,7 @@ skipinit:
   lda $dc0d     ; acknowledge CIA interrupts
   lsr $d019     ; and video interrupts
   cli
+  jmp *
   rts
 
 deinstall:
@@ -225,3 +227,56 @@ nmi = * + 1
   sta cnmi
   sty cnmi+1    ; restore original NMI vector (although it won't be used)
   rts
+
+preparescreen:
+    ldx #0
+lp1:
+    lda #$20
+    sta $0400,x
+    sta $0500,x
+    sta $0600,x
+    sta $06e8,x
+    lda #$01
+    sta $d800,x
+    sta $d900,x
+    sta $da00,x
+    sta $dae8,x
+    inx
+    bne lp1
+    ldx #39
+lp2:
+    lda text1,x
+    sta 0*40+$0400,x
+    sta 24*40+$0400,x
+    lda text2,x
+    sta 1*40+$0400,x
+    sta 23*40+$0400,x
+    dex
+    bpl lp2
+    ldx #0
+lp3:
+    lda text3,x
+    beq skp
+    cmp #$3f
+    bcc skp1
+    sec
+    sbc #$20
+    and #$3f
+skp1:
+    sta 5*40+$0400,x
+    inx
+    bne lp3
+skp:
+    lda #$a5
+    sta $3fff
+    rts
+
+text1:
+    .byte "1234567890123456789012345678901234567890"
+text2:
+    .byte "2345678901234567890123456789012345678901"
+text3:
+    .byte "den01-48-2                              "
+    .byte "                                        "
+    .byte "screen displays usual text"
+    .byte 0
