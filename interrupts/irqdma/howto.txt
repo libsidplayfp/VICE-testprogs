@@ -14,3 +14,5 @@ irqX_dtv.dump are measured with a PAL DTV3 (detected as old CIA);
 tests 3 and 3b give the same results as C64.
 
 Use record*.prg to measure your own data (stored at $2000-$A000).
+
+TODO: automatically compile DTV tests as well

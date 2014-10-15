@@ -677,3 +677,54 @@ smod:
 !by $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
     rts             ;6 cycles
 }
+
+!if TEST_MODE = 1 {
+    * = $2000
+    !if B_MODE = 0 {
+        !if TESTNUM = 1 {
+            !bin "nmi1.dump",,2
+        }
+        !if TESTNUM = 2 {
+            !bin "nmi2.dump",,2
+        }
+        !if TESTNUM = 3 {
+            !bin "nmi3.dump",,2
+        }
+        !if TESTNUM = 4 {
+            !bin "nmi4.dump",,2
+        }
+        !if TESTNUM = 5 {
+            !bin "nmi5.dump",,2
+        }
+        !if TESTNUM = 6 {
+            !bin "nmi6.dump",,2
+        }
+        !if TESTNUM = 7 {
+            !bin "nmi7.dump",,2
+        }
+    }
+    !if B_MODE = 1 {
+        !if TESTNUM = 1 {
+            !bin "nmi1b.dump",,2
+        }
+        !if TESTNUM = 2 {
+            !bin "nmi2b.dump",,2
+        }
+        !if TESTNUM = 3 {
+            !bin "nmi3b.dump",,2
+        }
+        !if TESTNUM = 4 {
+            !bin "nmi4b.dump",,2
+        }
+        !if TESTNUM = 5 {
+            !bin "nmi5b.dump",,2
+        }
+        !if TESTNUM = 6 {
+            !bin "nmi6b.dump",,2
+        }
+        !if TESTNUM = 7 {
+            !bin "nmi7b.dump",,2
+        }
+    }
+}
+

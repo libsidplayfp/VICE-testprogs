@@ -398,46 +398,117 @@ lc169:
 
 !if TESTNUM = 6 {
     ldx #$00
-    sei
+    sei ; i = 1
+
+    php
+    cli ; i = 0
+    plp ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+
+    php
+    cli ; i = 0
+    plp ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+
     php
     cli
     plp
     cli
     sei
+
     php
     cli
     plp
     cli
     sei
+
     php
     cli
     plp
     cli
     sei
+
     php
     cli
     plp
     cli
     sei
+
     php
     cli
     plp
     cli
     sei
+
     php
-    cli
-    plp
+    cli ; i = 0
+    plp ; i = 1
+    cli ; i = 0
+}
+
+; if test 6 fails, but test 7 works, then PHP or PLP are broken
+
+!if TESTNUM = 7 {
+    ldx #$00
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
     cli
     sei
-    php
-    cli
-    plp
     cli
     sei
-    php
     cli
-    plp
+    sei
     cli
+    sei
+    cli
+    sei
+    cli
+    sei
+    cli
+    sei
+    cli
+    sei
+    cli
+    sei
+    cli
+    sei
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    sei ; i = 1
+    cli ; i = 0
+    nop
 }
 
 ;------------------------------------------------------------------
@@ -693,4 +764,54 @@ smod:
 !by $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
 !by $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
     rts             ;6 cycles
+}
+
+!if TEST_MODE = 1 {
+    * = $2000
+    !if B_MODE = 0 {
+        !if TESTNUM = 1 {
+            !bin "irq1.dump",,2
+        }
+        !if TESTNUM = 2 {
+            !bin "irq2.dump",,2
+        }
+        !if TESTNUM = 3 {
+            !bin "irq3.dump",,2
+        }
+        !if TESTNUM = 4 {
+            !bin "irq4.dump",,2
+        }
+        !if TESTNUM = 5 {
+            !bin "irq5.dump",,2
+        }
+        !if TESTNUM = 6 {
+            !bin "irq6.dump",,2
+        }
+        !if TESTNUM = 7 {
+            !bin "irq7.dump",,2
+        }
+    }
+    !if B_MODE = 1 {
+        !if TESTNUM = 1 {
+            !bin "irq1b.dump",,2
+        }
+        !if TESTNUM = 2 {
+            !bin "irq2b.dump",,2
+        }
+        !if TESTNUM = 3 {
+            !bin "irq3b.dump",,2
+        }
+        !if TESTNUM = 4 {
+            !bin "irq4b.dump",,2
+        }
+        !if TESTNUM = 5 {
+            !bin "irq5b.dump",,2
+        }
+        !if TESTNUM = 6 {
+            !bin "irq6b.dump",,2
+        }
+        !if TESTNUM = 7 {
+            !bin "irq7b.dump",,2
+        }
+    }
 }
