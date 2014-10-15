@@ -11,20 +11,38 @@ basic:
 !by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
 
 start:
+    ldx #0
+clp:
+    lda #$20
+    sta $0400,x
+    sta $0500,x
+    sta $0600,x
+    sta $06e8,x
+    lda #$01
+    sta $d800+(24*40),x
+    inx
+    bne clp
+    ldx #0
+cl:
+    lda testtxt,x
+    beq sk
+    sta $0400+(24*40),x
+    inx
+    bne cl
+sk:
     jmp entrypoint
+
+testtxt:
+    !scr "irq"
+    !byte $30+TESTNUM
+    !if (B_MODE = 1) {
+        !scr "b"
+    }
+    !byte 0
 
 * = $0900
 entrypoint:
     sei
-;    lda #$20
-;    ldx #0
-;clp:
-;    sta $0400,x
-;    sta $0500,x
-;    sta $0600,x
-;    sta $06e8,x
-;    inx
-;    bne clp
 
     lda #4 ; start with 4 so we will see green (=5) on success
     sta $d020
