@@ -770,48 +770,48 @@ smod:
     * = $2000
     !if B_MODE = 0 {
         !if TESTNUM = 1 {
-            !bin "irq1.dump",,2
+            !bin "dumps/irq1.dump",,2
         }
         !if TESTNUM = 2 {
-            !bin "irq2.dump",,2
+            !bin "dumps/irq2.dump",,2
         }
         !if TESTNUM = 3 {
-            !bin "irq3.dump",,2
+            !bin "dumps/irq3.dump",,2
         }
         !if TESTNUM = 4 {
-            !bin "irq4.dump",,2
+            !bin "dumps/irq4.dump",,2
         }
         !if TESTNUM = 5 {
-            !bin "irq5.dump",,2
+            !bin "dumps/irq5.dump",,2
         }
         !if TESTNUM = 6 {
-            !bin "irq6.dump",,2
+            !bin "dumps/irq6.dump",,2
         }
         !if TESTNUM = 7 {
-            !bin "irq7.dump",,2
+            !bin "dumps/irq7.dump",,2
         }
     }
     !if B_MODE = 1 {
         !if TESTNUM = 1 {
-            !bin "irq1b.dump",,2
+            !bin "dumps/irq1b.dump",,2
         }
         !if TESTNUM = 2 {
-            !bin "irq2b.dump",,2
+            !bin "dumps/irq2b.dump",,2
         }
         !if TESTNUM = 3 {
-            !bin "irq3b.dump",,2
+            !bin "dumps/irq3b.dump",,2
         }
         !if TESTNUM = 4 {
-            !bin "irq4b.dump",,2
+            !bin "dumps/irq4b.dump",,2
         }
         !if TESTNUM = 5 {
-            !bin "irq5b.dump",,2
+            !bin "dumps/irq5b.dump",,2
         }
         !if TESTNUM = 6 {
-            !bin "irq6b.dump",,2
+            !bin "dumps/irq6b.dump",,2
         }
         !if TESTNUM = 7 {
-            !bin "irq7b.dump",,2
+            !bin "dumps/irq7b.dump",,2
         }
     }
 }

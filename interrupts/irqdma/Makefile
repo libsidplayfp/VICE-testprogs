@@ -51,40 +51,40 @@ nmirecord6b.prg: nmidma.asm
 	acme -DTESTNUM=6 -DB_MODE=1 -DTEST_MODE=0 -f cbm -o nmirecord6b.prg nmidma.asm
 
 
-test1.prg: irq1.dump irqdma.asm
+test1.prg: dumps/irq1.dump irqdma.asm
 	acme -DTESTNUM=1 -DB_MODE=0 -DTEST_MODE=1 -f cbm -o test1.prg irqdma.asm
-test2.prg: irq2.dump irqdma.asm
+test2.prg: dumps/irq2.dump irqdma.asm
 	acme -DTESTNUM=2 -DB_MODE=0 -DTEST_MODE=1 -f cbm -o test2.prg irqdma.asm
-test3.prg: irq3.dump irqdma.asm
+test3.prg: dumps/irq3.dump irqdma.asm
 	acme -DTESTNUM=3 -DB_MODE=0 -DTEST_MODE=1 -f cbm -o test3.prg irqdma.asm
-test4.prg: irq4.dump irqdma.asm
+test4.prg: dumps/irq4.dump irqdma.asm
 	acme -DTESTNUM=4 -DB_MODE=0 -DTEST_MODE=1 -f cbm -o test4.prg irqdma.asm
-test5.prg: irq5.dump irqdma.asm
+test5.prg: dumps/irq5.dump irqdma.asm
 	acme -DTESTNUM=5 -DB_MODE=0 -DTEST_MODE=1 -f cbm -o test5.prg irqdma.asm
-test6.prg: irq6.dump irqdma.asm
+test6.prg: dumps/irq6.dump irqdma.asm
 	acme -DTESTNUM=6 -DB_MODE=0 -DTEST_MODE=1 -f cbm -o test6.prg irqdma.asm
-test7.prg: irq6.dump irqdma.asm
+test7.prg: dumps/irq7.dump irqdma.asm
 	acme -DTESTNUM=7 -DB_MODE=0 -DTEST_MODE=1 -f cbm -o test7.prg irqdma.asm
 
-test1b.prg: irq1b.dump irqdma.asm
+test1b.prg: dumps/irq1b.dump irqdma.asm
 	acme -DTESTNUM=1 -DB_MODE=1 -DTEST_MODE=1 -f cbm -o test1b.prg irqdma.asm
-test2b.prg: irq2b.dump irqdma.asm
+test2b.prg: dumps/irq2b.dump irqdma.asm
 	acme -DTESTNUM=2 -DB_MODE=1 -DTEST_MODE=1 -f cbm -o test2b.prg irqdma.asm
-test3b.prg: irq3b.dump irqdma.asm
+test3b.prg: dumps/irq3b.dump irqdma.asm
 	acme -DTESTNUM=3 -DB_MODE=1 -DTEST_MODE=1 -f cbm -o test3b.prg irqdma.asm
-test4b.prg: irq4b.dump irqdma.asm
+test4b.prg: dumps/irq4b.dump irqdma.asm
 	acme -DTESTNUM=4 -DB_MODE=1 -DTEST_MODE=1 -f cbm -o test4b.prg irqdma.asm
-test5b.prg: irq5b.dump irqdma.asm
+test5b.prg: dumps/irq5b.dump irqdma.asm
 	acme -DTESTNUM=5 -DB_MODE=1 -DTEST_MODE=1 -f cbm -o test5b.prg irqdma.asm
-test6b.prg: irq6b.dump irqdma.asm
+test6b.prg: dumps/irq6b.dump irqdma.asm
 	acme -DTESTNUM=6 -DB_MODE=1 -DTEST_MODE=1 -f cbm -o test6b.prg irqdma.asm
-test7b.prg: irq7b.dump irqdma.asm
+test7b.prg: dumps/irq7b.dump irqdma.asm
 	acme -DTESTNUM=7 -DB_MODE=1 -DTEST_MODE=1 -f cbm -o test7b.prg irqdma.asm
 
-nmitest6.prg: nmi6.dump nmidma.asm
+nmitest6.prg: dumps/nmi6.dump nmidma.asm
 	acme -DTESTNUM=6 -DB_MODE=0 -DTEST_MODE=1 -f cbm -o nmitest6.prg nmidma.asm
 
-nmitest6b.prg: nmi6b.dump nmidma.asm
+nmitest6b.prg: dumps/nmi6b.dump nmidma.asm
 	acme -DTESTNUM=6 -DB_MODE=1 -DTEST_MODE=1 -f cbm -o nmitest6b.prg nmidma.asm
 
 .PHONY: irqdma.d64
