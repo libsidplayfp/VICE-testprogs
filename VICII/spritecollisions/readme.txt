@@ -14,3 +14,6 @@ sprite-sprite.prg: (DTV)
 @@--@--@-@-
 ---------@-
 
+TODO:
+- automatically generate DTV versions as well
+- verify and fix NTSC versions

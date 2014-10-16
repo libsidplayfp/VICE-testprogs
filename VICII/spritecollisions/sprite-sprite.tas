@@ -36,6 +36,7 @@ start:
 
   lda #$00
   sta testnum
+  sta fails
 
 ; setup sprites
   lda #$ff
@@ -94,11 +95,35 @@ wait2:
   sta $0428,x
   iny
 
+  lda #5
+  sta $d800,x
+  sta $d828,x
+
+  lda $0400,x
+  cmp $0428,x
+  beq nofail
+  lda #10
+  sta $d800,x
+  sta $d828,x
+  inc fails
+nofail:
+
   inc testnum
   jmp testloop
 
 endoftest:
+  ldy #5
+  lda fails
+  beq allok
+  ldy #10
+allok:
+  sty $d020
   rts  
+
+fails:
+    .byte 0
+
+; FIXME: tables for DTV and NTSC/NTSCOLD
 
 testtable:
 ;       xhigh xlow  y    reference

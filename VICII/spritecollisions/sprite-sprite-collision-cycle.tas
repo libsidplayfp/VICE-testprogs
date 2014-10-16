@@ -197,6 +197,32 @@ result:
   jmp endirq
 
 endirq:
+  tax
+  lda refpal,x
+  sta $0428,x
+
+  lda #5
+  sta $d800,x
+  sta $d828,x
+
+  lda $0400,x
+  cmp $0428,x
+  beq nofail
+  lda #10
+  sta $d800,x
+  sta $d828,x
+  inc fails
+nofail:
+
+  cpx #6
+  bne notlast
+  ldy #5
+  lda fails
+  beq allok
+  ldy #10
+allok:
+  sty $d020
+notlast:
   jmp $ea81     ; return to the auxiliary raster interrupt
 
 restore:        ; disable the Restore key
@@ -246,5 +272,13 @@ loopspritepattern:
   bne loopspritepattern
   lda #$80
   sta $0fc0
+
+  lda #0
+  sta fails
   rts
 
+fails:
+  .byte 0
+
+refpal:
+  .byte 3,3,0,0,0,0,0
