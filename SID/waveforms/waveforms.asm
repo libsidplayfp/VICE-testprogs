@@ -51,6 +51,13 @@ start
                 inx
                 bne -
 
+                ldx #3
+-
+                lda testname,x
+                sta $0400+(40*24)+35,x
+                dex
+                bpl -
+
                 jsr initsid
 
                 lda #0
@@ -63,15 +70,21 @@ start
                 asl
                 sta wave
 
+                lda currtest
+                jsr showbits
+
                 jsr doonetest
-                
+
                 jsr updateinfo
-                
+
                 inc currtest
                 lda currtest
                 cmp #$10
                 bne -
-                
+
+                lda #0
+                sta currtest
+                jsr showbits
 mainloop:
 
 again:
@@ -84,11 +97,23 @@ again:
                 ;sta $0701
                 cmp #$41 + $10
                 bcs skip
+
                 ;sta $0702
                 sta videoram+ (8*40)+20
                 sec
                 sbc #$41
                 sta currtest
+
+                jsr showbits
+
+skip
+                jsr doonetest
+
+                jsr updateinfo
+
+                jmp mainloop
+
+showbits:
                 ;sta $0703
                 tax
                 asl
@@ -126,12 +151,7 @@ again:
                 and #$80
                 ora #$2e
                 sta videoram+ (8*40)+27
-skip
-                jsr doonetest
-                
-                jsr updateinfo
-                
-                jmp mainloop
+                rts
 
 getkey
                 lda #$36
@@ -157,7 +177,7 @@ doonetest:
                 sta ptr+1
                 lda #<cmpbuffer
                 sta ptr+0
-                
+
                 ldy #0
 -
                 lda buffer,y
@@ -178,7 +198,7 @@ doonetest:
                 sta videoram+ (10*40),y
                 iny
                 bne -
-                
+
                 ldx #5
                 stx res
                 ldy #0
@@ -195,7 +215,7 @@ doonetest:
                 iny
                 bne -
                 rts
-                
+
 updateinfo:
                 ldx currtest
                 inx
@@ -207,8 +227,7 @@ updateinfo:
                 lda res
                 sta colorram + (8*40),x
                 rts
-                
-                
+
 ;-------------------------------------------------------------------------------
 
 hextab: !scr "0123456789abcdef"
@@ -218,35 +237,38 @@ hextab: !scr "0123456789abcdef"
 
                 jsr setup
 
-;                ldx #$fe
-;-               cpx $d012
-;                bne -
-;-               ldx $d012
-;                bne -
-                
                 lda     #$ff
                 STA     VOICE3+4 ; testbit on to reset/stop oscillator
+
+                ; the noise waveform needs a while to reset, so if
+                ; noise is selected, wait for a second...
+
+                ; NOTE: the emulation uses 0x8000 cycles delay - however in
+                ;       reality the requires delay can apparently be much
+                ;       more, which suggests the register is not actually
+                ;       cleared, but the bits slowly "fade" to "1"
+
+                lda     wave
+                and     #$80
+                beq     +
+
+                tya
+                ldy #5*10
+--
+                ldx #$fe
+-               cpx $d012
+                bne -
+-               ldx $d012
+                bne -
+                dey
+                bne --
+                tay
++
 
                 lda     #>$ffff
                 STA     VOICE3+1 ; freq hi
                 lda     #<$ffff
                 STA     VOICE3+0 ; freq lo
-
-;                ldx #$fe
-;-               cpx $d012
-;                bne -
-;                dex
-;-               cpx $d012
-;                bne -
-;                dex
-;-               cpx $d012
-;                bne -
-;                dex
-;-               cpx $d012
-;                bne -;
-;
-;-               ldx $d012
-;                bne -
 
                 LDA     #$01     ; gate on
                 ora     wave
@@ -270,6 +292,7 @@ dotest
                 bne -
 -               ldx $d012
                 bne -
+
                 stx $d020
 
                 ldy #0
@@ -361,41 +384,32 @@ sample:
                 rts
 
 setup:
-                ;lda #>buffer
-                ;sta ptr+1
                 tya
                 pha
                 clc
                 adc #<buffer
                 tay
-                
 
-;                ldx #0
-;-
                 !for i, 256 / 8 {
                 tya
-;                sta sample+4,x
                 sta sample+4+((i-1)*6)
-;                lda ptr+1
-;                sta sample+5,x
-                ;lda ptr+0
                 clc
                 adc #8
                 tay
-                ;sta ptr+0
 
                 }
-;                txa
-;                clc
-;                adc #6
-;                tax
 
-;                cpx #6*(256 / 8)
-;                bne -
-                
                 pla
                 tay
                 rts
+
+testname:
+            !if NEWSID = 0 {
+                !scr "6581"
+            }
+            !if NEWSID = 1 {
+                !scr "8580"
+            }
 
                 * = $4000
 refbuffer:
@@ -408,5 +422,3 @@ refbuffer:
 
                 * = $5000
 cmpbuffer:
-
-                
