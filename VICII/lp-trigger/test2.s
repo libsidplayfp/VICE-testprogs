@@ -1,60 +1,15 @@
 
+irqline = $20
+
     .export Start
 
 Start:
-
-
-    jsr initirq
-    jmp *
-
-    sei
-    lda #$35
-    sta $01
-
-    lda #$01
-    sta $d01a
-    lda #$7f
-    sta $dc0d
-    lda #$1b
-    sta $d011
-    lda #$20
-    sta $d012
-
-    lda $dc0d
-    sta $dc0d
-    inc $d019
-    cli
 
     lda #0
     sta $d020
     sta $d021
 
-    ldx #0
-@lp1:
-    lda #$20
-    sta $0400,x
-    sta $0500,x
-    sta $0600,x
-    sta $06e8,x
-    lda #$1
-    sta $d800,x
-    sta $d900,x
-    sta $da00,x
-    sta $dae8,x
-    inx
-    bne @lp1
-
-    ldx #0
-@lp:
-    lda #$a0
-    sta $0400,x
-    sta $0428,x
-    lda cols,x
-    sta $d800,x
-    sta $d828,x
-    inx
-    cpx #40
-    bne @lp
+    jsr initirq
 
 jitter:
     nop         ; 2
@@ -85,6 +40,7 @@ cols:
 tmp = $f0
 
 testlp:
+
          ldx #$ff
          ldy #$00
          ; prepare cia ports
@@ -143,12 +99,39 @@ testlp:
     tax
     lda hextab,x
     sta $0403
-    
+
+    ldy #5
+
+    lda tmp
+    cmp #1 ; new VIC
+    beq showvic
+    cmp #2 ; old VIC
+    beq showvic
+
+    ldy #10
+
+    lda #0 ; error
+
+showvic:
+    sty $d020
+
+    asl
+    asl
+    asl
+    tax
+
+    ldy #0
+slp:
+    lda types,x
+    and #$3f
+    sta $0400+10,y
+    inx
+    iny
+    cpy #8
+    bne slp
     rts
 
-hextab:
-    .byte "0123456789",1,2,3,4,5,6,7,8
-
+    .align 256
         ;*= $2000    ;Assemble to $2000
 initirq:
  
@@ -168,7 +151,7 @@ initirq:
  
          lda #$01    ;Enable RASTER IRQs
          sta $d01a
-         lda #$34    ;IRQ on line 52
+         lda #irqline    ;IRQ on line 52
          sta $d012
          lda #$1b    ;High bit (lines 256-311)
          sta $d011
@@ -177,10 +160,6 @@ initirq:
                      ;around a BAD LINE!
                      ;(Fast Line)
  
-         lda #$0e    ;Set Background
-         sta $d020   ;and Border colors
-         lda #$06
-         sta $d021
          lda #$00
          sta $d015   ;turn off sprites
  
@@ -194,12 +173,13 @@ initirq:
  
          cli         ;Allow IRQ's
  
-         jmp *       ;Endless Loop
+         rts
  
         .repeat 128+7
         .byte 0
         .endrepeat
 
+    .align 256
  
 irq1:
          sta reseta1 ;Preserve A,X and Y
@@ -241,26 +221,23 @@ irq2:
          bit $ea     ;Minus compare
          nop         ;cycles
  
-         nop  ;<--- remove 1 NOP for PAL
+;         nop  ;<--- remove 1 NOP for PAL
  
-         lda #$35    ;RASTER change yet?
+         lda #irqline + 1    ;RASTER change yet?
          cmp $d012
          beq start   ;If no waste 1 more
                      ;cycle
 start:
          nop         ;Some delay
          nop         ;So stable can be
-         nop         ;seen
+         bit $ea     ;seen
  
-         lda #$0e    ;Colors
-         ldx #$06
- 
-         sta $d021   ;Here is the proof
-         stx $d021
+         inc $d020   ;Here is the proof
+         dec $d020
  
          lda #<irq1  ;Set IRQ to point
          ldx #>irq1  ;to subsequent IRQ
-         ldy #$34    ;at line $68
+         ldy #irqline    ;at line $68
          sta $fffe
          stx $ffff
          sty $d012
@@ -276,21 +253,6 @@ resety1  = *+1
          ldy #$00
  
          rti         ;Return from IRQ
- 
-nmi:
-         asl $d019   ;Ack all IRQ's
-         lda $dc0d
-         lda $dd0d
-         lda #$81    ;reset CIA 1 IRQ
-         ldx #$00    ;remove raster IRQ
-         ldy #$37    ;reset MMU to roms
-         sta $dc0d
-         stx $d01a
-         sty $01
-         ldx #$ff    ;clear the stack
-         txs
-         cli         ;reenable IRQ's
-         jmp $9000   ;back to Turbo
  
 clrscreen:
          lda #$20    ;Clear the screen
@@ -318,3 +280,12 @@ printtext:
          sta $d018
  
 exit:     rts
+
+types:
+    .byte "error   "
+    .byte "new/8565"
+    .byte "old/6569"
+
+hextab:
+    .byte "0123456789",1,2,3,4,5,6,7,8
+
