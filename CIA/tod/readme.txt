@@ -136,7 +136,7 @@ tests that reproduce how the game "slurpy" uses the TOD clock.
 
 expected: exactly one alarm per test pass
 
-NOTE: this test fails in VICE (r28032)
+NOTE: this test fails in VICE (r28032, fixed in r28654)
 
 --------------------------------------------------------------------------------
 
@@ -148,7 +148,7 @@ whether an alarm-nmi occured or not.
 
 expected: NO alarm in 2nd run
 
-NOTE: this test fails in VICE (r28032)
+NOTE: this test fails in VICE (r28032, fixed in r28654)
 
 --------------------------------------------------------------------------------
 
@@ -164,7 +164,7 @@ can be repeated.
 
 expected: first run alarm, second NO alarm, third alarm, etc
 
-NOTE: this test fails in VICE (r28032)
+NOTE: this test fails in VICE (r28032, fixed in r28654)
 
 --------------------------------------------------------------------------------
 
@@ -272,6 +272,42 @@ checks if the clock stops (only) when writing to the hour register, and restarts
 also checks that writing to the tod registers does neither start nor stop the
 clock when alarm is selected by setting CRB bit 7. ("mapping the 64" claims it 
 does)
+
+--------------------------------------------------------------------------------
+
+* hammerfist0.prg
+
+This program sets the CIA 1's TOD to a specific value (9:30:12.3) then resets
+it, and, if the TOD alarm was set to the same specific value, prints a D in the
+top left corner, otherwise an A.
+
+On the real C64, it always prints D.
+
+How this was discovered: The game "Hammerfist" periodically does this check,
+most probably as a piracy prevention method. The loader sets the TOD alarm.
+If the check fails during the game, a spurious PLA is executed, corrupting the
+stack and leading to a crash or other undesired behaviour.
+
+However, it was noticed by some users of a forum that a pirate copy of
+Hammerfist, that crashes often in VICE, works well on a real C64.
+
+(fixed in r28654)
+
+--------------------------------------------------------------------------------
+
+* hammerfist1.prg
+
+A new version of the test program. It resets the TOD alarm to 0:00:00.0,
+then it sets the TOD clock to 9:12:30.3. Then, it checks for bit 2 of
+$DC0D (meaning: TOD alarm and TOD time are identical) and print X if it
+is 0, something else if it is 1. Then it sets the TOD time to all
+zeroes, byte by byte (first $DC08, last $DC0B) and performs the test of
+bit 2 of $DC0D each time.
+
+Run it under VICE: it prints XXXXX in the top left corner
+Run it under a real C64: it prints XXXXD in the top left corner
+
+(fixed in r28654)
 
 --------------------------------------------------------------------------------
 
