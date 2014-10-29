@@ -8,7 +8,9 @@
   105 for a=1to7:read a$(a):next a
   109 :
   110 base=54528:rem base address of chip (d500)
-  120 rem base=54784:rem base address of chip (d600)
+  115 rem base=54784:rem base address of chip (d600)
+  120 rem base=56832:rem base address of chip (de00)
+  125 rem base=57088:rem base address of chip (df00)
   130 print "{clr}"
   200 print "{home}"
   230 rem get time from rtc
