@@ -11,14 +11,16 @@
   110 print "select base address:{down}"
   111 print "1. $d500"
   112 print "2. $d600"
-  113 print "3. $de00"
-  114 print "4. $df00"
-  115 poke 198,0:wait 198,1: get a$
-  116 if a$ = "1" then base=54528:goto 130:rem base address of chip (d500)
-  117 if a$ = "2" then base=54784:goto 130:rem base address of chip (d600)
-  118 if a$ = "3" then base=56832:goto 130:rem base address of chip (de00)
-  119 if a$ = "4" then base=57088:goto 130:rem base address of chip (df00)
-  129 goto 115
+  113 print "3. $d700"
+  114 print "4. $de00"
+  115 print "5. $df00"
+  116 poke 198,0:wait 198,1: get a$
+  117 if a$ = "1" then base=54528:goto 130:rem base address of chip (d500)
+  118 if a$ = "2" then base=54784:goto 130:rem base address of chip (d600)
+  119 if a$ = "3" then base=55040:goto 130:rem base address of chip (d700)
+  120 if a$ = "4" then base=56832:goto 130:rem base address of chip (de00)
+  121 if a$ = "5" then base=57088:goto 130:rem base address of chip (df00)
+  129 goto 116
   130 print "{clr}"
   200 print "{home}"
   230 rem get time from rtc
