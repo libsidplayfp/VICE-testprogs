@@ -22,7 +22,7 @@
   121 if a$ = "5" then base=57088:goto 130:rem base address of chip (df00)
   129 goto 116
   130 print "{clr}"
-  200 print "{home}"
+  200 print "{home}press space to start oscillator{down}"
   230 rem get time from rtc
   231 poke base,6:dw=peek(base+1):if dw > 7 then dw = 0
   235 poke base,4:h=peek(base+1)
@@ -45,8 +45,11 @@
   280 poke 56329,s
   285 poke 56328,0
   290 :
-  291 rem that's all folks
+  291 rem start oscillator when space is pressed
   295 :
+  300 get a$:if a$ <> " " then 200
+  310 poke base,10:a=peek(base+1)
+  315 poke base+1,(a and 143) or 32
   999 goto 200
  1000 rem convert v to bcd, return in v
  1010 v=int(v/10)*16+(v-10*int(v/10))
