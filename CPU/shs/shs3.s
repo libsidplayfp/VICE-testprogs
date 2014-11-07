@@ -1,5 +1,5 @@
 ;----------------------------------------------------------------------------
-; SHA "unstable" behaviour check
+; SHX/SHY "unstable" behaviour check
 ; inspired by emulamers "bad copy"
 ;----------------------------------------------------------------------------
 
@@ -194,39 +194,44 @@ offs:           lda     #0
                 inc $d020
 
 ; second test
+                tsx
+                stx     spsave+1
+
                 LDA #$ff
                 tax
                 ldy offs+1
 
-                !if (opcode = $93) {
-                nop     ; 2 cycles
-                }
-                !if (opcode = $9f) {
-                BIT     $ea     ; 3 cycles
-                }
+                !if (opcode = $9b) {
+                ; SP = A & X
+                ; addr + Y = SP & H+1
 
-                ; addr + Y     = A & X   & H+1
-                ; testbase + Y = A & $ff & $11
+                ; testbase + Y = (SP = A & X) & $11
 
                 ; in cycles where sprite dma stops the opcode the & H+1 drops off
-                ; addr + Y     = A & X
-                ; testbase + Y = A & $ff
 
-                !if (opcode = $93) {
-                ; SHA   (zp),y
-                !byte $93, zp_testbase  ; 6 cycles
+                ; SP = A & X
+                ; addr + Y = SP
+
+                ; testbase + Y = (SP = A & X)
+
+                ; SHS     testbase,Y    ; 5 cycles
+                !byte $9b, <testbase, >testbase
                 }
-                !if (opcode = $9f) {
-                ; SHA     testbase,Y    ; 5 cycles
-                !byte $9f, <testbase, >testbase
-                }
+                tsx
+                stx spres+1
+
+spsave:         ldx     #0
+                txs
 
                 ; show result
                 inc $d020
 
                 ;ldx #0
                 ldx offs+1
--
+
+spres:          lda #0
+                sta $0400+(40*18),x
+
                 lda testbase,x
                 sta $0400+(40*10),x
 
@@ -241,9 +246,6 @@ offs:           lda     #0
 
                 lda reference,x
                 sta $0400+(40*2),x
-
-                ;inx
-                ;bne -
 
                 inc offs+1
 
@@ -295,8 +297,8 @@ timeout: bvc timeout            ; 3     (jumps always)
 
                 * = $1000
 reference:
-                !byte $12, $12, $12, $12, $12, $12
                 !byte $12, $12, $12, $12, $12, $12, $12, $12
+                !byte $12, $12, $12, $12, $12, $12, $12, $12, $12
                 !byte $12, $12, $12, $12, $12, $ff
 
                 !byte $12, $12, $12, $12, $12, $12, $12, $12
@@ -329,8 +331,8 @@ reference:
                 !byte $12, $12, $12, $12, $12, $12, $12, $12
                 !byte $12, $12, $12, $12, $12, $12, $12, $12
                 !byte $12, $12, $12
-                !byte $12, $12, $12, $12, $12, $12, $12, $12
-                !byte $12, $12, $12, $12, $12, $12, $ff, $12, $12, $12
+                !byte $12, $12, $12, $12, $12, $12, $12, $12, $12, $12
+                !byte $12, $12, $12, $12, $ff
 
                 * = $1100
 testbase:

@@ -36,6 +36,10 @@ shaabsy1.prg shazpy1.prg
 checks the mostly used "stable" behaviour of these opcodes
 
 works in x64 and x64sc
+
+verified on:
+- C64(old) with 6510 (gpz)
+- C64C(new) with 8500 (gpz)
 --------------------------------------------------------------------------------
 
 shaabsy2.prg shazpy2.prg
@@ -46,6 +50,10 @@ becomes A & X. this happens if the instruction is being interupted by sprite
 DMA (?: TODO: exact description, accurate timings)
 
 works in x64sc, fails in x64
+
+verified on:
+- C64(old) with 6510 (gpz)
+- C64C(new) with 8500 (gpz)
 --------------------------------------------------------------------------------
 
 shaabsy3.prg shazpy3.prg
@@ -55,6 +63,10 @@ checks the timing of the above tested behaviour
 the top dump is the reference data, the bottom shows the measured values
 
 fails in x64sc, fails in x64
+
+verified on:
+- C64(old) with 6510 (gpz)
+- C64C(new) with 8500 (gpz)
 --------------------------------------------------------------------------------
 
 TODO: test for page boundary crossing bug

@@ -1,5 +1,5 @@
 ;----------------------------------------------------------------------------
-; SHA "unstable" behaviour check
+; SHX/SHY "unstable" behaviour check
 ; inspired by emulamers "bad copy"
 ;----------------------------------------------------------------------------
 
@@ -194,31 +194,32 @@ offs:           lda     #0
                 inc $d020
 
 ; second test
-                LDA #$ff
-                tax
-                ldy offs+1
-
-                !if (opcode = $93) {
-                nop     ; 2 cycles
-                }
-                !if (opcode = $9f) {
-                BIT     $ea     ; 3 cycles
-                }
-
-                ; addr + Y     = A & X   & H+1
-                ; testbase + Y = A & $ff & $11
+                !if (opcode = $9c) {
+                ldy     #$ff
+                ldx     offs+1
+                ; addr + X     = Y   & H+1
+                ; testbase + X = $ff & $11
 
                 ; in cycles where sprite dma stops the opcode the & H+1 drops off
-                ; addr + Y     = A & X
-                ; testbase + Y = A & $ff
+                ; addr + X     = Y
+                ; testbase + X = $ff
 
-                !if (opcode = $93) {
-                ; SHA   (zp),y
-                !byte $93, zp_testbase  ; 6 cycles
+                ; SHY     testbase,X    ; 5 cycles
+                !byte $9c, <testbase, >testbase
                 }
-                !if (opcode = $9f) {
-                ; SHA     testbase,Y    ; 5 cycles
-                !byte $9f, <testbase, >testbase
+
+                !if (opcode = $9e) {
+                ldx     #$ff
+                ldy     offs+1
+                ; addr + Y     = X   & H+1
+                ; testbase + Y = $ff & $11
+
+                ; in cycles where sprite dma stops the opcode the & H+1 drops off
+                ; addr + Y     = X
+                ; testbase + Y = $ff
+
+                ; SHX     testbase,Y    ; 5 cycles
+                !byte $9e, <testbase, >testbase
                 }
 
                 ; show result
@@ -295,8 +296,7 @@ timeout: bvc timeout            ; 3     (jumps always)
 
                 * = $1000
 reference:
-                !byte $12, $12, $12, $12, $12, $12
-                !byte $12, $12, $12, $12, $12, $12, $12, $12
+                !byte $12, $12, $12, $12, $12, $12, $12, $12, $12
                 !byte $12, $12, $12, $12, $12, $ff
 
                 !byte $12, $12, $12, $12, $12, $12, $12, $12
@@ -331,6 +331,7 @@ reference:
                 !byte $12, $12, $12
                 !byte $12, $12, $12, $12, $12, $12, $12, $12
                 !byte $12, $12, $12, $12, $12, $12, $ff, $12, $12, $12
+                !byte $12, $12, $12, $12, $12
 
                 * = $1100
 testbase:

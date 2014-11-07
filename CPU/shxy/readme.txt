@@ -36,6 +36,10 @@ shxy1.prg shyx1.prg
 checks the mostly used "stable" behaviour of these opcodes
 
 works in x64 and x64sc
+
+verified on:
+- C64(old) with 6510 (gpz)
+- C64C(new) with 8500 (gpz)
 --------------------------------------------------------------------------------
 
 shxy2.prg shyx2.prg
@@ -46,6 +50,23 @@ becomes X/Y. this happens if the instruction is being interupted by sprite
 DMA (?: TODO: exact description, accurate timings)
 
 works in x64sc, fails in x64
+
+verified on:
+- C64(old) with 6510 (gpz)
+- C64C(new) with 8500 (gpz)
+--------------------------------------------------------------------------------
+
+shxy3.prg shyx3.prg
+
+checks the timing of the above tested behaviour
+
+the top dump is the reference data, the bottom shows the measured values
+
+fails in x64sc, fails in x64
+
+verified on:
+- C64(old) with 6510 (gpz)
+- C64C(new) with 8500 (gpz)
 --------------------------------------------------------------------------------
 
 TODO: test for page boundary crossing bug

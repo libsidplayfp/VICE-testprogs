@@ -38,6 +38,10 @@ shsabsy1.prg
 checks the mostly used "stable" behaviour of this opcode
 
 works in x64 and x64sc
+
+verified on:
+- C64(old) with 6510 (gpz)
+- C64C(new) with 8500 (gpz)
 --------------------------------------------------------------------------------
 
 shsabsy2.prg
@@ -48,6 +52,24 @@ value becomes A & X. this happens if the instruction is being interupted by
 sprite DMA (?: TODO: exact description, accurate timings)
 
 works in x64sc, fails in x64
+
+verified on:
+- C64(old) with 6510 (gpz)
+- C64C(new) with 8500 (gpz)
+--------------------------------------------------------------------------------
+
+shsabsy3.prg
+
+checks the timing of the above tested behaviour
+
+the top dump is the reference data, in the middle are the measured values (what
+is stored to memory) and the bottom shows the stack pointer
+
+fails in x64sc, fails in x64
+
+verified on:
+- C64(old) with 6510 (gpz)
+- C64C(new) with 8500 (gpz)
 --------------------------------------------------------------------------------
 
 TODO: test for page boundary crossing bug
