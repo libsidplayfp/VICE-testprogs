@@ -1,4 +1,8 @@
 
+; SHX RDY/DMA test by ninja/the dreams
+
+; acme -f cbm -o shx-t2.prg shx-t2.asm
+
 spx           = $64
 spy           = $65
 

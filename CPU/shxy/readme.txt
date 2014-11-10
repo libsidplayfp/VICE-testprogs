@@ -86,12 +86,12 @@ crossing.
 
 --------------------------------------------------------------------------------
 
-shx-text.prg
+shx-t2.prg
 
 another test by ninja/the dreams. this tests the &H+1 drop-off caused by RDY.
 
-<- disables the sprite -> no DMA/RDY -> SHX puts 0 (black) into border
-1  enables it -> DMA/RDY -> SHX puts 14 (light blue) into border
+1  enables the sprite -> DMA/RDY -> SHX puts 14 (light blue) into border
+<- disables the sprite -> no DMA/RDY -> SHX writes elsewhere (black border)
 
 --------------------------------------------------------------------------------
 
