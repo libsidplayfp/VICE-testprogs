@@ -20,6 +20,7 @@ basicstart = $0801
 
 zp_testbase = $f0
 
+testpage = $c000
 testbase = $c0ff
 
 start:
@@ -65,6 +66,32 @@ start:
                 lda     #>testbase
                 sta     zp_testbase+1
 
+                ldx #0
+-
+                lda #0
+                sta testpage,x
+                sta testpage+$0100,x
+                sta testpage+$0200,x
+                lda #$20
+                sta $0400,x
+                sta $0500,x
+                sta $0600,x
+                sta $0700,x
+                lda #$01
+                sta $d800,x
+                sta $d900,x
+                sta $da00,x
+                sta $db00,x
+                inx
+                bne -
+
+                ldx #1
+                stx testpage+$0001
+                inx
+                stx testpage+$0101
+                inx
+                stx testpage+$0201
+
 ; disable sprites and wait for border area
                 LDA     #0
                 STA     $D015
@@ -72,37 +99,37 @@ start:
 
 ; do the actual test
                 LDA     #$FF
-                STA     $C201
-                ;TAX
-                ;LDY     #2
-                ;SHA     $C0FF,Y
 
                 !if (opcode = $9c) {
                 TAY
                 LDX     #2
                 ; addr + X     = Y   & H+1
-                ; testbase + X = $ff & $11
+                ; testbase + X = $ff & $c1
 
                 ; SHY     testbase,X    ; 5 cycles
                 !byte $9c, <testbase, >testbase
-                LDY     #2
                 }
                 !if (opcode = $9e) {
                 TAX
                 LDY     #2
                 ; addr + Y     = X   & H+1
-                ; testbase + Y = $ff & $11
+                ; testbase + Y = $ff & $c1
 
                 ; SHX     testbase,Y    ; 5 cycles
                 !byte $9e, <testbase, >testbase
                 }
 
-                DEY
+                ldy     #3
                 LDA     $C201
-                CMP     #$FF
+                CMP     #$03
                 BNE     skpfail
+                dey
                 LDA     $C101
                 CMP     #$C1
+                BNE     skpfail
+                DEY
+                LDA     $C001
+                CMP     #$01
                 BNE     skpfail
                 DEY
 skpfail:
@@ -117,6 +144,17 @@ skpfail:
                 ldy     #5      ; pass
 +
                 sty     $d020
+
+                ldx #0
+-
+                lda testpage,x
+                sta $0400+(1*40),x
+                lda testpage+$0100,x
+                sta $0400+(8*40),x
+                lda testpage+$0200,x
+                sta $0400+(15*40),x
+                inx
+                bne -
 
                 jmp *
 

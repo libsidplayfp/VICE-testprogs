@@ -69,4 +69,22 @@ verified on:
 - C64C(new) with 8500 (gpz)
 --------------------------------------------------------------------------------
 
-TODO: test for page boundary crossing bug
+shx-text.prg
+
+another test by ninja/the dreams. combination of &H+1 drop-off and page-boundary
+crossing.
+
+--------------------------------------------------------------------------------
+
+shx-text.prg
+
+another test by ninja/the dreams. this tests the &H+1 drop-off caused by RDY.
+
+<- disables the sprite -> no DMA/RDY -> SHX puts 0 (black) into border
+1  enables it -> DMA/RDY -> SHX puts 14 (light blue) into border
+
+--------------------------------------------------------------------------------
+
+TODO: test for page boundary crossing bug - and try finding a machine where the
+supposed anomaly actually happens.
+
