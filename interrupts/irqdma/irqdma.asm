@@ -2,6 +2,18 @@
 
 reference_data = $2000
 
+zpdelaybmode   = $f7
+zpd015         = $f8
+
+zptimerstart   = $f5
+zptimerstop    = $f6
+zptimercurr    = $f9
+
+zpdatalo       = $fa
+zpdatahi       = $fb
+
+zpfailslo      = $fc
+zpfailshi      = $fd
 
 ; --- Code
 
@@ -12,6 +24,8 @@ basic:
 
 start:
     ldx #0
+    stx zpfailslo
+    stx zpfailshi
 clp:
     lda #$20
     sta $0400,x
@@ -46,7 +60,7 @@ entrypoint:
 
     lda #4 ; start with 4 so we will see green (=5) on success
     sta $d020
-    lda #$7f
+    lda #$7f    ; disable timer irq
     sta $dc0d
     sta $dd0d
     lda #$00
@@ -64,7 +78,7 @@ entrypoint:
     sta $d011
     lda #$46
     sta $d012
-    lda #$01
+    lda #$01    ; enable raster irq
     sta $d01a
     sta $d019
     lda #$64
@@ -88,23 +102,23 @@ entrypoint:
     lda #$00
     sta $d010
     lda #$00
-    sta $f5     ; delay depending on CIA
+    sta zptimerstart     ; delay depending on CIA
 
 !if B_MODE = 1 {
     lda #$40
-    sta $f7
+    sta zpdelaybmode
     lda #$04
 } else {
     lda #$00
 }
-    sta $f8     ; d015 value
+    sta zpd015     ; d015 value
 
     lda #<reference_data
-    sta $fa
+    sta zpdatalo
     ldy #$03
     jsr printhex
     lda #>reference_data
-    sta $fb
+    sta zpdatahi
     ldy #$01
     jsr printhex
     cli
@@ -155,16 +169,19 @@ irq_handler_2_wait_1:
 irq_handler_2_skip_1:
     nop
     nop
-    lda $f5     ; delay depending on CIA
+
+    ; test the CIA type on first run
+    lda zptimerstart     ; delay depending on CIA
     bne cia_ok
     jsr testcia
     jmp irq_handler_2_finish_test
+cia_ok:
 
-cia_ok:    
     ldx #$04
 irq_handler_2_wait_2:
     dex
     bne irq_handler_2_wait_2
+
     inc $d021
     dec $d021
     lda #<irq_handler_3
@@ -174,7 +191,8 @@ irq_handler_2_wait_2:
     lda #$46
     sta $d012
     cli
-    lda $f8     ; d015 value
+
+    lda zpd015     ; d015 value
     sta $d015
     lda #$ff
     sta $dd04
@@ -184,11 +202,11 @@ irq_handler_2_wait_2:
     sta $dd06
     lda #$00
     sta $dd07
-    lda $f9     ; cia1 ta lo
+    lda zptimercurr     ; cia1 ta lo
     sta $dc04
     lda #$00
     sta $dc05
-    lda #$81
+    lda #$81            ; enable timer irq
     sta $dc0d
     lda #$19
     sta $dd0e
@@ -196,7 +214,7 @@ irq_handler_2_wait_2:
     sta $dc0e
 
 !if B_MODE = 1 {
-    lda $f7
+    lda zpdelaybmode
     jsr delay
 }
 
@@ -544,65 +562,69 @@ lc169:
 
     ; store values
     pla
-    sta ($fa),y
+    sta (zpdatalo),y         ; $dd04 (timer a lo)
     iny
     pla
-    sta ($fa),y
+    sta (zpdatalo),y         ; $dd06 (timer b lo)
     jmp irq_handler_2_next
 
 irq_handler_2_test_mode:
 
     ; compare values with reference data
     pla
-    cmp ($fa),y
-    bne irq_handler_2_test_failed
+    cmp (zpdatalo),y
+    bne irq_handler_2_test_failed2
     iny
     pla
-    cmp ($fa),y
+    cmp (zpdatalo),y
     bne irq_handler_2_test_failed
     jmp irq_handler_2_next
 
+irq_handler_2_test_failed2:
+    pla
 irq_handler_2_test_failed:
-    sei
-    inc $d020
+    lda #2
+    sta $d020
+    sta irq_handler_failed_color+1
     jmp failed
 
 irq_handler_2_next:
-    lda $fa
+    ; advance to next
+    lda zpdatalo
     clc
     adc #$02
-    sta $fa
-    lda $fb
+    sta zpdatalo
+    lda zpdatahi
     adc #$00
-    sta $fb
+    sta zpdatahi
 
     ; show current addr
     ldy #$01
     jsr printhex
-    lda $fa
+    lda zpdatalo
     ldy #$03
     jsr printhex
 
 !if B_MODE = 1 {
-    dec $f7
-    lda $f7
+    dec zpdelaybmode
+    lda zpdelaybmode
     cmp #$38
     bne irq_handler_2_finish_test
 
     lda #$40
-    sta $f7
+    sta zpdelaybmode
 }
 
-    inc $f9     ; cia1 ta lo
-    lda $f9
-    cmp $f6
+    inc zptimercurr     ; cia1 ta lo
+    lda zptimercurr
+    cmp zptimerstop     ; cia1 ta lo end value (+$80)
     bne irq_handler_2_finish_test
 
-    lda $f5     ; delay depending on CIA
-    sta $f9
-    inc $f8     ; d015 value
-    lda $f8
+    lda zptimerstart     ; delay depending on CIA
+    sta zptimercurr
 
+    inc zpd015     ; d015 value
+    lda zpd015
 !if B_MODE = 1 {
     cmp #$14
 } else {
@@ -611,14 +633,16 @@ irq_handler_2_next:
     bne irq_handler_2_finish_test
 
     ; all tests done
-    inc $d020
+irq_handler_failed_color:
+    lda #5
+    sta $d020
 irq_handler_2_all_tests_successful:
     jmp irq_handler_2_all_tests_successful
 
 irq_handler_2_finish_test:
     lda #$00
     sta $dc0e
-    lda #$7f
+    lda #$7f    ; disable timer irq
     sta $dc0d
     lda $dc0d
     lda #<irq_handler
@@ -657,7 +681,7 @@ testcia:
     sta $dc04
     lda #$00
     sta $dc05
-    lda #$81
+    lda #$81    ; enable timer irq
     sta $dc0d
     lda #$19
     sta $dd0e
@@ -692,11 +716,11 @@ irq_handler_testcia:
 } else {
     adc #$10
 }
-    sta $f5     ; delay depending on CIA
-    sta $f9     ; cia1 ta lo
+    sta zptimerstart     ; delay depending on CIA
+    sta zptimercurr     ; cia1 ta lo
     clc
     adc #$80
-    sta $f6
+    sta zptimerstop
     
     tya
     lsr
@@ -755,17 +779,40 @@ failed:
 failvalue:
   pha
   ; reference value
-  lda ($fa),y
+  lda (zpdatalo),y
   ldy #$09
   jsr printhex
   pla
   ; actual value
   ldy #$06
   jsr printhex
-failloop:
-  inc $d020
-  jmp failloop  
-  
+;failloop:
+;  inc $d020
+;  jmp failloop
+
+  ; show current addr
+  lda zpdatahi
+  ldy #$01+40
+  jsr printhex
+  lda zpdatalo
+  ldy #$03+40
+  jsr printhex
+
+  ; number of fails
+  inc zpfailslo
+  bne skfail
+  inc zpfailshi
+skfail:
+
+  ldy #$10
+  lda zpfailslo
+  jsr printhex
+  ldy #$0e
+  lda zpfailshi
+  jsr printhex
+
+  jmp irq_handler_2_next
+
 !if B_MODE = 1 {
 * = $0850
 delay:              ;delay 80-accu cycles, 0<=accu<=64
