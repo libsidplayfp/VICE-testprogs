@@ -26,6 +26,9 @@ MUSICIANS/R/Rowlands_Steve/Cyberdyne_Warrior.sid
 MUSICIANS/R/Rowlands_Steve/Fuzzy_Wuzzy.sid
 MUSICIANS/R/Rowlands_Steve/Retrograde_tapeloader.sid
 
+"tune with free pages starting at $8000"
+MUSICIANS/P/Pedersen_Inge/Puggs_in_Town.sid
+
 --------------------------------------------------------------------------------
 
 "image located "under" BASIC ROM"
