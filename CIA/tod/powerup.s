@@ -2,7 +2,7 @@
 ; powerup state check
 ; this program shows the following:
 ; - at powerup the clock is not running
-; - the time value read from the latch is 01:00:00.0
+; - the time value read from the latch is 01:00:00.0 (may also be 11:01:00.0)
 ; - the am/pm flag is random
 ; - the value read is always the time, regardless of CRB bit7
 ; - reading the clock (hour to tenths) does not start it

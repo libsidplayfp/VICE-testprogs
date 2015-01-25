@@ -91,13 +91,16 @@ More facts about the TOD clocks that are not in the datasheet:
 
 - at powerup (->powerup.prg)
   - the clock is not running (must be started by writing to 10th second register)
-  - the time value read from the latch is 01:00:00.0 (mostly, hour might be $11 ...)
+  - the clock "latched" status is cleared
+  - the time value read from the latch is 01:00:00.0 (mostly, hour might be $11,
+    minute might be $01 ...)
   - the am/pm flag is random (mostly 0)
   - the alarm is set to 00:00:00.0 by default, and because of that does not
     trigger unless the time is forced to 00:00:00.0 too
 
 - after reset (->powerup.prg)
   - the clock is not running (must be started by writing to 10th second register)
+  - the clock "latched" status is cleared
   - the time value read from the latch is 01:00:00.0
   ...(?)
 
