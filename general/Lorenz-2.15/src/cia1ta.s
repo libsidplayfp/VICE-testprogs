@@ -219,6 +219,7 @@ loop
            lda #$81
            sta $dc0d
            jsr waitborder
+
            lda #0
            sta $dc0e
            sta $dc05
@@ -228,22 +229,29 @@ loop
            ldx beindex
            ldy betab,x
            sty be
+
+           ; write values "init"
            ldx i4
-           stx $dc04
+           stx $dc04    ; i4
            ldx #$10
            stx $dc0e
-           bit $dc0d
-           sta $dc0e
+           bit $dc0d    ; ack
+           sta $dc0e    ; ie
+
+           ; write values "before"
            lda b4
-           sta $dc04
-           sty $dc0e
-           lda $dc04
-           ldx $dc0d
-           ldy $dc0e
+           sta $dc04    ; b4
+           sty $dc0e    ; be
+
+           ; get values "after"
+           lda $dc04    ; a4
+           ldx $dc0d    ; ad
+           ldy $dc0e    ; ae
            sta a4
            stx ad
            sty ae
-           jsr $fda3
+
+           jsr $fda3    ; initialize I/O
            cli
 
            lda ieindex
@@ -494,8 +502,8 @@ nostop
 
 ; ------------------------------------------------------------------------------
 
-x100
-x108
+x100 ; test $08
+x108 ; test $0a
            .block
            lda i4
            ldx #$00

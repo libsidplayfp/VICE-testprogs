@@ -455,10 +455,14 @@ CNT must be high by default. This is tested with timer B cascaded mode CRB = $61
 Programs CIA1TA to CIA2TB - CIA timers in sysclock mode
 
 failed test #08
-init    00    11
-before  0e    00
-after   0a 81 00
+init    00    11 <- i4    ie
+before  0e    00 <- b4 bd be
+after   0a 81 00 <- a4 ad ae
 right   09 81 00
+         ^  ^  ^
+         |  |  \_ dc0e (ctrl1)
+         |  \____ dc0d (irq mask)
+         \_______ dc04 (timerA lo)
 
 after all tests are done a few more numbers will be printed, which show the
 type(s) of testcase(s) that failed (see source)

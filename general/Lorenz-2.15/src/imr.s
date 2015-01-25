@@ -168,7 +168,7 @@ onirq
          lda #1
          sta irqwait
 
-         lda $dc0d
+         lda $dc0d      ; ACK CIA1 IRQs
          pla
          tay
          pla
@@ -189,25 +189,25 @@ main
 ;set imr clock 2
 
          .block
-         sei
+         sei            ; disable IRQs
          jsr waitborder
          lda #0
          sta irqwait
-         sta $dc0e
-         sta $dc05
+         sta $dc0e      ; CIA1 TimerA stop
+         sta $dc05      ; CIA1 TimerA Hi
 .ifeq NEWCIA - 1
          lda #7
 .endif
-         sta $dc04
+         sta $dc04      ; CIA1 TimerA Lo
          lda #$7f
-         sta $dc0d
-         bit $dc0d
+         sta $dc0d      ; disable all CIA1 IRQs
+         bit $dc0d      ; ACK pending CIA1 IRQs
          lda #%00011001
-         sta $dc0e
-         cli            ; 2 cycles
+         sta $dc0e      ; CIA1 TimerA start, oneshot, force load
+         cli            ; 2 cycles enable IRQs
          lda #$81       ; 2 cycles
-         sta $dc0d      ; 4 cycles
-         sei            ; 2 cycles
+         sta $dc0d      ; 4 cycles enable CIA1 TimerA IRQ
+         sei            ; 2 cycles disable IRQs
          lda irqwait
          beq ok
          jsr print
@@ -223,21 +223,21 @@ ok
 ;set imr clock 3
 
          .block
-         sei
+         sei            ; disable IRQs
          jsr waitborder
          lda #0
          sta irqwait
-         sta $dc0e
-         sta $dc04
-         sta $dc05
+         sta $dc0e      ; CIA1 TimerA stop
+         sta $dc04      ; CIA1 TimerA Lo
+         sta $dc05      ; CIA1 TimerA Hi
          lda #$7f
-         sta $dc0d
-         bit $dc0d
+         sta $dc0d      ; disable all CIA1 IRQs
+         bit $dc0d      ; ACK pending CIA1 IRQs
          lda #%00011001
-         sta $dc0e
-         cli            ; 2 cycles
+         sta $dc0e      ; CIA1 TimerA start, oneshot, force load
+         cli            ; 2 cycles enable CIA1 TimerA IRQ
          lda #$81       ; 2 cycles
-         sta $dc0d      ; 4 cycles
+         sta $dc0d      ; 4 cycles enable CIA1 TimerA IRQ
 .ifeq NEWCIA - 1
          lda #2 ; 2 cycles
 .else
@@ -257,23 +257,30 @@ ok
 ;clear imr
 
          .block
-         sei
+         sei            ; disable IRQs
          jsr waitborder
          lda #0
          sta irqwait
-         sta $dc0e
-         sta $dc04
-         sta $dc05
+         sta $dc0e      ; CIA1 TimerA stop
+         sta $dc04      ; CIA1 TimerA Lo
+         sta $dc05      ; CIA1 TimerA Hi
+         ; TimerA value = 0000
          lda #$7f
-         sta $dc0d
-         bit $dc0d
+         sta $dc0d      ; disable all CIA1 IRQs
+         bit $dc0d      ; ACK pending CIA1 IRQs
          lda #%00011001
-         sta $dc0e
-         lda #$81
-         sta $dc0d
-         lda #$7f
-         sta $dc0d
-         lda $dc0d
+         sta $dc0e      ; (4) CIA1 TimerA start, oneshot, force load
+         lda #$81       ; (2)
+         sta $dc0d      ; (4) enable CIA1 TimerA IRQ
+         ; IRQs should happen now. if we would read from $dc0d, we would read $81
+         lda #$7f       ; (2)
+         sta $dc0d      ; (4)disable all CIA1 IRQs
+         ; although IMR was cleared (and no more IRQs can occur), the value that
+         ; will get read from $dc0d still has the respective bits set, it must
+         ; be read once to ACK pending IRQs
+         lda $dc0d      ; read IRQ mask and ACK IRQs
+
+         ; we expect to read $81 here, indicate failure if not so
          cmp #$81
          beq ok
          jsr print
