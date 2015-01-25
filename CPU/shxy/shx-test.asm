@@ -8,10 +8,10 @@ cur_x         = $57
 cur_y         = $57 + 1
 cur_lo        = $57 + 2
 cur_hi        = $57 + 3
-cur_res       = $57 + 5
-mem_pnt       = $57 + 6
-mem_save      = $57 + 8
-zp_end        = $57 + 9
+cur_res       = $57 + 4
+mem_pnt       = $57 + 5 ; 2
+mem_save      = $57 + 7
+zp_end        = $57 + 8
 
             * = $0801
 
@@ -59,8 +59,8 @@ mainloop:
             sta shx_pos1+2
             sta shx_pos2+2
             clc
-            adc #1
-            and cur_x
+            adc #1              ; H+1
+            and cur_x           ; & X
             sta cur_res
 
             lda cur_lo
