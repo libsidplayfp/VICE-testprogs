@@ -294,7 +294,7 @@ read36:
 ; 
 ; 0615 lda #$24           zu ladenden Track für
 ; 0617 sta $0c            den Job übergeben
-; 06I9 lda #$00           Sektor-Nl.I11I'Ier an
+; 06I9 lda #$00           Sektor-Nr an
 ; 061B sta $0d            den Job übergeben
 ; 0610 lda #$e0           Job·Code für Programm ausführen in den
 ; 061F sta $03            Job-Speicher schreiben
