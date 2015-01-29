@@ -314,6 +314,13 @@ Run it under a real C64: it prints XXXXD in the top left corner
 
 --------------------------------------------------------------------------------
 
+* frogger.prg
+
+Timer countdown used in the game "frogger". It relies on the state of registers
+and latches after poweron/reset.
+
+--------------------------------------------------------------------------------
+
 TODO: 
 
 - investigate "slurpy", try to create a testcase from it (see bug #514)

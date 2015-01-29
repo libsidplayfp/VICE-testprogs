@@ -3,7 +3,8 @@ TESTS=\
 	alarm.prg alarm-cond.prg alarm-cond2.prg hour-test.prg stability.prg stability-ntsc.prg \
 	4tod.prg 4todcia1.prg 5tod.prg 6tod.prg powerup.prg fix-hour.prg fix-min.prg fix-sec.prg fix-tsec.prg \
 	write-stop.prg read-latch.prg hzsync0.prg hzsync1.prg hzsync2.prg hzsync3.prg hzsync4.prg hzsync5.prg \
-	0alarm.prg 1alarm.prg hammerfist0.prg hammerfist1.prg
+	0alarm.prg 1alarm.prg hammerfist0.prg hammerfist1.prg \
+	frogger.prg
 
 all: $(TESTS)
 	
@@ -71,6 +72,9 @@ hammerfist0.prg: hammerfist0.asm
 	dasm hammerfist0.asm -ohammerfist0.prg
 hammerfist1.prg: hammerfist1.asm
 	dasm hammerfist1.asm -ohammerfist1.prg
+
+frogger.prg: frogger.asm
+	acme -f cbm -o frogger.prg frogger.asm
 
 clean:
 	rm -f *.prg
