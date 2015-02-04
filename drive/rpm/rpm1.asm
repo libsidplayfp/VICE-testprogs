@@ -12,6 +12,8 @@ drivecode_exec = drvstart ; skip $10 bytes table
 start:
         jsr clrscr
 
+        inc $d021
+
         lda #<drivecode
         ldy #>drivecode
         ldx #((drivecode_end - drivecode) + $1f) / $20 ; upload x * $20 bytes to 1541
@@ -20,6 +22,8 @@ start:
         lda #<drivecode_exec
         ldy #>drivecode_exec
         jsr start_code
+
+        dec $d021
 
         lda #$93
         jsr $ffd2
@@ -30,6 +34,7 @@ lp:
         sei
         jsr rcv_wait
 
+        ; get time stamps
         ldy #0
 -
         jsr rcv_1byte
@@ -37,10 +42,15 @@ lp:
         jsr rcv_1byte
         sta $c028,y     ; hi
 
+        jsr rcv_1byte
+        sta $c050,y     ; cnt
+        sta $0400+(24*40),y
+
         iny
         cpy #19+1
         bne -
 
+        ; calculate delta times
         ldy #0
 -
         sec
@@ -59,6 +69,7 @@ lp:
         lda #19
         jsr $ffd2
 
+        ; print delta times
         ldy #0
 -
         tya
@@ -82,16 +93,25 @@ lp:
         lda #$0d
         jsr $ffd2
 
+        ; calculate total time for one revolution
         lda $c128       ; hi
         ldy $c100       ; lo
         jsr $b395       ; to FAC
         jsr $bc0c       ; ARG = FAC
-        
+
+        lda #0
+        sta nonzero+1
+
         ldy #1
 -
         tya
         pha
 
+        lda $c128,y     ; hi
+        ora $c100,y     ; lo
+        beq +
+        inc nonzero+1
++
         lda $c128,y     ; hi
         tax
         lda $c100,y     ; lo
@@ -109,6 +129,11 @@ lp:
         cpy #19
         bne -
 
+nonzero: lda #0
+        bne +
+        jmp lp
++
+        ; calculate RPM
         jsr $bc0c       ; ARG = FAC
 
         lda #<c6000000
@@ -134,6 +159,9 @@ drivecode:
 
 drvstart
         sei
+        lda $180b
+        and #%11011111  ; start timer B
+        sta $180b
         jsr snd_init
 
 drvlp:
@@ -159,6 +187,9 @@ skp:
         txa
         jsr snd_1byte
 
+        tya
+        jsr snd_1byte
+
         iny
         cpy #19+1
         bne -
@@ -179,8 +210,8 @@ measure:
         sei
         rts
 
-htime:  !byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ltime:  !byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+htime:  !byte 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
+ltime:  !byte 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
 
         ;* = $0400
         !align $ff, 0, 0
