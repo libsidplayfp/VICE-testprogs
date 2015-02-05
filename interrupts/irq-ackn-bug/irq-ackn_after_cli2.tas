@@ -40,6 +40,7 @@ start:
   jmp deinstall
 
 install:        ; install the raster routine
+  jsr initscreen
   jsr restore   ; Disable the Restore key (disable NMI interrupts)
 checkirq:
   lda cinv      ; check the original IRQ vector
@@ -199,3 +200,19 @@ nmi = * + 1
   sta cnmi
   sty cnmi+1    ; restore original NMI vector (although it won't be used)
   rts
+
+initscreen:
+    ldx #0
+slp:
+    lda screen,x
+    sta $0400,x
+    lda #1
+    sta $d800,x
+    inx
+    cpx #80
+    bne slp
+    rts
+screen:
+        ;1234567890123456789012345678901234567890
+  .byte "bee                          #          "
+  .byte "1234567890123456789012345678901234567890"
