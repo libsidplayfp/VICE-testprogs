@@ -19,12 +19,17 @@ tlp
 tsk
 
           sei
-          lda #$8f
+          lda #0
+          STA $DC0E           ; stop CIA Timer A
+          lda #$7f
+          sta $dc0d
+          LDA $DC0D           ; read and clear the "interrupt control register"
+
+          lda #$81
           sta $dc0d
 
           LDA #0
           TAX                 ; Counter X = 0
-          STA $DC0E           ; stop CIA Timer A
           STA $DC05
           
           LDA #1
@@ -32,7 +37,7 @@ tsk
           
           LDA #2
           STA $D020           ; border = red
-          
+
           !if (ONESHOT=1) {
           LDA #%11011001      ; force load Timer A; Run Mode: One-Shot
           STA $DC0E           ; shift register: SP is output; TOD=50Hz 
