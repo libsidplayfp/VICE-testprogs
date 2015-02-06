@@ -30,7 +30,10 @@ basic:
 !by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
 
 start:
+  jsr initscreen
   jsr install
+  lda #0
+  tax
   rts
 
 ; -- Subroutines
@@ -226,3 +229,22 @@ nmi = * + 1
   sta cnmi
   sty cnmi+1    ; restore original NMI vector (although it won't be used)
   rts
+
+
+initscreen:
+    ldx #0
+slp:
+    lda screendata,x
+    sta $0400+(24*40),x
+    sta $0400+(25*40),x
+    lda #1
+    sta $d800+(24*40),x
+    lda #2
+    sta $d800+(25*40),x
+    inx
+    cpx #25
+    bne slp
+    rts
+screendata:
+        ;1234567890123456789012345678901234567890
+  !scr "123456789012345678901234                "
