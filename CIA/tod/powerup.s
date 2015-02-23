@@ -69,26 +69,34 @@ start:
             lda #<($0400+0*40)
             sta scrptr+0
 
+            ;===================================================================
+
             ; wait one second to make sure that IF the clock would be running,
             ; we will get other values than expected
             ldx #50*1
             jsr waitframes
-            
+
             ; first read the time, starting with tenth secs to avoid latching
             lda #$00    ; set clock
             sta $dd0f
 
             jsr readtime_nolatch
             jsr check01000000
-            jsr chkicr00
+            jsr ackicr00
             jsr printtime
+            lda icrbuf
+            jsr printhex
             jsr nextline
+            ;-------------------------------------------------------------------
 
             jsr readtime
             jsr check01000000
-            jsr chkicr00
+            jsr ackicr00
             jsr printtime
+            lda icrbuf
+            jsr printhex
             jsr nextline
+            ;-------------------------------------------------------------------
 
             ; wait one second again to make sure the above procedure did not
             ; start the clock
@@ -104,14 +112,19 @@ start:
             ; first read the time, starting with tenth secs to avoid latching
             jsr readtime_nolatch
             jsr check01000000
-            jsr chkicr00
+            jsr ackicr00
             jsr printtime
+            lda icrbuf
+            jsr printhex
             jsr nextline
+            ;-------------------------------------------------------------------
 
             jsr readtime
             jsr check01000000
-            jsr chkicr00
+            jsr ackicr00
             jsr printtime
+            lda icrbuf
+            jsr printhex
             jsr nextline
 
             jsr nextline
@@ -126,8 +139,10 @@ start:
             ; read clock again to show its not running
             jsr readtime
             jsr check01000000
-            jsr chkicr00
+            jsr ackicr00
             jsr printtime
+            lda icrbuf
+            jsr printhex
             jsr nextline
 
             jsr nextline
@@ -148,7 +163,7 @@ start:
             lda $dd0d
 
 -
-            jsr thisline
+            jsr thisline        ; CR
 
             jsr readtime
             lda $dd0d
@@ -169,6 +184,7 @@ start:
             beq -
 +
             jsr nextline
+            ;-------------------------------------------------------------------
 
             jsr readtime
             lda $dd0d
@@ -181,6 +197,7 @@ start:
             lda icrbuf
             jsr printhex
             jsr nextline
+            ;-------------------------------------------------------------------
 
             ; now set the time to 12:59:59.1 and wait for 91:00:00.0, for which
             ; we expect the alarm to occur
@@ -197,7 +214,7 @@ start:
             lda $dd0d
 
 -
-            jsr thisline
+            jsr thisline        ; CR
 
             jsr readtime
             lda $dd0d
@@ -218,6 +235,7 @@ start:
             beq -
 +
             jsr nextline
+            ;-------------------------------------------------------------------
 
             jsr readtime
             lda $dd0d
@@ -230,8 +248,9 @@ start:
             lda icrbuf
             jsr printhex
             jsr nextline
-
+            ;-------------------------------------------------------------------
             ; last we set the time to 00:00:00.0 and see if an alarm triggers
+            ; 00 00:00:00.00 04
 
             lda $dd00
 
@@ -245,7 +264,7 @@ start:
             sta $dd08
 
 -
-            jsr thisline
+            jsr thisline        ; CR
             
             jsr readtime
             lda $dd0d
@@ -274,6 +293,8 @@ start:
 +
 
             jsr nextline
+            ;-------------------------------------------------------------------
+            ; 00 00:00:00.00 00
             jsr readtime
             lda $dd0d
             sta icrbuf
@@ -285,6 +306,7 @@ start:
             lda icrbuf
             jsr printhex
             jsr nextline
+            ;-------------------------------------------------------------------
 
 bcol:       lda #5
             sta $d020
@@ -298,6 +320,9 @@ fail:
             sta bcol+1
             rts
 
+ackicr00:
+            lda $dd0d
+            sta icrbuf
 chkicr00:
             lda icrbuf
             beq +
