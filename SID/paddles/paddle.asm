@@ -90,7 +90,17 @@ printhex:
     lda hextab,x
     sta (ptr),y
     rts
-    
+
+delay:
+    ldx #0
+--
+    lda $d012
+-   cmp $d012
+    beq -
+    inx
+    bne --
+    rts
+
 ;-----------------------------------------------------------------------------
 
 main:
@@ -122,6 +132,8 @@ ploop:
     ldx testnum
     lda testval,x
     sta $dc00 ; port a data
+
+    jsr delay ; sampling delay
 
     lda $d419 ; adc 1
     sta adc1val
@@ -200,21 +212,17 @@ adcskp2:
     sta $dc02 ; port a ddr (all output)
     lda #%00000000
     sta $dc03 ; port b ddr (all input)
-    ldx testnum
-    lda testval,x
-    and #%11111110
-    sta $dc00 ; port a data (all active)
+    lda #%01111111
+    sta $dc00 ; port a data
 
     ; check return
     lda $dc01 ; port b data
-    and #$02
-    cmp #$02
-    beq nokey
+    cmp #%11011111
+    bne nokey
 wait:
     lda $dc01 ; port b data
-    and #$02
-    cmp #$02
-    bne wait
+    cmp #%11011111
+    beq wait
 
     ; select next test
     ldx testnum
@@ -257,7 +265,7 @@ screen:
     !scr "00    00     ........ ........          " ;3
     !scr "                43210    43210          " ;4
     !scr "                                        " ;5
-    !scr "selected: ........ (return to change)   " ;6
+    !scr "selected: ........ (c= to change)       " ;6
     !scr "                                        "
     !scr "4  joy fire                mouse left   "
     !scr "3  joy right paddle 2 fire              "
