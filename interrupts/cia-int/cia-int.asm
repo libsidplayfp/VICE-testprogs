@@ -521,7 +521,7 @@ dt_lp1:
 	sta	.cia_sec+$04
 	ldx	#0
 	stx	.cia_sec+$05
-	sty	.cia_dut+$06
+	sty	.cia_dut+$06    ; 0..23
 	stx	.cia_dut+$07
 	stx	int_zp
 	stx	time_zp
@@ -553,7 +553,7 @@ dt_sm2:
 	bne	dt_skp2
 	lda	#"-"
 dt_skp2:
-	sta	(ptr_zp),y
+	sta	(ptr_zp),y      ; result to screen
 	tya
 	clc
 	adc	#40
@@ -566,7 +566,7 @@ dt_skp2:
 	bne	dt_skp3
 	lda	#"-"
 dt_skp3:
-	sta	(ptr_zp),y
+	sta	(ptr_zp),y      ; result to screen
 
 	ldy	cnt_zp
 	iny
