@@ -8,6 +8,8 @@ and TOD clock tests, have been removed, as VIAs dont have these features.
 
 the tests should be run on a VIC20 with (at least) 8k RAM expansion (block1)
 
+xvic -default -memory 8k via<N>.prg
+
 when run, each program will cycle through all sub tests once and then display
 the results. red/green characters at bottom left indicate success/failure of
 the sub tests. red/green border indicates success/failure of the complete test
@@ -16,26 +18,26 @@ see the measured data, at the bottom the reference data.
 
 --------------------------------------------------------------------------------
 
-      (r28197)
+      (r29803)
 
-VIA1:   works   Timer A / B
-VIA2:   works   Timer A / B
+VIA1:   works      Timer A / B
+VIA2:   works      Timer A / B
 
-VIA3:   fail    Timer A / B IRQ Flags
-VIA3a:  works   Timer A IRQ Flags
+VIA3:   fail (k)   Timer A / B IRQ Flags
+VIA3a:  works      Timer A IRQ Flags
 
-VIA4:   works   Timer A (toggle timer A timed/continous irq)
-VIA4a:  works   Timer A (toggle timer A timed/continous irq)
+VIA4:   works      Timer A (toggle timer A timed/continous irq)
+VIA4a:  works      Timer A (toggle timer A timed/continous irq)
 
-VIA5:   works   Timer A / B IRQ Flags
-VIA5a:  works   Timer A / B IRQ Flags
+VIA5:   works      Timer A / B IRQ Flags
+VIA5a:  works      Timer A / B IRQ Flags
 
-VIA9:   fail    Timer B (toggle timer B counts PB6/Clock)
+VIA9:   fail (abdefghjkl)  Timer B (toggle timer B counts PB6/Clock)
 
-VIA10:  fail    Port B (output timer at PB7 and read back PB)
-VIA11:  fail    Port B (output timer at PB7 and read back PB)
-VIA12:  fail    Port B (output timer at PB7 and read back PB)
-VIA13:  fail    Port B (output timer at PB7 and read back PB)
+VIA10:  fail (dh)  Port B (output timer at PB7 and read back PB)
+VIA11:  fail (dh)  Port B (output timer at PB7 and read back PB)
+VIA12:  fail (dh)  Port B (output timer at PB7 and read back PB)
+VIA13:  fail (dh)  Port B (output timer at PB7 and read back PB)
 
 (gpz) reference data comes from the respective 1541 tests, was tweaked and
       checked against my VIC20

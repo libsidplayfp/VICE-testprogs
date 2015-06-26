@@ -33,7 +33,7 @@ DTMP=screenmem
 ; in the loop:
 ;       read IRQ Flags
 
-	!zone {         ; 
+	!zone {         ; a
 .test 	lda #1
 	sta viabase+$4       ; Timer A lo
 	;lda #$1
@@ -50,7 +50,7 @@ DTMP=screenmem
         * = .test+TESTLEN
         }
 
-	!zone {         ; 
+	!zone {         ; b
 .test 	lda #1
 	sta viabase+$4       ; Timer A lo
 	;lda #$1
@@ -67,7 +67,7 @@ DTMP=screenmem
         * = .test+TESTLEN
         }
 
-        !zone {         ; 
+        !zone {         ; c
 .test   lda #1
         sta viabase+$4       ; Timer A lo
         ;lda #$11
@@ -84,7 +84,7 @@ DTMP=screenmem
         * = .test+TESTLEN
         }
 
-        !zone {         ; 
+        !zone {         ; d
 .test   lda #1
         sta viabase+$4       ; Timer A lo
         ;lda #$11
@@ -101,7 +101,7 @@ DTMP=screenmem
         * = .test+TESTLEN
         }
 
-        !zone {         ; 
+        !zone {         ; e
 .test   lda #1
         sta viabase+$5       ; Timer A hi
         ;lda #$1
@@ -118,7 +118,7 @@ DTMP=screenmem
         * = .test+TESTLEN
         }
 
-        !zone {         ; 
+        !zone {         ; f
 .test   lda #1
         sta viabase+$5       ; Timer A hi
         ;lda #$1
@@ -135,7 +135,7 @@ DTMP=screenmem
         * = .test+TESTLEN
         }
 
-        !zone {         ; 
+        !zone {         ; g
 .test   lda #1
         sta viabase+$5       ; Timer A hi
         ;lda #$11
@@ -152,7 +152,7 @@ DTMP=screenmem
         * = .test+TESTLEN
         }
 
-        !zone {         ; 
+        !zone {         ; h
 .test   lda #1
         sta viabase+$5       ; Timer A hi
         ;lda #$11
@@ -176,7 +176,7 @@ DTMP=screenmem
 ; in the loop:
 ;       read IRQ Flags
 
-	!zone {         ; 
+	!zone {         ; i
 .test 	lda #1
 	sta viabase+$8       ; Timer B lo
 	;lda #$1
@@ -193,7 +193,7 @@ DTMP=screenmem
         * = .test+TESTLEN
         }
 
-	!zone {         ; 
+	!zone {         ; j
 .test	lda #1
 	sta viabase+$8       ; Timer B lo
 	;lda #$1
@@ -210,7 +210,7 @@ DTMP=screenmem
         * = .test+TESTLEN
         }
 
-	!zone {         ; 
+	!zone {         ; k
 .test 	lda #1
 	sta viabase+$9       ; Timer B hi
 	;lda #$1
@@ -227,7 +227,7 @@ DTMP=screenmem
         * = .test+TESTLEN
         }
 
-	!zone {         ; 
+	!zone {         ; l
 .test	lda #1
 	sta viabase+$9       ; Timer B hi
 	;lda #$1

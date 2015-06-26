@@ -39,7 +39,7 @@ disk: $(PROGS)
 
 
 test: all
-	xvic via3.prg
+	xvic -default -memory 8k via3.prg
  
 clean:
 	rm -f *~

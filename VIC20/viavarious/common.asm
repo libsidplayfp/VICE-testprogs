@@ -51,7 +51,7 @@ start2:
         dex
         sta ERRBUF,x
         bne -
-        
+
         lda #5
         sta ERRBUF+$ff
 

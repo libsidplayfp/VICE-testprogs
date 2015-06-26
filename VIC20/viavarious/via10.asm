@@ -46,20 +46,20 @@ DTMP=screenmem
 }
 
 ; timer A force-load, start, no output at PB7 (pulse)
-+TEST $00,$00,$00,0,0 
-+TEST $00,$00,$00,0,1 
++TEST $00,$00,$00,0,0 ; a
++TEST $00,$00,$00,0,1 ; b
 
 ; timer A force-load, start, output at PB7 (pulse)
-+TEST $00,$00,$80,0,0 
-+TEST $00,$00,$80,0,1 
++TEST $00,$00,$80,0,0 ; c
++TEST $00,$00,$80,0,1 ; d
 
 ; timer A force-load, start, no output at PB7 (toggle)
-+TEST $00,$00,$40,0,0 
-+TEST $00,$00,$40,0,1 
++TEST $00,$00,$40,0,0 ; e
++TEST $00,$00,$40,0,1 ; f
 
 ; timer A force-load, start, output at PB7 (toggle)
-+TEST $00,$00,$c0,0,0 
-+TEST $00,$00,$c0,0,1 
++TEST $00,$00,$c0,0,0 ; g
++TEST $00,$00,$c0,0,1 ; h
 
         * = DATA
         !bin "via10ref.bin", NUMTESTS * $0100, 2
