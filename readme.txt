@@ -41,6 +41,8 @@ this is a (very) brief overview of the contents in this repository:
 ./crtemulation
 ./printer
 ./vdrive
+./RS232
+./MIDI
 
 * VICE tools
 
@@ -51,18 +53,81 @@ this is a (very) brief overview of the contents in this repository:
 TODO: the long term goal is to have some tests for everything that is emulated
       by VICE. still a long way to go, this is what might be missing:
 
+* some existing tests are missing proper source code
+
+VIC20/vic6581
+VDC/40columns
+DTV/tsuitDTV
+
 * tests related to the various emulated chips
 
-CRTC, ACIA, ...
+6510
+----
+- add more elaborated SHA/SHY/SHX page-boundary crossing tests
+
+ACIA
+----
+
+CRTC
+----
+
+SID
+---
+- make test to check the POTX/Y sample period
+- make envelope generator timing test (like waveform check)
+- make test to check noise LFSR behavior on reset / test bit (it should take
+  about 0x8000 cycles until it resets)
+- make test to check correct noise LFSR sequence (like waveform check?)
+- make proper test for "new" waveforms created by selecting noise with other
+  waveforms (the regular waveform should get ANDed into the LFSR)
+
+VIA
+---
+- make test program for power-on values
+- make VIA shiftregister test program
+
+VIC-II
+------
+- make test to check that the correct value is fetched for the "FLI-bug" area
+- make more detailed sprite-collision timing test(s)
+- make sprite-stretch test (cl13 plasma)
 
 * tests specifically related to the various commodore computers
 
-PET, PLUS4, ...
+C64, C128, VIC20, PET, PLUS4, CBM2 ...
+
+* tests specifically related to drives
+
+1541:
+-----
+- make test program that measures mechanical delays (such as stepping)
+- make a test program to check half tracks
+- make a testcase for the case when V flag is set by "byte ready" and it is
+  modified by an opcode at the same time. (ARR?)
+- make test program to check various track lengths (in a g64)
+- make test program to check various speed zones (in a g64)
 
 * expansions
+
+super snapshot v5:
+------------------
+
+- make test for using SSV5+REU
 
 * VICE subsystems
 
 * VICE tools
 
-cartconv, c1541, ...
+petcat
+------
+
+- make more tests for other basic versions than v2
+- find more references for control-char notation used by magazines
+
+cartconv
+--------
+
+c1541
+-----
+
+- a couple of vdrive related regression tests could be done using c1541
