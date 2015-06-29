@@ -17,24 +17,22 @@ the bottom both XORed so you can spot bit errors easily.
 
 --------------------------------------------------------------------------------
 
-      (r27982)
+      (r29803)
 
-VIA1:   works   Timer A / B
-VIA2:   works   Timer A / B
+VIA1:   works    Timer A / B
+VIA2:   works    Timer A / B
 
-VIA3:   fail    Timer A / B IRQ Flags
-VIA3a:  fail    Timer A IRQ Flags
+VIA3:   fail (k) Timer A / B IRQ Flags
+VIA3a:  works    Timer A IRQ Flags
 
-VIA4:   fail    Timer A (toggle timer A timed/continous irq)
+VIA4:   works    Timer A (toggle timer A timed/continous irq)
+VIA5:   works    Timer A / B IRQ Flags
+VIA9:   works    Timer B (toggle timer B counts PB6/Clock)
 
-VIA5:   fail    Timer A / B IRQ Flags
-
-VIA9:   fail    Timer B (toggle timer B counts PB6/Clock)
-
-VIA10:  fail    Port B (output timer at PB7 and read back PB)
-VIA11:  fail    Port B (output timer at PB7 and read back PB)
-VIA12:  fail    Port B (output timer at PB7 and read back PB)
-VIA13:  fail    Port B (output timer at PB7 and read back PB)
+VIA10:  fail (abcdefgh)   Port B (output timer at PB7 and read back PB)
+VIA11:  fail (abcdefgh)   Port B (output timer at PB7 and read back PB)
+VIA12:  fail (abcdefgh)   Port B (output timer at PB7 and read back PB)
+VIA13:  fail (abcdefgh)   Port B (output timer at PB7 and read back PB)
 
 reference data comes from my 1541C and is also checked against my 1541-II, 
 more testing on other drives is needed (gpz)

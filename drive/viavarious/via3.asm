@@ -33,24 +33,24 @@ TESTSLOC = $1000
 ; in the loop:
 ;       read IRQ Flags
 
-	!zone {         ; 
-.test 	lda #1
-	sta $1804       ; Timer A lo
+	!zone {         ; A
+.test 	lda #1          ; 2
+	sta $1804       ; 4 Timer A lo
 	;lda #$1
 	;sta $dc0e       ; start timer A continuous
-        lda #%00000000
-        sta $180b       ; Timed Interrupt when Timer 1 is loaded, no PB7
+        lda #%00000000  ; 2
+        sta $180b       ; 4 Timed Interrupt when Timer 1 is loaded, no PB7
 
-	ldx #0
-.t1b	lda $180d       ; IRQ Flags / ACK
-	sta DTMP,x
-	inx
-	bne .t1b
+	ldx #0          ; 2
+.t1b	lda $180d       ; 4 IRQ Flags / ACK
+	sta DTMP,x      ; 5
+	inx             ; 2
+	bne .t1b        ; 3
 	rts
         * = .test+TESTLEN
         }
 
-	!zone {         ; 
+	!zone {         ; B
 .test 	lda #1
 	sta $1804       ; Timer A lo
 	;lda #$1
@@ -67,7 +67,7 @@ TESTSLOC = $1000
         * = .test+TESTLEN
         }
 
-        !zone {         ; 
+        !zone {         ; C
 .test   lda #1
         sta $1804       ; Timer A lo
         ;lda #$11
@@ -84,7 +84,7 @@ TESTSLOC = $1000
         * = .test+TESTLEN
         }
 
-        !zone {         ; 
+        !zone {         ; D
 .test   lda #1
         sta $1804       ; Timer A lo
         ;lda #$11
@@ -101,7 +101,7 @@ TESTSLOC = $1000
         * = .test+TESTLEN
         }
 
-        !zone {         ; 
+        !zone {         ; E
 .test   lda #1
         sta $1805       ; Timer A hi
         ;lda #$1
@@ -118,7 +118,7 @@ TESTSLOC = $1000
         * = .test+TESTLEN
         }
 
-        !zone {         ; 
+        !zone {         ; F
 .test   lda #1
         sta $1805       ; Timer A hi
         ;lda #$1
@@ -135,7 +135,7 @@ TESTSLOC = $1000
         * = .test+TESTLEN
         }
 
-        !zone {         ; 
+        !zone {         ; G
 .test   lda #1
         sta $1805       ; Timer A hi
         ;lda #$11
@@ -152,7 +152,7 @@ TESTSLOC = $1000
         * = .test+TESTLEN
         }
 
-        !zone {         ; 
+        !zone {         ; H
 .test   lda #1
         sta $1805       ; Timer A hi
         ;lda #$11
@@ -176,7 +176,7 @@ TESTSLOC = $1000
 ; in the loop:
 ;       read IRQ Flags
 
-	!zone {         ; 
+	!zone {         ; I
 .test 	lda #1
 	sta $1808       ; Timer B lo
 	;lda #$1
@@ -193,7 +193,7 @@ TESTSLOC = $1000
         * = .test+TESTLEN
         }
 
-	!zone {         ; 
+	!zone {         ; J
 .test	lda #1
 	sta $1808       ; Timer B lo
 	;lda #$1
@@ -210,7 +210,7 @@ TESTSLOC = $1000
         * = .test+TESTLEN
         }
 
-	!zone {         ; 
+	!zone {         ; K
 .test 	lda #1
 	sta $1809       ; Timer B hi
 	;lda #$1
@@ -227,7 +227,7 @@ TESTSLOC = $1000
         * = .test+TESTLEN
         }
 
-	!zone {         ; 
+	!zone {         ; L
 .test	lda #1
 	sta $1809       ; Timer B hi
 	;lda #$1
