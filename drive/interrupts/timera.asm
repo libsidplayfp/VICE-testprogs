@@ -43,26 +43,102 @@ start:
         inx
         bne -
 
+        lda $0400
+        jsr mkhex
+        stx $0400+(15*40)+3
+        sta $0400+(15*40)+2
+
+        lda $0500
+        jsr mkhex
+        stx $0400+(15*40)+1
+        sta $0400+(15*40)+0
+
+        jsr checkrefs
+        bcs +
+
+        jsr mkhex
+        stx $0400+(15*40)+6
+        sta $0400+(15*40)+5
+
+        lda #5
+        sta $d020
+        jmp cont
++
+        lda #10
+        sta $d020
+        jmp cont
+
+cont:
+
+
+waitk:
+        cli
+-       lda $dc01
+        cmp #$ef
+        bne -
+
+        jmp start
+
+checkrefs:
         ; check data
+        ldx #>reference1
+        stx refp+2
+        inx
+        stx refp2+2
+        lda #<reference1
+        sta refp+1
+        sta refp2+1
+
+        lda #0
+        sta refcnt+1
+checklp:
+        ldy #2
+--
         ldx #$00
 -
-        lda reference,x
+refp:   lda reference1,x
         cmp $0400,x
         bne chkerr
-        lda reference+$0100,x
+refp2:  lda reference1+$100,x
         cmp $0500,x
         bne chkerr
         inx
         bne -
+        ; no error
+refcnt: lda #0
+        clc
+        rts
 
-        lda #5
-        sta $d020
-        jmp *
 chkerr:
-        lda #10
-        sta $d020
-        jmp *
+        inc refp+2
+        inc refp+2
+        inc refp2+2
+        inc refp2+2
 
+        inc refcnt+1
+        lda refcnt+1
+        cmp #3
+        bne checklp
+        sec
+        rts
+
+mkhex:
+        pha
+        and #$0f
+        tay
+        lda hextab,y
+        tax
+        pla
+        lsr
+        lsr
+        lsr
+        lsr
+        tay
+        lda hextab,y
+        rts
+
+;hextab:
+;        !scr "0123456789abcdef"
 ;-------------------------------------------------------------------------------
 
 drivecode:
@@ -150,5 +226,9 @@ drvstart
 drivecode_end:
  
         * = $1000
-reference:
-        !bin "timera.bin", $200, 2
+reference1:
+        !bin "timera-ref1.bin", $200
+reference2:
+        !bin "timera-ref2.bin", $200,
+reference3:
+        !bin "timera-ref3.bin", $200,

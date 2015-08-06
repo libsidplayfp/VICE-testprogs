@@ -8,6 +8,16 @@ timera.asm:
 - hooks a timer interrupt (VIA2 timer A) and reads from another timer (VIA1
   timer A) which creates a typical pattern.
 
+  Note: the first number (and thus the entire pattern) seems to not only depend
+        on the type of mechanic used in the drive, but also in the state the
+        drive was before (preferably before running the test, first load the
+        directory so the head is on track 18, then powercycle the drive and run
+        the test)
+
+timera-ref1  FCFB 00    (Mitsumi D500, 1541C) (VICE 1541,1541-II)
+timera-ref2  9B5B 01    (1541-II) (1541-II, no disk) (Mitsumi D500, 1541C, no disk)
+timera-ref3  FCED 02    (Alps, 1570) (Alps, 1570, no disk) (VICE 1570,1571)
+
 watchdog.asm
 - a timer interrupt is reset by the c64 periodically polling the drive, so it
   never occurs. this is mostly a test for "freezers", run the test, then freeze
