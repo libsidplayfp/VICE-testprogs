@@ -133,6 +133,9 @@ static unsigned char checkRegisterStuckBits( void ) {
     return errors;
 }
 
+unsigned char timererrors = 0;
+unsigned char regserrors = 0;
+
 int main(void) {
     unsigned char type17xx;
     unsigned char failedTestclasses = 0;
@@ -247,7 +250,8 @@ int main(void) {
         failedTestclasses += ( 1 - assertRegisterDump( &expSelfTest ) );
     }
     
-    lprintf("\nTest classes with failures: %u\n", failedTestclasses);
+    lprintf("\nTest classes with failures: %u (Timing: %u, Registers: %u)\n",
+            failedTestclasses, timererrors - 1, regserrors - 1);
     if (logfile != NULL) {
         fclose(logfile);
     }

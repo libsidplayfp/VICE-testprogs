@@ -1,6 +1,6 @@
 
 # path to cc65 toolchain, leave empty if installed systemwide
-#CCPATH = ~/Desktop/cc65/github/cc65/bin/
+CCPATH = ~/Desktop/cc65/github/cc65/bin/
 
 CC =        $(CCPATH)cl65
 ASM =       $(CCPATH)ca65

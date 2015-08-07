@@ -61,6 +61,9 @@ extern unsigned char bankMask;
 extern unsigned char lstatus;
 extern unsigned short oldirq;
 
+extern unsigned char timererrors;
+extern unsigned char regserrors;
+
 extern void __fastcall__ enableReuIrq( void );
 extern void __fastcall__ disableReuIrq( void );
 extern signed char __fastcall__ reuexec( unsigned char command );
