@@ -24,6 +24,11 @@ lp1:
             sta $0500,y
             sta $0600,y
             sta $0700,y
+            lda #1
+            sta $d800,y
+            sta $d900,y
+            sta $da00,y
+            sta $db00,y
             tya
             sta $8000,y
             iny
@@ -53,7 +58,9 @@ lp11:
 
 
             ldy #0
-            lda reg+1
+            lda #$de
+            jsr puthex
+            lda #$00
             jsr puthex
             iny
             iny
@@ -80,7 +87,9 @@ xtmp:       ldx #0
             sta sptr+1
             
             ldy #0
-            lda rega+1
+            lda #$de
+            jsr puthex
+            lda #$00
             jsr puthex
             iny
             iny
