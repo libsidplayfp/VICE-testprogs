@@ -47,5 +47,17 @@ RUN with cartridge disabled:
 - de00 page is active cartridge ROM
 - df00 page is active cartridge ROM
 
+Super Snapshot v5:
+------------------
 
+RUN with cartridge enabled:
 
+- at 8000 is RAM
+- de00 page is active cartridge ROM
+- df00 page is inactive (open I/O)
+
+RUN with cartridge disabled (F8 in main screen):
+
+- at 8000 is RAM
+- de00 page is inactive (open I/O)
+- df00 page is inactive (open I/O)
