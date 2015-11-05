@@ -73,7 +73,7 @@ shxy4.prg shyx4.prg
 
 checks the timing of the &H+1 drop-off when page boundary is crossed
 
-fails in x64sc, fails in x64
+works in x64sc (r30092), fails in x64
 
 verified on:
 - C64C(new) with 8500 (gpz)

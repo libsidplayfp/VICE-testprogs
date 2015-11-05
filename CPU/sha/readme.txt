@@ -62,7 +62,7 @@ checks the timing of the above tested behaviour
 
 the top dump is the reference data, the bottom shows the measured values
 
-fails in x64sc, fails in x64
+works in x64sc (r30092), fails in x64
 
 verified on:
 - C64(old) with 6510 (gpz)

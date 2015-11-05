@@ -65,7 +65,7 @@ checks the timing of the above tested behaviour
 the top dump is the reference data, in the middle are the measured values (what
 is stored to memory) and the bottom shows the stack pointer
 
-fails in x64sc, fails in x64
+works in x64sc (r30092), fails in x64
 
 verified on:
 - C64(old) with 6510 (gpz)
