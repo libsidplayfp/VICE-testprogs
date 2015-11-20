@@ -1,0 +1,65 @@
+originally posted here: http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?p=83433#p83433
+
+However I took the opportunity to measure the display of the NTSC-VIC on my
+1084. I've resized the monitor settings so that there are no borders anymore
+and I can see the full area that the VIC displays (squeezing both vertically
+and horizontally). When I did the same for my PAL-VIC on the same monitor I
+got exactly the 224x283 display that VICE shows in PAL for "Normal Borders"
+mode, including the 284th at the bottom line that will ALWAYS be the border
+color, no matter what.
+
+Anyway, here goes for NTSC, pictures first:
+
+Standard screen 22x23: $9000 = 5 $9001 = 25 ($19)
+
+tokra_ntsc_1.jpg
+
+
+One character (8 pixels) to the right: $9000 = 7
+
+tokra_ntsc_2.jpg
+
+
+Two characters (16 pixels) to the left: $9000 = 1
+
+tokra_ntsc_3.jpg
+
+
+22 pixels up: $9001 = 14
+
+tokra_ntsc_4.jpg
+
+
+26 pixels down: $9001 = 38
+
+tokra_ntsc_5.jpg
+
+
+Adding another character line at the bottom: $9003 = 48 (24 lines)
+Only the top rasterline of the new characterline is visible. Border-colored
+single rasterline below that one
+
+tokra_ntsc_6.jpg
+
+
+Full visible screen: 25 columns (200 pixels), 29 character lines (232 rasterlines)
+
+tokra_ntsc_7.jpg
+
+
+Two rasterlines lower. My later experiments confirmed the last rasterline of the
+last characterline is not visible here and the 234th line will always be the
+border-color. So the total visible resolution is 200x233 pixels (and a 234th
+rasterline in border-color)
+
+tokra_ntsc_8.jpg
+
+
+Overview:
+
+PAL: total screen dimension of 224x283 + 284th rasterline in bordercolor
+NTSC: total screen dimension of 200x233 + 234th rasterline in bordercolor
+
+Border margins from standard screen (after powering the device) differ from
+original machine: Should be 8 pixels to the right, 16 pixels to the left, 22
+pixels to the top, 26 pixels to the bottom
