@@ -58,7 +58,7 @@ typedef struct emd_test_s {
 static emd_test_t drivers[] = {
 
 #if defined(__APPLE2__)
-    { '0', "Apple II auxiliary memory", "a2e.auxmem.emd" },
+    { '0', "Apple II auxiliary memory", "a2.auxmem.emd" },
 #endif
 
 #if defined(__APPLE2ENH__)
@@ -70,7 +70,7 @@ static emd_test_t drivers[] = {
 #endif
 
 #if defined(__ATARIXL__)
-    { '0', "Atari 130XE memory", "atr130.emd" },
+    { '0', "Atari 130XE memory", "atrx130.emd" },
 #endif
 
 #if defined(__C16__)
@@ -87,6 +87,7 @@ static emd_test_t drivers[] = {
     { '6', "REU", "c64-reu.emd" },
     { '7', "C128 VDC (in C64 mode)", "c64-vdc.emd" },
     { '8', "C64DTV himem", "dtv-himem.emd" },
+    { '9', "65816 extra banks", "c64-65816.emd" },
 #endif
 
 #if defined(__C128__)
@@ -96,8 +97,6 @@ static emd_test_t drivers[] = {
     { '3', "RamCart", "c128-ramcart.emd" },
     { '4', "REU", "c128-reu.emd" },
     { '5', "VDC", "c128-vdc.emd" },
-    { '6', "Internal Function RAM", "c128-ifnram.emd" },
-    { '7', "External Function RAM", "c128-efnram.emd" },
 #endif
 
 #if defined(__CBM510__)
