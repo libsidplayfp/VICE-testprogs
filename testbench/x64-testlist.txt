@@ -1,0 +1,21 @@
+# this is a generated file, do not edit.
+../CIA/ciavarious/,cia1.prg,exitcode,10000000
+../CIA/ciavarious/,cia2.prg,exitcode,10000000
+../CIA/ciavarious/,cia3.prg,exitcode,10000000
+../CIA/ciavarious/,cia3a.prg,exitcode,10000000
+../CIA/ciavarious/,cia4.prg,exitcode,20000000
+../CIA/ciavarious/,cia5.prg,exitcode,20000000
+../CIA/ciavarious/,cia6.prg,exitcode,10000000
+../CIA/ciavarious/,cia7.prg,exitcode,10000000
+../CIA/ciavarious/,cia8.prg,exitcode,10000000
+../CIA/ciavarious/,cia9.prg,exitcode,10000000
+../CIA/ciavarious/,cia10.prg,exitcode,10000000
+../CIA/ciavarious/,cia11.prg,exitcode,10000000
+../CIA/ciavarious/,cia12.prg,exitcode,10000000
+../CIA/ciavarious/,cia13.prg,exitcode,10000000
+../CIA/ciavarious/,cia14.prg,exitcode,10000000
+../CIA/ciavarious/,cia15.prg,exitcode,160000000
+../CIA/ciavarious/,cia3new.prg,exitcode,10000000
+../CIA/ciavarious/,cia3anew.prg,exitcode,10000000
+../CIA/ciavarious/,cia4new.prg,exitcode,20000000
+../CIA/ciavarious/,cia8new.prg,exitcode,10000000

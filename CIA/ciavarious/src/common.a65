@@ -48,6 +48,15 @@ clp1a
 
         lda ERRBUF+$ff
         sta $d020
+
+        ; return either 0 (success) or $ff (fail) in $d7ff for automatic testing
+        ldx #$ff ; error
+        cmp #5
+        bne failed
+        ldx #0 ; ok
+failed
+        stx $d7ff
+
         lda #0
         sta $d021
 wkey
@@ -110,10 +119,10 @@ lp2     lda $d012
 lp3     lda $d012
         bne lp3
 
-        ; TOD: 60Hz, set clock
+        ; TOD 60Hz, set clock
         ; serial port: input
-        ; timer A: count clk, stop, continuous, output to PB6 disabled, output to PB6 pulse
-        ; timer B: count clk, stop, continuous, output to PB7 disabled, output to PB7 pulse
+        ; timer A count clk, stop, continuous, output to PB6 disabled, output to PB6 pulse
+        ; timer B count clk, stop, continuous, output to PB7 disabled, output to PB7 pulse
         lda #0
         sta $dc0e
         sta $dc0f
