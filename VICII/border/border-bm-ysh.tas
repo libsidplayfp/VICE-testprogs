@@ -1,3 +1,9 @@
+videobankbase = $4000
+vrambase = $6000
+bitmapbase = $4000
+spritedata_loc = $6fc0
+
+
         *=$0801
 
 basic:
@@ -8,22 +14,57 @@ basic:
 
         sei
 
-        ; init ghostbyte with some pattern to make border more visible
-        ; and so we can see character boundaries in the border
-        lda #%10000000
-        sta $3fff
+        ; use videobank 2, ie 4000-7fff
+        lda #$02
+        sta $dd00
+        ; vram at $6000, bitmap at $4000
+        lda #$80
+        sta $d018
 
         ; setup textscreen Y position
         lda #$3b
         sta $d011
 
         ; setup background color for bitmap mode
-        lda #$12
-        ldx #$ff
+        ldx #$00
 col1
-        sta $06e8,x
-        dex
+        txa
+        sta vrambase+$000,x
+        lda #$f0
+        sta vrambase+$100,x
+        lda #$0f
+        sta vrambase+$200,x
+        lda #$01
+        sta vrambase+$300,x
+        inx
         bne col1
+
+        ; put some pattern into the bitmap too
+        lda #>bitmapbase
+        sta bmpaddrh
+        ldy #$20
+bmplp2:
+        tya
+        ldx #0
+bmplp1:
+        eor #$ff
+bmpaddrh = * + 2
+        sta bitmapbase+$000,x
+        stx addxl
+        clc
+addxl = * +1
+        adc #0
+        inx
+        bne bmplp1
+        inc bmpaddrh
+        dey
+        bne bmplp2
+
+
+        ; init ghostbyte with some pattern to make border more visible
+        ; and so we can see character boundaries in the border
+        lda #%10000000
+        sta videobankbase+$3fff
 
         ; init X scroll
         lda #$c8
@@ -47,8 +88,8 @@ col1
 ll
         txa
         sta $d027,x        ; sprite colors
-        lda #spritedata/64
-        sta $07f8,x        ; sprite pointers
+        lda #(spritedata_loc/64) and $ff
+        sta vrambase+$03f8,x        ; sprite pointers
         lda #$f2           ; $ff for the first variation of the main loop, $fa for the second variation
         sta $d001,y        ; y-pos
         iny
@@ -59,9 +100,9 @@ ll
 
         ; sprite data
         ldx #0
-        lda #$00
 l2
-        sta spritedata,x
+        lda spritedata,x
+        sta spritedata_loc,x
         inx
         cpx #63
         bne l2
@@ -193,4 +234,28 @@ lp2:     dey
          nop
          rts
 
-spritedata=$0fc0
+spritedata:
+    !by %00000000,%00000000,%00000001
+    !by %00000000,%00000000,%00000010
+    !by %00000000,%00000000,%00000100
+    !by %00000000,%00000000,%00001000
+    !by %00000000,%00000000,%00010000
+    !by %00000000,%00000000,%00100000
+    !by %00000000,%00000000,%01000000
+    !by %00000000,%00000000,%10000000
+    !by %00000000,%00000001,%00000000
+    !by %00000000,%00000010,%00000000
+    !by %00000000,%00000100,%00000000
+    !by %00000000,%00001000,%00000000
+    !by %00000000,%00010000,%00000000
+    !by %00000000,%00100000,%00000000
+    !by %00000000,%01000000,%00000000
+    !by %00000000,%10000000,%00000000
+    !by %00000001,%00000000,%00000000
+    !by %00000010,%00000000,%00000000
+    !by %00000100,%00000000,%00000000
+    !by %00001000,%00000000,%00000000
+    !by %00010000,%00000000,%00000000
+    !by %00100000,%00000000,%00000000
+    !by %01000000,%00000000,%00000000
+    !by %10000000,%00000000,%00000000
