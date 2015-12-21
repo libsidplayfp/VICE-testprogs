@@ -23,6 +23,12 @@ REGBUFFER = $0800 + $0400
 ;                      1 - active
 !byte $01, $00 ; ultimax
 
+!byte 0,0,0,0,0,0
+
+!text "EasyFlash"
+
+!byte 0
+
 ;-------------------------------------------------------------------------------
 ; CHIP header ($10 bytes)
 
@@ -36,7 +42,7 @@ REGBUFFER = $0800 + $0400
 ;                      0 - ROM
 ;                      1 - RAM, no ROM data
 ;                      2 - Flash ROM
-!byte $00, $00
+!byte $00, $02
 ;         000A-000B - Bank number ($0000 - normal cartridge)
 !byte $00, $00
 ;         000C-000D - Starting load address (high/low format)
