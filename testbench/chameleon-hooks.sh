@@ -2,6 +2,12 @@
 DUMMY=.dummyfile
 RDUMMY=.dummyfile2
 
+# X and Y offsets for saved screenshots. when saving a screenshot in the
+# computers reset/startup screen, the offset gives the top left pixel of the
+# top left character on screen.
+SXO=53
+SYO=62
+
 function chameleon_reset
 {
     # clear the "ready"
@@ -71,11 +77,25 @@ function chameleon_run_screenshot
 {
 #    echo chameleon "$1"/"$2"
     # reset
-    chacocmd --addr 0x80000000 --writemem $DUMMY > /dev/null
-    sleep 3
+    chameleon_reset
+
+    # run the helper program (enable I/O RAM at $d7xx)
+    chameleon_clear_returncode
+    chcodenet -x chameleon-helper.prg > /dev/null
+    chameleon_poll_returncode
+
     # run program
-    chcodenet -x "$1"/"$2"
-    sleep 10
+    chameleon_clear_returncode
+    chcodenet -x "$1"/"$2" > /dev/null
+#    chameleon_poll_returncode
+#    exitcode=$?
+#    echo "exited with: " $exitcode
+    timeoutsecs=`expr \( $3 + 5000000 \) / 10000000`
+    sleep $timeoutsecs
+    chshot -o "$1"/.testbench/"$2"-chameleon.png
+    ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-chameleon.png "$SXO" "$SYO"
+    exitcode=$?
+#    echo "exited with: " $exitcode
 }
 
 ################################################################################
@@ -83,7 +103,7 @@ function chameleon_run_screenshot
 # run test program
 # exit when write to d7ff occurs - the value written determines success (=1) or fail (other > 1)
 # exit after $timeout cycles
-# save a screenshot at exit
+# save a screenshot at exit (?)
 
 # $1  test path
 # $2  test program name

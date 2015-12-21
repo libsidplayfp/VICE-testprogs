@@ -53,25 +53,29 @@ function runprogsfortarget
 #            echo " program: $testprog"
 #            echo " type: $testtype"
 #            echo " timeout: $testtimeout"
-            echo -ne "$testpath" "$testprog" "- "
-            "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout"
-#            echo "exited with: " $exitcode
-            case "$exitcode" in
-                0)
-                        exitstatus="ok"
-                    ;;
-                1)
-                        exitstatus="timeout"
-                    ;;
-                255)
-                        exitstatus="error"
-                    ;;
-                *)
-                        exitstatus="error"
-                    ;;
-            esac
-            echo "$exitstatus"
-            echo "$exitstatus" "$testpath" "$testprog" >> "$target"_result.txt
+            if [ "${testtype}" == "interactive" ]; then
+                echo "$testpath" "$testprog" "- " "interactive (skipped)"
+            else
+                echo -ne "$testpath" "$testprog" "- "
+                "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout"
+#                echo "exited with: " $exitcode
+                case "$exitcode" in
+                    0)
+                            exitstatus="ok"
+                        ;;
+                    1)
+                            exitstatus="timeout"
+                        ;;
+                    255)
+                            exitstatus="error"
+                        ;;
+                    *)
+                            exitstatus="error"
+                        ;;
+                esac
+                echo "$exitstatus"
+                echo "$exitstatus" "$testpath" "$testprog" >> "$target"_result.txt
+            fi
         fi
     done
 }
@@ -90,7 +94,7 @@ case "$1" in
      -help)
             echo $NAME" - run test programs."
             echo "usage: "$NAME" [target]"
-            echo "  targets: x64, chameleon"
+            echo "  targets: x64, x64sc, chameleon"
             echo "  -help       show this help"
             exit
            ;;

@@ -1,4 +1,6 @@
 # this is a generated file, do not edit.
+../CIA/ciaports/,ciaports.prg,interactive,0
+../CIA/ciaports/,ghosting.prg,interactive,0
 ../CIA/ciavarious/,cia1.prg,exitcode,10000000
 ../CIA/ciavarious/,cia2.prg,exitcode,10000000
 ../CIA/ciavarious/,cia3.prg,exitcode,10000000
@@ -19,3 +21,20 @@
 ../CIA/ciavarious/,cia3anew.prg,exitcode,10000000
 ../CIA/ciavarious/,cia4new.prg,exitcode,20000000
 ../CIA/ciavarious/,cia8new.prg,exitcode,10000000
+../VICII/border/,border-250.prg,screenshot,10000000
+../VICII/border/,border-251.prg,screenshot,10000000
+../VICII/border/,border-252.prg,screenshot,10000000
+../VICII/border/,border-bm-idle.prg,screenshot,10000000
+../VICII/border/,border-bm-ysh2.prg,screenshot,10000000
+../VICII/border/,border-bm-ysh.prg,screenshot,10000000
+../VICII/border/,border-mcbm.prg,screenshot,10000000
+../VICII/border/,vborder.prg,interactive,0
+../VICII/border/,vborder2.prg,interactive,0
+../VICII/border/,vborder_ntsc.prg,interactive,0
+../VICII/border/,vborder2_ntsc.prg,interactive,0
+../VICII/border/,vborder_ntscold.prg,interactive,0
+../VICII/border/,vborder2_ntscold.prg,interactive,0
+../VICII/dmadelay/,test1.prg,interactive,0
+../VICII/dmadelay/,test2.prg,interactive,0
+../VICII/dmadelay/,test3.prg,interactive,0
+#../VICII/dmadelay/,test4.prg,screenshot,10000000
