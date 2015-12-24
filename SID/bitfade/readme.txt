@@ -11,10 +11,10 @@ test1osc3.prg / test1env3.prg - waveform 0 oscillator value
   (for completeness) shows that the envelope would also stay as is when waveform
   zero is selected.
 
-test1frq0.prg - read only SID registers
+test1frq0.prg - write only SID registers
 
-- plays a simple note on voice 0, and reads back the (read only) frequency
-  register. shows bitfading of read only registers
+- plays a simple note on voice 0, and reads back the (write only) frequency
+  register. shows bitfading of write only registers
 
 the delayXXXX.prg tests work the same, but measure the delay using a CIA timer
 and display the result.
