@@ -1,5 +1,5 @@
 
-.SILENT:
+#.SILENT:
 
 all:
 	cl65 --asm-define SCANOSC3 --asm-define SCANSPD=3 -o test1osc3.prg test1.s

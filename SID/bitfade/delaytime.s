@@ -1,3 +1,7 @@
+
+    .export __INITBSS_LOAD__
+__INITBSS_LOAD__ := 0
+
     .macpack longbranch
     .export Start
 
@@ -99,8 +103,8 @@ mainloop:
         lda #%01010001
         sta $dc0f
 
-        lda #$ff
-        sta scanreg
+        lda #$ff                ; 2
+        sta scanreg             ; 4
 
 loop:
 ;        jsr gettimers
@@ -111,20 +115,21 @@ loop:
 ;        sta scp+0
 ;        jsr timerout
 
-        lda scanreg
+        lda scanreg             ; 4
 ;        sta tmp1+1
 ;        ldy #10
 ;        jsr hexout
 
 ;tmp1:   lda #0
-        cmp #$ff
-        beq loop
+        cmp #$ff                ; 2
+        beq loop                ; 2+1
 
         ; stop timers
-        lda #%00000000
-        sta $dc0e
-        lda #%01000000
-        sta $dc0f
+        lda #%00000000          ; 2
+        sta $dc0e               ; 4
+        lda #%01000000          ; 2
+        sta $dc0f               ; 4
+                                ; = 26
 
         jsr gettimers
 
@@ -153,6 +158,21 @@ gettimers:
         lda $dc07
         eor #$ff
         sta val+0
+
+        sec
+        lda val+3
+        sbc #24
+        sta val+3
+        lda val+2
+        sbc #0
+        sta val+2
+        lda val+1
+        sbc #0
+        sta val+1
+        lda val+0
+        sbc #0
+        sta val+0
+
         rts
 
 timerout:
@@ -191,3 +211,5 @@ hexval:
         
 val:
         .byte 0,0,0,0
+
+    .segment "INIT"
