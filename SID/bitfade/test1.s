@@ -25,6 +25,8 @@ VOICE3 = $d40e
 tmp = $02
 tmp2 = $04
 
+frameh = $06
+
 Start:
                 SEI
                 ldx #$ff
@@ -50,7 +52,7 @@ loc_90F:
                 STA     VOICE3+6
 .endif
 
-restart:
+;restart:
 
                 ldx #0
 @clr:
@@ -59,10 +61,15 @@ restart:
                 sta $0500,x
                 sta $0600,x
                 sta $0700,x
-                
+                sta $4400,x
+                sta $4500,x
+                sta $4600,x
+                sta $4700,x
+
                 lda #$00
                 .repeat 32,count
                 sta $2000+(count*256),x
+                sta $6000+(count*256),x
                 .endrepeat
                 inx 
                 jne @clr
@@ -72,7 +79,9 @@ restart:
 @clr1:
                 sta $2000+(8*40*8),x
                 sta $2040+(8*40*8),x
-                inx 
+                sta $6000+(8*40*8),x
+                sta $6040+(8*40*8),x
+                inx
                 bne @clr1
 
                 ldx #0
@@ -80,18 +89,36 @@ restart:
                 lda colors,x
                 .repeat 9,count
                 sta $0400+(count*40),x
+                sta $4400+(count*40),x
                 .endrepeat
                 inx
                 cpx #40
                 bne @clr2
 
-;restart:
+mloop:
+                inc frame
+
                 lda #0
                 sta framecount
                 sta bitcount
                 sta tmp + 1
                 sta tmp
 
+frame = * + 1
+                lda #0
+                and #1
+                bne @sk1
+                lda #$20
+                sta frameh
+                lda #2
+                sta $dd00
+                jmp @sk2
+@sk1:
+                lda #$60
+                sta frameh
+                lda #3
+                sta $dd00
+@sk2:
 
                 LDA     #$3B
                 STA     $D011
@@ -124,22 +151,26 @@ restart:
                 STA     VOICE1+4
 .endif
 
+                ; each round takes 20 cycles
                 ldx #0
 @quicklp1:
-                lda scanreg
-                sta quicksamples,x
-                inx
-                cpx #64
-                bne @quicklp1
+                lda scanreg             ; 2
+                sta quicksamples,x      ; 5
+                nop                     ; 2
+                nop                     ; 2
+                nop                     ; 2
+                inx                     ; 2
+                cpx #64*2               ; 2
+                bne @quicklp1           ; 2+1
 
                 ldx #0
 @quicklp2:
                 jsr doquickscan
                 inx
-                cpx #64
+                cpx #64*2
                 bne @quicklp2
 
-                lda #64
+                lda #64*2
                 sta tmp
                 lda #0
                 sta framecount
@@ -165,6 +196,10 @@ mainloop:
                 
                 jmp mainloop
 
+restart:
+                jsr showpos
+                jmp mloop
+
 doscan:
                 jsr clearbits
 
@@ -177,7 +212,7 @@ doscan:
                 jsr incpos
                 jeq restart
 
-                jsr showpos
+;                jsr showpos
                 rts
 
 doquickscan:
@@ -244,6 +279,7 @@ showbit:
                 adc tmp
                 sta tmp2
                 lda yoffsh,y
+                ora frameh
                 adc tmp + 1
                 sta tmp2 + 1
 
@@ -263,6 +299,7 @@ clearbit:
                 adc tmp
                 sta tmp2
                 lda yoffsh,y
+                ora frameh
                 adc tmp + 1
                 sta tmp2 + 1
 
@@ -304,7 +341,7 @@ quicksamples:
         .endrepeat
         
 colors:
-        .repeat (64/8)
+        .repeat ((64*2)/8)
         .byte $f0
         .endrepeat
         .repeat (SCANSPD * 50) / 8,count
