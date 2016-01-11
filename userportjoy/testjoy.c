@@ -244,7 +244,7 @@ static unsigned char read_native_cbm510_joy2(void)
 
 /* c64/c128 hit joystick handling */
 #if defined(__C64__) || defined(__C128__)
-static void setup_hit(void)
+static void setup_cnt12sp(void)
 {
     POKE(USERPORT_DDR, 0);
     POKE(C64_CIA2_TIMER_A_LOW, 1);
@@ -260,7 +260,7 @@ static unsigned char read_c64_hit_joy1(void)
     unsigned char retval;
     unsigned char temp, temp2;
 
-    setup_hit();
+    setup_cnt12sp();
     temp = PEEK(C64_CIA2_PRA);
     temp2 = PEEK(C64_CIA2_DDRA);
     retval = (PEEK(USERPORT_DATA) & 0xf);
@@ -276,13 +276,92 @@ static unsigned char read_c64_hit_joy2(void)
 {
     unsigned char retval;
 
-    setup_hit();
+    setup_cnt12sp();
     retval = (PEEK(USERPORT_DATA) >> 4);
     POKE(C64_CIA1_SR, 0xFF);
     if (PEEK(C64_CIA2_SR) != 0)
     {
         retval |= 0x10;
     }
+    retval ^= 0x1F;
+    return retval;
+}
+
+static unsigned char read_c64_kingsoft_joy1(void)
+{
+    unsigned char retval = 0;
+    unsigned char temp, temp2;
+
+    setup_cnt12sp();
+    temp = PEEK(C64_CIA2_PRA);
+    temp2 = PEEK(C64_CIA2_DDRA);
+    POKE(C64_CIA2_DDRA, (PEEK(C64_CIA2_DDRA) & 0xFB));
+    retval |= ((PEEK(C64_CIA2_PRA) & 4) >> 2);
+    retval |= ((PEEK(USERPORT_DATA) & 0x80) >> 6);
+    retval |= ((PEEK(USERPORT_DATA) & 0x40) >> 4);
+    retval |= ((PEEK(USERPORT_DATA) & 0x20) >> 2);
+    retval |= (PEEK(USERPORT_DATA) & 0x10);
+    POKE(C64_CIA2_PRA, temp);
+    POKE(C64_CIA2_DDRA, temp2);
+    retval ^= 0x1F;
+    return retval;
+}
+
+static unsigned char read_c64_kingsoft_joy2(void)
+{
+    unsigned char retval = 0;
+
+    setup_cnt12sp();
+    retval |= ((PEEK(USERPORT_DATA) & 8) >> 3);
+    retval |= ((PEEK(USERPORT_DATA) & 4) >> 1);
+    retval |= ((PEEK(USERPORT_DATA) & 2) << 1);
+    retval |= ((PEEK(USERPORT_DATA) & 1) << 3);
+    POKE(C64_CIA1_SR, 0xFF);
+    if (PEEK(C64_CIA2_SR) != 0)
+    {
+        retval |= 0x10;
+    }
+    retval ^= 0x1F;
+    return retval;
+}
+
+static unsigned char read_c64_starbyte_joy1(void)
+{
+    unsigned char retval = 0;
+    unsigned char temp;
+
+    setup_cnt12sp();
+    temp = PEEK(C64_CIA2_DDRA);
+    POKE(C64_CIA1_SR, 0xFF);
+    if (PEEK(C64_CIA2_SR) != 0)
+    {
+        retval |= 0x10;
+    }
+    retval |= ((PEEK(USERPORT_DATA) & 1) << 1);
+    retval |= ((PEEK(USERPORT_DATA) & 2) << 2);
+    retval |= (PEEK(USERPORT_DATA) & 4);
+    retval |= ((PEEK(USERPORT_DATA) & 8) >> 3);
+    POKE(C64_CIA2_DDRA, temp);
+    retval ^= 0x1F;
+    return retval;
+}
+
+static unsigned char read_c64_starbyte_joy2(void)
+{
+    unsigned char retval;
+    unsigned char temp, temp2;
+
+    setup_cnt12sp();
+    temp = PEEK(C64_CIA2_PRA);
+    temp2 = PEEK(C64_CIA2_DDRA);
+    retval = ((PEEK(USERPORT_DATA) & 0x20) >> 4);
+    retval |= ((PEEK(USERPORT_DATA) & 0x40) >> 3);
+    retval |= ((PEEK(USERPORT_DATA) & 0x80) >> 5);
+    retval |= (PEEK(USERPORT_DATA) & 0x10);
+    POKE(C64_CIA2_DDRA, (PEEK(C64_CIA2_DDRA) & 0xFB));
+    retval |= ((PEEK(C64_CIA2_PRA) & 4) >> 2);
+    POKE(C64_CIA2_PRA, temp);
+    POKE(C64_CIA2_DDRA, temp2);
     retval ^= 0x1F;
     return retval;
 }
@@ -419,6 +498,10 @@ int main(void)
         {
             draw_joy(read_c64_hit_joy1(), 2, 15, 1, 15, "hit-1");
             draw_joy(read_c64_hit_joy2(), 10, 15, 9, 15, "hit-2");
+            draw_joy(read_c64_kingsoft_joy1(), 18, 15, 17, 15, "king1");
+            draw_joy(read_c64_kingsoft_joy2(), 26, 15, 25, 15, "king2");
+            draw_joy(read_c64_starbyte_joy1(), 18, 10, 17, 10, "star1");
+            draw_joy(read_c64_starbyte_joy2(), 26, 10, 25, 10, "star2");
         }
     }
 }
