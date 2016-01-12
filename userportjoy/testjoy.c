@@ -39,6 +39,12 @@
 #define USERPORT_DDR  0xE843
 #endif
 
+/* plus4 userport addresses */
+#if defined(__PLUS4__) || defined(__C16__)
+#define USERPORT_DATA 0xfd10
+#define USERPORT_DDR  0xfdf0  /* free space, no ddr on plus4 */
+#endif
+
 /* cbm6x0/7x0 userport addresses,
    and way of poking/peeking */
 #ifdef __CBM610__
@@ -415,7 +421,9 @@ static unsigned char read_cga_joy2(void)
     retval ^= 0x1F;
     return retval;
 }
+#endif
 
+#if !defined(__CBM510__)
 static unsigned char read_pet_joy1(void)
 {
     unsigned char retval;
@@ -578,6 +586,10 @@ int main(void)
         draw_joy(read_native_plus4_joy1(), 2, 0, 0, 0, "native1");
         draw_joy(read_native_plus4_joy2(), 10, 0, 8, 0, "native2");
         draw_joy(read_plus4_sidcart_joy(), 18, 0, 16, 0, "sidcart");
+        draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1");
+        draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2");
+        draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem");
+        draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer");
     }
 }
 #endif
