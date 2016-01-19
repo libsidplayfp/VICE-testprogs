@@ -1,7 +1,4 @@
 
-    .export __INITBSS_LOAD__
-__INITBSS_LOAD__ := 0
-
     .macpack longbranch
     .export Start
 
