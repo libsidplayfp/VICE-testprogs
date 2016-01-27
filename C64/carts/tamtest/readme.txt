@@ -11,7 +11,7 @@ C64 stack or Zeropage.
    - if $01 is broken background turns red
 5) switch to 16k mode so RAM can be accessed (except RAM under I/O)
    - if $01 is broken border turns white
-6) RAM at $0200-$cfff and $e000-$ffff is being tested
+6) RAM at $0002-$cfff and $e000-$ffff is being tested
 7) color RAM $d800-$dbff is being tested
 8) result is displayed on screen and easyflash LED
    - first line shows broken RAM bits (7-0)
