@@ -14,6 +14,8 @@
 #include <cbm610.h>
 #endif
 
+#include "audio-io.h"
+
 /* c64/c64dtv/c128 userport addresses */
 #if defined(__C128__) || defined(__C64__)
 #define USERPORT_DATA 0xDD01
@@ -119,719 +121,334 @@ typedef struct menu_input_s {
     char key;
     char *displayname;
     struct menu_input_s *menu;
-    unsigned char (*function)(unsigned char init);
+    void (*function_init)(void);
+    unsigned char (*function)(void);
 } menu_input_t;
-
-static unsigned char software_retval = 0;
-
-static unsigned char software_input(unsigned char init)
-{
-    if (init) {
-        return 0;
-    }
-
-    /* simple saw tooth generation */
-    ++software_retval;
-
-    return software_retval;
-}
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
-static unsigned char sfx_input(unsigned char init)
-{
-    unsigned char retval;
-
-    if (init) {
-        cprintf("Reading samples from sfx sound sampler at $04X\r\n", SFX_ADDRESS_READ);
-        POKE(SFX_ADDRESS_LATCH, 0);
-        return 0;
-    }
-    retval = PEEK(SFX_ADDRESS_READ);
-    POKE(SFX_ADDRESS_LATCH, 0);
-    return retval;
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static unsigned char daisy_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C16__) || defined(__PLUS4__)
-static unsigned char digiblaster_input(unsigned char init)
-{
-    if (init) {
-        cprintf("Reading samples from digiblaster at $FD5F\r\n");
-        return 0;
-    }
-    return PEEK(0xFD5F);
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM510__) || defined(__VIC20__)
-static unsigned char sampler_2bit_joy1_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM510__) || defined(__VIC20__)
-static unsigned char sampler_4bit_joy1_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM510__)
-static unsigned char sampler_2bit_joy2_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM510__)
-static unsigned char sampler_4bit_joy2_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C16__) || defined(__PLUS4__)
-static unsigned char sampler_2bit_sidcart_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C16__) || defined(__PLUS4__)
-static unsigned char sampler_4bit_sidcart_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
-static unsigned char sampler_4bit_userport_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM610__)
-static unsigned char sampler_8bss_left_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-
-static unsigned char sampler_8bss_right_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static unsigned char sampler_2bit_hummer_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static unsigned char sampler_4bit_hummer_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static unsigned char sampler_2bit_oem_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static unsigned char sampler_4bit_oem_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static unsigned char sampler_2bit_pet1_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static unsigned char sampler_4bit_pet1_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static unsigned char sampler_2bit_pet2_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static unsigned char sampler_4bit_pet2_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
-static unsigned char sampler_2bit_cga1_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
-static unsigned char sampler_4bit_cga1_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
-static unsigned char sampler_2bit_cga2_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
-static unsigned char sampler_4bit_cga2_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static unsigned char sampler_2bit_starbyte1_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static unsigned char sampler_4bit_starbyte1_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static unsigned char sampler_2bit_starbyte2_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static unsigned char sampler_4bit_starbyte2_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static unsigned char sampler_2bit_kingsoft1_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static unsigned char sampler_4bit_kingsoft1_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static unsigned char sampler_2bit_kingsoft2_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static unsigned char sampler_4bit_kingsoft2_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static unsigned char sampler_2bit_hit1_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static unsigned char sampler_4bit_hit1_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static unsigned char sampler_2bit_hit2_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static unsigned char sampler_4bit_hit2_input(unsigned char init)
-{
-    return init;
-    /* TODO */
-}
-#endif
 
 #if defined(__C64__) || defined(__C128__)
 static menu_input_t input_hit1_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_hit1_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_hit1_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_hit1_input_init, sampler_2bit_hit1_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_hit1_input_init, sampler_4bit_hit1_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__)
 static menu_input_t input_hit2_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_hit2_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_hit2_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_hit2_input_init, sampler_2bit_hit2_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_hit2_input_init, sampler_4bit_hit2_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__)
 static menu_input_t input_hit_menu[] = {
-    { '1', "port 1", input_hit1_menu, NULL },
-    { '2', "port 2", input_hit2_menu, NULL },
-    { 0, NULL, NULL, NULL },
+    { '1', "port 1", input_hit1_menu, NULL, NULL },
+    { '2', "port 2", input_hit2_menu, NULL, NULL },
+    { 0, NULL, NULL, NULL, NULL },
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__)
 static menu_input_t input_kingsoft1_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_kingsoft1_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_kingsoft1_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_kingsoft1_input_init, sampler_2bit_kingsoft1_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_kingsoft1_input_init, sampler_4bit_kingsoft1_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__)
 static menu_input_t input_kingsoft2_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_kingsoft2_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_kingsoft2_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_kingsoft2_input_init, sampler_2bit_kingsoft2_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_kingsoft2_input_init, sampler_4bit_kingsoft2_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__)
 static menu_input_t input_kingsoft_menu[] = {
-    { '1', "port 1", input_kingsoft1_menu, NULL },
-    { '2', "port 2", input_kingsoft2_menu, NULL },
-    { 0, NULL, NULL, NULL },
+    { '1', "port 1", input_kingsoft1_menu, NULL, NULL },
+    { '2', "port 2", input_kingsoft2_menu, NULL, NULL },
+    { 0, NULL, NULL, NULL, NULL },
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__)
 static menu_input_t input_starbyte1_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_starbyte1_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_starbyte1_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_starbyte1_input_init, sampler_2bit_starbyte1_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_starbyte1_input_init, sampler_4bit_starbyte1_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__)
 static menu_input_t input_starbyte2_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_starbyte2_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_starbyte2_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_starbyte2_input_init, sampler_2bit_starbyte2_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_starbyte2_input_init, sampler_4bit_starbyte2_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__)
 static menu_input_t input_starbyte_menu[] = {
-    { '1', "port 1", input_starbyte1_menu, NULL },
-    { '2', "port 2", input_starbyte2_menu, NULL },
-    { 0, NULL, NULL, NULL },
+    { '1', "port 1", input_starbyte1_menu, NULL, NULL },
+    { '2', "port 2", input_starbyte2_menu, NULL, NULL },
+    { 0, NULL, NULL, NULL, NULL },
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_cga1_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_cga1_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_cga1_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_cga1_input_init, sampler_2bit_cga1_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_cga1_input_init, sampler_4bit_cga1_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_cga2_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_cga2_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_cga2_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_cga2_input_init, sampler_2bit_cga2_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_cga2_input_init, sampler_4bit_cga2_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_cga_menu[] = {
-    { '1', "port 1", input_cga1_menu, NULL },
-    { '2', "port 2", input_cga2_menu, NULL },
-    { 0, NULL, NULL, NULL },
+    { '1', "port 1", input_cga1_menu, NULL, NULL },
+    { '2', "port 2", input_cga2_menu, NULL, NULL },
+    { 0, NULL, NULL, NULL, NULL },
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_pet1_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_pet1_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_pet1_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_pet1_input_init, sampler_2bit_pet1_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_pet1_input_init, sampler_4bit_pet1_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_pet2_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_pet2_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_pet2_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_pet2_input_init, sampler_2bit_pet2_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_pet2_input_init, sampler_4bit_pet2_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_pet_menu[] = {
-    { '1', "port 1", input_pet1_menu, NULL },
-    { '2', "port 2", input_pet2_menu, NULL },
-    { 0, NULL, NULL, NULL },
+    { '1', "port 1", input_pet1_menu, NULL, NULL },
+    { '2', "port 2", input_pet2_menu, NULL, NULL },
+    { 0, NULL, NULL, NULL, NULL },
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_oem_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_oem_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_oem_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_oem_input_init, sampler_2bit_oem_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_oem_input_init, sampler_4bit_oem_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_hummer_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_hummer_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_hummer_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_hummer_input_init, sampler_2bit_hummer_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_hummer_input_init, sampler_4bit_hummer_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_userport_joy_menu[] = {
-    { 'h', "HUMMER joystick adapter", input_hummer_menu, NULL },
-    { 'o', "OEM joystick adapter", input_oem_menu, NULL },
-    { 'p', "PET joystick adapter", input_pet_menu, NULL },
+    { 'h', "HUMMER joystick adapter", input_hummer_menu, NULL, NULL },
+    { 'o', "OEM joystick adapter", input_oem_menu, NULL, NULL },
+    { 'p', "PET joystick adapter", input_pet_menu, NULL, NULL },
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
-    { 'c', "CGA joystick adapter", input_cga_menu, NULL },
+    { 'c', "CGA joystick adapter", input_cga_menu, NULL, NULL },
 #endif
 #if defined(__C64__) || defined(__C128__)
-    { 's', "StarByte joystick adapter", input_starbyte_menu, NULL },
-    { 'k', "KingSoft joystick adapter", input_kingsoft_menu, NULL },
-    { 'h', "HIT joystick adapter", input_hit_menu, NULL },
+    { 's', "StarByte joystick adapter", input_starbyte_menu, NULL, NULL },
+    { 'k', "KingSoft joystick adapter", input_kingsoft_menu, NULL, NULL },
+    { 'h', "HIT joystick adapter", input_hit_menu, NULL, NULL },
 #endif
-    { 0, NULL, NULL, NULL }
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_userport_menu[] = {
-    { 'j', "userport joystick adapter", input_userport_joy_menu, NULL },
+    { 'j', "userport joystick adapter", input_userport_joy_menu, NULL, NULL },
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
-    { '4', "4 bit sampler", NULL, sampler_4bit_userport_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_userport_input_init, sampler_4bit_userport_input },
 #endif
 #if defined(__C64__) || defined(__C128__) || defined(__CBM610__)
-    { 'l', "8BSS left", NULL, sampler_8bss_left_input },
-    { 'r', "8BSS right", NULL, sampler_8bss_right_input },
+    { 'l', "8BSS left", NULL, sampler_8bss_left_input_init, sampler_8bss_left_input },
+    { 'r', "8BSS right", NULL, sampler_8bss_right_input_init, sampler_8bss_right_input },
 #endif
-    { 0, NULL, NULL, NULL }
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM510__) || defined(__VIC20__)
 static menu_input_t input_native_joy1_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_joy1_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_joy1_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_joy1_input_init, sampler_2bit_joy1_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_joy1_input_init, sampler_4bit_joy1_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM510__)
 static menu_input_t input_native_joy2_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_joy2_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_joy2_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_joy2_input_init, sampler_2bit_joy2_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_joy2_input_init, sampler_4bit_joy2_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C16__) || defined(__PLUS4__)
 static menu_input_t input_sidcart_joy_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_sidcart_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_sidcart_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_sidcart_input_init, sampler_2bit_sidcart_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_sidcart_input_init, sampler_4bit_sidcart_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM510__)
 static menu_input_t input_joy_menu[] = {
 #if defined(__C64__) || defined(__C128__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM510__)
-    { '1', "native port 1", input_native_joy1_menu, NULL },
-    { '2', "native port 2", input_native_joy2_menu, NULL },
+    { '1', "native port 1", input_native_joy1_menu, NULL, NULL },
+    { '2', "native port 2", input_native_joy2_menu, NULL, NULL },
 #endif
 #if defined(__VIC20__)
-    { '1', "native port", input_native_joy1_menu, NULL },
+    { '1', "native port", input_native_joy1_menu, NULL, NULL },
 #endif
 #if defined(__C16__) || defined(__PLUS4__)
-    { 's', "sidcart port", input_sidcart_joy_menu, NULL },
+    { 's', "sidcart port", input_sidcart_joy_menu, NULL, NULL },
 #endif
-    { 0, NULL, NULL, NULL },
+    { 0, NULL, NULL, NULL, NULL },
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__)
 static menu_input_t input_cart_menu[] = {
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
-    { 's', "sfx sound sampler", NULL, sfx_input },
+    { 's', "sfx sound sampler", NULL, sfx_input_init, sfx_input },
 #endif
 #if defined(__C64__) || defined(__C128__)
-    { 'd', "daisy", NULL, daisy_input },
+    { 'd', "daisy", NULL, daisy_input_init, daisy_input },
 #endif
 #if defined(__C16__) || defined(__PLUS4__)
-    { 'd', "digiblaster", NULL, digiblaster_input },
+    { 'd', "digiblaster", NULL, digiblaster_input_init, digiblaster_input },
 #endif
-    { 0, NULL, NULL, NULL },
+    { 0, NULL, NULL, NULL, NULL },
 };
 #endif
 
 static menu_input_t input_port_menu[] = {
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__)
-    { 'c', "cartridge port", input_cart_menu, NULL },
+    { 'c', "cartridge port", input_cart_menu, NULL, NULL },
 #endif
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM510__)
-    { 'j', "joystick port", input_joy_menu, NULL },
+    { 'j', "joystick port", input_joy_menu, NULL, NULL },
 #endif
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-    { 'u', "userport", input_userport_menu, NULL },
+    { 'u', "userport", input_userport_menu, NULL, NULL },
 #endif
-    { 0, NULL, NULL, NULL }
+    { 0, NULL, NULL, NULL, NULL }
 };
 
 static menu_input_t input_main_menu[] = {
-    { 's', "software generated waveform", NULL, software_input },
-    { 'h', "hardware device", input_port_menu, NULL },
-    { 0, NULL, NULL, NULL }
+    { 's', "software generated waveform", NULL, software_input_init, software_input },
+    { 'h', "hardware device", input_port_menu, NULL, NULL },
+    { 0, NULL, NULL, NULL, NULL }
 };
 
 #if defined(__C64__)
 static menu_input_t input_port1_c64dtv_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_joy1_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_joy1_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_joy1_input_init, sampler_2bit_joy1_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_joy1_input_init, sampler_4bit_joy1_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__)
 static menu_input_t input_port2_c64dtv_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_joy2_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_joy2_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_joy2_input_init, sampler_2bit_joy2_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_joy2_input_init, sampler_4bit_joy2_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__)
 static menu_input_t input_hummer_c64dtv_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_hummer_input },
-    { '4', "4 bit sampler", NULL, sampler_4bit_hummer_input },
-    { 0, NULL, NULL, NULL }
+    { '2', "2 bit sampler", NULL, sampler_2bit_hummer_input_init, sampler_2bit_hummer_input },
+    { '4', "4 bit sampler", NULL, sampler_4bit_hummer_input_init, sampler_4bit_hummer_input },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__)
 static menu_input_t input_port_c64dtv_menu[] = {
-    { '1', "native port 1", input_port1_c64dtv_menu, NULL },
-    { '2', "native port 2", input_port2_c64dtv_menu, NULL },
-    { 'h', "hummer joystick adapter", input_hummer_c64dtv_menu, NULL },
-    { 0, NULL, NULL, NULL }
+    { '1', "native port 1", input_port1_c64dtv_menu, NULL, NULL },
+    { '2', "native port 2", input_port2_c64dtv_menu, NULL, NULL },
+    { 'h', "hummer joystick adapter", input_hummer_c64dtv_menu, NULL, NULL },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 #if defined(__C64__)
 static menu_input_t input_main_c64dtv_menu[] = {
-    { 's', "software generated waveform", NULL, software_input },
-    { 'h', "hardware device", input_port_c64dtv_menu, NULL },
-    { 0, NULL, NULL, NULL }
+    { 's', "software generated waveform", NULL, software_input_init, software_input },
+    { 'h', "hardware device", input_port_c64dtv_menu, NULL, NULL },
+    { 0, NULL, NULL, NULL, NULL }
 };
 #endif
 
 typedef struct menu_output_s {
     char key;
     char *displayname;
-    void (*function)(unsigned char sample, unsigned char init);
+    void (*function_init)(void);
+    void (*function)(unsigned char sample);
 } menu_output_t;
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__) || defined(__CBM610__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__PET__)
-static void sid_output(unsigned char sample, unsigned char init)
-{
-    sample = sample;
-    init = init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C16__) || defined(__PLUS4__)
-static void ted_output(unsigned char sample, unsigned char init)
-{
-    sample = sample;
-    init = init;
-    /* TODO */
-}
-#endif
-
-#if defined(__VIC20__)
-static void vic_output(unsigned char sample, unsigned char init)
-{
-    sample = sample;
-    init = init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
-static void sfx_output(unsigned char sample, unsigned char init)
-{
-    if (init) {
-        cprintf("Writing samples to sfx sound sampler at $%04X\r\n", SFX_ADDRESS_WRITE);
-    } else {
-        POKE(SFX_ADDRESS_WRITE, sample);
-    }
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
-static void digimax_cart_output(unsigned char sample, unsigned char init)
-{
-    sample = sample;
-    init = init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM610__)
-static void userport_digimax_output(unsigned char sample, unsigned char init)
-{
-    sample = sample;
-    init = init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static void userport_dac_output(unsigned char sample, unsigned char init)
-{
-    sample = sample;
-    init = init;
-    /* TODO */
-}
-#endif
-
-#if defined(__C16__) || defined(__PLUS4__)
-static void digiblaster_output(unsigned char sample, unsigned char init)
-{
-    if (init) {
-        cprintf("Writing samples to digiblaster at $FD5E\r\n");
-    } else {
-        POKE(0xFD5E, sample);
-    }
-}
-#endif
 
 static menu_output_t output_menu[] = {
 #if defined(__C64__) || defined(__C128__) || defined(__CBM510__) || defined(__CBM610__)
-    { 's', "SID", sid_output },
+    { 's', "SID", sid_output_init, sid_output },
 #endif
 #if defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__PET__)
-    { 's', "SIDcart", sid_output },
+    { 's', "SIDcart", sid_output_init, sid_output },
 #endif
 #if defined(__C16__) || defined(__PLUS4__)
-    { 't', "TED", ted_output },
+    { 't', "TED", ted_output_init, ted_output },
 #endif
 #if defined(__VIC20__)
-    { 'v', "VIC", vic_output },
+    { 'v', "VIC", vic_output_init, vic_output },
 #endif
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
-    { 'x', "sfx sound sampler", sfx_output },
+    { 'x', "sfx sound sampler", sfx_output_init, sfx_output },
 #endif
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
-    { 'd', "digimax cartridge", digimax_cart_output },
+    { 'd', "digimax cartridge", digimax_cart_output_init, digimax_cart_output },
 #endif
 #if defined(__C64__) || defined(__C128__) || defined(__CBM610__)
-    { 'u', "userport digimax device", userport_digimax_output },
+    { 'u', "userport digimax device", userport_digimax_output_init, userport_digimax_output },
 #endif
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-    { '8', "userport dac", userport_dac_output },
+    { '8', "userport dac", userport_dac_output_init, userport_dac_output },
 #endif
 #if defined(__C16__) || defined(__PLUS4__)
-    { 'b', "digiblaster", digiblaster_output },
+    { 'b', "digiblaster", digiblaster_output_init, digiblaster_output },
 #endif
-    { 0, NULL, NULL }
+    { 0, NULL, NULL, NULL }
 };
 
 #if defined(__C64__)
 static menu_output_t output_c64dtv_menu[] = {
-    { 's', "SID", sid_output },
-    { 0, NULL, NULL }
+    { 's', "SID", sid_output_init, sid_output },
+    { 0, NULL, NULL, NULL }
 };
 #endif
 
@@ -839,12 +456,13 @@ int main(void)
 {
     menu_input_t *current_input_menu = NULL;
     menu_output_t *current_output_menu = NULL;
-    unsigned char (*input_function)(unsigned char init) = NULL;
-    void (*output_function)(unsigned char sample, unsigned char init) = NULL;
+    void (*input_function_init)(void) = NULL;
+    unsigned char (*input_function)(void) = NULL;
+    void (*output_function_init)(void) = NULL;
+    void (*output_function)(unsigned char sample) = NULL;
     unsigned char index;
     signed char valid_key = -1;
     char key;
-    unsigned char sample;
 
 #if defined(__C64__)
     test_c64dtv();
@@ -864,6 +482,7 @@ int main(void)
             if (current_input_menu[0].menu) {
                 current_input_menu = current_input_menu[0].menu;
             } else {
+                input_function_init = current_input_menu[0].function_init;
                 input_function = current_input_menu[0].function;
             }
         } else {
@@ -884,6 +503,7 @@ int main(void)
             if (current_input_menu[valid_key].menu) {
                 current_input_menu = current_input_menu[valid_key].menu;
             } else {
+                input_function_init = current_input_menu[valid_key].function_init;
                 input_function = current_input_menu[valid_key].function;
             }
         }
@@ -903,6 +523,7 @@ int main(void)
         for (index = 0; current_output_menu[index].key; ++index) {
         }
         if (index == 1) {
+            output_function_init = current_output_menu[0].function_init;
             output_function = current_output_menu[0].function;
         } else {
             clrscr();
@@ -919,19 +540,23 @@ int main(void)
                     }
                 }
             }
+            output_function_init = current_output_menu[valid_key].function_init;
             output_function = current_output_menu[valid_key].function;
         }
     }
 
     clrscr();
     SEI();
-    (void)input_function(1);
-    output_function(0, 1);
-    while (1) {
-        sample = input_function(0);
-        output_function(sample, 0);
+    set_input_jsr(input_function);
+    set_output_jsr(output_function);
+
+    if (input_function_init) {
+        input_function_init();
     }
+    if (output_function_init) {
+        output_function_init();
+    }
+    stream();
 
     return 0;
-
 }
