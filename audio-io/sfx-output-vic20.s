@@ -7,5 +7,5 @@
         .export  _sfx_output
 
 _sfx_output:
-        sta     $df00
+        sta     $9800
         rts
