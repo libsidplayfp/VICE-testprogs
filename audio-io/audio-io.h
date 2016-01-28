@@ -9,8 +9,12 @@ void __fastcall__ stream(void);
 /* sfx-input-c64.s / sfx-input-vic20.s */
 unsigned char __fastcall__ sfx_input(void);
 
-/* sfx-output-c64.s / sfx-input-vic20.s */
+/* sfx-output-c64.s / sfx-output-vic20.s */
 void __fastcall__ sfx_output(unsigned char sample);
+
+/* sid-output-c64.s / sid-output-cbm2.s / sid-output-pet.s / sid-output-plus4.s / sid-output-vic20.s */
+void __fastcall__ sid_output_init(void);
+void __fastcall__ sid_output(unsigned char sample);
 
 /* stubs.s */
 void __fastcall__ sampler_2bit_hit1_input_init(void);

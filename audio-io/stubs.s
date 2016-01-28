@@ -42,7 +42,6 @@
         .export  _digiblaster_input_init, _digiblaster_input
         .export  _software_input_init, _software_input
 
-        .export  _sid_output_init, _sid_output
         .export  _ted_output_init, _ted_output
         .export  _vic_output_init, _vic_output
         .export  _digimax_cart_output_init, _digimax_cart_output
@@ -124,8 +123,6 @@ _software_input_init:
 _software_input:
         rts
 
-_sid_output_init:
-_sid_output:
 _ted_output_init:
 _ted_output:
 _vic_output_init:
