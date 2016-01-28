@@ -12,5 +12,5 @@ cl65 -t pet audio-io.c stream.s sid-output-pet.s stubs.s
 mv audio-io audio-io-pet.prg
 cl65 -t c16 audio-io.c stream.s digiblaster-input-plus4.s sid-output-plus4.s digiblaster-output-plus4.s stubs.s
 mv audio-io audio-io-plus4.prg
-cl65 -t vic20 --config /usr/local/share/cc65/cfg/vic20-32k.cfg audio-io.c stream.s sfx-input-vic20.s sfx-output-vic20.s  sid-output-vic20.s stubs.s
+cl65 -t vic20 --config /usr/local/share/cc65/cfg/vic20-32k.cfg audio-io.c stream.s sfx-input-vic20.s sfx-output-vic20.s  vic-output-vic20.s sid-output-vic20.s stubs.s
 mv audio-io audio-io-vic20.prg

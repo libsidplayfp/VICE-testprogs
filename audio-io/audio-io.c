@@ -384,7 +384,7 @@ static output_device_t ted_output_device[] = {
 
 #if defined(__VIC20__)
 static output_device_t vic_output_device[] = {
-    { "VIC", vic_output_init, vic_output }
+    { "VIC", NULL, vic_output }
 };
 #endif
 
