@@ -406,9 +406,15 @@ static output_device_t userport_digimax_output_device[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static output_device_t userport_dac_output_device[] = {
     { "userport DAC", userport_dac_output_init, userport_dac_output }
+};
+#endif
+
+#if defined(__C16__) || defined(__PLUS4__)
+static output_device_t userport_dac_output_device[] = {
+    { "userport DAC", NULL, userport_dac_output }
 };
 #endif
 

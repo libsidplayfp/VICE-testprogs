@@ -43,7 +43,6 @@
 
         .export  _ted_output_init, _ted_output
         .export  _userport_digimax_output_init, _userport_digimax_output
-        .export  _userport_dac_output_init, _userport_dac_output
 
 _sampler_2bit_hit1_input_init:
 _sampler_2bit_hit1_input:
@@ -121,6 +120,4 @@ _ted_output_init:
 _ted_output:
 _userport_digimax_output_init:
 _userport_digimax_output:
-_userport_dac_output_init:
-_userport_dac_output:
         rts
