@@ -1,22 +1,26 @@
 ;
-; Marco van den Heuvel, 27.01.2016
+; Marco van den Heuvel, 28.01.2016
 ;
 ; void __fastcall__ sid_output_init(void);
 ; void __fastcall__ sid_output(unsigned char sample);
 ;
 
-        .export         _sid_output_init, _sid_output
-        .importzp       sreg
+        .export  _sid_output_init, _sid_output
 
-_sid_output_init:
+        .importzp   sreg
+
+setup_banking:
         ldx     $01
-        ldy     #$00
-        sty     sreg
-        ldy     #$da
-        sty     sreg + 1
         ldy     #$0f
         sty     $01
+        rts
+
+_sid_output_init:
+        jsr     setup_banking
+        ldy     #$da
+        sty     sreg + 1
         ldy     #$00
+        sty     sreg
         tya
 @l:
         sta     (sreg),y
@@ -37,18 +41,15 @@ _sid_output_init:
         sta     (sreg),y
         ldy     #$12
         sta     (sreg),y
-
         stx     $01
         rts
 
 _sid_output:
-        ldx     $01
+        jsr     setup_banking
         ldy     #$18
         sty     sreg
         ldy     #$da
         sty     sreg + 1
-        ldy     #$0f
-        sty     $01
         ldy     #$00
         lsr
         lsr

@@ -6,33 +6,27 @@ void __fastcall__ set_input_jsr(char __fastcall__ (*function)(void));
 void __fastcall__ set_output_jsr(void __fastcall__ (*function)(unsigned char sample));
 void __fastcall__ stream(void);
 
-/* sfx-input-c64.s / sfx-input-vic20.s */
+/* c64-drivers.s / vic20-drivers.s */
 unsigned char __fastcall__ sfx_input(void);
-
-/* digiblaster-input-plus4.s */
-unsigned char __fastcall__ digiblaster_input(void);
-
-/* sfx-output-c64.s / sfx-output-vic20.s */
 void __fastcall__ sfx_output(unsigned char sample);
+void __fastcall__ digimax_cart_output(unsigned char sample);
 
-/* sid-output-c64.s / sid-output-cbm2.s / sid-output-pet.s / sid-output-plus4.s / sid-output-vic20.s */
+/* plus4-drivers.s */
+unsigned char __fastcall__ digiblaster_input(void);
+void __fastcall__ digiblaster_output(unsigned char sample);
+
+/* c64-drivers.s / sid-output-cbm2.s / sid-output-pet.s / plus4-drivers.s / vic20-drivers.s */
 void __fastcall__ sid_output_init(void);
 void __fastcall__ sid_output(unsigned char sample);
 
-/* digiblaster-output-plus4.s */
-void __fastcall__ digiblaster_output(unsigned char sample);
-
-/* vic-output-vic20.s */
+/* vic20-drivers.s */
 void __fastcall__ vic_output(unsigned char sample);
 
-/* digimax-cart-output-c64.s / digimax-cart-output-vic20.s */
-void __fastcall__ digimax_cart_output(unsigned char sample);
-
-/* userport-dac-output-c64.s / userport-dac-output-cbm2.s / userport-dac-output-pet.s / userport-dac-output-plus4.s / userport-dac-output-vic20.s */
+/* c64-drivers.s / userport-dac-output-cbm2.s / userport-dac-output-pet.s / plus4-drivers.s / vic20-drivers.s */
 void __fastcall__ userport_dac_output_init(void);
 void __fastcall__ userport_dac_output(unsigned char sample);
 
-/* sampler-4bit-joy1-input-c64.s / sampler-4bit-joy1-input-cbm2.s / sampler-4bit-joy1-input-plus4.s / sampler-4bit-joy1-input-vic20.s */
+/* c64-drivers.s / sampler-4bit-joy1-input-cbm2.s / plus4-drivers.s / vic20-drivers.s */
 unsigned char __fastcall__ sampler_4bit_joy1_input(void);
 
 /* stubs.s */

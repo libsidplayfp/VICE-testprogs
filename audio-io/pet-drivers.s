@@ -1,11 +1,14 @@
 ;
-; Marco van den Heuvel, 27.01.2016
+; Marco van den Heuvel, 28.01.2016
 ;
 ; void __fastcall__ sid_output_init(void);
 ; void __fastcall__ sid_output(unsigned char sample);
+; void __fastcall__ userport_dac_output_init(void);
+; void __fastcall__ userport_dac_output(unsigned char sample);
 ;
 
         .export  _sid_output_init, _sid_output
+        .export  _userport_dac_output_init, _userport_dac_output
 
 _sid_output_init:
         lda     #$00
@@ -32,3 +35,13 @@ _sid_output:
         lsr
         sta     $e918
         rts
+
+_userport_dac_output_init:
+        ldx     #$ff
+        stx     $e843
+        rts
+
+_userport_dac_output:
+        sta     $e841
+        rts
+
