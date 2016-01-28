@@ -83,20 +83,6 @@
 #define CBM510_JOY_FIRE       0xDC00
 #define CBM510_JOY_DIRECTIONS 0xDC01
 
-/* C64/C128 SFX addresses */
-#if defined(__C128__) || defined(__C64__)
-#define SFX_ADDRESS_LATCH 0xDE00
-#define SFX_ADDRESS_READ  0xDF00
-#define SFX_ADDRESS_WRITE 0xDF00
-#endif
-
-/* VIC20 SFX addresses */
-#if defined(__VIC20__)
-#define SFX_ADDRESS_LATCH 0x9C00
-#define SFX_ADDRESS_READ  0x9800
-#define SFX_ADDRESS_WRITE 0x9800
-#endif
-
 /* detection of c64dtv */
 #if defined(__C64__)
 static unsigned char isc64dtv = 0;
@@ -356,7 +342,7 @@ static input_device_t sampler_4bit_sidcart_input_device[] = {
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
 static input_device_t sfx_input_device[] = {
-    { "SFX Sound Sampler", sfx_input_init, sfx_input }
+    { "SFX Sound Sampler", NULL, sfx_input }
 };
 #endif
 
@@ -404,7 +390,7 @@ static output_device_t vic_output_device[] = {
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
 static output_device_t sfx_output_device[] = {
-    { "SFX Sound Sampler", sfx_output_init, sfx_output }
+    { "SFX Sound Sampler", NULL, sfx_output }
 };
 #endif
 
