@@ -396,7 +396,7 @@ static output_device_t sfx_output_device[] = {
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
 static output_device_t digimax_cart_output_device[] = {
-    { "DigiMAX cartridge", digimax_cart_output_init, digimax_cart_output }
+    { "DigiMAX cartridge", NULL, digimax_cart_output }
 };
 #endif
 

@@ -42,7 +42,6 @@
         .export  _software_input_init, _software_input
 
         .export  _ted_output_init, _ted_output
-        .export  _digimax_cart_output_init, _digimax_cart_output
         .export  _userport_digimax_output_init, _userport_digimax_output
         .export  _userport_dac_output_init, _userport_dac_output
 
@@ -120,8 +119,6 @@ _software_input:
 
 _ted_output_init:
 _ted_output:
-_digimax_cart_output_init:
-_digimax_cart_output:
 _userport_digimax_output_init:
 _userport_digimax_output:
 _userport_dac_output_init:
