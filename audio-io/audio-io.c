@@ -606,6 +606,10 @@ static menu_input_t input_native_joy2_menu[] = {
 #if defined(__C16__) || defined(__PLUS4__)
 static menu_input_t input_sidcart_joy_menu[] = {
     { '2', "2 bit sampler", NULL, sampler_2bit_sidcart_input_device },
+
+
+
+
     { '4', "4 bit sampler", NULL, sampler_4bit_sidcart_input_device },
     { 0, NULL, NULL, NULL }
 };
@@ -764,34 +768,24 @@ int main(void)
 #endif
 
     while (input_device == NULL) {
+        clrscr();
+        cprintf("Choose input\r\n\r\n");
         for (index = 0; current_input_menu[index].key; ++index) {
+            cprintf("%c: %s\r\n", current_input_menu[index].key, current_input_menu[index].displayname);
         }
-        if (index == 1) {
-            if (current_input_menu[0].menu) {
-                current_input_menu = current_input_menu[0].menu;
-            } else {
-                input_device = current_input_menu[0].device;
-            }
-        } else {
-            clrscr();
-            cprintf("Choose input\r\n\r\n");
-            for (index = 0; current_input_menu[index].key; ++index) {
-                cprintf("%c: %s\r\n", current_input_menu[index].key, current_input_menu[index].displayname);
-            }
-            valid_key = -1;
-            while (valid_key < 0) {
-                key = cgetc();
-                for (index = 0; current_input_menu[index].key && valid_key < 0; ++index) {
-                    if (key == current_input_menu[index].key) {
-                        valid_key = index;
-                    }
+        valid_key = -1;
+        while (valid_key < 0) {
+            key = cgetc();
+            for (index = 0; current_input_menu[index].key && valid_key < 0; ++index) {
+                if (key == current_input_menu[index].key) {
+                    valid_key = index;
                 }
             }
-            if (current_input_menu[valid_key].menu) {
-                current_input_menu = current_input_menu[valid_key].menu;
-            } else {
-                input_device = current_input_menu[valid_key].device;
-            }
+        }
+        if (current_input_menu[valid_key].menu) {
+            current_input_menu = current_input_menu[valid_key].menu;
+        } else {
+            input_device = current_input_menu[valid_key].device;
         }
     }
 
@@ -806,27 +800,21 @@ int main(void)
 #endif
 
     while (output_device == NULL) {
+        clrscr();
+        cprintf("Choose output\r\n\r\n");
         for (index = 0; current_output_menu[index].key; ++index) {
+            cprintf("%c: %s\r\n", current_output_menu[index].key, current_output_menu[index].displayname);
         }
-        if (index == 1) {
-            output_device = current_output_menu[0].device;
-        } else {
-            clrscr();
-            cprintf("Choose output\r\n\r\n");
-            for (index = 0; current_output_menu[index].key; ++index) {
-                cprintf("%c: %s\r\n", current_output_menu[index].key, current_output_menu[index].displayname);
-            }
-            valid_key = -1;
-            while (valid_key < 0) {
-                key = cgetc();
-                for (index = 0; current_output_menu[index].key && valid_key < 0; ++index) {
-                    if (key == current_output_menu[index].key) {
-                        valid_key = index;
-                    }
+        valid_key = -1;
+        while (valid_key < 0) {
+            key = cgetc();
+            for (index = 0; current_output_menu[index].key && valid_key < 0; ++index) {
+                if (key == current_output_menu[index].key) {
+                    valid_key = index;
                 }
             }
-            output_device = current_output_menu[valid_key].device;
         }
+        output_device = current_output_menu[valid_key].device;
     }
 
     clrscr();
