@@ -3,10 +3,14 @@
 ;
 ; unsigned char __fastcall__ sampler_2bit_joy1_input(void);
 ; unsigned char __fastcall__ sampler_4bit_joy1_input(void);
+; unsigned char __fastcall__ sampler_2bit_joy2_input(void);
+; unsigned char __fastcall__ sampler_4bit_joy2_input(void);
 ;
 
         .export  _sampler_2bit_joy1_input
         .export  _sampler_4bit_joy1_input
+        .export  _sampler_2bit_joy2_input
+        .export  _sampler_4bit_joy2_input
 
         .importzp   sreg
 
@@ -16,7 +20,7 @@ setup_banking:
         sty     $01
         rts
 
-load_joy1:
+load_joy:
         ldy     #$dc
         sty     sreg + 1
         ldy     #$01
@@ -27,18 +31,32 @@ load_joy1:
 
 _sampler_2bit_joy1_input:
         jsr     setup_banking
-        jsr     load_joy1
+        jsr     load_joy
         asl
         asl
         jmp     do_asl4
 
 _sampler_4bit_joy1_input:
         jsr     setup_banking
-        jsr     load_joy1
+        jsr     load_joy
 do_asl4:
         asl
         asl
+do_asl2:
         asl
         asl
         stx     $01
         rts
+
+_sampler_2bit_joy2_input:
+        jsr     setup_banking
+        jsr     load_joy
+        and     #$f0
+        stx     $01
+        rts
+
+_sampler_4bit_joy2_input:
+        jsr     setup_banking
+        jsr     load_joy
+        and     #$30
+        jmp     do_asl2

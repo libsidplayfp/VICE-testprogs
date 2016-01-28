@@ -318,13 +318,13 @@ static input_device_t sampler_4bit_joy1_input_device[] = {
 
 #if defined(__C64__) || defined(__C128__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM510__)
 static input_device_t sampler_2bit_joy2_input_device[] = {
-    { "2 bit sampler on joystick port 2", sampler_2bit_joy2_input_init, sampler_2bit_joy2_input }
+    { "2 bit sampler on joystick port 2", NULL, sampler_2bit_joy2_input }
 };
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM510__)
 static input_device_t sampler_4bit_joy2_input_device[] = {
-    { "4 bit sampler on joystick port 2", sampler_4bit_joy2_input_init, sampler_4bit_joy2_input }
+    { "4 bit sampler on joystick port 2", NULL, sampler_4bit_joy2_input }
 };
 #endif
 

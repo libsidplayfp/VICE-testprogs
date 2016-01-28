@@ -4,6 +4,8 @@
 ; unsigned char __fastcall__ sfx_input(void);
 ; unsigned char __fastcall__ sampler_2bit_joy1_input(void);
 ; unsigned char __fastcall__ sampler_4bit_joy1_input(void);
+; unsigned char __fastcall__ sampler_2bit_joy2_input(void);
+; unsigned char __fastcall__ sampler_4bit_joy2_input(void);
 ;
 ; void __fastcall__ digimax_cart_output(unsigned char sample);
 ; void __fastcall__ sfx_output(unsigned char sample);
@@ -11,16 +13,21 @@
 ; void __fastcall__ sid_output(unsigned char sample);
 ; void __fastcall__ userport_dac_output_init(void);
 ; void __fastcall__ userport_dac_output(unsigned char sample);
+; void __fastcall__ userport_digimax_output_init(void);
+; void __fastcall__ userport_digimax_output(unsigned char sample);
 ;
 
         .export  _sfx_input
         .export  _sampler_2bit_joy1_input
         .export  _sampler_4bit_joy1_input
+        .export  _sampler_2bit_joy2_input
+        .export  _sampler_4bit_joy2_input
 
         .export  _digimax_cart_output
         .export  _sfx_output
         .export  _sid_output_init, _sid_output
         .export  _userport_dac_output_init, _userport_dac_output
+        .export  _userport_digimax_output_init, _userport_digimax_output
 
 _sfx_input:
         lda     $df00
@@ -41,6 +48,16 @@ do_asl4:
         asl
         asl
         rts
+
+_sampler_2bit_joy2_input:
+        lda     $dc00
+        asl
+        asl
+        jmp     do_asl4
+
+_sampler_4bit_joy2_input:
+        lda     $dc00
+        jmp     do_asl4
 
 _digimax_cart_output:
         sta     $de00
@@ -79,11 +96,13 @@ _sid_output:
         sta     $d418
         rts
 
+_userport_digimax_output_init:
 _userport_dac_output_init:
         ldx     #$ff
         stx     $dd03
         rts
 
+_userport_digimax_output:
 _userport_dac_output:
         sta     $dd01
         rts

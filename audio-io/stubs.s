@@ -32,15 +32,12 @@
         .export  _sampler_4bit_userport_input_init, _sampler_4bit_userport_input
         .export  _sampler_8bss_left_input_init, _sampler_8bss_left_input
         .export  _sampler_8bss_right_input_init, _sampler_8bss_right_input
-        .export  _sampler_2bit_joy2_input_init, _sampler_2bit_joy2_input
-        .export  _sampler_4bit_joy2_input_init, _sampler_4bit_joy2_input
         .export  _sampler_2bit_sidcart_input_init, _sampler_2bit_sidcart_input
         .export  _sampler_4bit_sidcart_input_init, _sampler_4bit_sidcart_input
         .export  _daisy_input_init, _daisy_input
         .export  _software_input_init, _software_input
 
         .export  _ted_output_init, _ted_output
-        .export  _userport_digimax_output_init, _userport_digimax_output
 
 _sampler_2bit_hit1_input_init:
 _sampler_2bit_hit1_input:
@@ -96,10 +93,6 @@ _sampler_8bss_left_input_init:
 _sampler_8bss_left_input:
 _sampler_8bss_right_input_init:
 _sampler_8bss_right_input:
-_sampler_2bit_joy2_input_init:
-_sampler_2bit_joy2_input:
-_sampler_4bit_joy2_input_init:
-_sampler_4bit_joy2_input:
 _sampler_2bit_sidcart_input_init:
 _sampler_2bit_sidcart_input:
 _sampler_4bit_sidcart_input_init:
@@ -112,6 +105,4 @@ _software_input:
 
 _ted_output_init:
 _ted_output:
-_userport_digimax_output_init:
-_userport_digimax_output:
         rts

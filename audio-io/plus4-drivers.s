@@ -4,6 +4,8 @@
 ; unsigned char __fastcall__ digiblaster_input(void);
 ; unsigned char __fastcall__ sampler_2bit_joy1_input(void);
 ; unsigned char __fastcall__ sampler_4bit_joy1_input(void);
+; unsigned char __fastcall__ sampler_2bit_joy2_input(void);
+; unsigned char __fastcall__ sampler_4bit_joy2_input(void);
 ;
 ; void __fastcall__ digiblaster_output(unsigned char sample);
 ; void __fastcall__ sid_output_init(void);
@@ -14,6 +16,8 @@
         .export  _digiblaster_input
         .export  _sampler_2bit_joy1_input
         .export  _sampler_4bit_joy1_input
+        .export  _sampler_2bit_joy2_input
+        .export  _sampler_4bit_joy2_input
 
         .export  _digiblaster_output
         .export  _sid_output_init, _sid_output
@@ -21,9 +25,14 @@
 
 load_joy1:
         lda     #$fa
+load_joy:
         sta     $ff08
         lda     $ff08
         rts
+
+load_joy2:
+        lda     #$fd
+        jmp     load_joy
 
 _digiblaster_input:
         lda     $fd5f
@@ -43,6 +52,16 @@ do_asl4:
         asl
         asl
         rts
+
+_sampler_2bit_joy2_input:
+        jsr     load_joy2
+        asl
+        asl
+        jmp     do_asl4
+
+_sampler_4bit_joy2_input:
+        jsr     load_joy2
+        jmp     do_asl4
 
 _digiblaster_output:
         sta     $fd5e
