@@ -37,8 +37,6 @@
         .export  _daisy_input_init, _daisy_input
         .export  _software_input_init, _software_input
 
-        .export  _ted_output_init, _ted_output
-
 _sampler_2bit_hit1_input_init:
 _sampler_2bit_hit1_input:
 _sampler_4bit_hit1_input_init:
@@ -101,8 +99,4 @@ _daisy_input_init:
 _daisy_input:
 _software_input_init:
 _software_input:
-        rts
-
-_ted_output_init:
-_ted_output:
         rts

@@ -11,6 +11,7 @@
 ; void __fastcall__ sid_output_init(void);
 ; void __fastcall__ sid_output(unsigned char sample);
 ; void __fastcall__ userport_dac_output(unsigned char sample);
+; void __fastcall__ ted_output(void);
 ;
 
         .export  _digiblaster_input
@@ -22,6 +23,7 @@
         .export  _digiblaster_output
         .export  _sid_output_init, _sid_output
         .export  _userport_dac_output
+        .export  _ted_output
 
 load_joy1:
         lda     #$fa
@@ -96,3 +98,13 @@ _sid_output:
 _userport_dac_output:
         sta     $fd10
         rts
+
+_ted_output:
+        and     #$0f
+        tax
+        lda     ted_table,x
+        sta     $ff11
+        rts
+
+ted_table:
+        .byte   $90,$91,$92,$93,$94,$95,$96,$97,$98,$b5,$b6,$b7,$b8,$05,$05,$15

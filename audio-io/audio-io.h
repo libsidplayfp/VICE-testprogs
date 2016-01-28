@@ -14,6 +14,7 @@ void __fastcall__ digimax_cart_output(unsigned char sample);
 /* plus4-drivers.s */
 unsigned char __fastcall__ digiblaster_input(void);
 void __fastcall__ digiblaster_output(unsigned char sample);
+void __fastcall__ ted_output(unsigned char sample);
 
 /* c64-drivers.s / cbm2-common-drivers.s / pet-drivers.s / plus4-drivers.s / vic20-drivers.s */
 void __fastcall__ sid_output_init(void);
@@ -102,7 +103,3 @@ unsigned char __fastcall__ sampler_2bit_sidcart_input(void);
 unsigned char __fastcall__ sampler_4bit_sidcart_input(void);
 unsigned char __fastcall__ daisy_input(void);
 unsigned char __fastcall__ software_input(void);
-
-void __fastcall__ ted_output_init(void);
-
-void __fastcall__ ted_output(unsigned char sample);

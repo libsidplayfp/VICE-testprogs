@@ -378,7 +378,7 @@ static output_device_t sid_output_device[] = {
 
 #if defined(__C16__) || defined(__PLUS4__)
 static output_device_t ted_output_device[] = {
-    { "TED", ted_output_init, ted_output }
+    { "TED", NULL, ted_output }
 };
 #endif
 
