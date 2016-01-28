@@ -354,7 +354,7 @@ static input_device_t daisy_input_device[] = {
 
 #if defined(__C16__) || defined(__PLUS4__)
 static input_device_t digiblaster_input_device[] = {
-    { "DigiBlaster", digiblaster_input_init, digiblaster_input }
+    { "DigiBlaster", NULL, digiblaster_input }
 };
 #endif
 
@@ -414,7 +414,7 @@ static output_device_t userport_dac_output_device[] = {
 
 #if defined(__C16__) || defined(__PLUS4__)
 static output_device_t digiblaster_output_device[] = {
-    { "DigiBlaster", digiblaster_output_init, digiblaster_output }
+    { "DigiBlaster", NULL, digiblaster_output }
 };
 #endif
 

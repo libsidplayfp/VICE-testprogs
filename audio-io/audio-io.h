@@ -9,12 +9,18 @@ void __fastcall__ stream(void);
 /* sfx-input-c64.s / sfx-input-vic20.s */
 unsigned char __fastcall__ sfx_input(void);
 
+/* digiblaster-input-plus4.s */
+unsigned char __fastcall__ digiblaster_input(void);
+
 /* sfx-output-c64.s / sfx-output-vic20.s */
 void __fastcall__ sfx_output(unsigned char sample);
 
 /* sid-output-c64.s / sid-output-cbm2.s / sid-output-pet.s / sid-output-plus4.s / sid-output-vic20.s */
 void __fastcall__ sid_output_init(void);
 void __fastcall__ sid_output(unsigned char sample);
+
+/* digiblaster-output-plus4.s */
+void __fastcall__ digiblaster_output(unsigned char sample);
 
 /* stubs.s */
 void __fastcall__ sampler_2bit_hit1_input_init(void);
@@ -51,7 +57,6 @@ void __fastcall__ sampler_4bit_joy2_input_init(void);
 void __fastcall__ sampler_2bit_sidcart_input_init(void);
 void __fastcall__ sampler_4bit_sidcart_input_init(void);
 void __fastcall__ daisy_input_init(void);
-void __fastcall__ digiblaster_input_init(void);
 void __fastcall__ software_input_init(void);
 
 unsigned char __fastcall__ sampler_2bit_hit1_input(void);
@@ -88,7 +93,6 @@ unsigned char __fastcall__ sampler_4bit_joy2_input(void);
 unsigned char __fastcall__ sampler_2bit_sidcart_input(void);
 unsigned char __fastcall__ sampler_4bit_sidcart_input(void);
 unsigned char __fastcall__ daisy_input(void);
-unsigned char __fastcall__ digiblaster_input(void);
 unsigned char __fastcall__ software_input(void);
 
 void __fastcall__ sid_output_init(void);
@@ -97,7 +101,6 @@ void __fastcall__ vic_output_init(void);
 void __fastcall__ digimax_cart_output_init(void);
 void __fastcall__ userport_digimax_output_init(void);
 void __fastcall__ userport_dac_output_init(void);
-void __fastcall__ digiblaster_output_init(void);
 
 void __fastcall__ sid_output(unsigned char sample);
 void __fastcall__ ted_output(unsigned char sample);
@@ -105,4 +108,3 @@ void __fastcall__ vic_output(unsigned char sample);
 void __fastcall__ digimax_cart_output(unsigned char sample);
 void __fastcall__ userport_digimax_output(unsigned char sample);
 void __fastcall__ userport_dac_output(unsigned char sample);
-void __fastcall__ digiblaster_output(unsigned char sample);
