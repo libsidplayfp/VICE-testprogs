@@ -294,13 +294,13 @@ static input_device_t sampler_8bss_right_input_device[] = {
 
 #if defined(__C64__) || defined(__C128__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM510__)
 static input_device_t sampler_2bit_joy1_input_device[] = {
-    { "2 bit sampler on joystick port 1", sampler_2bit_joy1_input_init, sampler_2bit_joy1_input }
+    { "2 bit sampler on joystick port 1", NULL, sampler_2bit_joy1_input }
 };
 #endif
 
 #if defined(__VIC20__)
 static input_device_t sampler_2bit_joy1_input_device[] = {
-    { "2 bit sampler on joystick port", sampler_2bit_joy1_input_init, sampler_2bit_joy1_input }
+    { "2 bit sampler on joystick port", NULL, sampler_2bit_joy1_input }
 };
 #endif
 

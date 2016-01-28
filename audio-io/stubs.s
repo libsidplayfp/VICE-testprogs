@@ -32,7 +32,6 @@
         .export  _sampler_4bit_userport_input_init, _sampler_4bit_userport_input
         .export  _sampler_8bss_left_input_init, _sampler_8bss_left_input
         .export  _sampler_8bss_right_input_init, _sampler_8bss_right_input
-        .export  _sampler_2bit_joy1_input_init, _sampler_2bit_joy1_input
         .export  _sampler_2bit_joy2_input_init, _sampler_2bit_joy2_input
         .export  _sampler_4bit_joy2_input_init, _sampler_4bit_joy2_input
         .export  _sampler_2bit_sidcart_input_init, _sampler_2bit_sidcart_input
@@ -97,8 +96,6 @@ _sampler_8bss_left_input_init:
 _sampler_8bss_left_input:
 _sampler_8bss_right_input_init:
 _sampler_8bss_right_input:
-_sampler_2bit_joy1_input_init:
-_sampler_2bit_joy1_input:
 _sampler_2bit_joy2_input_init:
 _sampler_2bit_joy2_input:
 _sampler_4bit_joy2_input_init:

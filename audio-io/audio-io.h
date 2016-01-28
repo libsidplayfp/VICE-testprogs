@@ -15,18 +15,19 @@ void __fastcall__ digimax_cart_output(unsigned char sample);
 unsigned char __fastcall__ digiblaster_input(void);
 void __fastcall__ digiblaster_output(unsigned char sample);
 
-/* c64-drivers.s / sid-output-cbm2.s / sid-output-pet.s / plus4-drivers.s / vic20-drivers.s */
+/* c64-drivers.s / cbm2-common-drivers.s / pet-drivers.s / plus4-drivers.s / vic20-drivers.s */
 void __fastcall__ sid_output_init(void);
 void __fastcall__ sid_output(unsigned char sample);
 
 /* vic20-drivers.s */
 void __fastcall__ vic_output(unsigned char sample);
 
-/* c64-drivers.s / userport-dac-output-cbm2.s / userport-dac-output-pet.s / plus4-drivers.s / vic20-drivers.s */
+/* c64-drivers.s / cbm2-drivers.s / pet-drivers.s / plus4-drivers.s / vic20-drivers.s */
 void __fastcall__ userport_dac_output_init(void);
 void __fastcall__ userport_dac_output(unsigned char sample);
 
-/* c64-drivers.s / sampler-4bit-joy1-input-cbm2.s / plus4-drivers.s / vic20-drivers.s */
+/* c64-drivers.s / cbm5x0-drivers.s / plus4-drivers.s / vic20-drivers.s */
+unsigned char __fastcall__ sampler_2bit_joy1_input(void);
 unsigned char __fastcall__ sampler_4bit_joy1_input(void);
 
 /* stubs.s */
@@ -57,7 +58,6 @@ void __fastcall__ sampler_4bit_hummer_input_init(void);
 void __fastcall__ sampler_4bit_userport_input_init(void);
 void __fastcall__ sampler_8bss_left_input_init(void);
 void __fastcall__ sampler_8bss_right_input_init(void);
-void __fastcall__ sampler_2bit_joy1_input_init(void);
 void __fastcall__ sampler_2bit_joy2_input_init(void);
 void __fastcall__ sampler_4bit_joy2_input_init(void);
 void __fastcall__ sampler_2bit_sidcart_input_init(void);
@@ -92,7 +92,6 @@ unsigned char __fastcall__ sampler_4bit_hummer_input(void);
 unsigned char __fastcall__ sampler_4bit_userport_input(void);
 unsigned char __fastcall__ sampler_8bss_left_input(void);
 unsigned char __fastcall__ sampler_8bss_right_input(void);
-unsigned char __fastcall__ sampler_2bit_joy1_input(void);
 unsigned char __fastcall__ sampler_2bit_joy2_input(void);
 unsigned char __fastcall__ sampler_4bit_joy2_input(void);
 unsigned char __fastcall__ sampler_2bit_sidcart_input(void);

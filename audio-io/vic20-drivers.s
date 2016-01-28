@@ -1,8 +1,10 @@
 ;
 ; Marco van den Heuvel, 28.01.2016
 ;
+; unsigned char __fastcall__ sampler_2bit_joy1_input(void);
 ; unsigned char __fastcall__ sampler_4bit_joy1_input(void);
 ; unsigned char __fastcall__ sfx_input(void);
+;
 ; void __fastcall__ digimax_cart_output(unsigned char sample);
 ; void __fastcall__ sfx_output(unsigned char sample);
 ; void __fastcall__ sid_output_init(void);
@@ -12,6 +14,7 @@
 ; void __fastcall__ vic_output(unsigned char sample);
 ;
 
+        .export  _sampler_2bit_joy1_input
         .export  _sampler_4bit_joy1_input
         .export  _sfx_input
 
@@ -22,6 +25,15 @@
         .export  _vic_output
 
         .importzp       tmp1
+
+_sampler_2bit_joy1_input:
+        lda     $9111
+        and     #$0c
+        asl
+        asl
+        asl
+        asl
+        rts
 
 _sampler_4bit_joy1_input:
         lda     $9111

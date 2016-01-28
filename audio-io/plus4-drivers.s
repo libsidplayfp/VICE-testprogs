@@ -2,7 +2,9 @@
 ; Marco van den Heuvel, 28.01.2016
 ;
 ; unsigned char __fastcall__ digiblaster_input(void);
+; unsigned char __fastcall__ sampler_2bit_joy1_input(void);
 ; unsigned char __fastcall__ sampler_4bit_joy1_input(void);
+;
 ; void __fastcall__ digiblaster_output(unsigned char sample);
 ; void __fastcall__ sid_output_init(void);
 ; void __fastcall__ sid_output(unsigned char sample);
@@ -10,21 +12,32 @@
 ;
 
         .export  _digiblaster_input
+        .export  _sampler_2bit_joy1_input
         .export  _sampler_4bit_joy1_input
 
         .export  _digiblaster_output
         .export  _sid_output_init, _sid_output
         .export  _userport_dac_output
 
+load_joy1:
+        lda     #$fa
+        sta     $ff08
+        lda     $ff08
+        rts
+
 _digiblaster_input:
         lda     $fd5f
         rts
 
+_sampler_2bit_joy1_input:
+        jsr     load_joy1
+        asl
+        asl
+        jmp     do_asl4
+
 _sampler_4bit_joy1_input:
-        lda     #$fa
-        sta     $ff08
-        lda     $ff08
-        and     #$0f
+        jsr     load_joy1
+do_asl4:
         asl
         asl
         asl
