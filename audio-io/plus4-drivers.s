@@ -6,6 +6,10 @@
 ; unsigned char __fastcall__ sampler_4bit_joy1_input(void);
 ; unsigned char __fastcall__ sampler_2bit_joy2_input(void);
 ; unsigned char __fastcall__ sampler_4bit_joy2_input(void);
+; unsigned char __fastcall__ sampler_2bit_sidcart_input(void);
+; unsigned char __fastcall__ sampler_4bit_sidcart_input(void);
+; unsigned char __fastcall__ sampler_2bit_hummer_input(void);
+; unsigned char __fastcall__ sampler_4bit_hummer_input(void);
 ;
 ; void __fastcall__ digiblaster_output(unsigned char sample);
 ; void __fastcall__ sid_output_init(void);
@@ -19,11 +23,25 @@
         .export  _sampler_4bit_joy1_input
         .export  _sampler_2bit_joy2_input
         .export  _sampler_4bit_joy2_input
+        .export  _sampler_2bit_sidcart_input
+        .export  _sampler_4bit_sidcart_input
+        .export  _sampler_2bit_hummer_input
+        .export  _sampler_4bit_hummer_input
 
         .export  _digiblaster_output
         .export  _sid_output_init, _sid_output
         .export  _userport_dac_output
         .export  _ted_output
+
+_sampler_2bit_hummer_input:
+        lda     $fd10
+        asl
+        asl
+        jmp     do_asl4
+
+_sampler_4bit_hummer_input:
+        lda     $fd10
+        jmp     do_asl4
 
 load_joy1:
         lda     #$fa
@@ -63,6 +81,16 @@ _sampler_2bit_joy2_input:
 
 _sampler_4bit_joy2_input:
         jsr     load_joy2
+        jmp     do_asl4
+
+_sampler_2bit_sidcart_input:
+        lda     $fd80
+        asl
+        asl
+        jmp     do_asl4
+
+_sampler_4bit_sidcart_input:
+        lda     $fd80
         jmp     do_asl4
 
 _digiblaster_output:

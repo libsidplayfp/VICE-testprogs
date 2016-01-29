@@ -262,15 +262,27 @@ static input_device_t sampler_4bit_oem_input_device[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static input_device_t sampler_2bit_hummer_input_device[] = {
     { "2 bit sampler on userport HUMMER joy adapter", sampler_2bit_hummer_input_init, sampler_2bit_hummer_input }
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
+#if defined(__C16__) || defined(__PLUS4__)
+static input_device_t sampler_2bit_hummer_input_device[] = {
+    { "2 bit sampler on userport HUMMER joy adapter", NULL, sampler_2bit_hummer_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static input_device_t sampler_4bit_hummer_input_device[] = {
     { "4 bit sampler on userport HUMMER joy adapter", sampler_4bit_hummer_input_init, sampler_4bit_hummer_input }
+};
+#endif
+
+#if defined(__C16__) || defined(__PLUS4__)
+static input_device_t sampler_4bit_hummer_input_device[] = {
+    { "4 bit sampler on userport HUMMER joy adapter", NULL, sampler_4bit_hummer_input }
 };
 #endif
 
@@ -330,13 +342,13 @@ static input_device_t sampler_4bit_joy2_input_device[] = {
 
 #if defined(__C16__) || defined(__PLUS4__)
 static input_device_t sampler_2bit_sidcart_input_device[] = {
-    { "2 bit sampler on sidcart joystick port", sampler_2bit_sidcart_input_init, sampler_2bit_sidcart_input }
+    { "2 bit sampler on sidcart joystick port", NULL, sampler_2bit_sidcart_input }
 };
 #endif
 
 #if defined(__C16__) || defined(__PLUS4__)
 static input_device_t sampler_4bit_sidcart_input_device[] = {
-    { "4 bit sampler on sidcart joystick port", sampler_4bit_sidcart_input_init, sampler_4bit_sidcart_input }
+    { "4 bit sampler on sidcart joystick port", NULL, sampler_4bit_sidcart_input }
 };
 #endif
 
@@ -359,7 +371,7 @@ static input_device_t digiblaster_input_device[] = {
 #endif
 
 static input_device_t software_input_device[] = {
-    { "software generated waveform", software_input_init, software_input }
+    { "software generated waveform", NULL, software_input }
 };
 
 /* -------------------------------------------------------------------------------------------------------- */

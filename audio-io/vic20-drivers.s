@@ -4,6 +4,10 @@
 ; unsigned char __fastcall__ sampler_2bit_joy1_input(void);
 ; unsigned char __fastcall__ sampler_4bit_joy1_input(void);
 ; unsigned char __fastcall__ sfx_input(void);
+; void __fastcall__ sampler_2bit_hummer_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_hummer_input(void);
+; void __fastcall__ sampler_4bit_hummer_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_hummer_input(void);
 ;
 ; void __fastcall__ digimax_cart_output(unsigned char sample);
 ; void __fastcall__ sfx_output(unsigned char sample);
@@ -17,6 +21,8 @@
         .export  _sampler_2bit_joy1_input
         .export  _sampler_4bit_joy1_input
         .export  _sfx_input
+        .export  _sampler_2bit_hummer_input_init, _sampler_2bit_hummer_input
+        .export  _sampler_4bit_hummer_input_init, _sampler_4bit_hummer_input
 
         .export  _digimax_cart_output
         .export  _sfx_output
@@ -26,9 +32,26 @@
 
         .importzp       tmp1
 
+_sampler_2bit_hummer_input_init:
+_sampler_4bit_hummer_input_init:
+        ldx     #$00
+        stx     $9112
+        rts
+
+_sampler_2bit_hummer_input:
+        lda     $9110
+        asl
+        asl
+        jmp     do_asl4
+
+_sampler_4bit_hummer_input:
+        lda     $9110
+        jmp     do_asl4
+
 _sampler_2bit_joy1_input:
         lda     $9111
         and     #$0c
+do_asl4:
         asl
         asl
         asl

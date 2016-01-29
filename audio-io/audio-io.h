@@ -5,6 +5,7 @@
 void __fastcall__ set_input_jsr(char __fastcall__ (*function)(void));
 void __fastcall__ set_output_jsr(void __fastcall__ (*function)(unsigned char sample));
 void __fastcall__ stream(void);
+unsigned char __fastcall__ software_input(void);
 
 /* c64-drivers.s / vic20-drivers.s */
 unsigned char __fastcall__ sfx_input(void);
@@ -15,6 +16,8 @@ void __fastcall__ digimax_cart_output(unsigned char sample);
 unsigned char __fastcall__ digiblaster_input(void);
 void __fastcall__ digiblaster_output(unsigned char sample);
 void __fastcall__ ted_output(unsigned char sample);
+unsigned char __fastcall__ sampler_2bit_sidcart_input(void);
+unsigned char __fastcall__ sampler_4bit_sidcart_input(void);
 
 /* c64-drivers.s / cbm2-common-drivers.s / pet-drivers.s / plus4-drivers.s / vic20-drivers.s */
 void __fastcall__ sid_output_init(void);
@@ -26,6 +29,10 @@ void __fastcall__ vic_output(unsigned char sample);
 /* c64-drivers.s / cbm2-drivers.s / pet-drivers.s / plus4-drivers.s / vic20-drivers.s */
 void __fastcall__ userport_dac_output_init(void);
 void __fastcall__ userport_dac_output(unsigned char sample);
+void __fastcall__ sampler_2bit_hummer_input_init(void);
+unsigned char __fastcall__ sampler_2bit_hummer_input(void);
+void __fastcall__ sampler_4bit_hummer_input_init(void);
+unsigned char __fastcall__ sampler_4bit_hummer_input(void);
 
 /* c64-drivers.s / cbm5x0-drivers.s / plus4-drivers.s / vic20-drivers.s */
 unsigned char __fastcall__ sampler_2bit_joy1_input(void);
@@ -62,15 +69,10 @@ void __fastcall__ sampler_2bit_pet2_input_init(void);
 void __fastcall__ sampler_4bit_pet2_input_init(void);
 void __fastcall__ sampler_2bit_oem_input_init(void);
 void __fastcall__ sampler_4bit_oem_input_init(void);
-void __fastcall__ sampler_2bit_hummer_input_init(void);
-void __fastcall__ sampler_4bit_hummer_input_init(void);
 void __fastcall__ sampler_4bit_userport_input_init(void);
 void __fastcall__ sampler_8bss_left_input_init(void);
 void __fastcall__ sampler_8bss_right_input_init(void);
-void __fastcall__ sampler_2bit_sidcart_input_init(void);
-void __fastcall__ sampler_4bit_sidcart_input_init(void);
 void __fastcall__ daisy_input_init(void);
-void __fastcall__ software_input_init(void);
 
 unsigned char __fastcall__ sampler_2bit_hit1_input(void);
 unsigned char __fastcall__ sampler_2bit_hit2_input(void);
@@ -99,7 +101,4 @@ unsigned char __fastcall__ sampler_4bit_hummer_input(void);
 unsigned char __fastcall__ sampler_4bit_userport_input(void);
 unsigned char __fastcall__ sampler_8bss_left_input(void);
 unsigned char __fastcall__ sampler_8bss_right_input(void);
-unsigned char __fastcall__ sampler_2bit_sidcart_input(void);
-unsigned char __fastcall__ sampler_4bit_sidcart_input(void);
 unsigned char __fastcall__ daisy_input(void);
-unsigned char __fastcall__ software_input(void);
