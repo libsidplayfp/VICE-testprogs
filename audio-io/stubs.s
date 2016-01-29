@@ -25,8 +25,6 @@
         .export  _sampler_4bit_pet1_input_init, _sampler_4bit_pet1_input
         .export  _sampler_2bit_pet2_input_init, _sampler_2bit_pet2_input
         .export  _sampler_4bit_pet2_input_init, _sampler_4bit_pet2_input
-        .export  _sampler_2bit_oem_input_init, _sampler_2bit_oem_input
-        .export  _sampler_4bit_oem_input_init, _sampler_4bit_oem_input
         .export  _sampler_4bit_userport_input_init, _sampler_4bit_userport_input
         .export  _sampler_8bss_left_input_init, _sampler_8bss_left_input
         .export  _sampler_8bss_right_input_init, _sampler_8bss_right_input
@@ -72,10 +70,6 @@ _sampler_2bit_pet2_input_init:
 _sampler_2bit_pet2_input:
 _sampler_4bit_pet2_input_init:
 _sampler_4bit_pet2_input:
-_sampler_2bit_oem_input_init:
-_sampler_2bit_oem_input:
-_sampler_4bit_oem_input_init:
-_sampler_4bit_oem_input:
 _sampler_4bit_userport_input_init:
 _sampler_4bit_userport_input:
 _sampler_8bss_left_input_init:

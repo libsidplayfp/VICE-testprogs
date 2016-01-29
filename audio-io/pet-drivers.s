@@ -5,6 +5,10 @@
 ; unsigned char __fastcall__ sampler_2bit_hummer_input(void);
 ; void __fastcall__ sampler_4bit_hummer_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_hummer_input(void);
+; void __fastcall__ sampler_2bit_oem_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_oem_input(void);
+; void __fastcall__ sampler_4bit_oem_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_oem_input(void);
 ;
 ; void __fastcall__ sid_output_init(void);
 ; void __fastcall__ sid_output(unsigned char sample);
@@ -14,18 +18,62 @@
 
         .export  _sampler_2bit_hummer_input_init, _sampler_2bit_hummer_input
         .export  _sampler_4bit_hummer_input_init, _sampler_4bit_hummer_input
+        .export  _sampler_2bit_oem_input_init, _sampler_2bit_oem_input
+        .export  _sampler_4bit_oem_input_init, _sampler_4bit_oem_input
 
         .export  _sid_output_init, _sid_output
         .export  _userport_dac_output_init, _userport_dac_output
 
+        .importzp   tmp1, tmp2
+
 _sampler_2bit_hummer_input_init:
 _sampler_4bit_hummer_input_init:
+_sampler_2bit_oem_input_init:
+_sampler_4bit_oem_input_init:
         ldx     #$00
         stx     $e843
         rts
 
+_sampler_2bit_oem_input:
+        lda     $e841
+        sta     tmp2
+        and     #$40
+        asl
+        sta     tmp1
+        lda     tmp2
+        and     #$80
+        lsr
+        ora     tmp1
+        rts
+
+_sampler_4bit_oem_input:
+        lda     $e841
+        sta     tmp2
+        and     #$10
+        asl
+        asl
+        asl
+        sta     tmp1
+        lda     tmp2
+        and     #$20
+        asl
+        ora     tmp1
+        sta     tmp1
+        lda     tmp2
+        and     #$40
+        lsr
+        ora     tmp1
+        sta     tmp1
+        lda     tmp2
+        and     #$80
+        lsr
+        lsr
+        lsr
+        ora     tmp1
+        rts
+
 _sampler_2bit_hummer_input:
-        lda     $e843
+        lda     $e841
         asl
         asl
 do_asl4:
@@ -36,13 +84,8 @@ do_asl4:
         rts
 
 _sampler_4bit_hummer_input:
-        lda     $e843
+        lda     $e841
         jmp     do_asl4
-
-_sfx_input:
-        lda     $df00
-        sta     $de00
-        rts
 
 _sid_output_init:
         lda     #$00

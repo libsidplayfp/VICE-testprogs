@@ -250,15 +250,27 @@ static input_device_t sampler_4bit_pet2_input_device[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static input_device_t sampler_2bit_oem_input_device[] = {
     { "2 bit sampler on userport OEM joy adapter", sampler_2bit_oem_input_init, sampler_2bit_oem_input }
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
+#if defined(__C16__) || defined(__PLUS4__)
+static input_device_t sampler_2bit_oem_input_device[] = {
+    { "2 bit sampler on userport OEM joy adapter", NULL, sampler_2bit_oem_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static input_device_t sampler_4bit_oem_input_device[] = {
     { "4 bit sampler on userport OEM joy adapter", sampler_4bit_oem_input_init, sampler_4bit_oem_input }
+};
+#endif
+
+#if defined(__C16__) || defined(__PLUS4__)
+static input_device_t sampler_4bit_oem_input_device[] = {
+    { "4 bit sampler on userport OEM joy adapter", NULL, sampler_4bit_oem_input }
 };
 #endif
 
@@ -391,6 +403,12 @@ static output_device_t sid_output_device[] = {
 #if defined(__C16__) || defined(__PLUS4__)
 static output_device_t ted_output_device[] = {
     { "TED", NULL, ted_output }
+};
+#endif
+
+#if defined(__C64__)
+static output_device_t siddtv_output_device[] = {
+    { "SIDDTV", siddtv_output_init, siddtv_output }
 };
 #endif
 
@@ -760,6 +778,7 @@ static menu_output_t output_menu[] = {
 #if defined(__C64__)
 static menu_output_t output_c64dtv_menu[] = {
     { 's', "SID", sid_output_device },
+    { 'd', "SIDDTV", siddtv_output_device },
     { 0, NULL, NULL }
 };
 #endif

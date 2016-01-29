@@ -10,6 +10,8 @@
 ; unsigned char __fastcall__ sampler_4bit_sidcart_input(void);
 ; unsigned char __fastcall__ sampler_2bit_hummer_input(void);
 ; unsigned char __fastcall__ sampler_4bit_hummer_input(void);
+; unsigned char __fastcall__ sampler_2bit_oem_input(void);
+; unsigned char __fastcall__ sampler_4bit_oem_input(void);
 ;
 ; void __fastcall__ digiblaster_output(unsigned char sample);
 ; void __fastcall__ sid_output_init(void);
@@ -27,11 +29,53 @@
         .export  _sampler_4bit_sidcart_input
         .export  _sampler_2bit_hummer_input
         .export  _sampler_4bit_hummer_input
+        .export  _sampler_2bit_oem_input
+        .export  _sampler_4bit_oem_input
 
         .export  _digiblaster_output
         .export  _sid_output_init, _sid_output
         .export  _userport_dac_output
         .export  _ted_output
+
+        .importzp   tmp1, tmp2
+
+_sampler_2bit_oem_input:
+        lda     $fd10
+        sta     tmp2
+        and     #$40
+        asl
+        sta     tmp1
+        lda     tmp2
+        and     #$80
+        lsr
+        ora     tmp1
+        rts
+
+_sampler_4bit_oem_input:
+        lda     $fd10
+        sta     tmp2
+        and     #$10
+        asl
+        asl
+        asl
+        sta     tmp1
+        lda     tmp2
+        and     #$20
+        asl
+        ora     tmp1
+        sta     tmp1
+        lda     tmp2
+        and     #$40
+        lsr
+        ora     tmp1
+        sta     tmp1
+        lda     tmp2
+        and     #$80
+        lsr
+        lsr
+        lsr
+        ora     tmp1
+        rts
 
 _sampler_2bit_hummer_input:
         lda     $fd10

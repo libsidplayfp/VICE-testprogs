@@ -8,6 +8,10 @@
 ; unsigned char __fastcall__ sampler_2bit_hummer_input(void);
 ; void __fastcall__ sampler_4bit_hummer_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_hummer_input(void);
+; void __fastcall__ sampler_2bit_oem_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_oem_input(void);
+; void __fastcall__ sampler_4bit_oem_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_oem_input(void);
 ;
 ; void __fastcall__ digimax_cart_output(unsigned char sample);
 ; void __fastcall__ sfx_output(unsigned char sample);
@@ -23,6 +27,8 @@
         .export  _sfx_input
         .export  _sampler_2bit_hummer_input_init, _sampler_2bit_hummer_input
         .export  _sampler_4bit_hummer_input_init, _sampler_4bit_hummer_input
+        .export  _sampler_2bit_oem_input_init, _sampler_2bit_oem_input
+        .export  _sampler_4bit_oem_input_init, _sampler_4bit_oem_input
 
         .export  _digimax_cart_output
         .export  _sfx_output
@@ -30,12 +36,52 @@
         .export  _userport_dac_output_init, _userport_dac_output
         .export  _vic_output
 
-        .importzp       tmp1
+        .importzp       tmp1, tmp2
 
 _sampler_2bit_hummer_input_init:
 _sampler_4bit_hummer_input_init:
+_sampler_2bit_oem_input_init:
+_sampler_4bit_oem_input_init:
         ldx     #$00
         stx     $9112
+        rts
+
+_sampler_2bit_oem_input:
+        lda     $9110
+        sta     tmp2
+        and     #$40
+        asl
+        sta     tmp1
+        lda     tmp2
+        and     #$80
+        lsr
+        ora     tmp1
+        rts
+
+_sampler_4bit_oem_input:
+        lda     $9110
+        sta     tmp2
+        and     #$10
+        asl
+        asl
+        asl
+        sta     tmp1
+        lda     tmp2
+        and     #$20
+        asl
+        ora     tmp1
+        sta     tmp1
+        lda     tmp2
+        and     #$40
+        lsr
+        ora     tmp1
+        sta     tmp1
+        lda     tmp2
+        and     #$80
+        lsr
+        lsr
+        lsr
+        ora     tmp1
         rts
 
 _sampler_2bit_hummer_input:

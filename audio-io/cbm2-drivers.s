@@ -5,6 +5,10 @@
 ; unsigned char __fastcall__ sampler_2bit_hummer_input(void);
 ; void __fastcall__ sampler_4bit_hummer_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_hummer_input(void);
+; void __fastcall__ sampler_2bit_oem_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_oem_input(void);
+; void __fastcall__ sampler_4bit_oem_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_oem_input(void);
 ;
 ; void __fastcall__ userport_dac_output_init(void);
 ; void __fastcall__ userport_dac_output(unsigned char sample);
@@ -14,11 +18,13 @@
 
         .export  _sampler_2bit_hummer_input_init, _sampler_2bit_hummer_input
         .export  _sampler_4bit_hummer_input_init, _sampler_4bit_hummer_input
+        .export  _sampler_2bit_oem_input_init, _sampler_2bit_oem_input
+        .export  _sampler_4bit_oem_input_init, _sampler_4bit_oem_input
 
         .export  _userport_dac_output_init, _userport_dac_output
         .export  _userport_digimax_output_init, _userport_digimax_output
 
-        .importzp   sreg
+        .importzp   sreg, tmp1, tmp2
 
 setup_banking:
         ldx     $01
@@ -37,6 +43,8 @@ load_userport:
 
 _sampler_2bit_hummer_input_init:
 _sampler_4bit_hummer_input_init:
+_sampler_2bit_oem_input_init:
+_sampler_4bit_oem_input_init:
         jsr     setup_banking
         ldy     #$03
         sty     sreg
@@ -45,6 +53,48 @@ _sampler_4bit_hummer_input_init:
         ldy     #$00
         tya
         sta     (sreg),y
+        stx     $01
+        rts
+
+_sampler_2bit_oem_input:
+        jsr     setup_banking
+        jsr     load_userport
+        sta     tmp2
+        and     #$40
+        asl
+        sta     tmp1
+        lda     tmp2
+        and     #$80
+        lsr
+        ora     tmp1
+        stx     $01
+        rts
+
+_sampler_4bit_oem_input:
+        jsr     setup_banking
+        jsr     load_userport
+        sta     tmp2
+        and     #$10
+        asl
+        asl
+        asl
+        sta     tmp1
+        lda     tmp2
+        and     #$20
+        asl
+        ora     tmp1
+        sta     tmp1
+        lda     tmp2
+        and     #$40
+        lsr
+        ora     tmp1
+        sta     tmp1
+        lda     tmp2
+        and     #$80
+        lsr
+        lsr
+        lsr
+        ora     tmp1
         stx     $01
         rts
 
