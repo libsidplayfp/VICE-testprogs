@@ -226,27 +226,51 @@ static input_device_t sampler_4bit_cga2_input_device[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static input_device_t sampler_2bit_pet1_input_device[] = {
-    { "2 bit sampler on port 1 of userport PET joy adapter", sampler_2bit_cga1_input_init, sampler_2bit_cga1_input }
+    { "2 bit sampler on port 1 of userport PET joy adapter", sampler_2bit_pet1_input_init, sampler_2bit_pet1_input }
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
+#if defined(__C16__) || defined(__PLUS4__)
+static input_device_t sampler_2bit_pet1_input_device[] = {
+    { "2 bit sampler on port 1 of userport PET joy adapter", NULL, sampler_2bit_pet1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static input_device_t sampler_4bit_pet1_input_device[] = {
-    { "4 bit sampler on port 1 of userport PET joy adapter", sampler_4bit_cga1_input_init, sampler_4bit_cga1_input }
+    { "4 bit sampler on port 1 of userport PET joy adapter", sampler_4bit_pet1_input_init, sampler_4bit_pet1_input }
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
+#if defined(__C16__) || defined(__PLUS4__)
+static input_device_t sampler_4bit_pet1_input_device[] = {
+    { "4 bit sampler on port 1 of userport PET joy adapter", NULL, sampler_4bit_pet1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static input_device_t sampler_2bit_pet2_input_device[] = {
-    { "2 bit sampler on port 2 of userport PET joy adapter", sampler_2bit_cga2_input_init, sampler_2bit_cga2_input }
+    { "2 bit sampler on port 2 of userport PET joy adapter", sampler_2bit_pet2_input_init, sampler_2bit_pet2_input }
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
+#if defined(__C16__) || defined(__PLUS4__)
+static input_device_t sampler_2bit_pet2_input_device[] = {
+    { "2 bit sampler on port 2 of userport PET joy adapter", NULL, sampler_2bit_pet2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static input_device_t sampler_4bit_pet2_input_device[] = {
-    { "4 bit sampler on port 2 of userport PET joy adapter", sampler_4bit_cga2_input_init, sampler_4bit_cga2_input }
+    { "4 bit sampler on port 2 of userport PET joy adapter", sampler_4bit_pet2_input_init, sampler_4bit_pet2_input }
+};
+#endif
+
+#if defined(__C16__) || defined(__PLUS4__)
+static input_device_t sampler_4bit_pet2_input_device[] = {
+    { "4 bit sampler on port 2 of userport PET joy adapter", NULL, sampler_4bit_pet2_input }
 };
 #endif
 

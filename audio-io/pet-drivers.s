@@ -9,6 +9,14 @@
 ; unsigned char __fastcall__ sampler_2bit_oem_input(void);
 ; void __fastcall__ sampler_4bit_oem_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_oem_input(void);
+; void __fastcall__ sampler_2bit_pet1_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_pet1_input(void);
+; void __fastcall__ sampler_4bit_pet1_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_pet1_input(void);
+; void __fastcall__ sampler_2bit_pet2_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
+; void __fastcall__ sampler_4bit_pet2_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_pet2_input(void);
 ;
 ; void __fastcall__ sid_output_init(void);
 ; void __fastcall__ sid_output(unsigned char sample);
@@ -20,6 +28,10 @@
         .export  _sampler_4bit_hummer_input_init, _sampler_4bit_hummer_input
         .export  _sampler_2bit_oem_input_init, _sampler_2bit_oem_input
         .export  _sampler_4bit_oem_input_init, _sampler_4bit_oem_input
+        .export  _sampler_2bit_pet1_input_init, _sampler_2bit_pet1_input
+        .export  _sampler_4bit_pet1_input_init, _sampler_4bit_pet1_input
+        .export  _sampler_2bit_pet2_input_init, _sampler_2bit_pet2_input
+        .export  _sampler_4bit_pet2_input_init, _sampler_4bit_pet2_input
 
         .export  _sid_output_init, _sid_output
         .export  _userport_dac_output_init, _userport_dac_output
@@ -30,8 +42,24 @@ _sampler_2bit_hummer_input_init:
 _sampler_4bit_hummer_input_init:
 _sampler_2bit_oem_input_init:
 _sampler_4bit_oem_input_init:
+_sampler_2bit_pet1_input_init:
+_sampler_4bit_pet1_input_init:
+_sampler_2bit_pet2_input_init:
+_sampler_4bit_pet2_input_init:
         ldx     #$00
         stx     $e843
+        rts
+
+_sampler_2bit_pet2_input:
+        lda     $e841
+        and     #$30
+        asl
+        asl
+        rts
+
+_sampler_4bit_pet2_input:
+        lda     $e841
+        and     #$f0
         rts
 
 _sampler_2bit_oem_input:
@@ -73,6 +101,7 @@ _sampler_4bit_oem_input:
         rts
 
 _sampler_2bit_hummer_input:
+_sampler_2bit_pet1_input:
         lda     $e841
         asl
         asl
@@ -84,6 +113,7 @@ do_asl4:
         rts
 
 _sampler_4bit_hummer_input:
+_sampler_4bit_pet1_input:
         lda     $e841
         jmp     do_asl4
 

@@ -12,6 +12,10 @@
 ; unsigned char __fastcall__ sampler_4bit_hummer_input(void);
 ; unsigned char __fastcall__ sampler_2bit_oem_input(void);
 ; unsigned char __fastcall__ sampler_4bit_oem_input(void);
+; unsigned char __fastcall__ sampler_2bit_pet1_input(void);
+; unsigned char __fastcall__ sampler_4bit_pet1_input(void);
+; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
+; unsigned char __fastcall__ sampler_4bit_pet2_input(void);
 ;
 ; void __fastcall__ digiblaster_output(unsigned char sample);
 ; void __fastcall__ sid_output_init(void);
@@ -31,6 +35,10 @@
         .export  _sampler_4bit_hummer_input
         .export  _sampler_2bit_oem_input
         .export  _sampler_4bit_oem_input
+        .export  _sampler_2bit_pet1_input
+        .export  _sampler_4bit_pet1_input
+        .export  _sampler_2bit_pet2_input
+        .export  _sampler_4bit_pet2_input
 
         .export  _digiblaster_output
         .export  _sid_output_init, _sid_output
@@ -38,6 +46,18 @@
         .export  _ted_output
 
         .importzp   tmp1, tmp2
+
+_sampler_2bit_pet2_input:
+        lda     $fd10
+        and     #$30
+        asl
+        asl
+        rts
+
+_sampler_4bit_pet2_input:
+        lda     $fd10
+        and     #$f0
+        rts
 
 _sampler_2bit_oem_input:
         lda     $fd10
@@ -78,12 +98,14 @@ _sampler_4bit_oem_input:
         rts
 
 _sampler_2bit_hummer_input:
+_sampler_2bit_pet1_input:
         lda     $fd10
         asl
         asl
         jmp     do_asl4
 
 _sampler_4bit_hummer_input:
+_sampler_4bit_pet1_input:
         lda     $fd10
         jmp     do_asl4
 
