@@ -9,6 +9,8 @@
 ; unsigned char __fastcall__ sampler_2bit_oem_input(void);
 ; void __fastcall__ sampler_4bit_oem_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_oem_input(void);
+; void __fastcall__ sampler_2bit_pet1_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_pet1_input(void);
 ; void __fastcall__ sampler_4bit_pet1_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_pet1_input(void);
 ; void __fastcall__ sampler_2bit_pet2_input_init(void);
@@ -23,6 +25,14 @@
 ; unsigned char __fastcall__ sampler_2bit_cga2_input(void);
 ; void __fastcall__ sampler_4bit_cga2_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_cga2_input(void);
+; void __fastcall__ sampler_2bit_hit1_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_hit1_input(void);
+; void __fastcall__ sampler_4bit_hit1_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_hit1_input(void);
+; void __fastcall__ sampler_2bit_hit2_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_hit2_input(void);
+; void __fastcall__ sampler_4bit_hit2_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_hit2_input(void);
 ;
 ; void __fastcall__ userport_dac_output_init(void);
 ; void __fastcall__ userport_dac_output(unsigned char sample);
@@ -42,6 +52,10 @@
         .export  _sampler_4bit_cga1_input_init, _sampler_4bit_cga1_input
         .export  _sampler_2bit_cga2_input_init, _sampler_2bit_cga2_input
         .export  _sampler_4bit_cga2_input_init, _sampler_4bit_cga2_input
+        .export  _sampler_2bit_hit1_input_init, _sampler_2bit_hit1_input
+        .export  _sampler_4bit_hit1_input_init, _sampler_4bit_hit1_input
+        .export  _sampler_2bit_hit2_input_init, _sampler_2bit_hit2_input
+        .export  _sampler_4bit_hit2_input_init, _sampler_4bit_hit2_input
 
         .export  _userport_dac_output_init, _userport_dac_output
         .export  _userport_digimax_output_init, _userport_digimax_output
@@ -98,6 +112,10 @@ _sampler_2bit_pet1_input_init:
 _sampler_4bit_pet1_input_init:
 _sampler_2bit_pet2_input_init:
 _sampler_4bit_pet2_input_init:
+_sampler_2bit_hit1_input_init:
+_sampler_4bit_hit1_input_init:
+_sampler_2bit_hit2_input_init:
+_sampler_4bit_hit2_input_init:
         jsr     setup_banking
         ldy     #$03
         sty     sreg
@@ -110,6 +128,7 @@ _sampler_4bit_pet2_input_init:
         rts
 
 _sampler_2bit_pet2_input:
+_sampler_2bit_hit2_input:
         jsr     setup_banking
         jsr     load_userport
         and     #$30
@@ -119,6 +138,7 @@ _sampler_2bit_pet2_input:
         rts
 
 _sampler_4bit_pet2_input:
+_sampler_4bit_hit2_input:
         jsr     setup_banking
         jsr     load_userport
         and     #$f0
@@ -171,6 +191,7 @@ _sampler_2bit_hummer_input:
 _sampler_2bit_pet1_input:
 _sampler_2bit_cga1_input:
 _sampler_2bit_cga2_input:
+_sampler_2bit_hit1_input:
         jsr     setup_banking
         jsr     load_userport
         asl
@@ -187,6 +208,7 @@ _sampler_4bit_hummer_input:
 _sampler_4bit_pet1_input:
 _sampler_4bit_cga1_input:
 _sampler_4bit_cga2_input:
+_sampler_4bit_hit1_input:
         jsr     setup_banking
         jsr     load_userport
         jmp     do_asl4

@@ -30,6 +30,14 @@
 ; unsigned char __fastcall__ sampler_2bit_cga2_input(void);
 ; void __fastcall__ sampler_4bit_cga2_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_cga2_input(void);
+; void __fastcall__ sampler_2bit_hit1_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_hit1_input(void);
+; void __fastcall__ sampler_4bit_hit1_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_hit1_input(void);
+; void __fastcall__ sampler_2bit_hit2_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_hit2_input(void);
+; void __fastcall__ sampler_4bit_hit2_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_hit2_input(void);
 ;
 ; void __fastcall__ digimax_cart_output(unsigned char sample);
 ; void __fastcall__ sfx_output(unsigned char sample);
@@ -60,6 +68,10 @@
         .export  _sampler_4bit_cga1_input_init, _sampler_4bit_cga1_input
         .export  _sampler_2bit_cga2_input_init, _sampler_2bit_cga2_input
         .export  _sampler_4bit_cga2_input_init, _sampler_4bit_cga2_input
+        .export  _sampler_2bit_hit1_input_init, _sampler_2bit_hit1_input
+        .export  _sampler_4bit_hit1_input_init, _sampler_4bit_hit1_input
+        .export  _sampler_2bit_hit2_input_init, _sampler_2bit_hit2_input
+        .export  _sampler_4bit_hit2_input_init, _sampler_4bit_hit2_input
 
         .export  _digimax_cart_output
         .export  _sfx_output
@@ -78,6 +90,10 @@ _sampler_2bit_pet1_input_init:
 _sampler_4bit_pet1_input_init:
 _sampler_2bit_pet2_input_init:
 _sampler_4bit_pet2_input_init:
+_sampler_2bit_hit1_input_init:
+_sampler_4bit_hit1_input_init:
+_sampler_2bit_hit2_input_init:
+_sampler_4bit_hit2_input_init:
         ldx     #$00
         stx     $dd03
         rts
@@ -98,6 +114,7 @@ _sampler_4bit_cga2_input_init:
         jmp     storex_dd01
 
 _sampler_2bit_pet2_input:
+_sampler_2bit_hit2_input:
         lda     $dd01
         and     #$30
         asl
@@ -105,6 +122,7 @@ _sampler_2bit_pet2_input:
         rts
 
 _sampler_4bit_pet2_input:
+_sampler_4bit_hit2_input:
         lda     $dd01
         and     #$f0
         rts
@@ -151,6 +169,7 @@ _sampler_2bit_hummer_input:
 _sampler_2bit_pet1_input:
 _sampler_2bit_cga1_input:
 _sampler_2bit_cga2_input:
+_sampler_2bit_hit1_input:
         lda     $dd01
         asl
         asl
@@ -160,6 +179,7 @@ _sampler_4bit_hummer_input:
 _sampler_4bit_pet1_input:
 _sampler_4bit_cga1_input:
 _sampler_4bit_cga2_input:
+_sampler_4bit_hit1_input:
         lda     $dd01
         jmp     do_asl4
 

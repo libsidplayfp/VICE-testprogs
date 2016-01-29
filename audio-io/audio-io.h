@@ -56,6 +56,16 @@ unsigned char __fastcall__ sampler_2bit_cga2_input(void);
 void __fastcall__ sampler_4bit_cga2_input_init(void);
 unsigned char __fastcall__ sampler_4bit_cga2_input(void);
 
+/* c64-drivers.s / cbm2-drivers.s */
+void __fastcall__ sampler_2bit_hit1_input_init(void);
+unsigned char __fastcall__ sampler_2bit_hit1_input(void);
+void __fastcall__ sampler_4bit_hit1_input_init(void);
+unsigned char __fastcall__ sampler_4bit_hit1_input(void);
+void __fastcall__ sampler_2bit_hit2_input_init(void);
+unsigned char __fastcall__ sampler_2bit_hit2_input(void);
+void __fastcall__ sampler_4bit_hit2_input_init(void);
+unsigned char __fastcall__ sampler_4bit_hit2_input(void);
+
 /* c64-drivers.s / cbm5x0-drivers.s / plus4-drivers.s / vic20-drivers.s */
 unsigned char __fastcall__ sampler_2bit_joy1_input(void);
 unsigned char __fastcall__ sampler_4bit_joy1_input(void);
@@ -73,10 +83,6 @@ void __fastcall__ siddtv_output_init(void);
 void __fastcall__ siddtv_output(unsigned char sample);
 
 /* stubs.s */
-void __fastcall__ sampler_2bit_hit1_input_init(void);
-void __fastcall__ sampler_2bit_hit2_input_init(void);
-void __fastcall__ sampler_4bit_hit1_input_init(void);
-void __fastcall__ sampler_4bit_hit2_input_init(void);
 void __fastcall__ sampler_2bit_kingsoft1_input_init(void);
 void __fastcall__ sampler_4bit_kingsoft1_input_init(void);
 void __fastcall__ sampler_2bit_kingsoft2_input_init(void);
@@ -90,10 +96,6 @@ void __fastcall__ sampler_8bss_left_input_init(void);
 void __fastcall__ sampler_8bss_right_input_init(void);
 void __fastcall__ daisy_input_init(void);
 
-unsigned char __fastcall__ sampler_2bit_hit1_input(void);
-unsigned char __fastcall__ sampler_2bit_hit2_input(void);
-unsigned char __fastcall__ sampler_4bit_hit1_input(void);
-unsigned char __fastcall__ sampler_4bit_hit2_input(void);
 unsigned char __fastcall__ sampler_2bit_kingsoft1_input(void);
 unsigned char __fastcall__ sampler_4bit_kingsoft1_input(void);
 unsigned char __fastcall__ sampler_2bit_kingsoft2_input(void);

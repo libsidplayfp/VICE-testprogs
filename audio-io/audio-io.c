@@ -618,7 +618,7 @@ static menu_input_t input_hummer_menu[] = {
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_userport_joy_menu[] = {
-    { 'h', "HUMMER joystick adapter", input_hummer_menu, NULL },
+    { 'd', "C64DTV HUMMER joystick adapter", input_hummer_menu, NULL },
     { 'o', "OEM joystick adapter", input_oem_menu, NULL },
     { 'p', "PET joystick adapter", input_pet_menu, NULL },
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
