@@ -46,6 +46,16 @@ unsigned char __fastcall__ sampler_2bit_pet2_input(void);
 void __fastcall__ sampler_4bit_pet2_input_init(void);
 unsigned char __fastcall__ sampler_4bit_pet2_input(void);
 
+/* c64-drivers.s / cbm2-drivers.s / pet-drivers.s / vic20-drivers.s */
+void __fastcall__ sampler_2bit_cga1_input_init(void);
+unsigned char __fastcall__ sampler_2bit_cga1_input(void);
+void __fastcall__ sampler_4bit_cga1_input_init(void);
+unsigned char __fastcall__ sampler_4bit_cga1_input(void);
+void __fastcall__ sampler_2bit_cga2_input_init(void);
+unsigned char __fastcall__ sampler_2bit_cga2_input(void);
+void __fastcall__ sampler_4bit_cga2_input_init(void);
+unsigned char __fastcall__ sampler_4bit_cga2_input(void);
+
 /* c64-drivers.s / cbm5x0-drivers.s / plus4-drivers.s / vic20-drivers.s */
 unsigned char __fastcall__ sampler_2bit_joy1_input(void);
 unsigned char __fastcall__ sampler_4bit_joy1_input(void);
@@ -75,10 +85,6 @@ void __fastcall__ sampler_2bit_starbyte1_input_init(void);
 void __fastcall__ sampler_4bit_starbyte1_input_init(void);
 void __fastcall__ sampler_2bit_starbyte2_input_init(void);
 void __fastcall__ sampler_4bit_starbyte2_input_init(void);
-void __fastcall__ sampler_2bit_cga1_input_init(void);
-void __fastcall__ sampler_4bit_cga1_input_init(void);
-void __fastcall__ sampler_2bit_cga2_input_init(void);
-void __fastcall__ sampler_4bit_cga2_input_init(void);
 void __fastcall__ sampler_4bit_userport_input_init(void);
 void __fastcall__ sampler_8bss_left_input_init(void);
 void __fastcall__ sampler_8bss_right_input_init(void);
@@ -96,12 +102,7 @@ unsigned char __fastcall__ sampler_2bit_starbyte1_input(void);
 unsigned char __fastcall__ sampler_4bit_starbyte1_input(void);
 unsigned char __fastcall__ sampler_2bit_starbyte2_input(void);
 unsigned char __fastcall__ sampler_4bit_starbyte2_input(void);
-unsigned char __fastcall__ sampler_2bit_cga1_input(void);
-unsigned char __fastcall__ sampler_4bit_cga1_input(void);
-unsigned char __fastcall__ sampler_2bit_cga2_input(void);
-unsigned char __fastcall__ sampler_4bit_cga2_input(void);
 unsigned char __fastcall__ sampler_4bit_userport_input(void);
 unsigned char __fastcall__ sampler_8bss_left_input(void);
 unsigned char __fastcall__ sampler_8bss_right_input(void);
 unsigned char __fastcall__ daisy_input(void);
-
