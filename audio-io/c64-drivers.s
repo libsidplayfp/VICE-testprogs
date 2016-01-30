@@ -54,6 +54,8 @@
 ; unsigned char __fastcall__ sampler_2bit_starbyte2_input(void);
 ; void __fastcall__ sampler_4bit_starbyte2_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_starbyte2_input(void);
+; void __fastcall__ sampler_4bit_userport_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_userport_input(void);
 ;
 ; void __fastcall__ digimax_cart_output(unsigned char sample);
 ; void __fastcall__ sfx_output(unsigned char sample);
@@ -96,6 +98,7 @@
         .export  _sampler_4bit_starbyte1_input_init, _sampler_4bit_starbyte1_input
         .export  _sampler_2bit_starbyte2_input_init, _sampler_2bit_starbyte2_input
         .export  _sampler_4bit_starbyte2_input_init, _sampler_4bit_starbyte2_input
+        .export  _sampler_4bit_userport_input_init, _sampler_4bit_userport_input
 
         .export  _digimax_cart_output
         .export  _sfx_output
@@ -105,6 +108,16 @@
         .export  _userport_digimax_output_init, _userport_digimax_output
 
         .importzp   tmp1, tmp2
+
+_sampler_4bit_userport_input_init:
+        lda     $dd02
+        ora     #$04
+        sta     $dd02
+        lda     $dd00
+        and     #$fb
+        sta     $dd00
+        jmp     _sampler_2bit_hummer_input_init
+
 
 _sampler_2bit_kingsoft1_input_init:
 _sampler_4bit_kingsoft1_input_init:
@@ -331,6 +344,7 @@ _sampler_2bit_hit2_input:
 
 _sampler_4bit_pet2_input:
 _sampler_4bit_hit2_input:
+_sampler_4bit_userport_input:
         lda     $dd01
         and     #$f0
         rts
@@ -434,14 +448,22 @@ _sfx_output:
 
 _siddtv_output_init:
         jsr     setup_sid
-        lda     #$10
-        sta     $d404
+        lda     #$00
+        sta     $d41f
+        sta     $d407           ; V2 FreqL = 0
+        sta     $d408           ; V2 FreqH = 0
+        sta     $d40c           ; V2 A=0, D=0
+        sta     $d40d           ; V2 S=0, R=0
+        sta     $d409           ; V2 PwL = 0
+        sta     $d40a           ; V2 PwH = 0
+        lda     #$41
+        sta     $d40b           ; V2 Wave = Pulse + gate
         lda     #$0f
         sta     $d418
         rts
 
 _siddtv_output:
-        sta     $d41e
+        sta     $d41f
         rts
 
 setup_sid:

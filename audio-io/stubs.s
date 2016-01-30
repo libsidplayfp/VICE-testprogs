@@ -5,13 +5,10 @@
 ;
 ;
 
-        .export  _sampler_4bit_userport_input_init, _sampler_4bit_userport_input
         .export  _sampler_8bss_left_input_init, _sampler_8bss_left_input
         .export  _sampler_8bss_right_input_init, _sampler_8bss_right_input
         .export  _daisy_input_init, _daisy_input
 
-_sampler_4bit_userport_input_init:
-_sampler_4bit_userport_input:
 _sampler_8bss_left_input_init:
 _sampler_8bss_left_input:
 _sampler_8bss_right_input_init:

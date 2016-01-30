@@ -49,6 +49,8 @@
 ; unsigned char __fastcall__ sampler_2bit_starbyte2_input(void);
 ; void __fastcall__ sampler_4bit_starbyte2_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_starbyte2_input(void);
+; void __fastcall__ sampler_4bit_userport_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_userport_input(void);
 ;
 ; void __fastcall__ userport_dac_output_init(void);
 ; void __fastcall__ userport_dac_output(unsigned char sample);
@@ -80,6 +82,7 @@
         .export  _sampler_4bit_starbyte1_input_init, _sampler_4bit_starbyte1_input
         .export  _sampler_2bit_starbyte2_input_init, _sampler_2bit_starbyte2_input
         .export  _sampler_4bit_starbyte2_input_init, _sampler_4bit_starbyte2_input
+        .export  _sampler_4bit_userport_input_init, _sampler_4bit_userport_input
 
         .export  _userport_dac_output_init, _userport_dac_output
         .export  _userport_digimax_output_init, _userport_digimax_output
@@ -135,6 +138,26 @@ _sampler_4bit_cga2_input_init:
         jsr     setup_userport_dc01
         lda     #$00
         jmp     storea_dc01
+
+_sampler_4bit_userport_input_init:
+        jsr     setup_banking
+        ldy     #$dc
+        sty     sreg + 1
+        ldy     #$00
+        sty     sreg
+        ldy     #$02
+        lda     (sreg),y
+        ora     #$04
+        sta     (sreg),y
+        ldy     #$00
+        lda     (sreg),y
+        and     #$fb
+        sta     (sreg),y
+        tya
+        ldy     #$03
+        sta     (sreg),y
+        stx     $01
+        rts
 
 _sampler_2bit_kingsoft1_input_init:
 _sampler_4bit_kingsoft1_input_init:
@@ -194,6 +217,7 @@ _sampler_2bit_hit2_input:
 
 _sampler_4bit_pet2_input:
 _sampler_4bit_hit2_input:
+_sampler_4bit_userport_input:
         jsr     setup_banking
         jsr     load_userport
         and     #$f0

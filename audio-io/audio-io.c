@@ -322,7 +322,7 @@ static input_device_t sampler_4bit_hummer_input_device[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
+#if defined(__C64__) || defined(__C128__) || defined(__CBM610__)
 static input_device_t sampler_4bit_userport_input_device[] = {
     { "4 bit userport sampler", sampler_4bit_userport_input_init, sampler_4bit_userport_input }
 };
@@ -636,7 +636,7 @@ static menu_input_t input_userport_joy_menu[] = {
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_userport_menu[] = {
     { 'j', "userport joystick adapter", input_userport_joy_menu, NULL },
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
+#if defined(__C64__) || defined(__C128__) || defined(__CBM610__)
     { '4', "4 bit sampler", NULL, sampler_4bit_userport_input_device },
 #endif
 #if defined(__C64__) || defined(__C128__) || defined(__CBM610__)
