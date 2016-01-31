@@ -1,6 +1,8 @@
 ;
 ; Marco van den Heuvel, 28.01.2016
 ;
+; void __fastcall__ set_sid_addr(unsigned addr);
+;
 ; unsigned char __fastcall__ digiblaster_input(void);
 ; unsigned char __fastcall__ sampler_2bit_joy1_input(void);
 ; unsigned char __fastcall__ sampler_4bit_joy1_input(void);
@@ -44,6 +46,8 @@
         .export  _sid_output_init, _sid_output
         .export  _userport_dac_output
         .export  _ted_output
+
+        .export  _set_sid_addr
 
         .importzp   tmp1, tmp2
 
@@ -163,31 +167,45 @@ _digiblaster_output:
         sta     $fd5e
         rts
 
+_set_sid_addr:
+        sta     store_sid+1
+        stx     store_sid+2
+        rts
+
+store_sid:
+        sta     $fd40,x
+        rts
+
 _sid_output_init:
         lda     #$00
         ldx     #$00
 @l:
-        sta     $fd40,x
+        jsr     store_sid
         inx
         cpx     #$20
         bne     @l
         lda     #$ff
-        sta     $fd46
-        sta     $fd4d
-        sta     $fd54
+        ldx     #$06
+        jsr     store_sid
+        ldx     #$0d
+        jsr     store_sid
+        ldx     #$14
+        jsr     store_sid
         lda     #$49
-        sta     $fd44
-        sta     $fd4b
-        sta     $fd52
-        rts
+        ldx     #$04
+        jsr     store_sid
+        ldx     #$0b
+        jsr     store_sid
+        ldx     #$12
+        jmp     store_sid
 
 _sid_output:
         lsr
         lsr
         lsr
         lsr
-        sta     $fd58
-        rts
+        ldx     #$18
+        jmp     store_sid
 
 _userport_dac_output:
         sta     $fd10

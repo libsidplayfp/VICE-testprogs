@@ -1,13 +1,21 @@
 ;
 ; Marco van den Heuvel, 28.01.2016
 ;
+; void __fastcall__ set_sid_addr(unsigned addr);
+;
 ; void __fastcall__ sid_output_init(void);
 ; void __fastcall__ sid_output(unsigned char sample);
 ;
 
         .export  _sid_output_init, _sid_output
 
+        .export _set_sid_addr
+
         .importzp   sreg
+
+; dummy function, sid always at $da00 bank 15
+_set_sid_addr:
+        rts
 
 setup_banking:
         ldx     $01

@@ -1,6 +1,8 @@
 ;
 ; Marco van den Heuvel, 28.01.2016
 ;
+; void __fastcall__ set_sid_addr(unsigned addr);
+;
 ; unsigned char __fastcall__ sfx_input(void);
 ; unsigned char __fastcall__ sampler_2bit_joy1_input(void);
 ; unsigned char __fastcall__ sampler_4bit_joy1_input(void);
@@ -109,6 +111,8 @@
         .export  _userport_dac_output_init, _userport_dac_output
         .export  _userport_digimax_output_init, _userport_digimax_output
         .export  _sfx_sound_expander_output_init, _sfx_sound_expander_output
+
+        .export  _set_sid_addr
 
         .importzp   tmp1, tmp2
 
@@ -469,11 +473,20 @@ _siddtv_output:
         sta     $d41f
         rts
 
+_set_sid_addr:
+        sta     store_sid+1
+        stx     store_sid+2
+        rts
+
+store_sid:
+        sta     $d400,x
+        rts
+
 setup_sid:
         lda     #$00
         ldx     #$00
 @l:
-        sta     $d400,x
+        jsr     store_sid
         inx
         cpx     #$20
         bne     @l
@@ -482,22 +495,27 @@ setup_sid:
 _sid_output_init:
         jsr     setup_sid
         lda     #$ff
-        sta     $d406
-        sta     $d40d
-        sta     $d414
+        ldx     #$06
+        jsr     store_sid
+        ldx     #$0d
+        jsr     store_sid
+        ldx     #$14
+        jsr     store_sid
         lda     #$49
-        sta     $d404
-        sta     $d40b
-        sta     $d412
-        rts
+        ldx     #$04
+        jsr     store_sid
+        ldx     #$0b
+        jsr     store_sid
+        ldx     #$12
+        jmp     store_sid
 
 _sid_output:
         lsr
         lsr
         lsr
         lsr
-        sta     $d418
-        rts
+        ldx     #$18
+        jmp     store_sid
 
 _userport_digimax_output_init:
 _userport_dac_output_init:
@@ -518,10 +536,10 @@ sfx_se_write:
         nop                         ; wait 12 cycles for register select
         sta     $df50               ; write to it
         ldx     #$04
-lup:
+loop:
         dex
         nop
-        bne lup                     ; wait 36 cycles to do the next write
+        bne loop                    ; wait 36 cycles to do the next write
         rts
 
 _sfx_sound_expander_output_init:
@@ -555,12 +573,15 @@ _sfx_sound_expander_output_init:
 
 ; FIXME: need correct way of waiting for top of sine wave
 
-wait1:
-        cmp     $d012
-        beq     wait1
-wait2:
-        cmp     $d012
-        bne     wait2
+        ldy     #$0a
+loop1:
+        ldx     #$de
+loop2:
+        dex
+        nop
+        bne     loop2
+        dey
+        bne     loop1
         lda     #$20
         ldx     #$b0
         jsr     sfx_se_write

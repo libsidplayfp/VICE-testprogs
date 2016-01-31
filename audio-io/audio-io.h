@@ -24,6 +24,7 @@ unsigned char __fastcall__ sampler_4bit_sidcart_input(void);
 /* c64-drivers.s / cbm2-common-drivers.s / pet-drivers.s / plus4-drivers.s / vic20-drivers.s */
 void __fastcall__ sid_output_init(void);
 void __fastcall__ sid_output(unsigned char sample);
+void __fastcall__ set_sid_addr(unsigned addr);
 
 /* vic20-drivers.s */
 void __fastcall__ vic_output(unsigned char sample);

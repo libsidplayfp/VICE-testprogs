@@ -16,72 +16,60 @@
 
 #include "audio-io.h"
 
-/* c64/c64dtv/c128 userport addresses */
-#if defined(__C128__) || defined(__C64__)
-#define USERPORT_DATA 0xDD01
-#define USERPORT_DDR  0xDD03
+#if defined(__C64__) || defined(__C128__)
+static unsigned sid_addresses_d4[] = { 0xd400, 0xd420, 0xd440, 0xd460, 0xd480, 0xd4a0, 0xd4c0, 0xd4e0, 0 };
+static unsigned sid_addresses_d7[] = { 0xd700, 0xd720, 0xd740, 0xd760, 0xd780, 0xd7a0, 0xd7c0, 0xd7e0, 0 };
+static unsigned sid_addresses_de[] = { 0xde00, 0xde20, 0xde40, 0xde60, 0xde80, 0xdea0, 0xdec0, 0xdee0, 0 };
+static unsigned sid_addresses_df[] = { 0xdf00, 0xdf20, 0xdf40, 0xdf60, 0xdf80, 0xdfa0, 0xdfc0, 0xdfe0, 0 };
 #endif
 
-/* vic20 userport addresses */
-#ifdef __VIC20__
-#define USERPORT_DATA 0x9110
-#define USERPORT_DDR  0x9112
+#if defined(__C64__)
+static unsigned sid_addresses_d5[] = { 0xd500, 0xd520, 0xd540, 0xd560, 0xd580, 0xd5a0, 0xd5c0, 0xd5e0, 0 };
+static unsigned sid_addresses_d6[] = { 0xd600, 0xd620, 0xd640, 0xd660, 0xd680, 0xd6a0, 0xd6c0, 0xd6e0, 0 };
 #endif
 
-/* pet userport addresses */
-#ifdef __PET__
-#define USERPORT_DATA 0xE841
-#define USERPORT_DDR  0xE843
+#if defined(__CBM510__) || defined(__CBM610__)
+static unsigned sid_addresses_da[] = { 0xda00, 0 };
 #endif
 
-/* plus4 userport addresses */
+#if defined(__PET__)
+static unsigned sidcart_addresses_8f[] = { 0x8f00, 0 };
+static unsigned sidcart_addresses_e9[] = { 0xe900, 0 };
+#endif
+
 #if defined(__PLUS4__) || defined(__C16__)
-#define USERPORT_DATA 0xfd10
-#define USERPORT_DDR  0xfdf0  /* free space, no ddr on plus4 */
+static unsigned sidcart_addresses_fd[] = { 0xfd40, 0 };
+static unsigned sidcart_addresses_fe[] = { 0xfe80, 0 };
 #endif
 
-/* cbm6x0/7x0 userport addresses,
-   and way of poking/peeking */
-#ifdef __CBM610__
-#define USERPORT_DATA 0xDC01
-#define USERPORT_DDR  0xDC03
-#define USERPORTPOKE(x, y) pokebsys(x, y)
-#define USERPORTPEEK(x) peekbsys(x)
-#else
-#define USERPORTPOKE(x, y) POKE(x, y)
-#define USERPORTPEEK(x) PEEK(x)
+#if defined(__VIC20__)
+static unsigned sidcart_addresses_98[] = { 0x9800, 0 };
+static unsigned sidcart_addresses_9c[] = { 0x9c00, 0 };
 #endif
 
-/* c64 CIA1 addresses */
-#define C64_CIA1_PRA          0xDC00
-#define C64_CIA1_PRB          0xDC01
-#define C64_CIA1_DDRA         0xDC02
-#define C64_CIA1_TIMER_A_LOW  0xDC04
-#define C64_CIA1_TIMER_A_HIGH 0xDC05
-#define C64_CIA1_SR           0xDC0C
-#define C64_CIA1_CRA          0xDC0E
+#if defined(__C64__)
+static unsigned *sid_addresses[] = { sid_addresses_d4, sid_addresses_d5, sid_addresses_d6, sid_addresses_d7, sid_addresses_de, sid_addresses_df, NULL };
+#endif
 
-/* c64 CIA2 addresses */
-#define C64_CIA2_PRA          0xDD00
-#define C64_CIA2_DDRA         0xDD02
-#define C64_CIA2_TIMER_A_LOW  0xDD04
-#define C64_CIA2_TIMER_A_HIGH 0xDD05
-#define C64_CIA2_SR           0xDD0C
-#define C64_CIA2_CRA          0xDD0E
+#if defined(__C128__)
+static unsigned *sid_addresses[] = { sid_addresses_d4, sid_addresses_d7, sid_addresses_de, sid_addresses_df, NULL };
+#endif
 
-/* vic20 VIA1/VIA2 addresses */
-#define VIC20_VIA1_PRA        0x9111
-#define VIC20_VIA2_PRB        0x9120
-#define VIC20_VIA2_DDRB       0x9122
+#if defined(__CBM510__) || defined(__CBM610__)
+static unsigned *sid_addresses[] = { sid_addresses_da, NULL };
+#endif
 
-/* plus4 native and sidcart
-   joystick addresses */
-#define PLUS4_TED_KBD         0xFF08
-#define PLUS4_SIDCART_JOY     0xFD80
+#if defined(__PET__)
+static unsigned *sid_addresses[] = { sidcart_addresses_8f, sidcart_addresses_e9, NULL };
+#endif
 
-/* cbm5x0 native joystick addresses */
-#define CBM510_JOY_FIRE       0xDC00
-#define CBM510_JOY_DIRECTIONS 0xDC01
+#if defined(__PLUS4__) || defined(__C16__)
+static unsigned *sid_addresses[] = { sidcart_addresses_fd, sidcart_addresses_fe, NULL };
+#endif
+
+#if defined(__VIC20__)
+static unsigned *sid_addresses[] = { sidcart_addresses_98, sidcart_addresses_9c, NULL };
+#endif
 
 /* detection of c64dtv */
 #if defined(__C64__)
@@ -448,7 +436,7 @@ static output_device_t sfx_output_device[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__)
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
 static output_device_t sfx_sound_expander_output_device[] = {
     { "SFX Sound Expander", sfx_sound_expander_output_init, sfx_sound_expander_output }
 };
@@ -790,7 +778,7 @@ static menu_output_t output_menu[] = {
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
     { 'x', "sfx sound sampler", sfx_output_device },
 #endif
-#if defined(__C64__) || defined(__C128__)
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
     { 'e', "sfx sound expander", sfx_sound_expander_output_device },
 #endif
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
@@ -823,8 +811,10 @@ int main(void)
     input_device_t *input_device = NULL;
     output_device_t *output_device = NULL;
     unsigned char index;
+    unsigned char sid_index;
     signed char valid_key = -1;
     char key;
+    unsigned char max_key = 0;
 
 #if defined(__C64__)
     test_c64dtv();
@@ -887,6 +877,38 @@ int main(void)
         output_device = current_output_menu[valid_key].device;
     }
 
+    if (output_device->function == sid_output) {
+        clrscr();
+        cprintf("Choose SID address range\r\n\r\n");
+        for (index = 0; sid_addresses[index]; ++index) {
+            cprintf("%c: $%02Xxx\r\n", 'a' + index, sid_addresses[index][0] >> 8);
+            ++max_key;
+        }
+        valid_key = -1;
+        while (valid_key < 0) {
+            key = cgetc();
+            if (key >= 'a' && key < 'a' + max_key) {
+                valid_key = key - 'a';
+            }
+        }
+        sid_index = valid_key;
+        clrscr();
+        cprintf("Choose SID address\r\n\r\n");
+        max_key = 0;
+        for (index = 0; sid_addresses[sid_index][index]; ++index) {
+            cprintf("%c: $%04X\r\n", 'a' + index, sid_addresses[sid_index][index]);
+            ++max_key;
+        }
+        valid_key = -1;
+        while (valid_key < 0) {
+            key = cgetc();
+            if (key >= 'a' && key < 'a' + max_key) {
+                valid_key = key - 'a';
+            }
+        }
+        set_sid_addr(sid_addresses[sid_index][valid_key]);
+    }
+
     clrscr();
     SEI();
     set_input_jsr(input_device->function);
@@ -898,7 +920,12 @@ int main(void)
     if (output_device->function_init) {
         output_device->function_init();
     }
-    cprintf("Streaming from\r\n\r\n%s\r\n\r\nto\r\n\r\n%s\r\n", input_device->device_name, output_device->device_name);
+    cprintf("Streaming from\r\n\r\n%s\r\n\r\nto\r\n\r\n", input_device->device_name);
+    if (output_device->function == sid_output) {
+        cprintf("%s at $%04X\r\n", output_device->device_name, sid_addresses[sid_index][valid_key]);
+    } else {
+        cprintf("%s\r\n", output_device->device_name);
+    }
     stream();
 
     return 0;

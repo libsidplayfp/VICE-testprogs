@@ -1,6 +1,8 @@
 ;
 ; Marco van den Heuvel, 28.01.2016
 ;
+; void __fastcall__ set_sid_addr(unsigned addr);
+;
 ; void __fastcall__ sampler_2bit_hummer_input_init(void);
 ; unsigned char __fastcall__ sampler_2bit_hummer_input(void);
 ; void __fastcall__ sampler_4bit_hummer_input_init(void);
@@ -47,6 +49,8 @@
 
         .export  _sid_output_init, _sid_output
         .export  _userport_dac_output_init, _userport_dac_output
+
+        .export  _set_sid_addr
 
         .importzp   tmp1, tmp2
 
@@ -148,31 +152,45 @@ _sampler_4bit_cga2_input:
         lda     $e841
         jmp     do_asl4
 
+_set_sid_addr:
+        sta     store_sid+1
+        stx     store_sid+2
+        rts
+
+store_sid:
+        sta     $e900,x
+        rts
+
 _sid_output_init:
         lda     #$00
         ldx     #$00
 @l:
-        sta     $e900,x
+        jsr     store_sid
         inx
         cpx     #$20
         bne     @l
         lda     #$ff
-        sta     $e906
-        sta     $e90d
-        sta     $e914
+        ldx     #$06
+        jsr     store_sid
+        ldx     #$0d
+        jsr     store_sid
+        ldx     #$14
+        jsr     store_sid
         lda     #$49
-        sta     $e904
-        sta     $e90b
-        sta     $e912
-        rts
+        ldx     #$04
+        jsr     store_sid
+        ldx     #$0b
+        jsr     store_sid
+        ldx     #$12
+        jmp     store_sid
 
 _sid_output:
         lsr
         lsr
         lsr
         lsr
-        sta     $e918
-        rts
+        ldx     #$18
+        jmp     store_sid
 
 _userport_dac_output_init:
         ldx     #$ff
@@ -182,4 +200,3 @@ _userport_dac_output_init:
 _userport_dac_output:
         sta     $e841
         rts
-
