@@ -448,6 +448,12 @@ static output_device_t sfx_output_device[] = {
 };
 #endif
 
+#if defined(__C64__) || defined(__C128__)
+static output_device_t sfx_sound_expander_output_device[] = {
+    { "SFX Sound Expander", sfx_sound_expander_output_init, sfx_sound_expander_output }
+};
+#endif
+
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
 static output_device_t digimax_cart_output_device[] = {
     { "DigiMAX cartridge", NULL, digimax_cart_output }
@@ -783,6 +789,9 @@ static menu_output_t output_menu[] = {
 #endif
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
     { 'x', "sfx sound sampler", sfx_output_device },
+#endif
+#if defined(__C64__) || defined(__C128__)
+    { 'e', "sfx sound expander", sfx_sound_expander_output_device },
 #endif
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
     { 'd', "digimax cartridge", digimax_cart_output_device },

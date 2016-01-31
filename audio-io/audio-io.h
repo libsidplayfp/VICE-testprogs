@@ -11,6 +11,8 @@ unsigned char __fastcall__ software_input(void);
 unsigned char __fastcall__ sfx_input(void);
 void __fastcall__ sfx_output(unsigned char sample);
 void __fastcall__ digimax_cart_output(unsigned char sample);
+void __fastcall__ sfx_sound_expander_output_init(void);
+void __fastcall__ sfx_sound_expander_output(unsigned char sample);
 
 /* plus4-drivers.s */
 unsigned char __fastcall__ digiblaster_input(void);

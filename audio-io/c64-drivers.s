@@ -67,6 +67,8 @@
 ; void __fastcall__ userport_dac_output(unsigned char sample);
 ; void __fastcall__ userport_digimax_output_init(void);
 ; void __fastcall__ userport_digimax_output(unsigned char sample);
+; void __fastcall__ sfx_sound_expander_output_init(void);
+; void __fastcall__ sfx_sound_expander_output(unsigned char sample);
 ;
 
         .export  _sfx_input
@@ -106,6 +108,7 @@
         .export  _siddtv_output_init, _siddtv_output
         .export  _userport_dac_output_init, _userport_dac_output
         .export  _userport_digimax_output_init, _userport_digimax_output
+        .export  _sfx_sound_expander_output_init, _sfx_sound_expander_output
 
         .importzp   tmp1, tmp2
 
@@ -506,3 +509,67 @@ _userport_digimax_output:
 _userport_dac_output:
         sta     $dd01
         rts
+
+sfx_se_write:
+        stx     $df40               ; select ym3526 register
+        nop
+        nop
+        nop
+        nop                         ; wait 12 cycles for register select
+        sta     $df50               ; write to it
+        ldx     #$04
+lup:
+        dex
+        nop
+        bne lup                     ; wait 36 cycles to do the next write
+        rts
+
+_sfx_sound_expander_output_init:
+        lda     #$21
+        ldx     #$20
+        jsr     sfx_se_write        ; Sets MULTI=1,AM=0,VIB=0,KSR=0,EG=1 for operator 1
+        lda     #$f0
+        ldx     #$60
+        jsr     sfx_se_write        ; Sets attack rate to 15 and decay rate to 0 for operator 1
+        ldx     #$80
+        jsr     sfx_se_write        ; Sets the sustain level to 15 and the release rate to 0 for operator 1
+        lda     #$01
+        ldx     #$c0
+        jsr     sfx_se_write        ; Feedback=0 and Additive Synthesis is on  for voice 1 [which is operator 1 and operator 4]
+        lda     #$00
+        ldx     #$e0
+        jsr     sfx_se_write        ; Waveform=regular sine wave for operator 1
+        lda     #$3f
+        ldx     #$43
+        jsr     sfx_se_write        ; sets total level=63 and attenuation for operator 4
+        lda     #$01
+        ldx     #$b0
+        jsr     sfx_se_write
+        lda     #$8f
+        ldx     #$a0
+        jsr     sfx_se_write
+        lda     #$2e
+        ldx     #$b0
+        jsr     sfx_se_write
+        lda     $d012
+
+; FIXME: need correct way of waiting for top of sine wave
+
+wait1:
+        cmp     $d012
+        beq     wait1
+wait2:
+        cmp     $d012
+        bne     wait2
+        lda     #$20
+        ldx     #$b0
+        jsr     sfx_se_write
+        lda     #$00
+        ldx     #$b0
+        jmp     sfx_se_write
+
+_sfx_sound_expander_output:
+        lsr
+        lsr
+        ldx     #$40
+        jmp     sfx_se_write
