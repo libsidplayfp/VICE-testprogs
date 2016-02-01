@@ -2,6 +2,7 @@
 ; Marco van den Heuvel, 28.01.2016
 ;
 ; void __fastcall__ set_sid_addr(unsigned addr);
+; void __fastcall__ set_digimax_addr(unsigned addr);
 ;
 ; unsigned char __fastcall__ sfx_input(void);
 ; unsigned char __fastcall__ sampler_2bit_joy1_input(void);
@@ -113,6 +114,7 @@
         .export  _sfx_sound_expander_output_init, _sfx_sound_expander_output
 
         .export  _set_sid_addr
+        .export  _set_digimax_addr
 
         .importzp   tmp1, tmp2
 
@@ -442,12 +444,24 @@ _sampler_4bit_joy2_input:
         lda     $dc00
         jmp     do_asl4
 
-_digimax_cart_output:
-        sta     $de00
-        sta     $de01
-        sta     $de02
-        sta     $de03
+_set_digimax_addr:
+        sta     store_digimax+1
+        stx     store_digimax+2
         rts
+
+store_digimax:
+        sta     $de00,x
+        rts
+
+_digimax_cart_output:
+        ldx     #$00
+        jsr     store_digimax
+        inx
+        jsr     store_digimax
+        inx
+        jsr     store_digimax
+        inx
+        jmp     store_digimax
 
 _sfx_output:
         sta     $df00

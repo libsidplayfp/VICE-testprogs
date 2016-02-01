@@ -71,6 +71,24 @@ static unsigned *sid_addresses[] = { sidcart_addresses_fd, sidcart_addresses_fe,
 static unsigned *sid_addresses[] = { sidcart_addresses_98, sidcart_addresses_9c, NULL };
 #endif
 
+#if defined(__C64__) || defined(__C128__)
+static unsigned digimax_addresses_de[] = { 0xde00, 0xde20, 0xde40, 0xde60, 0xde80, 0xdea0, 0xdec0, 0xdee0, 0 };
+static unsigned digimax_addresses_df[] = { 0xdf00, 0xdf20, 0xdf40, 0xdf60, 0xdf80, 0xdfa0, 0xdfc0, 0xdfe0, 0 };
+#endif
+
+#if defined(__VIC20__)
+static unsigned digimax_addresses_98[] = { 0x9800, 0x9820, 0x9840, 0x9860, 0x9880, 0x98a0, 0x98c0, 0x98e0, 0 };
+static unsigned digimax_addresses_9c[] = { 0x9c00, 0x9c20, 0x9c40, 0x9c60, 0x9c80, 0x9ca0, 0x9cc0, 0x9ce0, 0 };
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static unsigned *digimax_addresses[] = { digimax_addresses_de, digimax_addresses_df, NULL };
+#endif
+
+#if defined(__VIC20__)
+static unsigned *digimax_addresses[] = { digimax_addresses_98, digimax_addresses_9c, NULL };
+#endif
+
 /* detection of c64dtv */
 #if defined(__C64__)
 static unsigned char isc64dtv = 0;
@@ -382,6 +400,12 @@ static input_device_t sfx_input_device[] = {
 };
 #endif
 
+#if defined(__VIC20__)
+static input_device_t sfx_io_swapped_input_device[] = {
+    { "SFX Sound Sampler (I/O swapped)", NULL, sfx_io_swapped_input }
+};
+#endif
+
 #if defined(__C64__) || defined(__C128__)
 static input_device_t daisy_input_device[] = {
     { "DAISY", daisy_input_init, daisy_input }
@@ -442,9 +466,21 @@ static output_device_t sfx_output_device[] = {
 };
 #endif
 
+#if defined(__VIC20__)
+static output_device_t sfx_io_swapped_output_device[] = {
+    { "SFX Sound Sampler (I/O swapped)", NULL, sfx_io_swapped_output }
+};
+#endif
+
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
 static output_device_t sfx_sound_expander_output_device[] = {
     { "SFX Sound Expander", sfx_sound_expander_output_init, sfx_sound_expander_output }
+};
+#endif
+
+#if defined(__VIC20__)
+static output_device_t sfx_sound_expander_io_swapped_output_device[] = {
+    { "SFX Sound Expander", sfx_sound_expander_io_swapped_output_init, sfx_sound_expander_output }
 };
 #endif
 
@@ -679,6 +715,14 @@ static menu_input_t input_digiblaster_menu[] = {
 };
 #endif
 
+#if defined(__VIC20__)
+static menu_input_t input_sfx_menu[] = {
+    { 's', "SFX Sound Sampler (standard I/O)", NULL, sfx_input_device },
+    { 'i', "SFX Sound Sampler (I/O swapped)", NULL, sfx_io_swapped_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM510__)
 static menu_input_t input_joy_menu[] = {
 #if defined(__C64__) || defined(__C128__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM510__)
@@ -697,8 +741,11 @@ static menu_input_t input_joy_menu[] = {
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__)
 static menu_input_t input_cart_menu[] = {
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
+#if defined(__C64__) || defined(__C128__)
     { 's', "sfx sound sampler", NULL, sfx_input_device },
+#endif
+#if defined(__VIC20__)
+    { 's', "sfx sound sampler", input_sfx_menu, NULL },
 #endif
 #if defined(__C64__) || defined(__C128__)
     { 'd', "daisy", NULL, daisy_input_device },
@@ -785,11 +832,19 @@ static menu_output_t output_menu[] = {
 #if defined(__VIC20__)
     { 'v', "VIC", vic_output_device },
 #endif
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
+#if defined(__C64__) || defined(__C128__)
     { 'x', "sfx sound sampler", sfx_output_device },
 #endif
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
+#if defined(__VIC20__)
+    { 'x', "sfx sound sampler (standard I/O)", sfx_output_device },
+    { 'y', "sfx sound sampler (swapped I/O", sfx_io_swapped_output_device },
+#endif
+#if defined(__C64__) || defined(__C128__)
     { 'e', "sfx sound expander", sfx_sound_expander_output_device },
+#endif
+#if defined(__VIC20__)
+    { 'e', "sfx sound expander (standard I/O)", sfx_sound_expander_output_device },
+    { 'q', "sfx sound expander (swapped I/O)", sfx_sound_expander_io_swapped_output_device },
 #endif
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
     { 'd', "digimax cartridge", digimax_cart_output_device },
@@ -820,6 +875,8 @@ int main(void)
     menu_output_t *current_output_menu = NULL;
     input_device_t *input_device = NULL;
     output_device_t *output_device = NULL;
+    unsigned **addresses = NULL;
+    void (*device_function)(unsigned addr) = NULL;
     unsigned char index;
     unsigned char sid_index;
     signed char valid_key = -1;
@@ -887,11 +944,30 @@ int main(void)
         output_device = current_output_menu[valid_key].device;
     }
 
+#if defined(__C64__)
+    if (output_device->function == sid_output && !isc64dtv) {
+        addresses = sid_addresses;
+        device_function = set_sid_addr;
+    }
+#else
     if (output_device->function == sid_output) {
+        addresses = sid_addresses;
+        device_function = set_sid_addr;
+    }
+#endif
+
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
+    if (output_device->function == digimax_cart_output) {
+        addresses = digimax_addresses;
+        device_function = set_digimax_addr;
+    }
+#endif
+
+    if (addresses) {
         clrscr();
-        cprintf("Choose SID address range\r\n\r\n");
-        for (index = 0; sid_addresses[index]; ++index) {
-            cprintf("%c: $%02Xxx\r\n", 'a' + index, sid_addresses[index][0] >> 8);
+        cprintf("Choose %s address range\r\n\r\n", output_device->device_name);
+        for (index = 0; addresses[index]; ++index) {
+            cprintf("%c: $%02Xxx\r\n", 'a' + index, addresses[index][0] >> 8);
             ++max_key;
         }
         valid_key = -1;
@@ -903,10 +979,10 @@ int main(void)
         }
         sid_index = valid_key;
         clrscr();
-        cprintf("Choose SID address\r\n\r\n");
+        cprintf("Choose %s address\r\n\r\n", output_device->device_name);
         max_key = 0;
-        for (index = 0; sid_addresses[sid_index][index]; ++index) {
-            cprintf("%c: $%04X\r\n", 'a' + index, sid_addresses[sid_index][index]);
+        for (index = 0; addresses[sid_index][index]; ++index) {
+            cprintf("%c: $%04X\r\n", 'a' + index, addresses[sid_index][index]);
             ++max_key;
         }
         valid_key = -1;
@@ -916,7 +992,9 @@ int main(void)
                 valid_key = key - 'a';
             }
         }
-        set_sid_addr(sid_addresses[sid_index][valid_key]);
+        if (device_function) {
+            device_function(addresses[sid_index][valid_key]);
+        }
     }
 
     clrscr();
@@ -931,8 +1009,8 @@ int main(void)
         output_device->function_init();
     }
     cprintf("Streaming from\r\n\r\n%s\r\n\r\nto\r\n\r\n", input_device->device_name);
-    if (output_device->function == sid_output) {
-        cprintf("%s at $%04X\r\n", output_device->device_name, sid_addresses[sid_index][valid_key]);
+    if (addresses) {
+        cprintf("%s at $%04X\r\n", output_device->device_name, addresses[sid_index][valid_key]);
     } else {
         cprintf("%s\r\n", output_device->device_name);
     }

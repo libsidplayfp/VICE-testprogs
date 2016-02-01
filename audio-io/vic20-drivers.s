@@ -2,10 +2,12 @@
 ; Marco van den Heuvel, 28.01.2016
 ;
 ; void __fastcall__ set_sid_addr(unsigned addr);
+; void __fastcall__ set_digimax_addr(unsigned addr);
 ;
 ; unsigned char __fastcall__ sampler_2bit_joy1_input(void);
 ; unsigned char __fastcall__ sampler_4bit_joy1_input(void);
 ; unsigned char __fastcall__ sfx_input(void);
+; unsigned char __fastcall__ sfx_io_swapped_input(void);
 ; void __fastcall__ sampler_2bit_hummer_input_init(void);
 ; unsigned char __fastcall__ sampler_2bit_hummer_input(void);
 ; void __fastcall__ sampler_4bit_hummer_input_init(void);
@@ -33,6 +35,7 @@
 ;
 ; void __fastcall__ digimax_cart_output(unsigned char sample);
 ; void __fastcall__ sfx_output(unsigned char sample);
+; void __fastcall__ sfx_io_swapped_output(unsigned char sample);
 ; void __fastcall__ sid_output_init(void);
 ; void __fastcall__ sid_output(unsigned char sample);
 ; void __fastcall__ userport_dac_output_init(void);
@@ -40,11 +43,13 @@
 ; void __fastcall__ vic_output(unsigned char sample);
 ; void __fastcall__ sfx_sound_expander_output_init(void);
 ; void __fastcall__ sfx_sound_expander_output(unsigned char sample);
+; void __fastcall__ sfx_sound_expander_io_swapped_output_init(void);
 ;
 
         .export  _sampler_2bit_joy1_input
         .export  _sampler_4bit_joy1_input
         .export  _sfx_input
+        .export  _sfx_io_swapped_input
         .export  _sampler_2bit_hummer_input_init, _sampler_2bit_hummer_input
         .export  _sampler_4bit_hummer_input_init, _sampler_4bit_hummer_input
         .export  _sampler_2bit_oem_input_init, _sampler_2bit_oem_input
@@ -60,12 +65,15 @@
 
         .export  _digimax_cart_output
         .export  _sfx_output
+        .export  _sfx_io_swapped_output
         .export  _sid_output_init, _sid_output
         .export  _userport_dac_output_init, _userport_dac_output
         .export  _vic_output
         .export  _sfx_sound_expander_output_init, _sfx_sound_expander_output
+        .export  _sfx_sound_expander_io_swapped_output_init
 
         .export  _set_sid_addr
+        .export  _set_digimax_addr
 
         .importzp       tmp1, tmp2
 
@@ -189,15 +197,36 @@ _sfx_input:
         sta     $9c00
         rts
 
-_digimax_cart_output:
+_sfx_io_swapped_input:
+        lda     $9c00
         sta     $9800
-        sta     $9801
-        sta     $9802
-        sta     $9803
         rts
+
+_set_digimax_addr:
+        sta     store_digimax+1
+        stx     store_digimax+2
+        rts
+
+store_digimax:
+        sta     $9800,x
+        rts
+
+_digimax_cart_output:
+        ldx     #$00
+        jsr     store_digimax
+        inx
+        jsr     store_digimax
+        inx
+        jsr     store_digimax
+        inx
+        jmp     store_digimax
 
 _sfx_output:
         sta     $9800
+        rts
+
+_sfx_io_swapped_output:
+        sta     $9c00
         rts
 
 _set_sid_addr:
@@ -263,6 +292,7 @@ sfx_se_write:
         nop
         nop
         nop                         ; wait 12 cycles for register select
+sfx_se_write2:
         sta     $9c50               ; write to it
         ldx     #$04
 loop:
@@ -271,7 +301,19 @@ loop:
         bne loop                    ; wait 36 cycles to do the next write
         rts
 
+_sfx_sound_expander_io_swapped_output_init:
+        lda     #$98
+        sta     sfx_se_write+2
+        sta     sfx_se_write2+2
+        jmp     sfx_se_real_init
+
 _sfx_sound_expander_output_init:
+        lda     #$9c
+        sta     sfx_se_write+2
+        sta     sfx_se_write2+2
+        jmp     sfx_se_real_init
+
+sfx_se_real_init:
         lda     #$21
         ldx     #$20
         jsr     sfx_se_write        ; Sets MULTI=1,AM=0,VIB=0,KSR=0,EG=1 for operator 1

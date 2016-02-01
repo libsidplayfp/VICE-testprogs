@@ -10,6 +10,7 @@ unsigned char __fastcall__ software_input(void);
 /* c64-drivers.s / vic20-drivers.s */
 unsigned char __fastcall__ sfx_input(void);
 void __fastcall__ sfx_output(unsigned char sample);
+void __fastcall__ set_digimax_addr(unsigned addr);
 void __fastcall__ digimax_cart_output(unsigned char sample);
 void __fastcall__ sfx_sound_expander_output_init(void);
 void __fastcall__ sfx_sound_expander_output(unsigned char sample);
@@ -29,6 +30,9 @@ void __fastcall__ set_sid_addr(unsigned addr);
 
 /* vic20-drivers.s */
 void __fastcall__ vic_output(unsigned char sample);
+unsigned char __fastcall__ sfx_io_swapped_input(void);
+void __fastcall__ sfx_io_swapped_output(unsigned char sample);
+void __fastcall__ sfx_sound_expander_io_swapped_output_init(void);
 
 /* c64-drivers.s / cbm2-drivers.s / pet-drivers.s / plus4-drivers.s / vic20-drivers.s */
 void __fastcall__ userport_dac_output_init(void);
