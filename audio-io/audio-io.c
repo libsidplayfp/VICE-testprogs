@@ -389,8 +389,14 @@ static input_device_t daisy_input_device[] = {
 #endif
 
 #if defined(__C16__) || defined(__PLUS4__)
-static input_device_t digiblaster_input_device[] = {
-    { "DigiBlaster", NULL, digiblaster_input }
+static input_device_t digiblaster_fd5x_input_device[] = {
+    { "DigiBlaster at $FD5x", NULL, digiblaster_fd5x_input }
+};
+#endif
+
+#if defined(__C16__) || defined(__PLUS4__)
+static input_device_t digiblaster_fe9x_input_device[] = {
+    { "DigiBlaster at $FE9x", NULL, digiblaster_fe9x_input }
 };
 #endif
 
@@ -660,11 +666,15 @@ static menu_input_t input_native_joy2_menu[] = {
 #if defined(__C16__) || defined(__PLUS4__)
 static menu_input_t input_sidcart_joy_menu[] = {
     { '2', "2 bit sampler", NULL, sampler_2bit_sidcart_input_device },
-
-
-
-
     { '4', "4 bit sampler", NULL, sampler_4bit_sidcart_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C16__) || defined(__PLUS4__)
+static menu_input_t input_digiblaster_menu[] = {
+    { 'd', "DigiBlaster at $FD5x", NULL, digiblaster_fd5x_input_device },
+    { 'e', "DigiBlaster at $FE9x", NULL, digiblaster_fe9x_input_device },
     { 0, NULL, NULL, NULL }
 };
 #endif
@@ -694,7 +704,7 @@ static menu_input_t input_cart_menu[] = {
     { 'd', "daisy", NULL, daisy_input_device },
 #endif
 #if defined(__C16__) || defined(__PLUS4__)
-    { 'd', "digiblaster", NULL, digiblaster_input_device },
+    { 'd', "digiblaster", input_digiblaster_menu, NULL },
 #endif
     { 0, NULL, NULL, NULL },
 };

@@ -15,7 +15,8 @@ void __fastcall__ sfx_sound_expander_output_init(void);
 void __fastcall__ sfx_sound_expander_output(unsigned char sample);
 
 /* plus4-drivers.s */
-unsigned char __fastcall__ digiblaster_input(void);
+unsigned char __fastcall__ digiblaster_fd5x_input(void);
+unsigned char __fastcall__ digiblaster_fe9x_input(void);
 void __fastcall__ digiblaster_output(unsigned char sample);
 void __fastcall__ ted_output(unsigned char sample);
 unsigned char __fastcall__ sampler_2bit_sidcart_input(void);

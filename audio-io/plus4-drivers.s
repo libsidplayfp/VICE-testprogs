@@ -3,7 +3,8 @@
 ;
 ; void __fastcall__ set_sid_addr(unsigned addr);
 ;
-; unsigned char __fastcall__ digiblaster_input(void);
+; unsigned char __fastcall__ digiblaster_fd5x_input(void);
+; unsigned char __fastcall__ digiblaster_fe9x_input(void);
 ; unsigned char __fastcall__ sampler_2bit_joy1_input(void);
 ; unsigned char __fastcall__ sampler_4bit_joy1_input(void);
 ; unsigned char __fastcall__ sampler_2bit_joy2_input(void);
@@ -26,7 +27,8 @@
 ; void __fastcall__ ted_output(void);
 ;
 
-        .export  _digiblaster_input
+        .export  _digiblaster_fd5x_input
+        .export  _digiblaster_fe9x_input
         .export  _sampler_2bit_joy1_input
         .export  _sampler_4bit_joy1_input
         .export  _sampler_2bit_joy2_input
@@ -124,8 +126,12 @@ load_joy2:
         lda     #$fd
         jmp     load_joy
 
-_digiblaster_input:
+_digiblaster_fd5x_input:
         lda     $fd5f
+        rts
+
+_digiblaster_fe9x_input:
+        lda     $fe9f
         rts
 
 _sampler_2bit_joy1_input:
