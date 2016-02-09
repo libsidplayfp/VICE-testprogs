@@ -89,7 +89,7 @@ re_done:
 	
 
 greet_msg:
-	dc.b	147,"RR-FREEZE R01 / TLR",13,13
+	dc.b	147,"RR-FREEZE R02 / TLR",13,13
 	dc.b	"THIS PROGRAM VERIFIES THE CART STATE",13
 	dc.b	"DURING FREEZING.",13,13,0
 
@@ -174,17 +174,18 @@ pt_lp3:
 prepare_st:
 	rorg	$0120
 prepare:
-	lda	#%00100010
+	lda	#%00100011
 	sta	$de00
 	ldx	#0
 prp_lp1:
 	txa
 	cpx	#$10
 	bcc	prp_skp1
-	sta	$de00,x
+	sta	$9e00,x
 prp_skp1:
-	eor	$80
-	sta	$df00,x
+	clc
+	adc	#$10
+	sta	$9f00,x
 	inx
 	bne	prp_lp1
 	lda	#%00000000
