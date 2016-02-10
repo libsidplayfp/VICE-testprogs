@@ -21,6 +21,43 @@ ptr_zp:
 	ds.w	1
 
 
+	seg.u	bss
+;**************************************************************************
+;*
+;* SECTION  storage
+;*
+;******
+	org	$0800		; FIXME: shouldn't overlap
+tab_selected:
+	ds.b	1
+de01_selected:
+	ds.b	1
+
+	org	$0800		; FIXME: shouldn't overlap
+de00_pre:
+	ds.b	1
+de01_pre:
+	ds.b	1
+de00_post:
+	ds.b	1
+de01_post:
+	ds.b	1
+
+	org	$0800		; FIXME: shouldn't overlap
+de00_store1:
+	ds.b	256
+de00_store2:
+	ds.b	256
+de00_store3:
+	ds.b	256
+df00_store1:
+	ds.b	256
+df00_store2:
+	ds.b	256
+df00_store3:
+	ds.b	256
+
+
 	seg	code
 	org	$8000
 ;**************************************************************************
@@ -29,12 +66,12 @@ ptr_zp:
 ;*
 ;******
 	dc.w	reset_entry
-	dc.w	reset_entry
-;	dc.w	warm_entry
+	dc.w	warm_entry
 	dc.b    "C"|$80,"B"|$80,"M"|$80,"8","0"
 
 
 reset_entry:
+warm_entry:
 	sei
 	cld
 	ldx	#$ff
@@ -55,16 +92,16 @@ reset_entry:
 	jsr	print_str
 	cli
 	lda	#0
-	sta	$0800
+	sta	tab_selected
 re_lp1:
 	lda	#0
 	sta	$d3
 	lda	#<sel1_msg
 	ldy	#>sel1_msg
 	jsr	print_str
-	ldx	$0800
+	ldx	tab_selected
 	lda	de01_tab,x
-	sta	$0801
+	sta	de01_selected
 	jsr	print_hex
 	lda	#<sel2_msg
 	ldy	#>sel2_msg
@@ -81,7 +118,7 @@ re_lp2:
 	bcs	re_lp2
 	sec
 	sbc	#"1"
-	sta	$0800
+	sta	tab_selected
 	jmp	re_lp1
 
 re_done:
@@ -121,7 +158,7 @@ de01_tab:
 perform_test:
 
 ; initial setup of RR-mode
-	lda	$0801
+	lda	de01_selected
 	sta	$de01
 
 
@@ -129,12 +166,12 @@ perform_test:
 	ldx	#0
 	lda	#$aa
 pt_lp1:
-	sta	$0800,x
-	sta	$0900,x
-	sta	$0a00,x
-	sta	$0b00,x
-	sta	$0c00,x
-	sta	$0d00,x
+	sta	de00_store1,x
+	sta	de00_store2,x
+	sta	de00_store3,x
+	sta	df00_store1,x
+	sta	df00_store2,x
+	sta	df00_store3,x
 	inx
 	bne	pt_lp1
 	
@@ -147,9 +184,9 @@ pt_lp2:
 
 	jsr	prepare
 	lda	$de00
-	sta	$0800
+	sta	de00_pre
 	lda	$de01
-	sta	$0801
+	sta	de01_pre
 	cli
 	
 	lda	#<freeze_msg
@@ -210,71 +247,71 @@ continue_test:
 	ldy	#>thank_you_msg
 	jsr	print_str
 
-	lda	$0800
+	lda	de00_pre
 	jsr	print_hex
 	jsr	print_space
-	lda	$0801
+	lda	de01_pre
 	jsr	print_hex
 	jsr	print_space
-	lda	$0802
+	lda	de00_post
 	jsr	print_hex
 	jsr	print_space
-	lda	$0803
+	lda	de01_post
 	jsr	print_hex
 	jsr	print_cr
 	jsr	print_cr
 
-	lda	#<$0810
-	ldy	#>$0810
+	lda	#<[de00_store1+$10]
+	ldy	#>[de00_store1+$10]
 	jsr	dump_hex
 	jsr	print_cr
-	lda	#<$08e0
-	ldy	#>$08e0
-	jsr	dump_hex
-	jsr	print_cr
-
-	lda	#<$0910
-	ldy	#>$0910
-	jsr	dump_hex
-	jsr	print_cr
-	lda	#<$09e0
-	ldy	#>$09e0
+	lda	#<[de00_store1+$e0]
+	ldy	#>[de00_store1+$e0]
 	jsr	dump_hex
 	jsr	print_cr
 
-	lda	#<$0a10
-	ldy	#>$0a10
+	lda	#<[de00_store2+$10]
+	ldy	#>[de00_store2+$10]
 	jsr	dump_hex
 	jsr	print_cr
-	lda	#<$0ae0
-	ldy	#>$0ae0
-	jsr	dump_hex
-	jsr	print_cr
-
-	lda	#<$0b10
-	ldy	#>$0b10
-	jsr	dump_hex
-	jsr	print_cr
-	lda	#<$0be0
-	ldy	#>$0be0
+	lda	#<[de00_store2+$e0]
+	ldy	#>[de00_store2+$e0]
 	jsr	dump_hex
 	jsr	print_cr
 
-	lda	#<$0c10
-	ldy	#>$0c10
+	lda	#<[de00_store3+$10]
+	ldy	#>[de00_store3+$10]
 	jsr	dump_hex
 	jsr	print_cr
-	lda	#<$0ce0
-	ldy	#>$0ce0
+	lda	#<[de00_store3+$e0]
+	ldy	#>[de00_store3+$e0]
 	jsr	dump_hex
 	jsr	print_cr
 
-	lda	#<$0d10
-	ldy	#>$0d10
+	lda	#<[df00_store1+$10]
+	ldy	#>[df00_store1+$10]
 	jsr	dump_hex
 	jsr	print_cr
-	lda	#<$0de0
-	ldy	#>$0de0
+	lda	#<[df00_store1+$e0]
+	ldy	#>[df00_store1+$e0]
+	jsr	dump_hex
+	jsr	print_cr
+
+	lda	#<[df00_store2+$10]
+	ldy	#>[df00_store2+$10]
+	jsr	dump_hex
+	jsr	print_cr
+	lda	#<[df00_store2+$e0]
+	ldy	#>[df00_store2+$e0]
+	jsr	dump_hex
+	jsr	print_cr
+
+	lda	#<[df00_store3+$10]
+	ldy	#>[df00_store3+$10]
+	jsr	dump_hex
+	jsr	print_cr
+	lda	#<[df00_store3+$e0]
+	ldy	#>[df00_store3+$e0]
 	jsr	dump_hex
 	jsr	print_cr
 
@@ -479,27 +516,27 @@ freeze_entry:
 	txs
 
 	lda	$de00
-	sta	$0802
+	sta	de00_post
 	lda	$de01
-	sta	$0803
+	sta	de01_post
 	
 	ldx	#0
 fr_lp1:
 	cpx	#$10
 	bcc	fr_skp1
 	lda	$de00,x
-	sta	$0800,x
+	sta	de00_store1,x
 	eor	#$ff
 	sta	$de00,x
 	lda	$de00,x
-	sta	$0900,x
+	sta	de00_store2,x
 fr_skp1:
 	lda	$df00,x
-	sta	$0b00,x
+	sta	df00_store1,x
 	eor	#$ff
 	sta	$df00,x
 	lda	$df00,x
-	sta	$0c00,x
+	sta	df00_store2,x
 	inx
 	bne	fr_lp1
 
@@ -513,9 +550,9 @@ fr_skp1:
 	ldx	#0
 fr_lp2:
 	lda	$9e00,x
-	sta	$0a00,x
+	sta	de00_store3,x
 	lda	$9f00,x
-	sta	$0d00,x
+	sta	df00_store3,x
 	inx
 	bne	fr_lp2
 
