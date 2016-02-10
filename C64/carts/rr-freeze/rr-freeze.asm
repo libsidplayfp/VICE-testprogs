@@ -32,6 +32,8 @@ CHK_MAGIC	equ	$35
 	org	$02
 ptr_zp:
 	ds.w	1
+tmp_zp:
+	ds.b	1
 chk_zp:
 	ds.b	1
 page_zp:
@@ -40,6 +42,10 @@ bank_zp:
 	ds.b	1
 wr_zp:
 	ds.b	1
+pages_zp:
+	ds.b	5
+banks_zp:
+	ds.b	5
 
 	
 	seg.u	bss
@@ -179,11 +185,6 @@ de01_tab:
 ;******
 perform_test:
 
-; initial setup of RR-mode
-	lda	de01_selected
-	sta	$de01
-
-
 	sei
 	ldx	#0
 	; fill buffers with $aa
@@ -208,13 +209,26 @@ pt_lp2:
 	bne	pt_lp2
 
 	jsr	prepare
+
+	lda	#<rst_msg
+	ldy	#>rst_msg
+	jsr	print_areas
+	jsr	print_cr
+
+; initial setup of RR-mode
+	lda	de01_selected
+	sta	$de01
+
 	lda	$de00
 	sta	de00_pre
 	lda	$de01
 	sta	de01_pre
 
+	lda	#<post_msg
+	ldy	#>post_msg
+	jsr	print_areas
+	jsr	print_cr
 
-	jsr	scan_area
 	cli
 	
 	lda	#<freeze_msg
@@ -273,6 +287,21 @@ prp_lp2:
 	
 	lda	#%00000000
 	sta	$de00
+	rts
+
+
+scan_areas:
+	ldx	#0
+sar_lp1:
+	lda	area_tab,x
+	jsr	verify_section
+	lda	page_zp
+	sta	pages_zp,x
+	lda	bank_zp
+	sta	banks_zp,x
+	inx
+	cpx	#AREA_TAB_LEN
+	bne	sar_lp1
 	rts
 
 
@@ -374,6 +403,7 @@ area_tab:
 	dc.b	$de
 	dc.b	$df
 	dc.b	$fe
+AREA_TAB_LEN	equ	.-area_tab
 
 ;*******
 ;* $DE00 bank bits
@@ -605,7 +635,12 @@ ct_lp1:
 	jmp	ct_lp1
 
 
-
+rst_msg:
+	dc.b	13,13,18,"RST",146,"  ",0
+post_msg:
+	dc.b	18,"POST",146," ",0
+frz_msg:
+	dc.b	18,"FRZ",146,"  ",0
 freeze_msg:
 	dc.b	13,13,"PRESS THE FREEZE BUTTON PLEASE...",0
 
@@ -614,6 +649,57 @@ thank_you_msg:
 
 
 
+print_areas:
+	jsr	print_str
+	jsr	scan_areas
+
+	ldx	#0
+pas_lp1:
+	lda	area_tab,x
+	jsr	print_hex
+	lda	#":"
+	jsr	$ffd2
+	jsr	print_space
+	lda	banks_zp,x
+	jsr	tag_to_char
+
+	jsr	print_space
+	inx
+	cpx	#AREA_TAB_LEN
+	bne	pas_lp1
+	rts
+
+
+
+tag_to_char:
+	cmp	#$ff
+	beq	ttc_fl1
+	sta	tmp_zp
+	tay
+	bmi	ttc_rom
+ttc_ram:
+	and	#$0f
+	ora	#$30
+	bne	ttc_common	; always taken
+ttc_rom:
+	and	#$0f
+	clc
+	adc	#$01
+ttc_common:
+	bit	tmp_zp
+	bvs	ttc_ex1
+	eor	#$80
+	bvc	ttc_ex1		; always taken
+
+ttc_fl1:
+	lda	#"-"
+ttc_ex1:
+	ldy	$d3
+	dey
+	sta	($d1),y
+	rts
+
+	
 ;**************************************************************************
 ;*
 ;* NAME  clone_ff87
