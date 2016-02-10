@@ -10,6 +10,19 @@
 ;******
 	processor 6502
 
+
+;******
+;* tag to place in each bank for identification by scanning
+CHK_MAGIC	equ	$35
+	mac	BANK_TAG
+	dc.b	"BANK"
+	dc.b	{1}				; page
+	dc.b	{2}				; bank
+	dc.b	{3}				; is_rom?
+	dc.b	"B"^"A"^"N"^"K"^{1}^{2}^{3}^CHK_MAGIC	; checksum
+	endm
+
+
 	seg.u	zp
 ;**************************************************************************
 ;*
@@ -19,21 +32,28 @@
 	org	$02
 ptr_zp:
 	ds.w	1
+chk_zp:
+	ds.b	1
+page_zp:
+	ds.b	1
+bank_zp:
+	ds.b	1
+wr_zp:
+	ds.b	1
 
-
+	
 	seg.u	bss
 ;**************************************************************************
 ;*
 ;* SECTION  storage
 ;*
 ;******
-	org	$0800		; FIXME: shouldn't overlap
+	org	$0800
 tab_selected:
 	ds.b	1
 de01_selected:
 	ds.b	1
 
-	org	$0800		; FIXME: shouldn't overlap
 de00_pre:
 	ds.b	1
 de01_pre:
@@ -43,7 +63,7 @@ de00_post:
 de01_post:
 	ds.b	1
 
-	org	$0800		; FIXME: shouldn't overlap
+;	org	$0900
 de00_store1:
 	ds.b	256
 de00_store2:
@@ -57,6 +77,8 @@ df00_store2:
 df00_store3:
 	ds.b	256
 
+code_area:
+	ds.b	512
 
 	seg	code
 	org	$8000
@@ -126,7 +148,7 @@ re_done:
 	
 
 greet_msg:
-	dc.b	147,"RR-FREEZE R02 / TLR",13,13
+	dc.b	147,"RR-FREEZE R03 / TLR",13,13
 	dc.b	"THIS PROGRAM VERIFIES THE CART STATE",13
 	dc.b	"DURING FREEZING.",13,13,0
 
@@ -161,6 +183,7 @@ perform_test:
 	lda	de01_selected
 	sta	$de01
 
+
 	sei
 	ldx	#0
 	; fill buffers with $aa
@@ -175,11 +198,13 @@ pt_lp1:
 	inx
 	bne	pt_lp1
 	
-	ldx	#PREPARE_LEN
+	ldx	#0
 pt_lp2:
-	lda	prepare_st-1,x
-	sta	prepare-1,x
-	dex
+	lda	prepare_st,x
+	sta	prepare,x
+	lda	prepare_st+$0100,x
+	sta	prepare+$0100,x
+	inx
 	bne	pt_lp2
 
 	jsr	prepare
@@ -187,6 +212,9 @@ pt_lp2:
 	sta	de00_pre
 	lda	$de01
 	sta	de01_pre
+
+
+	jsr	scan_area
 	cli
 	
 	lda	#<freeze_msg
@@ -211,7 +239,7 @@ pt_lp3:
         ; de10..deff gets 10 11 12 13..
         ; df00..dfff gets 10 11 12 13..
 prepare_st:
-	rorg	$0120
+	rorg	code_area
 prepare:
 	lda	#%00100011
 	sta	$de00
@@ -227,10 +255,264 @@ prp_skp1:
 	sta	$9f00,x
 	inx
 	bne	prp_lp1
+
+; enumerate banks in ram in reverse here!
+	ldx	#7
+prp_lp2:
+	lda	bank_tab,x
+	ora	#%00100011
+	sta	$de00
+
+	lda	#$9e
+	jsr	tag_section
+	lda	#$9f
+	jsr	tag_section
+
+	dex
+	bpl	prp_lp2
+	
 	lda	#%00000000
 	sta	$de00
 	rts
 
+
+scan_area:
+	ldx	#0
+sca_lp1:
+	lda	bank_tab,x
+	ora	#%00100011
+	sta	$de00
+
+	lda	#$9e
+	jsr	verify_section
+	lda	page_zp
+	sta	$0400+40*10,x
+	lda	bank_zp
+	sta	$0400+40*11,x
+	
+	lda	#$be
+	jsr	verify_section
+	lda	page_zp
+	sta	$0400+40*10+10,x
+	lda	bank_zp
+	sta	$0400+40*11+10,x
+
+	lda	#$de
+	jsr	verify_section
+	lda	page_zp
+	sta	$0400+40*13,x
+	lda	bank_zp
+	sta	$0400+40*14,x
+	
+	lda	#$df
+	jsr	verify_section
+	lda	page_zp
+	sta	$0400+40*13+10,x
+	lda	bank_zp
+	sta	$0400+40*14+10,x
+
+	lda	#$fe
+	jsr	verify_section
+	lda	page_zp
+	sta	$0400+40*16,x
+	lda	bank_zp
+	sta	$0400+40*17,x
+
+	lda	bank_tab,x
+	ora	#%00000011
+	sta	$de00
+
+	lda	#$9e
+	jsr	verify_section
+	lda	page_zp
+	sta	$0400+40*10+20,x
+	lda	bank_zp
+	sta	$0400+40*11+20,x
+	
+	lda	#$be
+	jsr	verify_section
+	lda	page_zp
+	sta	$0400+40*10+30,x
+	lda	bank_zp
+	sta	$0400+40*11+30,x
+
+	lda	#$de
+	jsr	verify_section
+	lda	page_zp
+	sta	$0400+40*13+20,x
+	lda	bank_zp
+	sta	$0400+40*14+20,x
+	
+	lda	#$df
+	jsr	verify_section
+	lda	page_zp
+	sta	$0400+40*13+30,x
+	lda	bank_zp
+	sta	$0400+40*14+30,x
+
+	lda	#$fe
+	jsr	verify_section
+	lda	page_zp
+	sta	$0400+40*16+20,x
+	lda	bank_zp
+	sta	$0400+40*17+20,x
+
+	inx
+	cpx	#8
+	beq	sca_skp1
+	jmp	sca_lp1
+sca_skp1:
+	lda	#%00000000
+	sta	$de00
+	rts
+
+;*******
+;* Areas to scan
+area_tab:
+	dc.b	$9e
+	dc.b	$be
+	dc.b	$de
+	dc.b	$df
+	dc.b	$fe
+
+;*******
+;* $DE00 bank bits
+bank_tab:
+	dc.b	%00000000
+	dc.b	%00001000
+	dc.b	%00010000
+	dc.b	%00011000
+	dc.b	%10000000
+	dc.b	%10001000
+	dc.b	%10010000
+	dc.b	%10011000
+
+
+;**************************************************************************
+;*
+;* NAME  tag_section
+;*
+;* DESCRIPTION
+;*   Write tag to ram indicating which bank is here.
+;*
+;*   IN: Acc=MSB, X=bank
+;*   OUT: -
+;*
+;*     Y is preserved.
+;*
+;******
+tag_section:
+	sta	tag_page
+	sta	ptr_zp+1
+	lda	#$80
+	sta	ptr_zp
+
+	stx	tag_bank
+
+	lda	#CHK_MAGIC
+	sta	chk_zp
+	ldy	#0
+ts_lp1:
+	lda	tag,y
+	sta	(ptr_zp),y
+	eor	chk_zp
+	sta	chk_zp
+	iny
+	cpy	#TAG_LEN
+	bne	ts_lp1
+	sta	(ptr_zp),y
+	rts
+
+
+;*******
+;* tag data
+tag:
+	dc.b	"BANK"
+tag_page:
+	dc.b	$9e				; page
+tag_bank:
+	dc.b	0				; bank
+	dc.b	0				; is_rom?
+TAG_LEN	equ	.-tag
+
+
+;**************************************************************************
+;*
+;* NAME  verify_section
+;*
+;* DESCRIPTION
+;*   Verify which part of the cart we are seeing.
+;*
+;*   IN: Acc=MSB
+;*   OUT:
+;*     C=0:  page_zp=MSB, bank_zp=RW000BBB (R=ROM, W=RW, B=bank)
+;*     C=1:  page_zp=$ff, bank_zp=$ff  (no cart present here)
+;*
+;*     X is preserved.
+;*
+;******
+verify_section:
+	sta	ptr_zp+1
+	lda	#$80
+	sta	ptr_zp
+
+	lda	#CHK_MAGIC
+	sta	chk_zp
+	ldy	#0
+vs_lp1:
+	lda	(ptr_zp),y
+	cpy	#4
+	bcs	vs_skp1
+	cmp	tag,y
+	bne	vs_fl1
+vs_skp1:
+	eor	chk_zp
+	sta	chk_zp
+	iny
+	cpy	#TAG_LEN
+	bne	vs_lp1
+	cmp	(ptr_zp),y
+	bne	vs_fl1
+
+; check if writable
+	iny
+	lda	#0
+	sta	wr_zp
+	lda	#$aa
+	sta	(ptr_zp),y
+	cmp	(ptr_zp),y
+	bne	vs_skp2
+	lda	#$55
+	sta	(ptr_zp),y
+	cmp	(ptr_zp),y
+	bne	vs_skp2
+	inc	wr_zp
+vs_skp2:
+
+	ldy	#4
+	lda	(ptr_zp),y
+	sta	page_zp
+	iny
+	lda	(ptr_zp),y
+	sta	bank_zp
+	iny
+	lda	(ptr_zp),y
+	lsr	wr_zp
+	ror
+	ror
+	ora	bank_zp
+	sta	bank_zp
+	clc
+	rts
+	
+vs_fl1:
+	lda	#$ff
+	sta	page_zp
+	sta	bank_zp
+	sec
+	rts
+
+	echo	.
 	rend
 PREPARE_LEN	equ	.-prepare_st
 
@@ -503,6 +785,12 @@ end_de00rom:
 
 	echo	"de00rom",start_de00rom,end_de00rom
 
+;******
+;* $9e00 Tag for bank 0
+	ds.b	$9e80-.,$ff
+	BANK_TAG $9e,0,1
+
+	
 	ds.b	$9f00-.,$ff
 ;**************************************************************************
 ;*
@@ -582,15 +870,30 @@ fr_out:
 
 	jmp	continue_test
 
+;******
+;* $9f00 Tag for bank 0
+	ds.b	$9f80-.,$ff
+	BANK_TAG $9f,0,1
+	
 	ds.b	$9ffa-.,$ff
 	dc.w	freeze_entry	; nmi vector
 	dc.w	freeze_entry	; reset vector
 	dc.w	freeze_entry	; irq vector
 
-;**************************************************************************
-;*
-;* SECTION  next bank
-;*
 ;******
-	ds.b	$18000-.,$ff
+;* Tags for the remaining 7 banks
+bank	set	1
+	repeat	7
+	rorg	$8000
+	ds.b	$9e80-.,$ff
+	BANK_TAG $9e,bank,1
+	ds.b	$9f80-.,$ff
+	BANK_TAG $9f,bank,1
+	ds.b	$a000-.,$ff
+	rend
+bank	set	bank+1
+	repend
+	
+	
+
 ; eof
