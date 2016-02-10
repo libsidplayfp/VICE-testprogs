@@ -557,10 +557,12 @@ continue_test:
 	sta	($d1),y
 
 ; present state
-	lda	#<thank_you_msg
-	ldy	#>thank_you_msg
+	lda	#<frz_msg
+	ldy	#>frz_msg
 	jsr	print_str
-
+	jsr	print_areas2
+	jsr	print_cr
+	
 	lda	de00_pre
 	jsr	print_hex
 	jsr	print_space
@@ -640,19 +642,16 @@ rst_msg:
 post_msg:
 	dc.b	18,"POST",146," ",0
 frz_msg:
-	dc.b	18,"FRZ",146,"  ",0
+	dc.b	13,13,18,"FRZ",146,"  ",0
 freeze_msg:
-	dc.b	13,13,"PRESS THE FREEZE BUTTON PLEASE...",0
-
-thank_you_msg:
-	dc.b	13,"THANK YOU.",13,13,0
-
+	dc.b	13,"PRESS THE FREEZE BUTTON PLEASE...",0
 
 
 print_areas:
 	jsr	print_str
 	jsr	scan_areas
 
+print_areas2:
 	ldx	#0
 pas_lp1:
 	lda	area_tab,x
@@ -890,6 +889,8 @@ freeze_entry:
 	cld
 	ldx	#$ff
 	txs
+
+	jsr	scan_areas
 
 	; read registers de00/de01
 	lda	$de00
