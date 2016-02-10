@@ -42,11 +42,12 @@ bank_zp:
 	ds.b	1
 wr_zp:
 	ds.b	1
-pages_zp:
-	ds.b	5
 banks_zp:
 	ds.b	5
-
+dst_zp:
+	ds.w	1
+mode_zp:
+	ds.b	1
 	
 	seg.u	bss
 ;**************************************************************************
@@ -71,6 +72,7 @@ de01_post:
 
 ;	org	$0900
 de00_store1:
+bank_store:			; should get it's own space.
 	ds.b	256
 de00_store2:
 	ds.b	256
@@ -215,6 +217,12 @@ pt_lp2:
 	jsr	print_areas
 	jsr	print_cr
 
+	lda	#%00100011
+	ldx	#<bank_store
+	ldy	#>bank_store
+	jsr	scan_banks
+	jsr	print_banks
+
 ; initial setup of RR-mode
 	lda	de01_selected
 	sta	$de01
@@ -228,6 +236,12 @@ pt_lp2:
 	ldy	#>post_msg
 	jsr	print_areas
 	jsr	print_cr
+
+	lda	#%00100011
+	ldx	#<bank_store
+	ldy	#>bank_store
+	jsr	scan_banks
+	jsr	print_banks
 
 	cli
 	
@@ -291,108 +305,71 @@ prp_lp2:
 
 
 scan_areas:
+	php
+	sei
 	ldx	#0
 sar_lp1:
 	lda	area_tab,x
 	jsr	verify_section
-	lda	page_zp
-	sta	pages_zp,x
-	lda	bank_zp
 	sta	banks_zp,x
 	inx
 	cpx	#AREA_TAB_LEN
 	bne	sar_lp1
+	plp
 	rts
 
 
-scan_area:
+scan_banks:
+	php
+	sei
+	stx	dst_zp
+	sty	dst_zp+1
+	sta	mode_zp
 	ldx	#0
 sca_lp1:
 	lda	bank_tab,x
-	ora	#%00100011
+	ora	mode_zp
 	sta	$de00
 
-	lda	#$9e
-	jsr	verify_section
-	lda	page_zp
-	sta	$0400+40*10,x
-	lda	bank_zp
-	sta	$0400+40*11,x
+	txa
+	pha
+	jsr	scan_areas
 	
-	lda	#$be
-	jsr	verify_section
-	lda	page_zp
-	sta	$0400+40*10+10,x
-	lda	bank_zp
-	sta	$0400+40*11+10,x
-
-	lda	#$de
-	jsr	verify_section
-	lda	page_zp
-	sta	$0400+40*13,x
-	lda	bank_zp
-	sta	$0400+40*14,x
+	ldy	#0
+	ldx	#0
+sca_lp2:
+	lda	banks_zp,x
+	sta	(dst_zp),y
+	tya
+	clc
+	adc	#8
+	tay
+	inx
+	cpx	#AREA_TAB_LEN
+	bne	sca_lp2
 	
-	lda	#$df
-	jsr	verify_section
-	lda	page_zp
-	sta	$0400+40*13+10,x
-	lda	bank_zp
-	sta	$0400+40*14+10,x
+	pla
+	tax
 
-	lda	#$fe
-	jsr	verify_section
-	lda	page_zp
-	sta	$0400+40*16,x
-	lda	bank_zp
-	sta	$0400+40*17,x
-
-	lda	bank_tab,x
-	ora	#%00000011
-	sta	$de00
-
-	lda	#$9e
-	jsr	verify_section
-	lda	page_zp
-	sta	$0400+40*10+20,x
-	lda	bank_zp
-	sta	$0400+40*11+20,x
-	
-	lda	#$be
-	jsr	verify_section
-	lda	page_zp
-	sta	$0400+40*10+30,x
-	lda	bank_zp
-	sta	$0400+40*11+30,x
-
-	lda	#$de
-	jsr	verify_section
-	lda	page_zp
-	sta	$0400+40*13+20,x
-	lda	bank_zp
-	sta	$0400+40*14+20,x
-	
-	lda	#$df
-	jsr	verify_section
-	lda	page_zp
-	sta	$0400+40*13+30,x
-	lda	bank_zp
-	sta	$0400+40*14+30,x
-
-	lda	#$fe
-	jsr	verify_section
-	lda	page_zp
-	sta	$0400+40*16+20,x
-	lda	bank_zp
-	sta	$0400+40*17+20,x
-
+	inc	dst_zp
+	bne	sca_skp1
+	inc	dst_zp+1
+sca_skp1:
 	inx
 	cpx	#8
-	beq	sca_skp1
-	jmp	sca_lp1
-sca_skp1:
+	bne	sca_lp1
+
 	lda	#%00000000
 	sta	$de00
+
+	lda	dst_zp
+	sec
+	sbc	#8
+	sta	dst_zp
+	lda	dst_zp+1
+	sbc	#0
+	sta	dst_zp+1
+	plp
 	rts
 
 ;*******
@@ -474,9 +451,9 @@ TAG_LEN	equ	.-tag
 ;*   Verify which part of the cart we are seeing.
 ;*
 ;*   IN: Acc=MSB
-;*   OUT:
-;*     C=0:  page_zp=MSB, bank_zp=RW000BBB (R=ROM, W=RW, B=bank)
-;*     C=1:  page_zp=$ff, bank_zp=$ff  (no cart present here)
+;*   OUT: Acc=bank_zp
+;*     C=0:  bank_zp=RW000BBB (R=ROM, W=RW, B=bank), page_zp=MSB
+;*     C=1:  bank_zp=$fe (page mismatch), bank_zp=$ff (no cart present here)
 ;*
 ;*     X is preserved.
 ;*
@@ -522,6 +499,9 @@ vs_skp2:
 	ldy	#4
 	lda	(ptr_zp),y
 	sta	page_zp
+	eor	ptr_zp+1
+	and	#$1f
+	bne	vs_fl2
 	iny
 	lda	(ptr_zp),y
 	sta	bank_zp
@@ -534,10 +514,12 @@ vs_skp2:
 	sta	bank_zp
 	clc
 	rts
-	
+
+vs_fl2:
+	lda	#$fe
+	dc.b	$2c
 vs_fl1:
 	lda	#$ff
-	sta	page_zp
 	sta	bank_zp
 	sec
 	rts
@@ -637,16 +619,28 @@ ct_lp1:
 	jmp	ct_lp1
 
 
+freeze_msg:
+	dc.b	13,"PRESS THE FREEZE BUTTON PLEASE...",0
+
+
 rst_msg:
 	dc.b	13,13,18,"RST",146,"  ",0
 post_msg:
 	dc.b	18,"POST",146," ",0
 frz_msg:
 	dc.b	13,13,18,"FRZ",146,"  ",0
-freeze_msg:
-	dc.b	13,"PRESS THE FREEZE BUTTON PLEASE...",0
 
-
+	
+;**************************************************************************
+;*
+;* NAME  print_areas, print_areas2
+;*
+;* DESCRIPTION
+;*   Scan areas for which banks are present and print out.
+;*
+;*   IN: Acc/Y=leading string
+;*
+;******
 print_areas:
 	jsr	print_str
 	jsr	scan_areas
@@ -658,9 +652,9 @@ pas_lp1:
 	jsr	print_hex
 	lda	#":"
 	jsr	$ffd2
-	jsr	print_space
+
 	lda	banks_zp,x
-	jsr	tag_to_char
+	jsr	print_tag
 
 	jsr	print_space
 	inx
@@ -669,30 +663,97 @@ pas_lp1:
 	rts
 
 
+;**************************************************************************
+;*
+;* NAME  print_banks
+;*
+;* DESCRIPTION
+;*   Print out n areas for which banks are present and print out.
+;*
+;******
+print_banks:
+	ldx	#0
+pbs_lp1:
+	lda	area_tab,x
+	jsr	print_hex
+	lda	#":"
+	jsr	$ffd2
 
-tag_to_char:
+	ldy	#0
+pbs_lp2:
+	tya
+	pha
+	lda	(dst_zp),y
+	jsr	print_tag
+	pla
+	tay
+	iny
+	cpy	#8
+	bne	pbs_lp2
+	tya
+	clc
+	adc	dst_zp
+	sta	dst_zp
+	bcc	pbs_skp1
+	inc	dst_zp+1
+pbs_skp1:
+	cpx	#2
+	beq	pbs_skp2
+	jsr	print_space
+	jsr	print_space
+	jmp	pbs_skp3
+pbs_skp2:
+	jsr	print_cr
+pbs_skp3:
+	
+	inx
+	cpx	#AREA_TAB_LEN
+	bne	pbs_lp1
+
+	jmp	print_cr
+;	rts
+
+
+
+;**************************************************************************
+;*
+;* NAME  print_tag
+;*
+;* DESCRIPTION
+;*   Print a char describing when the tag in Acc is located.
+;*
+;******
+print_tag:
+	tay
+	jsr	print_space	; place holder for the char to be printed
+	tya
+	cmp	#$fe
+	beq	ptg_fl1
 	cmp	#$ff
-	beq	ttc_fl1
+	beq	ptg_fl2
 	sta	tmp_zp
 	tay
-	bmi	ttc_rom
-ttc_ram:
+	bmi	ptg_rom
+ptg_ram:
 	and	#$0f
 	ora	#$30
-	bne	ttc_common	; always taken
-ttc_rom:
+	bne	ptg_common	; always taken
+ptg_rom:
 	and	#$0f
 	clc
 	adc	#$01
-ttc_common:
+ptg_common:
 	bit	tmp_zp
-	bvs	ttc_ex1
+	bvs	ptg_ex1
 	eor	#$80
-	bvc	ttc_ex1		; always taken
+	bvc	ptg_ex1		; always taken
 
-ttc_fl1:
+ptg_fl1:
+	lda	#"?"
+	dc.b	$2c
+ptg_fl2:
 	lda	#"-"
-ttc_ex1:
+ptg_ex1:
 	ldy	$d3
 	dey
 	sta	($d1),y
