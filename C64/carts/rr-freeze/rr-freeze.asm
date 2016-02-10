@@ -161,9 +161,9 @@ perform_test:
 	lda	de01_selected
 	sta	$de01
 
-
 	sei
 	ldx	#0
+	; fill buffers with $aa
 	lda	#$aa
 pt_lp1:
 	sta	de00_store1,x
@@ -207,7 +207,9 @@ pt_lp3:
 	sta	$0427
 	jmp	pt_lp3
 
-
+        ; prepare cartridge RAM with pattern:
+        ; de10..deff gets 10 11 12 13..
+        ; df00..dfff gets 10 11 12 13..
 prepare_st:
 	rorg	$0120
 prepare:
@@ -515,6 +517,7 @@ freeze_entry:
 	ldx	#$ff
 	txs
 
+	; read registers de00/de01
 	lda	$de00
 	sta	de00_post
 	lda	$de01
@@ -524,10 +527,15 @@ freeze_entry:
 fr_lp1:
 	cpx	#$10
 	bcc	fr_skp1
+	; read from de00..de0f and save
+	; de00_store1 contains copy of ROM or Cartridge RAM or I/O
 	lda	$de00,x
 	sta	de00_store1,x
+	; eor value with $ff and write back
 	eor	#$ff
 	sta	$de00,x
+        ; read from de00..de0f and save
+        ; de00_store2 contains copy of ROM or (Cartridge RAM ^ $ff) or I/O
 	lda	$de00,x
 	sta	de00_store2,x
 fr_skp1:
@@ -547,6 +555,7 @@ fr_skp1:
 	lda	#%00100011	; RR-RAM at $8000, RR-ROM at $e000
 	sta	$de00
 
+	; read RAM from 9e00..9fff and save
 	ldx	#0
 fr_lp2:
 	lda	$9e00,x
