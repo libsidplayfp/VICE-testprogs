@@ -48,7 +48,8 @@ dst_zp:
 	ds.w	1
 mode_zp:
 	ds.b	1
-	
+
+
 	seg.u	bss
 ;**************************************************************************
 ;*
@@ -87,6 +88,7 @@ df00_store3:
 
 code_area:
 	ds.b	512
+
 
 	seg	code
 	org	$8000
@@ -217,7 +219,12 @@ pt_lp2:
 	jsr	print_areas
 	jsr	print_cr
 
-	lda	#%00100011
+	lda	#%00100011	; RAM
+	ldx	#<bank_store
+	ldy	#>bank_store
+	jsr	scan_banks
+	jsr	print_banks
+	lda	#%00000011	; ROM
 	ldx	#<bank_store
 	ldy	#>bank_store
 	jsr	scan_banks
@@ -237,7 +244,12 @@ pt_lp2:
 	jsr	print_areas
 	jsr	print_cr
 
-	lda	#%00100011
+	lda	#%00100011	; RAM
+	ldx	#<bank_store
+	ldy	#>bank_store
+	jsr	scan_banks
+	jsr	print_banks
+	lda	#%00000011	; ROM
 	ldx	#<bank_store
 	ldy	#>bank_store
 	jsr	scan_banks
@@ -674,6 +686,8 @@ pas_lp1:
 print_banks:
 	ldx	#0
 pbs_lp1:
+	jsr	print_space
+
 	lda	area_tab,x
 	jsr	print_hex
 	lda	#":"
@@ -699,7 +713,6 @@ pbs_lp2:
 pbs_skp1:
 	cpx	#2
 	beq	pbs_skp2
-	jsr	print_space
 	jsr	print_space
 	jmp	pbs_skp3
 pbs_skp2:
