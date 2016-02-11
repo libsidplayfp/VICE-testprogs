@@ -18,7 +18,8 @@ Steps:
 1. Dump initial state, "RST"
 2. setup $de01
 3. Dump state, "CNFD"
-Wait for user pressing <freeze>
+4. Set $de00 to ROM bank #5 and then kill cart
+5. Wait for user pressing <freeze>
 5. Dump state, "FRZ"
 6. Ack freeze
 7. Dump state, "ACKD"

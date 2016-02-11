@@ -524,7 +524,25 @@ area_tab:
 NUM_AREAS	equ	5
 
 
+;**************************************************************************
+;*
+;* NAME  wait_freeze
+;*
+;* DESCRIPTION
+;*   Wait for freeze
+;*
+;******
+wait_freeze:
+; set "random" mapping (bank 5 in ROM)
+	lda	#%10001000
+	sta	$de00
+; kill cartridge
+	ora	#%00000100
+	sta	$de00
+wf_lp1:
+	jmp	wf_lp1
 
+	
 ;**************************************************************************
 ;*
 ;* NAME  freeze_entry
@@ -549,22 +567,22 @@ freeze_entry:
 	lda	$de01
 	sta	de01_post
 
-	lda	#%00000011
+	lda	#%00000000
 	ldx	#<banks_post_frz
 	ldy	#>banks_post_frz
 	jsr	scan_banks
 
 ; ack freeze
-	lda	#%01100011	; RR-RAM at $8000, RR-ROM at $e000, ack freeze
+	lda	#%01100000	; RR-RAM at $8000, ack freeze
 	sta	$de00
-	lda	#%00100011	; RR-RAM at $8000, RR-ROM at $e000
+	lda	#%00100000	; RR-RAM at $8000
 	sta	$de00
 
 	ldx	#<areas_post_ack
 	ldy	#>areas_post_ack
 	jsr	scan_areas
 
-	lda	#%00000011
+	lda	#%00000000
 	ldx	#<banks_post_ack
 	ldy	#>banks_post_ack
 	jsr	scan_banks
@@ -609,7 +627,7 @@ perform_test:
 	ldy	#>areas_post_rst
 	jsr	print_areas
 
-	lda	#%00000011
+	lda	#%00000000
 	ldx	#<banks_post_rst
 	ldy	#>banks_post_rst
 	jsr	scan_banks
@@ -636,7 +654,7 @@ perform_test:
 	ldy	#>areas_post_cnf
 	jsr	print_areas
 
-	lda	#%00000011
+	lda	#%00000000
 	ldx	#<banks_post_cnf
 	ldy	#>banks_post_cnf
 	jsr	scan_banks
@@ -656,13 +674,7 @@ perform_test:
 	lda	646
 	sta	$d826
 	sta	$d827
-	
-pt_lp3:
-	lda	$de00
-	sta	$0426
-	lda	$de01
-	sta	$0427
-	jmp	pt_lp3
+	jmp	wait_freeze
 
 
 ;******
