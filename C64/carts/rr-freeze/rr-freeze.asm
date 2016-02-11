@@ -424,6 +424,15 @@ vs_fl1:
 	rts
 
 
+;**************************************************************************
+;*
+;* NAME  scan_areas, scan_areas_int
+;*
+;* DESCRIPTION
+;*   Scan the mappable regions to find what is mapped there.
+;*   IN: X/Y=pointer to area table.
+;*
+;******
 scan_areas:
 	php
 	sei
@@ -451,6 +460,27 @@ sai_lp1:
 	rts
 
 
+;*******
+;* Areas to scan
+area_tab:
+	dc.b	$9e
+	dc.b	$be
+	dc.b	$de
+	dc.b	$df
+	dc.b	$fe
+NUM_AREAS	equ	5
+
+
+;**************************************************************************
+;*
+;* NAME  scan_banks, scan_banks_int
+;*
+;* DESCRIPTION
+;*   Scan the mappable regions of all banks, ROM and RAM to find what is
+;*   mapped there.
+;*   IN: X/Y=pointer to bank table.
+;*
+;******
 scan_banks:
 	php
 	sei
@@ -512,16 +542,6 @@ sca_skp1:
 	inc	dst_zp+1
 sca_skp2:
 	rts
-
-;*******
-;* Areas to scan
-area_tab:
-	dc.b	$9e
-	dc.b	$be
-	dc.b	$de
-	dc.b	$df
-	dc.b	$fe
-NUM_AREAS	equ	5
 
 
 ;**************************************************************************
@@ -677,6 +697,10 @@ perform_test:
 	jmp	wait_freeze
 
 
+freeze_msg:
+	dc.b	13,"PRESS THE FREEZE BUTTON PLEASE...",0
+
+
 ;******
 ;* continue after freezing
 continue_test:
@@ -727,13 +751,8 @@ ct_lp1:
 	jsr	print_cr
 
 
-	
 ct_lp2:
 	jmp	ct_lp2
-
-
-freeze_msg:
-	dc.b	13,"PRESS THE FREEZE BUTTON PLEASE...",0
 
 
 rst_msg:
@@ -789,6 +808,7 @@ pas_lp1:
 ;*
 ;* DESCRIPTION
 ;*   Print out n areas for which banks are present and print out.
+;*   IN: X/Y=pointer to bank table.
 ;*
 ;******
 print_banks:
@@ -846,7 +866,7 @@ pbs_skp3:
 ;* NAME  print_tag
 ;*
 ;* DESCRIPTION
-;*   Print a char describing when the tag in Acc is located.
+;*   Print a char describing where the tag in Acc is located.
 ;*
 ;******
 print_tag:
