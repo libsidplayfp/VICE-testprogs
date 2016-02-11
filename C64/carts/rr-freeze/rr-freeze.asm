@@ -61,6 +61,10 @@ tab_selected:
 	ds.b	1
 de01_selected:
 	ds.b	1
+de00_pre_frz:
+	ds.b	1
+de00_post_frz:
+	ds.b	1
 
 de00_pre:
 	ds.b	1
@@ -71,23 +75,26 @@ de00_post:
 de01_post:
 	ds.b	1
 
-;	org	$0900
-de00_store1:
-bank_store:			; should get it's own space.
-	ds.b	256
-de00_store2:
-	ds.b	256
-de00_store3:
-	ds.b	256
-df00_store1:
-	ds.b	256
-df00_store2:
-	ds.b	256
-df00_store3:
-	ds.b	256
+areas_post_rst:
+	ds.b	NUM_AREAS
+banks_post_rst:
+	ds.b	NUM_BANKS*NUM_AREAS*2
+areas_post_cnf:
+	ds.b	NUM_AREAS
+banks_post_cnf:
+	ds.b	NUM_BANKS*NUM_AREAS*2
+areas_post_frz:
+	ds.b	NUM_AREAS
+banks_post_frz:
+	ds.b	NUM_BANKS*NUM_AREAS*2
+areas_post_ack:
+	ds.b	NUM_AREAS
+banks_post_ack:
+	ds.b	NUM_BANKS*NUM_AREAS*2
 
+	org	$0c00
 code_area:
-	ds.b	512
+	ds.b	$0400
 
 
 	seg	code
@@ -113,11 +120,14 @@ warm_entry:
 	lda	#$2f
 	sta	$00
 
-
 	jsr	$fda3
 	jsr	clone_ff87
 	jsr	clone_ff8a
 	jsr	$ff5b
+
+	jsr	prefill_ram
+	jsr	install_code
+
 
 	lda	#<greet_msg
 	ldy	#>greet_msg
@@ -158,7 +168,7 @@ re_done:
 	
 
 greet_msg:
-	dc.b	147,"RR-FREEZE R03 / TLR",13,13
+	dc.b	147,"RR-FREEZE R04 / TLR",13,13
 	dc.b	"THIS PROGRAM VERIFIES THE CART STATE",13
 	dc.b	"DURING FREEZING.",13,13,0
 
@@ -179,126 +189,82 @@ de01_tab:
 	dc.b	%00000110	; REU-Comp=0, NoFreeze=1, AllowBank=1
 
 
+	
 ;**************************************************************************
 ;*
-;* NAME  perform_test, continue_test
+;* NAME  prefill_ram
 ;*
 ;* DESCRIPTION
-;*   Do freeze test
+;*   Prepare ram with dummy pattern.
 ;*
 ;******
-perform_test:
+prefill_ram:
 
-	sei
-	ldx	#0
-	; fill buffers with $aa
+;******
+;* prefill ram area with $aa
+	ldy	#0
+	sty	ptr_zp
+	ldx	#8
+	stx	ptr_zp+1
 	lda	#$aa
-pt_lp1:
-	sta	de00_store1,x
-	sta	de00_store2,x
-	sta	de00_store3,x
-	sta	df00_store1,x
-	sta	df00_store2,x
-	sta	df00_store3,x
-	inx
-	bne	pt_lp1
-	
+pf_lp1:
+	sta	(ptr_zp),y
+	iny
+	bne	pf_lp1
+	dex
+	bne	pf_lp1
+
+	rts
+
+
+;**************************************************************************
+;*
+;* NAME  install_code
+;*
+;* DESCRIPTION
+;*   Install the ram part of our code.
+;*
+;******
+install_code:
 	ldx	#0
-pt_lp2:
-	lda	prepare_st,x
-	sta	prepare,x
-	lda	prepare_st+$0100,x
-	sta	prepare+$0100,x
+ic_lp1:
+	lda	ram_code_st,x
+	sta	ram_code,x
+	if	RAM_CODE_LEN > $0100
+	lda	ram_code_st+$0100,x
+	sta	ram_code+$0100,x
+	endif
+	if	RAM_CODE_LEN > $0200
+	lda	ram_code_st+$0200,x
+	sta	ram_code+$0200,x
+	endif
+	if	RAM_CODE_LEN > $0300
+	lda	ram_code_st+$0300,x
+	sta	ram_code+$0300,x
+	endif
 	inx
-	bne	pt_lp2
+	bne	ic_lp1
 
-	jsr	prepare
+	rts
 
-	lda	#<rst_msg
-	ldy	#>rst_msg
-	jsr	print_areas
-	jsr	print_cr
 
-	lda	#%00100011	; RAM
-	ldx	#<bank_store
-	ldy	#>bank_store
-	jsr	scan_banks
-	jsr	print_banks
-	lda	#%00000011	; ROM
-	ldx	#<bank_store
-	ldy	#>bank_store
-	jsr	scan_banks
-	jsr	print_banks
-
-; initial setup of RR-mode
-	lda	de01_selected
-	sta	$de01
-
-	lda	$de00
-	sta	de00_pre
-	lda	$de01
-	sta	de01_pre
-
-	lda	#<post_msg
-	ldy	#>post_msg
-	jsr	print_areas
-	jsr	print_cr
-
-	lda	#%00100011	; RAM
-	ldx	#<bank_store
-	ldy	#>bank_store
-	jsr	scan_banks
-	jsr	print_banks
-	lda	#%00000011	; ROM
-	ldx	#<bank_store
-	ldy	#>bank_store
-	jsr	scan_banks
-	jsr	print_banks
-
-	cli
-	
-	lda	#<freeze_msg
-	ldy	#>freeze_msg
-	jsr	print_str
-	
-; cursor on
-	lda	#0
-	sta	$cc
-	lda	646
-	sta	$d826
-	sta	$d827
-	
-pt_lp3:
-	lda	$de00
-	sta	$0426
-	lda	$de01
-	sta	$0427
-	jmp	pt_lp3
-
-        ; prepare cartridge RAM with pattern:
-        ; de10..deff gets 10 11 12 13..
-        ; df00..dfff gets 10 11 12 13..
-prepare_st:
+;**************************************************************************
+;*
+;* NAME  ram_code
+;*
+;* DESCRIPTION
+;*   Code to be run from ram
+;*
+;******
+ram_code_st:
 	rorg	code_area
-prepare:
-	lda	#%00100011
-	sta	$de00
-	ldx	#0
-prp_lp1:
-	txa
-	cpx	#$10
-	bcc	prp_skp1
-	sta	$9e00,x
-prp_skp1:
-	clc
-	adc	#$10
-	sta	$9f00,x
-	inx
-	bne	prp_lp1
+ram_code:
 
-; enumerate banks in ram in reverse here!
-	ldx	#7
-prp_lp2:
+prepare_cartram:
+;******
+;* enumerate banks in ram in reverse
+	ldx	#NUM_BANKS-1
+prc_lp1:
 	lda	bank_tab,x
 	ora	#%00100011
 	sta	$de00
@@ -309,90 +275,11 @@ prp_lp2:
 	jsr	tag_section
 
 	dex
-	bpl	prp_lp2
+	bpl	prc_lp1
 	
 	lda	#%00000000
 	sta	$de00
 	rts
-
-
-scan_areas:
-	php
-	sei
-	ldx	#0
-sar_lp1:
-	lda	area_tab,x
-	jsr	verify_section
-	sta	banks_zp,x
-	inx
-	cpx	#AREA_TAB_LEN
-	bne	sar_lp1
-	plp
-	rts
-
-
-scan_banks:
-	php
-	sei
-	stx	dst_zp
-	sty	dst_zp+1
-	sta	mode_zp
-	ldx	#0
-sca_lp1:
-	lda	bank_tab,x
-	ora	mode_zp
-	sta	$de00
-
-	txa
-	pha
-	jsr	scan_areas
-	
-	ldy	#0
-	ldx	#0
-sca_lp2:
-	lda	banks_zp,x
-	sta	(dst_zp),y
-	tya
-	clc
-	adc	#8
-	tay
-	inx
-	cpx	#AREA_TAB_LEN
-	bne	sca_lp2
-	
-	pla
-	tax
-
-	inc	dst_zp
-	bne	sca_skp1
-	inc	dst_zp+1
-sca_skp1:
-	inx
-	cpx	#8
-	bne	sca_lp1
-
-	lda	#%00000000
-	sta	$de00
-
-	lda	dst_zp
-	sec
-	sbc	#8
-	sta	dst_zp
-	lda	dst_zp+1
-	sbc	#0
-	sta	dst_zp+1
-	plp
-	rts
-
-;*******
-;* Areas to scan
-area_tab:
-	dc.b	$9e
-	dc.b	$be
-	dc.b	$de
-	dc.b	$df
-	dc.b	$fe
-AREA_TAB_LEN	equ	.-area_tab
 
 ;*******
 ;* $DE00 bank bits
@@ -405,7 +292,7 @@ bank_tab:
 	dc.b	%10001000
 	dc.b	%10010000
 	dc.b	%10011000
-
+NUM_BANKS	equ	8
 
 ;**************************************************************************
 ;*
@@ -536,26 +423,282 @@ vs_fl1:
 	sec
 	rts
 
-	echo	.
+
+scan_areas:
+	php
+	sei
+	stx	dst_zp
+	sty	dst_zp+1
+	jsr	scan_areas_int
+	ldy	#NUM_AREAS-1
+sar_lp1:
+	lda	banks_zp,y
+	sta	(dst_zp),y
+	dey
+	bpl	sar_lp1
+	plp
+	rts
+
+scan_areas_int:
+	ldx	#0
+sai_lp1:
+	lda	area_tab,x
+	jsr	verify_section
+	sta	banks_zp,x
+	inx
+	cpx	#NUM_AREAS
+	bne	sai_lp1
+	rts
+
+
+scan_banks:
+	php
+	sei
+	stx	dst_zp
+	sty	dst_zp+1
+	pha
+	ora	#%00100000	; RAM
+	jsr	scan_banks_int
+	pla
+	and	#%11011111	; ROM
+	jsr	scan_banks_int
+	plp
+	rts
+	
+scan_banks_int:
+	sta	mode_zp
+	ldx	#0
+sca_lp1:
+	lda	bank_tab,x
+	ora	mode_zp
+	sta	$de00
+
+	txa
+	pha
+	jsr	scan_areas_int
+	
+	ldy	#0
+	ldx	#0
+sca_lp2:
+	lda	banks_zp,x
+	sta	(dst_zp),y
+	tya
+	clc
+	adc	#NUM_BANKS
+	tay
+	inx
+	cpx	#NUM_AREAS
+	bne	sca_lp2
+	
+	pla
+	tax
+
+	inc	dst_zp
+	bne	sca_skp1
+	inc	dst_zp+1
+sca_skp1:
+	inx
+	cpx	#NUM_BANKS
+	bne	sca_lp1
+
+	lda	#%00000000
+	sta	$de00
+
+	lda	dst_zp
+	clc
+	adc	#NUM_AREAS*NUM_BANKS-NUM_BANKS
+	sta	dst_zp
+	bcc	sca_skp2
+	inc	dst_zp+1
+sca_skp2:
+	rts
+
+;*******
+;* Areas to scan
+area_tab:
+	dc.b	$9e
+	dc.b	$be
+	dc.b	$de
+	dc.b	$df
+	dc.b	$fe
+NUM_AREAS	equ	5
+
+
+
+;**************************************************************************
+;*
+;* NAME  freeze_entry
+;*
+;* DESCRIPTION
+;*   Freeze entry point
+;*
+;******
+freeze_entry:
+	sei
+	cld
+	ldx	#$ff
+	txs
+
+	ldx	#<areas_post_frz
+	ldy	#>areas_post_frz
+	jsr	scan_areas
+
+; read registers de00/de01
+	lda	$de00
+	sta	de00_post
+	lda	$de01
+	sta	de01_post
+
+	lda	#%00000011
+	ldx	#<banks_post_frz
+	ldy	#>banks_post_frz
+	jsr	scan_banks
+
+; ack freeze
+	lda	#%01100011	; RR-RAM at $8000, RR-ROM at $e000, ack freeze
+	sta	$de00
+	lda	#%00100011	; RR-RAM at $8000, RR-ROM at $e000
+	sta	$de00
+
+	ldx	#<areas_post_ack
+	ldy	#>areas_post_ack
+	jsr	scan_areas
+
+	lda	#%00000011
+	ldx	#<banks_post_ack
+	ldy	#>banks_post_ack
+	jsr	scan_banks
+
+; exit kernal rom and enter normal rom
+	lda	#$37
+	sta	$01
+	lda	#$2f
+	sta	$00
+
+	lda	#%00000000	; Normal conf, RR-ROM at $8000
+	sta	$de00
+	jmp	continue_test
+	
 	rend
-PREPARE_LEN	equ	.-prepare_st
+RAM_CODE_LEN	equ	.-ram_code_st
+
+
+
+	
+;**************************************************************************
+;*
+;* NAME  perform_test, continue_test
+;*
+;* DESCRIPTION
+;*   Do freeze test
+;*
+;******
+perform_test:
+
+	sei
+
+	jsr	prepare_cartram
+
+	ldx	#<areas_post_rst
+	ldy	#>areas_post_rst
+	jsr	scan_areas
+	lda	#<rst_msg
+	ldy	#>rst_msg
+	jsr	print_str
+	ldx	#<areas_post_rst
+	ldy	#>areas_post_rst
+	jsr	print_areas
+
+	lda	#%00000011
+	ldx	#<banks_post_rst
+	ldy	#>banks_post_rst
+	jsr	scan_banks
+	ldx	#<banks_post_rst
+	ldy	#>banks_post_rst
+	jsr	print_banks
+
+; initial setup of RR-mode
+	lda	de01_selected
+	sta	$de01
+
+	lda	$de00
+	sta	de00_pre
+	lda	$de01
+	sta	de01_pre
+
+	ldx	#<areas_post_cnf
+	ldy	#>areas_post_cnf
+	jsr	scan_areas
+	lda	#<cnfd_msg
+	ldy	#>cnfd_msg
+	jsr	print_str
+	ldx	#<areas_post_cnf
+	ldy	#>areas_post_cnf
+	jsr	print_areas
+
+	lda	#%00000011
+	ldx	#<banks_post_cnf
+	ldy	#>banks_post_cnf
+	jsr	scan_banks
+	ldx	#<banks_post_cnf
+	ldy	#>banks_post_cnf
+	jsr	print_banks
+
+	cli
+	
+	lda	#<freeze_msg
+	ldy	#>freeze_msg
+	jsr	print_str
+	
+; cursor on
+	lda	#0
+	sta	$cc
+	lda	646
+	sta	$d826
+	sta	$d827
+	
+pt_lp3:
+	lda	$de00
+	sta	$0426
+	lda	$de01
+	sta	$0427
+	jmp	pt_lp3
 
 
 ;******
 ;* continue after freezing
 continue_test:
-; clear cursor
+; clear cursor and line
 	inc	$cc
 	ldy	$d3
 	lda	#$20
+ct_lp1:
 	sta	($d1),y
-
+	dey
+	bpl	ct_lp1
+	iny
+	sty	$d3
+	
 ; present state
 	lda	#<frz_msg
 	ldy	#>frz_msg
 	jsr	print_str
-	jsr	print_areas2
-	jsr	print_cr
+	ldx	#<areas_post_frz
+	ldy	#>areas_post_frz
+	jsr	print_areas
+	ldx	#<banks_post_frz
+	ldy	#>banks_post_frz
+	jsr	print_banks
+
+	lda	#<ackd_msg
+	ldy	#>ackd_msg
+	jsr	print_str
+	ldx	#<areas_post_ack
+	ldy	#>areas_post_ack
+	jsr	print_areas
+	ldx	#<banks_post_ack
+	ldy	#>banks_post_ack
+	jsr	print_banks
 	
 	lda	de00_pre
 	jsr	print_hex
@@ -571,64 +714,10 @@ continue_test:
 	jsr	print_cr
 	jsr	print_cr
 
-	lda	#<[de00_store1+$10]
-	ldy	#>[de00_store1+$10]
-	jsr	dump_hex
-	jsr	print_cr
-	lda	#<[de00_store1+$e0]
-	ldy	#>[de00_store1+$e0]
-	jsr	dump_hex
-	jsr	print_cr
-
-	lda	#<[de00_store2+$10]
-	ldy	#>[de00_store2+$10]
-	jsr	dump_hex
-	jsr	print_cr
-	lda	#<[de00_store2+$e0]
-	ldy	#>[de00_store2+$e0]
-	jsr	dump_hex
-	jsr	print_cr
-
-	lda	#<[de00_store3+$10]
-	ldy	#>[de00_store3+$10]
-	jsr	dump_hex
-	jsr	print_cr
-	lda	#<[de00_store3+$e0]
-	ldy	#>[de00_store3+$e0]
-	jsr	dump_hex
-	jsr	print_cr
-
-	lda	#<[df00_store1+$10]
-	ldy	#>[df00_store1+$10]
-	jsr	dump_hex
-	jsr	print_cr
-	lda	#<[df00_store1+$e0]
-	ldy	#>[df00_store1+$e0]
-	jsr	dump_hex
-	jsr	print_cr
-
-	lda	#<[df00_store2+$10]
-	ldy	#>[df00_store2+$10]
-	jsr	dump_hex
-	jsr	print_cr
-	lda	#<[df00_store2+$e0]
-	ldy	#>[df00_store2+$e0]
-	jsr	dump_hex
-	jsr	print_cr
-
-	lda	#<[df00_store3+$10]
-	ldy	#>[df00_store3+$10]
-	jsr	dump_hex
-	jsr	print_cr
-	lda	#<[df00_store3+$e0]
-	ldy	#>[df00_store3+$e0]
-	jsr	dump_hex
-	jsr	print_cr
 
 	
-	
-ct_lp1:
-	jmp	ct_lp1
+ct_lp2:
+	jmp	ct_lp2
 
 
 freeze_msg:
@@ -637,42 +726,49 @@ freeze_msg:
 
 rst_msg:
 	dc.b	13,13,18,"RST",146,"  ",0
-post_msg:
-	dc.b	18,"POST",146," ",0
+cnfd_msg:
+	dc.b	18,"CNFD",146," ",0
 frz_msg:
-	dc.b	13,13,18,"FRZ",146,"  ",0
+	dc.b	18,"FRZ",146,"  ",0
+ackd_msg:
+	dc.b	18,"ACKD",146," ",0
 
 	
 ;**************************************************************************
 ;*
-;* NAME  print_areas, print_areas2
+;* NAME  print_areas
 ;*
 ;* DESCRIPTION
-;*   Scan areas for which banks are present and print out.
+;*   Print out which areas were visible in a previous scan
 ;*
-;*   IN: Acc/Y=leading string
+;*   IN: X/Y=pointer to area table.
 ;*
 ;******
 print_areas:
-	jsr	print_str
-	jsr	scan_areas
+	stx	dst_zp
+	sty	dst_zp+1
 
-print_areas2:
-	ldx	#0
+	ldy	#0
 pas_lp1:
-	lda	area_tab,x
+	lda	area_tab,y
 	jsr	print_hex
 	lda	#":"
 	jsr	$ffd2
 
-	lda	banks_zp,x
+	tya
+	pha
+	lda	(dst_zp),y
 	jsr	print_tag
-
+	pla
+	tay
+	
 	jsr	print_space
-	inx
-	cpx	#AREA_TAB_LEN
+	iny
+	cpy	#NUM_AREAS
 	bne	pas_lp1
-	rts
+
+	jmp	print_cr
+;	rts
 
 
 ;**************************************************************************
@@ -684,6 +780,11 @@ pas_lp1:
 ;*
 ;******
 print_banks:
+	stx	dst_zp
+	sty	dst_zp+1
+	jsr	print_banks_int
+	; fall through
+print_banks_int:
 	ldx	#0
 pbs_lp1:
 	jsr	print_space
@@ -702,7 +803,7 @@ pbs_lp2:
 	pla
 	tay
 	iny
-	cpy	#8
+	cpy	#NUM_BANKS
 	bne	pbs_lp2
 	tya
 	clc
@@ -720,7 +821,7 @@ pbs_skp2:
 pbs_skp3:
 	
 	inx
-	cpx	#AREA_TAB_LEN
+	cpx	#NUM_AREAS
 	bne	pbs_lp1
 
 	jmp	print_cr
@@ -948,88 +1049,6 @@ end_de00rom:
 ;* $9e00 Tag for bank 0
 	ds.b	$9e80-.,$ff
 	BANK_TAG $9e,0,1
-
-	
-	ds.b	$9f00-.,$ff
-;**************************************************************************
-;*
-;* SECTION  $ff00 freeze ROM
-;*
-;******
-freeze_st:
-	rorg	freeze_st-$8000+$e000
-freeze_entry:
-	sei
-	cld
-	ldx	#$ff
-	txs
-
-	jsr	scan_areas
-
-	; read registers de00/de01
-	lda	$de00
-	sta	de00_post
-	lda	$de01
-	sta	de01_post
-	
-	ldx	#0
-fr_lp1:
-	cpx	#$10
-	bcc	fr_skp1
-	; read from de00..de0f and save
-	; de00_store1 contains copy of ROM or Cartridge RAM or I/O
-	lda	$de00,x
-	sta	de00_store1,x
-	; eor value with $ff and write back
-	eor	#$ff
-	sta	$de00,x
-        ; read from de00..de0f and save
-        ; de00_store2 contains copy of ROM or (Cartridge RAM ^ $ff) or I/O
-	lda	$de00,x
-	sta	de00_store2,x
-fr_skp1:
-	lda	$df00,x
-	sta	df00_store1,x
-	eor	#$ff
-	sta	$df00,x
-	lda	$df00,x
-	sta	df00_store2,x
-	inx
-	bne	fr_lp1
-
-	
-; ack freeze
-	lda	#%01100011	; RR-RAM at $8000, RR-ROM at $e000, ack freeze
-	sta	$de00
-	lda	#%00100011	; RR-RAM at $8000, RR-ROM at $e000
-	sta	$de00
-
-	; read RAM from 9e00..9fff and save
-	ldx	#0
-fr_lp2:
-	lda	$9e00,x
-	sta	de00_store3,x
-	lda	$9f00,x
-	sta	df00_store3,x
-	inx
-	bne	fr_lp2
-
-
-; exit kernal rom and enter normal rom
-	lda	#$37
-	sta	$01
-	lda	#$2f
-	sta	$00
-
-	lda	#%00000011	; RR-ROM at $8000, RR-ROM at $e000
-	sta	$de00
-	jmp	fr_out
-	rend
-fr_out:
-	lda	#%00000000	; Normal conf, RR-ROM at $8000
-	sta	$de00
-
-	jmp	continue_test
 
 ;******
 ;* $9f00 Tag for bank 0

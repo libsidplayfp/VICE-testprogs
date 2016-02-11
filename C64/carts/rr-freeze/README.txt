@@ -1,3 +1,46 @@
+rr-freeze R04
+-------------
+ 
+Select one of the following bit patterns that is written to $de01, then press
+RETURN to do it, then FREEZE and observe the result.
+
+01000000  40    REU-Comp=1, NoFreeze=0, AllowBank=0
+00000000  00    REU-Comp=0, NoFreeze=0, AllowBank=0
+01000010  42    REU-Comp=1, NoFreeze=0, AllowBank=1
+00000010  02    REU-Comp=0, NoFreeze=0, AllowBank=1
+01000100  44    REU-Comp=1, NoFreeze=1, AllowBank=0
+00000100  04    REU-Comp=0, NoFreeze=1, AllowBank=0
+01000110  46    REU-Comp=1, NoFreeze=1, AllowBank=1
+00000110  06    REU-Comp=0, NoFreeze=1, AllowBank=1
+
+
+Steps:
+1. Dump initial state, "RST"
+2. setup $de01
+3. Dump state, "CNFD"
+Wait for user pressing <freeze>
+5. Dump state, "FRZ"
+6. Ack freeze
+7. Dump state, "ACKD"
+
+
+
+Output format:
+  <NAME>  9E:A BE:- DE:- DF:A FE:-         <- detected config before banking 
+    9E:01230123  BE:--------  DE:--------      / bank scan with
+    DF:00000000  FE:ABCDEFGH               <---\ RAM-bit=1
+    9E:ABCDEFGH  BE:--------  DE:--------    / bank scan with 
+    DF:ABCDEFGH  FE:ABCDEFGH               <-\ RAM-bit=0  (ROM)
+
+  Letter meaning:
+    0-7   -> RAM banks 0-7, inverted means read only.
+    A-H   -> ROM banks 0-7, if non-inverted, it is writable (!)
+    -     -> no cart detected
+    ?     -> mapping mismatch (e.g $de not mapped to $9e and similar)
+ 
+
+OLD version
+-----------
  
 Select one of the following bit patterns that is written to $de01, then press
 RETURN to do it, then FREEZE and observe the result.
