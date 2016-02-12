@@ -1,6 +1,47 @@
 rr-freeze R04
 -------------
  
+
+DESCRIPTION
+-----------
+
+$9E80 and $9F80 of each bank in cartridge RAM is pre-filled with tags
+to indicate which bank it is.  This is done for all eight possible bank bit
+combinations in reverse.  This ensures that any aliases are overwritten with
+the lowest possible bank number.
+
+$9e80 and $9f80 of each bank in cartridge ROM is prepared with tags inside
+the image.
+
+Scanning is done in two steps.
+1. area scan
+   This scans the areas $9Exx,$BExx,$DExx,$DFxx and $FExx to see what
+   bank/ram/rom is present there and if it's read only or writable
+   Area scan is always performed without touching $DE00.
+
+2. bank scan
+   This performs an area scan for each of the eight possible bank bit
+   combinations, once with RAM=1 and once with RAM=0. 
+   Bank scan is "destructive" as it has to write $DE00 to sweep the bank
+   bits.   The base configuration (i.e bits 1 and 0) are set to 00.
+
+Output format:
+  <NAME>  9E:A BE:- DE:- DF:A FE:-    <- detected config (area scan)
+    9E:01230123  BE:--------  DE:--------      / bank scan with
+    DF:00000000  FE:ABCDEFGH               <---\ RAM-bit=1
+    9E:ABCDEFGH  BE:--------  DE:--------    / bank scan with 
+    DF:ABCDEFGH  FE:ABCDEFGH               <-\ RAM-bit=0  (ROM)
+
+  Letter meaning:
+    0-7   -> RAM banks 0-7, inverted means read only.
+    A-H   -> ROM banks 0-7, if non-inverted, it is writable (!)
+    -     -> no cart detected
+    ?     -> mapping mismatch (e.g $de not mapped to $9e and similar)
+
+
+TEST SEQUENCE
+-------------
+
 Select one of the following bit patterns that is written to $de01, then press
 RETURN to do it, then FREEZE and observe the result.
 
@@ -13,7 +54,6 @@ RETURN to do it, then FREEZE and observe the result.
 01000110  46    REU-Comp=1, NoFreeze=1, AllowBank=1
 00000110  06    REU-Comp=0, NoFreeze=1, AllowBank=1
 
-
 Steps:
 1. Dump initial state, "RST"
 2. setup $de01
@@ -24,20 +64,6 @@ Steps:
 6. Ack freeze
 7. Dump state, "ACKD"
 
-
-
-Output format:
-  <NAME>  9E:A BE:- DE:- DF:A FE:-         <- detected config before banking 
-    9E:01230123  BE:--------  DE:--------      / bank scan with
-    DF:00000000  FE:ABCDEFGH               <---\ RAM-bit=1
-    9E:ABCDEFGH  BE:--------  DE:--------    / bank scan with 
-    DF:ABCDEFGH  FE:ABCDEFGH               <-\ RAM-bit=0  (ROM)
-
-  Letter meaning:
-    0-7   -> RAM banks 0-7, inverted means read only.
-    A-H   -> ROM banks 0-7, if non-inverted, it is writable (!)
-    -     -> no cart detected
-    ?     -> mapping mismatch (e.g $de not mapped to $9e and similar)
  
 
 OLD version
