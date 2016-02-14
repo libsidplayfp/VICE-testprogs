@@ -25,7 +25,6 @@ printthis
          sta 1
          lda #$2f
          sta 0
-         jsr $fd15
          jsr $fda3
          jsr print
          .text " - ok"
@@ -133,7 +132,6 @@ ok
 
 waitkey
          .block
-         jsr $fd15
          jsr $fda3
          cli
 wait
