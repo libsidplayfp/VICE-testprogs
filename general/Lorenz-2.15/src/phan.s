@@ -20,6 +20,10 @@
          sta yb
          lda #0
          sta pb
+         ldx #4
+s2       dex
+         sta $200,x
+         bne s2
          tsx
          stx sb
 
