@@ -5,7 +5,7 @@ To start the image just set drive 8 to 1581 and insert the image and reset the m
 If after booting the screen is on 40col mode, type the following after you get the A> prompt:
 
 device conout:=80col
-screen40
+screen40 off
 
 There are two z80 test programs on the disk image:
 
