@@ -19,4 +19,10 @@ and poke reverse space, space and "dithered" reverse space into the invisible
 24th line. Press Space to cycle through the 3 values.
 You will see the line changing at the bottom."
 
+"I have investigated the rasterline 0 anomaly a little further to see what
+happened if I expanded the screen by $9003 (36867). I noticed that if I expand
+the screen just to far enough rasterline 0 contents will in fact be a copy of
+the first rasterline in that final char-line."
+-> vert0pal2.jpg vert0pal3.jpg vert0ntsc2.jpg vert0ntsc3.jpg
+
 does not work correctly on xvic (r30500)
