@@ -265,6 +265,8 @@ end_of_testset:
 	jmp entrypoint
 	
 end_of_tests:
+        ldy #2
+
         ldx #0
 endlp:
         lda $0401,x
@@ -278,12 +280,20 @@ endlp:
         inx
         cpx #30
         bne endlp
-        lda #5
-        sta $d020
-	jmp *
+        ldy #5
 fail:
-        lda #2
-        sta $d020
+
+        sty $d020
+
+    lda $d020
+    and #$0f
+    ldx #0 ; success
+    cmp #5
+    beq nofail
+    ldx #$ff ; failure
+nofail:
+    stx $d7ff
+
         jmp *
 	
 * = $0900

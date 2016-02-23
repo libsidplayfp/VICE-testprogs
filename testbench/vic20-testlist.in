@@ -1,0 +1,5 @@
+#../interrupts/irq-ackn-bug/,via1-free.prg
+#../interrupts/irq-ackn-bug/,via1.prg
+#../interrupts/irqnmi/,irqnmi-vic20irq.prg
+#../interrupts/irqnmi/,irqnmi-vic20nmi.prg
+

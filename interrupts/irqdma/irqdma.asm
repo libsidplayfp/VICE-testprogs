@@ -637,6 +637,16 @@ irq_handler_failed_color:
     lda #5
     sta $d020
 irq_handler_2_all_tests_successful:
+
+    lda $d020
+    and #$0f
+    ldx #0 ; success
+    cmp #5
+    beq nofail
+    ldx #$ff ; failure
+nofail:
+    stx $d7ff
+
     jmp irq_handler_2_all_tests_successful
 
 irq_handler_2_finish_test:

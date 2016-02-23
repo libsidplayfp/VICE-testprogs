@@ -45,13 +45,18 @@ function runprogsfortarget
         if [ "${e:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$e"
 
+            arraylength=${#myarray[@]}
+            if [ "$arraylength" -lt "4" ]; then
+                echo "error: unexpected end of line in input"
+                exit -1
+            fi
+
             testpath="${myarray[0]}"
             testprog="${myarray[1]}"
             testtype="${myarray[2]}"
             testtimeout="${myarray[3]}"
 
             testoptions=""
-            arraylength=${#myarray[@]}
             for (( i=5; i<${arraylength}+1; i++ ));
             do
 #                echo $i " / " ${arraylength} " : " ${myarray[$i-1]}

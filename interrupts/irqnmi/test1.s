@@ -29,9 +29,17 @@ lpy:
                 bne lpx
 
                 jsr comparescreen
-                
-                inc $d020
-                jmp *-3
+
+    lda $d020
+    and #$0f
+    ldx #0 ; success
+    cmp #5
+    beq nofail
+    ldx #$ff ; failure
+nofail:
+    stx $d7ff
+
+                jmp *
 
 ;-------------------------------------------------------------------------------
                 
@@ -196,14 +204,18 @@ lp1:
                 rts
 ;-------------------------------------------------------------------------------
 comparescreen:
+                ldy #5
+                sty $d020
+
                 ldx #0
 lp2:
                 .repeat 3,cnt
                 ldy #5
                 lda $0400+(cnt*$100),x
                 cmp refdata+(cnt*$100),x
-                beq *+4
+                beq *+(2+2+3)
                 ldy #2
+                sty $d020
 
                 tya
                 sta $d800+(cnt*$100),x

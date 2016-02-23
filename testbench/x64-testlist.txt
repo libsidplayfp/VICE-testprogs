@@ -1,4 +1,16 @@
 # this is a generated file, do not edit.
+../interrupts/cia-int/,cia-int-irq-new.prg,exitcode,100000000,cia-new
+../interrupts/cia-int/,cia-int-irq.prg,exitcode,100000000,cia-old
+../interrupts/cia-int/,cia-int-nmi-new.prg,exitcode,100000000,cia-new
+../interrupts/cia-int/,cia-int-nmi.prg,exitcode,100000000,cia-old
+../interrupts/irq-ackn-bug/,cia1new.prg,exitcode,100000000,cia-new
+../interrupts/irq-ackn-bug/,cia1.prg,exitcode,100000000,cia-old
+../interrupts/irq-ackn-bug/,cia2new.prg,exitcode,100000000,cia-new
+../interrupts/irq-ackn-bug/,cia2.prg,exitcode,100000000,cia-old
+../interrupts/irq-ackn-bug/,irq-ackn_after_cli2.prg,interactive,0,vicii-pal
+../interrupts/irq-ackn-bug/,irq-ackn_after_cli.prg,interactive,0,vicii-pal
+../interrupts/irq-ackn-bug/,irq-ack-vicii.prg,exitcode,100000000
+
 ################################################################################
 # CIA 6526
 ################################################################################
