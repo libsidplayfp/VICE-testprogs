@@ -36,6 +36,8 @@ typedef struct {
 } Dump;
 
 
+uint8_t ident[16];
+
 uint8_t de01_conf;
 
 Dump rst;
@@ -53,7 +55,8 @@ void read_dump(const char *name)
     }
 
     /* skip header */
-    fseek(fp, 0x12, SEEK_CUR);
+    fseek(fp, 0x2, SEEK_CUR);
+    fread(&ident, 1, sizeof(ident), fp);
 
     de01_conf = fgetc(fp);
 
@@ -161,16 +164,32 @@ int main(int argc, char *argv[])
 
     setup_vmap();
     read_dump(argv[1]);
+    printf("analyzing file: %s\n", argv[1]);
+    printf("  program: %s, format: %d\n", ident, ident[15]);
 
-    printf("<RESET>\n");
+    printf("\n<RESET>\n");
     print_dump(&rst, "RST ");
-    printf("\n$%02X -> $DE01\n", de01_conf);
+    printf("\n$%02X -> $DE01  (REU-Comp=%c, NoFreeze=%c, AllowBank=%c)\n",
+	   de01_conf,
+	   (de01_conf & 0x40) ? '1':'0',
+	   (de01_conf & 0x04) ? '1':'0',
+	   (de01_conf & 0x02) ? '1':'0'
+    );
     print_dump(&cnfd, "CNFD");
+    printf("\n$88 -> $DE00  (\"random\" mapping, bank 5 in ROM)\n$8C -> $DE00 (kill)\n");
     printf("\n<FREEZE>\n");
     print_dump(&frz, "FRZ ");
-    printf("\n$60 -> $DE00 (ACK)\n$20 -> $DE00\n");
+    printf("\n$60 -> $DE00  (ACK)\n$20 -> $DE00\n");
     print_dump(&ackd, "ACKD");
 
+    printf(
+"\n\n"
+"LEGEND:\n"
+"   0-7   -> RAM banks 0-7, an '*' means read only.\n"
+"   A-H   -> ROM banks 0-7, should have an '*', otherwise its writable (!)\n"
+"   -     -> no cart detected\n"
+"   ?     -> mapping mismatch (e.g $de not mapped to $9e and similar)\n"
+    );
 
     exit(0);
 }
