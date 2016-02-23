@@ -10,6 +10,8 @@
 ;******
 	processor 6502
 
+TEST_REVISION	eqm	"R05"
+
 
 ;******
 ;* tag to place in each bank for identification by scanning
@@ -59,12 +61,18 @@ mode_zp:
 	org	$0334
 tab_selected:
 	ds.b	1
+
+	org	$0800
+BUFFER:
+ident:
+	ds.b	15
+format_rev:
+	ds.b	1
+
 de01_selected:
 	ds.b	1
-de00_pre_frz:
-	ds.b	1
-de00_post_frz:
-	ds.b	1
+
+	ds.b	3
 
 de00_pre:
 	ds.b	1
@@ -75,8 +83,8 @@ de00_post:
 de01_post:
 	ds.b	1
 
-	org	$0800
-BUFFER:
+	ds.b	8
+
 areas_post_rst:
 	ds.b	NUM_AREAS
 banks_post_rst:
@@ -130,6 +138,7 @@ warm_entry:
 	jsr	$ff5b
 
 	jsr	prefill_ram
+	jsr	setup_dump
 	jsr	install_code
 
 
@@ -172,7 +181,7 @@ re_done:
 	
 
 greet_msg:
-	dc.b	147,"RR-FREEZE R05 / TLR",13,13
+	dc.b	147,"RR-FREEZE ",TEST_REVISION," / TLR",13,13
 	dc.b	"THIS PROGRAM VERIFIES THE CART STATE",13
 	dc.b	"DURING FREEZING.",13,13,0
 
@@ -219,6 +228,32 @@ pf_lp1:
 	bne	pf_lp1
 
 	rts
+
+
+;**************************************************************************
+;*
+;* NAME  setup_dump
+;*
+;* DESCRIPTION
+;*   Prepare dump area with ident.
+;*
+;******
+setup_dump:
+	ldx	#IDENT_LEN
+sd_lp1:
+	lda	ident_st-1,x
+	sta	ident-1,x
+	dex
+	bne	sd_lp1
+
+	lda	#0
+	sta	format_rev
+	rts
+
+ident_st:
+	dc.b	"RR-FREEZE ",TEST_REVISION,0
+	ds.b	15-[.-ident_st],0
+IDENT_LEN	equ	.-ident_st
 
 
 ;**************************************************************************
