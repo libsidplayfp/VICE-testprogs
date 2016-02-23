@@ -56,7 +56,7 @@ mode_zp:
 ;* SECTION  storage
 ;*
 ;******
-	org	$0800
+	org	$0334
 tab_selected:
 	ds.b	1
 de01_selected:
@@ -75,6 +75,8 @@ de00_post:
 de01_post:
 	ds.b	1
 
+	org	$0800
+BUFFER:
 areas_post_rst:
 	ds.b	NUM_AREAS
 banks_post_rst:
@@ -91,10 +93,12 @@ areas_post_ack:
 	ds.b	NUM_AREAS
 banks_post_ack:
 	ds.b	NUM_BANKS*NUM_AREAS*2
+BUFFER_END:
 
-	org	$0c00
+
+	org	$0e00
 code_area:
-	ds.b	$0400
+	ds.b	$0200
 
 
 	seg	code
@@ -168,7 +172,7 @@ re_done:
 	
 
 greet_msg:
-	dc.b	147,"RR-FREEZE R04 / TLR",13,13
+	dc.b	147,"RR-FREEZE R05 / TLR",13,13
 	dc.b	"THIS PROGRAM VERIFIES THE CART STATE",13
 	dc.b	"DURING FREEZING.",13,13,0
 
@@ -233,14 +237,6 @@ ic_lp1:
 	if	RAM_CODE_LEN > $0100
 	lda	ram_code_st+$0100,x
 	sta	ram_code+$0100,x
-	endif
-	if	RAM_CODE_LEN > $0200
-	lda	ram_code_st+$0200,x
-	sta	ram_code+$0200,x
-	endif
-	if	RAM_CODE_LEN > $0300
-	lda	ram_code_st+$0300,x
-	sta	ram_code+$0300,x
 	endif
 	inx
 	bne	ic_lp1
@@ -621,7 +617,6 @@ freeze_entry:
 RAM_CODE_LEN	equ	.-ram_code_st
 
 
-
 	
 ;**************************************************************************
 ;*
@@ -705,7 +700,7 @@ freeze_msg:
 ;* continue after freezing
 continue_test:
 ; clear cursor and line
-	inc	$cc
+	inc	$cc		; disable cursor
 	ldy	$d3
 	lda	#$20
 ct_lp1:
@@ -713,7 +708,13 @@ ct_lp1:
 	dey
 	bpl	ct_lp1
 	iny
-	sty	$d3
+	sty	$d3		; x-pos
+	sty	$cf		; cursor not in the inverted state
+	
+	if	0
+	lda	#145		; cursor up
+	jsr	$ffd2
+	endif
 	
 ; present state
 	lda	#<frz_msg
@@ -750,7 +751,11 @@ ct_lp1:
 	jsr	print_cr
 	jsr	print_cr
 
-
+	ldx	#<dumpname
+	ldy	#>dumpname
+	lda	#DUMPNAME_LEN
+	jsr	$ffbd
+	jsr	save_file
 ct_lp2:
 	jmp	ct_lp2
 
@@ -764,7 +769,11 @@ frz_msg:
 ackd_msg:
 	dc.b	18,"ACKD",146," ",0
 
-	
+
+dumpname:
+	dc.b	"RR-FRZ"
+DUMPNAME_LEN	equ	.-dumpname
+
 ;**************************************************************************
 ;*
 ;* NAME  print_areas
@@ -1042,7 +1051,110 @@ dh_lp1:
 	bne	dh_lp1
 	rts
 
-	
+
+;**************************************************************************
+;*
+;* NAME  save_file
+;*
+;* DESCRIPTION
+;*   Save dump file.
+;*
+;******
+sa_zp	equ	$fb
+
+save_file:
+; set device num to 8 if less than 8.
+	lda	#8
+	cmp	$ba
+	bcc	sf_skp1
+	sta	$ba
+sf_skp1:
+
+	lda	#<save_to_disk_msg
+	ldy	#>save_to_disk_msg
+	jsr	print_str
+sf_lp1:
+	jsr	$ffe4
+	cmp	#"N"
+	beq	sf_ex1
+	cmp	#"Y"
+	bne	sf_lp1
+
+	lda	#<filename_msg
+	ldy	#>filename_msg
+	jsr	print_str
+	ldx	$d3
+	ldy	#0
+sf_lp2:
+	cpy	$b7
+	beq	sf_skp2
+	lda	($bb),y
+	jsr	$ffd2
+	iny
+	bne	sf_lp2		; always taken
+sf_skp2:
+	stx	$d3
+
+	ldx	#<namebuf
+	ldy	#>namebuf
+;	lda	#NAMEBUF_LEN	; don't care
+	jsr	$ffbd
+
+	ldy	#0
+sf_lp3:
+	jsr	$ffcf
+	sta	($bb),y
+	cmp	#13
+	beq	sf_skp3
+	iny
+	cpy	#NAMEBUF_LEN
+	bne	sf_lp3
+sf_skp3:
+	sty	$b7
+
+	lda	#$80
+	sta	$9d
+	lda	#1
+	ldx	$ba
+	tay
+	jsr	$ffba
+	ldx	#<BUFFER
+	ldy	#>BUFFER
+	stx	sa_zp
+	sty	sa_zp+1
+	lda	#sa_zp
+	ldx	#<BUFFER_END
+	ldy	#>BUFFER_END
+	jsr	$ffd8
+
+	lda	#<ok_msg
+	ldy	#>ok_msg
+	jsr	print_str
+
+	lda	#<again_msg
+	ldy	#>again_msg
+	jsr	print_str
+	jmp	sf_lp1
+sf_ex1:
+	lda	#<ok_msg
+	ldy	#>ok_msg
+	jsr	print_str
+	rts
+
+save_to_disk_msg:
+	dc.b	"SAVE TO DISK? ",0
+again_msg:
+	dc.b	13,"SAVE AGAIN? ",0
+filename_msg:
+	dc.b	13,"FILENAME: ",0
+ok_msg:
+	dc.b	13,"OK",13,0
+
+NAMEBUF_LEN	equ	32
+namebuf		equ	$0120
+
+
+
 	ds.b	$9e00-.,$ff
 ;**************************************************************************
 ;*
