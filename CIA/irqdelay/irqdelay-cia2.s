@@ -100,6 +100,16 @@ tstsk1:
     dex
     bpl tstlp1
 .endif
+
+    lda $d020
+    and #$0f
+    ldx #0 ; success
+    cmp #2
+    bne nofail
+    ldx #$ff ; failure
+nofail:
+    stx $d7ff
+
     jmp mainloop
 
 .if (TESTVAL = 255)

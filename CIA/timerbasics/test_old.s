@@ -1,5 +1,5 @@
 
     !src "test.s"
 
-    * = $2200
+    * = buffer2
     !bin "test-dump.bin",$1000,2

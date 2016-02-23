@@ -108,6 +108,7 @@ lp1:
           cmp reference,x
           beq sk1
           ldy #10
+          ;sty $d020
 sk1:
           tya
           sta $d800,x
@@ -121,6 +122,7 @@ lp2:
           cmp reference+$100,x
           beq sk2
           ldy #10
+          ;sty $d020
 sk2:
           tya
           sta $d800+$100,x
@@ -134,11 +136,21 @@ lp3:
           cmp reference+$200,x
           beq sk3
           ldy #10
+          ;sty $d020
 sk3:
           tya
           sta $d800+$200,x
           inx
           bne lp3
+
+    lda $d020
+    and #$0f
+    ldx #0 ; success
+    cmp #5
+    beq nofail
+    ldx #$ff ; failure
+nofail:
+    stx $d7ff
 
           JMP *
 

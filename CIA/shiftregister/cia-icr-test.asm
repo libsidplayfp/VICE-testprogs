@@ -124,6 +124,15 @@ sk3:
           lda #$1b
           sta $d011
 
+    lda $d020
+    and #$0f
+    ldx #0 ; success
+    cmp #10
+    bne nofail
+    ldx #$ff ; failure
+nofail:
+    stx $d7ff
+
           JMP *
 
 text:

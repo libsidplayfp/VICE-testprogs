@@ -1,4 +1,7 @@
 
+buffer = $2200
+buffer2 = $3200
+
 CIA	= $dd00
 TIMER	= 0	; timer 0 or timer 1
 
@@ -25,7 +28,7 @@ TIMER	= 0	; timer 0 or timer 1
 	jsr sync
 
 	; test1 - read timer values from register after starting. 
-	; should read @ $1200 0a 09 08 07 06 05 04 03 02 01 0c 0c 0b 0a 09 08 07 ....
+	; should read @ buffer 0a 09 08 07 06 05 04 03 02 01 0c 0c 0b 0a 09 08 07 ....
 	lda #12
 	sta CIA+4+(TIMER*2)
 	lda #0
@@ -38,7 +41,7 @@ TIMER	= 0	; timer 0 or timer 1
 	inc CIA+14+TIMER	; start timer
 l0
 	lda CIA+4+(TIMER*2)
-	sta $1200,x
+	sta buffer,x
 	inx
 	bne l0
 
@@ -61,7 +64,7 @@ l0
 	inc CIA+14+TIMER
 l1
 	lda CIA+13
-	sta $1300,x
+	sta buffer+$0100,x
 	inx
 	bne l1
 
@@ -98,7 +101,7 @@ l1
 	sta $0319
 
 	lda #0
-	sta $1400
+	sta buffer+$0200
 
 	inc CIA+14+TIMER	; start timer
 
@@ -222,17 +225,17 @@ IRQ
 	lda #0
 	sta CIA+14+TIMER	; timer stop
 	tsx
-	ldy $1400
+	ldy buffer+$0200
 	iny
 	lda $105,x		; return address
-	sta $1400,y
+	sta buffer+$0200,y
 	iny
 	lda $106,x
-	sta $1400,y
+	sta buffer+$0200,y
 	iny
 	lda CIA+4+(TIMER*2)
-	sta $1400,y
-	sty $1400
+	sta buffer+$0200,y
+	sty buffer+$0200
 
 	; without this read, there should only be one NMI on CIA2, TA
 	lda CIA+13
@@ -252,7 +255,7 @@ lp1:
         sta $0500,x
         sta $0600,x
         sta $0700,x
-        lda #2
+        lda #5
         sta $d800,x
         sta $d900,x
         sta $da00,x
@@ -260,31 +263,47 @@ lp1:
         inx
         bne lp1
 
+        lda #5
+        sta $d020
+
         ldx #0
 lp:
-        lda $1200,x
+        lda buffer+$0000,x
         sta $0400,x
-        cmp $2200,x
-        bne sk1
-        lda #5
+        cmp buffer2+$0000,x
+        beq sk1
+        lda #2
         sta $d800,x
+        sta $d020
 sk1
-        lda $1300,x
+        lda buffer+$0100,x
         sta $0500,x
-        cmp $2300,x
-        bne sk2
-        lda #5
+        cmp buffer2+$0100,x
+        beq sk2
+        lda #2
         sta $d900,x
+        sta $d020
 sk2
-        lda $1400,x
+        lda buffer+$0200,x
         sta $0600,x
-        cmp $2400,x
-        bne sk3
-        lda #5
+        cmp buffer2+$0200,x
+        beq sk3
+        lda #2
         sta $da00,x
+        sta $d020
 sk3
         inx
         bne lp
+
+    lda $d020
+    and #$0f
+    ldx #0 ; success
+    cmp #5
+    beq nofail
+    ldx #$ff ; failure
+nofail:
+    stx $d7ff
+
         jmp *
 
 

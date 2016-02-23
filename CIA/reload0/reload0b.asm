@@ -260,6 +260,14 @@ sk4:
           cpx #$e8
           bne lp4
 
+    lda $d020
+    and #$0f
+    ldx #0 ; success
+    cmp #10
+    bne nofail
+    ldx #$ff ; failure
+nofail:
+    stx $d7ff
 
            jmp *
 

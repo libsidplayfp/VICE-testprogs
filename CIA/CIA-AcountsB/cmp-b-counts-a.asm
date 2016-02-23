@@ -269,6 +269,10 @@ nexta:
   ; end test: turn border green, restore IRQ/NMI
   lda #5
   sta $d020
+  ; signal success
+  lda #0
+  sta $d7ff
+
   lda $c000
   sta cnmi
   lda $c001
@@ -342,6 +346,9 @@ nmitestfailed:
 
 freeze:
   inc $d020
+  ; signal failure
+  lda #$ff
+  sta $d7ff
   jmp freeze
 
 cmptestfailed:

@@ -1,5 +1,5 @@
 
     !src "timer.s"
 
-    * = $2200
+    * = buffer2
     !bin "timer-dump.bin",$2000,2

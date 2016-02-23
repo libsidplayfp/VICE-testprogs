@@ -250,6 +250,10 @@ nextb:
   bne setupend
 
   inc $d020
+  ; signal success
+  lda #0
+  sta $d7ff
+
   dec setupjmp+1
   dec testjmp+1
   lda $c000

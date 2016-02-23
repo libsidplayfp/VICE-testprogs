@@ -155,7 +155,8 @@ jmploop
 
 
 finish
-
+          ldy #5
+          sty $d020
 
           ldx #0
 lp1:
@@ -202,6 +203,14 @@ sk3:
           cpx #40*6
           bne lp3
 
+    lda $d020
+    and #$0f
+    ldx #0 ; success
+    cmp #10
+    bne nofail
+    ldx #$ff ; failure
+nofail:
+    stx $d7ff
 
            jmp *
 

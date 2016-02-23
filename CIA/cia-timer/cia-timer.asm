@@ -299,8 +299,12 @@ greet_msg:
 ;-------------------------------------------------------------------------------
 
 checkdata:
+    lda #5
+    sta bordercol
+
     ldy #0
 lp
+
     ldx #2
     lda $0428,y
     cmp data_compare+$000,y
@@ -309,6 +313,11 @@ lp
 skp1
     txa
     sta $d828,y
+    cmp #2
+    bne skp1a
+    sta bordercol
+skp1a:
+
     ldx #2
     lda $0528,y
     cmp data_compare+$100,y
@@ -317,6 +326,11 @@ skp1
 skp2
     txa
     sta $d928,y
+    cmp #2
+    bne skp2a
+    sta bordercol
+skp2a:
+
     ldx #2
     lda $0628,y
     cmp data_compare+$200,y
@@ -325,6 +339,15 @@ skp2
 skp3
     txa
     sta $da28,y
+    cmp #2
+    bne skp3a
+    sta bordercol
+skp3a:
+
+    iny
+    bne lp
+
+lpa
     ldx #2
     lda $0728,y
     cmp data_compare+$300,y
@@ -333,8 +356,25 @@ skp3
 skp4
     txa
     sta $db28,y
+    cmp #2
+    bne skp4a
+    sta bordercol
+skp4a:
+
     iny
-    bne lp
+    cpy #$a0
+    bne lpa
+
+bordercol = * + 1
+    lda #0
+    sta $d020
+
+    ldx #0 ; success
+    cmp #2
+    bne nofail
+    ldx #$ff ; failure
+nofail:
+    stx $d7ff
 
   jmp restart
 
