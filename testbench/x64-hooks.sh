@@ -4,7 +4,8 @@ X64OPTS+=" -default"
 X64OPTS+=" -VICIIfilter 0"
 X64OPTS+=" -VICIIextpal"
 X64OPTS+=" -VICIIpalette vice.vpl"
-#X64OPTS+=" -warp"
+X64OPTS+=" -warp"
+X64OPTS+=" -console"
 X64OPTS+=" -debugcart"
 
 # X and Y offsets for saved screenshots. when saving a screenshot in the
@@ -12,6 +13,35 @@ X64OPTS+=" -debugcart"
 # top left character on screen.
 SXO=32
 SYO=35
+
+function x64_get_options
+{
+#    echo x64_get_options "$1"
+    exitoptions=""
+    case "$1" in
+        "default")
+                exitoptions=""
+            ;;
+        "vicii-pal")
+                exitoptions="-pal"
+            ;;
+        "vicii-ntsc")
+                exitoptions="-ntsc"
+            ;;
+        "vicii-ntscold")
+                exitoptions="-ntscold"
+            ;;
+        "cia-old")
+                exitoptions="-ciamodel 0"
+            ;;
+        "cia-new")
+                exitoptions="-ciamodel 1"
+            ;;
+        *)
+                exitoptions=""
+            ;;
+    esac
+}
 
 ################################################################################
 # reset
@@ -25,10 +55,11 @@ SYO=35
 # $3  timeout cycles
 function x64_run_screenshot
 {
+    extraopts=""$4" "$5" "$6""
 #    echo $X64 "$1"/"$2"
     mkdir -p "$1"/".testbench"
 #   $X64 $X64OPTS "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$1"/"$2"
-    $X64 $X64OPTS "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$1"/"$2" 1> /dev/null
+    $X64 $X64OPTS $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$1"/"$2" 1> /dev/null
     ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-x64.png "$SXO" "$SYO"
     exitcode=$?
 #    echo "exited with: " $exitcode
@@ -46,8 +77,9 @@ function x64_run_screenshot
 # $3  timeout cycles
 function x64_run_exitcode
 {
+    extraopts=""$4" "$5" "$6""
 #    echo $X64 "$1"/"$2"
-    $X64 $X64OPTS "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
+    $X64 $X64OPTS $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

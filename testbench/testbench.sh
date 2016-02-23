@@ -49,15 +49,27 @@ function runprogsfortarget
             testprog="${myarray[1]}"
             testtype="${myarray[2]}"
             testtimeout="${myarray[3]}"
+
+            testoptions=""
+            arraylength=${#myarray[@]}
+            for (( i=5; i<${arraylength}+1; i++ ));
+            do
+#                echo $i " / " ${arraylength} " : " ${myarray[$i-1]}
+                "$target"_get_options "${myarray[$i-1]}"
+#                echo "exitoptions: $exitoptions"
+                testoptions+="$exitoptions"
+            done
+
 #            echo " path: $testpath"
 #            echo " program: $testprog"
 #            echo " type: $testtype"
 #            echo " timeout: $testtimeout"
+#            echo " options: $testoptions"
             if [ "${testtype}" == "interactive" ]; then
                 echo "$testpath" "$testprog" "- " "interactive (skipped)"
             else
                 echo -ne "$testpath" "$testprog" "- "
-                "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout"
+                "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout" "$testoptions"
 #                echo "exited with: " $exitcode
                 case "$exitcode" in
                     0)

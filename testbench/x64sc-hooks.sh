@@ -4,7 +4,8 @@ X64SCOPTS+=" -default"
 X64SCOPTS+=" -VICIIfilter 0"
 X64SCOPTS+=" -VICIIextpal"
 X64SCOPTS+=" -VICIIpalette vice.vpl"
-#X64SCOPTS+=" -warp"
+X64SCOPTS+=" -warp"
+X64SCOPTS+=" -console"
 X64SCOPTS+=" -debugcart"
 
 # X and Y offsets for saved screenshots. when saving a screenshot in the
@@ -12,6 +13,35 @@ X64SCOPTS+=" -debugcart"
 # top left character on screen.
 SXO=32
 SYO=35
+
+function x64sc_get_options
+{
+#    echo x64sc_get_options "$1"
+    exitoptions=""
+    case "$1" in
+        "default")
+                exitoptions=""
+            ;;
+        "vicii-pal")
+                exitoptions="-pal"
+            ;;
+        "vicii-ntsc")
+                exitoptions="-ntsc"
+            ;;
+        "vicii-ntscold")
+                exitoptions="-ntscold"
+            ;;
+        "cia-old")
+                exitoptions="-ciamodel 0"
+            ;;
+        "cia-new")
+                exitoptions="-ciamodel 1"
+            ;;
+        *)
+                exitoptions=""
+            ;;
+    esac
+}
 
 ################################################################################
 # reset
@@ -25,9 +55,10 @@ SYO=35
 # $3  timeout cycles
 function x64sc_run_screenshot
 {
+    extraopts=""$4" "$5" "$6""
 #    echo $X64SC "$1"/"$2"
     mkdir -p "$1"/".testbench"
-    $X64SC $X64SCOPTS "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$1"/"$2" 1> /dev/null
+    $X64SC $X64SCOPTS $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$1"/"$2" 1> /dev/null
     ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-x64sc.png "$SXO" "$SYO"
     exitcode=$?
 }
@@ -44,8 +75,11 @@ function x64sc_run_screenshot
 # $3  timeout cycles
 function x64sc_run_exitcode
 {
-#    echo $X64SC "$1"/"$2"
-    $X64SC $X64SCOPTS "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
+    extraopts=""$4" "$5" "$6""
+#    echo "extraopts=" $extraopts
+#    echo $X64SC $X64SCOPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
+    $X64SC $X64SCOPTS $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
+#    $X64SC $X64SCOPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

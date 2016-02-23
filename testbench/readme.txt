@@ -40,12 +40,22 @@ currently just add them to c64-testlist.in
 format of the abc-testlist.in files:
 ------------------------------------
 
-<path to test>,<test executable name>,<test type>,<timeout>
+<path to test>,<test executable name>,<test type>,<timeout>,<options>
 
 test type:
     exitcode
     screenshot
     interactive
+
+options:
+    - extra options, which are translated to actual commandline options by the
+      respective driver script
+
+    cia-old
+    cia-new
+    vicii-pal
+    vicii-ntsc
+    vicii-ntscold
 
 --------------------------------------------------------------------------------
 
@@ -54,6 +64,10 @@ TODO:
     - handle old/new sid differences
     - handle old/new cia differences
     - handle pal/ntsc differences
+
+    - handle all kinds of extra switches (-reu, -cartXX etc)
+
+    - add "self test" kind of templates for all targets
 
     write proper docs :)
     write TODO list :)

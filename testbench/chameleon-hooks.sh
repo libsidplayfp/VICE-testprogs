@@ -64,6 +64,37 @@ function chameleon_poll_returncode
 }
 
 ################################################################################
+
+function chameleon_get_options
+{
+#    echo chameleon_get_options "$1"
+    exitoptions=""
+    case "$1" in
+        "default")
+                exitoptions=""
+            ;;
+        "vicii-pal")
+                exitoptions=""
+            ;;
+        "vicii-ntsc")
+                exitoptions=""
+            ;;
+        "vicii-ntscold")
+                exitoptions=""
+            ;;
+        "cia-old")
+                exitoptions=""
+            ;;
+        "cia-new")
+                exitoptions=""
+            ;;
+        *)
+                exitoptions=""
+            ;;
+    esac
+}
+
+################################################################################
 # reset
 # run test program
 # exit when write to d7ff occurs (any value)
