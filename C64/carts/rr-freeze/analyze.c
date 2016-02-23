@@ -14,20 +14,14 @@
 #include <stdint.h>
 
 
+uint8_t areas[] = { 0x9e, 0xbe, 0xde, 0xdf, 0xfe };
+
 typedef struct {
-    uint8_t v_9e;
-    uint8_t v_be;
-    uint8_t v_de;
-    uint8_t v_df;
-    uint8_t v_fe;
+    uint8_t v[5];
 } AreaScan;
 
 typedef struct {
-    uint8_t v_9e[8];
-    uint8_t v_be[8];
-    uint8_t v_de[8];
-    uint8_t v_df[8];
-    uint8_t v_fe[8];
+    uint8_t v[5][8];
 } BankScan;
 
 typedef struct {
@@ -115,77 +109,29 @@ static void setup_vmap(void)
 
 static void print_dump(Dump *d, char *str)
 {
-    int i;
+    int i, j;
+
     /* initial */
-    printf("%s  9E:%s  BE:%s  DE:%s  DF:%s  FE:%s\n",
-	   str,
-	   vmap[d->initial.v_9e],
-	   vmap[d->initial.v_be],
-	   vmap[d->initial.v_de],
-	   vmap[d->initial.v_df],
-	   vmap[d->initial.v_fe]
-   );
-
-
-    printf(" 9E: ");
-    /* RAM */
-    for (i = 0; i < 8; i++) {
-	printf("%s ", vmap[d->mode[0].ram.v_9e[i]]);
-    }
-    printf("   ");
-    /* ROM */
-    for (i = 0; i < 8; i++) {
-	printf("%s ", vmap[d->mode[0].rom.v_9e[i]]);
+    printf("%s", str);
+    for (i = 0; i < 5; i++) {
+	printf("  %02X:%s", areas[i], vmap[d->initial.v[i]]);
     }
     printf("\n");
 
-    printf(" BE: ");
-    /* RAM */
-    for (i = 0; i < 8; i++) {
-	printf("%s ", vmap[d->mode[0].ram.v_be[i]]);
+    /* bank scan */
+    for (i = 0; i < 5; i++) {
+	printf(" %02X: ", areas[i]);
+	/* RAM */
+	for (j = 0; j < 8; j++) {
+	    printf("%s ", vmap[d->mode[0].ram.v[i][j]]);
+	}
+	printf("   ");
+	/* ROM */
+	for (j = 0; j < 8; j++) {
+	    printf("%s ", vmap[d->mode[0].rom.v[i][j]]);
+	}
+	printf("\n");
     }
-    printf("   ");
-    /* ROM */
-    for (i = 0; i < 8; i++) {
-	printf("%s ", vmap[d->mode[0].rom.v_be[i]]);
-    }
-    printf("\n");
-
-    printf(" DE: ");
-    /* RAM */
-    for (i = 0; i < 8; i++) {
-	printf("%s ", vmap[d->mode[0].ram.v_de[i]]);
-    }
-    printf("   ");
-    /* ROM */
-    for (i = 0; i < 8; i++) {
-	printf("%s ", vmap[d->mode[0].rom.v_de[i]]);
-    }
-    printf("\n");
-
-    printf(" DF: ");
-    /* RAM */
-    for (i = 0; i < 8; i++) {
-	printf("%s ", vmap[d->mode[0].ram.v_df[i]]);
-    }
-    printf("   ");
-    /* ROM */
-    for (i = 0; i < 8; i++) {
-	printf("%s ", vmap[d->mode[0].rom.v_df[i]]);
-    }
-    printf("\n");
-
-    printf(" FE: ");
-    /* RAM */
-    for (i = 0; i < 8; i++) {
-	printf("%s ", vmap[d->mode[0].ram.v_fe[i]]);
-    }
-    printf("   ");
-    /* ROM */
-    for (i = 0; i < 8; i++) {
-	printf("%s ", vmap[d->mode[0].rom.v_fe[i]]);
-    }
-    printf("\n");
 
 }
 
