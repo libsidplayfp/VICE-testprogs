@@ -11,7 +11,7 @@
 	processor 6502
 
 TEST_REVISION	eqm	"R05"
-
+FORMAT_REVISION	equ	0
 
 ;******
 ;* tag to place in each bank for identification by scanning
@@ -88,19 +88,19 @@ de01_post:
 areas_post_rst:
 	ds.b	NUM_AREAS
 banks_post_rst:
-	ds.b	NUM_BANKS*NUM_AREAS*2
+	ds.b	NUM_BANKS*NUM_AREAS*2*4
 areas_post_cnf:
 	ds.b	NUM_AREAS
 banks_post_cnf:
-	ds.b	NUM_BANKS*NUM_AREAS*2
+	ds.b	NUM_BANKS*NUM_AREAS*2*4
 areas_post_frz:
 	ds.b	NUM_AREAS
 banks_post_frz:
-	ds.b	NUM_BANKS*NUM_AREAS*2
+	ds.b	NUM_BANKS*NUM_AREAS*2*4
 areas_post_ack:
 	ds.b	NUM_AREAS
 banks_post_ack:
-	ds.b	NUM_BANKS*NUM_AREAS*2
+	ds.b	NUM_BANKS*NUM_AREAS*2*4
 BUFFER_END:
 
 
@@ -224,6 +224,7 @@ pf_lp1:
 	sta	(ptr_zp),y
 	iny
 	bne	pf_lp1
+	inc	ptr_zp+1
 	dex
 	bne	pf_lp1
 
@@ -246,7 +247,7 @@ sd_lp1:
 	dex
 	bne	sd_lp1
 
-	lda	#0
+	lda	#FORMAT_REVISION
 	sta	format_rev
 	rts
 
@@ -517,12 +518,23 @@ scan_banks:
 	sei
 	stx	dst_zp
 	sty	dst_zp+1
+
+	ldx	#0
+sb_lp1:
+	txa
 	pha
 	ora	#%00100000	; RAM
 	jsr	scan_banks_int
 	pla
-	and	#%11011111	; ROM
+	pha
+;	and	#%11011111	; ROM
 	jsr	scan_banks_int
+	pla
+	tax
+	inx
+	cpx	#4
+	bne	sb_lp1
+
 	plp
 	rts
 	
@@ -618,7 +630,6 @@ freeze_entry:
 	lda	$de01
 	sta	de01_post
 
-	lda	#%00000000
 	ldx	#<banks_post_frz
 	ldy	#>banks_post_frz
 	jsr	scan_banks
@@ -633,7 +644,6 @@ freeze_entry:
 	ldy	#>areas_post_ack
 	jsr	scan_areas
 
-	lda	#%00000000
 	ldx	#<banks_post_ack
 	ldy	#>banks_post_ack
 	jsr	scan_banks
@@ -677,7 +687,6 @@ perform_test:
 	ldy	#>areas_post_rst
 	jsr	print_areas
 
-	lda	#%00000000
 	ldx	#<banks_post_rst
 	ldy	#>banks_post_rst
 	jsr	scan_banks
@@ -704,7 +713,6 @@ perform_test:
 	ldy	#>areas_post_cnf
 	jsr	print_areas
 
-	lda	#%00000000
 	ldx	#<banks_post_cnf
 	ldy	#>banks_post_cnf
 	jsr	scan_banks
