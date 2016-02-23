@@ -308,6 +308,24 @@ prc_lp1:
 
 	dex
 	bpl	prc_lp1
+
+;******
+;* wipe C64 ram under cart just to make sure
+	lda	#%00000010
+	sta	$de00
+	lda	#$34
+	sta	$01
+
+	ldx	#0
+	txa
+prc_lp2:
+	sta	$9e00,x
+	sta	$9f00,x
+	inx
+	bne	prc_lp2
+
+	lda	#$37
+	sta	$01
 	
 	lda	#%00000000
 	sta	$de00

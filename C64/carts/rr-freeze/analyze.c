@@ -186,9 +186,10 @@ int main(int argc, char *argv[])
 "\n\n"
 "LEGEND:\n"
 "   0-7   -> RAM banks 0-7, an '*' means read only.\n"
-"   A-H   -> ROM banks 0-7, should have an '*', otherwise its writable (!)\n"
+"   A-H   -> ROM banks 0-7, should have an '*', otherwise it is writable (!)\n"
 "   -     -> no cart detected\n"
 "   ?     -> mapping mismatch (e.g $de not mapped to $9e and similar)\n"
+"\n"
     );
 
     exit(0);
