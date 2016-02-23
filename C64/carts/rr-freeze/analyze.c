@@ -121,15 +121,17 @@ static void print_dump(Dump *d, char *str)
     int i, j, k;
 
     /* initial */
-    printf("\n%s", str);
+    printf("\n--- %s ---\n", str);
+    printf(" detected initial state:\n");
     for (i = 0; i < 5; i++) {
 	printf("  %02X:%s", areas[i], vmap[d->initial.v[i]]);
     }
     printf("\n");
 
 
+    printf("\n scan of all banks/modes:\n");
     for (k = 0; k < 4; k++) {
-	printf("     x01xx0%c%c -> $DE00 (RAM)",
+	printf("      x01xx0%c%c -> $DE00 (RAM)",
 	       (k & 2) ? '1':'0',
 	       (k & 1) ? '1':'0'
 	);
@@ -141,7 +143,7 @@ static void print_dump(Dump *d, char *str)
 
 	/* bank scan */
 	for (i = 0; i < 5; i++) {
-	    printf(" %02X: ", areas[i]);
+	    printf("  %02X: ", areas[i]);
 	    /* RAM */
 	    for (j = 0; j < 8; j++) {
 		printf("%s ", vmap[d->mode[k].ram.v[i][j]]);
@@ -154,6 +156,7 @@ static void print_dump(Dump *d, char *str)
 	    printf("\n");
 	}
     }
+    printf("-------------\n");
 
 }
 
@@ -168,7 +171,7 @@ int main(int argc, char *argv[])
     printf("  program: %s, format: %d\n", ident, ident[15]);
 
     printf("\n<RESET>\n");
-    print_dump(&rst, "RST ");
+    print_dump(&rst, "RST");
     printf("\n$%02X -> $DE01  (REU-Comp=%c, NoFreeze=%c, AllowBank=%c)\n",
 	   de01_conf,
 	   (de01_conf & 0x40) ? '1':'0',
@@ -178,7 +181,7 @@ int main(int argc, char *argv[])
     print_dump(&cnfd, "CNFD");
     printf("\n$88 -> $DE00  (\"random\" mapping, bank 5 in ROM)\n$8C -> $DE00 (kill)\n");
     printf("\n<FREEZE>\n");
-    print_dump(&frz, "FRZ ");
+    print_dump(&frz, "FRZ");
     printf("\n$60 -> $DE00  (ACK)\n$20 -> $DE00\n");
     print_dump(&ackd, "ACKD");
 
