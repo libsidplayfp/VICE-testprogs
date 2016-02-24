@@ -31,10 +31,16 @@ function gettestsfortarget
     readarray -t testlist < "$1"-testlist.txt
 }
 
+# $1 - target
+# $2 - filter substring
 function runprogsfortarget
 {
     checktarget "$1"
-    echo "running tests for" "$target"":"
+    if [ "$2" == "" ]; then
+        echo "running tests for" "$target"":"
+    else
+        echo "running tests for" "$target" "(""$2"")"":"
+    fi
 
     gettestsfortarget "$target"
     rm -f "$target"_result.txt
@@ -70,28 +76,32 @@ function runprogsfortarget
 #            echo " type: $testtype"
 #            echo " timeout: $testtimeout"
 #            echo " options: $testoptions"
+            if [ "$2" == "" ] || [ "${testpath#*$2}" != "$testpath" ]; then
             if [ "${testtype}" == "interactive" ]; then
                 echo "$testpath" "$testprog" "- " "interactive (skipped)"
             else
-                echo -ne "$testpath" "$testprog" "- "
-                "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout" "$testoptions"
-#                echo "exited with: " $exitcode
-                case "$exitcode" in
-                    0)
-                            exitstatus="ok"
-                        ;;
-                    1)
-                            exitstatus="timeout"
-                        ;;
-                    255)
-                            exitstatus="error"
-                        ;;
-                    *)
-                            exitstatus="error"
-                        ;;
-                esac
-                echo "$exitstatus"
-                echo "$exitstatus" "$testpath" "$testprog" >> "$target"_result.txt
+#                if [ "$2" == "" ] || [ "${testpath#*$2}" != "$testpath" ]; then
+                    echo -ne "$testpath" "$testprog" "- "
+                    "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout" "$testoptions"
+    #                echo "exited with: " $exitcode
+                    case "$exitcode" in
+                        0)
+                                exitstatus="ok"
+                            ;;
+                        1)
+                                exitstatus="timeout"
+                            ;;
+                        255)
+                                exitstatus="error"
+                            ;;
+                        *)
+                                exitstatus="error"
+                            ;;
+                    esac
+                    echo "$exitstatus"
+                    echo "$exitstatus" "$testpath" "$testprog" >> "$target"_result.txt
+#                fi
+            fi
             fi
         fi
     done
@@ -100,9 +110,15 @@ function runprogsfortarget
 function showfailedfortarget
 {
     checktarget "$1"
-    echo "failed tests for" "$target"":"
-    grep "error" "$target"_result.txt
-    grep "timeout" "$target"_result.txt
+    if [ -f "$target"_result.txt ]; then
+        if [ `grep -v ok "$target"_result.txt | wc -l ` -eq 0 ]; then
+            echo "no test(s) failed for" "$target""."
+        else
+            echo "failed tests for" "$target"":"
+            grep "error" "$target"_result.txt
+            grep "timeout" "$target"_result.txt
+        fi
+    fi
 }
 
 ###############################################################################
@@ -110,8 +126,9 @@ function showfailedfortarget
 case "$1" in
      -help)
             echo $NAME" - run test programs."
-            echo "usage: "$NAME" [target]"
+            echo "usage: "$NAME" [target] <filter>"
             echo "  targets: x64, x64sc, chameleon"
+            echo "  <filter> is a substring of the path of tests to restrict to"
             echo "  -help       show this help"
             exit
            ;;
@@ -121,7 +138,7 @@ case "$1" in
             exit
         fi
         SECONDS=0
-        runprogsfortarget "$1"
+        runprogsfortarget "$1" "$2"
         duration=$SECONDS
         echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
         showfailedfortarget "$1"

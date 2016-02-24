@@ -34,6 +34,16 @@ $ff - for failure
 
 --------------------------------------------------------------------------------
 
+tests that have to be checked by screenshot must contain reference screenshots
+that are named the same as the tests with an additional .png extension, in a
+subdirectory called "references". like this:
+
+./mytest.prg
+./references/mytest.prg.png
+
+the reference screenshots should be taken with default screen dimensions,
+CRT emulation disabled, using the pepto palette (vice.vpl, "Default" in menus)
+
 ================================================================================
 adding new tests
 ================================================================================

@@ -3,6 +3,10 @@
 
 all: testx64 testx64sc
 
+.PHONY: testlist cmpscreens
+
+testlist: x64-testlist.txt x64sc-testlist.txt chameleon-testlist.txt
+
 cmpscreens: cmpscreens.c
 	$(CC) -W -Wall -O3 -o cmpscreens cmpscreens.c -lm
 
