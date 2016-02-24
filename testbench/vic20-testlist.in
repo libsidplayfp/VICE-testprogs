@@ -1,5 +1,17 @@
+# TODO:
+#../crtemulation/vic20
+#../VIC20
+#
 #../interrupts/irq-ackn-bug/,via1-free.prg
 #../interrupts/irq-ackn-bug/,via1.prg
 #../interrupts/irqnmi/,irqnmi-vic20irq.prg
 #../interrupts/irqnmi/,irqnmi-vic20nmi.prg
-
+################################################################################
+# various expansions
+################################################################################
+#TODO:
+#../audio-io/,audio-io-vic20.prg,interactive
+#../GEO-RAM/,georam20.prg
+#../sfx_soundsampler/,vic20-test.prg
+#../userportjoy/,testjoy_vic20.prg
+#../userportrtc/,testrtc-vic20.prg
