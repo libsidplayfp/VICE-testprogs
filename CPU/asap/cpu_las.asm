@@ -121,6 +121,8 @@ las	!byte	$bb     ; las abs,y
         jsr     print
         lda     #5
         sta     $d020
+        ldx #0 ; success
+        stx $d7ff
         jmp     *
 
 error
@@ -146,6 +148,8 @@ error
 	jsr	put_char
         lda     #10
         sta     $d020
+        ldx #$ff ; failure
+        stx $d7ff
         jmp     *
 
 put_hex_byte

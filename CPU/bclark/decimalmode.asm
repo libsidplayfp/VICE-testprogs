@@ -65,10 +65,14 @@ N2H   = $1f     ; 2 bytes
 
             lda #5
             sta $d020
+            ldx #0 ; success
+            stx $d7ff
             jmp *
 fail
             lda #10
             sta $d020
+            ldx #$ff ; failure
+            stx $d7ff
             jmp *
 
 ;-------------------------------------------------------------------------------

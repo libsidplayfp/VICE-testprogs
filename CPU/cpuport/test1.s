@@ -75,6 +75,8 @@ Start:
 
         lda #5
         sta $d020
+        ldx #0 ; success
+        stx $d7ff
         jmp *
 
 fail:
@@ -82,5 +84,7 @@ fail:
         clc
         adc #'0'
         sta $0400
+        ldx #$ff ; failure
+        stx $d7ff
         inc $d020
         jmp *-3

@@ -105,6 +105,8 @@ main
         jsr     print
         lda     #5
         sta     $d020
+        ldx #0 ; success
+        stx $d7ff
         jmp     *
 
 error
@@ -124,6 +126,8 @@ error
 	jsr	put_char
         lda     #10
         sta     $d020
+        ldx #$ff ; failure
+        stx $d7ff
         jmp     *
 
 test_adc_sbc

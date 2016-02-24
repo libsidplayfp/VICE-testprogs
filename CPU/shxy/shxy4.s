@@ -256,9 +256,23 @@ offs:           lda     #0
                 ;bne -
 
                 inc offs+1
+                bne notlast
 
 bordercolor:
                 lda #5
+                sta realbordercolor+1
+
+    ldx #0 ; success
+    cmp #5
+    beq nofail
+    ldx #$ff ; failure
+nofail:
+    stx $d7ff
+
+notlast:
+
+realbordercolor:
+                lda #0
                 sta $d020
 
 ; open lower border

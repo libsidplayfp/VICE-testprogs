@@ -131,6 +131,8 @@ anx	!byte	$ab,0           ; LAX #imm
         jsr     print
         lda     #5
         sta     $d020
+        ldx #0 ; success
+        stx $d7ff
         jmp     *
 
 errori
@@ -155,6 +157,8 @@ errorf
 error
         lda     #10
         sta     $d020
+        ldx #$ff ; failure
+        stx $d7ff
         jmp     *
 
 readmagic:

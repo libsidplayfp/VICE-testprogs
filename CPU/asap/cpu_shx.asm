@@ -104,6 +104,8 @@ loop
 	sta     $d020
         lda     #$1b
         sta     $d011
+        ldx #0 ; success
+        stx $d7ff
 	jmp	*
 
 do_test
@@ -240,6 +242,8 @@ error
 	sta     $d020
         lda     #$1b
         sta     $d011
+        ldx #$ff ; failure
+        stx $d7ff
 	jmp	*
 
 put_hex_byte

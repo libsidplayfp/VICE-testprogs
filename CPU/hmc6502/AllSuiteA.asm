@@ -45,11 +45,15 @@ theend:
 
             lda #5
             sta $d020
+            ldx #0 ; success
+            stx $d7ff
             jmp *
 error
             sta $0400
             lda #10
             sta $d020
+            ldx #$ff ; failure
+            stx $d7ff
             jmp*
 
 ;-------------------------------------------------------------------------------

@@ -248,9 +248,23 @@ spres:          lda #0
                 sta $0400+(40*2),x
 
                 inc offs+1
+                bne notlast
 
 bordercolor:
                 lda #5
+                sta realbordercolor+1
+
+    ldx #0 ; success
+    cmp #5
+    beq nofail
+    ldx #$ff ; failure
+nofail:
+    stx $d7ff
+
+notlast:
+
+realbordercolor:
+                lda #0
                 sta $d020
 
 ; open lower border
@@ -282,6 +296,7 @@ bordercolor:
                 ASL     $D019
                 RTI
 
+                * = $0f00
 docycles:
 
          lsr                    ; 2
@@ -323,7 +338,7 @@ reference:
                 !byte $12, $12, $12, $12, $12, $12, $12, $12
                 !byte $12, $12, $12, $12, $12, $12, $12, $12
                 !byte $12, $12, $12, $12, $12, $12, $12, $12
-                !byte $12, $12, $12, $12, $12, $12, $12, $12, $12, $ff
+                !byte $12, $12, $12, $12, $12, $12, $12, $12, $ff, $12
 
                 !byte $12, $12, $12, $12, $12, $12, $12, $12
                 !byte $12, $12, $12, $12, $12, $12, $12, $12
@@ -332,7 +347,7 @@ reference:
                 !byte $12, $12, $12, $12, $12, $12, $12, $12
                 !byte $12, $12, $12
                 !byte $12, $12, $12, $12, $12, $12, $12, $12, $12, $12
-                !byte $12, $12, $12, $12, $ff
+                !byte $12, $12, $12, $ff, $12
 
                 * = $1100
 testbase:
