@@ -16,16 +16,19 @@ main:
         lda #$15        ; screen: $0400 char: $1000
         sta $d018
 
+-       lda $d011
+        bpl -
+-       lda $d011
+        bmi -
+
 mainlp:
+
         lda #0
         sta $d020
         sta $d021
 
--       lda $d011
-        bmi -
-        lda $d012
-        cmp #8
-        bne -
+        ldx #8
+        jsr rastersync
         inc $d020
 
         lda #$3f        ; bits 0-1 output
@@ -139,6 +142,14 @@ mainlp:
         bne -
         inc $d020
 
+-       lda $d011
+        bpl -
+-       lda $d011
+        bmi -
+
+        ldx #0 ; success
+        stx $d7ff
+
         jmp mainlp
 
 screen0 = $0400
@@ -238,3 +249,43 @@ preparechar:
         lda #$35
         sta $01
         rts
+
+;--------------------------------------------------
+; simple polling rastersync routine
+
+        *=$0d00 ; align to some page so branches do not cross a page boundary and fuck up the timing
+
+rastersync:
+
+lp1:
+          cpx $d012
+          bne lp1
+          jsr cycles
+          bit $ea
+          nop
+          cpx $d012
+          beq skip1
+          nop
+          nop
+skip1:    jsr cycles
+          bit $ea
+          nop
+          cpx $d012
+          beq skip2
+          bit $ea
+skip2:    jsr cycles
+          nop
+          nop
+          nop
+          cpx $d012
+          bne onecycle
+onecycle: rts
+
+cycles:
+         ldy #$06
+lp2:     dey
+         bne lp2
+         inx
+         nop
+         nop
+         rts

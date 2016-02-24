@@ -66,9 +66,21 @@ skipinit:
   sta $dd0d
   ldx #1
   stx $d01a     ; enable raster interrupt
-  lda $dc0d     ; acknowledge CIA interrupts
-  lsr $d019     ; and video interrupts
-  cli
+
+  ldx #0
+lp1a:
+  lda #1
+  sta $d800,x
+  sta $d900,x
+  sta $da00,x
+  sta $db00,x
+  lda #$20
+  sta $0400,x
+  sta $0500,x
+  sta $0600,x
+  sta $0700,x
+  inx
+  bne lp1a
 
   ldx #$27
 lp1:
@@ -76,10 +88,19 @@ lp1:
   sta $0400,x
   lda #$02
   sta $0428,x
+  lda #$03
+  sta $0450,x
   dex
   bpl lp1  
 
-  rts
+  lda $d011
+  bpl *-3
+
+  lda $dc0d     ; acknowledge CIA interrupts
+  lsr $d019     ; and video interrupts
+  cli
+
+  jmp *
 
 deinstall:
   sei           ; disable interrupts
@@ -224,6 +245,10 @@ postloop:
 
 
 endirq:
+  lda $d011
+  bpl *-3
+  lda #0 ; success
+  sta $d7ff
   jmp $ea81     ; return to the auxiliary raster interrupt
 
 restore:        ; disable the Restore key
