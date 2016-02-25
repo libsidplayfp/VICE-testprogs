@@ -109,8 +109,22 @@ clp1    sta $0400,x
         sta addr+1
 
         sei
+        lda $d011
+        bmi *-3
+        lda $d011
+        bpl *-3
+        lda $d011
+        bmi *-3
+
         lda #$0b
         sta $d011
+
+        lda $d011
+        bmi *-3
+        lda $d011
+        bpl *-3
+        lda $d011
+        bmi *-3
 
 lp1     lda $d012
         bne lp1
