@@ -36,6 +36,9 @@ start:
   jsr clrscr
 
 restart:
+  lda $d011
+  bpl *-3
+
   lda #$00
   sta $fa
 nexttest:
@@ -111,13 +114,13 @@ nr4:
   sei
   lda #$35
   sta $01
-  lda #$00
+  lda #<irqhandler
   sta $fffe
-  lda #$0e
+  lda #>irqhandler
   sta $ffff
-  lda #$00
+  lda #<irqhandler
   sta $fffa
-  lda #$0e
+  lda #>irqhandler
   sta $fffb
   lda #$7f
   sta $dc0d
@@ -221,7 +224,8 @@ output2:
 
 ;-------------------------------------------------------------------------------
 
-  .org $0e00
+  .org $0f00
+irqhandler:
   pha
 usecia14:
   lda $dc0d
@@ -241,6 +245,8 @@ intexit:
 
 clrscr:
   ldx #$00
+  stx $d020
+  stx $d021
 clrlp:
   lda #$01
   sta $d800,x
@@ -316,6 +322,8 @@ skp1
     cmp #2
     bne skp1a
     sta bordercol
+    lda data_compare+$000,y
+    sta $0428,y
 skp1a:
 
     ldx #2
@@ -329,6 +337,8 @@ skp2
     cmp #2
     bne skp2a
     sta bordercol
+    lda data_compare+$100,y
+    sta $0528,y
 skp2a:
 
     ldx #2
@@ -342,6 +352,8 @@ skp3
     cmp #2
     bne skp3a
     sta bordercol
+    lda data_compare+$200,y
+    sta $0628,y
 skp3a:
 
     iny
@@ -359,10 +371,12 @@ skp4
     cmp #2
     bne skp4a
     sta bordercol
+    lda data_compare+$300,y
+    sta $0728,y
 skp4a:
 
     iny
-    cpy #$a0
+    cpy #$c0
     bne lpa
 
 bordercol = * + 1
@@ -370,8 +384,8 @@ bordercol = * + 1
     sta $d020
 
     ldx #0 ; success
-    cmp #2
-    bne nofail
+    cmp #5
+    beq nofail
     ldx #$ff ; failure
 nofail:
     stx $d7ff
