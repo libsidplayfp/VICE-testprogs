@@ -66,6 +66,70 @@ Steps:
 
  
 
+
++---------------------+
+| HOW TO RUN THE TEST |
++---------------------+
+
+What to do for each cartridge:
+---
+1. flash .bin or .crt to the cart.
+2. power cycle (reset is probably ok as well)
+3. select $DE01 value. ($40, $00, $42 and $02 are the interesting ones)
+4. press enter to start test
+5. press freeze when requested.
+6. choose save and save as dump_rr_40.prg (dev 8 is hardcoded)
+
+Repeat from (2) for $DE01 = $00, $42 and $02 -> dump_rr_00.prg, dump_rr_42.prg, dump_rr_02.prg
+---
+
+
+
++-------+
+| DUMPS |
++-------+
+
+Retro Replay #1  (Impetigo)
+---------------------------
+dumps/dump_rr_00_impetigo.prg
+dumps/dump_rr_02_impetigo.prg
+dumps/dump_rr_40_impetigo.prg
+dumps/dump_rr_42_impetigo.prg
+
+---
+Message sent by: Impetigo on 2016-02-25 17:39:47+01
+Details:
+
+Tests are done on C64C (short board 250469).
+
+Retro Replay cart (rr-freeze.bin is flashed on the lower bank) as only device on the Expansion Port.
+
+SD2IEC on the serial port (with a .d81 image mounted). Test outputs are saved on this image.
+
+$DE01 values 00, 02, 40, 42 were OK.
+The other values didn't work. After starting the test freeze button didn't affect anything.
+
+Let me know if you need more tests.
+
+...and...
+
+You're welcome. Glad my dumps shed more light on the case :)
+
+Yes, the cart I have is 'a genuine Individual Computers Retro Replay'. With the red PCB. I think this one was the last batch of the RR cartridges. I don't have a 1541U nor an EF.
+
+Good luck.
+Cheers
+---
+
+
+
+
+
+
+
+
+
+
 OLD version
 -----------
  
