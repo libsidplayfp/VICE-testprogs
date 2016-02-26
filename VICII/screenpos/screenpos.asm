@@ -34,7 +34,7 @@ start:
   jsr install
   lda #0
   tax
-  rts
+  jmp *
 
 ; -- Subroutines
 
@@ -232,6 +232,22 @@ nmi = * + 1
 
 
 initscreen:
+    ldx #0
+slp1:
+    txa
+    sta $0400,x
+    sta $0500,x
+    lda #$20
+    sta $0600,x
+    sta $0700,x
+    lda #14
+    sta $d800,x
+    sta $d900,x
+    sta $da00,x
+    sta $db00,x
+    inx
+    bne slp1
+
     ldx #0
 slp:
     lda screendata,x

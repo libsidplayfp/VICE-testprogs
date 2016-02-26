@@ -153,6 +153,9 @@ tr_match:
 	lda	#5
 	sta	$d020
 	
+	lda     #0      ; success
+	sta     $d7ff
+
 	lda	#<matches_msg
 	ldy	#>matches_msg
 	jsr	$ab1e
@@ -169,8 +172,10 @@ tr_match:
 	jmp	tr_ex2
 	
 tr_ex1:
-	lda	#15
+	lda	#10
 	sta	$d020
+        lda     #$ff    ; failure
+        sta     $d7ff
 	lda	#<nomatches_msg
 	ldy	#>nomatches_msg
 	jsr	$ab1e

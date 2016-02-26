@@ -54,7 +54,7 @@ sa_lp1:
 	dex
 	bne	sa_lp1
 
-	jsr	wait_vb
+	jsr     makescreen
 
 	lda	#$7f
 	sta	$dc0d
@@ -189,4 +189,22 @@ ho_lp2:
 	sta	$d020
 	rts
 	
-; eof
+makescreen:
+        lda #$20
+        ldx #0
+sclp1:
+        sta $0400,x
+        sta $0500,x
+        sta $0600,x
+        sta $0700,x
+        inx
+        bne sclp1
+        ldx #39
+sclp2:
+        lda #"#"
+        sta $0400,x
+        lda #1
+        sta $d800,x
+        dex
+        bpl sclp2
+        jmp     wait_vb
