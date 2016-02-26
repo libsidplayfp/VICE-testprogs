@@ -1,9 +1,9 @@
 
 .SILENT:
 
-all: testx64 testx64sc
+all: testlist cmpscreens chameleon-helper.prg
 
-.PHONY: testlist cmpscreens
+.PHONY: testlist
 
 testlist: x64-testlist.txt x64sc-testlist.txt chameleon-testlist.txt
 
