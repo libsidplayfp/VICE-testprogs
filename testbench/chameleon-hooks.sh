@@ -5,8 +5,8 @@ RDUMMY=.dummyfile2
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
 # top left character on screen.
-SXO=53
-SYO=62
+CHAMSXO=53
+CHAMSYO=62
 
 function chameleon_reset
 {
@@ -107,6 +107,10 @@ function chameleon_get_options
 function chameleon_run_screenshot
 {
 #    echo chameleon "$1"/"$2"
+    extraopts=""$4" "$5" "$6""
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$2"-chameleon.png
+
     # reset
     chameleon_reset
 
@@ -124,9 +128,17 @@ function chameleon_run_screenshot
     timeoutsecs=`expr \( $3 + 5000000 \) / 10000000`
     sleep $timeoutsecs
     chshot -o "$1"/.testbench/"$2"-chameleon.png
-    ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-chameleon.png "$SXO" "$SYO"
-    exitcode=$?
 #    echo "exited with: " $exitcode
+    if [ -f "$1"/references/"$2".png ]
+    then
+#        echo ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-chameleon.png "$CHAMSXO" "$CHAMSYO"
+        ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-chameleon.png "$CHAMSXO" "$CHAMSYO"
+        exitcode=$?
+    else
+        echo -ne "reference screenshot missing - "
+        exitcode=255
+    fi
+#    echo -ne "exitcode:" $exitcode
 }
 
 ################################################################################

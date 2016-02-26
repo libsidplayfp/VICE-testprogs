@@ -13,7 +13,7 @@ int verbose = 0;
 void usage(void)
 {
     printf("cmpscreens - compare two emulator screenshots\n\n"
-           "usage: cmpscreens [options] <file1> <file2>\n\n"
+           "usage: cmpscreens [options] <file1> <xoff> <yoff> <file2> <xoff> <yoff>\n\n"
            "options:\n"
            "-v         verbose mode\n"
           );
@@ -65,10 +65,15 @@ int main(int argc, char *argv[])
     int xstart, xsize;
     int ystart, ysize;
 
+    if (argc < 4) {
+        usage();
+        exit(-1);
+    }
+
     for (i = 1; i < argc; i++) {
         if (argv[i][0] == '-') {
             if (argv[i][1] == 'v') {
-                verbose = 0;
+                verbose = 1;
             }
         } else {
             break;
@@ -80,6 +85,7 @@ int main(int argc, char *argv[])
     imgname2 = argv[i]; i++;
     xoff2 = strtoul(argv[i], NULL, 0); i++;
     yoff2 = strtoul(argv[i], NULL, 0); i++;
+    if (verbose) printf("%dx%d %dx%d\n",xoff1,yoff1,xoff2,yoff2);
 
     data1 = loadimage(imgname1, &xsize1, &ysize1, &bpp1);
     data2 = loadimage(imgname2, &xsize2, &ysize2, &bpp2);
@@ -132,6 +138,7 @@ int main(int argc, char *argv[])
 
     xsize = xsize1;     // FIXME
     ysize = ysize1;     // FIXME
+    if (verbose) printf("cmp size: %dx%d\n", xsize, ysize);
 
     for (y = ystart; y < (ystart + ysize); y++) {
         for (x = xstart; x < (xstart + xsize); x++) {

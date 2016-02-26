@@ -17,8 +17,8 @@ X64SCOPTSSCREENSHOT+=""
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
 # top left character on screen.
-SXO=32
-SYO=35
+X64SCSXO=32
+X64SCSYO=35
 
 function x64sc_get_options
 {
@@ -77,7 +77,7 @@ function x64sc_run_screenshot
     fi
     if [ -f "$1"/references/"$2".png ]
     then
-        ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-x64sc.png "$SXO" "$SYO"
+        ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-x64sc.png "$X64SCSXO" "$X64SCSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

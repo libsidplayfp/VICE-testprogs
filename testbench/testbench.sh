@@ -82,24 +82,30 @@ function runprogsfortarget
             else
 #                if [ "$2" == "" ] || [ "${testpath#*$2}" != "$testpath" ]; then
                     echo -ne "$testpath" "$testprog" "- "
-                    "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout" "$testoptions"
-    #                echo "exited with: " $exitcode
-                    case "$exitcode" in
-                        0)
-                                exitstatus="ok"
-                            ;;
-                        1)
-                                exitstatus="timeout"
-                            ;;
-                        255)
-                                exitstatus="error"
-                            ;;
-                        *)
-                                exitstatus="error"
-                            ;;
-                    esac
-                    echo "$exitstatus"
-                    echo "$exitstatus" "$testpath" "$testprog" >> "$target"_result.txt
+
+                    if [ "${testtype}" == "screenshot" ] && ! [ -f "$testpath"/references/"$testprog".png ]
+                    then
+                        echo "reference screenshot missing (skipped)"
+                    else
+                        "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout" "$testoptions"
+        #                echo "exited with: " $exitcode
+                        case "$exitcode" in
+                            0)
+                                    exitstatus="ok"
+                                ;;
+                            1)
+                                    exitstatus="timeout"
+                                ;;
+                            255)
+                                    exitstatus="error"
+                                ;;
+                            *)
+                                    exitstatus="error"
+                                ;;
+                        esac
+                        echo "$exitstatus"
+                        echo "$exitstatus" "$testpath" "$testprog" >> "$target"_result.txt
+                    fi
 #                fi
             fi
             fi
