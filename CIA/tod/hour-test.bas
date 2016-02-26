@@ -13,7 +13,7 @@
    80 def fn b(x)=int(x/10)*16+x-int(x/10)*10
 
    90 print chr$(14);chr$(147);
-  110 poke646,1:print "24hr: Wr => Rd    => Nx     (CIA#";cs;")";:poke646,14
+  110 poke 646,1:print "24hr: Wr => Rd    => Nx     (CIA#";cs;")";:poke 646,14
 
   130 for i=0 to 23
   140 rem  if i>2 and i<11 or i>14 and i<23 then next
@@ -29,7 +29,8 @@
   180 gosub 210
   190 next
 
-  199 poke53280,13:if f=1 then poke53280,10
+  198 if f=1 then poke 53280,10:poke 55295,255: rem failure
+  199 if f=0 then poke 53280,13:poke 55295,0: rem success
   200 goto 200
 
   210 print:if i<10 then print " ";
@@ -44,17 +45,17 @@
   290 poke c(cs)+8,fn b(08)
   300 x=peek(c(cs)+8)
   310 x=peek(c(cs)+11)
-  315 poke646,13:if x<>er then poke646,10:f=1
+  315 poke 646,13:if x<>er then poke 646,10:f=1
   320 gosub 400
-  325 poke646,14:print " ";: x=er: gosub 400
+  325 poke 646,14:print " ";: x=er: gosub 400
 
   330 print " => ";
   340 y=peek(c(cs)+8)
   350 if x=peek(c(cs)+11) then 340
   360 x=peek(c(cs)+11)
-  365 poke646,13:if x<>eh then poke646,10:f=1
+  365 poke 646,13:if x<>eh then poke 646,10:f=1
   370 gosub 400
-  375 poke646,14:print " ";: x=eh: gosub 400
+  375 poke 646,14:print " ";: x=eh: gosub 400
   390 return
 
   400 y=int(x/16)

@@ -193,6 +193,15 @@ start:
 bcol:       lda #5
             sta $d020
 
+            lda $d020
+            and #$0f
+            ldx #0 ; success
+            cmp #5
+            beq nofail
+            ldx #$ff ; failure
+nofail:
+            stx $d7ff
+
             jmp *
 
 waitandprint3s:

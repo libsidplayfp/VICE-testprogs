@@ -27,6 +27,9 @@ eol             .word 0
                 sta $dd0f       ;writes = ToD
                 sei             ;just for safety's sake
 
+                ldy #5
+                sty bcol+1
+
                 ldx #$00        ;init test pass counter
 
 again           stx $dd08       ;to stabilize 1st pass: start clock
@@ -69,6 +72,19 @@ wait4change     inc frame       ;repeat frame count++
                 lda frame       ;current frame #
                 ora #$30        ;+ offset screencode "0"
                 sta $400,x      ;put on screen:
+                sta $400+(18*40),x      ;put on screen:
+
+                ldy #5
+                cmp #$33
+                beq ok1
+                cmp #$34
+                beq ok1
+                ldy #10
+                sty bcol+1
+ok1
+                tya
+                sta $d800+(18*40),x
+
                 lda color       ;white if valid result, red if latch bug struck
                 sta $d800,x
 
@@ -78,7 +94,20 @@ wait4change     inc frame       ;repeat frame count++
                 cli             ;reenable timer1 irqs
                 lda #$81
                 sta $dc0d
-                rts             ;return to basic interpreter
+
+bcol:           lda #0
+                sta $d020
+
+                lda $d020
+                and #$0f
+                ldx #0 ; success
+                cmp #5
+                beq nofail
+                ldx #$ff ; failure
+nofail:
+                stx $d7ff
+
+                jmp *
 
 sync            ldy #$ff        ;wait til raster #$100
                 cpy $d012

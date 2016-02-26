@@ -65,4 +65,6 @@ start:
 
             lda #$05
             sta $d020
+            lda #0      ; success
+            sta $d7ff
             jmp *

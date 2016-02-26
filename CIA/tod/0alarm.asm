@@ -66,6 +66,31 @@ main            ldx #50
                 lda alarms
                 jsr hexout
 
+                lda passes
+                cmp #$40
+                beq checkok
+                jmp main
+
+checkok:
+                ldy #2
+                lda alarms
+                cmp passes
+                lda alarms+1
+                sbc passes+1
+                bcc noteq
+                ldy #5
+noteq:
+                sty $d020
+
+                lda $d020
+                and #$0f
+                ldx #0 ; success
+                cmp #5
+                beq nofail
+                ldx #$ff ; failure
+nofail:
+                stx $d7ff
+
                 jmp main
 
 time0alarm0     ldx #$00        ;write to tod time

@@ -57,17 +57,17 @@ loop:
 
             lda $dd0d
 
-			; wait for 10th sec change
+            ; wait for 10th sec change
             lda $dd08
 wait:
-			cmp $dd08
-			beq wait
-			sta $0400+0
-			tay
-			iny
+            cmp $dd08
+            beq wait
+            sta $0400+0
+            tay
+            iny
 
             lda $dd0d
-			sta $0400+1
+            sta $0400+1
 
             lda #$80    ; set alarm
             sta $dd0f
@@ -76,7 +76,7 @@ wait:
             stx $dd0b
 
             lda $dd0d
-			sta $0400+2
+            sta $0400+2
             and #$04 
             bne fail
 
@@ -84,7 +84,7 @@ wait:
             stx $dd0a
 
             lda $dd0d
-			sta $0400+3
+            sta $0400+3
             and #$04 
             bne fail
 
@@ -92,7 +92,7 @@ wait:
             stx $dd09
 
             lda $dd0d
-			sta $0400+4
+            sta $0400+4
             and #$04 
             bne fail
 
@@ -105,15 +105,20 @@ wait:
             lda #5
             sta $d020
 
-			inc $07e7
+            lda #0      ; success
+            sta $d7ff
+
+            inc $07e7
 
             lda $dd0d
-			sta $0400+5
+            sta $0400+5
 
             and #$04 
             beq fail
-			jmp loop
+            jmp loop
 fail:
             lda #$2
             sta $d020
+            lda #$ff    ; failure
+            sta $d7ff
             jmp *

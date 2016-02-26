@@ -15,6 +15,13 @@ eol             .word 0
                 ldy #>text
                 jsr $ab1e
 
+                lda #$ff
+                ldx #0
+flp
+                sta resbuffer,x
+                inx
+                bne flp
+
 start           lda #$7f        ;disable cia interrupts
                 sta $dc0d
                 sta $dc0d
@@ -35,10 +42,11 @@ start           lda #$7f        ;disable cia interrupts
                 jsr showtod
                 lda #$35        ;roms off
                 sta $01
-                ldx #0
-                stx alarm       ;flag: 1=alarm occured, 0=clock ran up to 0:00:01.0
-                stx $d021       ;set colors
+bcol:           ldx #0
                 stx $d020
+                ldx #0
+                stx $d021       ;set colors
+                stx alarm       ;flag: 1=alarm occured, 0=clock ran up to 0:00:01.0
                 cli
                 lda #$84        ;enable alarm irq
                 sta $dc0d,x
@@ -53,10 +61,7 @@ main            jsr sync        ;repeat once per frame:
 
                 ;jsr resettod    ;if no alarm occured, restore time at powerup
 
-update          inc try
-                bne *+5
-                inc try+1
-
+update
                 lda alarm
                 beq update1
 
@@ -64,7 +69,16 @@ update          inc try
                 bne *+5
                 inc alarms+1
 
-update1         ldx #200
+update1
+                ldx try
+                sta resbuffer,x
+                sta $0400+(18*40),x
+
+                inc try
+                bne *+5
+                inc try+1
+
+                ldx #200
                 ldy #4
                 stx $5a
                 sty $5b
@@ -92,8 +106,39 @@ update1         ldx #200
 wait            jsr sync
                 dex
                 bne wait
+
+                lda try
+                cmp #$9
+                beq checkok
+                jmp start
+checkok:
+                ldy #5
+                ldx #0
+checklp:
+                lda resbuffer,x
+                cmp refbuffer,x
+                beq iseq
+                ldy #10
+iseq:
+                inx
+                cpx #8
+                bne checklp
+                sty bcol+1
+                sty $d020
+
+                lda $d020
+                and #$0f
+                ldx #0 ; success
+                cmp #5
+                beq nofail
+                ldx #$ff ; failure
+nofail:
+                stx $d7ff
+
                 jmp start
 
+refbuffer:
+    .byte 1,0,1,1,1,1,1,1
 
 ;irq will set show tod-state at alarm-time and set alarm flag:
 
@@ -230,3 +275,5 @@ text            .byte 147,13,13,5
                 .text "no alarm on second run",13
                 .byte 31,19,0
                 .byte 0
+
+resbuffer:

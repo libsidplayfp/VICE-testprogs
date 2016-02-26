@@ -101,10 +101,13 @@ wait:
             lda #5
             sta $d020
 
-			inc $07e7
+            lda #0      ; success
+            sta $d7ff
+
+  	    inc $07e7
 
             lda $dd0d
-			sta $0402
+            sta $0402
 
             and #$04 
             bne loop
@@ -112,4 +115,6 @@ wait:
 fail:
             lda #$2
             sta $d020
+            lda #$ff    ; failure
+            sta $d7ff
             jmp *

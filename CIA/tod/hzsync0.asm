@@ -34,9 +34,15 @@ eol             .word 0
                 sta $dd0f       ;writes = ToD
                 sei             ;just for safety's sake
 
+                ldy #5
+                sty $d020
+
                 ldx #$00        ;init test pass counter
 
-set             lda #$00
+set             lda $d020
+                pha
+set2
+                lda #$00
                 jsr sync
                 sta $d020       ;black border to indicate write/re-read phase of test pass
                 sta $dd0b       ;at raster #$100, Tod := 0:00:00.0
@@ -47,7 +53,7 @@ set             lda #$00
                 ora $dd0a
                 ora $dd09
                 ora $dd08
-                bne set         ;try again if time read != time written
+                bne set2         ;try again if time read != time written
 
                 sta frame       ;reset frame counter
                 dec $d020
@@ -63,9 +69,10 @@ set             lda #$00
                 ora $dd0a
                 ora $dd09
                 ora $dd08
-                bne set         ;repeat the whole procedure if time read != time written
+                bne set2        ;repeat the whole procedure if time read != time written
 
-                dec $d020
+                pla
+                sta $d020
 
 wait4change     inc frame       ;repeat frame count++
                 jsr sync        ;wait another frame
@@ -75,7 +82,16 @@ wait4change     inc frame       ;repeat frame count++
                 lda frame       ;current frame #
                 ora #$30        ;+ offset screencode "0"
                 sta $400,x      ;put on screen in white
-                lda #1
+
+                ldy #5
+                cmp #$35
+                beq ok1
+                cmp #$36
+                beq ok1
+                ldy #10
+                sty $d020
+ok1
+                tya
                 sta $d800,x
 
                 inx             ;test 256 times in a row
@@ -84,7 +100,17 @@ wait4change     inc frame       ;repeat frame count++
                 cli             ;reenable timer1 irqs
                 lda #$81
                 sta $dc0d
-                rts             ;return to basic interpreter
+
+                lda $d020
+                and #$0f
+                ldx #0 ; success
+                cmp #5
+                beq nofail
+                ldx #$ff ; failure
+nofail:
+                stx $d7ff
+
+                jmp *
 
 sync            ldy #$ff        ;wait til raster #$100
                 cpy $d012

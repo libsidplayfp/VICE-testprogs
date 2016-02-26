@@ -38,10 +38,11 @@ start           lda #$7f        ;disable cia interrupts
                 jsr showtod
                 lda #$35        ;roms off
                 sta $01
-                ldx #0
-                stx alarm       ;flag: 1=alarm occured, 0=clock ran up to 0:00:01.0
-                stx $d021       ;set colors
+bcol:           ldx #0
                 stx $d020
+                ldx #0
+                stx $d021       ;set colors
+                stx alarm       ;flag: 1=alarm occured, 0=clock ran up to 0:00:01.0
                 lda #$84        ;enable alarm nmi
                 sta $dd0d,x
                 jsr settod      ;start tod at 0:00:00.0
@@ -93,8 +94,46 @@ update2         ldy #0          ;column0
 wait            jsr sync
                 dex
                 bne wait
+
+                lda try
+                cmp #$7
+                beq checkok
+                jmp start
+checkok:
+                ldy #5
+                ldx #0
+checklp:
+                lda $0400+(5*40),x
+                cmp reftext,x
+                beq iseq
+                ldy #10
+iseq:
+                inx
+                cpx #6*40
+                bne checklp
+                sty bcol+1
+                sty $d020
+
+                lda $d020
+                and #$0f
+                ldx #0 ; success
+                cmp #5
+                beq nofail
+                ldx #$ff ; failure
+nofail:
+                stx $d7ff
+
                 jmp start
 
+reftext:
+    .enc screen ;screen code mode
+    .text "01        01                            "
+    .text "02        00   expected:                "
+    .text "03        01   alarm on first run,      "
+    .text "04        00   no alarm on second run,  "
+    .text "05        01   alarm on third run, etc. "
+    .text "06        00                            "
+    .enc none
 
 ;nmi will set show tod-state at alarm-time and set alarm flag:
 

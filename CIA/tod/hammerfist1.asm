@@ -30,6 +30,16 @@ chkskp
         dex
         bpl chklp
         sty $d020
+
+        lda $d020
+        and #$0f
+        ldx #0 ; success
+        cmp #5
+        beq nofail
+        ldx #$ff ; failure
+nofail:
+        stx $d7ff
+
         RTS
 
 expected: hex 18 18 18 18 04
