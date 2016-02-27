@@ -1,4 +1,4 @@
-rr-freeze R04
+rr-freeze R05
 -------------
  
 
@@ -37,6 +37,12 @@ Output format:
     A-H   -> ROM banks 0-7, if non-inverted, it is writable (!)
     -     -> no cart detected
     ?     -> mapping mismatch (e.g $de not mapped to $9e and similar)
+
+
+What it doesn't check but perhaps ought to:
+- what happens with the mapping after KILL in the "random" state.
+- what happens with the mapping _during_ when the ack bit is set =1.
+- it doesn't allow you to select GAME/EXROM bits during ack.
 
 
 TEST SEQUENCE
