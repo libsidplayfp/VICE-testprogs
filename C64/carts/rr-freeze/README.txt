@@ -128,6 +128,18 @@ Cheers
 ---
 
 
+Emulator #1  (VICE x64 r30643)
+------------------------------
+dumps/dump_rr_00_x64-r30643.prg
+dumps/dump_rr_02_x64-r30643.prg
+dumps/dump_rr_40_x64-r30643.prg
+dumps/dump_rr_42_x64-r30643.prg
+
+
+
+Emulator #2  (HOXS64 v1.0.8.7)
+------------------------------
+dumps/dump_rr_40_hoxs64-v1087.prg
 
 
 
