@@ -128,6 +128,28 @@ Cheers
 ---
 
 
+1541 Ultimate-I #1  (Count Zero)
+--------------------------------
+dumps/dump_rr_00_1541u1-26d_cz.prg
+dumps/dump_rr_02_1541u1-26d_cz.prg
+dumps/dump_rr_40_1541u1-26d_cz.prg
+dumps/dump_rr_42_1541u1-26d_cz.prg
+
+There where four additional dumps provided with the NoFreeze bit set
+(04, 06, 44 and 46).  These dumps are identical to the ones without
+the NoFreeze bit set which indicates that the NoFreeze bit is simply
+ignored.
+
+---
+Message sent by: Count Zero on 2016-02-29 19:36:29+01
+
+on a c64c (short board), svn checkout from today on 1541U with softloaded 2.6d Firmware - somehow cannot load a crt or the bin from sd card with 1.72b firmware. will run the romtests when I find back the update utility :)
+
+Nordic Replay, EF3 and several RRs to come soon.
+---
+
+
+
 Emulator #1  (VICE x64 r30643)
 ------------------------------
 dumps/dump_rr_00_x64-r30643.prg
