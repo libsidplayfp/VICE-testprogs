@@ -61,6 +61,7 @@
 ; unsigned char __fastcall__ sampler_4bit_userport_input(void);
 ;
 ; void __fastcall__ digimax_cart_output(unsigned char sample);
+; void __fastcall__ shortbus_digimax_output(unsigned char sample);
 ; void __fastcall__ sfx_output(unsigned char sample);
 ; void __fastcall__ sid_output_init(void);
 ; void __fastcall__ sid_output(unsigned char sample);
@@ -106,6 +107,7 @@
         .export  _sampler_4bit_userport_input_init, _sampler_4bit_userport_input
 
         .export  _digimax_cart_output
+        .export  _shortbus_digimax_output
         .export  _sfx_output
         .export  _sid_output_init, _sid_output
         .export  _siddtv_output_init, _siddtv_output
@@ -454,6 +456,7 @@ store_digimax:
         rts
 
 _digimax_cart_output:
+_shortbus_digimax_output:
         ldx     #$00
         jsr     store_digimax
         inx

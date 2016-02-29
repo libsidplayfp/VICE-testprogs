@@ -89,6 +89,14 @@ static unsigned *digimax_addresses[] = { digimax_addresses_de, digimax_addresses
 static unsigned *digimax_addresses[] = { digimax_addresses_98, digimax_addresses_9c, NULL };
 #endif
 
+#if defined(__C64__) || defined(__C128__)
+static unsigned shortbus_digimax_addresses_de4x[] = { 0xde40, 0xde48, 0 };
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static unsigned *shortbus_digimax_addresses[] = { shortbus_digimax_addresses_de4x, NULL };
+#endif
+
 /* detection of c64dtv */
 #if defined(__C64__)
 static unsigned char isc64dtv = 0;
@@ -490,6 +498,12 @@ static output_device_t digimax_cart_output_device[] = {
 };
 #endif
 
+#if defined(__C64__) || defined(__C128__)
+static output_device_t shortbus_digimax_output_device[] = {
+    { "DigiMAX shorbus expansion", NULL, shortbus_digimax_output }
+};
+#endif
+
 #if defined(__C64__) || defined(__C128__) || defined(__CBM610__)
 static output_device_t userport_digimax_output_device[] = {
     { "DigiMAX userport device", userport_digimax_output_init, userport_digimax_output }
@@ -849,6 +863,9 @@ static menu_output_t output_menu[] = {
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
     { 'd', "digimax cartridge", digimax_cart_output_device },
 #endif
+#if defined(__C64__) || defined(__C128__)
+    { 'h', "IDE64 shortbus digimax expansion", shortbus_digimax_output_device },
+#endif
 #if defined(__C64__) || defined(__C128__) || defined(__CBM610__)
     { 'u', "userport digimax device", userport_digimax_output_device },
 #endif
@@ -959,6 +976,13 @@ int main(void)
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
     if (output_device->function == digimax_cart_output) {
         addresses = digimax_addresses;
+        device_function = set_digimax_addr;
+    }
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+    if (output_device->function == shortbus_digimax_output) {
+        addresses = shortbus_digimax_addresses;
         device_function = set_digimax_addr;
     }
 #endif

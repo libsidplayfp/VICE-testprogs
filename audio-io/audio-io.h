@@ -12,6 +12,7 @@ unsigned char __fastcall__ sfx_input(void);
 void __fastcall__ sfx_output(unsigned char sample);
 void __fastcall__ set_digimax_addr(unsigned addr);
 void __fastcall__ digimax_cart_output(unsigned char sample);
+void __fastcall__ shortbus_digimax_output(unsigned char sample);
 void __fastcall__ sfx_sound_expander_output_init(void);
 void __fastcall__ sfx_sound_expander_output(unsigned char sample);
 
