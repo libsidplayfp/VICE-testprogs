@@ -1,9 +1,20 @@
 
 .SILENT:
 
-all: testlist cmpscreens chameleon-helper.prg
+all: prereq
+	echo "to run the tests use the following targets:"
+	echo "testall - run all VICE tests"
+	echo "testx64"
+	echo "testx64sc"
+	echo "teschameleon"
 
-.PHONY: testlist
+################################################################################
+prereq: selftest testlist cmpscreens chameleon-helper.prg
+
+.PHONY: testlist selftest
+
+selftest:
+	make -C selftest
 
 testlist: x64-testlist.txt x64sc-testlist.txt chameleon-testlist.txt
 
@@ -12,11 +23,15 @@ cmpscreens: cmpscreens.c
 
 ################################################################################
 
+testall: testx64 testx64sc
+
+################################################################################
+
 x64-testlist.txt: c64-testlist.in
 	echo "# this is a generated file, do not edit." >  x64-testlist.txt
 	cat  c64-testlist.in >> x64-testlist.txt
 
-testx64: x64-testlist.txt cmpscreens
+testx64: prereq
 	./testbench.sh x64
 
 ################################################################################
@@ -25,7 +40,7 @@ x64sc-testlist.txt: c64-testlist.in
 	echo "# this is a generated file, do not edit." >  x64sc-testlist.txt
 	cat  c64-testlist.in >> x64sc-testlist.txt
 
-testx64sc: x64sc-testlist.txt cmpscreens
+testx64sc: prereq
 	./testbench.sh x64sc
 
 ################################################################################
@@ -37,5 +52,5 @@ chameleon-testlist.txt: c64-testlist.in
 	echo "# this is a generated file, do not edit." >  chameleon-testlist.txt
 	cat  c64-testlist.in >> chameleon-testlist.txt
 
-testchameleon: chameleon-testlist.txt chameleon-helper.prg cmpscreens
+testchameleon: prereq
 	./testbench.sh chameleon

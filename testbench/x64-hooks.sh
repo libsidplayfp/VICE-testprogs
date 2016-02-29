@@ -64,16 +64,19 @@ function x64_run_screenshot
     extraopts=""$4" "$5" "$6""
 #    echo $X64 "$1"/"$2"
     mkdir -p "$1"/".testbench"
-#    echo $X64 $X64OPTS $X64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$1"/"$2"
     rm -f "$1"/.testbench/"$2"-x64.png
+#    echo $X64 $X64OPTS $X64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$1"/"$2"
     $X64 $X64OPTS $X64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$1"/"$2" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
         if [ $exitcode -ne 1 ]
         then
-            echo -ne "\nerror: call to $X64 failed.\n"
-            exit -1
+            if [ $exitcode -ne 255 ]
+            then
+                echo -ne "\nerror: call to $X64 failed.\n"
+                exit -1
+            fi
         fi
     fi
     if [ -f "$1"/references/"$2".png ]

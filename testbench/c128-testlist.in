@@ -1,3 +1,11 @@
+################################################################################
+# C128 related tests
+################################################################################
+################################################################################
+# selftest
+################################################################################
+./selftest/,c128-fail.prg,exitcode,10000000
+./selftest/,c128-pass.prg,exitcode,10000000
 #TODO:
 #../VDC
 ################################################################################
@@ -11,16 +19,19 @@
 #TODO:
 #../GEO-RAM/,georam128.prg
 ################################################################################
+# Joystick/Mouse
+################################################################################
+../mouse/,mouse-c128-1351.prg,interactive,0
+../mouse/,mouse-c128-pot.prg,interactive,0
+../userportjoy/,testjoy_c128.prg,interactive,0
+################################################################################
 # various expansions
 ################################################################################
+../audio-io/,audio-io-c128.prg,interactive,0
+../c128-cpm/,cpm3.d81,interactive,0
+../digimax/,modplay128.d81,interactive,0
 #TODO:
-#../mouse/,mouse-c128-1351.prg
-#../mouse/,mouse-c128-pot.prg
-#../audio-io/,audio-io-c128.prg,interactive
-#../c128-cpm/,cpm3.d81
-#../digimax/,modplay128.d81,interactive
 #../sfx_soundsampler/,c128-test.prg
-#../userportjoy/,testjoy_c128.prg
 #../ramcart/,rc128um.d64
 #../userportrtc/,testrtc-c128.prg
-#../memory-expansions/,memory-tests.d64
+../memory-expansions/,memory-tests.d64,interactive,0

@@ -1,4 +1,14 @@
 ################################################################################
+# C64 related tests
+################################################################################
+################################################################################
+# selftest
+################################################################################
+./selftest/,c64-fail.prg,exitcode,10000000
+./selftest/,c64-pass.prg,exitcode,10000000
+./selftest/,c64-fail.prg,screenshot,10000000
+./selftest/,c64-pass.prg,screenshot,10000000
+################################################################################
 # general
 ################################################################################
 ../C64/autostart/basic/,basictest.prg,exitcode,100000000
@@ -401,13 +411,12 @@
 ################################################################################
 # Joystick/Mouse
 ################################################################################
-#TODO:
-#../userportjoy/,testjoy_c64.prg
-#../mouse/,mouse-c64-1351.prg
-#../mouse/,mouse-c64-pot.prg
-#../propmouse/,prop_c64_amiga.prg
-#../propmouse/,prop_c64_cx22.prg
-#../propmouse/,prop_c64_st.prg
+../userportjoy/,testjoy_c64.prg,interactive,0
+../mouse/,mouse-c64-1351.prg,interactive,0
+../mouse/,mouse-c64-pot.prg,interactive,0
+../propmouse/,prop_c64_amiga.prg,interactive,0
+../propmouse/,prop_c64_cx22.prg,interactive,0
+../propmouse/,prop_c64_st.prg,interactive,0
 ################################################################################
 # various expansions
 ################################################################################
@@ -415,9 +424,10 @@
 #../sfx_soundsampler/,c64-test.prg
 #../digimax/,modplay64.d81,interactive
 #../c64-cpm/,c64-cbm.d64,interactive
-#../audio-io/,audio-io-c64.prg,interactive
+../audio-io/,audio-io-c64.prg,interactive,0
+#TODO:
 #../userportrtc/,testrtc-c64.prg
 #../RS232/,test1.prg
 #../RTC/,ds12c887.prg
 #../MIDI/,midi-out-irq-test.prg
-#../memory-expansions/,memory-tests.d64
+../memory-expansions/,memory-tests.d64,interactive,0

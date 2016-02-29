@@ -1,8 +1,20 @@
 ################################################################################
-# various expansions
+# CBM610 related tests
+################################################################################
+################################################################################
+# selftest
 ################################################################################
 #TODO:
-#../audio-io/,audio-io-cbm6x0.prg,interactive
-#../userportjoy/,testjoy_cbm610.prg
+#./selftest/,cbm610-fail.prg,exitcode,10000000
+#./selftest/,cbm610-pass.prg,exitcode,10000000
+################################################################################
+# Joystick/Mouse
+################################################################################
+../userportjoy/,testjoy_cbm610.prg,interactive,0
+################################################################################
+# various expansions
+################################################################################
+../audio-io/,audio-io-cbm6x0.prg,interactive,interactive,0
+#TODO:
 #../userportrtc/,testrtc-cbm610.prg
-#../memory-expansions/,memory-tests.d64
+../memory-expansions/,memory-tests.d64,interactive,0

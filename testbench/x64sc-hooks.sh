@@ -71,8 +71,11 @@ function x64sc_run_screenshot
     then
         if [ $exitcode -ne 1 ]
         then
-            echo -ne "\nerror: call to $X64SC failed.\n"
-            exit -1
+            if [ $exitcode -ne 255 ]
+            then
+                echo -ne "\nerror: call to $X64 failed.\n"
+                exit -1
+            fi
         fi
     fi
     if [ -f "$1"/references/"$2".png ]

@@ -4,10 +4,16 @@ running the tests
 ================================================================================
 
 the Makefile in this directory serves as the main frontend to the testbench. to
-run the tests just use "make"
+get a list of things you can do just run "make".
 
-you can also run ./testbench.sh manually
+you can also run ./testbench.sh manually:
 
+$ ./testbench.sh <target> <filter>
+
+.. where <target> is one of "x64", "x64sc", "chameleon"
+
+... and <filter> is an optional string which is matched against the path that
+contains the test. (eg use "CIA" to run only the CIA tests)
 
 ================================================================================
 preparing tests
@@ -17,13 +23,15 @@ preparing tests
 "debug cartridge" register locations:
 
 C64     $d7ff
-VSID    $d7ff
-SCPU    TBD
-DTV     TBD
-VIC20   TBD     (discussion: http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?f=2&t=7763 )
-PLUS4   TBD     (discussion: http://plus4world.powweb.com/forum.php?postid=31417#31429)
+C128    $d7ff ?
+VSID    $d7ff ?
+SCPU    $d7ff ?
+DTV     $d7ff ?
+VIC20   $9fff ? (discussion: http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?f=2&t=7763 )
+PLUS4   $fe00 ? (discussion: http://plus4world.powweb.com/forum.php?postid=31417#31429)
 PET     TBD
-CBM2    TBD
+CBM510  TBD
+CBM610  TBD
 
 --------------------------------------------------------------------------------
 
@@ -95,3 +103,14 @@ TODO:
 
     write proper docs :)
     write TODO list :)
+
+    - add hooks for:
+        c128
+        cbm510
+        cbm610
+        dtv
+        pet
+        plus4
+        scpu
+        vic20
+        vsid
