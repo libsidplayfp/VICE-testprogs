@@ -25,4 +25,4 @@ cartconv:
 .PHONY: runtests
 
 runtests: petcat
-	@$(MAKE) -C testbench all
+	@$(MAKE) -C testbench testall
