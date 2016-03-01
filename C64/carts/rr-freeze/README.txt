@@ -42,7 +42,10 @@ Output format:
 What it doesn't check but perhaps ought to:
 - what happens with the mapping after KILL in the "random" state.
 - what happens with the mapping _during_ when the ack bit is set =1.
-- it doesn't allow you to select GAME/EXROM bits during ack.
+- it doesn't detect open bus vs. C64 RAM when no cart is detected.
+- it doesn't allow you to select which GAME/EXROM bits to set during ack.
+- it doesn't check what happens if bank switching is done using the banking
+  bits in $de01 instead of $de00. 
 
 
 TEST SEQUENCE
