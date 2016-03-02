@@ -43,9 +43,16 @@ What it doesn't check but perhaps ought to:
 - what happens with the mapping after KILL in the "random" state.
 - what happens with the mapping _during_ when the ack bit is set =1.
 - it doesn't detect open bus vs. C64 RAM when no cart is detected.
+- another thing that would be interesting to test: do writes "fall through"
+  to C64 memory or not?
+- can we check the "bus contention" condition?
 - it doesn't allow you to select which GAME/EXROM bits to set during ack.
 - it doesn't check what happens if bank switching is done using the banking
   bits in $de01 instead of $de00. 
+
+Requests:
+- append the de01 value to the default filename (rr-frz00 etc)
+- a version for regular AR.
 
 
 TEST SEQUENCE
@@ -131,6 +138,46 @@ Cheers
 ---
 
 
+Retro Replay #2  (Count Zero)
+---------------------------
+dumps/dump_rr_00_sample_cz.prg
+dumps/dump_rr_02_sample_cz.prg
+dumps/dump_rr_40_sample_cz.prg
+dumps/dump_rr_42_sample_cz.prg
+
+---
+Message sent by: Count Zero on 2016-03-02 20:36:48+01
+
+RR - is a test run on a RR labeled "sample" - one of the first 10 ever I assume - all chips on a socket, etc.
+---
+
+
+Nordic Replay #1  (Groepaz)
+---------------------------
+dumps/dump_nr_00_gpz.prg
+dumps/dump_nr_02_gpz.prg
+dumps/dump_nr_40_gpz.prg
+dumps/dump_nr_42_gpz.prg
+
+
+Nordic Replay #2  (Count Zero)
+------------------------------
+dumps/dump_nr_00_cz.prg
+dumps/dump_nr_02_cz.prg
+dumps/dump_nr_40_cz.prg
+dumps/dump_nr_42_cz.prg
+
+These dumps are identical to Groepaz' Nordic Replay with the exception
+that the freeze button bit is set in dump_nr_40_gpz, perhaps due to holding
+the button longer.
+
+---
+Message sent by: Count Zero on 2016-03-02 20:36:48+01
+
+NR - is the new nordic replay from Jens - RR with the nordic power mode added.
+----
+
+
 1541 Ultimate-I #1  (Count Zero)
 --------------------------------
 dumps/dump_rr_00_1541u1-26d_cz.prg
@@ -151,6 +198,24 @@ on a c64c (short board), svn checkout from today on 1541U with softloaded 2.6d F
 Nordic Replay, EF3 and several RRs to come soon.
 ---
 
+
+EasyFlash 3 #1  (Count Zero)
+----------------------------
+dumps/dump_rr_00_ef3_cz.prg
+dumps/dump_rr_02_ef3_cz.prg
+dumps/dump_rr_40_ef3_cz.prg
+dumps/dump_rr_42_ef3_cz.prg
+
+There where four additional dumps provided with the NoFreeze bit set
+(04, 06, 44 and 46).  These dumps are identical to the ones without
+the NoFreeze bit set which indicates that the NoFreeze bit is simply
+ignored.
+
+---
+Message sent by: Count Zero on 2016-03-02 20:36:48+01
+
+EF - easyflash3 - curious observation: on $44 and $46 after "Save again? N" and "OK" a reset took the c64 into plain basic mode with 30k bytes free - needed another reset or power cycle to restart the RR rom.
+---
 
 
 Emulator #1  (VICE x64 r30643)
