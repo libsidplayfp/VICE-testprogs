@@ -38,6 +38,4 @@ disk: $(PROGS)
 clean:
 	rm -f *~
 	rm -f $(PROGS)
-	rm -f viavarious1.d64
-	rm -f viavarious2.d64
-	rm -f viavarious3.d64
+	rm -f viavarious.d64
