@@ -53,6 +53,9 @@ TESTSLOC
 +TEST $80,$80,$c0,0,0
 +TEST $80,$80,$c0,0,1
 
+NEXTNAME ;!pet "via14"
+NEXTNAME_END
+
 DATA
         !bin "via13ref.bin", NUMTESTS * $0100, 2
 ERRBUF

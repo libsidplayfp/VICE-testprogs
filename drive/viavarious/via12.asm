@@ -6,7 +6,7 @@ tmp=$fc
 addr=$fd
 add2=$f9
 
-TMP=$6000
+TMP=$8000
 
 TESTLEN = $40
 
@@ -16,7 +16,6 @@ DTMP   = $0700          ; measured data on drive side
 
         !src "common.asm"
 
-        !align 255,0
 TESTSLOC
 
 ;------------------------------------------
@@ -52,6 +51,9 @@ TESTSLOC
 
 +TEST $00,$80,$c0,0,0
 +TEST $00,$80,$c0,0,1
+
+NEXTNAME !pet "via13"
+NEXTNAME_END
 
 DATA
         !bin "via12ref.bin", NUMTESTS * $0100, 2

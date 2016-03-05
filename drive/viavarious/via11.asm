@@ -16,7 +16,6 @@ DTMP   = $0700          ; measured data on drive side
 
         !src "common.asm"
 
-        !align 255,0
 TESTSLOC
 
 ;------------------------------------------
@@ -52,6 +51,9 @@ TESTSLOC
 
 +TEST $80,$00,$c0,0,0
 +TEST $80,$00,$c0,0,1
+
+NEXTNAME !pet "via12"
+NEXTNAME_END
 
 DATA
         !bin "via11ref.bin", NUMTESTS * $0100, 2

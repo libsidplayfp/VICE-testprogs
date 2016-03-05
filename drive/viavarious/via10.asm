@@ -16,7 +16,6 @@ DTMP   = $0700          ; measured data on drive side
 
         !src "common.asm"
 
-        !align 255,0
 TESTSLOC
 
 ;------------------------------------------
@@ -56,6 +55,9 @@ TESTSLOC
 ; timer A force-load, start, output at PB7 (toggle)
 +TEST $00,$00,$c0,0,0 
 +TEST $00,$00,$c0,0,1 
+
+NEXTNAME !pet "via11"
+NEXTNAME_END
 
 DATA
         !bin "via10ref.bin", NUMTESTS * $0100, 2

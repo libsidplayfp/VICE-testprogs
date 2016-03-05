@@ -10,6 +10,11 @@ drivecode_exec = drvstart
 
 ;-------------------------------------------------------------------------------
 start:
+        lda $ba
+        bne +
+        lda #8
++       sta DRIVE
+
         jsr $e518       ; init I/O
 
         jsr clrscr
@@ -51,6 +56,30 @@ clp1b
         jsr dotest
         }
 
+        lda ERRBUF+$ff
+        cmp #5
+        bne loop
+DRIVE   = * + 1
+        ldx #0
+        ldy #1
+        jsr $ffba
+        lda #NEXTNAME_END-NEXTNAME
+        beq loop
+        ldx #<NEXTNAME
+        ldy #>NEXTNAME
+        jsr $ffbd
+        ldx #4
+        stx 198
+-       lda RUN-1,x
+        sta 630,x
+        dex
+        bne -
+        lda #0
+        jmp $ffd5
+
+RUN     !pet "rU:"
+        !byte 13
+
 loop
 ;        jsr calcaddr
 ;        jsr displayresults
@@ -90,28 +119,17 @@ clp1    sta $0400,x
         inx
         bne clp1
 
-        lda #0
-        sta addr+1
-        lda tmp
-        asl
-        rol addr+1
-        asl
-        rol addr+1
-        asl
-        rol addr+1
-        asl
-        rol addr+1
-        asl
-        rol addr+1
-!if (TESTLEN >= $40) {
-        asl
-        rol addr+1
-}
+        ldy #>(TESTSLOC-TESTLEN)        ; testloc hi
+        lda #<(TESTSLOC-TESTLEN)        ; testloc lo
+        ldx tmp
+-       clc
+        adc #TESTLEN
+        bcc +
+        iny
++       dex
+        bpl -
         sta addr
-        lda #>TESTSLOC        ; testloc hi
-        clc
-        adc addr+1
-        sta addr+1
+        sty addr+1
 
         ldy #0
 clp2:
