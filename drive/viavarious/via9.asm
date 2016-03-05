@@ -6,22 +6,18 @@ tmp=$fc
 addr=$fd
 add2=$f9
 
-ERRBUF=$5f00
-TMP=$6000          ; measured data on C64 side
-DATA=$8000
+TMP=$8000          ; measured data on C64 side
 
 TESTLEN =         $20
 
 NUMTESTS =        12
 
 DTMP   = $0700          ; measured data on drive side
-TESTSLOC = $1000
-
 
         !src "common.asm"
 
-
-        * = TESTSLOC
+        !align 255,0
+TESTSLOC
 
 ;------------------------------------------
 ; before:
@@ -299,7 +295,7 @@ TESTSLOC = $1000
         rts
         * = .test+TESTLEN
         }
-        
-        
-        * = DATA
+
+DATA
         !bin "via9ref.bin", NUMTESTS * $0100, 2
+ERRBUF
