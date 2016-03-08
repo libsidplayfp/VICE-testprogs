@@ -6,7 +6,7 @@ all: prereq
 	echo "testall - run all VICE tests"
 	echo "testx64"
 	echo "testx64sc"
-	echo "teschameleon"
+	echo "testchameleon"
 
 ################################################################################
 prereq: selftest testlist cmpscreens chameleon-helper.prg

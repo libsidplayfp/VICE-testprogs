@@ -1,6 +1,8 @@
 #! /bin/bash
 ###############################################################################
 
+NAME=$0
+
 source "./chameleon-hooks.sh"
 source "./x64-hooks.sh"
 source "./x64sc-hooks.sh"
