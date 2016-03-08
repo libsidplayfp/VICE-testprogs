@@ -66,9 +66,18 @@ start:
 +
         lda #10
         sta $d020
-        jmp cont
+        ;jmp cont
 
 cont:
+        lda $d020
+        and #$0f
+
+        ldx #$ff    ; failure
+        cmp #5      ; green
+        bne fail2
+        ldx #0      ; success
+fail2:
+        stx $d7ff
 
 
 waitk:
