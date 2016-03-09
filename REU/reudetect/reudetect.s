@@ -50,6 +50,9 @@ l242A:
         ; ram expansion unit (reu) not found!
         lda #2
         sta $d020
+
+        lda #$ff        ; failure
+        sta $d7ff
         RTS
 
         ; check data
@@ -64,10 +67,14 @@ l2444:
         ; reu found, data check ok
         lda #5
         sta $d020
+        lda #$00 ; success
+        sta $d7ff
         RTS
 l2450:
         lda #7
         sta $d020
+        lda #$00 ; success
+        sta $d7ff
         RTS
 
     ; reu register values

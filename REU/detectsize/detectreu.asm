@@ -75,9 +75,11 @@ loop2:       txa
              cpx #5
              bne loop2
              jmp rinit
-r1700:       lda #<reutext
+r1700:       ; REU 1700 : 128KB DETECTED
+             lda #<reutext
              ldy #>reutext
-             jmp $ab1e
+             jsr $ab1e
+             jmp reufound
 ;-------------------------------------------------
 rinit:       ldx #00          ; 1764 wake up
 rinit2:      lda #128         ; stash
@@ -90,9 +92,23 @@ rinit2:      lda #128         ; stash
              cpx #33          ;  ... 33 banks into somewhere
              bne rinit2
              jmp action
-noreu:       lda #<notext
+noreu:
+             lda #<notext
              ldy #>notext
-             jmp $ab1e
+             jsr $ab1e
+
+             lda #10
+             sta $d020
+             lda #$ff ; failure
+             sta $d7ff
+             jmp *
+
+reufound:
+             lda #5
+             sta $d020
+             lda #$00 ; success
+             sta $d7ff
+             jmp *
 ;--------------------------------------------------
 ; Count banks
 ;--------------------------------------------------
@@ -125,19 +141,22 @@ r1764:       lda #4
              sta banks
              lda #<text1764
              ldy #>text1764
-             jmp $ab1e
+             jsr $ab1e
+             jmp reufound
 j1:          cmp #8
              beq r512
              bne j2
 r512:        lda #<reut512
              ldy #>reut512
-             jmp $ab1e
+             jsr $ab1e
+             jmp reufound
 j2:          cmp #16
              beq r1024
              bne j3
 r1024:       lda #<reut1024
              ldy #>reut1024
-             jmp $ab1e
+             jsr $ab1e
+             jmp reufound
 j3:          cmp #20
              beq r1764
              bne j4
@@ -146,10 +165,12 @@ j4:          cmp #32
              bne j6
 r2048:       lda #<reut2048
              ldy #>reut2048
-             jmp $ab1e
+             jsr $ab1e
+             jmp reufound
 j6:          lda #<reuunk
              ldy #>reuunk
-             jmp $ab1e
+             jsr $ab1e
+             jmp reufound
 ;--------------------------------------------------
 ; Bank Check
 ;--------------------------------------------------

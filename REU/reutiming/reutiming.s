@@ -1,6 +1,6 @@
-        .export Start
+        .export _main
 
-Start:
+_main:
         sei
 
         LDX #$00
@@ -71,11 +71,15 @@ l240A:
 
         lda #2
         sta $d020
+        lda #$ff ; failure
+        sta $d7ff
         jmp *
 
 allok:
         lda #5
         sta $d020
+        lda #$00 ; success
+        sta $d7ff
         jmp *
 
 hextab:

@@ -249,10 +249,18 @@ int main(void) {
         lprintf( "\nDoing self test, check test operation:\n" );
         failedTestclasses += ( 1 - assertRegisterDump( &expSelfTest ) );
     }
-    
-    lprintf("\nTest classes with failures: %u (Timing: %u, Registers: %u)\n",
-            failedTestclasses, timererrors - 1, regserrors - 1);
+             //1234567890123456789012345678901234567890
+    lprintf("\nTest classes with failures: %u\n", failedTestclasses);
+    lprintf("(Timing: %u, Registers: %u)\n", timererrors - 1, regserrors - 1);
     if (logfile != NULL) {
         fclose(logfile);
+    }
+
+    if (failedTestclasses) {
+        *((unsigned char *)0xd020) = 10;
+        *((unsigned char *)0xd7ff) = 0xff; /* failure */
+    } else {
+        *((unsigned char *)0xd020) = 5;
+        *((unsigned char *)0xd7ff) = 0x00; /* ok */
     }
 }
