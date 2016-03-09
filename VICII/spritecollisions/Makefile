@@ -17,8 +17,11 @@ TESTSNTSCOLD=\
 all: $(TESTS) $(TESTSNTSC) $(TESTSNTSCOLD)
 
 %.prg:%.tas
-	dasm $*.tas -o$*.prg -DCYCLES=63 -DDTV=0 
+	dasm $*.tas -o$*.prg -DCYCLES=63 -DDTV=0
 %_ntsc.prg:%.tas
 	dasm $*.tas -o$*_ntsc.prg -DCYCLES=65 -DDTV=0
 %_ntscold.prg:%.tas
 	dasm $*.tas -o$*_ntscold.prg -DCYCLES=64 -DDTV=0
+
+clean:
+	rm -f $(TESTS) $(TESTSNTSC) $(TESTSNTSCOLD)

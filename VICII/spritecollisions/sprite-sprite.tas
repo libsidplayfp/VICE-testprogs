@@ -118,6 +118,17 @@ endoftest:
   ldy #10
 allok:
   sty $d020
+
+    lda $d020
+    and #$0f
+
+    ldx #$ff    ; failure
+    cmp #5      ; green
+    bne fail2
+    ldx #0      ; success
+fail2:
+    stx $d7ff
+
   rts  
 
 fails:

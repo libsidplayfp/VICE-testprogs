@@ -244,6 +244,9 @@ testloop:
     lda #color_border_done
     sta $d020
 
+    lda #$00 ; ok
+    sta $d7ff
+
     ; print finished message
     lda #<statusloc
     sta scrptr
@@ -437,6 +440,9 @@ testerror_diff = * + 1
     ; change border color
     lda #color_error
     sta $d020
+
+    lda #$ff ; failure
+    sta $d7ff
 
     ; wait for key
 -   jsr checkkey

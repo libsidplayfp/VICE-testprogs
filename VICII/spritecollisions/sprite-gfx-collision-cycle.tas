@@ -151,6 +151,7 @@ irq2:
   sta cinv+1
   ldx $d012
   nop
+
 #if CYCLES - 63
 #if CYCLES - 64
   nop           ; 6567R8, 65 cycles/line
@@ -162,6 +163,7 @@ irq2:
 #else
   bit $24       ; 6569, 63 cycles/line
 #endif
+
   cpx $d012     ; The comparison cycle is executed CYCLES or CYCLES+1 cycles
                 ; after the interrupt has occurred.
   beq *+2       ; Delay by one cycle if $d012 hadn't changed.
@@ -221,6 +223,17 @@ nofail:
   ldy #10
 allok:
   sty $d020
+
+    lda $d020
+    and #$0f
+
+    ldx #$ff    ; failure
+    cmp #5      ; green
+    bne fail2
+    ldx #0      ; success
+fail2:
+    stx $d7ff
+
 notlast:
   jmp $ea81     ; return to the auxiliary raster interrupt
 
