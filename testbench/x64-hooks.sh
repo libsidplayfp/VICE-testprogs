@@ -43,6 +43,9 @@ function x64_get_options
         "cia-new")
                 exitoptions="-ciamodel 1"
             ;;
+        "reu512k")
+                exitoptions="-reu -reusize 512"
+            ;;
         *)
                 exitoptions=""
             ;;
