@@ -502,6 +502,8 @@ wexp       lda #0
            .byte 0
 wgot       lda #0
            jsr printhb
+           lda #$ff      ; failure
+           sta $d7ff
 .ifeq DEBUG - 0
            jmp waitk
 wok
@@ -697,6 +699,10 @@ error
            jsr $ffd2
            lda #$14
            jsr printhb
+
+           lda #$ff      ; failure
+           sta $d7ff
+
 waitk
            jsr $ffe4
            beq waitk
@@ -715,11 +721,9 @@ ok
            jsr print
            .text " - ok"
            .byte 13,0
-           lda turboass
-           beq load
-waitkey    jsr $ffe4
-           beq waitkey
-           jmp $8000
+
+           lda #0       ; success
+           sta $d7ff
 
 load
            lda #47

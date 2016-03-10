@@ -201,6 +201,14 @@ checkoffs = * + 1
     sta border
 @noerr:
     
+    ldx #$ff ; failed
+    lda border
+    cmp #5
+    bne failed
+    ldx #$00 ; success
+failed:
+    stx $d7ff
+
 .if DEBUG
     lda #0
     sta $d020

@@ -35,10 +35,8 @@ printthis
            jsr print
            .text " - ok"
            .byte 13,0
-           lda turboass
-           beq loadnext
-           jsr waitkey
-           jmp $8000
+            lda #$00 ; success
+            sta $d7ff
            .bend
 loadnext
            .block
@@ -140,6 +138,9 @@ wait
 ;wait for a key and check for STOP
 
 waitkey
+            lda #$ff ; failure
+            sta $d7ff
+
            .block
            clc
            jsr vector

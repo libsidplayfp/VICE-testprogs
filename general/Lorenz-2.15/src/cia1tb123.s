@@ -71,6 +71,9 @@ ok
 
 
 waitkey
+        lda #$ff  ; failure
+        sta $d7ff
+
          .block
          jsr $fda3
 wait
@@ -757,10 +760,9 @@ ok
          jsr print
          .text " - ok"
          .byte 13,0
-         lda turboass
-         beq load
-         jsr waitkey
-         jmp $8000
+
+        lda #0  ; success
+        sta $d7ff
 load
          jsr print
 name     .text "cia2tb123"

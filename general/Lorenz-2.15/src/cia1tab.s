@@ -230,6 +230,8 @@ diff
          .text "   "
          .byte 0
          jsr print12
+         lda #$ff ; failure
+         sta $d7ff
          jsr waitkey
          jmp outend
 
@@ -277,10 +279,10 @@ ok
          jsr print
          .text " - ok"
          .byte 13,0
-         lda turboass
-         beq load
-         jsr waitkey
-         jmp $8000
+
+         lda #$00 ; success
+         sta $d7ff
+
 load
          jsr print
 name     .text "loadth"
