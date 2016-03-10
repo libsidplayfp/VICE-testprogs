@@ -17,12 +17,13 @@
 #TODO:
 #../C64/autostart/defaults/,test.prg,exitcode,100000000
 #../C64/autostart/defaults/,test.d64,exitcode,100000000
-#../C64/autostart/defaults/,test.crt,exitcode,100000000
 ../C64/autostart/random/,raster.prg,interactive,0
-#TODO:
-#../crtemulation
+../crtemulation/paltest/,paltest.prg,interactive,0
+../crtemulation/,emusuxX0r-crest.prg,interactive,0
 #FIXME: exit with status after a while
 ../general/banking00/,banking00.prg,interactive,0
+################################################################################
+# Lorenz Suite
 ################################################################################
 #TODO:
 #../general/Lorenz-2.15/src/,
@@ -512,6 +513,9 @@
 ################################################################################
 # Cartridges
 ################################################################################
+../C64/autostart/cartio/,test.prg,interactive,0
+#TODO:
+#../C64/autostart/defaults/,test.crt,exitcode,100000000
 #TODO:
 #../C64/carts/,exos.prg
 #../C64/carts/,mmcrplugin.prg
@@ -520,11 +524,10 @@
 #../C64/carts/,romram.crt
 #../C64/carts/,rr-reu.crt
 #../C64/carts/,writeram.crt
-#../C64/carts/ef-test/,ef_test.crt
+../C64/carts/ef-test/,ef_test.crt,interactive,0
 ../C64/carts/rr-freeze/,rr-freeze.crt,interactive,0
 #TODO:
 #../C64/carts/tamtest/,tamtest.crt
-#../C64/autostart/cartio/,test.prg
 ../C64/freezer/,freezeblock.prg,interactive,0
 ../C64/freezer/,freeze-cia1.prg,interactive,0
 ../C64/freezer/,freeze-cia2.prg,interactive,0

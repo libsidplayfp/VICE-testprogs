@@ -1,19 +1,36 @@
+NOTE: this is still initial WIP
 
-================================================================================
-running the tests
-================================================================================
 
-the Makefile in this directory serves as the main frontend to the testbench. to
-get a list of things you can do just run "make".
+TODO:
 
-you can also run ./testbench.sh manually:
+    - handle old/new SID differences
+    - handle old/new VIC differences
 
-$ ./testbench.sh <target> <filter>
+    - handle all kinds of extra switches (-reu, -cartXX etc)
 
-.. where <target> is one of "x64", "x64sc", "chameleon"
+    - add "self test" kind of templates for all targets
 
-... and <filter> is an optional string which is matched against the path that
-contains the test. (eg use "CIA" to run only the CIA tests)
+    write proper docs :)
+    write TODO list :)
+
+    - add hooks for:
+        c128
+        cbm510
+        cbm610
+        dtv
+        pet
+        plus4
+        scpu
+        vic20
+        vsid
+
+################################################################################
+VICE test bench
+################################################################################
+
+* preparing tests
+* adding new tests
+* running the tests
 
 ================================================================================
 preparing tests
@@ -70,6 +87,10 @@ vic20-testlist.in
 scpu-testlist.in
 vsid-testlist.in
 
+after updating any of these files, regenerate the test lists:
+
+$ make testlist
+
 
 format of the abc-testlist.in files:
 ------------------------------------
@@ -94,26 +115,18 @@ options:
     geo256k
     reu512k
 
---------------------------------------------------------------------------------
+================================================================================
+running the tests
+================================================================================
 
-TODO:
+the Makefile in this directory serves as the main frontend to the testbench. to
+get a list of things you can do just run "make".
 
-    - handle old/new sid differences
+you can also run ./testbench.sh manually:
 
-    - handle all kinds of extra switches (-reu, -cartXX etc)
+$ ./testbench.sh <target> <filter>
 
-    - add "self test" kind of templates for all targets
+.. where <target> is one of "x64", "x64sc", "chameleon"
 
-    write proper docs :)
-    write TODO list :)
-
-    - add hooks for:
-        c128
-        cbm510
-        cbm610
-        dtv
-        pet
-        plus4
-        scpu
-        vic20
-        vsid
+... and <filter> is an optional string which is matched against the path that
+contains the test. (eg use "CIA" to run only the CIA tests)

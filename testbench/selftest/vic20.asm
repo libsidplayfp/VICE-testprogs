@@ -23,7 +23,7 @@ lp1:
             sta $1f00,x
             inx
             bne lp1
-
+; preferably show the name of the test on screen
             ldx #21
 lp2:
             lda testname,x
