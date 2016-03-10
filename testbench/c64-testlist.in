@@ -15,14 +15,66 @@
 ../C64/autostart/basic/,printpoint.prg,exitcode,100000000
 ../C64/autostart/basic/,printpoint2.prg,exitcode,100000000
 #TODO:
-#../C64/autostart/cartio
-#../C64/autostart/defaults
-#../C64/autostart/random
+#../C64/autostart/defaults/,test.prg,exitcode,100000000
+#../C64/autostart/defaults/,test.d64,exitcode,100000000
+#../C64/autostart/defaults/,test.crt,exitcode,100000000
+../C64/autostart/random/,raster.prg,interactive,0
+#TODO:
 #../crtemulation
-#../general/banking00
-#../general/Lorenz-2.15
-#../general/ram0001
-#../general/,fuxxortest.d64
+#FIXME: exit with status after a while
+../general/banking00/,banking00.prg,interactive,0
+################################################################################
+#TODO:
+#../general/Lorenz-2.15/src/,
+# Lorenz-Suite Disk1:
+# Lorenz-Suite Disk2:
+# Lorenz-Suite Disk3 (old CIA):
+../general/Lorenz-2.15/src/,irq.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,nmi.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,cia1tb123.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,cia2tb123.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,cia1pb6.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,cia1pb7.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,cia2pb6.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,cia2pb7.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,cia1tab.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,loadth.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,cnto2.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,icr01.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,imr.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,flipos.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,oneshot.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,cntdef.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,cia1ta.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,cia1tb.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,cia2ta.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,cia2tb.prg,exitcode,100000000,cia-old
+# Lorenz-Suite Disk3 (new CIA):
+../general/Lorenz-2.15/src/,irqnew.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,nminew.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,cia1tb123.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,cia2tb123.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,cia1pb6.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,cia1pb7.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,cia2pb6.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,cia2pb7.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,cia1tabnew.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,loadth.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,cnto2.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,icr01new.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,imrnew.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,flipos.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,oneshot.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,cntdef.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,cia1tanew.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,cia1tbnew.prg,exitcode,100000000,cia-new
+#FIXME: these two dont work!
+../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,cia2tbnew.prg,exitcode,100000000,cia-new
+################################################################################
+../general/ram0001/,quicktest.prg,interactive,0
+../general/ram0001/,test1.prg,exitcode,10000000
+../general/,fuxxortest.d64,interactive,0
 ################################################################################
 # CPU 6510
 ################################################################################
@@ -461,13 +513,29 @@
 # Cartridges
 ################################################################################
 #TODO:
-#../C64/carts
-#../C64/freezer
+#../C64/carts/,exos.prg
+#../C64/carts/,mmcrplugin.prg
+#../C64/carts/,16kgame.crt
+#../C64/carts/,mmcr-64krom.crt
+#../C64/carts/,romram.crt
+#../C64/carts/,rr-reu.crt
+#../C64/carts/,writeram.crt
+#../C64/carts/ef-test/,ef_test.crt
+../C64/carts/rr-freeze/,rr-freeze.crt,interactive,0
+#TODO:
+#../C64/carts/tamtest/,tamtest.crt
+#../C64/autostart/cartio/,test.prg
+../C64/freezer/,freezeblock.prg,interactive,0
+../C64/freezer/,freeze-cia1.prg,interactive,0
+../C64/freezer/,freeze-cia2.prg,interactive,0
+../C64/freezer/,freeze-combined.prg,interactive,0
+../C64/freezer/,freeze-raster.prg,interactive,0
+../C64/freezer/,freeze-test.prg,interactive,0
 ################################################################################
 # REU
 ################################################################################
 ../REU/detectsize/,detectreu.prg,exitcode,10000000,reu512k
-#TODO: splite into behaviour- and timing- test
+#TODO: split into behaviour- and timing- test
 ../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,exitcode,100000000,reu512k
 ../REU/reudetect/,reudetect.prg,exitcode,100000000,reu512k
 ../REU/reutiming/,reutiming.prg,exitcode,100000000,reu512k
@@ -478,7 +546,7 @@
 ../GEO-RAM/,georamtest.prg,interactive,0,geo256k
 ../GEO-RAM/,newtest.prg,interactive,0,geo256k
 ################################################################################
-# Drives
+# 1541 Drive
 ################################################################################
 #TODO:
 #../drive/1541-testsuite
@@ -515,6 +583,9 @@
 ../drive/viavarious/,via11.prg,exitcode,1000000000
 ../drive/viavarious/,via12.prg,exitcode,1000000000
 ../drive/viavarious/,via13.prg,exitcode,1000000000
+################################################################################
+# virtual Drive
+################################################################################
 #TODO:
 #../vdrive
 ################################################################################
@@ -545,3 +616,4 @@
 #../RTC/,ds12c887.prg
 #../MIDI/,midi-out-irq-test.prg
 ../memory-expansions/,memory-tests.d64,interactive,0
+#../cp-clockf83/cp-clockf83.d64
