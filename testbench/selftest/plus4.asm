@@ -1,7 +1,7 @@
 
 BORDERCOLOR = $ff19
 SCREENCOLOR = $ff15
-DEBUGREG = $fe00        ; FIXME -> http://plus4world.powweb.com/forum.php?postid=31417#31429
+DEBUGREG = $fdcf        ; http://plus4world.powweb.com/forum.php?postid=31417#31429
 
             * = $1001
             !word eol,0

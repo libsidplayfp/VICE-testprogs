@@ -8,10 +8,22 @@ TODO:
 
     - handle all kinds of extra switches (-reu, -cartXX etc)
 
-    - add "self test" kind of templates for all targets
-
     write proper docs :)
-    write TODO list :)
+    write proper TODO list :)
+
+    - implement -debugcart for:
+        cbm510
+        cbm610
+        dtv
+        pet
+        plus4
+        vic20
+        vsid
+
+    - add selftests for:
+        cbm510
+        cbm610
+        pet
 
     - add hooks for:
         c128
@@ -24,31 +36,36 @@ TODO:
         vic20
         vsid
 
+--------------------------------------------------------------------------------
+================================================================================
 ################################################################################
-VICE test bench
+#                               VICE test bench                                #
 ################################################################################
+================================================================================
+--------------------------------------------------------------------------------
 
 * preparing tests
 * adding new tests
 * running the tests
 
+--------------------------------------------------------------------------------
 ================================================================================
 preparing tests
 ================================================================================
-
 --------------------------------------------------------------------------------
+
 "debug cartridge" register locations:
 
 C64     $d7ff
-C128    $d7ff ?
-VSID    $d7ff ?
-SCPU    $d7ff ?
-DTV     $d7ff ?
-VIC20   $9fff ? (discussion: http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?f=2&t=7763 )
-PLUS4   $fe00 ? (discussion: http://plus4world.powweb.com/forum.php?postid=31417#31429)
-PET     TBD
-CBM510  TBD
-CBM610  TBD
+C128    $d7ff
+VSID    $d7ff
+SCPU    $d7ff
+DTV     $d7ff
+VIC20   $910f  (discussion: http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?f=2&t=7763 )
+PLUS4   $fdcf  (discussion: http://plus4world.powweb.com/forum.php?postid=31417#31429)
+PET     $8bff
+CBM510  $fdaff
+CBM610  $fdaff
 
 --------------------------------------------------------------------------------
 
@@ -69,9 +86,11 @@ subdirectory called "references". like this:
 the reference screenshots should be taken with default screen dimensions,
 CRT emulation disabled, using the pepto palette (vice.vpl, "Default" in menus)
 
+--------------------------------------------------------------------------------
 ================================================================================
 adding new tests
 ================================================================================
+--------------------------------------------------------------------------------
 
 when adding new tests to the test repository, you should also put them into one
 (or more) of the following files:
@@ -115,9 +134,11 @@ options:
     geo256k
     reu512k
 
+--------------------------------------------------------------------------------
 ================================================================================
 running the tests
 ================================================================================
+--------------------------------------------------------------------------------
 
 the Makefile in this directory serves as the main frontend to the testbench. to
 get a list of things you can do just run "make".

@@ -1,6 +1,6 @@
 
 SCREENCOLOR = $900f
-DEBUGREG = $9fff        ; FIXME -> http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?f=2&t=7763&p=84058#p84058
+DEBUGREG = $910f        ; http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?f=2&t=7763&p=84058#p84058
 
             * = $1001
             !word eol,0

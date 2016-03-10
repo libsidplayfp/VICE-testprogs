@@ -1,7 +1,7 @@
 
 BORDERCOLOR = $d020
 SCREENCOLOR = $d021
-DEBUGREG = $d7ff                ; FIXME
+DEBUGREG = $d7ff
 
             * = $1c01
             !word eol,0
