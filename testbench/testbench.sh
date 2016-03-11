@@ -6,10 +6,18 @@ NAME=$0
 source "./chameleon-hooks.sh"
 source "./x64-hooks.sh"
 source "./x64sc-hooks.sh"
+source "./x128-hooks.sh"
+source "./xscpu64-hooks.sh"
+source "./x64dtv-hooks.sh"
+source "./xpet-hooks.sh"
+source "./xplus4-hooks.sh"
+
+###############################################################################
 
 function checktarget
 {
     case "$1" in
+    # C64 targets
         x64)
                 target="$1"
             ;;
@@ -19,6 +27,26 @@ function checktarget
         chameleon)
                 target="$1"
             ;;
+    # C128 targets
+        x128)
+                target="$1"
+            ;;
+    # SCPU targets
+        xscpu64)
+                target="$1"
+            ;;
+    # PET targets
+        xpet)
+                target="$1"
+            ;;
+    # Plus4 targets
+        xplus4)
+                target="$1"
+            ;;
+    # DTV targets
+        x64dtv)
+                target="$1"
+            ;;
         *)
             echo "error:" "$1" "is not a valid target."
             exit -1
@@ -26,12 +54,16 @@ function checktarget
     esac
 }
 
+###############################################################################
+
 # read the list of tests for the given target
 function gettestsfortarget
 {
 #    echo "reading list of tests for" "$1".
     readarray -t testlist < "$1"-testlist.txt
 }
+
+###############################################################################
 
 # $1 - target
 # $2 - filter substring
@@ -135,7 +167,7 @@ case "$1" in
      -help)
             echo $NAME" - run test programs."
             echo "usage: "$NAME" [target] <filter>"
-            echo "  targets: x64, x64sc, chameleon"
+            echo "  targets: x64, x64sc, x128, xscpu64, xpet, xplus4, chameleon"
             echo "  <filter> is a substring of the path of tests to restrict to"
             echo "  -help       show this help"
             exit

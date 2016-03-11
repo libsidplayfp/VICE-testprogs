@@ -8,33 +8,32 @@ TODO:
 
     - handle all kinds of extra switches (-reu, -cartXX etc)
 
+    - prepare dtv/x128/xpet/plus4/vic20/cbm2 for tests that use screenshots
+
     write proper docs :)
     write proper TODO list :)
 
     - implement -debugcart for:
         cbm510
         cbm610
-        dtv
-        pet
-        plus4
         vic20
         vsid
 
     - add selftests for:
         cbm510
         cbm610
-        pet
+        vsid
 
     - add hooks for:
-        c128
         cbm510
         cbm610
-        dtv
-        pet
-        plus4
-        scpu
         vic20
         vsid
+
+    fix VICE bugs:
+        - crash when using -exitscreenshot with -console
+        xpet, x128, xplus4:
+            - GTK warnings when starting up with -console
 
 --------------------------------------------------------------------------------
 ================================================================================

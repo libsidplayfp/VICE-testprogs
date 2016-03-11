@@ -1,17 +1,19 @@
+# this is a generated file, do not edit.
 ################################################################################
-# Plus4/C16 related tests
+# PET related tests
 ################################################################################
 ################################################################################
 # selftest
 ################################################################################
-./selftest/,plus4-pass.prg,exitcode,10000000
-./selftest/,plus4-fail.prg,exitcode,10000000
+./selftest/,pet-pass.prg,exitcode,10000000
+./selftest/,pet-fail.prg,exitcode,10000000
 ################################################################################
 # Joystick/Mouse
 ################################################################################
-../userportjoy/,testjoy_plus4.prg,interactive,0
+../userportjoy/,testjoy_pet.prg,interactive,0
 ################################################################################
 # various expansions
 ################################################################################
-../audio-io/,audio-io-plus4.prg,interactive,0
-../memory-expansions/,memory-tests.d64,interactive,0
+../audio-io/,audio-io-pet.prg,interactive,0
+#TODO:
+#../userportrtc/,testrtc-pet.prg

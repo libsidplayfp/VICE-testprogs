@@ -4,7 +4,8 @@ all: c64-pass.prg c64-fail.prg \
 	scpu-pass.prg scpu-fail.prg \
 	dtv-pass.prg dtv-fail.prg \
 	c128-pass.prg c128-fail.prg \
-	vic20-pass.prg vic20-fail.prg
+	vic20-pass.prg vic20-fail.prg \
+	pet-pass.prg pet-fail.prg
 
 c64-pass.prg: c64.asm
 	acme -DFAIL=0 -f cbm -o c64-pass.prg c64.asm
@@ -30,3 +31,7 @@ c128-pass.prg: c128.asm
 	acme -DFAIL=0 -f cbm -o c128-pass.prg c128.asm
 c128-fail.prg: c128.asm
 	acme -DFAIL=1 -f cbm -o c128-fail.prg c128.asm
+pet-pass.prg: pet.asm
+	acme -DFAIL=0 -f cbm -o pet-pass.prg pet.asm
+pet-fail.prg: pet.asm
+	acme -DFAIL=1 -f cbm -o pet-fail.prg pet.asm
