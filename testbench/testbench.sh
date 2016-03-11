@@ -11,6 +11,7 @@ source "./xscpu64-hooks.sh"
 source "./x64dtv-hooks.sh"
 source "./xpet-hooks.sh"
 source "./xplus4-hooks.sh"
+source "./vsid-hooks.sh"
 
 ###############################################################################
 
@@ -45,6 +46,10 @@ function checktarget
             ;;
     # DTV targets
         x64dtv)
+                target="$1"
+            ;;
+    # SID-player targets
+        vsid)
                 target="$1"
             ;;
         *)

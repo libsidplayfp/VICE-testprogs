@@ -3,15 +3,16 @@
 
 all: prereq
 	echo "to run the tests use the following targets:"
-	echo "testall - run all VICE tests"
+	echo "testall           - run all VICE tests"
 	echo "testx64"
 	echo "testx64sc"
-	echo "testchameleon"
 	echo "testx128"
 	echo "testxscpu64"
 	echo "testx64dtv"
 	echo "testxpet"
 	echo "testxplus4"
+	echo "testvsid"
+	echo "testchameleon"
 
 ################################################################################
 prereq: selftest testlist cmpscreens chameleon-helper.prg
@@ -34,7 +35,8 @@ testlist: \
 	xscpu64-testlist.txt \
 	x64dtv-testlist.txt \
 	xplus4-testlist.txt \
-	xpet-testlist.txt
+	xpet-testlist.txt \
+	vsid-testlist.txt
 
 x64-testlist.txt: c64-testlist.in
 	echo "# this is a generated file, do not edit." >  x64-testlist.txt
@@ -68,6 +70,10 @@ xplus4-testlist.txt: plus4-testlist.in
 	echo "# this is a generated file, do not edit." >  xplus4-testlist.txt
 	cat  plus4-testlist.in >> xplus4-testlist.txt
 
+vsid-testlist.txt: vsid-testlist.in
+	echo "# this is a generated file, do not edit." >  vsid-testlist.txt
+	cat  vsid-testlist.in >> vsid-testlist.txt
+
 ################################################################################
 
 testall: \
@@ -77,7 +83,8 @@ testall: \
 	testxscpu64 \
 	testx64dtv \
 	testxplus4 \
-	testxpet
+	testxpet \
+	testvsid
 
 testx64: prereq
 	./testbench.sh x64
@@ -99,6 +106,9 @@ testxplus4: prereq
 
 testxpet: prereq
 	./testbench.sh xpet
+
+testvsid: prereq
+	./testbench.sh vsid
 
 ################################################################################
 

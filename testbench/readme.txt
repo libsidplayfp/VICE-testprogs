@@ -17,12 +17,10 @@ TODO:
         cbm510
         cbm610
         vic20
-        vsid
 
     - add selftests for:
         cbm510
         cbm610
-        vsid
 
     - add hooks for:
         cbm510

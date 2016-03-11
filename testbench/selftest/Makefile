@@ -5,7 +5,8 @@ all: c64-pass.prg c64-fail.prg \
 	dtv-pass.prg dtv-fail.prg \
 	c128-pass.prg c128-fail.prg \
 	vic20-pass.prg vic20-fail.prg \
-	pet-pass.prg pet-fail.prg
+	pet-pass.prg pet-fail.prg \
+	vsid-pass.prg vsid-fail.prg
 
 c64-pass.prg: c64.asm
 	acme -DFAIL=0 -f cbm -o c64-pass.prg c64.asm
@@ -35,3 +36,7 @@ pet-pass.prg: pet.asm
 	acme -DFAIL=0 -f cbm -o pet-pass.prg pet.asm
 pet-fail.prg: pet.asm
 	acme -DFAIL=1 -f cbm -o pet-fail.prg pet.asm
+vsid-pass.prg: vsid.asm
+	acme -DFAIL=0 -f plain -o vsid-pass.sid vsid.asm
+vsid-fail.prg: vsid.asm
+	acme -DFAIL=1 -f plain -o vsid-fail.sid vsid.asm
