@@ -12,6 +12,7 @@ all: prereq
 	echo "testxpet"
 	echo "testxcbm2"
 	echo "testxcbm5x0"
+	echo "testxvic"
 	echo "testxplus4"
 	echo "testvsid"
 	echo "testchameleon"
@@ -36,6 +37,7 @@ testlist: \
 	x128-testlist.txt \
 	xscpu64-testlist.txt \
 	x64dtv-testlist.txt \
+	xvic-testlist.txt \
 	xplus4-testlist.txt \
 	xpet-testlist.txt \
 	xcbm2-testlist.txt \
@@ -78,6 +80,10 @@ xcbm5x0-testlist.txt: cbm510-testlist.in
 	echo "# this is a generated file, do not edit." >  xcbm5x0-testlist.txt
 	cat  cbm510-testlist.in >> xcbm5x0-testlist.txt
 
+xvic-testlist.txt: vic20-testlist.in
+	echo "# this is a generated file, do not edit." >  xvic-testlist.txt
+	cat  vic20-testlist.in >> xvic-testlist.txt
+
 xplus4-testlist.txt: plus4-testlist.in
 	echo "# this is a generated file, do not edit." >  xplus4-testlist.txt
 	cat  plus4-testlist.in >> xplus4-testlist.txt
@@ -95,6 +101,7 @@ testall: \
 	testxscpu64 \
 	testx64dtv \
 	testxplus4 \
+	testxvic \
 	testxpet \
 	testxcbm2 \
 	testxcbm5x0 \
@@ -117,6 +124,9 @@ testx64dtv: prereq
 
 testxplus4: prereq
 	./testbench.sh xplus4
+
+testxvic: prereq
+	./testbench.sh xvic
 
 testxpet: prereq
 	./testbench.sh xpet

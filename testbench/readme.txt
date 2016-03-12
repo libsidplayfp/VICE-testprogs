@@ -13,16 +13,10 @@ TODO:
     write proper docs :)
     write proper TODO list :)
 
-    - implement -debugcart for:
-        vic20
-
-    - add hooks for:
-        vic20
-
     fix VICE bugs:
         - crash when using -exitscreenshot with -console
-        xpet, x128, xplus4, xcbm2, xcbm5x0:
-            - GTK warnings when starting up with -console
+        xpet, x128, xplus4, xcbm2, xcbm5x0, xvic:
+            - lots of GTK warnings when starting up with -console
         xcbm2:
             -VICIIfilter doesnt work?
             -VICIIextpal
