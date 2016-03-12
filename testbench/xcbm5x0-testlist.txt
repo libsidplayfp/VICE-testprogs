@@ -1,23 +1,22 @@
+# this is a generated file, do not edit.
 ################################################################################
-# CBM610 related tests
+# CBM510 related tests
 ################################################################################
 ################################################################################
 # selftest
 ################################################################################
-./selftest/,cbm610-pass.prg,exitcode,100000000
-./selftest/,cbm610-fail.prg,exitcode,100000000
+./selftest/,cbm510-pass.prg,exitcode,100000000
+./selftest/,cbm510-fail.prg,exitcode,100000000
 ################################################################################
 # general
 ################################################################################
-../CBM2/,cbm2-burnin.d80,interactive,0
+../CBM2/,p500-burnin.d80,interactive,0
 ################################################################################
 # Joystick/Mouse
 ################################################################################
-../userportjoy/,testjoy_cbm610.prg,interactive,0
+../userportjoy/,testjoy_cbm510.prg,interactive,0
 ################################################################################
 # various expansions
 ################################################################################
-../audio-io/,audio-io-cbm6x0.prg,interactive,interactive,0
-#TODO:
-#../userportrtc/,testrtc-cbm610.prg
+../audio-io/,audio-io-cbm5x0.prg,interactive,interactive,0
 ../memory-expansions/,memory-tests.d64,interactive,0

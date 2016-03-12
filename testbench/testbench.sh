@@ -10,6 +10,8 @@ source "./x128-hooks.sh"
 source "./xscpu64-hooks.sh"
 source "./x64dtv-hooks.sh"
 source "./xpet-hooks.sh"
+source "./xcbm2-hooks.sh"
+source "./xcbm5x0-hooks.sh"
 source "./xplus4-hooks.sh"
 source "./vsid-hooks.sh"
 
@@ -38,6 +40,14 @@ function checktarget
             ;;
     # PET targets
         xpet)
+                target="$1"
+            ;;
+    # CBM2 / CBM500 targets
+        xcbm5x0)
+                target="$1"
+            ;;
+    # CBM2 / CBM600 targets
+        xcbm2)
                 target="$1"
             ;;
     # Plus4 targets
@@ -172,7 +182,7 @@ case "$1" in
      -help)
             echo $NAME" - run test programs."
             echo "usage: "$NAME" [target] <filter>"
-            echo "  targets: x64, x64sc, x128, xscpu64, xpet, xplus4, chameleon"
+            echo "  targets: x64, x64sc, x128, xscpu64, xpet, xcbm2, xcbm5x0 xplus4, chameleon"
             echo "  <filter> is a substring of the path of tests to restrict to"
             echo "  -help       show this help"
             exit

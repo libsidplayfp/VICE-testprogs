@@ -8,4 +8,13 @@
 ./selftest/,vsid-pass.sid,exitcode,10000000
 ./selftest/,vsid-fail.sid,exitcode,10000000
 #TODO:
-#../vsid
+#../vsid/environment/,basicram-v1.sid
+#../vsid/environment/,basicram-v2.sid
+#../vsid/environment/,Calypso.sid
+#../vsid/environment/,underbasic.sid
+#../vsid/environment/,underio.sid
+#../vsid/environment/,underkernal.sid
+#../vsid/sidplayer/,fallinginlove.sid
+#../vsid/sidplayer/,scrollmachine-mus.sid
+#../vsid/sidplayer/,scrollmachine.sid
+#../vsid/tunes/,

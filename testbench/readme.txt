@@ -14,24 +14,19 @@ TODO:
     write proper TODO list :)
 
     - implement -debugcart for:
-        cbm510
-        cbm610
         vic20
-
-    - add selftests for:
-        cbm510
-        cbm610
 
     - add hooks for:
-        cbm510
-        cbm610
         vic20
-        vsid
 
     fix VICE bugs:
         - crash when using -exitscreenshot with -console
-        xpet, x128, xplus4:
+        xpet, x128, xplus4, xcbm2, xcbm5x0:
             - GTK warnings when starting up with -console
+        xcbm2:
+            -VICIIfilter doesnt work?
+            -VICIIextpal
+            -VICIIpalette
 
 --------------------------------------------------------------------------------
 ================================================================================

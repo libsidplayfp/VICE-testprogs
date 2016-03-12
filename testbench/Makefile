@@ -10,6 +10,8 @@ all: prereq
 	echo "testxscpu64"
 	echo "testx64dtv"
 	echo "testxpet"
+	echo "testxcbm2"
+	echo "testxcbm5x0"
 	echo "testxplus4"
 	echo "testvsid"
 	echo "testchameleon"
@@ -36,6 +38,8 @@ testlist: \
 	x64dtv-testlist.txt \
 	xplus4-testlist.txt \
 	xpet-testlist.txt \
+	xcbm2-testlist.txt \
+	xcbm5x0-testlist.txt \
 	vsid-testlist.txt
 
 x64-testlist.txt: c64-testlist.in
@@ -66,6 +70,14 @@ xpet-testlist.txt: pet-testlist.in
 	echo "# this is a generated file, do not edit." >  xpet-testlist.txt
 	cat  pet-testlist.in >> xpet-testlist.txt
 
+xcbm2-testlist.txt: cbm610-testlist.in
+	echo "# this is a generated file, do not edit." >  xcbm2-testlist.txt
+	cat  cbm610-testlist.in >> xcbm2-testlist.txt
+
+xcbm5x0-testlist.txt: cbm510-testlist.in
+	echo "# this is a generated file, do not edit." >  xcbm5x0-testlist.txt
+	cat  cbm510-testlist.in >> xcbm5x0-testlist.txt
+
 xplus4-testlist.txt: plus4-testlist.in
 	echo "# this is a generated file, do not edit." >  xplus4-testlist.txt
 	cat  plus4-testlist.in >> xplus4-testlist.txt
@@ -84,6 +96,8 @@ testall: \
 	testx64dtv \
 	testxplus4 \
 	testxpet \
+	testxcbm2 \
+	testxcbm5x0 \
 	testvsid
 
 testx64: prereq
@@ -106,6 +120,12 @@ testxplus4: prereq
 
 testxpet: prereq
 	./testbench.sh xpet
+
+testxcbm2: prereq
+	./testbench.sh xcbm2
+
+testxcbm5x0: prereq
+	./testbench.sh xcbm5x0
 
 testvsid: prereq
 	./testbench.sh vsid
