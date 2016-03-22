@@ -201,11 +201,9 @@ ok
          jsr print
          .text " - ok"
          .byte 13,0
-         lda turboass
-         beq load
-wait     jsr $ffe4
-         beq wait
-         jmp $8000
+
+        lda #0         ; success
+        sta $d7ff
 
 load
          lda #47

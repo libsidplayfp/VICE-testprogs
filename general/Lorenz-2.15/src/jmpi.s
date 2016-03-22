@@ -100,11 +100,9 @@ nonext
          jsr print
          .text " - ok"
          .byte 13,0
-         lda 2
-         beq load
-wt       jsr $ffe4
-         beq wt
-         jmp $8000
+
+        lda #0         ; success
+        sta $d7ff
 
 load     jsr print
 name     .text "beqr"
@@ -182,16 +180,13 @@ error    jsr print
          jsr showregs
          lda #13
          jsr $ffd2
+
+         lda #$ff       ; failure
+         sta $d7ff
+
 wait     jsr $ffe4
          beq wait
-         cmp #3
-         beq stop
          rts
-stop
-         lda 2
-         beq basic
-         jmp $8000
-basic    jmp ($a002)
 
 showregs stx 172
          sty 173

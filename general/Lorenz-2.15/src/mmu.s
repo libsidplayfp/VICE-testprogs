@@ -186,18 +186,13 @@ printconf
          jsr printhb
          lda #13
          jsr $ffd2
-waitkey
-         jsr $ffe4
-         beq waitkey
-         cmp #$03
-         beq stop
+
+         lda #$ff       ; failure
+         sta $d7ff
+
+wait     jsr $ffe4
+         beq wait
          rts
-stop
-         lda turboass
-         beq basic
-         jmp $8000
-basic
-         jmp $a474
          .bend
 
 
@@ -276,11 +271,9 @@ ok
          jsr print
          .text " - ok"
          .byte 13,0
-         lda turboass
-         beq load
-wait     jsr $ffe4
-         beq wait
-         jmp $8000
+
+        lda #0         ; success
+        sta $d7ff
 
 load
          lda #47

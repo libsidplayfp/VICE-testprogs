@@ -199,32 +199,22 @@ oldx
            lda #13
            jsr $ffd2
 
-;           sei
-;           jmp *
 
-waitk
-           jsr $ffe4
-           beq waitk
-           cmp #3
-           beq stop
-           jmp noerror
-stop
-           lda turboass
-           beq basic
-           jmp $8000
-basic
-           jmp $a474
+         lda #$ff       ; failure
+         sta $d7ff
+
+wait     jsr $ffe4
+         beq wait
+         jmp noerror
 
 
 ok
            jsr print
            .text " - ok"
            .byte 13,0
-           lda turboass
-           beq load
-wait       jsr $ffe4
-           beq wait
-           jmp $8000
+
+        lda #0         ; success
+        sta $d7ff
 
 load
            lda #47

@@ -566,29 +566,22 @@ error
          sta gatimer+2
          sta gatimer+3
          jsr printtimer
-waitk
-         jsr $ffe4
-         beq waitk
-         cmp #3
-         beq stop
+
+         lda #$ff       ; failure
+         sta $d7ff
+
+wait     jsr $ffe4
+         beq wait
          jmp noerror
-stop
-         lda turboass
-         beq basic
-         jmp $8000
-basic
-         jmp $a474
 
 
 ok
          jsr print
          .text " - ok"
          .byte 13,0
-         lda turboass
-         beq load
-waitkey  jsr $ffe4
-         beq waitkey
-         jmp $8000
+
+        lda #0         ; success
+        sta $d7ff
 
 load
          lda #47

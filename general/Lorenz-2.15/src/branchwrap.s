@@ -1,4 +1,5 @@
 ; original source file: n/a (broken), this was recreated from a disassembly
+; FIXME: this test can not fail?!
 ;-------------------------------------------------------------------------------
         * = $0801
 
@@ -64,12 +65,9 @@ i085c
         jsr print
         .text " - ok"
         .byte $0d, 0
-        lda $030c
-        beq load
-wait
-        jsr $ffe4
-        beq wait
-        jmp $8000
+
+        lda #0         ; success
+        sta $d7ff
 load
         lda #$2f
         sta $00
