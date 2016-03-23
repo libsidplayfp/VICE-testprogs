@@ -289,15 +289,13 @@ error
            jsr printhb
            lda #13
            jsr $ffd2
-waitkey
-           jsr $ffe4
-           beq waitkey
-           cmp #3
-           bne jmpnostop
-           lda turboass
-           beq return
-           jmp $8000
-jmpnostop
+
+         lda #$ff       ; failure
+         sta $d7ff
+
+wait     jsr $ffe4
+         beq wait
+
            jmp nostop
 return
            lda #$37
@@ -310,11 +308,9 @@ ok
            jsr print
            .text " - ok"
            .byte 13,0
-           lda turboass
-           beq load
-wait       jsr $ffe4
-           beq wait
-           jmp $8000
+
+        lda #0         ; success
+        sta $d7ff
 
 load
            lda #47

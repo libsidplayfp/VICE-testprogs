@@ -13,8 +13,6 @@ turboass   = 780
            .byte $2c,$30,$3a,$9e,$32,$30
            .byte $37,$33,$00,$00,$00
            .block
-           lda #1
-           sta turboass
            ldx #0
            stx $d3
            lda thisname
@@ -33,10 +31,9 @@ printthis
            jsr print
            .text " - ok"
            .byte 13,0
-           lda turboass
-           beq loadnext
-           jsr waitkey
-           jmp $8000
+
+            lda #0         ; success
+            sta $d7ff
            .bend
 loadnext
            .block
@@ -135,23 +132,21 @@ wait
            .bend
 
 ;---------------------------------------
-;wait for a key and check for STOP
+;wait for a key after failure
 
 waitkey
            .block
            jsr $fd15
            jsr $fda3
            cli
-wait
-           jsr $ffe4
-           beq wait
-           cmp #3
-           beq stop
-           rts
-stop
-           lda turboass
-           beq load
-           jmp $8000
+
+         lda #$ff       ; failure
+         sta $d7ff
+
+wait     jsr $ffe4
+         beq wait
+         rts
+
 load
            jsr print
            .byte 13
