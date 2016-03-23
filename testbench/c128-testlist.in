@@ -29,8 +29,7 @@
 ../audio-io/,audio-io-c128.prg,interactive,0
 ../c128-cpm/,cpm3.d81,interactive,0
 ../digimax/,modplay128.d81,interactive,0
-#TODO:
-#../sfx_soundsampler/,c128-test.prg
-#../ramcart/,rc128um.d64
-#../userportrtc/,testrtc-c128.prg
+../sfx_soundsampler/,c128-test.prg,interactive,0
+../ramcart/,rc128um.d64,interactive,0
+../userportrtc/,testrtc-c128.prg,interactive,0
 ../memory-expansions/,memory-tests.d64,interactive,0

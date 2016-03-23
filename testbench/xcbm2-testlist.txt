@@ -19,6 +19,5 @@
 # various expansions
 ################################################################################
 ../audio-io/,audio-io-cbm6x0.prg,interactive,interactive,0
-#TODO:
-#../userportrtc/,testrtc-cbm610.prg
+../userportrtc/,testrtc-cbm610.prg,interactive,0
 ../memory-expansions/,memory-tests.d64,interactive,0

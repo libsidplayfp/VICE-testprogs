@@ -7,11 +7,33 @@
 ################################################################################
 ./selftest/,dtv-pass.prg,exitcode,10000000
 ./selftest/,dtv-fail.prg,exitcode,10000000
+../DTV/blitregt/,blitregt.prg,interactive,0
+../DTV/bmsac/,bmsac.prg,interactive,0
 #TODO:
-#../DTV
+#../DTV/borderdma/,borderdma.prg,screenshot
+#../DTV/d044/,d044.prg,exitcode
+../DTV/dmablit/,blittertest_dtv3.prg,interactive,0
+../DTV/dmablit/,dmatest.prg,interactive,0
+#TODO:
+#../DTV/dmatime,dmatime.prg,exitcode
+../DTV/fulltime/,fulltime.prg,interactive,0
+../DTV/fulltime/,fulltime_dtv.prg,interactive,0
+#TODO:
+#../DTV/gfxmodes/,gfxmodes.prg,screenshot
+#../DTV/overscan/,overscan.prg,screenshot
+../DTV/steal/,steal.prg,interactive,0
+#TODO: rework ../general/Lorenz-21.15 to also generate the DTV version
+#../DTV/tsuitDTV
 ################################################################################
 # SID
 ################################################################################
+#TODO:
+#../DTV/sid/adsr
+#../DTV/sid/envcmp
+../DTV/sid/envelopm/,envelopm.prg,interactive,0
+../DTV/sid/sidtestm,sidtestm.prg,interactive,0
+#TODO:
+#../DTV/sid/waveform/,waveform.prg,exitcode
 ################################################################################
 # Joystick/Mouse
 ################################################################################

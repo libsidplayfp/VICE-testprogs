@@ -5,12 +5,38 @@
 ################################################################################
 # selftest
 ################################################################################
-#TODO:
-./selftest/,vic20-fail.prg,exitcode,10000000
 ./selftest/,vic20-pass.prg,exitcode,10000000
+./selftest/,vic20-fail.prg,exitcode,10000000
 #TODO:
 #../crtemulation/vic20
-#../VIC20
+#../VIC20/fe3diag/,f3diag.prg,exitcode,10000000
+#../VIC20/split-tests/common/
+#../VIC20/split-tests/lightpen/
+#../VIC20/split-tests/timing/
+#../VIC20/unconnected/,unconnected.prg,exitcode,10000000
+#../VIC20/via_defaults/,defaults.prg,exitcode,10000000
+#../VIC20/via_pb7/,main.prg,exitcode,10000000
+#../VIC20/via_t1crash/,via1crash.prg,exitcode,10000000
+#../VIC20/via_t1crash/,via2crash.prg,exitcode,10000000
+#../VIC20/via_t1irqack/,bandits-via1.prg,exitcode,10000000
+#../VIC20/via_t1irqack/,bandits-via2.prg,exitcode,10000000
+#../VIC20/viavarious/,via1.prg,exitcode,10000000
+#../VIC20/viavarious/,via2.prg,exitcode,10000000
+#../VIC20/viavarious/,via3.prg,exitcode,10000000
+#../VIC20/viavarious/,via3a.prg,exitcode,10000000
+#../VIC20/viavarious/,via4.prg,exitcode,10000000
+#../VIC20/viavarious/,via4a.prg,exitcode,10000000
+#../VIC20/viavarious/,via5.prg,exitcode,10000000
+#../VIC20/viavarious/,via5a.prg,exitcode,10000000
+#../VIC20/viavarious/,via9.prg,exitcode,10000000
+#../VIC20/viavarious/,via10.prg,exitcode,10000000
+#../VIC20/viavarious/,via11.prg,exitcode,10000000
+#../VIC20/viavarious/,via12.prg,exitcode,10000000
+#../VIC20/viavarious/,via13.prg,exitcode,10000000
+#../VIC20/via_wrap
+#../VIC20/vic6561
+#../VIC20/vic_line0
+#../VIC20/vic_vert0
 ################################################################################
 # Interrupts
 ################################################################################
@@ -22,8 +48,7 @@
 ################################################################################
 # GEO-RAM
 ################################################################################
-#TODO:
-#../GEO-RAM/,georam20.prg
+../GEO-RAM/,georam20.prg,interactive,0
 ################################################################################
 # Joystick/Mouse
 ################################################################################
@@ -32,6 +57,5 @@
 # various expansions
 ################################################################################
 ../audio-io/,audio-io-vic20.prg,interactive,0
-#TODO:
-#../sfx_soundsampler/,vic20-test.prg
-#../userportrtc/,testrtc-vic20.prg
+../sfx_soundsampler/,vic20-test.prg,interactive,0
+../userportrtc/,testrtc-vic20.prg,interactive,0

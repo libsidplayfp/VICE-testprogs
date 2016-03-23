@@ -5,4 +5,5 @@ self-test of the testbench.
 --------------------------------------------------------------------------------
 
 TODO:
-    make screenshots from all tests too
+    - make screenshots from all tests too
+    - CBM2 tests could maybe use an ML copy loop instead of the basic stub :)

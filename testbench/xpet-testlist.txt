@@ -15,5 +15,4 @@
 # various expansions
 ################################################################################
 ../audio-io/,audio-io-pet.prg,interactive,0
-#TODO:
-#../userportrtc/,testrtc-pet.prg
+../userportrtc/,testrtc-pet.prg,interactive,0
