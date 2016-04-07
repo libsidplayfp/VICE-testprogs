@@ -74,6 +74,13 @@ fails:  lda #0
 sk3:
         stx $d020
 
+        lda #$ff
+        cpx #5
+        bne failed
+        lda #0
+failed:
+        sta $d7ff
+
         jmp lp
 
 

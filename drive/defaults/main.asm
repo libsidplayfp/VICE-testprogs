@@ -144,6 +144,14 @@ cadr2:   sta $d800,x
 
 iserr:  lda #5
         sta $d020
+
+        ldx #$ff        ; failure
+        cmp #5
+        bne fail
+        ldx #$00        ;success
+fail:
+        stx $d7ff
+
         cli
 waitkey
         jsr $ffe4

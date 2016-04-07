@@ -145,6 +145,15 @@ skp:
 recend:
         lda rescol
         sta $d020
+
+        cmp #5
+        bne fail
+        lda #$00        ;success
+        sta $d7ff
+        jmp *
+fail:
+        lda #$ff        ; failure
+        sta $d7ff
         jmp *
 
 rtrk: !byte 0
