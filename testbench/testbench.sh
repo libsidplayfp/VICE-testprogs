@@ -120,7 +120,7 @@ function runprogsfortarget
             for (( i=5; i<${arraylength}+1; i++ ));
             do
 #                echo $i " / " ${arraylength} " : " ${myarray[$i-1]}
-                "$target"_get_options "${myarray[$i-1]}"
+                "$target"_get_options "${myarray[$i-1]}" "$testpath"
 #                echo "exitoptions: $exitoptions"
                 testoptions+="$exitoptions"
             done

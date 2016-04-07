@@ -20,6 +20,8 @@ X64DTVOPTSSCREENSHOT+=""
 X64DTVSXO=32
 X64DTVSYO=35
 
+# $1  option
+# $2  test path
 function x64dtv_get_options
 {
 #    echo x64dtv_get_options "$1"
@@ -39,6 +41,12 @@ function x64dtv_get_options
             ;;
         *)
                 exitoptions=""
+                if [ "${1:0:9}" == "mountd64:" ]; then
+                    exitoptions="-8 $2/${1:9}"
+                fi
+                if [ "${1:0:9}" == "mountg64:" ]; then
+                    exitoptions="-8 $2/${1:9}"
+                fi
             ;;
     esac
 }

@@ -23,6 +23,8 @@ XCBM2OPTSSCREENSHOT+=""
 XCBM2SXO=32
 XCBM2SYO=35
 
+# $1  option
+# $2  test path
 function xcbm2_get_options
 {
 #    echo xcbm2_get_options "$1"

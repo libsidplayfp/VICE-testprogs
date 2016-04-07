@@ -20,6 +20,8 @@ VSIDOPTSSCREENSHOT+=""
 VSIDSXO=32
 VSIDSYO=35
 
+# $1  option
+# $2  test path
 function vsid_get_options
 {
 #    echo vsid_get_options "$1"

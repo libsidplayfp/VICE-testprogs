@@ -23,6 +23,8 @@ XCBM5X0OPTSSCREENSHOT+=""
 XCBM5X0SXO=32
 XCBM5X0SYO=35
 
+# $1  option
+# $2  test path
 function xcbm5x0_get_options
 {
 #    echo xcbm5x0_get_options "$1"

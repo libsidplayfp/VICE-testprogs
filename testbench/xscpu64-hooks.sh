@@ -20,6 +20,8 @@ XSCPU64OPTSSCREENSHOT+=""
 XSCPU64SXO=32
 XSCPU64SYO=35
 
+# $1  option
+# $2  test path
 function xscpu64_get_options
 {
 #    echo xscpu64_get_options "$1"

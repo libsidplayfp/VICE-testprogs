@@ -27,6 +27,7 @@
 # Lorenz Suite
 #
 # ../general/ runtime: 9 minutes and 49 seconds (x64sc)
+# ../general/ runtime: 83 minutes and 5 seconds (chameleon)
 ################################################################################
 # Lorenz-Suite Disk1:
 ../general/Lorenz-2.15/src/,start.prg,exitcode,100000000
@@ -796,10 +797,9 @@
 ################################################################################
 #TODO:
 #../drive/1541-testsuite
-#../drive/defaults/,defaults.prg
+../drive/defaults/,defaults.prg,exitcode,1000000000,mountd64:defaults.d64
 ../drive/diskchange/,pollwp.prg,interactive,0
-#TODO:
-#../drive/diskid/,diskid.d64
+../drive/diskid/,diskid1.prg,exitcode,1000000000,mountd64:diskid.d64
 ../drive/iecdelay/,iec-bus-delay.prg,interactive,0
 ../drive/interrupts/,timera.prg,exitcode,1000000000
 ../drive/interrupts/,watchdog,interactive,0
@@ -807,16 +807,15 @@
 ../drive/rpm/,rpm.d64,interactive,0
 ../drive/rpm/,rpm.g64,interactive,0
 ../drive/rpm/,rpm.p64,interactive,0
-#TODO:
-#../drive/scanner/,scan35.d64
-#../drive/scanner/,scan35err.d64
-#../drive/scanner/,scan40.d64
-#../drive/scanner/,scan40err.d64
-#../drive/scanner/,scan42.d64
-#../drive/scanner/,scan42err.d64
-#../drive/scanner/,scan35.g64
-#../drive/scanner/,scan40.g64
-#../drive/scanner/,scan42.g64
+../drive/scanner/,scanner35.prg,exitcode,1000000000,mountd64:scan35.d64
+../drive/scanner/,scanner35e.prg,exitcode,1000000000,mountd64:scan35err.d64
+../drive/scanner/,scanner40.prg,exitcode,1000000000,mountd64:scan40.d64
+../drive/scanner/,scanner40e.prg,exitcode,1000000000,mountd64:scan40err.d64
+../drive/scanner/,scanner42.prg,exitcode,1000000000,mountd64:scan42.d64
+../drive/scanner/,scanner42e.prg,exitcode,1000000000,mountd64:scan42err.d64
+../drive/scanner/,scanner35.prg,exitcode,1000000000,mountg64:scan35.g64
+../drive/scanner/,scanner40.prg,exitcode,1000000000,mountg64:scan40.g64
+../drive/scanner/,scanner42.prg,exitcode,1000000000,mountg64:scan42.g64
 ../drive/selftest/,selftest.prg,exitcode,1000000000
 ../drive/viavarious/,via1.prg,exitcode,1000000000
 ../drive/viavarious/,via2.prg,exitcode,1000000000

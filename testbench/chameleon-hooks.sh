@@ -65,6 +65,8 @@ function chameleon_poll_returncode
 
 ################################################################################
 
+# $1  option
+# $2  test path
 function chameleon_get_options
 {
 #    echo chameleon_get_options "$1"
@@ -90,6 +92,12 @@ function chameleon_get_options
             ;;
         *)
                 exitoptions=""
+                if [ "${1:0:9}" == "mountd64:" ]; then
+                    chmount -d64 "$2/${1:9}" > /dev/null
+                fi
+                if [ "${1:0:9}" == "mountg64:" ]; then
+                    chmount -g64 "$2/${1:9}" > /dev/null
+                fi
             ;;
     esac
 }

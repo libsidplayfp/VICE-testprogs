@@ -20,6 +20,8 @@ XPLUS4OPTSSCREENSHOT+=""
 XPLUS4SXO=32
 XPLUS4SYO=35
 
+# $1  option
+# $2  test path
 function xplus4_get_options
 {
 #    echo xplus4_get_options "$1"

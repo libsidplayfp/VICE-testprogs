@@ -20,6 +20,8 @@ XPETOPTSSCREENSHOT+=""
 XPETSXO=32
 XPETSYO=35
 
+# $1  option
+# $2  test path
 function xpet_get_options
 {
 #    echo xpet_get_options "$1"
