@@ -67,8 +67,9 @@ test_errcode_map	= test_result_map + $100
 
 		.print (string_header)
 
-		.print (string_quit_on_failure)
-		jsr input_yes_no
+;		.print (string_quit_on_failure)
+;		jsr input_yes_no
+		lda #0
 		sta flag_quit_on_failure
 
 		lda #$0d
@@ -164,9 +165,9 @@ end_test:
 		bne next_test
 exit:
 		jsr clear_watchdog
-		.print (string_waitkey)
-		jsr Basic_GetKey
-		beq *-3
+;		.print (string_waitkey)
+;		jsr Basic_GetKey
+;		beq *-3
 		jsr show_map
 		rts
 
@@ -524,6 +525,13 @@ next_elem:
 		stx map_table_errcode+1
 		sta map_table_errcode+2
 		.print (map_info_tables)
+
+                ldx #0          ; success
+		lda err_cnt
+		beq allok
+		ldx #$ff        ; fails
+allok:
+                stx $d7ff
 		rts
 .)
 
@@ -543,8 +551,8 @@ cmd_get_result_len = * - cmd_get_result
 string_header:		.text $93,$05,$0e,"1541 Test Framework V0.33", $0d
 			.text "by Ninja / The Dreams in 2008",$0d,$0d,0
 string_quit_on_failure:	.text "Quit tests on failure (y/n)? ",0
-string_ok:		.text $99,$ba,0
-string_fail:		.text $96,"x",0
+string_ok:		.text $99,$ba,0 ; light green
+string_fail:		.text $96,"x",0 ; light red
 string_results:		.text " ("
 string_results_codes	.text "00/00, "
 string_results_time	.text "00:00)",$0d,0
