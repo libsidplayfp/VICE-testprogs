@@ -88,6 +88,12 @@ init1:
 
 		.print (string_scanning)
 
+                lda FileZp_Device
+                bne hasdev
+                lda #8
+                sta FileZp_Device
+hasdev:
+
 		lda #dirname_len
 		ldx #<(dirname)
 		ldy #>(dirname)
