@@ -10,6 +10,10 @@
 		ldx #$40
 		stx $1c0e
 
+                lda #0
+                .byte $ab, $ff
+                sta magicvalue+1
+
 		lda #%00011011
 		sta db
 		lda #%11000111
@@ -32,7 +36,7 @@ next		lda db
 		sta cmd+1
 
 		lda ab
-		ora #$ee
+magicvalue:     ora #$ee
 		and db
 		sta ar
 		sta xr
