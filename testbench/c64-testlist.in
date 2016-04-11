@@ -793,9 +793,10 @@
 ../GEO-RAM/,newtest.prg,interactive,0,geo256k
 ################################################################################
 # 1541 Drive
+# ../drive runtime 93 minutes and 36 seconds (chameleon)
 ################################################################################
-#TODO:
-#../drive/1541-testsuite
+../drive/1541-testsuite,1541-testsuite.prg,exitcode,4294967295,mountd64:disks/pc64_1.d64
+../drive/1541-testsuite,1541-testsuite.prg,exitcode,4294967295,mountd64:disks/pc64_2.d64
 ../drive/defaults/,defaults.prg,exitcode,1000000000,mountd64:defaults.d64
 ../drive/diskchange/,pollwp.prg,interactive,0
 ../drive/diskid/,diskid1.prg,exitcode,1000000000,mountd64:diskid.d64
