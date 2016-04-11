@@ -68,7 +68,10 @@ cia12a.s
     - fix to work on "new" CIA.
 cia2tb.s
     - fix to work on "new" CIA.
-  
+
+branchwrap.s, mmufetch.s
+    - these tests can never fail
+
 ///////////////////////////////////////////////////////////////////////////////
 Program START - some 6510 basic commands, just as an insurance
 
