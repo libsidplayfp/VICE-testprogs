@@ -1,4 +1,4 @@
-dd0dtest.prg by Wilfried Bos
+dd0dtest.prg by Wilfred Bos
 
 The test program is reading the value of $DD0D before, during and after a NMI
 occurs in several ways.
