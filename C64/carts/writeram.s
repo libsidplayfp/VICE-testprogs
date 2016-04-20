@@ -161,6 +161,14 @@ lp4c:
     ldx #5
 doneerror:
     stx $d020
+
+    lda #0      ; success
+    cpx #5
+    beq nofail
+    lda #$ff    ; failure
+nofail:
+    sta $d7ff
+
 done
     beq done
     bne done

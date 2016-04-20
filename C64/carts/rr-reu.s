@@ -117,6 +117,13 @@ chk:
 doneerror:
         sty $d020
 
+        lda #0      ; success
+        cpy #5
+        beq nofail
+        lda #$ff    ; failure
+nofail:
+        sta $d7ff
+
         jmp *
 
 ;-------------------------------------------------------------------------------

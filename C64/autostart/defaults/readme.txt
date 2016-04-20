@@ -15,3 +15,5 @@ MEMTOP (9ff0-9fff, the filename of the loaded program shows up here)
 - press + / - to select memory page shown at the bottom
         , selects page $00
         . selects page $de
+
+NOTE: test.prg must be loaded from disk using LOAD"TEST",8 - else it will fail

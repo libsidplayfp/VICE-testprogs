@@ -72,11 +72,15 @@ opc: lda contok
 notok:
     lda #2
     sta $d020
+    lda #$ff    ; failure
+    sta $d7ff
     jmp *
 
 contok:
     lda #5
     sta $d020
+    lda #0      ; success
+    sta $d7ff
     jmp *
     
 ;-------------------------------------------------------------------------------

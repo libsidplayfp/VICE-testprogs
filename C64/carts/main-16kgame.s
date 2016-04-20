@@ -71,7 +71,7 @@ lp2:
 
         ;-----------------------------------------------------
 codestart:
-	!pseudopc $0800
+	!pseudopc $0800 {
 
 tagoffset = $80 ; fixup tables must match this offset
 taglen = 4
@@ -914,7 +914,16 @@ wtfrm:
 wtfrm2:			
 	cmp $d012
 	bcc wtfrm2
-			
+
+        ldx #0          ; success
+        lda $d020
+        and #$f
+        cmp #5
+        beq nofail
+        ldx #$ff        ; failure
+nofail:
+        stx $d7ff
+
 	;-------------------------
 			
 	jsr minikey
@@ -936,8 +945,8 @@ wtfrm2:
 
 	;-------------------------		
 	jsr update_blocks
-			
-keywait			
+
+keywait
 	jsr minikey
 	cmp #$ff
 	bne keywait
@@ -959,7 +968,7 @@ tagexp05: !scr "ra03ra70ra80raa0rac0iod0crd8........rae0"
 tagexp06: !scr "ra03ra70ra80caa0rac0iod0crd8........kern"
 tagexp07: !scr "ra03ra70ca80caa0rac0iod0crd8........kern"
 
-    !realpc
+}
     * = ROMSTART + (4 * 1024) + $80
     !scr "ca90"
     * = ROMSTART + (8 * 1024) + $80
