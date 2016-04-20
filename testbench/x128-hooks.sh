@@ -56,6 +56,10 @@ function x128_get_options
                 if [ "${1:0:9}" == "mountg64:" ]; then
                     exitoptions="-8 $2/${1:9}"
                 fi
+                if [ "${1:0:9}" == "mountcrt:" ]; then
+                    exitoptions="-cartcrt $2/${1:9}"
+                    echo -ne "(cartridge:${1:9}) "
+                fi
             ;;
     esac
 }

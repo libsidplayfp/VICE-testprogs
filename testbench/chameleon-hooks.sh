@@ -1,6 +1,7 @@
 
 DUMMY=.dummyfile
 RDUMMY=.dummyfile2
+CDUMMY=.dummyfile3
 
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
@@ -44,7 +45,9 @@ function chameleon_clear_returncode
 function chameleon_poll_returncode
 {
     # poll return code
+    echo -ne "X" > $DUMMY
     RET=`cat $DUMMY |  hexdump -ve '/1 "%02x"'`
+#    RET="58"
 #    echo "poll1:" "$RET"
     while [ "$RET" = "58" ]
     do
@@ -61,6 +64,36 @@ function chameleon_poll_returncode
 #    echo "chameleon_poll_returncode done"
 #    echo "poll:" "$RET"
     return $RET
+}
+
+function chameleon_make_crtid
+{
+    crtid=`hex $CDUMMY`
+    crtid="${crtid:6:2}"
+#    echo X"$crtid"X
+    case "$crtid" in
+        "00")
+                # generic
+                crtid="\xfc"
+            ;;
+        "20")
+                # easyflash
+                crtid="\x20"
+            ;;
+        "24")
+                # retro replay
+                crtid="\x01"
+            ;;
+        "35")
+                # pagefox
+                crtid="\x35"
+            ;;
+        *)
+                echo " unsupported crt id: 0x"$crtid
+                crtid="\x00"
+            ;;
+    esac
+#    echo "crtid:" "$crtid"
 }
 
 ################################################################################
@@ -93,10 +126,17 @@ function chameleon_get_options
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then
+                    echo -ne "(disk:${1:9}) "
                     chmount -d64 "$2/${1:9}" > /dev/null
                 fi
                 if [ "${1:0:9}" == "mountg64:" ]; then
+                    echo -ne "(disk:${1:9}) "
                     chmount -g64 "$2/${1:9}" > /dev/null
+                fi
+                if [ "${1:0:9}" == "mountcrt:" ]; then
+                    echo -ne "(cartridge:${1:9}) "
+                    chmount -crt "$2/${1:9}" > /dev/null
+                    dd if="$2/${1:9}" bs=1 skip=23 count=1 of=$CDUMMY 2> /dev/null > /dev/null
                 fi
             ;;
     esac
@@ -161,20 +201,46 @@ function chameleon_run_screenshot
 # $3  timeout cycles
 function chameleon_run_exitcode
 {
-#    echo chameleon "$1"/"$2"
-    # reset
-    chameleon_reset
+#    echo chameleon X"$1"X / X"$2"X
 
-    # run the helper program (enable I/O RAM at $d7xx)
-    chameleon_clear_returncode
-    chcodenet -x chameleon-helper.prg > /dev/null
-    chameleon_poll_returncode
+    if [ X"$2"X = X""X ]
+    then
+#        echo "no program given"
+        # reset
+        chameleon_reset
+        # set cartridge type
+        chameleon_make_crtid
+        echo -ne "\x00" > $RDUMMY
+        echo -ne "$crtid" >> $RDUMMY
+        chacocmd --addr 0x400 --writemem $RDUMMY > /dev/null
+        chcodenet -x chameleon-helper.prg > /dev/null
 
-    # run program
-    chameleon_clear_returncode
-    chcodenet -x "$1"/"$2" > /dev/null
-    chameleon_poll_returncode
-    exitcode=$?
+        chameleon_clear_returncode
+        # trigger reset  (run cartridge)
+        echo -ne "X" > $RDUMMY
+        chacocmd --addr 0x80000000 --writemem $RDUMMY > /dev/null
+#        sleep 3
+        chameleon_poll_returncode
+        exitcode=$?
+
+        # overwrite the CBM80 signature with generic "cartridge off" program
+        chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
+        # reset
+        chameleon_reset
+    else
+        # reset
+        chameleon_reset
+        # run the helper program (enable I/O RAM at $d7xx)
+        chameleon_clear_returncode
+        chcodenet -x chameleon-helper.prg > /dev/null
+        chameleon_poll_returncode
+
+        # run program
+        chameleon_clear_returncode
+        chcodenet -x "$1"/"$2" > /dev/null
+        chameleon_poll_returncode
+        exitcode=$?
+    fi
 #    echo "exited with: " $exitcode
 }
 

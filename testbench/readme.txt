@@ -20,6 +20,10 @@ TODO:
             -VICIIextpal
             -VICIIpalette
 
+KLUDGES:
+    - when crt or d64 is mounted and no .prg is given, only the path (and not
+      the actual failed test) will go into the results file
+
 --------------------------------------------------------------------------------
 ================================================================================
 ################################################################################

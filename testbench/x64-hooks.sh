@@ -56,6 +56,10 @@ function x64_get_options
                 if [ "${1:0:9}" == "mountg64:" ]; then
                     exitoptions="-8 $2/${1:9}"
                 fi
+                if [ "${1:0:9}" == "mountcrt:" ]; then
+                    exitoptions="-cartcrt $2/${1:9}"
+                    echo -ne "(cartridge:${1:9}) "
+                fi
             ;;
     esac
 }
@@ -114,7 +118,7 @@ function x64_run_screenshot
 function x64_run_exitcode
 {
     extraopts=""$4" "$5" "$6""
-#    echo $X64 "$1"/"$2"
+#    echo $X64 $X64OPTS $X64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2"
     $X64 $X64OPTS $X64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode

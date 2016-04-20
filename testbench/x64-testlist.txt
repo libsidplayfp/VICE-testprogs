@@ -15,9 +15,9 @@
 ../C64/autostart/basic/,basictest.prg,exitcode,100000000
 ../C64/autostart/basic/,printpoint.prg,exitcode,100000000
 ../C64/autostart/basic/,printpoint2.prg,exitcode,100000000
-#TODO:
-#../C64/autostart/defaults/,test.prg,exitcode,100000000
-#../C64/autostart/defaults/,test.d64,exitcode,100000000
+#TODO: test.prg fails when not loaded by LOAD"TEST",8
+../C64/autostart/defaults/,test.prg,exitcode,100000000
+../C64/autostart/defaults/,test.prg,exitcode,100000000,mountd64:test.d64
 ../C64/autostart/random/,raster.prg,interactive,0
 ../crtemulation/paltest/,paltest.prg,interactive,0
 ../crtemulation/,emusuxX0r-crest.prg,interactive,0
@@ -385,6 +385,8 @@
 #../CPU/,cputest.d64
 ################################################################################
 # Interrupts
+#
+# ../interrupts/ runtime 89 minutes and 27 seconds (chameleon)
 ################################################################################
 ../interrupts/cia-int/,cia-int-irq-new.prg,exitcode,100000000,cia-new
 ../interrupts/cia-int/,cia-int-irq.prg,exitcode,100000000,cia-old
@@ -420,6 +422,8 @@
 ../interrupts/nmitest/,nmitest2.prg,interactive,0
 ################################################################################
 # CIA 6526
+#
+# ../CIA/ runtime 15 minutes and 23 seconds (chameleon)
 ################################################################################
 ../CIA/CIA-AcountsB/,cia-b-counts-a.prg,exitcode,100000000
 ../CIA/CIA-AcountsB/,cmp-b-counts-a-old.prg,exitcode,100000000,cia-old
@@ -448,6 +452,7 @@
 ../CIA/ciavarious/,cia3anew.prg,exitcode,10000000,cia-new
 ../CIA/ciavarious/,cia4new.prg,exitcode,20000000,cia-new
 ../CIA/ciavarious/,cia8new.prg,exitcode,10000000,cia-new
+../CIA/dd0dtest/,dd0dtest.prg,exitcode,100000000
 ../CIA/irqdelay/,irqdelay.prg,interactive,0
 ../CIA/irqdelay/,irqdelay2.prg,interactive,0
 ../CIA/irqdelay/,irqdelay-oneshot.prg,interactive,0
@@ -756,22 +761,24 @@
 #../SID/waveforms/,waveforms-8580.prg
 ################################################################################
 # Cartridges
+#
+# ../C64/ runtime 0 minutes and 33 seconds (chameleon)
 ################################################################################
 ../C64/autostart/cartio/,test.prg,interactive,0
-#TODO:
-#../C64/autostart/defaults/,test.crt,exitcode,100000000
+../C64/autostart/defaults/,,exitcode,100000000,mountcrt:test.crt
 #TODO:
 #../C64/carts/,exos.prg
-#../C64/carts/,mmcrplugin.prg
-#../C64/carts/,16kgame.crt
-#../C64/carts/,mmcr-64krom.crt
-#../C64/carts/,romram.crt
-#../C64/carts/,rr-reu.crt
-#../C64/carts/,writeram.crt
+../C64/carts/,mmcrplugin.prg,interactive,0
+../C64/carts/,,exitcode,100000000,mountcrt:16kgame.crt
+#TODO: do more research and make a proper automatic test
+../C64/carts/,mmcr-64krom.crt,interactive,0
+../C64/carts/,,exitcode,100000000,mountcrt:romram.crt
+../C64/carts/,,exitcode,100000000,reu512k,mountcrt:rr-reu.crt
+../C64/carts/,,exitcode,100000000,mountcrt:writeram.crt
 ../C64/carts/ef-test/,ef_test.crt,interactive,0
 ../C64/carts/rr-freeze/,rr-freeze.crt,interactive,0
-#TODO:
-#../C64/carts/tamtest/,tamtest.crt
+#TODO: make this automatic
+../C64/carts/tamtest/,tamtest.crt,interactive,0
 ../C64/freezer/,freezeblock.prg,interactive,0
 ../C64/freezer/,freeze-cia1.prg,interactive,0
 ../C64/freezer/,freeze-cia2.prg,interactive,0
@@ -794,6 +801,7 @@
 ../GEO-RAM/,newtest.prg,interactive,0,geo256k
 ################################################################################
 # 1541 Drive
+# ../drive runtime 93 minutes and 36 seconds (chameleon)
 ################################################################################
 ../drive/1541-testsuite,1541-testsuite.prg,exitcode,4294967295,mountd64:disks/pc64_1.d64
 ../drive/1541-testsuite,1541-testsuite.prg,exitcode,4294967295,mountd64:disks/pc64_2.d64

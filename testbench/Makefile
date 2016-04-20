@@ -18,7 +18,7 @@ all: prereq
 	echo "testchameleon"
 
 ################################################################################
-prereq: selftest testlist cmpscreens chameleon-helper.prg
+prereq: selftest testlist cmpscreens prereq-chameleon
 
 .PHONY: testlist selftest
 
@@ -142,8 +142,13 @@ testvsid: prereq
 
 ################################################################################
 
+prereq-chameleon: chameleon-helper.prg chameleon-crtoff.prg
+
 chameleon-helper.prg: chameleon-helper.asm
 	acme -f cbm -o chameleon-helper.prg chameleon-helper.asm
+
+chameleon-crtoff.prg: chameleon-crtoff.asm
+	acme -f plain -o chameleon-crtoff.prg chameleon-crtoff.asm
 
 testchameleon: chameleon-helper.prg prereq
 	./testbench.sh chameleon

@@ -104,10 +104,15 @@ function runprogsfortarget
 #        echo "$e"
         if [ "${e:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$e"
-
+#            echo line:${e}
+#            echo 1:${myarray[0]}
+#            echo 2:${myarray[1]}
+#            echo 3:${myarray[2]}
+#            echo 4:${myarray[3]}
+#            echo 5:${myarray[4]}
             arraylength=${#myarray[@]}
             if [ "$arraylength" -lt "4" ]; then
-                echo "error: unexpected end of line in input"
+                echo "error: unexpected end of line in input (arraylenght=${arraylength})"
                 exit -1
             fi
 
@@ -130,7 +135,7 @@ function runprogsfortarget
     #                echo $i " / " ${arraylength} " : " ${myarray[$i-1]}
                     "$target"_get_options "${myarray[$i-1]}" "$testpath"
     #                echo "exitoptions: $exitoptions"
-                    testoptions+="$exitoptions"
+                    testoptions+="${exitoptions} "
                 done
             if [ "${testtype}" == "interactive" ]; then
                 echo "$testpath" "$testprog" "- " "interactive (skipped)"

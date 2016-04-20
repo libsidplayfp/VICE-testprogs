@@ -16,6 +16,20 @@ link:   !word 0
         sta $d0fa       ; enable config registers
         lda #$27        ; MMU Slot for I/O RAM
         sta $d0af
+
+        lda #$00
+        sta $d0f7       ; select 1 disk per drive, select image slot 1
+        lda #$40
+        sta $d0f8       ; enable disk drive 1 at id 8
+
+        lda #0
+        ldx $0400
+        cpx #$20
+        beq nocart
+        lda $0401
+nocart:
+        sta $d0f0       ; dis/enable cartridge
+
         lda #0
         ldx #1
         ; there is free memory at 0x00010000

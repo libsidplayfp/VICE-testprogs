@@ -1,12 +1,9 @@
 Prerequisites:
 --------------
 
-- reset the chameleon configuration to default, and enable one emulated drive
-  at device id #8
-- mount some d64 to that drive (it doesnt matter which one, this is needed so
-  the chameleon will actually enable the drive - the GCR data will be
-  overwritten/changed by the testbench when running tests)
-
+- reset the chameleon configuration to default
+- make sure no d64 is mounted. some tests will upload GCR data to the memory
+  and overwrite whatever is there.
 
 Quirks:
 -------
@@ -15,8 +12,14 @@ Quirks:
 
 $ ./testbench.sh chameleon REU/
 
+- same for the "rr+reu" test
+
 - right now tests for all hardware/chip variations are always run, resulting in
   in a bunch of "failing" tests
+
+- not all CRT types are supported right now
+
+- sending d64/GCR data takes a long time and no progress is shown
 
 Running the testbench:
 ----------------------
