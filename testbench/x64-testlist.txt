@@ -777,6 +777,7 @@
 ../C64/carts/,,exitcode,100000000,mountcrt:writeram.crt
 ../C64/carts/ef-test/,ef_test.crt,interactive,0
 ../C64/carts/rr-freeze/,rr-freeze.crt,interactive,0
+../C64/carts/Supergames/,,exitcode,100000000,mountcrt:supergames.crt
 #TODO: make this automatic
 ../C64/carts/tamtest/,tamtest.crt,interactive,0
 ../C64/freezer/,freezeblock.prg,interactive,0

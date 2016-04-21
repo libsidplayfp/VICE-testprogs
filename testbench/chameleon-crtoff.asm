@@ -15,7 +15,13 @@ lp:
     bne lp
     jmp $0400
 
+; copied to $0400
 payload:
+    lda #$2f
+    sta $00
+    lda #$37
+    sta $01
+
     lda #42
     sta $d0fe       ; enable config mode
     lda #0
@@ -65,3 +71,37 @@ payload:
     lda $df00 ; REU
 
     jmp $fce2
+
+    * = $9000
+startmax:
+    sei
+    ldx #0
+lp1:
+    lda payload + ($e000 - $8000),x
+    sta $0400,x
+    inx
+    bne lp1
+    jmp $0400
+
+; hardware vectors for ultimax mode (one 8k bank at e000)
+    * = $9ffa
+    !word $9000
+    !word $9000
+    !word $9000
+
+    * = $9000+$2000
+;startmax:
+    sei
+    ldx #0
+lp2:
+    lda payload,x
+    sta $0400,x
+    inx
+    bne lp2
+    jmp $0400
+
+; hardware vectors for ultimax mode (one 8k bank at 8000, one 8k bank at e000)
+    * = $9ffa+$2000
+    !word startmax + ($e000 - $8000)
+    !word startmax + ($e000 - $8000)
+    !word startmax + ($e000 - $8000)

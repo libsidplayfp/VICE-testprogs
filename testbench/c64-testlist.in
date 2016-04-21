@@ -761,7 +761,7 @@
 ################################################################################
 # Cartridges
 #
-# ../C64/ runtime 0 minutes and 33 seconds (chameleon)
+# ../C64/carts runtime 0 minutes and 44 seconds (chameleon)
 ################################################################################
 ../C64/autostart/cartio/,test.prg,interactive,0
 ../C64/autostart/defaults/,,exitcode,100000000,mountcrt:test.crt
@@ -776,6 +776,7 @@
 ../C64/carts/,,exitcode,100000000,mountcrt:writeram.crt
 ../C64/carts/ef-test/,ef_test.crt,interactive,0
 ../C64/carts/rr-freeze/,rr-freeze.crt,interactive,0
+../C64/carts/Supergames/,,exitcode,100000000,mountcrt:supergames.crt
 #TODO: make this automatic
 ../C64/carts/tamtest/,tamtest.crt,interactive,0
 ../C64/freezer/,freezeblock.prg,interactive,0

@@ -47,14 +47,17 @@ function x128_get_options
             ;;
         "reu512k")
                 exitoptions="-reu -reusize 512"
+                reu_enabled=1
             ;;
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then
                     exitoptions="-8 $2/${1:9}"
+                    echo -ne "(disk:${1:9}) "
                 fi
                 if [ "${1:0:9}" == "mountg64:" ]; then
                     exitoptions="-8 $2/${1:9}"
+                    echo -ne "(disk:${1:9}) "
                 fi
                 if [ "${1:0:9}" == "mountcrt:" ]; then
                     exitoptions="-cartcrt $2/${1:9}"

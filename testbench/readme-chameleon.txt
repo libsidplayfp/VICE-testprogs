@@ -8,12 +8,6 @@ Prerequisites:
 Quirks:
 -------
 
-- the REU tests must be run seperately right now (with enabled 512kb REU):
-
-$ ./testbench.sh chameleon REU/
-
-- same for the "rr+reu" test
-
 - right now tests for all hardware/chip variations are always run, resulting in
   in a bunch of "failing" tests
 

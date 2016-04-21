@@ -30,23 +30,14 @@ function xpet_get_options
         "default")
                 exitoptions=""
             ;;
-        "vicii-pal")
+        "crtc-pal")
                 exitoptions="-pal"
             ;;
-        "vicii-ntsc")
+        "crtc-ntsc")
                 exitoptions="-ntsc"
             ;;
-        "vicii-ntscold")
+        "crtc-ntscold")
                 exitoptions="-ntscold"
-            ;;
-        "cia-old")
-                exitoptions="-ciamodel 0"
-            ;;
-        "cia-new")
-                exitoptions="-ciamodel 1"
-            ;;
-        "reu512k")
-                exitoptions="-reu -reusize 512"
             ;;
         *)
                 exitoptions=""

@@ -85,6 +85,14 @@ function gettestsfortarget
 
 ###############################################################################
 
+# reset all flags used for options
+function resetflags
+{
+    reu_enabled=0
+}
+
+###############################################################################
+
 # $1 - target
 # $2 - filter substring
 function runprogsfortarget
@@ -102,6 +110,8 @@ function runprogsfortarget
     for e in "${testlist[@]}"
     do
 #        echo "$e"
+        resetflags
+
         if [ "${e:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$e"
 #            echo line:${e}

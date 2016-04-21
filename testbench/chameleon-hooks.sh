@@ -23,12 +23,18 @@ function chameleon_reset
     # check for "ready."
     RET="XXXXXX"
 #    echo "poll1:" "$RET"
+    SECONDSEND=$((SECONDS + 5))
     while [ "$RET" != "12050104192e" ]
     do
 #        chacocmd --len 1 --addr 0x000100ff --dumpmem
         chacocmd --len 6 --addr 1224 --readmem $DUMMY > /dev/null
         RET=`cat $DUMMY |  hexdump -ve '/1 "%02x"'`
  #      echo "poll:" "$RET"
+        if [ $SECONDS -gt $SECONDSEND ]
+        then
+            echo "timeout when waiting for reset"
+            return
+        fi
     done;
 
 #    echo "chameleon_reset done"
@@ -49,12 +55,18 @@ function chameleon_poll_returncode
     RET=`cat $DUMMY |  hexdump -ve '/1 "%02x"'`
 #    RET="58"
 #    echo "poll1:" "$RET"
+    SECONDSEND=$((SECONDS + 5))
     while [ "$RET" = "58" ]
     do
 #        chacocmd --len 1 --addr 0x000100ff --dumpmem
         chacocmd --len 1 --addr 0x000100ff --readmem $DUMMY > /dev/null
         RET=`cat $DUMMY |  hexdump -ve '/1 "%02x"'`
 #        echo "poll:" "$RET"
+        if [ $SECONDS -gt $SECONDSEND ]
+        then
+            echo "timeout when waiting for return code"
+            return
+        fi
     done;
 
     if [ "$RET" = "ff" ]; then
@@ -123,6 +135,9 @@ function chameleon_get_options
         "cia-new")
                 exitoptions=""
             ;;
+        "reu512k")
+                reu_enabled=1
+            ;;
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then
@@ -159,6 +174,8 @@ function chameleon_run_screenshot
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-chameleon.png
 
+    # overwrite the CBM80 signature with generic "cartridge off" program
+    chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
     # reset
     chameleon_reset
 
@@ -212,14 +229,23 @@ function chameleon_run_exitcode
         chameleon_make_crtid
         echo -ne "\x00" > $RDUMMY
         echo -ne "$crtid" >> $RDUMMY
+        # set reu type
+        if [ $reu_enabled = 1 ]
+        then
+            echo -ne "\x01" >> $RDUMMY
+        else
+            echo -ne "\x00" >> $RDUMMY
+        fi
         chacocmd --addr 0x400 --writemem $RDUMMY > /dev/null
+        # run helper program
+        chameleon_clear_returncode
         chcodenet -x chameleon-helper.prg > /dev/null
+        chameleon_poll_returncode
 
         chameleon_clear_returncode
         # trigger reset  (run cartridge)
         echo -ne "X" > $RDUMMY
         chacocmd --addr 0x80000000 --writemem $RDUMMY > /dev/null
-#        sleep 3
         chameleon_poll_returncode
         exitcode=$?
 
@@ -228,6 +254,8 @@ function chameleon_run_exitcode
         # reset
         chameleon_reset
     else
+        # overwrite the CBM80 signature with generic "cartridge off" program
+        chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
         # reset
         chameleon_reset
         # run the helper program (enable I/O RAM at $d7xx)
