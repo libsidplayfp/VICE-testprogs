@@ -59,11 +59,6 @@ TODO:
 - make all tests run on PAL and NTSC
 - improve tests for illegal opcodes to make them work on all CPUs
 
-aneb.s
-    - add detection for the ANE "magic constant" and fix test accordingly
-trap1-15.s
-    - add detection for the ANE "magic constant" and fix test accordingly
-
 cia12a.s
     - fix to work on "new" CIA.
 cia2tb.s

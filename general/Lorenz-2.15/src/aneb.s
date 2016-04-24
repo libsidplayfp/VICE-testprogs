@@ -10,6 +10,11 @@
          .text "{up}aneb"
          .byte 0
 
+        lda #0
+        ldx #$ff
+        .byte $8b, $ff
+        sta magicvalue+1
+
          lda #%00011011
          sta db
          lda #%11000110
@@ -33,6 +38,7 @@ next     lda db
          sta cmd+1
 
          lda ab
+magicvalue:
          ora #$ee
          and xb
          and db
