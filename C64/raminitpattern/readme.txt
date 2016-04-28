@@ -136,6 +136,13 @@ C64reloaded (gpz)
 some problematic programs:
 
 Typical/Beyond Force  (https://csdb.dk/release/?id=4136)
+ - crashes in upscroller (first part), clearing RAM with zeros before RUN makes
+   it work.
 Flying Shark Preview+/Federation Against Copyright (https://csdb.dk/release/?id=21889)
+ - crashes after crack intro, clearing RAM with zeros before RUN makes it work
 Comic Art 09/Mayhem (https://csdb.dk/release/?id=38695)
+ - crashes shortly after start, starting reset pattern with 255 makes it work
 Defcom/Jazzcat Cracking Team (https://csdb.dk/release/?id=29387)
+ - crashes right at the start, starting reset pattern with 255 makes it work
+Platton.tap (original)
+ - crashes while loading around counter 22 when RAM is cleared with zeros before
