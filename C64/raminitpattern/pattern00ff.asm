@@ -41,7 +41,7 @@ clrlp:
         sta fnumFF
         sta fnumXX
 restart:
-        lda #$a0
+        lda #>(codeend+255)
         sta ptr+1
         sta fptr+1
         lda #$00
@@ -50,7 +50,7 @@ restart:
 
 ;        jsr showpage
 
-        ldx #$a0
+        ldx #>(codeend+255)
 mlp:
         jsr countpage
 
@@ -161,3 +161,6 @@ showlp:
 
 hextab:
         !scr "0123456789abcdef"
+
+codeend:
+

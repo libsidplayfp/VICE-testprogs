@@ -12,15 +12,35 @@ since a surprising number of program (probably not deliberatly) depend on the
 
 ================================================================================
 
+hints on how to examine the init pattern
+----------------------------------------
+
+you can examine the init pattern using a cartridge with ML monitor (AR) like
+this:
+
+- power off the C64. leave it powered off for at least some minutes (yes really)
+- power on the C64
+- go to "fastload"
+- enter the ML monitor (AR: MON)
+- look at the memory in "screencode" mode (AR: I*0800-). let the whole memory
+  scroll by, this makes it somewhat easier to recognize a pattern even when a
+  bunch of values are not exactly $00 or $ff
+
+if in doubt, save the entire memory range (AR: s"dump" 8 0000 ffff) and send the
+file to someone from the VICE team for examination
+
+================================================================================
+
 pattern00ff.prg
 ---------------
 
-this program scans the a000-ffff area and tries to find the page that has least
-bytes that are neither $00 nor $ff. this page will be displayed at the bottom
-(white).
+this program scans the RAM area not used by the program itself and tries to find
+the page that has least bytes that are neither $00 nor $ff. this page will be
+displayed at the bottom (white).
 
 this program will not get useful results for RAMs that show a pattern that is
-more complex/longer than one page.
+more complex/longer than one page or when the initial pattern contains other
+values than $00 and $ff.
 
 ================================================================================
 
@@ -49,13 +69,40 @@ VICE (2.4.27, rev 31063)
 results from real C64s
 ----------------------
 
-C64C (gpz)
+C64 PAL Breadbox (gpz) (ASSY NO 250407, RAM: mT4264-15 / USA)
 
-- repeating ff,ff,00,00,00,00,ff,ff pattern, every $4000 bytes the pattern seems
-  to be inverted (for another $4000 bytes). occasional random bytes
+- page starts with $00, then $ff, $00, $ff etc. first 16 bytes of each page seem
+  completely random. some more occasional random bytes in the rest of the page.
+  pattern seems consistant across the whole memory range.
+
+C64 NTSC Breadbox (gpz) (ASSY 250425, RAM: KM4164B-10 / 931C KOREA)
+
+- page starts with 8 times $00, then 8 times $ff, etc. lots of random bytes at
+  no particular offsets. pattern seems to be the same on whole memory range
+
+C64C PAL (gpz) (ASSY NO 250469 R4, RAM: M41464-10 / OKI / JAPAN 833050)
+
+- repeating 00,00,ff,ff,ff,ff,00,00 pattern, $every $4000 bytes the pattern
+  seems to be inverted (for another $4000 bytes) ($4000-$7fff and $c000-$ffff
+  show the inverted pattern). occasional random bytes, almost none after longer
+  power off period.
+
+C64C PAL (gpz) (ASSY NO 250469 R4, RAM: MN414644-08 / JAPAN 75252)
+
+- page starts with $80 times $00, then $80 times $ff, etc. random bytes only at
+  offset 0 of each page. oddly enough $4000-$cfff show the inverted pattern
+  In this C64 the RAM content is persistant for literally minutes after power
+  off!
+
+C64reloaded (gpz)
+
+- page starts with 8 times $00, then 8 times $ff, etc. very few random bytes
 
 ================================================================================
 
 some problematic programs:
 
 Typical/Beyond Force  (https://csdb.dk/release/?id=4136)
+Flying Shark Preview+/Federation Against Copyright (https://csdb.dk/release/?id=21889)
+Comic Art 09/Mayhem (https://csdb.dk/release/?id=38695)
+Defcom/Jazzcat Cracking Team (https://csdb.dk/release/?id=29387)
