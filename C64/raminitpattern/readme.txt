@@ -44,13 +44,22 @@ values than $00 and $ff.
 
 ================================================================================
 
-results from current emulators
-------------------------------
+VICE (2.4.27, rev 31063)
+
+- page starts with 64 bytes $00, then 64 bytes $ff etc
+
+
+results from other emulators
+----------------------------
 
 CCS64 (3.9)
 
 - page starts with 64 times $ff, then 64 times $00 etc. additionally the bytes
   at offset $13, $53, $93, $d3 seem to be random
+
+  -raminitstartvalue    255
+  -raminitvalueinvert   64
+  -raminitpatterninvert 0
 
 HOXS54 (1.0.8.8)
 
@@ -58,13 +67,17 @@ HOXS54 (1.0.8.8)
   pages with 128 bytes $99, then 128 bytes $66. additionally the first bytes of
   each page seems to be random. (this is supposed to be taken from a real C64)
 
+  -raminitstartvalue    255
+  -raminitvalueinvert   128
+  -raminitpatterninvert 0       (the $99/$66 stuff is not produced)
+
 Micro64 (1.00.2013.05.11 - build 714)
 
 - page starts with 64 bytes $00, then 64 bytes $ff etc
 
-VICE (2.4.27, rev 31063)
-
-- page starts with 64 bytes $00, then 64 bytes $ff etc
+  -raminitstartvalue    0
+  -raminitvalueinvert   64
+  -raminitpatterninvert 0
 
 results from real C64s
 ----------------------
@@ -75,10 +88,18 @@ C64 PAL Breadbox (gpz) (ASSY NO 250407, RAM: mT4264-15 / USA)
   completely random. some more occasional random bytes in the rest of the page.
   pattern seems consistant across the whole memory range.
 
+  -raminitstartvalue    0
+  -raminitvalueinvert   1
+  -raminitpatterninvert 0
+
 C64 NTSC Breadbox (gpz) (ASSY 250425, RAM: KM4164B-10 / 931C KOREA)
 
 - page starts with 8 times $00, then 8 times $ff, etc. lots of random bytes at
   no particular offsets. pattern seems to be the same on whole memory range
+
+  -raminitstartvalue    0
+  -raminitvalueinvert   8
+  -raminitpatterninvert 0
 
 C64C PAL (gpz) (ASSY NO 250469 R4, RAM: M41464-10 / OKI / JAPAN 833050)
 
@@ -87,6 +108,10 @@ C64C PAL (gpz) (ASSY NO 250469 R4, RAM: M41464-10 / OKI / JAPAN 833050)
   show the inverted pattern). occasional random bytes, almost none after longer
   power off period.
 
+  -raminitstartvalue    0
+  -raminitvalueinvert   4
+  -raminitpatterninvert 16384   (pattern starts with 4 zeros instead of 2)
+
 C64C PAL (gpz) (ASSY NO 250469 R4, RAM: MN414644-08 / JAPAN 75252)
 
 - page starts with $80 times $00, then $80 times $ff, etc. random bytes only at
@@ -94,9 +119,17 @@ C64C PAL (gpz) (ASSY NO 250469 R4, RAM: MN414644-08 / JAPAN 75252)
   In this C64 the RAM content is persistant for literally minutes after power
   off!
 
+  -raminitstartvalue    0
+  -raminitvalueinvert   128
+  -raminitpatterninvert 16384   (only $4000-$7fff will be inverted)
+
 C64reloaded (gpz)
 
 - page starts with 8 times $00, then 8 times $ff, etc. very few random bytes
+
+  -raminitstartvalue    0
+  -raminitvalueinvert   8
+  -raminitpatterninvert 0
 
 ================================================================================
 
