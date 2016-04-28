@@ -42,6 +42,12 @@ this program will not get useful results for RAMs that show a pattern that is
 more complex/longer than one page or when the initial pattern contains other
 values than $00 and $ff.
 
+platoontest.prg
+---------------
+
+extracted from the original Platoon tape - checks if the memory at $1000-$10ff
+has been filled with the same constant value
+
 ================================================================================
 
 VICE (2.4.27, rev 31063)
