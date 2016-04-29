@@ -48,8 +48,8 @@ platoontest.prg
 extracted from the original Platoon tape - checks if the memory at $1000-$10ff
 has been filled with the same constant value
 
-darkstarbbstes.prg
-------------------
+darkstarbbstest.prg
+-------------------
 
 extracted from the original Disk - checks if a couple of pages have been filled
 with a constant value (first 10 values), or contain incrementing values in the
@@ -107,6 +107,16 @@ C64 PAL Breadbox (gpz) (ASSY NO 250407, RAM: mT4264-15 / USA)
   -raminitvalueinvert   1
   -raminitpatterninvert 0
 
+C64 PAL Breadbox (flavioweb) (ASSY 250407 rev C, RAM: JAPAN3L4U / HM4864P-3)
+
+- page starts with 2 times $ff, then two times $00. pattern is inverted every
+  256 bytes. occasional random bytes mostly at offsets $71, $7f, $f1, $ff in
+  each page.
+
+  -raminitstartvalue    255
+  -raminitvalueinvert   2
+  -raminitpatterninvert 256
+
 C64 NTSC Breadbox (gpz) (ASSY 250425, RAM: KM4164B-10 / 931C KOREA)
 
 - page starts with 8 times $00, then 8 times $ff, etc. lots of random bytes at
@@ -138,6 +148,24 @@ C64C PAL (gpz) (ASSY NO 250469 R4, RAM: MN414644-08 / JAPAN 75252)
   -raminitvalueinvert   128
   -raminitpatterninvert 16384   (only $4000-$7fff will be inverted)
 
+C64C PAL (flavioweb) (ASSY: ???, RAM: ???)
+
+- first come two pages with 128 bytes $ff, then 128 bytes $00... followed by two
+  pages with 128 bytes $99, then 128 bytes $66. very few random bytes, mostly in
+  the last byte of each page. (this seems to match the pattern HOXS64 uses)
+
+  -raminitstartvalue    255
+  -raminitvalueinvert   128
+  -raminitpatterninvert 0       (the $99/$66 stuff is not produced)
+
+C64G PAL (flavioweb) (ASSY: ???, RAM: ???)
+
+- repeating 00,00,ff,ff,ff,ff,00,00 pattern
+
+  -raminitstartvalue    0
+  -raminitvalueinvert   4
+  -raminitpatterninvert 0       (pattern starts with 4 zeros instead of 2)
+
 C64reloaded (gpz)
 
 - page starts with 8 times $00, then 8 times $ff, etc. very few random bytes
@@ -163,7 +191,10 @@ Comic Art 09/Mayhem (https://csdb.dk/release/?id=38695)
 Defcom/Jazzcat Cracking Team (https://csdb.dk/release/?id=29387)
  - crashes right at the start, starting reset pattern with 255 makes it work
 
-Platton.tap (original)
+Platoon.tap (original)
  - crashes while loading around counter 22 when RAM is cleared with zeros before
+   (see above)
 
-
+Darkstar BBS (original)
+ - contains a check for typical RAM clear patterns (see above). using an init
+   pattern that inverts after at most 10 bytes makes it work.
