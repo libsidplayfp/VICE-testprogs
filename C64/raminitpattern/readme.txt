@@ -48,6 +48,15 @@ platoontest.prg
 extracted from the original Platoon tape - checks if the memory at $1000-$10ff
 has been filled with the same constant value
 
+darkstarbbstes.prg
+------------------
+
+extracted from the original Disk - checks if a couple of pages have been filled
+with a constant value (first 10 values), or contain incrementing values in the
+first 8 locations.
+
+note: the first test fails on some common RAM init patterns!
+
 ================================================================================
 
 VICE (2.4.27, rev 31063)
@@ -144,11 +153,17 @@ some problematic programs:
 Typical/Beyond Force  (https://csdb.dk/release/?id=4136)
  - crashes in upscroller (first part), clearing RAM with zeros before RUN makes
    it work.
+
 Flying Shark Preview+/Federation Against Copyright (https://csdb.dk/release/?id=21889)
  - crashes after crack intro, clearing RAM with zeros before RUN makes it work
+
 Comic Art 09/Mayhem (https://csdb.dk/release/?id=38695)
  - crashes shortly after start, starting reset pattern with 255 makes it work
+
 Defcom/Jazzcat Cracking Team (https://csdb.dk/release/?id=29387)
  - crashes right at the start, starting reset pattern with 255 makes it work
+
 Platton.tap (original)
  - crashes while loading around counter 22 when RAM is cleared with zeros before
+
+
