@@ -7,8 +7,9 @@ $ff.
 the actual pattern may depend on many things, such as the type of RAM used
 (organisation, manufacturer, etc) and the main board.
 
-since a surprising number of program (probably not deliberatly) depend on the
+since a surprising number of programs (probably not deliberatly) depend on the
 "correct" RAM init pattern, it is important to get this right in emulation.
+(a couple such programs are listed at the end of this document)
 
 ================================================================================
 
@@ -126,6 +127,16 @@ C64 NTSC Breadbox (gpz) (ASSY 250425, RAM: KM4164B-10 / 931C KOREA)
   -raminitvalueinvert   8
   -raminitpatterninvert 0
 
+C64C PAL (magervalp) (ASSY NO 250469 R3, RAM: M41464-15 / OKI / JAPAN 713028)
+
+- repeating ff,ff,00,00,00,00,ff,ff pattern, $every $4000 bytes the pattern
+  seems to be inverted (for another $4000 bytes) ($4000-$7fff and $c000-$ffff
+  show the inverted pattern).
+
+  -raminitstartvalue    255
+  -raminitvalueinvert   4
+  -raminitpatterninvert 16384   (pattern starts with 4 zeros instead of 2)
+
 C64C PAL (gpz) (ASSY NO 250469 R4, RAM: M41464-10 / OKI / JAPAN 833050)
 
 - repeating 00,00,ff,ff,ff,ff,00,00 pattern, $every $4000 bytes the pattern
@@ -176,11 +187,12 @@ C64reloaded (gpz)
 
 ================================================================================
 
-some problematic programs:
+some problematic programs
+-------------------------
 
 Typical/Beyond Force  (https://csdb.dk/release/?id=4136)
  - crashes in upscroller (first part), clearing RAM with zeros before RUN makes
-   it work.
+   it work. (to be precise, it requires $3fff being zero)
 
 Flying Shark Preview+/Federation Against Copyright (https://csdb.dk/release/?id=21889)
  - crashes after crack intro, clearing RAM with zeros before RUN makes it work

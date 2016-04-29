@@ -1,5 +1,7 @@
 ; freezer detection/cartridge check from original Platoon tape
 ; checks if the memory at $1000-$10ff is filled with the same value
+;
+; thanks to Ian Coog for finding this routine
 
             *=$0801
             ; BASIC stub: "1 SYS 2061"

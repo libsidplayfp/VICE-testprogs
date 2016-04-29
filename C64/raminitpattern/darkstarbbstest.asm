@@ -1,6 +1,8 @@
 
 ; freezer/cartridge detection extracted from "Darkstar BBS" Disk
 ; note: the first test fails on some common RAM init patterns!
+;
+; thanks to tlr for finding this routine
 
             *=$0801
             ; BASIC stub: "1 SYS 2061"
