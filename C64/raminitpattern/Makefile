@@ -1,5 +1,5 @@
 
-all: pattern00ff.prg platoontest.prg darkstarbbstest.prg cyberloadtest.prg
+all: pattern00ff.prg platoontest.prg darkstarbbstest.prg cyberloadtest.prg typicaltest.prg
 
 pattern00ff.prg: pattern00ff.asm
 	acme -f cbm -o pattern00ff.prg pattern00ff.asm

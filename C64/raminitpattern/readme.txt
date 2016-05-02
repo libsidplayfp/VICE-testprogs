@@ -64,15 +64,16 @@ cyberloadtest.prg ("Cyberload")
 extracted from the original last ninja tape - checks of a page of memory at
 f379 is filled with a constant value and fails if that is the case.
 
+typicaltest.prg
+---------------
+
+checks unitialized memory for values that would make the "typical" demo crash
+eventually.
+
 ================================================================================
 
-VICE (2.4.27, rev 31063)
-
-- page starts with 64 bytes $00, then 64 bytes $ff etc
-
-
-results from other emulators
-----------------------------
+patterns used by emulators
+--------------------------
 
 CCS64 (3.9)
 
@@ -94,6 +95,7 @@ HOXS54 (1.0.8.8)
   -raminitpatterninvert 0       (the $99/$66 stuff is not produced)
 
 Micro64 (1.00.2013.05.11 - build 714)
+VICE (2.4.27, rev 31063)
 
 - page starts with 64 bytes $00, then 64 bytes $ff etc
 
@@ -101,8 +103,23 @@ Micro64 (1.00.2013.05.11 - build 714)
   -raminitvalueinvert   64
   -raminitpatterninvert 0
 
+================================================================================
+
 results from real C64s
 ----------------------
+
+C64 PAL (Impetigo) (ASSY: KU-14194HB, RAM: MB8264-15 / JAPAN 8241 R43 BG)
+
+- page starts with 64 times $ff, then 64 times $00 etc. some random bytes, more
+  or less systematically at offsets:
+    $00, $25, $37, $3e, $47, $5f, $69, $6b
+    $80, $a5, $b7, $be, $c7, $df, $e9, $eb
+
+  -raminitstartvalue    255
+  -raminitvalueinvert   64
+  -raminitpatterninvert 0
+
+  this seems to match the pattern CCS64 uses
 
 C64 PAL Breadbox (gpz) (ASSY NO 250407, RAM: mT4264-15 / USA)
 
@@ -141,7 +158,16 @@ C64C PAL (magervalp) (ASSY NO 250469 R3, RAM: M41464-15 / OKI / JAPAN 713028)
 
   -raminitstartvalue    255
   -raminitvalueinvert   4
-  -raminitpatterninvert 16384   (pattern starts with 4 zeros instead of 2)
+  -raminitpatterninvert 16384   (pattern starts with 4 $ff instead of 2)
+
+C64G PAL (flavioweb) (ASSY: ???, RAM: ???)
+C64C PAL (Impetigo) (ASSY: 250469 R3, RAM: JAPAN 8704 / HM50464P-15 / U1005ZZ)
+
+- repeating 00,00,ff,ff,ff,ff,00,00 pattern
+
+  -raminitstartvalue    0
+  -raminitvalueinvert   4
+  -raminitpatterninvert 0       (pattern starts with 4 zeros instead of 2)
 
 C64C PAL (gpz) (ASSY NO 250469 R4, RAM: M41464-10 / OKI / JAPAN 833050)
 
@@ -169,19 +195,13 @@ C64C PAL (flavioweb) (ASSY: ???, RAM: ???)
 
 - first come two pages with 128 bytes $ff, then 128 bytes $00... followed by two
   pages with 128 bytes $99, then 128 bytes $66. very few random bytes, mostly in
-  the last byte of each page. (this seems to match the pattern HOXS64 uses)
+  the last byte of each page.
 
   -raminitstartvalue    255
   -raminitvalueinvert   128
   -raminitpatterninvert 0       (the $99/$66 stuff is not produced)
 
-C64G PAL (flavioweb) (ASSY: ???, RAM: ???)
-
-- repeating 00,00,ff,ff,ff,ff,00,00 pattern
-
-  -raminitstartvalue    0
-  -raminitvalueinvert   4
-  -raminitpatterninvert 0       (pattern starts with 4 zeros instead of 2)
+  this seems to match the pattern HOXS64 uses
 
 C64reloaded (gpz)
 
@@ -205,9 +225,11 @@ Flying Shark Preview+/Federation Against Copyright (https://csdb.dk/release/?id=
 
 Comic Art 09/Mayhem (https://csdb.dk/release/?id=38695)
  - crashes shortly after start, starting reset pattern with 255 makes it work
+ (packed with "Abuze Crunch", the depacker screws up (unpacked binary works))
 
 Defcom/Jazzcat Cracking Team (https://csdb.dk/release/?id=29387)
  - crashes right at the start, starting reset pattern with 255 makes it work
+ (packed with "JCT packer", then "JCT cruncher"
 
 Platoon (original tape) ("Freeload")
 Rainbow Islands (original tape)
