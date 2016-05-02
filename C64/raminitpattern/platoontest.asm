@@ -1,4 +1,5 @@
-; freezer detection/cartridge check from original Platoon tape
+; "Freeload" freezer detection/cartridge check from original Platoon tape
+; (original source says this detect the expert cartridge)
 ; checks if the memory at $1000-$10ff is filled with the same value
 ;
 ; thanks to Ian Coog for finding this routine

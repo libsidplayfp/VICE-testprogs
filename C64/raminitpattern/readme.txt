@@ -43,8 +43,8 @@ this program will not get useful results for RAMs that show a pattern that is
 more complex/longer than one page or when the initial pattern contains other
 values than $00 and $ff.
 
-platoontest.prg
----------------
+platoontest.prg ("Freeload")
+----------------------------
 
 extracted from the original Platoon tape - checks if the memory at $1000-$10ff
 has been filled with the same constant value
@@ -57,6 +57,12 @@ with a constant value (first 10 values), or contain incrementing values in the
 first 8 locations.
 
 note: the first test fails on some common RAM init patterns!
+
+cyberloadtest.prg ("Cyberload")
+-------------------------------
+
+extracted from the original last ninja tape - checks of a page of memory at
+f379 is filled with a constant value and fails if that is the case.
 
 ================================================================================
 
@@ -203,10 +209,18 @@ Comic Art 09/Mayhem (https://csdb.dk/release/?id=38695)
 Defcom/Jazzcat Cracking Team (https://csdb.dk/release/?id=29387)
  - crashes right at the start, starting reset pattern with 255 makes it work
 
-Platoon.tap (original)
+Platoon (original tape) ("Freeload")
+Rainbow Islands (original tape)
  - crashes while loading around counter 22 when RAM is cleared with zeros before
    (see above)
 
-Darkstar BBS (original)
+Darkstar BBS (original disk)
  - contains a check for typical RAM clear patterns (see above). using an init
    pattern that inverts after at most 10 bytes makes it work.
+
+The Last Ninja (original tape) ("Cyberload")
+Bangkok Knights (original tape)
+Last Ninja 2 (original tape)
+Back to the Future 3 (original tape)
+ - contains a check for typical RAM clear pattern (see above). RAM pages may not
+   be cleared with a constant value
