@@ -7,6 +7,7 @@ X64SCOPTS+=" -VICIIpalette vice.vpl"
 X64SCOPTS+=" -warp"
 #X64SCOPTS+=" -console"
 X64SCOPTS+=" -debugcart"
+#X64SCOPTS+=" -raminitstartvalue 255 -raminitvalueinvert 4"
 
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started
