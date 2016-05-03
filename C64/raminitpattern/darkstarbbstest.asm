@@ -17,9 +17,10 @@ start:
             sta $d7ff
             jmp *
 
-i1415 =         $1415
+;i1415 =         $1415
+i1415:      !byte 0
 
-            * = $18f3
+            ; * = $18f3
 darkstartest:
             ; first test (main)
             LDA #$40

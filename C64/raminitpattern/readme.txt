@@ -189,7 +189,7 @@ C64C PAL (gpz) (ASSY NO 250469 R4, RAM: MN414644-08 / JAPAN 75252)
 
   -raminitstartvalue    0
   -raminitvalueinvert   128
-  -raminitpatterninvert 16384   (only $4000-$7fff will be inverted)
+  -raminitpatterninvert 16384   ($4000-$7fff and $c000-$ffff will be inverted)
 
 C64C PAL (flavioweb) (ASSY: ???, RAM: ???)
 
@@ -202,6 +202,15 @@ C64C PAL (flavioweb) (ASSY: ???, RAM: ???)
   -raminitpatterninvert 0       (the $99/$66 stuff is not produced)
 
   this seems to match the pattern HOXS64 uses
+
+C64C PAL (willymanilly) (ASSY: 250466, RAM: MN41464-15 / JAPAN 6D632)
+
+- page starts with 128 times $ff, then 128 times $00. pattern is inverted every
+  16k ($4000-$7fff and $c000-$ffff show the inverted pattern). few random bytes.
+
+  -raminitstartvalue    255
+  -raminitvalueinvert   128
+  -raminitpatterninvert 16384
 
 C64reloaded (gpz)
 
@@ -246,3 +255,8 @@ Last Ninja 2 (original tape)
 Back to the Future 3 (original tape)
  - contains a check for typical RAM clear pattern (see above). RAM pages may not
    be cleared with a constant value
+
+================================================================================
+
+http://www.c64-wiki.de/index.php/RAM/Herstellercodes
+http://www.c64-wiki.de/index.php/RAM#Cross-Referenz-Tabelle

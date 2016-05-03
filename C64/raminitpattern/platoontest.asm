@@ -13,7 +13,7 @@ start:
             jsr platoontest
             jmp *
 
-            * = $0a80
+            ; * = $0a80
 platoontest:
 
             LDA #<$1000
@@ -22,58 +22,66 @@ platoontest:
             STA $FE
 
 i0A88:
+            ; first check if 5 bytes with same value at current addr
             LDY #$00
             LDA ($FD),Y
             STA i0B16
             INY
             CMP ($FD),Y
-            BNE i0AC3
+            BNE i0AC3 ; no
             INY
             CMP ($FD),Y
-            BNE i0AC3
+            BNE i0AC3 ; no
             INY
             CMP ($FD),Y
-            BNE i0AC3
+            BNE i0AC3 ; no
             INY
             CMP ($FD),Y
-            BNE i0AC3
+            BNE i0AC3 ; no
 
+            ; 5 bytes found
+
+            ; reset addr to $1000
             LDA #<$1000
             STA $FD
             LDA #>$1000
             STA $FE
 
+            ; count how many bytes in $1000-$10ff area are equal to the first
+            ; byte in that page
             LDY #$00
 i0AAD:
             LDA ($FD),Y
             CMP i0B16
-            BEQ i0ABA
+            BEQ i0ABA ; same?
             INY
             BNE i0AAD
             JMP i0ADB
-i0ABA:
-            INC i0B17
+i0ABA: ; same value
+            INC i0B17 ; counter
             INY
             BNE i0AAD
             JMP i0ADB
-i0AC3:
+
+i0AC3:      ; end of page reached?
             LDA $FD
             CMP #<$1100
             BNE i0AD2
             LDA $FE
             CMP #>$1100
-            BNE i0AD2
-            JMP i0AE2
+            BNE i0AD2 ; next test
+            JMP i0AE2 ; passed
 i0AD2:
+            ; memptr + 1
             INC $FD
             BNE i0AD8
             INC $FE
 i0AD8:
-            JMP i0A88
+            JMP i0A88 ; next test
 i0ADB:
-            LDA i0B17
+            LDA i0B17 ; counter
             CMP #$8C
-            BCS i0AE3
+            BCS i0AE3   ; failed
 i0AE2:
             ; test passed
             lda #5
