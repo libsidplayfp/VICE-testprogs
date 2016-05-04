@@ -115,11 +115,15 @@ bend:       !word 0
 _testPassed:
             lda #5
             sta $d020
+            lda #$00
+            sta $d7ff
             jmp *
 _fail
             sta videoram+(24*40)+0
             lda #10
             sta $d020
+            lda #$ff
+            sta $d7ff
             jmp *
 
 _testFailed2
