@@ -347,6 +347,14 @@
 ../CPU/asap/,cpu_shx.prg,exitcode,100000000
 #FIXME:
 #../CPU/ane-lax
+../CPU/Acid800/,cpu_decimal.prg,exitcode,100000000
+../CPU/Acid800/,cpu_flags.prg,exitcode,100000000
+../CPU/Acid800/,cpu_illegal.prg,exitcode,100000000
+../CPU/Acid800/,cpu_insn.prg,exitcode,100000000
+../CPU/Acid800/,cpu_timing.prg,exitcode,100000000
+#FIXME:
+#../CPU/Acid800/,cpu_bugs.prg,exitcode,100000000
+#../CPU/Acid800/,cpu_clisei.prg,exitcode,100000000
 ../CPU/bclark/,decimalmode.prg,exitcode,1000000000
 #TODO:
 #../CPU/cpujam/,cpujam02.prg
