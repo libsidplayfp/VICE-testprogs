@@ -11,6 +11,11 @@ since a surprising number of programs (probably not deliberatly) depend on the
 "correct" RAM init pattern, it is important to get this right in emulation.
 (a couple such programs are listed at the end of this document)
 
+http://csdb.dk/forums/?roomid=11&topicid=116800
+
+http://www.c64-wiki.de/index.php/RAM/Herstellercodes
+http://www.c64-wiki.de/index.php/RAM#Cross-Referenz-Tabelle
+
 ================================================================================
 
 hints on how to examine the init pattern
@@ -127,11 +132,26 @@ C64 PAL Breadbox (gpz) (ASSY NO 250407, RAM: mT4264-15 / USA)
   completely random. some more occasional random bytes in the rest of the page.
   pattern seems consistant across the whole memory range.
 
+C64 PAL Breadbox (TMR) (ASSY: 250425, RAM: MCM6665BP20 / FQQ8502)
+
+- tendency to alternating $00, $ff but lots of other values. apparently takes a
+  long time to loose values.
+
   -raminitstartvalue    0
   -raminitvalueinvert   1
   -raminitpatterninvert 0
 
+C64 1983 Breadbox (pitcher) (ASSY 250407, RAM: mn4164p / 3n6-15)
+C64 1984 Breadbox (pitcher) (ASSY 250425, RAM: mn4164p / 4d1-15)
+
+- page starts with $ff, then $00, $ff, $00 etc. lots of random bytes
+
+  -raminitstartvalue    255
+  -raminitvalueinvert   1
+  -raminitpatterninvert 0
+
 C64 PAL Breadbox (flavioweb) (ASSY 250407 rev C, RAM: JAPAN3L4U / HM4864P-3)
+C64 PAL Breadbox (TMR) (ASSY: 250425, RAM: JAPAN4L3U / HM4864P-3)
 
 - page starts with 2 times $ff, then two times $00. pattern is inverted every
   256 bytes. occasional random bytes mostly at offsets $71, $7f, $f1, $ff in
@@ -140,6 +160,15 @@ C64 PAL Breadbox (flavioweb) (ASSY 250407 rev C, RAM: JAPAN3L4U / HM4864P-3)
   -raminitstartvalue    255
   -raminitvalueinvert   2
   -raminitpatterninvert 256
+
+(fierman) (ASSY:250407, RAM: MB8264-15 / JAPAN 8313 R46 BG, RAM: TMM4164P-3 / 3-CC3)
+
+- repeating pattern of $20 bytes that have mostly all bits 1, then $20 bytes
+  that have most bits 0 (no clear $ff, $00 pattern)
+
+  -raminitstartvalue    255
+  -raminitvalueinvert   32
+  -raminitpatterninvert 0
 
 C64 NTSC Breadbox (gpz) (ASSY 250425, RAM: KM4164B-10 / 931C KOREA)
 
@@ -181,6 +210,7 @@ C64C PAL (gpz) (ASSY NO 250469 R4, RAM: M41464-10 / OKI / JAPAN 833050)
   -raminitpatterninvert 16384   (pattern starts with 4 zeros instead of 2)
 
 C64C PAL (gpz) (ASSY NO 250469 R4, RAM: MN414644-08 / JAPAN 75252)
+C64C (christopher jam) (ASSY: ???, RAM: ???)
 
 - page starts with $80 times $00, then $80 times $ff, etc. random bytes only at
   offset 0 of each page. oddly enough $4000-$cfff show the inverted pattern
@@ -203,6 +233,15 @@ C64C PAL (flavioweb) (ASSY: ???, RAM: ???)
 
   this seems to match the pattern HOXS64 uses
 
+(hypnosis) (ASSY: 250407, RAM: M3764-20RS OKI Japan 3Y311)
+
+- 128 bytes $ff, then 128 bytes $00... random bytes somewhat systematically at
+  offsets $0f, $10, $18, $38, $3a, $fe, $ff
+
+  -raminitstartvalue    255
+  -raminitvalueinvert   128
+  -raminitpatterninvert 0
+
 C64C PAL (willymanilly) (ASSY: 250466, RAM: MN41464-15 / JAPAN 6D632)
 
 - page starts with 128 times $ff, then 128 times $00. pattern is inverted every
@@ -219,6 +258,17 @@ C64reloaded (gpz)
   -raminitstartvalue    0
   -raminitvalueinvert   8
   -raminitpatterninvert 0
+
+(karmic) (ASSY: 250466, RAM: NEC D41464C / 8605FU037)
+
+.:c000 03 f0 00 f0 00 f0 03 f0
+.:c008 0f ff 0f ff 0f ff 0f ff
+.:c010 81 ff ff ef ff 0f ff 0f
+.:c018 f0 00 f0 00 f0 00 f0 00
+.:c020 00 f0 00 f0 b0 f0 00 f0
+.:c028 0f ff 0f ff 0f ff 0f ff
+.:c030 ff c0 ff 0f ff ef 80 0f
+.:c038 f0 00 f0 00 f0 00 f0 01
 
 ================================================================================
 
@@ -256,7 +306,7 @@ Back to the Future 3 (original tape)
  - contains a check for typical RAM clear pattern (see above). RAM pages may not
    be cleared with a constant value
 
-================================================================================
-
-http://www.c64-wiki.de/index.php/RAM/Herstellercodes
-http://www.c64-wiki.de/index.php/RAM#Cross-Referenz-Tabelle
+Advanced Music System
+ - https://sourceforge.net/p/vice-emu/bugs/732/
+ fill RAM with 0s before starting or start VICE like this:
+ x64sc -raminitstartvalue 255
