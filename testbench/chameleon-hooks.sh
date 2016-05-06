@@ -55,7 +55,7 @@ function chameleon_poll_returncode
     RET=`cat $DUMMY |  hexdump -ve '/1 "%02x"'`
 #    RET="58"
 #    echo "poll1:" "$RET"
-    SECONDSEND=$((SECONDS + 5))
+    SECONDSEND=$((SECONDS + $1))
     while [ "$RET" = "58" ]
     do
 #        chacocmd --len 1 --addr 0x000100ff --dumpmem
@@ -182,12 +182,12 @@ function chameleon_run_screenshot
     # run the helper program (enable I/O RAM at $d7xx)
     chameleon_clear_returncode
     chcodenet -x chameleon-helper.prg > /dev/null
-    chameleon_poll_returncode
+    chameleon_poll_returncode 5
 
     # run program
     chameleon_clear_returncode
     chcodenet -x "$1"/"$2" > /dev/null
-#    chameleon_poll_returncode
+#    chameleon_poll_returncode 5
 #    exitcode=$?
 #    echo "exited with: " $exitcode
     timeoutsecs=`expr \( $3 + 5000000 \) / 10000000`
@@ -240,13 +240,13 @@ function chameleon_run_exitcode
         # run helper program
         chameleon_clear_returncode
         chcodenet -x chameleon-helper.prg > /dev/null
-        chameleon_poll_returncode
+        chameleon_poll_returncode 5
 
         chameleon_clear_returncode
         # trigger reset  (run cartridge)
         echo -ne "X" > $RDUMMY
         chacocmd --addr 0x80000000 --writemem $RDUMMY > /dev/null
-        chameleon_poll_returncode
+        chameleon_poll_returncode 5
         exitcode=$?
 
         # overwrite the CBM80 signature with generic "cartridge off" program
@@ -261,12 +261,12 @@ function chameleon_run_exitcode
         # run the helper program (enable I/O RAM at $d7xx)
         chameleon_clear_returncode
         chcodenet -x chameleon-helper.prg > /dev/null
-        chameleon_poll_returncode
+        chameleon_poll_returncode 5
 
         # run program
         chameleon_clear_returncode
         chcodenet -x "$1"/"$2" > /dev/null
-        chameleon_poll_returncode
+        chameleon_poll_returncode $(($3 + 1))
         exitcode=$?
     fi
 #    echo "exited with: " $exitcode

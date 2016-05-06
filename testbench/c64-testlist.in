@@ -373,6 +373,9 @@
 #../CPU/cpuport/,delaytime.prg
 ../CPU/cpuport/,test1.prg,exitcode,10000000
 ../CPU/hmc6502/,AllSuiteA.prg,exitcode,100000000
+../CPU/kdormann/,6502_functional_test.prg,exitcode,4294967295
+#FIXME
+#../CPU/kdormann/,6502_interrupt_test.prg,exitcode,4294967295
 ../CPU/sha/,shaabsy1.prg,exitcode,10000000
 ../CPU/sha/,shaabsy2.prg,exitcode,10000000
 ../CPU/sha/,shaabsy3.prg,exitcode,100000000
@@ -763,6 +766,7 @@
 ../SID/bitfade/,test1osc3.prg,interactive,0
 #../SID/detect/,detect.prg
 ../SID/mapping/,sid-detect2.prg,interactive,0
+../SID/noisewriteback/,noisewriteback.prg,interactive,0
 #TODO (fix noisemapper program)
 #../SID/noise
 ../SID/paddles/,ft3detect.prg,interactive,0

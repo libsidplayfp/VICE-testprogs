@@ -213,6 +213,7 @@ case "$1" in
             $0 -help
             exit
         fi
+        make prereq
         SECONDS=0
         runprogsfortarget "$1" "$2"
         duration=$SECONDS
