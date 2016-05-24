@@ -82,10 +82,49 @@ test_result:
 	ldy	#>done_msg
 	jsr	$ab1e
 
+	lda     #>BUFFER
+	sta     chksrc+1
+	lda     #>refdata
+	sta     chkref+1
+
+	ldy     #9
+chklp2:
+	ldx     #0
+chklp1:
+chksrc = * + 1
+        lda     BUFFER,x
+chkref = * + 1
+        cmp     refdata,x
+        bne     failed
+        inx
+        bne     chklp1
+        inc     chksrc+1
+        inc     chkref+1
+        dey
+        bne     chklp2
+
+        lda     #5
+        sta     $d020
+        lda     #0
+        sta     $d7ff
+        lda     #<passed_msg
+        ldy     #>passed_msg
+
+        jmp     chkcont
+failed:
+        lda     #10
+        sta     $d020
+        lda     #$ff
+        sta     $d7ff
+
+        lda     #<failed_msg
+        ldy     #>failed_msg
+chkcont:
+        jsr     $ab1e
+
 	lda	#<result_msg
 	ldy	#>result_msg
 	jsr	$ab1e
-
 
 	ldx	#<filename
 	ldy	#>filename
@@ -96,10 +135,16 @@ test_result:
 	rts
 
 done_msg:
-	dc.b	"DONE",13,13,0
+        dc.b    "DONE",13,13,0
+
+passed_msg:
+        dc.b    "PASSED",13,13,0
+
+failed_msg:
+        dc.b    "FAILED",13,13,0
 
 result_msg:
-	dc.b	13,13,"(RESULT AT $4000-$4900)",0
+	dc.b	"(RESULT AT $4000-$4900)",0
 
 filename:
 	dc.b	"BARESULT"
@@ -304,6 +349,7 @@ dl_tail:
 BUFFER		equ	$4000
 BUFFER_END	equ	$4900
 
-
+refdata:
+        incbin "dump-c64.bin"
 
 ; eof
