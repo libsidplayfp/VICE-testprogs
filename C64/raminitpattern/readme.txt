@@ -143,6 +143,7 @@ C64 PAL Breadbox (TMR) (ASSY: 250425, RAM: MCM6665BP20 / FQQ8502)
 
 C64 1983 Breadbox (pitcher) (ASSY 250407, RAM: mn4164p / 3n6-15)
 C64 1984 Breadbox (pitcher) (ASSY 250425, RAM: mn4164p / 4d1-15)
+Educator64 PAL (shock) (ASSY: 326298, RAM: ???)
 
 - page starts with $ff, then $00, $ff, $00 etc. lots of random bytes
 
