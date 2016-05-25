@@ -44,7 +44,7 @@ Uses slightly different sprite pattern.
 ---------------------------------------------------------------------------
 
 
-spritegap3-6569r1.prg
+spritegap3-6569r1.bin
 ---------------------
 
 Dumped on Machine 1 (tlr):
@@ -59,7 +59,7 @@ VICII: 6569R1 (guess)
 SID: none
 
 
-spritegap3-6569.prg
+spritegap3-6569.bin
 -------------------
 
 Dumped on Machine 1 (tlr):
@@ -74,7 +74,7 @@ VICII: 6569R3 (guess)
 SID: <unknown>
 
 
-spritegap3-6572.prg
+spritegap3-6572.bin
 -------------------
 
 Dumped on Machine 1 (hedning):
@@ -87,15 +87,27 @@ VICII: 6572R1 (guess)
 SID: MOS/6581/5182 
 
 
-spritegap2-ntsc-c128.dump
-spritegap3-ntsc-c128.dump
+spritegap2-ntsc-c128.bin
+spritegap3-ntsc-c128.bin
 -------------------------
 
 Dumped on unknown machine.
 
-spritegap3-pal-newvic.dump
+spritegap3-pal-newvic.bin
 --------------------------
 
 Dumped on unknown machine. (Rubi?)
+this one is equal to the spritegap3-6569r1.prg file!
+
+spritegap2-8565r2.bin
+---------------------
+
+created on VICE and verified on Machine 1 (gpz):
+
+CPU MOS / 8500 / 1588 24
+CIA1 „new“ MOS / 6526A / 1788 216A
+CIA2 „new“ MOS / 6526 / 1888 216A
+VIC-II „new“ MOS / 8565R2 / 1688 22
+SID „new“ MOS / 8580R5 / 1788 25
 
 ---------------------------------------------------------------------------

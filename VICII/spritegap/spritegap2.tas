@@ -1,3 +1,5 @@
+BUFFER = $4000
+
   processor 6502
 
   .org $801
@@ -35,6 +37,29 @@ pushloop:
   dex
   bne pushloop
 
+  ldx #0
+clrlp:
+  lda #$20
+  sta $0400,x
+  sta $0500,x
+  sta $0600,x
+  sta $0700,x
+  lda #$01
+  sta $d800,x
+  sta $d900,x
+  sta $da00,x
+  sta $db00,x
+  inx
+  bne clrlp
+
+  ldx #39
+namelp:
+  lda testname,x
+  and #$3f
+  sta $0400+40*24,x
+  dex
+  bpl namelp
+
   lda #$03
   sta $f8
   lda #$00
@@ -42,6 +67,15 @@ pushloop:
   lda #$40
   sta $fc
   
+  ldx #0
+  txa
+loop3:
+  sta BUFFER,x
+  sta BUFFER+$100,x
+  sta BUFFER+$200,x
+  inx
+  bne loop3
+
   ldx #$00
   lda #$00
   sta $d020
@@ -210,6 +244,7 @@ pullloop:
   sta $2e
 
   cli
+  jsr checkref
   rts
 
 
@@ -234,4 +269,121 @@ log:
 lognohigh:
   rts
   
+checkoneref:
+    ldx #0
+chklp:
+chksrc1 = * + 1
+    lda $4000,x
+chkref1 = * + 1
+    cmp reference,x
+    bne notfound
+chksrc2 = * + 1
+    lda $4100,x
+chkref2 = * + 1
+    cmp reference+$100,x
+    bne notfound
+chksrc3 = * + 1
+    lda $4200,x
+chkref3 = * + 1
+    cmp reference+$200,x
+    bne notfound
+    inx
+    bne chklp
+    clc
+    rts
+notfound:
+    sec
+    rts
+
+
+checkref:
+    ldx #>reference
+    stx chkref1+1
+    inx
+    stx chkref2+1
+    inx
+    stx chkref3+1
+
+    ldx #>BUFFER
+    stx chksrc1+1
+    inx
+    stx chksrc2+1
+    inx
+    stx chksrc3+1
+
+    lda #1
+    sta $0400
+
+    ldy #NUMREFS
+chklp2:
+    jsr checkoneref
+    bcc passed
+
+    lda chkref1+1
+    clc
+    adc #3
+    tax
+    stx chkref1+1
+    inx
+    stx chkref2+1
+    inx
+    stx chkref3+1
+
+    inc $0400
+
+    dey
+    bne chklp2
+
+failed:
+    lda #10
+    sta $d020
+    lda #$ff
+    sta $d7ff
+    rts
+
+passed:
+
+    ldx $0400
+    dex
+    txa
+    asl
+    asl
+    asl
+    asl
+    tax
+    ldy #0
+txtlp:
+    lda reftext,x
+    and #$3f
+    sta $0400 + 3,y
+    inx
+    iny
+    cpy #16
+    bne txtlp
+
+    lda #5
+    sta $d020
+    lda #0
+    sta $d7ff
+    rts
+
+testname:
+          ;1234567890123456789012345678901234567890
+    .byte "SPRITEGAP2                              "
+
+NUMREFS = 2
+
+    .align 256
+reftext:
+    .byte "C128NTSC        "
+    .byte "6569R1 / 8565R2 "
+
+    .align 256
+reference:
+    .incbin "dumps/spritegap2-ntsc-c128.bin" ; 676
+    .align 256
+    .incbin "dumps/spritegap2-8565r2.bin"    ; 668
+    .align 256
+    .byte 0
+
   
