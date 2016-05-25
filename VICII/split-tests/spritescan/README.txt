@@ -3,7 +3,7 @@ Readme for spritescan
 
 -----------------------------------------------------------------------
 
-dump6569.prg
+dump6569.bin
 ------------
 Dumped on Machine 1 (tlr):
 
@@ -16,7 +16,7 @@ CIA2: MOS/6526 R4/3283
 VICII: 6569R3 (guess)
 SID: <unknown>
 
-dump6572.prg
+dump6572.bin
 ------------
 Dumped on Machine 1 (hedning):
 
@@ -28,7 +28,7 @@ VICII: 6572R1 (guess)
 SID: MOS/6581/5182 
 
 
-dump8565.prg
+dump8565.bin
 ------------
 Dumped on Machine 1 (hedning):
 
@@ -40,6 +40,7 @@ CIA2: CSG/6526A/2592 216A
 VICII: CSG/8565R2/2092
 SID: CSG/8580R5/2392 25
 
+note: this one is equal to dump6569.bin
 
 -----------------------------------------------------------------------
 eof

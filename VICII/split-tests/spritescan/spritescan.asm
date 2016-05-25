@@ -10,7 +10,15 @@
 ;******
 	processor 6502
 
-TEST_NAME	eqm	"SPRITESCAN"
+
+    if VICTYPE = 6569
+                  ;123456789012345678901234567890
+TEST_NAME eqm     "SPRITESCAN (6569/PAL)"
+    endif
+    if VICTYPE = 6572
+                  ;123456789012345678901234567890
+TEST_NAME eqm     "SPRITESCAN (6572/DREAN)"
+    endif
 TEST_REVISION	eqm	"R01"
 LINE	equ	48+8*7+6
 SPRPOS	equ	LINE+6
@@ -139,6 +147,8 @@ test_result:
 	ldy	#>done_msg
 	jsr	$ab1e
 
+    jsr checkref	
+
 	lda	#<result_msg
 	ldy	#>result_msg
 	jsr	$ab1e
@@ -156,7 +166,7 @@ done_msg:
 	dc.b	"DONE",13,13,0
 
 result_msg:
-	dc.b	13,13,"(RESULT AT $4F00-$6000)",0
+	dc.b	13,13,"(RESULT AT $6F00-$8000)",0
 
 filename:
 	dc.b	"SSCRESULT"
@@ -172,22 +182,22 @@ test_prepare:
 	ldx	#0
 	txa
 tpr_lp1:
-	sta	$4f00,x
+	sta	BUFFER,x
 	inx
 	bne	tpr_lp1
 
 	ldx	#IDENT_LEN
 tpr_lp2:
 	lda	ident-1,x
-	sta	$4f00-1,x
+	sta	BUFFER-1,x
 	dex
 	bne	tpr_lp2
 	lda	cycles_per_line
-	sta	$4f00+32
+	sta	BUFFER+32
 	lda	num_lines
-	sta	$4f00+33
+	sta	BUFFER+33
 	lda	#1
-	sta	$4f00+34
+	sta	BUFFER+34
 	
 ; prepare test
 	lda	#0
@@ -699,12 +709,61 @@ seq:
 ;*
 ;******
 
-CORR_BUF	equ	$3000
+checkref:
+    lda #>reference
+    sta chkrefaddr+1+1
+    lda #>BUFFER
+    sta chkbufaddr+1+1
+
+    ldy #$11
+
+chklp2:    
+
+    ldx #32
+chklp1:
+chkrefaddr:
+    lda reference,x
+chkbufaddr:
+    cmp BUFFER,x
+    bne chkfailed
+    inx
+    bne chklp1
+
+    inc chkrefaddr+1+1
+    inc chkbufaddr+1+1
+    
+    dey
+    bne chklp2
+    
+    lda #5
+    sta $d020
+    lda #$00
+    sta $d7ff
+    
+    rts
+
+chkfailed:
+    lda #10
+    sta $d020
+    lda #$ff
+    sta $d7ff
+    rts
+    
+reference:
+    if VICTYPE = 6569
+    incbin "dumps/dump6569.bin"         ; $1100 bytes
+    endif
+    if VICTYPE = 6572
+    incbin "dumps/dump6572.bin"         ; $1100 bytes
+    endif
 
 
-BUFFER		equ	$4f00
-BUFFER_RES	equ	$5000
-BUFFER_END	equ	$6000
+CORR_BUF	equ	$5000
+
+
+BUFFER		equ	$6f00
+BUFFER_RES	equ	$7000
+BUFFER_END	equ	$8000
 
 
 
