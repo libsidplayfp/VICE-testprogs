@@ -48,9 +48,12 @@ SysAddress:
 
 	
 	ldx	#0
-	txa
 sa_lp1:
+	lda #$00
 	sta	$3f00,x
+	lda #$ff
+	sta BUFFER,x
+	sta BUFFER+$100,x
 	inx
 	bne	sa_lp1
 	lda	#$80
@@ -86,10 +89,46 @@ sa_lp1:
 	sta	$d019
 	sta	$d01a
 
+
+	lda #0
+	sta $0401
+	sta $0400
+	
 	cli
 sa_lp2:
+
+    lda #2
+chkwait:
+    cmp $0400
+    bne chkwait
+    
+    ldx #0
+chklp:    
+    lda BUFFER,x
+    cmp reference,x
+    bne failed
+    lda BUFFER+$100,x
+    cmp reference+$100,x
+    bne failed
+    inx
+    bne chklp
+
+    lda #5
+    sta $d020
+    sta bgcol+1
+    lda #$00
+    sta $d7ff
+    
 	jmp	sa_lp2
 
+failed:
+    lda #10
+    sta $d020
+    sta bgcol+1
+    lda #$ff
+    sta $d7ff
+    jmp sa_lp2
+	
 
 irq_server:
 	lda	#1
@@ -127,6 +166,8 @@ is_sm1:
 is_lp3:
 	dex
 	bne	is_lp3
+	
+bgcol:
 	lda	#14
 	sta	$d020
 
@@ -139,6 +180,11 @@ is_lp3:
 	jsr	inc_ypos
 
 	jsr	set_raster
+	
+	inc $0401
+	bne skip
+	inc $0400
+skip:
 	jmp	$febc
 
 set_raster:
@@ -176,6 +222,9 @@ iy_skp1:
 iy_ex1:
 	rts
 
+reference:
+    incbin "dumps/dump8565.bin"
+	
 BUFFER	equ	$4000
 	
 ; eof
