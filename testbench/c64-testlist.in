@@ -631,7 +631,9 @@
 #TODO:
 #../VICII/lplatency
 #../VICII/lp-trigger
-#../VICII/movesplit
+../VICII/movesplit/,movesplit.prg,interactive,0
+../VICII/movesplit/,movesplit_ntsc.prg,interactive,0
+../VICII/movesplit/,movesplit_ntscold.prg,interactive,0
 ../VICII/phi1timing/,phi1timing.prg,exitcode,10000000
 ../VICII/phi1timing/,phi1timing_ntsc.prg,exitcode,10000000,vicii-ntsc
 ../VICII/phi1timing/,phi1timing_ntscold.prg,exitcode,10000000,vicii-ntscold
@@ -645,8 +647,9 @@
 ../VICII/split-tests/lightpen/,lightpen.prg,exitcode,10000000
 #FIXME: old vs new VIC
 ../VICII/split-tests/modesplit/,modesplit.prg,screenshot,10000000
+../VICII/split-tests/spritescan/,spritescan.prg,exitcode,1000000000
 #TODO:
-#../VICII/split-tests/spritescan
+#../VICII/split-tests/spritescan/,spritescan_drean.prg,exitcode,1000000000,vicii-drean
 ../VICII/vicii_timing/,vicii_reg_timing.prg,screenshot,10000000
 ../VICII/videomode/,rmwtest.prg,screenshot,10000000
 ../VICII/videomode/,rmwtest_ntsc.prg,screenshot,10000000,vicii-ntsc
@@ -724,8 +727,7 @@
 ../VICII/spritefetchbug/,test.prg,interactive,0
 ../VICII/spritegap/,spritegap2.prg,exitcode,1000000000
 ../VICII/spritegap/,spritegap3.prg,exitcode,1000000000
-#TODO:
-#../VICII/spritemcbase/,spritemcbase.prg
+../VICII/spritemcbase/,spritemcbase.prg,interactive,0
 ../VICII/spritepriorities/,test1.prg,screenshot,10000000
 ../VICII/spritesplit/,ss-exp-unexp-hires.prg,screenshot,10000000
 ../VICII/spritesplit/,ss-exp-unexp-mc.prg,screenshot,10000000
@@ -752,8 +754,7 @@
 ../VICII/spritex/,testsuite_ntscold.prg,exitcode,10000000,vicii-ntscold
 ../VICII/spritex/,testsuite_ntsc.prg,exitcode,10000000,vicii-ntsc
 ../VICII/spritex/,testsuite.prg,exitcode,10000000,vicii-pal
-#TODO:
-#../VICII/spritey/,spritey.prg
+../VICII/spritey/,spritey.prg,exitcode,100000000
 ################################################################################
 # SID 6581
 ################################################################################
