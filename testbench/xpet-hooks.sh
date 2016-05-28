@@ -60,8 +60,8 @@ function xpet_run_screenshot
     extraopts=""$4" "$5" "$6""
 #    echo $XPET "$1"/"$2"
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-x64sc.png
-    $XPET $XPETOPTS $XPETOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$1"/"$2" 1> /dev/null
+    rm -f "$1"/.testbench/"$2"-xpet.png
+    $XPET $XPETOPTS $XPETOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xpet.png "$1"/"$2" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -69,14 +69,14 @@ function xpet_run_screenshot
         then
             if [ $exitcode -ne 255 ]
             then
-                echo -ne "\nerror: call to $X64 failed.\n"
+                echo -ne "\nerror: call to $XPET failed.\n"
                 exit -1
             fi
         fi
     fi
-    if [ -f "$1"/references/"$2".png ]
+    if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-x64sc.png "$XPETSXO" "$XPETSYO"
+        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-xpet.png "$XPETSXO" "$XPETSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

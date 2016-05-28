@@ -91,14 +91,14 @@ function xscpu64_run_screenshot
         then
             if [ $exitcode -ne 255 ]
             then
-                echo -ne "\nerror: call to $X64 failed.\n"
+                echo -ne "\nerror: call to $XSCPU64 failed.\n"
                 exit -1
             fi
         fi
     fi
-    if [ -f "$1"/references/"$2".png ]
+    if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-x64sc.png "$XSCPU64SXO" "$XSCPU64SYO"
+        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-x64sc.png "$XSCPU64SXO" "$XSCPU64SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

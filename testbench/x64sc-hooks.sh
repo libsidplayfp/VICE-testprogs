@@ -97,9 +97,9 @@ function x64sc_run_screenshot
             fi
         fi
     fi
-    if [ -f "$1"/references/"$2".png ]
+    if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-x64sc.png "$X64SCSXO" "$X64SCSYO"
+        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-x64sc.png "$X64SCSXO" "$X64SCSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

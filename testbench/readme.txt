@@ -136,9 +136,14 @@ get a list of things you can do just run "make".
 
 you can also run ./testbench.sh manually:
 
-$ ./testbench.sh <target> <filter>
-
-.. where <target> is one of "x64", "x64sc", "chameleon"
-
-... and <filter> is an optional string which is matched against the path that
-contains the test. (eg use "CIA" to run only the CIA tests)
+usage: ./testbench.sh [target] <filter> <options>
+  targets: x64, x64sc, x128, xscpu64, xpet, xcbm2, xcbm5x0, xvic, xplus4, chameleon
+  <filter> is a substring of the path of tests to restrict to
+  --help       show this help
+  --verbose    be more verbose
+  --pal        skip tests that do not work on PAL
+  --ntsc       skip tests that do not work on NTSC
+  --ntscold    skip tests that do not work on NTSC(old)
+  --8565       target VICII type is 8565 (grey dot)
+  --8565early  target VICII type is 8565 (new color instead of grey dot)
+  --8565late   target VICII type is 8565 (old color instead of grey dot)

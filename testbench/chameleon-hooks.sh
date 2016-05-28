@@ -121,13 +121,13 @@ function chameleon_get_options
                 exitoptions=""
             ;;
         "vicii-pal")
-                exitoptions=""
+                exitoptions="-pal"
             ;;
         "vicii-ntsc")
-                exitoptions=""
+                exitoptions="-ntsc"
             ;;
         "vicii-ntscold")
-                exitoptions=""
+                exitoptions="-ntscold"
             ;;
         "cia-old")
                 exitoptions=""
@@ -194,10 +194,10 @@ function chameleon_run_screenshot
     sleep $timeoutsecs
     chshot -o "$1"/.testbench/"$2"-chameleon.png
 #    echo "exited with: " $exitcode
-    if [ -f "$1"/references/"$2".png ]
+    if [ -f "$refscreenshotname" ]
     then
-#        echo ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-chameleon.png "$CHAMSXO" "$CHAMSYO"
-        ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-chameleon.png "$CHAMSXO" "$CHAMSYO"
+#        echo ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-chameleon.png "$CHAMSXO" "$CHAMSYO"
+        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-chameleon.png "$CHAMSXO" "$CHAMSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

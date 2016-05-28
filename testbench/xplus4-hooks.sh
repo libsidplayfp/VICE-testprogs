@@ -60,9 +60,9 @@ function xplus4_run_screenshot
     extraopts=""$4" "$5" "$6""
 #    echo $XPLUS4 "$1"/"$2"
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-x64.png
-#    echo $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$1"/"$2"
-    $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$1"/"$2" 1> /dev/null
+    rm -f "$1"/.testbench/"$2"-xplus4.png
+#    echo $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xplus4.png "$1"/"$2"
+    $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xplus4.png "$1"/"$2" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -75,9 +75,9 @@ function xplus4_run_screenshot
             fi
         fi
     fi
-    if [ -f "$1"/references/"$2".png ]
+    if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-x64.png "$XPLUS4SXO" "$XPLUS4SYO"
+        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-xplus4.png "$XPLUS4SXO" "$XPLUS4SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

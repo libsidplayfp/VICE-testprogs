@@ -151,7 +151,8 @@ chameleon-crtoff.prg: chameleon-crtoff.asm
 	acme -f plain -o chameleon-crtoff.prg chameleon-crtoff.asm
 
 testchameleon: chameleon-helper.prg prereq
-	./testbench.sh chameleon
+	./testbench.sh chameleon --pal --8565early
+
 
 
 

@@ -69,9 +69,9 @@ function xcbm2_run_screenshot
     extraopts=""$4" "$5" "$6""
 #    echo $XCBM2 "$1"/"$2"
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-x64.png
-#    echo $XCBM2 $XCBM2OPTS $XCBM2OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$1"/"$2"
-    $XCBM2 $XCBM2OPTS $XCBM2OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$1"/"$2" 1> /dev/null
+    rm -f "$1"/.testbench/"$2"-xcbm2.png
+#    echo $XCBM2 $XCBM2OPTS $XCBM2OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm2.png "$1"/"$2"
+    $XCBM2 $XCBM2OPTS $XCBM2OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm2.png "$1"/"$2" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -84,9 +84,9 @@ function xcbm2_run_screenshot
             fi
         fi
     fi
-    if [ -f "$1"/references/"$2".png ]
+    if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-x64.png "$XCBM2SXO" "$XCBM2SYO"
+        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-xcbm2.png "$XCBM2SXO" "$XCBM2SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

@@ -68,8 +68,8 @@ function x64dtv_run_screenshot
     extraopts=""$4" "$5" "$6""
 #    echo $X64DTV "$1"/"$2"
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-x64sc.png
-    $X64DTV $X64DTVOPTS $X64DTVOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$1"/"$2" 1> /dev/null
+    rm -f "$1"/.testbench/"$2"-x64dtv.png
+    $X64DTV $X64DTVOPTS $X64DTVOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64dtv.png "$1"/"$2" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -77,14 +77,14 @@ function x64dtv_run_screenshot
         then
             if [ $exitcode -ne 255 ]
             then
-                echo -ne "\nerror: call to $X64 failed.\n"
+                echo -ne "\nerror: call to $X64DTV failed.\n"
                 exit -1
             fi
         fi
     fi
-    if [ -f "$1"/references/"$2".png ]
+    if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-x64sc.png "$X64DTVSXO" "$X64DTVSYO"
+        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-x64dtv.png "$X64DTVSXO" "$X64DTVSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

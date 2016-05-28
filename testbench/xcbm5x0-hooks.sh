@@ -69,9 +69,9 @@ function xcbm5x0_run_screenshot
     extraopts=""$4" "$5" "$6""
 #    echo $XCBM5X0 "$1"/"$2"
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-x64.png
-#    echo $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$1"/"$2"
-    $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$1"/"$2" 1> /dev/null
+    rm -f "$1"/.testbench/"$2"-xcbm5x0.png
+#    echo $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm5x0.png "$1"/"$2"
+    $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm5x0.png "$1"/"$2" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -84,9 +84,9 @@ function xcbm5x0_run_screenshot
             fi
         fi
     fi
-    if [ -f "$1"/references/"$2".png ]
+    if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$1"/references/"$2".png 32 35 "$1"/.testbench/"$2"-x64.png "$XCBM5X0SXO" "$XCBM5X0SYO"
+        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-xcbm5x0.png "$XCBM5X0SXO" "$XCBM5X0SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "
