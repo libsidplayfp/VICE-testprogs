@@ -37,32 +37,33 @@ mainlp:
         lda #3
         sta $dd00
 
--       lda $d012
-        cmp #baseline + (2 * 8)
+        ldx #2
+        lda #baseline + (2 * 8)
+-       cmp $d012
         bne -
-        inc $d020
+        stx $d020
 
         lda #2
         sta $dd00
 
--       lda $d012
-        cmp #baseline + (4 * 8)
+        lda #baseline + (4 * 8)
+-       cmp $d012
         bne -
         inc $d020
 
         lda #1
         sta $dd00
 
--       lda $d012
-        cmp #baseline + (6 * 8)
+        lda #baseline + (6 * 8)
+-       cmp $d012
         bne -
         inc $d020
 
         lda #0
         sta $dd00
 
--       lda $d012
-        cmp #baseline + (8 * 8)
+        lda #baseline + (8 * 8)
+-       cmp $d012
         bne -
         inc $d020
         dec $d021
@@ -75,34 +76,38 @@ mainlp:
         lda #$3c | $00
         sta $dd02
 
--       lda $d012
-        cmp #baseline + (10 * 8)
+        lda #baseline + (10 * 8)
+-       cmp $d012
         bne -
         inc $d020
 
         lda #$3c | $01
         sta $dd02
 
--       lda $d012
-        cmp #baseline + (12 * 8)
+        lda #baseline + (12 * 8)
+-       cmp $d012
         bne -
         inc $d020
 
         lda #$3c | $02
         sta $dd02
 
--       lda $d012
-        cmp #baseline + (14 * 8)
+        ldx #8
+        lda #baseline + (14 * 8)
+-       cmp $d012
         bne -
-        inc $d020
+        stx $d020
 
         lda #$3c | $03
         sta $dd02
 
--       lda $d012
-        cmp #baseline + (16 * 8)
+        inx
+        lda #baseline + (16 * 8)
+-       cmp $d012
         bne -
-        inc $d020
+        nop
+        bit $ea
+        stx $d020
         inc $d021
 
         ;------------------------------
@@ -113,34 +118,37 @@ mainlp:
         lda #$3c | $03
         sta $dd02
 
--       lda $d012
-        cmp #baseline + (18 * 8)
+        lda #baseline + (18 * 8)
+-       cmp $d012
         bne -
         inc $d020
 
         lda #$3c | $02
         sta $dd02
 
--       lda $d012
-        cmp #baseline + (20 * 8)
+        lda #baseline + (20 * 8)
+-       cmp $d012
         bne -
         inc $d020
 
         lda #$3c | $01
         sta $dd02
 
--       lda $d012
-        cmp #baseline + (22 * 8)
+        lda #baseline + (22 * 8)
+-       cmp $d012
         bne -
         inc $d020
 
         lda #$3c | $00
         sta $dd02
 
--       lda $d012
-        cmp #baseline + (24 * 8)
+        ldx #14
+        lda #baseline + (24 * 8)
+-       cmp $d012
         bne -
-        inc $d020
+        nop
+        bit $ea
+        stx $d020
 
 -       lda $d011
         bpl -
