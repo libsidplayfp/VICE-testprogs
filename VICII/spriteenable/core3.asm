@@ -294,9 +294,14 @@ setup:
     sta zpzero
 
     ; set screen color
-    lda 646
     ldx #0
 col_lp:
+    lda #$20
+    sta $0400,x
+    sta $0500,x
+    sta $0600,x
+    sta $06e8,x
+    lda 646
     sta $d800,x
     sta $d900,x
     sta $da00,x
