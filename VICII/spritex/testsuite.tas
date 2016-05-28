@@ -58,6 +58,17 @@ irqinit:
   sta cinv      ; set the new interrupt vector
   stx cinv+1
 skipinit:
+
+  lda #$20
+  ldx #0
+llp:
+  sta $0400,x
+  sta $0500,x
+  sta $0600,x
+  sta $0700,x
+  inx
+  bne llp
+
   lda #$1b
   sta $d011     ; set the raster interrupt location
   lda #raster
@@ -73,6 +84,12 @@ skipinit:
 ; setup sprites here
   lda #$81
   sta $d015
+  lda #100
+  sta $d000
+  lda #150
+  sta $d00e
+  lda #0
+  sta $d010
   lda #49
   sta $d001
   sta $d00f
@@ -98,21 +115,26 @@ sprloop1:
 
   lda #$05
   sta $d020
-  lda #$20
-  ldx #0
-llp:
-  sta $0400,x
-  sta $0500,x
-  sta $0600,x
-  sta $0700,x
-  inx
-  bne llp
 
+  ; wait until at least one frame was drawn to work around potentially buggy
+  ; first frame (see spritemcbase)
+  jsr waitframe
+  lda $dc0d     ; acknowledge CIA interrupts
+  lsr $d019     ; and video interrupts
+  lda $d01e
+  
   jsr setuptest
 
   cli
   jmp *
 
+waitframe:
+  lda $d011
+  bpl * -3
+  lda $d011
+  bmi * -3
+  rts
+  
 deinstall:
   sei           ; disable interrupts
   lda #$1b
