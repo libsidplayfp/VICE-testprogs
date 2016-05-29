@@ -56,6 +56,17 @@ irqinit:
   ldx #>irq1
   sta cinv      ; set the new interrupt vector
   stx cinv+1
+
+  lda #$20
+  ldx #0
+fill3:
+  sta $0400,x
+  sta $0500,x
+  sta $0600,x
+  sta $0700,x
+  dex
+  bne fill3
+  
 skipinit:
   lda #$1b
   sta $d011     ; set the raster interrupt location
@@ -69,7 +80,7 @@ skipinit:
   lda $dc0d     ; acknowledge CIA interrupts
   lsr $d019     ; and video interrupts
   cli
-  rts
+  jmp *
 
 deinstall:
   sei           ; disable interrupts

@@ -70,7 +70,7 @@ skipinit:
   lda $dc0d     ; acknowledge CIA interrupts
   lsr $d019     ; and video interrupts
   cli
-  rts
+  jmp *
 
 deinstall:
   sei           ; disable interrupts
@@ -214,6 +214,16 @@ inloop1:
 
 
 fill:
+  lda #$20
+  ldx #0
+fill3:
+  sta $0400,x
+  sta $0500,x
+  sta $0600,x
+  sta $0700,x
+  dex
+  bne fill3
+
   lda #48
   ldx #00
 fill0:
