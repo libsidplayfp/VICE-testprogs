@@ -330,7 +330,7 @@
 ################################################################################
 # CPU 6510
 ################################################################################
-#TODO:
+#FIXME:
 #../CPU/64doc/,dadc.prg
 #../CPU/64doc/,dincsbc-deccmp.prg
 #../CPU/64doc/,dincsbc.prg
@@ -647,34 +647,34 @@
 ../VICII/split-tests/lightpen/,lightpen.prg,exitcode,1000000000
 ../VICII/split-tests/modesplit/,modesplit.prg,screenshot,20000000
 ../VICII/split-tests/spritescan/,spritescan.prg,exitcode,1000000000
-#TODO:
+#TODO: add "drean" support to testbench
 #../VICII/split-tests/spritescan/,spritescan_drean.prg,exitcode,1000000000,vicii-drean
 ../VICII/vicii_timing/,vicii_reg_timing.prg,screenshot,50000000
 ../VICII/videomode/,rmwtest.prg,screenshot,10000000
 ../VICII/videomode/,rmwtest_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/videomode/,rmwtest_ntscold.prg,screenshot,10000000,vicii-ntscold
-#TODO:
+../VICII/videomode/,videomode1.prg,screenshot,10000000
+../VICII/videomode/,videomode2.prg,screenshot,10000000
+../VICII/videomode/,videomode-v.prg,screenshot,10000000
+../VICII/videomode/,videomode-w.prg,screenshot,10000000
+../VICII/videomode/,videomode-x.prg,screenshot,10000000
+../VICII/videomode/,videomode-y.prg,screenshot,10000000
+../VICII/videomode/,videomode-z.prg,screenshot,10000000
+#TODO: check on ntsc and make references:
 #../VICII/videomode/,videomode1_ntscold.prg,screenshot,10000000,vicii-ntscold
 #../VICII/videomode/,videomode1_ntsc.prg,screenshot,10000000,vicii-ntsc
-#../VICII/videomode/,videomode1.prg,screenshot,10000000
 #../VICII/videomode/,videomode2_ntscold.prg,screenshot,10000000,vicii-ntscold
 #../VICII/videomode/,videomode2_ntsc.prg,screenshot,10000000,vicii-ntsc
-#../VICII/videomode/,videomode2.prg,screenshot,10000000
 #../VICII/videomode/,videomode-v_ntscold.prg,screenshot,10000000,vicii-ntscold
 #../VICII/videomode/,videomode-v_ntsc.prg,screenshot,10000000,vicii-ntsc
-#../VICII/videomode/,videomode-v.prg,screenshot,10000000
 #../VICII/videomode/,videomode-w_ntscold.prg,screenshot,10000000,vicii-ntscold
 #../VICII/videomode/,videomode-w_ntsc.prg,screenshot,10000000,vicii-ntsc
-#../VICII/videomode/,videomode-w.prg,screenshot,10000000
 #../VICII/videomode/,videomode-x_ntscold.prg,screenshot,10000000,vicii-ntscold
 #../VICII/videomode/,videomode-x_ntsc.prg,screenshot,10000000,vicii-ntsc
-#../VICII/videomode/,videomode-x.prg,screenshot,10000000
 #../VICII/videomode/,videomode-y_ntscold.prg,screenshot,10000000,vicii-ntscold
 #../VICII/videomode/,videomode-y_ntsc.prg,screenshot,10000000,vicii-ntsc
-#../VICII/videomode/,videomode-y.prg,screenshot,10000000
 #../VICII/videomode/,videomode-z_ntscold.prg,screenshot,10000000,vicii-ntscold
 #../VICII/videomode/,videomode-z_ntsc.prg,screenshot,10000000,vicii-ntsc
-#../VICII/videomode/,videomode-z.prg,screenshot,10000000
 ../VICII/vspbug/,lft-safe-vsp.prg,interactive,0
 ################################################################################
 # Sprites
@@ -744,7 +744,7 @@
 ../VICII/spritesteal/,spritesteal_ntscold.prg,exitcode,100000000,vicii-ntscold
 ../VICII/spritesteal/,spritesteal_ntsc.prg,exitcode,100000000,vicii-ntsc
 ../VICII/spritesteal/,spritesteal.prg,exitcode,100000000,vicii-pal
-#TODO:
+#TODO: (this is not a test)
 #../VICII/spritex/,demusinterruptus-emucheck.prg
 ../VICII/spritex/,testsuite_ntscold.prg,exitcode,10000000,vicii-ntscold
 ../VICII/spritex/,testsuite_ntsc.prg,exitcode,10000000,vicii-ntsc
@@ -810,6 +810,7 @@
 ../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,exitcode,100000000,reu512k
 ../REU/reudetect/,reudetect.prg,exitcode,100000000,reu512k
 ../REU/reutiming/,reutiming.prg,exitcode,100000000,reu512k
+#TODO: clean up and add all the other reu timing tests....
 ################################################################################
 # GEO-RAM
 ################################################################################
