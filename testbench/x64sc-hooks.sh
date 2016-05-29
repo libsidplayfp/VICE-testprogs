@@ -1,6 +1,7 @@
 
 X64SC=../../trunk/vice/src/x64sc
 X64SCOPTS+=" -default"
+X64SCOPTS+=" -model c64c"
 X64SCOPTS+=" -VICIIfilter 0"
 X64SCOPTS+=" -VICIIextpal"
 X64SCOPTS+=" -VICIIpalette vice.vpl"

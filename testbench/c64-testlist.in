@@ -545,7 +545,6 @@
 ../VICII/border/,vborder_ntscold.prg,interactive,0,vicii-ntscold
 ../VICII/border/,vborder2_ntscold.prg,interactive,0,vicii-ntscold
 ../VICII/colorram/,test.prg,exitcode,100000000
-#FIXME: old vic vs new vic
 ../VICII/colorsplit,colorsplit.prg,screenshot,10000000
 ../VICII/D011Test/,disable-bad.prg,screenshot,100000000
 #FIXME: check on ntsc/ntscold
@@ -625,8 +624,7 @@
 #FIXME: check on ntsc/ntscold
 ../VICII/gfxfetch/,gfxfetch_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/gfxfetch/,gfxfetch_ntscold.prg,screenshot,10000000,vicii-ntscold
-#TODO:
-#../VICII/greydot
+../VICII/greydot/,greydot.prg,screenshot,20000000
 ../VICII/lpcoordinates/,lpcoords.prg,interactive,0
 #TODO:
 #../VICII/lplatency
@@ -643,14 +641,14 @@
 ../VICII/screenpos/,screenpos_ntscold.prg,screenshot,10000000,vicii-ntscold
 #TODO: fix test for NTSC
 ../VICII/split-tests/bascan/,bascan.prg,exitcode,100000000
-../VICII/split-tests/fetchsplit/,fetchsplit.prg,screenshot,10000000
-../VICII/split-tests/lightpen/,lightpen.prg,exitcode,10000000
-#FIXME: old vs new VIC
-../VICII/split-tests/modesplit/,modesplit.prg,screenshot,10000000
+../VICII/split-tests/fetchsplit/,fetchsplit.prg,screenshot,20000000
+#FIXME: assemble seperate tests per VIC type
+../VICII/split-tests/lightpen/,lightpen.prg,exitcode,1000000000
+../VICII/split-tests/modesplit/,modesplit.prg,screenshot,20000000
 ../VICII/split-tests/spritescan/,spritescan.prg,exitcode,1000000000
 #TODO:
 #../VICII/split-tests/spritescan/,spritescan_drean.prg,exitcode,1000000000,vicii-drean
-../VICII/vicii_timing/,vicii_reg_timing.prg,screenshot,10000000
+../VICII/vicii_timing/,vicii_reg_timing.prg,screenshot,50000000
 ../VICII/videomode/,rmwtest.prg,screenshot,10000000
 ../VICII/videomode/,rmwtest_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/videomode/,rmwtest_ntscold.prg,screenshot,10000000,vicii-ntscold
@@ -720,6 +718,7 @@
 ../VICII/spriteenable/,spriteenable5_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/spriteenable/,spriteenable5.prg,screenshot,10000000,vicii-pal
 ../VICII/spritefetchbug/,test.prg,interactive,0
+# FIXME: seems to fail randomly, hard to reproduce
 ../VICII/spritegap/,spritegap2.prg,exitcode,1000000000
 ../VICII/spritegap/,spritegap3.prg,exitcode,1000000000
 ../VICII/spritemcbase/,spritemcbase.prg,interactive,0

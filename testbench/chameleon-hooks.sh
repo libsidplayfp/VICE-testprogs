@@ -200,7 +200,7 @@ function chameleon_run_screenshot
         ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-chameleon.png "$CHAMSXO" "$CHAMSYO"
         exitcode=$?
     else
-        echo -ne "reference screenshot missing - "
+        echo -ne "reference screenshot missing ("$refscreenshotname") - "
         exitcode=255
     fi
 #    echo -ne "exitcode:" $exitcode
