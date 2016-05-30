@@ -145,7 +145,10 @@ int main(int argc, char *argv[])
             p1 = &data1[bpp1 * ((xsize1 * (y + yoff1)) + (x + xoff1))];
             p2 = &data2[bpp2 * ((xsize2 * (y + yoff2)) + (x + xoff2))];
             if ((p1[0] != p2[0]) || (p1[1] != p2[1]) || (p1[2] != p2[2])) {
-                if (verbose) printf("not equal\n");
+                if (verbose) {
+                    printf("not equal\n");
+                    printf("%d,%d %02x,%02x,%02x != %02x,%02x,%02x\n", x, y, p1[0],p1[1],p1[2],p2[0],p2[1],p2[2]);
+                }
                 stbi_image_free(data1);
                 stbi_image_free(data2);
                 return 0xff;

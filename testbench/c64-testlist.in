@@ -626,9 +626,10 @@
 ../VICII/gfxfetch/,gfxfetch_ntscold.prg,screenshot,10000000,vicii-ntscold
 ../VICII/greydot/,greydot.prg,screenshot,20000000
 ../VICII/lpcoordinates/,lpcoords.prg,interactive,0
-#TODO:
-#../VICII/lplatency
-#../VICII/lp-trigger
+../VICII/lplatency/,lplatency.prg,exitcode,10000000
+#TODO: port to NTSC
+../VICII/lp-trigger/,test1.prg,screenshot,20000000,vicii-pal
+../VICII/lp-trigger/,test2.prg,screenshot,20000000,vicii-pal
 ../VICII/movesplit/,movesplit.prg,interactive,0
 ../VICII/movesplit/,movesplit_ntsc.prg,interactive,0
 ../VICII/movesplit/,movesplit_ntscold.prg,interactive,0
