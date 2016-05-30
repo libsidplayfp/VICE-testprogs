@@ -81,7 +81,7 @@ sa_lp2:
 	bit	$d011
 	bpl	sa_lp2
 ; in bottom border
-	inc	$d020
+	inc	$0420
 	ldy	#%00000000
 ; get $d019 without trigger
 	tya
@@ -103,7 +103,7 @@ sa_lp2:
 
 	ldy	#%11111111
 	sty	$dc01
-	dec	$d020
+	dec	$0420
 	
 	ldy	$d3
 	dey
@@ -114,15 +114,22 @@ sa_lp2:
 	sta	($d1),y
 	
 	ldx     #10
-        lda     $0400+40*7+8
-        cmp     $0400+40*8+8
-        bne     err
-        lda     $0400+40*7+10
-        cmp     $0400+40*8+10
-        bne     err
+    lda     $0400+40*7+8
+    cmp     $0400+40*8+8
+    bne     err
+    lda     $0400+40*7+10
+    cmp     $0400+40*8+10
+    bne     err
 	ldx     #5
 err:
-        stx     $d020
+    stx     $d020
+    
+    lda #0
+    cpx #5
+    beq passed
+    lda #$ff
+passed:
+    sta $d7ff
 
 	jmp	sa_lp1
 
