@@ -1,4 +1,6 @@
 
+TESTING = 0
+
 irqline = $20
 
     .export Start
@@ -18,9 +20,9 @@ jitter:
 
     lda ($ff),y ; 5+1
     lda ($ff,x) ; 6
-
+.if TESTING = 1
     inc $06e8,x ; 7
-
+.endif
     inx
     iny
 
@@ -79,11 +81,11 @@ testlp:
     tax
     lda hextab,x
     sta $0400
-
+.if TESTING = 1
     lda tmp
     tax
     sta $0400+(4*40),x
-    
+.endif
     lda tmp+1
     and #$0f
     tax
@@ -100,6 +102,12 @@ testlp:
     lda hextab,x
     sta $0403
 
+    ; wait until at top of frame to avoid grey dot on screen(shot)
+    lda $d011
+    bpl *-3
+    lda $d011
+    bmi *-3
+    
     ldy #5
 
     lda tmp
@@ -231,10 +239,14 @@ start:
          nop         ;Some delay
          nop         ;So stable can be
          bit $ea     ;seen
- 
-         inc $d020   ;Here is the proof
-         dec $d020
- 
+.if TESTING = 1 
+         inc $d020   ;6 Here is the proof
+         dec $d020   ;6
+.else
+        bit $eaea ;4
+        bit $eaea ;4
+        bit $eaea ;4
+.endif 
          lda #<irq1  ;Set IRQ to point
          ldx #>irq1  ;to subsequent IRQ
          ldy #irqline    ;at line $68

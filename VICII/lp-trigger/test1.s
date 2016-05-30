@@ -1,3 +1,4 @@
+TESTING = 0
 
     .export Start
 
@@ -6,6 +7,8 @@ Start:
     sei
     lda #$35
     sta $01
+    lda #$c9
+    sta $d016
 
     lda #$01
     sta $d01a
@@ -63,9 +66,9 @@ jitter:
 
     lda ($ff),y ; 5+1
     lda ($ff,x) ; 6
-
+.if TESTING = 1
     inc $06e8,x ; 7
-
+.endif
     inx
     iny
 
@@ -122,7 +125,7 @@ irq:
     bne @lp
 
     inc $d019
-
+.if TESTING = 1
     lda tmp
     and #$0f
     tax
@@ -158,15 +161,16 @@ irq:
     tax
     lda hextab,x
     sta $0403
-    
+.endif
     nop         ; 2
     bit $ea     ; 3
     bit $eaea   ; 4
 
     lda ($ff),y ; 5+1
     lda ($ff,x) ; 6
-
+.if TESTING = 1
     inc $06e8,x ; 7
+.endif
     bne *+2
 
     inx

@@ -1,12 +1,12 @@
  
 
-all: lpcart.crt test2.prg test2.prg
+all: lpcart.crt test1.prg test2.prg
 
 test1.prg: test1.s stableraster_lightpen.s
-	cl65 -t c64 -o test1.prg test1.s stableraster_lightpen.s
+	cl65 -t c64 -C c64-asm.cfg -u __EXEHDR__  -o test1.prg test1.s stableraster_lightpen.s
 
 test2.prg: test2.s stableraster_lightpen.s
-	cl65 -t c64 -o test2.prg test2.s
+	cl65 -t c64 -C c64-asm.cfg -u __EXEHDR__  -o test2.prg test2.s
 
 lpcart.crt: lpcart.s
 	acme lpcart.s
