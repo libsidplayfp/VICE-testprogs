@@ -392,7 +392,7 @@ xi3:
   ; next test
   clc
   lda $fd
-  adc #$07
+  adc #$07  ; length of entries in testtable
   sta $fd
   bcc nofe
   inc $fe
@@ -431,41 +431,64 @@ smod:
 ; high: value of $D010 that is used for the test
 ; reference: Value of the collision that is shown on a real C64
 testtable:
-  .byte 13, 14, 128, 72, 72, 129, 129
+  .byte 13, 14, 128, 72, 72, 129, 129   ; 1
+#if CYCLES = 63
+  .byte 40, 0, 95, 119, 96, 0, 0		; 2  test collision with new position
+#else
+  .byte 40, 0, 95, 119, 96, 0, 129
+#endif
+  .byte 40, 0, 96, 120, 97, 0, 129      ; 3
+  .byte 40, 0, 97, 121, 98, 0, 129      ; 4
 
-  .byte 40, 0, 95, 119, 96, 0, 0		; test collision with new position
-  .byte 40, 0, 96, 120, 97, 0, 129
-  .byte 40, 0, 97, 121, 98, 0, 129
+#if CYCLES = 63
+  .byte 40, 0, 95, 72, 96, 0, 129		; 5  test collision with old position
+#else
+  .byte 40, 0, 95, 72, 96, 0, 0
+#endif
+  .byte 40, 0, 96, 73, 97, 0, 0         ; 6
+  .byte 40, 0, 97, 74, 98, 0, 0         ; 7
 
-  .byte 40, 0, 95, 72, 96, 0, 129		; test collision with old position
-  .byte 40, 0, 96, 73, 97, 0, 0
-  .byte 40, 0, 97, 74, 98, 0, 0
+#if CYCLES = 63
+  .byte 40, 0, 95, 118, 94, 0, 129		; 8  test collision with old position
+#else
+  .byte 40, 0, 95, 118, 94, 0, 0
+#endif
+  
+  .byte 40, 0, 96, 119, 95, 0, 0        ; 9
+  .byte 40, 0, 97, 120, 96, 0, 0        ; 10
+  
+#if CYCLES = 63
+  .byte 40, 0, 95, 71, 94, 0, 0		    ; 11 test collision with new position
+  .byte 40, 0, 96, 72, 95, 0, 0         ; 12
+#else
+  .byte 40, 0, 95, 71, 94, 0, 129
+  .byte 40, 0, 96, 72, 95, 0, 129
+#endif
+  
+  .byte 40, 0, 97, 73, 96, 0, 129       ; 13
 
-  .byte 40, 0, 95, 118, 94, 0, 129		; test collision with old position
-  .byte 40, 0, 96, 119, 95, 0, 0
-  .byte 40, 0, 97, 120, 96, 0, 0
+  .byte 19, 0, 0, 111, 109, 129, 0		; 14 Krestage3
+  .byte 19, 0, 0, 111, 110, 129, 0		; 15 determine first pixel for reused sprite#0
+#if CYCLES = 63
+  .byte 19, 0, 0, 111, 111, 129, 129	; 16 and collide
+  .byte 19, 0, 0, 0, 111, 129, 129		; 17 with both
+#else
+  .byte 19, 0, 0, 111, 111, 129, 0
+  .byte 19, 0, 0, 0, 111, 129, 0
+#endif
 
-  .byte 40, 0, 95, 71, 94, 0, 0		; test collision with new position
-  .byte 40, 0, 96, 72, 95, 0, 0
-  .byte 40, 0, 97, 73, 96, 0, 129
-
-  .byte 19, 0, 0, 111, 109, 129, 0		; Krestage3
-  .byte 19, 0, 0, 111, 110, 129, 0		; determine first pixel for reused sprite#0
-  .byte 19, 0, 0, 111, 111, 129, 129		; and collide
-  .byte 19, 0, 0, 0, 111, 129, 129		; with both
-
-  .byte 61, 14, 100, 124, 101, 0, 129	; special test for bug introduced in 1.22++
-  .byte 60, 14, 100, 124, 101, 0, 129	; for sprites changed before their fetch but after
-  .byte 59, 14, 100, 124, 101, 0, 129	; VICEs drawing handler
-  .byte 61, 14, 100, 77, 101, 0, 0		; visible in unreleased filledcube demo of Skate / Glance
-  .byte 60, 14, 100, 77, 101, 0, 0	
-  .byte 59, 14, 100, 77, 101, 0, 0
-  .byte 61, 14, 100, 123, 99, 0, 0	
-  .byte 60, 14, 100, 123, 99, 0, 0	
-  .byte 59, 14, 100, 123, 99, 0, 0
-  .byte 61, 14, 100, 76, 99, 0, 129
-  .byte 60, 14, 100, 76, 99, 0, 129	
-  .byte 59, 14, 100, 76, 99, 0, 129
+  .byte 61, 14, 100, 124, 101, 0, 129	; 18 special test for bug introduced in 1.22++
+  .byte 60, 14, 100, 124, 101, 0, 129	; 19 for sprites changed before their fetch but after
+  .byte 59, 14, 100, 124, 101, 0, 129	; 20 VICEs drawing handler
+  .byte 61, 14, 100, 77, 101, 0, 0		; 21 visible in unreleased filledcube demo of Skate / Glance
+  .byte 60, 14, 100, 77, 101, 0, 0	    ; 22
+  .byte 59, 14, 100, 77, 101, 0, 0      ; 23
+  .byte 61, 14, 100, 123, 99, 0, 0	    ; 24
+  .byte 60, 14, 100, 123, 99, 0, 0	    ; 25
+  .byte 59, 14, 100, 123, 99, 0, 0      ; 26
+  .byte 61, 14, 100, 76, 99, 0, 129     ; 27
+  .byte 60, 14, 100, 76, 99, 0, 129	    ; 28
+  .byte 59, 14, 100, 76, 99, 0, 129     ; 29
 
 
 

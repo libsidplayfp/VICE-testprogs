@@ -53,3 +53,7 @@ Tests
 C64C / new VIC-II:
 
 A@AAA@@A@@@@A@@AAAAA@@@@@@AAA
+
+C64 / 6567R8 (NTSC) (gpz)
+
+AAAA@@@@@@AAA@@@@AAA@@@@@@AAA
