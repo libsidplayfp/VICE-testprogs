@@ -61,12 +61,14 @@ mainlp:
 
         lda #0
         sta $dd00
-
+        ldy #1
+        ldx #$0f
         lda #baseline + (8 * 8)
 -       cmp $d012
         bne -
-        inc $d020
-        dec $d021
+        
+        sty $d021
+        stx $d020
 
         ;------------------------------
 
@@ -105,10 +107,10 @@ mainlp:
         lda #baseline + (16 * 8)
 -       cmp $d012
         bne -
+        inc $d021
         nop
         bit $ea
         stx $d020
-        inc $d021
 
         ;------------------------------
 
@@ -134,10 +136,12 @@ mainlp:
         lda #$3c | $01
         sta $dd02
 
+        ldx #13
         lda #baseline + (22 * 8)
 -       cmp $d012
         bne -
-        inc $d020
+        bit $eaea
+        stx $d020
 
         lda #$3c | $00
         sta $dd02
@@ -146,8 +150,8 @@ mainlp:
         lda #baseline + (24 * 8)
 -       cmp $d012
         bne -
-        nop
-        bit $ea
+        ;nop
+        ;bit $ea
         stx $d020
 
 -       lda $d011
