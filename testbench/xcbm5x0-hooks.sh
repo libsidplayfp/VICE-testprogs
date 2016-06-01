@@ -23,6 +23,9 @@ XCBM5X0OPTSSCREENSHOT+=""
 XCBM5X0SXO=32
 XCBM5X0SYO=35
 
+XCBM5X0REFSXO=32
+XCBM5X0REFSYO=35
+
 # $1  option
 # $2  test path
 function xcbm5x0_get_options
@@ -50,6 +53,22 @@ function xcbm5x0_get_options
             ;;
         *)
                 exitoptions=""
+            ;;
+    esac
+}
+
+# $1  option
+# $2  test path
+function xcbm5x0_get_cmdline_options
+{
+#    echo xcbm5x0_get_cmdline_options "$1"
+    exitoptions=""
+    case "$1" in
+        "PAL")
+                exitoptions="-pal"
+            ;;
+        "NTSC")
+                exitoptions="-ntsc"
             ;;
     esac
 }
@@ -86,7 +105,7 @@ function xcbm5x0_run_screenshot
     fi
     if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-xcbm5x0.png "$XCBM5X0SXO" "$XCBM5X0SYO"
+        ./cmpscreens "$refscreenshotname" "$XCBM5X0REFSXO" "$XCBM5X0REFSYO" "$1"/.testbench/"$2"-xcbm5x0.png "$XCBM5X0SXO" "$XCBM5X0SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

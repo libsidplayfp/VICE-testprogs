@@ -157,6 +157,32 @@ function chameleon_get_options
     esac
 }
 
+
+# $1  option
+# $2  test path
+function chameleon_get_cmdline_options
+{
+#    echo chameleon_get_cmdline_options "$1"
+    exitoptions=""
+    case "$1" in
+        "PAL")
+                exitoptions="-pal"
+            ;;
+        "NTSC")
+                exitoptions="-ntsc"
+            ;;
+        "NTSCOLD")
+                exitoptions="-ntscold"
+            ;;
+        "8565") # "new" PAL
+                exitoptions=""
+            ;;
+        "8562") # "new" NTSC
+                exitoptions=""
+            ;;
+    esac
+}
+
 ################################################################################
 # reset
 # run test program
@@ -192,12 +218,34 @@ function chameleon_run_screenshot
 #    echo "exited with: " $exitcode
     timeoutsecs=`expr \( $3 + 5000000 \) / 10000000`
     sleep $timeoutsecs
-    chshot -o "$1"/.testbench/"$2"-chameleon.png
+    if [ "${videotype}" == "NTSC" ]; then
+        chshot --ntsc -o "$1"/.testbench/"$2"-chameleon.png
+    else
+        chshot -o "$1"/.testbench/"$2"-chameleon.png
+    fi
 #    echo "exited with: " $exitcode
     if [ -f "$refscreenshotname" ]
     then
-#        echo ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-chameleon.png "$CHAMSXO" "$CHAMSYO"
-        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-chameleon.png "$CHAMSXO" "$CHAMSYO"
+        # defaults for PAL
+        CHAMREFSXO=32
+        CHAMREFSYO=35
+        CHAMSXO=53
+        CHAMSYO=62
+        
+#        echo [ "${refscreenshotvideotype}" "${videotype}" ]
+    
+        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+            CHAMREFSXO=32
+            CHAMREFSYO=23
+        fi
+    
+        if [ "${videotype}" == "NTSC" ]; then
+            CHAMSXO=61
+            CHAMSYO=38
+        fi
+    
+#        echo ./cmpscreens "$refscreenshotname" "$CHAMREFSXO" "$CHAMREFSYO" "$1"/.testbench/"$2"-chameleon.png "$CHAMSXO" "$CHAMSYO"
+        ./cmpscreens "$refscreenshotname" "$CHAMREFSXO" "$CHAMREFSYO" "$1"/.testbench/"$2"-chameleon.png "$CHAMSXO" "$CHAMSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing ("$refscreenshotname") - "

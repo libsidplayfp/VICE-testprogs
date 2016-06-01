@@ -20,6 +20,9 @@ XSCPU64OPTSSCREENSHOT+=""
 XSCPU64SXO=32
 XSCPU64SYO=35
 
+XSCPU64REFSXO=32
+XSCPU64REFSYO=35
+
 # $1  option
 # $2  test path
 function xscpu64_get_options
@@ -67,6 +70,32 @@ function xscpu64_get_options
     esac
 }
 
+
+# $1  option
+# $2  test path
+function xscpu64_get_cmdline_options
+{
+#    echo xscpu64_get_cmdline_options "$1"
+    exitoptions=""
+    case "$1" in
+        "PAL")
+                exitoptions="-pal"
+            ;;
+        "NTSC")
+                exitoptions="-ntsc"
+            ;;
+        "NTSCOLD")
+                exitoptions="-ntscold"
+            ;;
+        "8565") # "new" PAL
+                exitoptions="-VICIImodel 8565"
+            ;;
+        "8562") # "new" NTSC
+                exitoptions="-VICIImodel 8562"
+            ;;
+    esac
+}
+
 ################################################################################
 # reset
 # run test program
@@ -98,7 +127,26 @@ function xscpu64_run_screenshot
     fi
     if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-x64sc.png "$XSCPU64SXO" "$XSCPU64SYO"
+    
+        # defaults for PAL
+        XSCPU64REFSXO=32
+        XSCPU64REFSYO=35
+        XSCPU64SXO=32
+        XSCPU64SYO=35
+        
+#        echo [ "${refscreenshotvideotype}" "${videotype}" ]
+    
+        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+            XSCPU64REFSXO=32
+            XSCPU64REFSYO=23
+        fi
+    
+        if [ "${videotype}" == "NTSC" ]; then
+            XSCPU64SXO=32
+            XSCPU64SYO=23
+        fi
+    
+        ./cmpscreens "$refscreenshotname" "$XSCPU64REFSXO" "$XSCPU64REFSYO" "$1"/.testbench/"$2"-x64sc.png "$XSCPU64SXO" "$XSCPU64SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

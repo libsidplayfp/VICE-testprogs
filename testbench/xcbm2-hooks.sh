@@ -23,6 +23,9 @@ XCBM2OPTSSCREENSHOT+=""
 XCBM2SXO=32
 XCBM2SYO=35
 
+XCBM2REFSXO=32
+XCBM2REFSYO=35
+
 # $1  option
 # $2  test path
 function xcbm2_get_options
@@ -50,6 +53,32 @@ function xcbm2_get_options
             ;;
         *)
                 exitoptions=""
+            ;;
+    esac
+}
+
+
+# $1  option
+# $2  test path
+function xcbm2_get_cmdline_options
+{
+#    echo xcbm2_get_cmdline_options "$1"
+    exitoptions=""
+    case "$1" in
+        "PAL")
+                exitoptions="-pal"
+            ;;
+        "NTSC")
+                exitoptions="-ntsc"
+            ;;
+        "NTSCOLD")
+                exitoptions="-ntscold"
+            ;;
+        "8565") # "new" PAL
+                exitoptions="-VICIImodel 8565"
+            ;;
+        "8562") # "new" NTSC
+                exitoptions="-VICIImodel 8562"
             ;;
     esac
 }
@@ -86,7 +115,26 @@ function xcbm2_run_screenshot
     fi
     if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-xcbm2.png "$XCBM2SXO" "$XCBM2SYO"
+    
+        # defaults for PAL
+        XCBM2REFSXO=32
+        XCBM2REFSYO=35
+        XCBM2SXO=32
+        XCBM2SYO=35
+        
+#        echo [ "${refscreenshotvideotype}" "${videotype}" ]
+    
+        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+            XCBM2REFSXO=32
+            XCBM2REFSYO=23
+        fi
+    
+        if [ "${videotype}" == "NTSC" ]; then
+            XCBM2SXO=32
+            XCBM2SYO=23
+        fi
+    
+        ./cmpscreens "$refscreenshotname" "$XCBM2REFSXO" "$XCBM2REFSYO" "$1"/.testbench/"$2"-xcbm2.png "$XCBM2SXO" "$XCBM2SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

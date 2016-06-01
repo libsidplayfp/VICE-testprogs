@@ -98,6 +98,18 @@ function getscreenshotname
         fi
     fi
 
+    if [ "$videotype" == "NTSC" ] && [ -f "$1"/references/"$2"-ntsc.png ]
+    then
+        refscreenshotname="$1"/references/"$2"-ntsc.png
+        return 0
+    fi
+
+    if [ "$videotype" == "NTSCOLD" ] && [ -f "$1"/references/"$2"-ntscold.png ]
+    then
+        refscreenshotname="$1"/references/"$2"-ntscold.png
+        return 0
+    fi
+
     if [ -f "$1"/references/"$2".png ]
     then
         refscreenshotname="$1"/references/"$2".png
@@ -172,7 +184,9 @@ function runprogsfortarget
 
             skiptest=0
             if [ "$2" == "" ] || [ "${progpath#*$2}" != "$progpath" ]; then
+                # create the commandline for the target...
                 testoptions=""
+                # first loop over the options given for the test
                 for (( i=5; i<${arraylength}+1; i++ ));
                 do
     #                echo $i " / " ${arraylength} " : " ${myarray[$i-1]}
@@ -199,43 +213,85 @@ function runprogsfortarget
                         fi
                     fi
                 done
-            if [ "${testtype}" == "interactive" ]; then
+                # now setup additional options depending on commandline options given to the testbench script
+                if [ "${videotype}" == "PAL" ]; then
+                    "$target"_get_cmdline_options "PAL"
+                    testoptions+="${exitoptions} "
+                fi
+                if [ "${videotype}" == "NTSC" ]; then
+                    "$target"_get_cmdline_options "NTSC"
+                    testoptions+="${exitoptions} "
+                fi
+                if [ "${videotype}" == "NTSCOLD" ]; then
+                    "$target"_get_cmdline_options "NTSCOLD"
+                    testoptions+="${exitoptions} "
+                fi
+                if [ "${videosubtype}" == "8565" ]; then
+                    "$target"_get_cmdline_options "8565"
+                    testoptions+="${exitoptions} "
+                fi
+                if [ "${videosubtype}" == "8562" ]; then
+                    "$target"_get_cmdline_options "8562"
+                    testoptions+="${exitoptions} "
+                fi
+            if [ "${skiptest}" == "0" ] && [ "${testtype}" == "interactive" ]; then
                 echo "$testpath" "$testprog" "- " "interactive (skipped)"
                 skiptest=1
             fi
             if [ "${skiptest}" == "0" ]; then
 #                if [ "$2" == "" ] || [ "${testpath#*$2}" != "$testpath" ]; then
                     echo -ne "$testpath" "$testprog" "- "
+                    if [ "${verbose}" == "1" ]; then
+                        echo -ne ["${testtype}"]
+                    fi
 
                     if [ "${testtype}" == "screenshot" ]
                     then
                         getscreenshotname "$testpath" "$testprog"
+                        refscreenshotvideotype="PAL"
+                        if [ "${refscreenshotname#*_ntsc.prg}" != "$refscreenshotname" ] || [ "${refscreenshotname#*-ntsc.png}" != "$refscreenshotname" ]
+                        then
+                            refscreenshotvideotype="NTSC"
+                        fi
+                        if [ "${refscreenshotname#*_ntscold.prg}" != "$refscreenshotname" ] || [ "${refscreenshotname#*-ntscold.png}" != "$refscreenshotname" ]
+                        then
+                            refscreenshotvideotype="NTSCOLD"
+                        fi
                         if [ "${verbose}" == "1" ]; then
-                            echo -ne ["$refscreenshotname"]
+                            echo -ne ["$refscreenshotvideotype": "$refscreenshotname"]
                         fi
                     fi
 
                     if [ "${testtype}" == "screenshot" ] && [ "$refscreenshotname" == "" ]
                     then
                         echo "reference screenshot missing (skipped)"
+                        echo "noref" "$testpath" "$testprog" >> "$target"_result.txt
                     else
+#                        echo "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout" "$testoptions"
                         "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout" "$testoptions"
-        #                echo "exited with: " $exitcode
+#                        echo "exited with: " $exitcode
+                        GREEN='\033[1;32m'
+                        RED='\033[1;31m'
+                        NC='\033[0m'
                         case "$exitcode" in
                             0)
+                                    echo -ne $GREEN
                                     exitstatus="ok"
                                 ;;
                             1)
+                                    echo -ne $RED
                                     exitstatus="timeout"
                                 ;;
                             255)
+                                    echo -ne $RED
                                     exitstatus="error"
                                 ;;
                             *)
+                                    echo -ne $RED
                                     exitstatus="error"
                                 ;;
                         esac
-                        echo "$exitstatus"
+                        echo -e "$exitstatus" $NC
                         echo "$exitstatus" "$testpath" "$testprog" >> "$target"_result.txt
                     fi
                     
@@ -256,6 +312,7 @@ function showfailedfortarget
             echo "failed tests for" "$target"":"
             grep "error" "$target"_result.txt
             grep "timeout" "$target"_result.txt
+            grep "noref" "$target"_result.txt
         fi
     fi
 }
@@ -269,9 +326,10 @@ function showhelp
     echo "  <filter> is a substring of the path of tests to restrict to"
     echo "  --help       show this help"
     echo "  --verbose    be more verbose"
-    echo "  --pal        skip tests that do not work on PAL"
-    echo "  --ntsc       skip tests that do not work on NTSC"
-    echo "  --ntscold    skip tests that do not work on NTSC(old)"
+    echo "  --pal        run tests in PAL, skip tests that do not work on PAL"
+    echo "  --ntsc       run tests in NTSC, skip tests that do not work on NTSC"
+    echo "  --ntscold    run tests in NTSC(old), skip tests that do not work on NTSC(old)"
+    echo "  --8562       target VICII type is 8562 (grey dot)"
     echo "  --8565       target VICII type is 8565 (grey dot)"
     echo "  --8565early  target VICII type is 8565 (new color instead of grey dot)"
     echo "  --8565late   target VICII type is 8565 (old color instead of grey dot)"
@@ -306,14 +364,17 @@ do
         --ntscold)
                 videotype="NTSCOLD"
             ;;
-        --8565) # "new" VICII (grey dot)
+        --8565) # "new" PAL VICII (grey dot)
                 videosubtype="8565"
             ;;
-        --8565early) # "new" VICII (no grey dot, new color instead)
+        --8565early) # "new" PAL VICII (no grey dot, new color instead)
                 videosubtype="8565early"
             ;;
-        --8565late) # "new" VICII (no grey dot, old color instead)
+        --8565late) # "new" PAL VICII (no grey dot, old color instead)
                 videosubtype="8565late"
+            ;;
+        --8562) # "new" NTSC VICII (grey dot)
+                videosubtype="8562"
             ;;
         *) # is either target or filter
             if [ "$thisarg" = "" ] ; then

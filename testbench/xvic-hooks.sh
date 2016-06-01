@@ -20,6 +20,9 @@ XVICOPTSSCREENSHOT+=""
 XVICSXO=32
 XVICSYO=35
 
+XVICREFSXO=32
+XVICREFSYO=35
+
 # $1  option
 # $2  test path
 function xvic_get_options
@@ -49,6 +52,25 @@ function xvic_get_options
                     exitoptions="-8 $2/${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
+            ;;
+    esac
+}
+
+# $1  option
+# $2  test path
+function xvic_get_cmdline_options
+{
+#    echo xvic_get_cmdline_options "$1"
+    exitoptions=""
+    case "$1" in
+        "PAL")
+                exitoptions="-pal"
+            ;;
+        "NTSC")
+                exitoptions="-ntsc"
+            ;;
+        "NTSCOLD")
+                exitoptions="-ntscold"
             ;;
     esac
 }
@@ -85,7 +107,7 @@ function xvic_run_screenshot
     fi
     if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-xvic.png "$XVICSXO" "$XVICSYO"
+        ./cmpscreens "$refscreenshotname" "$XVICREFSXO" "$XVICREFSYO" "$1"/.testbench/"$2"-xvic.png "$XVICSXO" "$XVICSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

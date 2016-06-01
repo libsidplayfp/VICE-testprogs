@@ -20,6 +20,9 @@ VSIDOPTSSCREENSHOT+=""
 VSIDSXO=32
 VSIDSYO=35
 
+VSIDREFSXO=32
+VSIDREFSYO=35
+
 # $1  option
 # $2  test path
 function vsid_get_options
@@ -47,6 +50,25 @@ function vsid_get_options
             ;;
         *)
                 exitoptions=""
+            ;;
+    esac
+}
+
+# $1  option
+# $2  test path
+function vsid_get_cmdline_options
+{
+#    echo vsid_get_cmdline_options "$1"
+    exitoptions=""
+    case "$1" in
+        "PAL")
+                exitoptions="-pal"
+            ;;
+        "NTSC")
+                exitoptions="-ntsc"
+            ;;
+        "NTSCOLD")
+                exitoptions="-ntscold"
             ;;
     esac
 }
@@ -83,7 +105,7 @@ function vsid_run_screenshot
 
     if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-vsid.png "$VSIDSXO" "$VSIDSYO"
+        ./cmpscreens "$refscreenshotname" "$VSIDREFSXO" "$VSIDREFSYO" "$1"/.testbench/"$2"-vsid.png "$VSIDSXO" "$VSIDSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

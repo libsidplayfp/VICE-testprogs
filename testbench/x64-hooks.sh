@@ -17,8 +17,15 @@ X64OPTSSCREENSHOT+=""
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
 # top left character on screen.
+#
+# for PAL use  32x35
+# for NTSC use 32x23
 X64SXO=32
 X64SYO=35
+
+# the same for the reference screenshots
+X64REFSXO=32
+X64REFSYO=35
 
 # $1  option
 # $2  test path
@@ -67,6 +74,32 @@ function x64_get_options
     esac
 }
 
+
+# $1  option
+# $2  test path
+function x64_get_cmdline_options
+{
+#    echo x64_get_cmdline_options "$1"
+    exitoptions=""
+    case "$1" in
+        "PAL")
+                exitoptions="-pal"
+            ;;
+        "NTSC")
+                exitoptions="-ntsc"
+            ;;
+        "NTSCOLD")
+                exitoptions="-ntscold"
+            ;;
+        "8565") # "new" PAL
+                exitoptions="-VICIImodel 8565"
+            ;;
+        "8562") # "new" NTSC
+                exitoptions="-VICIImodel 8562"
+            ;;
+    esac
+}
+
 ################################################################################
 # reset
 # run test program
@@ -99,7 +132,24 @@ function x64_run_screenshot
     fi
     if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-x64.png "$X64SXO" "$X64SYO"
+    
+        # defaults for PAL
+        X64REFSXO=32
+        X64REFSYO=35
+        X64SXO=32
+        X64SYO=35
+    
+        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+            X64REFSXO=32
+            X64REFSYO=23
+        fi
+
+        if [ "${videotype}" == "NTSC" ]; then
+            X64SXO=32
+            X64SYO=23
+        fi
+
+        ./cmpscreens "$refscreenshotname" "$X64REFSXO" "$X64REFSYO" "$1"/.testbench/"$2"-x64.png "$X64SXO" "$X64SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

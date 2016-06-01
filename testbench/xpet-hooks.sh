@@ -20,6 +20,9 @@ XPETOPTSSCREENSHOT+=""
 XPETSXO=32
 XPETSYO=35
 
+XPETREFSXO=32
+XPETREFSYO=35
+
 # $1  option
 # $2  test path
 function xpet_get_options
@@ -41,6 +44,22 @@ function xpet_get_options
             ;;
         *)
                 exitoptions=""
+            ;;
+    esac
+}
+
+# $1  option
+# $2  test path
+function xpet_get_cmdline_options
+{
+#    echo xpet_get_cmdline_options "$1"
+    exitoptions=""
+    case "$1" in
+        "PAL")
+                exitoptions="-pal"
+            ;;
+        "NTSC")
+                exitoptions="-ntsc"
             ;;
     esac
 }
@@ -76,7 +95,7 @@ function xpet_run_screenshot
     fi
     if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-xpet.png "$XPETSXO" "$XPETSYO"
+        ./cmpscreens "$refscreenshotname" "$XPETREFSXO" "$XPETREFSYO" "$1"/.testbench/"$2"-xpet.png "$XPETSXO" "$XPETSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

@@ -20,6 +20,9 @@ XPLUS4OPTSSCREENSHOT+=""
 XPLUS4SXO=32
 XPLUS4SYO=35
 
+XPLUS4REFSXO=32
+XPLUS4REFSYO=35
+
 # $1  option
 # $2  test path
 function xplus4_get_options
@@ -41,6 +44,25 @@ function xplus4_get_options
             ;;
         *)
                 exitoptions=""
+            ;;
+    esac
+}
+
+# $1  option
+# $2  test path
+function xplus4_get_cmdline_options
+{
+#    echo xplus4_get_cmdline_options "$1"
+    exitoptions=""
+    case "$1" in
+        "PAL")
+                exitoptions="-pal"
+            ;;
+        "NTSC")
+                exitoptions="-ntsc"
+            ;;
+        "NTSCOLD")
+                exitoptions="-ntscold"
             ;;
     esac
 }
@@ -77,7 +99,7 @@ function xplus4_run_screenshot
     fi
     if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-xplus4.png "$XPLUS4SXO" "$XPLUS4SYO"
+        ./cmpscreens "$refscreenshotname" "$XPLUS4REFSXO" "$XPLUS4REFSYO" "$1"/.testbench/"$2"-xplus4.png "$XPLUS4SXO" "$XPLUS4SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

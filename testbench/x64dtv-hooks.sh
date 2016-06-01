@@ -20,6 +20,9 @@ X64DTVOPTSSCREENSHOT+=""
 X64DTVSXO=32
 X64DTVSYO=35
 
+X64DTVREFSXO=32
+X64DTVREFSYO=35
+
 # $1  option
 # $2  test path
 function x64dtv_get_options
@@ -49,6 +52,22 @@ function x64dtv_get_options
                     exitoptions="-8 $2/${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
+            ;;
+    esac
+}
+
+# $1  option
+# $2  test path
+function x64dtv_get_cmdline_options
+{
+#    echo x64dtv_get_cmdline_options "$1"
+    exitoptions=""
+    case "$1" in
+        "PAL")
+                exitoptions="-pal"
+            ;;
+        "NTSC")
+                exitoptions="-ntsc"
             ;;
     esac
 }
@@ -84,7 +103,26 @@ function x64dtv_run_screenshot
     fi
     if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-x64dtv.png "$X64DTVSXO" "$X64DTVSYO"
+    
+        # defaults for PAL
+        X64DTVREFSXO=32
+        X64DTVREFSYO=35
+        X64DTVSXO=32
+        X64DTVSYO=35
+        
+#        echo [ "${refscreenshotvideotype}" "${videotype}" ]
+    
+        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+            X64DTVREFSXO=32
+            X64DTVREFSYO=23
+        fi
+    
+        if [ "${videotype}" == "NTSC" ]; then
+            X64DTVSXO=32
+            XX64DTVSYO=23
+        fi
+    
+        ./cmpscreens "$refscreenshotname" "$X64DTVREFSXO" "$X64DTVREFSYO" "$1"/.testbench/"$2"-x64dtv.png "$X64DTVSXO" "$X64DTVSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

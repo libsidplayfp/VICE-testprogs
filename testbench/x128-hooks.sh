@@ -20,6 +20,9 @@ X128OPTSSCREENSHOT+=""
 X128SXO=32
 X128SYO=35
 
+X128REFSXO=32
+X128REFSYO=35
+
 # $1  option
 # $2  test path
 function x128_get_options
@@ -67,6 +70,22 @@ function x128_get_options
     esac
 }
 
+# $1  option
+# $2  test path
+function x128_get_cmdline_options
+{
+#    echo x128_get_cmdline_options "$1"
+    exitoptions=""
+    case "$1" in
+        "PAL")
+                exitoptions="-pal"
+            ;;
+        "NTSC")
+                exitoptions="-ntsc"
+            ;;
+    esac
+}
+
 ################################################################################
 # reset
 # run test program
@@ -98,7 +117,28 @@ function x128_run_screenshot
     fi
     if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-x128.png "$X128SXO" "$X128SYO"
+    
+        # FIXME: this only works for the VICII
+    
+        # defaults for PAL
+        X128REFSXO=32
+        X128REFSYO=35
+        X128SXO=32
+        X128SYO=35
+        
+#        echo [ "${refscreenshotvideotype}" "${videotype}" ]
+    
+        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+            X128REFSXO=32
+            X128REFSYO=23
+        fi
+    
+        if [ "${videotype}" == "NTSC" ]; then
+            X128SXO=32
+            X128SYO=23
+        fi
+
+        ./cmpscreens "$refscreenshotname" "$X128REFSXO" "$X128REFSYO" "$1"/.testbench/"$2"-x128.png "$X128SXO" "$X128SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

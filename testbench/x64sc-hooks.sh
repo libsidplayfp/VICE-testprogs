@@ -2,6 +2,7 @@
 X64SC=../../trunk/vice/src/x64sc
 X64SCOPTS+=" -default"
 #X64SCOPTS+=" -model c64c"
+#X64SCOPTS+=" -model c64 -ntsc "
 X64SCOPTS+=" -VICIIfilter 0"
 X64SCOPTS+=" -VICIIextpal"
 X64SCOPTS+=" -VICIIpalette vice.vpl"
@@ -21,6 +22,9 @@ X64SCOPTSSCREENSHOT+=""
 # top left character on screen.
 X64SCSXO=32
 X64SCSYO=35
+
+X64SCREFSXO=32
+X64SCREFSYO=35
 
 # $1  option
 # $2  test path
@@ -69,6 +73,32 @@ function x64sc_get_options
     esac
 }
 
+# $1  option
+# $2  test path
+function x64sc_get_cmdline_options
+{
+#    echo x64sc_get_cmdline_options "$1"
+    exitoptions=""
+    case "$1" in
+        "PAL")
+                exitoptions="-pal"
+            ;;
+        "NTSC")
+                exitoptions="-ntsc"
+            ;;
+        "NTSCOLD")
+                exitoptions="-ntscold"
+            ;;
+        "8565") # "new" PAL
+                exitoptions="-VICIImodel 8565"
+            ;;
+        "8562") # "new" NTSC
+                exitoptions="-VICIImodel 8562"
+            ;;
+    esac
+}
+
+
 ################################################################################
 # reset
 # run test program
@@ -85,6 +115,7 @@ function x64sc_run_screenshot
 #    echo $X64SC "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-x64sc.png
+#    echo $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$1"/"$2"
     $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$1"/"$2" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
@@ -100,7 +131,27 @@ function x64sc_run_screenshot
     fi
     if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$refscreenshotname" 32 35 "$1"/.testbench/"$2"-x64sc.png "$X64SCSXO" "$X64SCSYO"
+
+        # defaults for PAL
+        X64SCREFSXO=32
+        X64SCREFSYO=35
+        X64SCSXO=32
+        X64SCSYO=35
+        
+#        echo [ "${refscreenshotvideotype}" "${videotype}" ]
+    
+        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+            X64SCREFSXO=32
+            X64SCREFSYO=23
+        fi
+    
+        if [ "${videotype}" == "NTSC" ]; then
+            X64SCSXO=32
+            X64SCSYO=23
+        fi
+    
+#        echo ./cmpscreens "$refscreenshotname" "$X64SCREFSXO" "$X64SCREFSYO" "$1"/.testbench/"$2"-x64sc.png "$X64SCSXO" "$X64SCSYO"
+        ./cmpscreens "$refscreenshotname" "$X64SCREFSXO" "$X64SCREFSYO" "$1"/.testbench/"$2"-x64sc.png "$X64SCSXO" "$X64SCSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "
@@ -122,7 +173,7 @@ function x64sc_run_exitcode
 {
     extraopts=""$4" "$5" "$6""
 #    echo "extraopts=" $extraopts
-#    echo $X64SC $X64SCOPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
+#    echo $X64SC $X64SCOPTS $X64SCOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2"
     $X64SC $X64SCOPTS $X64SCOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
 #    $X64SC $X64SCOPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
     exitcode=$?

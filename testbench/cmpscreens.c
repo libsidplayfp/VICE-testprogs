@@ -9,6 +9,106 @@
 #define MAXCOLORS 0x100
 
 int verbose = 0;
+int numpalettes = 2;
+int numcolors = 16;
+
+int palette1 = 0, palette2 = 0;
+
+unsigned char cols_pepto_pal[3*16] = {
+    0x00, 0x00, 0x00,
+    0xff, 0xff, 0xff,
+    0x68, 0x37, 0x2b,
+    0x70, 0xa4, 0xb2,
+
+    0x6f, 0x3d, 0x86,
+    0x58, 0x8d, 0x43,
+    0x35, 0x28, 0x79,
+    0xb8, 0xc7, 0x6f,
+
+    0x6f, 0x4f, 0x25,
+    0x43, 0x39, 0x00,
+    0x9a, 0x67, 0x59,
+    0x44, 0x44, 0x44,
+
+    0x6c, 0x6c, 0x6c,
+    0x9a, 0xd2, 0x84,
+    0x6c, 0x5e, 0xb5,
+    0x95, 0x95, 0x95,
+};
+unsigned char cols_pepto_ntsc_sony[3*16] = {
+    0x00, 0x00, 0x00,
+    0xFF, 0xFF, 0xFF,
+    0x7C, 0x35, 0x2B,
+    0x5A, 0xA6, 0xB1,
+
+    0x69, 0x41, 0x85,
+    0x5D, 0x86, 0x43,
+    0x21, 0x2E, 0x78,
+    0xCF, 0xBE, 0x6F,
+
+    0x89, 0x4A, 0x26,
+    0x5B, 0x33, 0x00,
+    0xAF, 0x64, 0x59,
+    0x43, 0x43, 0x43,
+
+    0x6B, 0x6B, 0x6B,
+    0xA0, 0xCB, 0x84,
+    0x56, 0x65, 0xB3,
+    0x95, 0x95, 0x95,
+};
+
+unsigned char *colors[2] = {
+    &cols_pepto_pal[0],
+    &cols_pepto_ntsc_sony[0]
+};
+
+char *palettenames[2] = {
+    "Pepto (PAL)",
+    "Pepto (NTSC/SONY)",
+};
+
+int findcolorinpalette(unsigned char *p, int palette)
+{
+    int i;
+    unsigned char *c;
+    c = colors[palette];
+    for (i = 0; i < numcolors; i++) {
+        if ((p[0] == c[0]) && (p[1] == c[1]) && (p[2] == c[2])) {
+            return i;
+        }
+        c+=3;
+    }
+    return -1;
+}
+
+
+int picusespalette(unsigned char *data, int bpp, int w, int h, int palette) {
+    int x, y;
+    for (y = 0; y < (h); y++) {
+        for (x = 0; x < (w); x++) {
+            if (findcolorinpalette(&data[bpp * ((w * (y)) + (x))], palette) == -1) {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+int picchangepalette(unsigned char *data, int bpp, int w, int h, int paletteold, int palettenew) {
+    int x, y, col;
+    unsigned char *p, *c;
+    for (y = 0; y < (h); y++) {
+        for (x = 0; x < (w); x++) {
+            p = &data[bpp * ((w * (y)) + (x))];
+            col = findcolorinpalette(p, paletteold);
+            c = colors[palettenew];
+            p[0] = c[0 + (col * 3)];
+            p[1] = c[1 + (col * 3)];
+            p[2] = c[2 + (col * 3)];
+        }
+    }
+    return 1;
+}
 
 void usage(void)
 {
@@ -137,9 +237,36 @@ int main(int argc, char *argv[])
     }
 
     xsize = xsize1;     // FIXME
-    ysize = ysize1;     // FIXME
+    ysize = ysize1 < ysize2 ? ysize1 : ysize2;     // FIXME
     if (verbose) printf("cmp size: %dx%d\n", xsize, ysize);
 
+    // find out what palette the first picture uses
+    palette1 = 0;
+    for (i = 0; i < numpalettes; i++) {
+        if (picusespalette(data1, bpp1, xsize1, ysize1, i)) {
+            palette1 = i;
+            if (verbose) printf("found palette 1:%d %s\n", palette1, palettenames[palette1]);
+            break;
+        }
+    }
+//    if (verbose) printf("using palette 1:%d\n", palette1);
+    
+    // find out what palette the second picture uses
+    palette2 = 0;
+    for (i = 0; i < numpalettes; i++) {
+        if (picusespalette(data2, bpp2, xsize2, ysize2, i)) {
+            palette2 = i;
+            if (verbose) printf("found palette 2:%d %s\n", palette2, palettenames[palette2]);
+            break;
+        }
+    }
+//    if (verbose) printf("using palette 2:%d\n", palette2);
+    // if the images use different palettes, alter the second picture to use the same palette as the first
+    if (palette1 != palette2) {
+        picchangepalette(data2, bpp2, xsize2, ysize2, palette2, palette1);
+    }
+    
+    // finally compare the images
     for (y = ystart; y < (ystart + ysize); y++) {
         for (x = xstart; x < (xstart + xsize); x++) {
             p1 = &data1[bpp1 * ((xsize1 * (y + yoff1)) + (x + xoff1))];
