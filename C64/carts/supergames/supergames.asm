@@ -133,10 +133,10 @@ fail:
 
         lda #0          ; success
         cpx #5
-        bne fail2
+        beq fail2
         lda #$ff        ; failure
 fail2:
-        stx $d7ff
+        sta $d7ff
 
         bne -
         beq -
