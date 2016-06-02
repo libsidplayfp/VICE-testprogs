@@ -177,5 +177,7 @@ function x64sc_run_exitcode
     $X64SC $X64SCOPTS $X64SCOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
 #    $X64SC $X64SCOPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
     exitcode=$?
-#    echo "exited with: " $exitcode
+    if [ $verbose == "1" ]; then
+        echo $X64SC "exited with: " $exitcode
+    fi
 }
