@@ -2,7 +2,20 @@
         !byte $0c,$08,$0b,$00,$9e
         !byte $32,$30,$36,$34
         *= $0810
+
+        ldx #1
+l1:     lda $d012
+l2:     cmp $d012
+        beq l2
+        bmi l1
+        cmp #$20
+        bcc ntsc
+        ldx #0
+ntsc:   stx ntscflag
         jmp start
+
+ntscflag:
+        !byte 0 ; 1 means NTSC
 
 ;-------------------------------------------------------------------------------
 rcv_init:
@@ -32,6 +45,9 @@ rcv_wait:
 ;-------------------------------------------------------------------------------
 
 rcv_1byte
+        lda ntscflag
+        bne rcv_1byte_ntsc
+
 !if (0) {
 .poll
         lda $d012
@@ -77,6 +93,41 @@ rcv_1byte
         eor $dd00      ; get nn000000
 
         dec $d020
+        rts
+
+rcv_1byte_ntsc
+!if (1) {
+-
+        lda #$2e
+        cmp $d012
+        bcc -
+}
+        dec $d020
+
+.wait2a
+        lda $dd00       ; wait for DATA = 0 CLOCK = 0 (1 on drive side)
+        and #%11000000
+        bne .wait2a
+
+        lda #%00001011 ; ATN=1
+        sta $dd00
+        bit $ea
+        lda #%00000011 ; ATN=0
+        sta $dd00
+
+        lda #$ff
+        eor $dd00      ; get 000000nn
+        lsr
+        lsr
+        eor $dd00      ; get 0000nn00
+        lsr
+        lsr
+        eor $dd00      ; get 00nn0000
+        lsr
+        ;asr #$fe       ;lets carry be cleared after lsr!
+        lsr
+        eor $dd00      ; get nn000000
+        inc $d020
         rts
 
 ;-------------------------------------------------------------------------------
