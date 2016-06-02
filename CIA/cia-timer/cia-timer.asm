@@ -129,6 +129,10 @@ useirc:
   lda #$80
 usecia11:
   sta $dc0d
+  
+  inc $d019
+  lda $dc0d
+  lda $dd0d
   cli
 
   ; do test
@@ -149,8 +153,12 @@ usecia11:
   lda $dc0d
   lda $dd0d
 
-  jmp checkdata
-;  jmp restart
+  lda #$1b
+  sta $d011
+  
+  jsr checkdata
+
+  jmp *
 
 nrst:
   jmp nexttest
@@ -162,6 +170,13 @@ end:
 ;-------------------------------------------------------------------------------
 
 test:
+  ; switch off the screen while the test is running, this is needed so it can
+  ; work correctly also on NTSC (where the border is much smaller)
+  lda #$0b
+  sta $d011
+
+  lda $d011
+  bmi test
   lda $d011
   bpl test
 
@@ -187,6 +202,7 @@ usecia22:
   sta $dd0e
 
 lp0:
+
   lda #$20
 output3a:
   sta $0478,x
@@ -390,7 +406,7 @@ bordercol = * + 1
 nofail:
     stx $d7ff
 
-  jmp restart
+    rts
 
 data_compare:
     if DUMP = 0
