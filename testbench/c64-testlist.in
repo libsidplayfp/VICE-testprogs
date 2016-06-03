@@ -19,7 +19,7 @@
 ../C64/autostart/basic/,basictest.prg,exitcode,100000000
 ../C64/autostart/basic/,printpoint.prg,exitcode,100000000
 ../C64/autostart/basic/,printpoint2.prg,exitcode,100000000
-#TODO: test.prg fails when not loaded by LOAD"TEST",8
+#FIXME: test.prg fails when not loaded by LOAD"TEST",8
 ../C64/autostart/defaults/,test.prg,exitcode,100000000
 ../C64/autostart/defaults/,test.prg,exitcode,100000000,mountd64:test.d64
 ../C64/autostart/random/,raster.prg,interactive,0
@@ -272,8 +272,9 @@
 ../general/Lorenz-2.15/src/,trap13.prg,exitcode,100000000
 ../general/Lorenz-2.15/src/,trap14.prg,exitcode,100000000
 ../general/Lorenz-2.15/src/,trap15.prg,exitcode,100000000
-../general/Lorenz-2.15/src/,trap16.prg,exitcode,100000000
-../general/Lorenz-2.15/src/,trap17.prg,exitcode,100000000
+#FIXME: port trap16/17 to NTSC/NTSCOLD
+../general/Lorenz-2.15/src/,trap16.prg,exitcode,200000000,vicii-pal
+../general/Lorenz-2.15/src/,trap17.prg,exitcode,200000000,vicii-pal
 ../general/Lorenz-2.15/src/,branchwrap.prg,exitcode,100000000
 ../general/Lorenz-2.15/src/,mmufetch.prg,exitcode,100000000
 ../general/Lorenz-2.15/src/,mmu.prg,exitcode,100000000
@@ -411,25 +412,28 @@
 ../interrupts/irq-ackn-bug/,cia1.prg,exitcode,100000000,cia-old
 ../interrupts/irq-ackn-bug/,cia2new.prg,exitcode,100000000,cia-new
 ../interrupts/irq-ackn-bug/,cia2.prg,exitcode,100000000,cia-old
+#FIXME: fix tests for NTSC/NTSCOLD
 ../interrupts/irq-ackn-bug/,irq-ackn_after_cli2.prg,interactive,0,vicii-pal
 ../interrupts/irq-ackn-bug/,irq-ackn_after_cli.prg,interactive,0,vicii-pal
-../interrupts/irq-ackn-bug/,irq-ack-vicii.prg,exitcode,100000000
-../interrupts/irqdma/,nmitest6b.prg,exitcode,1000000000
-../interrupts/irqdma/,nmitest6.prg,exitcode,1000000000
-../interrupts/irqdma/,test1b.prg,exitcode,1000000000
-../interrupts/irqdma/,test1.prg,exitcode,1000000000
-../interrupts/irqdma/,test2b.prg,exitcode,1000000000
-../interrupts/irqdma/,test2.prg,exitcode,1000000000
-../interrupts/irqdma/,test3b.prg,exitcode,1000000000
-../interrupts/irqdma/,test3.prg,exitcode,1000000000
-../interrupts/irqdma/,test4b.prg,exitcode,1000000000
-../interrupts/irqdma/,test4.prg,exitcode,1000000000
-../interrupts/irqdma/,test5b.prg,exitcode,1000000000
-../interrupts/irqdma/,test5.prg,exitcode,1000000000
-../interrupts/irqdma/,test6b.prg,exitcode,1000000000
-../interrupts/irqdma/,test6.prg,exitcode,1000000000
-../interrupts/irqdma/,test7b.prg,exitcode,1000000000
-../interrupts/irqdma/,test7.prg,exitcode,1000000000
+#FIXME: fix tests for NTSC/NTSCOLD
+../interrupts/irq-ackn-bug/,irq-ack-vicii.prg,exitcode,100000000,vicii-pal
+#FIXME: fix tests for NTSC/NTSCOLD
+../interrupts/irqdma/,nmitest6b.prg,exitcode,1000000000,vicii-pal
+../interrupts/irqdma/,nmitest6.prg,exitcode,1000000000,vicii-pal
+../interrupts/irqdma/,test1b.prg,exitcode,1000000000,vicii-pal
+../interrupts/irqdma/,test1.prg,exitcode,1000000000,vicii-pal
+../interrupts/irqdma/,test2b.prg,exitcode,1000000000,vicii-pal
+../interrupts/irqdma/,test2.prg,exitcode,1000000000,vicii-pal
+../interrupts/irqdma/,test3b.prg,exitcode,1000000000,vicii-pal
+../interrupts/irqdma/,test3.prg,exitcode,1000000000,vicii-pal
+../interrupts/irqdma/,test4b.prg,exitcode,1000000000,vicii-pal
+../interrupts/irqdma/,test4.prg,exitcode,1000000000,vicii-pal
+../interrupts/irqdma/,test5b.prg,exitcode,1000000000,vicii-pal
+../interrupts/irqdma/,test5.prg,exitcode,1000000000,vicii-pal
+../interrupts/irqdma/,test6b.prg,exitcode,1000000000,vicii-pal
+../interrupts/irqdma/,test6.prg,exitcode,1000000000,vicii-pal
+../interrupts/irqdma/,test7b.prg,exitcode,1000000000,vicii-pal
+../interrupts/irqdma/,test7.prg,exitcode,1000000000,vicii-pal
 ../interrupts/irqdummy/,irqdummy.prg,exitcode,10000000
 ../interrupts/irqnmi/,irqnmi-new.prg,exitcode,100000000,cia-new
 ../interrupts/irqnmi/,irqnmi-old.prg,exitcode,100000000,cia-old
@@ -438,13 +442,18 @@
 ################################################################################
 # CIA 6526
 #
+# ../CIA/ runtime 2 minutes and 26 seconds (x64sc)
 # ../CIA/ runtime 15 minutes and 23 seconds (chameleon)
 ################################################################################
-../CIA/CIA-AcountsB/,cia-b-counts-a.prg,exitcode,100000000
-../CIA/CIA-AcountsB/,cmp-b-counts-a-old.prg,exitcode,100000000,cia-old
-../CIA/CIA-AcountsB/,cmp-b-counts-a-new.prg,exitcode,100000000,cia-new
-../CIA/cia-timer/,cia-timer-oldcias.prg,exitcode,100000000,cia-old
-../CIA/cia-timer/,cia-timer-newcias.prg,exitcode,100000000,cia-new
+../CIA/CIA-AcountsB/,cia-b-counts-a.prg,exitcode,100000000,vicii-pal
+../CIA/CIA-AcountsB/,cmp-b-counts-a-old.prg,exitcode,100000000,cia-old,vicii-pal
+../CIA/CIA-AcountsB/,cmp-b-counts-a-new.prg,exitcode,100000000,cia-new,vicii-pal
+#FIXME: fix the following three tests also for NTSCOLD
+../CIA/CIA-AcountsB/,cia-b-counts-a_ntsc.prg,exitcode,100000000,vicii-ntsc
+../CIA/CIA-AcountsB/,cmp-b-counts-a-old_ntsc.prg,exitcode,100000000,cia-old,vicii-ntsc
+../CIA/CIA-AcountsB/,cmp-b-counts-a-new_ntsc.prg,exitcode,100000000,cia-new,vicii-ntsc
+../CIA/cia-timer/,cia-timer-oldcias.prg,exitcode,200000000,cia-old
+../CIA/cia-timer/,cia-timer-newcias.prg,exitcode,200000000,cia-new
 ../CIA/ciaports/,ciaports.prg,interactive,0
 ../CIA/ciaports/,ghosting.prg,interactive,0
 ../CIA/ciavarious/,cia1.prg,exitcode,10000000
@@ -453,7 +462,7 @@
 ../CIA/ciavarious/,cia3a.prg,exitcode,10000000,cia-old
 ../CIA/ciavarious/,cia4.prg,exitcode,20000000,cia-old
 ../CIA/ciavarious/,cia5.prg,exitcode,20000000
-../CIA/ciavarious/,cia6.prg,exitcode,10000000
+../CIA/ciavarious/,cia6.prg,exitcode,20000000
 ../CIA/ciavarious/,cia7.prg,exitcode,10000000
 ../CIA/ciavarious/,cia8.prg,exitcode,10000000,cia-old
 ../CIA/ciavarious/,cia9.prg,exitcode,10000000
@@ -481,8 +490,8 @@
 ../CIA/irqdelay/,irqdelay-cia2-oneshot-4.prg,exitcode,10000000
 ../CIA/irqdelay/,irqdelay-cia2-oneshot.prg,exitcode,10000000
 ../CIA/irqdelay/,irqdelay-cia2.prg,exitcode,10000000
-../CIA/reload0/,reload0a.prg,exitcode,10000000
-../CIA/reload0/,reload0b.prg,exitcode,10000000
+../CIA/reload0/,reload0a.prg,exitcode,20000000
+../CIA/reload0/,reload0b.prg,exitcode,20000000
 ../CIA/shiftregister/,cia-icr-test2-continues.prg,exitcode,10000000
 ../CIA/shiftregister/,cia-icr-test2-oneshot.prg,exitcode,10000000
 ../CIA/shiftregister/,cia-icr-test-continues-new.prg,exitcode,10000000,cia-new
@@ -803,7 +812,7 @@
 ../C64/carts/,,exitcode,100000000,mountcrt:writeram.crt
 ../C64/carts/ef-test/,ef_test.crt,interactive,0
 ../C64/carts/rr-freeze/,rr-freeze.crt,interactive,0
-../C64/carts/supergames/,,exitcode,1000000000,mountcrt:supergames.crt
+../C64/carts/supergames/,,exitcode,100000000,mountcrt:supergames.crt
 #TODO: make this automatic
 ../C64/carts/tamtest/,tamtest.crt,interactive,0
 ../C64/freezer/ciairq,ciairq1t1.prg,interactive,0
@@ -833,6 +842,7 @@
 ../GEO-RAM/,newtest.prg,interactive,0,geo256k
 ################################################################################
 # 1541 Drive
+# ../drive runtime 8 minutes and 20 seconds (x64sc)
 # ../drive runtime 93 minutes and 36 seconds (chameleon)
 ################################################################################
 ../drive/1541-testsuite,1541-testsuite.prg,exitcode,4294967295,mountd64:disks/pc64_1.d64
