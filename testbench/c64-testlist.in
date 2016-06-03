@@ -246,16 +246,16 @@
 ../general/Lorenz-2.15/src/,axsix.prg,exitcode,100000000
 ../general/Lorenz-2.15/src/,alrb.prg,exitcode,100000000
 ../general/Lorenz-2.15/src/,arrb.prg,exitcode,100000000
-../general/Lorenz-2.15/src/,aneb.prg,exitcode,100000000
+../general/Lorenz-2.15/src/,aneb.prg,exitcode,200000000
 ../general/Lorenz-2.15/src/,lxab.prg,exitcode,100000000
 ../general/Lorenz-2.15/src/,sbxb.prg,exitcode,100000000
-../general/Lorenz-2.15/src/,shaay.prg,exitcode,100000000
-../general/Lorenz-2.15/src/,shaiy.prg,exitcode,100000000
-../general/Lorenz-2.15/src/,shxay.prg,exitcode,100000000
-../general/Lorenz-2.15/src/,shyax.prg,exitcode,100000000
-../general/Lorenz-2.15/src/,shsay.prg,exitcode,100000000
+../general/Lorenz-2.15/src/,shaay.prg,exitcode,200000000
+../general/Lorenz-2.15/src/,shaiy.prg,exitcode,200000000
+../general/Lorenz-2.15/src/,shxay.prg,exitcode,200000000
+../general/Lorenz-2.15/src/,shyax.prg,exitcode,200000000
+../general/Lorenz-2.15/src/,shsay.prg,exitcode,200000000
 ../general/Lorenz-2.15/src/,ancb.prg,exitcode,100000000
-../general/Lorenz-2.15/src/,lasay.prg,exitcode,100000000
+../general/Lorenz-2.15/src/,lasay.prg,exitcode,200000000
 ../general/Lorenz-2.15/src/,sbcb-eb.prg,exitcode,100000000
 ../general/Lorenz-2.15/src/,trap1.prg,exitcode,100000000
 ../general/Lorenz-2.15/src/,trap2.prg,exitcode,100000000
@@ -297,7 +297,7 @@
 ../general/Lorenz-2.15/src/,flipos.prg,exitcode,100000000,cia-old
 ../general/Lorenz-2.15/src/,oneshot.prg,exitcode,100000000,cia-old
 ../general/Lorenz-2.15/src/,cntdef.prg,exitcode,100000000,cia-old
-../general/Lorenz-2.15/src/,cia1ta.prg,exitcode,100000000,cia-old
+../general/Lorenz-2.15/src/,cia1ta.prg,exitcode,200000000,cia-old
 ../general/Lorenz-2.15/src/,cia1tb.prg,exitcode,100000000,cia-old
 ../general/Lorenz-2.15/src/,cia2ta.prg,exitcode,100000000,cia-old
 ../general/Lorenz-2.15/src/,cia2tb.prg,exitcode,100000000,cia-old
@@ -318,7 +318,7 @@
 ../general/Lorenz-2.15/src/,flipos.prg,exitcode,100000000,cia-new
 ../general/Lorenz-2.15/src/,oneshot.prg,exitcode,100000000,cia-new
 ../general/Lorenz-2.15/src/,cntdef.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,cia1tanew.prg,exitcode,100000000,cia-new
+../general/Lorenz-2.15/src/,cia1tanew.prg,exitcode,200000000,cia-new
 ../general/Lorenz-2.15/src/,cia1tbnew.prg,exitcode,100000000,cia-new
 #FIXME: these two dont work!
 ../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,100000000,cia-new
