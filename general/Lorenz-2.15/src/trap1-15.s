@@ -147,6 +147,30 @@ main
            .byte $30 + (TRAP - 10)
            .endif
            .byte 0
+           
+           ; read ANE "magic constant"
+           lda #0
+           ldx #$ff
+           ane #$ff
+           sta anemagic
+           ; calc reference test result
+           lda #$c6 ; value in A
+anemagic = * + 1
+           ora #0
+           and #$1b ; immediate value used in the test
+           and #$b1 ; value in X
+           sta aneresult
+           ; reference status
+           lda aneresult
+           and #$80
+           ora #$30
+           sta aneresultstatus
+           lda aneresult
+           bne sk1
+           lda aneresultstatus
+           ora #$02
+           sta aneresultstatus
+sk1
            lda #<code
            sta pcode+0
            lda #>code
@@ -1147,6 +1171,8 @@ tsxn
            sta (ptable),y
            rts
 
+           
+           ; byte after opcode, returned akku, returned x, returned y, returned status
 table
            .text "brk"
            .word brkn
@@ -1565,9 +1591,13 @@ table
            .text "txa"
            .word n
            .byte $1b,$b1,$b1,$6c,$b0
+
            .text "ane"
            .word b
+aneresult = * + 1
+aneresultstatus = * + 4
            .byte $1b,$00,$b1,$6c,$32
+
            .text "sty"
            .word a_
            .byte $6c,$c6,$b1,$6c,$30
