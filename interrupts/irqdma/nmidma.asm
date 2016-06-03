@@ -695,6 +695,8 @@ failvalue:
   jsr printhex
 failloop:
   inc $d020
+  lda #$ff
+  sta $d7ff
   jmp failloop  
   
 !if B_MODE = 1 {
