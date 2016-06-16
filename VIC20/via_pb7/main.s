@@ -52,13 +52,7 @@ start:
 
                 jsr comparescreen
 
-.done:
-                ldx $900f
-                inx
-                txa
-                and #$07
-                sta $900f
-                jmp .done
+                jmp *
 
 dotest2:
             lda #$00    ; ACR end
@@ -219,21 +213,37 @@ lp1:
                 rts
 
 comparescreen:
+                lda #5 ; green
+                sta failed+1
+
                 ldx #0
 lp2:
                 !for cnt, 2 {
-                ldy #5
+                ldy #5 ; green
                 lda screenmem+((cnt-1)*$100),x
                 cmp refdata+((cnt-1)*$100),x
-                beq *+4
-                ldy #2
-
+                beq +
+                ldy #2 ; red
+                sty failed+1
++
                 tya
                 sta colormem+((cnt-1)*$100),x
                 }
 
                 inx
                 bne lp2
+                
+failed:         lda #0
+                sta $900f
+                
+                ; store value to "debug cart"
+                ldy #0 ; success
+                cmp #5 ; green
+                beq +
+                ldy #$ff ; failure
++
+                sty $910f
+
                 rts
 
 refdata:

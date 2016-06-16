@@ -33,4 +33,8 @@ $c0     b@@@ b@@@ b@@b b@@b  data=0
 
 (gpz) reference data checked on my vic20
 
-fails on VICE r28197
+fails on VICE r31270
+
+
+xvic -memory 8k main-exp.prg
+xvic main.prg
