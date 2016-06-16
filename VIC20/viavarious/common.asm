@@ -50,7 +50,7 @@ start2:
 -
         dex
         sta ERRBUF,x
-        bne -
+        bpl -
 
         lda #5
         sta ERRBUF+$ff
@@ -72,6 +72,29 @@ clp1b
         bne clp1b
         }
 
+        ; check if test failed and set border color accordingly
+        ldy #5 ; green
+        ldx #0
+-
+        lda ERRBUF,x
+        cmp #5 ; green
+        beq +
+        ldy #2 ; red
++
+        inx
+        cpx #NUMTESTS
+        bne -
+
+        sty $900f
+
+        ; store value to "debug cart"
+        lda #0 ; success
+        cpy #5 ; green
+        beq +
+        lda #$ff ; failure
++
+        sta $910f
+        
 loop
 ;        jsr calcaddr
 ;        jsr displayresults

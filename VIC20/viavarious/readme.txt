@@ -18,12 +18,12 @@ see the measured data, at the bottom the reference data.
 
 --------------------------------------------------------------------------------
 
-      (r29803)
+       (r31270)
 
 VIA1:   works      Timer A / B
 VIA2:   works      Timer A / B
 
-VIA3:   fail (k)   Timer A / B IRQ Flags
+VIA3:   works      Timer A / B IRQ Flags
 VIA3a:  works      Timer A IRQ Flags
 
 VIA4:   works      Timer A (toggle timer A timed/continous irq)
@@ -88,7 +88,6 @@ $dc0f ->        CTRL B (TimerB)
 - no cascade mode for timers
 - timers run always
   - VIA1 timer B can be stopped by configuring it to count PB6 transitions. 
-    since the drive-number jumpers are wired there, it will not count.
 - only first timer can be output at port B
 - no TOD clock
 + seperate register for the Timer A latch
