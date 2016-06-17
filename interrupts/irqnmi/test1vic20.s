@@ -6,12 +6,33 @@ tmp2 = $04
 
 buffer = $1b00 ; get the dump from here
 
-colormem = $9600
+.if (expanded=1) 
+basicstart = $1201      ; expanded
+screenmem = $1000
+colormem = $9400
+.else
+basicstart = $1001      ; unexpanded
 screenmem = $1e00
+colormem = $9600
+.endif
 
 charsperline = 22
 screenlines = 23
 
+                .org basicstart - 2
+                .word basicstart
+
+                .word basicstart + $0c
+                .byte $0a, $00
+                .byte $9e
+.if (expanded=1)
+                .byte $34, $36, $32, $32
+.else
+                .byte $34, $31, $31, $30
+.endif
+                .byte 0,0,0
+
+;                * = basicstart + $0d
 Start:
                 sei
                 ldx #$ff
@@ -38,13 +59,14 @@ lpy:
                 jsr copyscreen
                 jsr comparescreen
 
-mlp:
-                ldx $900f
-                inx
-                txa
-                and #$07
-                sta $900f
-                jmp mlp
+                ldy #0  ; success
+                lda $900f
+                cmp #5
+                beq @skp
+                ldy #$ff ; failure
+@skp:
+                sty $910f
+                jmp *
 
 ;-------------------------------------------------------------------------------
                 
@@ -214,17 +236,25 @@ lp3:
                 rts
 ;-------------------------------------------------------------------------------
 comparescreen:
+                lda #$05
+                sta $900f
+
                 ldx #0
 lp2:
                 .repeat 2,cnt
+                .scope
                 ldy #5
                 lda screenmem+(cnt*$100),x
                 cmp refdata+(cnt*$100),x
-                beq *+4
+                beq @skp
+                lda #$02
+                sta $900f
+                
                 ldy #2
-
+@skp:
                 tya
                 sta colormem+(cnt*$100),x
+                .endscope
                 .endrepeat
 
                 inx
