@@ -2,7 +2,7 @@
         !convtab pet
         !cpu 6510
 
-expanded=0      ; +8k
+;expanded=0      ; +8k
 
 VICCOLSVADDRHI = $9002
 VICRASTERLINE  = $9004
@@ -158,6 +158,10 @@ loc_A7DF:
 }
 loop
 
+framewait       lda #5
+                bne framewait
+                
+
                 lda #>(screenmem+(charsperline*3))
                 sta $03
                 lda #<(screenmem+(charsperline*3))
@@ -176,6 +180,34 @@ loop
                 jsr printhex
                 lda screenmem+charsperline+2
                 jsr printhex
+
+                ldy #5
+                
+                ldx #2
+-
+                lda     colormem+(0*charsperline)+0,x
+                and #$0f
+                cmp #5
+                beq +
+                ldy #2
++
+                lda     colormem+(1*charsperline)+0,x
+                and #$0f
+                cmp #5
+                beq +
+                ldy #2
++
+                dex
+                bpl -
+
+                sty $900f
+            
+                lda #0      ; success
+                cpy #5
+                beq +
+                lda #$ff    ; failure
++
+                sta $910f
 
                 jmp loop
 
@@ -343,6 +375,11 @@ loc_BE23:
 +
                 sta     colormem+(1*charsperline)+2
 
+                lda framewait+1
+                beq +
+                dec framewait+1
++
+                
                 PLA
                 TAY
                 PLA
