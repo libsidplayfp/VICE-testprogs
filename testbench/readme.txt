@@ -6,8 +6,6 @@ TODO:
     - handle old/new SID differences
     - handle old/new VIC differences
 
-    - handle all kinds of extra switches (-reu, -cartXX etc)
-
     - prepare dtv/x128/xpet/plus4/vic20/cbm2 for tests that use screenshots
 
     write proper docs :)
@@ -35,6 +33,7 @@ KLUDGES:
 * preparing tests
 * adding new tests
 * running the tests
+* adding support for another target/emulator
 
 --------------------------------------------------------------------------------
 ================================================================================
@@ -150,3 +149,37 @@ usage: ./testbench.sh [target] <filter> <options>
   --8565       target VICII type is 8565 (grey dot)
   --8565early  target VICII type is 8565 (new color instead of grey dot)
   --8565late   target VICII type is 8565 (old color instead of grey dot)
+
+--------------------------------------------------------------------------------
+================================================================================
+adding support for another target/emulator
+================================================================================
+--------------------------------------------------------------------------------
+
+additional targets/emulators can be hooked up fairly easy, only a few simple
+features are needed. in case of VICE they are called like this:
+
+
+-debugcart
+  enable a virtual "debug cartridge" which consists of one write-only register.
+  when a value is written to that register, the emulator should exit with the
+  written value as exitcode. see "preparing tests" above for the location of the
+  debug registers for the different machines.
+
+-limitcycles <n>
+  after the emulation has run N cycles, exit the emulator with exitcode 1 - this
+  will enable the testbench to continue even when a test hangs/crashes.
+
+-exitscreenshot <name>
+  at exit, save a screenshot. this is required for the tests that can not work
+  with an exitcode, ie the result can only be determined by looking at the output
+
+
+additionally, there must be a way to automatically run a program from commandline,
+and to mount disk- and cartridge images. it also helps to have a "warp" mode, and
+to be able to disable the GUI/graphics screen (but this is not strictly necessary)
+
+
+for further hints see testbench.sh and x64-hooks.sh
+  
+  
