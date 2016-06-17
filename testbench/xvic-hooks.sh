@@ -6,6 +6,7 @@ XVICOPTS+=" -default"
 #XVICOPTS+=" -VICIIpalette vice.vpl"
 XVICOPTS+=" -warp"
 XVICOPTS+=" -debugcart"
+XVICOPTS+=" -basicload"
 #XVICOPTS+=" -console"
 
 # extra options for the different ways tests can be run
@@ -41,6 +42,9 @@ function xvic_get_options
             ;;
         "vic-ntscold")
                 exitoptions="-ntscold"
+            ;;
+        "vic20-8k")
+                exitoptions="-memory 8k"
             ;;
         *)
                 exitoptions=""
