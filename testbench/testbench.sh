@@ -124,7 +124,9 @@ function getscreenshotname
 function gettestsfortarget
 {
 #    echo "reading list of tests for" "$1".
-    readarray -t testlist < "$1"-testlist.txt
+# readerror does only work on bash4 (not in mingw)
+#    readarray -t testlist < "$1"-testlist.txt
+    IFS=$'\n' read -d '' -r -a testlist < "$1"-testlist.txt
 }
 
 ###############################################################################
@@ -153,7 +155,7 @@ function runprogsfortarget
 
     for e in "${testlist[@]}"
     do
-#        echo "$e"
+        echo "$e"
         resetflags
 
         if [ "${e:0:1}" != "#" ]; then
