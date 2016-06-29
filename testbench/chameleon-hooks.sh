@@ -24,11 +24,12 @@ function chameleon_reset
     RET="XXXXXX"
 #    echo "poll1:" "$RET"
     SECONDSEND=$((SECONDS + 5))
-    while [ "$RET" != "12050104192e" ]
+    while [ "$RET" != "12 05 01 04 19 2e" ]
     do
 #        chacocmd --len 1 --addr 0x000100ff --dumpmem
-        chacocmd --len 6 --addr 1224 --readmem $DUMMY > /dev/null
-        RET=`cat $DUMMY |  hexdump -ve '/1 "%02x"'`
+#        chacocmd --len 6 --addr 1224 --readmem $DUMMY > /dev/null
+        e=`chacocmd --noprogress --len 6 --addr 1224 --dumpmem`
+        RET=${e:10:17}
  #      echo "poll:" "$RET"
         if [ $SECONDS -gt $SECONDSEND ]
         then
@@ -52,15 +53,16 @@ function chameleon_poll_returncode
 {
     # poll return code
     echo -ne "X" > $DUMMY
-    RET=`cat $DUMMY |  hexdump -ve '/1 "%02x"'`
+    RET="58"
 #    RET="58"
 #    echo "poll1:" "$RET"
     SECONDSEND=$((SECONDS + $1))
     while [ "$RET" = "58" ]
     do
 #        chacocmd --len 1 --addr 0x000100ff --dumpmem
-        chacocmd --len 1 --addr 0x000100ff --readmem $DUMMY > /dev/null
-        RET=`cat $DUMMY |  hexdump -ve '/1 "%02x"'`
+#        chacocmd --len 1 --addr 0x000100ff --readmem $DUMMY > /dev/null
+        e=`chacocmd --noprogress --len 1 --addr 0x000100ff --dumpmem`
+        RET=${e:10:2}
 #        echo "poll:" "$RET"
         if [ $SECONDS -gt $SECONDSEND ]
         then
@@ -231,19 +233,19 @@ function chameleon_run_screenshot
         CHAMREFSYO=35
         CHAMSXO=53
         CHAMSYO=62
-        
+
 #        echo [ "${refscreenshotvideotype}" "${videotype}" ]
-    
+
         if [ "${refscreenshotvideotype}" == "NTSC" ]; then
             CHAMREFSXO=32
             CHAMREFSYO=23
         fi
-    
+
         if [ "${videotype}" == "NTSC" ]; then
             CHAMSXO=61
             CHAMSYO=38
         fi
-    
+
 #        echo ./cmpscreens "$refscreenshotname" "$CHAMREFSXO" "$CHAMREFSYO" "$1"/.testbench/"$2"-chameleon.png "$CHAMSXO" "$CHAMSYO"
         ./cmpscreens "$refscreenshotname" "$CHAMREFSXO" "$CHAMREFSYO" "$1"/.testbench/"$2"-chameleon.png "$CHAMSXO" "$CHAMSYO"
         exitcode=$?
