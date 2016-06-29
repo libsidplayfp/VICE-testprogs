@@ -1,5 +1,5 @@
 
-X64=../../trunk/vice/src/x64
+X64="$VICEDIR"/x64
 X64OPTS+=" -default"
 X64OPTS+=" -VICIIfilter 0"
 X64OPTS+=" -VICIIextpal"

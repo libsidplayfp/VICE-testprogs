@@ -150,6 +150,13 @@ usage: ./testbench.sh [target] <filter> <options>
   --8565early  target VICII type is 8565 (new color instead of grey dot)
   --8565late   target VICII type is 8565 (old color instead of grey dot)
 
+by default, the testbench script expects the VICE binaries in a directory
+called "trunk" which resides in the same directory as the "testprogs"
+directory. if that is not the case you can give the VICE directory on the
+commandline like this:
+
+$ VICEDIR=/c/users/youruser/somedir/WinVICE-2.4.99 ./testbench x64
+
 --------------------------------------------------------------------------------
 ================================================================================
 adding support for another target/emulator

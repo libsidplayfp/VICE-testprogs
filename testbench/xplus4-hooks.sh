@@ -1,5 +1,5 @@
 
-XPLUS4=../../trunk/vice/src/xplus4
+XPLUS4="$VICEDIR"/xplus4
 XPLUS4OPTS+=" -default"
 #XPLUS4OPTS+=" -VICIIfilter 0"
 #XPLUS4OPTS+=" -VICIIextpal"

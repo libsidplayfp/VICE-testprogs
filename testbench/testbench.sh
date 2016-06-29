@@ -10,6 +10,11 @@ verbose=0
 # extra options
 videotype=""
 videosubtype=""
+if [ "$VICEDIR" == "" ] ; then
+	VICEDIR="../../trunk/vice/src"
+else
+	echo "using VICEDIR="$VICEDIR
+fi
 
 # globals set by utility functions that can be used in the hooks
 refscreenshotname=""
@@ -155,7 +160,7 @@ function runprogsfortarget
 
     for e in "${testlist[@]}"
     do
-        echo "$e"
+#        echo "$e"
         resetflags
 
         if [ "${e:0:1}" != "#" ]; then

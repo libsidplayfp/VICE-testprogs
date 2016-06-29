@@ -1,5 +1,5 @@
 
-X64DTV=../../trunk/vice/src/x64dtv
+X64DTV="$VICEDIR"/x64dtv
 X64DTVOPTS+=" -default"
 X64DTVOPTS+=" -VICIIfilter 0"
 X64DTVOPTS+=" -VICIIextpal"

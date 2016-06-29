@@ -1,5 +1,5 @@
 
-VSID=../../trunk/vice/src/vsid
+VSID="$VICEDIR"/vsid
 VSIDOPTS+=" -default"
 #VSIDOPTS+=" -VICIIfilter 0"
 #VSIDOPTS+=" -VICIIextpal"

@@ -1,5 +1,5 @@
 
-X64SC=../../trunk/vice/src/x64sc
+X64SC="$VICEDIR"/x64sc
 X64SCOPTS+=" -default"
 #X64SCOPTS+=" -model c64c"
 #X64SCOPTS+=" -model c64 -ntsc "

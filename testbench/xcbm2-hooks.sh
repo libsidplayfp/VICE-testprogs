@@ -1,5 +1,5 @@
 
-XCBM2=../../trunk/vice/src/xcbm2
+XCBM2="$VICEDIR"/xcbm2
 XCBM2OPTS+=" -default"
 XCBM2OPTS+=" -model 610"
 XCBM2OPTS+=" -virtualdev"

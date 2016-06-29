@@ -1,5 +1,5 @@
 
-XVIC=../../trunk/vice/src/xvic
+XVIC="$VICEDIR"/xvic
 XVICOPTS+=" -default"
 #XVICOPTS+=" -VICIIfilter 0"
 #XVICOPTS+=" -VICIIextpal"

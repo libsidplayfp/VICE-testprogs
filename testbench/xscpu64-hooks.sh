@@ -1,5 +1,5 @@
 
-XSCPU64=../../trunk/vice/src/xscpu64
+XSCPU64="$VICEDIR"/xscpu64
 XSCPU64OPTS+=" -default"
 XSCPU64OPTS+=" -VICIIfilter 0"
 XSCPU64OPTS+=" -VICIIextpal"

@@ -1,5 +1,5 @@
 
-X128=../../trunk/vice/src/x128
+X128="$VICEDIR"/x128
 X128OPTS+=" -default"
 X128OPTS+=" -VICIIfilter 0"
 X128OPTS+=" -VICIIextpal"

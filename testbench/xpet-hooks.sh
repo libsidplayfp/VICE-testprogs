@@ -1,5 +1,5 @@
 
-XPET=../../trunk/vice/src/xpet
+XPET="$VICEDIR"/xpet
 XPETOPTS+=" -default"
 #XPETOPTS+=" -VICIIfilter 0"
 #XPETOPTS+=" -VICIIextpal"
