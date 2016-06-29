@@ -43,6 +43,16 @@ lp:
 -
         jsr rcv_1byte
         sta $0400+(0*40),y
+        jsr rcv_1byte
+        sta $0400+(1*40),y
+
+        iny
+        cpy #19
+        bne -
+
+        ldy #0
+-
+        lda $0400+(0*40),y
         ldx #5
         cmp #$41        ; a
         beq sk1
@@ -52,8 +62,7 @@ sk1:
         txa
         sta $d800+(0*40),y
 
-        jsr rcv_1byte
-        sta $0400+(1*40),y
+        lda $0400+(1*40),y
         ldx #5
         cmp #$58        ; x
         beq sk2
