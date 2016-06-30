@@ -14,10 +14,12 @@ function chameleon_reset
     # clear the "ready"
     echo -ne "XXXXXX" > $RDUMMY
     chacocmd --addr 1224 --writemem $RDUMMY > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
 
     # trigger reset
     echo -ne "X" > $RDUMMY
     chacocmd --addr 0x80000000 --writemem $RDUMMY > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
 #    sleep 3
 
     # check for "ready."
@@ -29,6 +31,7 @@ function chameleon_reset
 #        chacocmd --len 1 --addr 0x000100ff --dumpmem
 #        chacocmd --len 6 --addr 1224 --readmem $DUMMY > /dev/null
         e=`chacocmd --noprogress --len 6 --addr 1224 --dumpmem`
+        if [ "$?" != "0" ]; then exit -1; fi
         RET=${e:10:17}
  #      echo "poll:" "$RET"
         if [ $SECONDS -gt $SECONDSEND ]
@@ -46,6 +49,7 @@ function chameleon_clear_returncode
     # clear the return code
     echo -ne "X" > $DUMMY
     chacocmd --addr 0x000100ff --writemem $DUMMY > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
 #    echo "chameleon_clear_returncode done"
 }
 
@@ -62,6 +66,7 @@ function chameleon_poll_returncode
 #        chacocmd --len 1 --addr 0x000100ff --dumpmem
 #        chacocmd --len 1 --addr 0x000100ff --readmem $DUMMY > /dev/null
         e=`chacocmd --noprogress --len 1 --addr 0x000100ff --dumpmem`
+        if [ "$?" != "0" ]; then exit -1; fi
         RET=${e:10:2}
 #        echo "poll:" "$RET"
         if [ $SECONDS -gt $SECONDSEND ]
@@ -145,14 +150,17 @@ function chameleon_get_options
                 if [ "${1:0:9}" == "mountd64:" ]; then
                     echo -ne "(disk:${1:9}) "
                     chmount -d64 "$2/${1:9}" > /dev/null
+                    if [ "$?" != "0" ]; then exit -1; fi
                 fi
                 if [ "${1:0:9}" == "mountg64:" ]; then
                     echo -ne "(disk:${1:9}) "
                     chmount -g64 "$2/${1:9}" > /dev/null
+                    if [ "$?" != "0" ]; then exit -1; fi
                 fi
                 if [ "${1:0:9}" == "mountcrt:" ]; then
                     echo -ne "(cartridge:${1:9}) "
                     chmount -crt "$2/${1:9}" > /dev/null
+                    if [ "$?" != "0" ]; then exit -1; fi
                     dd if="$2/${1:9}" bs=1 skip=23 count=1 of=$CDUMMY 2> /dev/null > /dev/null
                 fi
             ;;
@@ -204,17 +212,20 @@ function chameleon_run_screenshot
 
     # overwrite the CBM80 signature with generic "cartridge off" program
     chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
     # reset
     chameleon_reset
 
     # run the helper program (enable I/O RAM at $d7xx)
     chameleon_clear_returncode
     chcodenet -x chameleon-helper.prg > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
     chameleon_poll_returncode 5
 
     # run program
     chameleon_clear_returncode
     chcodenet -x "$1"/"$2" > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
 #    chameleon_poll_returncode 5
 #    exitcode=$?
 #    echo "exited with: " $exitcode
@@ -222,8 +233,10 @@ function chameleon_run_screenshot
     sleep $timeoutsecs
     if [ "${videotype}" == "NTSC" ]; then
         chshot --ntsc -o "$1"/.testbench/"$2"-chameleon.png
+        if [ "$?" != "0" ]; then exit -1; fi
     else
         chshot -o "$1"/.testbench/"$2"-chameleon.png
+        if [ "$?" != "0" ]; then exit -1; fi
     fi
 #    echo "exited with: " $exitcode
     if [ -f "$refscreenshotname" ]
@@ -287,35 +300,42 @@ function chameleon_run_exitcode
             echo -ne "\x00" >> $RDUMMY
         fi
         chacocmd --addr 0x400 --writemem $RDUMMY > /dev/null
+        if [ "$?" != "0" ]; then exit -1; fi
         # run helper program
         chameleon_clear_returncode
         chcodenet -x chameleon-helper.prg > /dev/null
+        if [ "$?" != "0" ]; then exit -1; fi
         chameleon_poll_returncode 5
 
         chameleon_clear_returncode
         # trigger reset  (run cartridge)
         echo -ne "X" > $RDUMMY
         chacocmd --addr 0x80000000 --writemem $RDUMMY > /dev/null
+        if [ "$?" != "0" ]; then exit -1; fi
         chameleon_poll_returncode 5
         exitcode=$?
 
         # overwrite the CBM80 signature with generic "cartridge off" program
         chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
+        if [ "$?" != "0" ]; then exit -1; fi
         # reset
         chameleon_reset
     else
         # overwrite the CBM80 signature with generic "cartridge off" program
         chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
+        if [ "$?" != "0" ]; then exit -1; fi
         # reset
         chameleon_reset
         # run the helper program (enable I/O RAM at $d7xx)
         chameleon_clear_returncode
         chcodenet -x chameleon-helper.prg > /dev/null
+        if [ "$?" != "0" ]; then exit -1; fi
         chameleon_poll_returncode 5
 
         # run program
         chameleon_clear_returncode
         chcodenet -x "$1"/"$2" > /dev/null
+        if [ "$?" != "0" ]; then exit -1; fi
         chameleon_poll_returncode $(($3 + 1))
         exitcode=$?
     fi
