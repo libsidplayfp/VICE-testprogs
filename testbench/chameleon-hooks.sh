@@ -72,7 +72,8 @@ function chameleon_poll_returncode
         if [ $SECONDS -gt $SECONDSEND ]
         then
             echo "timeout when waiting for return code"
-            return
+            RET=255
+            return $RET
         fi
     done;
 
@@ -87,13 +88,20 @@ function chameleon_poll_returncode
 
 function chameleon_make_crtid
 {
-    crtid=`hex $CDUMMY`
-    crtid="${crtid:6:2}"
+# use od instead of hex, since that always works
+#    crtid=`hex $CDUMMY`
+#    crtid="${crtid:6:2}"
+    crtid=`od -An -t x1 $CDUMMY`
+    crtid="${crtid:1:2}"
 #    echo X"$crtid"X
     case "$crtid" in
         "00")
                 # generic
                 crtid="\xfc"
+            ;;
+        "08")
+                # supergames
+                crtid="\x08"
             ;;
         "20")
                 # easyflash
