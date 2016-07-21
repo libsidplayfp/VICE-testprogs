@@ -1,6 +1,8 @@
 
-b: b.asm
+all: a.prg b.prg
+
+b.prg: b.asm
 	64tass -a -B $< -o $@
 
-a: a.asm a.hpi
+a.prg: a.asm a.hpi
 	64tass -a -B $< -o $@
