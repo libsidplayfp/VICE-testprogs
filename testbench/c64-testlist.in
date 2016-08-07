@@ -784,6 +784,7 @@
 ../SID/bitfade/,test1env3.prg,interactive,0
 ../SID/bitfade/,test1frq0.prg,interactive,0
 ../SID/bitfade/,test1osc3.prg,interactive,0
+../SID/busvalue/,busvalue.prg,exitcode,10000000
 #../SID/detect/,detect.prg
 ../SID/mapping/,sid-detect2.prg,interactive,0
 ../SID/noisewriteback/,noisewriteback.prg,interactive,0
@@ -820,6 +821,7 @@
 ../C64/freezer/ciairq,ciairq1t2.prg,interactive,0
 ../C64/freezer/ciairq,ciairq2t1.prg,interactive,0
 ../C64/freezer/ciairq,ciairq2t2.prg,interactive,0
+../C64/freezer/batest,batest.prg,interactive,0
 ../C64/freezer/,freezeblock.prg,interactive,0
 ../C64/freezer/,freeze-cia1.prg,interactive,0
 ../C64/freezer/,freeze-cia2.prg,interactive,0
