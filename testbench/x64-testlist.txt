@@ -793,6 +793,7 @@
 #../SID/noise
 ../SID/paddles/,ft3detect.prg,interactive,0
 ../SID/paddles/,paddle.prg,interactive,0
+../SID/ringmod/,ringmodtest.prg,exitcode,100000000
 ../SID/stereo/,stereo.prg,interactive,0
 #TODO:
 #../SID/waveforms/,waveforms-6581.prg
