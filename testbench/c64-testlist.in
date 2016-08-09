@@ -791,6 +791,7 @@
 #TODO (fix noisemapper program)
 #../SID/noise
 ../SID/paddles/,ft3detect.prg,interactive,0
+../SID/oscinit/,oscinit.prg,exitcode,100000000
 ../SID/paddles/,paddle.prg,interactive,0
 ../SID/ringmod/,ringmodtest.prg,exitcode,100000000
 ../SID/stereo/,stereo.prg,interactive,0
