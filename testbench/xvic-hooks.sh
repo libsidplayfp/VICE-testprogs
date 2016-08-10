@@ -43,6 +43,12 @@ function xvic_get_options
         "vic-ntscold")
                 exitoptions="-ntscold"
             ;;
+        "sid-old")
+                exitoptions="-sidenginemodel 256"
+            ;;
+        "sid-new")
+                exitoptions="-sidenginemodel 257"
+            ;;
         "vic20-8k")
                 exitoptions="-memory 8k"
             ;;

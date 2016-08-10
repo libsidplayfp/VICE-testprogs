@@ -48,6 +48,12 @@ function xscpu64_get_options
         "cia-new")
                 exitoptions="-ciamodel 1"
             ;;
+        "sid-old")
+                exitoptions="-sidenginemodel 256"
+            ;;
+        "sid-new")
+                exitoptions="-sidenginemodel 257"
+            ;;
         "reu512k")
                 exitoptions="-reu -reusize 512"
                 reu_enabled=1

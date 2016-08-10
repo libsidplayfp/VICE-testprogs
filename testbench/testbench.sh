@@ -10,6 +10,7 @@ verbose=0
 # extra options
 videotype=""
 videosubtype=""
+sidtype=""
 if [ "$VICEDIR" == "" ] ; then
 	VICEDIR="../../trunk/vice/src"
 else
@@ -219,6 +220,18 @@ function runprogsfortarget
                             skiptest=1
                         fi
                     fi
+                    if [ "${sidtype}" == "6581" ]; then
+                        if [ "${exitoptions}" == "-sidenginemodel 257" ]; then
+                            echo "$testpath" "$testprog" "- " "not" "${sidtype}" "(skipped)"
+                            skiptest=1
+                        fi
+                    fi
+                    if [ "${sidtype}" == "8580" ]; then
+                        if [ "${exitoptions}" == "-sidenginemodel 256" ]; then
+                            echo "$testpath" "$testprog" "- " "not" "${sidtype}" "(skipped)"
+                            skiptest=1
+                        fi
+                    fi
                 done
                 # now setup additional options depending on commandline options given to the testbench script
                 if [ "${videotype}" == "PAL" ]; then
@@ -336,6 +349,8 @@ function showhelp
     echo "  --pal        run tests in PAL, skip tests that do not work on PAL"
     echo "  --ntsc       run tests in NTSC, skip tests that do not work on NTSC"
     echo "  --ntscold    run tests in NTSC(old), skip tests that do not work on NTSC(old)"
+    echo "  --6581       skip tests that do not work on 8580 (new SID)"
+    echo "  --8580       skip tests that do not work on 6581 (old SID)"
     echo "  --8562       target VICII type is 8562 (grey dot)"
     echo "  --8565       target VICII type is 8565 (grey dot)"
     echo "  --8565early  target VICII type is 8565 (new color instead of grey dot)"
@@ -371,6 +386,12 @@ do
         --ntscold)
                 videotype="NTSCOLD"
             ;;
+        --6581)
+                sidtype="6581"
+            ;;
+        --8580)
+                sidtype="8580"
+            ;;
         --8565) # "new" PAL VICII (grey dot)
                 videosubtype="8565"
             ;;
@@ -404,6 +425,7 @@ if [ "$verbose" = "1" ] ; then
     echo target:"$target"
     echo filter:"$filter"
     echo verbose:"$verbose"
+    echo "video type:" "$videotype"
     echo "video subtype:" "$videosubtype"
 fi
 

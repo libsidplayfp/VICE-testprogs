@@ -42,6 +42,12 @@ function xplus4_get_options
         "ted-ntscold")
                 exitoptions="-ntscold"
             ;;
+        "sid-old")
+                exitoptions="-sidenginemodel 256"
+            ;;
+        "sid-new")
+                exitoptions="-sidenginemodel 257"
+            ;;
         *)
                 exitoptions=""
             ;;

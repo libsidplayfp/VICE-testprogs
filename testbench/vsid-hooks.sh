@@ -48,6 +48,12 @@ function vsid_get_options
         "cia-new")
                 exitoptions="-ciamodel 1"
             ;;
+        "sid-old")
+                exitoptions="-sidenginemodel 256"
+            ;;
+        "sid-new")
+                exitoptions="-sidenginemodel 257"
+            ;;
         *)
                 exitoptions=""
             ;;
