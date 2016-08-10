@@ -1,7 +1,6 @@
 
 ;-------------------------------------------------------------------------------
-            *=$07ff
-            !word $0801
+            *=$0801
             !word bend
             !word 10
             !byte $9e
@@ -35,6 +34,7 @@ colorram = $d800
         inx
         bne -
 
+        !if (INTERACTIVE = 1) {
 mlp:
         jsr check1
         sta videoram
@@ -51,7 +51,7 @@ mlp:
         bne -
 
         jsr check2
-        sta videoram
+        sta videoram+1
 
         asl
         asl
@@ -65,6 +65,34 @@ mlp:
         bne -
 
         jmp mlp
+
+        } else {
+        
+        !if (CHECKTYPE = 0) {
+        jsr check1
+        } else {
+        jsr check2
+        }
+        
+        ldy #5
+        !if (SIDTYPE = 0) {
+        cmp #0
+        } else {
+        cmp #1
+        }
+        beq +
+        ldy #10
++
+        sty $d020
+        
+        lda #0      ; ok
+        cpy #5
+        beq +
+        lda #$ff    ; failure
++
+        sta $d7ff
+        jmp *
+        }
 
 told:   !scr " dlo"
 tnew:   !scr " wen"
