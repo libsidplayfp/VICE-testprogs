@@ -803,6 +803,7 @@
 #TODO:
 #../SID/waveforms/,waveforms-6581.prg
 #../SID/waveforms/,waveforms-8580.prg
+../SID/writedelay/,writedelay.prg,exitcode,100000000
 ################################################################################
 # Cartridges
 #
