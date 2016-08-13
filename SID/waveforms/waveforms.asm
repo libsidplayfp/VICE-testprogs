@@ -1,6 +1,5 @@
 ;-------------------------------------------------------------------------------
-            *=$07ff
-            !word $0801
+            *=$0801
             !word bend
             !word 10
             !byte $9e
@@ -60,9 +59,9 @@ start
 
                 jsr initsid
 
-                lda #0
+                lda #WAVE
                 sta currtest
--
+testloop:
                 lda currtest
                 asl
                 asl
@@ -77,10 +76,12 @@ start
 
                 jsr updateinfo
 
+                !if (INTERACTIVE=1) {
+                
                 inc currtest
                 lda currtest
                 cmp #$10
-                bne -
+                bne testloop
 
                 lda #0
                 sta currtest
@@ -112,6 +113,24 @@ skip
                 jsr updateinfo
 
                 jmp mainloop
+                
+                } else {
+                lda res
+                sta $d020
+                
+                ldy #0      ; success
+                lda $d020
+                and #$0f
+                cmp #5
+                beq +
+                ldy #$ff    ; failure
++
+                sty $d7ff
+
+                jmp *
+                }
+                
+;-------------------------------------------------------------------------------
 
 showbits:
                 ;sta $0703
