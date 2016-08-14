@@ -272,15 +272,25 @@ hextab: !scr "0123456789abcdef"
                 beq     +
 
                 tya
-                ldy #5*10
+                pha
+                eor #$07
+                clc
+                adc #'0'
+                sta $0400+(24*40)
+
+    ldy #$10
+---
+    ldx #$00
 --
-                ldx #$fe
--               cpx $d012
-                bne -
--               ldx $d012
-                bne -
-                dey
-                bne --
+    lda #$ff
+-
+    cmp $d012
+    bne -
+    dex
+    bne --
+    dey
+    bne ---
+                pla
                 tay
 +
 
