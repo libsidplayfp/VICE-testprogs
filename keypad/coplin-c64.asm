@@ -15,6 +15,7 @@ C64_CIA2_SR = 0xDD0C
 C64_CIA2_CRA = 0xDD0E
 USERPORT_DDR = 0xDD03
 USERPORT_DATA = 0xDD01
+SCANKEY = 0xff9f
 
 basic: !by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
 
@@ -24,16 +25,15 @@ start:
 	stx $D021	; background
 	inx
 	stx $0286	; cursor
+	jsr choose_port
 
 mainloop:
 	jsr print_main_screen
 	jsr print_test_name_screen
 	jsr print_joy_device_screen
-	jsr print_press_f1_screen
 	lda #$00
 	sta $c6		; keys in buffer
 check_loop:
-	jsr check_f1
 	jsr check_port
 	jsr show_key
 	jmp check_loop
@@ -101,6 +101,7 @@ check_key_r:
 	cmp #15
 	bne no_key_pressed
 	ldy #34
+	bne invert_key_5
 no_key_pressed:
 	rts
 invert_key_5:
@@ -160,9 +161,9 @@ check_port:
 	beq read_kingsoft_1
 	cpx #55
 	beq read_kingsoft_2
-	cpx #$56
+	cpx #56
 	beq read_starbyte_1
-	cpx #$57
+	cpx #57
 	beq read_starbyte_2
 read_native_1:
 	jsr read_native_1_code
@@ -232,9 +233,13 @@ read_oem_code:
 	stx USERPORT_DDR
 	lda USERPORT_DATA
 	tay
-	rol
-	rol
-	and #$01
+	lsr
+	lsr
+	lsr
+	lsr
+	lsr
+	lsr
+	lsr
 	sta tmp
 	tya
 	and #$40
@@ -289,6 +294,7 @@ read_pet_1_code:
 	ldx #$00
 	stx USERPORT_DDR
 	lda USERPORT_DATA
+read_pet_code:
 	and #$0f
 	cmp #$0c
 	bne notc
@@ -306,13 +312,7 @@ read_pet_2_code:
 	lsr
 	lsr
 	lsr
-	cmp #$0c
-	bne notc2
-	lda #$0f
-	rts
-notc2:
-	ora #$10
-	rts
+	jmp read_pet_code
 
 read_hit_1_code:
 	jsr setup_cnt12sp
@@ -331,7 +331,7 @@ read_hit_1_code:
 	ora tmp
 	sty C64_CIA2_PRA
 	stx C64_CIA2_DDRA
-	rts
+	jmp restore_cnt12sp
 
 read_hit_2_code:
 	jsr setup_cnt12sp
@@ -346,7 +346,7 @@ read_hit_2_code:
 	beq notsr
 	ora #$10
 notsr:
-	rts
+	jmp restore_cnt12sp
 
 read_kingsoft_1_code:
 	jsr setup_cnt12sp
@@ -389,7 +389,7 @@ read_kingsoft_1_code:
 	ora tmp
 	stx C64_CIA2_PRA
 	sty C64_CIA2_DDRA
-	rts
+	jmp restore_cnt12sp
 
 read_kingsoft_2_code:
 	jsr setup_cnt12sp
@@ -422,7 +422,7 @@ read_kingsoft_2_code:
 	beq notsr2
 	ora #$10
 notsr2:
-	rts
+	jmp restore_cnt12sp
 
 read_starbyte_1_code:
 	jsr setup_cnt12sp
@@ -459,7 +459,7 @@ notsr3:
 	lsr
 	ora tmp
 	sty C64_CIA2_DDRA
-	rts
+	jmp restore_cnt12sp
 
 read_starbyte_2_code:
 	jsr setup_cnt12sp
@@ -502,41 +502,62 @@ read_starbyte_2_code:
 	ora tmp
 	sty C64_CIA2_PRA
 	stx C64_CIA2_DDRA
-	rts
+	jmp restore_cnt12sp
 
 invert:
 	and #$1f
 	rts
 
 setup_cnt12sp:
+	sei
+	ldx USERPORT_DDR
+	stx tmp_ddr
 	ldx #$00
 	stx USERPORT_DDR
 	inx
+	ldy C64_CIA2_TIMER_A_LOW
+	sty tmp_cia2_tal
 	stx C64_CIA2_TIMER_A_LOW
 	dex
+	ldy C64_CIA2_TIMER_A_HIGH
+	sty tmp_cia2_tah
 	stx C64_CIA2_TIMER_A_HIGH
 	ldx #$11
+	ldy C64_CIA2_CRA
+	sty tmp_cia2_cra
 	stx C64_CIA2_CRA
 	ldx #$01
+	ldy C64_CIA1_TIMER_A_LOW
+	sty tmp_cia1_tal
 	stx C64_CIA1_TIMER_A_LOW
 	dex
+	ldy C64_CIA1_TIMER_A_HIGH
+	sty tmp_cia1_tah
 	stx C64_CIA1_TIMER_A_HIGH
 	ldx #$51
+	ldy C64_CIA1_CRA
+	sty tmp_cia1_cra
 	stx C64_CIA1_CRA
 	rts
 
-check_f1:
-	lda $c6		; keys in buffer
-	beq no_key
-	lda $0277		; 1st key
-	cmp #133		; F1
-	beq change_port
-	lda #$00
-	sta $c6		; keys in buffer
-no_key:
+restore_cnt12sp:
+	ldy tmp_cia1_cra
+	sty C64_CIA1_CRA
+	ldy tmp_cia1_tah
+	sty C64_CIA1_TIMER_A_HIGH
+	ldy tmp_cia1_tal
+	sty C64_CIA1_TIMER_A_LOW
+	ldy tmp_cia2_cra
+	sty C64_CIA2_CRA
+	ldy tmp_cia2_tah
+	sty C64_CIA2_TIMER_A_HIGH
+	ldy tmp_cia2_tal
+	sty C64_CIA2_TIMER_A_LOW
+	ldy tmp_ddr
+	sty USERPORT_DDR
 	rts
 
-change_port:
+choose_port:
 	ldx #$00
 print_change_port_screen_loop1:
 	lda change_port_screen_top,x
@@ -556,13 +577,14 @@ check_change_port_key:
 	ldx #$00
 	stx $c6
 port_key_loop:
+	jsr SCANKEY
 	ldx $c6
 	beq port_key_loop
 	ldx $0277
 	cpx #'1'
 	bne check2
 	ldx #0
-	bne new_port
+	beq new_port
 check2:
 	cpx #'2'
 	bne check3
@@ -630,17 +652,6 @@ checkE:
 new_port:
 	stx port
 	jmp mainloop
-
-print_press_f1_screen:
-	ldx #$00
-press_f1_screen_loop:
-	lda press_f1_screen,x
-	beq end_f1_screen_loop
-	jsr $ffd2
-	inx
-	bne press_f1_screen_loop
-end_f1_screen_loop:
-	rts
 
 print_main_screen:
 	ldx #$00
@@ -753,6 +764,14 @@ port:	!by 0
 
 tmp:	!by 0
 
+tmp_cia1_cra:	!by 0
+tmp_cia1_tah:	!by 0
+tmp_cia1_tal:	!by 0
+tmp_cia2_cra:	!by 0
+tmp_cia2_tah:	!by 0
+tmp_cia2_tal:	!by 0
+tmp_ddr:		!by 0
+
 main_screen:
 	!by 147
 	!by 176,195,195,195,178,195,195,195,178,195,195,195,174,13
@@ -795,9 +814,6 @@ kingsoft_screen:
 
 native_device_screen:
 	!by 'N','A','T','I','V','E',0
-
-press_f1_screen:
-	!by 13,'P','R','E','S','S',' ','F','1',' ','T','O',' ','C','H','A','N','G','E',' ','P','O','R','T',13,0
 
 change_port_screen_top:
 	!by 147,'P','L','E','A','S','E',' ','C','H','O','O','S','E',' ','T','H','E',' ','N','E','W',' ','P','O','R','T',':',13
