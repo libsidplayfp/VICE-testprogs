@@ -11,6 +11,7 @@ verbose=0
 videotype=""
 videosubtype=""
 sidtype=""
+memoryexpansion=""
 if [ "$VICEDIR" == "" ] ; then
 	VICEDIR="../../trunk/vice/src"
 else
@@ -21,6 +22,7 @@ fi
 refscreenshotname=""
 
 source "./chameleon-hooks.sh"
+source "./cham20-hooks.sh"
 source "./x64-hooks.sh"
 source "./x64sc-hooks.sh"
 source "./x128-hooks.sh"
@@ -70,6 +72,9 @@ function checktarget
             ;;
     # VIC20 targets
         xvic)
+                target="$1"
+            ;;
+        cham20)
                 target="$1"
             ;;
     # Plus4 targets
@@ -197,7 +202,7 @@ function runprogsfortarget
                 # first loop over the options given for the test
                 for (( i=5; i<${arraylength}+1; i++ ));
                 do
-    #                echo $i " / " ${arraylength} " : " ${myarray[$i-1]}
+#                    echo $i " / " ${arraylength} " : " ${myarray[$i-1]}
                     "$target"_get_options "${myarray[$i-1]}" "$testpath"
 #                    echo "exitoptions: $exitoptions"
                     testoptions+="${exitoptions} "
@@ -221,14 +226,22 @@ function runprogsfortarget
                         fi
                     fi
                     if [ "${sidtype}" == "6581" ]; then
-                        if [ "${exitoptions}" == "-sidenginemodel 257" ]; then
+                        if [ x"${exitoptions}"x == x"-sidenginemodel 257"x ]; then
                             echo "$testpath" "$testprog" "- " "not" "${sidtype}" "(skipped)"
                             skiptest=1
                         fi
                     fi
                     if [ "${sidtype}" == "8580" ]; then
-                        if [ "${exitoptions}" == "-sidenginemodel 256" ]; then
+                        if [ x"${exitoptions}"x == x"-sidenginemodel 256"x ]; then
                             echo "$testpath" "$testprog" "- " "not" "${sidtype}" "(skipped)"
+                            skiptest=1
+                        fi
+                    fi
+#                    echo "memoryexpansion:"  "${memoryexpansion}"
+                    if [ "${memoryexpansion}" == "8K" ]; then
+#                        echo "check Not 8k?"
+                        if [ x"${exitoptions}"x != x"-memory 8k"x ]; then
+                            echo "$testpath" "$testprog" "- " "not" "${memoryexpansion}" "(skipped)"
                             skiptest=1
                         fi
                     fi
@@ -252,6 +265,10 @@ function runprogsfortarget
                 fi
                 if [ "${videosubtype}" == "8562" ]; then
                     "$target"_get_cmdline_options "8562"
+                    testoptions+="${exitoptions} "
+                fi
+                if [ "${memoryexpansion}" == "8K" ]; then
+                    "$target"_get_cmdline_options "8K"
                     testoptions+="${exitoptions} "
                 fi
             if [ "${skiptest}" == "0" ] && [ "${testtype}" == "interactive" ]; then
@@ -342,7 +359,7 @@ function showhelp
 {
     echo $NAME" - run test programs."
     echo "usage: "$NAME" [target] <filter> <options>"
-    echo "  targets: x64, x64sc, x128, xscpu64, x64dtv, xpet, xcbm2, xcbm5x0, xvic, xplus4, vsid, chameleon"
+    echo "  targets: x64, x64sc, x128, xscpu64, x64dtv, xpet, xcbm2, xcbm5x0, xvic, xplus4, vsid, chameleon, cham20"
     echo "  <filter> is a substring of the path of tests to restrict to"
     echo "  --help       show this help"
     echo "  --verbose    be more verbose"
@@ -355,6 +372,7 @@ function showhelp
     echo "  --8565       target VICII type is 8565 (grey dot)"
     echo "  --8565early  target VICII type is 8565 (new color instead of grey dot)"
     echo "  --8565late   target VICII type is 8565 (old color instead of grey dot)"
+    echo "  --8k         skip tests that do not work with 8k RAM expansion"
 }
 
 function checkparams
@@ -404,6 +422,9 @@ do
         --8562) # "new" NTSC VICII (grey dot)
                 videosubtype="8562"
             ;;
+        --8k) # 8k RAM expansion
+                memoryexpansion="8K"
+            ;;
         *) # is either target or filter
             if [ "$thisarg" = "" ] ; then
                 showhelp
@@ -427,6 +448,7 @@ if [ "$verbose" = "1" ] ; then
     echo verbose:"$verbose"
     echo "video type:" "$videotype"
     echo "video subtype:" "$videosubtype"
+    echo "memory expansion:" "$memoryexpansion"
 fi
 
 checkparams

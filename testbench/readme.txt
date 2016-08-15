@@ -127,6 +127,7 @@ options:
     mountg64:<image>
     mountcrt:<image>
 
+    vic20-unexp
     vic20-8k
 
 --------------------------------------------------------------------------------
@@ -153,6 +154,7 @@ usage: ./testbench.sh [target] <filter> <options>
   --8565       target VICII type is 8565 (grey dot)
   --8565early  target VICII type is 8565 (new color instead of grey dot)
   --8565late   target VICII type is 8565 (old color instead of grey dot)
+  --8k         skip tests that do not work with 8k RAM expansion
 
 by default, the testbench script expects the VICE binaries in a directory
 called "trunk" which resides in the same directory as the "testprogs"

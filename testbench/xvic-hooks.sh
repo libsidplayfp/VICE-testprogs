@@ -82,6 +82,9 @@ function xvic_get_cmdline_options
         "NTSCOLD")
                 exitoptions="-ntscold"
             ;;
+        "8K")
+                exitoptions="-memory 8k"
+            ;;
     esac
 }
 

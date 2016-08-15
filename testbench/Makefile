@@ -16,6 +16,7 @@ all: prereq
 	echo "testxplus4"
 	echo "testvsid"
 	echo "testchameleon"
+	echo "testcham20"
 
 ################################################################################
 prereq: selftest testlist cmpscreens prereq-chameleon
@@ -38,6 +39,7 @@ testlist: \
 	xscpu64-testlist.txt \
 	x64dtv-testlist.txt \
 	xvic-testlist.txt \
+	cham20-testlist.txt \
 	xplus4-testlist.txt \
 	xpet-testlist.txt \
 	xcbm2-testlist.txt \
@@ -83,6 +85,10 @@ xcbm5x0-testlist.txt: cbm510-testlist.in
 xvic-testlist.txt: vic20-testlist.in
 	echo "# this is a generated file, do not edit." >  xvic-testlist.txt
 	cat  vic20-testlist.in >> xvic-testlist.txt
+
+cham20-testlist.txt: vic20-testlist.in
+	echo "# this is a generated file, do not edit." >  cham20-testlist.txt
+	cat  vic20-testlist.in >> cham20-testlist.txt
 
 xplus4-testlist.txt: plus4-testlist.in
 	echo "# this is a generated file, do not edit." >  xplus4-testlist.txt
@@ -151,7 +157,10 @@ chameleon-crtoff.prg: chameleon-crtoff.asm
 	acme -f plain -o chameleon-crtoff.prg chameleon-crtoff.asm
 
 testchameleon: chameleon-helper.prg prereq
-	./testbench.sh chameleon --pal --8565early
+	./testbench.sh chameleon --pal --8565early --6581
+
+testcham20: chameleon-helper.prg prereq
+	./testbench.sh cham20
 
 
 
