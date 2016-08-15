@@ -256,7 +256,7 @@ hextab: !scr "0123456789abcdef"
 
                 jsr setup
 
-                lda     #$ff
+                lda     #$08
                 STA     VOICE3+4 ; testbit on to reset/stop oscillator
 
                 ; the noise waveform needs a while to reset, so if
