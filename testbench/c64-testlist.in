@@ -805,9 +805,11 @@
 ../SID/waveforms/,waveforms-10-6581.prg,exitcode,100000000,sid-old
 ../SID/waveforms/,waveforms-20-6581.prg,exitcode,100000000,sid-old
 ../SID/waveforms/,waveforms-40-6581.prg,exitcode,100000000,sid-old
+../SID/waveforms/,waveforms-80-6581.prg,exitcode,1000000000,sid-old
 ../SID/waveforms/,waveforms-10-8580.prg,exitcode,100000000,sid-new
 ../SID/waveforms/,waveforms-20-8580.prg,exitcode,100000000,sid-new
 ../SID/waveforms/,waveforms-40-8580.prg,exitcode,100000000,sid-new
+../SID/waveforms/,waveforms-80-8580.prg,exitcode,1000000000,sid-new
 ../SID/writedelay/,writedelay.prg,exitcode,100000000
 ################################################################################
 # Cartridges
