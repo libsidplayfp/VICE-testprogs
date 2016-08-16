@@ -4,8 +4,10 @@
 ################################################################################
 # selftest
 ################################################################################
-./selftest/,vic20-pass.prg,exitcode,10000000,vic20-unexp
-./selftest/,vic20-fail.prg,exitcode,10000000,vic20-unexp
+./selftest/,vic20-pass.prg,exitcode,100000000,vic20-8k
+./selftest/,vic20-fail.prg,exitcode,100000000,vic20-8k
+./selftest/,vic20-pass.prg,screenshot,100000000,vic20-8k
+./selftest/,vic20-fail.prg,screenshot,100000000,vic20-8k
 #TODO:
 #../crtemulation/vic20
 #../VIC20/fe3diag/,f3diag.prg,exitcode,10000000
@@ -73,7 +75,7 @@
 ################################################################################
 ../userportjoy/,testjoy_vic20.prg,interactive,0
 ../VIC20/joystick/,joystick.prg,interactive,0
-../keypad/coplin-vic20.prg,interactive,0
+../keypad/,coplin-vic20.prg,interactive,0
 ################################################################################
 # various expansions
 ################################################################################

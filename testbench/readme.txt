@@ -2,11 +2,7 @@ NOTE: this is still initial WIP
 
 
 TODO:
-
-    - handle old/new SID differences
-    - handle old/new VIC differences
-
-    - prepare dtv/x128/xpet/plus4/vic20/cbm2 for tests that use screenshots
+    - prepare dtv/x128/xpet/plus4/cbm2 for tests that use screenshots
 
     write proper docs :)
     write proper TODO list :)
@@ -71,7 +67,10 @@ subdirectory called "references". like this:
 ./references/mytest.prg.png
 
 the reference screenshots should be taken with default screen dimensions,
-CRT emulation disabled, using the pepto palette (vice.vpl, "Default" in menus)
+with CRT emulation disabled.
+
+- for C64: use the pepto palette (vice.vpl, "Default" in menus)
+- for VIC20: use the "mike" palette
 
 --------------------------------------------------------------------------------
 ================================================================================

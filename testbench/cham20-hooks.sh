@@ -6,8 +6,8 @@ CDUMMY=.dummyfile3
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
 # top left character on screen.
-CHAM20SXO=53
-CHAM20SYO=62
+CHAM20SXO=70
+CHAM20SYO=66
 
 function cham20_reset
 {
@@ -185,32 +185,32 @@ function cham20_run_screenshot
     timeoutsecs=`expr \( $3 + 5000000 \) / 10000000`
     sleep $timeoutsecs
     if [ "${videotype}" == "NTSC" ]; then
-        chshot --ntsc -o "$1"/.testbench/"$2"-cham20.png
+        chshot --vic20 --ntsc -o "$1"/.testbench/"$2"-cham20.png
         if [ "$?" != "0" ]; then exit -1; fi
     else
-        chshot -o "$1"/.testbench/"$2"-cham20.png
+        chshot --vic20 -o "$1"/.testbench/"$2"-cham20.png
         if [ "$?" != "0" ]; then exit -1; fi
     fi
 #    echo "exited with: " $exitcode
     if [ -f "$refscreenshotname" ]
     then
         # defaults for PAL
-        CHAM20REFSXO=32
-        CHAM20REFSYO=35
-        CHAM20SXO=53
-        CHAM20SYO=62
+        CHAM20REFSXO=96
+        CHAM20REFSYO=48
+        CHAM20SXO=70
+        CHAM20SYO=66
 
 #        echo [ "${refscreenshotvideotype}" "${videotype}" ]
 
-        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
-            CHAM20REFSXO=32
-            CHAM20REFSYO=23
-        fi
+#       if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+#           CHAM20REFSXO=32
+#           CHAM20REFSYO=23
+#       fi
 
-        if [ "${videotype}" == "NTSC" ]; then
-            CHAM20SXO=61
-            CHAM20SYO=38
-        fi
+#       if [ "${videotype}" == "NTSC" ]; then
+#           CHAM20SXO=61
+#           CHAM20SYO=38
+#       fi
 
 #        echo ./cmpscreens "$refscreenshotname" "$CHAM20REFSXO" "$CHAM20REFSYO" "$1"/.testbench/"$2"-cham20.png "$CHAM20SXO" "$CHAM20SYO"
         ./cmpscreens "$refscreenshotname" "$CHAM20REFSXO" "$CHAM20REFSYO" "$1"/.testbench/"$2"-cham20.png "$CHAM20SXO" "$CHAM20SYO"

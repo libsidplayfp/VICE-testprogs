@@ -180,6 +180,7 @@ function runprogsfortarget
             arraylength=${#myarray[@]}
             if [ "$arraylength" -lt "4" ]; then
                 echo "error: unexpected end of line in input (arraylenght=${arraylength})"
+                echo "line:${e}"
                 exit -1
             fi
 

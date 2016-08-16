@@ -1,9 +1,9 @@
 
 XVIC="$VICEDIR"/xvic
 XVICOPTS+=" -default"
-#XVICOPTS+=" -VICIIfilter 0"
-#XVICOPTS+=" -VICIIextpal"
-#XVICOPTS+=" -VICIIpalette vice.vpl"
+XVICOPTS+=" -VICfilter 0"
+XVICOPTS+=" -VICextpal"
+#XVICOPTS+=" -VICpalette mike-pal.vpl"
 XVICOPTS+=" -warp"
 XVICOPTS+=" -debugcart"
 XVICOPTS+=" -basicload"
@@ -18,11 +18,11 @@ XVICOPTSSCREENSHOT+=""
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
 # top left character on screen.
-XVICSXO=32
-XVICSYO=35
+XVICSXO=96
+XVICSYO=48
 
-XVICREFSXO=32
-XVICREFSYO=35
+XVICREFSXO=96
+XVICREFSYO=48
 
 # $1  option
 # $2  test path
@@ -120,6 +120,24 @@ function xvic_run_screenshot
     fi
     if [ -f "$refscreenshotname" ]
     then
+        # defaults for PAL
+        XVICSXO=96
+        XVICSYO=48
+        XVICREFSXO=96
+        XVICREFSYO=48
+        
+#        echo [ "${refscreenshotvideotype}" "${videotype}" ]
+    
+        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+            XVICREFSXO=40
+            XVICREFSYO=22
+        fi
+    
+        if [ "${videotype}" == "NTSC" ]; then
+            XVICSXO=40
+            XVICSYO=22
+        fi
+
         ./cmpscreens "$refscreenshotname" "$XVICREFSXO" "$XVICREFSYO" "$1"/.testbench/"$2"-xvic.png "$XVICSXO" "$XVICSYO"
         exitcode=$?
     else

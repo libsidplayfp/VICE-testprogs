@@ -7,9 +7,10 @@
 #include "stb_image.h"
 
 #define MAXCOLORS 0x100
+#define MAXPALETTES 3
 
 int verbose = 0;
-int numpalettes = 2;
+int numpalettes = MAXPALETTES;
 int numcolors = 16;
 
 int palette1 = 0, palette2 = 0;
@@ -57,14 +58,35 @@ unsigned char cols_pepto_ntsc_sony[3*16] = {
     0x95, 0x95, 0x95,
 };
 
-unsigned char *colors[2] = {
-    &cols_pepto_pal[0],
-    &cols_pepto_ntsc_sony[0]
+unsigned char cols_mike_pal[16 * 3] = {
+    0x00, 0x00, 0x00,
+    0xFF, 0xFF, 0xFF,
+    0x21, 0x1F, 0xB6,
+    0xFF, 0xF0, 0x4D,
+    0xFF, 0x3F, 0xB4,
+    0x37, 0xE2, 0x44,
+    0xFF, 0x34, 0x1A,
+    0x1B, 0xD7, 0xDC,
+    0x00, 0x54, 0xCA,
+    0x72, 0xB0, 0xE9,
+    0x93, 0x92, 0xE7,
+    0xFD, 0xF7, 0x9A,
+    0xFF, 0x9F, 0xE0,
+    0x93, 0xE4, 0x8F,
+    0xFF, 0x90, 0x82,
+    0x85, 0xDE, 0xE5
 };
 
-char *palettenames[2] = {
+unsigned char *colors[MAXPALETTES] = {
+    &cols_pepto_pal[0],
+    &cols_pepto_ntsc_sony[0],
+    &cols_mike_pal[0],
+};
+
+char *palettenames[MAXPALETTES] = {
     "Pepto (PAL)",
     "Pepto (NTSC/SONY)",
+    "Mike (VIC20, PAL)",
 };
 
 int findcolorinpalette(unsigned char *p, int palette)
@@ -236,8 +258,8 @@ int main(int argc, char *argv[])
         yoff2 = 0;
     }
 
-    xsize = xsize1;     // FIXME
-    ysize = ysize1 < ysize2 ? ysize1 : ysize2;     // FIXME
+    xsize = (xsize1 < xsize2) ? xsize1 : xsize2;     // FIXME
+    ysize = (ysize1 < ysize2) ? ysize1 : ysize2;     // FIXME
     if (verbose) printf("cmp size: %dx%d\n", xsize, ysize);
 
     // find out what palette the first picture uses
