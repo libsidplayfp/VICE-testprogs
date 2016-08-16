@@ -340,7 +340,7 @@ read_hit_2_code:
 	lsr
 	lsr
 	lsr
-	ldx #$0f
+	ldx #$ff
 	stx C64_CIA1_SR
 	ldx C64_CIA2_SR
 	beq notsr
