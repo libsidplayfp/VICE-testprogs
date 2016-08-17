@@ -135,6 +135,8 @@ function chameleon_get_options
         "default")
                 exitoptions=""
             ;;
+        # FIXME: the returned options must be the same as for VICE to make the
+        #        selective test-runs work
         "vicii-pal")
                 exitoptions="-pal"
             ;;
@@ -145,10 +147,16 @@ function chameleon_get_options
                 exitoptions="-ntscold"
             ;;
         "cia-old")
-                exitoptions=""
+                exitoptions="-ciamodel 0"
             ;;
         "cia-new")
-                exitoptions=""
+                exitoptions="-ciamodel 1"
+            ;;
+        "sid-old")
+                exitoptions="-sidenginemodel 256"
+            ;;
+        "sid-new")
+                exitoptions="-sidenginemodel 257"
             ;;
         "reu512k")
                 reu_enabled=1
@@ -183,6 +191,8 @@ function chameleon_get_cmdline_options
 #    echo chameleon_get_cmdline_options "$1"
     exitoptions=""
     case "$1" in
+        # FIXME: the returned options must be the same as for VICE to make the
+        #        selective test-runs work
         "PAL")
                 exitoptions="-pal"
             ;;
@@ -197,6 +207,12 @@ function chameleon_get_cmdline_options
             ;;
         "8562") # "new" NTSC
                 exitoptions=""
+            ;;
+        "6526") # "old" CIA
+                exitoptions="-ciamodel 0"
+            ;;
+        "6526A") # "new" CIA
+                exitoptions="-ciamodel 1"
             ;;
     esac
 }

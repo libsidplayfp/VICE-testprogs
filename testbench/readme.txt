@@ -148,8 +148,10 @@ usage: ./testbench.sh [target] <filter> <options>
   --pal        skip tests that do not work on PAL
   --ntsc       skip tests that do not work on NTSC
   --ntscold    skip tests that do not work on NTSC(old)
-  --6581       skip tests that do not work on 8580 (new SID)
-  --8580       skip tests that do not work on 6581 (old SID)
+  --ciaold     run tests on 'old' CIA, skip tests that do not work on 'new' CIA
+  --cianew     run tests on 'new' CIA, skip tests that do not work on 'old' CIA
+  --6581       run tests on 6581 (old SID), skip tests that do not work on 8580 (new SID)
+  --8580       run tests on 8580 (new SID), skip tests that do not work on 6581 (old SID)
   --8565       target VICII type is 8565 (grey dot)
   --8565early  target VICII type is 8565 (new color instead of grey dot)
   --8565late   target VICII type is 8565 (old color instead of grey dot)

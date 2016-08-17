@@ -76,6 +76,12 @@ function vsid_get_cmdline_options
         "NTSCOLD")
                 exitoptions="-ntscold"
             ;;
+        "6526") # "old" CIA
+                exitoptions="-ciamodel 0"
+            ;;
+        "6526A") # "new" CIA
+                exitoptions="-ciamodel 1"
+            ;;
     esac
 }
 

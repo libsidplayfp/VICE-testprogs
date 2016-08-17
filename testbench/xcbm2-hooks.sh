@@ -86,6 +86,12 @@ function xcbm2_get_cmdline_options
         "8562") # "new" NTSC
                 exitoptions="-VICIImodel 8562"
             ;;
+        "6526") # "old" CIA
+                exitoptions="-ciamodel 0"
+            ;;
+        "6526A") # "new" CIA
+                exitoptions="-ciamodel 1"
+            ;;
     esac
 }
 

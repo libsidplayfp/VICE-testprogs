@@ -76,6 +76,12 @@ function xcbm5x0_get_cmdline_options
         "NTSC")
                 exitoptions="-ntsc"
             ;;
+        "6526") # "old" CIA
+                exitoptions="-ciamodel 0"
+            ;;
+        "6526A") # "new" CIA
+                exitoptions="-ciamodel 1"
+            ;;
     esac
 }
 

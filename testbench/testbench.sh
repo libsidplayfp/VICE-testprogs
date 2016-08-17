@@ -11,6 +11,7 @@ verbose=0
 videotype=""
 videosubtype=""
 sidtype=""
+ciatype=""
 memoryexpansion=""
 if [ "$VICEDIR" == "" ] ; then
 	VICEDIR="../../trunk/vice/src"
@@ -238,6 +239,18 @@ function runprogsfortarget
                             skiptest=1
                         fi
                     fi
+                    if [ "${ciatype}" == "6526" ]; then
+                        if [ x"${exitoptions}"x == x"-ciamodel 1"x ]; then
+                            echo "$testpath" "$testprog" "- " "not" "${ciatype}" "(skipped)"
+                            skiptest=1
+                        fi
+                    fi
+                    if [ "${ciatype}" == "6526A" ]; then
+                        if [ x"${exitoptions}"x == x"-ciamodel 0"x ]; then
+                            echo "$testpath" "$testprog" "- " "not" "${ciatype}" "(skipped)"
+                            skiptest=1
+                        fi
+                    fi
 #                    echo "memoryexpansion:"  "${memoryexpansion}"
                     if [ "${memoryexpansion}" == "8K" ]; then
 #                        echo "check Not 8k?"
@@ -258,6 +271,14 @@ function runprogsfortarget
                 fi
                 if [ "${videotype}" == "NTSCOLD" ]; then
                     "$target"_get_cmdline_options "NTSCOLD"
+                    testoptions+="${exitoptions} "
+                fi
+                if [ "${ciatype}" == "6526" ]; then
+                    "$target"_get_cmdline_options "6526"
+                    testoptions+="${exitoptions} "
+                fi
+                if [ "${ciatype}" == "6526A" ]; then
+                    "$target"_get_cmdline_options "6526A"
                     testoptions+="${exitoptions} "
                 fi
                 if [ "${videosubtype}" == "8565" ]; then
@@ -367,8 +388,10 @@ function showhelp
     echo "  --pal        run tests in PAL, skip tests that do not work on PAL"
     echo "  --ntsc       run tests in NTSC, skip tests that do not work on NTSC"
     echo "  --ntscold    run tests in NTSC(old), skip tests that do not work on NTSC(old)"
-    echo "  --6581       skip tests that do not work on 8580 (new SID)"
-    echo "  --8580       skip tests that do not work on 6581 (old SID)"
+    echo "  --ciaold     run tests on 'old' CIA, skip tests that do not work on 'new' CIA"
+    echo "  --cianew     run tests on 'new' CIA, skip tests that do not work on 'old' CIA"
+    echo "  --6581       run tests on 6581 (old SID), skip tests that do not work on 8580 (new SID)"
+    echo "  --8580       run tests on 8580 (new SID), skip tests that do not work on 6581 (old SID)"
     echo "  --8562       target VICII type is 8562 (grey dot)"
     echo "  --8565       target VICII type is 8565 (grey dot)"
     echo "  --8565early  target VICII type is 8565 (new color instead of grey dot)"
@@ -405,11 +428,17 @@ do
         --ntscold)
                 videotype="NTSCOLD"
             ;;
-        --6581)
+        --6581) # "old" SID
                 sidtype="6581"
             ;;
-        --8580)
+        --8580) # "new" SID
                 sidtype="8580"
+            ;;
+        --ciaold) # "old" CIA
+                ciatype="6526"
+            ;;
+        --cianew) # "new" CIA
+                ciatype="6526A"
             ;;
         --8565) # "new" PAL VICII (grey dot)
                 videosubtype="8565"
@@ -449,6 +478,7 @@ if [ "$verbose" = "1" ] ; then
     echo verbose:"$verbose"
     echo "video type:" "$videotype"
     echo "video subtype:" "$videosubtype"
+    echo "SID type:" "$sidtype"
     echo "memory expansion:" "$memoryexpansion"
 fi
 

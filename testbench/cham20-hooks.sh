@@ -95,6 +95,8 @@ function cham20_get_options
 #    echo cham20_get_options "$1"
     exitoptions=""
     case "$1" in
+        # FIXME: the returned options must be the same as for VICE to make the
+        #        selective test-runs work
         "default")
                 exitoptions=""
             ;;
@@ -140,6 +142,8 @@ function cham20_get_cmdline_options
 #    echo cham20_get_cmdline_options "$1"
     exitoptions=""
     case "$1" in
+        # FIXME: the returned options must be the same as for VICE to make the
+        #        selective test-runs work
         "PAL")
                 exitoptions="-pal"
             ;;

@@ -458,7 +458,7 @@
 ../CIA/ciaports/,ciaports.prg,interactive,0
 ../CIA/ciaports/,ghosting.prg,interactive,0
 ../CIA/ciavarious/,cia1.prg,exitcode,10000000
-../CIA/ciavarious/,cia2.prg,exitcode,10000000
+../CIA/ciavarious/,cia2.prg,exitcode,20000000
 ../CIA/ciavarious/,cia3.prg,exitcode,10000000,cia-old
 ../CIA/ciavarious/,cia3a.prg,exitcode,10000000,cia-old
 ../CIA/ciavarious/,cia4.prg,exitcode,20000000,cia-old
