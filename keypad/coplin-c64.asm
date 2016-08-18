@@ -15,7 +15,10 @@ C64_CIA2_SR = 0xDD0C
 C64_CIA2_CRA = 0xDD0E
 USERPORT_DDR = 0xDD03
 USERPORT_DATA = 0xDD01
+
 SCANKEY = 0xff9f
+KEYS = $c6
+KEY_QUEUE = $0277
 
 basic: !by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
 
@@ -32,7 +35,7 @@ mainloop:
 	jsr print_test_name_screen
 	jsr print_joy_device_screen
 	lda #$00
-	sta $c6		; keys in buffer
+	sta KEYS
 check_loop:
 	jsr check_port
 	jsr show_key
@@ -107,20 +110,14 @@ no_key_pressed:
 invert_key_5:
 	ldx #5
 invert_key:
-	sty invert_key_peek + 1
-	sty invert_key_poke + 1
-	sty invert_key_peek2 + 1
-	sty invert_key_poke2 + 1
-	stx invert_key_peek + 2
-	stx invert_key_poke + 2
-	stx invert_key_peek2 + 2
-	stx invert_key_poke2 + 2
+	sty $fb
+	stx $fc
+	ldy #$00
 	pha
 invert_key_peek:
-	lda $ffff
+	lda ($fb),y
 	ora #$80
-invert_key_poke:
-	sta $ffff
+	sta ($fb),y
 release_key_loop:
 	jsr check_port
 	sta tmp
@@ -130,11 +127,10 @@ release_key_loop:
 	pha
 	jmp release_key_loop
 revert_back:
-invert_key_peek2:
-	lda $ffff
+	ldy #$00
+	lda ($fb),y
 	and #$7f
-invert_key_poke2:
-	sta $ffff
+	sta ($fb),y
 	rts
 
 check_port:
@@ -167,46 +163,60 @@ check_port:
 	beq read_starbyte_2
 read_native_1:
 	jsr read_native_1_code
-	jmp invert
+	and #$1f
+	rts
 read_native_2:
 	jsr read_native_2_code
-	jmp invert
+	and #$1f
+	rts
 read_hummer:
 	jsr read_hummer_code
-	jmp invert
+	and #$1f
+	rts
 read_oem:
 	jsr read_oem_code
-	jmp invert
+	and #$1f
+	rts
 read_cga_1:
 	jsr read_cga_1_code
-	jmp invert
+	and #$1f
+	rts
 read_cga_2:
 	jsr read_cga_2_code
-	jmp invert
+	and #$1f
+	rts
 read_pet_1:
 	jsr read_pet_1_code
-	jmp invert
+	and #$1f
+	rts
 read_pet_2:
 	jsr read_pet_2_code
-	jmp invert
+	and #$1f
+	rts
 read_hit_1:
 	jsr read_hit_1_code
-	jmp invert
+	and #$1f
+	rts
 read_hit_2:
 	jsr read_hit_2_code
-	jmp invert
+	and #$1f
+	rts
 read_kingsoft_1:
 	jsr read_kingsoft_1_code
-	jmp invert
+	and #$1f
+	rts
 read_kingsoft_2:
 	jsr read_kingsoft_2_code
-	jmp invert
+	and #$1f
+	rts
 read_starbyte_1:
 	jsr read_starbyte_1_code
-	jmp invert
+	and #$1f
+	rts
 read_starbyte_2:
 	jsr read_starbyte_2_code
-	jmp invert
+	and #$1f
+	rts
 
 read_native_1_code:
 	ldx #$7f
@@ -504,10 +514,6 @@ read_starbyte_2_code:
 	stx C64_CIA2_DDRA
 	jmp restore_cnt12sp
 
-invert:
-	and #$1f
-	rts
-
 setup_cnt12sp:
 	sei
 	ldx USERPORT_DDR
@@ -575,12 +581,12 @@ print_change_port_screen_loop2:
 	bne print_change_port_screen_loop2
 check_change_port_key:
 	ldx #$00
-	stx $c6
+	stx KEYS
 port_key_loop:
 	jsr SCANKEY
-	ldx $c6
+	ldx KEYS
 	beq port_key_loop
-	ldx $0277
+	ldx KEY_QUEUE
 	cpx #'1'
 	bne check2
 	ldx #0
@@ -735,14 +741,14 @@ is_kingsoft_device:
 	ldy #<kingsoft_screen
 	ldx #>kingsoft_screen
 print_type:
-	sty print_type_loop + 1
-	stx print_type_loop + 2
-	ldx #$00
+	sty $fb
+	stx $fc
+	ldy #$00
 print_type_loop:
-	lda $ffff,x
+	lda ($fb),y
 	beq end_print_type_loop
 	jsr $ffd2
-	inx
+	iny
 	bne print_type_loop
 end_print_type_loop:
 	lda port

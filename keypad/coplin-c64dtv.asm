@@ -5,7 +5,10 @@ C64_CIA1_PRB = 0xDC01
 C64_CIA1_DDRA = 0xDC02
 USERPORT_DDR = 0xDD03
 USERPORT_DATA = 0xDD01
+
 SCANKEY = 0xff9f
+KEYS = $c6
+KEY_QUEUE = $0277
 
 basic: !by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
 
@@ -22,7 +25,7 @@ mainloop:
 	jsr print_test_name_screen
 	jsr print_joy_device_screen
 	lda #$00
-	sta $c6		; keys in buffer
+	sta KEYS
 check_loop:
 	jsr check_port
 	jsr show_key
@@ -97,20 +100,14 @@ no_key_pressed:
 invert_key_5:
 	ldx #5
 invert_key:
-	sty invert_key_peek + 1
-	sty invert_key_poke + 1
-	sty invert_key_peek2 + 1
-	sty invert_key_poke2 + 1
-	stx invert_key_peek + 2
-	stx invert_key_poke + 2
-	stx invert_key_peek2 + 2
-	stx invert_key_poke2 + 2
+	sty $fb
+	stx $fc
 	pha
+	ldy #$00
 invert_key_peek:
-	lda $ffff
+	lda ($fb),y
 	ora #$80
-invert_key_poke:
-	sta $ffff
+	sta ($fb),y
 release_key_loop:
 	jsr check_port
 	sta tmp
@@ -120,11 +117,10 @@ release_key_loop:
 	pha
 	jmp release_key_loop
 revert_back:
-invert_key_peek2:
-	lda $ffff
+	ldy #$00
+	lda ($fb),y
 	and #$7f
-invert_key_poke2:
-	sta $ffff
+	sta ($fb),y
 	rts
 
 check_port:
@@ -177,12 +173,12 @@ print_change_port_screen_loop:
 	bne print_change_port_screen_loop
 check_change_port_key:
 	ldx #$00
-	stx $c6
+	stx KEYS
 port_key_loop:
 	jsr SCANKEY
-	ldx $c6
+	ldx KEYS
 	beq port_key_loop
-	ldx $0277
+	ldx KEY_QUEUE
 	cpx #'1'
 	bne check2
 	ldx #0
