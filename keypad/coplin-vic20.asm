@@ -10,25 +10,96 @@ SCANKEY = 0xff9f
 KEYS = $c6
 KEY_QUEUE = $0277
 
-basic: !by $0b,$10,$01,$00,$9e,$34,$31,$30,$39,$00,$00,$00
+PICJMP = $0203
+
+basic: !by $13,$10,$e0,$07,$9e,$c2,$28,$34,$34,$29,$ac,$32,$35,$36,$aa,$32,$31,$00,$00,$00
 
 start:
 	ldx #$08
 	stx $900f	; border/background
 	lda #$05
 	jsr $ffd2
-	jsr choose_port
+
+init_jsr_fixer:
+; $0203	stx $021b
+; $0206	lda $2c
+; $0208	cmp #$10
+; $020a	beq $020e
+; $020c	iny
+; $020d	iny
+; $020e	sty $021c
+; $0211	lda $0200
+; $0214	ldx $0201
+; $0217	ldy $0202
+; $021a	jmp $xxxx
+	ldx #$00
+	stx $0212
+	inx
+	stx $0215
+	inx
+	stx $0205
+	stx $020B
+	stx $0210
+	stx $0213
+	stx $0216
+	stx $0218
+	stx $0219
+	ldx #$10
+	stx $0209
+	ldx #$1b
+	stx $0204
+	inx
+	stx $020F
+	ldx #$2c
+	stx $0207
+	ldx #$4c
+	stx $021A
+	ldx #$8c
+	stx $020E
+	ldx #$8e
+	stx $0203
+	ldx #$a5
+	stx $0206
+	ldx #$ac
+	stx $0217
+	inx
+	stx $0211
+	inx
+	stx $0214
+	ldx #$c8
+	stx $020C
+	stx $020D
+	inx
+	stx $0208
+	ldx #$f0
+	stx $020A
 
 mainloop:
-	jsr print_main_screen
-	jsr print_test_name_screen
-	jsr print_joy_device_screen
+	ldx #<choose_port
+	ldy #>choose_port
+	jsr PICJMP
+	ldx #<print_main_screen
+	ldy #>print_main_screen
+	jsr PICJMP
+	ldx #<print_test_name_screen
+	ldy #>print_test_name_screen
+	jsr PICJMP
+	ldx #<print_joy_device_screen
+	ldy #>print_joy_device_screen
+	jsr PICJMP
 	lda #$00
 	sta KEYS
 check_loop:
-	jsr check_port
-	jsr show_key
-	jmp check_loop
+	ldx #<check_port
+	ldy #>check_port
+	jsr PICJMP
+	and #$1f
+	sta $0200
+	ldx #<show_key
+	ldy #>show_key
+	jsr PICJMP
+	bne check_loop
+	beq check_loop
 
 show_key:
 	ldy #$00
@@ -96,22 +167,31 @@ no_key_pressed:
 	rts
 invert_key:
 	sty $fb
+	ldx $2c
+	cpx #$10
+	beq invert_key_1e
+	ldx #$10
+	bne invert_store
+invert_key_1e:
 	ldx #$1e
+invert_store:
 	stx $fc
-	pha
+	sta $0201
 invert_key_peek:
 	ldy #$00
 	lda ($fb),y
 	ora #$80
 	sta ($fb),y
 release_key_loop:
-	jsr check_port
-	sta tmp
-	pla
-	cmp tmp
+	ldx #<check_port
+	ldy #>check_port
+	jsr PICJMP
+	and #$1f
+	sta $0200
+	lda $0201
+	cmp $0200
 	bne revert_back
-	pha
-	jmp release_key_loop
+	beq release_key_loop
 revert_back:
 	ldy #$00
 	lda ($fb),y
@@ -134,26 +214,33 @@ check_port:
 	cpx #51
 	beq read_pet_2
 read_native:
-	jsr read_native_code
-	jmp invert
+	ldx #<read_native_code
+	ldy #>read_native_code
+	jmp PICJMP
 read_hummer:
-	jsr read_hummer_code
-	jmp invert
+	ldx #<read_hummer_code
+	ldy #>read_hummer_code
+	jmp PICJMP
 read_oem:
-	jsr read_oem_code
-	jmp invert
+	ldx #<read_oem_code
+	ldy #>read_oem_code
+	jmp PICJMP
 read_cga_1:
-	jsr read_cga_1_code
-	jmp invert
+	ldx #<read_cga_1_code
+	ldy #>read_cga_1_code
+	jmp PICJMP
 read_cga_2:
-	jsr read_cga_2_code
-	jmp invert
+	ldx #<read_cga_2_code
+	ldy #>read_cga_2_code
+	jmp PICJMP
 read_pet_1:
-	jsr read_pet_1_code
-	jmp invert
+	ldx #<read_pet_1_code
+	ldy #>read_pet_1_code
+	jmp PICJMP
 read_pet_2:
-	jsr read_pet_2_code
-	jmp invert
+	ldx #<read_pet_2_code
+	ldy #>read_pet_2_code
+	jmp PICJMP
 
 read_native_code:
 	lda VIC20_VIA1_PRA
@@ -161,12 +248,12 @@ read_native_code:
 	and #$1c
 	lsr
 	lsr
-	sta tmp
+	sta $0201
 	tya
 	and #$20
 	lsr
-	ora tmp
-	sta tmp
+	ora $0201
+	sta $0201
 	lda VIC20_VIA2_DDRB
 	and #$7f
 	sta VIC20_VIA2_DDRB
@@ -176,7 +263,7 @@ read_native_code:
 	lsr
 	lsr
 	lsr
-	ora tmp
+	ora $0201
 	rts
 
 read_hummer_code:
@@ -197,7 +284,7 @@ read_oem_code:
 	lsr
 	lsr
 	lsr
-	sta tmp
+	sta $0201
 	tya
 	and #$40
 	lsr
@@ -205,24 +292,24 @@ read_oem_code:
 	lsr
 	lsr
 	lsr
-	ora tmp
-	sta tmp
+	ora $0201
+	sta $0201
 	tya
 	and #$20
 	lsr
 	lsr
 	lsr
-	ora tmp
-	sta tmp
+	ora $0201
+	sta $0201
 	tya
 	and #$10
 	lsr
-	ora tmp
-	sta tmp
+	ora $0201
+	sta $0201
 	tya
 	and #$08
 	asl
-	ora tmp
+	ora $0201
 	rts
 
 read_cga_1_code:
@@ -240,11 +327,11 @@ read_cga_2_code:
 	lda USERPORT_DATA
 	tay
 	and #$0f
-	sta tmp
+	sta $0201
 	tya
 	and #$20
 	lsr
-	ora tmp
+	ora $0201
 	rts
 
 read_pet_1_code:
@@ -269,19 +356,25 @@ read_pet_2_code:
 	lsr
 	lsr
 	lsr
-	jmp read_pet_code
-
-invert:
-	and #$1f
-	rts
+	bne read_pet_code
 
 choose_port:
-	ldx #$00
+	ldx #<change_port_screen
+	stx $fb
+	ldy #>change_port_screen
+	lda $2c
+	cmp #$10
+	beq noiny_change_port_screen
+	iny
+	iny
+noiny_change_port_screen:
+	sty $fc
+	ldy #$00
 print_change_port_screen_loop:
-	lda change_port_screen,x
+	lda ($fb),y
 	beq check_change_port_key
 	jsr $ffd2
-	inx
+	iny
 	bne print_change_port_screen_loop
 check_change_port_key:
 	ldx #$00
@@ -329,42 +422,82 @@ new_port:
 	rts
 
 print_main_screen:
-	ldx #$00
+	ldx #<main_screen
+	stx $fb
+	ldy #>main_screen
+	lda $2c
+	cmp #$10
+	beq noiny_main_screen
+	iny
+	iny
+noiny_main_screen:
+	sty $fc
+	ldy #$00
 screen_loop:
-	lda main_screen,x
+	lda ($fb),y
 	beq end_loop
 	jsr $ffd2
-	inx
+	iny
 	bne screen_loop
 end_loop:
 	rts
 
 print_test_name_screen:
-	ldx #$00
+	ldx #<test_name_screen
+	stx $fb
+	ldy #>test_name_screen
+	lda $2c
+	cmp #$10
+	beq noiny_test_name_screen
+	iny
+	iny
+noiny_test_name_screen:
+	sty $fc
+	ldy #$00
 test_name_screen_loop:
-	lda test_name_screen,x
+	lda ($fb),y
 	beq end_loop
 	jsr $ffd2
-	inx
+	iny
 	bne test_name_screen_loop
 
 print_joy_device_screen:
-	ldx #$00
+	ldy #$00
 	lda port
 	and #$10
-	beq print_native_device_loop
-	lda port
+	beq print_native_device_setup
+	ldx #<userport_device_screen
+	stx $fb
+	ldx #>userport_device_screen
+	lda $2c
+	cmp #$10
+	beq noinx_userport_device_screen
+	inx
+	inx
+noinx_userport_device_screen:
+	stx $fc
 print_userport_device_loop:
-	lda userport_device_screen,x
+	lda ($fc),y
 	beq print_userport_type
 	jsr $ffd2
-	inx
+	iny
 	bne print_userport_device_loop
+print_native_device_setup:
+	ldx #<native_device_screen
+	stx $fb
+	ldx #>native_device_screen
+	lda $2c
+	cmp #$10
+	beq noinx_native_device_screen
+	inx
+	inx
+noinx_native_device_screen:
+	stx $fc
 print_native_device_loop:
-	lda native_device_screen,x
+	lda ($fc),y
 	beq end_device_print
 	jsr $ffd2
-	inx
+	iny
 	bne print_native_device_loop
 print_userport_type:
 	lda #$20
@@ -379,20 +512,26 @@ print_userport_type:
 	beq is_pet_device
 	ldy #<hummer_screen
 	ldx #>hummer_screen
-	jmp print_type
+	bne print_type
 is_oem_device:
 	ldy #<oem_screen
 	ldx #>oem_screen
-	jmp print_type
+	bne print_type
 is_cga_device:
 	ldy #<cga_screen
 	ldx #>cga_screen
-	jmp print_type
+	bne print_type
 is_pet_device:
 	ldy #<pet_screen
 	ldx #>pet_screen
 print_type:
 	sty $fb
+	lda $2c
+	cmp #$10
+	beq noinx_print_type
+	inx
+	inx
+noinx_print_type:
 	stx $fc
 	ldy #$00
 print_type_loop:
