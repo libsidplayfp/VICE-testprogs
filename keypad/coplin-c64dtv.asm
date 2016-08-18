@@ -194,7 +194,7 @@ check3:
 	ldx #16
 new_port:
 	stx port
-	jmp mainloop
+	rts
 
 print_main_screen:
 	ldx #$00

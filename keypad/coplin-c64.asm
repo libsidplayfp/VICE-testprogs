@@ -657,7 +657,7 @@ checkE:
 	ldx #57
 new_port:
 	stx port
-	jmp mainloop
+	rts
 
 print_main_screen:
 	ldx #$00
