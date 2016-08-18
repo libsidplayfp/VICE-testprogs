@@ -151,10 +151,12 @@ check_port:
 	beq read_native_2
 read_native_1:
 	jsr read_native_1_code
-	jmp invert
+	and #$1f
+	rts
 read_native_2:
 	jsr read_native_2_code
-	jmp invert
+	and #$1f
+	rts
 
 read_native_1_code:
 	lda $dc00
@@ -184,10 +186,6 @@ read_key_2:
 	stx C64_CIA1_DDRA
 	lda C64_CIA1_PRA
 	sty C64_CIA1_DDRA
-	rts
-
-invert:
-	and #$1f
 	rts
 
 choose_port:

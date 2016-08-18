@@ -131,13 +131,16 @@ check_port:
 	beq read_hummer
 read_native_1:
 	jsr read_native_1_code
-	jmp invert
+	and #$1f
+	rts
 read_native_2:
 	jsr read_native_2_code
-	jmp invert
+	and #$1f
+	rts
 read_hummer:
 	jsr read_hummer_code
-	jmp invert
+	and #$1f
+	rts
 
 read_native_1_code:
 	ldx #$7f
@@ -157,10 +160,6 @@ read_hummer_code:
 	ldx #$00
 	stx USERPORT_DDR
 	lda USERPORT_DATA
-	rts
-
-invert:
-	and #$1f
 	rts
 
 choose_port:

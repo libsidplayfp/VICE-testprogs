@@ -137,25 +137,33 @@ check_port:
 	beq read_sidcard
 read_native_1:
 	jsr read_native_1_code
-	jmp invert
+	and #$1f
+	rts
+
 read_native_2:
 	jsr read_native_2_code
-	jmp invert
+	and #$1f
+	rts
 read_hummer:
 	jsr read_hummer_code
-	jmp invert
+	and #$1f
+	rts
 read_oem:
 	jsr read_oem_code
-	jmp invert
+	and #$1f
+	rts
 read_pet_1:
 	jsr read_pet_1_code
-	jmp invert
+	and #$1f
+	rts
 read_pet_2:
 	jsr read_pet_2_code
-	jmp invert
+	and #$1f
+	rts
 read_sidcard:
 	jsr read_sidcard_code
-	jmp invert
+	and #$1f
+	rts
 
 read_native_1_code:
 	ldx #$fa
@@ -257,10 +265,6 @@ read_pet_2_code:
 	lsr
 	lsr
 	jmp read_pet_code
-
-invert:
-	and #$1f
-	rts
 
 choose_port:
 	ldx #$00
