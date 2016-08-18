@@ -28,6 +28,7 @@ mainloop:
 	sta KEYS
 check_loop:
 	jsr check_port
+	and #$1f
 	jsr show_key
 	jmp check_loop
 
@@ -110,6 +111,7 @@ invert_key_peek:
 	sta ($fb),y
 release_key_loop:
 	jsr check_port
+	and #$1f
 	sta tmp
 	pla
 	cmp tmp
@@ -130,17 +132,11 @@ check_port:
 	cpx #16
 	beq read_hummer
 read_native_1:
-	jsr read_native_1_code
-	and #$1f
-	rts
+	jmp read_native_1_code
 read_native_2:
-	jsr read_native_2_code
-	and #$1f
-	rts
+	jmp read_native_2_code
 read_hummer:
-	jsr read_hummer_code
-	and #$1f
-	rts
+	jmp read_hummer_code
 
 read_native_1_code:
 	ldx #$7f

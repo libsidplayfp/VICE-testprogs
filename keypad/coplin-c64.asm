@@ -38,6 +38,7 @@ mainloop:
 	sta KEYS
 check_loop:
 	jsr check_port
+	and #$1f
 	jsr show_key
 	jmp check_loop
 
@@ -120,6 +121,7 @@ invert_key_peek:
 	sta ($fb),y
 release_key_loop:
 	jsr check_port
+	and #$1f
 	sta tmp
 	pla
 	cmp tmp
@@ -162,61 +164,33 @@ check_port:
 	cpx #57
 	beq read_starbyte_2
 read_native_1:
-	jsr read_native_1_code
-	and #$1f
-	rts
+	jmp read_native_1_code
 read_native_2:
-	jsr read_native_2_code
-	and #$1f
-	rts
+	jmp read_native_2_code
 read_hummer:
-	jsr read_hummer_code
-	and #$1f
-	rts
+	jmp read_hummer_code
 read_oem:
-	jsr read_oem_code
-	and #$1f
-	rts
+	jmp read_oem_code
 read_cga_1:
-	jsr read_cga_1_code
-	and #$1f
-	rts
+	jmp read_cga_1_code
 read_cga_2:
-	jsr read_cga_2_code
-	and #$1f
-	rts
+	jmp read_cga_2_code
 read_pet_1:
-	jsr read_pet_1_code
-	and #$1f
-	rts
+	jmp read_pet_1_code
 read_pet_2:
-	jsr read_pet_2_code
-	and #$1f
-	rts
+	jmp read_pet_2_code
 read_hit_1:
-	jsr read_hit_1_code
-	and #$1f
-	rts
+	jmp read_hit_1_code
 read_hit_2:
-	jsr read_hit_2_code
-	and #$1f
-	rts
+	jmp read_hit_2_code
 read_kingsoft_1:
-	jsr read_kingsoft_1_code
-	and #$1f
-	rts
+	jmp read_kingsoft_1_code
 read_kingsoft_2:
-	jsr read_kingsoft_2_code
-	and #$1f
-	rts
+	jmp read_kingsoft_2_code
 read_starbyte_1:
-	jsr read_starbyte_1_code
-	and #$1f
-	rts
+	jmp read_starbyte_1_code
 read_starbyte_2:
-	jsr read_starbyte_2_code
-	and #$1f
-	rts
+	jmp read_starbyte_2_code
 
 read_native_1_code:
 	ldx #$7f
