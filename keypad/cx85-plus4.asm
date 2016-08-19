@@ -4,10 +4,6 @@ PLUS4_TED_KBD = 0xFF08
 PLUS4_SIDCART_JOY = 0xFD80
 USERPORT_DATA = 0xfd10
 
-SCANKEY = 0xff9f
-KEYS = $ef
-KEY_QUEUE = $0527
-
 basic: !by $0b,$08,$01,$00,$9e,$34,$31,$30,$39,$00,$00,$00
 
 start:
@@ -19,8 +15,6 @@ start:
 
 mainloop:
 	jsr print_main_screen
-	lda #$00
-	sta KEYS
 check_loop:
 	jsr read_sidcard_code
 	and #$1f
