@@ -1,7 +1,7 @@
 
 all:	coplin-c64.prg coplin-c64dtv.prg coplin-vic20.prg coplin-plus4.prg \
 	cx85-c64.prg cx85-plus4.prg cx85-vic20.prg \
-	cardkey-c64.prg
+	cardkey-c64.prg cardkey-plus4.prg
 
 coplin-c64.prg: coplin-c64.asm
 	acme -v1 --cpu 6502 -f cbm -o coplin-c64.prg coplin-c64.asm
@@ -26,6 +26,9 @@ cx85-vic20.prg: cx85-vic20.asm
 
 cardkey-c64.prg: cardkey-c64.asm
 	acme -v1 --cpu 6502 -f cbm -o cardkey-c64.prg cardkey-c64.asm
+
+cardkey-plus4.prg: cardkey-plus4.asm
+	acme -v1 --cpu 6502 -f cbm -o cardkey-plus4.prg cardkey-plus4.asm
 
 clean:
 	rm -f *~
