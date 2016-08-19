@@ -9,6 +9,7 @@ USERPORT_DDR = 0x9112
 SCANKEY = 0xff9f
 KEYS = $c6
 KEY_QUEUE = $0277
+PORT = $0220
 
 PICJMP = $0203
 
@@ -200,7 +201,7 @@ revert_back:
 	rts
 
 check_port:
-	ldx port
+	ldx PORT
 	cpx #16
 	beq read_hummer
 	cpx #17
@@ -418,7 +419,7 @@ check7:
 	bne check_change_port_key
 	ldx #17
 new_port:
-	stx port
+	stx PORT
 	rts
 
 print_main_screen:
@@ -463,7 +464,7 @@ test_name_screen_loop:
 
 print_joy_device_screen:
 	ldy #$00
-	lda port
+	lda PORT
 	and #$10
 	beq print_native_device_setup
 	ldx #<userport_device_screen
@@ -502,7 +503,7 @@ print_native_device_loop:
 print_userport_type:
 	lda #$20
 	jsr $ffd2
-	lda port
+	lda PORT
 	cmp #17
 	beq is_oem_device
 	and #$fe
@@ -541,13 +542,13 @@ print_type_loop:
 	iny
 	bne print_type_loop
 end_print_type_loop:
-	lda port
+	lda PORT
 	and #$20
 	beq end_device_print
 print_port_number:
 	lda #$20
 	jsr $ffd2
-	lda port
+	lda PORT
 	and #$01
 	clc
 	adc #'1'
@@ -555,10 +556,6 @@ print_port_number:
 end_device_print:
 	lda #13
 	jmp $ffd2
-
-port:	!by 0
-
-tmp:	!by 0
 
 main_screen:
 	!by 147

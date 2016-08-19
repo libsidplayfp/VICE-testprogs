@@ -658,7 +658,6 @@ print_joy_device_screen:
 	lda port
 	and #$10
 	beq print_native_device_loop
-	lda port
 print_userport_device_loop:
 	lda userport_device_screen,x
 	beq print_userport_type
