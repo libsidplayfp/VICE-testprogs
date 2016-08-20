@@ -87,84 +87,84 @@ check_loop:
 show_key:
 	ldy #$00
 	ldx #$00
-	cmp #12
-	bne check_key_7
+	cmp #24
+	bne check_key_8
 	ldy #24
 	bne invert_key
-check_key_7:
-	cmp #21
-	bne check_key_8
+check_key_8:
+	cmp #23
+	bne check_key_9
 	ldy #28
 	bne invert_key
-check_key_8:
+check_key_9:
 	cmp #22
-	bne check_key_9
+	bne check_key_mult
 	ldy #32
 	bne invert_key
-check_key_9:
-	cmp #23
-	bne check_key_minus
+check_key_mult:
+	cmp #18
+	bne check_key_4
 	ldy #36
 	bne invert_key
-check_key_minus:
-	cmp #31
-	bne check_key_n
-	ldy #40
-	bne invert_key
-check_key_n:
-	cmp #20
-	bne check_key_4
+check_key_4:
+	cmp #27
+	bne check_key_5
 	ldy #68
 	bne invert_key
-check_key_4:
-	cmp #17
-	bne check_key_5
+check_key_5:
+	cmp #26
+	bne check_key_6
 	ldy #72
 	bne invert_key
-check_key_5:
-	cmp #18
-	bne check_key_6
+check_key_6:
+	cmp #25
+	bne check_key_div
 	ldy #76
 	bne invert_key
-check_key_6:
+check_key_div:
 	cmp #19
-	bne check_key_e
+	bne check_key_1
 	ldy #80
 	bne invert_key
-check_key_e:
+check_key_1:
 	cmp #30
-	bne check_key_d
-	ldy #84
-	bne invert_key
-check_key_d:
-	cmp #16
-	bne check_key_1
+	bne check_key_2
 	ldy #112
 	bne invert_key
-check_key_1:
-	cmp #25
-	bne check_key_2
+check_key_2:
+	cmp #29
+	bne check_key_3
 	ldy #116
 	bne invert_key
-check_key_2:
-	cmp #26
-	bne check_key_3
+check_key_3:
+	cmp #28
+	bne check_key_minus
 	ldy #120
 	bne invert_key
-check_key_3:
-	cmp #27
-	bne check_key_y
+check_key_minus:
+	cmp #20
+	bne check_key_dot
 	ldy #124
 	bne invert_key
-check_key_y:
-	cmp #28
+check_key_dot:
+	cmp #17
 	bne check_key_0
 	ldy #156
 	bne invert_key
 check_key_0:
-	cmp #28
-	bne check_key_dot
-	ldy #162
+	cmp #31
+	bne check_key_e
+	ldy #160
+	bne invert_key
+check_key_e:
+	cmp #16
+	bne check_key_plus
+	ldy #164
+	bne invert_key
+check_key_plus:
+	cmp #21
+	bne no_key_pressed
+	ldy #168
 invert_key:
 	sty $fb
 	ldx $2c
@@ -198,11 +198,6 @@ revert_back:
 	and #$7f
 	sta ($fb),y
 	rts
-check_key_dot:
-	cmp #29
-	bne no_key_pressed
-	ldy #168
-	bne invert_key
 no_key_pressed:
 	rts
 
@@ -257,14 +252,14 @@ end_loop:
 
 main_screen:
 	!by 147
-	!by 176,192,192,192,178,192,192,192,178,192,192,192,178,192,192,192,178,192,192,192,174,13
-	!by 221, 32,'S', 32,221, 32,'7', 32,221, 32,'8', 32,221, 32,'9', 32,221, 32,'-', 32,221,13
-	!by 171,192,192,192,219,192,192,192,219,192,192,192,219,192,192,192,219,192,192,192,179,13
-	!by 221, 32,'N', 32,221, 32,'4', 32,221, 32,'5', 32,221, 32,'6', 32,221, 32,'E', 32,221,13
-	!by 171,192,192,192,219,192,192,192,219,192,192,192,219,192,192,192,179, 32,'N', 32,221,13
-	!by 221, 32,'D', 32,221, 32,'1', 32,221, 32,'2', 32,221, 32,'3', 32,221, 32,'T', 32,221,13
-	!by 171,192,192,192,219,192,192,192,177,192,192,192,219,192,192,192,179, 32,'E', 32,221,13
-	!by 221, 32,'Y', 32,221, 32, 32, 32,'0', 32, 32, 32,221, 32,'.', 32,221, 32,'R', 32,221,13
-	!by 173,192,192,192,177,192,192,192,192,192,192,192,177,192,192,192,177,192,192,192,189,13
-	!by 13,'A','T','A','R','I',' ','C','X','8','5',' ','K','E','Y','P','A','D',' ','I','N',13
+	!by 176,192,192,192,178,192,192,192,178,192,192,192,178,192,192,192,174,13
+	!by 221, 32,'7', 32,221, 32,'8', 32,221, 32,'9', 32,221, 32,'*', 32,221,13
+	!by 171,192,192,192,219,192,192,192,219,192,192,192,219,192,192,192,179,13
+	!by 221, 32,'4', 32,221, 32,'5', 32,221, 32,'6', 32,221, 32,'/', 32,221,13
+	!by 171,192,192,192,219,192,192,192,219,192,192,192,219,192,192,192,179,13
+	!by 221, 32,'1', 32,221, 32,'2', 32,221, 32,'3', 32,221, 32,'-', 32,221,13
+	!by 171,192,192,192,219,192,192,192,219,192,192,192,219,192,192,192,179,13
+	!by 221, 32,'.', 32,221, 32,'0', 32,221, 32,'E', 32,221, 32,'+', 32,221,13
+	!by 173,192,192,192,177,192,192,192,177,192,192,192,177,192,192,192,189,13
+	!by 13,'C','A','R','D','C','O',' ','C','A','R','D','K','E','Y',' ','K','E','Y','P','A','D',' ','I','N',13
 	!by 'N','A','T','I','V','E',0
