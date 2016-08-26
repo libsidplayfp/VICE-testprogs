@@ -6,7 +6,6 @@ TESTPROGS = \
 	mmcrplugin.prg \
 	mmcr-64krom.crt \
 	romram.crt \
-	writeram.crt \
 	16kgame.crt \
 	rr-reu.crt
 
@@ -32,10 +31,6 @@ mmcr-64krom.crt: mmcr-64krom.bin
 romram.crt: romram.s
 	acme romram.s
 	
-writeram.crt: writeram.s
-	acme writeram.s
-	cartconv -p -t pf -i writeram.bin -o writeram.crt
-
 16kgame.crt: main-16kgame.s
 	acme main-16kgame.s
 	cartconv -p -t normal -i 16kgame.bin -o 16kgame.crt

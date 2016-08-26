@@ -1,10 +1,19 @@
-
-;CRTID = 36 ; retro replay
-CRTID = 53 ; pagefox
+;
+;    Bit 0: unused/don't care
+;    Bit 1: Bank select: 0=upper, 1=lower (not correct ?!)
+;    Bit 2: chip select 0
+;    Bit 3: chip select 1
+;    Bit 4: cartridge enable/disable: 0=enable, 1=disable
+;    Bits 5-7: unused/don't care
+;
+;    Chip select combinations of 0/1 are:
+;    00: Eprom "79"
+;    01: Eprom "ZS3"
+;    10: Ram
+;    11: empty space (reading returns VIC data)
+;
 
 ROMSTART = $8000
-
-    !to "writeram.bin",plain
 
     * = ROMSTART
 
@@ -21,8 +30,13 @@ start:
     lda #$c8
     sta $d016
 
+    lda #$e7
+    sta $01
     lda #$2f
     sta $00
+    
+    ldx #$ff
+    txs
 
     ldx #0
 lp:
@@ -45,44 +59,47 @@ lp:
     bne lp
     jmp $1000
 
+;-------------------------------------------------------------------------------
+; copied to $1000
+    
 code:
 
     ; cart off, store pattern to c64 ram
     lda #$35
     sta $01
-    lda #%00011100
+    lda #(1 << 4) or (3 << 2) or (0 << 1)
     sta $de80
 
     ldx #0
 lp2:
     txa
-    sta $a000,x
+    sta RAMLOC,x
     dex
     bne lp2
 
     ; cart on, store pattern to cart AND c64 ram
     lda #$37
     sta $01
-    lda #%00001000
+    lda #(0 << 4) or (2 << 2) or (0 << 1)
     sta $de80
 
     ldx #0
 lp3:
     txa
     eor #$ff
-    sta $a000,x
+    sta RAMLOC,x
     dex
     bne lp3
 
     ; cart off, read pattern
     lda #$35
     sta $01
-    lda #%00011100
+    lda #(1 << 4) or (3 << 2) or (0 << 1)
     sta $de80
 
     ldx #0
 lp4a:
-    lda $a000,x
+    lda RAMLOC,x
     sta $0400,x
     dex
     bne lp4a
@@ -90,12 +107,12 @@ lp4a:
     ; cart on, read pattern
     lda #$37
     sta $01
-    lda #%00001000
+    lda #(0 << 4) or (2 << 2) or (0 << 1)
     sta $de80
 
     ldx #0
 lp4b:
-    lda $a000,x
+    lda RAMLOC,x
     sta $0500,x
     dex
     bne lp4b
@@ -103,26 +120,26 @@ lp4b:
     ; cart off, store pattern to c64 ram
     lda #$35
     sta $01
-    lda #%00011100
+    lda #(1 << 4) or (3 << 2) or (0 << 1)
     sta $de80
 
     ldx #0
 lp2a:
     txa
     eor #%10101010
-    sta $a000,x
+    sta RAMLOC,x
     dex
     bne lp2a
 
     ; cart off, read pattern
     lda #$35
     sta $01
-    lda #%00011100
+    lda #(1 << 4) or (3 << 2) or (0 << 1)
     sta $de80
 
     ldx #0
 lp4d:
-    lda $a000,x
+    lda RAMLOC,x
     sta $0600,x
     dex
     bne lp4d
@@ -130,12 +147,12 @@ lp4d:
     ; cart on, read pattern
     lda #$37
     sta $01
-    lda #%00001000
+    lda #(0 << 4) or (2 << 2) or (0 << 1)
     sta $de80
 
     ldx #0
 lp4c:
-    lda $a000,x
+    lda RAMLOC,x
     sta $0700,x
     dex
     bne lp4c
