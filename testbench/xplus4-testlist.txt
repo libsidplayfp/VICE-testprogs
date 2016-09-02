@@ -12,6 +12,9 @@
 ################################################################################
 ../userportjoy/,testjoy_plus4.prg,interactive,0
 ../keypad/,coplin-plus4.prg,interactive,0
+../keypad/cx85-plus4.prg,interactive,0
+../keypad/rushware-plus4.prg,interactive,0
+../keypad/cardkey-plus4.prg,interactive,0
 ################################################################################
 # various expansions
 ################################################################################

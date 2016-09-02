@@ -916,6 +916,7 @@
 ../drive/viavarious/,via11.prg,exitcode,1000000000
 ../drive/viavarious/,via12.prg,exitcode,1000000000
 ../drive/viavarious/,via13.prg,exitcode,1000000000
+../drive/writeprotect/,write.d64,interactive,0
 ################################################################################
 # virtual Drive
 ################################################################################
@@ -937,9 +938,9 @@
 ../propmouse/,prop_c64_st.prg,interactive,0
 ../keypad/,coplin-c64.prg,interactive,0
 ../keypad/,cx85-c64.prg,interactive,0
-../keypad/rushware-c64.prg,interactive,0
-../keypad/cx21-c64.prg,interactive,0
-../keypad/cardkey-c64.prg,interactive,0
+../keypad/,rushware-c64.prg,interactive,0
+../keypad/,cx21-c64.prg,interactive,0
+../keypad/,cardkey-c64.prg,interactive,0
 ################################################################################
 # various expansions
 ################################################################################

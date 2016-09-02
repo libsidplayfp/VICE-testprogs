@@ -76,10 +76,10 @@
 ../userportjoy/,testjoy_vic20.prg,interactive,0
 ../VIC20/joystick/,joystick.prg,interactive,0
 ../keypad/,coplin-vic20.prg,interactive,0
-../keypad/cx21-vic20.prg,interactive,0
-../keypad/cardkey-vic20.prg,interactive,0
-../keypad/cx85-vic20.prg,interactive,0
-../keypad/rushware-vic20.prg,interactive,0
+../keypad/,cx21-vic20.prg,interactive,0
+../keypad/,cardkey-vic20.prg,interactive,0
+../keypad/,cx85-vic20.prg,interactive,0
+../keypad/,rushware-vic20.prg,interactive,0
 ################################################################################
 # cartridges
 ################################################################################

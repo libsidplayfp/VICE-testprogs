@@ -38,3 +38,4 @@
 # Joystick/Mouse
 ################################################################################
 ../keypad/,coplin-c64dtv.prg,interactive,0
+../keypad/rushware-c64dtv.prg,interactive,0
