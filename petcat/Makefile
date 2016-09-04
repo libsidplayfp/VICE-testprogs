@@ -8,13 +8,18 @@ all: test
 # all valid basic v2 tokens in a "basic program"
 tokensv2.prg: tokensv2.s
 	acme tokensv2.s
+
 # all character codes (0-255)
 petscii.bin: petscii.s
 	acme petscii.s
 
-.PHONY: test test1 test2 test3 test4
+# all basic v2 keywords in a "basic program"
+keywordsv2.prg: keywordsv2.s
+	acme keywordsv2.s
 
-test: test1 test2 test3 test4
+.PHONY: test test1 test2 test3 test4 test5
+
+test: test1 test2 test3 test4 test5
 	
 #verify that petscii -> ascii -> petscii produces consistant and reversible results
 test1: petscii.bin
@@ -63,6 +68,14 @@ test4: ctrlcodes.bas
 	$(PETCAT) -nh -c -o toasc.out ctrlcodes.prg
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
 	diff  -q -s ctrlcodes.prg tobas.prg
+
+#verify that basic -> ascii -> basic produces consistant and reversible results
+test5: keywordsv2.prg
+	@echo -----
+	@echo test5 - basic v2 keywords test program
+	$(PETCAT) -nh -c -o toasc.out keywordsv2.prg
+	$(PETCAT) -w2 -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2.prg tobas.prg
 
 clean:
 	rm -f *~
