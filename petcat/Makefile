@@ -13,13 +13,21 @@ tokensv2.prg: tokensv2.s
 petscii.bin: petscii.s
 	acme petscii.s
 
+# all basic v1 keywords in a "basic program"
+keywordsv1.prg: keywordsv1.s
+	acme keywordsv1.s
+
 # all basic v2 keywords in a "basic program"
 keywordsv2.prg: keywordsv2.s
 	acme keywordsv2.s
 
-.PHONY: test test1 test2 test3 test4 test5
+# all basic v2 + Super Expander keywords in a "basic program"
+keywordsv2superexp.prg: keywordsv2superexp.s
+	acme keywordsv2superexp.s
 
-test: test1 test2 test3 test4 test5
+.PHONY: test test1 test2 test3 test4 test5 test6 test7
+
+test: test1 test2 test3 test4 test5 test6 test7
 	
 #verify that petscii -> ascii -> petscii produces consistant and reversible results
 test1: petscii.bin
@@ -70,12 +78,27 @@ test4: ctrlcodes.bas
 	diff  -q -s ctrlcodes.prg tobas.prg
 
 #verify that basic -> ascii -> basic produces consistant and reversible results
-test5: keywordsv2.prg
+test5: keywordsv1.prg
 	@echo -----
-	@echo test5 - basic v2 keywords test program
+	@echo test5 - basic v1 keywords test program
+	$(PETCAT) -nh -1 -c -o toasc.out keywordsv1.prg
+	$(PETCAT) -w1 -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv1.prg tobas.prg
+
+#verify that basic -> ascii -> basic produces consistant and reversible results
+test6: keywordsv2.prg
+	@echo -----
+	@echo test6 - basic v2 keywords test program
 	$(PETCAT) -nh -2 -c -o toasc.out keywordsv2.prg
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
 	diff  -q -s keywordsv2.prg tobas.prg
+
+test7: keywordsv2superexp.prg
+	@echo -----
+	@echo test6 - basic v2 + Super Expander keywords test program
+	$(PETCAT) -nh -superexp -c -o toasc.out keywordsv2superexp.prg
+	$(PETCAT) -wsuperexp -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2superexp.prg tobas.prg
 
 clean:
 	rm -f *~
