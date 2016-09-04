@@ -73,7 +73,7 @@ test4: ctrlcodes.bas
 test5: keywordsv2.prg
 	@echo -----
 	@echo test5 - basic v2 keywords test program
-	$(PETCAT) -nh -c -o toasc.out keywordsv2.prg
+	$(PETCAT) -nh -2 -c -o toasc.out keywordsv2.prg
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
 	diff  -q -s keywordsv2.prg tobas.prg
 
