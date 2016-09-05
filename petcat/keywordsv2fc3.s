@@ -3,9 +3,9 @@
 	
 	!initmem 	fillvalue
 	!cpu 6502
-	!to "keywordsv2superexp.prg", cbm
+	!to "keywordsv2fc3.prg", cbm
 
-        *= $0401
+        *= $0801
 line0:
         !word line1 ; ptr to next line
         !word 1 ; line nr
@@ -99,23 +99,36 @@ line9:
 line10:
         !word line11 ; ptr to next line
         !word 11 ; line nr
-        !byte $d0
-        !for i, $7 {
+        !byte $d1
+        !for i, $6 {
             !byte ":"
-            !byte $d0 + i
+            !byte $d1 + i
         }
         !byte 0 ; end of line
 line11:
         !word line12 ; ptr to next line
         !word 12 ; line nr
         !byte $d8
-        !for i, $5 {
+        !for i, $7 {
             !byte ":"
             !byte $d8 + i
         }
+        !byte 0 ; end of line
+line12:
+        !word line13 ; ptr to next line
+        !word 13 ; line nr
+        !byte $e0
+        !for i, $7 {
+            !byte ":"
+            !byte $e0 + i
+        }
+        !byte 0 ; end of line
+line13:
+        !word line14 ; ptr to next line
+        !word 14 ; line nr
+        !byte $e8
         !byte ":"
         !byte $ff
         !byte 0 ; end of line
-line12:
+line14:
         !word 0 ; basic end
-			

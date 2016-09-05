@@ -3,9 +3,9 @@
 	
 	!initmem 	fillvalue
 	!cpu 6502
-	!to "keywordsv2superexp.prg", cbm
+	!to "keywordsv2speech.prg", cbm
 
-        *= $0401
+        *= $0801
 line0:
         !word line1 ; ptr to next line
         !word 1 ; line nr
@@ -109,13 +109,25 @@ line11:
         !word line12 ; ptr to next line
         !word 12 ; line nr
         !byte $d8
-        !for i, $5 {
+        !for i, $7 {
             !byte ":"
             !byte $d8 + i
+        }
+        !byte 0 ; end of line
+line12:
+        !word line13 ; ptr to next line
+        !word 13 ; line nr
+        !byte $e0
+        !for i, $2 {
+            !byte ":"
+            !byte $e0 + i
+        }
+        !for i, $3 {
+            !byte ":"
+            !byte $e3 + i
         }
         !byte ":"
         !byte $ff
         !byte 0 ; end of line
-line12:
+line13:
         !word 0 ; basic end
-			
