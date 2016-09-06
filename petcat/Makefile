@@ -77,11 +77,49 @@ keywordsv2drago.prg: keywordsv2drago.s
 keywordsv2reu.prg: keywordsv2reu.s
 	acme keywordsv2reu.s
 
+# all basic v2 + Basic Lightning keywords in a "basic program"
+keywordsv2lightning.prg: keywordsv2lightning.s
+	acme keywordsv2lightning.s
+
+# all basic v2 + Magic Basic keywords in a "basic program"
+keywordsv2magic.prg: keywordsv2magic.s
+	acme keywordsv2magic.s
+
+# all basic v2 + Easy Basic keywords in a "basic program"
+keywordsv2easy.prg: keywordsv2easy.s
+	acme keywordsv2easy.s
+
+# all basic v2 + Blarg keywords in a "basic program"
+keywordsv2blarg.prg: keywordsv2blarg.s
+	acme keywordsv2blarg.s
+
+# all basic v2 + Game Basic keywords in a "basic program"
+keywordsv2game.prg: keywordsv2game.s
+	acme keywordsv2game.s
+
+# all basic v2 + Super Basic keywords in a "basic program"
+keywordsv2superbas.prg: keywordsv2superbas.s
+	acme keywordsv2superbas.s
+
+# all basic v2 + Expanded Basic 20 keywords in a "basic program"
+keywordsv2exp20.prg: keywordsv2exp20.s
+	acme keywordsv2exp20.s
+
+# all basic v2 + Expanded Basic 64 keywords in a "basic program"
+keywordsv2exp64.prg: keywordsv2exp64.s
+	acme keywordsv2exp64.s
+
+# all basic v2 + Super Expander Chip keywords in a "basic program"
+keywordsv2sxc.prg: keywordsv2sxc.s
+	acme keywordsv2sxc.s
+
 .PHONY: test test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
-	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20
+	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
+	test21 test22 test23 test24 test25 test26 test27 test28 test29
 
 test:	test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
-	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20
+	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
+	test21 test22 test23 test24 test25 test26 test27 test28 test29
 
 #verify that petscii -> ascii -> petscii produces consistant and reversible results
 test1: petscii.bin
@@ -244,6 +282,69 @@ test20: keywordsv2reu.prg
 	$(PETCAT) -nh -reu -c -o toasc.out keywordsv2reu.prg
 	$(PETCAT) -wreu -c -o tobas.prg toasc.out
 	diff  -q -s keywordsv2reu.prg tobas.prg
+
+test21: keywordsv2lightning.prg
+	@echo -----
+	@echo test21 - basic v2 + Basic Lightning keywords test program
+	$(PETCAT) -nh -lightning -c -o toasc.out keywordsv2lightning.prg
+	$(PETCAT) -wlightning -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2lightning.prg tobas.prg
+
+test22: keywordsv2magic.prg
+	@echo -----
+	@echo test22 - basic v2 + Magic Basic keywords test program
+	$(PETCAT) -nh -magic -c -o toasc.out keywordsv2magic.prg
+	$(PETCAT) -wmagic -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2magic.prg tobas.prg
+
+test23: keywordsv2easy.prg
+	@echo -----
+	@echo test23 - basic v2 + Easy Basic keywords test program
+	$(PETCAT) -nh -easy -c -o toasc.out keywordsv2easy.prg
+	$(PETCAT) -weasy -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2easy.prg tobas.prg
+
+test24: keywordsv2blarg.prg
+	@echo -----
+	@echo test24 - basic v2 + Blarg keywords test program
+	$(PETCAT) -nh -blarg -c -o toasc.out keywordsv2blarg.prg
+	$(PETCAT) -wblarg -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2blarg.prg tobas.prg
+
+test25: keywordsv2game.prg
+	@echo -----
+	@echo test25 - basic v2 + Game Basic keywords test program
+	$(PETCAT) -nh -game -c -o toasc.out keywordsv2game.prg
+	$(PETCAT) -wgame -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2game.prg tobas.prg
+
+test26: keywordsv2superbas.prg
+	@echo -----
+	@echo test26 - basic v2 + Super Basic keywords test program
+	$(PETCAT) -nh -superbas -c -o toasc.out keywordsv2superbas.prg
+	$(PETCAT) -wsuperbas -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2superbas.prg tobas.prg
+
+test27: keywordsv2exp20.prg
+	@echo -----
+	@echo test27 - basic v2 + Expanded Basic 20 keywords test program
+	$(PETCAT) -nh -exp20 -o toasc.out keywordsv2exp20.prg
+	$(PETCAT) -wexp20 -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2exp20.prg tobas.prg
+
+test28: keywordsv2exp64.prg
+	@echo -----
+	@echo test28 - basic v2 + Expanded Basic 64 keywords test program
+	$(PETCAT) -nh -exp64 -o toasc.out keywordsv2exp64.prg
+	$(PETCAT) -wexp64 -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2exp64.prg tobas.prg
+
+test29: keywordsv2sxc.prg
+	@echo -----
+	@echo test29 - basic v2 + Super Expander Chip keywords test program
+	$(PETCAT) -nh -sxc -o toasc.out keywordsv2sxc.prg
+	$(PETCAT) -wsxc -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2sxc.prg tobas.prg
 
 clean:
 	rm -f *~
