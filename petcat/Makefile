@@ -37,10 +37,52 @@ keywordsv2at.prg: keywordsv2at.s
 keywordsv2fc3.prg: keywordsv2fc3.s
 	acme keywordsv2fc3.s
 
-.PHONY: test test1 test2 test3 test4 test5 test6 test7 test8 test9 test10
+# all basic v2 + Ultra Basic 64 keywords in a "basic program"
+keywordsv2ultra64.prg: keywordsv2ultra64.s
+	acme keywordsv2ultra64.s
 
-test: test1 test2 test3 test4 test5 test6 test7 test8 test9 test10
-	
+# all basic v2 + Graphics Basic keywords in a "basic program"
+keywordsv2graph.prg: keywordsv2graph.s
+	acme keywordsv2graph.s
+
+# all basic v2 + WS Basic keywords in a "basic program"
+keywordsv2ws.prg: keywordsv2ws.s
+	acme keywordsv2ws.s
+
+# all basic v2 + WS Basic Final keywords in a "basic program"
+keywordsv2wsf.prg: keywordsv2wsf.s
+	acme keywordsv2wsf.s
+
+# all basic v2 + Turtle Basic keywords in a "basic program"
+keywordsv2turtle.prg: keywordsv2turtle.s
+	acme keywordsv2turtle.s
+
+# all basic v2 + Mighty Basic keywords in a "basic program"
+keywordsv2mighty.prg: keywordsv2mighty.s
+	acme keywordsv2mighty.s
+
+# all basic v2 + Pegasus Basic 4.0 keywords in a "basic program"
+keywordsv2peg40.prg: keywordsv2peg40.s
+	acme keywordsv2peg40.s
+
+# all basic v2 + Xbasic keywords in a "basic program"
+keywordsv2xbas.prg: keywordsv2xbas.s
+	acme keywordsv2xbas.s
+
+# all basic v2 + Drago Basic v2.2 keywords in a "basic program"
+keywordsv2drago.prg: keywordsv2drago.s
+	acme keywordsv2drago.s
+
+# all basic v2 + REU Basic keywords in a "basic program"
+keywordsv2reu.prg: keywordsv2reu.s
+	acme keywordsv2reu.s
+
+.PHONY: test test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
+	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20
+
+test:	test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
+	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20
+
 #verify that petscii -> ascii -> petscii produces consistant and reversible results
 test1: petscii.bin
 	@echo -----
@@ -133,9 +175,79 @@ test10: keywordsv2fc3.prg
 	$(PETCAT) -wfc3 -c -o tobas.prg toasc.out
 	diff  -q -s keywordsv2fc3.prg tobas.prg
 
+test11: keywordsv2ultra64.prg
+	@echo -----
+	@echo test11 - basic v2 + Ultra Basic 64 keywords test program
+	$(PETCAT) -nh -ultra -c -o toasc.out keywordsv2ultra64.prg
+	$(PETCAT) -wultra -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2ultra64.prg tobas.prg
+
+test12: keywordsv2graph.prg
+	@echo -----
+	@echo test12 - basic v2 + Graphics Basic keywords test program
+	$(PETCAT) -nh -graph -c -o toasc.out keywordsv2graph.prg
+	$(PETCAT) -wgraph -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2graph.prg tobas.prg
+
+test13: keywordsv2ws.prg
+	@echo -----
+	@echo test13 - basic v2 + WS Basic keywords test program
+	$(PETCAT) -nh -bws -c -o toasc.out keywordsv2ws.prg
+	$(PETCAT) -wbws -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2ws.prg tobas.prg
+
+test14: keywordsv2wsf.prg
+	@echo -----
+	@echo test14 - basic v2 + WS Basic Final keywords test program
+	$(PETCAT) -nh -bwsf -c -o toasc.out keywordsv2wsf.prg
+	$(PETCAT) -wbwsf -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2wsf.prg tobas.prg
+
+test15: keywordsv2turtle.prg
+	@echo -----
+	@echo test15 - basic v2 + Turtle Basic keywords test program
+	$(PETCAT) -nh -turtle -c -o toasc.out keywordsv2turtle.prg
+	$(PETCAT) -wturtle -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2turtle.prg tobas.prg
+
+test16: keywordsv2mighty.prg
+	@echo -----
+	@echo test16 - basic v2 + Mighty Basic keywords test program
+	$(PETCAT) -nh -mighty -c -o toasc.out keywordsv2mighty.prg
+	$(PETCAT) -wmighty -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2mighty.prg tobas.prg
+
+test17: keywordsv2peg40.prg
+	@echo -----
+	@echo test17 - basic v2 + Pegasus Basic 4.0 keywords test program
+	$(PETCAT) -nh -pegasus -c -o toasc.out keywordsv2peg40.prg
+	$(PETCAT) -wpegasus -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2peg40.prg tobas.prg
+
+test18: keywordsv2xbas.prg
+	@echo -----
+	@echo test18 - basic v2 + Xbasic keywords test program
+	$(PETCAT) -nh -xbasic -c -o toasc.out keywordsv2xbas.prg
+	$(PETCAT) -wxbasic -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2xbas.prg tobas.prg
+
+test19: keywordsv2drago.prg
+	@echo -----
+	@echo test19 - basic v2 + Drago Basic v2.2 keywords test program
+	$(PETCAT) -nh -drago -c -o toasc.out keywordsv2drago.prg
+	$(PETCAT) -wdrago -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2drago.prg tobas.prg
+
+test20: keywordsv2reu.prg
+	@echo -----
+	@echo test20 - basic v2 + REU Basic keywords test program
+	$(PETCAT) -nh -reu -c -o toasc.out keywordsv2reu.prg
+	$(PETCAT) -wreu -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2reu.prg tobas.prg
+
 clean:
 	rm -f *~
-	rm -f tokensv2.prg
+	rm -f tokensv2*.prg
 	rm -f petscii.bin
 	rm -f tobas.prg
 	rm -f topet.out
