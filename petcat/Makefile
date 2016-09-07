@@ -113,13 +113,17 @@ keywordsv2exp64.prg: keywordsv2exp64.s
 keywordsv2sxc.prg: keywordsv2sxc.s
 	acme keywordsv2sxc.s
 
+# all basic v2 + Warsaw Basic keywords in a "basic program"
+keywordsv2warsaw.prg: keywordsv2warsaw.s
+	acme keywordsv2warsaw.s
+
 .PHONY: test test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
-	test21 test22 test23 test24 test25 test26 test27 test28 test29
+	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30
 
 test:	test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
-	test21 test22 test23 test24 test25 test26 test27 test28 test29
+	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30
 
 #verify that petscii -> ascii -> petscii produces consistant and reversible results
 test1: petscii.bin
@@ -345,6 +349,13 @@ test29: keywordsv2sxc.prg
 	$(PETCAT) -nh -sxc -o toasc.out keywordsv2sxc.prg
 	$(PETCAT) -wsxc -c -o tobas.prg toasc.out
 	diff  -q -s keywordsv2sxc.prg tobas.prg
+
+test30: keywordsv2warsaw.prg
+	@echo -----
+	@echo test30 - basic v2 + Warsaw Basic keywords test program
+	$(PETCAT) -nh -bwarsaw -o toasc.out keywordsv2warsaw.prg
+	$(PETCAT) -wbwarsaw -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2warsaw.prg tobas.prg
 
 clean:
 	rm -f *~

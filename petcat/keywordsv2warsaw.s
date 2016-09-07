@@ -3,7 +3,7 @@
 	
 	!initmem 	fillvalue
 	!cpu 6502
-	!to "keywordsv2sxc.prg", cbm
+	!to "keywordsv2warsaw.prg", cbm
 
         *= $0801
 line0:
@@ -97,61 +97,59 @@ line9:
         }
         !byte 0 ; end of line
 line10:
+        !word line11 ; ptr to next line
+        !word 11 ; line nr
+        !byte $db
+        !for i, $4 {
+            !byte ":"
+            !byte $db + i
+        }
+        !byte 0 ; end of line
+line11:
+        !word line12 ; ptr to next line
+        !word 12 ; line nr
+        !byte $e0
+        !for i, $2 {
+            !byte ":"
+            !byte $e0 + i
+        }
+        !for i, $4 {
+            !byte ":"
+            !byte $e3 + i
+        }
+        !byte 0 ; end of line
+line12:
+        !word line13 ; ptr to next line
+        !word 13 ; line nr
+        !byte $e8
+        !for i, $6 {
+            !byte ":"
+            !byte $e9 + i
+        }
+        !byte 0 ; end of line
+line13:
+        !word line14 ; ptr to next line
+        !word 14 ; line nr
+        !byte $f0
+        !byte ":"
+        !byte $f1
+        !for i, $2 {
+            !byte ":"
+            !byte $f5 + i
+        }
+        !byte 0 ; end of line
+line14:
         !word line15 ; ptr to next line
         !word 15 ; line nr
-        !byte $fe
-        !byte $00
-        !byte ":"
-        !byte $80
+        !byte $f8
+        !for i, $2 {
+            !byte ":"
+            !byte $f9 + i
+        }
+        !for i, $3 {
+            !byte ":"
+            !byte $fc + i
+        }
         !byte 0 ; end of line
-;line10:
-;        !word line11 ; ptr to next line
-;        !word 11 ; line nr
-;        !byte $fe
-;        !byte $00
-;        !for i, $7 {
-;            !byte ":"
-;            !byte $fe
-;            !byte i
-;        }
-;        !byte 0 ; end of line
-;line11:
-;        !word line12 ; ptr to next line
-;        !word 12 ; line nr
-;        !byte $fe
-;        !byte $08
-;        !for i, $7 {
-;            !byte ":"
-;            !byte $fe
-;            !byte $08 + i
-;        }
-;        !byte 0 ; end of line
-;line12:
-;        !word line13 ; ptr to next line
-;        !word 13 ; line nr
-;        !byte $fe
-;        !byte $10
-;        !for i, $7 {
-;            !byte ":"
-;            !byte $fe
-;            !byte $10 + i
-;        }
-;        !byte 0 ; end of line
-;line13:
-;        !word line14 ; ptr to next line
-;        !word 14 ; line nr
-;        !byte $fe
-;        !byte $18
-;        !for i, $7 {
-;            !byte ":"
-;            !byte $fe
-;            !byte $18 + i
-;        }
-;        !byte 0 ; end of line
-;line14:
-;        !word line15 ; ptr to next line
-;        !word 15 ; line nr
-;        !byte $ff
-;        !byte 0 ; end of line
 line15:
         !word 0 ; basic end
