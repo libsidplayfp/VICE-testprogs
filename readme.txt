@@ -121,7 +121,6 @@ super snapshot v5:
 petcat
 ------
 
-- make more tests for other basic versions than v2
 - find more references for control-char notation used by magazines
 
 cartconv
