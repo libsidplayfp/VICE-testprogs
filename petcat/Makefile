@@ -117,13 +117,65 @@ keywordsv2sxc.prg: keywordsv2sxc.s
 keywordsv2warsaw.prg: keywordsv2warsaw.s
 	acme keywordsv2warsaw.s
 
+# all basic v2 + Super Grafik 64 keywords in a "basic program"
+keywordsv2supergraph.prg: keywordsv2supergraph.s
+	acme keywordsv2supergraph.s
+
+# all basic v2 + Kipper Basic keywords in a "basic program"
+keywordsv2kipper.prg: keywordsv2kipper.s
+	acme keywordsv2kipper.s
+
+# all basic v2 + Basic On Bails keywords in a "basic program"
+keywordsv2bob.prg: keywordsv2bob.s
+	acme keywordsv2bob.s
+
+# all basic v2 + Eve Basic keywords in a "basic program"
+keywordsv2eve.prg: keywordsv2eve.s
+	acme keywordsv2eve.s
+
+# all basic v2 + The Tool 64 keywords in a "basic program"
+keywordsv2tt64.prg: keywordsv2tt64.s
+	acme keywordsv2tt64.s
+
+# all basic v2 + Basex keywords in a "basic program"
+keywordsv2basex.prg: keywordsv2basex.s
+	acme keywordsv2basex.s
+
+# all basic v4 keywords in a "basic program"
+keywordsv4.prg: keywordsv4.s
+	acme keywordsv4.s
+
+# all basic v4 for C64 keywords in a "basic program"
+keywordsv4c64.prg: keywordsv4c64.s
+	acme keywordsv4c64.s
+
+# all basic v4 for VIC20 keywords in a "basic program"
+keywordsv4vic20.prg: keywordsv4vic20.s
+	acme keywordsv4vic20.s
+
+# all basic v5 keywords in a "basic program"
+keywordsv5.prg: keywordsv5.s
+	acme keywordsv5.s
+
+# all basic v3.5 keywords in a "basic program"
+keywordsv35.prg: keywordsv35.s
+	acme keywordsv35.s
+
+# all basic v7 keywords in a "basic program"
+keywordsv7.prg: keywordsv7.s
+	acme keywordsv7.s
+
 .PHONY: test test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
-	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30
+	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30 \
+	test31 test32 test33 test34 test35 test36 test37 test38 test39 test40 \
+	test41 test42
 
 test:	test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
-	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30
+	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30 \
+	test31 test32 test33 test34 test35 test36 test37 test38 test39 test40 \
+	test41 test42
 
 #verify that petscii -> ascii -> petscii produces consistant and reversible results
 test1: petscii.bin
@@ -357,9 +409,94 @@ test30: keywordsv2warsaw.prg
 	$(PETCAT) -wbwarsaw -c -o tobas.prg toasc.out
 	diff  -q -s keywordsv2warsaw.prg tobas.prg
 
+test31: keywordsv2supergraph.prg
+	@echo -----
+	@echo test31 - basic v2 + Super Grafik 64 keywords test program
+	$(PETCAT) -nh -supergra -o toasc.out keywordsv2supergraph.prg
+	$(PETCAT) -wsupergra -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2supergraph.prg tobas.prg
+
+test32: keywordsv2kipper.prg
+	@echo -----
+	@echo test32 - basic v2 + Kipper Basic keywords test program
+	$(PETCAT) -nh -bk -o toasc.out keywordsv2kipper.prg
+	$(PETCAT) -wbk -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2kipper.prg tobas.prg
+
+test33: keywordsv2bob.prg
+	@echo -----
+	@echo test33 - basic v2 + Basic On Bails keywords test program
+	$(PETCAT) -nh -bob -o toasc.out keywordsv2bob.prg
+	$(PETCAT) -wbob -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2bob.prg tobas.prg
+
+test34: keywordsv2eve.prg
+	@echo -----
+	@echo test34 - basic v2 + Eve Basic keywords test program
+	$(PETCAT) -nh -eve -o toasc.out keywordsv2eve.prg
+	$(PETCAT) -weve -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2eve.prg tobas.prg
+
+test35: keywordsv2tt64.prg
+	@echo -----
+	@echo test35 - basic v2 + The Tool 64 keywords test program
+	$(PETCAT) -nh -tt64 -o toasc.out keywordsv2tt64.prg
+	$(PETCAT) -wtt64 -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2tt64.prg tobas.prg
+
+test36: keywordsv2basex.prg
+	@echo -----
+	@echo test36 - basic v2 + Basex keywords test program
+	$(PETCAT) -nh -bsx -o toasc.out keywordsv2basex.prg
+	$(PETCAT) -wbsx -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2basex.prg tobas.prg
+
+test37: keywordsv4.prg
+	@echo -----
+	@echo test37 - basic v4 keywords test program
+	$(PETCAT) -nh -40 -o toasc.out keywordsv4.prg
+	$(PETCAT) -w40 -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv4.prg tobas.prg
+
+test38: keywordsv4c64.prg
+	@echo -----
+	@echo test38 - basic v4 for C64 keywords test program
+	$(PETCAT) -nh -4e -o toasc.out keywordsv4c64.prg
+	$(PETCAT) -w4e -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv4c64.prg tobas.prg
+
+test39: keywordsv4vic20.prg
+	@echo -----
+	@echo test39 - basic v4 for VIC20 keywords test program
+	$(PETCAT) -nh -4v -o toasc.out keywordsv4vic20.prg
+	$(PETCAT) -w4v -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv4vic20.prg tobas.prg
+
+test40: keywordsv5.prg
+	@echo -----
+	@echo test40 - basic v5 keywords test program
+	$(PETCAT) -nh -5 -o toasc.out keywordsv5.prg
+	$(PETCAT) -w5 -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv5.prg tobas.prg
+
+test41: keywordsv35.prg
+	@echo -----
+	@echo test41 - basic v3.5 keywords test program
+	$(PETCAT) -nh -3 -o toasc.out keywordsv35.prg
+	$(PETCAT) -w3 -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv35.prg tobas.prg
+
+test42: keywordsv7.prg
+	@echo -----
+	@echo test42 - basic v7 keywords test program
+	$(PETCAT) -nh -70 -o toasc.out keywordsv7.prg
+	$(PETCAT) -w70 -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv7.prg tobas.prg
+
 clean:
 	rm -f *~
-	rm -f tokensv2*.prg
+	rm -f tokensv2.prg
+	rm -f keywords*.prg
 	rm -f petscii.bin
 	rm -f tobas.prg
 	rm -f topet.out
