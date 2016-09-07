@@ -165,17 +165,29 @@ keywordsv35.prg: keywordsv35.s
 keywordsv7.prg: keywordsv7.s
 	acme keywordsv7.s
 
+# all basic v7.1 keywords in a "basic program"
+keywordsv71.prg: keywordsv71.s
+	acme keywordsv71.s
+
+# all basic v10 keywords in a "basic program"
+keywordsv10.prg: keywordsv10.s
+	acme keywordsv10.s
+
+# all basic v2 + Simons Basic keywords in a "basic program"
+keywordsv2simon.prg: keywordsv2simon.s
+	acme keywordsv2simon.s
+
 .PHONY: test test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
 	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30 \
 	test31 test32 test33 test34 test35 test36 test37 test38 test39 test40 \
-	test41 test42
+	test41 test42 test43 test44 test45
 
 test:	test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
 	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30 \
 	test31 test32 test33 test34 test35 test36 test37 test38 test39 test40 \
-	test41 test42
+	test41 test42 test43 test44 test45
 
 #verify that petscii -> ascii -> petscii produces consistant and reversible results
 test1: petscii.bin
@@ -229,8 +241,8 @@ test4: ctrlcodes.bas
 test5: keywordsv1.prg
 	@echo -----
 	@echo test5 - basic v1 keywords test program
-	$(PETCAT) -nh -1 -c -o toasc.out keywordsv1.prg
-	$(PETCAT) -w1 -c -o tobas.prg toasc.out
+	$(PETCAT) -nh -1p -c -o toasc.out keywordsv1.prg
+	$(PETCAT) -w1p -c -o tobas.prg toasc.out
 	diff  -q -s keywordsv1.prg tobas.prg
 
 #verify that basic -> ascii -> basic produces consistant and reversible results
@@ -492,6 +504,27 @@ test42: keywordsv7.prg
 	$(PETCAT) -nh -70 -o toasc.out keywordsv7.prg
 	$(PETCAT) -w70 -c -o tobas.prg toasc.out
 	diff  -q -s keywordsv7.prg tobas.prg
+
+test43: keywordsv71.prg
+	@echo -----
+	@echo test43 - basic v7.1 keywords test program
+	$(PETCAT) -nh -71 -o toasc.out keywordsv71.prg
+	$(PETCAT) -w71 -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv71.prg tobas.prg
+
+test44: keywordsv10.prg
+	@echo -----
+	@echo test44 - basic v10 keywords test program
+	$(PETCAT) -nh -10 -o toasc.out keywordsv10.prg
+	$(PETCAT) -w10 -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv10.prg tobas.prg
+
+test45: keywordsv2simon.prg
+	@echo -----
+	@echo test45 - basic v2 + Simons Basic keywords test program
+	$(PETCAT) -nh -simon -o toasc.out keywordsv2simon.prg
+	$(PETCAT) -wsimon -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2simon.prg tobas.prg
 
 clean:
 	rm -f *~
