@@ -5,7 +5,7 @@
 	!cpu 6502
 	!to "keywordsv5.prg", cbm
 
-        *= $0801
+        *= $1201
 line0:
         !word line1 ; ptr to next line
         !word 1 ; line nr
