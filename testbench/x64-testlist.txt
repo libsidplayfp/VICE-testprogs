@@ -939,9 +939,9 @@
 ../propmouse/,prop_c64_st.prg,interactive,0
 ../keypad/,coplin-c64.prg,interactive,0
 ../keypad/,cx85-c64.prg,interactive,0
-../keypad/rushware-c64.prg,interactive,0
-../keypad/cx21-c64.prg,interactive,0
-../keypad/cardkey-c64.prg,interactive,0
+../keypad/,rushware-c64.prg,interactive,0
+../keypad/,cx21-c64.prg,interactive,0
+../keypad/,cardkey-c64.prg,interactive,0
 ################################################################################
 # various expansions
 ################################################################################
