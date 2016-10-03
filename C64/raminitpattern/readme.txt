@@ -163,6 +163,7 @@ C64 PAL Breadbox (TMR) (ASSY: 250425, RAM: JAPAN4L3U / HM4864P-3)
   -raminitpatterninvert 256
 
 (fierman) (ASSY:250407, RAM: MB8264-15 / JAPAN 8313 R46 BG, RAM: TMM4164P-3 / 3-CC3)
+(flavioweb) (ASSY: 240407 REV.A, RAM (ceramic): (F) MB8264-15 / JAPAN 8307 R84 BG)
 
 - repeating pattern of $20 bytes that have mostly all bits 1, then $20 bytes
   that have most bits 0 (no clear $ff, $00 pattern)
