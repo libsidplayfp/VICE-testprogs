@@ -1,0 +1,295 @@
+================================================================================
+AR+Co AcidRamTest 0.1
+================================================================================
+
+
+Action Replay V6:
+-----------------
+
+(gpz: mine crashes on RAM-Size check)
+
+VICE (r32076) -> 15 points, original AR/NP behaviour (8kb RAM)
+
+Nordic Power:
+-------------
+
+(todo: test on real cart)
+
+VICE (r32077) -> 15 points, original AR/NP behaviour (8kb RAM)
+
+Retro Replay:
+-------------
+
+Test 5: Extended AR RAM Write Test -No.1
+
+vrfy -- C64 RAM: FAILED!
+vrfy -- AR IO RAM: FAILED!  <- incorrect
+vrfy -- AR RAM: FAILED!     <- incorrect
+
+Test 5: Extended AR RAM Write Test -No.2
+
+vrfy -- C64 RAM: FAILED!
+vrfy -- AR IO RAM: FAILED!  <- incorrect
+vrfy -- AR RAM: FAILED!     <- incorrect
+
+-> total score is 43 points
+
+VICE (r32076) matches this behaviour
+
+MMC Replay:
+-----------
+
+Test 5: Extended AR RAM Write Test -No.1
+
+vrfy -- C64 RAM: FAILED!
+vrfy -- AR IO RAM: FAILED!  <- incorrect
+vrfy -- AR RAM: FAILED!     <- incorrect
+
+Test 5: Extended AR RAM Write Test -No.2
+
+vrfy -- C64 RAM: FAILED!
+vrfy -- AR IO RAM: FAILED!  <- incorrect
+vrfy -- AR RAM: FAILED!     <- incorrect
+
+-> total score is 43 points
+
+VICE: MMCR is still broken :(
+
+Nordic Replay:
+--------------
+
+-> total score is 39 points, RR desired behaviour (32kb RAM)
+
+VICE (r32076) matches this behaviour
+
+Easyflash 3:
+------------
+
+-> total score is 39 points, RR desired behaviour (32kb RAM)
+
+Chameleon (beta 9f):
+--------------------
+
+Test 5: Extended AR RAM Write Test -No.1
+
+vrfy -- C64 RAM: OK         <- incorrect
+vrfy -- AR IO RAM: OK
+vrfy -- AR RAM: OK
+
+Test 5: Extended AR RAM Write Test -No.2
+
+vrfy -- C64 RAM: OK         <- incorrect
+vrfy -- AR IO RAM: OK
+vrfy -- AR RAM: OK
+
+-> total score is 37 points
+
+================================================================================
+Expected results for all tests:
+================================================================================
+
+- all tests enable cartridge RAM in ROML and IO2
+
+--------------------------------------------------------------------------------
+
+Test 1: Basic AR RAM Detection
+
+data -> $8000 C64 RAM
+data -> $8000 AR RAM using:
+#$23 -> $de00                               <- ultimax
+
+vrfy -- C64 RAM: OK
+vrfy -- AR RAM : OK
+
+--------------------------------------------------------------------------------
+
+Test 2: Basic AR RAM Size Detection
+
+data -> $8000 C64 RAM
+#$x3 -> $de00 walk through all banks        <- ultimax
+chck -- Extended RAM kb found: 8            <- 8kb or 32kb
+
+--------------------------------------------------------------------------------
+
+Test 3: AR RAM IO Write Access -Run No.1
+
+data -> $9x00 C64 RAM
+data -> $Dx00 IO1/IO2 AR RAM using:
+#$20 -> $de00                               <- 8k Game
+
+vrfy -- C64 RAM: OK
+vrfy -- AR IO RAM : OK
+vrfy -- AR RAM : OK
+
+
+Test 3: AR RAM IO Write Access -Run No.2
+
+data -> $9x00 C64 RAM
+data -> $Dx00 IO1/IO2 AR RAM using:
+#$21 -> $de00                               <- 16K Game
+
+vrfy -- C64 RAM: OK
+vrfy -- AR IO RAM : OK
+vrfy -- AR RAM : OK
+
+
+Test 3: AR RAM IO Write Access -Run No.3
+
+data -> $9x00 C64 RAM
+data -> $Dx00 IO1/IO2 AR RAM using:
+#$22 -> $de00                               <- cart disabled / all C64 RAM
+
+vrfy -- C64 RAM: OK
+vrfy -- AR IO RAM : OK
+vrfy -- AR RAM : FAILED!                    <- expected FAIL
+
+
+Test 3: AR RAM IO Write Access -Run No.4
+
+data -> $9x00 C64 RAM
+data -> $Dx00 IO1/IO2 AR RAM using:
+#$23 -> $de00                               <- ultimax
+
+vrfy -- C64 RAM: OK
+vrfy -- AR IO RAM : OK
+vrfy -- AR RAM : OK
+
+--------------------------------------------------------------------------------
+
+Test 4: AR RAM IO Read Access  -Run No.1
+
+data -> $9x00 C64 RAM
+data -> $9x00 AR RAM using:
+#$20 -> $de00                               <- 8k Game
+
+vrfy -- C64 RAM: OK
+vrfy -- AR IO RAM : OK
+vrfy -- AR RAM : OK
+
+
+Test 4: AR RAM IO Read Access  -Run No.2
+
+data -> $9x00 C64 RAM
+data -> $9x00 AR RAM using:
+#$21 -> $de00                               <- 16K Game
+
+vrfy -- C64 RAM: OK
+vrfy -- AR IO RAM : OK
+vrfy -- AR RAM : OK
+
+
+Test 4: AR RAM IO Read Access  -Run No.3
+
+data -> $9x00 C64 RAM
+data -> $9x00 AR RAM using:
+#$22 -> $de00                               <- cart disabled / all C64 RAM
+
+vrfy -- C64 RAM: OK
+vrfy -- AR IO RAM : OK
+vrfy -- AR RAM : FAILED!                    <- expected FAIL
+
+
+Test 4: AR RAM IO Read Access  -Run No.4
+
+data -> $9x00 C64 RAM
+data -> $9x00 AR RAM using:
+#$23 -> $de00                               <- ultimax
+
+vrfy -- C64 RAM: OK
+vrfy -- AR IO RAM : OK
+vrfy -- AR RAM : OK
+
+--------------------------------------------------------------------------------
+
+- bank 2, cart off, ROM
+  - clear 8000-9fff with 0 (should clear C64 RAM)
+  - write 128*$ff, 128*$80 to page at 8000,9e00,9f00
+- bank 0, ultimax, RAM
+  - clear 8000-9fff with 0 (should clear cartridge RAM)
+- bank 0, <mode to test>, RAM
+  - write 128*$55, 128*$aa to page at 8000,9e00,9f00
+- bank 2, cart off, ROM
+  - check for 128*$ff, 128*$80 on page at 8000,9e00,9f00 (verify C64 RAM)
+    - if check failed
+        - bank 2, cart off, ROM
+        - clear 8000-9fff with 0 (should clear C64 RAM)
+        - write 128*$ff, 128*$80 to page at 8000,9e00,9f00
+- bank 0, <mode to test>, RAM
+  - check for  128*$55, 128*$aa on page at 8000,9e00,9f00 (verify AR IO RAM)
+  - check for  64*$55, 64*$aa at 9e40-9ec0 (verify AR IO RAM)
+  
+Test 5: Extended AR RAM Write Test -No.1
+
+data -> $8000 C64 RAM
+data -> $8000 AR RAM using:
+#$20 -> $de00                               <- 8k Game
+
+vrfy -- C64 RAM: FAILED!                    <- expected FAIL
+vrfy -- AR IO RAM : OK
+vrfy -- AR RAM : OK
+
+
+Test 5: Extended AR RAM Write Test -No.2
+
+data -> $8000 C64 RAM
+data -> $8000 AR RAM using:
+#$21 -> $de00                               <- 16K Game
+
+vrfy -- C64 RAM: FAILED!                    <- expected FAIL
+vrfy -- AR IO RAM : OK
+vrfy -- AR RAM : OK
+
+
+Test 5: Extended AR RAM Write Test -No.3
+
+data -> $8000 C64 RAM
+data -> $8000 AR RAM using:
+#$22 -> $de00                               <- cart disabled / all C64 RAM
+
+vrfy -- C64 RAM: FAILED!                    <- expected FAIL
+vrfy -- AR IO RAM : FAILED!                 <- expected FAIL
+vrfy -- AR RAM : FAILED!                    <- expected FAIL
+
+
+Test 5: Extended AR RAM Write Test -No.4
+
+data -> $8000 C64 RAM
+data -> $8000 AR RAM using:
+#$23 -> $de00                               <- ultimax
+
+vrfy -- C64 RAM: OK
+vrfy -- AR IO RAM : OK
+vrfy -- AR RAM : OK
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
