@@ -147,6 +147,7 @@ function gettestsfortarget
 function resetflags
 {
     reu_enabled=0
+    new_sid_enabled=0
 }
 
 ###############################################################################

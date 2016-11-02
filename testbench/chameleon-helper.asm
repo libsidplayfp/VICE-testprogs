@@ -1,3 +1,7 @@
+; $0400 if != $20 then configure a cartridge
+; $0401 CRT ID
+; $0402 if != $00 then REU is used
+; $0403 0=6581 1=8580 SID
 
         *=$0801
 
@@ -68,6 +72,14 @@ noef:
         ldx #$82        ; reu on, 512k
 noreu:
         stx $d0f5       ; dis/enable REU
+
+        lda #$00
+        ldx $0403
+        cpx #$00
+        beq oldsid
+        lda #$c0 
+oldsid:
+        sta $d0f4       ; set SID type
 
         lda #$27        ; MMU Slot for I/O RAM
         sta $d0af

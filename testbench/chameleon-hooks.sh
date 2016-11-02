@@ -123,6 +123,37 @@ function chameleon_make_crtid
 #    echo "crtid:" "$crtid"
 }
 
+# $1 = 1 - enable cartridge
+function chameleon_make_helper_options
+{
+    # set cartridge type
+    if [ X"$1"X = X"1"X ]
+    then
+        chameleon_make_crtid
+        echo -ne "\x00" > $RDUMMY
+        echo -ne "$crtid" >> $RDUMMY
+    else
+        echo -ne "\x20" > $RDUMMY
+        echo -ne "\x00" >> $RDUMMY
+    fi
+
+    # set REU type
+    if [ $reu_enabled = 1 ]
+    then
+        echo -ne "\x01" >> $RDUMMY
+    else
+        echo -ne "\x00" >> $RDUMMY
+    fi
+    # set SID type
+    if [ $new_sid_enabled = 1 ]
+    then
+        echo -ne "\x01" >> $RDUMMY
+    else
+        echo -ne "\x00" >> $RDUMMY
+    fi
+    chacocmd --addr 0x400 --writemem $RDUMMY > /dev/null
+}
+
 ################################################################################
 
 # $1  option
@@ -154,9 +185,11 @@ function chameleon_get_options
             ;;
         "sid-old")
                 exitoptions="-sidenginemodel 256"
+                new_sid_enabled=0
             ;;
         "sid-new")
                 exitoptions="-sidenginemodel 257"
+                new_sid_enabled=1
             ;;
         "reu512k")
                 reu_enabled=1
@@ -240,6 +273,9 @@ function chameleon_run_screenshot
     # reset
     chameleon_reset
 
+    chameleon_make_helper_options 0
+    if [ "$?" != "0" ]; then exit -1; fi
+
     # run the helper program (enable I/O RAM at $d7xx)
     chameleon_clear_returncode
     chcodenet -x chameleon-helper.prg > /dev/null
@@ -312,19 +348,10 @@ function chameleon_run_exitcode
 #        echo "no program given"
         # reset
         chameleon_reset
-        # set cartridge type
-        chameleon_make_crtid
-        echo -ne "\x00" > $RDUMMY
-        echo -ne "$crtid" >> $RDUMMY
-        # set reu type
-        if [ $reu_enabled = 1 ]
-        then
-            echo -ne "\x01" >> $RDUMMY
-        else
-            echo -ne "\x00" >> $RDUMMY
-        fi
-        chacocmd --addr 0x400 --writemem $RDUMMY > /dev/null
+
+        chameleon_make_helper_options 1
         if [ "$?" != "0" ]; then exit -1; fi
+
         # run helper program
         chameleon_clear_returncode
         chcodenet -x chameleon-helper.prg > /dev/null
@@ -350,6 +377,10 @@ function chameleon_run_exitcode
         if [ "$?" != "0" ]; then exit -1; fi
         # reset
         chameleon_reset
+
+        chameleon_make_helper_options 0
+        if [ "$?" != "0" ]; then exit -1; fi
+
         # run the helper program (enable I/O RAM at $d7xx)
         chameleon_clear_returncode
         chcodenet -x chameleon-helper.prg > /dev/null
