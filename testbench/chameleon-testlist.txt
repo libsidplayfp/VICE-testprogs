@@ -25,6 +25,9 @@
 ../C64/autostart/defaults/,test.prg,exitcode,100000000
 ../C64/autostart/defaults/,test.prg,exitcode,100000000,mountd64:test.d64
 ../C64/autostart/random/,raster.prg,interactive,0
+../C64/openio/,dadb.prg,interactive,0
+../C64/openio/,de00all.prg,interactive,0
+../C64/openio/,de00int.prg,interactive,0
 ../crtemulation/paltest/,paltest.prg,interactive,0
 ../crtemulation/,emusuxX0r-crest.prg,interactive,0
 #FIXME: exit with status after a while
