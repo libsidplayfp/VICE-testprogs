@@ -185,13 +185,13 @@ keywordsv2handy.prg: keywordsv2handy.s
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
 	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30 \
 	test31 test32 test33 test34 test35 test36 test37 test38 test39 test40 \
-	test41 test42 test43 test44 test45 test46
+	test41 test41a test42 test43 test44 test45 test46
 
 test:	test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
 	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30 \
 	test31 test32 test33 test34 test35 test36 test37 test38 test39 test40 \
-	test41 test42 test43 test44 test45 test46
+	test41 test41a test42 test43 test44 test45 test46
 
 #verify that petscii -> ascii -> petscii produces consistant and reversible results
 test1: petscii.bin
@@ -502,6 +502,14 @@ test41: keywordsv35.prg
 	$(PETCAT) -w3 -c -o tobas.prg toasc.out
 	diff  -q -s keywordsv35.prg tobas.prg
 
+test41a: ctrlcodes35.bas
+	@echo -----
+	@echo ctrlcodes35 - check if various control codes work
+	$(PETCAT) -w3 -o ctrlcodes35.prg ctrlcodes35.bas
+	$(PETCAT) -nh -3 -o toasc.out ctrlcodes35.prg
+	$(PETCAT) -w3 -c -o tobas.prg toasc.out
+	diff  -q -s ctrlcodes35.prg tobas.prg
+	
 test42: keywordsv7.prg
 	@echo -----
 	@echo test42 - basic v7 keywords test program
@@ -546,3 +554,4 @@ clean:
 	rm -f topet.out
 	rm -f toasc.out
 	rm -f ctrlcodes.prg
+	rm -f ctrlcodes35.prg
