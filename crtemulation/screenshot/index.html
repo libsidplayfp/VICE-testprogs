@@ -1,0 +1,575 @@
+<html>
+
+The purpose of this page is to test/check the output of all renderers and check
+if their output is correct and consistant.
+
+<ul>
+<li>scale 2x not tested
+<li>for 80-columns chips, non vertical stretched output is not tested
+</ul>
+
+<hr>
+
+<h1>C64 VICII (PAL)</h1>
+
+<ul>
+<li>the classic "Pepto Palette" is the reference, however VICE uses its builtin color generator to
+calculate the actual values based on various parameters on the fly.
+<li>VICE uses custom luma ramps for the various emulated VICII variants (none will match pepto exactly!).
+<li>the CRT emulation paramaters are tuned so when all values are in "neutral" position, the result
+will be close to (but not equal to!) the "Pepto colors"
+<li>however, due to popular demand, saturation and contrast was increased a bit by default (just
+like a lot of people did at their TVs/Monitors)
+</ul>
+
+<table>
+<tr>
+<td><img src="pepto-pal.png"></td>
+<td><img src="shots/c64-gui-default-unfiltered.png" width=384></td>
+<td><img src="shots/c64-gui-default-crt.png" width=384></td>
+</tr>
+<tr>
+<td>Reference (Pepto PAL)</td>
+<td>default (unfiltered)</td>
+<td>default (CRT emulation)</td>
+</tr>
+</table>
+
+<h2>screenshots taken by VICE</h2>
+<table>
+<tr>
+<td>(1x) Pepto PAL palette, unfiltered</td>
+<td>internal colors, unfiltered</td>
+<td>Pepto PAL palette, CRT emulation</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/c64-pepto-unfiltered.png"></td>
+<td><img src="shots/c64-internal-unfiltered.png"></td>
+<td><img src="shots/c64-pepto-crt.png"></td>
+<td><img src="shots/c64-internal-crt.png"></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/c64-pepto-unfiltered-ds.png"></td>
+<td><img src="shots/c64-internal-unfiltered-ds.png"></td>
+<td><img src="shots/c64-pepto-crt-ds.png"></td>
+<td><img src="shots/c64-internal-crt-ds.png"></td>
+</tr>
+</table>
+
+<h2>actual screenshots of the GUI</h2>
+<table>
+<tr>
+<td>(1x) Pepto PAL palette, unfiltered</td>
+<td>Pepto PAL palette, CRT emulation</td>
+<td>internal colors, unfiltered</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/c64-gui-pepto-unfiltered.png" width=384></td>
+<td><img src="shots/c64-gui-pepto-crt.png" width=384></td>
+<td><img src="shots/c64-gui-internal-unfiltered.png" width=384></td>
+<td><img src="shots/c64-gui-internal-crt.png" width=384></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/c64-gui-pepto-unfiltered-ds.png" width=384></td>
+<td><img src="shots/c64-gui-pepto-crt-ds.png" width=384></td>
+<td><img src="shots/c64-gui-internal-unfiltered-ds.png" width=384></td>
+<td><img src="shots/c64-gui-internal-crt-ds.png" width=384></td>
+</tr>
+</table>
+
+<HR>
+
+<h1>C64 VICII (NTSC)</h1>
+
+<table>
+<tr>
+<td><img src="pepto-ntsc-sony.png" width=384></td>
+<td><img src="shots/c64-gui-ntsc-default-unfiltered.png" width=384></td>
+<td><img src="shots/c64-gui-ntsc-default-crt.png" width=384></td>
+</tr>
+<tr>
+<td>Reference (Pepto NTSC-SONY)</td>
+<td>default (unfiltered)</td>
+<td>default (CRT emulation)</td>
+</tr>
+</table>
+
+<h2>screenshots taken by VICE</h2>
+<table>
+<tr>
+<td>(1x) Pepto NTSC-SONY palette, unfiltered</td>
+<td>Pepto NTSC-SONY palette, CRT emulation</td>
+<td>internal colors, unfiltered</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/c64-ntsc-pepto-unfiltered.png"></td>
+<td><img src="shots/c64-ntsc-pepto-crt.png"></td>
+<td><img src="shots/c64-ntsc-internal-unfiltered.png"></td>
+<td><img src="shots/c64-ntsc-internal-crt.png"></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/c64-ntsc-pepto-unfiltered-ds.png"></td>
+<td><img src="shots/c64-ntsc-pepto-crt-ds.png"></td>
+<td><img src="shots/c64-ntsc-internal-unfiltered-ds.png"></td>
+<td><img src="shots/c64-ntsc-internal-crt-ds.png"></td>
+</tr>
+</table>
+
+<h2>actual screenshots of the GUI</h2>
+<table>
+<tr>
+<td>(1x) Pepto NTSC-SONY palette, unfiltered</td>
+<td>Pepto NTSC-SONY palette, CRT emulation</td>
+<td>internal colors, unfiltered</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/c64-gui-ntsc-pepto-unfiltered.png" width=384></td>
+<td><img src="shots/c64-gui-ntsc-pepto-crt.png" width=384></td>
+<td><img src="shots/c64-gui-ntsc-internal-unfiltered.png" width=384></td>
+<td><img src="shots/c64-gui-ntsc-internal-crt.png" width=384></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/c64-gui-ntsc-pepto-unfiltered-ds.png" width=384></td>
+<td><img src="shots/c64-gui-ntsc-pepto-crt-ds.png" width=384></td>
+<td><img src="shots/c64-gui-ntsc-internal-unfiltered-ds.png" width=384></td>
+<td><img src="shots/c64-gui-ntsc-internal-crt-ds.png" width=384></td>
+</tr>
+</table>
+
+
+<hr>
+
+<h1>VIC20 - PAL</h1>
+
+<table>
+<tr>
+<td><img src="vic20-pal-tokra.jpg" width=384></td>
+<td><img src="shots/vic20-gui-default-crt.png" width=384></td>
+<td><img src="shots/vic20-gui-default-unfiltered.png" width=384></td>
+<td><img src="vic20-mike-pal.png" width=384></td>
+</tr>
+<tr>
+<td>reference (tokra)</td>
+<td>default (CRT emulation)</td>
+<td>default (unfiltered)</td>
+<td>reference (mike)</td>
+</tr>
+</table>
+
+<h2>screenshots taken by VICE</h2>
+<table>
+<tr>
+<td>(1x) Mike's PAL palette, unfiltered</td>
+<td>internal colors, unfiltered</td>
+<td>Mike's PAL palette, CRT emulation</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/vic20-mike-unfiltered.png" width=384></td>
+<td><img src="shots/vic20-internal-unfiltered.png" width=384></td>
+<td><img src="shots/vic20-mike-crt.png" width=384></td>
+<td><img src="shots/vic20-internal-crt.png" width=384></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/vic20-mike-unfiltered-ds.png" width=384></td>
+<td><img src="shots/vic20-internal-unfiltered-ds.png" width=384></td>
+<td><img src="shots/vic20-mike-crt-ds.png" width=384></td>
+<td><img src="shots/vic20-internal-crt-ds.png" width=384></td>
+</tr>
+</table>
+
+<h2>actual screenshots of the GUI</h2>
+<table>
+<tr>
+<td>(1x) Mike's PAL palette, unfiltered</td>
+<td>Mike's PAL palette, CRT emulation</td>
+<td>internal colors, unfiltered</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/vic20-gui-mike-unfiltered.png" width=384></td>
+<td><img src="shots/vic20-gui-mike-crt.png" width=384></td>
+<td><img src="shots/vic20-gui-internal-unfiltered.png" width=384></td>
+<td><img src="shots/vic20-gui-internal-crt.png" width=384></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/vic20-gui-mike-unfiltered-ds.png" width=384></td>
+<td><img src="shots/vic20-gui-mike-crt-ds.png" width=384></td>
+<td><img src="shots/vic20-gui-internal-unfiltered-ds.png" width=384></td>
+<td><img src="shots/vic20-gui-internal-crt-ds.png" width=384></td>
+</tr>
+</table>
+
+<h1>VIC20 - NTSC</h1>
+
+<table>
+<tr>
+<td><img src="vic20-ntsc-tokra.jpg" width=384></td>
+<td><img src="shots/vic20-gui-ntsc-default-crt.png" width=384></td>
+<td><img src="shots/vic20-gui-ntsc-default-unfiltered.png" width=384></td>
+<td><img src="vic20-mike-ntsc.png" width=384></td>
+</tr>
+<tr>
+<td>reference (tokra)</td>
+<td>default (CRT emulation)</td>
+<td>default (unfiltered)</td>
+<td>reference (mike)</td>
+</tr>
+</table>
+
+<h2>screenshots taken by VICE</h2>
+<table>
+<tr>
+<td>(1x) Mike's NTSC palette, unfiltered</td>
+<td>Mike's NTSC palette, CRT emulation</td>
+<td>internal colors, unfiltered</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/vic20-ntsc-mike-unfiltered.png" width=384></td>
+<td><img src="shots/vic20-ntsc-mike-crt.png" width=384></td>
+<td><img src="shots/vic20-ntsc-internal-unfiltered.png" width=384></td>
+<td><img src="shots/vic20-ntsc-internal-crt.png" width=384></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/vic20-ntsc-mike-unfiltered-ds.png" width=384></td>
+<td><img src="shots/vic20-ntsc-mike-crt-ds.png" width=384></td>
+<td><img src="shots/vic20-ntsc-internal-unfiltered-ds.png" width=384></td>
+<td><img src="shots/vic20-ntsc-internal-crt-ds.png" width=384></td>
+</tr>
+</table>
+
+<h2>actual screenshots of the GUI</h2>
+<table>
+<tr>
+<td>(1x) Mike's NTSC palette, unfiltered</td>
+<td>Mike's NTSC palette, CRT emulation</td>
+<td>internal colors, unfiltered</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/vic20-gui-ntsc-mike-unfiltered.png" width=384></td>
+<td><img src="shots/vic20-gui-ntsc-mike-crt.png" width=384></td>
+<td><img src="shots/vic20-gui-ntsc-internal-unfiltered.png" width=384></td>
+<td><img src="shots/vic20-gui-ntsc-internal-crt.png" width=384></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/vic20-gui-ntsc-mike-unfiltered-ds.png" width=384></td>
+<td><img src="shots/vic20-gui-ntsc-mike-crt-ds.png" width=384></td>
+<td><img src="shots/vic20-gui-ntsc-internal-unfiltered-ds.png" width=384></td>
+<td><img src="shots/vic20-gui-ntsc-internal-crt-ds.png" width=384></td>
+</tr>
+</table>
+
+<hr>
+
+<h1>Plus4 - PAL</h1>
+
+<table>
+<tr>
+<td><img src="yape-pal.png" width=384></td>
+<td><img src="shots/plus4-gui-default-unfiltered.png" width=384></td>
+<td><img src="shots/plus4-gui-default-crt.png" width=384></td>
+</tr>
+<tr>
+<td>reference (YAPE)</td>
+<td>default (unfiltered)</td>
+<td>default (CRT emulation)</td>
+</tr>
+</table>
+
+<h2>screenshots taken by VICE</h2>
+<table>
+<tr>
+<td>(1x) YAPE PAL palette, unfiltered</td>
+<td>internal colors, unfiltered</td>
+<td>YAPE PAL palette, CRT emulation</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/plus4-yape-unfiltered.png"></td>
+<td><img src="shots/plus4-internal-unfiltered.png"></td>
+<td><img src="shots/plus4-yape-crt.png"></td>
+<td><img src="shots/plus4-internal-crt.png"></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/plus4-yape-unfiltered-ds.png"></td>
+<td><img src="shots/plus4-internal-unfiltered-ds.png"></td>
+<td><img src="shots/plus4-yape-crt-ds.png"></td>
+<td><img src="shots/plus4-internal-crt-ds.png"></td>
+</tr>
+</table>
+
+<h1>Plus4 - NTSC</h1>
+
+<table>
+<tr>
+<td><img src="yape-ntsc.png" width=384></td>
+<td><img src="shots/plus4-gui-ntsc-default-unfiltered.png" width=384></td>
+<td><img src="shots/plus4-gui-ntsc-default-crt.png" width=384></td>
+</tr>
+<tr>
+<td>refernce (YAPE)</td>
+<td>default (unfiltered)</td>
+<td>default (CRT emulation)</td>
+</tr>
+</table>
+
+<h2>screenshots taken by VICE</h2>
+<table>
+<tr>
+<td>(1x) Yape palette, unfiltered</td>
+<td>internal colors, unfiltered</td>
+<td>Yape palette, CRT emulation</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/plus4-ntsc-yape-unfiltered.png"></td>
+<td><img src="shots/plus4-ntsc-internal-unfiltered.png"></td>
+<td><img src="shots/plus4-ntsc-yape-crt.png"></td>
+<td><img src="shots/plus4-ntsc-internal-crt.png"></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/plus4-ntsc-yape-unfiltered-ds.png"></td>
+<td><img src="shots/plus4-ntsc-internal-unfiltered-ds.png"></td>
+<td><img src="shots/plus4-ntsc-yape-crt-ds.png"></td>
+<td><img src="shots/plus4-ntsc-internal-crt-ds.png"></td>
+</tr>
+</table>
+
+<hr>
+
+<h1>DTV - PAL</h1>
+
+<table>
+<tr>
+<td width=432><img src="dtv_pal_spiff_fix.jpg" width=432></td>
+<td width=432><img src="shots/dtv-gui-default-crt.png" width=432></td>
+<td width=432><img src="shots/dtv-gui-default-unfiltered.png" width=432></td>
+</tr>
+<tr>
+<td>reference (spiff)</td>
+<td>default (CRT emulation)</td>
+<td>default (unfiltered)</td>
+</tr>
+</table>
+
+<h2>screenshots taken by VICE</h2>
+<table>
+<tr>
+<td>(1x) Spiff's PAL palette, unfiltered</td>
+<td>internal colors, unfiltered</td>
+<td>Spiff's PAL palette, CRT emulation</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/dtv-spiff-unfiltered.png"></td>
+<td><img src="shots/dtv-internal-unfiltered.png"></td>
+<td><img src="shots/dtv-spiff-crt.png"></td>
+<td><img src="shots/dtv-internal-crt.png"></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/dtv-spiff-unfiltered-ds.png"></td>
+<td><img src="shots/dtv-internal-unfiltered-ds.png"></td>
+<td><img src="shots/dtv-spiff-crt-ds.png"></td>
+<td><img src="shots/dtv-internal-crt-ds.png"></td>
+</tr>
+</table>
+
+<h2>actual screenshots of the GUI</h2>
+<table>
+<tr>
+<td>(1x) Spiff's PAL palette, unfiltered</td>
+<td>Spiff's PAL palette, CRT emulation</td>
+<td>internal colors, unfiltered</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/dtv-gui-spiff-unfiltered.png" width=384></td>
+<td><img src="shots/dtv-gui-spiff-crt.png" width=384></td>
+<td><img src="shots/dtv-gui-internal-unfiltered.png" width=384></td>
+<td><img src="shots/dtv-gui-internal-crt.png" width=384></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/dtv-gui-spiff-unfiltered-ds.png" width=384></td>
+<td><img src="shots/dtv-gui-spiff-crt-ds.png" width=384></td>
+<td><img src="shots/dtv-gui-internal-unfiltered-ds.png" width=384></td>
+<td><img src="shots/dtv-gui-internal-crt-ds.png" width=384></td>
+</tr>
+</table>
+
+<hr>
+
+<h1>C128 VDC (RGB)</h1>
+
+<table>
+<tr>
+<td width=384><img src="c128-scart.jpg" width=432></td>
+<td width=384><img src="shots/c128-gui-default-unfiltered.png" width=432></td>
+<td width=384><img src="shots/c128-gui-default-crt.png" width=432></td>
+</tr>
+<tr>
+<td>reference (?)</td>
+<td>default (unfiltered)</td>
+<td>default (CRT emulation)</td>
+</tr>
+</table>
+
+<h2>screenshots taken by VICE</h2>
+<table>
+<tr>
+<td>(1x) VICE palette, unfiltered</td>
+<td>internal colors, unfiltered</td>
+<td>VICE palette, CRT emulation</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/c128-vice-unfiltered.png" width=384></td>
+<td><img src="shots/c128-internal-unfiltered.png" width=384></td>
+<td><img src="shots/c128-vice-crt.png" width=384></td>
+<td><img src="shots/c128-internal-crt.png" width=384></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/c128-vice-unfiltered-ds.png" width=384></td>
+<td><img src="shots/c128-internal-unfiltered-ds.png" width=384></td>
+<td><img src="shots/c128-vice-crt-ds.png" width=384></td>
+<td><img src="shots/c128-internal-crt-ds.png" width=384></td>
+</tr>
+</table>
+
+<h2>actual screenshots of the GUI</h2>
+<table>
+<tr>
+<td>(1x) VICE palette, unfiltered</td>
+<td>VICE palette, CRT emulation</td>
+<td>internal colors, unfiltered</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/c128-gui-vice-unfiltered.png" width=384></td>
+<td><img src="shots/c128-gui-vice-crt.png" width=384></td>
+<td><img src="shots/c128-gui-internal-unfiltered.png" width=384></td>
+<td><img src="shots/c128-gui-internal-crt.png" width=384></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/c128-gui-vice-unfiltered-ds.png" width=384></td>
+<td><img src="shots/c128-gui-vice-crt-ds.png" width=384></td>
+<td><img src="shots/c128-gui-internal-unfiltered-ds.png" width=384></td>
+<td><img src="shots/c128-gui-internal-crt-ds.png" width=384></td>
+</tr>
+</table>
+
+<hr>
+
+<h1>PET CRTC (Monochrome)</h1>
+
+<table>
+<tr>
+<td width=352><img src="pet-p1-green.png" width=352></td>
+<td width=356><img src="shots/pet-gui-default-unfiltered.png" width=356></td>
+<td width=356><img src="shots/pet-gui-default-crt.png" width=356></td>
+</tr>
+<tr>
+<td>reference (?)</td>
+<td>default (unfiltered)</td>
+<td>default (CRT emulation)</td>
+</tr>
+</table>
+
+<h2>screenshots taken by VICE</h2>
+<table>
+<tr>
+<td>(1x) VICE palette, unfiltered</td>
+<td>internal colors, unfiltered</td>
+<td>VICE palette, CRT emulation</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/pet-green-unfiltered.png" width=384></td>
+<td><img src="shots/pet-internal-unfiltered.png" width=384></td>
+<td><img src="shots/pet-green-crt.png" width=384></td>
+<td><img src="shots/pet-internal-crt.png" width=384></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/pet-green-unfiltered-ds.png" width=384></td>
+<td><img src="shots/pet-internal-unfiltered-ds.png" width=384></td>
+<td><img src="shots/pet-green-crt-ds.png" width=384></td>
+<td><img src="shots/pet-internal-crt-ds.png" width=384></td>
+</tr>
+</table>
+
+<h2>actual screenshots of the GUI</h2>
+<table>
+<tr>
+<td>(1x) VICE palette, unfiltered</td>
+<td>VICE palette, CRT emulation</td>
+<td>internal colors, unfiltered</td>
+<td>internal colors, CRT emulation</td>
+</tr>
+<tr>
+<td><img src="shots/pet-gui-green-unfiltered.png" width=384></td>
+<td><img src="shots/pet-gui-green-crt.png" width=384></td>
+<td><img src="shots/pet-gui-internal-unfiltered.png" width=384></td>
+<td><img src="shots/pet-gui-internal-crt.png" width=384></td>
+</tr>
+<tr>
+<td>(2x)</td>
+</tr>
+<tr>
+<td><img src="shots/pet-gui-green-unfiltered-ds.png" width=384></td>
+<td><img src="shots/pet-gui-green-crt-ds.png" width=384></td>
+<td><img src="shots/pet-gui-internal-unfiltered-ds.png" width=384></td>
+<td><img src="shots/pet-gui-internal-crt-ds.png" width=384></td>
+</tr>
+</table>
+
+</html>
