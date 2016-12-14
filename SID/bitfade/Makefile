@@ -8,6 +8,7 @@ all:
 	cl65 -C c64-asm.cfg -u __EXEHDR__ --asm-define SCANOSC3 --asm-define SCANSPD=0 -o delayosc3.prg delaytime.s
 	cl65 -C c64-asm.cfg -u __EXEHDR__ --asm-define SCANENV3 --asm-define SCANSPD=0 -o delayenv3.prg delaytime.s
 	cl65 -C c64-asm.cfg -u __EXEHDR__ --asm-define SCANFRQ0 --asm-define SCANSPD=0 -o delayfrq0.prg delaytime.s
+	cl65 -C c64-asm.cfg -u __EXEHDR__ --asm-define SCANNOISE --asm-define SCANSPD=0 -o delaynoise.prg delaytime.s
 	rm -f *.o
 
 clean:

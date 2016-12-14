@@ -14,6 +14,10 @@ scantype = 0
 scanreg = $d41c
 scantype = 0
 .endif
+.ifdef SCANNOISE
+scanreg = $d41b
+scantype = 2
+.endif
 
 VOICE1 = $d400
 VOICE2 = $d407
@@ -37,7 +41,7 @@ lp1:
         inx
         bne lp1
 
-.if (scantype = 0) || (scantype = 1)
+.if (scantype = 0) || (scantype = 1) || (scantype = 2)
                 ; init sid
                 LDA     #0
                 LDX     #$17
@@ -93,6 +97,26 @@ mainloop:
                 LDA     #$11     ; gate on, waveform 1
                 STA     VOICE1+4
 .endif
+                ; trigger noise, then lock it
+.if scantype = 2
+                LDA     #$81     ; gate on, waveform 8
+                STA     VOICE3+4
+                lda     #$ff
+                STA     VOICE3+1 ; freq hi
+                lda     #$ff
+                STA     VOICE3+0 ; freq lo
+                ldx #0
+@lp2:
+                bit $eaea
+                bit $eaea
+                dex
+                bne @lp2
+@lp1:
+                lda scanreg             ; 4
+                beq @lp1
+                LDA     #$81+8   ; gate on, waveform 8 + test bit
+                STA     VOICE3+4
+.endif
 
         ; force load and start chained timers
         lda #%00010001
@@ -100,27 +124,21 @@ mainloop:
         lda #%01010001
         sta $dc0f
 
+.if (scantype = 0) || (scantype = 1)
         lda #$ff                ; 2
         sta scanreg             ; 4
 
 loop:
-;        jsr gettimers
-
-;        lda #>$0400
-;        sta scp+1
-;        lda #<$0400
-;        sta scp+0
-;        jsr timerout
-
         lda scanreg             ; 4
-;        sta tmp1+1
-;        ldy #10
-;        jsr hexout
-
-;tmp1:   lda #0
         cmp #$ff                ; 2
         beq loop                ; 2+1
-
+.endif
+.if (scantype = 2)
+loop:
+        lda scanreg             ; 4
+        cmp #$ff                ; 2
+        bne loop                ; 2+1
+.endif
         ; stop timers
         lda #%00000000          ; 2
         sta $dc0e               ; 4
