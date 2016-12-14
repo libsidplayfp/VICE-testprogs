@@ -784,6 +784,7 @@
 ../SID/bitfade/,delayenv3.prg,interactive,0
 ../SID/bitfade/,delayfrq0.prg,interactive,0
 ../SID/bitfade/,delayosc3.prg,interactive,0
+../SID/bitfade/,delaynoise.prg,interactive,0
 ../SID/bitfade/,test1env3.prg,interactive,0
 ../SID/bitfade/,test1frq0.prg,interactive,0
 ../SID/bitfade/,test1osc3.prg,interactive,0
@@ -809,6 +810,7 @@
 ../SID/paddles/,paddle.prg,interactive,0
 ../SID/ringmod/,ringmodtest.prg,exitcode,100000000
 ../SID/stereo/,stereo.prg,interactive,0
+../SID/sidcheck/,sidcheck.prg,interactive,0
 #TODO:
 #../SID/waveforms/,waveforms-6581.prg
 #../SID/waveforms/,waveforms-8580.prg
