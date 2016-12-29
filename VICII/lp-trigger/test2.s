@@ -111,11 +111,13 @@ testlp:
     ldy #5
 
     lda tmp
+.ifdef NEWVIC
     cmp #1 ; new VIC
     beq showvic
+.else
     cmp #2 ; old VIC
     beq showvic
-
+.endif
     ldy #10
 
     lda #0 ; error
@@ -137,6 +139,22 @@ slp:
     iny
     cpy #8
     bne slp
+    
+    ; skip check on first frame, as the value will be bogus
+@dl:lda #0
+    beq @skp1
+    
+    ldy #0      ; success
+    lda $d020
+    and #$0f
+    cmp #5
+    beq @skp
+    ldy #$ff    ; failure
+@skp:
+    sty $d7ff
+@skp1:
+    inc @dl+1
+
     rts
 
     .align 256
@@ -175,6 +193,11 @@ initirq:
          jsr clrcolor
          jsr printtext
  
+@l1:     lda $d011
+         bpl @l1
+@l2:     lda $d011
+         bmi @l2
+
          asl $d019   ;Ack any previous
          bit $dc0d   ;IRQ's
          bit $dd0d
