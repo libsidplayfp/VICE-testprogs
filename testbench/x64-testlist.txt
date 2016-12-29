@@ -650,7 +650,8 @@
 ../VICII/lplatency/,lplatency.prg,exitcode,10000000,vicii-pal
 #FIXME: port to NTSC
 ../VICII/lp-trigger/,test1.prg,screenshot,20000000,vicii-pal
-../VICII/lp-trigger/,test2.prg,screenshot,20000000,vicii-pal
+../VICII/lp-trigger/,test2.prg,exitcode,20000000,vicii-pal
+../VICII/lp-trigger/,test2new.prg,exitcode,20000000,vicii-pal
 ../VICII/movesplit/,movesplit.prg,interactive,0,vicii-pal
 ../VICII/movesplit/,movesplit_ntsc.prg,interactive,0,vicii-ntsc
 ../VICII/movesplit/,movesplit_ntscold.prg,interactive,0,vicii-ntscold
@@ -785,6 +786,7 @@
 ../SID/bitfade/,delayenv3.prg,interactive,0
 ../SID/bitfade/,delayfrq0.prg,interactive,0
 ../SID/bitfade/,delayosc3.prg,interactive,0
+../SID/bitfade/,delaynoise.prg,interactive,0
 ../SID/bitfade/,test1env3.prg,interactive,0
 ../SID/bitfade/,test1frq0.prg,interactive,0
 ../SID/bitfade/,test1osc3.prg,interactive,0
@@ -810,6 +812,7 @@
 ../SID/paddles/,paddle.prg,interactive,0
 ../SID/ringmod/,ringmodtest.prg,exitcode,100000000
 ../SID/stereo/,stereo.prg,interactive,0
+../SID/sidcheck/,sidcheck.prg,interactive,0
 #TODO:
 #../SID/waveforms/,waveforms-6581.prg
 #../SID/waveforms/,waveforms-8580.prg
