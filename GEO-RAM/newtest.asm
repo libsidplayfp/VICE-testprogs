@@ -176,7 +176,9 @@ restore:          inx
                   inx
                   bne -
                   beq main
-end:              rts
+
+end:              
+                  rts
 
 
 
@@ -244,6 +246,7 @@ main:
 ; keyboard
 ;------------------------------------------------------------
 
+!if TESTBENCH = 0 {
 
 keys              jsr get
                   cmp #$20                   ; spc-key
@@ -251,6 +254,7 @@ keys              jsr get
                   cmp #$58                   ; x for exit
                   beq end
                   bne keys
+} 
 
 ;------------------------------------------------------------
 ; check 16k-page
@@ -308,7 +312,10 @@ check:            inc geo_hi
                   inx
                   cpx #$28
                   bne -
-
+!if TESTBENCH = 1 {
+                  lda #$00  ; success
+                  sta $d7ff
+}
                   jmp end
 
 ;------------------------------------------------------------
@@ -413,6 +420,10 @@ error:            lda #$02
                   cpx #$10
                   bne -
 
+!if TESTBENCH = 1 {
+                  lda #$ff  ; failure
+                  sta $d7ff
+}
                   ldx #$06                   ; line
                   ldy #$01                   ; column
                   clc
