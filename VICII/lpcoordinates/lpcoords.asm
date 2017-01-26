@@ -25,6 +25,7 @@ start:
 
     * = $0980
 sprite:
+          ;12345678  90123456  78901234
     !byte %00000000,%00111110,%00000000
     !byte %00000000,%00001000,%00000000
     !byte %00000000,%00001000,%00000000
@@ -137,16 +138,28 @@ loop:
 
     lda $d013
     sta adc1val
+    
     ldx #<($0400+(40*4)+1)
     ldy #>($0400+(40*4)+1)
     jsr printhex
 
-    lda $d014 ; adc 2
+    lda $d014
     sta adc2val
+    
     ldx #<($0400+(40*4)+7)
     ldy #>($0400+(40*4)+7)
     jsr printhex
 
+    lda $d419 ; adc 1
+    ldx #<($0400+(40*7)+1)
+    ldy #>($0400+(40*7)+1)
+    jsr printhex
+    
+    lda $d41a ; adc 2
+    ldx #<($0400+(40*7)+7)
+    ldy #>($0400+(40*7)+7)
+    jsr printhex
+    
     ; setup CIA1 to read joystick #1, port A -> port b
     lda #%11111111
     sta $dc02 ; port a ddr (all output)
@@ -173,7 +186,7 @@ loop:
     ; 24 + xoffs
     lda adc1val
     sec
-    sbc #(24 + 12) / 2
+    sbc #24 + 16
     asl
     sta $d000
     adc #0
@@ -221,8 +234,8 @@ screen:
     !scr " xpos  ypos   port1                     " ;2
     !scr " 00    00     ........                  " ;3
     !scr "                 43210                  " ;4
-    !scr "                                        " ;5
-    !scr "                                        "
+    !scr " adc1  adc2                             " ;5
+    !scr " 00    00                               "
     !scr "                                        "
     !scr " 4  joy fire                mouse left  "
     !scr " 3  joy right paddle 2 fire             "
