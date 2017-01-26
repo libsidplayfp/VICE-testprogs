@@ -61,6 +61,10 @@ function x64sc_get_options
                 exitoptions="-reu -reusize 512"
                 reu_enabled=1
             ;;
+        "geo256k")
+                exitoptions="-georam -georamsize 256"
+                georam_enabled=1
+            ;;
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then

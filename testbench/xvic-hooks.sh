@@ -52,6 +52,10 @@ function xvic_get_options
         "vic20-8k")
                 exitoptions="-memory 8k"
             ;;
+        "geo256k")
+                exitoptions="-georam -georamsize 256"
+                georam_enabled=1
+            ;;
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then

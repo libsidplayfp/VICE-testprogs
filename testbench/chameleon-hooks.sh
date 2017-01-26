@@ -142,7 +142,13 @@ function chameleon_make_helper_options
     then
         echo -ne "\x01" >> $RDUMMY
     else
-        echo -ne "\x00" >> $RDUMMY
+        # set GEORAM type
+        if [ $georam_enabled = 1 ]
+        then
+            echo -ne "\x02" >> $RDUMMY
+        else
+            echo -ne "\x00" >> $RDUMMY
+        fi
     fi
     # set SID type
     if [ $new_sid_enabled = 1 ]
@@ -193,6 +199,9 @@ function chameleon_get_options
             ;;
         "reu512k")
                 reu_enabled=1
+            ;;
+        "geo256k")
+                georam_enabled=1
             ;;
         *)
                 exitoptions=""

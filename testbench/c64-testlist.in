@@ -887,9 +887,11 @@
 ################################################################################
 # GEO-RAM
 ################################################################################
-../GEO-RAM/,georam64.prg,interactive,0,geo256k
+../GEO-RAM/,georam64.prg,exitcode,80000000,geo256k
 ../GEO-RAM/,georamtest.prg,interactive,0,geo256k
+../GEO-RAM/,georamtest-auto.prg,exitcode,80000000,geo256k
 ../GEO-RAM/,newtest.prg,interactive,0,geo256k
+../GEO-RAM/,newtest-auto.prg,exitcode,80000000,geo256k
 ################################################################################
 # 1541 Drive
 # ../drive runtime 8 minutes and 20 seconds (x64sc)

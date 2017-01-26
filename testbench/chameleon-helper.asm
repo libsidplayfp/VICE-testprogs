@@ -1,6 +1,6 @@
 ; $0400 if != $20 then configure a cartridge
 ; $0401 CRT ID
-; $0402 if != $00 then REU is used
+; $0402 if = 0 no ram expansion, = 1 REU (512k), = 2 GEORAM (256k)
 ; $0403 0=6581 1=8580 SID
 
         *=$0801
@@ -68,9 +68,14 @@ noef:
 
         ldx #0
         lda $0402
-        beq noreu
+        beq noramexp
         ldx #$82        ; reu on, 512k
-noreu:
+        lda $0402
+        cmp #$01
+        beq isreu
+        ldx #$50        ; georam on, 512k
+isreu:
+noramexp:
         stx $d0f5       ; dis/enable REU
 
         lda #$00
