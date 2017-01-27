@@ -6,11 +6,8 @@
  1480 print"    0.985MHz (PAL)
  1490 print"{down}  (n/p) ?
  1495 fq=0.98525
- 1500 geta$:fq=1.02273::ifa$="n"then1520:rem noauto
- 1510 fq=0.98525:ifa$<>"p"then1500:rem noauto
  1520 dv=100/7/fq:rem divider
  1525 dn=8
- 1530 input"{down}{down} 1541/1571-devicenumber";dn:rem noauto
  
  1540 open5,dn,15
  1550 print#5,"u0>m0":rem 1571->1541-mode (1mhz)
@@ -110,7 +107,6 @@
  2510 print" "int(rd/fq*100+0.5)/100"microseconds
  2520 poke56576,31:poke56576,15:poke56576,7
  2530 print"{down}{down}{up} <Return>";
- 2531 input a$: rem noauto
  
  2540 nextc6
  2550 nextfl:rem-------------------------
@@ -134,7 +130,6 @@
  2710 print"{down} Edge = what the C64/floppy makes
  2720 print"        (not what it reacts to)
  2730 print"{down}{down}{down}{down}{up} <Return>";
- 2731 input a$: rem noauto
   
  2740 print"{clr}results (2/2)
  2741 print"{down}    C64=fal  C64=ris{rght} C64=fal  C64=ris
