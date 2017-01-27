@@ -902,7 +902,7 @@
 ../drive/defaults/,defaults.prg,exitcode,1000000000,mountd64:defaults.d64
 ../drive/diskchange/,pollwp.prg,interactive,0
 ../drive/diskid/,diskid1.prg,exitcode,1000000000,mountd64:diskid.d64
-../drive/iecdelay/,iec-bus-delay.prg,interactive,0
+../drive/iecdelay/,iec-bus-delay-auto.prg,exitcode,1000000000
 ../drive/interrupts/,timera.prg,exitcode,1000000000
 ../drive/interrupts/,watchdog,interactive,0
 ../drive/pwm/,pwm.prg,interactive,0
