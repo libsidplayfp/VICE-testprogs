@@ -843,7 +843,7 @@
 ../C64/carts/pagefox,,exitcode,100000000,mountcrt:writeram-8000.crt
 ../C64/carts/pagefox,,exitcode,100000000,mountcrt:writeram-a000.crt
 ../C64/carts/pagefox,,exitcode,100000000,mountcrt:godot.crt
-../C64/carts/ef-test/,ef_test.crt,interactive,0
+../C64/carts/ef-test/,,exitcode,100000000,mountcrt:ef_test.crt
 ../C64/carts/rr-freeze/,rr-freeze.crt,interactive,0
 ../C64/carts/nordicpower/,nptest.crt,interactive,0
 ../C64/carts/nordicpower/,rrtest.crt,interactive,0
