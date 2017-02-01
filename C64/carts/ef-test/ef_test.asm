@@ -10,12 +10,19 @@
 
 bank	=	$80
 mode	=	$81
+colorL	=	$FA
+colorH	=	$FB
 stringL	=	$FC
 stringH	=	$FD
 cursorL	=	$FE
 cursorH	=	$FF
 testloc = $0200 ; Location of print and test routines copied to RAM as ROM will be switched off
+charactersloc = $0800
+testloc2 = $0c00
 
+refdataloc = $0f00
+
+;-------------------------------------------------------------------------------
 romid:
 	.byte	$AA, $55, $AA, $23
 
@@ -121,6 +128,83 @@ characters:
 	.byte	$FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF    ; $7F  127  Solid block
 	.byte	$00, $00, $00, $00, $00, $00, $00, $00
 
+refdata:
+    .byte <(refdataloc+$20+(0*8*4))
+    .byte <(refdataloc+$20+(1*8*4))
+    .byte <(refdataloc+$20+(2*8*4))
+    .byte <(refdataloc+$20+(3*8*4))
+
+    .byte <(refdataloc+$20+(4*8*4))
+    .byte <(refdataloc+$20+(5*8*4))
+    .byte <(refdataloc+$20+(6*8*4))
+    .byte <(refdataloc+$20+(7*8*4))
+
+    .byte 0
+    .byte 0
+    .byte 0
+    .byte 0
+
+    .byte 0
+    .byte 0
+    .byte 0
+    .byte 0
+
+
+    .byte >(refdataloc+$20+(0*8*4))
+    .byte >(refdataloc+$20+(1*8*4))
+    .byte >(refdataloc+$20+(2*8*4))
+    .byte >(refdataloc+$20+(3*8*4))
+
+    .byte >(refdataloc+$20+(4*8*4))
+    .byte >(refdataloc+$20+(5*8*4))
+    .byte >(refdataloc+$20+(6*8*4))
+    .byte >(refdataloc+$20+(7*8*4))
+
+    .byte 0
+    .byte 0
+    .byte 0
+    .byte 0
+
+    .byte 0
+    .byte 0
+    .byte 0
+    .byte 0
+
+    .byte "AA000000"
+    .byte "AA010101"
+    .byte "AA030303"
+    .byte "AA050505"
+
+    .byte "AA55AA23"
+    .byte "AA020202"
+    .byte "AA040404"
+    .byte "AA060606"
+
+    .byte "AA55AA23" 
+    .byte "AA020202" 
+    .byte "AA040404" 
+    .byte "AA060606" 
+
+    .byte "8556200F" 
+    .byte "8556200F" 
+    .byte "8556200F" 
+    .byte "8556200F" 
+    
+    .byte "01020304" 
+    .byte "01020304" 
+    .byte "01020304" 
+    .byte "01020304" 
+    
+    .byte "94E37BE3" 
+    .byte "94E37BE3" 
+    .byte "94E37BE3" 
+    .byte "94E37BE3" 
+
+    .byte "8556200F" 
+    .byte "8556200F" 
+    .byte "8556200F" 
+    .byte "8556200F" 
+    
 	;        ----|--10|----|--20|----|--30|----|--40|
 welcomeString:
 	.byte	"EasyFlash banking test by Peter Wendrich"
@@ -129,10 +213,12 @@ spaceString:
 	.byte	"Hold spacebar for modes 4-7.", $00
 	
 testroutines:
+
 	.org  testloc
 hextbl:
 	.byte	"0123456789ABCDEF"
 
+;-------------------------------------------------------------------------------
 printnibble:
 	and	#$0f
 	tax
@@ -234,20 +320,61 @@ runBankTest:
 	inc bank
 	jmp	singleTest
 
-runTest:
-	lda	#80
-	sta cursorL
-	lda	#$04
-	sta cursorH
+startTest:
+    ; write tag to C64 RAM
+    lda #$04    ; mode
+    sta $de02
+    lda #$00    ; bank
+    sta $de00
+    ldx #1
+    stx $8000
+    ldx #2
+    stx $8001
+    ldx #3
+    stx $8002
+    ldx #4
+    stx $8003
 
+    ldy #5
+    sty $d020
+
+	ldx	#$04
+    jsr DorunBankTests
+    jsr compareresults
+	ldx	#$00
+    jsr DorunBankTests
+    jsr compareresults
+
+    lda $d020
+    and #$0f
+
+    ldy #0      ; success
+    cmp #5
+    beq nofail
+    ldy #$ff    ; failure
+nofail:
+
+    sty $d7ff
+
+runTest:
 	; Check spacebar and switch to mode 4-7
 	ldx	#$00
 	lda	$DC01
 	and	#$10
 	bne noSpacebar
 	ldx	#$04
-
 noSpacebar:
+
+    jsr DorunBankTests
+    jsr compareresults
+    jmp runTest
+
+DorunBankTests:
+	lda	#<($0400+(2*40))
+	sta cursorL
+	lda	#>($0400+(2*40))
+	sta cursorH
+
 	stx	mode
 	jsr runBankTest
 
@@ -258,16 +385,246 @@ noSpacebar:
 	jsr runBankTest
 
 	inc mode
-	jsr runBankTest
+	jmp runBankTest
+    
+;-------------------------------------------------------------------------------
+    .reloc
+testroutines2:
+    .org testloc2
+compareresults:
+    lda mode
+    cmp #7
+    beq check2
 
-;	jsr	singleTest
-;	jsr	singleTest
-
-endcart:
-	jmp runTest
+	lda	#<($0400+(2*40)+10)
+	sta cursorL
+	lda	#>($0400+(2*40)+10)
+	sta cursorH
 	
+	ldx #0
+	jsr comparepattern
+	ldx #0
+	jsr comparepattern
+	ldx #0
+	jsr comparepattern
+	ldx #0
+	jsr comparepattern
 
+	lda	#<($0400+(2*40)+20)
+	sta cursorL
+	lda	#>($0400+(2*40)+20)
+	sta cursorH
+	
+	ldx #0
+    jsr compareio
+	ldx #1
+    jsr compareio
+	ldx #2
+;    jsr compareio
+	jsr comparepattern
+	ldx #2
+	jsr comparepattern
 
+	lda	#<($0400+(2*40)+30)
+	sta cursorL
+	lda	#>($0400+(2*40)+30)
+	sta cursorH
+	
+	ldx #1
+	jsr comparepattern
+	ldx #1
+	jsr comparepattern
+	ldx #3
+	jsr comparepattern
+	ldx #3
+	jsr comparepattern
+
+	rts
+	
+check2:	
+	lda	#<($0400+(2*40)+10)
+	sta cursorL
+	lda	#>($0400+(2*40)+10)
+	sta cursorH
+	
+	ldx #4
+	jsr comparepattern
+	ldx #0
+	jsr comparepattern
+	ldx #0
+	jsr comparepattern
+	ldx #0
+	jsr comparepattern
+
+	lda	#<($0400+(2*40)+20)
+	sta cursorL
+	lda	#>($0400+(2*40)+20)
+	sta cursorH
+	
+	ldx #5
+	jsr comparepattern
+	ldx #5
+    jsr compareio
+	ldx #5
+	jsr comparepattern
+	ldx #2
+	jsr comparepattern
+	
+	lda	#<($0400+(2*40)+30)
+	sta cursorL
+	lda	#>($0400+(2*40)+30)
+	sta cursorH
+	
+	ldx #6
+	jsr comparepattern
+	ldx #1
+	jsr comparepattern
+	ldx #3
+	jsr comparepattern
+	ldx #3
+	jsr comparepattern
+	
+	rts
+	
+compareio:
+	stx mode
+	stx	$DE02
+
+    cmp $d011
+    bpl *-3
+    cmp $d011
+    bmi *-3
+
+    lda #$30
+@lp:
+    cmp $d012
+    bne @lp
+
+    ldx #0
+@lp2:
+    txa
+    pha
+	sta	bank
+	sta	$DE00
+    
+    ldy #0
+@lp1:
+    jsr _compareio
+    iny
+    cpy #8
+    bne @lp1
+
+    jsr _compareadv
+    
+    pla
+    tax
+    inx
+    cpx #4
+    bne @lp2
+    rts
+
+comparepattern:
+
+    lda refdataloc+$00,x
+    sta stringL
+    lda refdataloc+$10,x
+    sta stringH
+
+    ldx #4
+@lp2:
+    txa
+    pha
+    
+    ldy #0
+@lp1:
+    jsr _compare
+    iny
+    cpy #8
+    bne @lp1
+
+    jsr _compareadv
+    
+    pla
+    tax
+    dex
+    bne @lp2
+    
+    rts
+	
+_compare:	
+	lda cursorL
+	sta colorL
+	lda cursorH
+	clc
+	adc #$d4
+	sta colorH
+	
+    lda #5
+    sta (colorL),y
+    lda (stringL),y
+    cmp (cursorL),y
+    beq @notfail1
+    lda #10
+    sta (colorL),y
+    sta $d020
+@notfail1:
+    rts
+	
+_compareio:	
+	lda cursorL
+	sta colorL
+	lda cursorH
+	clc
+	adc #$d4
+	sta colorH
+	
+    lda #5
+    sta (colorL),y
+
+    jsr _compareiobyte
+    bcc @notfail1
+
+    lda #10
+    sta (colorL),y
+    sta $d020
+
+@notfail1:
+    rts
+
+_compareiobyte:
+
+    lda $a000,y
+    ldx #0
+@lp1:
+    cmp $a000,y
+    bne @notfail1
+    inx
+    bne @lp1
+    sec
+    rts
+
+@notfail1:
+    clc
+    rts
+    
+_compareadv:
+    lda stringL
+    clc
+    adc #8
+    sta stringL
+    bcc @skp1
+    inc stringH
+@skp1:
+    lda cursorL
+    clc
+    adc #40
+    sta cursorL
+    bcc @skp2
+    inc cursorH
+@skp2:
+    rts
+	
+	
 	.reloc
 copyTestRoutines:
 	; Copy print routines from ROM into RAM.
@@ -277,6 +634,12 @@ copyTest1:
 	sta testloc,x
 	lda	testroutines + $100,x
 	sta testloc + $100,x
+	lda	testroutines2,x
+	sta testloc2,x
+	lda	testroutines2+$100,x
+	sta testloc2+$100,x
+	lda	testroutines2+$200,x
+	sta testloc2+$200,x
 	inx
 	bne	copyTest1
 	rts
@@ -304,12 +667,21 @@ initVIC:
 	ldx	#$00
 initVIC1:
 	lda	characters,x
-	sta	$0900,x
+	sta	charactersloc+$100,x
 	lda	characters + $0100,x
-	sta	$0A00,x
+	sta	charactersloc+$200,x
 	lda	characters + $0200,x
-	sta	$0B00,x
+	sta	charactersloc+$300,x
 
+	lda	refdata + $000,x
+	sta refdataloc + $000,x
+	lda	refdata + $100,x
+	sta refdataloc + $100,x
+	lda	refdata + $200,x
+	sta refdataloc + $200,x
+	lda	refdata + $300,x
+	sta refdataloc + $300,x
+	
 	; Fill screen with space ($20) characters
 	lda	#$20
 	sta	$0400,x
@@ -387,7 +759,7 @@ freezeReset:
 	jsr initCIA
 	jsr spacemessage
 	jsr welcome
-	jmp	runTest
+	jmp	startTest
 
 
 	
