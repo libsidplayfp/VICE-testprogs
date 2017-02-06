@@ -88,7 +88,9 @@ xvic-testlist.txt: vic20-testlist.in
 
 cham20-testlist.txt: vic20-testlist.in
 	echo "# this is a generated file, do not edit." >  cham20-testlist.txt
-	cat  vic20-testlist.in >> cham20-testlist.txt
+	cat  vic20-testlist.in \
+		| grep -v ",geo256k" \
+		>> cham20-testlist.txt
 
 xplus4-testlist.txt: plus4-testlist.in
 	echo "# this is a generated file, do not edit." >  xplus4-testlist.txt
