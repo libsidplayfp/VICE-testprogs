@@ -45,12 +45,52 @@ start:
 
                 jsr comparescreen
 lp
+            jsr showreg
+            lda #0
+            sta $9120
+            lda $9121
+            cmp #$ff
+            beq lp
+
+            jsr swapscrn
+
+-           lda $9121
+            cmp #$ff
+            bne - 
+            
+            jsr swapscrn
+            jmp lp
+
+showreg:
             !for n, charsperline {
                 lda viabase + $0a     ; SR
                 sta screenmem+(charsperline*19)+n-1
             }
-                jmp lp
-
+            rts
+swapscrn:
+            ldx #0
+-
+            lda screenmem,x
+            pha
+            lda refdata,x
+            sta screenmem,x
+            pla
+            sta refdata,x
+            inx
+            bne -
+            ldx #0
+-
+            lda screenmem+$100,x
+            pha
+            lda refdata+$100,x
+            sta screenmem+$100,x
+            pla
+            sta refdata+$100,x
+            inx
+            cpx #$84
+            bne -
+            rts
+                
 dotest:
             ; clear all registers twice to make sure they are all 0
             jsr resetvia
