@@ -140,7 +140,7 @@ function x64sc_run_screenshot
         then
             if [ $exitcode -ne 255 ]
             then
-                echo -ne "\nerror: call to $X64 failed.\n"
+                echo -ne "\nerror: call to $X64SC failed.\n"
                 exit -1
             fi
         fi
