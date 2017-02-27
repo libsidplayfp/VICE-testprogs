@@ -17,6 +17,7 @@ all: prereq
 	echo "testvsid"
 	echo "testchameleon"
 	echo "testcham20"
+	echo "testmicro64"
 
 ################################################################################
 prereq: selftest testlist cmpscreens prereq-chameleon
@@ -35,6 +36,7 @@ testlist: \
 	x64-testlist.txt \
 	x64sc-testlist.txt \
 	chameleon-testlist.txt \
+	micro64-testlist.txt \
 	x128-testlist.txt \
 	xscpu64-testlist.txt \
 	x64dtv-testlist.txt \
@@ -57,6 +59,13 @@ x64sc-testlist.txt: c64-testlist.in
 chameleon-testlist.txt: c64-testlist.in
 	echo "# this is a generated file, do not edit." >  chameleon-testlist.txt
 	cat  c64-testlist.in >> chameleon-testlist.txt
+
+micro64-testlist.txt: c64-testlist.in
+	echo "# this is a generated file, do not edit." >  micro64-testlist.txt
+	cat  c64-testlist.in \
+		| grep -v ",vicii-ntsc" \
+		| grep -v ",vicii-ntscold" \
+		>> micro64-testlist.txt
 
 x128-testlist.txt: c128-testlist.in
 	echo "# this is a generated file, do not edit." >  x128-testlist.txt

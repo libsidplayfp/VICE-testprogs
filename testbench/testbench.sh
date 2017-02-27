@@ -35,6 +35,7 @@ source "./xcbm5x0-hooks.sh"
 source "./xplus4-hooks.sh"
 source "./xvic-hooks.sh"
 source "./vsid-hooks.sh"
+source "./micro64-hooks.sh"
 
 ###############################################################################
 
@@ -49,6 +50,9 @@ function checktarget
                 target="$1"
             ;;
         chameleon)
+                target="$1"
+            ;;
+        micro64)
                 target="$1"
             ;;
     # C128 targets
