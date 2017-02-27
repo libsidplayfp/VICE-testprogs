@@ -263,7 +263,7 @@ int main(int argc, char *argv[])
     if (verbose) printf("cmp size: %dx%d\n", xsize, ysize);
 
     // find out what palette the first picture uses
-    palette1 = 0;
+    palette1 = -1;
     for (i = 0; i < numpalettes; i++) {
         if (picusespalette(data1, bpp1, xsize1, ysize1, i)) {
             palette1 = i;
@@ -271,10 +271,11 @@ int main(int argc, char *argv[])
             break;
         }
     }
+    if (palette1 == -1) printf("error: palette 1 not found\n");
 //    if (verbose) printf("using palette 1:%d\n", palette1);
     
     // find out what palette the second picture uses
-    palette2 = 0;
+    palette2 = -1;
     for (i = 0; i < numpalettes; i++) {
         if (picusespalette(data2, bpp2, xsize2, ysize2, i)) {
             palette2 = i;
@@ -282,6 +283,12 @@ int main(int argc, char *argv[])
             break;
         }
     }
+    if (palette2 == -1) printf("error: palette 2 not found\n");
+    
+    if ((palette1 == -1) || (palette2 == -1)) {
+        return 0xff;
+    }
+
 //    if (verbose) printf("using palette 2:%d\n", palette2);
     // if the images use different palettes, alter the second picture to use the same palette as the first
     if (palette1 != palette2) {
