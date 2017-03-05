@@ -1,16 +1,11 @@
 
 #MICRO64="$VICEDIR"/micro64
 MICRO64=micro64
-#MICRO64OPTS+=" -default"
-#MICRO64OPTS+=" -model c64c"
-#MICRO64OPTS+=" -model c64 -ntsc "
-#MICRO64OPTS+=" -VICIIfilter 0"
-#MICRO64OPTS+=" -VICIIextpal"
-#MICRO64OPTS+=" -VICIIpalette pepto-pal.vpl"
+# FIXME: set default config, old c64, pepto palette
 MICRO64OPTS+=" -PAL"
 MICRO64OPTS+=" +VICSINGLEPIXELCLOCK"
 MICRO64OPTS+=" +WARP"
-MICRO64OPTS+=" +DEBUGCART +AUTOSTART"
+MICRO64OPTS+=" +DEBUGCART +AUTOSTART +FASTAUTOSTART"
 #MICRO64OPTS+=" -raminitstartvalue 255 -raminitvalueinvert 4"
 
 # extra options for the different ways tests can be run
@@ -36,15 +31,17 @@ function micro64_get_options
         "default")
                 exitoptions=""
             ;;
+        # FIXME: the returned options must be the same as for VICE to make the
+        #        selective test-runs work
         "vicii-pal")
                 exitoptions=""
             ;;
-        "vicii-ntsc")
-                exitoptions=""
-            ;;
-        "vicii-ntscold")
-                exitoptions=""
-            ;;
+#        "vicii-ntsc")
+#                exitoptions=""
+#            ;;
+#        "vicii-ntscold")
+#                exitoptions=""
+#            ;;
         "cia-old")
                 exitoptions="-CIA6526"
             ;;
@@ -68,15 +65,15 @@ function micro64_get_options
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then
-                    exitoptions="-8 $2/${1:9}"
+                    exitoptions="+mount1541d8=$2/${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
                 if [ "${1:0:9}" == "mountg64:" ]; then
-                    exitoptions="-8 $2/${1:9}"
+                    exitoptions="+mount1541d8=$2/${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
                 if [ "${1:0:9}" == "mountcrt:" ]; then
-                    exitoptions="-cartcrt $2/${1:9}"
+                    exitoptions="+mountcrt=$2/${1:9}"
                     echo -ne "(cartridge:${1:9}) "
                 fi
             ;;
@@ -90,21 +87,23 @@ function micro64_get_cmdline_options
 #    echo micro64_get_cmdline_options "$1"
     exitoptions=""
     case "$1" in
+        # FIXME: the returned options must be the same as for VICE to make the
+        #        selective test-runs work
         "PAL")
                 exitoptions=""
             ;;
-        "NTSC")
-                exitoptions=""
-            ;;
-        "NTSCOLD")
-                exitoptions=""
-            ;;
+#        "NTSC")
+#                exitoptions=""
+#            ;;
+#        "NTSCOLD")
+#                exitoptions=""
+#            ;;
         "8565") # "new" PAL
                 exitoptions="-VIC8565"
             ;;
-        "8562") # "new" NTSC
-                exitoptions=""
-            ;;
+#        "8562") # "new" NTSC
+#                exitoptions=""
+#            ;;
         "6526") # "old" CIA
                 exitoptions="-CIA6526"
             ;;
