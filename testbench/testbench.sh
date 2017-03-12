@@ -36,6 +36,7 @@ source "./xplus4-hooks.sh"
 source "./xvic-hooks.sh"
 source "./vsid-hooks.sh"
 source "./micro64-hooks.sh"
+source "./emu64-hooks.sh"
 
 ###############################################################################
 
@@ -53,6 +54,9 @@ function checktarget
                 target="$1"
             ;;
         micro64)
+                target="$1"
+            ;;
+        emu64)
                 target="$1"
             ;;
     # C128 targets
@@ -140,7 +144,7 @@ function getscreenshotname
 function gettestsfortarget
 {
 #    echo "reading list of tests for" "$1".
-# readerror does only work on bash4 (not in mingw)
+# readarray does only work on bash4 (not in mingw)
 #    readarray -t testlist < "$1"-testlist.txt
     IFS=$'\n' read -d '' -r -a testlist < "$1"-testlist.txt
 }
@@ -387,7 +391,8 @@ function showhelp
 {
     echo $NAME" - run test programs."
     echo "usage: "$NAME" [target] <filter> <options>"
-    echo "  targets: x64, x64sc, x128, xscpu64, x64dtv, xpet, xcbm2, xcbm5x0, xvic, xplus4, vsid, chameleon, cham20"
+    echo "  targets: x64, x64sc, x128, xscpu64, x64dtv, xpet, xcbm2, xcbm5x0, xvic, xplus4, vsid,"
+    echo "           chameleon, cham20, micro64, emu64"
     echo "  <filter> is a substring of the path of tests to restrict to"
     echo "  --help       show this help"
     echo "  --verbose    be more verbose"
@@ -398,10 +403,12 @@ function showhelp
     echo "  --cianew     run tests on 'new' CIA, skip tests that do not work on 'old' CIA"
     echo "  --6581       run tests on 6581 (old SID), skip tests that do not work on 8580 (new SID)"
     echo "  --8580       run tests on 8580 (new SID), skip tests that do not work on 6581 (old SID)"
-    echo "  --8562       target VICII type is 8562 (grey dot)"
-    echo "  --8565       target VICII type is 8565 (grey dot)"
-    echo "  --8565early  target VICII type is 8565 (new color instead of grey dot)"
-    echo "  --8565late   target VICII type is 8565 (old color instead of grey dot)"
+    echo "  --6569       target VICII type is 6569 (PAL)"
+    echo "  --6567       target VICII type is 6567 (NTSC)"
+    echo "  --8562       target VICII type is 8562 (NTSC, grey dot)"
+    echo "  --8565       target VICII type is 8565 (PAL, grey dot)"
+    echo "  --8565early  target VICII type is 8565 (PAL, new color instead of grey dot)"
+    echo "  --8565late   target VICII type is 8565 (PAL, old color instead of grey dot)"
     echo "  --8k         skip tests that do not work with 8k RAM expansion"
 }
 
@@ -446,6 +453,9 @@ do
         --cianew) # "new" CIA
                 ciatype="6526A"
             ;;
+        --6569) # PAL VICII
+                videosubtype="6569"
+            ;;
         --8565) # "new" PAL VICII (grey dot)
                 videosubtype="8565"
             ;;
@@ -454,6 +464,9 @@ do
             ;;
         --8565late) # "new" PAL VICII (no grey dot, old color instead)
                 videosubtype="8565late"
+            ;;
+        --6567) # NTSC VICII
+                videosubtype="6567"
             ;;
         --8562) # "new" NTSC VICII (grey dot)
                 videosubtype="8562"

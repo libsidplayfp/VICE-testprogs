@@ -1,3 +1,4 @@
+# this is a generated file, do not edit.
 ################################################################################
 # C64 related tests
 # total runtime (chameleon): 341 minutes and 14 seconds
@@ -306,27 +307,7 @@
 ../general/Lorenz-2.15/src/,cia2ta.prg,exitcode,100000000,cia-old
 ../general/Lorenz-2.15/src/,cia2tb.prg,exitcode,100000000,cia-old
 # Lorenz-Suite Disk3 (new CIA):
-../general/Lorenz-2.15/src/,irqnew.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,nminew.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,cia1tb123.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,cia2tb123.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,cia1pb6.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,cia1pb7.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,cia2pb6.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,cia2pb7.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,cia1tabnew.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,loadth.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,cnto2.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,icr01new.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,imrnew.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,flipos.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,oneshot.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,cntdef.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,cia1tanew.prg,exitcode,200000000,cia-new
-../general/Lorenz-2.15/src/,cia1tbnew.prg,exitcode,100000000,cia-new
 #FIXME: these two dont work!
-../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,100000000,cia-new
-../general/Lorenz-2.15/src/,cia2tbnew.prg,exitcode,100000000,cia-new
 ################################################################################
 ../general/ram0001/,quicktest.prg,interactive,0
 ../general/ram0001/,test1.prg,exitcode,10000000
@@ -408,13 +389,9 @@
 #
 # ../interrupts/ runtime 89 minutes and 27 seconds (chameleon)
 ################################################################################
-../interrupts/cia-int/,cia-int-irq-new.prg,exitcode,100000000,cia-new
 ../interrupts/cia-int/,cia-int-irq.prg,exitcode,100000000,cia-old
-../interrupts/cia-int/,cia-int-nmi-new.prg,exitcode,100000000,cia-new
 ../interrupts/cia-int/,cia-int-nmi.prg,exitcode,100000000,cia-old
-../interrupts/irq-ackn-bug/,cia1new.prg,exitcode,100000000,cia-new
 ../interrupts/irq-ackn-bug/,cia1.prg,exitcode,100000000,cia-old
-../interrupts/irq-ackn-bug/,cia2new.prg,exitcode,100000000,cia-new
 ../interrupts/irq-ackn-bug/,cia2.prg,exitcode,100000000,cia-old
 #FIXME: fix tests for NTSC/NTSCOLD
 ../interrupts/irq-ackn-bug/,irq-ackn_after_cli2.prg,interactive,0,vicii-pal
@@ -439,7 +416,6 @@
 ../interrupts/irqdma/,test7b.prg,exitcode,1000000000,vicii-pal
 ../interrupts/irqdma/,test7.prg,exitcode,1000000000,vicii-pal
 ../interrupts/irqdummy/,irqdummy.prg,exitcode,10000000
-../interrupts/irqnmi/,irqnmi-new.prg,exitcode,100000000,cia-new
 ../interrupts/irqnmi/,irqnmi-old.prg,exitcode,100000000,cia-old
 ../interrupts/nmitest/,nmitest.prg,interactive,0
 ../interrupts/nmitest/,nmitest2.prg,interactive,0
@@ -451,13 +427,8 @@
 ################################################################################
 ../CIA/CIA-AcountsB/,cia-b-counts-a.prg,exitcode,100000000,vicii-pal
 ../CIA/CIA-AcountsB/,cmp-b-counts-a-old.prg,exitcode,100000000,cia-old,vicii-pal
-../CIA/CIA-AcountsB/,cmp-b-counts-a-new.prg,exitcode,100000000,cia-new,vicii-pal
 #FIXME: fix the following three tests also for NTSCOLD
-../CIA/CIA-AcountsB/,cia-b-counts-a_ntsc.prg,exitcode,100000000,vicii-ntsc
-../CIA/CIA-AcountsB/,cmp-b-counts-a-old_ntsc.prg,exitcode,100000000,cia-old,vicii-ntsc
-../CIA/CIA-AcountsB/,cmp-b-counts-a-new_ntsc.prg,exitcode,100000000,cia-new,vicii-ntsc
 ../CIA/cia-timer/,cia-timer-oldcias.prg,exitcode,200000000,cia-old
-../CIA/cia-timer/,cia-timer-newcias.prg,exitcode,200000000,cia-new
 ../CIA/ciaports/,ciaports.prg,interactive,0
 ../CIA/ciaports/,ghosting.prg,interactive,0
 ../CIA/ciavarious/,cia1.prg,exitcode,10000000
@@ -476,17 +447,11 @@
 ../CIA/ciavarious/,cia13.prg,exitcode,10000000
 ../CIA/ciavarious/,cia14.prg,exitcode,10000000
 ../CIA/ciavarious/,cia15.prg,exitcode,160000000
-../CIA/ciavarious/,cia3new.prg,exitcode,10000000,cia-new
-../CIA/ciavarious/,cia3anew.prg,exitcode,10000000,cia-new
-../CIA/ciavarious/,cia4new.prg,exitcode,20000000,cia-new
-../CIA/ciavarious/,cia8new.prg,exitcode,10000000,cia-new
 ../CIA/dd0dtest/,dd0dtest.prg,exitcode,100000000
 ../CIA/irqdelay/,irqdelay.prg,interactive,0
 ../CIA/irqdelay/,irqdelay2.prg,interactive,0
 ../CIA/irqdelay/,irqdelay-oneshot.prg,interactive,0
-../CIA/irqdelay/,irqdelay-cia1-4-new.prg,exitcode,10000000,cia-new
 ../CIA/irqdelay/,irqdelay-cia1-4-old.prg,exitcode,10000000,cia-old
-../CIA/irqdelay/,irqdelay-cia1-oneshot-4-new.prg,exitcode,10000000,cia-new
 ../CIA/irqdelay/,irqdelay-cia1-oneshot-4-old.prg,exitcode,10000000,cia-old
 ../CIA/irqdelay/,irqdelay-cia1-oneshot.prg,exitcode,10000000
 ../CIA/irqdelay/,irqdelay-cia1.prg,exitcode,10000000
@@ -498,19 +463,12 @@
 ../CIA/reload0/,reload0b.prg,exitcode,20000000
 ../CIA/shiftregister/,cia-icr-test2-continues.prg,exitcode,10000000
 ../CIA/shiftregister/,cia-icr-test2-oneshot.prg,exitcode,10000000
-../CIA/shiftregister/,cia-icr-test-continues-new.prg,exitcode,10000000,cia-new
 ../CIA/shiftregister/,cia-icr-test-continues-old.prg,exitcode,10000000,cia-old
-../CIA/shiftregister/,cia-icr-test-oneshot-new.prg,exitcode,10000000,cia-new
 ../CIA/shiftregister/,cia-icr-test-oneshot-old.prg,exitcode,10000000,cia-old
-../CIA/shiftregister/,cia-sp-test-continues-new.prg,exitcode,50000000,cia-new
 ../CIA/shiftregister/,cia-sp-test-continues-old.prg,exitcode,50000000,cia-old
-../CIA/shiftregister/,cia-sp-test-oneshot-new.prg,exitcode,50000000,cia-new
 ../CIA/shiftregister/,cia-sp-test-oneshot-old.prg,exitcode,50000000,cia-old
-../CIA/timerbasics/,test_new.prg,exitcode,100000000,cia-new
 ../CIA/timerbasics/,test.prg,exitcode,100000000,cia-old
-../CIA/timerbasics/,timer_new.prg,exitcode,100000000,cia-new
 ../CIA/timerbasics/,timer.prg,exitcode,100000000,cia-old
-../CIA/timerbasics/,timer_test1_new.prg,exitcode,100000000,cia-new
 ../CIA/timerbasics/,timer_test1.prg,exitcode,100000000,cia-old
 ../CIA/tod/,0alarm.prg,exitcode,100000000
 ../CIA/tod/,1alarm.prg,exitcode,100000000
@@ -537,7 +495,6 @@
 ../CIA/tod/,hzsync5.prg,exitcode,100000000
 ../CIA/tod/,powerup.prg,exitcode,100000000
 ../CIA/tod/,read-latch.prg,exitcode,100000000
-../CIA/tod/,stability-ntsc.prg,interactive,0,vicii-ntsc
 ../CIA/tod/,stability.prg,interactive,0,vicii-pal
 ../CIA/tod/,write-stop.prg,exitcode,100000000
 ################################################################################
@@ -554,17 +511,11 @@
 ../VICII/border/,border-mcbm.prg,screenshot,10000000,vicii-pal
 ../VICII/border/,vborder.prg,interactive,0,vicii-pal
 ../VICII/border/,vborder2.prg,interactive,0,vicii-pal
-../VICII/border/,vborder_ntsc.prg,interactive,0,vicii-ntsc
-../VICII/border/,vborder2_ntsc.prg,interactive,0,vicii-ntsc
-../VICII/border/,vborder_ntscold.prg,interactive,0,vicii-ntscold
-../VICII/border/,vborder2_ntscold.prg,interactive,0,vicii-ntscold
 ../VICII/colorram/,test.prg,exitcode,100000000
 ../VICII/colorsplit,colorsplit.prg,screenshot,10000000,vicii-pal
 ../VICII/D011Test/,disable-bad.prg,screenshot,100000000,vicii-pal
 #FIXME: this test is broken on NTSC
-../VICII/D011Test/,disable-bad_ntsc.prg,screenshot,100000000,vicii-ntsc
 #FIXME: check on NTSCOLD
-../VICII/D011Test/,disable-bad_ntscold.prg,screenshot,100000000,vicii-ntscold
 ../VICII/dentest/,den01-48-0.prg,screenshot,10000000,vicii-pal
 ../VICII/dentest/,den01-48-1.prg,screenshot,10000000,vicii-pal
 ../VICII/dentest/,den01-48-2.prg,screenshot,10000000,vicii-pal
@@ -586,54 +537,12 @@
 ../VICII/dentest/,denrsel-s0.prg,screenshot,10000000,vicii-pal
 ../VICII/dentest/,denrsel-s1.prg,screenshot,10000000,vicii-pal
 ../VICII/dentest/,denrsel-s2.prg,screenshot,10000000,vicii-pal
-../VICII/dentest/,den01-48-0_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/dentest/,den01-48-1_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/dentest/,den01-48-2_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/dentest/,den01-49-0_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/dentest/,den01-49-1_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: this test is broken on NTSC
-../VICII/dentest/,den01-49-2_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/dentest/,den10-48-0_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/dentest/,den10-48-1_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/dentest/,den10-48-2_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/dentest/,den10-51-0_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/dentest/,den10-51-1_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/dentest/,den10-51-2_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/dentest/,den10-51-3_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/dentest/,denrsel-0_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: this test is broken on NTSC
-../VICII/dentest/,denrsel-1_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: this test is broken on NTSC
-../VICII/dentest/,denrsel-2_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/dentest/,denrsel-63_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/dentest/,denrsel-s0_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: this test is broken on NTSC
-../VICII/dentest/,denrsel-s1_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: this test is broken on NTSC
-../VICII/dentest/,denrsel-s2_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/dentest/,denrsel55_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: check tests on NTSCOLD
-../VICII/dentest/,den01-48-0_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,den01-48-1_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,den01-48-2_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,den01-49-0_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,den01-49-1_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,den01-49-2_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,den10-48-0_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,den10-48-1_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,den10-48-2_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,den10-51-0_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,den10-51-1_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,den10-51-2_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,den10-51-3_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,denrsel-0_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,denrsel-1_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,denrsel-2_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,denrsel-63_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,denrsel-s0_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,denrsel-s1_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,denrsel-s2_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dentest/,denrsel55_ntscold.prg,screenshot,10000000,vicii-ntscold
 ../VICII/dmadelay/,test1.prg,interactive,0
 ../VICII/dmadelay/,test2.prg,interactive,0
 ../VICII/dmadelay/,test3.prg,interactive,0
@@ -642,9 +551,7 @@
 ../VICII/fldscroll/,fldscroll.prg,interactive,0
 ../VICII/flibug/,blackmail.prg,screenshot,10000000,vicii-pal
 ../VICII/gfxfetch/,gfxfetch.prg,screenshot,10000000,vicii-pal
-../VICII/gfxfetch/,gfxfetch_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: check on NTSCOLD
-../VICII/gfxfetch/,gfxfetch_ntscold.prg,screenshot,10000000,vicii-ntscold
 ../VICII/greydot/,greydot.prg,screenshot,20000000,vicii-pal
 ../VICII/lpcoordinates/,lpcoords.prg,interactive,0
 ../VICII/lplatency/,lplatency.prg,exitcode,10000000,vicii-pal
@@ -653,16 +560,10 @@
 ../VICII/lp-trigger/,test2.prg,exitcode,20000000,vicii-pal
 ../VICII/lp-trigger/,test2new.prg,exitcode,20000000,vicii-pal
 ../VICII/movesplit/,movesplit.prg,interactive,0,vicii-pal
-../VICII/movesplit/,movesplit_ntsc.prg,interactive,0,vicii-ntsc
-../VICII/movesplit/,movesplit_ntscold.prg,interactive,0,vicii-ntscold
 ../VICII/phi1timing/,phi1timing.prg,exitcode,10000000,vicii-pal
-../VICII/phi1timing/,phi1timing_ntsc.prg,exitcode,10000000,vicii-ntsc
-../VICII/phi1timing/,phi1timing_ntscold.prg,exitcode,10000000,vicii-ntscold
 ../VICII/rasterirq/,rasterirq_hold.prg,screenshot,10000000,vicii-pal
 ../VICII/screenpos/,screenpos.prg,screenshot,10000000,vicii-pal
-../VICII/screenpos/,screenpos_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: check tests on NTSCOLD
-../VICII/screenpos/,screenpos_ntscold.prg,screenshot,10000000,vicii-ntscold
 #FIXME: fix test for NTSC, dump reference data
 ../VICII/split-tests/bascan/,bascan.prg,exitcode,100000000,vicii-pal
 ../VICII/split-tests/fetchsplit/,fetchsplit.prg,screenshot,20000000,vicii-pal
@@ -676,8 +577,6 @@
 #../VICII/split-tests/spritescan/,spritescan_drean.prg,exitcode,1000000000,vicii-drean
 ../VICII/vicii_timing/,vicii_reg_timing.prg,screenshot,50000000,vicii-pal
 ../VICII/videomode/,rmwtest.prg,screenshot,10000000,vicii-pal
-../VICII/videomode/,rmwtest_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/videomode/,rmwtest_ntscold.prg,screenshot,10000000,vicii-ntscold
 ../VICII/videomode/,videomode1.prg,screenshot,10000000,vicii-pal
 ../VICII/videomode/,videomode2.prg,screenshot,10000000,vicii-pal
 ../VICII/videomode/,videomode-v.prg,screenshot,10000000,vicii-pal
@@ -686,63 +585,27 @@
 ../VICII/videomode/,videomode-y.prg,screenshot,10000000,vicii-pal
 ../VICII/videomode/,videomode-z.prg,screenshot,10000000,vicii-pal
 #FIXME: VICE output doesnt match my C64
-#../VICII/videomode/,videomode-v_ntsc.prg,screenshot,10000000,vicii-ntsc
-#../VICII/videomode/,videomode-w_ntsc.prg,screenshot,10000000,vicii-ntsc
-#../VICII/videomode/,videomode-x_ntsc.prg,screenshot,10000000,vicii-ntsc
-#../VICII/videomode/,videomode-y_ntsc.prg,screenshot,10000000,vicii-ntsc
-#../VICII/videomode/,videomode-z_ntsc.prg,screenshot,10000000,vicii-ntsc
-#../VICII/videomode/,videomode2_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/videomode/,videomode1_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: check on NTSCOLD
-../VICII/videomode/,videomode1_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/videomode/,videomode2_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/videomode/,videomode-v_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/videomode/,videomode-w_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/videomode/,videomode-x_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/videomode/,videomode-y_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/videomode/,videomode-z_ntscold.prg,screenshot,10000000,vicii-ntscold
 ../VICII/vspbug/,lft-safe-vsp.prg,interactive,0
 ################################################################################
 # Sprites
 # ../VICII/sprite runtime: 5min 12sec (chameleon)
 ################################################################################
 ../VICII/sprite0move/,sprite0move.prg,interactive,0,vicii-pal
-../VICII/sprite0move/,sprite0move.prg_ntsc,interactive,0,vicii-ntsc
-../VICII/sprite0move/,sprite0move.prg_ntscold,interactive,0,vicii-ntscold
 ../VICII/spritebug/,spritebug.prg,interactive,0,vicii-pal
 ../VICII/spritecollisions/,sprite-gfx-collision-cycle.prg,exitcode,10000000,vicii-pal
 ../VICII/spritecollisions/,sprite-sprite-collision-cycle.prg,exitcode,10000000,vicii-pal
 ../VICII/spritecollisions/,sprite-sprite.prg,exitcode,10000000,vicii-pal
 #FIXME: tests are broken on NTSC
-#../VICII/spritecollisions/,sprite-gfx-collision-cycle_ntsc.prg,exitcode,10000000,vicii-ntsc
-#../VICII/spritecollisions/,sprite-sprite-collision-cycle_ntsc.prg,exitcode,10000000,vicii-ntsc
-#../VICII/spritecollisions/,sprite-sprite_ntsc.prg,exitcode,10000000,vicii-ntsc
-#../VICII/spritecollisions/,sprite-gfx-collision-cycle_ntscold.prg,exitcode,10000000,vicii-ntscold
-#../VICII/spritecollisions/,sprite-sprite-collision-cycle_ntscold.prg,exitcode,10000000,vicii-ntscold
-#../VICII/spritecollisions/,sprite-sprite_ntscold.prg,exitcode,10000000,vicii-ntscold
 ../VICII/spritecrunch/,spritecrunch.prg,interactive,0
 ../VICII/spritecrunch/,spritecrunch2.prg,interactive,0
 #FIXME: check on NTSCOLD and make reference screenshots
-../VICII/spritedma/,d017-54_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/spritedma/,d017-57_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/spritedma/,d017-54_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/spritedma/,d017-57_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/spritedma/,d017-54.prg,screenshot,10000000,vicii-pal
 ../VICII/spritedma/,d017-57.prg,screenshot,10000000,vicii-pal
-../VICII/spriteenable/,spriteenable1_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/spriteenable/,spriteenable1_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/spriteenable/,spriteenable1.prg,screenshot,10000000,vicii-pal
-../VICII/spriteenable/,spriteenable2_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/spriteenable/,spriteenable2_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/spriteenable/,spriteenable2.prg,screenshot,10000000,vicii-pal
-../VICII/spriteenable/,spriteenable3_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/spriteenable/,spriteenable3_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/spriteenable/,spriteenable3.prg,screenshot,10000000,vicii-pal
-../VICII/spriteenable/,spriteenable4_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/spriteenable/,spriteenable4_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/spriteenable/,spriteenable4.prg,screenshot,10000000,vicii-pal
-../VICII/spriteenable/,spriteenable5_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/spriteenable/,spriteenable5_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/spriteenable/,spriteenable5.prg,screenshot,10000000,vicii-pal
 ../VICII/spritefetchbug/,test.prg,interactive,0
 #FIXME: seems to fail randomly, hard to reproduce
@@ -768,14 +631,10 @@
 ../VICII/spritesplit/,ss-unexp-exp-hires.prg,screenshot,10000000,vicii-pal
 ../VICII/spritesplit/,ss-unexp-exp-mc.prg,screenshot,10000000,vicii-pal
 ../VICII/spritesplit/,ss-xpos.prg,screenshot,10000000,vicii-pal
-../VICII/spritesteal/,spritesteal_ntscold.prg,exitcode,100000000,vicii-ntscold
-../VICII/spritesteal/,spritesteal_ntsc.prg,exitcode,100000000,vicii-ntsc
 ../VICII/spritesteal/,spritesteal.prg,exitcode,100000000,vicii-pal
 ###(this is not a test)
 #../VICII/spritex/,demusinterruptus-emucheck.prg
 #FIXME: check on NTSCOLD
-../VICII/spritex/,testsuite_ntscold.prg,exitcode,10000000,vicii-ntscold
-../VICII/spritex/,testsuite_ntsc.prg,exitcode,10000000,vicii-ntsc
 ../VICII/spritex/,testsuite.prg,exitcode,10000000,vicii-pal
 #FIXME: port test to NTSC
 ../VICII/spritey/,spritey.prg,exitcode,100000000,vicii-pal
@@ -793,9 +652,7 @@
 ../SID/busvalue/,busvalue.prg,exitcode,100000000
 ../SID/detect/,detect.prg,interactive,0
 ../SID/detect/,detect-1-old.prg,exitcode,100000000,sid-old
-../SID/detect/,detect-1-new.prg,exitcode,100000000,sid-new
 ../SID/detect/,detect-2-old.prg,exitcode,100000000,sid-old
-../SID/detect/,detect-2-new.prg,exitcode,100000000,sid-new
 ../SID/envelope/,testADSRDelayBug.prg,exitcode,100000000
 ../SID/envelope/,testFlip00toFF.prg,exitcode,100000000
 ../SID/envelope/,testFlipFFto00.prg,exitcode,100000000
@@ -804,9 +661,7 @@
 #../SID/noise
 ../SID/noisewriteback/,noisewriteback.prg,interactive,0
 ../SID/noisewriteback/,noise_writeback_test1-old.prg,exitcode,100000000,sid-old
-../SID/noisewriteback/,noise_writeback_test1-new.prg,exitcode,100000000,sid-new
 ../SID/noisewriteback/,noise_writeback_test2-old.prg,exitcode,100000000,sid-old
-../SID/noisewriteback/,noise_writeback_test2-new.prg,exitcode,100000000,sid-new
 ../SID/paddles/,ft3detect.prg,interactive,0
 ../SID/oscinit/,oscinit.prg,exitcode,100000000
 ../SID/paddles/,paddle.prg,interactive,0
@@ -820,10 +675,6 @@
 ../SID/waveforms/,waveforms-20-6581.prg,exitcode,100000000,sid-old
 ../SID/waveforms/,waveforms-40-6581.prg,exitcode,100000000,sid-old
 ../SID/waveforms/,waveforms-80-6581.prg,exitcode,1000000000,sid-old
-../SID/waveforms/,waveforms-10-8580.prg,exitcode,100000000,sid-new
-../SID/waveforms/,waveforms-20-8580.prg,exitcode,100000000,sid-new
-../SID/waveforms/,waveforms-40-8580.prg,exitcode,100000000,sid-new
-../SID/waveforms/,waveforms-80-8580.prg,exitcode,1000000000,sid-new
 ../SID/writedelay/,writedelay.prg,exitcode,100000000
 ################################################################################
 # Cartridges
@@ -839,7 +690,6 @@
 #TODO: do more research and make a proper automatic test
 ../C64/carts/,mmcr-64krom.crt,interactive,0
 ../C64/carts/,,exitcode,100000000,mountcrt:romram.crt
-../C64/carts/,,exitcode,100000000,reu512k,mountcrt:rr-reu.crt
 ../C64/carts/pagefox,,exitcode,100000000,mountcrt:writeram-8000.crt
 ../C64/carts/pagefox,,exitcode,100000000,mountcrt:writeram-a000.crt
 ../C64/carts/pagefox,,exitcode,100000000,mountcrt:godot.crt
@@ -868,34 +718,13 @@
 ################################################################################
 # REU
 ################################################################################
-../REU/colorram/,colorram.prg,exitcode,1000000000,reu512k
 ../REU/colorram/,dmacolortest.prg,interactive,0
-../REU/detectsize/,detectreu.prg,exitcode,10000000,reu512k
-../REU/misc/,bitfill-auto.prg,exitcode,100000000,reu512k
-../REU/misc/,twoblocks-auto.prg,exitcode,100000000,reu512k
-../REU/misc/,twoblocks-ff00-auto.prg,exitcode,100000000,reu512k
-../REU/misc/,wheels.prg,exitcode,100000000,reu512k
 #TODO: split into behaviour- and timing- test
-../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,exitcode,100000000,reu512k
-../REU/reudetect/,reudetect.prg,exitcode,100000000,reu512k
-../REU/reutiming/,reutiming.prg,exitcode,100000000,reu512k
-../REU/reutiming2/,a.prg,screenshot,40000000,reu512k
-../REU/reutiming2/,b.prg,screenshot,20000000,reu512k
 ../REU/spriteba/,spriteba.prg,interactive,0
-../REU/xfertiming/,xfertiming-cmp.prg,screenshot,20000000,reu512k
-../REU/xfertiming/,xfertiming-swap.prg,screenshot,20000000,reu512k
-../REU/xfertiming/,xfertiming-swap2.prg,screenshot,20000000,reu512k
-../REU/xfertiming/,xfertiming-toreu.prg,screenshot,20000000,reu512k
-../REU/xfertiming/,xfertiming-toc64.prg,screenshot,20000000,reu512k
 #TODO: clean up and add all the other reu timing tests....
 ################################################################################
 # GEO-RAM
 ################################################################################
-../GEO-RAM/,georam64.prg,exitcode,80000000,geo256k
-../GEO-RAM/,georamtest.prg,interactive,0,geo256k
-../GEO-RAM/,georamtest-auto.prg,exitcode,80000000,geo256k
-../GEO-RAM/,newtest.prg,interactive,0,geo256k
-../GEO-RAM/,newtest-auto.prg,exitcode,80000000,geo256k
 ################################################################################
 # 1541 Drive
 # ../drive runtime 8 minutes and 20 seconds (x64sc)

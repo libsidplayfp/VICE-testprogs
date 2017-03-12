@@ -141,7 +141,8 @@ get a list of things you can do just run "make".
 you can also run ./testbench.sh manually:
 
 usage: ./testbench.sh [target] <filter> <options>
-  targets: x64, x64sc, x128, xscpu64, xpet, xcbm2, xcbm5x0, xvic, xplus4, chameleon
+  targets: x64, x64sc, x128, xscpu64, xpet, xcbm2, xcbm5x0, xvic, xplus4, 
+           chameleon, micro64, emu64
   <filter> is a substring of the path of tests to restrict to
   --help       show this help
   --verbose    be more verbose

@@ -851,6 +851,10 @@
 ../C64/carts/supergames/,,exitcode,100000000,mountcrt:supergames.crt
 #TODO: make this automatic
 ../C64/carts/tamtest/,tamtest.crt,interactive,0
+../C64/carts/ultimax,ultimax-ef.crt,interactive,0
+../C64/carts/ultimax,ultimax-rr.crt,interactive,0
+../C64/carts/ultimax,ultimax-vic-ef.crt,interactive,0
+../C64/carts/ultimax,ultimax-vic-rr.crt,interactive,0
 ../C64/freezer/ciairq,ciairq1t1.prg,interactive,0
 ../C64/freezer/ciairq,ciairq1t2.prg,interactive,0
 ../C64/freezer/ciairq,ciairq2t1.prg,interactive,0
