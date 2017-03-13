@@ -157,6 +157,13 @@ function chameleon_make_helper_options
     else
         echo -ne "\x00" >> $RDUMMY
     fi
+    # set CIA type
+    if [ $new_cia_enabled = 1 ]
+    then
+        echo -ne "\x02" >> $RDUMMY
+    else
+        echo -ne "\x00" >> $RDUMMY
+    fi
     chacocmd --addr 0x400 --writemem $RDUMMY > /dev/null
 }
 
@@ -185,9 +192,11 @@ function chameleon_get_options
             ;;
         "cia-old")
                 exitoptions="-ciamodel 0"
+                new_cia_enabled=0
             ;;
         "cia-new")
                 exitoptions="-ciamodel 1"
+                new_cia_enabled=1
             ;;
         "sid-old")
                 exitoptions="-sidenginemodel 256"
@@ -252,9 +261,11 @@ function chameleon_get_cmdline_options
             ;;
         "6526") # "old" CIA
                 exitoptions="-ciamodel 0"
+                new_cia_enabled=0
             ;;
         "6526A") # "new" CIA
                 exitoptions="-ciamodel 1"
+                new_cia_enabled=1
             ;;
     esac
 }

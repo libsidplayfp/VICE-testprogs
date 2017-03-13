@@ -2,6 +2,7 @@
 ; $0401 CRT ID
 ; $0402 if = 0 no ram expansion, = 1 REU (512k), = 2 GEORAM (256k)
 ; $0403 0=6581 1=8580 SID
+; $0404 0=6526 2=8521 CIA
 
         *=$0801
 
@@ -86,6 +87,9 @@ noramexp:
 oldsid:
         sta $d0f4       ; set SID type
 
+        lda $0404       ; set CIA type
+        sta $d0fc
+        
         lda #$27        ; MMU Slot for I/O RAM
         sta $d0af
         lda #0
