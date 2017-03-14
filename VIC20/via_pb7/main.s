@@ -1,7 +1,7 @@
 
 zpage = $02
 
-viabase = $9110
+viabase = $9110 ; pb7 goes to userport
 
 
 charsperline = 22
