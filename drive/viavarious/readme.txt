@@ -6,7 +6,11 @@ the VIA too. The respective tests have been reworked to match what the original
 tests want to do as close as possible. Consequently tests for cascaded timers,
 and TOD clock tests, have been removed, as VIAs dont have these features.
 
-the tests should be run on a 1541 compatible drive with drive #8
+the tests should be run on a 1541 compatible drive with drive #8. to make sure
+everything works as intended, load individual tests from disk and run them.
+(once run, each test will load the next one if it completed without error) do 
+only have one drive connected, don't use any cartridges or kernal/drive rom 
+replacements.
 
 when run, each program will cycle through all sub tests once and then display
 the results. red/green characters at bottom left indicate success/failure of
@@ -17,12 +21,12 @@ the bottom both XORed so you can spot bit errors easily.
 
 --------------------------------------------------------------------------------
 
-      (r29803)
+      (r32779)
 
 VIA1:   works    Timer A / B
 VIA2:   works    Timer A / B
 
-VIA3:   fail (k) Timer A / B IRQ Flags
+VIA3:   works    Timer A / B IRQ Flags
 VIA3a:  works    Timer A IRQ Flags
 
 VIA4:   works    Timer A (toggle timer A timed/continous irq)
