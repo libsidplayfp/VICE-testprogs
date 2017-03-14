@@ -663,6 +663,9 @@
 ../SID/noisewriteback/,noise_writeback_test1-old.prg,exitcode,100000000,sid-old
 ../SID/noisewriteback/,noise_writeback_test2-old.prg,exitcode,100000000,sid-old
 ../SID/paddles/,ft3detect.prg,interactive,0
+../SID/osc_topbit/,osc_topbit_test_noise_old.prg,exitcode,1000000000,sid-old
+../SID/osc_topbit/,osc_topbit_test_pulse_old.prg,exitcode,1000000000,sid-old
+../SID/osc_topbit/,osc_topbit_test_triangle_old.prg,exitcode,1000000000,sid-old
 ../SID/oscinit/,oscinit.prg,exitcode,100000000
 ../SID/paddles/,paddle.prg,interactive,0
 ../SID/ringmod/,ringmodtest.prg,exitcode,100000000
