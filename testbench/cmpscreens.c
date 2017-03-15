@@ -59,22 +59,25 @@ unsigned char cols_pepto_ntsc_sony[3*16] = {
 };
 
 unsigned char cols_mike_pal[16 * 3] = {
-    0x00, 0x00, 0x00,
-    0xFF, 0xFF, 0xFF,
-    0x21, 0x1F, 0xB6,
-    0xFF, 0xF0, 0x4D,
-    0xFF, 0x3F, 0xB4,
-    0x37, 0xE2, 0x44,
-    0xFF, 0x34, 0x1A,
-    0x1B, 0xD7, 0xDC,
-    0x00, 0x54, 0xCA,
-    0x72, 0xB0, 0xE9,
-    0x93, 0x92, 0xE7,
-    0xFD, 0xF7, 0x9A,
-    0xFF, 0x9F, 0xE0,
-    0x93, 0xE4, 0x8F,
-    0xFF, 0x90, 0x82,
-    0x85, 0xDE, 0xE5
+    0x00, 0x00, 0x00, 
+    0xFF, 0xFF, 0xFF, 
+    0xB6, 0x1F, 0x21, 
+    0x4D, 0xF0, 0xFF, 
+    
+    0xB4, 0x3F, 0xFF, 
+    0x44, 0xE2, 0x37, 
+    0x1A, 0x34, 0xFF, 
+    0xDC, 0xD7, 0x1B, 
+
+    0xCA, 0x54, 0x00, 
+    0xE9, 0xB0, 0x72, 
+    0xE7, 0x92, 0x93, 
+    0x9A, 0xF7, 0xFD, 
+
+    0xE0, 0x9F, 0xFF, 
+    0x8F, 0xE4, 0x93, 
+    0x82, 0x90, 0xFF, 
+    0xE5, 0xDE, 0x85
 };
 
 unsigned char *colors[MAXPALETTES] = {
@@ -95,6 +98,7 @@ int findcolorinpalette(unsigned char *p, int palette)
     unsigned char *c;
     c = colors[palette];
     for (i = 0; i < numcolors; i++) {
+//        printf("check %02x %02x %02x vs  %02x %02x %02x\n", c[0], c[1], c[2], p[0], p[1], p[2]);
         if ((p[0] == c[0]) && (p[1] == c[1]) && (p[2] == c[2])) {
             return i;
         }
@@ -196,7 +200,9 @@ int main(int argc, char *argv[])
         if (argv[i][0] == '-') {
             if (argv[i][1] == 'v') {
                 verbose = 1;
-            }
+            } else if (!strcmp(argv[i], "--verbose")) {
+                verbose = 1;
+            } 
         } else {
             break;
         }
@@ -267,7 +273,7 @@ int main(int argc, char *argv[])
     for (i = 0; i < numpalettes; i++) {
         if (picusespalette(data1, bpp1, xsize1, ysize1, i)) {
             palette1 = i;
-            if (verbose) printf("found palette 1:%d %s\n", palette1, palettenames[palette1]);
+            if (verbose) { printf("found palette 1:%d %s\n", palette1, palettenames[palette1]); }
             break;
         }
     }
@@ -279,7 +285,7 @@ int main(int argc, char *argv[])
     for (i = 0; i < numpalettes; i++) {
         if (picusespalette(data2, bpp2, xsize2, ysize2, i)) {
             palette2 = i;
-            if (verbose) printf("found palette 2:%d %s\n", palette2, palettenames[palette2]);
+            if (verbose) { printf("found palette 2:%d %s\n", palette2, palettenames[palette2]); }
             break;
         }
     }

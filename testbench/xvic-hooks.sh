@@ -3,7 +3,7 @@ XVIC="$VICEDIR"/xvic
 XVICOPTS+=" -default"
 XVICOPTS+=" -VICfilter 0"
 XVICOPTS+=" -VICextpal"
-#XVICOPTS+=" -VICpalette mike-pal.vpl"
+XVICOPTS+=" -VICpalette mike-pal.vpl"
 XVICOPTS+=" -warp"
 XVICOPTS+=" -debugcart"
 XVICOPTS+=" -basicload"
@@ -142,6 +142,7 @@ function xvic_run_screenshot
             XVICSYO=22
         fi
 
+#        echo ./cmpscreens "$refscreenshotname" "$XVICREFSXO" "$XVICREFSYO" "$1"/.testbench/"$2"-xvic.png "$XVICSXO" "$XVICSYO"
         ./cmpscreens "$refscreenshotname" "$XVICREFSXO" "$XVICREFSYO" "$1"/.testbench/"$2"-xvic.png "$XVICSXO" "$XVICSYO"
         exitcode=$?
     else
