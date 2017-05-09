@@ -7,9 +7,9 @@
 
 ; assemble using ACME:
 ;
-; acme -Dexpanded=0 -f cbm -o neos0k.prg Neos0k.asm
+; acme -Dexpanded=0 -f cbm -o neos0k.prg neos-vic20.asm
 ;
-; acme -Dexpanded=1 -f cbm -o neos8k.prg Neos0k.asm
+; acme -Dexpanded=1 -f cbm -o neos8k.prg neos-vic20.asm
 
 ; for testing use something like this:
 ; xvic -memory all -controlport1device 4 -mouse neos8k.prg
