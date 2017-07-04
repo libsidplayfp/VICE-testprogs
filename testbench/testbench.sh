@@ -476,6 +476,10 @@ do
                 memoryexpansion="8K"
             ;;
         *) # is either target or filter
+            if [ "${thisarg:0:2}" == "--" ]; then
+                echo "error: unknown option '"$thisarg"'."
+                exit -1
+            fi
             if [ "$thisarg" = "" ] ; then
                 showhelp
                 exit -1
@@ -499,6 +503,7 @@ if [ "$verbose" = "1" ] ; then
     echo "video type:" "$videotype"
     echo "video subtype:" "$videosubtype"
     echo "SID type:" "$sidtype"
+    echo "CIA type:" "$ciatype"
     echo "memory expansion:" "$memoryexpansion"
 fi
 
