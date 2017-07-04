@@ -19,6 +19,7 @@ all: prereq
 	echo "testcham20"
 	echo "testmicro64"
 	echo "testemu64"
+	echo "testyace"
 
 ################################################################################
 prereq: selftest testlist cmpscreens prereq-chameleon
@@ -39,6 +40,7 @@ testlist: \
 	chameleon-testlist.txt \
 	micro64-testlist.txt \
 	emu64-testlist.txt \
+	yace-testlist.txt \
 	x128-testlist.txt \
 	xscpu64-testlist.txt \
 	x64dtv-testlist.txt \
@@ -80,6 +82,13 @@ emu64-testlist.txt: c64-testlist.in
 		| grep -v ",geo256k" \
 		>> emu64-testlist.txt
 
+yace-testlist.txt: c64-testlist.in
+	echo "# this is a generated file, do not edit." >  yace-testlist.txt
+	cat  c64-testlist.in \
+		| grep -v ",vicii-ntsc" \
+		| grep -v ",vicii-ntscold" \
+		>> yace-testlist.txt
+		
 x128-testlist.txt: c128-testlist.in
 	echo "# this is a generated file, do not edit." >  x128-testlist.txt
 	cat  c128-testlist.in >> x128-testlist.txt
