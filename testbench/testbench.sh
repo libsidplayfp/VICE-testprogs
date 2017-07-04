@@ -37,6 +37,7 @@ source "./xvic-hooks.sh"
 source "./vsid-hooks.sh"
 source "./micro64-hooks.sh"
 source "./emu64-hooks.sh"
+source "./yace-hooks.sh"
 
 ###############################################################################
 
@@ -57,6 +58,9 @@ function checktarget
                 target="$1"
             ;;
         emu64)
+                target="$1"
+            ;;
+        yace)
                 target="$1"
             ;;
     # C128 targets
@@ -393,7 +397,7 @@ function showhelp
     echo $NAME" - run test programs."
     echo "usage: "$NAME" [target] <filter> <options>"
     echo "  targets: x64, x64sc, x128, xscpu64, x64dtv, xpet, xcbm2, xcbm5x0, xvic, xplus4, vsid,"
-    echo "           chameleon, cham20, micro64, emu64"
+    echo "           chameleon, cham20, micro64, emu64, yace"
     echo "  <filter> is a substring of the path of tests to restrict to"
     echo "  --help       show this help"
     echo "  --verbose    be more verbose"
