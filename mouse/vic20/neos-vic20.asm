@@ -308,28 +308,34 @@ mousestart2:
 
         lda     #'.'
         sta     screenmem+20
+        sta     screenmem+21
 
         ; get the mouse button
         LDA     $9008       ; Paddle POTX
-        BPL     nobutton
+        BPL     norightbutton
+
+        lda     #'*'
+        sta     screenmem+21
+
+norightbutton:
+
+        LDA     $9111
+        AND     #$20
+        bne     noleftbutton
 
         lda     #'*'
         sta     screenmem+20
 
-; ??? - this seems very wrong
-;         LDA     $9111
-;         AND     #32         ;=#32 for NEOS or #16 in VICE
-;         CMP     #0
-;         BNE     nobutton
+        LDA     $CE         ; get character under cursor
+        LDX     $0287       ; get colour under cursor
+        LDY     #$00        ; clear Y
+        STY     $CF         ; clear cursor blink phase
+        JSR     $EAA1       ; Write character A
+        LDY     lastx
+        LDX     lasty
+        JSR     $E50C       ; Set new cursor positions
 
-;         LDA     $CE         ; get character under cursor
-;         LDX     $0287       ; get colour under cursor
-;         LDY     #$00        ; clear Y
-;         STY     $CF         ; clear cursor blink phase
-;         JSR     $EAA1       ; Write character A
-;         LDY     lastx
-;         LDX     lasty
-;         JSR     $E50C       ; Set new cursor positions
+noleftbutton:
 
 nobutton:
 
