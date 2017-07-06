@@ -17,9 +17,11 @@
 
 mousex = $19
 mousey = $1a
+mousebtn = $1b
 
-mousexold = $1b
-mouseyold = $1c
+mousexold = $1c
+mouseyold = $1d
+mousebtnold = $1e
 
 pointerx = $fe
 pointery = $ff
@@ -89,11 +91,17 @@ mainlp:
 
         inc $d020
         
+        lda     $DC00
+        sta mousebtn
+        
         lda mousex
         cmp mousexold
         bne +
         lda mousey
         cmp mouseyold
+        bne +
+        lda mousebtn
+        cmp mousebtnold
         bne +
         
         jmp noprint
@@ -104,6 +112,11 @@ mainlp:
         lda #<($0400+24*40)
         sta lineptr
         
+        lda mousebtn
+        jsr printhex
+        
+        inc lineptr
+
         lda mousex
         jsr printhex
         
@@ -116,13 +129,15 @@ noprint:
         sta mousexold
         lda mousey
         sta mouseyold
+        lda mousebtn
+        sta mousebtnold
         
         lda #0
         sta $d020
         
         ; check fire, if LMB pressed
         ldy     #0
-        lda     $DC00
+        lda     mousebtn
         and     #$10
         bne     +
         ldy     #11
