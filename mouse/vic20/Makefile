@@ -1,5 +1,5 @@
 
-all: neos0k.prg neos8k.prg \
+all: neos0k.prg neos8k.prg 13510k.prg 13518k.prg \
 	prop_vic20_amiga.prg \
 	prop_vic20_cx22.prg \
 	prop_vic20_st.prg
@@ -19,9 +19,15 @@ neos0k.prg: neos-vic20.asm
 neos8k.prg: neos-vic20.asm
 	acme -Dexpanded=1 -f cbm -o neos8k.prg neos-vic20.asm
 	
+13510k.prg: 1351-vic20.asm
+	acme -Dexpanded=0 -f cbm -o 13510k.prg 1351-vic20.asm
+	
+13518k.prg: 1351-vic20.asm
+	acme -Dexpanded=1 -f cbm -o 13518k.prg 1351-vic20.asm
+	
 clean:
 	$(RM) prop_vic20_amiga.prg
 	$(RM) prop_vic20_cx22.prg
 	$(RM) prop_vic20_st.prg
-	$(RM) neos0k.prg
-	$(RM) neos8k.prg
+	$(RM) neos0k.prg 13510k.prg
+	$(RM) neos8k.prg 13518k.prg
