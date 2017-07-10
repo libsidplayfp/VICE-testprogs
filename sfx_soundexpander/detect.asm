@@ -16,6 +16,12 @@
         LDA	#$93
         JSR	$FFD2
 
+        lda #'-'
+		sta $0400
+		sta $0400+40
+		sta $0401
+		sta $0401+40
+        
         lda #0
         sta $d020
         
@@ -75,17 +81,17 @@ loc_1064C:
 		bne loc_1064C
 		dey
 		bne loc_1064C
+		sta $0400
 		and #$e0		; and the value there with e0 (11100000, bits 7, 6 and 5) to make sure all others are 0. 
 		eor #$c0		; check if bits 7 and 6 are set (should result in 0)
-		sta $0400
-		inc $0400+40
+		sta $0400+40
 		bne loc_10663	; not zero ? jmp to set carry and leave subroutine
 
 		tay				; is was zero, no moce a out of the way for a moment
 		lda tread		; read the previous status byte
-		and #$e0		; "and" that with e0, ends in zero if no bits are set
 		sta $0401
-		inc $0401+40
+		and #$e0		; "and" that with e0, ends in zero if no bits are set
+		sta $0401+40
 		bne loc_10663	; was it not zero ? ok, jmp to set carry and leave
 
 		ldx #$04		; ok previous status was no timers set. set timer control byte to #$60 = clear timers T1 T2 and ignore them
