@@ -36,6 +36,12 @@
         STA	$DC02
 
 loc_838:
+        lda #$f8
+        cmp $d012
+        bne *-3
+
+        inc $d020
+
         LDX	#0
         STX	$C004
         LDA	$D419
@@ -95,6 +101,8 @@ loc_892:
 } else {
         LDA $DC00
 }
+        dec $d020
+
         AND	#$1F
         CMP	$C005
         BEQ	loc_8A2
@@ -107,6 +115,7 @@ loc_8A2:
         BEQ	loc_838
 
 loc_8A9:
+
         TYA
         PHA
         TXA
