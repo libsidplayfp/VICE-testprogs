@@ -574,7 +574,6 @@
 #FIXME: port to NTSC/dump reference data
 ../VICII/split-tests/spritescan/,spritescan.prg,exitcode,1000000000,vicii-pal
 #TODO: add "drean" support to testbench
-#../VICII/split-tests/spritescan/,spritescan_drean.prg,exitcode,1000000000,vicii-drean
 ../VICII/vicii_timing/,vicii_reg_timing.prg,screenshot,50000000,vicii-pal
 ../VICII/videomode/,rmwtest.prg,screenshot,10000000,vicii-pal
 ../VICII/videomode/,videomode1.prg,screenshot,10000000,vicii-pal
