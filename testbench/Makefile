@@ -17,9 +17,10 @@ all: prereq
 	echo "testvsid"
 	echo "testchameleon"
 	echo "testcham20"
-	echo "testmicro64"
-	echo "testemu64"
-	echo "testyace"
+#	echo "testhoxs64"
+#	echo "testmicro64"
+#	echo "testemu64"
+#	echo "testyace"
 
 ################################################################################
 prereq: selftest testlist cmpscreens prereq-chameleon
@@ -38,6 +39,7 @@ testlist: \
 	x64-testlist.txt \
 	x64sc-testlist.txt \
 	chameleon-testlist.txt \
+	hoxs64-testlist.txt \
 	micro64-testlist.txt \
 	emu64-testlist.txt \
 	yace-testlist.txt \
@@ -69,13 +71,26 @@ micro64-testlist.txt: c64-testlist.in
 	cat  c64-testlist.in \
 		| grep -v ",vicii-ntsc" \
 		| grep -v ",vicii-ntscold" \
+		| grep -v ",vicii-drean" \
 		>> micro64-testlist.txt
+
+hoxs64-testlist.txt: c64-testlist.in
+	echo "# this is a generated file, do not edit." >  hoxs64-testlist.txt
+	cat  c64-testlist.in \
+		| grep -v ",vicii-ntsc" \
+		| grep -v ",vicii-ntscold" \
+		| grep -v ",vicii-drean" \
+		| grep -v ",sid-old" \
+		| grep -v ",reu512k" \
+		| grep -v ",geo256k" \
+		>> hoxs64-testlist.txt
 
 emu64-testlist.txt: c64-testlist.in
 	echo "# this is a generated file, do not edit." >  emu64-testlist.txt
 	cat  c64-testlist.in \
 		| grep -v ",vicii-ntsc" \
 		| grep -v ",vicii-ntscold" \
+		| grep -v ",vicii-drean" \
 		| grep -v ",cia-new" \
 		| grep -v ",sid-new" \
 		| grep -v ",reu512k" \
@@ -87,6 +102,7 @@ yace-testlist.txt: c64-testlist.in
 	cat  c64-testlist.in \
 		| grep -v ",vicii-ntsc" \
 		| grep -v ",vicii-ntscold" \
+		| grep -v ",vicii-drean" \
 		>> yace-testlist.txt
 		
 x128-testlist.txt: c128-testlist.in
