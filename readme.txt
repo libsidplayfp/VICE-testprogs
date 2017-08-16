@@ -130,3 +130,12 @@ c1541
 -----
 
 - a couple of vdrive related regression tests could be done using c1541
+- no tests for c1541, these should be added
+
+vdrive
+------
+
+- add tests for directory wildcard handling, still some bugs: multiple wildcards
+  aren't supported (eg "$:A*,B*") (#614)
+- add tests for various CBMDOS commands
+
