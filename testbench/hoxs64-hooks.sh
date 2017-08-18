@@ -12,12 +12,13 @@ fi
 
 
 # FIXME: set default config, old c64, pepto palette
+HOXS64OPTS+=" -defaultsettings"
 HOXS64OPTS+=" -runfast"
 HOXS64OPTS+=" -debugcart"
 
 # extra options for the different ways tests can be run
-HOXS64OPTSEXITCODE+=" -nomessagebox"
-HOXS64OPTSSCREENSHOT+=" -nomessagebox"
+HOXS64OPTSEXITCODE+=" -nomessagebox -window-hide"
+HOXS64OPTSSCREENSHOT+=" -nomessagebox -window-hide"
 
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
