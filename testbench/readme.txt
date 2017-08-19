@@ -142,7 +142,7 @@ you can also run ./testbench.sh manually:
 
 usage: ./testbench.sh [target] <filter> <options>
   targets: x64, x64sc, x128, xscpu64, xpet, xcbm2, xcbm5x0, xvic, xplus4, 
-           chameleon, micro64, emu64
+           chameleon, hoxs64, micro64, emu64, yace
   <filter> is a substring of the path of tests to restrict to
   --help       show this help
   --verbose    be more verbose
@@ -164,6 +164,17 @@ directory. if that is not the case you can give the VICE directory on the
 commandline like this:
 
 $ VICEDIR=/c/users/youruser/somedir/WinVICE-2.4.99 ./testbench x64
+
+--------------------------------------------------------------------------------
+================================================================================
+running tests on another supported target/emulator
+================================================================================
+--------------------------------------------------------------------------------
+
+make sure to give the full path to the emulator binary, and use the respective 
+switches to skip tests that make no sense and/or can not work.
+
+$ VICEDIR="/c/hoxs64_x64_1_0_9_3_sr1" ./testbench.sh hoxs64 --pal --8565early --8580
 
 --------------------------------------------------------------------------------
 ================================================================================
