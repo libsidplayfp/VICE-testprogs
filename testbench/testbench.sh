@@ -124,6 +124,14 @@ function getscreenshotname
             refscreenshotname="$1"/references/"$2"-"$videosubtype".png
             return 0
         fi
+        # if the exact subtype could not be found, try more general one
+        if [ "$videosubtype" == "8565early" ] || [ "$videosubtype" == "8565late" ]; then
+            if [ -f "$1"/references/"$2"-"8565".png ]
+            then
+                refscreenshotname="$1"/references/"$2"-"8565".png
+                return 0
+            fi
+        fi
     fi
 
     if [ "$videotype" == "NTSC" ] && [ -f "$1"/references/"$2"-ntsc.png ]
