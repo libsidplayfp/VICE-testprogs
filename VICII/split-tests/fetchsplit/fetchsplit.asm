@@ -67,6 +67,35 @@ test_present:
 ;*
 ;******
 test_prepare:
+; fill RAM with some pattern
+
+    sei
+    lda #$34
+    sta $01
+    ldy #>($ff00 - test_end)
+    ldx #0
+    stx inithi+1
+initlp1:
+    txa
+inithi:
+    sta test_end + $100,x
+    inx
+    bne initlp1
+    inc inithi+2
+    dey
+    bne initlp1
+    ; do the last page without crashing pointers
+initlp2:
+    txa
+    sta $ff00,x
+    inx
+    cpx #$f8
+    bne initlp2
+    
+    lda #$35
+    sta $01
+
+
 ; setup main screen
 	ldx	#0
 prt_lp1:
