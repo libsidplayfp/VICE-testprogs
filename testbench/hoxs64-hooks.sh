@@ -150,7 +150,7 @@ function hoxs64_run_screenshot
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
-        if [ $exitcode -ne 100 ]
+        if [ $exitcode -ne 1 ]
         then
             if [ $exitcode -ne 255 ]
             then
