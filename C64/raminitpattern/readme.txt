@@ -224,6 +224,7 @@ C64C (christopher jam) (ASSY: ???, RAM: ???)
   -raminitpatterninvert 16384   ($4000-$7fff and $c000-$ffff will be inverted)
 
 C64C PAL (flavioweb) (ASSY: ???, RAM: ???)
+C64C PAL (david horrocks) (ASSY NO. 260469 NO252311 REV.4, RAM: LH2464-12 SHARP JAPAN 9018 1 SA)
 
 - first come two pages with 128 bytes $ff, then 128 bytes $00... followed by two
   pages with 128 bytes $99, then 128 bytes $66. very few random bytes, mostly in
