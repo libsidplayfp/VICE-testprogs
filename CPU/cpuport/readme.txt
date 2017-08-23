@@ -42,6 +42,22 @@ cpuports.prg from the lorenz testsuite
 http://csdb.dk/release/?id=47808
 C64Music/MUSICIANS/R/Rayden/Boot_Zak_v2.sid
 
+================================================================================
 
+initvalues.crt - show/check the initial state of the CPU port bits and DDR bits
 
- 
+four values are shown:
+
+- value read from DDR (should be $00)
+- value read from DATA (should be $17 due to the pullups, see below)
+- value of the stack pointer (should be $ff)
+- the last value is again read from DATA, but this time after setting DDR to all
+  output. (should be $00)
+
+theory of operation:
+--------------------
+
+DDR and DATA are both initialized to 0 on powerup/reset. on the C64 pullup
+resistors are installed on bits 0,1,2,4 which gives the inital standard memory
+configuration.
+
