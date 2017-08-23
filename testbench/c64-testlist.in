@@ -378,6 +378,7 @@
 #../CPU/cpuport/,bitfade.prg
 #../CPU/cpuport/,delaytime.prg
 ../CPU/cpuport/,test1.prg,exitcode,10000000
+../CPU/cpuport/,initvalue.crt,exitcode,10000000
 ../CPU/hmc6502/,AllSuiteA.prg,exitcode,100000000
 ../CPU/kdormann/,6502_functional_test.prg,exitcode,4294967295
 #FIXME
