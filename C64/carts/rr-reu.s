@@ -15,17 +15,18 @@ ROMSTART = $8000
 
 start:
         sei
+        ; we must set data first, then update DDR
+        lda #$37
+        sta $01
+        lda #$2f
+        sta $00
+
         lda #$1b
         sta $d011
         lda #$17
         sta $d018
         lda #$c8
         sta $d016
-
-        lda #$2f
-        sta $00
-        lda #$37
-        sta $01
 
         ; switch to REU mapping
         lda #%01000000

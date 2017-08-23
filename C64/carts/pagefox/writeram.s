@@ -30,6 +30,7 @@ start:
     lda #$c8
     sta $d016
 
+    ; we must set data first, then update DDR
     lda #$e7
     sta $01
     lda #$2f

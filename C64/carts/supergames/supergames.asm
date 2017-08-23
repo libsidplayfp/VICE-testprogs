@@ -7,10 +7,12 @@
         CLD
         LDX #$FF
         TXS                    ; Stackpointer setzen
-        lda #$2f
-        sta $00
+
+        ; we must set data first, then update DDR
         lda #$37
         sta $01
+        lda #$2f
+        sta $00
 
         lda #6
         sta $d020

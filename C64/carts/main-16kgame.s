@@ -19,10 +19,11 @@ copycode:
             txs
             cld
 
-            lda #$2f
-            sta $00
+            ; we must set data first, then update DDR
             lda #$37
             sta $01
+            lda #$2f
+            sta $00
 
             ; enable VIC (e.g. RAM refresh)
             lda #8

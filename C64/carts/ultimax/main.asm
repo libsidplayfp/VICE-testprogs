@@ -39,6 +39,7 @@ start:
         ldx	#$ff
         txs
 
+        ; we must set data first, then update DDR
         lda #$33
         sta $01
         lda #$2f
