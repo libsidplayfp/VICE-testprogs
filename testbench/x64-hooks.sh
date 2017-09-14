@@ -101,6 +101,9 @@ function x64_get_cmdline_options
         "NTSCOLD")
                 exitoptions="-ntscold"
             ;;
+        "6569") # "old" PAL
+                exitoptions="-VICIImodel 6569"
+            ;;
         "8565") # "new" PAL
                 exitoptions="-VICIImodel 8565"
             ;;

@@ -64,7 +64,9 @@ x64sc-testlist.txt: c64-testlist.in
 
 chameleon-testlist.txt: c64-testlist.in
 	echo "# this is a generated file, do not edit." >  chameleon-testlist.txt
-	cat  c64-testlist.in >> chameleon-testlist.txt
+	cat  c64-testlist.in \
+		| grep -v ",vicii-drean" \
+		>> chameleon-testlist.txt
 
 micro64-testlist.txt: c64-testlist.in
 	echo "# this is a generated file, do not edit." >  micro64-testlist.txt
@@ -74,6 +76,20 @@ micro64-testlist.txt: c64-testlist.in
 		| grep -v ",vicii-drean" \
 		>> micro64-testlist.txt
 
+# The official cartridge file support list is:
+# Action Reply
+# Retro Reply
+# Easy Flash (1MB)
+# Ocean
+# System 3
+# Dinamic
+# Magic Desk
+# Super Games
+# Zaxxon
+# Fun Play
+# Simons Basic
+# 
+# Simple 8K/16K and Ultimax cartridges should work also.
 hoxs64-testlist.txt: c64-testlist.in
 	echo "# this is a generated file, do not edit." >  hoxs64-testlist.txt
 	cat  c64-testlist.in \

@@ -99,6 +99,9 @@ function x64sc_get_cmdline_options
         "NTSCOLD")
                 exitoptions="-ntscold"
             ;;
+        "6569") # "old" PAL
+                exitoptions="-VICIImodel 6569"
+            ;;
         "8565") # "new" PAL
                 exitoptions="-VICIImodel 8565"
             ;;
@@ -132,7 +135,7 @@ function x64sc_run_screenshot
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-x64sc.png
 #    echo $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$1"/"$2"
-    $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$1"/"$2" 1> /dev/null
+    $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -192,7 +195,7 @@ function x64sc_run_exitcode
     if [ $verbose == "1" ]; then
         echo $X64SC $X64SCOPTS $X64SCOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2"
     fi
-    $X64SC $X64SCOPTS $X64SCOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
+    $X64SC $X64SCOPTS $X64SCOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $verbose == "1" ]; then
         echo $X64SC "exited with: " $exitcode

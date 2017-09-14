@@ -308,6 +308,10 @@ function runprogsfortarget
                     "$target"_get_cmdline_options "6526A"
                     testoptions+="${exitoptions} "
                 fi
+                if [ "${videosubtype}" == "6569" ]; then
+                    "$target"_get_cmdline_options "6569"
+                    testoptions+="${exitoptions} "
+                fi
                 if [ "${videosubtype}" == "8565" ]; then
                     "$target"_get_cmdline_options "8565"
                     testoptions+="${exitoptions} "

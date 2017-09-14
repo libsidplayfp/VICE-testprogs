@@ -93,6 +93,9 @@ function x128_get_cmdline_options
         "NTSC")
                 exitoptions="-ntsc"
             ;;
+        "6569") # "old" PAL
+                exitoptions="-VICIImodel 6569"
+            ;;
     esac
 }
 
