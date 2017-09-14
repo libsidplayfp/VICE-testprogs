@@ -191,10 +191,20 @@ preloop:
 
 
 fill:
-  lda #1
-  sta 646
-  lda #$93
-  jsr $ffd2
+  ldx #0
+fill00:
+  lda #$20
+  sta $0400,x
+  sta $0500,x
+  sta $0600,x
+  sta $0700,x
+  lda #$01
+  sta $d800,x
+  sta $d900,x
+  sta $da00,x
+  sta $db00,x
+  inx
+  bne fill00
   
   lda #48
   ldx #00
