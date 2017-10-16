@@ -66,6 +66,10 @@ bend:       !word 0
         lda     #$07
         sta     $D027
 
+        lda     #$7f
+        sta     $dc0d
+        lda     $dc0d
+        
         sei
 mainlp:
         lda     #$7F
@@ -80,20 +84,37 @@ mainlp:
 
         jsr     readmouse
 
+!if TEST = 0 {
+        
         ; if carry set then RMB pressed
         lda     #$07
         bcc     +
-        lda     #$0A
+        lda     #$0A    ; not RMB
 +       sta     $D027
+}
 
+!if TEST = 1 {
+        ; if A = 1 then RMB is pressed
+        ldy     #$07
+        cmp     #$01
+        bne     +
+        ldy     #$0A    ; not RMB
++       sty     $D027
+
+        stx     mousex
+        
+        lda     #3
+        sta     $dd00
+}
         jsr     LC190
         jsr     LC1D0
 
         inc $d020
         
-        lda     $DC00
+!if TEST = 0 {
+        lda $DC00
         sta mousebtn
-        
+}        
         lda mousex
         cmp mousexold
         bne +
@@ -147,104 +168,12 @@ noprint:
         
         
 ;-------------------------------------------------------------------------------
-
-readmouse:  lda     $DC00
-        pha
-        lda     $DC01
-        pha
-        lda     $DC02
-        pha
-        lda     $DC03
-        pha
-
-        lda     #$10
-        sta     $DC02
-
-        ; unset clk
-        lda     $DC00
-        and     #$EF
-        sta     $DC00
-
-        ldx     #$08
-        jsr     delay
-
-        ; get 4 bit from bits 0-3
-        ; and rotate into bits 4-7
-        lda     $DC00
-        asl
-        asl
-        asl
-        asl
-        sta     mousex
-
-        ; set clk
-        lda     $DC00
-        ora     #$10
-        sta     $DC00
-        
-        ldx     #$05
-        jsr     delay
-
-        ; get 4 bit from bits 0-3
-        ; and or into bits 0-3
-        lda     $DC00
-        and     #$0F
-        ora     mousex
-        sta     mousex
-
-        ; unset clk
-        lda     $DC00
-        and     #$EF
-        sta     $DC00
-        
-        ldx     #$05
-        jsr     delay
-
-        ; get 4 bit from bits 0-3
-        ; and rotate into bits 4-7
-        lda     $DC00
-        asl
-        asl
-        asl
-        asl
-        sta     mousey
-
-        ; set clk
-        lda     $DC00
-        ora     #$10
-        sta     $DC00
-
-        ldx     #$05
-        jsr     delay
-
-        ; get 4 bit from bits 0-3
-        ; and or into bits 0-3
-        lda     $DC00
-        and     #$0F
-        ora     mousey
-        sta     mousey
-
-        ; check RMB in POTX
-        lda     $D419
-        cmp     #$FF
-
-        pla
-        sta     $DC03
-        pla
-        sta     $DC02
-        pla
-        sta     $DC01
-        pla
-        sta     $DC00
-        rts
-
-delay:  nop
-        nop
-        nop
-        dex
-        bne     delay
-        rts
-
+!if TEST = 0 {
+    !src "mousecheese.s"
+}
+!if TEST = 1 {
+    !src "arkanoid.s"
+}
 ;-------------------------------------------------------------------------------
 ; add mouse movement to sprite positions
 LC190:  
