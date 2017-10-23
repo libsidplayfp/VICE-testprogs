@@ -6,4 +6,4 @@ screenshots in this directory were provided by unseen
 board/VICII was "cold", showing no grey dots (most noteable in rwmtest)
 
 the .gif anims have been created from the original screenshot and the reference
-pictures (using 8565early) to confirm that the reference is correct. (r33744)
+pictures (using 8565early)
