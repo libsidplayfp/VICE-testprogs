@@ -24,6 +24,7 @@ refscreenshotname=""
 
 source "./chameleon-hooks.sh"
 source "./cham20-hooks.sh"
+source "./c64rmk2-hooks.sh"
 source "./x64-hooks.sh"
 source "./x64sc-hooks.sh"
 source "./x128-hooks.sh"
@@ -53,6 +54,9 @@ function checktarget
                 target="$1"
             ;;
         chameleon)
+                target="$1"
+            ;;
+        c64rmk2)
                 target="$1"
             ;;
         hoxs64)
@@ -413,7 +417,7 @@ function showhelp
     echo $NAME" - run test programs."
     echo "usage: "$NAME" [target] <filter> <options>"
     echo "  targets: x64, x64sc, x128, xscpu64, x64dtv, xpet, xcbm2, xcbm5x0, xvic, xplus4, vsid,"
-    echo "           chameleon, cham20, hoxs64, micro64, emu64, yace"
+    echo "           chameleon, cham20, c64rmk2, hoxs64, micro64, emu64, yace"
     echo "  <filter> is a substring of the path of tests to restrict to"
     echo "  --help       show this help"
     echo "  --verbose    be more verbose"

@@ -39,6 +39,7 @@ testlist: \
 	x64-testlist.txt \
 	x64sc-testlist.txt \
 	chameleon-testlist.txt \
+	c64rmk2-testlist.txt \
 	hoxs64-testlist.txt \
 	micro64-testlist.txt \
 	emu64-testlist.txt \
@@ -67,6 +68,19 @@ chameleon-testlist.txt: c64-testlist.in
 	cat  c64-testlist.in \
 		| grep -v ",vicii-drean" \
 		>> chameleon-testlist.txt
+
+c64rmk2-testlist.txt: c64-testlist.in
+	echo "# this is a generated file, do not edit." >  c64rmk2-testlist.txt
+	cat  c64-testlist.in \
+		| sed -e "s:,screenshot:,interactive:g" \
+		| grep -v ",vicii-drean" \
+		| grep -v ",geo256k" \
+		| grep -v ",reu512k" \
+		| grep -v ".d64" \
+		| grep -v ".d81" \
+		| grep -v ".g64" \
+		| grep -v ".crt" \
+		>> c64rmk2-testlist.txt
 
 micro64-testlist.txt: c64-testlist.in
 	echo "# this is a generated file, do not edit." >  micro64-testlist.txt
