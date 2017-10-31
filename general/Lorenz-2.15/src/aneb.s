@@ -15,6 +15,11 @@
         .byte $8b, $ff
         sta magicvalue+1
 
+         lda #32
+         jsr $ffd2
+         lda magicvalue+1
+         jsr hexb
+        
          lda #%00011011
          sta db
          lda #%11000110
@@ -73,6 +78,7 @@ waitborder
          cmp #40
          bcs waitborder
 border
+        inc $d020
 
          ldx sb
          txs
@@ -96,6 +102,8 @@ cmd      .byte $8b
          tsx
          stx sa
          jsr check
+
+        dec $d020
 
          inc ab
          clc
