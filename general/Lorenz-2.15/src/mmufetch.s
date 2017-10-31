@@ -1,13 +1,13 @@
 
-         *= $0801
-         .byte $4c,$14,$08,$00,$97
+          *= $0801
+          .byte $4c,$14,$08,$00,$97
 turboass = 780
-         .text "780"
-         .byte $2c,$30,$3a,$9e,$32,$30
-         .byte $37,$33,$00,$00,$00
-         lda #1
-         sta turboass
-         jmp main
+          .text "780"
+          .byte $2c,$30,$3a,$9e,$32,$30
+          .byte $37,$33,$00,$00,$00
+          lda #1
+          sta turboass
+          jmp main
 
 rom
          lda #$2f
@@ -17,6 +17,33 @@ rom
          cli
          rts
 
+irqhandler:
+         pha
+         txa
+         pha
+
+         tsx
+         lda $104,x
+         and #$10
+         bne breakhandler
+         
+         inc $d020
+         dec $d020
+         
+         lda $dc0d
+         pla
+         tax
+         pla
+         rti
+
+breakhandler:
+         jsr rom
+         sei
+         lda #2
+         sta $d020
+         lda #$ff
+         sta $d7ff  ; failed
+         jmp *
 
 main
          jsr print
@@ -24,6 +51,18 @@ main
          .text "{up}mmufetch"
          .byte 0
 
+         lda #<breakhandler
+         sta $0316
+         lda #>breakhandler
+         sta $0317
+         lda #<irqhandler
+         sta $fffe
+         lda #>irqhandler
+         sta $ffff
+
+         lda #$30   ; "0"
+         sta $0400
+         
          jsr rom
          sei
 
@@ -32,8 +71,10 @@ main
          sty $24
          dey
          sty $25
+
          lda #$36
-         sta 1
+         sta 1          ; BASIC off
+
          lda $a4df
          pha
          lda $a4e0
@@ -44,6 +85,7 @@ main
          pha
          lda $a4e3
          pha
+
          lda #$86
          sta $a4df
          lda #1
@@ -56,6 +98,7 @@ main
          lda #$36
          ldx #$37
          jsr $a4df
+
          pla
          sta $a4e3
          pla
@@ -67,6 +110,8 @@ main
          pla
          sta $a4df
 
+         inc $0400  ; 1
+         
 ;b000 ram-rom-ram
          ldy #1
          sty $14
@@ -107,6 +152,8 @@ main
          pla
          sta $b828
 
+         inc $0400  ; 2
+         
 ;e000 ram-rom-ram
          lda #$86
          sta $ea77
@@ -122,6 +169,8 @@ main
          sta 1
          jsr $ea77
 
+         inc $0400  ; 3
+         
 ;f000 ram-rom-ram
          ldy #1
          sty $c3
@@ -141,11 +190,14 @@ main
          sta 1
          jsr $fd25
 
+         inc $0400  ; 4
+         
 ;d000 ram-rom-ram
          lda $91
          pha
          lda $92
          pha
+
          ldy #1
          sty $91
          dey
@@ -165,35 +217,52 @@ main
          ldx #$33
          sta 1
          jsr $d400
+
          pla
          sta $92
          pla
          sta $91
 
+         inc $0400  ; 5
+         
 ;d000 ram-io-ram
          lda #$37
-         sta 1
-         lda #$85
+         sta 1      ; I/O at $d000
+
+         lda #0     ; I/O d000   00 00
+         sta $d000
+         sta $d001
+         lda #$85   ; I/O d002   85 01  STA $01
          sta $d002
          lda #1
          sta $d003
-         lda #0
+         lda #0     ; I/O d004   00
          sta $d004
+
          lda #$33
-         sta 1
-         lda #$86
+         sta 1      ; chargen at $d000
+
+         lda #$86   ; RAM d000   86 01  STX $01
          sta $d000
          lda #1
          sta $d001
-         lda #0
+         lda #0     ; RAM d002   00 00
          sta $d002
          sta $d003
-         lda #$60
+         lda #$60   ; RAM d004   60     RTS
          sta $d004
+
          lda #$34
          ldx #$37
-         sta 1
+         sta 1      ; RAM at $d000
          jsr $d000
+         ; when everything works correctly, execution goes as follows:
+
+         ; RAM d000   86 01  STX $01    <- enables I/O
+         ; I/O d002   85 01  STA $01    <- enables RAM
+         ; RAM d004   60     RTS
+
+         inc $0400  ; 6
 
          jsr rom
 
