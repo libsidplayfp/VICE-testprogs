@@ -415,7 +415,55 @@ loop:
 
         ;lda #0
         ;sta $d020
+
+        lda #$ff
+        sta $dc02
+        lda #$00
+        sta $dc03
         
+        lda #$7f
+        sta $dc00
+        
+        lda $dc01
+        cmp #%11111101 ; arrow left
+        bne +
+
+        !if CARTTYPE = 0 {  ; easyflash
+        ldx #%00000101      ; ultimax
+        stx $de02
+        }
+        !if CARTTYPE = 1 {  ; retro replay
+        ldx #%00000011      ; ultimax
+        stx $de00
+        }
+        
++
+        cmp #%11111110 ; 1
+        bne +
+        
+        !if CARTTYPE = 0 {  ; easyflash
+        ldx #%00000110      ; 8k game
+        stx $de02
+        }
+        !if CARTTYPE = 1 {  ; retro replay
+        ldx #%00000001      ; 8k game
+        stx $de00
+        }
+        
++
+        cmp #%11110111 ; 2
+        bne +
+        
+        !if CARTTYPE = 0 {  ; easyflash
+        ldx #%00000111      ; 16k game
+        stx $de02
+        }
+        !if CARTTYPE = 1 {  ; retro replay
+        ldx #%00000000      ; 16k game
+        stx $de00
+        }
+        
++
         jmp loop
 
 }
