@@ -25,6 +25,7 @@
 #FIXME: test.prg fails when not loaded by LOAD"TEST",8
 ../C64/autostart/defaults/,test.prg,exitcode,100000000
 ../C64/autostart/random/,raster.prg,interactive,0
+../C64/bankio/,bankio.prg,exitcode,100000000
 ../C64/openio/,dadb.prg,interactive,0
 ../C64/openio/,de00all.prg,interactive,0
 ../C64/openio/,de00int.prg,interactive,0

@@ -25,6 +25,7 @@
 ../C64/autostart/defaults/,test.prg,exitcode,100000000
 ../C64/autostart/defaults/,test.prg,exitcode,100000000,mountd64:test.d64
 ../C64/autostart/random/,raster.prg,interactive,0
+../C64/bankio/,bankio.prg,exitcode,100000000
 ../C64/openio/,dadb.prg,interactive,0
 ../C64/openio/,de00all.prg,interactive,0
 ../C64/openio/,de00int.prg,interactive,0
@@ -872,6 +873,7 @@
 #TODO:
 #../C64/carts/,exos.prg
 ../C64/carts/,mmcrplugin.prg,interactive,0
+../C64/carts/,,exitcode,100000000,mountcrt:8kgame.crt
 ../C64/carts/,,exitcode,100000000,mountcrt:16kgame.crt
 #TODO: do more research and make a proper automatic test
 ../C64/carts/,mmcr-64krom.crt,interactive,0
