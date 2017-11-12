@@ -1,5 +1,7 @@
 
 C64RMK2PORT=ttyUSB2
+#MK2CODENET=sudo `which mk2codenet`
+MK2CODENET=mk2codenet
 
 DUMMY=.dummyfile
 RDUMMY=.dummyfile2
@@ -13,7 +15,7 @@ CDUMMY=.dummyfile3
 
 function c64rmk2_reset
 {
-    sudo `which mk2codenet` -p $C64RMK2PORT --resetwait > /dev/null
+    $MK2CODENET -p $C64RMK2PORT --resetwait > /dev/null
 #    echo "c64rmk2_reset done"
 }
 
@@ -21,7 +23,7 @@ function c64rmk2_clear_returncode
 {
     # clear the return code
     echo -ne "X" > $DUMMY
-    sudo `which mk2codenet` -p $C64RMK2PORT -wb $DUMMY 0x187ff > /dev/null
+    $MK2CODENET -p $C64RMK2PORT -wb $DUMMY 0x187ff > /dev/null
     if [ "$?" != "0" ]; then exit -1; fi
 #    echo "c64rmk2_clear_returncode done"
 }
@@ -33,20 +35,30 @@ function c64rmk2_poll_returncode
     RET="58"
 #    RET="58"
 #    echo "poll1:" "$RET"
-    SECONDSEND=$((SECONDS + $1))
+    SECONDSEND=$((SECONDS + 10 + ($1 / 1000000)))
+# a alot of timing dependend tests will fail when we poll the result before the
+# test was finished - so we must sleep until the timeout and THEN check
+#    sleep $((1 + ($1 / 1000000)))
+    echo -n "(waiting) "
+    read -s -t $((1 + ($1 / 1000000)))
+
     while [ "$RET" = "58" ]
     do
-        sudo `which mk2codenet` -p $C64RMK2PORT -rb $DUMMY 0x187ff 1 > /dev/null
+#        echo 1:$SECONDS $SECONDSEND
+        $MK2CODENET -p $C64RMK2PORT -rb $DUMMY 0x187ff 1 > /dev/null
+#        echo 2:$SECONDS $SECONDSEND
+#        SECONDSEND=$((SECONDSEND + 1))
         if [ "$?" != "0" ]; then exit -1; fi
         e=`hex $DUMMY`
         RET=${e:6:2}
-#        echo "poll:" "$RET"
+#        echo "poll:" "$RET" "secs:" "$SECONDS" "secsend:" "$SECONDSEND"
         if [ $SECONDS -gt $SECONDSEND ]
         then
             echo "timeout when waiting for return code"
             RET=255
             return $RET
         fi
+#        sleep 1
     done;
 
     if [ "$RET" = "ff" ]; then
@@ -382,7 +394,7 @@ function c64rmk2_run_exitcode
 
         # run program
         c64rmk2_clear_returncode
-        sudo `which mk2codenet` -p $C64RMK2PORT -x "$1"/"$2" > /dev/null
+        $MK2CODENET -p $C64RMK2PORT -x "$1"/"$2" > /dev/null
         if [ "$?" != "0" ]; then exit -1; fi
         c64rmk2_poll_returncode $(($3 + 1))
         exitcode=$?
