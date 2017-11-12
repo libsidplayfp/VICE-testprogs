@@ -60,7 +60,7 @@ function chameleon_poll_returncode
     RET="58"
 #    RET="58"
 #    echo "poll1:" "$RET"
-    SECONDSEND=$((SECONDS + $1))
+    SECONDSEND=$((SECONDS + 1 + ($1 / 10000000)))
     while [ "$RET" = "58" ]
     do
 #        chacocmd --len 1 --addr 0x000100ff --dumpmem
