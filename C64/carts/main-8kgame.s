@@ -959,18 +959,14 @@ str_header0:
           !scr "00- 10- 80- a0- c0- d0- d8- de- df- e0- ",0
 
 tagexp00: !scr "ra03ra70ra80raa0rac0rad0rad8raderadfrae0"
-tagexp01: !scr "ra03ra70ra80raa0rac0rad0rad8raderadfrae0"
-tagexp02: !scr "ra03ra70ra80caa0rac0charcharcharcharkern"
-tagexp03: !scr "ra03ra70ca80caa0rac0charcharcharcharkern"
+tagexp01: !scr "ra03ra70ra80raa0rac0charcharcharcharrae0"
+tagexp02: !scr "ra03ra70ra80raa0rac0charcharcharcharkern"
+tagexp03: !scr "ra03ra70ca80basirac0charcharcharcharkern"
 tagexp04: !scr "ra03ra70ra80raa0rac0rad0rad8raderadfrae0"
 tagexp05: !scr "ra03ra70ra80raa0rac0iod0crd8........rae0"
-tagexp06: !scr "ra03ra70ra80caa0rac0iod0crd8........kern"
-tagexp07: !scr "ra03ra70ca80caa0rac0iod0crd8........kern"
+tagexp06: !scr "ra03ra70ra80raa0rac0iod0crd8........kern"
+tagexp07: !scr "ra03ra70ca80basirac0iod0crd8........kern"
 
 }
     * = ROMSTART + (4 * 1024) + $80
     !scr "ca90"
-    * = ROMSTART + (8 * 1024) + $80
-    !scr "caa0"
-    * = ROMSTART + (12 * 1024) + $80
-    !scr "cab0"
