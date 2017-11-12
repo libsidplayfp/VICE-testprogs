@@ -31,13 +31,13 @@
 prop_init:
 	lda #0
 	jsr prop_update
-	lda #0
-	sta prop_x
-	sta prop_y
-	sta prop_state_x
-	sta prop_state_y
-	sta prop_err
-	sta prop_err + 1
+;	lda #0
+;	sta prop_x
+;	sta prop_y
+;	sta prop_state_x
+;	sta prop_state_y
+;	sta prop_err
+;	sta prop_err + 1
 	rts
 
 prop_update:
@@ -171,15 +171,15 @@ cx22_map:
 	.byt %1011
 	.byt %1111
 
-	.bss
+;	.bss
 
 prop_state_x:
-	.byt 0
+	.byte 0
 prop_state_y:
-	.byt 0
+	.byte 0
 prop_x:
-	.byt 0
+	.byte $40
 prop_y:
-	.byt 0
+	.byte $40
 prop_err:
 	.word 0
