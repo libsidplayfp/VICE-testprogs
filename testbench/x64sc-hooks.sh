@@ -65,6 +65,10 @@ function x64sc_get_options
                 exitoptions="-georam -georamsize 256"
                 georam_enabled=1
             ;;
+        "plus60k")
+                exitoptions="-memoryexphack 2"
+                plus60k_enabled=1
+            ;;
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then
@@ -195,8 +199,9 @@ function x64sc_run_exitcode
     if [ $verbose == "1" ]; then
         echo $X64SC $X64SCOPTS $X64SCOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2"
     fi
+#    $X64SC $X64SCOPTS $X64SCOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 2> /dev/null | grep "cycles elapsed" | tr '\n' '-'
+#    exitcode=${PIPESTATUS[0]}
     $X64SC $X64SCOPTS $X64SCOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
-#    $X64SC $X64SCOPTS $X64SCOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 2> /dev/null | grep "cycles elapsed"
     exitcode=$?
     if [ $verbose == "1" ]; then
         echo $X64SC "exited with: " $exitcode

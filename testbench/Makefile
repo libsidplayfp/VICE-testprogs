@@ -76,6 +76,7 @@ c64rmk2-testlist.txt: c64-testlist.in
 		| grep -v ",vicii-drean" \
 		| grep -v ",geo256k" \
 		| grep -v ",reu512k" \
+		| grep -v ",plus60k" \
 		| grep -v ".d64" \
 		| grep -v ".d81" \
 		| grep -v ".g64" \
@@ -113,6 +114,7 @@ hoxs64-testlist.txt: c64-testlist.in
 		| grep -v ",sid-old" \
 		| grep -v ",reu512k" \
 		| grep -v ",geo256k" \
+		| grep -v ",plus60k" \
 		>> hoxs64-testlist.txt
 
 emu64-testlist.txt: c64-testlist.in
@@ -125,6 +127,7 @@ emu64-testlist.txt: c64-testlist.in
 		| grep -v ",sid-new" \
 		| grep -v ",reu512k" \
 		| grep -v ",geo256k" \
+		| grep -v ",plus60k" \
 		>> emu64-testlist.txt
 
 yace-testlist.txt: c64-testlist.in
@@ -236,7 +239,7 @@ chameleon-crtoff.prg: chameleon-crtoff.asm
 	acme -f plain -o chameleon-crtoff.prg chameleon-crtoff.asm
 
 testchameleon: chameleon-helper.prg prereq
-	./testbench.sh chameleon --pal --8565early --6581
+	./testbench.sh chameleon --pal --8565early --6581 --oldcia
 
 testcham20: chameleon-helper.prg prereq
 	./testbench.sh cham20

@@ -936,6 +936,10 @@
 ../GEO-RAM/,newtest.prg,interactive,0,geo256k
 ../GEO-RAM/,newtest-auto.prg,exitcode,80000000,geo256k
 ################################################################################
+# plus60k
+################################################################################
+../plus60k/,test.prg,exitcode,10000000,plus60k
+################################################################################
 # 1541 Drive
 # ../drive runtime 8 minutes and 20 seconds (x64sc)
 # ../drive runtime 93 minutes and 36 seconds (chameleon)

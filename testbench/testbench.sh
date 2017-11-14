@@ -176,6 +176,7 @@ function resetflags
 {
     reu_enabled=0
     georam_enabled=0
+    plus60k_enabled=0
     new_sid_enabled=0
     new_cia_enabled=0
 }
