@@ -79,6 +79,18 @@ start:
 end:
 	ldx #$37
 	stx $01
+
+    ldy #5
+    ldx #0
+    lda $0400
+    cmp #$13
+    beq +
+    ldy #2
+    ldx #$ff
++
+    sty $d020
+    stx $d7ff
+
 	cli
 	rts
 
