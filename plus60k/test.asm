@@ -79,18 +79,16 @@ start:
 end:
 	ldx #$37
 	stx $01
-
-    ldy #5
-    ldx #0
-    lda $0400
-    cmp #$13
-    beq +
-    ldy #2
-    ldx #$ff
-+
-    sty $d020
-    stx $d7ff
-
+	ldy #5
+	ldx #0
+	lda $0400
+	cmp #$13
+	beq store_result
+	ldy #2
+	ldx #$ff
+store_result:
+	sty $d020
+	stx $d7ff
 	cli
 	rts
 
