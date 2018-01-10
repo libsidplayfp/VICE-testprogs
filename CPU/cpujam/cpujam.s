@@ -40,7 +40,7 @@ dojam:
         jmp *
 
 eaeahook:
-        ; if we come here, the JAM did behave lile JMP or JSR
+        ; if we come here, the JAM did behave like JMP or JSR
         lda #2
         sta $d020
         jmp *
