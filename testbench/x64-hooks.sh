@@ -70,6 +70,10 @@ function x64_get_options
                 exitoptions="-memoryexphack 2"
                 plus60k_enabled=1
             ;;
+        "plus256k")
+                exitoptions="-memoryexphack 3"
+                plus256k_enabled=1
+            ;;
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then
