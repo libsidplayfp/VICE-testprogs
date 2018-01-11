@@ -703,23 +703,23 @@
 # ../C64/carts runtime 0 minutes and 44 seconds (chameleon)
 ################################################################################
 ../C64/autostart/cartio/,test.prg,interactive,0
-../C64/autostart/defaults/,,exitcode,100000000,mountcrt:test.crt
+../C64/autostart/defaults/,,exitcode,3000000,mountcrt:test.crt
 #TODO:
 #../C64/carts/,exos.prg
 ../C64/carts/,mmcrplugin.prg,interactive,0
-../C64/carts/,,exitcode,100000000,mountcrt:8kgame.crt
-../C64/carts/,,exitcode,100000000,mountcrt:16kgame.crt
+../C64/carts/,,exitcode,2500000,mountcrt:8kgame.crt
+../C64/carts/,,exitcode,2500000,mountcrt:16kgame.crt
 #TODO: do more research and make a proper automatic test
 ../C64/carts/,mmcr-64krom.crt,interactive,0
-../C64/carts/,,exitcode,100000000,mountcrt:romram.crt
-../C64/carts/pagefox,,exitcode,100000000,mountcrt:writeram-8000.crt
-../C64/carts/pagefox,,exitcode,100000000,mountcrt:writeram-a000.crt
-../C64/carts/pagefox,,exitcode,100000000,mountcrt:godot.crt
-../C64/carts/ef-test/,,exitcode,100000000,mountcrt:ef_test.crt
+../C64/carts/,,exitcode,100000,mountcrt:romram.crt
+../C64/carts/pagefox,,exitcode,100000,mountcrt:writeram-8000.crt
+../C64/carts/pagefox,,exitcode,100000,mountcrt:writeram-a000.crt
+../C64/carts/pagefox,,exitcode,500000,mountcrt:godot.crt
+../C64/carts/ef-test/,,exitcode,500000,mountcrt:ef_test.crt
 ../C64/carts/rr-freeze/,rr-freeze.crt,interactive,0
 ../C64/carts/nordicpower/,nptest.crt,interactive,0
 ../C64/carts/nordicpower/,rrtest.crt,interactive,0
-../C64/carts/supergames/,,exitcode,100000000,mountcrt:supergames.crt
+../C64/carts/supergames/,,exitcode,100000,mountcrt:supergames.crt
 #TODO: make this automatic
 ../C64/carts/tamtest/,tamtest.crt,interactive,0
 ../C64/carts/ultimax,ultimax-ef.crt,interactive,0
@@ -750,6 +750,10 @@
 ################################################################################
 # plus60k
 ################################################################################
+################################################################################
+# plus256k
+################################################################################
+../plus256k/,test.prg,exitcode,200000000,plus256k
 ################################################################################
 # 1541 Drive
 # ../drive runtime 8 minutes and 20 seconds (x64sc)
