@@ -87,7 +87,7 @@ xtmp:       ldx #0
             sta sptr+1
             
             ldy #0
-            lda #$de
+            lda #$df
             jsr puthex
             lda #$00
             jsr puthex
