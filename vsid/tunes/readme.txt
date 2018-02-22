@@ -84,6 +84,15 @@ DEMOS/Commodore/C64_Christmas_Album_BASIC.sid - BASIC tune with sub tunes
 GAMES/M-R/Othello_BASIC.sid - BASIC tune with sub tunes
 
 ********************************************************************************
+* PSID format border cases
+********************************************************************************
+
+these have 256 sub tunes:
+
+MUSICIANS/B/Bond_Alan/Randomly_generated_music_BASIC.sid
+MUSICIANS/B/Bond_Alan/Randomly_generated_music_2_BASIC.sid
+
+********************************************************************************
 * technically broken rips
 ********************************************************************************
 
