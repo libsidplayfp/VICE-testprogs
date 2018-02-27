@@ -24,11 +24,11 @@ cpu-test program called 'old6502'
 
 OLD6502
 -------
-CPU(s) runnable      : old6502, new6502, c64dtv, 6509, 6510, 7501, 8500, 8501,
-                       8502, 65SC02, 65C02, 65CE02, 65802, 65816
+CPU(s) runnable      : old6502, new6502, c64dtv, 6509, 6510/7501/8500/8501/8502,
+                       65SC02, 65C02, 65CE02, 4510, 65802, 65816
 CPU(s) tested        : old6502
-CPU(s) left over     : new6502, c64dtv, 6509, 6510, 7501, 8500, 8501, 8502,
-                       65SC02, 65C02, 65CE02, 65802, 65816
+CPU(s) left over     : new6502, c64dtv, 6509, 6510/7501/8500/8501/8502,
+                       65SC02, 65C02, 65CE02, 4510, 65802, 65816
 Action when found    : Print "Your cpu is an old6502"
 Action when not found: Load "65SC02ANDUP"
 
@@ -55,10 +55,10 @@ The code used for this test is as follows:
 
 65SC02ANDUP
 -----------
-CPU(s) runnable      : new6502, c64dtv, 6509, 6510, 7501, 8500, 8501, 8502,
-                       65SC02, 65C02, 65CE02, 65802, 65816
-CPU(s) tested        : 65SC02, 65C02, 65CE02, 65802, 65816
-CPU(s) left over     : new6502, c64dtv, 6509, 6510, 7501, 8500, 8501, 8502
+CPU(s) runnable      : new6502, c64dtv, 6509, 6510/7501/8500/8501/8502,
+                       65SC02, 65C02, 65CE02, 4510, 65802, 65816
+CPU(s) tested        : 65SC02, 65C02, 65CE02, 4510, 65802, 65816
+CPU(s) left over     : new6502, c64dtv, 6509, 6510/7501/8500/8501/8502
 Action when found    : Load "65802OR65816"
 Action when not found: Load "6509"
 
@@ -86,9 +86,9 @@ The code used for this test is as follows:
 
 65802OR65816
 ------------
-CPU(s) runnable      : 65SC02, 65C02, 65CE02, 65802, 65816
+CPU(s) runnable      : 65SC02, 65C02, 65CE02, 4510, 65802, 65816
 CPU(s) tested        : 65802, 65816
-CPU(s) left over     : 65SC02, 65C02, 65CE02
+CPU(s) left over     : 65SC02, 65C02, 65CE02, 4510
 Action when found    : Load "65816"
 Action when not found: Load "65CE02"
 
@@ -99,7 +99,7 @@ The code used for this test is as follows:
 * = $0201
 		clc
 .byte		$e2, $01	; NOP #$01 on 65C02/65SC02, LDA ($01,S),Y on
-				; 65CE02 and SEP #$01 on 65802/65816.
+				; 65CE02/4510 and SEP #$01 on 65802/65816.
 		bcc @is_not_65802_or_65816
 @is_65802_or_65816:
 		lda #$01
@@ -113,21 +113,21 @@ The code used for this test is as follows:
 
 65CE02
 ------
-CPU(s) runnable      : 65SC02, 65C02, 65CE02
-CPU(s) tested        : 65CE02
+CPU(s) runnable      : 65SC02, 65C02, 65CE02, 4510
+CPU(s) tested        : 65CE02, 4510
 CPU(s) left over     : 65SC02, 65C02
-Action when found    : Print "Your cpu is a 65CE02"
+Action when found    : Load "4510"
 Action when not found: Load "65SC02"
 
-This program tests for the extra Z register of the 65CE02.
+This program tests for the extra Z register of the 65CE02/4510.
 
 The code used for this test is as follows:
 
 * = $0201
 .byte		$a3, $A3	; NOP NOP on 65C02/65SC02 and
-				; LDZ #$A3 on 65CE02
+				; LDZ #$A3 on 65CE02/4510
 		lda #$00
-.byte		$6b		; NOP on 65C02/65SC02 and TZA on 65CE02
+.byte		$6b		; NOP on 65C02/65SC02 and TZA on 65CE02/4510
 		cmp #$00
 		beq @is_not_65CE02
 @is_65CE02:
@@ -139,6 +139,27 @@ The code used for this test is as follows:
 		sta $0200
 		rts
 
+
+4510
+----
+CPU(s) runnable      : 65CE02, 4510
+CPU(s) tested        : 4510
+CPU(s) left over     : 65CE02
+Action when found    : Print "Your cpu is a 4510"
+Action when not found: Print "Your cpu is a 65CE02"
+
+This program tests for the map instruction of the 4510.
+
+The code used for this test is as follows:
+
+* = $0201
+		lda #$00
+.byte		$5c		; MAP on 4510 and
+				; 4 byte NOP on 65CE02
+		lda #$01
+		nop
+		sta $0200
+		rts
 
 65SC02
 ------
@@ -214,9 +235,9 @@ The code used for this test is as follows:
 
 6509
 ----
-CPU(s) runnable      : new6502, c64dtv, 6509, 6510, 7501, 8500, 8501, 8502
+CPU(s) runnable      : new6502, c64dtv, 6509, 6510/7501/8500/8501/8502
 CPU(s) tested        : 6509
-CPU(s) left over     : new6502, c64dtv, 6510, 7501, 8500, 8501, 8502
+CPU(s) left over     : new6502, c64dtv, 6510/7501/8500/8501/8502
 Action when found    : Print "Your cpu is a 6509"
 Action when not found: Load "NEW6502"
 
@@ -282,9 +303,9 @@ The code used for this test is as follows:
 
 NEW6502
 -------
-CPU(s) runnable      : new6502, c64dtv, 6510, 7501, 8500, 8501, 8502
+CPU(s) runnable      : new6502, c64dtv, 6510/7501/8500/8501/8502
 CPU(s) tested        : new6502
-CPU(s) left over     : c64dtv, 6510, 7501, 8500, 8501, 8502
+CPU(s) left over     : c64dtv, 6510/7501/8500/8501/8502
 Action when found    : Print "Your cpu is a NEW6502"
 Action when not found: Load "C64DTV"
 
@@ -323,11 +344,11 @@ The code used for this test is as follows:
 
 C64DTV
 ------
-CPU(s) runnable      : c64dtv, 6510, 7501, 8500, 8501, 8502
+CPU(s) runnable      : c64dtv, 6510/7501/8500/8501/8502
 CPU(s) tested        : c64dtv
-CPU(s) left over     : 6510, 7501, 8500, 8501, 8502
+CPU(s) left over     : 6510/7501/8500/8501/8502
 Action when found    : Print "Your cpu is a C64DTV"
-Action when not found: Load "6510OR8500"
+Action when not found: Print "Your cpu is a 6510/7501/8500/8501/8502"
 
 This program tests for the unability to set the upper two bits of $00.
 
@@ -351,98 +372,3 @@ The code used for this test is as follows:
 	stx $0200
 	cli
 	rts
-
-
-6510OR8500
-----------
-CPU(s) runnable      : 6510, 7501, 8500, 8501, 8502
-CPU(s) tested        : 6510, 8500
-CPU(s) left over     : 7501, 8501, 8502
-Action when found    : Print "Your cpu is a 6510/8500"
-Action when not found: Load "8502"
-
-This program tests for the ability to set bit 6 of $01 when in input mode.
-
-The code used for this test is as follows:
-
-* = $0201
-	sei
-	lda $01
-	pha
-	lda $00
-	pha
-	lda #$00
-	sta $00
-	lda $01
-	and #$40
-	cmp #$40
-	beq @is_not_6510or8500
-	lda #$40
-	sta $01
-	lda $01
-	and #$40
-	cmp #$40
-	bne @is_not_6510or8500
-@is_6510or8500:
-	ldx #$01
-	bne @end_6510or8500
-@is_not_6510or8500:
-	ldx #$00
-@end_6510or8500:
-	pla
-	sta $00
-	pla
-	sta $01
-	stx $0200
-	cli
-	rts
-
-
-8502
-----
-CPU(s) runnable      : 7501, 8501, 8502
-CPU(s) tested        : 8502
-CPU(s) left over     : 7501, 8501
-Action when found    : Print "Your cpu is a 8502"
-Action when not found: Print "Your cpu is a 7501/8501"
-
-This program tests for the ability to set bit 7 of $01 when in input mode.
-
-The code used for this test is as follows:
-
-* = $0201
-	sei
-	lda $01
-	pha
-	lda $00
-	pha
-	lda #$00
-	sta $00
-	lda $01
-	and #$80
-	cmp #$80
-	beq @is_not_8502
-	lda #$80
-	sta $01
-	lda $01
-	and #$80
-	cmp #$80
-	bne @is_not_8502
-@is_85020:
-	ldx #$01
-	bne @end_8502
-@is_8502:
-	ldx #$00
-@end_8502:
-	pla
-	sta $00
-	pla
-	sta $01
-	stx $0200
-	cli
-	rts
-
-In the future the difference between the 6510 and 8500 might be determined by
-the rate of $01 unused bits drop-off when more information is known.
-
-How to determine the difference between the 7501 and 8501 is currently unknown.
