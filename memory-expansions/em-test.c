@@ -107,6 +107,10 @@ static emd_test_t drivers[] = {
     { '0', "CBM6x0/7x0 RAM in bank 2", "cbm610-ram.emd" },
 #endif
 
+#if defined(__VIC20__)
+    { '0', "VIC20 RAM at $a000", "vic20-rama.emd" },
+#endif
+
     { 0, NULL, NULL }
 };
 
