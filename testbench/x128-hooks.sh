@@ -62,6 +62,10 @@ function x128_get_options
                 exitoptions="-georam -georamsize 256"
                 georam_enabled=1
             ;;
+        "c64dqbb")
+                exitoptions="-go64 -dqbb"
+                dqbb_enabled=1
+            ;;
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then

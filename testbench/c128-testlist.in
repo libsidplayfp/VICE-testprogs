@@ -32,4 +32,4 @@
 ../sfx_soundsampler/,c128-test.prg,interactive,0
 ../ramcart/,rc128um.d64,interactive,0
 ../userportrtc/,testrtc-c128.prg,interactive,0
-../memory-expansions/,memory-tests.d64,interactive,0
+../memory-expansions/,c64-dqbb-emd.prg,exitcode,75000000,c64dqbb

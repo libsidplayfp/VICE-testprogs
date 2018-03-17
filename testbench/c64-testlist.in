@@ -1019,5 +1019,5 @@
 #../RS232/,test1.prg
 #../RTC/,ds12c887.prg
 #../MIDI/,midi-out-irq-test.prg
-../memory-expansions/,memory-tests.d64,interactive,0
+../memory-expansions/,c64-dqbb-emd.prg,exitcode,75000000,dqbb
 #../cp-clockf83/cp-clockf83.d64
