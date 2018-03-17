@@ -4,20 +4,48 @@
 #include <errno.h>
 #include <conio.h>
 #include <em.h>
+#include <peekpoke.h>
 
 #define FORCE_ERROR1 0
 #define FORCE_ERROR2 0
+
+/* debug cart poke addresses for different platforms */
+#if defined(__C64__) || defined(__C128__)
+#define DEBUG_CART_ADDR 0xd7ff
+#endif
+
+#if defined(__CBM510__) || defined(__CBM610__)
+#define DEBUG_CART_ADDR 0xdaff
+#endif
+
+#ifdef __PET__
+#define DEBUG_CART_ADDR 0x8bff
+#endif
+
+#if defined(__C16__) || defined(__PLUS4__)
+#define DEBUG_CART_ADDR 0xfdcf
+#endif
+
+#ifdef __VIC20__
+#define DEBUG_CART_ADDR 0x910f
+#endif
+
+#if defined(__CBM610__) || defined(__CBM510__)
+#define DEBUGPOKE(x, y) pokebsys(x, y)
+#else
+#define DEBUGPOKE(x, y) POKE(x, y)
+#endif
 
 #define PAGE_SIZE       128                     /* Size in words */
 #define BUF_SIZE        (PAGE_SIZE + PAGE_SIZE/2)
 static unsigned buf[BUF_SIZE];
 
-
+extern char emd_test;
 
 static void cleanup (void)
 /* Remove the driver on exit */
 {
-    em_unload ();
+    em_uninstall();
 }
 
 
@@ -44,112 +72,29 @@ static void cmp (unsigned page, register const unsigned* buf,
 #ifdef __ATARI__
             cgetc ();
 #endif
+#ifdef DEBUG_CART_ADDR
+            DEBUGPOKE(DEBUG_CART_ADDR, 0xff);
+#endif
             exit (EXIT_FAILURE);
         }
     }
 }
 
-typedef struct emd_test_s {
-    char key;
-    char *displayname;
-    char *drivername;
-} emd_test_t;
-
-static emd_test_t drivers[] = {
-
-#if defined(__APPLE2__)
-    { '0', "Apple II auxiliary memory", "a2.auxmem.emd" },
-#endif
-
-#if defined(__APPLE2ENH__)
-    { '0', "Apple II auxiliary memory", "a2e.auxmem.emd" },
-#endif
-
-#if defined(__ATARI__)
-    { '0', "Atari 130XE memory", "atr130.emd" },
-#endif
-
-#if defined(__ATARIXL__)
-    { '0', "Atari 130XE memory", "atrx130.emd" },
-#endif
-
-#if defined(__C16__)
-    { '0', "C16 RAM above $8000", "c16-ram.emd" },
-#endif
-
-#if defined(__C64__)
-    { '0', "C64 RAM above $D000", "c64-ram.emd" },
-    { '1', "C64 256K", "c64-c256k.emd" },
-    { '2', "Double Quick Brown Box", "c64-dqbb.emd" },
-    { '3', "GEORAM", "c64-georam.emd" },
-    { '4', "Isepic", "c64-isepic.emd" },
-    { '5', "RamCart", "c64-ramcart.emd" },
-    { '6', "REU", "c64-reu.emd" },
-    { '7', "C128 VDC (in C64 mode)", "c64-vdc.emd" },
-    { '8', "C64DTV himem", "dtv-himem.emd" },
-    { '9', "65816 extra banks", "c64-65816.emd" },
-#endif
-
-#if defined(__C128__)
-    { '0', "C128 RAM in bank 1", "c128-ram.emd" },
-    { '1', "C128 RAM in banks 1, 2 & 3", "c128-ram2.emd" },
-    { '2', "GEORAM", "c128-georam.emd" },
-    { '3', "RamCart", "c128-ramcart.emd" },
-    { '4', "REU", "c128-reu.emd" },
-    { '5', "VDC", "c128-vdc.emd" },
-#endif
-
-#if defined(__CBM510__)
-    { '0', "CBM5x0 RAM in bank 2", "cbm510-ram.emd" },
-#endif
-
-#if defined(__CBM610__)
-    { '0', "CBM6x0/7x0 RAM in bank 2", "cbm610-ram.emd" },
-#endif
-
-#if defined(__VIC20__)
-    { '0', "VIC20 RAM at $a000", "vic20-rama.emd" },
-#endif
-
-    { 0, NULL, NULL }
-};
-
 int main (void)
 {
-    unsigned char Res;
     unsigned I;
     unsigned Offs;
     unsigned PageCount;
     unsigned char X, Y;
     struct em_copy c;
-    unsigned index;
-    signed char valid_key = -1;
-    char key;
 
     clrscr ();
-    cputs ("Which RAM exp to test?\r\n\r\n");
-    for (index = 0; drivers[index].key; ++index) {
-        cprintf("%c: %s\r\n", drivers[index].key, drivers[index].displayname);
-    }
-
-    while (valid_key < 0) {
-        key = cgetc();
-        for (index = 0; drivers[index].key && valid_key < 0; ++index) {
-            if (key == drivers[index].key) {
-                valid_key = index;
-            }
-        }
-    }
-
-    clrscr ();
-    Res = em_load_driver (drivers[valid_key].drivername);
-    if (Res != EM_ERR_OK) {
-        cprintf ("Error in em_load_driver: %u\r\n", Res);
-        cprintf ("os: %u, %s\r\n", _oserror, _stroserror (_oserror));
-#ifdef __ATARI__
-        cgetc ();
+    if (em_install(&emd_test) != EM_ERR_OK) {
+       cprintf("Hardware not found\r\n");
+#ifdef DEBUG_CART_ADDR
+        DEBUGPOKE(DEBUG_CART_ADDR, 0xff);
 #endif
-        exit (EXIT_FAILURE);
+       exit (EXIT_FAILURE);
     }
     atexit (cleanup);
 
@@ -264,6 +209,9 @@ int main (void)
     cgetc ();
 #endif
 
-    return 0;
+#ifdef DEBUG_CART_ADDR
+        DEBUGPOKE(DEBUG_CART_ADDR, 0);
+#endif
 
+    return 0;
 }
