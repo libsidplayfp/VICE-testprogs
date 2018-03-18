@@ -62,6 +62,22 @@ function x128_get_options
                 exitoptions="-georam -georamsize 256"
                 georam_enabled=1
             ;;
+        "efnram")
+                exitoptions="-extfunc 2"
+                extfuncram_enabled=1
+            ;;
+        "ifnram")
+                exitoptions="-intfunc 2"
+                intfuncram_enabled=1
+            ;;
+        "c128fullbanks")
+                exitoptions="-c128fullbanks"
+                fullbanks_enabled=1
+            ;;
+        "ramcart128k")
+                exitoptions="-ramcart -ramcartsize 128"
+                ramcart_enabled=1
+            ;;
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then

@@ -52,6 +52,9 @@ function xvic_get_options
         "vic20-8k")
                 exitoptions="-memory 8k"
             ;;
+        "vic20-32k")
+                exitoptions="-memory all"
+            ;;
         "geo256k")
                 exitoptions="-georam -georamsize 256"
                 georam_enabled=1

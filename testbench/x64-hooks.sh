@@ -78,6 +78,14 @@ function x64_get_options
                 exitoptions="-dqbb"
                 dqbb_enabled=1
             ;;
+        "ramcart128k")
+                exitoptions="-ramcart -ramcartsize 128"
+                ramcart_enabled=1
+            ;;
+        "isepic")
+                exitoptions="-isepicswitch -isepic"
+                isepic_enabled=1
+            ;;
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then

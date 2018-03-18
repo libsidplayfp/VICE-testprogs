@@ -174,11 +174,16 @@ function gettestsfortarget
 # reset all flags used for options per test
 function resetflags
 {
+    isepic_enabled=0
+    fullbanks_enabled=0
+    ramcart_enabled=0
     reu_enabled=0
     georam_enabled=0
     dqbb_enabled=0
     plus60k_enabled=0
     plus256k_enabled=0
+    extfuncram_enabled=0
+    intfuncram_enabled=0
     new_sid_enabled=0
     new_cia_enabled=0
 }
