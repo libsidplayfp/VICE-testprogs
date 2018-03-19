@@ -129,3 +129,4 @@
 # Memory expansions
 ################################################################################
 ../memory-expansions/,vic20-rama-emd.prg,exitcode,23000000,vic20-32k
+../memory-expansions/,vic20-georam-emd.prg,exitcode,280000000,geo256k

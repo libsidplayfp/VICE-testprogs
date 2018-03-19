@@ -18,7 +18,8 @@ PROGS=\
 	c16-ram-emd.prg \
 	cbm510-ram-emd.prg \
 	cbm610-ram-emd.prg \
-	vic20-rama-emd.prg
+	vic20-rama-emd.prg \
+	vic20-georam-emd.prg
 
 all:	$(PROGS)
 
@@ -201,6 +202,15 @@ vic20-rama-emd.o:	vic20-rama-emd.s
 
 vic20-rama-emd.s: $(shell cl65 --print-target-path)/vic20/drv/emd/vic20-rama.emd
 	co65 -o vic20-rama-emd.s --code-label _emd_test $(shell cl65 --print-target-path)/vic20/drv/emd/vic20-rama.emd
+
+vic20-georam-emd.prg:	vic20-georam-emd.o em-test.c
+	cl65 -t vic20 -C vic20-32k.cfg -o vic20-georam-emd.prg em-test.c vic20-georam-emd.o
+
+vic20-georam-emd.o:	vic20-georam-emd.s
+	ca65 vic20-georam-emd.s
+
+vic20-georam-emd.s: $(shell cl65 --print-target-path)/vic20/drv/emd/vic20-georam.emd
+	co65 -o vic20-georam-emd.s --code-label _emd_test $(shell cl65 --print-target-path)/vic20/drv/emd/vic20-georam.emd
 
 clean:
 	rm -f *.o
