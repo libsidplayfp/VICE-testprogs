@@ -501,7 +501,7 @@ store_sid:
 
 setup_sid:
         lda     #$00
-        ldx     #$00
+        tax
 @l:
         jsr     store_sid
         inx

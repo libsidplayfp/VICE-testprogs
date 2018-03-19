@@ -109,10 +109,12 @@ static void test_c64dtv(void)
     temp1 = PEEK(0xD040);
     POKE(0xD000, PEEK(0xD000) + 1);
     temp2 = PEEK(0xD000);
-    if (PEEK(0xD040) == temp1)
+    if (PEEK(0xD040) == temp1) {
         isc64dtv = 1;
-    if (PEEK(0xD040) == temp2)
+    }
+    if (PEEK(0xD040) == temp2) {
         isc64dtv = 0;
+    }
     POKE(0xD03F, 0);
 }
 #endif

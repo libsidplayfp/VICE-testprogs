@@ -184,7 +184,7 @@ store_sid:
 
 _sid_output_init:
         lda     #$00
-        ldx     #$00
+        tax
 @l:
         jsr     store_sid
         inx
