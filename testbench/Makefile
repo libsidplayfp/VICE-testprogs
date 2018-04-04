@@ -6,6 +6,7 @@ all: prereq
 	echo "testall           - run all VICE tests"
 	echo "testx64"
 	echo "testx64sc"
+	echo "testx128c64"
 	echo "testx128"
 	echo "testxscpu64"
 	echo "testx64dtv"
@@ -38,6 +39,7 @@ cmpscreens: cmpscreens.c
 testlist: \
 	x64-testlist.txt \
 	x64sc-testlist.txt \
+	x128c64-testlist.txt \
 	chameleon-testlist.txt \
 	c64rmk2-testlist.txt \
 	hoxs64-testlist.txt \
@@ -63,9 +65,17 @@ x64sc-testlist.txt: c64-testlist.in
 	echo "# this is a generated file, do not edit." >  x64sc-testlist.txt
 	cat  c64-testlist.in >> x64sc-testlist.txt
 
+x128c64-testlist.txt: c64-testlist.in
+	echo "# this is a generated file, do not edit." >  x128c64-testlist.txt
+	cat  c64-testlist.in \
+		| grep -v ",vicii-ntscold" \
+		| grep -v ",vicii-drean" \
+		>> x128c64-testlist.txt
+
 chameleon-testlist.txt: c64-testlist.in
 	echo "# this is a generated file, do not edit." >  chameleon-testlist.txt
 	cat  c64-testlist.in \
+		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
 		>> chameleon-testlist.txt
 
@@ -185,6 +195,7 @@ vsid-testlist.txt: vsid-testlist.in
 testall: \
 	testx64 \
 	testx64sc \
+	testx128c64 \
 	testx128 \
 	testxscpu64 \
 	testx64dtv \
@@ -200,6 +211,9 @@ testx64: prereq
 
 testx64sc: prereq
 	./testbench.sh x64sc
+
+testx128c64: prereq
+	./testbench.sh x128c64
 
 testx128: prereq
 	./testbench.sh x128

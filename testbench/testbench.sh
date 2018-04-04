@@ -28,6 +28,7 @@ source "./c64rmk2-hooks.sh"
 source "./x64-hooks.sh"
 source "./x64sc-hooks.sh"
 source "./x128-hooks.sh"
+source "./x128c64-hooks.sh"
 source "./xscpu64-hooks.sh"
 source "./x64dtv-hooks.sh"
 source "./xpet-hooks.sh"
@@ -51,6 +52,9 @@ function checktarget
                 target="$1"
             ;;
         x64sc)
+                target="$1"
+            ;;
+        x128c64)
                 target="$1"
             ;;
         chameleon)
@@ -424,7 +428,7 @@ function showhelp
 {
     echo $NAME" - run test programs."
     echo "usage: "$NAME" [target] <filter> <options>"
-    echo "  targets: x64, x64sc, x128, xscpu64, x64dtv, xpet, xcbm2, xcbm5x0, xvic, xplus4, vsid,"
+    echo "  targets: x64, x64sc, x128c64, x128, xscpu64, x64dtv, xpet, xcbm2, xcbm5x0, xvic, xplus4, vsid,"
     echo "           chameleon, cham20, c64rmk2, hoxs64, micro64, emu64, yace"
     echo "  <filter> is a substring of the path of tests to restrict to"
     echo "  --help       show this help"
