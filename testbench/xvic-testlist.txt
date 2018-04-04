@@ -126,3 +126,8 @@
 ../audio-io/,audio-io-vic20.prg,interactive,0
 ../sfx_soundsampler/,vic20-test.prg,interactive,0
 ../userportrtc/,testrtc-vic20.prg,interactive,0
+################################################################################
+# Memory expansions
+################################################################################
+../memory-expansions/,vic20-rama-emd.prg,exitcode,23000000,vic20-32k
+../memory-expansions/,vic20-georam-emd.prg,exitcode,280000000,geo256k

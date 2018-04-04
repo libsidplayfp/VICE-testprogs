@@ -830,5 +830,8 @@
 #../RS232/,test1.prg
 #../RTC/,ds12c887.prg
 #../MIDI/,midi-out-irq-test.prg
-../memory-expansions/,memory-tests.d64,interactive,0
+../memory-expansions/,c64-dqbb-emd.prg,exitcode,37000000,dqbb
+../memory-expansions/,c64-ram.prg,exitcode,29000000
+../memory-expansions/,c64-ramcart-emd.prg,exitcode,160000000,ramcart128k
+../memory-expansions/,c64-isepic-emd.prg,exitcode,18000000,isepic
 #../cp-clockf83/cp-clockf83.d64
