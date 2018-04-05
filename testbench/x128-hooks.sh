@@ -1,5 +1,4 @@
 
-X128="$VICEDIR"/x128
 X128OPTS+=" -default"
 X128OPTS+=" -VICIIfilter 0"
 X128OPTS+=" -VICIIextpal"
@@ -22,6 +21,11 @@ X128SYO=35
 
 X128REFSXO=32
 X128REFSYO=35
+
+function x128_check_environment
+{
+    X128="$EMUDIR"x128
+}
 
 # $1  option
 # $2  test path

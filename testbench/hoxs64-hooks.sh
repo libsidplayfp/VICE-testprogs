@@ -1,16 +1,5 @@
 
 
-if [ `uname` == "Linux" ]
-then
-export WINEDEBUG=-all
-HOXS64="wine"
-HOXS64+=" $VICEDIR""/hoxs64.exe"
-else
-HOXS64="$VICEDIR"/hoxs64.exe
-#HOXS64=hoxs64
-fi
-
-
 # FIXME: set default config, old c64, pepto palette
 HOXS64OPTS+=" -defaultsettings"
 HOXS64OPTS+=" -runfast"
@@ -28,6 +17,23 @@ HOXS64SYO=35
 
 HOXS64REFSXO=32
 HOXS64REFSYO=35
+
+function hoxs64_check_environment
+{
+    if [ `uname` == "Linux" ]
+    then
+        if ! [ -x "$(command -v wine)" ]; then
+            echo 'Error: wine not installed.' >&2
+            exit 1
+        fi
+        export WINEDEBUG=-all
+        HOXS64="wine"
+        HOXS64+=" $EMUDIR"hoxs64.exe
+    else
+        HOXS64="$EMUDIR"hoxs64.exe
+        #HOXS64=hoxs64
+    fi
+}
 
 # $1  option
 # $2  test path

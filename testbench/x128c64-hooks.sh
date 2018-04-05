@@ -1,5 +1,4 @@
 
-X128C64="$VICEDIR"/x128
 X128C64OPTS+=" -default"
 X128C64OPTS+=" -go64"
 X128C64OPTS+=" -VICIIfilter 0"
@@ -27,6 +26,11 @@ X128C64SYO=35
 # the same for the reference screenshots
 X128C64REFSXO=32
 X128C64REFSYO=35
+
+function x128c64_check_environment
+{
+    X128C64="$EMUDIR"x128
+}
 
 # $1  option
 # $2  test path

@@ -1,6 +1,4 @@
 
-#MICRO64="$VICEDIR"/micro64
-MICRO64=micro64
 # FIXME: set default config, old c64, pepto palette
 MICRO64OPTS+=" -PAL"
 MICRO64OPTS+=" +VICSINGLEPIXELCLOCK"
@@ -20,6 +18,15 @@ MICRO64SYO=40
 
 MICRO64REFSXO=32
 MICRO64REFSYO=35
+
+function micro64_check_environment
+{
+    MICRO64="$EMUDIR"micro64
+    if ! [ -x "$(command -v $MICRO64)" ]; then
+        echo 'Error: '$MICRO64' not found.' >&2
+        exit 1
+    fi
+}
 
 # $1  option
 # $2  test path

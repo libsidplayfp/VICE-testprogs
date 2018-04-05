@@ -193,7 +193,7 @@ called "trunk" which resides in the same directory as the "testprogs"
 directory. if that is not the case you can give the VICE directory on the
 commandline like this:
 
-$ VICEDIR=/c/users/youruser/somedir/WinVICE-2.4.99 ./testbench x64
+$ EMUDIR=/c/users/youruser/somedir/WinVICE-2.4.99 ./testbench x64
 
 --------------------------------------------------------------------------------
 ================================================================================
@@ -236,7 +236,7 @@ TODO: add support for more emulators and "real" hardware. if you are a emulator-
 make sure to give the full path to the emulator binary, and use the respective 
 switches to skip tests that make no sense and/or can not work.
 
-$ VICEDIR="/c/hoxs64_x64_1_0_9_3_sr1" ./testbench.sh hoxs64 --pal --8565early --8580
+$ EMUDIR="/c/hoxs64_x64_1_0_9_3_sr1" ./testbench.sh hoxs64 --pal --8565early --8580
 
 --------------------------------------------------------------------------------
 ================================================================================

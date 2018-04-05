@@ -1,5 +1,4 @@
 
-XCBM2="$VICEDIR"/xcbm2
 XCBM2OPTS+=" -default"
 XCBM2OPTS+=" -model 610"
 XCBM2OPTS+=" -virtualdev"
@@ -25,6 +24,11 @@ XCBM2SYO=35
 
 XCBM2REFSXO=32
 XCBM2REFSYO=35
+
+function xcbm2_check_environment
+{
+    XCBM2="$EMUDIR"xcbm2
+}
 
 # $1  option
 # $2  test path

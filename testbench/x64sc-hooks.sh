@@ -1,5 +1,4 @@
 
-X64SC="$VICEDIR"/x64sc
 X64SCOPTS+=" -default"
 #X64SCOPTS+=" -model c64c"
 #X64SCOPTS+=" -model c64 -ntsc "
@@ -25,6 +24,11 @@ X64SCSYO=35
 
 X64SCREFSXO=32
 X64SCREFSYO=35
+
+function x64sc_check_environment
+{
+    X64SC="$EMUDIR"x64sc
+}
 
 # $1  option
 # $2  test path

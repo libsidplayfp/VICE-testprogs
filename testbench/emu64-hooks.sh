@@ -1,6 +1,5 @@
 
-#EMU64="$VICEDIR"/emu64
-EMU64=emu64
+
 #EMU64OPTS+=" -default"
 #EMU64OPTS+=" -VICIIfilter 0"
 #EMU64OPTS+=" -VICIIextpal"
@@ -25,6 +24,12 @@ EMU64SYO=35
 # the same for the reference screenshots
 EMU64REFSXO=32
 EMU64REFSYO=35
+
+
+function emu64_check_environment
+{
+    EMU64="$EMUDIR"emu64
+}
 
 # $1  option
 # $2  test path

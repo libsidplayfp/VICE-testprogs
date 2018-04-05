@@ -1,5 +1,4 @@
 
-XVIC="$VICEDIR"/xvic
 XVICOPTS+=" -default"
 XVICOPTS+=" -VICfilter 0"
 XVICOPTS+=" -VICextpal"
@@ -23,6 +22,11 @@ XVICSYO=48
 
 XVICREFSXO=96
 XVICREFSYO=48
+
+function xvic_check_environment
+{
+    XVIC="$EMUDIR"xvic
+}
 
 # $1  option
 # $2  test path

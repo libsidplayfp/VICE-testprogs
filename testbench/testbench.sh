@@ -13,11 +13,6 @@ videosubtype=""
 sidtype=""
 ciatype=""
 memoryexpansion=""
-if [ "$VICEDIR" == "" ] ; then
-	VICEDIR="../../trunk/vice/src"
-else
-	echo "using VICEDIR="$VICEDIR
-fi
 
 # globals set by utility functions that can be used in the hooks
 refscreenshotname=""
@@ -532,6 +527,50 @@ do
     
 done
 
+if [ "$EMUDIR" == "" ] ; then
+    case "$target" in
+        x64)
+                EMUDIR="../../trunk/vice/src/"
+            ;;
+        x64sc)
+                EMUDIR="../../trunk/vice/src/"
+            ;;
+        x128c64)
+                EMUDIR="../../trunk/vice/src/"
+            ;;
+        x128)
+                EMUDIR="../../trunk/vice/src/"
+            ;;
+        xscpu64)
+                EMUDIR="../../trunk/vice/src/"
+            ;;
+        xpet)
+                EMUDIR="../../trunk/vice/src/"
+            ;;
+        xcbm5x0)
+                EMUDIR="../../trunk/vice/src/"
+            ;;
+        xcbm2)
+                EMUDIR="../../trunk/vice/src/"
+            ;;
+        xvic)
+                EMUDIR="../../trunk/vice/src/"
+            ;;
+        xplus4)
+                EMUDIR="../../trunk/vice/src/"
+            ;;
+        x64dtv)
+                EMUDIR="../../trunk/vice/src/"
+            ;;
+        vsid)
+                EMUDIR="../../trunk/vice/src/"
+            ;;
+    esac
+else
+# if EMUDIR is not empty, make sure it ends with a path seperator
+    EMUDIR+="/"
+fi
+
 if [ "$verbose" = "1" ] ; then
     echo target:"$target"
     echo filter:"$filter"
@@ -541,9 +580,12 @@ if [ "$verbose" = "1" ] ; then
     echo "SID type:" "$sidtype"
     echo "CIA type:" "$ciatype"
     echo "memory expansion:" "$memoryexpansion"
+    echo "using EMUDIR="$EMUDIR
 fi
 
 checkparams
+
+"$target"_check_environment
 
 if [ "$filter" == "" ]; then
     echo "running tests for" "$target" "(all):"

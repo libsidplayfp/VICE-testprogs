@@ -9,6 +9,26 @@ CDUMMY=.dummyfile3
 CHAM20SXO=70
 CHAM20SYO=66
 
+function cham20_check_environment
+{
+    if ! [ -x "$(command -v chacocmd)" ]; then
+        echo 'Error: chacocmd is not installed.' >&2
+        exit 1
+    fi
+    if ! [ -x "$(command -v chshot)" ]; then
+        echo 'Error: chshot is not installed.' >&2
+        exit 1
+    fi
+    if ! [ -x "$(command -v chcodenet)" ]; then
+        echo 'Error: chcodenet is not installed.' >&2
+        exit 1
+    fi
+    if ! [ -x "$(command -v chmount)" ]; then
+        echo 'Error: chmount is not installed.' >&2
+        exit 1
+    fi
+}
+
 function cham20_reset
 {
     # clear the "ready"

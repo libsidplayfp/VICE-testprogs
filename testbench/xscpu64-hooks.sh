@@ -1,5 +1,4 @@
 
-XSCPU64="$VICEDIR"/xscpu64
 XSCPU64OPTS+=" -default"
 XSCPU64OPTS+=" -VICIIfilter 0"
 XSCPU64OPTS+=" -VICIIextpal"
@@ -22,6 +21,11 @@ XSCPU64SYO=35
 
 XSCPU64REFSXO=32
 XSCPU64REFSYO=35
+
+function xscpu64_check_environment
+{
+    XSCPU64="$EMUDIR"xscpu64
+}
 
 # $1  option
 # $2  test path

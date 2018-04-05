@@ -1,5 +1,4 @@
 
-X64="$VICEDIR"/x64
 X64OPTS+=" -default"
 X64OPTS+=" -VICIIfilter 0"
 X64OPTS+=" -VICIIextpal"
@@ -26,6 +25,11 @@ X64SYO=35
 # the same for the reference screenshots
 X64REFSXO=32
 X64REFSYO=35
+
+function x64_check_environment
+{
+    X64="$EMUDIR"x64
+}
 
 # $1  option
 # $2  test path

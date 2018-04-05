@@ -1,5 +1,4 @@
 
-X64DTV="$VICEDIR"/x64dtv
 X64DTVOPTS+=" -default"
 X64DTVOPTS+=" -VICIIfilter 0"
 X64DTVOPTS+=" -VICIIextpal"
@@ -22,6 +21,11 @@ X64DTVSYO=35
 
 X64DTVREFSXO=32
 X64DTVREFSYO=35
+
+function x64dtv_check_environment
+{
+    X64DTV="$EMUDIR"x64dtv
+}
 
 # $1  option
 # $2  test path

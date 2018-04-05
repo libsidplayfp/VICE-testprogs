@@ -1,5 +1,4 @@
 
-XCBM5X0="$VICEDIR"/xcbm5x0
 XCBM5X0OPTS+=" -default"
 XCBM5X0OPTS+=" -model 510"
 XCBM2OPTS+=" -virtualdev"
@@ -25,6 +24,11 @@ XCBM5X0SYO=35
 
 XCBM5X0REFSXO=32
 XCBM5X0REFSYO=35
+
+function xcbm5x0_check_environment
+{
+    XCBM5X0="$EMUDIR"xcbm5x0
+}
 
 # $1  option
 # $2  test path

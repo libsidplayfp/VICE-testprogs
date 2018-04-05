@@ -1,7 +1,4 @@
 
-# FIXME: this shouldnt be a full path :)
-#YACE=/J/YACE/YACE/TestServer/TestServer/x64/Release/YACETest.exe
-YACE="$VICEDIR"/YACETest.exe
 #YACEOPTS+=" -default"
 #YACEOPTS+=" -VICIIfilter 0"
 #YACEOPTS+=" -VICIIextpal"
@@ -30,6 +27,11 @@ YACESYO=35
 # the same for the reference screenshots
 YACEREFSXO=32
 YACEREFSYO=35
+
+function yace_check_environment
+{
+    YACE="$EMUDIR"YACETest.exe
+}
 
 # $1  option
 # $2  test path

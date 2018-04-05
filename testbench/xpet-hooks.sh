@@ -1,5 +1,4 @@
 
-XPET="$VICEDIR"/xpet
 XPETOPTS+=" -default"
 #XPETOPTS+=" -VICIIfilter 0"
 #XPETOPTS+=" -VICIIextpal"
@@ -22,6 +21,11 @@ XPETSYO=35
 
 XPETREFSXO=32
 XPETREFSYO=35
+
+function xpet_check_environment
+{
+    XPET="$EMUDIR"xpet
+}
 
 # $1  option
 # $2  test path

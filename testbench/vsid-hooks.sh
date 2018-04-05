@@ -1,5 +1,4 @@
 
-VSID="$VICEDIR"/vsid
 VSIDOPTS+=" -default"
 #VSIDOPTS+=" -VICIIfilter 0"
 #VSIDOPTS+=" -VICIIextpal"
@@ -22,6 +21,11 @@ VSIDSYO=35
 
 VSIDREFSXO=32
 VSIDREFSYO=35
+
+function vsid_check_environment
+{
+    VSID="$EMUDIR"vsid
+}
 
 # $1  option
 # $2  test path

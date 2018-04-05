@@ -1,5 +1,4 @@
 
-XPLUS4="$VICEDIR"/xplus4
 XPLUS4OPTS+=" -default"
 #XPLUS4OPTS+=" -VICIIfilter 0"
 #XPLUS4OPTS+=" -VICIIextpal"
@@ -22,6 +21,11 @@ XPLUS4SYO=35
 
 XPLUS4REFSXO=32
 XPLUS4REFSYO=35
+
+function xplus4_check_environment
+{
+    XPLUS4="$EMUDIR"xplus4
+}
 
 # $1  option
 # $2  test path
