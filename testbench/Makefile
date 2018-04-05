@@ -55,7 +55,10 @@ testlist: \
 	xpet-testlist.txt \
 	xcbm2-testlist.txt \
 	xcbm5x0-testlist.txt \
-	vsid-testlist.txt
+	vsid-testlist.txt \
+	z64kc64-testlist.txt \
+	z64kc128-testlist.txt \
+	z64kvic20-testlist.txt
 
 x64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  x64-testlist.txt
@@ -177,10 +180,34 @@ yace-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",ramcart128k" \
 		>> yace-testlist.txt
 		
+z64kc64-testlist.txt: c64-testlist.in Makefile
+	echo "# this is a generated file, do not edit." >  z64kc64-testlist.txt
+	cat  c64-testlist.in \
+		| grep -v ",vicii-ntscold" \
+		| grep -v ",vicii-drean" \
+		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
+		>> z64kc64-testlist.txt
+		
 x128-testlist.txt: c128-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  x128-testlist.txt
 	cat  c128-testlist.in >> x128-testlist.txt
 
+z64kc128-testlist.txt: c128-testlist.in Makefile
+	echo "# this is a generated file, do not edit." >  z64kc128-testlist.txt
+	cat  c128-testlist.in \
+		| grep -v ",vicii-ntscold" \
+		| grep -v ",vicii-drean" \
+		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
+		>> z64kc128-testlist.txt
+	
 xscpu64-testlist.txt: scpu-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  xscpu64-testlist.txt
 	cat  scpu-testlist.in >> xscpu64-testlist.txt
@@ -204,6 +231,12 @@ xcbm5x0-testlist.txt: cbm510-testlist.in Makefile
 xvic-testlist.txt: vic20-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  xvic-testlist.txt
 	cat  vic20-testlist.in >> xvic-testlist.txt
+
+z64kvic20-testlist.txt: vic20-testlist.in Makefile
+	echo "# this is a generated file, do not edit." >  z64kvic20-testlist.txt
+	cat  vic20-testlist.in \
+		| grep -v ",geo256k" \
+		>> z64kvic20-testlist.txt
 
 cham20-testlist.txt: vic20-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  cham20-testlist.txt

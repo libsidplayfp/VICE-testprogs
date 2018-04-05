@@ -1,0 +1,42 @@
+# this is a generated file, do not edit.
+################################################################################
+# C128 related tests
+################################################################################
+################################################################################
+# selftest
+################################################################################
+./selftest/,c128-pass.prg,exitcode,10000000
+./selftest/,c128-fail.prg,exitcode,10000000
+#TODO:
+#../VDC
+################################################################################
+# REU
+################################################################################
+#TODO:
+#../REU/c128/
+################################################################################
+# GEO-RAM
+################################################################################
+../GEO-RAM/,georam128.prg,exitcode,10000000,geo256k
+################################################################################
+# Joystick/Mouse
+################################################################################
+../mouse/,mouse-c128-1351.prg,interactive,0
+../mouse/,mouse-c128-pot.prg,interactive,0
+../userportjoy/,testjoy_c128.prg,interactive,0
+################################################################################
+# various expansions
+################################################################################
+../audio-io/,audio-io-c128.prg,interactive,0
+../c128-cpm/,cpm3.d81,interactive,0
+../digimax/,modplay128.d81,interactive,0
+../sfx_soundsampler/,c128-test.prg,interactive,0
+../ramcart/,rc128um.d64,interactive,0
+../userportrtc/,testrtc-c128.prg,interactive,0
+../memory-expansions/,c128-efnram-emd.prg,exitcode,48000000,efnram
+../memory-expansions/,c128-ifnram-emd.prg,exitcode,48000000,ifnram
+../memory-expansions/,c128-georam-emd.prg,exitcode,300000000,geo256k
+../memory-expansions/,c128-ram-emd.prg,exitcode,86000000
+../memory-expansions/,c128-ram2-emd.prg,exitcode,280000000,c128fullbanks
+../memory-expansions/,c128-reu-emd.prg,exitcode,550000000,reu512k
+../memory-expansions/,c128-vdc-emd.prg,exitcode,81000000

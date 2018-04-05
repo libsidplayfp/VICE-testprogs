@@ -36,6 +36,9 @@ source "./hoxs64-hooks.sh"
 source "./micro64-hooks.sh"
 source "./emu64-hooks.sh"
 source "./yace-hooks.sh"
+source "./z64kc64-hooks.sh"
+source "./z64kc128-hooks.sh"
+source "./z64kvic20-hooks.sh"
 
 ###############################################################################
 
@@ -70,8 +73,14 @@ function checktarget
         yace)
                 target="$1"
             ;;
+        z64kc64)
+                target="$1"
+            ;;
     # C128 targets
         x128)
+                target="$1"
+            ;;
+        z64kc128)
                 target="$1"
             ;;
     # SCPU targets
@@ -95,6 +104,9 @@ function checktarget
                 target="$1"
             ;;
         cham20)
+                target="$1"
+            ;;
+        z64kvic20)
                 target="$1"
             ;;
     # Plus4 targets
@@ -424,7 +436,7 @@ function showhelp
     echo $NAME" - run test programs."
     echo "usage: "$NAME" [target] <filter> <options>"
     echo "  targets: x64, x64sc, x128c64, x128, xscpu64, x64dtv, xpet, xcbm2, xcbm5x0, xvic, xplus4, vsid,"
-    echo "           chameleon, cham20, c64rmk2, hoxs64, micro64, emu64, yace"
+    echo "           chameleon, cham20, c64rmk2, hoxs64, micro64, emu64, yace, z64kc64, z64kc128, z64kvic20"
     echo "  <filter> is a substring of the path of tests to restrict to"
     echo "  --help       show this help"
     echo "  --verbose    be more verbose"

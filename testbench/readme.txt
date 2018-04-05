@@ -218,10 +218,13 @@ vsid
 
 additionally some other emulators have implemented a suitable set of options:
 
-hoxs64
-micro64
-emu64
-yace
+hoxs64      - hoxs64, c64
+micro64     - micro64, c64
+emu64       - (WIP) emu64, c64 (http://www.emu64.de)
+yace        - (WIP) yace, c64
+z64kc64     - (WIP) z64k, c64 (http://www.z64k.com/)
+z64kc128    - (WIP) z64k, c128
+z64kvic20   - (WIP) z64k, vic20
 
 also some "real" hardware is supported:
 
