@@ -17,6 +17,9 @@ TODO:
 KLUDGES:
     - when crt or d64 is mounted and no .prg is given, only the path (and not
       the actual failed test) will go into the results file
+    - we need to implement some way to choose between VDC/VICII
+     - currently x128 screenshots are always from VDC
+     - currently x128c64 screenshots are always from VICII
 
 --------------------------------------------------------------------------------
 ================================================================================
@@ -57,6 +60,16 @@ the test program writes its exit code to the "debug cartridge" register,
 $00 - for success
 $ff - for failure
 
+the respective memory locations have been choosen so they will most likely never
+collide with any kind of extension.
+
+when a value was written to the debug register, the emulator should exit with
+the value written as exit code. see further down for hints on how to implement
+similar behaviour on real hardware.
+
+a typical test program will print its name on screen, and end with green or red
+border, followed by the respective write to the debug register.
+
 --------------------------------------------------------------------------------
 
 tests that have to be checked by screenshot must contain reference screenshots
@@ -69,8 +82,14 @@ subdirectory called "references". like this:
 the reference screenshots should be taken with default screen dimensions,
 with CRT emulation disabled.
 
-- for C64: use the pepto palette (vice.vpl, "Default" in menus)
-- for VIC20: use the "mike" palette
+- for C64: use the "pepto" palette (pepto-pal.vpl)
+- for VIC20: use the "mike" palette (mike-pal.vpl)
+
+typically tests that will be checked by screenshot should wait a frame before
+writing their exit code to the debug register.
+
+TODO: add support for palettes in the testlist somehow
+TODO: get rid of the border mode dependency
 
 --------------------------------------------------------------------------------
 ================================================================================
@@ -118,9 +137,17 @@ options:
     vicii-pal
     vicii-ntsc
     vicii-ntscold
+    vicii-drean
 
+    dqbb
+    ramcart128k
+    isepic
+    
     geo256k
     reu512k
+    
+    plus60k
+    plus256k
 
     mountd64:<image>
     mountg64:<image>
@@ -128,6 +155,9 @@ options:
 
     vic20-unexp
     vic20-8k
+
+TODO: when you add support for certain features that require options as above,
+      don't forget to add them here :)
 
 --------------------------------------------------------------------------------
 ================================================================================
@@ -141,8 +171,8 @@ get a list of things you can do just run "make".
 you can also run ./testbench.sh manually:
 
 usage: ./testbench.sh [target] <filter> <options>
-  targets: x64, x64sc, x128, xscpu64, xpet, xcbm2, xcbm5x0, xvic, xplus4, 
-           chameleon, hoxs64, micro64, emu64, yace
+  targets: x64, x64sc, x128c64, x128, xscpu64, x64dtv, xpet, xcbm2, xcbm5x0, xvic, xplus4, vsid, 
+           chameleon, cham20, c64rmk2, hoxs64, micro64, emu64, yace
   <filter> is a substring of the path of tests to restrict to
   --help       show this help
   --verbose    be more verbose
@@ -171,6 +201,38 @@ running tests on another supported target/emulator
 ================================================================================
 --------------------------------------------------------------------------------
 
+so far, all emulators of VICE are supported:
+
+x64
+x64sc
+x128c64     - x128 in C64 mode
+x128
+xscpu64
+x64dtv
+xpet
+xcbm2
+xcbm5x0
+xvic
+xplus4
+vsid
+
+additionally some other emulators have implemented a suitable set of options:
+
+hoxs64
+micro64
+emu64
+yace
+
+also some "real" hardware is supported:
+
+chameleon   - turbo chameleon C64 core via USB link
+cham20      - chameleon vic20 core via USB link
+c64rmk2     - C64R-MK2 via USB link
+
+TODO: add support for more emulators and "real" hardware. if you are a emulator-
+      or hardware maker - please get in touch with us!
+
+
 make sure to give the full path to the emulator binary, and use the respective 
 switches to skip tests that make no sense and/or can not work.
 
@@ -183,8 +245,10 @@ adding support for another target/emulator
 --------------------------------------------------------------------------------
 
 additional targets/emulators can be hooked up fairly easy, only a few simple
-features are needed. in case of VICE they are called like this:
+features are needed. 
 
+*** in case of VICE they are called like this, for actual emulators you will want
+    to implement something along these lines:
 
 -debugcart
   enable a virtual "debug cartridge" which consists of one write-only register.
@@ -200,12 +264,36 @@ features are needed. in case of VICE they are called like this:
   at exit, save a screenshot. this is required for the tests that can not work
   with an exitcode, ie the result can only be determined by looking at the output
 
+-exitscreenshotvicii <name>
+  same as above, for vicii screen on c128
 
 additionally, there must be a way to automatically run a program from commandline,
 and to mount disk- and cartridge images. it also helps to have a "warp" mode, and
 to be able to disable the GUI/graphics screen (but this is not strictly necessary)
 
-
 for further hints see testbench.sh and x64-hooks.sh
+
+*** for real hardware, some things might have to be handled differently:
+
+- the debug register should be implemented as a register or ram location in the
+  I/O space. the value written to it must be readable from the remote host, and
+  there must be a way to change/reset the value from the host. (the script will
+  initialize this value with something like 42 and then poll it in intervals
+  until it changes)
   
+- there must be a way to reset the target via the remote interface
+
+- there must be a way to read and write the c64 memory via the remote interface
+
+- for the screenshot based tests to work, some way to make screenshots via the
+  remote interface must be provided.
   
+- a way to change disk images, cartridge images, ROM contents etc must be
+  provided to run tests related to these.
+
+- for FPGA based platforms, it generally makes sense to expose all RAM to the
+  remote interface, including frame buffers, image storage, ROMs etc. the remote
+  host can then run a tool that does all the fancy things via a relatively 
+  simple interface to the target.
+  
+for further hints see testbench.sh and chameleon-hooks.sh
