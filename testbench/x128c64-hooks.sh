@@ -64,14 +64,14 @@ function x128c64_get_options
                 exitoptions="-georam -georamsize 256"
                 georam_enabled=1
             ;;
-        "plus60k")
-                exitoptions="-memoryexphack 2"
-                plus60k_enabled=1
-            ;;
-        "plus256k")
-                exitoptions="-memoryexphack 3"
-                plus256k_enabled=1
-            ;;
+#        "plus60k")
+#                exitoptions="-memoryexphack 2"
+#                plus60k_enabled=1
+#            ;;
+#        "plus256k")
+#                exitoptions="-memoryexphack 3"
+#                plus256k_enabled=1
+#            ;;
         "dqbb")
                 exitoptions="-dqbb"
                 dqbb_enabled=1

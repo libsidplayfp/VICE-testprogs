@@ -889,11 +889,9 @@
 ################################################################################
 # plus60k
 ################################################################################
-../plus60k/,test.prg,exitcode,10000000,plus60k
 ################################################################################
 # plus256k
 ################################################################################
-../plus256k/,test.prg,exitcode,200000000,plus256k
 ################################################################################
 # 1541 Drive
 # ../drive runtime 8 minutes and 20 seconds (x64sc)
@@ -970,10 +968,7 @@
 #../RS232/,test1.prg
 #../RTC/,ds12c887.prg
 #../MIDI/,midi-out-irq-test.prg
-../memory-expansions/,c64-dqbb-emd.prg,exitcode,37000000,dqbb
 ../memory-expansions/,c64-georam-emd.prg,exitcode,290000000,geo256k
 ../memory-expansions/,c64-reu-emd.prg,exitcode,530000000,reu512k
 ../memory-expansions/,c64-ram.prg,exitcode,29000000
-../memory-expansions/,c64-ramcart-emd.prg,exitcode,160000000,ramcart128k
-../memory-expansions/,c64-isepic-emd.prg,exitcode,18000000,isepic
 #../cp-clockf83/cp-clockf83.d64

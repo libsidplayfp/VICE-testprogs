@@ -57,29 +57,36 @@ testlist: \
 	xcbm5x0-testlist.txt \
 	vsid-testlist.txt
 
-x64-testlist.txt: c64-testlist.in
+x64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  x64-testlist.txt
 	cat  c64-testlist.in >> x64-testlist.txt
 
-x64sc-testlist.txt: c64-testlist.in
+x64sc-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  x64sc-testlist.txt
 	cat  c64-testlist.in >> x64sc-testlist.txt
 
-x128c64-testlist.txt: c64-testlist.in
+x128c64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  x128c64-testlist.txt
 	cat  c64-testlist.in \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
+		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
 		>> x128c64-testlist.txt
 
-chameleon-testlist.txt: c64-testlist.in
+chameleon-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  chameleon-testlist.txt
 	cat  c64-testlist.in \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
+		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
 		>> chameleon-testlist.txt
 
-c64rmk2-testlist.txt: c64-testlist.in
+c64rmk2-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  c64rmk2-testlist.txt
 	cat  c64-testlist.in \
 		| sed -e "s:,screenshot:,interactive:g" \
@@ -87,18 +94,27 @@ c64rmk2-testlist.txt: c64-testlist.in
 		| grep -v ",geo256k" \
 		| grep -v ",reu512k" \
 		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
 		| grep -v ".d64" \
 		| grep -v ".d81" \
 		| grep -v ".g64" \
 		| grep -v ".crt" \
 		>> c64rmk2-testlist.txt
 
-micro64-testlist.txt: c64-testlist.in
+micro64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  micro64-testlist.txt
 	cat  c64-testlist.in \
 		| grep -v ",vicii-ntsc" \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
+		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
 		>> micro64-testlist.txt
 
 # The official cartridge file support list is:
@@ -115,7 +131,7 @@ micro64-testlist.txt: c64-testlist.in
 # Simons Basic
 # 
 # Simple 8K/16K and Ultimax cartridges should work also.
-hoxs64-testlist.txt: c64-testlist.in
+hoxs64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  hoxs64-testlist.txt
 	cat  c64-testlist.in \
 		| grep -v ",vicii-ntsc" \
@@ -125,9 +141,13 @@ hoxs64-testlist.txt: c64-testlist.in
 		| grep -v ",reu512k" \
 		| grep -v ",geo256k" \
 		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
 		>> hoxs64-testlist.txt
 
-emu64-testlist.txt: c64-testlist.in
+emu64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  emu64-testlist.txt
 	cat  c64-testlist.in \
 		| grep -v ",vicii-ntsc" \
@@ -138,55 +158,64 @@ emu64-testlist.txt: c64-testlist.in
 		| grep -v ",reu512k" \
 		| grep -v ",geo256k" \
 		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
 		>> emu64-testlist.txt
 
-yace-testlist.txt: c64-testlist.in
+yace-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  yace-testlist.txt
 	cat  c64-testlist.in \
 		| grep -v ",vicii-ntsc" \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
+		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
 		>> yace-testlist.txt
 		
-x128-testlist.txt: c128-testlist.in
+x128-testlist.txt: c128-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  x128-testlist.txt
 	cat  c128-testlist.in >> x128-testlist.txt
 
-xscpu64-testlist.txt: scpu-testlist.in
+xscpu64-testlist.txt: scpu-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  xscpu64-testlist.txt
 	cat  scpu-testlist.in >> xscpu64-testlist.txt
 
-x64dtv-testlist.txt: dtv-testlist.in
+x64dtv-testlist.txt: dtv-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  x64dtv-testlist.txt
 	cat  dtv-testlist.in >> x64dtv-testlist.txt
 
-xpet-testlist.txt: pet-testlist.in
+xpet-testlist.txt: pet-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  xpet-testlist.txt
 	cat  pet-testlist.in >> xpet-testlist.txt
 
-xcbm2-testlist.txt: cbm610-testlist.in
+xcbm2-testlist.txt: cbm610-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  xcbm2-testlist.txt
 	cat  cbm610-testlist.in >> xcbm2-testlist.txt
 
-xcbm5x0-testlist.txt: cbm510-testlist.in
+xcbm5x0-testlist.txt: cbm510-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  xcbm5x0-testlist.txt
 	cat  cbm510-testlist.in >> xcbm5x0-testlist.txt
 
-xvic-testlist.txt: vic20-testlist.in
+xvic-testlist.txt: vic20-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  xvic-testlist.txt
 	cat  vic20-testlist.in >> xvic-testlist.txt
 
-cham20-testlist.txt: vic20-testlist.in
+cham20-testlist.txt: vic20-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  cham20-testlist.txt
 	cat  vic20-testlist.in \
 		| grep -v ",geo256k" \
 		>> cham20-testlist.txt
 
-xplus4-testlist.txt: plus4-testlist.in
+xplus4-testlist.txt: plus4-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  xplus4-testlist.txt
 	cat  plus4-testlist.in >> xplus4-testlist.txt
 
-vsid-testlist.txt: vsid-testlist.in
+vsid-testlist.txt: vsid-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  vsid-testlist.txt
 	cat  vsid-testlist.in >> vsid-testlist.txt
 
