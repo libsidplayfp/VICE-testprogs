@@ -170,9 +170,10 @@ emu64-testlist.txt: c64-testlist.in Makefile
 yace-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  yace-testlist.txt
 	cat  c64-testlist.in \
-		| grep -v ",vicii-ntsc" \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
+		| grep -v ",cia-new" \
+		| grep -v ",sid-new" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \

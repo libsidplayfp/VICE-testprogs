@@ -10,8 +10,6 @@ YACEOPTS+=" -silent" # don't show output
 #YACEOPTS+=" -console"   # not need, YACETest.exe is already console application
 
 # extra options for the different ways tests can be run
-# FIXME: the emulators may crash when making screenshots when emu was started
-#        with -console
 #YACEOPTSEXITCODE+=" -console"
 YACEOPTSSCREENSHOT+=""
 
@@ -21,7 +19,7 @@ YACEOPTSSCREENSHOT+=""
 #
 # for PAL use  32x35
 # for NTSC use 32x23
-YACESXO=32    # Habe -exitscreenshot mit eingebaut, weis noch nicht ob das für die Tests so passt ???
+YACESXO=32
 YACESYO=35
 
 # the same for the reference screenshots
@@ -30,7 +28,18 @@ YACEREFSYO=35
 
 function yace_check_environment
 {
-    YACE="$EMUDIR"YACETest.exe
+    if [ `uname` == "Linux" ]
+    then
+        if ! [ -x "$(command -v wine)" ]; then
+            echo 'Error: wine not installed.' >&2
+            exit 1
+        fi
+        export WINEDEBUG=-all
+        YACE="wine"
+        YACE+=" $EMUDIR"YACETest.exe
+    else
+        YACE="$EMUDIR"YACETest.exe
+    fi
 }
 
 # $1  option
@@ -49,29 +58,29 @@ function yace_get_options
         "vicii-ntsc")
                 exitoptions="-ntsc"
             ;;
-        "vicii-ntscold")
-                exitoptions="-ntscold" # not supported by yace
-            ;;
-        "cia-old")
-                exitoptions="-ciamodel 0" # not supported by yace
-            ;;
-        "cia-new")
-                exitoptions="-ciamodel 1" # not supported by yace
-            ;;
-        "sid-old")
-                exitoptions="-sidenginemodel 256" # ??? should always be the old one
-            ;;
-        "sid-new")
-                exitoptions="-sidenginemodel 257" # not supported by yace
-            ;;
+#        "vicii-ntscold")
+#                exitoptions="-ntscold" # not supported by yace
+#            ;;
+#        "cia-old")
+#                exitoptions="-ciamodel 0" # not supported by yace
+#            ;;
+#        "cia-new")
+#                exitoptions="-ciamodel 1" # not supported by yace
+#            ;;
+#        "sid-old")
+#                exitoptions="-sidenginemodel 256" # ??? should always be the old one
+#            ;;
+#        "sid-new")
+#                exitoptions="-sidenginemodel 257" # not supported by yace
+#            ;;
         "reu512k")
                 exitoptions="-reu 512"
                 reu_enabled=1
             ;;
-        "geo256k")
-                exitoptions="-georam -georamsize 256" # not supported by yace
-                georam_enabled=1
-            ;;
+#        "geo256k")
+#                exitoptions="-georam -georamsize 256" # not supported by yace
+#                georam_enabled=1
+#            ;;
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then # d64 supported by yace, but currently not by YACETest.exe
@@ -104,15 +113,15 @@ function yace_get_cmdline_options
         "NTSC")
                 exitoptions="-ntsc"
             ;;
-        "NTSCOLD")
-                exitoptions="-ntscold" # not supported by yace
-            ;;
-        "8565") # "new" PAL
-                exitoptions="-VICIImodel 8565" # not supported by yace
-            ;;
-        "8562") # "new" NTSC
-                exitoptions="-VICIImodel 8562" # not supported by yace
-            ;;
+#        "NTSCOLD")
+#                exitoptions="-ntscold" # not supported by yace
+#            ;;
+#        "8565") # "new" PAL
+#                exitoptions="-VICIImodel 8565" # not supported by yace
+#            ;;
+#        "8562") # "new" NTSC
+#                exitoptions="-VICIImodel 8562" # not supported by yace
+#            ;;
     esac
 }
 
@@ -187,8 +196,8 @@ function yace_run_screenshot
 function yace_run_exitcode
 {
     extraopts=""$4" "$5" "$6""
-    echo "RUN: " $YACE $YACEOPTS $YACEOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2"
-    $YACE $YACEOPTS $YACEOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" #1> /dev/null
+#    echo "RUN: " $YACE $YACEOPTS $YACEOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2"
+    $YACE $YACEOPTS $YACEOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }
