@@ -1,10 +1,10 @@
 
 
-#EMU64OPTS+=" -default"
+EMU64OPTS+=" --reset-ini"
 #EMU64OPTS+=" -VICIIfilter 0"
 #EMU64OPTS+=" -VICIIextpal"
 #EMU64OPTS+=" -VICIIpalette pepto-pal.vpl"
-#EMU64OPTS+=" -warp"
+EMU64OPTS+=" --warp"
 EMU64OPTS+=" --debugcart"
 #EMU64OPTS+="  --nosplash"
 
@@ -135,7 +135,7 @@ function emu64_run_screenshot
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-emu64.png
     if [ $verbose == "1" ]; then
-        echo $EMU64 $EMU64OPTS $EMU64OPTSSCREENSHOT $extraopts "--limitcycles" "$3" "--exitscreenshot" "--autostart" "$1"/.testbench/"$2"-emu64.png "$1"/"$2" 2> /dev/null
+        echo $EMU64 $EMU64OPTS $EMU64OPTSSCREENSHOT $extraopts "--limitcycles" "$3" "--exitscreenshot" "$1"/.testbench/"$2"-emu64.png "--autostart" "$1"/"$2" "1> /dev/null 2> /dev/null"
     fi
     $EMU64 $EMU64OPTS $EMU64OPTSSCREENSHOT $extraopts "--limitcycles" "$3" "--exitscreenshot" "$1"/.testbench/"$2"-emu64.png "--autostart" "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
