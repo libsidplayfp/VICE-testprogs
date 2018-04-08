@@ -92,8 +92,8 @@ function vsid_get_cmdline_options
 ################################################################################
 # reset
 # run test program
-# exit when write to d7ff occurs (any value)
-# exit after $timeout cycles
+# exit when write to $d7ff occurs - the value written determines success (=$00) or fail (=$ff)
+# exit after $timeout cycles (exitcode=$01)
 # save a screenshot at exit - success or failure is determined by comparing screenshots
 
 # $1  test path
@@ -132,9 +132,8 @@ function vsid_run_screenshot
 ################################################################################
 # reset
 # run test program
-# exit when write to d7ff occurs - the value written determines success (=1) or fail (other > 1)
-# exit after $timeout cycles
-# save a screenshot at exit (?)
+# exit when write to $d7ff occurs - the value written determines success (=$00) or fail (=$ff)
+# exit after $timeout cycles (exitcode=$01)
 
 # $1  test path
 # $2  test program name
