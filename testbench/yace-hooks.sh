@@ -3,7 +3,8 @@
 #YACEOPTS+=" -VICIIfilter 0"
 #YACEOPTS+=" -VICIIextpal"
 #YACEOPTS+=" -VICIIpalette pepto-pal.vpl"
-YACEOPTS+=" -window" # opens a preview window
+YACEOPTS+=" -test"
+#YACEOPTS+=" -window" # opens a preview window
 YACEOPTS+=" -warp" # sets emulator speed to max
 YACEOPTS+=" -silent" # don't show output
 #YACEOPTS+=" -debugcart" # not need, only active in YACETest.exe
@@ -36,9 +37,9 @@ function yace_check_environment
         fi
         export WINEDEBUG=-all
         YACE="wine"
-        YACE+=" $EMUDIR"YACETest.exe
+        YACE+=" $EMUDIR"YACE64Windows.exe
     else
-        YACE="$EMUDIR"YACETest.exe
+        YACE="$EMUDIR"YACE64Windows.exe
     fi
 }
 
@@ -137,13 +138,35 @@ function yace_get_cmdline_options
 # $3  timeout cycles
 function yace_run_screenshot
 {
+    TESTDIR=$(cd $1; pwd)
+
+    if [ `uname` == "Linux" ]
+    then
+        TESTDIRWINE=z:$TESTDIR
+    else
+        TESTDIRWINE=$TESTDIR
+    fi
+    
+    OLDCWD=`pwd`
+    cd $EMUDIR
     extraopts=""$4" "$5" "$6""
+
+#    echo 1:$1
+#    echo 2:$2
+#    echo TESTDIR:$TESTDIR
+#    echo TESTDIRWINE:$TESTDIRWINE
+
 #    echo $YACE "$1"/"$2"
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-yace.png
-#    echo $YACE $YACEOPTS $YACEOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-yace.png "$1"/"$2"
-    $YACE $YACEOPTS $YACEOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-yace.png "$1"/"$2" 1> /dev/null
+    mkdir -p "$TESTDIR"/".testbench"
+    rm -f "$TESTDIR"/.testbench/"$2"-yace.png
+    
+    if [ $verbose == "1" ]; then
+        echo "RUN: " $YACE $YACEOPTS $YACEOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$TESTDIRWINE"/.testbench/"$2"-yace.png "$TESTDIRWINE"/"$2" "1> /dev/null"
+    fi
+    $YACE $YACEOPTS $YACEOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$TESTDIRWINE"/.testbench/"$2"-yace.png -ar -l "$TESTDIRWINE"/"$2" 1> /dev/null
     exitcode=$?
+    cd $OLDCWD
+
     if [ $exitcode -ne 0 ]
     then
         if [ $exitcode -ne 1 ]
@@ -174,7 +197,7 @@ function yace_run_screenshot
             YACESYO=23
         fi
 
-        ./cmpscreens "$refscreenshotname" "$YACEREFSXO" "$YACEREFSYO" "$1"/.testbench/"$2"-yace.png "$YACESXO" "$YACESYO"
+        ./cmpscreens "$refscreenshotname" "$YACEREFSXO" "$YACEREFSYO" "$TESTDIR"/.testbench/"$2"-yace.png "$YACESXO" "$YACESYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "
@@ -195,9 +218,28 @@ function yace_run_screenshot
 # $3  timeout cycles
 function yace_run_exitcode
 {
+    TESTDIR=$(cd $1; pwd)
+    if [ `uname` == "Linux" ]
+    then
+        TESTDIRWINE=z:$TESTDIR
+    else
+        TESTDIRWINE=$TESTDIR
+    fi
+    
+    OLDCWD=`pwd`
+    cd $EMUDIR
     extraopts=""$4" "$5" "$6""
-#    echo "RUN: " $YACE $YACEOPTS $YACEOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2"
-    $YACE $YACEOPTS $YACEOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
+    
+#    echo 1:$1
+#    echo 2:$2
+#    echo TESTDIR:$TESTDIR
+#    echo TESTDIRWINE:$TESTDIRWINE
+    
+    if [ $verbose == "1" ]; then
+        echo "RUN: " $YACE $YACEOPTS $YACEOPTSEXITCODE $extraopts "-limitcycles" "$3" -ar -l "$TESTDIRWINE"/"$2" "1> /dev/null"
+    fi
+    $YACE $YACEOPTS $YACEOPTSEXITCODE $extraopts "-limitcycles" "$3" -ar -l "$TESTDIRWINE"/"$2" 1> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
+    cd $OLDCWD
 }
