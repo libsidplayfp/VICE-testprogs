@@ -31,7 +31,7 @@ function x128_check_environment
 # $2  test path
 function x128_get_options
 {
-#    echo x128_get_options "$1"
+#    echo x128_get_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "default")
@@ -39,24 +39,31 @@ function x128_get_options
             ;;
         "vicii-pal")
                 exitoptions="-pal"
+                testprogvideotype="PAL"
             ;;
         "vicii-ntsc")
                 exitoptions="-ntsc"
+                testprogvideotype="NTSC"
             ;;
         "vicii-ntscold")
                 exitoptions="-ntscold"
+                testprogvideotype="NTSCOLD"
             ;;
         "cia-old")
                 exitoptions="-ciamodel 0"
+                new_cia_enabled=0
             ;;
         "cia-new")
                 exitoptions="-ciamodel 1"
+                new_cia_enabled=1
             ;;
         "sid-old")
                 exitoptions="-sidenginemodel 256"
+                new_sid_enabled=0
             ;;
         "sid-new")
                 exitoptions="-sidenginemodel 257"
+                new_sid_enabled=1
             ;;
         "reu512k")
                 exitoptions="-reu -reusize 512"
@@ -104,7 +111,7 @@ function x128_get_options
 # $2  test path
 function x128_get_cmdline_options
 {
-#    echo x128_get_cmdline_options "$1"
+#    echo x128_get_cmdline_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "PAL")
@@ -166,7 +173,9 @@ function x128_run_screenshot
             X128REFSYO=23
         fi
     
-        if [ "${videotype}" == "NTSC" ]; then
+        # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+        # then we need the offsets on the NTSC screenshot
+        if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
             X128SXO=32
             X128SYO=23
         fi

@@ -23,8 +23,9 @@ Z64KC128REFSYO=35
 function z64kc128_check_environment
 {
     Z64KC128="java -jar"
+    Z64KC128+=" $EMUDIR"Z64K.jar" c128 "
 #    Z64KC128+=" $EMUDIR"Z64KNewUI.jar" c128 "
-    Z64KC128+=" $EMUDIR"C128_Beta_2017_03_13.jar
+#    Z64KC128+=" $EMUDIR"C128_Beta_2017_03_13.jar
     
     if ! [ -x "$(command -v java)" ]; then
         echo 'Error: java not installed.' >&2
@@ -36,7 +37,7 @@ function z64kc128_check_environment
 # $2  test path
 function z64kc128_get_options
 {
-#    echo z64kc128_get_options "$1"
+#    echo z64kc128_get_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "default")
@@ -44,33 +45,40 @@ function z64kc128_get_options
             ;;
         "vicii-pal")
                 exitoptions="-pal"
+                testprogvideotype="PAL"
             ;;
         "vicii-ntsc")
                 exitoptions="-ntsc"
+                testprogvideotype="NTSC"
             ;;
         "vicii-ntscold")
                 exitoptions="-ntscold"
+                testprogvideotype="NTSCOLD"
             ;;
         "cia-old")
                 exitoptions="-ciamodel 0"
+                new_cia_enabled=0
             ;;
         "cia-new")
                 exitoptions="-ciamodel 1"
+                new_cia_enabled=1
             ;;
         "sid-old")
                 exitoptions="-sidenginemodel 256"
+                new_sid_enabled=0
             ;;
         "sid-new")
                 exitoptions="-sidenginemodel 257"
+                new_sid_enabled=1
             ;;
         "reu512k")
                 exitoptions="-reu -reusize 512"
                 reu_enabled=1
             ;;
-        "geo256k")
-                exitoptions="-georam -georamsize 256"
-                georam_enabled=1
-            ;;
+#        "geo256k")
+#                exitoptions="-georam -georamsize 256"
+#                georam_enabled=1
+#            ;;
         "efnram")
                 exitoptions="-extfunc 2"
                 extfuncram_enabled=1
@@ -109,7 +117,7 @@ function z64kc128_get_options
 # $2  test path
 function z64kc128_get_cmdline_options
 {
-#    echo z64kc128_get_cmdline_options "$1"
+#    echo z64kc128_get_cmdline_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "PAL")
@@ -140,6 +148,9 @@ function z64kc128_run_screenshot
 #    echo $Z64KC128 "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-z64kc128.png
+    if [ $verbose == "1" ]; then
+        echo "RUN: "$Z64KC128 $Z64KC128OPTS $Z64KC128OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kc128.png "$1"/"$2" "1> /dev/null"
+    fi
     $Z64KC128 $Z64KC128OPTS $Z64KC128OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kc128.png "$1"/"$2" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
@@ -171,7 +182,9 @@ function z64kc128_run_screenshot
             Z64KC128REFSYO=23
         fi
     
-        if [ "${videotype}" == "NTSC" ]; then
+        # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+        # then we need the offsets on the NTSC screenshot
+        if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
             Z64KC128SXO=32
             Z64KC128SYO=23
         fi
@@ -197,9 +210,10 @@ function z64kc128_run_exitcode
 {
     extraopts=""$4" "$5" "$6""
 #    echo "extraopts=" $extraopts
-#    echo $Z64KC128 $Z64KC128OPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
+    if [ $verbose == "1" ]; then
+        echo "RUN: "$Z64KC128 $Z64KC128OPTS $extraopts "-limitcycles" "$3" "$1"/"$2" "1> /dev/null"
+    fi
     $Z64KC128 $Z64KC128OPTS $Z64KC128OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
-#    $Z64KC128 $Z64KC128OPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

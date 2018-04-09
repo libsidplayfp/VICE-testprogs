@@ -193,37 +193,38 @@ function chameleon_make_helper_options
 # $2  test path
 function chameleon_get_options
 {
-#    echo chameleon_get_options "$1"
+#    echo chameleon_get_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "default")
                 exitoptions=""
             ;;
-        # FIXME: the returned options must be the same as for VICE to make the
-        #        selective test-runs work
         "vicii-pal")
-                exitoptions="-pal"
+#                exitoptions="-pal"
+                testprogvideotype="PAL"
             ;;
         "vicii-ntsc")
-                exitoptions="-ntsc"
+#                exitoptions="-ntsc"
+                testprogvideotype="NTSC"
             ;;
         "vicii-ntscold")
-                exitoptions="-ntscold"
+#                exitoptions="-ntscold"
+                testprogvideotype="NTSCOLD"
             ;;
         "cia-old")
-                exitoptions="-ciamodel 0"
+#                exitoptions="-ciamodel 0"
                 new_cia_enabled=0
             ;;
         "cia-new")
-                exitoptions="-ciamodel 1"
+#                exitoptions="-ciamodel 1"
                 new_cia_enabled=1
             ;;
         "sid-old")
-                exitoptions="-sidenginemodel 256"
+#                exitoptions="-sidenginemodel 256"
                 new_sid_enabled=0
             ;;
         "sid-new")
-                exitoptions="-sidenginemodel 257"
+#                exitoptions="-sidenginemodel 257"
                 new_sid_enabled=1
             ;;
         "reu512k")
@@ -262,8 +263,8 @@ function chameleon_get_cmdline_options
 #    echo chameleon_get_cmdline_options "$1"
     exitoptions=""
     case "$1" in
-        # FIXME: the returned options must be the same as for VICE to make the
-        #        selective test-runs work
+        # FIXME: the returned options are meaningless right now,
+        #        chameleon_run_screenshot and chameleon_run_exitcode may use them
         "PAL")
                 exitoptions="-pal"
             ;;
@@ -354,7 +355,9 @@ function chameleon_run_screenshot
             CHAMREFSYO=23
         fi
 
-        if [ "${videotype}" == "NTSC" ]; then
+        # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+        # then we need the offsets on the NTSC screenshot
+        if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
             CHAMSXO=61
             CHAMSYO=38
         fi

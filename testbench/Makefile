@@ -186,6 +186,7 @@ z64kc64-testlist.txt: c64-testlist.in Makefile
 	cat  c64-testlist.in \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
+		| grep -v ",geo256k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \
@@ -202,6 +203,7 @@ z64kc128-testlist.txt: c128-testlist.in Makefile
 	cat  c128-testlist.in \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
+		| grep -v ",geo256k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \

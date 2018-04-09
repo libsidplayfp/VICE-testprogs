@@ -31,7 +31,7 @@ function xplus4_check_environment
 # $2  test path
 function xplus4_get_options
 {
-#    echo xplus4_get_options "$1"
+#    echo xplus4_get_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "default")
@@ -39,18 +39,23 @@ function xplus4_get_options
             ;;
         "ted-pal")
                 exitoptions="-pal"
+                testprogvideotype="PAL"
             ;;
         "ted-ntsc")
                 exitoptions="-ntsc"
+                testprogvideotype="NTSC"
             ;;
         "ted-ntscold")
                 exitoptions="-ntscold"
+                testprogvideotype="NTSCOLD"
             ;;
         "sid-old")
                 exitoptions="-sidenginemodel 256"
+                new_sid_enabled=0
             ;;
         "sid-new")
                 exitoptions="-sidenginemodel 257"
+                new_sid_enabled=1
             ;;
         *)
                 exitoptions=""
@@ -62,7 +67,7 @@ function xplus4_get_options
 # $2  test path
 function xplus4_get_cmdline_options
 {
-#    echo xplus4_get_cmdline_options "$1"
+#    echo xplus4_get_cmdline_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "PAL")

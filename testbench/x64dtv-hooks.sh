@@ -31,7 +31,7 @@ function x64dtv_check_environment
 # $2  test path
 function x64dtv_get_options
 {
-#    echo x64dtv_get_options "$1"
+#    echo x64dtv_get_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "default")
@@ -39,12 +39,15 @@ function x64dtv_get_options
             ;;
         "vicii-pal")
                 exitoptions="-pal"
+                testprogvideotype="PAL"
             ;;
         "vicii-ntsc")
                 exitoptions="-ntsc"
+                testprogvideotype="NTSC"
             ;;
         "vicii-ntscold")
                 exitoptions="-ntscold"
+                testprogvideotype="NTSCOLD"
             ;;
         *)
                 exitoptions=""
@@ -64,7 +67,7 @@ function x64dtv_get_options
 # $2  test path
 function x64dtv_get_cmdline_options
 {
-#    echo x64dtv_get_cmdline_options "$1"
+#    echo x64dtv_get_cmdline_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "PAL")
@@ -121,7 +124,9 @@ function x64dtv_run_screenshot
             X64DTVREFSYO=23
         fi
     
-        if [ "${videotype}" == "NTSC" ]; then
+        # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+        # then we need the offsets on the NTSC screenshot
+        if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
             X64DTVSXO=32
             XX64DTVSYO=23
         fi

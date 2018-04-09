@@ -32,34 +32,39 @@ function micro64_check_environment
 # $2  test path
 function micro64_get_options
 {
-#    echo micro64_get_options "$1"
+#    echo micro64_get_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "default")
                 exitoptions=""
             ;;
-        # FIXME: the returned options must be the same as for VICE to make the
-        #        selective test-runs work
         "vicii-pal")
-                exitoptions=""
+#                exitoptions=""
+                testprogvideotype="PAL"
             ;;
-#        "vicii-ntsc")
+        "vicii-ntsc")
 #                exitoptions=""
-#            ;;
-#        "vicii-ntscold")
+                testprogvideotype="NTSC"
+            ;;
+        "vicii-ntscold")
 #                exitoptions=""
-#            ;;
+                testprogvideotype="NTSCOLD"
+            ;;
         "cia-old")
                 exitoptions="-CIA6526"
+                new_cia_enabled=0
             ;;
         "cia-new")
                 exitoptions="-CIA6526A"
+                new_cia_enabled=1
             ;;
         "sid-old")
                 exitoptions="-SID6581"
+                new_sid_enabled=0
             ;;
         "sid-new")
                 exitoptions="-SID8580"
+                new_sid_enabled=1
             ;;
         "reu512k")
                 exitoptions="+REUMODE=3"
@@ -91,11 +96,9 @@ function micro64_get_options
 # $2  test path
 function micro64_get_cmdline_options
 {
-#    echo micro64_get_cmdline_options "$1"
+#    echo micro64_get_cmdline_options "$1" "$2"
     exitoptions=""
     case "$1" in
-        # FIXME: the returned options must be the same as for VICE to make the
-        #        selective test-runs work
         "PAL")
                 exitoptions=""
             ;;
@@ -162,18 +165,7 @@ function micro64_run_screenshot
         MICRO64SXO=32
         MICRO64SYO=40
         
-#        echo [ "${refscreenshotvideotype}" "${videotype}" ]
- 
 # micro64 cant do NTSC
-#        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
-#            MICRO64REFSXO=32
-#            MICRO64REFSYO=23
-#        fi
-#    
-#        if [ "${videotype}" == "NTSC" ]; then
-#            MICRO64SXO=32
-#            MICRO64SYO=23
-#        fi
     
         if [ $verbose == "1" ]; then
             echo ./cmpscreens "$refscreenshotname" "$MICRO64REFSXO" "$MICRO64REFSYO" "$1"/.testbench/"$2"-micro64.png "$MICRO64SXO" "$MICRO64SYO"

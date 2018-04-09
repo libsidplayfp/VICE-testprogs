@@ -34,7 +34,7 @@ function xcbm2_check_environment
 # $2  test path
 function xcbm2_get_options
 {
-#    echo xcbm2_get_options "$1"
+#    echo xcbm2_get_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "default")
@@ -42,24 +42,31 @@ function xcbm2_get_options
             ;;
         "vicii-pal")
                 exitoptions="-pal"
+                testprogvideotype="PAL"
             ;;
         "vicii-ntsc")
                 exitoptions="-ntsc"
+                testprogvideotype="NTSC"
             ;;
         "vicii-ntscold")
                 exitoptions="-ntscold"
+                testprogvideotype="NTSCOLD"
             ;;
         "cia-old")
                 exitoptions="-ciamodel 0"
+                new_cia_enabled=0
             ;;
         "cia-new")
                 exitoptions="-ciamodel 1"
+                new_cia_enabled=1
             ;;
         "sid-old")
                 exitoptions="-sidenginemodel 256"
+                new_sid_enabled=0
             ;;
         "sid-new")
                 exitoptions="-sidenginemodel 257"
+                new_sid_enabled=1
             ;;
         *)
                 exitoptions=""
@@ -72,7 +79,7 @@ function xcbm2_get_options
 # $2  test path
 function xcbm2_get_cmdline_options
 {
-#    echo xcbm2_get_cmdline_options "$1"
+#    echo xcbm2_get_cmdline_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "PAL")
@@ -148,7 +155,9 @@ function xcbm2_run_screenshot
             XCBM2REFSYO=23
         fi
     
-        if [ "${videotype}" == "NTSC" ]; then
+        # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+        # then we need the offsets on the NTSC screenshot
+        if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
             XCBM2SXO=32
             XCBM2SYO=23
         fi

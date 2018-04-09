@@ -47,7 +47,7 @@ function yace_check_environment
 # $2  test path
 function yace_get_options
 {
-#    echo yace_get_options "$1"
+#    echo yace_get_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "default")
@@ -55,24 +55,30 @@ function yace_get_options
             ;;
         "vicii-pal")
                 exitoptions="-pal"
+                testprogvideotype="PAL"
             ;;
         "vicii-ntsc")
                 exitoptions="-ntsc"
+                testprogvideotype="NTSC"
             ;;
 #        "vicii-ntscold")
 #                exitoptions="-ntscold" # not supported by yace
 #            ;;
 #        "cia-old")
 #                exitoptions="-ciamodel 0" # not supported by yace
+#                new_cia_enabled=0
 #            ;;
 #        "cia-new")
 #                exitoptions="-ciamodel 1" # not supported by yace
+#                new_cia_enabled=1
 #            ;;
 #        "sid-old")
 #                exitoptions="-sidenginemodel 256" # ??? should always be the old one
+#                new_sid_enabled=0
 #            ;;
 #        "sid-new")
 #                exitoptions="-sidenginemodel 257" # not supported by yace
+#                new_sid_enabled=1
 #            ;;
         "reu512k")
                 exitoptions="-reu 512"
@@ -105,7 +111,7 @@ function yace_get_options
 # $2  test path
 function yace_get_cmdline_options
 {
-#    echo yace_get_cmdline_options "$1"
+#    echo yace_get_cmdline_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "PAL")
@@ -192,7 +198,9 @@ function yace_run_screenshot
             YACEREFSYO=23
         fi
 
-        if [ "${videotype}" == "NTSC" ]; then
+        # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+        # then we need the offsets on the NTSC screenshot
+        if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
             YACESXO=32
             YACESYO=23
         fi

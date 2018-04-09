@@ -8,8 +8,8 @@ Z64KC64OPTS+=" -debugcart"
 #Z64KC64OPTS+=" -console"
 
 # extra options for the different ways tests can be run
-Z64KC64OPTSEXITCODE+=" -console"
-Z64KC64OPTSSCREENSHOT+=""
+#Z64KC64OPTSEXITCODE+=" -console"
+#Z64KC64OPTSSCREENSHOT+=" -console"
 
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
@@ -27,8 +27,9 @@ Z64KC64REFSYO=35
 function z64kc64_check_environment
 {
     Z64KC64="java -jar"
+    Z64KC64+=" $EMUDIR"Z64K.jar" c64 "
 #    Z64KC64+=" $EMUDIR"Z64KNewUI.jar" c64 "
-    Z64KC64+=" $EMUDIR"C64_Beta_2017_03_08b.jar
+#    Z64KC64+=" $EMUDIR"C64_Beta_2017_03_08b.jar
     
     if ! [ -x "$(command -v java)" ]; then
         echo 'Error: java not installed.' >&2
@@ -40,7 +41,7 @@ function z64kc64_check_environment
 # $2  test path
 function z64kc64_get_options
 {
-#    echo z64kc64_get_options "$1"
+#    echo z64kc64_get_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "default")
@@ -48,33 +49,40 @@ function z64kc64_get_options
             ;;
         "vicii-pal")
                 exitoptions="-pal"
+                testprogvideotype="PAL"
             ;;
         "vicii-ntsc")
                 exitoptions="-ntsc"
+                testprogvideotype="NTSC"
             ;;
         "vicii-ntscold")
                 exitoptions="-ntscold"
+                testprogvideotype="NTSCOLD"
             ;;
         "cia-old")
                 exitoptions="-ciamodel 0"
+                new_cia_enabled=0
             ;;
         "cia-new")
                 exitoptions="-ciamodel 1"
+                new_cia_enabled=1
             ;;
         "sid-old")
                 exitoptions="-sidenginemodel 256"
+                new_sid_enabled=0
             ;;
         "sid-new")
                 exitoptions="-sidenginemodel 257"
+                new_sid_enabled=1
             ;;
         "reu512k")
                 exitoptions="-reu -reusize 512"
                 reu_enabled=1
             ;;
-        "geo256k")
-                exitoptions="-georam -georamsize 256"
-                georam_enabled=1
-            ;;
+#        "geo256k")
+#                exitoptions="-georam -georamsize 256"
+#                georam_enabled=1
+#            ;;
 #        "plus60k")
 #                exitoptions="-memoryexphack 2"
 #                plus60k_enabled=1
@@ -118,7 +126,7 @@ function z64kc64_get_options
 # $2  test path
 function z64kc64_get_cmdline_options
 {
-#    echo z64kc64_get_cmdline_options "$1"
+#    echo z64kc64_get_cmdline_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "PAL")
@@ -130,15 +138,15 @@ function z64kc64_get_cmdline_options
         "NTSCOLD")
                 exitoptions="-ntscold"
             ;;
-        "6569") # "old" PAL
-                exitoptions="-VICIImodel 6569"
-            ;;
-        "8565") # "new" PAL
-                exitoptions="-VICIImodel 8565"
-            ;;
-        "8562") # "new" NTSC
-                exitoptions="-VICIImodel 8562"
-            ;;
+#        "6569") # "old" PAL
+#                exitoptions="-VICIImodel 6569"
+#            ;;
+#        "8565") # "new" PAL
+#                exitoptions="-VICIImodel 8565"
+#            ;;
+#        "8562") # "new" NTSC
+#                exitoptions="-VICIImodel 8562"
+#            ;;
     esac
 }
 
@@ -152,15 +160,19 @@ function z64kc64_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4- extra commandline arguments for the emulator
 function z64kc64_run_screenshot
 {
-    extraopts=""$4" "$5" "$6""
+    extraopts=""$4" "$5" "$6" "$7" "$8" "$9""
 #    echo $Z64KC64 "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-z64kc64.png
-#    echo $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kc64.png "$1"/"$2"
+    if [ $verbose == "1" ]; then
+        echo "RUN: "$Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kc64.png "$1"/"$2" "1> /dev/null"
+    fi
     $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kc64.png "$1"/"$2" 1> /dev/null
     exitcode=$?
+#    echo exitcode:$exitcode
     if [ $exitcode -ne 0 ]
     then
         if [ $exitcode -ne 1 ]
@@ -186,11 +198,21 @@ function z64kc64_run_screenshot
             Z64KC64REFSYO=23
         fi
 
-        if [ "${videotype}" == "NTSC" ]; then
+        # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+        # then we need the offsets on the NTSC screenshot
+        if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
             Z64KC64SXO=32
             Z64KC64SYO=23
         fi
 
+#        echo "refscreenshotvideotype:" ${refscreenshotvideotype}
+#        echo "refscreenshotname:" $refscreenshotname
+#        echo "screenshotname": "$1"/.testbench/"$2"-z64kc64.png
+#        echo "Z64KC64SXO:"$Z64KC64SXO
+#        echo "Z64KC64SYO:"$Z64KC64SYO
+#        echo "Z64KC64REFSXO:"$Z64KC64REFSXO
+#        echo "Z64KC64REFSYO:"$Z64KC64REFSYO
+        
         ./cmpscreens "$refscreenshotname" "$Z64KC64REFSXO" "$Z64KC64REFSYO" "$1"/.testbench/"$2"-z64kc64.png "$Z64KC64SXO" "$Z64KC64SYO"
         exitcode=$?
     else
@@ -209,10 +231,13 @@ function z64kc64_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4- extra commandline arguments for the emulator
 function z64kc64_run_exitcode
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2"
+    extraopts=""$4" "$5" "$6" "$7" "$8" "$9""
+    if [ $verbose == "1" ]; then
+        echo "RUN: "$Z64KC64 $Z64KC64OPTS $Z64KC64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" "1> /dev/null"
+    fi
     $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode

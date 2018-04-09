@@ -881,11 +881,6 @@
 ################################################################################
 # GEO-RAM
 ################################################################################
-../GEO-RAM/,georam64.prg,exitcode,80000000,geo256k
-../GEO-RAM/,georamtest.prg,interactive,0,geo256k
-../GEO-RAM/,georamtest-auto.prg,exitcode,80000000,geo256k
-../GEO-RAM/,newtest.prg,interactive,0,geo256k
-../GEO-RAM/,newtest-auto.prg,exitcode,80000000,geo256k
 ################################################################################
 # plus60k
 ################################################################################
@@ -968,7 +963,6 @@
 #../RS232/,test1.prg
 #../RTC/,ds12c887.prg
 #../MIDI/,midi-out-irq-test.prg
-../memory-expansions/,c64-georam-emd.prg,exitcode,290000000,geo256k
 ../memory-expansions/,c64-reu-emd.prg,exitcode,530000000,reu512k
 ../memory-expansions/,c64-ram.prg,exitcode,29000000
 #../cp-clockf83/cp-clockf83.d64

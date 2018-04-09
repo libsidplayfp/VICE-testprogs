@@ -112,31 +112,39 @@ function cham20_poll_returncode
 # $2  test path
 function cham20_get_options
 {
-#    echo cham20_get_options "$1"
+#    echo cham20_get_options "$1" "$2"
     exitoptions=""
     case "$1" in
-        # FIXME: the returned options must be the same as for VICE to make the
-        #        selective test-runs work
         "default")
                 exitoptions=""
             ;;
         "vic-pal")
-                exitoptions="-pal"
+#                exitoptions="-pal"
+                testprogvideotype="PAL"
             ;;
         "vic-ntsc")
-                exitoptions="-ntsc"
+#                exitoptions="-ntsc"
+                testprogvideotype="NTSC"
             ;;
         "vic-ntscold")
-                exitoptions="-ntscold"
+#                exitoptions="-ntscold"
+                testprogvideotype="NTSCOLD"
             ;;
-        "sid-old")
-                exitoptions=""
-            ;;
-        "sid-new")
-                exitoptions=""
-            ;;
+#        "sid-old")
+#                exitoptions=""
+#                new_sid_enabled=0
+#            ;;
+#        "sid-new")
+#                exitoptions=""
+#                new_sid_enabled=0
+#            ;;
         "vic20-8k")
-                exitoptions="-memory 8k"
+#                exitoptions="-memory 8k"
+                memory_expansion_enabled="8K"
+            ;;
+        "vic20-32k")
+#                exitoptions="-memory all"
+                memory_expansion_enabled="32K"
             ;;
         *)
                 exitoptions=""
@@ -162,8 +170,8 @@ function cham20_get_cmdline_options
 #    echo cham20_get_cmdline_options "$1"
     exitoptions=""
     case "$1" in
-        # FIXME: the returned options must be the same as for VICE to make the
-        #        selective test-runs work
+        # FIXME: the returned options are meaningless right now,
+        #        cham20_run_screenshot and cham20_run_exitcode may use them
         "PAL")
                 exitoptions="-pal"
             ;;
@@ -175,6 +183,9 @@ function cham20_get_cmdline_options
             ;;
         "8K")
                 exitoptions="-memory 8k"
+            ;;
+        "32K")
+                exitoptions="-memory all"
             ;;
     esac
 }

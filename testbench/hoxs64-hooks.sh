@@ -39,35 +39,40 @@ function hoxs64_check_environment
 # $2  test path
 function hoxs64_get_options
 {
-#    echo hoxs64_get_options "$1"
+#    echo hoxs64_get_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "default")
                 exitoptions=""
             ;;
-        # FIXME: the returned options must be the same as for VICE to make the
-        #        selective test-runs work
         "vicii-pal")
-                exitoptions=""
+#                exitoptions=""
+                testprogvideotype="PAL"
             ;;
-#        "vicii-ntsc")
+        "vicii-ntsc")
 #                exitoptions=""
-#            ;;
-#        "vicii-ntscold")
+                testprogvideotype="NTSC"
+            ;;
+        "vicii-ntscold")
 #                exitoptions=""
-#            ;;
+                testprogvideotype="NTSCOLD"
+            ;;
         "cia-old")
-                exitoptions="-cia-old"
+#                exitoptions="-cia-old"
+                new_cia_enabled=0
             ;;
         "cia-new")
-                exitoptions="-cia-new"
+#                exitoptions="-cia-new"
+                new_cia_enabled=1
             ;;
-#       "sid-old")
+       "sid-old")
 #               exitoptions="-SID6581"
-#           ;;
-#       "sid-new")
+                new_sid_enabled=0
+           ;;
+       "sid-new")
 #               exitoptions="-SID8580"
-#           ;;
+                new_sid_enabled=1
+           ;;
 #       "reu512k")
 #               exitoptions="+REUMODE=3"
 #               reu_enabled=1
@@ -99,11 +104,9 @@ function hoxs64_get_options
 # $2  test path
 function hoxs64_get_cmdline_options
 {
-#    echo hoxs64_get_cmdline_options "$1"
+#    echo hoxs64_get_cmdline_options "$1" "$2"
     exitoptions=""
     case "$1" in
-        # FIXME: the returned options must be the same as for VICE to make the
-        #        selective test-runs work
         "PAL")
                 exitoptions=""
             ;;

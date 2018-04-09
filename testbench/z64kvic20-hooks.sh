@@ -24,8 +24,9 @@ Z64KVIC20REFSYO=48
 function z64kvic20_check_environment
 {
     Z64KVIC20="java -jar"
+    Z64KVIC20+=" $EMUDIR"Z64K.jar" vic20 "
 #    Z64KVIC20+=" $EMUDIR"Z64KNewUI.jar" vic20 "
-    Z64KVIC20+=" $EMUDIR"VIC20_Beta_2017_02_09.jar
+#    Z64KVIC20+=" $EMUDIR"VIC20_Beta_2017_02_09.jar
     
     if ! [ -x "$(command -v java)" ]; then
         echo 'Error: java not installed.' >&2
@@ -37,7 +38,7 @@ function z64kvic20_check_environment
 # $2  test path
 function z64kvic20_get_options
 {
-#    echo z64kvic20_get_options "$1"
+#    echo z64kvic20_get_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "default")
@@ -45,24 +46,31 @@ function z64kvic20_get_options
             ;;
         "vic-pal")
                 exitoptions="-pal"
+                testprogvideotype="PAL"
             ;;
         "vic-ntsc")
                 exitoptions="-ntsc"
+                testprogvideotype="NTSC"
             ;;
         "vic-ntscold")
                 exitoptions="-ntscold"
+                testprogvideotype="NTSCOLD"
             ;;
-        "sid-old")
-                exitoptions="-sidenginemodel 256"
-            ;;
-        "sid-new")
-                exitoptions="-sidenginemodel 257"
-            ;;
+#        "sid-old")
+#                exitoptions="-sidenginemodel 256"
+#                new_sid_enabled=0
+#            ;;
+#        "sid-new")
+#                exitoptions="-sidenginemodel 257"
+#                new_sid_enabled=1
+#            ;;
         "vic20-8k")
                 exitoptions="-memory 8k"
+                memory_expansion_enabled="8K"
             ;;
         "vic20-32k")
                 exitoptions="-memory all"
+                memory_expansion_enabled="32K"
             ;;
         "geo256k")
                 exitoptions="-georam -georamsize 256"
@@ -86,7 +94,7 @@ function z64kvic20_get_options
 # $2  test path
 function z64kvic20_get_cmdline_options
 {
-#    echo z64kvic20_get_cmdline_options "$1"
+#    echo z64kvic20_get_cmdline_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "PAL")
@@ -99,7 +107,10 @@ function z64kvic20_get_cmdline_options
                 exitoptions="-ntscold"
             ;;
         "8K")
-                exitoptions="-memory 8k"
+                exitoptions="-8k"
+            ;;
+        "32K")
+                exitoptions="-full"
             ;;
     esac
 }
@@ -120,7 +131,9 @@ function z64kvic20_run_screenshot
 #    echo $Z64KVIC20 "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-z64kvic20.png
-#    echo $Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kvic20.png "$1"/"$2"
+    if [ $verbose == "1" ]; then
+        echo "RUN: "$Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kvic20.png "$1"/"$2" "1> /dev/null"
+    fi
     $Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kvic20.png "$1"/"$2" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
@@ -149,7 +162,9 @@ function z64kvic20_run_screenshot
             Z64KVIC20REFSYO=22
         fi
     
-        if [ "${videotype}" == "NTSC" ]; then
+        # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+        # then we need the offsets on the NTSC screenshot
+        if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
             Z64KVIC20SXO=40
             Z64KVIC20SYO=22
         fi
@@ -177,6 +192,9 @@ function z64kvic20_run_exitcode
 {
     extraopts=""$4" "$5" "$6""
 #    echo $Z64KVIC20 "$1"/"$2"
+    if [ $verbose == "1" ]; then
+        echo "RUN: "$Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" "1> /dev/null"
+    fi
     $Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode

@@ -197,6 +197,8 @@ function resetflags
     intfuncram_enabled=0
     new_sid_enabled=0
     new_cia_enabled=0
+    memory_expansion_enabled=0
+    testprogvideotype=0
 }
 
 ###############################################################################
@@ -257,54 +259,64 @@ function runprogsfortarget
 #                    echo $i " / " ${arraylength} " : " ${myarray[$i-1]}
                     "$target"_get_options "${myarray[$i-1]}" "$testpath"
 #                    echo "exitoptions: $exitoptions"
+#                    echo "testprogvideotype: ${testprogvideotype}"
+#                    echo "memoryexpansion:"  "${memoryexpansion}"
                     testoptions+="${exitoptions} "
-                    # skip test if videomode was given on commandline and it does not match
+                    # skip test if videomode was given on commandline and it does
+                    # not match the videomode given in the testlist
                     if [ "${videotype}" == "PAL" ]; then
-                        if [ "${exitoptions}" == "-ntsc" ] || [ "${exitoptions}" == "-ntscold" ]; then
+                        if [ "${testprogvideotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSCOLD" ]; then
                             echo "$testpath" "$testprog" "- " "not" "${videotype}" "(skipped)"
                             skiptest=1
                         fi
                     fi
                     if [ "${videotype}" == "NTSC" ]; then
-                        if [ "${exitoptions}" == "-pal" ] || [ "${exitoptions}" == "-ntscold" ]; then
+                        if [ "${testprogvideotype}" == "PAL" ] || [ "${testprogvideotype}" == "NTSCOLD" ]; then
                             echo "$testpath" "$testprog" "- " "not" "${videotype}" "(skipped)"
                             skiptest=1
                         fi
                     fi
                     if [ "${videotype}" == "NTSCOLD" ]; then
-                        if [ "${exitoptions}" == "-ntsc" ] || [ "${exitoptions}" == "-pal" ]; then
+                        if [ "${testprogvideotype}" == "NTSC" ] || [ "${testprogvideotype}" == "PAL" ]; then
                             echo "$testpath" "$testprog" "- " "not" "${videotype}" "(skipped)"
                             skiptest=1
                         fi
                     fi
+                    # skip test if SID type was given on commandline and it does not match
                     if [ "${sidtype}" == "6581" ]; then
-                        if [ x"${exitoptions}"x == x"-sidenginemodel 257"x ]; then
+                        if [ x"${new_sid_enabled}"x == x"1"x ]; then
                             echo "$testpath" "$testprog" "- " "not" "${sidtype}" "(skipped)"
                             skiptest=1
                         fi
                     fi
                     if [ "${sidtype}" == "8580" ]; then
-                        if [ x"${exitoptions}"x == x"-sidenginemodel 256"x ]; then
+                        if [ x"${new_sid_enabled}"x == x"0"x ]; then
                             echo "$testpath" "$testprog" "- " "not" "${sidtype}" "(skipped)"
                             skiptest=1
                         fi
                     fi
+                    # skip test if CIA type was given on commandline and it does not match
                     if [ "${ciatype}" == "6526" ]; then
-                        if [ x"${exitoptions}"x == x"-ciamodel 1"x ]; then
+                        if [ x"${new_cia_enabled}"x == x"1"x ]; then
                             echo "$testpath" "$testprog" "- " "not" "${ciatype}" "(skipped)"
                             skiptest=1
                         fi
                     fi
                     if [ "${ciatype}" == "6526A" ]; then
-                        if [ x"${exitoptions}"x == x"-ciamodel 0"x ]; then
+                        if [ x"${new_cia_enabled}"x == x"0"x ]; then
                             echo "$testpath" "$testprog" "- " "not" "${ciatype}" "(skipped)"
                             skiptest=1
                         fi
                     fi
-#                    echo "memoryexpansion:"  "${memoryexpansion}"
+                    # skip test if memory expansion type was given on commandline and it does not match
                     if [ "${memoryexpansion}" == "8K" ]; then
-#                        echo "check Not 8k?"
-                        if [ x"${exitoptions}"x != x"-memory 8k"x ]; then
+                        if [ x"${memory_expansion_enabled}"x != x"8K"x ]; then
+                            echo "$testpath" "$testprog" "- " "not" "${memoryexpansion}" "(skipped)"
+                            skiptest=1
+                        fi
+                    fi
+                    if [ "${memoryexpansion}" == "32K" ]; then
+                        if [ x"${memory_expansion_enabled}"x != x"32K"x ]; then
                             echo "$testpath" "$testprog" "- " "not" "${memoryexpansion}" "(skipped)"
                             skiptest=1
                         fi
@@ -345,6 +357,10 @@ function runprogsfortarget
                 fi
                 if [ "${memoryexpansion}" == "8K" ]; then
                     "$target"_get_cmdline_options "8K"
+                    testoptions+="${exitoptions} "
+                fi
+                if [ "${memoryexpansion}" == "32K" ]; then
+                    "$target"_get_cmdline_options "32K"
                     testoptions+="${exitoptions} "
                 fi
             if [ "${skiptest}" == "0" ] && [ "${testtype}" == "interactive" ]; then

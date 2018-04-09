@@ -32,7 +32,7 @@ function xvic_check_environment
 # $2  test path
 function xvic_get_options
 {
-#    echo xvic_get_options "$1"
+#    echo xvic_get_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "default")
@@ -40,24 +40,31 @@ function xvic_get_options
             ;;
         "vic-pal")
                 exitoptions="-pal"
+                testprogvideotype="PAL"
             ;;
         "vic-ntsc")
                 exitoptions="-ntsc"
+                testprogvideotype="NTSC"
             ;;
         "vic-ntscold")
                 exitoptions="-ntscold"
+                testprogvideotype="NTSCOLD"
             ;;
         "sid-old")
                 exitoptions="-sidenginemodel 256"
+                new_sid_enabled=0
             ;;
         "sid-new")
                 exitoptions="-sidenginemodel 257"
+                new_sid_enabled=1
             ;;
         "vic20-8k")
                 exitoptions="-memory 8k"
+                memory_expansion_enabled="8K"
             ;;
         "vic20-32k")
                 exitoptions="-memory all"
+                memory_expansion_enabled="32K"
             ;;
         "geo256k")
                 exitoptions="-georam -georamsize 256"
@@ -81,7 +88,7 @@ function xvic_get_options
 # $2  test path
 function xvic_get_cmdline_options
 {
-#    echo xvic_get_cmdline_options "$1"
+#    echo xvic_get_cmdline_options "$1" "$2"
     exitoptions=""
     case "$1" in
         "PAL")
@@ -95,6 +102,9 @@ function xvic_get_cmdline_options
             ;;
         "8K")
                 exitoptions="-memory 8k"
+            ;;
+        "32K")
+                exitoptions="-memory all"
             ;;
     esac
 }
@@ -144,7 +154,9 @@ function xvic_run_screenshot
             XVICREFSYO=22
         fi
     
-        if [ "${videotype}" == "NTSC" ]; then
+        # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+        # then we need the offsets on the NTSC screenshot
+        if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
             XVICSXO=40
             XVICSYO=22
         fi
