@@ -195,10 +195,34 @@ function resetflags
     plus256k_enabled=0
     extfuncram_enabled=0
     intfuncram_enabled=0
-    new_sid_enabled=0
-    new_cia_enabled=0
     memory_expansion_enabled=0
-    testprogvideotype=0
+
+    testprogvideotype=-1
+    new_sid_enabled=-1
+    new_cia_enabled=-1
+}
+
+###############################################################################
+
+# the results file is a simple comma-seperated list
+#
+# 1) path of the test
+# 2) executable name of the test
+# 3) exit status (0:ok, $ff:error, 1:timeout, noref)
+
+function resultstartlog
+{
+    RESULT_LOG_NAME="$target"
+    RESULT_LOG_NAME+="-result.txt"
+    rm -f "$RESULT_LOG_NAME"
+}
+
+# $1 - path
+# $2 - exe name
+# $3 - status
+function resultprintline
+{
+    echo "$1","$2","$3" >> "$RESULT_LOG_NAME"
 }
 
 ###############################################################################
@@ -215,7 +239,7 @@ function runprogsfortarget
 #    fi
 
     gettestsfortarget "$target"
-    rm -f "$target"_result.txt
+    resultstartlog
 
     for e in "${testlist[@]}"
     do
@@ -394,7 +418,7 @@ function runprogsfortarget
                     if [ "${testtype}" == "screenshot" ] && [ "$refscreenshotname" == "" ]
                     then
                         echo "reference screenshot missing (skipped)"
-                        echo "noref" "$testpath" "$testprog" >> "$target"_result.txt
+                        resultprintline "$testpath" "$testprog" "noref"
                     else
 #                        echo "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout" "$testoptions"
                         "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout" "$testoptions"
@@ -421,7 +445,7 @@ function runprogsfortarget
                                 ;;
                         esac
                         echo -e "$exitstatus" $NC
-                        echo "$exitstatus" "$testpath" "$testprog" >> "$target"_result.txt
+                        resultprintline "$testpath" "$testprog" "$exitstatus"
                     fi
                     
 #                fi
