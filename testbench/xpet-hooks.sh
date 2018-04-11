@@ -95,7 +95,7 @@ function xpet_run_screenshot
 #    echo $XPET "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-xpet.png
-    $XPET $XPETOPTS $XPETOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xpet.png "$1"/"$2" 1> /dev/null
+    $XPET $XPETOPTS $XPETOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xpet.png "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -132,7 +132,7 @@ function xpet_run_exitcode
     extraopts=""$4" "$5" "$6""
 #    echo "extraopts=" $extraopts
 #    echo $XPET $XPETOPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
-    $XPET $XPETOPTS $XPETOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
+    $XPET $XPETOPTS $XPETOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
 #    $XPET $XPETOPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
     exitcode=$?
 #    echo "exited with: " $exitcode

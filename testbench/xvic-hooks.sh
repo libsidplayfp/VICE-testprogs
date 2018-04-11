@@ -125,8 +125,8 @@ function xvic_run_screenshot
 #    echo $XVIC "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-xvic.png
-#    echo $XVIC $XVICOPTS $XVICOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xvic.png "$1"/"$2"
-    $XVIC $XVICOPTS $XVICOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xvic.png "$1"/"$2" 1> /dev/null
+#    echo $XVIC $XVICOPTS $XVICOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xvic.png "$1"/"$2" "1> /dev/null 2> /dev/null"
+    $XVIC $XVICOPTS $XVICOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xvic.png "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -184,7 +184,7 @@ function xvic_run_exitcode
 {
     extraopts=""$4" "$5" "$6""
 #    echo $XVIC "$1"/"$2"
-    $XVIC $XVICOPTS $XVICOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
+    $XVIC $XVICOPTS $XVICOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

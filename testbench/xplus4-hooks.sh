@@ -98,8 +98,8 @@ function xplus4_run_screenshot
 #    echo $XPLUS4 "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-xplus4.png
-#    echo $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xplus4.png "$1"/"$2"
-    $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xplus4.png "$1"/"$2" 1> /dev/null
+#    echo $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xplus4.png "$1"/"$2" "1> /dev/null 2> /dev/null"
+    $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xplus4.png "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -136,7 +136,7 @@ function xplus4_run_exitcode
 {
     extraopts=""$4" "$5" "$6""
 #    echo $XPLUS4 "$1"/"$2"
-    $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
+    $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

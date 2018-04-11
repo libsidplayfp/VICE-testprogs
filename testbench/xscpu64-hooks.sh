@@ -150,7 +150,7 @@ function xscpu64_run_screenshot
 #    echo $XSCPU64 "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-x64sc.png
-    $XSCPU64 $XSCPU64OPTS $XSCPU64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$1"/"$2" 1> /dev/null
+    $XSCPU64 $XSCPU64OPTS $XSCPU64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -208,8 +208,7 @@ function xscpu64_run_exitcode
     extraopts=""$4" "$5" "$6""
 #    echo "extraopts=" $extraopts
 #    echo $XSCPU64 $XSCPU64OPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
-    $XSCPU64 $XSCPU64OPTS $XSCPU64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
-#    $XSCPU64 $XSCPU64OPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
+    $XSCPU64 $XSCPU64OPTS $XSCPU64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

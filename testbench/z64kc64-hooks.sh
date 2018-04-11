@@ -5,7 +5,7 @@ Z64KC64OPTS+=" -VICIIextpal"
 Z64KC64OPTS+=" -VICIIpalette pepto-pal.vpl"
 Z64KC64OPTS+=" -warp"
 Z64KC64OPTS+=" -debugcart"
-#Z64KC64OPTS+=" -console"
+Z64KC64OPTS+=" -console"
 
 # extra options for the different ways tests can be run
 #Z64KC64OPTSEXITCODE+=" -console"
@@ -168,9 +168,9 @@ function z64kc64_run_screenshot
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-z64kc64.png
     if [ $verbose == "1" ]; then
-        echo "RUN: "$Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kc64.png "$1"/"$2" "1> /dev/null"
+        echo "RUN: "$Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kc64.png "$1"/"$2" "1> /dev/null 2> /dev/null"
     fi
-    $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kc64.png "$1"/"$2" 1> /dev/null
+    $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kc64.png "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo exitcode:$exitcode
     if [ $exitcode -ne 0 ]
@@ -236,9 +236,9 @@ function z64kc64_run_exitcode
 {
     extraopts=""$4" "$5" "$6" "$7" "$8" "$9""
     if [ $verbose == "1" ]; then
-        echo "RUN: "$Z64KC64 $Z64KC64OPTS $Z64KC64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" "1> /dev/null"
+        echo "RUN: "$Z64KC64 $Z64KC64OPTS $Z64KC64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" "1> /dev/null 2> /dev/null"
     fi
-    $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
+    $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

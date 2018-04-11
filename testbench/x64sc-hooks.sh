@@ -10,6 +10,8 @@ X64SCOPTS+=" -warp"
 X64SCOPTS+=" -debugcart"
 #X64SCOPTS+=" -raminitstartvalue 255 -raminitvalueinvert 4"
 
+#X64SCOPTS+=" -autostartprgmode 1"
+
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started
 #        with -console
@@ -226,11 +228,12 @@ function x64sc_run_exitcode
 #    echo "extraopts=" $extraopts
     if [ $verbose == "1" ]; then
         echo $X64SC $X64SCOPTS $X64SCOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2"
+        $X64SC $X64SCOPTS $X64SCOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 2> /dev/null | grep "cycles elapsed" | tr '\n' '-'
+        exitcode=${PIPESTATUS[0]}
+    else
+        $X64SC $X64SCOPTS $X64SCOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
+        exitcode=$?
     fi
-#    $X64SC $X64SCOPTS $X64SCOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 2> /dev/null | grep "cycles elapsed" | tr '\n' '-'
-#    exitcode=${PIPESTATUS[0]}
-    $X64SC $X64SCOPTS $X64SCOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
-    exitcode=$?
     if [ $verbose == "1" ]; then
         echo $X64SC "exited with: " $exitcode
     fi
