@@ -2,6 +2,9 @@
 ################################################################################
 # C64 related tests
 # total runtime (chameleon): 341 minutes and 14 seconds
+#               (micro64):    88 minutes and 46 seconds
+#               (x64sc)       61 minutes and 26 seconds
+#               (emu64):      44 minutes and 37 seconds
 #               (hoxs64):     29 minutes and 46 seconds
 ################################################################################
 ################################################################################
@@ -829,5 +832,5 @@
 #../RS232/,test1.prg
 #../RTC/,ds12c887.prg
 #../MIDI/,midi-out-irq-test.prg
-../memory-expansions/,c64-ram.prg,exitcode,29000000
+../memory-expansions/,c64-ram-emd.prg,exitcode,29000000
 #../cp-clockf83/cp-clockf83.d64
