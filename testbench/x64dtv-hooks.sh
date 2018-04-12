@@ -11,7 +11,7 @@ X64DTVOPTS+=" -debugcart"
 # FIXME: the emulators may crash when making screenshots when emu was started
 #        with -console
 X64DTVOPTSEXITCODE+=" -console"
-X64DTVOPTSSCREENSHOT+=""
+X64DTVOPTSSCREENSHOT+=" -minimized"
 
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
@@ -53,10 +53,12 @@ function x64dtv_get_options
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then
                     exitoptions="-8 $2/${1:9}"
+                    mounted_d64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
                 if [ "${1:0:9}" == "mountg64:" ]; then
                     exitoptions="-8 $2/${1:9}"
+                    mounted_g64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
             ;;
@@ -152,7 +154,9 @@ function x64dtv_run_exitcode
 {
     extraopts=""$4" "$5" "$6""
 #    echo "extraopts=" $extraopts
-#    echo $X64DTV $X64DTVOPTS $extraopts "-limitcycles" "$3" "$1"/"$2" "1> /dev/null 2> /dev/null"
+    if [ $verbose == "1" ]; then
+        echo $X64DTV $X64DTVOPTS $extraopts "-limitcycles" "$3" "$1"/"$2" "1> /dev/null 2> /dev/null"
+    fi
     $X64DTV $X64DTVOPTS $X64DTVOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode

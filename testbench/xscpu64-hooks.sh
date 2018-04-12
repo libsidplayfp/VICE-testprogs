@@ -11,7 +11,7 @@ XSCPU64OPTS+=" -debugcart"
 # FIXME: the emulators may crash when making screenshots when emu was started
 #        with -console
 XSCPU64OPTSEXITCODE+=" -console"
-XSCPU64OPTSSCREENSHOT+=""
+XSCPU64OPTSSCREENSHOT+=" -minimized"
 
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
@@ -87,14 +87,17 @@ function xscpu64_get_options
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then
                     exitoptions="-8 $2/${1:9}"
+                    mounted_d64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
                 if [ "${1:0:9}" == "mountg64:" ]; then
                     exitoptions="-8 $2/${1:9}"
+                    mounted_g64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
                 if [ "${1:0:9}" == "mountcrt:" ]; then
                     exitoptions="-cartcrt $2/${1:9}"
+                    mounted_crt="${1:9}"
                     echo -ne "(cartridge:${1:9}) "
                 fi
             ;;
@@ -209,7 +212,9 @@ function xscpu64_run_exitcode
 {
     extraopts=""$4" "$5" "$6""
 #    echo "extraopts=" $extraopts
-#    echo $XSCPU64 $XSCPU64OPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
+    if [ $verbose == "1" ]; then
+        echo $XSCPU64 $XSCPU64OPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
+    fi
     $XSCPU64 $XSCPU64OPTS $XSCPU64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode

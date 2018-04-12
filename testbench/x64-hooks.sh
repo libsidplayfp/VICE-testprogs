@@ -12,7 +12,7 @@ X64OPTS+=" -debugcart"
 # FIXME: the emulators may crash when making screenshots when emu was started
 #        with -console
 X64OPTSEXITCODE+=" -console"
-X64OPTSSCREENSHOT+=""
+X64OPTSSCREENSHOT+=" -minimized"
 
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
@@ -104,14 +104,17 @@ function x64_get_options
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then
                     exitoptions="-8 $2/${1:9}"
+                    mounted_d64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
                 if [ "${1:0:9}" == "mountg64:" ]; then
                     exitoptions="-8 $2/${1:9}"
+                    mounted_g64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
                 if [ "${1:0:9}" == "mountcrt:" ]; then
                     exitoptions="-cartcrt $2/${1:9}"
+                    mounted_crt="${1:9}"
                     echo -ne "(cartridge:${1:9}) "
                 fi
             ;;

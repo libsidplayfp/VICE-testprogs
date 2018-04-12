@@ -241,17 +241,20 @@ function chameleon_get_options
                     echo -ne "(disk:${1:9}) "
                     chmount -d64 "$2/${1:9}" > /dev/null
                     if [ "$?" != "0" ]; then exit -1; fi
+                    mounted_d64="${1:9}"
                 fi
                 if [ "${1:0:9}" == "mountg64:" ]; then
                     echo -ne "(disk:${1:9}) "
                     chmount -g64 "$2/${1:9}" > /dev/null
                     if [ "$?" != "0" ]; then exit -1; fi
+                    mounted_g64="${1:9}"
                 fi
                 if [ "${1:0:9}" == "mountcrt:" ]; then
                     echo -ne "(cartridge:${1:9}) "
                     chmount -crt "$2/${1:9}" > /dev/null
                     if [ "$?" != "0" ]; then exit -1; fi
                     dd if="$2/${1:9}" bs=1 skip=23 count=1 of=$CDUMMY 2> /dev/null > /dev/null
+                    mounted_crt="${1:9}"
                 fi
             ;;
     esac

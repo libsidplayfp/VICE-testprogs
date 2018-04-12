@@ -209,6 +209,10 @@ function resetflags
     testprogvideotype=-1
     new_sid_enabled=-1
     new_cia_enabled=-1
+    
+    mounted_d64=""
+    mounted_g64=""
+    mounted_crt=""
 }
 
 ###############################################################################
@@ -218,6 +222,7 @@ function resetflags
 # 1) path of the test
 # 2) executable name of the test
 # 3) exit status (0:ok, $ff:error, 1:timeout, noref)
+# 4) type of the test (exitstatus,screenshot,interactive)
 
 function resultstartlog
 {
@@ -229,9 +234,15 @@ function resultstartlog
 # $1 - path
 # $2 - exe name
 # $3 - status
+# $4 - test type
 function resultprintline
 {
-    echo "$1","$2","$3" >> "$RESULT_LOG_NAME"
+    echo "$1","$2","$3","$4","$mounted_d64","$mounted_g64","$mounted_crt" >> "$RESULT_LOG_NAME"
+}
+
+function resultstoplog
+{
+    echo "$1""$2""$3""$4" >> "$RESULT_LOG_NAME"
 }
 
 ###############################################################################
@@ -427,7 +438,7 @@ function runprogsfortarget
                     if [ "${testtype}" == "screenshot" ] && [ "$refscreenshotname" == "" ]
                     then
                         echo "reference screenshot missing (skipped)"
-                        resultprintline "$testpath" "$testprog" "noref"
+                        resultprintline "$testpath" "$testprog" "noref" "${testtype}"
                     else
 #                        echo "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout" "$testoptions"
                         "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout" "$testoptions"
@@ -454,7 +465,7 @@ function runprogsfortarget
                                 ;;
                         esac
                         echo -e "$exitstatus" $NC
-                        resultprintline "$testpath" "$testprog" "$exitstatus"
+                        resultprintline "$testpath" "$testprog" "$exitstatus" "${testtype}"
                     fi
                     
 #                fi
@@ -662,6 +673,8 @@ runprogsfortarget "$target" "$filter"
 
 duration=$SECONDS
 echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
+
+resultstoplog "# $(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 
 showfailedfortarget "$target"
 

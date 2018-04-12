@@ -14,7 +14,7 @@ XCBM5X0OPTS+=" -debugcart"
 # FIXME: the emulators may crash when making screenshots when emu was started
 #        with -console
 XCBM5X0OPTSEXITCODE+=" -console"
-XCBM5X0OPTSSCREENSHOT+=""
+XCBM5X0OPTSSCREENSHOT+=" -minimized"
 
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
