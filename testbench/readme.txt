@@ -155,6 +155,7 @@ options:
 
     vic20-unexp
     vic20-8k
+    vic20-32k
 
 TODO: when you add support for certain features that require options as above,
       don't forget to add them here :)
