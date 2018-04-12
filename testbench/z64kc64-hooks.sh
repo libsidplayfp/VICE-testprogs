@@ -35,6 +35,9 @@ function z64kc64_check_environment
         echo 'Error: java not installed.' >&2
         exit 1
     fi
+    
+    # is this correct?
+    emu_default_videosubtype="6569"
 }
 
 # $1  option

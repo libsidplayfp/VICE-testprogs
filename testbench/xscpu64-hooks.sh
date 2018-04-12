@@ -25,6 +25,8 @@ XSCPU64REFSYO=35
 function xscpu64_check_environment
 {
     XSCPU64="$EMUDIR"xscpu64
+
+    emu_default_videosubtype="8565"
 }
 
 # $1  option

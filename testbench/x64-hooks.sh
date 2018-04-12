@@ -1,5 +1,6 @@
 
 X64OPTS+=" -default"
+X64OPTS+=" -model c64c"
 X64OPTS+=" -VICIIfilter 0"
 X64OPTS+=" -VICIIextpal"
 X64OPTS+=" -VICIIpalette pepto-pal.vpl"
@@ -29,6 +30,8 @@ X64REFSYO=35
 function x64_check_environment
 {
     X64="$EMUDIR"x64
+
+    emu_default_videosubtype="8565"
 }
 
 # $1  option

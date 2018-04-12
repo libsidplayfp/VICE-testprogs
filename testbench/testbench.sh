@@ -133,14 +133,23 @@ function checktarget
 function getscreenshotname
 {
     refscreenshotname=""
+    screenshot_videosubtype=""
     if [ "$videosubtype" != "" ] ; then
-        if [ -f "$1"/references/"$2"-"$videosubtype".png ]
+        screenshot_videosubtype=$videosubtype
+    else
+        if [ "$emu_default_videosubtype" != "" ] ; then
+            screenshot_videosubtype=$emu_default_videosubtype
+        fi
+    fi
+
+    if [ "$screenshot_videosubtype" != "" ] ; then
+        if [ -f "$1"/references/"$2"-"$screenshot_videosubtype".png ]
         then
-            refscreenshotname="$1"/references/"$2"-"$videosubtype".png
+            refscreenshotname="$1"/references/"$2"-"$screenshot_videosubtype".png
             return 0
         fi
         # if the exact subtype could not be found, try more general one
-        if [ "$videosubtype" == "8565early" ] || [ "$videosubtype" == "8565late" ]; then
+        if [ "$screenshot_videosubtype" == "8565early" ] || [ "$screenshot_videosubtype" == "8565late" ]; then
             if [ -f "$1"/references/"$2"-"8565".png ]
             then
                 refscreenshotname="$1"/references/"$2"-"8565".png

@@ -29,6 +29,8 @@ EMU64REFSYO=35
 function emu64_check_environment
 {
     EMU64="$EMUDIR"emu64
+    # is this correct?
+    emu_default_videosubtype="6569"
 }
 
 # $1  option
@@ -174,6 +176,7 @@ function emu64_run_screenshot
             EMU64SYO=23
         fi
 
+        echo ./cmpscreens "$refscreenshotname" "$EMU64REFSXO" "$EMU64REFSYO" "$1"/.testbench/"$2"-emu64.png "$EMU64SXO" "$EMU64SYO"
         ./cmpscreens "$refscreenshotname" "$EMU64REFSXO" "$EMU64REFSYO" "$1"/.testbench/"$2"-emu64.png "$EMU64SXO" "$EMU64SYO"
         exitcode=$?
     else

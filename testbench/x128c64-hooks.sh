@@ -30,6 +30,9 @@ X128C64REFSYO=35
 function x128c64_check_environment
 {
     X128C64="$EMUDIR"x128
+
+    # this isnt really correct, perhaps invent an alias?
+    emu_default_videosubtype="8565"
 }
 
 # $1  option

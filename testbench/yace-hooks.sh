@@ -41,6 +41,9 @@ function yace_check_environment
     else
         YACE="$EMUDIR"YACE64Windows.exe
     fi
+
+    # is this correct?
+    emu_default_videosubtype="6569"
 }
 
 # $1  option

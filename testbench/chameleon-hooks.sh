@@ -27,6 +27,8 @@ function chameleon_check_environment
         echo 'Error: chmount is not installed.' >&2
         exit 1
     fi
+
+    emu_default_videosubtype="8565early"
 }
 
 function chameleon_reset

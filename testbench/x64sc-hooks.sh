@@ -1,6 +1,6 @@
 
 X64SCOPTS+=" -default"
-#X64SCOPTS+=" -model c64c"
+X64SCOPTS+=" -model c64c"
 #X64SCOPTS+=" -model c64 -ntsc "
 X64SCOPTS+=" -VICIIfilter 0"
 X64SCOPTS+=" -VICIIextpal"
@@ -30,6 +30,8 @@ X64SCREFSYO=35
 function x64sc_check_environment
 {
     X64SC="$EMUDIR"x64sc
+    
+    emu_default_videosubtype="8565"
 }
 
 # $1  option
@@ -167,7 +169,9 @@ function x64sc_run_screenshot
 #    echo $X64SC "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-x64sc.png
-#    echo $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$1"/"$2"
+    if [ $verbose == "1" ]; then
+        echo $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$1"/"$2"
+    fi
     $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]

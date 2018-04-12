@@ -33,6 +33,8 @@ function hoxs64_check_environment
         HOXS64="$EMUDIR"hoxs64.exe
         #HOXS64=hoxs64
     fi
+
+    emu_default_videosubtype="8565early"
 }
 
 # $1  option

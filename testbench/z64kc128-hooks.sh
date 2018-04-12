@@ -31,6 +31,9 @@ function z64kc128_check_environment
         echo 'Error: java not installed.' >&2
         exit 1
     fi
+
+    # this isnt really correct, perhaps invent an alias?
+    emu_default_videosubtype="8565"
 }
 
 # $1  option
