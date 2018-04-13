@@ -134,6 +134,9 @@ options:
     cia-new
     sid-old
     sid-new
+    vicii-old
+    vicii-new
+    
     vicii-pal
     vicii-ntsc
     vicii-ntscold
