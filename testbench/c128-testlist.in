@@ -1,5 +1,7 @@
 ################################################################################
 # C128 related tests
+#                           (z64kc128)  3 minutes and 18 seconds
+#                           (x128)      1 minutes and 36 seconds
 ################################################################################
 ################################################################################
 # selftest
@@ -11,8 +13,6 @@
 ################################################################################
 # REU
 ################################################################################
-#TODO:
-#../REU/c128/
 ################################################################################
 # GEO-RAM
 ################################################################################
@@ -35,8 +35,8 @@
 ../memory-expansions/,c128-efnram-emd.prg,exitcode,48000000,efnram
 ../memory-expansions/,c128-ifnram-emd.prg,exitcode,48000000,ifnram
 ../memory-expansions/,c128-georam-emd.prg,exitcode,300000000,geo256k
-../memory-expansions/,c128-ram-emd.prg,exitcode,86000000
+../memory-expansions/,c128-ram-emd.prg,exitcode,200000000
 ../memory-expansions/,c128-ram2-emd.prg,exitcode,280000000,c128fullbanks
 ../memory-expansions/,c128-ramcart-emd.prg,exitcode,160000000,ramcart128k
-../memory-expansions/,c128-reu-emd.prg,exitcode,550000000,reu512k
-../memory-expansions/,c128-vdc-emd.prg,exitcode,81000000
+../memory-expansions/,c128-reu-emd.prg,exitcode,1500000000,reu512k
+../memory-expansions/,c128-vdc-emd.prg,exitcode,200000000
