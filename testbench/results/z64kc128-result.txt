@@ -1,0 +1,7 @@
+./selftest/,c128-pass.prg,ok,exitcode,,,
+./selftest/,c128-fail.prg,error,exitcode,,,
+../memory-expansions/,c128-ram-emd.prg,ok,exitcode,,,
+../memory-expansions/,c128-ram2-emd.prg,ok,exitcode,,,
+../memory-expansions/,c128-reu-emd.prg,ok,exitcode,,,
+../memory-expansions/,c128-vdc-emd.prg,ok,exitcode,,,
+# 5 minutes and 17 seconds elapsed.

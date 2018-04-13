@@ -1,0 +1,12 @@
+./selftest/,c128-pass.prg,ok,exitcode,,,
+./selftest/,c128-fail.prg,error,exitcode,,,
+../GEO-RAM/,georam128.prg,timeout,exitcode,,,
+../memory-expansions/,c128-efnram-emd.prg,timeout,exitcode,,,
+../memory-expansions/,c128-ifnram-emd.prg,timeout,exitcode,,,
+../memory-expansions/,c128-georam-emd.prg,timeout,exitcode,,,
+../memory-expansions/,c128-ram-emd.prg,ok,exitcode,,,
+../memory-expansions/,c128-ram2-emd.prg,ok,exitcode,,,
+../memory-expansions/,c128-ramcart-emd.prg,timeout,exitcode,,,
+../memory-expansions/,c128-reu-emd.prg,timeout,exitcode,,,
+../memory-expansions/,c128-vdc-emd.prg,ok,exitcode,,,
+# 2 minutes and 31 seconds elapsed.

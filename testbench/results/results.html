@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <title>VICE Testsuite results</title>
+    <style type="text/css">
+    body                  { background-color: #ffffff; color: #000000; font: normal 10px Verdana, Arial, sans-serif;}
+    </style>  
+  </head>
+  <body>
+
+  <a href="sid.html">sid</a>
+  <a href="c64.html">c64</a>
+  <a href="vic20.html">vic20</a>
+  <a href="c128.html">c128</a>
+  <a href="plus4.html">plus4</a>
+  <a href="pet.html">pet</a>
+  <a href="dtv.html">dtv</a>
+  <a href="scpu.html">scpu</a>
+  <a href="cbm5x0.html">cbm5x0</a>
+  <a href="cbm2.html">cbm2</a>
+
+  <hr>
+  
+  From this page all the various results gathered by the VICE testsuite are
+  linked. The linked pages have been created like this:
+<tt><pre>
+  $EMUDIR="/home/foo/bar/z64k/" ./testbench.sh z64k
+  $EMUDIR="/home/foo/bar/hoxs64/" ./testbench.sh hoxs64 --pal --cianew --8580
+  $EMUDIR="/home/foo/bar/micro64/" ./testbench.sh micro64 --pal
+  $EMUDIR="/home/foo/bar/emu64/" ./testbench.sh emu64
+  $EMUDIR="/home/foo/bar/yace/" ./testbench.sh yace
+  $./testbench.sh cham20 --8k
+</pre></tt>
+  and
+<tt><pre>
+  $./testbench.sh vsid / x64 / x64sc / x128 / xplus4 / xpet / x64dtv / xscpu64 / xcbm2 / xcbm5x0
+</pre></tt>
+  then
+<tt><pre>
+  $./testresults.sh sid / c64 / vic20 / c128 / plus4 / pet / dtv / scpu / cbm2 / cbm5x0 --html
+</pre></tt>
+
+  <h1>Results<h1>
+
+  <a href="sid.html">sid</a>
+  <a href="c64.html">c64</a>
+  <a href="vic20.html">vic20</a>
+  <a href="c128.html">c128</a>
+  <a href="plus4.html">plus4</a>
+  <a href="pet.html">pet</a>
+  <a href="dtv.html">dtv</a>
+  <a href="scpu.html">scpu</a>
+  <a href="cbm5x0.html">cbm5x0</a>
+  <a href="cbm2.html">cbm2</a>
+
+  <h1>specific problems</h1>
+  <ul>
+    <li>x64
+    <ul>
+      <li><b>plus256k/test.prg</b> fails because of broken autostart
+    </ul>
+    <li>x64sc
+    <ul>
+      <li><b>plus256k/test.prg</b> fails because of broken autostart
+      <li><b>VICII/spriteenable3/4/5</b> - theres is a stray pixel in the output in NTSC mode (?) check against real NTSC machine
+    </ul>
+    <li>z64k
+    <li>hoxs64
+    <li>micro64
+    <ul>
+      <li>a bunch of drive tests fail with timeout
+    </ul>
+    <li>emu64
+    <ul>
+      <li>missing an option that makes the emu start without gui or minimized
+      <li>apparently crashes randomly at exit, perhaps related to screenshots?
+      <li>a bunch of drive tests fail with timeout
+    </ul>
+    <li>yace
+    <ul>
+      <li>latest binaries do not work correctly in WINE :(
+    </ul>
+    <li>x128
+    <ul>
+      <li>apparently broken autostart makes some tests fail
+      <li>check if <b>bankio.prg</b> fails on real C128 too
+    </ul>
+    <li>cham20
+    <ul>
+      <li>there are some serious problems with getting the result from the core, usb errors etc :/
+    </ul>
+    <li>xscpu64
+    <ul>
+      <li>broken autostart makes some tests fail
+    </ul>
+  </ul>
+
+  <h1>tests that need fixing</h1>
+  <ul>
+    <li><b>ciat2anew.prg</b> and <b>ciat2bnew.prg</b> from the Lorenz suite always fail
+    <li>videomode - the results are a bit questionable, we need to check the references
+  </ul>
+  
+  <h1>false errors</h1>
+  <ul>
+  <li><b>lp-trigger/test2.prg</b> and <b>test2new.prg</b>- needs the right ("new" or "old") VICII to work correctly.
+      perhaps more magic needs to be added to skip the respective "wrong" test
+      on full runs
+  </ul>
+
+  </body>
+</html>

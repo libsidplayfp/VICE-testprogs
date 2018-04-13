@@ -1,0 +1,3 @@
+./selftest/,pet-pass.prg,ok,exitcode,,,
+./selftest/,pet-fail.prg,error,exitcode,,,
+# 0 minutes and 1 seconds elapsed.

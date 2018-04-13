@@ -1,0 +1,3 @@
+./selftest/,vsid-pass.sid,ok,exitcode,,,
+./selftest/,vsid-fail.sid,error,exitcode,,,
+# 0 minutes and 1 seconds elapsed.

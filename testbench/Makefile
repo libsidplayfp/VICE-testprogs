@@ -203,6 +203,8 @@ z64kc128-testlist.txt: c128-testlist.in Makefile
 	cat  c128-testlist.in \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
+		| grep -v ",efnram" \
+		| grep -v ",ifnram" \
 		| grep -v ",geo256k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
@@ -307,6 +309,12 @@ testxcbm5x0: prereq
 testvsid: prereq
 	./testbench.sh vsid
 
+	
+#EMUDIR="/home/groepaz/Desktop/c64stuff/hoxs64/hoxs64_x64_1_0_9_8" ./testbench.sh hoxs64 --pal --8565early --cianew	
+#EMUDIR="/home/groepaz/Desktop/c64stuff/z64k" ./testbench.sh z64kc64
+#EMUDIR="/home/groepaz/Desktop/micro64/micro64/release/x86_64-linux/" ./testbench.sh micro64 --pal
+#EMUDIR="/home/groepaz/Desktop/emu64/build/" ./testbench.sh emu64
+	
 ################################################################################
 
 prereq-chameleon: chameleon-helper.prg chameleon-crtoff.prg
@@ -323,6 +331,29 @@ testchameleon: chameleon-helper.prg prereq
 testcham20: chameleon-helper.prg prereq
 	./testbench.sh cham20
 
+################################################################################
 
+.PHONY: results
 
+results:
+	@echo c64
+	./testresults.sh c64 --html > results/c64.html
+	@echo vic20
+	./testresults.sh vic20 --html > results/vic20.html
+	@echo c128
+	./testresults.sh c128 --html > results/c128.html
+	@echo sid
+	./testresults.sh sid --html > results/sid.html
+	@echo plus4
+	./testresults.sh plus4 --html > results/plus4.html
+	@echo pet
+	./testresults.sh pet --html > results/pet.html
+	@echo dtv
+	./testresults.sh dtv --html > results/dtv.html
+	@echo scpu
+	./testresults.sh scpu --html > results/scpu.html
+	@echo cbm5x0
+	./testresults.sh cbm5x0 --html > results/cbm5x0.html
+	@echo cbm2
+	./testresults.sh cbm2 --html > results/cbm2.html
 
