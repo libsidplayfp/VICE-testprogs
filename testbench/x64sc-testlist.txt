@@ -657,8 +657,8 @@
 ../VICII/lplatency/,lplatency.prg,exitcode,10000000,vicii-pal
 #FIXME: port to NTSC
 ../VICII/lp-trigger/,test1.prg,screenshot,20000000,vicii-pal
-../VICII/lp-trigger/,test2.prg,exitcode,20000000,vicii-pal
-../VICII/lp-trigger/,test2new.prg,exitcode,20000000,vicii-pal
+../VICII/lp-trigger/,test2.prg,exitcode,20000000,vicii-pal,vicii-old
+../VICII/lp-trigger/,test2new.prg,exitcode,20000000,vicii-pal,vicii-new
 ../VICII/movesplit/,movesplit.prg,interactive,0,vicii-pal
 ../VICII/movesplit/,movesplit_ntsc.prg,interactive,0,vicii-ntsc
 ../VICII/movesplit/,movesplit_ntscold.prg,interactive,0,vicii-ntscold
