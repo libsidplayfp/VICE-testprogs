@@ -52,6 +52,30 @@ function xcbm2_get_options
                 exitoptions="-ntscold"
                 testprogvideotype="NTSCOLD"
             ;;
+        "vicii-old") 
+                if [ x"$testprogvideotype"x == x"PAL"x ]; then
+                    # "old" PAL
+#                    exitoptions="-VICIImodel 6569"
+                    testprogvideosubtype="6569"
+                fi
+                if [ x"$testprogvideotype"x == x"NTSC"x ]; then
+                    # "old" NTSC
+#                    exitoptions="-VICIImodel 6562"
+                    testprogvideosubtype="6562"
+                fi
+            ;;
+        "vicii-new") 
+                if [ x"$testprogvideotype"x == x"PAL"x ]; then
+                    # "new" PAL
+#                    exitoptions="-VICIImodel 8565"
+                    testprogvideosubtype="8565"
+                fi
+                if [ x"$testprogvideotype"x == x"NTSC"x ]; then
+                    # "new" NTSC
+#                    exitoptions="-VICIImodel 8562"
+                   testprogvideosubtype="8562"
+                fi
+            ;;
         "cia-old")
                 exitoptions="-ciamodel 0"
                 new_cia_enabled=0
@@ -91,15 +115,18 @@ function xcbm2_get_cmdline_options
         "NTSCOLD")
                 exitoptions="-ntscold"
             ;;
-        "6569") # "old" PAL
-                exitoptions="-VICIImodel 6569"
-            ;;
-        "8565") # "new" PAL
-                exitoptions="-VICIImodel 8565"
-            ;;
-        "8562") # "new" NTSC
-                exitoptions="-VICIImodel 8562"
-            ;;
+#        "6569") # "old" PAL
+#                exitoptions="-VICIImodel 6569"
+#            ;;
+#        "8565") # "new" PAL
+#                exitoptions="-VICIImodel 8565"
+#            ;;
+#        "6562") # "old" NTSC
+#                exitoptions="-VICIImodel 6562"
+#            ;;
+#        "8562") # "new" NTSC
+#                exitoptions="-VICIImodel 8562"
+#            ;;
         "6526") # "old" CIA
                 exitoptions="-ciamodel 0"
             ;;

@@ -213,6 +213,30 @@ function chameleon_get_options
 #                exitoptions="-ntscold"
                 testprogvideotype="NTSCOLD"
             ;;
+        "vicii-old") 
+                if [ x"$testprogvideotype"x == x"PAL"x ]; then
+                    # "old" PAL
+#                    exitoptions="-VICIImodel 6569"
+                    testprogvideosubtype="6569"
+                fi
+                if [ x"$testprogvideotype"x == x"NTSC"x ]; then
+                    # "old" NTSC
+#                    exitoptions="-VICIImodel 6562"
+                    testprogvideosubtype="6562"
+                fi
+            ;;
+        "vicii-new") 
+                if [ x"$testprogvideotype"x == x"PAL"x ]; then
+                    # "new" PAL
+#                    exitoptions="-VICIImodel 8565"
+                    testprogvideosubtype="8565early"
+                fi
+                if [ x"$testprogvideotype"x == x"NTSC"x ]; then
+                    # "new" NTSC
+#                    exitoptions="-VICIImodel 8562"
+                    testprogvideosubtype="8562early"
+                fi
+            ;;
         "cia-old")
 #                exitoptions="-ciamodel 0"
                 new_cia_enabled=0
@@ -279,12 +303,12 @@ function chameleon_get_cmdline_options
         "NTSCOLD")
                 exitoptions="-ntscold"
             ;;
-        "8565") # "new" PAL
-                exitoptions=""
-            ;;
-        "8562") # "new" NTSC
-                exitoptions=""
-            ;;
+#        "8565") # "new" PAL
+#                exitoptions=""
+#            ;;
+#        "8562") # "new" NTSC
+#                exitoptions=""
+#            ;;
         "6526") # "old" CIA
                 exitoptions="-ciamodel 0"
                 new_cia_enabled=0

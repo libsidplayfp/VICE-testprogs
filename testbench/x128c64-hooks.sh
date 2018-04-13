@@ -32,7 +32,7 @@ function x128c64_check_environment
     X128C64="$EMUDIR"x128
 
     # this isnt really correct, perhaps invent an alias?
-    emu_default_videosubtype="8565"
+    emu_default_videosubtype="8565early"
 }
 
 # $1  option
@@ -52,6 +52,30 @@ function x128c64_get_options
         "vicii-ntsc")
                 exitoptions="-ntsc"
                 testprogvideotype="NTSC"
+            ;;
+        "vicii-old") 
+                if [ x"$testprogvideotype"x == x"PAL"x ]; then
+                    # "old" PAL
+#                    exitoptions="-VICIImodel 6569"
+                    testprogvideosubtype="6569"
+                fi
+                if [ x"$testprogvideotype"x == x"NTSC"x ]; then
+                    # "old" NTSC
+#                    exitoptions="-VICIImodel 6562"
+                    testprogvideosubtype="6562"
+                fi
+            ;;
+        "vicii-new") 
+                if [ x"$testprogvideotype"x == x"PAL"x ]; then
+                    # "new" PAL
+#                    exitoptions="-VICIImodel 8565"
+                    testprogvideosubtype="8565early"
+                fi
+                if [ x"$testprogvideotype"x == x"NTSC"x ]; then
+                    # "new" NTSC
+#                    exitoptions="-VICIImodel 8562"
+                    testprogvideosubtype="8562early"
+                fi
             ;;
         "cia-old")
                 exitoptions="-ciamodel 0"
@@ -132,14 +156,23 @@ function x128c64_get_cmdline_options
         "NTSC")
                 exitoptions="-ntsc"
             ;;
-        "6569") # "old" PAL
-                exitoptions="-VICIImodel 6569"
+#        "6569") # "old" PAL
+#                exitoptions="-VICIImodel 6569"
+#            ;;
+#        "8565") # "new" PAL
+#                exitoptions="-VICIImodel 8565"
+#            ;;
+#        "6562") # "old" NTSC
+#                exitoptions="-VICIImodel 6562"
+#            ;;
+#        "8562") # "new" NTSC
+#                exitoptions="-VICIImodel 8562"
+#            ;;
+        "6526") # "old" CIA
+                exitoptions="-ciamodel 0"
             ;;
-        "8565") # "new" PAL
-                exitoptions="-VICIImodel 8565"
-            ;;
-        "8562") # "new" NTSC
-                exitoptions="-VICIImodel 8562"
+        "6526A") # "new" CIA
+                exitoptions="-ciamodel 1"
             ;;
     esac
 }

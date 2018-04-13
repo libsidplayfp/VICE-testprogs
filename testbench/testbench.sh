@@ -142,6 +142,11 @@ function getscreenshotname
         fi
     fi
 
+    if [ "$testprogvideotype" == "NTSC" ] && [ "$screenshot_videosubtype" == "8565" ]
+    then
+        screenshot_videosubtype="8562"
+    fi
+
     if [ "$screenshot_videosubtype" != "" ] ; then
         if [ -f "$1"/references/"$2"-"$screenshot_videosubtype".png ]
         then
@@ -156,15 +161,23 @@ function getscreenshotname
                 return 0
             fi
         fi
+        # if the exact subtype could not be found, try more general one
+        if [ "$screenshot_videosubtype" == "8562early" ] || [ "$screenshot_videosubtype" == "8562late" ]; then
+            if [ -f "$1"/references/"$2"-"8562".png ]
+            then
+                refscreenshotname="$1"/references/"$2"-"8562".png
+                return 0
+            fi
+        fi
     fi
 
-    if [ "$videotype" == "NTSC" ] && [ -f "$1"/references/"$2"-ntsc.png ]
+    if [ "$testprogvideotype" == "NTSC" ] && [ -f "$1"/references/"$2"-ntsc.png ]
     then
         refscreenshotname="$1"/references/"$2"-ntsc.png
         return 0
     fi
 
-    if [ "$videotype" == "NTSCOLD" ] && [ -f "$1"/references/"$2"-ntscold.png ]
+    if [ "$testprogvideotype" == "NTSCOLD" ] && [ -f "$1"/references/"$2"-ntscold.png ]
     then
         refscreenshotname="$1"/references/"$2"-ntscold.png
         return 0
@@ -207,6 +220,7 @@ function resetflags
     memory_expansion_enabled=0
 
     testprogvideotype=-1
+    testprogvideosubtype=-1
     new_sid_enabled=-1
     new_cia_enabled=-1
     
@@ -421,12 +435,15 @@ function runprogsfortarget
                     if [ "${testtype}" == "screenshot" ]
                     then
                         getscreenshotname "$testpath" "$testprog"
+#                        echo NAME:"$refscreenshotname"
                         refscreenshotvideotype="PAL"
-                        if [ "${refscreenshotname#*_ntsc.prg}" != "$refscreenshotname" ] || [ "${refscreenshotname#*-ntsc.png}" != "$refscreenshotname" ]
+                        if [ "${refscreenshotname#*_ntsc.prg}" != "$refscreenshotname" ] || 
+                           [ "${refscreenshotname#*_ntsc-8562.png}" != "$refscreenshotname" ]
                         then
                             refscreenshotvideotype="NTSC"
                         fi
-                        if [ "${refscreenshotname#*_ntscold.prg}" != "$refscreenshotname" ] || [ "${refscreenshotname#*-ntscold.png}" != "$refscreenshotname" ]
+                        if [ "${refscreenshotname#*_ntscold.prg}" != "$refscreenshotname" ] || 
+                           [ "${refscreenshotname#*-ntscold.png}" != "$refscreenshotname" ]
                         then
                             refscreenshotvideotype="NTSCOLD"
                         fi

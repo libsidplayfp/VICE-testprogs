@@ -31,7 +31,7 @@ function x64_check_environment
 {
     X64="$EMUDIR"x64
 
-    emu_default_videosubtype="8565"
+    emu_default_videosubtype="8565early"
 }
 
 # $1  option
@@ -55,6 +55,30 @@ function x64_get_options
         "vicii-ntscold")
                 exitoptions="-ntscold"
                 testprogvideotype="NTSCOLD"
+            ;;
+        "vicii-old") 
+                if [ x"$testprogvideotype"x == x"PAL"x ]; then
+                    # "old" PAL
+#                    exitoptions="-VICIImodel 6569"
+                    testprogvideosubtype="6569"
+                fi
+                if [ x"$testprogvideotype"x == x"NTSC"x ]; then
+                    # "old" NTSC
+#                    exitoptions="-VICIImodel 6562"
+                    testprogvideosubtype="6562"
+                fi
+            ;;
+        "vicii-new") 
+                if [ x"$testprogvideotype"x == x"PAL"x ]; then
+                    # "new" PAL
+#                    exitoptions="-VICIImodel 8565"
+                    testprogvideosubtype="8565early"
+                fi
+                if [ x"$testprogvideotype"x == x"NTSC"x ]; then
+                    # "new" NTSC
+#                    exitoptions="-VICIImodel 8562"
+                    testprogvideosubtype="8562early"
+                fi
             ;;
         "cia-old")
                 exitoptions="-ciamodel 0"
@@ -138,14 +162,23 @@ function x64_get_cmdline_options
         "NTSCOLD")
                 exitoptions="-ntscold"
             ;;
-        "6569") # "old" PAL
-                exitoptions="-VICIImodel 6569"
+#        "6569") # "old" PAL
+#                exitoptions="-VICIImodel 6569"
+#            ;;
+#        "8565") # "new" PAL
+#                exitoptions="-VICIImodel 8565"
+#            ;;
+#        "6562") # "old" NTSC
+#                exitoptions="-VICIImodel 6562"
+#            ;;
+#        "8562") # "new" NTSC
+#                exitoptions="-VICIImodel 8562"
+#            ;;
+        "6526") # "old" CIA
+                exitoptions="-ciamodel 0"
             ;;
-        "8565") # "new" PAL
-                exitoptions="-VICIImodel 8565"
-            ;;
-        "8562") # "new" NTSC
-                exitoptions="-VICIImodel 8562"
+        "6526A") # "new" CIA
+                exitoptions="-ciamodel 1"
             ;;
     esac
 }
@@ -222,7 +255,9 @@ function x64_run_screenshot
 function x64_run_exitcode
 {
     extraopts=""$4" "$5" "$6""
-#    echo $X64 $X64OPTS $X64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" "1> /dev/null 2> /dev/null"
+    if [ $verbose == "1" ]; then
+        echo $X64 $X64OPTS $X64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" "1> /dev/null 2> /dev/null"
+    fi
     $X64 $X64OPTS $X64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
