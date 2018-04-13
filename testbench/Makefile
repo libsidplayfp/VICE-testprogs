@@ -309,13 +309,7 @@ testxcbm5x0: prereq
 testvsid: prereq
 	./testbench.sh vsid
 
-	
-#EMUDIR="/home/groepaz/Desktop/c64stuff/hoxs64/hoxs64_x64_1_0_9_8" ./testbench.sh hoxs64 --pal --8565early --cianew	
-#EMUDIR="/home/groepaz/Desktop/c64stuff/z64k" ./testbench.sh z64kc64
-#EMUDIR="/home/groepaz/Desktop/micro64/micro64/release/x86_64-linux/" ./testbench.sh micro64 --pal
-#EMUDIR="/home/groepaz/Desktop/emu64/build/" ./testbench.sh emu64
-	
-################################################################################
+##############################################################################
 
 prereq-chameleon: chameleon-helper.prg chameleon-crtoff.prg
 
