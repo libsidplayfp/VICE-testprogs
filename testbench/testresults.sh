@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # read the list of tests
 function gettests
@@ -21,6 +21,14 @@ function getresults
 }
 
 ################################################################################
+
+BLUE='\033[1;34m'
+YELLOW='\033[1;33m'
+GREEN='\033[1;32m'
+RED='\033[1;31m'
+GREY='\033[1;30m'
+WHITE='\033[1;29m'
+NC='\033[0m'
 
 function outputheader
 {
@@ -88,25 +96,33 @@ SFLINK="https://sourceforge.net/p/vice-emu/code/HEAD/tree/testprogs/testbench"
 function outputrowstart
 {
     if [ x"$1"x != x""x ]; then
-    case "$outmode" in
-        html)
-            # html
-            echo "<tr><td>"
-            echo "<a href=\"$SFLINK/$1\">"$1"</a>"
-            echo "<a href=\"$SFLINK/$1/$2?format=raw\">"$2"</a>"
-            echo "$4" "$5" "$6""</td>"
-            if [ x"$3"x != x"exitcode"x ]; then
-                echo "  <td>""$3""</td>"
-            else
-                echo "  <td></td>"
-            fi
-        ;;
-        *)
-            # terminal
-        ;;
-    esac
+        case "$outmode" in
+            html)
+                # html
+                echo "<tr><td>"
+                echo "<a href=\"$SFLINK/$1\">"$1"</a>"
+                echo "<a href=\"$SFLINK/$1/$2?format=raw\">"$2"</a>"
+                echo "$4" "$5" "$6""</td>"
+                if [ x"$3"x != x"exitcode"x ]; then
+                    echo "  <td>""$3""</td>"
+                else
+                    echo "  <td></td>"
+                fi
+            ;;
+            *)
+                # terminal
+            ;;
+        esac
     else
-        echo "<tr><td></td><td></td>"
+        case "$outmode" in
+            html)
+                # html
+                echo "<tr><td></td><td></td>"
+            ;;
+            *)
+                # terminal
+            ;;
+        esac
     fi
 }
 
@@ -138,7 +154,8 @@ function outputrowheader
         ;;
         *)
             # terminal
-            echo "$1"
+            tmp="$1            "
+            echo -ne ${WHITE}"${tmp:0:7} "${NC}
         ;;
     esac
 }
@@ -174,8 +191,29 @@ function outputcolumn
         ;;
         *)
             # terminal
-            tmp="$1]            "
-            echo -ne "[${tmp:0:10}\t"
+            tmp="$1            "
+            
+            case "$1" in
+                "n/a")
+                    if [ "$2" == "interactive" ]; then
+                        echo -ne ${GREY}"manual  "${NC}
+                    else
+                        echo -ne ${GREY}"${tmp:0:7} "${NC}
+                    fi
+                ;;
+                "ok")
+                    echo -ne ${GREEN}"${tmp:0:7} "${NC}
+                ;;
+                "error")
+                    echo -ne ${RED}"${tmp:0:7} "${NC}
+                ;;
+                "timeout")
+                    echo -ne ${BLUE}"${tmp:0:7} "${NC}
+                ;;
+                *)
+                    echo -ne "${tmp:0:7} "
+                ;;
+            esac
         ;;
     esac
 }
@@ -392,6 +430,27 @@ function findresult9
     outputcolumn "n/a" "$4"
 }
 
+function findresult10
+{
+    for r in "${resultlist10[@]}"
+    do
+        if [ "${r:0:1}" != "#" ]; then
+            IFS=',' read -a myarray <<< "$r"
+            if [ x"$2"x == x"${myarray[0]}"x ] && 
+            [ x"$3"x == x"${myarray[1]}"x ] && 
+            [ x"$4"x == x"${myarray[3]}"x ] && 
+            [ x"$5"x == x"${myarray[4]}"x ] && 
+            [ x"$6"x == x"${myarray[5]}"x ] && 
+            [ x"$7"x == x"${myarray[6]}"x ]; then
+                outputcolumn ${myarray[2]} "$4"
+                return
+            fi
+        fi
+    done
+    outputcolumn "n/a" "$4"
+}
+
+################################################################################
 
 function reset_options
 {
@@ -477,25 +536,28 @@ function outputtable
 {
     outputheader
     outputrowstart
-    outputrowheader ${header[0]}
+    outputrowheader "${header[0]}"
     if [ "${resultcolums}" -gt "1" ]; then
-        outputrowheader ${header[1]}
+        outputrowheader "${header[1]}"
         if [ "${resultcolums}" -gt "2" ]; then
-            outputrowheader ${header[2]}
+            outputrowheader "${header[2]}"
             if [ "${resultcolums}" -gt "3" ]; then
-                outputrowheader ${header[3]}
+                outputrowheader "${header[3]}"
                 if [ "${resultcolums}" -gt "4" ]; then
-                    outputrowheader ${header[4]}
+                    outputrowheader "${header[4]}"
                     if [ "${resultcolums}" -gt "5" ]; then
-                        outputrowheader ${header[5]}
+                        outputrowheader "${header[5]}"
                         if [ "${resultcolums}" -gt "6" ]; then
-                            outputrowheader ${header[6]}
+                            outputrowheader "${header[6]}"
                             if [ "${resultcolums}" -gt "7" ]; then
-                                outputrowheader ${header[7]}
+                                outputrowheader "${header[7]}"
                                 if [ "${resultcolums}" -gt "8" ]; then
-                                    outputrowheader ${header[8]}
+                                    outputrowheader "${header[8]}"
                                     if [ "${resultcolums}" -gt "9" ]; then
-                                        outputrowheader ${header[9]}
+                                        outputrowheader "${header[9]}"
+                                        if [ "${resultcolums}" -gt "10" ]; then
+                                            outputrowheader "${header[10]}"
+                                        fi
                                     fi
                                 fi
                             fi
@@ -543,6 +605,9 @@ function outputtable
                                             findresult8 resultlist8 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
                                             if [ "${resultcolums}" -gt "9" ]; then
                                                 findresult9 resultlist9 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                                                if [ "${resultcolums}" -gt "10" ]; then
+                                                    findresult10 resultlist10 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                                                fi
                                             fi
                                         fi
                                     fi
@@ -572,23 +637,25 @@ function checktarget
                 resultsfile[1]="results/x64sc-result.txt"
                 resultsfile[2]="results/x128c64-result.txt"
                 resultsfile[3]="results/z64kc64-result.txt"
-                resultsfile[4]="results/hoxs64-result.txt"
-                resultsfile[5]="results/micro64-result.txt"
-                resultsfile[6]="results/emu64-result.txt"
-                resultsfile[7]="results/yace-result.txt"
-                resultsfile[8]="results/chameleon-result.txt"
-                resultsfile[9]="results/c64rmk2-result.txt"
+                resultsfile[4]="results/z64kc128c64-result.txt"
+                resultsfile[5]="results/hoxs64-result.txt"
+                resultsfile[6]="results/micro64-result.txt"
+                resultsfile[7]="results/emu64-result.txt"
+                resultsfile[8]="results/yace-result.txt"
+                resultsfile[9]="results/chameleon-result.txt"
+                resultsfile[10]="results/c64rmk2-result.txt"
                 header[0]="x64"
                 header[1]="x64sc"
-                header[2]="x128c64"
-                header[3]="z64kc64"
-                header[4]="hoxs64"
-                header[5]="micro64"
-                header[6]="emu64"
-                header[7]="yace"
-                header[8]="chameleon"
-                header[9]="c64rmk2"
-                resultcolums=10
+                header[2]="x128<br>(c64)"
+                header[3]="z64k<br>(c64)"
+                header[4]="z64k<br>(c128/c64)"
+                header[5]="hoxs64"
+                header[6]="micro64"
+                header[7]="emu64"
+                header[8]="yace"
+                header[9]="chameleon"
+                header[10]="c64rmk2"
+                resultcolums=11
             ;;
     # C128 targets
         c128)
@@ -597,7 +664,7 @@ function checktarget
                 resultsfile[0]="results/x128-result.txt"
                 resultsfile[1]="results/z64kc128-result.txt"
                 header[0]="x128"
-                header[1]="z64kc128"
+                header[1]="z64k<br>(c128)"
                 resultcolums=2
             ;;
     # SCPU targets
@@ -640,7 +707,7 @@ function checktarget
                 resultsfile[1]="results/z64kvic20-result.txt"
                 resultsfile[2]="results/cham20-result.txt"
                 header[0]="xvic"
-                header[1]="z64kvic20"
+                header[1]="z64k<br>(vic20)"
                 header[2]="cham20"
                 resultcolums=3
             ;;
@@ -741,15 +808,10 @@ checkparams
 
 gettests $testlistfile
 
-getresults 0 ${resultsfile[0]}
-getresults 1 ${resultsfile[1]}
-getresults 2 ${resultsfile[2]}
-getresults 3 ${resultsfile[3]}
-getresults 4 ${resultsfile[4]}
-getresults 5 ${resultsfile[5]}
-getresults 6 ${resultsfile[6]}
-getresults 7 ${resultsfile[7]}
-getresults 8 ${resultsfile[8]}
-getresults 9 ${resultsfile[9]}
+for ((i=0;i<${resultcolums};i++))
+do
+#    echo "reading" ${resultsfile[$i]}
+    getresults $i ${resultsfile[$i]}
+done
 
 outputtable
