@@ -202,10 +202,10 @@ function cham20_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function cham20_run_screenshot
 {
-#    echo cham20 "$1"/"$2"
-    extraopts=""$4" "$5" "$6""
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-cham20.png
 
@@ -268,6 +268,8 @@ function cham20_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function cham20_run_exitcode
 {
 #    echo cham20 X"$1"X / X"$2"X

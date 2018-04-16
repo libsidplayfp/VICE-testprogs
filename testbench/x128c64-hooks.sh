@@ -1,6 +1,7 @@
 
 X128C64OPTS+=" -default"
-X128C64OPTS+=" -go64"
+# we must handle go64 below
+#X128C64OPTS+=" -go64"
 X128C64OPTS+=" -VICIIfilter 0"
 X128C64OPTS+=" -VICIIextpal"
 X128C64OPTS+=" -VICIIpalette pepto-pal.vpl"
@@ -187,14 +188,23 @@ function x128c64_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function x128c64_run_screenshot
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $X128C64 "$1"/"$2"
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-x64.png
-#    echo $X128C64 $X128C64OPTS $X128C64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$2"-x128c64.png "$1"/"$2"
-    $X128C64 $X128C64OPTS $X128C64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$2"-x128c64.png "$1"/"$2" 1> /dev/null 2> /dev/null
+    rm -f "$1"/.testbench/"$2"-x128c64.png
+
+    if [ "x"$mounted_crt"x" == "x""x" ]; then
+        X128C64GO64OPTS=" -go64"
+    else
+        X128C64GO64OPTS=""
+    fi
+
+    if [ $verbose == "1" ]; then
+        echo $X128C64 $X128C64OPTS $X128C64GO64OPTS $X128C64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$2"-x128c64.png "$4"
+    fi
+    $X128C64 $X128C64OPTS $X128C64GO64OPTS $X128C64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$2"-x128c64.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -246,11 +256,19 @@ function x128c64_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function x128c64_run_exitcode
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $X128C64 $X128C64OPTS $X128C64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2"
-    $X128C64 $X128C64OPTS $X128C64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
+    if [ "x"$mounted_crt"x" == "x""x" ]; then
+        X128C64GO64OPTS=" -go64"
+    else
+        X128C64GO64OPTS=""
+    fi
+    if [ $verbose == "1" ]; then
+        echo $X128C64 $X128C64OPTS $X128C64GO64OPTS $X128C64OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4"
+    fi
+    $X128C64 $X128C64OPTS $X128C64GO64OPTS $X128C64OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

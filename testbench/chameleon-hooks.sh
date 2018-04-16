@@ -330,10 +330,10 @@ function chameleon_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function chameleon_run_screenshot
 {
-#    echo chameleon "$1"/"$2"
-    extraopts=""$4" "$5" "$6""
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-chameleon.png
 
@@ -410,6 +410,8 @@ function chameleon_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function chameleon_run_exitcode
 {
 #    echo chameleon X"$1"X / X"$2"X

@@ -461,8 +461,17 @@ function runprogsfortarget
                         echo "reference screenshot missing (skipped)"
                         resultprintline "$testpath" "$testprog" "noref" "${testtype}"
                     else
+                    
+                        # make sure the full name is empty when there is no program file
+                        # (ie dont just pass a path)
+                        if [ "x"$testprog"x" == "x""x" ]; then
+                            testprogfullname=""
+                        else
+                            testprogfullname="$testpath/$testprog"
+                        fi
+                    
 #                        echo "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout" "$testoptions"
-                        "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout" "$testoptions"
+                        "$target"_run_"$testtype" "$testpath" "$testprog" "$testtimeout" "$testprogfullname" "$testoptions"
 #                        echo "exited with: " $exitcode
                         GREEN='\033[1;32m'
                         RED='\033[1;31m'

@@ -106,14 +106,16 @@ function xcbm5x0_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function xcbm5x0_run_screenshot
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $XCBM5X0 "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-xcbm5x0.png
-#    echo $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm5x0.png "$1"/"$2" "1> /dev/null 2> /dev/null"
-    $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm5x0.png "$1"/"$2" 1> /dev/null 2> /dev/null
+    if [ $verbose == "1" ]; then
+        echo $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm5x0.png "$4"
+    fi
+    $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm5x0.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -146,11 +148,14 @@ function xcbm5x0_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function xcbm5x0_run_exitcode
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $XCBM5X0 "$1"/"$2"
-    $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
+    if [ $verbose == "1" ]; then
+        echo $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4"
+    fi
+    $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

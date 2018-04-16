@@ -160,16 +160,21 @@ function emu64_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function emu64_run_screenshot
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $EMU64 "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-emu64.png
-    if [ $verbose == "1" ]; then
-        echo $EMU64 $EMU64OPTS $EMU64OPTSSCREENSHOT $extraopts "--limitcycles" "$3" "--exitscreenshot" "$1"/.testbench/"$2"-emu64.png "--autostart" "$1"/"$2" "1> /dev/null 2> /dev/null"
+    if [ x"$2"x == x""x ]; then
+        TESTPROGFULLPATH=""
+    else
+        TESTPROGFULLPATH="--autostart "$1"/"$2""
     fi
-    $EMU64 $EMU64OPTS $EMU64OPTSSCREENSHOT $extraopts "--limitcycles" "$3" "--exitscreenshot" "$1"/.testbench/"$2"-emu64.png "--autostart" "$1"/"$2" 1> /dev/null 2> /dev/null
+    if [ $verbose == "1" ]; then
+        echo $EMU64 $EMU64OPTS $EMU64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--exitscreenshot" "$1"/.testbench/"$2"-emu64.png $TESTPROGFULLPATH
+    fi
+    $EMU64 $EMU64OPTS $EMU64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--exitscreenshot" "$1"/.testbench/"$2"-emu64.png $TESTPROGFULLPATH 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -203,7 +208,9 @@ function emu64_run_screenshot
             EMU64SYO=23
         fi
 
-        echo ./cmpscreens "$refscreenshotname" "$EMU64REFSXO" "$EMU64REFSYO" "$1"/.testbench/"$2"-emu64.png "$EMU64SXO" "$EMU64SYO"
+        if [ $verbose == "1" ]; then
+            echo ./cmpscreens "$refscreenshotname" "$EMU64REFSXO" "$EMU64REFSYO" "$1"/.testbench/"$2"-emu64.png "$EMU64SXO" "$EMU64SYO"
+        fi
         ./cmpscreens "$refscreenshotname" "$EMU64REFSXO" "$EMU64REFSYO" "$1"/.testbench/"$2"-emu64.png "$EMU64SXO" "$EMU64SYO"
         exitcode=$?
     else
@@ -222,13 +229,19 @@ function emu64_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function emu64_run_exitcode
 {
-    extraopts=""$4" "$5" "$6""
-    if [ $verbose == "1" ]; then
-        echo $EMU64 $EMU64OPTS $EMU64OPTSEXITCODE $extraopts "--limitcycles" "$3" "--autostart" "$1"/"$2" "1> /dev/null 2> /dev/null"
+    if [ x"$2"x == x""x ]; then
+        TESTPROGFULLPATH=""
+    else
+        TESTPROGFULLPATH="--autostart "$1"/"$2""
     fi
-    $EMU64 $EMU64OPTS $EMU64OPTSEXITCODE $extraopts "--limitcycles" "$3" "--autostart" "$1"/"$2" 1> /dev/null 2> /dev/null
+    if [ $verbose == "1" ]; then
+        echo $EMU64 $EMU64OPTS $EMU64OPTSEXITCODE ${@:5} "--limitcycles" "$3" $TESTPROGFULLPATH "1> /dev/null 2> /dev/null"
+    fi
+    $EMU64 $EMU64OPTS $EMU64OPTSEXITCODE ${@:5} "--limitcycles" "$3" $TESTPROGFULLPATH 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $verbose == "1" ]; then
         echo "exited with: " $exitcode

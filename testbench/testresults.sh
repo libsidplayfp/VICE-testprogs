@@ -128,9 +128,10 @@ function outputrowstart
 
 # $1 test path
 # $2 test exe
-# $3 mountd64
-# $4 mountg64
-# $5 mountcrt
+# $3 test type
+# $4 mountd64
+# $5 mountg64
+# $6 mountcrt
 function outputrowend
 {
    case "$outmode" in
@@ -140,7 +141,12 @@ function outputrowend
         ;;
         *)
             # terminal
-            echo "$1" "$2"
+            if [ x"$3"x != x"exitcode"x ]; then
+                tmp="$3            "
+            else
+                tmp="            "
+            fi
+            echo "${tmp:0:7} " "$1" "$2" "$4" "$5" "$6"
         ;;
     esac
 }
@@ -225,6 +231,9 @@ function outputcolumn
 # $2 test path
 # $3 test exe
 # $4 test type
+# $5 mountd64
+# $6 mountg64
+# $7 mountcrt
 function findresult0
 {
     for r in "${resultlist0[@]}"
@@ -232,7 +241,7 @@ function findresult0
 #        echo "check:$r"
         if [ "${r:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$r"
-    #        echo 1: x"$2"x == x"${myarray[0]}"x x"$3"x == x"${myarray[1]}"x x"$4"x == x"${myarray[3]}"x x"$5"x == x"${myarray[4]}"x x"$6"x == x"${myarray[5]}"x x"$7"x == x"${myarray[6]}"x
+#            echo 1: x"$2"x == x"${myarray[0]}"x 2:x"$3"x == x"${myarray[1]}"x 3:x"$4"x == x"${myarray[3]}"x 4:x"$5"x == x"${myarray[4]}"x 5:x"$6"x == x"${myarray[5]}"x 6:x"$7"x == x"${myarray[6]}"x
             if [ x"$2"x == x"${myarray[0]}"x ] && 
             [ x"$3"x == x"${myarray[1]}"x ] && 
             [ x"$4"x == x"${myarray[3]}"x ] && 

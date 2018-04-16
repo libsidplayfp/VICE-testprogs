@@ -181,13 +181,16 @@ function x128_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function x128_run_screenshot
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $X128 "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-x128.png
-    $X128 $X128OPTS $X128OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x128.png "$1"/"$2" 1> /dev/null 2> /dev/null
+    if [ $verbose == "1" ]; then
+        echo $X128 $X128OPTS $X128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x128.png "$4"
+    fi
+    $X128 $X128OPTS $X128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x128.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -242,14 +245,14 @@ function x128_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function x128_run_exitcode
 {
-    extraopts=""$4" "$5" "$6""
-#    echo "extraopts=" $extraopts
     if [ $verbose == "1" ]; then
-        echo $X128 $X128OPTS $extraopts "-limitcycles" "$3" "$1"/"$2" "1> /dev/null 2> /dev/null"
+        echo $X128 $X128OPTS ${@:5} "-limitcycles" "$3" "$4"
     fi
-    $X128 $X128OPTS $X128OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
+    $X128 $X128OPTS $X128OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

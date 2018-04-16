@@ -163,16 +163,16 @@ function micro64_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function micro64_run_screenshot
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $MICRO64 "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-micro64.png
     if [ $verbose == "1" ]; then
-        echo $MICRO64 $MICRO64OPTS $MICRO64OPTSSCREENSHOT $extraopts "+DEBUGLIMITCYCLES=""$3" "+DEBUGEXITVICBITMAP=""$1"/.testbench/"$2"-micro64.png "$1"/"$2"
+        echo $MICRO64 $MICRO64OPTS $MICRO64OPTSSCREENSHOT ${@:5} "+DEBUGLIMITCYCLES=""$3" "+DEBUGEXITVICBITMAP=""$1"/.testbench/"$2"-micro64.png "$4"
     fi
-    $MICRO64 $MICRO64OPTS $MICRO64OPTSSCREENSHOT $extraopts "+DEBUGLIMITCYCLES=""$3" "+DEBUGEXITVICBITMAP=""$1"/.testbench/"$2"-micro64.png "$1"/"$2" 1> /dev/null
+    $MICRO64 $MICRO64OPTS $MICRO64OPTSSCREENSHOT ${@:5} "+DEBUGLIMITCYCLES=""$3" "+DEBUGEXITVICBITMAP=""$1"/.testbench/"$2"-micro64.png "$4" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -216,15 +216,14 @@ function micro64_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function micro64_run_exitcode
 {
-    extraopts=""$4" "$5" "$6""
-#    echo "extraopts=" $extraopts
     if [ $verbose == "1" ]; then
-        echo $MICRO64 $MICRO64OPTS $MICRO64OPTSEXITCODE $extraopts "+DEBUGLIMITCYCLES=""$3" "$1"/"$2"
+        echo $MICRO64 $MICRO64OPTS $MICRO64OPTSEXITCODE ${@:5} "+DEBUGLIMITCYCLES=""$3" "$4"
     fi
-    $MICRO64 $MICRO64OPTS $MICRO64OPTSEXITCODE $extraopts "+DEBUGLIMITCYCLES=""$3" "$1"/"$2" 1> /dev/null
-#    $MICRO64 $MICRO64OPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
+    $MICRO64 $MICRO64OPTS $MICRO64OPTSEXITCODE ${@:5} "+DEBUGLIMITCYCLES=""$3" "$4" 1> /dev/null
     exitcode=$?
     if [ $verbose == "1" ]; then
         echo $MICRO64 "exited with: " $exitcode

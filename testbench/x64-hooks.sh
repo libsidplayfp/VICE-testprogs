@@ -193,14 +193,16 @@ function x64_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function x64_run_screenshot
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $X64 "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-x64.png
-#    echo $X64 $X64OPTS $X64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$1"/"$2" "1> /dev/null 2> /dev/null"
-    $X64 $X64OPTS $X64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$1"/"$2" 1> /dev/null 2> /dev/null
+    if [ $verbose == "1" ]; then
+        echo $X64 $X64OPTS $X64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$4"
+    fi
+    $X64 $X64OPTS $X64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -252,13 +254,14 @@ function x64_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function x64_run_exitcode
 {
-    extraopts=""$4" "$5" "$6""
     if [ $verbose == "1" ]; then
-        echo $X64 $X64OPTS $X64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" "1> /dev/null 2> /dev/null"
+        echo $X64 $X64OPTS $X64OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4"
     fi
-    $X64 $X64OPTS $X64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
+    $X64 $X64OPTS $X64OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

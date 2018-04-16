@@ -171,20 +171,20 @@ function hoxs64_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 
 # exit: 0   ok
 #       1   timeout
 #       255 error
 function hoxs64_run_screenshot
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $HOXS64 "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-hoxs64.png
     if [ $verbose == "1" ]; then
-        echo $HOXS64 $HOXS64OPTS $HOXS64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-hoxs64.png "-autoload" "$1"/"$2"
+        echo $HOXS64 $HOXS64OPTS $HOXS64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-hoxs64.png "-autoload" "$4"
     fi
-    $HOXS64 $HOXS64OPTS $HOXS64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-hoxs64.png "-autoload" "$1"/"$2" 1> /dev/null
+    $HOXS64 $HOXS64OPTS $HOXS64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-hoxs64.png "-autoload" "$4" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -234,27 +234,25 @@ function hoxs64_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 
 # exit: 0   ok
 #       1   timeout
 #       255 error
 function hoxs64_run_exitcode
 {
-    extraopts=""$4" "$5" "$6""
-#    echo "extraopts=" $extraopts
     if [ x"$2"x == xx ]; then
         # for launching cartridges
         if [ $verbose == "1" ]; then
-            echo $HOXS64 $HOXS64OPTS $HOXS64OPTSEXITCODE $extraopts "-limitcycles" "$3"
+            echo $HOXS64 $HOXS64OPTS $HOXS64OPTSEXITCODE ${@:5} "-limitcycles" "$3"
         fi
-        $HOXS64 $HOXS64OPTS $HOXS64OPTSEXITCODE $extraopts "-limitcycles" "$3" 1> /dev/null
-#        $HOXS64 $HOXS64OPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
+        $HOXS64 $HOXS64OPTS $HOXS64OPTSEXITCODE ${@:5} "-limitcycles" "$3" 1> /dev/null
     else
         if [ $verbose == "1" ]; then
-            echo $HOXS64 $HOXS64OPTS $HOXS64OPTSEXITCODE $extraopts "-limitcycles" "$3" "-autoload" "$1"/"$2"
+            echo $HOXS64 $HOXS64OPTS $HOXS64OPTSEXITCODE ${@:5} "-limitcycles" "$3" "-autoload" "$4"
         fi
-        $HOXS64 $HOXS64OPTS $HOXS64OPTSEXITCODE $extraopts "-limitcycles" "$3" "-autoload" "$1"/"$2" 1> /dev/null
-#        $HOXS64 $HOXS64OPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
+        $HOXS64 $HOXS64OPTS $HOXS64OPTSEXITCODE ${@:5} "-limitcycles" "$3" "-autoload" "$4" 1> /dev/null
     fi
     exitcode=$?
     if [ $verbose == "1" ]; then

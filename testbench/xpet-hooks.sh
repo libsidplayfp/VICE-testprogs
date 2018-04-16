@@ -89,13 +89,16 @@ function xpet_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function xpet_run_screenshot
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $XPET "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-xpet.png
-    $XPET $XPETOPTS $XPETOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xpet.png "$1"/"$2" 1> /dev/null 2> /dev/null
+    if [ $verbose == "1" ]; then
+        echo $XPET $XPETOPTS $XPETOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xpet.png "$4"
+    fi
+    $XPET $XPETOPTS $XPETOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xpet.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -127,13 +130,14 @@ function xpet_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function xpet_run_exitcode
 {
-    extraopts=""$4" "$5" "$6""
-#    echo "extraopts=" $extraopts
-#    echo $XPET $XPETOPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
-    $XPET $XPETOPTS $XPETOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
-#    $XPET $XPETOPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
+    if [ $verbose == "1" ]; then
+        echo $XPET $XPETOPTS $XPETOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4"
+    fi
+    $XPET $XPETOPTS $XPETOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

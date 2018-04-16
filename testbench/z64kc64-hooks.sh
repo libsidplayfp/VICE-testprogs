@@ -190,17 +190,16 @@ function z64kc64_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
-# $4- extra commandline arguments for the emulator
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function z64kc64_run_screenshot
 {
-    extraopts=""$4" "$5" "$6" "$7" "$8" "$9""
-#    echo $Z64KC64 "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-z64kc64.png
     if [ $verbose == "1" ]; then
-        echo "RUN: "$Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kc64.png "$1"/"$2" "1> /dev/null 2> /dev/null"
+        echo "RUN: "$Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kc64.png "$4"
     fi
-    $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kc64.png "$1"/"$2" 1> /dev/null 2> /dev/null
+    $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kc64.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo exitcode:$exitcode
     if [ $exitcode -ne 0 ]
@@ -261,14 +260,14 @@ function z64kc64_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
-# $4- extra commandline arguments for the emulator
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function z64kc64_run_exitcode
 {
-    extraopts=""$4" "$5" "$6" "$7" "$8" "$9""
     if [ $verbose == "1" ]; then
-        echo "RUN: "$Z64KC64 $Z64KC64OPTS $Z64KC64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" "1> /dev/null 2> /dev/null"
+        echo "RUN: "$Z64KC64 $Z64KC64OPTS $Z64KC64OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4"
     fi
-    $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
+    $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

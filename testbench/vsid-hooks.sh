@@ -106,13 +106,16 @@ function vsid_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function vsid_run_screenshot
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $VSID "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-vsid.png
-    $VSID $VSIDOPTS $VSIDOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-vsid.png "$1"/"$2" 1> /dev/null 2> /dev/null
+    if [ $verbose == "1" ]; then
+        echo $VSID $VSIDOPTS $VSIDOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-vsid.png "$4"
+    fi
+    $VSID $VSIDOPTS $VSIDOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-vsid.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -145,12 +148,14 @@ function vsid_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function vsid_run_exitcode
 {
-    extraopts=""$4" "$5" "$6""
-#    echo "extraopts=" $extraopts
-#    echo $VSID $VSIDOPTS $extraopts "-limitcycles" "$3" "$1"/"$2"
-    $VSID $VSIDOPTS $VSIDOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
+    if [ $verbose == "1" ]; then
+        echo $VSID $VSIDOPTS $VSIDOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4"
+    fi
+    $VSID $VSIDOPTS $VSIDOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

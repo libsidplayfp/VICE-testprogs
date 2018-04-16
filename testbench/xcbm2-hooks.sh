@@ -146,14 +146,16 @@ function xcbm2_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function xcbm2_run_screenshot
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $XCBM2 "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-xcbm2.png
-#    echo $XCBM2 $XCBM2OPTS $XCBM2OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm2.png "$1"/"$2" " 1> /dev/null 2> /dev/null"
-    $XCBM2 $XCBM2OPTS $XCBM2OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm2.png "$1"/"$2" 1> /dev/null 2> /dev/null
+    if [ $verbose == "1" ]; then
+        echo $XCBM2 $XCBM2OPTS $XCBM2OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm2.png "$4"
+    fi
+    $XCBM2 $XCBM2OPTS $XCBM2OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm2.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -207,11 +209,14 @@ function xcbm2_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function xcbm2_run_exitcode
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $XCBM2 "$1"/"$2"
-    $XCBM2 $XCBM2OPTS $XCBM2OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
+    if [ $verbose == "1" ]; then
+        echo $XCBM2 $XCBM2OPTS $XCBM2OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4"
+    fi
+    $XCBM2 $XCBM2OPTS $XCBM2OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

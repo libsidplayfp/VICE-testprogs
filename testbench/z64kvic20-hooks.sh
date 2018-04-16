@@ -127,16 +127,16 @@ function z64kvic20_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function z64kvic20_run_screenshot
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $Z64KVIC20 "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-z64kvic20.png
     if [ $verbose == "1" ]; then
-        echo "RUN: "$Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kvic20.png "$1"/"$2" "1> /dev/null"
+        echo "RUN: "$Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kvic20.png "$4"
     fi
-    $Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kvic20.png "$1"/"$2" 1> /dev/null
+    $Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kvic20.png "$4" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -190,14 +190,14 @@ function z64kvic20_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function z64kvic20_run_exitcode
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $Z64KVIC20 "$1"/"$2"
     if [ $verbose == "1" ]; then
-        echo "RUN: "$Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" "1> /dev/null"
+        echo "RUN: "$Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4"
     fi
-    $Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null
+    $Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }

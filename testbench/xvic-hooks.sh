@@ -121,14 +121,16 @@ function xvic_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function xvic_run_screenshot
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $XVIC "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-xvic.png
-#    echo $XVIC $XVICOPTS $XVICOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xvic.png "$1"/"$2" "1> /dev/null 2> /dev/null"
-    $XVIC $XVICOPTS $XVICOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xvic.png "$1"/"$2" 1> /dev/null 2> /dev/null
+    if [ $verbose == "1" ]; then
+        echo $XVIC $XVICOPTS $XVICOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xvic.png "$4"
+    fi
+    $XVIC $XVICOPTS $XVICOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xvic.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -182,17 +184,16 @@ function xvic_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function xvic_run_exitcode
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $XVIC "$1"/"$2"
-    
     if [ $verbose == "1" ]; then
-        echo $XVIC $XVICOPTS $XVICOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" "1> /dev/null 2> /dev/null"
-        $XVIC $XVICOPTS $XVICOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 2> /dev/null | grep "cycles elapsed" | tr '\n' '-'
+        echo $XVIC $XVICOPTS $XVICOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" "1> /dev/null 2> /dev/null"
+        $XVIC $XVICOPTS $XVICOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 2> /dev/null | grep "cycles elapsed" | tr '\n' '-'
         exitcode=${PIPESTATUS[0]}
     else
-        $XVIC $XVICOPTS $XVICOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
+        $XVIC $XVICOPTS $XVICOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
         exitcode=$?
     fi
 #    echo "exited with: " $exitcode

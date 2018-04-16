@@ -9,6 +9,7 @@ YACEOPTS+=" -warp" # sets emulator speed to max
 YACEOPTS+=" -silent" # don't show output
 #YACEOPTS+=" -debugcart" # not need, only active in YACETest.exe
 #YACEOPTS+=" -console"   # not need, YACETest.exe is already console application
+YACEOPTS+=" -con off"
 
 # extra options for the different ways tests can be run
 #YACEOPTSEXITCODE+=" -console"
@@ -148,6 +149,8 @@ function yace_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function yace_run_screenshot
 {
     TESTDIR=$(cd $1; pwd)
@@ -159,23 +162,29 @@ function yace_run_screenshot
         TESTDIRWINE=$TESTDIR
     fi
     
+    if [ x"$2"x == x""x ]; then
+        TESTPROGWINE=""
+    else
+        TESTPROGWINE=-ar -l "$TESTDIRWINE"/"$2"
+    fi
+    
+    # FIXMEFIXMEFIXME
+    ROMARGS=" -rk $EMUDIR/kernal.901227-03.bin"
+    ROMARGS+=" -rb $EMUDIR/basic.901226-01.bin"
+    ROMARGS+=" -rc $EMUDIR/characters.901225-01.bin"
+    ROMARGS+=" -r1541c $EMUDIR/1541-c000.325302-01.bin"
+    ROMARGS+=" -r1541e $EMUDIR/1541-e000.901229-03.bin"
+    
     OLDCWD=`pwd`
     cd $EMUDIR
-    extraopts=""$4" "$5" "$6""
 
-#    echo 1:$1
-#    echo 2:$2
-#    echo TESTDIR:$TESTDIR
-#    echo TESTDIRWINE:$TESTDIRWINE
-
-#    echo $YACE "$1"/"$2"
     mkdir -p "$TESTDIR"/".testbench"
     rm -f "$TESTDIR"/.testbench/"$2"-yace.png
     
     if [ $verbose == "1" ]; then
-        echo "RUN: " $YACE $YACEOPTS $YACEOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$TESTDIRWINE"/.testbench/"$2"-yace.png "$TESTDIRWINE"/"$2" "1> /dev/null"
+        echo "RUN: " $YACE $YACEOPTS $YACEOPTSSCREENSHOT $ROMARGS ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$TESTDIRWINE"/.testbench/"$2"-yace.png $TESTPROGWINE
     fi
-    $YACE $YACEOPTS $YACEOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$TESTDIRWINE"/.testbench/"$2"-yace.png -ar -l "$TESTDIRWINE"/"$2" 1> /dev/null
+    $YACE $YACEOPTS $YACEOPTSSCREENSHOT $ROMARGS ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$TESTDIRWINE"/.testbench/"$2"-yace.png $TESTPROGWINE 1> /dev/null
     exitcode=$?
     cd $OLDCWD
 
@@ -229,6 +238,8 @@ function yace_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function yace_run_exitcode
 {
     TESTDIR=$(cd $1; pwd)
@@ -238,20 +249,27 @@ function yace_run_exitcode
     else
         TESTDIRWINE=$TESTDIR
     fi
+
+    if [ x"$2"x == x""x ]; then
+        TESTPROGWINE=""
+    else
+        TESTPROGWINE=-ar -l "$TESTDIRWINE"/"$2"
+    fi
     
     OLDCWD=`pwd`
     cd $EMUDIR
-    extraopts=""$4" "$5" "$6""
     
-#    echo 1:$1
-#    echo 2:$2
-#    echo TESTDIR:$TESTDIR
-#    echo TESTDIRWINE:$TESTDIRWINE
+    # FIXMEFIXMEFIXME
+    ROMARGS=" -rk $EMUDIR/kernal.901227-03.bin"
+    ROMARGS+=" -rb $EMUDIR/basic.901226-01.bin"
+    ROMARGS+=" -rc $EMUDIR/characters.901225-01.bin"
+    ROMARGS+=" -r1541c $EMUDIR/1541-c000.325302-01.bin"
+    ROMARGS+=" -r1541e $EMUDIR/1541-e000.901229-03.bin"
     
     if [ $verbose == "1" ]; then
-        echo "RUN: " $YACE $YACEOPTS $YACEOPTSEXITCODE $extraopts "-limitcycles" "$3" -ar -l "$TESTDIRWINE"/"$2" "1> /dev/null"
+        echo "RUN: " $YACE $YACEOPTS $YACEOPTSEXITCODE $ROMARGS ${@:5} "-limitcycles" "$3" $TESTPROGWINE
     fi
-    $YACE $YACEOPTS $YACEOPTSEXITCODE $extraopts "-limitcycles" "$3" -ar -l "$TESTDIRWINE"/"$2" 1> /dev/null
+    $YACE $YACEOPTS $YACEOPTSEXITCODE $ROMARGS ${@:5} "-limitcycles" "$3" $TESTPROGWINE 1> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
     cd $OLDCWD

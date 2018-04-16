@@ -91,13 +91,16 @@ function x64dtv_get_cmdline_options
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function x64dtv_run_screenshot
 {
-    extraopts=""$4" "$5" "$6""
-#    echo $X64DTV "$1"/"$2"
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-x64dtv.png
-    $X64DTV $X64DTVOPTS $X64DTVOPTSSCREENSHOT $extraopts "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64dtv.png "$1"/"$2" 1> /dev/null 2> /dev/null
+    if [ $verbose == "1" ]; then
+        echo $X64DTV $X64DTVOPTS $X64DTVOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64dtv.png "$4"
+    fi
+    $X64DTV $X64DTVOPTS $X64DTVOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64dtv.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -150,14 +153,14 @@ function x64dtv_run_screenshot
 # $1  test path
 # $2  test program name
 # $3  timeout cycles
+# $4  test full path+name (may be empty)
+# $5- extra options for the emulator
 function x64dtv_run_exitcode
 {
-    extraopts=""$4" "$5" "$6""
-#    echo "extraopts=" $extraopts
     if [ $verbose == "1" ]; then
-        echo $X64DTV $X64DTVOPTS $extraopts "-limitcycles" "$3" "$1"/"$2" "1> /dev/null 2> /dev/null"
+        echo $X64DTV $X64DTVOPTS ${@:5} "-limitcycles" "$3" "$4"
     fi
-    $X64DTV $X64DTVOPTS $X64DTVOPTSEXITCODE $extraopts "-limitcycles" "$3" "$1"/"$2" 1> /dev/null 2> /dev/null
+    $X64DTV $X64DTVOPTS $X64DTVOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo "exited with: " $exitcode
 }
