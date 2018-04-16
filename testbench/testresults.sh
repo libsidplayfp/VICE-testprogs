@@ -570,43 +570,48 @@ function outputtable
     outputrowend
     for e in "${testlist[@]}"
     do
+    
         if [ "${e:0:1}" != "#" ]; then
             IFS=',' read -a myarray1 <<< "$e"
 #            echo -ne "$e - "
 #            echo -ne "${myarray1[0]} ${myarray1[1]}\t"
 #            echo -ne " "
 
-            reset_options
-            arraylength=${#myarray1[@]}
-            for (( i=5; i<${arraylength}+1; i++ ));
-            do
-#               echo $i " / " ${arraylength} " : " ${myarray1[$i-1]}
-                set_options "${myarray1[$i-1]}"
-            done
+            progpath=${myarray1[0]}/${myarray1[1]}
+            if [ "$1" == "" ] || [ "${progpath#*$1}" != "$progpath" ]; then
+
+                reset_options
+                arraylength=${#myarray1[@]}
+                for (( i=5; i<${arraylength}+1; i++ ));
+                do
+    #               echo $i " / " ${arraylength} " : " ${myarray1[$i-1]}
+                    set_options "${myarray1[$i-1]}"
+                done
 
 
-            outputrowstart "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
-            findresult0 resultlist0 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
-            if [ "${resultcolums}" -gt "1" ]; then
-                findresult1 resultlist1 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
-                if [ "${resultcolums}" -gt "2" ]; then
-                    findresult2 resultlist2 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
-                    if [ "${resultcolums}" -gt "3" ]; then
-                        findresult3 resultlist3 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
-                        if [ "${resultcolums}" -gt "4" ]; then
-                            findresult4 resultlist4 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
-                            if [ "${resultcolums}" -gt "5" ]; then
-                                findresult5 resultlist5 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
-                                if [ "${resultcolums}" -gt "6" ]; then
-                                    findresult6 resultlist6 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
-                                    if [ "${resultcolums}" -gt "7" ]; then
-                                        findresult7 resultlist7 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
-                                        if [ "${resultcolums}" -gt "8" ]; then
-                                            findresult8 resultlist8 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
-                                            if [ "${resultcolums}" -gt "9" ]; then
-                                                findresult9 resultlist9 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
-                                                if [ "${resultcolums}" -gt "10" ]; then
-                                                    findresult10 resultlist10 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                outputrowstart "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                findresult0 resultlist0 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                if [ "${resultcolums}" -gt "1" ]; then
+                    findresult1 resultlist1 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                    if [ "${resultcolums}" -gt "2" ]; then
+                        findresult2 resultlist2 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                        if [ "${resultcolums}" -gt "3" ]; then
+                            findresult3 resultlist3 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                            if [ "${resultcolums}" -gt "4" ]; then
+                                findresult4 resultlist4 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                                if [ "${resultcolums}" -gt "5" ]; then
+                                    findresult5 resultlist5 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                                    if [ "${resultcolums}" -gt "6" ]; then
+                                        findresult6 resultlist6 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                                        if [ "${resultcolums}" -gt "7" ]; then
+                                            findresult7 resultlist7 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                                            if [ "${resultcolums}" -gt "8" ]; then
+                                                findresult8 resultlist8 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                                                if [ "${resultcolums}" -gt "9" ]; then
+                                                    findresult9 resultlist9 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                                                    if [ "${resultcolums}" -gt "10" ]; then
+                                                        findresult10 resultlist10 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                                                    fi
                                                 fi
                                             fi
                                         fi
@@ -616,9 +621,9 @@ function outputtable
                         fi
                     fi
                 fi
+    #            echo " "
+                outputrowend "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
             fi
-#            echo " "
-            outputrowend "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
         fi
     done
     outputfooter
@@ -646,9 +651,9 @@ function checktarget
                 resultsfile[10]="results/c64rmk2-result.txt"
                 header[0]="x64"
                 header[1]="x64sc"
-                header[2]="x128<br>(c64)"
-                header[3]="z64k<br>(c64)"
-                header[4]="z64k<br>(c128/c64)"
+                header[2]="x128 (c64)"
+                header[3]="z64k (c64)"
+                header[4]="z64k (c128/c64)"
                 header[5]="hoxs64"
                 header[6]="micro64"
                 header[7]="emu64"
@@ -664,7 +669,7 @@ function checktarget
                 resultsfile[0]="results/x128-result.txt"
                 resultsfile[1]="results/z64kc128-result.txt"
                 header[0]="x128"
-                header[1]="z64k<br>(c128)"
+                header[1]="z64k (c128)"
                 resultcolums=2
             ;;
     # SCPU targets
@@ -707,7 +712,7 @@ function checktarget
                 resultsfile[1]="results/z64kvic20-result.txt"
                 resultsfile[2]="results/cham20-result.txt"
                 header[0]="xvic"
-                header[1]="z64k<br>(vic20)"
+                header[1]="z64k (vic20)"
                 header[2]="cham20"
                 resultcolums=3
             ;;
@@ -814,4 +819,4 @@ do
     getresults $i ${resultsfile[$i]}
 done
 
-outputtable
+outputtable "$filter"
