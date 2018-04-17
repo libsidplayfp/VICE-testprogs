@@ -307,9 +307,11 @@ function outputcolumn
 # $7 mountcrt
 function findresult0
 {
+    i=0
     for r in "${resultlist0[@]}"
     do
 #        echo "check:$r"
+#        echo "$i" - "${resultlist0[$i]}" - "${resultlist0[@]:0:$i}" - "${resultlist0[@]:$((i+1))}"
         if [ "${r:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$r"
 #            echo 1: x"$2"x == x"${myarray[0]}"x 2:x"$3"x == x"${myarray[1]}"x 3:x"$4"x == x"${myarray[3]}"x 4:x"$5"x == x"${myarray[4]}"x 5:x"$6"x == x"${myarray[5]}"x 6:x"$7"x == x"${myarray[6]}"x
@@ -320,18 +322,25 @@ function findresult0
             [ x"$6"x == x"${myarray[5]}"x ] && 
             [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
+#                echo "$i" - ${resultlist0:0:i}
+                # remove the element that was found from the resultlist to speed up further searches
+                resultlist0=( "${resultlist0[@]:0:$i}" "${resultlist0[@]:$((i+1))}" )
                 return
             fi
+        else
+            # remove the element that was found from the resultlist to speed up further searches
+            resultlist0=( "${resultlist0[@]:0:$i}" "${resultlist0[@]:$((i+1))}" )
         fi
+        i=$((i+1))
     done
     outputcolumn "n/a" "$4"
 }
 
 function findresult1
 {
+    i=0
     for r in "${resultlist1[@]}"
     do
-#        echo "check:$r"
         if [ "${r:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$r"
             if [ x"$2"x == x"${myarray[0]}"x ] && 
@@ -341,19 +350,22 @@ function findresult1
             [ x"$6"x == x"${myarray[5]}"x ] && 
             [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
+                resultlist1=( "${resultlist1[@]:0:$i}" "${resultlist1[@]:$((i+1))}" )
                 return
             fi
+        else
+            resultlist1=( "${resultlist1[@]:0:$i}" "${resultlist1[@]:$((i+1))}" )
         fi
+        i=$((i+1))
     done
-#    echo 2: x"$2"x == x"${myarray[0]}"x x"$3"x == x"${myarray[1]}"x x"$4"x == x"${myarray[3]}"x x"$5"x == x"${myarray[4]}"x x"$6"x == x"${myarray[5]}"x x"$7"x == x"${myarray[6]}"x
     outputcolumn "n/a" "$4"
 }
 
 function findresult2
 {
+    i=0
     for r in "${resultlist2[@]}"
     do
-#        echo "check:$r"
         if [ "${r:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$r"
             if [ x"$2"x == x"${myarray[0]}"x ] && 
@@ -363,15 +375,20 @@ function findresult2
             [ x"$6"x == x"${myarray[5]}"x ] && 
             [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
+                resultlist2=( "${resultlist2[@]:0:$i}" "${resultlist2[@]:$((i+1))}" )
                 return
             fi
+        else
+            resultlist2=( "${resultlist2[@]:0:$i}" "${resultlist2[@]:$((i+1))}" )
         fi
+        i=$((i+1))
     done
     outputcolumn "n/a" "$4"
 }
 
 function findresult3
 {
+    i=0
     for r in "${resultlist3[@]}"
     do
         if [ "${r:0:1}" != "#" ]; then
@@ -383,15 +400,20 @@ function findresult3
             [ x"$6"x == x"${myarray[5]}"x ] && 
             [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
+                resultlist3=( "${resultlist3[@]:0:$i}" "${resultlist3[@]:$((i+1))}" )
                 return
             fi
+        else
+            resultlist3=( "${resultlist3[@]:0:$i}" "${resultlist3[@]:$((i+1))}" )
         fi
+        i=$((i+1))
     done
     outputcolumn "n/a" "$4"
 }
 
 function findresult4
 {
+    i=0
     for r in "${resultlist4[@]}"
     do
         if [ "${r:0:1}" != "#" ]; then
@@ -403,15 +425,20 @@ function findresult4
             [ x"$6"x == x"${myarray[5]}"x ] && 
             [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
+                resultlist4=( "${resultlist4[@]:0:$i}" "${resultlist4[@]:$((i+1))}" )
                 return
             fi
+        else
+            resultlist4=( "${resultlist4[@]:0:$i}" "${resultlist4[@]:$((i+1))}" )
         fi
+        i=$((i+1))
     done
     outputcolumn "n/a" "$4"
 }
 
 function findresult5
 {
+    i=0
     for r in "${resultlist5[@]}"
     do
         if [ "${r:0:1}" != "#" ]; then
@@ -423,15 +450,20 @@ function findresult5
             [ x"$6"x == x"${myarray[5]}"x ] && 
             [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
+                resultlist5=( "${resultlist5[@]:0:$i}" "${resultlist5[@]:$((i+1))}" )
                 return
             fi
+        else
+            resultlist5=( "${resultlist5[@]:0:$i}" "${resultlist5[@]:$((i+1))}" )
         fi
+        i=$((i+1))
     done
     outputcolumn "n/a" "$4"
 }
 
 function findresult6
 {
+    i=0
     for r in "${resultlist6[@]}"
     do
         if [ "${r:0:1}" != "#" ]; then
@@ -443,15 +475,20 @@ function findresult6
             [ x"$6"x == x"${myarray[5]}"x ] && 
             [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
+                resultlist6=( "${resultlist6[@]:0:$i}" "${resultlist6[@]:$((i+1))}" )
                 return
             fi
+        else
+            resultlist6=( "${resultlist6[@]:0:$i}" "${resultlist6[@]:$((i+1))}" )
         fi
+        i=$((i+1))
     done
     outputcolumn "n/a" "$4"
 }
 
 function findresult7
 {
+    i=0
     for r in "${resultlist7[@]}"
     do
         if [ "${r:0:1}" != "#" ]; then
@@ -463,15 +500,20 @@ function findresult7
             [ x"$6"x == x"${myarray[5]}"x ] && 
             [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
+                resultlist7=( "${resultlist7[@]:0:$i}" "${resultlist7[@]:$((i+1))}" )
                 return
             fi
+        else
+            resultlist7=( "${resultlist7[@]:0:$i}" "${resultlist7[@]:$((i+1))}" )
         fi
+        i=$((i+1))
     done
     outputcolumn "n/a" "$4"
 }
 
 function findresult8
 {
+    i=0
     for r in "${resultlist8[@]}"
     do
         if [ "${r:0:1}" != "#" ]; then
@@ -483,15 +525,20 @@ function findresult8
             [ x"$6"x == x"${myarray[5]}"x ] && 
             [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
+                resultlist8=( "${resultlist8[@]:0:$i}" "${resultlist8[@]:$((i+1))}" )
                 return
             fi
+        else
+            resultlist8=( "${resultlist8[@]:0:$i}" "${resultlist8[@]:$((i+1))}" )
         fi
+        i=$((i+1))
     done
     outputcolumn "n/a" "$4"
 }
 
 function findresult9
 {
+    i=0
     for r in "${resultlist9[@]}"
     do
         if [ "${r:0:1}" != "#" ]; then
@@ -503,15 +550,20 @@ function findresult9
             [ x"$6"x == x"${myarray[5]}"x ] && 
             [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
+                resultlist9=( "${resultlist9[@]:0:$i}" "${resultlist9[@]:$((i+1))}" )
                 return
             fi
+        else
+            resultlist9=( "${resultlist9[@]:0:$i}" "${resultlist9[@]:$((i+1))}" )
         fi
+        i=$((i+1))
     done
     outputcolumn "n/a" "$4"
 }
 
 function findresult10
 {
+    i=0
     for r in "${resultlist10[@]}"
     do
         if [ "${r:0:1}" != "#" ]; then
@@ -523,9 +575,13 @@ function findresult10
             [ x"$6"x == x"${myarray[5]}"x ] && 
             [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
+                resultlist10=( "${resultlist10[@]:0:$i}" "${resultlist10[@]:$((i+1))}" )
                 return
             fi
+        else
+            resultlist10=( "${resultlist10[@]:0:$i}" "${resultlist10[@]:$((i+1))}" )
         fi
+        i=$((i+1))
     done
     outputcolumn "n/a" "$4"
 }
