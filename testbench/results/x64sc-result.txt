@@ -309,7 +309,7 @@
 ../CPU/Acid800/,cpu_timing.prg,ok,exitcode,,,
 ../CPU/bclark/,decimalmode.prg,ok,exitcode,,,
 ../CPU/cpuport/,test1.prg,ok,exitcode,,,
-../CPU/cpuport/,initvalue.crt,ok,exitcode,,,
+../CPU/cpuport/,,ok,exitcode,,,initvalue.crt
 ../CPU/hmc6502/,AllSuiteA.prg,ok,exitcode,,,
 ../CPU/kdormann/,6502_functional_test.prg,ok,exitcode,,,
 ../CPU/sha/,shaabsy1.prg,ok,exitcode,,,

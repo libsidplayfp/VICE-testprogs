@@ -1,11 +1,12 @@
 # this is a generated file, do not edit.
 ################################################################################
 # C64 related tests
-# total runtime (chameleon): 341 minutes and 14 seconds
-#               (micro64):    88 minutes and 46 seconds
-#               (x64sc)       61 minutes and 26 seconds
-#               (emu64):      44 minutes and 37 seconds
-#               (hoxs64):     29 minutes and 46 seconds
+# total runtime (chameleon):   341 minutes and 14 seconds
+#               (z64kc128c64): 128 minutes and 48 seconds
+#               (micro64):      88 minutes and 46 seconds
+#               (x64sc)         61 minutes and 26 seconds
+#               (emu64):        44 minutes and 37 seconds
+#               (hoxs64):       29 minutes and 46 seconds
 ################################################################################
 ################################################################################
 # selftest
