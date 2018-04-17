@@ -22,6 +22,24 @@ function getresults
 
 ################################################################################
 
+function echotobuffer
+{
+    ECHOBUFFER+=${@}
+}
+
+function flushbuffer
+{
+    echo -ne "$ECHOBUFFER"
+    ECHOBUFFER=""
+}
+
+function clearbuffer
+{
+    ECHOBUFFER=""
+}
+
+################################################################################
+
 BLUE='\033[1;34m'
 YELLOW='\033[1;33m'
 GREEN='\033[1;32m'
@@ -95,18 +113,33 @@ SFLINK="https://sourceforge.net/p/vice-emu/code/HEAD/tree/testprogs/testbench"
 # $6 mountcrt
 function outputrowstart
 {
+    isheader=0
+
+    errorsinrow="0"
+    clearbuffer
+
     if [ x"$1"x != x""x ]; then
         case "$outmode" in
             html)
                 # html
-                echo "<tr><td>"
-                echo "<a href=\"$SFLINK/$1\">"$1"</a>"
-                echo "<a href=\"$SFLINK/$1/$2?format=raw\">"$2"</a>"
-                echo "$4" "$5" "$6""</td>"
+                echotobuffer "<tr><td>"
+                echotobuffer "<a href=\"$SFLINK/$1\">"$1"</a>"
+                echotobuffer "<a href=\"$SFLINK/$1/$2?format=raw\">"$2"</a>"
+#                echo "$4" "$5" "$6"
+                if [ x"$4"x != x""x ]; then
+                    echotobuffer "<a href=\"$SFLINK/$1/$4?format=raw\">"$4"</a>"
+                fi
+                if [ x"$5"x != x""x ]; then
+                    echotobuffer "<a href=\"$SFLINK/$1/$5?format=raw\">"$5"</a>"
+                fi
+                if [ x"$6"x != x""x ]; then
+                    echotobuffer "<a href=\"$SFLINK/$1/$6?format=raw\">"$6"</a>"
+                fi
+                echotobuffer "</td>"
                 if [ x"$3"x != x"exitcode"x ]; then
-                    echo "  <td>""$3""</td>"
+                    echotobuffer "  <td>""$3""</td>"
                 else
-                    echo "  <td></td>"
+                    echotobuffer "  <td></td>"
                 fi
             ;;
             *)
@@ -137,23 +170,55 @@ function outputrowend
    case "$outmode" in
         html)
             # html
-            echo "</tr>"
+            if [ x"$errorsinrow"x != x"0"x ] || [ x"$skippassed"x == x"0"x ]; then
+                flushbuffer
+                echo "</tr>"
+            else
+                if [ x"$isheader"x != x"0"x ]; then
+                    echo "</tr>"
+                fi
+            fi
         ;;
         *)
             # terminal
-            if [ x"$3"x != x"exitcode"x ]; then
-                tmp="$3            "
+            if [ x"$errorsinrow"x != x"0"x ] || [ x"$skippassed"x == x"0"x ]; then
+            
+                flushbuffer
+                
+                if [ x"$3"x != x"exitcode"x ]; then
+                    tmp="$3            "
+                else
+                    tmp="            "
+                fi
+                echo -ne "${tmp:0:7} "$1" "
+
+                if [ x"$2"x != x""x ]; then
+                    echo -ne "$2 "
+                fi
+                if [ x"$4"x != x""x ]; then
+                    echo -ne "$4 "
+                fi
+                if [ x"$5"x != x""x ]; then
+                    echo -ne "$5 "
+                fi
+                if [ x"$6"x != x""x ]; then
+                    echo -ne "$6 "
+                fi
+
+                echo -ne "\n"
             else
-                tmp="            "
+                if [ x"$isheader"x != x"0"x ]; then
+                    echo -ne "\n"
+                fi
             fi
-            echo "${tmp:0:7} " "$1" "$2" "$4" "$5" "$6"
         ;;
     esac
 }
 
 function outputrowheader
 {
-   case "$outmode" in
+    isheader=1
+    case "$outmode" in
         html)
             # html
             echo "<th>"$1"</th>"
@@ -176,22 +241,25 @@ function outputcolumn
             case "$1" in
                 "n/a")
                     if [ "$2" == "interactive" ]; then
-                        echo "  <td class=\"inter\">manual</td>"
+                        echotobuffer "  <td class=\"inter\">manual</td>"
                     else
-                        echo "  <td class=\"na\">""$1""</td>"
+                        echotobuffer "  <td class=\"na\">""$1""</td>"
                     fi
                 ;;
                 "ok")
-                    echo "  <td class=\"ok\">""$1""</td>"
+                    echotobuffer "  <td class=\"ok\">""$1""</td>"
                 ;;
                 "error")
-                    echo "  <td class=\"error\">""$1""</td>"
+                    echotobuffer "  <td class=\"error\">""$1""</td>"
+                    errorsinrow=$((errorsinrow+1))
                 ;;
                 "timeout")
-                    echo "  <td class=\"timeout\">""$1""</td>"
+                    echotobuffer "  <td class=\"timeout\">""$1""</td>"
+                    errorsinrow=$((errorsinrow+1))
                 ;;
                 *)
-                    echo "  <td>""$1""</td>"
+                    echotobuffer "  <td>""$1""</td>"
+                    errorsinrow=$((errorsinrow+1))
                 ;;
             esac
         ;;
@@ -202,22 +270,25 @@ function outputcolumn
             case "$1" in
                 "n/a")
                     if [ "$2" == "interactive" ]; then
-                        echo -ne ${GREY}"manual  "${NC}
+                        echotobuffer ${GREY}"manual  "${NC}
                     else
-                        echo -ne ${GREY}"${tmp:0:7} "${NC}
+                        echotobuffer ${GREY}"${tmp:0:7} "${NC}
                     fi
                 ;;
                 "ok")
-                    echo -ne ${GREEN}"${tmp:0:7} "${NC}
+                    echotobuffer ${GREEN}"${tmp:0:7} "${NC}
                 ;;
                 "error")
-                    echo -ne ${RED}"${tmp:0:7} "${NC}
+                    echotobuffer ${RED}"${tmp:0:7} "${NC}
+                    errorsinrow=$((errorsinrow+1))
                 ;;
                 "timeout")
-                    echo -ne ${BLUE}"${tmp:0:7} "${NC}
+                    echotobuffer ${BLUE}"${tmp:0:7} "${NC}
+                    errorsinrow=$((errorsinrow+1))
                 ;;
                 *)
-                    echo -ne "${tmp:0:7} "
+                    echotobuffer "${tmp:0:7} "
+                    errorsinrow=$((errorsinrow+1))
                 ;;
             esac
         ;;
@@ -586,6 +657,12 @@ function outputtable
 #            echo -ne "${myarray1[0]} ${myarray1[1]}\t"
 #            echo -ne " "
 
+#            if [ "${myarray1[2]}" != "interactive" ] || [ "${skipinteractive}" == "0" ]; then
+            if [ "${myarray1[2]}" == "interactive" ] && [ "${skipinteractive}" == "1" ]; then
+                # skipped
+                echo -ne ""
+            else
+
             progpath=${myarray1[0]}/${myarray1[1]}
             if [ "$1" == "" ] || [ "${progpath#*$1}" != "$progpath" ]; then
 
@@ -632,6 +709,8 @@ function outputtable
                 fi
     #            echo " "
                 outputrowend "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                
+                fi
             fi
         fi
     done
@@ -764,6 +843,8 @@ function showhelp
     echo "  targets: c64, c128, scpu, dtv, pet, cbm2, cbm5x0, vic, plus4, sid"
     echo "  <filter> is a substring of the path of tests to restrict to"
     echo "  --help       show this help"
+    echo "  --html       output html"
+    echo "  --errors     output only rows that contain errors"
     echo "  --verbose    be more verbose"
 }
 
@@ -778,6 +859,8 @@ function checkparams
 
 verbose=
 outmode=
+skipinteractive=0
+skippassed=0
 
 for thisarg in "$@"
 do
@@ -789,6 +872,10 @@ do
             ;;
         --verbose)
                 verbose=1
+            ;;
+        --errors)
+                skipinteractive=1
+                skippassed=1
             ;;
         --html)
                 outmode=html
