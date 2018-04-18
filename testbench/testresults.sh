@@ -315,12 +315,12 @@ function findresult0
         if [ "${r:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$r"
 #            echo 1: x"$2"x == x"${myarray[0]}"x 2:x"$3"x == x"${myarray[1]}"x 3:x"$4"x == x"${myarray[3]}"x 4:x"$5"x == x"${myarray[4]}"x 5:x"$6"x == x"${myarray[5]}"x 6:x"$7"x == x"${myarray[6]}"x
-            if [ x"$2"x == x"${myarray[0]}"x ] && 
-            [ x"$3"x == x"${myarray[1]}"x ] && 
-            [ x"$4"x == x"${myarray[3]}"x ] && 
-            [ x"$5"x == x"${myarray[4]}"x ] && 
-            [ x"$6"x == x"${myarray[5]}"x ] && 
-            [ x"$7"x == x"${myarray[6]}"x ]; then
+            if [ x"$3"x == x"${myarray[1]}"x ] && 
+               [ x"$2"x == x"${myarray[0]}"x ] && 
+               [ x"$4"x == x"${myarray[3]}"x ] && 
+               [ x"$5"x == x"${myarray[4]}"x ] && 
+               [ x"$6"x == x"${myarray[5]}"x ] && 
+               [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
 #                echo "$i" - ${resultlist0:0:i}
                 # remove the element that was found from the resultlist to speed up further searches
@@ -343,12 +343,12 @@ function findresult1
     do
         if [ "${r:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$r"
-            if [ x"$2"x == x"${myarray[0]}"x ] && 
-            [ x"$3"x == x"${myarray[1]}"x ] && 
-            [ x"$4"x == x"${myarray[3]}"x ] && 
-            [ x"$5"x == x"${myarray[4]}"x ] && 
-            [ x"$6"x == x"${myarray[5]}"x ] && 
-            [ x"$7"x == x"${myarray[6]}"x ]; then
+            if [ x"$3"x == x"${myarray[1]}"x ] && 
+               [ x"$2"x == x"${myarray[0]}"x ] && 
+               [ x"$4"x == x"${myarray[3]}"x ] && 
+               [ x"$5"x == x"${myarray[4]}"x ] && 
+               [ x"$6"x == x"${myarray[5]}"x ] && 
+               [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
                 resultlist1=( "${resultlist1[@]:0:$i}" "${resultlist1[@]:$((i+1))}" )
                 return
@@ -368,12 +368,12 @@ function findresult2
     do
         if [ "${r:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$r"
-            if [ x"$2"x == x"${myarray[0]}"x ] && 
-            [ x"$3"x == x"${myarray[1]}"x ] && 
-            [ x"$4"x == x"${myarray[3]}"x ] && 
-            [ x"$5"x == x"${myarray[4]}"x ] && 
-            [ x"$6"x == x"${myarray[5]}"x ] && 
-            [ x"$7"x == x"${myarray[6]}"x ]; then
+            if [ x"$3"x == x"${myarray[1]}"x ] && 
+               [ x"$2"x == x"${myarray[0]}"x ] && 
+               [ x"$4"x == x"${myarray[3]}"x ] && 
+               [ x"$5"x == x"${myarray[4]}"x ] && 
+               [ x"$6"x == x"${myarray[5]}"x ] && 
+               [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
                 resultlist2=( "${resultlist2[@]:0:$i}" "${resultlist2[@]:$((i+1))}" )
                 return
@@ -393,12 +393,12 @@ function findresult3
     do
         if [ "${r:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$r"
-            if [ x"$2"x == x"${myarray[0]}"x ] && 
-            [ x"$3"x == x"${myarray[1]}"x ] && 
-            [ x"$4"x == x"${myarray[3]}"x ] && 
-            [ x"$5"x == x"${myarray[4]}"x ] && 
-            [ x"$6"x == x"${myarray[5]}"x ] && 
-            [ x"$7"x == x"${myarray[6]}"x ]; then
+            if [ x"$3"x == x"${myarray[1]}"x ] && 
+               [ x"$2"x == x"${myarray[0]}"x ] && 
+               [ x"$4"x == x"${myarray[3]}"x ] && 
+               [ x"$5"x == x"${myarray[4]}"x ] && 
+               [ x"$6"x == x"${myarray[5]}"x ] && 
+               [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
                 resultlist3=( "${resultlist3[@]:0:$i}" "${resultlist3[@]:$((i+1))}" )
                 return
@@ -418,12 +418,12 @@ function findresult4
     do
         if [ "${r:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$r"
-            if [ x"$2"x == x"${myarray[0]}"x ] && 
-            [ x"$3"x == x"${myarray[1]}"x ] && 
-            [ x"$4"x == x"${myarray[3]}"x ] && 
-            [ x"$5"x == x"${myarray[4]}"x ] && 
-            [ x"$6"x == x"${myarray[5]}"x ] && 
-            [ x"$7"x == x"${myarray[6]}"x ]; then
+            if [ x"$3"x == x"${myarray[1]}"x ] && 
+               [ x"$2"x == x"${myarray[0]}"x ] && 
+               [ x"$4"x == x"${myarray[3]}"x ] && 
+               [ x"$5"x == x"${myarray[4]}"x ] && 
+               [ x"$6"x == x"${myarray[5]}"x ] && 
+               [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
                 resultlist4=( "${resultlist4[@]:0:$i}" "${resultlist4[@]:$((i+1))}" )
                 return
@@ -443,12 +443,12 @@ function findresult5
     do
         if [ "${r:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$r"
-            if [ x"$2"x == x"${myarray[0]}"x ] && 
-            [ x"$3"x == x"${myarray[1]}"x ] && 
-            [ x"$4"x == x"${myarray[3]}"x ] && 
-            [ x"$5"x == x"${myarray[4]}"x ] && 
-            [ x"$6"x == x"${myarray[5]}"x ] && 
-            [ x"$7"x == x"${myarray[6]}"x ]; then
+            if [ x"$3"x == x"${myarray[1]}"x ] && 
+               [ x"$2"x == x"${myarray[0]}"x ] && 
+               [ x"$4"x == x"${myarray[3]}"x ] && 
+               [ x"$5"x == x"${myarray[4]}"x ] && 
+               [ x"$6"x == x"${myarray[5]}"x ] && 
+               [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
                 resultlist5=( "${resultlist5[@]:0:$i}" "${resultlist5[@]:$((i+1))}" )
                 return
@@ -468,12 +468,12 @@ function findresult6
     do
         if [ "${r:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$r"
-            if [ x"$2"x == x"${myarray[0]}"x ] && 
-            [ x"$3"x == x"${myarray[1]}"x ] && 
-            [ x"$4"x == x"${myarray[3]}"x ] && 
-            [ x"$5"x == x"${myarray[4]}"x ] && 
-            [ x"$6"x == x"${myarray[5]}"x ] && 
-            [ x"$7"x == x"${myarray[6]}"x ]; then
+            if [ x"$3"x == x"${myarray[1]}"x ] && 
+               [ x"$2"x == x"${myarray[0]}"x ] && 
+               [ x"$4"x == x"${myarray[3]}"x ] && 
+               [ x"$5"x == x"${myarray[4]}"x ] && 
+               [ x"$6"x == x"${myarray[5]}"x ] && 
+               [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
                 resultlist6=( "${resultlist6[@]:0:$i}" "${resultlist6[@]:$((i+1))}" )
                 return
@@ -493,12 +493,12 @@ function findresult7
     do
         if [ "${r:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$r"
-            if [ x"$2"x == x"${myarray[0]}"x ] && 
-            [ x"$3"x == x"${myarray[1]}"x ] && 
-            [ x"$4"x == x"${myarray[3]}"x ] && 
-            [ x"$5"x == x"${myarray[4]}"x ] && 
-            [ x"$6"x == x"${myarray[5]}"x ] && 
-            [ x"$7"x == x"${myarray[6]}"x ]; then
+            if [ x"$3"x == x"${myarray[1]}"x ] && 
+               [ x"$2"x == x"${myarray[0]}"x ] && 
+               [ x"$4"x == x"${myarray[3]}"x ] && 
+               [ x"$5"x == x"${myarray[4]}"x ] && 
+               [ x"$6"x == x"${myarray[5]}"x ] && 
+               [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
                 resultlist7=( "${resultlist7[@]:0:$i}" "${resultlist7[@]:$((i+1))}" )
                 return
@@ -518,12 +518,12 @@ function findresult8
     do
         if [ "${r:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$r"
-            if [ x"$2"x == x"${myarray[0]}"x ] && 
-            [ x"$3"x == x"${myarray[1]}"x ] && 
-            [ x"$4"x == x"${myarray[3]}"x ] && 
-            [ x"$5"x == x"${myarray[4]}"x ] && 
-            [ x"$6"x == x"${myarray[5]}"x ] && 
-            [ x"$7"x == x"${myarray[6]}"x ]; then
+            if [ x"$3"x == x"${myarray[1]}"x ] && 
+               [ x"$2"x == x"${myarray[0]}"x ] && 
+               [ x"$4"x == x"${myarray[3]}"x ] && 
+               [ x"$5"x == x"${myarray[4]}"x ] && 
+               [ x"$6"x == x"${myarray[5]}"x ] && 
+               [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
                 resultlist8=( "${resultlist8[@]:0:$i}" "${resultlist8[@]:$((i+1))}" )
                 return
@@ -543,12 +543,12 @@ function findresult9
     do
         if [ "${r:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$r"
-            if [ x"$2"x == x"${myarray[0]}"x ] && 
-            [ x"$3"x == x"${myarray[1]}"x ] && 
-            [ x"$4"x == x"${myarray[3]}"x ] && 
-            [ x"$5"x == x"${myarray[4]}"x ] && 
-            [ x"$6"x == x"${myarray[5]}"x ] && 
-            [ x"$7"x == x"${myarray[6]}"x ]; then
+            if [ x"$3"x == x"${myarray[1]}"x ] && 
+               [ x"$2"x == x"${myarray[0]}"x ] && 
+               [ x"$4"x == x"${myarray[3]}"x ] && 
+               [ x"$5"x == x"${myarray[4]}"x ] && 
+               [ x"$6"x == x"${myarray[5]}"x ] && 
+               [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
                 resultlist9=( "${resultlist9[@]:0:$i}" "${resultlist9[@]:$((i+1))}" )
                 return
@@ -568,12 +568,12 @@ function findresult10
     do
         if [ "${r:0:1}" != "#" ]; then
             IFS=',' read -a myarray <<< "$r"
-            if [ x"$2"x == x"${myarray[0]}"x ] && 
-            [ x"$3"x == x"${myarray[1]}"x ] && 
-            [ x"$4"x == x"${myarray[3]}"x ] && 
-            [ x"$5"x == x"${myarray[4]}"x ] && 
-            [ x"$6"x == x"${myarray[5]}"x ] && 
-            [ x"$7"x == x"${myarray[6]}"x ]; then
+            if [ x"$3"x == x"${myarray[1]}"x ] && 
+               [ x"$2"x == x"${myarray[0]}"x ] && 
+               [ x"$4"x == x"${myarray[3]}"x ] && 
+               [ x"$5"x == x"${myarray[4]}"x ] && 
+               [ x"$6"x == x"${myarray[5]}"x ] && 
+               [ x"$7"x == x"${myarray[6]}"x ]; then
                 outputcolumn ${myarray[2]} "$4"
                 resultlist10=( "${resultlist10[@]:0:$i}" "${resultlist10[@]:$((i+1))}" )
                 return
