@@ -754,6 +754,8 @@
 ../SID/detect/,detect-1-new.prg,exitcode,5500000,sid-new
 ../SID/detect/,detect-2-old.prg,exitcode,5500000,sid-old
 ../SID/detect/,detect-2-new.prg,exitcode,5500000,sid-new
+../SID/env_test/,env_test_ra_0000.prg,exitcode,8200000
+../SID/env_test/,env_test_ra_0100.prg,exitcode,8200000
 ../SID/envelope/,testADSRDelayBug.prg,exitcode,5500000
 ../SID/envelope/,testFlip00toFF.prg,exitcode,5500000
 ../SID/envelope/,testFlipFFto00.prg,exitcode,5500000
