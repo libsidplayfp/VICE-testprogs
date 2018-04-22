@@ -29,7 +29,7 @@ spritepage=$20
 fast2slow=$0400+(delayctrline*40)+30
 slow2fast=$0400+(delayctrline*40)+28
  *= $1c01
-byt $0c,$1c,$0a,$00,$9e,$20,$37,$31,$38,$32,$00,$00,$00
+!byte $0c,$1c,$0a,$00,$9e,$20,$37,$31,$38,$32,$00,$00,$00
 mainprogram
          sei         ;Disable IRQ's
          lda #$f7
@@ -192,11 +192,9 @@ endtimercalc
          ora #$1b
          sta $d011
          rts
-align $100
+!align 255, 0 
 frame    ;arrives here at raster 300 cycle 10 (PAL), raster 13 cycle 10 (NTSC) vync 303/2 (PAL) 17/3 (NTSC)
 
-;         jsr clockslide+255
-;delaycorrection=*-2
          ldx #$0b        ; 2
          stx $d011       ; 4 ensure bad lines do not interfere with timing...
          lda #$00        ; 2
@@ -332,7 +330,7 @@ inittest2
          stx start+2
          sty $d012
          rts
-align $100
+!align 255, 0 
 test2
          ldy #$11        ; 2
          sty $dc0e       ; 6
@@ -732,7 +730,7 @@ digitlocation
 endprintdigit
          rts
 hexlut: 
- byt "0123456789ABCDEF"
+ !text "0123456789ABCDEF"
 printline
          lda #45
          ldy #40
@@ -862,10 +860,7 @@ rownumber=*-1
         jmp (jumptable)
 actionkey=*-2
          rts
-         lda keyboardtab+4
-         and #$20
-         beq keyk
-         jmp testkeyl
+      
 displayhb
          lda #7
          ldx #28
@@ -1156,13 +1151,11 @@ keyminus
 endminus
          rts
 keycomma  
-         ldx delaycorrection
          inx
          beq endcomma
 endcomma
          jmp delaynextkey
 keyperiod 
-         ldx delaycorrection
          beq endperiod
          dex
 endperiod
@@ -1337,11 +1330,11 @@ sprdata
          cli         ;Allow IRQ's
          jmp *       ;Endless Loop
 spritepos
-         byt 96,228,120,228,144,228,168,228,192,228,216,228,240,228,8,228,128
+         !byte 96,228,120,228,144,228,168,228,192,228,216,228,240,228,8,228,128
 spritedata
-         byt spritepage,spritepage,spritepage,spritepage,spritepage,spritepage,spritepage,spritepage
+         !byte spritepage,spritepage,spritepage,spritepage,spritepage,spritepage,spritepage,spritepage
 spritecolors
-         byt 0,1,2,3,4,5,6,7
+         !byte 0,1,2,3,4,5,6,7
 verticaladjust
          lda #00
 vadjust=*-1
@@ -1359,72 +1352,74 @@ delayfromcode=13;30;30+9
 ntscframetime=65*(263+ntscframepos-stableraster2)-1
 palframetime=63*(palframepos-stableraster2)-1
 
-lastframetime byt 0,0
+lastframetime !byte 0,0
 config                 ; NTSC
-vblankraster byt <ntscvblank
-ciatimerset  word ntscframetime
-framepos     byt <ntscvblank,128*(>ntscvblank)
-calcpos      byt <ntscframepos,128*(>ntscframepos)
+vblankraster !byte <ntscvblank
+ciatimerset  !word ntscframetime
+framepos     !byte <ntscvblank,128*(>ntscvblank)
+calcpos      !byte <ntscframepos,128*(>ntscframepos)
 *=config+$80           ; PAL
-             byt <palvblank
-             word palframetime
-             byt <palvblank,128*(>palvblank)
-             byt <palframepos,128*(>palframepos)
-align $100
+             !byte <palvblank
+             !word palframetime
+             !byte <palvblank,128*(>palvblank)
+             !byte <palframepos,128*(>palframepos)
+!align 255, 0 
 jumptable
         ;row0
-word undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined
+!word undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined
         ;row1
-word key3,keyw,keya,key4,keyz,keys,keye,undefined
+!word key3,keyw,keya,key4,keyz,keys,keye,undefined
         ;row2
-word key5,undefined,keyd,key6,keyc,undefined,undefined,keyx
+!word key5,undefined,keyd,key6,keyc,undefined,undefined,keyx
         ;row3
-word key7,undefined,undefined,key8,keyb,keyh,undefined,undefined
+!word key7,undefined,undefined,key8,keyb,keyh,undefined,undefined
         ;row4
-word undefined,keyi,undefined,undefined,keym,keyk,keyo,undefined
+!word undefined,keyi,undefined,undefined,keym,keyk,keyo,undefined
         ;row5
-word keyplus,undefined,keyl,keyminus,keyperiod,undefined,undefined,keycomma
+!word keyplus,undefined,keyl,keyminus,keyperiod,undefined,undefined,keycomma
         ;row6
-word undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined
+!word undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined
         ;row7
-word key1,undefined,undefined,key2,undefined,undefined,undefined,undefined
-align $100
-demotext  byt "0-BLACK 2-RED   9-BROWN ",95,95,105,105,32,95,95,105,105,32,95,95,105,105,32,32
-democolor byt 0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,9,9,9,9,9,9,9,9,0,0,0,0,0,2,2,2,2,2,9,9,9,9,9,0
-cyclesperline byt 0
+!word key1,undefined,undefined,key2,undefined,undefined,undefined,undefined
+!align 255, 0 
+demotext  !text "0-BLACK 2-RED   9-BROWN "
+!byte 95,95,105,105,32,95,95,105,105,32,95,95,105,105,32,32
+democolor !byte 0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,9,9,9,9,9,9,9,9,0,0,0,0,0,2,2,2,2,2,9,9,9,9,9,0
+cyclesperline !byte 0
 
-title        byt 26,"VICIIe D030 TEST (V2.0) - "
-paltext      byt 3,"PAL"
-ntsctext     byt 4,"NTSC"
-standardtext byt 9,"Standard "
-multitext    byt 11,"Multicolor "
-ecmtext      byt 4,"ECM "
-textmodetext byt 5,"Text "
-bimaptext    byt 7,"Bitmap "
-modetext     byt 4,"Mode"
-illegaltext  byt 8,"Illegal "
-fasttesttext byt 13,"2 MHZ BIT - "
+title        !scr 26,"VICIIe D030 TEST (V2.0) - "
+paltext      !scr 3,"PAL"
+ntsctext     !scr 4,"NTSC"
+standardtext !scr 9,"Standard "
+multitext    !scr 11,"Multicolor "
+ecmtext      !scr 4,"ECM "
+textmodetext !scr 5,"Text "
+bimaptext    !scr 7,"Bitmap "
+modetext     !scr 4,"Mode"
+illegaltext  !scr 8,"Illegal "
+fasttesttext !scr 13,"2 MHZ BIT - "
 
-d030bitstext byt 27,"   H - D030 unused bits   :"
-disablefast  byt 27,"   O - 2Mhz Disable method:"
-modecontrol  byt 37,"   E - ECM:     B - BMM:     M - MCM:"
-delaycontrol byt 31," K/L - Delay set/reset    : 0/0"
-testbittext  byt 35,"TEST BIT: Lines cut:   Cycles Lost:"
-testbitline1 byt 5,$20,$6f,$6f,$6f,$20
-testbitline2 byt 5,$6a," W ",$65
-tbline2col2  byt 19,"  C - BGD color: 05"
-testbitline3 byt 17,$6a,"A+D",$65,"- DELAY :000"
-tbline3col2  byt 19,"  I - Idle data: 00"
-testbitline4 byt 14,$6a," S ",$65,"  Raster:"
-tbline4col2  byt 18,"Z/X - D030 00==>00"
-testbitline5 byt 5,$20,$77,$77,$77,$20
-tbline5col2  byt 18,"+/- - Vertical Pos"
-tbline6col2  byt 19,"1-8 - Toggle sprite"
-dectext      byt 3,"DEC"
-stxtext      byt 3,"STX"
-tbcontrol    byt 31," Z/X - D030 ON/OFF value: 00/00"
-adcontrol    byt 28," Delay: A-D W-S  1/63 cycles"
-wscontrol    byt 29," W-S - 63 cycles"
+d030bitstext !scr 27,"   H - D030 unused bits   :"
+disablefast  !scr 27,"   O - 2Mhz Disable method:"
+modecontrol  !scr 37,"   E - ECM:     B - BMM:     M - MCM:"
+delaycontrol !scr 31," K/L - Delay set/reset    : 0/0"
+testbittext  !scr 35,"TEST BIT: Lines cut:   Cycles Lost:"
+testbitline1 !scr 5,$20,$6f,$6f,$6f,$20
+testbitline2 !scr 5,$6a," W ",$65
+tbline2col2  !scr 19,"  C - BGD color: 05"
+testbitline3 !scr 17,$6a,"A+D",$65,"- DELAY :000"
+tbline3col2  !scr 19,"  I - Idle data: 00"
+testbitline4 !scr 14,$6a," S ",$65,"  Raster:"
+tbline4col2  !scr 18,"Z/X - D030 00==>00"
+testbitline5 !scr 5,$20,$77,$77,$77,$20
+tbline5col2  !scr 18,"+/- - Vertical Pos"
+tbline6col2  !scr 19,"1-8 - Toggle sprite"
+dectext      !scr 3,"DEC"
+stxtext      !scr 3,"STX"
+tbcontrol    !scr 31," Z/X - D030 ON/OFF value: 00/00"
+adcontrol    !scr 28," Delay: A-D W-S  1/63 cycles"
+wscontrol    !scr 29," W-S - 63 cycles"
+
 
 
 clockslide=(*+$ff)&$ff00        ; jsr clockslide+(255-x) =14+x cycles  257 bytes total
