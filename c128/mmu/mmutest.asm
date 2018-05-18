@@ -9,10 +9,18 @@
 ; Test done by Bodo^Rabenauge
 
 
+start=$2400
+
+basicHeader=1 
+
+!ifdef basicHeader {
 ; 10 SYS7181
 *=$1c01  
 	!byte  $0c,$08,$0a,$00,$9e,$37,$31,$38,$31,$00,$00,$00
 *=$1c0d 
+	jmp start
+}
+*=start
 
 	lda #%00110011 ; disable basic
 	sta $01
@@ -41,13 +49,12 @@
 	lda #%00000111  ; lower 16kb shared RAM	  
 	sta $d506	
 
-	
+	lda #$0	   
+	sta $d50a  ; change stackpage to bank 0
+
 	lda #$5
 	sta $d509  ; change stackpage to $500
 
-	lda #$0	   
-	sta $d50a  ; change stackpage to bank 0
-	
 	ldx #5	   ; change stack pointer
 	txs
 
@@ -64,6 +71,9 @@
 ;-----
 	lda #1 
 	sta $d50a ; change stackpage to bank 1
+
+	lda #$5
+	sta $d509  ; change stackpage to $500
 
 ; pull the bytes from the stack in bank 1
 ; the bytes must be the same 4 bytes, like the bytes which are pushed before to stack in bank 0,
@@ -129,4 +139,3 @@ error_msg:
 ok_msg:	
 	!scr "test passed" 
 	!byte 0
-	
