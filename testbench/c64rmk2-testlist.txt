@@ -33,6 +33,8 @@
 ../C64/openio/,dadb.prg,interactive,0
 ../C64/openio/,de00all.prg,interactive,0
 ../C64/openio/,de00int.prg,interactive,0
+../C64/openio/,trivial.prg,interactive,0
+../C64/openio/,gauntlet.prg,exitcode,8000000
 #FIXME: exit with status after a while
 ../general/banking00/,banking00.prg,interactive,0
 ################################################################################
