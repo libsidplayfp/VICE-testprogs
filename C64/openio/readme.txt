@@ -28,3 +28,11 @@ runs code in color-ram (using the high nibbles)
 
 when the program is working, the border color can be changed from white to 
 black by pressing space.
+
+* trivial.prg
+
+trivial test that shows that the values read from open i/o are somewhat "random"
+
+* gauntlet.prg
+
+cartridge check extracted from "Gauntlet - The Deeper Dungeons"
