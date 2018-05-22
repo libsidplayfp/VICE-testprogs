@@ -35,6 +35,9 @@ scanner:
 viavarious:
 - various tests, ported from andre fachats "ciavarious"
 
+skew:
+- determines track skew as well as block distribution within tracks
+
 --------------------------------------------------------------------------------
 
 TODO:
