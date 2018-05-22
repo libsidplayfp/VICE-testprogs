@@ -22,6 +22,10 @@ interrupts:
 pwm:
 - simple drive-led pwm test
 
+readtest:
+- fastloads a bunch of files from a disk again and again and checksumming files 
+  (green char = file loaded successful).
+
 rpm:
 - drive rotation speed measurement
 
@@ -32,11 +36,11 @@ scanner:
 - reads through the entire disk contents (track 1-42) and shows available
   tracks
 
-viavarious:
-- various tests, ported from andre fachats "ciavarious"
-
 skew:
 - determines track skew as well as block distribution within tracks
+
+viavarious:
+- various tests, ported from andre fachats "ciavarious"
 
 --------------------------------------------------------------------------------
 
