@@ -13,6 +13,7 @@
 # FIXME: once these work, we can use screenshots
 ../c128/2mhzVIC,2mhz-vic-hires.prg,interactive,0
 ../c128/2mhzVIC,2mhz-vic-multicolor.prg,interactive,0
+../c128/2mhzVIC,2mhz-vic-extended.prg,interactive,0
 ../c128/2mhzVIC,timing-change0.prg,interactive,0
 ../c128/2mhzVIC,timing-change1.prg,interactive,0
 ../c128/d030tester/,d030tester2.0.prg,interactive,0
