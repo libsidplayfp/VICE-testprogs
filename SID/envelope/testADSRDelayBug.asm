@@ -18,6 +18,11 @@ bend:       !word 0
     sei
     lda #0
     sta $d011
+    
+-   lda $d011
+    bpl -
+-   lda $d011
+    bmi -
 
 ; set minimum Release time
     lda #$00
