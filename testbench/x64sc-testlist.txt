@@ -811,6 +811,7 @@
 ../SID/envelope/,testADSRDelayBug.prg,exitcode,5500000
 ../SID/envelope/,testFlip00toFF.prg,exitcode,5500000
 ../SID/envelope/,testFlipFFto00.prg,exitcode,5500000
+../SID/envelope/,lft-adsr-test.prg,exitcode,5500000
 ../SID/mapping/,sid-detect2.prg,interactive,0
 #TODO (fix noisemapper program)
 #../SID/noise
@@ -856,6 +857,8 @@
 ../SID/osc_topbit/,osc_topbit_test_triangle_new.prg,exitcode,15000000,sid-new
 ../SID/osc_topbit/,osc_topbit_test_triangle_old.prg,exitcode,15000000,sid-old
 ../SID/oscinit/,oscinit.prg,exitcode,5200000
+../SID/oscinit/,noiseinit.prg,exitcode,5200000
+../SID/oscinit/,allinit.prg,exitcode,5200000
 ../SID/paddles/,paddle.prg,interactive,0
 ../SID/ringmod/,ringmodtest.prg,exitcode,5200000
 ../SID/stereo/,stereo.prg,interactive,0

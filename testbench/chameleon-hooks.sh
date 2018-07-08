@@ -82,7 +82,10 @@ function chameleon_poll_returncode
     RET="58"
 #    RET="58"
 #    echo "poll1:" "$RET"
-    SECONDSEND=$((SECONDS + 1 + ($1 / 10000000)))
+    SECONDSEND=$((SECONDS + 1 + (($1 + 999999) / 1000000)))
+#    echo 1: $1
+#    echo secs: $SECONDS
+#    echo secsend: $SECONDSEND
     while [ "$RET" = "58" ]
     do
 #        chacocmd --len 1 --addr 0x000100ff --dumpmem
@@ -359,7 +362,7 @@ function chameleon_run_screenshot
 #    chameleon_poll_returncode 5
 #    exitcode=$?
 #    echo "exited with: " $exitcode
-    timeoutsecs=`expr \( $3 + 5000000 \) / 10000000`
+    timeoutsecs=`expr \( $3 + 999999 \) / 1000000`
     sleep $timeoutsecs
     if [ "${videotype}" == "NTSC" ]; then
         chshot --ntsc -o "$1"/.testbench/"$2"-chameleon.png
