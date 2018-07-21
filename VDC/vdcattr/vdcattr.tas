@@ -520,6 +520,17 @@ jmp handlestuff
 +
 
 
+cmp #83 ; "S"
+bne +
+; switch semi-graphics mode on/off
+ldx #25
++vdc_lda_rx
+eor #$20
++vdc_sta_rx
+jmp handlestuff
++
+
+
 cmp #86 ; "V"
 bne +
 ; vblank test
@@ -672,6 +683,79 @@ jmp handlestuff
 +
 
 
+cmp #49 ; "1"
+bne +
+ldx #22 ; char horiz size control
+lda #$71; default $78
++vdc_sta_rx
+jmp handlestuff:
++
+
+cmp #50 ; "2"
+bne +
+ldx #22 ; char horiz size control
+lda #$72; default $78
++vdc_sta_rx
+jmp handlestuff:
++
+
+cmp #51 ; "3"
+bne +
+ldx #22 ; char horiz size control
+lda #$73; default $78
++vdc_sta_rx
+jmp handlestuff:
++
+
+cmp #52 ; "4"
+bne +
+ldx #22 ; char horiz size control
+lda #$74; default $78
++vdc_sta_rx
+jmp handlestuff:
++
+
+cmp #53 ; "5"
+bne +
+ldx #22 ; char horiz size control
+lda #$75; default $78
++vdc_sta_rx
+jmp handlestuff:
++
+
+cmp #54 ; "6"
+bne +
+ldx #22 ; char horiz size control
+lda #$76; default $78
++vdc_sta_rx
+jmp handlestuff:
++
+
+cmp #55 ; "7"
+bne +
+ldx #22 ; char horiz size control
+lda #$77; default $78
++vdc_sta_rx
+jmp handlestuff:
++
+
+cmp #56 ; "8"
+bne +
+ldx #22 ; char horiz size control
+lda #$78; default $78
++vdc_sta_rx
+jmp handlestuff:
++
+
+cmp #56 ; "9"
+bne +
+ldx #22 ; char horiz size control
+lda #$79; default $78
++vdc_sta_rx
+jmp handlestuff:
++
+
+
 ; colon - decrease background colour
 cmp #58 ; :
 bne +
@@ -705,7 +789,7 @@ jmp exit
 +
 
 
-cmp #52 ; "4"
+cmp #68 ; "D" for double pixel mode
 beq +
 jmp handlestuff:
 +
@@ -1027,8 +1111,8 @@ prgtxt
 !tx "f: character flash rate  c: cursor mode               g: text/bitmap mode toggle" ; 4
 !tx "b: background cycle on/off ('border' should match bckgrnd, except bitmap mode)  " ; 5
 !tx "x: xsmooth test - left border should be fixed, right border 'open'              " ; 6
-!tx "y: ysmooth test          : ; set background colour    + - adjust smooth speed   " ; 7
-!tx "  4: 40/80columns    v: show vblank area    i - interlace mode test (50 rows)   " ; 8
+!tx "y: ysmooth test    : ; background colour    + - smooth speed    s: semi-gfx mode" ; 7
+!tx "  d: 40/80columns  v: show vblank area    i: interlace/50 rows  1-9 char width  " ; 8
 !tx "                                                                                " ; 9
 
 
