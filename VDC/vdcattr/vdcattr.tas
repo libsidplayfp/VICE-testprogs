@@ -683,6 +683,14 @@ jmp handlestuff
 +
 
 
+cmp #48 ; "0"
+bne +
+ldx #22 ; char horiz size control
+lda #$70; default $78
++vdc_sta_rx
+jmp handlestuff:
++
+
 cmp #49 ; "1"
 bne +
 ldx #22 ; char horiz size control
@@ -747,7 +755,7 @@ lda #$78; default $78
 jmp handlestuff:
 +
 
-cmp #56 ; "9"
+cmp #57 ; "9"
 bne +
 ldx #22 ; char horiz size control
 lda #$79; default $78
@@ -1112,7 +1120,7 @@ prgtxt
 !tx "b: background cycle on/off ('border' should match bckgrnd, except bitmap mode)  " ; 5
 !tx "x: xsmooth test - left border should be fixed, right border 'open'              " ; 6
 !tx "y: ysmooth test    : ; background colour    + - smooth speed    s: semi-gfx mode" ; 7
-!tx "  d: 40/80columns  v: show vblank area    i: interlace/50 rows  1-9 char width  " ; 8
+!tx "  d: 40/80columns  v: show vblank area    i: interlace/50 rows  0-9 char width  " ; 8
 !tx "                                                                                " ; 9
 
 
