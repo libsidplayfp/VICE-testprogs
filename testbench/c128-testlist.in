@@ -18,6 +18,7 @@
 ../c128/2mhzVIC,timing-change1.prg,interactive,0
 ../c128/d030tester/,d030tester2.0.prg,interactive,0
 ../c128/mmu/,mmutest.prg,exitcode,6000000
+../c128/mmu/,mmutest2.prg,exitcode,6000000
 ../c128/mmu/,mmuregister-should-not-mirror.prg,exitcode,6000000
 ../c128/mmu/,p0h-is-set-after-p0l.prg,exitcode,7000000
 ../c128/mmu/,p0h-rw-test.prg,exitcode,7000000
