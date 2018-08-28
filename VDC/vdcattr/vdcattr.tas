@@ -470,6 +470,34 @@ jmp handlestuff
 +
 
 
+cmp #72 ; "H"
+bne ++   ; switch horizontal blanking test on/off
+ldx #34
++vdc_lda_rx
+cmp #6        ; is it already on?
+bne +
+
+; horizontal blanking test already on, so reload kernal defaults
++vdc_sta_rx
+ldx #34
+lda #125
++vdc_sta_rx     ;r34 = 125 (default)
+ldx #35
+lda #100
++vdc_sta_rx     ;r35 = 100 (default)
+jmp handlestuff
+
++   ;turn horizontal blanking test on
++vdc_sta_rx
+ldx #34
+lda #6
++vdc_sta_rx     ;r34 = 6 (one charwidth to the left of the left border)
+ldx #35
+lda #88
++vdc_sta_rx     ;r35 = 88 (one charwidth to the right of the right border)
+jmp handlestuff
+++
+
 
 cmp #73 ; "I"
 beq +   ; switch between interlace/non interlace modes
@@ -1116,7 +1144,7 @@ prgtxt
 !tx "x128 vdc tester v0.1                                                   esc: exit" ; 1
 !tx "--------------------------------------------------------------------------------" ; 2
 !tx "a: attributes on/off     r: screen reverse on/off     crsr/home: move cursor    " ; 3
-!tx "f: character flash rate  c: cursor mode               g: text/bitmap mode toggle" ; 4
+!tx "f: char flash rate  c: crsr mode  g: text/bitmap mode toggle   h: horiz blanking" ; 4
 !tx "b: background cycle on/off ('border' should match bckgrnd, except bitmap mode)  " ; 5
 !tx "x: xsmooth test - left border should be fixed, right border 'open'              " ; 6
 !tx "y: ysmooth test    : ; background colour    + - smooth speed    s: semi-gfx mode" ; 7
