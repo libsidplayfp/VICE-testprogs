@@ -714,7 +714,8 @@ jmp handlestuff
 cmp #48 ; "0"
 bne +
 ldx #22 ; char horiz size control
-lda #$70; default $78
+lda #$00; default $78
+ora ctbits
 +vdc_sta_rx
 jmp handlestuff:
 +
@@ -722,7 +723,8 @@ jmp handlestuff:
 cmp #49 ; "1"
 bne +
 ldx #22 ; char horiz size control
-lda #$71; default $78
+lda #$01; default $78
+ora ctbits
 +vdc_sta_rx
 jmp handlestuff:
 +
@@ -730,7 +732,8 @@ jmp handlestuff:
 cmp #50 ; "2"
 bne +
 ldx #22 ; char horiz size control
-lda #$72; default $78
+lda #$02; default $78
+ora ctbits
 +vdc_sta_rx
 jmp handlestuff:
 +
@@ -738,7 +741,8 @@ jmp handlestuff:
 cmp #51 ; "3"
 bne +
 ldx #22 ; char horiz size control
-lda #$73; default $78
+lda #$03; default $78
+ora ctbits
 +vdc_sta_rx
 jmp handlestuff:
 +
@@ -746,7 +750,8 @@ jmp handlestuff:
 cmp #52 ; "4"
 bne +
 ldx #22 ; char horiz size control
-lda #$74; default $78
+lda #$04; default $78
+ora ctbits
 +vdc_sta_rx
 jmp handlestuff:
 +
@@ -754,7 +759,8 @@ jmp handlestuff:
 cmp #53 ; "5"
 bne +
 ldx #22 ; char horiz size control
-lda #$75; default $78
+lda #$05; default $78
+ora ctbits
 +vdc_sta_rx
 jmp handlestuff:
 +
@@ -762,7 +768,8 @@ jmp handlestuff:
 cmp #54 ; "6"
 bne +
 ldx #22 ; char horiz size control
-lda #$76; default $78
+lda #$06; default $78
+ora ctbits
 +vdc_sta_rx
 jmp handlestuff:
 +
@@ -770,7 +777,8 @@ jmp handlestuff:
 cmp #55 ; "7"
 bne +
 ldx #22 ; char horiz size control
-lda #$77; default $78
+lda #$07; default $78
+ora ctbits
 +vdc_sta_rx
 jmp handlestuff:
 +
@@ -778,7 +786,8 @@ jmp handlestuff:
 cmp #56 ; "8"
 bne +
 ldx #22 ; char horiz size control
-lda #$78; default $78
+lda #$08; default $78
+ora ctbits
 +vdc_sta_rx
 jmp handlestuff:
 +
@@ -786,7 +795,8 @@ jmp handlestuff:
 cmp #57 ; "9"
 bne +
 ldx #22 ; char horiz size control
-lda #$79; default $78
+lda #$09; default $78
+ora ctbits
 +vdc_sta_rx
 jmp handlestuff:
 +
@@ -838,6 +848,8 @@ ldx #25
 +vdc_lda_rx
 and #$ef
 +vdc_sta_rx
+lda #$70
+sta ctbits
 ldx #0 ;total horiz char positions
 stx pixeldouble
 lda #$7f
@@ -862,6 +874,8 @@ ldx #25
 ora #$10
 +vdc_sta_rx
 sta pixeldouble
+lda #$80
+sta ctbits
 ldx #0 ;total horiz char positions
 lda #63
 +vdc_sta_rx
@@ -1136,6 +1150,8 @@ ysmooth:        !by $00
 ysmoothdir      !by 0
 
 pixeldouble:    !by 0
+
+ctbits:			!by $70
 
 
 ;    |---------01-3-5----0----5----0----5----0----5----0----5----0----5----01234567-|
