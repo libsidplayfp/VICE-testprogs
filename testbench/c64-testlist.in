@@ -874,6 +874,8 @@
 ../SID/waveforms/,waveforms-40-8580.prg,exitcode,53000000,sid-new
 ../SID/waveforms/,waveforms-80-8580.prg,exitcode,200000000,sid-new
 ../SID/writedelay/,writedelay.prg,exitcode,5500000
+../SID/wf12nsr/,wf12nsr.prg,exitcode,150000000,sid-old
+../SID/wf12nsr/,wf12nsr-8580.prg,exitcode,150000000,sid-new
 ################################################################################
 # Cartridges
 #

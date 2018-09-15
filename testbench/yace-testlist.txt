@@ -760,6 +760,7 @@
 ../SID/waveforms/,waveforms-40-6581.prg,exitcode,53000000,sid-old
 ../SID/waveforms/,waveforms-80-6581.prg,exitcode,200000000,sid-old
 ../SID/writedelay/,writedelay.prg,exitcode,5500000
+../SID/wf12nsr/,wf12nsr.prg,exitcode,150000000,sid-old
 ################################################################################
 # Cartridges
 #
