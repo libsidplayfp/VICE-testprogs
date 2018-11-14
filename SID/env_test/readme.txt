@@ -16,6 +16,23 @@ a column of characters onscreen.
 
 M loops from 15 down to 0, plotting one column per test.
 
+
+The following programs are all based on env_test_ra_0000.prg:
+ 
+env_test_ar_1.prg: Test release during attack
+env_test_ar_2.prg: Test release around ENV3 =$FF
+env_test_ar_3.prg: Test release during decay
+env_test_adra_1.prg: Attack during release (exponential period > 1)
+env_test_adra_2.prg: Attack during release (exponential period == 1)
+
+env_test_adra_2 reveals strange behaviour where attack either gets accepted
+or is ignored or causes the volume to stay the same for the current rate
+counter period.
+
 Left side of screen shows measured behaviour, right is expected.  
 
 Errors in red, correct values in green, 
+
+
+Pass on real C64C with 8580 and Hoxs64 1.0.10.0 (David Horrocks)
+Pass on real C64 with 6581 (groepaz)
