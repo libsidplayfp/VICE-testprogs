@@ -31,6 +31,17 @@ e        .macro
          rts
          .endm
 
+         ; init selfmod stuff
+         ldx #0
+         stx l00+1
+         stx l01+1
+         stx l20+1
+         stx l21+1
+         inx
+         stx l11+1
+         stx l14+1
+         stx l17+1
+
          cli
          cld
 l00      lda #0
