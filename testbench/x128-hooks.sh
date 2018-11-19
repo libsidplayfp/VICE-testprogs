@@ -171,6 +171,11 @@ function x128_get_cmdline_options
     esac
 }
 
+# called once before any tests run
+function x128_prepare
+{
+}
+
 ################################################################################
 # reset
 # run test program

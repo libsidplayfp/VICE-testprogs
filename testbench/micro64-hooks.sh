@@ -152,6 +152,10 @@ function micro64_get_cmdline_options
     esac
 }
 
+# called once before any tests run
+function micro64_prepare
+{
+}
 
 ################################################################################
 # reset

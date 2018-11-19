@@ -279,6 +279,8 @@ function runprogsfortarget
     gettestsfortarget "$target"
     resultstartlog
 
+    "$target"_prepare
+
     for e in "${testlist[@]}"
     do
 #        echo "$e"

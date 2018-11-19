@@ -96,6 +96,11 @@ function xcbm5x0_get_cmdline_options
     esac
 }
 
+# called once before any tests run
+function xcbm5x0_prepare
+{
+}
+
 ################################################################################
 # reset
 # run test program

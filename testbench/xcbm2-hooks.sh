@@ -136,6 +136,11 @@ function xcbm2_get_cmdline_options
     esac
 }
 
+# called once before any tests run
+function xcbm2_prepare
+{
+}
+
 ################################################################################
 # reset
 # run test program

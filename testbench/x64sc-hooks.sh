@@ -182,6 +182,10 @@ function x64sc_get_cmdline_options
     esac
 }
 
+# called once before any tests run
+function x64sc_prepare
+{
+}
 
 ################################################################################
 # reset

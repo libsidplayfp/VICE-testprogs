@@ -192,6 +192,11 @@ function cham20_get_cmdline_options
     esac
 }
 
+# called once before any tests run
+function cham20_prepare
+{
+}
+
 ################################################################################
 # reset
 # run test program

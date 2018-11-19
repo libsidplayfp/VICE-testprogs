@@ -79,6 +79,11 @@ function xpet_get_cmdline_options
     esac
 }
 
+# called once before any tests run
+function xpet_prepare
+{
+}
+
 ################################################################################
 # reset
 # run test program

@@ -139,6 +139,11 @@ function yace_get_cmdline_options
     esac
 }
 
+# called once before any tests run
+function yace_prepare
+{
+}
+
 ################################################################################
 # reset
 # run test program

@@ -166,6 +166,11 @@ function xscpu64_get_cmdline_options
     esac
 }
 
+# called once before any tests run
+function xscpu64_prepare
+{
+}
+
 ################################################################################
 # reset
 # run test program

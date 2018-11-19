@@ -194,6 +194,24 @@ function chameleon_make_helper_options
 
 ################################################################################
 
+# called once before any tests run
+function chameleon_prepare
+{
+    echo -ne "preparing chameleon."
+    # fill 0x00300000-0x003a8000 to prevent "killer tracks"
+#    dd if=/dev/zero of=$RDUMMY bs=64k count=58 > /dev/null 2> /dev/null 
+#    dd if=/dev/random of=$RDUMMY bs=64k count=1 > /dev/null 2> /dev/null 
+#    cat /dev/null | tr '\000' '\010' | dd of=$RDUMMY bs=64k count=1 > /dev/null 2> /dev/null
+#    chacocmd --addr 0x00301ffe --writemem $RDUMMY > /dev/null
+    echo -ne "."
+    # press F3 in the menu
+    echo -ne "\x86" > $RDUMMY
+    chacocmd --addr 0x001300b4 --writemem $RDUMMY > /dev/null    
+    echo -ne "."
+    chameleon_reset
+    echo "ok"
+}
+
 # $1  option
 # $2  test path
 function chameleon_get_options

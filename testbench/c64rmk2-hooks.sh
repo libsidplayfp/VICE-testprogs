@@ -153,6 +153,11 @@ function c64rmk2_poll_returncode
 
 ################################################################################
 
+# called once before any tests run
+function c64rmk2_prepare
+{
+}
+
 # $1  option
 # $2  test path
 function c64rmk2_get_options

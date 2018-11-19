@@ -111,6 +111,11 @@ function xvic_get_cmdline_options
     esac
 }
 
+# called once before any tests run
+function xvic_prepare
+{
+}
+
 ################################################################################
 # reset
 # run test program

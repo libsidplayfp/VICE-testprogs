@@ -82,6 +82,11 @@ function xplus4_get_cmdline_options
     esac
 }
 
+# called once before any tests run
+function xplus4_prepare
+{
+}
+
 ################################################################################
 # reset
 # run test program
