@@ -95,6 +95,7 @@ function outputfooter
         html)
             # html
             echo "</table>"
+            echo "created by testresults.sh on " `date`
             echo "</body></html>"
         ;;
         *)
@@ -124,16 +125,19 @@ function outputrowstart
                 # html
                 echotobuffer "<tr><td>"
                 echotobuffer "<a href=\"$SFLINK/$1\">"$1"</a>"
-                echotobuffer "<a href=\"$SFLINK/$1/$2?format=raw\">"$2"</a>"
+                if [ x"${1: -1}"x != x"/"x ]; then
+                    echotobuffer "/"
+                fi
+                echotobuffer "<a href=\"$SFLINK/$1/$2?format=raw\">" $2"</a>"
 #                echo "$4" "$5" "$6"
                 if [ x"$4"x != x""x ]; then
-                    echotobuffer "<a href=\"$SFLINK/$1/$4?format=raw\">"$4"</a>"
+                    echotobuffer "<a href=\"$SFLINK/$1/$4?format=raw\">" $4"</a>"
                 fi
                 if [ x"$5"x != x""x ]; then
-                    echotobuffer "<a href=\"$SFLINK/$1/$5?format=raw\">"$5"</a>"
+                    echotobuffer "<a href=\"$SFLINK/$1/$5?format=raw\">" $5"</a>"
                 fi
                 if [ x"$6"x != x""x ]; then
-                    echotobuffer "<a href=\"$SFLINK/$1/$6?format=raw\">"$6"</a>"
+                    echotobuffer "<a href=\"$SFLINK/$1/$6?format=raw\">" $6"</a>"
                 fi
                 echotobuffer "</td>"
                 if [ x"$3"x != x"exitcode"x ]; then
@@ -586,6 +590,56 @@ function findresult10
     outputcolumn "n/a" "$4"
 }
 
+function findresult11
+{
+    i=0
+    for r in "${resultlist11[@]}"
+    do
+        if [ "${r:0:1}" != "#" ]; then
+            IFS=',' read -a myarray <<< "$r"
+            if [ x"$3"x == x"${myarray[1]}"x ] && 
+               [ x"$2"x == x"${myarray[0]}"x ] && 
+               [ x"$4"x == x"${myarray[3]}"x ] && 
+               [ x"$5"x == x"${myarray[4]}"x ] && 
+               [ x"$6"x == x"${myarray[5]}"x ] && 
+               [ x"$7"x == x"${myarray[6]}"x ]; then
+                outputcolumn ${myarray[2]} "$4"
+                resultlist11=( "${resultlist11[@]:0:$i}" "${resultlist11[@]:$((i+1))}" )
+                return
+            fi
+        else
+            resultlist11=( "${resultlist11[@]:0:$i}" "${resultlist11[@]:$((i+1))}" )
+        fi
+        i=$((i+1))
+    done
+    outputcolumn "n/a" "$4"
+}
+
+function findresult12
+{
+    i=0
+    for r in "${resultlist12[@]}"
+    do
+        if [ "${r:0:1}" != "#" ]; then
+            IFS=',' read -a myarray <<< "$r"
+            if [ x"$3"x == x"${myarray[1]}"x ] && 
+               [ x"$2"x == x"${myarray[0]}"x ] && 
+               [ x"$4"x == x"${myarray[3]}"x ] && 
+               [ x"$5"x == x"${myarray[4]}"x ] && 
+               [ x"$6"x == x"${myarray[5]}"x ] && 
+               [ x"$7"x == x"${myarray[6]}"x ]; then
+                outputcolumn ${myarray[2]} "$4"
+                resultlist12=( "${resultlist12[@]:0:$i}" "${resultlist12[@]:$((i+1))}" )
+                return
+            fi
+        else
+            resultlist12=( "${resultlist12[@]:0:$i}" "${resultlist12[@]:$((i+1))}" )
+        fi
+        i=$((i+1))
+    done
+    outputcolumn "n/a" "$4"
+}
+
 ################################################################################
 
 function reset_options
@@ -693,6 +747,12 @@ function outputtable
                                         outputrowheader "${header[9]}"
                                         if [ "${resultcolums}" -gt "10" ]; then
                                             outputrowheader "${header[10]}"
+                                            if [ "${resultcolums}" -gt "11" ]; then
+                                                outputrowheader "${header[11]}"
+                                                if [ "${resultcolums}" -gt "12" ]; then
+                                                    outputrowheader "${header[12]}"
+                                                fi
+                                            fi
                                         fi
                                     fi
                                 fi
@@ -753,6 +813,12 @@ function outputtable
                                                     findresult9 resultlist9 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
                                                     if [ "${resultcolums}" -gt "10" ]; then
                                                         findresult10 resultlist10 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                                                        if [ "${resultcolums}" -gt "11" ]; then
+                                                            findresult11 resultlist11 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                                                            if [ "${resultcolums}" -gt "12" ]; then
+                                                                findresult12 resultlist12 "${myarray1[0]}" "${myarray1[1]}" "${myarray1[2]}" "${mountd64}" "${mountg64}" "${mountcrt}"
+                                                            fi
+                                                        fi
                                                     fi
                                                 fi
                                             fi
@@ -793,6 +859,7 @@ function checktarget
                 resultsfile[8]="results/yace-result.txt"
                 resultsfile[9]="results/chameleon-result.txt"
                 resultsfile[10]="results/c64rmk2-result.txt"
+                resultsfile[11]="results/u64-result.txt"
                 header[0]="x64"
                 header[1]="x64sc"
                 header[2]="x128 (c64)"
@@ -804,7 +871,8 @@ function checktarget
                 header[8]="yace"
                 header[9]="chameleon"
                 header[10]="c64rmk2"
-                resultcolums=11
+                header[11]="U64"
+                resultcolums=12
             ;;
     # C128 targets
         c128)
