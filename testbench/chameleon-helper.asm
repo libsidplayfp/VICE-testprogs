@@ -87,7 +87,11 @@ noramexp:
 oldsid:
         sta $d0f4       ; set SID type
 
-        lda $0404       ; set CIA type
+        lda #%00101000 ; old cia, disable IR, disable ps2 mouse
+        ldx $0404       ; set CIA type
+        beq oldcia
+        lda #%00101010 ; new cia, disable IR, disable ps2 mouse
+oldcia:
         sta $d0fc
         
         lda #$27        ; MMU Slot for I/O RAM
