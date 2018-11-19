@@ -85,6 +85,7 @@ function xplus4_get_cmdline_options
 # called once before any tests run
 function xplus4_prepare
 {
+    true
 }
 
 ################################################################################

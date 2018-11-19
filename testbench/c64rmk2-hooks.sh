@@ -156,6 +156,7 @@ function c64rmk2_poll_returncode
 # called once before any tests run
 function c64rmk2_prepare
 {
+    true
 }
 
 # $1  option

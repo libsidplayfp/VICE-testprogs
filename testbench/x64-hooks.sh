@@ -186,6 +186,7 @@ function x64_get_cmdline_options
 # called once before any tests run
 function x64_prepare
 {
+    true
 }
 
 ################################################################################

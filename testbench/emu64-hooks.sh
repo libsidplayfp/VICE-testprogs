@@ -153,6 +153,7 @@ function emu64_get_cmdline_options
 # called once before any tests run
 function emu64_prepare
 {
+    true
 }
 
 ################################################################################

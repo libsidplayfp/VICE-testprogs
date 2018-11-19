@@ -142,6 +142,7 @@ function yace_get_cmdline_options
 # called once before any tests run
 function yace_prepare
 {
+    true
 }
 
 ################################################################################

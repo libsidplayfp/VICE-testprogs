@@ -195,6 +195,7 @@ function cham20_get_cmdline_options
 # called once before any tests run
 function cham20_prepare
 {
+    true
 }
 
 ################################################################################

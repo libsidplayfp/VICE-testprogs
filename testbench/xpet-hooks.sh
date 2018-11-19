@@ -82,6 +82,7 @@ function xpet_get_cmdline_options
 # called once before any tests run
 function xpet_prepare
 {
+    true
 }
 
 ################################################################################

@@ -174,6 +174,7 @@ function x128_get_cmdline_options
 # called once before any tests run
 function x128_prepare
 {
+    true
 }
 
 ################################################################################

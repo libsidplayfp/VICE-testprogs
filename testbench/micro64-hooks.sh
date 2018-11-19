@@ -155,6 +155,7 @@ function micro64_get_cmdline_options
 # called once before any tests run
 function micro64_prepare
 {
+    true
 }
 
 ################################################################################

@@ -165,6 +165,7 @@ function z64kc128_get_cmdline_options
 # called once before any tests run
 function z64kc128_prepare
 {
+    true
 }
 
 ################################################################################

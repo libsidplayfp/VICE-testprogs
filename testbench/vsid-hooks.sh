@@ -99,6 +99,7 @@ function vsid_get_cmdline_options
 # called once before any tests run
 function vsid_prepare
 {
+    true
 }
 
 ################################################################################
