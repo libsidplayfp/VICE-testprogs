@@ -2,8 +2,10 @@ Prerequisites:
 --------------
 
 - reset the chameleon configuration to default
-- make sure no d64 is mounted. some tests will upload GCR data to the memory
-  and overwrite whatever is there.
+- enable one drive 8 and mount some d64. make sure you can read the directory
+  before you start the tests, else the drive tests hang for some reason.
+  CAUTION: some tests will upload GCR data to the memory and overwrite whatever 
+  is there.
 
 Quirks:
 -------

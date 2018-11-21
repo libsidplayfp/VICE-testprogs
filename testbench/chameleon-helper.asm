@@ -21,6 +21,7 @@ link:   !word 0
         sta $d0fa       ; enable config registers
 
         lda #$00
+        sta $d0f6       ; clear "image modified" bits
         sta $d0f7       ; select 1 disk per drive, select image slot 1
         lda #$40
         sta $d0f8       ; enable disk drive 1 at id 8
