@@ -163,11 +163,14 @@ status:
 
 
 msg_syncfail:
-    scrcode "Sync failed.",160
+    scrcode "Sync failed."
+    .byte 160
 
 msg_generic_pass:
-    scrcode "Test passed.",160
+    scrcode "Test passed."
+    .byte 160
 msg_generic_fail:
-    scrcode "Test failed.",160
+    scrcode "Test failed."
+    .byte 160
 
     .segment "ZPSAVE"

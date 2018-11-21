@@ -202,7 +202,8 @@ copyref:
 
 
 msg_testname:
-    scrcode "Note start, ADSR=0000",160
+    scrcode "Note start, ADSR=0000"
+    .byte 160
 
 reference:
     .byte 0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
