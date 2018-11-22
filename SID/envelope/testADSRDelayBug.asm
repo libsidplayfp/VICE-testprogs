@@ -18,25 +18,25 @@ bend:       !word 0
     sei
     lda #0
     sta $d011
-    
+
+; set minimum ADSR time
+    lda #$00
+    sta $D413
+    sta $D414
+; gate off
+    sta $D412
+
+; wait frame
 -   lda $d011
     bpl -
 -   lda $d011
     bmi -
 
-; set minimum Release time
-    lda #$00
-    sta $D414
-
-; gate off
-    lda #$00
-    sta $D412
-
-; wait until ENV3 reaches $00
-loop:
+; check that ENV3 is at $00
+-
     lda $D41C
     cmp #$00
-    bne loop
+    bne -
 
 ; set Attack time
     lda #$70
@@ -46,18 +46,24 @@ loop:
     lda #$01
     sta $D412
 
+; wait until ENV3 reaches $01
+-
+    lda $D41C
+    cmp #$01
+    bne -
+
 ; wait 200 cycles
-	ldy #$28
-wait:
-	dey
-	bne wait
+    ldy #$28
+-
+    dey
+    bne -
 
 ; sample ENV3
     lda $D41C
-	sta $0400
+    sta $0400
 
-; it's still at $00
-    cmp #$00
+; it's still at $01
+    cmp #$01
     bne nok
 
 ; set lower Attack time
@@ -66,17 +72,17 @@ wait:
     sta $D413
 
 ; wait another 200 cycles
-	ldy #$28
-wait2:
-	dey
-	bne wait2
+    ldy #$28
+-
+    dey
+    bne -
 
 ; sample ENV3
     lda $D41C
-	sta $0401
+    sta $0401
 
-; it's still at $00 even if enough cycles have passed
-    cmp #$00
+; it's still at $01 even if enough cycles have passed
+    cmp #$01
     bne nok
 
 ok:
@@ -104,3 +110,4 @@ prnt:
     sta $d011
 
     jmp *
+
