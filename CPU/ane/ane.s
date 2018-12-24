@@ -24,9 +24,6 @@ irqline=$1c
 
 ane_constant = $02
 
-zp_testbase = $f0
-;patternbase = $f3
-
 spriteblock = $0800
 
         * = $0900
@@ -46,7 +43,7 @@ start:
         dex
         bne -
 
-        lda #$a5
+        lda #$ff
         ldx #$3f
 -
         sta spriteblock,x
@@ -62,7 +59,7 @@ coloffs1=5
 }
         
         lda #12
-        ldx #2
+        ldx #0
 -
         sta $d800+(40*10)+coloffs1+5,x
         sta $d800+(40*11)+coloffs1+5,x
@@ -98,42 +95,42 @@ coloffs1=5
         ane #$ff
         sta ane_constant
 
-                sei
-; timer nmi and irq off
-                lda     #$7f
-                sta     $dc0d
-                sta     $dd0d
-; set nmi
-                lda     #<nmi0
-                ldx     #>nmi0
-                sta     $fffa
-                stx     $fffb
-; set irq0
-                lda     #<irq0
-                ldx     #>irq0
-                sta     $fffe
-                stx     $ffff
-; all ram
-                lda     #$35
-                sta     $01
-; raster irq on
-                lda     #1
-                sta     $d01a
+        sei
+        ; timer nmi and irq off
+        lda     #$7f
+        sta     $dc0d
+        sta     $dd0d
+        ; set nmi
+        lda     #<nmi0
+        ldx     #>nmi0
+        sta     $fffa
+        stx     $fffb
+        ; set irq0
+        lda     #<irq0
+        ldx     #>irq0
+        sta     $fffe
+        stx     $ffff
+        ; all ram
+        lda     #$35
+        sta     $01
+        ; raster irq on
+        lda     #1
+        sta     $d01a
 
-                lda     #irqline
-                sta     $d012
-                lda     #$1b
-                sta     $d011
-; timer nmi on
-; it triggers on next cycle to disable restore
-                ldx     #$81
-                stx     $dd0d
-                ldx     #0
-                stx     $dd05
-                inx
-                stx     $dd04
-                ldx     #$dd
-                stx     $dd0e
+        lda     #irqline
+        sta     $d012
+        lda     #$1b
+        sta     $d011
+        ; timer nmi on
+        ; it triggers on next cycle to disable restore
+        ldx     #$81
+        stx     $dd0d
+        ldx     #0
+        stx     $dd05
+        inx
+        stx     $dd04
+        ldx     #$dd
+        stx     $dd0e
 
         ; setup sprite
         ldx     #$a0 ;
@@ -244,7 +241,7 @@ loc_e35:
 
         !align 255,0
 irq0:
-; stabilize (double irq)
+        ; stabilize (double irq)
         lda     #<irq1
         ldx     #>irq1
         sta     $fffe
@@ -292,125 +289,127 @@ irq1:
         sta $d015
 
 
-                lda     #$01
-                sta     $d020
-                sta     $d021
+        lda     #$01
+        sta     $d020
+        sta     $d021
 
-                inc $d021
-                inc $d021
-                inc $d021
-                
+        inc $d021
+        inc $d021
+        inc $d021
+        
 offs:           lda     #0
-                jsr docycles
+        jsr docycles
 
-                inc $d021
+        inc $d021
 
-                ; args for ane
-                clc
-                cld
+        ; args for ane
+        clc
+        cld
 ane_a = * + 1
-                lda #$ff
+        lda #$ff
 ane_x = * + 1
-                ldx #$ff
+        ldx #$ff
 ane_imm = * + 1
-                ane #$ff
+        ane #$ff
 
-                sta spres0+1
-                
-                php
-                pla
+        sta spres0+1
+        
+        php
+        pla
 
-                sta fpres0+1
-                
-                ; show result
-                inc $d021
+        sta fpres0+1
+        
+        ; show result
+        inc $d021
 
-                ;ldx #0
-                ldx offs+1
+        ;ldx #0
+        ldx offs+1
 
-                lda testframes
-                bne tf1
+        lda testframes
+        bne tf1
 spres0:          lda #0
-                sta $0400+(40*10),x
+        sta $0400+(40*10),x
 
 fpres0:          lda #0
-                sta $0400+(40*18),x
+        sta $0400+(40*18),x
 tf1
-                lda testframes
-                beq tf2
-                
-                lda spres0+1
-                cmp $0400+(40*10),x
-                beq +
-                inc $0400+(40*2),x
+        lda testframes
+        beq tf2
+        
+        lda spres0+1
+        cmp $0400+(40*10),x
+        beq +
+        inc $0400+(40*2),x
 +
-                lda fpres0+1
-                cmp $0400+(40*18),x
-                beq +
-                inc $0400+(40*2),x
+        lda fpres0+1
+        cmp $0400+(40*18),x
+        beq +
+        inc $0400+(40*2),x
 +
 tf2
 
-                lda $0400+(40*10)
-                eor $0400+(40*10),x
-                sta $0400+(40*10)+40,x
+        lda $0400+(40*10)
+        eor $0400+(40*10),x
+        sta $0400+(40*10)+40,x
 
-                lda $0400+(40*18)
-                eor $0400+(40*18),x
-                sta $0400+(40*18)+40,x
+        lda $0400+(40*18)
+        eor $0400+(40*18),x
+        sta $0400+(40*18)+40,x
 
 !if BORDER=0 {
-                ldx #5
+        ldx #5
 } else {
-                ldx #10
+        ldx #10
 }
-                cpx offs+1
-                bne notedge
+        cpx offs+1
+        bne notedge
 
-                lda ane_a
-                ora ane_constant
-                and ane_x
-                and ane_imm
-                sta $0400+(40*10)+80-1,x
+        lda ane_a
+        ora ane_constant
+        and ane_x
+        and ane_imm
+        sta $0400+(40*10)+80-1,x
 
-                ; rdy
-                lda ane_a
-                ora ane_constant
-                and #$ee
-                and ane_x
-                and ane_imm
-                sta $0400+(40*10)+80,x
-                
-                
-                lda $0400+(40*10)
-                eor $0400+(40*10)+80-1,x
-                sta $0400+(40*10)+40*3-1,x
+!if SPRITES=1 {
+        ; rdy
+        lda ane_a
+        ora ane_constant
+        and #$ee
+        and ane_x
+        and ane_imm
+        sta $0400+(40*10)+80,x
+} else {
+        sta $0400+(40*10)+80,x
+}
+        
+        lda $0400+(40*10)
+        eor $0400+(40*10)+80-1,x
+        sta $0400+(40*10)+40*3-1,x
 
-                lda $0400+(40*10)
-                eor $0400+(40*10)+80,x
-                sta $0400+(40*10)+40*3,x
+        lda $0400+(40*10)
+        eor $0400+(40*10)+80,x
+        sta $0400+(40*10)+40*3,x
 
-                ldy #13
-                lda $0400+(40*10)+40-1,x
-                cmp $0400+(40*10)+40*3-1,x
-                beq +
-                ldy #10
+        ldy #13
+        lda $0400+(40*10)+40-1,x
+        cmp $0400+(40*10)+40*3-1,x
+        beq +
+        ldy #10
 +
-                tya
-                sta $d800+(40*10)+40*3-1,x
-                
-                ldy #13
-                lda $0400+(40*10)+40,x
-                cmp $0400+(40*10)+40*3,x
-                beq +
-                ldy #10
+        tya
+        sta $d800+(40*10)+40*3-1,x
+        
+        ldy #13
+        lda $0400+(40*10)+40,x
+        cmp $0400+(40*10)+40*3,x
+        beq +
+        ldy #10
 +
-                tya
-                sta $d800+(40*10)+40*3,x
-                
+        tya
+        sta $d800+(40*10)+40*3,x
+
 notedge
 
-                
         sed
         lda ane_a
         and #$0f
@@ -480,14 +479,12 @@ notedge
         ;inc ane_imm
 +
         
-                
         lda #0
         sta $d020
         sta $d021
         
         ; open lower border
         lda     #$f8
-
 -
         cmp     $d012
         bne     -
@@ -506,6 +503,7 @@ notedge
         lda #0
         sta $d015
 
+        ; re-read the magic constant
         lda #0
         ldx #$ff
         ane #$ff
@@ -530,7 +528,6 @@ notedge
         dec $d020
         dec $d021
 
-                
         lda     #$1b
         sta     $d011
 
