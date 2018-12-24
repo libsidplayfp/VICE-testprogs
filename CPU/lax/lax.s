@@ -54,7 +54,7 @@ start:
         cpx #(40*4)
         bne -
 
-        lda #$a5
+        lda #$ff
         ldx #$3f
 -
         sta spriteblock,x
@@ -445,10 +445,11 @@ tf2
         sta $d015
 
         lda #0
-        ldx #$ff
-        ane #$ff
+        ;lax #$ff
+        !byte $ab
+        !byte $ff
         sta lax_constant
-                
+           
         sed
         lda lax_constant
         and #$0f
