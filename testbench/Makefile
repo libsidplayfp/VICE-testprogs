@@ -364,6 +364,7 @@ testcham20: chameleon-helper.prg prereq
 
 # missing: chameleon-vic20, u64
 #          vsid, x64dtv, xscpu64, xcbm5x0
+#	   yace, emu64
 
 results0: maketable
 	./maketable --list c64-testlist.in \
@@ -379,6 +380,20 @@ results0: maketable
 	./maketable --list vic20-testlist.in \
 		--results results/xvic-r35990-result.txt "xvic r35990" \
 		--results results/z64kvic20-20181202-result.txt "z64k (vic20) 20181202"
+
+	./maketable --list c128-testlist.in \
+		--results results/x128-r35990-result.txt "x128 r35990" \
+		--results results/z64kc128-20181202-result.txt "z64k (c128) 20181202"
+
+	./maketable --list plus4-testlist.in \
+		--results results/xplus4-r35990-result.txt "xplus4 r35990"
+
+	./maketable --list pet-testlist.in \
+		--results results/xpet-r35990-result.txt "xpet r35990"
+
+	./maketable --list cbm610-testlist.in \
+		--results results/xcbm2-r35990-result.txt "xcbm2 r35990"
+		
 		
 results: maketable
 	./maketable --html --list c64-testlist.in \
@@ -397,6 +412,27 @@ results: maketable
 		--results results/z64kvic20-20181202-result.txt "z64k (vic20) 20181202" \
 		\
 		> results/vic20.html
+		
+	./maketable --html --list c128-testlist.in \
+		--results results/x128-r35990-result.txt "x128 r35990" \
+		--results results/z64kc128-20181202-result.txt "z64k (c128) 20181202" \
+		\
+		> results/c128.html
+
+	./maketable --html --list plus4-testlist.in \
+		--results results/xplus4-r35990-result.txt "xplus4 r35990" \
+		\
+		> results/plus4.html
+
+	./maketable --html --list pet-testlist.in \
+		--results results/xpet-r35990-result.txt "xpet r35990" \
+		\
+		> results/pet.html
+
+	./maketable --html --list cbm610-testlist.in \
+		--results results/xcbm2-r35990-result.txt "xcbm2 r35990" \
+		\
+		> results/cbm2.html
 		
 resultswiki: maketable
 	@echo "=== C64 ==="
