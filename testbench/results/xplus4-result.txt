@@ -1,4 +1,0 @@
-./selftest/,plus4-pass.prg,ok,exitcode,,,
-./selftest/,plus4-fail.prg,error,exitcode,,,
-../memory-expansions/,c16-ram-emd.prg,ok,exitcode,,,
-# 0 minutes and 5 seconds elapsed.
