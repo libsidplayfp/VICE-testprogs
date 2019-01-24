@@ -4,6 +4,8 @@
 #include <string.h>
 
 #define MAXLISTS    0x10
+#define MAXTESTS    2000
+#define MAXPATHLEN  0x100
 
 #define BLUE    "\033[1;34m"
 #define YELLOW  "\033[1;33m"
@@ -13,6 +15,10 @@
 #define WHITE   "\033[1;29m"
 #define NC      "\033[0m"
 
+#define FORMAT_TEXT 0
+#define FORMAT_HTML 1
+#define FORMAT_WIKI 2
+
 int verbose = 0;
 int format = 0;
 int errormode = 0;
@@ -21,13 +27,28 @@ char *infilename[MAXLISTS];
 int numfiles = 0;
 char *headline[MAXLISTS];
 
+#define RESULT_ERROR    0
+#define RESULT_OK       1
+#define RESULT_TIMEOUT  2
+#define RESULT_NA       -1
+
+#define TYPE_EXITCODE       0
+#define TYPE_SCREENSHOT     1
+#define TYPE_INTERACTIVE    2
+#define TYPE_NA             -1
+
+#define MEDIA_NONE  -1
+#define MEDIA_D64   0
+#define MEDIA_G64   1
+#define MEDIA_CRT   2
+
 typedef struct
 {
-    char path[0x100];
-    char prog[0x100];
+    char path[MAXPATHLEN];
+    char prog[MAXPATHLEN];
     int result;
     int type;
-    char media[0x100];
+    char media[MAXPATHLEN];
     int mediatype;
     int ciatype;
     int sidtype;
@@ -35,10 +56,10 @@ typedef struct
 } TEST;
 
 char *refname = NULL;
-TEST reflist[2000];
+TEST reflist[MAXTESTS];
 int refnum = 0;
 
-TEST testlist[MAXLISTS][2000];
+TEST testlist[MAXLISTS][MAXTESTS];
 int testnum[MAXLISTS];
 
 char *sfurl = "https://sourceforge.net/p/vice-emu/code/HEAD/tree/testprogs/testbench";
@@ -84,13 +105,13 @@ int readlist(TEST *list, char *name, int isresultfile)
     char opt5[0x100];
     int num = 0;
     int len;
-    
+
     in = fopen(name, "r");
     if (in == NULL) {
         fprintf(stderr, "error: could not open '%s'\n", name);
         return 0;
     }
-    
+
     while(!feof(in)) {
         result[0] = 0;
         type[0] = 0;
@@ -106,35 +127,33 @@ int readlist(TEST *list, char *name, int isresultfile)
         if (line[0] == '#') {
             continue; // skip comment lines
         }
-//        printf("line:%s\n", line);
         if (isresultfile) {
             splitline(line, list->path, list->prog, result, type, opt1, opt2, opt3, opt4, opt5);
-//            printf("|%s|%s|%s|%s|%s|%s|%s|",list->path, list->prog, result, type, opt1, opt2, opt3, opt4, opt5);
         } else {
             splitline(line, list->path, list->prog, type, timeout, opt1, opt2, opt3, opt4, opt5);
         }
         // check error status
         if (!strcmp(result, "error")) {
-            list->result = 0;
+            list->result = RESULT_ERROR;
         } else if (!strcmp(result, "ok")) {
-            list->result = 1;
+            list->result = RESULT_OK;
         } else if (!strcmp(result, "timeout")) {
-            list->result = 2;
+            list->result = RESULT_TIMEOUT;
         } else {
-            list->result = -1;
+            list->result = RESULT_NA;
         }
         // check test type
         if (!strcmp(type, "exitcode")) {
-            list->type = 0;
+            list->type = TYPE_EXITCODE;
         } else if (!strcmp(type, "screenshot")) {
-            list->type = 1;
+            list->type = TYPE_SCREENSHOT;
         } else if (!strcmp(type, "interactive")) {
-            list->type = 2;
+            list->type = TYPE_INTERACTIVE;
         } else {
-            list->type = -1;
+            list->type = TYPE_NA;
         }
         // check extra option for mounted media,cia/sid/vic type
-        list->mediatype = -1;
+        list->mediatype = MEDIA_NONE;
         list->ciatype = -1;
         list->sidtype = -1;
         list->videotype = -1;
@@ -143,19 +162,19 @@ int readlist(TEST *list, char *name, int isresultfile)
             len = strlen(opt1);
             if (len > 0) {
                 strcpy(list->media, opt1);
-                list->mediatype = 0;
+                list->mediatype = MEDIA_D64;
             }
             // 2) g64
             len = strlen(opt2);
             if (len > 0) {
                 strcpy(list->media, opt2);
-                list->mediatype = 1;
+                list->mediatype = MEDIA_G64;
             }
             // 3) crt
             len = strlen(opt3);
             if (len > 0) {
                 strcpy(list->media, opt3);
-                list->mediatype = 2;
+                list->mediatype = MEDIA_CRT;
             }
             // 4) cia
             if (!strcmp(opt4, "0")) {
@@ -169,8 +188,6 @@ int readlist(TEST *list, char *name, int isresultfile)
             } else if (!strcmp(opt5, "1")) {
                 list->sidtype = 1;
             }
-//            printf("opt1:%s|", opt1);
-//            printf("mediatype:%d|", list->mediatype);
         } else {
             // FIXME: there can be more than one option
             if (!strcmp(opt1, "cia-old")) {
@@ -187,31 +204,26 @@ int readlist(TEST *list, char *name, int isresultfile)
 
             if (!strncmp(opt1, "mountd64:", 9)) {
                 strcpy(list->media, &opt1[9]);
-                list->mediatype = 0;
+                list->mediatype = MEDIA_D64;
             } else if (!strncmp(opt1, "mountg64:", 9)) {
                 strcpy(list->media, &opt1[9]);
-                list->mediatype = 1;
+                list->mediatype = MEDIA_G64;
             } else if (!strncmp(opt1, "mountcrt:", 9)) {
                 strcpy(list->media, &opt1[9]);
-                list->mediatype = 2;
+                list->mediatype = MEDIA_CRT;
             }
-//            printf("opt1:%s|", opt1);
-//            printf("mediatype:%d|", list->mediatype);
         }
 
         len = strlen(list->path);
         if ((len > 0) && (list->path[len - 1] == '/')) {
             list->path[len - 1] = 0;
         }
-        
-//        printf("\n");
-
         num++;
         list++;
     }
-    
+
     fclose(in);
-    
+
     return num;
 }
 
@@ -238,7 +250,7 @@ int findresult(TEST *list, TEST *reflist)
 //------------------------------------------------------------------------------
 void printstart(void)
 {
-    if (format == 1) {
+    if (format == FORMAT_HTML) {
         printf(
             "<html>"
             "<head>"
@@ -258,16 +270,20 @@ void printstart(void)
             "<hr><table style=\"width: 100%%\" id=\"maintable\">"
             "\n"
         );
+    } else if (format == FORMAT_WIKI) {
+        printf("{| class=\"wikitable sortable\" border=\"1\" cellpadding=\"2\" cellspacing=\"0\"\n");
     }
 }
 
 void printend(void)
 {
-    if (format == 1) {
+    if (format == FORMAT_HTML) {
         printf("</table>"
                "</html>"
                "\n"
         );
+    } else if (format == FORMAT_WIKI) {
+        printf("|}\n");
     }
 }
 
@@ -276,49 +292,85 @@ void printheader(void)
     char tmp[0x100];
     int i;
 
-    if (format == 1) {
+    if (format == FORMAT_HTML) {
         printf("<tr>"
                "<th>Path</th>"
                "<th>Type</th>"
+        );
+    } else if (format == FORMAT_WIKI) {
+        printf(
+               "! |Path\n"
+               "! |Type\n"
         );
     }
 
     for (i = 0; i < numfiles; i++) {
         switch (format) {
-            case 0: 
+            case FORMAT_TEXT: 
                 strcpy(tmp, headline[i]); tmp[8] = 0;
                 printf(WHITE "%-8s" NC, tmp); 
                 break;
-            case 1: 
+            case FORMAT_HTML: 
                 printf("<th width=120>%s</th>", headline[i]); 
+                break;
+            case FORMAT_WIKI: 
+                printf("! width=\"80pt\" |%s\n", headline[i]); 
                 break;
         }
     }
     
-    if (format == 1) {
-        printf("</tr>");
+    if (format == FORMAT_TEXT) {
+        printf("\n");
+    } else if (format == FORMAT_HTML) {
+        printf("</tr>\n");
     }
-    
-    printf("\n");
+
 }
 
 void printrowtestpath(int row)
 {
     switch (format) {
-        case 0:
+        case FORMAT_TEXT:
             printf("%s/ %s", reflist[row].path, reflist[row].prog); 
             switch (reflist[row].mediatype) {
-                case 0: printf(" (%s)", reflist[row].media); break;
+                case MEDIA_D64:
+                case MEDIA_G64:
+                case MEDIA_CRT:
+                    printf(" (%s)", reflist[row].media); 
+                    break;
             }
         break;
-        case 1:
+        case FORMAT_HTML:
             printf("<td>");
-            printf("<a href=\"%s/%s/\">%s</a>", sfurl, reflist[row].path, reflist[row].path); 
-            printf(" <a href=\"%s/%s/%s?format=raw\">%s</a>", sfurl, reflist[row].path, reflist[row].prog, reflist[row].prog); 
+            printf("<a href=\"%s/%s/\">%s</a>", 
+                   sfurl, reflist[row].path, reflist[row].path); 
+            printf(" <a href=\"%s/%s/%s?format=raw\">%s</a>", 
+                   sfurl, reflist[row].path, reflist[row].prog, reflist[row].prog); 
             switch (reflist[row].mediatype) {
-                case 0: printf(" (%s)", reflist[row].media); break;
+                case MEDIA_D64:
+                case MEDIA_G64:
+                case MEDIA_CRT:
+                    printf(" (<a href=\"%s/%s/%s?format=raw\">%s</a>)", 
+                           sfurl, reflist[row].path, reflist[row].media, reflist[row].media); 
+                    break;
             }
             printf("</td>");
+        break;
+        case FORMAT_WIKI:
+            printf("||");
+            printf("[%s/%s/ %s]", 
+                   sfurl, reflist[row].path, reflist[row].path); 
+            printf(" [%s/%s/%s?format=raw %s]", 
+                   sfurl, reflist[row].path, reflist[row].prog, reflist[row].prog); 
+            switch (reflist[row].mediatype) {
+                case MEDIA_D64:
+                case MEDIA_G64:
+                case MEDIA_CRT:
+                    printf(" ([%s/%s/%s?format=raw %s])", 
+                           sfurl, reflist[row].path, reflist[row].media, reflist[row].media); 
+                    break;
+            }
+            printf("\n");
         break;
     }
 }
@@ -326,18 +378,25 @@ void printrowtestpath(int row)
 void printrowtesttype(int row)
 {
     switch (format) {
-        case 0:
+        case FORMAT_TEXT:
             switch (reflist[row].type) {
-                case 0: printf("        "); break;
-                case 1: printf("screens "); break;
-                case 2: printf("interac "); break;
+                case TYPE_EXITCODE: printf("        "); break;
+                case TYPE_SCREENSHOT: printf("screens "); break;
+                case TYPE_INTERACTIVE: printf("interac "); break;
             }
         break;
-        case 1:
+        case FORMAT_HTML:
             switch (reflist[row].type) {
-                case 0: printf("<td></td>"); break;
-                case 1: printf("<td>screenshot</td>"); break;
-                case 2: printf("<td>interactive</td>"); break;
+                case TYPE_EXITCODE: printf("<td></td>"); break;
+                case TYPE_SCREENSHOT: printf("<td>screenshot</td>"); break;
+                case TYPE_INTERACTIVE: printf("<td>interactive</td>"); break;
+            }
+        break;
+        case FORMAT_WIKI:
+            switch (reflist[row].type) {
+                case TYPE_EXITCODE: printf("||\n"); break;
+                case TYPE_SCREENSHOT: printf("||screenshot\n"); break;
+                case TYPE_INTERACTIVE: printf("|style=\"background:lightgrey;\"|interactive\n"); break;
             }
         break;
     }
@@ -346,13 +405,13 @@ void printrowtesttype(int row)
 void printrowtestresult(int row, int res)
 {
     switch (format) {
-        case 0:
+        case FORMAT_TEXT:
             switch (res) {
-                case 0:  printf(RED "error   " NC); break;
-                case 1:  printf(GREEN "ok      " NC); break;
-                case 2:  printf(BLUE "timeout " NC); break;
-                case -1: 
-                    if (reflist[row].type == 2) {
+                case RESULT_ERROR:  printf(RED "error   " NC); break;
+                case RESULT_OK:  printf(GREEN "ok      " NC); break;
+                case RESULT_TIMEOUT:  printf(BLUE "timeout " NC); break;
+                case RESULT_NA: 
+                    if (reflist[row].type == TYPE_INTERACTIVE) {
                         printf(GREY "manual  " NC);
                     } else {
                         printf(GREY "n/a     " NC); 
@@ -360,13 +419,13 @@ void printrowtestresult(int row, int res)
                     break;
             }
         break;
-        case 1:
+        case FORMAT_HTML:
             switch (res) {
-                case 0:  printf("<td class=\"error\">error"); break;
-                case 1:  printf("<td class=\"ok\">ok"); break;
-                case 2:  printf("<td class=\"timeout\">timeout"); break;
-                case -1: 
-                    if (reflist[row].type == 2) {
+                case RESULT_ERROR:  printf("<td class=\"error\">error"); break;
+                case RESULT_OK:  printf("<td class=\"ok\">ok"); break;
+                case RESULT_TIMEOUT:  printf("<td class=\"timeout\">timeout"); break;
+                case RESULT_NA: 
+                    if (reflist[row].type == TYPE_INTERACTIVE) {
                         printf("<td class=\"inter\">interactive");
                     } else {
                         printf("<td class=\"na\">n/a"); 
@@ -375,6 +434,20 @@ void printrowtestresult(int row, int res)
             }
             printf("</td>");
         break;
+        case FORMAT_WIKI:
+            switch (res) {
+                case RESULT_ERROR:  printf("|style=\"background:red;\"|error\n"); break;
+                case RESULT_OK:  printf("|style=\"background:lime;\"|ok\n"); break;
+                case RESULT_TIMEOUT:  printf("|style=\"background:lightblue;\"|timeout\n"); break;
+                case RESULT_NA: 
+                    if (reflist[row].type == TYPE_INTERACTIVE) {
+                        printf("|style=\"background:lightgrey;\"|manual\n");
+                    } else {
+                        printf("|style=\"background:lightgrey;\"|n/a\n"); 
+                    }
+                    break;
+            }
+        break;
     }
 }
 
@@ -382,8 +455,12 @@ void printrow(int row, int *res)
 {
     int ii;
 
-    if (format == 1) {
+    if (format == FORMAT_HTML) {
         printf("<tr>");
+        printrowtestpath(row);
+        printrowtesttype(row);
+    } else if (format == FORMAT_WIKI) {
+        printf("|-\n");
         printrowtestpath(row);
         printrowtesttype(row);
     }
@@ -392,20 +469,14 @@ void printrow(int row, int *res)
         printrowtestresult(row, res[ii]);
     }
 
-    if (format == 0) {
+    if (format == FORMAT_TEXT) {
         printrowtesttype(row);
         printrowtestpath(row);
-//        printf("(ref:%s)", reflist[row].media);
-//        printf("(media:%d)", reflist[row].mediatype);
-//        printf("(cia:%d)", reflist[row].ciatype);
-//        printf("(sid:%d)", reflist[row].sidtype);
+        printf("\n");
+    } else if (format == FORMAT_HTML) {
+        printf("</tr>\n");
     }
     
-    if (format == 1) {
-        printf("</tr>");
-    }
-    
-    printf("\n");
 }
 
 void printtable(void)
@@ -424,16 +495,15 @@ void printtable(void)
         // loop over all result files
         for (ii = 0; ii < numfiles; ii++) {
             res[ii] = findresult(testlist[ii], &reflist[i]);
-            if (res[ii] == 0) iserror = 1;
+            if (res[ii] == RESULT_ERROR) iserror = 1;
         }
         // skip this line if we only want to see errors
         if (errormode && !iserror) continue;
-        
+
         printrow(i, res);
     }
-    
+
     printend();
-    
 }
 
 //------------------------------------------------------------------------------
@@ -462,9 +532,9 @@ int main(int argc, char *argv[])
         } else if(!strcmp(argv[i], "--errors")) {
             errormode = 1;
         } else if(!strcmp(argv[i], "--html")) {
-            format = 1;
+            format = FORMAT_HTML;
         } else if(!strcmp(argv[i], "--wiki")) {
-            format = 2;
+            format = FORMAT_WIKI;
         } else if(!strcmp(argv[i], "--help")) {
             usage(argv[0]);
             exit(EXIT_SUCCESS);
@@ -479,27 +549,29 @@ int main(int argc, char *argv[])
             numfiles++;
         }
     }
-    
+
     // do some sanity checks and report errors
     if (refname == NULL) {
         fprintf(stderr, "error: no test list specified\n");
         exit(-1);
     }
-    
+
     if (numfiles == 0) {
         fprintf(stderr, "error: no results specified\n");
         exit(-1);
     }
 
-    // output the table
+    // read the testlist
     refnum = readlist(reflist, refname, 0);
     if (verbose) printf("%d tests in %s\n", refnum, refname);
-    
+
+    // read the results
     for (i = 0; i < numfiles; i++) {
         testnum[i] = readlist(testlist[i], infilename[i], 1);
         if (verbose) printf("%d tests in %s\n", testnum[i], infilename[i]);
     }
-    
+
+    // output the table
     printtable();
 
     return EXIT_SUCCESS;

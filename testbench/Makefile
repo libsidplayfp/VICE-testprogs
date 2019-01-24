@@ -24,7 +24,7 @@ all: prereq
 #	echo "testyace"
 
 ################################################################################
-prereq: selftest testlist cmpscreens prereq-chameleon
+prereq: selftest testlist cmpscreens maketable prereq-chameleon
 
 .PHONY: testlist selftest
 
@@ -34,6 +34,9 @@ selftest:
 cmpscreens: cmpscreens.c
 	$(CC) -W -Wall -O3 -o cmpscreens cmpscreens.c -lm
 
+maketable: maketable.c
+	$(CC) -W -Wall -O3 -o maketable maketable.c -lm
+
 ################################################################################
 
 testlist: \
@@ -41,6 +44,7 @@ testlist: \
 	x64sc-testlist.txt \
 	x128c64-testlist.txt \
 	chameleon-testlist.txt \
+	u64-testlist.txt \
 	c64rmk2-testlist.txt \
 	hoxs64-testlist.txt \
 	micro64-testlist.txt \
@@ -89,6 +93,21 @@ chameleon-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
 		>> chameleon-testlist.txt
+
+# FIXME
+u64-testlist.txt: c64-testlist.in Makefile
+	echo "# this is a generated file, do not edit." >  u64-testlist.txt
+	cat  c64-testlist.in \
+		| grep -v ",cia-new" \
+		| grep -v ",vicii-ntsc" \
+		| grep -v ",vicii-ntscold" \
+		| grep -v ",vicii-drean" \
+		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
+		>> u64-testlist.txt
 
 c64rmk2-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  c64rmk2-testlist.txt
@@ -343,25 +362,71 @@ testcham20: chameleon-helper.prg prereq
 
 .PHONY: results
 
-results:
-	@echo c64
-	./testresults.sh c64 --html > results/c64.html
-	@echo vic20
-	./testresults.sh vic20 --html > results/vic20.html
-	@echo c128
-	./testresults.sh c128 --html > results/c128.html
-	@echo sid
-	./testresults.sh sid --html > results/sid.html
-	@echo plus4
-	./testresults.sh plus4 --html > results/plus4.html
-	@echo pet
-	./testresults.sh pet --html > results/pet.html
-	@echo dtv
-	./testresults.sh dtv --html > results/dtv.html
-	@echo scpu
-	./testresults.sh scpu --html > results/scpu.html
-	@echo cbm5x0
-	./testresults.sh cbm5x0 --html > results/cbm5x0.html
-	@echo cbm2
-	./testresults.sh cbm2 --html > results/cbm2.html
+# missing: chameleon-vic20, u64
+#          vsid, x64dtv, xscpu64, xcbm5x0
 
+results0: maketable
+	./maketable --list c64-testlist.in \
+		--results results/x64-r35968-result.txt "x64 r35968" \
+		--results results/x64sc-r35968-result.txt "x64sc r35968" \
+		--results results/x128c64-r35968-result.txt "x128 (c64) r35968" \
+		--results results/hoxs64-1-0-16-0-result.txt "hoxs64 1.0.16.0" \
+		--results results/z64kc64-20181202-result.txt "z64k (c64) 20181202" \
+		--results results/z64kc128c64-20181202-result.txt "z64k (c128/c64) 20181202" \
+		--results results/micro64-20180314-result.txt "micro64 20180314" \
+		--results results/chameleon-9h-result.txt "TC64 9h"
+
+	./maketable --list vic20-testlist.in \
+		--results results/xvic-r35990-result.txt "xvic r35990" \
+		--results results/z64kvic20-20181202-result.txt "z64k (vic20) 20181202"
+		
+results: maketable
+	./maketable --html --list c64-testlist.in \
+		--results results/x64-r35968-result.txt "x64 r35968" \
+		--results results/x64sc-r35968-result.txt "x64sc r35968" \
+		--results results/x128c64-r35968-result.txt "x128 (c64) r35968" \
+		--results results/hoxs64-1-0-16-0-result.txt "hoxs64 1.0.16.0" \
+		--results results/z64kc64-20181202-result.txt "z64k (c64) 20181202" \
+		--results results/z64kc128c64-20181202-result.txt "z64k (c128/c64) 20181202" \
+		--results results/micro64-20180314-result.txt "micro64 20180314" \
+		--results results/chameleon-9h-result.txt "TC64 9h" \
+		\
+		> results/c64.html
+	./maketable --html --list vic20-testlist.in \
+		--results results/xvic-r35990-result.txt "xvic r35990" \
+		--results results/z64kvic20-20181202-result.txt "z64k (vic20) 20181202" \
+		\
+		> results/vic20.html
+		
+resultswiki: maketable
+	@echo "=== C64 ==="
+	./maketable --wiki --list c64-testlist.in \
+		--results results/x64-r35968-result.txt "x64 r35968" \
+		--results results/x64sc-r35968-result.txt "x64sc r35968" \
+		--results results/x128c64-r35968-result.txt "x128 (c64) r35968" \
+		--results results/hoxs64-1-0-16-0-result.txt "hoxs64 1.0.16.0" \
+		--results results/z64kc64-20181202-result.txt "z64k (c64) 20181202" \
+		--results results/z64kc128c64-20181202-result.txt "z64k (c128/c64) 20181202" \
+		--results results/micro64-20180314-result.txt "micro64 20180314" \
+		--results results/chameleon-9h-result.txt "TC64 9h" 
+	@echo "=== VIC20 ==="
+	./maketable --wiki --list vic20-testlist.in \
+		--results results/xvic-r35990-result.txt "xvic r35990" \
+		--results results/z64kvic20-20181202-result.txt "z64k (vic20) 20181202"
+	@echo "=== C128 ==="
+	./maketable --wiki --list c128-testlist.in \
+		--results results/x128-r35990-result.txt "x128 r35990" \
+		--results results/z64kc128-20181202-result.txt "z64k (c128) 20181202"
+	@echo "=== SID ==="
+	@echo "=== PLUS4 ==="
+	./maketable --wiki --list plus4-testlist.in \
+		--results results/xplus4-r35990-result.txt "xplus4 r35990"
+	@echo "=== PET ==="
+	./maketable --wiki --list pet-testlist.in \
+		--results results/xpet-r35990-result.txt "xpet r35990"
+	@echo "=== DTV ==="
+	@echo "=== SCPU ==="
+	@echo "=== CBM5x0 ==="
+	@echo "=== CBM2 ==="
+	./maketable --wiki --list cbm610-testlist.in \
+		--results results/xcbm2-r35990-result.txt "xcbm2 r35990"
