@@ -98,6 +98,10 @@ chameleon-testlist.txt: c64-testlist.in Makefile
 u64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  u64-testlist.txt
 	cat  c64-testlist.in \
+		| grep -v ",mountd64" \
+		| grep -v ",mountcrt" \
+		| grep -v ",mountg64" \
+		| grep -v ",screenshot" \
 		| grep -v ",cia-new" \
 		| grep -v ",vicii-ntsc" \
 		| grep -v ",vicii-ntscold" \
@@ -112,7 +116,7 @@ u64-testlist.txt: c64-testlist.in Makefile
 c64rmk2-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  c64rmk2-testlist.txt
 	cat  c64-testlist.in \
-		| sed -e "s:,screenshot:,interactive:g" \
+		| grep -v ",screenshot" \
 		| grep -v ",vicii-drean" \
 		| grep -v ",geo256k" \
 		| grep -v ",reu512k" \
@@ -375,7 +379,8 @@ results0: maketable
 		--results results/z64kc64-20181202-result.txt "z64k (c64) 20181202" \
 		--results results/z64kc128c64-20181202-result.txt "z64k (c128/c64) 20181202" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/chameleon-9h-result.txt "TC64 9h"
+		--results results/chameleon-9h-result.txt "TC64 9h" \
+		--results results/u64-10c-result.txt "U64 1.0c"
 
 	./maketable --list vic20-testlist.in \
 		--results results/xvic-r35990-result.txt "xvic r35990" \
@@ -405,6 +410,7 @@ results: maketable
 		--results results/z64kc128c64-20181202-result.txt "z64k (c128/c64) 20181202" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		--results results/chameleon-9h-result.txt "TC64 9h" \
+		--results results/u64-10c-result.txt "U64 1.0c" \
 		\
 		> results/c64.html
 	./maketable --html --list vic20-testlist.in \
@@ -444,7 +450,8 @@ resultswiki: maketable
 		--results results/z64kc64-20181202-result.txt "z64k (c64) 20181202" \
 		--results results/z64kc128c64-20181202-result.txt "z64k (c128/c64) 20181202" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/chameleon-9h-result.txt "TC64 9h" 
+		--results results/chameleon-9h-result.txt "TC64 9h" \
+		--results results/u64-10c-result.txt "U64 1.0c"
 	@echo "=== VIC20 ==="
 	./maketable --wiki --list vic20-testlist.in \
 		--results results/xvic-r35990-result.txt "xvic r35990" \

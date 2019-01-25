@@ -18,6 +18,7 @@ memoryexpansion=""
 refscreenshotname=""
 
 source "./chameleon-hooks.sh"
+source "./u64-hooks.sh"
 source "./cham20-hooks.sh"
 source "./c64rmk2-hooks.sh"
 source "./x64-hooks.sh"
@@ -57,6 +58,9 @@ function checktarget
                 target="$1"
             ;;
         chameleon)
+                target="$1"
+            ;;
+        u64)
                 target="$1"
             ;;
         c64rmk2)
@@ -241,6 +245,11 @@ function resetflags
 # 2) executable name of the test
 # 3) exit status (0:ok, $ff:error, 1:timeout, noref)
 # 4) type of the test (exitstatus,screenshot,interactive)
+# 5) mounted d64 (if any)
+# 6) mounted g64 (if any)
+# 7) mounted crt (if any)
+# 8) CIA type flag
+# 9) SID type flag
 
 function resultstartlog
 {
@@ -255,7 +264,7 @@ function resultstartlog
 # $4 - test type
 function resultprintline
 {
-    echo "$1","$2","$3","$4","$mounted_d64","$mounted_g64","$mounted_crt" >> "$RESULT_LOG_NAME"
+    echo "$1","$2","$3","$4","$mounted_d64","$mounted_g64","$mounted_crt","${new_cia_enabled}","${new_sid_enabled}" >> "$RESULT_LOG_NAME"
 }
 
 function resultstoplog
@@ -528,7 +537,7 @@ function showhelp
     echo $NAME" - run test programs."
     echo "usage: "$NAME" [target] <filter> <options>"
     echo "  targets: x64, x64sc, x128c64, x128, xscpu64, x64dtv, xpet, xcbm2, xcbm5x0, xvic, xplus4, vsid,"
-    echo "           chameleon, cham20, c64rmk2, hoxs64, micro64, emu64, yace, z64kc64, z64kc128, z64kc128c64, z64kvic20"
+    echo "           chameleon, u64, cham20, c64rmk2, hoxs64, micro64, emu64, yace, z64kc64, z64kc128, z64kc128c64, z64kvic20"
     echo "  <filter> is a substring of the path of tests to restrict to"
     echo "  --help       show this help"
     echo "  --verbose    be more verbose"
