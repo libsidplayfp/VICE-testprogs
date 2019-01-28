@@ -14,7 +14,7 @@
 
 start=$2400
 
-;basicHeader=1 
+basicHeader=1 
 
 !ifdef basicHeader {
 ; 10 SYS7181
