@@ -1,0 +1,4 @@
+./selftest/,dtv-pass.prg,ok,exitcode,,,,-1,-1,-1
+./selftest/,dtv-fail.prg,error,exitcode,,,,-1,-1,-1
+../memory-expansions/,c64-dtv-himem-emd.prg,ok,exitcode,,,,-1,-1,-1
+# 1 minutes and 45 seconds elapsed.

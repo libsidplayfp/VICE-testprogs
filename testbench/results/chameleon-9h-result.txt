@@ -250,8 +250,8 @@
 ../general/Lorenz-2.15/src/,trap13.prg,ok,exitcode,,,,-1,-1
 ../general/Lorenz-2.15/src/,trap14.prg,ok,exitcode,,,,-1,-1
 ../general/Lorenz-2.15/src/,trap15.prg,ok,exitcode,,,,-1,-1
-../general/Lorenz-2.15/src/,trap16.prg,ok,exitcode,,,,-1,-1
-../general/Lorenz-2.15/src/,trap17.prg,ok,exitcode,,,,-1,-1
+../general/Lorenz-2.15/src/,trap16.prg,ok,exitcode,,,,-1,-1,PAL
+../general/Lorenz-2.15/src/,trap17.prg,ok,exitcode,,,,-1,-1,PAL
 ../general/Lorenz-2.15/src/,branchwrap.prg,ok,exitcode,,,,-1,-1
 ../general/Lorenz-2.15/src/,mmufetch.prg,ok,exitcode,,,,-1,-1
 ../general/Lorenz-2.15/src/,mmu.prg,ok,exitcode,,,,-1,-1
