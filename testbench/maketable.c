@@ -42,6 +42,20 @@ char *headline[MAXLISTS];
 #define MEDIA_G64   1
 #define MEDIA_CRT   2
 
+#define CIATYPE_UNSET   -1
+#define CIATYPE_OLD      0
+#define CIATYPE_NEW      1
+
+#define SIDTYPE_UNSET   -1
+#define SIDTYPE_OLD      0
+#define SIDTYPE_NEW      1
+
+#define VIDEOTYPE_UNSET   -1
+#define VIDEOTYPE_PAL      0
+#define VIDEOTYPE_NTSC     1
+#define VIDEOTYPE_NTSCOLD  2
+#define VIDEOTYPE_DREAN    3
+
 typedef struct
 {
     char path[MAXPATHLEN];
@@ -76,7 +90,7 @@ char *copytocomma(char *dest, char *src)
     return src;
 }
 
-void splitline(char *line, char *a1, char *a2, char *a3, char *a4, char *a5, char *a6, char *a7, char *a8, char *a9)
+void splitline(char *line, char *a1, char *a2, char *a3, char *a4, char *a5, char *a6, char *a7, char *a8, char *a9, char *a10)
 {
     line = copytocomma(a1, line);
     line = copytocomma(a2, line);
@@ -87,9 +101,12 @@ void splitline(char *line, char *a1, char *a2, char *a3, char *a4, char *a5, cha
     line = copytocomma(a7, line);
     line = copytocomma(a8, line);
     line = copytocomma(a9, line);
+    line = copytocomma(a10, line);
 }
 
 //------------------------------------------------------------------------------
+
+#define MAXOPTIONS  6
 
 int readlist(TEST *list, char *name, int isresultfile)
 {
@@ -98,13 +115,9 @@ int readlist(TEST *list, char *name, int isresultfile)
     char result[0x100];
     char type[0x100];
     char timeout[0x100];
-    char opt1[0x100];
-    char opt2[0x100];
-    char opt3[0x100];
-    char opt4[0x100];
-    char opt5[0x100];
+    char opt[MAXOPTIONS][0x100];
     int num = 0;
-    int len;
+    int len, i;
 
     in = fopen(name, "r");
     if (in == NULL) {
@@ -115,11 +128,9 @@ int readlist(TEST *list, char *name, int isresultfile)
     while(!feof(in)) {
         result[0] = 0;
         type[0] = 0;
-        opt1[0] = 0;
-        opt2[0] = 0;
-        opt3[0] = 0;
-        opt4[0] = 0;
-        opt5[0] = 0;
+        for (i = 0; i < MAXOPTIONS; i++) {
+            opt[i][0] = 0;
+        }
         timeout[0] = 0;
         if (fgets(line, 0x100, in) == NULL) {
             break; // stop if no line could be read
@@ -128,9 +139,9 @@ int readlist(TEST *list, char *name, int isresultfile)
             continue; // skip comment lines
         }
         if (isresultfile) {
-            splitline(line, list->path, list->prog, result, type, opt1, opt2, opt3, opt4, opt5);
+            splitline(line, list->path, list->prog, result, type, opt[0], opt[1], opt[2], opt[3], opt[4], opt[5]);
         } else {
-            splitline(line, list->path, list->prog, type, timeout, opt1, opt2, opt3, opt4, opt5);
+            splitline(line, list->path, list->prog, type, timeout, opt[0], opt[1], opt[2], opt[3], opt[4], opt[5]);
         }
         // check error status
         if (!strcmp(result, "error")) {
@@ -154,63 +165,84 @@ int readlist(TEST *list, char *name, int isresultfile)
         }
         // check extra option for mounted media,cia/sid/vic type
         list->mediatype = MEDIA_NONE;
-        list->ciatype = -1;
-        list->sidtype = -1;
-        list->videotype = -1;
+        list->ciatype = CIATYPE_UNSET;
+        list->sidtype = SIDTYPE_UNSET;
+        list->videotype = VIDEOTYPE_UNSET;
         if (isresultfile) {
             // 1) d64
-            len = strlen(opt1);
+            len = strlen(opt[0]);
             if (len > 0) {
-                strcpy(list->media, opt1);
+                strcpy(list->media, opt[0]);
                 list->mediatype = MEDIA_D64;
             }
             // 2) g64
-            len = strlen(opt2);
+            len = strlen(opt[1]);
             if (len > 0) {
-                strcpy(list->media, opt2);
+                strcpy(list->media, opt[1]);
                 list->mediatype = MEDIA_G64;
             }
             // 3) crt
-            len = strlen(opt3);
+            len = strlen(opt[2]);
             if (len > 0) {
-                strcpy(list->media, opt3);
+                strcpy(list->media, opt[2]);
                 list->mediatype = MEDIA_CRT;
             }
             // 4) cia
-            if (!strcmp(opt4, "0")) {
-                list->ciatype = 0;
-            } else if (!strcmp(opt4, "1")) {
-                list->ciatype = 1;
+            if (!strcmp(opt[3], "0")) {
+                list->ciatype = CIATYPE_OLD;
+            } else if (!strcmp(opt[3], "1")) {
+                list->ciatype = CIATYPE_NEW;
             }
             // 5) sid
-            if (!strcmp(opt5, "0")) {
-                list->sidtype = 0;
-            } else if (!strcmp(opt5, "1")) {
-                list->sidtype = 1;
+            if (!strcmp(opt[4], "0")) {
+                list->sidtype = SIDTYPE_OLD;
+            } else if (!strcmp(opt[4], "1")) {
+                list->sidtype = SIDTYPE_NEW;
+            }
+            // 6) video
+            if (!strcmp(opt[5], "PAL")) {
+                list->videotype = VIDEOTYPE_PAL;
+            } else if (!strcmp(opt[5], "NTSC")) {
+                list->videotype = VIDEOTYPE_NTSC;
+            } else if (!strcmp(opt[5], "NTSCOLD")) {
+                list->videotype = VIDEOTYPE_NTSCOLD;
+            } else if (!strcmp(opt[5], "DREAN")) {
+                list->videotype = VIDEOTYPE_DREAN;
             }
         } else {
-            // FIXME: there can be more than one option
-            if (!strcmp(opt1, "cia-old")) {
-                list->ciatype = 0;
-            } else if (!strcmp(opt1, "cia-new")) {
-                list->ciatype = 1;
-            }
+            for (i = 0; i < MAXOPTIONS; i++) {
+                if (!strcmp(opt[i], "cia-old")) {
+                    list->ciatype = CIATYPE_OLD;
+                } else if (!strcmp(opt[i], "cia-new")) {
+                    list->ciatype = CIATYPE_NEW;
+                }
 
-            if (!strcmp(opt1, "sid-old")) {
-                list->sidtype = 0;
-            } else if (!strcmp(opt1, "sid-new")) {
-                list->sidtype = 1;
-            }
+                if (!strcmp(opt[i], "sid-old")) {
+                    list->sidtype = SIDTYPE_OLD;
+                } else if (!strcmp(opt[i], "sid-new")) {
+                    list->sidtype = SIDTYPE_NEW;
+                }
 
-            if (!strncmp(opt1, "mountd64:", 9)) {
-                strcpy(list->media, &opt1[9]);
-                list->mediatype = MEDIA_D64;
-            } else if (!strncmp(opt1, "mountg64:", 9)) {
-                strcpy(list->media, &opt1[9]);
-                list->mediatype = MEDIA_G64;
-            } else if (!strncmp(opt1, "mountcrt:", 9)) {
-                strcpy(list->media, &opt1[9]);
-                list->mediatype = MEDIA_CRT;
+                if (!strcmp(opt[i], "vicii-pal")) {
+                    list->videotype = VIDEOTYPE_PAL;
+                } else if (!strcmp(opt[i], "vicii-ntsc")) {
+                    list->videotype = VIDEOTYPE_NTSC;
+                } else if (!strcmp(opt[i], "vicii-ntscold")) {
+                    list->videotype = VIDEOTYPE_NTSCOLD;
+                } else if (!strcmp(opt[i], "vicii-drean")) {
+                    list->videotype = VIDEOTYPE_DREAN;
+                }
+
+                if (!strncmp(opt[i], "mountd64:", 9)) {
+                    strcpy(list->media, &opt[i][9]);
+                    list->mediatype = MEDIA_D64;
+                } else if (!strncmp(opt[i], "mountg64:", 9)) {
+                    strcpy(list->media, &opt[i][9]);
+                    list->mediatype = MEDIA_G64;
+                } else if (!strncmp(opt[i], "mountcrt:", 9)) {
+                    strcpy(list->media, &opt[i][9]);
+                    list->mediatype = MEDIA_CRT;
+                }
             }
         }
 
@@ -295,11 +327,13 @@ void printheader(void)
     if (format == FORMAT_HTML) {
         printf("<tr>"
                "<th>Path</th>"
+               "<th>Chip</th>"
                "<th>Type</th>"
         );
     } else if (format == FORMAT_WIKI) {
         printf(
                "! |Path\n"
+               "! |Chip\n"
                "! |Type\n"
         );
     }
@@ -311,7 +345,7 @@ void printheader(void)
                 printf(WHITE "%-8s" NC, tmp); 
                 break;
             case FORMAT_HTML: 
-                printf("<th width=120>%s</th>", headline[i]); 
+                printf("<th width=110>%s</th>", headline[i]); 
                 break;
             case FORMAT_WIKI: 
                 printf("! width=\"80pt\" |%s\n", headline[i]); 
@@ -386,6 +420,22 @@ void printrowtesttype(int row)
             }
         break;
         case FORMAT_HTML:
+            printf("<td>");
+            switch (reflist[row].videotype) {
+                case VIDEOTYPE_PAL: printf("PAL "); break;
+                case VIDEOTYPE_NTSC: printf("NTSC "); break;
+                case VIDEOTYPE_NTSCOLD: printf("NTSCOLD "); break;
+                case VIDEOTYPE_DREAN: printf("DREAN "); break;
+            }
+            switch (reflist[row].ciatype) {
+                case CIATYPE_OLD: printf("6526 "); break;
+                case CIATYPE_NEW: printf("8521 "); break;
+            }
+            switch (reflist[row].sidtype) {
+                case SIDTYPE_OLD: printf("6581 "); break;
+                case SIDTYPE_NEW: printf("8580 "); break;
+            }
+            printf("</td>");
             switch (reflist[row].type) {
                 case TYPE_EXITCODE: printf("<td></td>"); break;
                 case TYPE_SCREENSHOT: printf("<td>screenshot</td>"); break;
@@ -393,6 +443,22 @@ void printrowtesttype(int row)
             }
         break;
         case FORMAT_WIKI:
+            printf("||");
+            switch (reflist[row].videotype) {
+                case VIDEOTYPE_PAL: printf("PAL "); break;
+                case VIDEOTYPE_NTSC: printf("NTSC "); break;
+                case VIDEOTYPE_NTSCOLD: printf("NTSCOLD "); break;
+                case VIDEOTYPE_DREAN: printf("DREAN "); break;
+            }
+            switch (reflist[row].ciatype) {
+                case CIATYPE_OLD: printf("6526 "); break;
+                case CIATYPE_NEW: printf("8521 "); break;
+            }
+            switch (reflist[row].sidtype) {
+                case SIDTYPE_OLD: printf("6581 "); break;
+                case SIDTYPE_NEW: printf("8580 "); break;
+            }
+            printf("\n");
             switch (reflist[row].type) {
                 case TYPE_EXITCODE: printf("||\n"); break;
                 case TYPE_SCREENSHOT: printf("||screenshot\n"); break;

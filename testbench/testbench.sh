@@ -264,7 +264,7 @@ function resultstartlog
 # $4 - test type
 function resultprintline
 {
-    echo "$1","$2","$3","$4","$mounted_d64","$mounted_g64","$mounted_crt","${new_cia_enabled}","${new_sid_enabled}" >> "$RESULT_LOG_NAME"
+    echo "$1","$2","$3","$4","$mounted_d64","$mounted_g64","$mounted_crt","${new_cia_enabled}","${new_sid_enabled}","${testprogvideotype}" >> "$RESULT_LOG_NAME"
 }
 
 function resultstoplog
