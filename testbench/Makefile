@@ -311,40 +311,55 @@ testall: \
 	testvsid
 
 testx64: prereq
-	./testbench.sh x64
+	EMUDIR="$(VICEDIR)" ./testbench.sh x64
 
 testx64sc: prereq
-	./testbench.sh x64sc
+	EMUDIR="$(VICEDIR)" ./testbench.sh x64sc
 
 testx128c64: prereq
-	./testbench.sh x128c64
+	EMUDIR="$(VICEDIR)" ./testbench.sh x128c64
 
 testx128: prereq
-	./testbench.sh x128
+	EMUDIR="$(VICEDIR)" ./testbench.sh x128
 
 testxscpu64: prereq
-	./testbench.sh xscpu64
+	EMUDIR="$(VICEDIR)" ./testbench.sh xscpu64
 
 testx64dtv: prereq
-	./testbench.sh x64dtv
+	EMUDIR="$(VICEDIR)" ./testbench.sh x64dtv
 
 testxplus4: prereq
-	./testbench.sh xplus4
+	EMUDIR="$(VICEDIR)" ./testbench.sh xplus4
 
 testxvic: prereq
-	./testbench.sh xvic
+	EMUDIR="$(VICEDIR)" ./testbench.sh xvic
 
 testxpet: prereq
-	./testbench.sh xpet
+	EMUDIR="$(VICEDIR)" ./testbench.sh xpet
 
 testxcbm2: prereq
-	./testbench.sh xcbm2
+	EMUDIR="$(VICEDIR)" ./testbench.sh xcbm2
 
 testxcbm5x0: prereq
-	./testbench.sh xcbm5x0
+	EMUDIR="$(VICEDIR)" ./testbench.sh xcbm5x0
 
 testvsid: prereq
-	./testbench.sh vsid
+	EMUDIR="$(VICEDIR)" ./testbench.sh vsid
+
+##############################################################################
+	
+testhoxs64:	
+	EMUDIR="$(HOXS64DIR)" ./testbench.sh hoxs64 --pal --cianew --8580 --8565early
+testmicro64:
+	EMUDIR="$(MICRO64DIR)" ./testbench.sh micro64
+testz64kc64:	
+	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc64
+testz64kc128c64:	
+	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc128c64
+testz64kc128:	
+	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc128
+testz64kvic20:	
+	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kvic20
 
 ##############################################################################
 
@@ -363,11 +378,13 @@ testcham20: chameleon-helper.prg prereq
 	./testbench.sh cham20
 
 ################################################################################
+# the folling must be manually updated to use the right files
+################################################################################
 
-.PHONY: results
+.PHONY: results0 results resultswiki
 
-# missing: chameleon-vic20, u64
-#          vsid, x64dtv, xscpu64, xcbm5x0
+# missing: chameleon-vic20
+#          vsid
 #	   yace, emu64
 
 results0: maketable
@@ -387,7 +404,7 @@ results0: maketable
 		--results results/z64kvic20-20181202-result.txt "z64k (vic20) 20181202"
 
 	./maketable --list c128-testlist.in \
-		--results results/x128-r35990-result.txt "x128 r35990" \
+		--results results/x128-r36014-result.txt "x128 r36014" \
 		--results results/z64kc128-20181202-result.txt "z64k (c128) 20181202"
 
 	./maketable --list plus4-testlist.in \
@@ -396,6 +413,15 @@ results0: maketable
 	./maketable --list pet-testlist.in \
 		--results results/xpet-r35990-result.txt "xpet r35990"
 
+	./maketable --list dtv-testlist.in \
+		--results results/x64dtv-r35990-result.txt "x64dtv r35990"
+
+	./maketable --list scpu-testlist.in \
+		--results results/xscpu64-r35990-result.txt "xscpu64 r35990"
+		
+	./maketable --list cbm510-testlist.in \
+		--results results/xcbm5x0-r35990-result.txt "xcbm5x0 r35990"
+		
 	./maketable --list cbm610-testlist.in \
 		--results results/xcbm2-r35990-result.txt "xcbm2 r35990"
 		
@@ -420,7 +446,7 @@ results: maketable
 		> results/vic20.html
 		
 	./maketable --html --list c128-testlist.in \
-		--results results/x128-r35990-result.txt "x128 r35990" \
+		--results results/x128-r36014-result.txt "x128 r36014" \
 		--results results/z64kc128-20181202-result.txt "z64k (c128) 20181202" \
 		\
 		> results/c128.html
@@ -435,6 +461,21 @@ results: maketable
 		\
 		> results/pet.html
 
+	./maketable --html --list dtv-testlist.in \
+		--results results/x64dtv-r35990-result.txt "x64dtv r35990" \
+		\
+		> results/dtv.html
+
+	./maketable --html --list scpu-testlist.in \
+		--results results/xscpu64-r35990-result.txt "xscpu64 r35990" \
+		\
+		> results/scpu.html
+		
+	./maketable --html --list cbm510-testlist.in \
+		--results results/xcbm5x0-r35990-result.txt "xcbm5x0 r35990" \
+		\
+		> results/cbm5x0.html
+		
 	./maketable --html --list cbm610-testlist.in \
 		--results results/xcbm2-r35990-result.txt "xcbm2 r35990" \
 		\
@@ -458,9 +499,8 @@ resultswiki: maketable
 		--results results/z64kvic20-20181202-result.txt "z64k (vic20) 20181202"
 	@echo "=== C128 ==="
 	./maketable --wiki --list c128-testlist.in \
-		--results results/x128-r35990-result.txt "x128 r35990" \
+		--results results/x128-r36014-result.txt "x128 r36014" \
 		--results results/z64kc128-20181202-result.txt "z64k (c128) 20181202"
-	@echo "=== SID ==="
 	@echo "=== PLUS4 ==="
 	./maketable --wiki --list plus4-testlist.in \
 		--results results/xplus4-r35990-result.txt "xplus4 r35990"
@@ -468,8 +508,15 @@ resultswiki: maketable
 	./maketable --wiki --list pet-testlist.in \
 		--results results/xpet-r35990-result.txt "xpet r35990"
 	@echo "=== DTV ==="
+	./maketable --wiki --list dtv-testlist.in \
+		--results results/x64dtv-r35990-result.txt "x64dtv r35990"
 	@echo "=== SCPU ==="
+	./maketable --wiki --list scpu-testlist.in \
+		--results results/xscpu64-r35990-result.txt "xscpu64 r35990"
 	@echo "=== CBM5x0 ==="
+	./maketable --wiki --list cbm510-testlist.in \
+		--results results/xcbm5x0-r35990-result.txt "xcbm5x0 r35990"
 	@echo "=== CBM2 ==="
 	./maketable --wiki --list cbm610-testlist.in \
 		--results results/xcbm2-r35990-result.txt "xcbm2 r35990"
+	@echo "=== SID ==="

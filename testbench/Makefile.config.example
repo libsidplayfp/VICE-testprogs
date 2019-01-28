@@ -1,0 +1,25 @@
+
+###############################################################################
+# copy this file and rename it to "Makefile.config" and edit it to your needs
+###############################################################################
+
+# should point to the directory contain VICE x64 binary.
+# if you have checked out "trunk" and "testprogs" into the same directory AND
+# built the VICE binaries in-tree, you may leave this empty to use these 
+# binaries.
+#VICEDIR="/usr/local/bin"
+
+# should point to the directory containing hoxs64
+HOXS64DIR="~/c64stuff/hoxs64/"
+
+# should point to directoy containing z64k
+Z64KDIR="~/c64stuff/z64k/"
+
+# should point to directoy containing micro64
+MICRO64DIR="~/c64stuff/micro64/"
+
+# should point to directoy containing YACE
+YACEDIR="~/c64stuff/yace/"
+
+# should point to directoy containing emu64
+EMU64DIR="~/c64stuff/emu64/"
