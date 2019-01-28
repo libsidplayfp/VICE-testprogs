@@ -1,4 +1,6 @@
 
+include Makefile.config
+
 .SILENT:
 
 all: prereq
