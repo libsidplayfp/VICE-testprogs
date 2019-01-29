@@ -374,10 +374,13 @@ chameleon-crtoff.prg: chameleon-crtoff.asm
 	acme -f plain -o chameleon-crtoff.prg chameleon-crtoff.asm
 
 testchameleon: chameleon-helper.prg prereq
-	./testbench.sh chameleon --pal --8565early --6581 --oldcia
+	./testbench.sh chameleon --pal --8565early
 
 testcham20: chameleon-helper.prg prereq
-	./testbench.sh cham20
+	./testbench.sh cham20 --8k
+
+testu64: prereq
+	./testbench.sh u64
 
 ################################################################################
 # the folling must be manually updated to use the right files
@@ -385,7 +388,7 @@ testcham20: chameleon-helper.prg prereq
 
 .PHONY: results0 results resultswiki
 
-# missing: chameleon-vic20
+# missing:
 #          vsid
 #	   yace, emu64
 
@@ -403,7 +406,8 @@ results0: maketable
 
 	./maketable --list vic20-testlist.in \
 		--results results/xvic-r35990-result.txt "xvic r35990" \
-		--results results/z64kvic20-20181202-result.txt "z64k (vic20) 20181202"
+		--results results/z64kvic20-20181202-result.txt "z64k (vic20) 20181202" \
+		--results results/cham20-20150818-result.txt "cham20 20150818"
 
 	./maketable --list c128-testlist.in \
 		--results results/x128-r36014-result.txt "x128 r36014" \
@@ -441,9 +445,11 @@ results: maketable
 		--results results/u64-10c-result.txt "U64 1.0c" \
 		\
 		> results/c64.html
+		
 	./maketable --html --list vic20-testlist.in \
 		--results results/xvic-r35990-result.txt "xvic r35990" \
 		--results results/z64kvic20-20181202-result.txt "z64k (vic20) 20181202" \
+		--results results/cham20-20150818-result.txt "cham20 20150818" \
 		\
 		> results/vic20.html
 		
@@ -498,7 +504,8 @@ resultswiki: maketable
 	@echo "=== VIC20 ==="
 	./maketable --wiki --list vic20-testlist.in \
 		--results results/xvic-r35990-result.txt "xvic r35990" \
-		--results results/z64kvic20-20181202-result.txt "z64k (vic20) 20181202"
+		--results results/z64kvic20-20181202-result.txt "z64k (vic20) 20181202" \
+		--results results/cham20-20150818-result.txt "cham20 20150818"
 	@echo "=== C128 ==="
 	./maketable --wiki --list c128-testlist.in \
 		--results results/x128-r36014-result.txt "x128 r36014" \
