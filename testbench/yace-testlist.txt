@@ -916,6 +916,7 @@
 ../REU/colorram/,colorram.prg,exitcode,1000000000,reu512k
 ../REU/colorram/,dmacolortest.prg,interactive,0
 ../REU/detectsize/,detectreu.prg,exitcode,10000000,reu512k
+../REU/ioglitch/,ioglitch.prg,exitcode,1000000000,reu512k
 ../REU/misc/,bitfill-auto.prg,exitcode,100000000,reu512k
 ../REU/misc/,twoblocks-auto.prg,exitcode,100000000,reu512k
 ../REU/misc/,twoblocks-ff00-auto.prg,exitcode,100000000,reu512k
