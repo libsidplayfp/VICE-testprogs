@@ -1,6 +1,6 @@
 ; vdcattr
 ; --------
-; 2009 Errol Smith
+; 2009-2019 Errol Smith
 
 ; VDC demonstration of basic text & attributes
 
@@ -27,7 +27,7 @@
 
 ; --- Constants
 
-!src "..\vdc2.a"
+!src "vdc2.a"
 
 
 
@@ -180,7 +180,7 @@ bne -
 
 ; fill attr memory with different attributes for each row
 
-; set start address for vdc char write
+; set start address for vdc attribute write
 lda #vdcattributehi	;hi
 ldx #18
 +vdc_sta_rx
@@ -217,7 +217,7 @@ iny
 cpy #$10
 bne fillbstart
 
-
+; fill rest of the menu/instructions area
 ldy #3
 lda #$0e	;fill $300 bytes extra bytes with 'dark' white
 - +vdc_sta
@@ -266,18 +266,7 @@ jsr vdc_setattrxy
 lda #$0f
 +vdc_sta
 
-
-
-
-
-
-
-
-
-
-
-
-
+; we've now finished drawing the screen & attributes
 
 ; put the cursor somewhere
 ldx #$20
@@ -403,7 +392,7 @@ adc tmp
 
 
 
-
+; Read the keyboard and process based on what key is pressed, if any
 jsr GETIN
 ; beq handlestuff
 
@@ -416,6 +405,7 @@ eor #$40
 +vdc_sta_rx
 jmp handlestuff
 +
+
 
 cmp #66 ; "B"
 bne +
@@ -447,6 +437,126 @@ and #$7f
 +vdc_sta_rx
 jmp handlestuff
 +
+
+
+cmp #68 ; "D" for double pixel mode
+beq +
+jmp ++
++
+; switch pixel double (40/80col mode) on/off
+lda pixeldouble
+beq pd
+
+; turn pixel double off, reset registers to default
+ldx #25
++vdc_lda_rx
+and #$ef
++vdc_sta_rx
+lda #$70
+sta ctbits
+ldx #0 ;total horiz char positions
+stx pixeldouble
+lda #$7f
++vdc_sta_rx
+ldx #1 ; active horiz chars
+lda #80
++vdc_sta_rx
+ldx #2 ; horiz sync position
+lda #$66
++vdc_sta_rx
+ldx #22 ; char horiz size control
+lda #$78
++vdc_sta_rx
+ldx #27 ; address inc per row
+lda #$0
++vdc_sta_rx
+jmp handlestuff
+
+pd:	; pixeldouble is off, turn it on
+ldx #25
++vdc_lda_rx
+ora #$10
++vdc_sta_rx
+sta pixeldouble
+lda #$80
+sta ctbits
+ldx #0 ;total horiz char positions
+lda #63
++vdc_sta_rx
+ldx #1 ; active horiz chars
+lda #40
++vdc_sta_rx
+ldx #2 ; horiz sync position
+lda #55
++vdc_sta_rx
+ldx #22 ; char horiz size control
+lda #$89
++vdc_sta_rx
+ldx #27 ; address inc per row
+lda #40
++vdc_sta_rx
+jmp handlestuff
+++
+
+
+cmp #69 ; "E" - expanded character test for intercharacter gap rendering
+beq +
+jmp ++
++
+; switch expanded character test on/off
+lda expandedchars
+beq pe
+
+; turn expandedchars off, reset registers to default
+lda #$70
+sta ctbits
+ldx #0 ;total horiz char positions (default of $7f / 127 * default char width of 8 = 1016 total horiz pixels )
+stx expandedchars
+lda #$7f
++vdc_sta_rx
+ldx #2      ; horiz sync position
+lda #$66    ;$66 / 102 * 8 = 816
++vdc_sta_rx
+ldx #3 ; horiz/vert sync width
+lda #$49    ;default, equals width of 9*8=72
++vdc_sta_rx
+ldx #22 ; char horiz size control
+lda #$78
++vdc_sta_rx
+ldx #34 ; display begin
+lda #125
++vdc_sta_rx
+ldx #35 ; display end
+lda #100
++vdc_sta_rx
+jmp handlestuff
+
+pe:	; expandedchars is off, turn it on
+lda #$80
+sta expandedchars
+sta ctbits
+ldx #0      ;total horiz char positions
+;lda #$70    ; ($70 / 112 * new char width of 9 = 1008 total horiz pixels )
+lda #$71    ; ($71 / 113 * new char width of 9 = 1017 total horiz pixels )
++vdc_sta_rx
+ldx #2      ; horiz sync position
+lda #$5f    ;$5f / 95 * 9 = 855
++vdc_sta_rx
+ldx #3      ; horiz/vert sync width
+lda #$48    ; equals width of 8*9=72
++vdc_sta_rx
+ldx #22 ; char horiz size control
+lda #$89
++vdc_sta_rx
+ldx #34 ; display begin
+lda #6
++vdc_sta_rx
+ldx #35 ; display end
+lda #89
++vdc_sta_rx
+jmp handlestuff
+++
+
 
 cmp #70 ; "F"
 bne +
@@ -651,8 +761,6 @@ jmp handlestuff
 +
 
 
-
-
 upbit:
 cmp #145 ; up cursor
 bne +
@@ -661,12 +769,14 @@ jsr setcrsr
 jmp handlestuff
 +
 
+
 cmp #17 ; down cursor
 bne +
 inc crsry
 jsr setcrsr
 jmp handlestuff
 +
+
 
 cmp #157 ; left cursor
 bne +
@@ -675,6 +785,7 @@ jsr setcrsr
 jmp handlestuff
 +
 
+
 cmp #29 ; right cursor
 bne +
 inc crsrx
@@ -682,7 +793,8 @@ jsr setcrsr
 jmp handlestuff
 +
 
-cmp #19 ; home
+
+cmp #19 ; home - home cursor
 bne +
 lda #0
 sta crsrx
@@ -692,8 +804,7 @@ jmp handlestuff
 +
 
 
-
-cmp #43 ; minus
+cmp #43 ; minus - decrease smooth scroll speed
 bne +
 dec smoothdefault
 bne minus
@@ -702,7 +813,8 @@ minus:
 jmp handlestuff
 +
 
-cmp #45 ; plus
+
+cmp #45 ; plus - increase smooth scroll speed
 bne +
 inc smoothdefault
 bpl minus
@@ -711,6 +823,27 @@ jmp handlestuff
 +
 
 
+cmp #44 ; , - decrease xsync position
+bne +
+ldx #2
++vdc_ldy_rx
+dey
++vdc_sty_rx
+jmp handlestuff
++
+
+
+cmp #46 ; . - increase xsync position
+bne +
+ldx #2
++vdc_ldy_rx
+iny
++vdc_sty_rx
+jmp handlestuff
++
+
+
+; 0-9 are settings for horizontal size control
 cmp #48 ; "0"
 bne +
 ldx #22 ; char horiz size control
@@ -815,6 +948,7 @@ ora #$e0
 jmp handlestuff
 +
 
+
 ; semicolon - increase background colour
 cmp #59 ; ;
 bne +
@@ -829,78 +963,21 @@ jmp handlestuff
 +
 
 
-cmp #27	;esc
+cmp #27	;ESC - quit
 bne +
 jmp exit
 +
 
 
-cmp #68 ; "D" for double pixel mode
-beq +
-jmp handlestuff:
-+
-; switch pixel double (40/80col mode) on/off
-lda pixeldouble
-beq pd
-
-; turn pixel double off, reset registers to default
-ldx #25
-+vdc_lda_rx
-and #$ef
-+vdc_sta_rx
-lda #$70
-sta ctbits
-ldx #0 ;total horiz char positions
-stx pixeldouble
-lda #$7f
-+vdc_sta_rx
-ldx #1 ; active horiz chars
-lda #$50
-+vdc_sta_rx
-ldx #2 ; horiz sync position
-lda #$66
-+vdc_sta_rx
-ldx #22 ; char horiz size control
-lda #$78
-+vdc_sta_rx
-ldx #27 ; address inc per row
-lda #$0
-+vdc_sta_rx
-jmp handlestuff
-
-pd:	; pixeldouble is off, turn it on
-ldx #25
-+vdc_lda_rx
-ora #$10
-+vdc_sta_rx
-sta pixeldouble
-lda #$80
-sta ctbits
-ldx #0 ;total horiz char positions
-lda #63
-+vdc_sta_rx
-ldx #1 ; active horiz chars
-lda #40
-+vdc_sta_rx
-ldx #2 ; horiz sync position
-lda #55
-+vdc_sta_rx
-ldx #22 ; char horiz size control
-lda #$89
-+vdc_sta_rx
-ldx #27 ; address inc per row
-lda #40
-+vdc_sta_rx
-jmp handlestuff
-+
 
 
 
+; End of checking input, now handle per frame updates/changes
 handlestuff:
 
 lda backcycle
 beq xsmoothbit
-; cycle the background
+; cycle the background colour if the background colour cycle is enabled
 dec backcyclecount
 bne +
 lda #50
@@ -977,10 +1054,6 @@ y9:
 sty ysmooth
 
 yend:
-
-+
-
-
 
 
 
@@ -1150,6 +1223,7 @@ ysmooth:        !by $00
 ysmoothdir      !by 0
 
 pixeldouble:    !by 0
+expandedchars:  !by 0
 
 ctbits:			!by $70
 
@@ -1157,19 +1231,19 @@ ctbits:			!by $70
 ;    |---------01-3-5----0----5----0----5----0----5----0----5----0----5----01234567-|
 prgtxt
 !tx "blackdkgrydkblublue dkgrngreendkcyncyan dkred red dkpplpurplbrownyelowltgrywhite" ; 0
-!tx "x128 vdc tester v0.1                                                   esc: exit" ; 1
+!tx "x128 vdc tester v0.2 by strobe                                         esc: exit" ; 1
 !tx "--------------------------------------------------------------------------------" ; 2
 !tx "a: attributes on/off     r: screen reverse on/off     crsr/home: move cursor    " ; 3
 !tx "f: char flash rate  c: crsr mode  g: text/bitmap mode toggle   h: horiz blanking" ; 4
 !tx "b: background cycle on/off ('border' should match bckgrnd, except bitmap mode)  " ; 5
-!tx "x: xsmooth test - left border should be fixed, right border 'open'              " ; 6
+!tx "x: xsmooth test - left border should be fixed, right border 'open'     e: expand" ; 6
 !tx "y: ysmooth test    : ; background colour    + - smooth speed    s: semi-gfx mode" ; 7
 !tx "  d: 40/80columns  v: show vblank area    i: interlace/50 rows  0-9 char width  " ; 8
 !tx "                                                                                " ; 9
 
 
 
-; end of errol's code ----------------------------------------------------
+; end of Errol's code ----------------------------------------------------
 
 
 progsize = * - entry
