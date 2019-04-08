@@ -110,9 +110,21 @@ dataadd = * + 1
     sta $0400+(2*40),x
     dex
     bpl -
+
+    ; REU <-> I/O      $000100 <-> $d000
+    LDA #>$d000
+    STA $03
+    LDA #<$d000
+    STA $02
+    JSR verifyC64toREU
+    
+    lda $df00
+    and #$20
+    sta $0400+(3*40)
     
     dec $d020
 
+    
     ; compare the results
     ldy #5
     
@@ -130,6 +142,10 @@ dataadd = * + 1
     dex
     bpl -
 
+    lda $0400+(3*40)        ; verify
+    beq +
+    ldy #10
++
 
     ; test result and exit if "green" or failure
     cpy #5
@@ -161,7 +177,7 @@ dataadd = * + 1
 
     jmp lp
 
-waitframes: !byte $10
+waitframes: !byte 10
     
 ;---------------------------------------
 
@@ -178,6 +194,8 @@ copyREUtoC64:                  ; REU -> C64
     LDY #$91
 copyC64toREU = * + 1           ; C64 -> REU
     BIT $90A0
+verifyC64toREU = * + 1         ; C64 -> REU
+    BIT $90A3
 
     LDA $03
     STA $DF03
