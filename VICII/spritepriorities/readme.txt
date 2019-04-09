@@ -1,16 +1,17 @@
 
 charset/bitmap/background bits:
 
-- 00 (d020, black) and 01 (d022, red) are always background (sprites are always 
+- 00 (d021, black) and 01 (d022, red) are always background (sprites are always 
   in front of it)
 - 10 (d023, green) and 11 (colram, blue) are foreground. it will be in front of 
   sprites with the respective priority bit set.
 
 sprite bits:
 
-- 00/0 (transparent) (background or sprite with lower priority)
-- 11/1 (sprite color, red/blue)
-- 01,10 (d025, d026, yellow/green)
+- 00/0  (transparent) (background or sprite with lower priority)
+- 10/1  (sprite color, red/blue)
+- 01    (d025, yellow) (Multicolor 1)
+- 11    (d026, green) (Multicolor 2)
 
 the priority can be made up by these two rules (this order!)
 
