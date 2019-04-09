@@ -559,6 +559,8 @@
 ../VICII/border/,border-bm-ysh2.prg,screenshot,10000000,vicii-pal
 ../VICII/border/,border-bm-ysh.prg,screenshot,10000000,vicii-pal
 ../VICII/border/,border-mcbm.prg,screenshot,10000000,vicii-pal
+../VICII/border/,hvborder1.prg,screenshot,10000000,vicii-pal
+../VICII/border/,hvborder2.prg,screenshot,10000000,vicii-pal
 ../VICII/border/,vborder.prg,interactive,0,vicii-pal
 ../VICII/border/,vborder2.prg,interactive,0,vicii-pal
 ../VICII/colorram/,test.prg,exitcode,100000000
@@ -883,6 +885,7 @@
 ../drive/defaults/,defaults.prg,exitcode,9500000,mountd64:defaults.d64
 ../drive/diskchange/,pollwp.prg,interactive,0
 ../drive/diskid/,diskid1.prg,exitcode,8500000,mountd64:diskid.d64
+../drive/format/,format.prg,exitcode,80000000,mountd64:format.d64
 ../drive/iecdelay/,iec-bus-delay-auto.prg,exitcode,80000000
 ../drive/interrupts/,timera.prg,exitcode,20000000
 ../drive/interrupts/,watchdog,interactive,0
