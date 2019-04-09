@@ -207,6 +207,7 @@ function chameleon_prepare
     # press F3 in the menu
     echo -ne "\x86" > $RDUMMY
     chacocmd --addr 0x001300b4 --writemem $RDUMMY > /dev/null    
+    sleep 3
     echo -ne "."
     chameleon_reset
     echo "ok"
