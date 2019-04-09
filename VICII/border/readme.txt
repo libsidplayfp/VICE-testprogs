@@ -47,3 +47,13 @@ Clears RSEL for four cycles somewhere (variable delay with 'A' and 'S') at line 
 $00-$21 and $64-$80: Border4 closes at line 251 (complete last line visible)
 $22-$35: Border closes in line 247 (displays 4 raster lines of thee last row)
 $36-$63: Border closes in line 248 (displays 5 raster lines of thee last row)
+
+hvborder1:
+----------
+opens the vertical border first, then opens the sideborder. idle gfx is shown
+in the entire vertical border.
+
+hvborder2:
+----------
+opens the sideborder before the vertical border starts, and keeps opening it.
+no idle gfx is shown in the vertical border.
