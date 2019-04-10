@@ -32,6 +32,9 @@ lp2:
         inx
         cpx #80
         bne lp2
+        
+        lda #%11001010
+        sta $3fff
 
         SEI
         LDA #$01
