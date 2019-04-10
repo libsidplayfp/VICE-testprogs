@@ -30,7 +30,7 @@ lp2:
         sta $0400,x
         sta $0400+(5*40),x
         inx
-        cpx #40
+        cpx #80
         bne lp2
 
         SEI
@@ -109,6 +109,13 @@ delay:
         LDA #$01
         STA $D019
 
+        ; check shift
+        lda #%11111101
+        sta $dc00
+        lda $dc01
+        and #%10000000
+        beq shiftpressed
+        
 smod2:
         DEC $FF
 
@@ -134,6 +141,7 @@ skp1:
         STA smod2+1
 skp2:
 
+shiftpressed:
         ; check keys
         inc kdelay+1
 kdelay: lda #0
@@ -217,6 +225,7 @@ hextab:
 
 texttab:      ;1234567890123456789012345678901234567890
         .text "   (A-S)  RANGE 21-29 SHOULD BE FLD     "
+        .text "          PRESS SHIFT TO HOLD           "
 
         .align 256
 
