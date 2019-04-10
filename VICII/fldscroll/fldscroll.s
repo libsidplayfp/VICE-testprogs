@@ -29,8 +29,10 @@ lp2:
         and #$3f
         sta $0400,x
         sta $0400+(5*40),x
+        sta $0400+(10*40),x
+        sta $0400+(15*40),x
         inx
-        cpx #80
+        cpx #120
         bne lp2
         
         lda #%11001010
@@ -189,8 +191,12 @@ skEND:
 
         lda $0400
         sta $0400+(40*5)
+        sta $0400+(40*10)
+        sta $0400+(40*15)
         lda $0401
         sta $0401+(40*5)
+        sta $0401+(40*10)
+        sta $0401+(40*15)
 
         JMP $EA7E
 
@@ -229,6 +235,7 @@ hextab:
 texttab:      ;1234567890123456789012345678901234567890
         .text "   (A-S)  RANGE 21-29 SHOULD BE FLD     "
         .text "          PRESS SHIFT TO HOLD           "
+        .text "0123456789012345678901234567890123456789"
 
         .align 256
 
