@@ -668,7 +668,13 @@
 ../VICII/dmadelay/,test3.prg,interactive,0
 #FIXME: doesnt work in emu, possibly unstable on real hw
 ../VICII/dmadelay/,test4.prg,interactive,0
-../VICII/fldscroll/,fldscroll.prg,interactive,0
+../VICII/fldscroll/,fldscroll.prg,interactive,0,vicii-pal
+../VICII/fldscroll/,fldscroll-20-60.prg,screenshot,10000000,vicii-pal
+../VICII/fldscroll/,fldscroll-21-60.prg,screenshot,10000000,vicii-pal
+../VICII/fldscroll/,fldscroll-22-60.prg,screenshot,10000000,vicii-pal
+../VICII/fldscroll/,fldscroll-29-60.prg,screenshot,10000000,vicii-pal
+../VICII/fldscroll/,fldscroll-2A-60.prg,screenshot,10000000,vicii-pal
+../VICII/fldscroll/,fldscroll-2B-60.prg,screenshot,10000000,vicii-pal
 ../VICII/flibug/,blackmail.prg,screenshot,10000000,vicii-pal
 ../VICII/gfxfetch/,gfxfetch.prg,screenshot,10000000,vicii-pal
 ../VICII/gfxfetch/,gfxfetch_ntsc.prg,screenshot,10000000,vicii-ntsc

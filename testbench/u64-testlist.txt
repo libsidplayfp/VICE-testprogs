@@ -563,7 +563,7 @@
 ../VICII/dmadelay/,test3.prg,interactive,0
 #FIXME: doesnt work in emu, possibly unstable on real hw
 ../VICII/dmadelay/,test4.prg,interactive,0
-../VICII/fldscroll/,fldscroll.prg,interactive,0
+../VICII/fldscroll/,fldscroll.prg,interactive,0,vicii-pal
 #FIXME: check on NTSCOLD
 ../VICII/lpcoordinates/,lpcoords.prg,interactive,0
 ../VICII/lplatency/,lplatency.prg,exitcode,10000000,vicii-pal

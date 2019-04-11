@@ -375,6 +375,9 @@ chameleon-crtoff.prg: chameleon-crtoff.asm
 
 testchameleon: chameleon-helper.prg prereq
 	./testbench.sh chameleon --pal --8565early
+# for testing in cartridge mode on "new" c64
+testchameleoncart: chameleon-helper.prg prereq
+	./testbench.sh chameleon VICII --pal --8565early --cianew --8580
 
 testcham20: chameleon-helper.prg prereq
 	./testbench.sh cham20 --8k
@@ -529,3 +532,13 @@ resultswiki: maketable
 	./maketable --wiki --list cbm610-testlist.in \
 		--results results/xcbm2-r35990-result.txt "xcbm2 r35990"
 	@echo "=== SID ==="
+
+.PHONY: resultscham
+resultscham: maketable
+	./maketable --html --list c64-testlist.in \
+		--results results/x64sc-r35968-result.txt "x64sc r35968" \
+		--results results/chameleon-9h-result.txt "TC64 9h" \
+		--results results/chameleon-head-cartridge-result.txt "TC64 head (cartridge)" \
+		--results results/chameleon-head-standalone-result.txt "TC64 head (standalone)" \
+		\
+		> results/chameleon.html
