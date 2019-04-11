@@ -3,6 +3,7 @@ of "Cataball+3/Decibel".
 
 press A and S to shift the timing left/right by one cycle
 press left SHIFT to stop/hold movement
+when shift is pressed, use Q and W to scroll up/down
 
 when the displayed hex number is in the range 21-29 the text screen should
 scroll up and down via FLD. outside of this range line crunching and/or FLI 

@@ -1,4 +1,7 @@
 
+DEBUGCOLOR = $dbff
+;DEBUGCOLOR = $d020
+
 scrptr = $02
 
     * = $0801
@@ -7,6 +10,13 @@ scrptr = $02
 
         * = $0a00
 
+        lda #$17
+        sta $d018
+        lda #$0e
+        sta $d020
+        lda #$06
+        sta $d021
+        
         ldx #0
 lp1:
         lda #$20
@@ -15,11 +25,11 @@ lp1:
         sta $0600,x
         txa
         sta $0700,x
+        sta $db00,x
         lda #$01
         sta $d800,x
         sta $d900,x
         sta $da00,x
-        sta $db00,x
         inx
         bne lp1
 
@@ -31,11 +41,16 @@ lp2:
         sta $0400+(5*40),x
         sta $0400+(10*40),x
         sta $0400+(15*40),x
+        lda colortab,x
+        sta $d800,x
+        sta $d800+(5*40),x
+        sta $d800+(10*40),x
+        sta $d800+(15*40),x
         inx
-        cpx #120
+        cpx #5*40
         bne lp2
-        
-        lda #%11001010
+
+        lda #%00110100
         sta $3fff
 
         SEI
@@ -51,7 +66,11 @@ lp2:
 
         LDA #$10
         STA $D012
+.if (OFFSET == 0)
         LDA #$F0
+.else
+        LDA #OFFSET
+.endif
         STA $FF
 
         LDA #$1B
@@ -62,16 +81,21 @@ lp2:
 
 ;-------------------------------------------------------------------------------
 
+        .align 256
 irq:
         jsr rastersync_lp
 
-        inc $d020
+        inc DEBUGCOLOR
 
         ; Calculate a variable offset to delay by branching over nops
         lda #126 - 1
         sec
 xPosOffset:
+.if (CYCLE == 0)
         sbc #$21
+.else
+        sbc #CYCLE
+.endif
         ; divide by 2 to get the number of nops to skip
         lsr
         sta sm1+1
@@ -86,7 +110,7 @@ sm1:
         .rept 126 / 2
         nop
         .next
-        dec $d020
+        dec DEBUGCOLOR
 
         LDX $FF
 
@@ -107,25 +131,55 @@ delay:
         DEY
         BNE delay
 
-        sta $d020
+        sta DEBUGCOLOR
         DEX
         BNE irqlp
 
         LDA #$01
         STA $D019
 
+        lda #0
+        sta DEBUGCOLOR
+
+.if (OFFSET == 0)
         ; check shift
         lda #%11111101
         sta $dc00
         lda $dc01
         and #%10000000
+        pha
+        bne shiftnotpressed
+        
+        ; check keys
+        inc kdelay1+1
+kdelay1: 
+        lda #0
+        and #$07
+        bne skEND1
+.endif
+        lda #%11111101
+        sta $dc00
+        lda $dc01
+        and #%00000010      ;W
+        bne +
+        inc $ff
++
+        lda #%01111111
+        sta $dc00
+        lda $dc01
+        and #%01000000      ;Q
+        bne +
+        dec $ff
++
+skEND1:
+        
+.if (OFFSET == 0)
+shiftnotpressed:
+        pla
         beq shiftpressed
         
 smod2:
         DEC $FF
-
-        lda #0
-        sta $d020
 
         LDA $FF
         CMP #$1C
@@ -147,6 +201,7 @@ skp1:
 skp2:
 
 shiftpressed:
+.endif
         ; check keys
         inc kdelay+1
 kdelay: lda #0
@@ -181,24 +236,52 @@ skA:
 o2:
 skS:
 skEND:
-        lda #>$0400
+        lda #>($0400+(1*40)+2)
         sta scrptr+1
-        lda #<$0400
+        lda #<($0400+(1*40)+2)
         sta scrptr
 
         lda xPosOffset+1
         jsr hexout
 
-        lda $0400
-        sta $0400+(40*5)
-        sta $0400+(40*10)
-        sta $0400+(40*15)
-        lda $0401
-        sta $0401+(40*5)
-        sta $0401+(40*10)
-        sta $0401+(40*15)
+        lda #>($0400+(3*40)+2)
+        sta scrptr+1
+        lda #<($0400+(3*40)+2)
+        sta scrptr
+
+        lda $ff
+        jsr hexout
+
+        lda $0402+(1*40)
+        sta $0402+(40*6)
+        sta $0402+(40*11)
+        sta $0402+(40*16)
+
+        lda $0403+(1*40)
+        sta $0403+(40*6)
+        sta $0403+(40*11)
+        sta $0403+(40*16)
+
+        lda $0402+(3*40)
+        sta $0402+(2*40)+(40*6)
+        sta $0402+(2*40)+(40*11)
+        sta $0402+(2*40)+(40*16)
+
+        lda $0403+(3*40)
+        sta $0403+(2*40)+(40*6)
+        sta $0403+(2*40)+(40*11)
+        sta $0403+(2*40)+(40*16)
+
+        ; make test exit after 3 frames
+        dec framecount
+        bne +
+        lda #0
+        sta $d7ff
++
 
         JMP $EA7E
+
+framecount: .byte 3
 
 ;-------------------------------------------------------------------------------
 
@@ -233,9 +316,18 @@ hextab:
         .byte $01, $02, $03, $04, $05, $06
 
 texttab:      ;1234567890123456789012345678901234567890
-        .text "   (A-S)  RANGE 21-29 SHOULD BE FLD     "
-        .text "          PRESS SHIFT TO HOLD           "
-        .text "0123456789012345678901234567890123456789"
+        .text "A12345678901234567890123456789012345678Z"
+        .text "B.XX.(A-S)..RANGE.21-29.SHOULD.BE.FLD..Y"
+        .text "C...........PRESS.SHIFT.TO.HOLD........X"
+        .text "D.XX (Q-W)..TO SCROLL.MANUALLY.........W"
+        .text "E12345678901234567890123456789012345678V"
+
+colortab:     ;1234567890123456789012345678901234567890
+        .text "@KL@KL@KL@KL@KL@KL@KL@KL@KL@KL@KL@KL@KL@"
+        .text "KLAALAAAAAL@AAAAA@AAAAA@AAAAAAKAAKAAAL@K"
+        .text "L@KL@KL@KL@KAAAAAKAAAAAKAAKAAAA@KL@KL@KL"
+        .text "@KAAKAAAAAKLAALAAAAAA@AAAAAAAA@KL@KL@KL@"
+        .text "KL@KL@KL@KL@KL@KL@KL@KL@KL@KL@KL@KL@KL@K"
 
         .align 256
 
