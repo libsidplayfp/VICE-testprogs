@@ -267,9 +267,9 @@ int findresult(TEST *list, TEST *reflist)
         if(!strcmp(list->path, reflist->path) && 
            !strcmp(list->prog, reflist->prog) &&
            (list->type == reflist->type) &&
-           (list->ciatype == reflist->ciatype) &&
-           (list->sidtype == reflist->sidtype) &&
-           (list->videotype == reflist->videotype) &&
+           ((reflist->ciatype == CIATYPE_UNSET) || (list->ciatype == reflist->ciatype)) &&
+           ((reflist->sidtype == SIDTYPE_UNSET) || (list->sidtype == reflist->sidtype)) &&
+           ((reflist->videotype == VIDEOTYPE_UNSET) || (list->videotype == reflist->videotype)) &&
            (list->mediatype == reflist->mediatype)
           ) {
             return list->result;
