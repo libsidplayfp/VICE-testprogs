@@ -1,10 +1,4 @@
 
-All border-*.PRGs compiled with acme
-Run them with
-LOAD"BORDER-....PRG",8,1
-RUN
-
-
 border-<n>:
 -----------
 Opens right border in cycle 56 of line n and following lines.
@@ -44,9 +38,10 @@ to determine the smallest delay with borders still open. That delay should be $0
 vborder2:
 ---------
 Clears RSEL for four cycles somewhere (variable delay with 'A' and 'S') at line 247.
-$00-$21 and $64-$80: Border4 closes at line 251 (complete last line visible)
-$22-$35: Border closes in line 247 (displays 4 raster lines of thee last row)
-$36-$63: Border closes in line 248 (displays 5 raster lines of thee last row)
+$00-$21: Border4 closes at line 251 (complete last line visible)
+$22-$35: Border closes in line 247 (displays 4 raster lines of the last row)
+$36-$63: Border closes in line 248 (displays 5 raster lines of the last row)
+$64-$80: Border4 closes at line 251 (complete last line visible)
 
 hvborder1:
 ----------

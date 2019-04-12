@@ -1,5 +1,13 @@
   processor 6502
 
+#if DEBUG = 0
+DBGCOLOR0 = $dbfe
+DBGCOLOR1 = $dbff
+#else
+DBGCOLOR0 = $d020
+DBGCOLOR1 = $d021
+#endif
+
 ; Select the video timing (processor clock cycles per raster line)
 ;CYCLES = 65     ; 6567R8 and above, NTSC-M
 ;CYCLES = 64    ; 6567R5 6A, NTSC-M
@@ -45,7 +53,7 @@ start:
   jmp install
   jmp deinstall
 
-install:        ; install the raster routine
+install2:       ; install the raster routine
   jsr restore   ; Disable the Restore key (disable NMI interrupts)
 checkirq:
   lda cinv      ; check the original IRQ vector
@@ -75,8 +83,9 @@ skipinit:
   lda $dc0d     ; acknowledge CIA interrupts
   lsr $d019     ; and video interrupts
   cli
-  lda #$20
+  lda #OFFSET/2
   sta $fa
+  lda #OFFSET-(OFFSET/2)
   sta $fb
   lda #$55
   sta $3fff
@@ -212,10 +221,10 @@ loop1:
   dex
   bne loop1
 
-  inc $d021
-  dec $d021
-  inc $d020
-  dec $d020
+  inc DBGCOLOR1
+  dec DBGCOLOR1
+  inc DBGCOLOR0
+  dec DBGCOLOR0
   
   lda $fb
   jsr delay
@@ -225,10 +234,10 @@ loop1:
   lda #$13
   ldx #$1b
   
-  inc $d021
-  dec $d021
-  inc $d020
-  dec $d020
+  inc DBGCOLOR1
+  dec DBGCOLOR1
+  inc DBGCOLOR0
+  dec DBGCOLOR0
 
   sta $d011
   stx $d011
@@ -239,15 +248,24 @@ loop1:
   jsr delay
   
 
-  inc $d021
-  dec $d021
-  inc $d020
-  dec $d020
+  inc DBGCOLOR1
+  dec DBGCOLOR1
+  inc DBGCOLOR0
+  dec DBGCOLOR0
 
   lda #$1b
   sta $d011
 
+  ; trigger exit with debug cart after some frames
+  dec framecount
+  bne notdone
+  lda #0
+  sta $d7ff
+notdone:
+
   jmp $ea81
+  
+framecount: .byte 3
 
 restore:        ; disable the Restore key
   lda cnmi
@@ -355,3 +373,22 @@ smod:
  .byte $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
  .byte $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
     rts             ;6 cycles
+
+    
+install:
+
+    ldx #0
+lp1:
+    lda #$20
+    sta $0400,x
+    sta $0500,x
+    sta $0600,x
+    sta $0700,x
+    lda #$01
+    sta $d800,x
+    sta $d900,x
+    sta $da00,x
+    sta $db00,x
+    inx
+    bne lp1
+    jmp install2
