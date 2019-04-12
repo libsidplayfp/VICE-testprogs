@@ -606,7 +606,17 @@
 ../VICII/border/,hvborder1.prg,screenshot,10000000,vicii-pal
 ../VICII/border/,hvborder2.prg,screenshot,10000000,vicii-pal
 ../VICII/border/,vborder.prg,interactive,0,vicii-pal
+../VICII/border/,vborder-32-08.prg,screenshot,10000000,vicii-pal
+../VICII/border/,vborder-32-09.prg,screenshot,10000000,vicii-pal
+../VICII/border/,vborder-33-08.prg,screenshot,10000000,vicii-pal
+../VICII/border/,vborder-33-09.prg,screenshot,10000000,vicii-pal
 ../VICII/border/,vborder2.prg,interactive,0,vicii-pal
+../VICII/border/,vborder2-21.prg,screenshot,10000000,vicii-pal
+../VICII/border/,vborder2-22.prg,screenshot,10000000,vicii-pal
+../VICII/border/,vborder2-35.prg,screenshot,10000000,vicii-pal
+../VICII/border/,vborder2-36.prg,screenshot,10000000,vicii-pal
+../VICII/border/,vborder2-63.prg,screenshot,10000000,vicii-pal
+../VICII/border/,vborder2-64.prg,screenshot,10000000,vicii-pal
 ../VICII/border/,vborder_ntsc.prg,interactive,0,vicii-ntsc
 ../VICII/border/,vborder2_ntsc.prg,interactive,0,vicii-ntsc
 ../VICII/colorram/,test.prg,exitcode,100000000
