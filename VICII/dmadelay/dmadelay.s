@@ -1,4 +1,12 @@
 
+!if (DEBUG = 0) {
+DEBUGCOLOR0=$d020
+DEBUGCOLOR1=$d021
+} else {
+DEBUGCOLOR0=$dbff
+DEBUGCOLOR1=$dbff
+}
+
 scrptr = $02
 
 *= $0801
@@ -80,18 +88,39 @@ scrptr = $02
 
 ;-------------------------------------------------------------------------------
         ldx #0
+.lp1
+        lda #$20
+        sta $0400,x
+        sta $0500,x
+        sta $0600,x
+        sta $0700,x
+        lda #15
+        sta $d800,x
+        sta $d900,x
+        sta $da00,x
+        sta $db00,x
+        inx
+        bne .lp1
+
+        ldx #0
 .lp
         txa
         and #$0f
         tay
         lda hextab,y
         sta $0400,x
-        lda #$20
-        sta $0400+80,x
-        lda #$0e
+        sta $0400+(10*40),x
+        sta $0400+(15*40),x
+        txa
         sta $d800,x
+        sta $d800+(10*40),x
+        sta $d800+(15*40),x
+        lda screendata,x
+        sta $0400+(3*40),x
+        lda screendata2,x
+        sta $0400+(5*40),x
         lda #$01
-        sta $d800+80,x
+        sta $d800+(3*40),x
         inx
         cpx #80
         bne .lp
@@ -162,14 +191,19 @@ scrptr = $02
 .sk2
 
 .skEND
-        lda #>$0478
+        lda #>($0400+(3*40))
         sta scrptr+1
-        lda #<$0478
+        lda #<($0400+(3*40))
         sta scrptr+0
 
         lda .xStartOffset
         jsr hexout
         
+        lda #>($0400+(4*40))
+        sta scrptr+1
+        lda #<($0400+(4*40))
+        sta scrptr+0
+
         lda .xPosOffset
         jsr hexout
 
@@ -216,6 +250,11 @@ hexout:
 hextab:
         !by $30, $31, $32, $33, $34, $35, $36, $37, $38, $39
         !by $01, $02, $03, $04, $05, $06
+
+screendata:
+             ;1234567890123456789012345678901234567890
+        !scr ".. (1-2) delay before d011 init         "
+        !scr ".. (a-s) delay before badline forcing   "
 
 ;-------------------------------------------------------------------------------
 
@@ -330,8 +369,8 @@ IrqTopOfScreen
         }
 
         ; Show the raster position is stable and varies as a function of x offset
-        inc $d020
-        dec $d020
+        inc DEBUGCOLOR0
+        dec DEBUGCOLOR0
 
         ; Do the HSP by tweaking the $d011 register at the correct time
         !if (VSPSEQ = 1) {
@@ -363,8 +402,8 @@ IrqTopOfScreen
         ; the timing is stable here again!
         !for ii, 15 {
         !for i, 7 {
-        sty $d021
-        stx $d021
+        sty DEBUGCOLOR1
+        stx DEBUGCOLOR1
         }
         nop
         nop
@@ -380,7 +419,12 @@ IrqTopOfScreen
         sty $d012
         lda #1
         sta $d019                          ; Ack Raster interupt
-
+        
+        dec framecount
+        bne +
+        lda #0
+        sta $d7ff
++
         ; Exit the IRQ
         pla
         tay
@@ -390,4 +434,5 @@ IrqTopOfScreen
 .initIRQ
 .initNMI
         rti 
- 
+
+framecount: !byte 5
