@@ -633,8 +633,29 @@
 ../VICII/dentest/,denrsel55_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: check tests on NTSCOLD
 ../VICII/dmadelay/,test1.prg,interactive,0
+../VICII/dmadelay/,test1-2a-03.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test1-2a-04.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test1-2a-10.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test1-2a-11.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test1-2a-16.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test1-2a-17.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test1-2a-18.prg,screenshot,10000000,vicii-pal
 ../VICII/dmadelay/,test2.prg,interactive,0
+../VICII/dmadelay/,test2-28-05.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test2-28-06.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test2-28-11.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test2-28-12.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test2-28-16.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test2-28-17.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test2-28-18.prg,screenshot,10000000,vicii-pal
 ../VICII/dmadelay/,test3.prg,interactive,0
+../VICII/dmadelay/,test3-28-07.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test3-28-08.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test3-28-13.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test3-28-14.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test3-28-18.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test3-28-19.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test3-28-1a.prg,screenshot,10000000,vicii-pal
 #FIXME: doesnt work in emu, possibly unstable on real hw
 ../VICII/dmadelay/,test4.prg,interactive,0
 ../VICII/fldscroll/,fldscroll.prg,interactive,0,vicii-pal
