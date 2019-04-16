@@ -1,4 +1,13 @@
 
+;NUMLINES=$2a ; 42
+;XPOS=0
+
+!if DEBUG = 1 {
+DEBUGCOL1 = $d021
+} else {
+DEBUGCOL1 = $dbff
+}
+
 *=$0801
 basic:
 ; BASIC stub: "1 SYS 2061"
@@ -12,12 +21,25 @@ init:
 lp:
                 lda #1
                 sta $d800,x
+                sta $d900,x
+                sta $da00,x
+                sta $db00,x
                 lda #$20
                 sta $0400,x
+                sta $0500,x
+                sta $0600,x
+                sta $0700,x
                 inx
                 bne lp
-
-                lda #$2a ; 36
+                
+                ldx #39
+lp2:
+                lda screendata,x
+                sta $0400,x
+                dex
+                bpl lp2
+                
+                lda #NUMLINES
                 sta numlines
 
                 LDX     #$2E
@@ -54,25 +76,37 @@ sprptrtab:	!byte $11
 		!byte $11
 		!byte $11
 
-vicregtab:	!byte 0
+XPOS0=XPOS
+XPOS1=XPOS+$40
+XPOS2=XPOS+$80
+XPOS3=XPOS+$C0
+XPOS4=XPOS+$100
+XPOS5=XPOS+$140
+XPOS6=XPOS+$180
+XPOS7=XPOS+$1c0
+
+XPOSMSB=((XPOS7&$100)>>1)|((XPOS6&$100)>>2)|((XPOS5&$100)>>3)|((XPOS4&$100)>>4)|((XPOS3&$100)>>5)|((XPOS2&$100)>>6)|((XPOS1&$100)>>7)|((XPOS0&$100)>>8)
+		
+vicregtab:	
+        !byte <(XPOS0)
 		!byte $38
-		!byte $40
+		!byte <(XPOS1)
 		!byte $38
-		!byte $80
+		!byte <(XPOS2)
 		!byte $38
-		!byte $C0
+		!byte <(XPOS3)
 		!byte $38
 		
-		!byte 0
+		!byte <(XPOS4)
 		!byte $38
-		!byte $40
+		!byte <(XPOS5)
 		!byte $38
-		!byte $80
+		!byte <(XPOS6)
 		!byte $38
-		!byte $C0
+		!byte <(XPOS7)
 		!byte $38
 
-		!byte $F0
+		!byte XPOSMSB
 		!byte $1B
 		!byte	0
 		!byte	0
@@ -148,13 +182,13 @@ branchloc:
 		BIT	$EA
 
                 ; delay
-		INC	$D021
+		INC	DEBUGCOL1
 		LDX	#$EC
 loc_204A:
 		DEX
 		BNE	loc_204A
 
-		DEC	$D021
+		DEC	DEBUGCOL1
 		NOP
 
 numlines = * + 1
@@ -169,8 +203,8 @@ loc_2053:
 		ORA	#$18
 		STA	$D011
 		BIT	$EA
-		INC	$D021
-		DEC	$D021
+		INC	DEBUGCOL1
+		DEC	DEBUGCOL1
 		DEX
 		BNE	loc_2053
 
@@ -310,7 +344,7 @@ printsprpos:
 		AND	#$F
 		TAX
 		LDA	hextab,X
-		STA	$405
+		STA	$402+20
 		LDA	numlines
 		LSR
 		LSR
@@ -318,11 +352,18 @@ printsprpos:
 		LSR
 		TAX
 		LDA	hextab,X
-		STA	$404
+		STA	$401+20
 
+		dec framecount
+		bne +
+		lda #0
+		sta $d7ff
++
+		
 		JMP	mainloop
 
-hextab:		!byte $30
+hextab:		
+        !byte $30
 		!byte $31
 		!byte $32
 		!byte $33
@@ -338,3 +379,8 @@ hextab:		!byte $30
 		!byte 4
 		!byte 5
 		!byte 6
+
+framecount: !byte 5
+
+screendata:
+    !scr "... (",31,"-1)            .. (ctrl-2)        "
