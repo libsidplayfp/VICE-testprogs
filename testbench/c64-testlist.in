@@ -812,8 +812,19 @@
 #../VICII/spritecollisions/,sprite-gfx-collision-cycle_ntscold.prg,exitcode,10000000,vicii-ntscold
 #../VICII/spritecollisions/,sprite-sprite-collision-cycle_ntscold.prg,exitcode,10000000,vicii-ntscold
 #../VICII/spritecollisions/,sprite-sprite_ntscold.prg,exitcode,10000000,vicii-ntscold
-../VICII/spritecrunch/,spritecrunch.prg,interactive,0
-../VICII/spritecrunch/,spritecrunch2.prg,interactive,0
+../VICII/spritecrunch/,spritecrunch.prg,interactive,0,vicii-pal
+../VICII/spritecrunch/,spritecrunch-3b-00.prg,screenshot,10000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch-3c-00.prg,screenshot,10000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch-3d-00.prg,screenshot,10000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2.prg,interactive,0,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-07.prg,screenshot,10000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-08.prg,screenshot,10000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-09.prg,screenshot,10000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-25.prg,screenshot,10000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-26.prg,screenshot,10000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-27.prg,screenshot,10000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-28.prg,screenshot,10000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-29.prg,screenshot,10000000,vicii-pal
 #FIXME: check on NTSCOLD and make reference screenshots
 ../VICII/spritedma/,d017-54.prg,screenshot,10000000,vicii-pal
 ../VICII/spritedma/,d017-57.prg,screenshot,10000000,vicii-pal

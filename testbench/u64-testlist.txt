@@ -594,8 +594,8 @@
 ../VICII/spritecollisions/,sprite-sprite-collision-cycle.prg,exitcode,10000000,vicii-pal
 ../VICII/spritecollisions/,sprite-sprite.prg,exitcode,10000000,vicii-pal
 #FIXME: tests are broken on NTSC
-../VICII/spritecrunch/,spritecrunch.prg,interactive,0
-../VICII/spritecrunch/,spritecrunch2.prg,interactive,0
+../VICII/spritecrunch/,spritecrunch.prg,interactive,0,vicii-pal
+../VICII/spritecrunch/,spritecrunch2.prg,interactive,0,vicii-pal
 #FIXME: check on NTSCOLD and make reference screenshots
 ../VICII/spritefetchbug/,test.prg,interactive,0
 #FIXME: seems to fail randomly, hard to reproduce

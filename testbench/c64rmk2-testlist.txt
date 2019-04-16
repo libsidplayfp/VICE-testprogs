@@ -650,8 +650,8 @@
 #../VICII/spritecollisions/,sprite-gfx-collision-cycle_ntscold.prg,exitcode,10000000,vicii-ntscold
 #../VICII/spritecollisions/,sprite-sprite-collision-cycle_ntscold.prg,exitcode,10000000,vicii-ntscold
 #../VICII/spritecollisions/,sprite-sprite_ntscold.prg,exitcode,10000000,vicii-ntscold
-../VICII/spritecrunch/,spritecrunch.prg,interactive,0
-../VICII/spritecrunch/,spritecrunch2.prg,interactive,0
+../VICII/spritecrunch/,spritecrunch.prg,interactive,0,vicii-pal
+../VICII/spritecrunch/,spritecrunch2.prg,interactive,0,vicii-pal
 #FIXME: check on NTSCOLD and make reference screenshots
 ../VICII/spritefetchbug/,test.prg,interactive,0
 #FIXME: seems to fail randomly, hard to reproduce
