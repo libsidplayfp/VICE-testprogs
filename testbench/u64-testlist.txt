@@ -597,7 +597,7 @@
 ../VICII/spritecrunch/,spritecrunch.prg,interactive,0,vicii-pal
 ../VICII/spritecrunch/,spritecrunch2.prg,interactive,0,vicii-pal
 #FIXME: check on NTSCOLD and make reference screenshots
-../VICII/spritefetchbug/,test.prg,interactive,0
+../VICII/spritefetchbug/,test.prg,interactive,0,vicii-pal
 #FIXME: seems to fail randomly, hard to reproduce
 ../VICII/spritegap/,spritegap2.prg,exitcode,1000000000
 ../VICII/spritegap/,spritegap3.prg,exitcode,1000000000

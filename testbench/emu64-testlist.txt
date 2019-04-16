@@ -709,7 +709,8 @@
 ../VICII/spriteenable/,spriteenable3.prg,screenshot,10000000,vicii-pal
 ../VICII/spriteenable/,spriteenable4.prg,screenshot,10000000,vicii-pal
 ../VICII/spriteenable/,spriteenable5.prg,screenshot,10000000,vicii-pal
-../VICII/spritefetchbug/,test.prg,interactive,0
+../VICII/spritefetchbug/,test.prg,interactive,0,vicii-pal
+../VICII/spritefetchbug/,test-136-2a.prg,screenshot,10000000,vicii-pal
 #FIXME: seems to fail randomly, hard to reproduce
 ../VICII/spritegap/,spritegap2.prg,exitcode,1000000000
 ../VICII/spritegap/,spritegap3.prg,exitcode,1000000000

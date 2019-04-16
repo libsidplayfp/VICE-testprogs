@@ -759,7 +759,8 @@
 ../VICII/spriteenable/,spriteenable3_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/spriteenable/,spriteenable4_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/spriteenable/,spriteenable5_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/spritefetchbug/,test.prg,interactive,0
+../VICII/spritefetchbug/,test.prg,interactive,0,vicii-pal
+../VICII/spritefetchbug/,test-136-2a.prg,screenshot,10000000,vicii-pal
 #FIXME: seems to fail randomly, hard to reproduce
 ../VICII/spritegap/,spritegap2.prg,exitcode,1000000000
 ../VICII/spritegap/,spritegap3.prg,exitcode,1000000000
