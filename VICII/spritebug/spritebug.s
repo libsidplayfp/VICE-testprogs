@@ -2,6 +2,8 @@
 #define PAGE	.dsb	$ff - ((* - 1) & $ff), $00
 
 BORDER		=	$d020
+SPLITREG    =   $d01d
+;SPLITREG    =   $d021
 
 time		=	$02
 
@@ -17,6 +19,11 @@ entry
 		sei
 		lda	#$35
 		sta	1
+		
+		lda #6
+		sta $d021
+		lda #14
+		sta $d020
 
 		lda	#$7f
 		sta	$dc0d
@@ -31,7 +38,29 @@ loop
 		bpl	loop
 		.)
 
-		lda	#0
+		.(
+		ldx	#$00
+loop
+		lda #$20
+		sta	$0400,x
+		sta	$0500,x
+		sta	$0600,x
+		sta	$0700,x
+		lda #$01
+		sta	$d800,x
+		sta	$d900,x
+		sta	$da00,x
+		sta	$db00,x
+		inx
+		bne	loop
+		.)
+		
+		lda #$65
+		sta $0400+(1*40)+15
+		sta $0400+(2*40)+15
+		sta $0400+(3*40)+15
+
+		lda	#COUNTER
 		sta	time
 
 		lda	#$44
@@ -131,11 +160,11 @@ loop
 		lda	#$00		; 57
 		sta	$d01c		; 1
 		lda	#$04		; 5
-		sta	$d01d		; 7
+		sta	SPLITREG		; 7
 
 		lda	#$00		; 11
 		jsr	delay16		; 13
-		sta	$d01d		; 29
+		sta	SPLITREG		; 29
 
 		lda	0		; 33
 		nop			; 36
@@ -148,12 +177,35 @@ loop
 		bne	loop		; 48
 		.)
 
+#if (COUNTER = 0)
 		inc	time
+#endif
 		lda	time
 		sta	$d004
 
 		inc	BORDER
 
+		lda	time
+		pha
+		and #$0f
+		tax
+		lda hextab,x
+		sta $0401
+		pla
+		lsr
+		lsr
+		lsr
+		lsr
+		tax
+		lda hextab,x
+		sta $0400
+		
+		dec framecount
+		bne skp
+		lda #0
+		sta $d7ff
+skp:
+		
 int_savea	lda	#0
 int_savex	ldx	#0
 int_savey	ldy	#0
@@ -164,3 +216,6 @@ delay16		nop
 delay14		nop
 delay12		rts
 
+hextab: .byt "0123456789",1,2,3,4,5,6
+
+framecount: .byt 5
