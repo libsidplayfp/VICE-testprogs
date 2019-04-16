@@ -721,6 +721,9 @@
 ################################################################################
 ../VICII/sprite0move/,sprite0move.prg,interactive,0,vicii-pal
 ../VICII/spritebug/,spritebug.prg,interactive,0,vicii-pal
+../VICII/spritebug/,spritebug-104.prg,screenshot,10000000,vicii-pal
+../VICII/spritebug/,spritebug-105.prg,screenshot,10000000,vicii-pal
+../VICII/spritebug/,spritebug-106.prg,screenshot,10000000,vicii-pal
 ../VICII/spritecollisions/,sprite-gfx-collision-cycle.prg,exitcode,10000000,vicii-pal
 ../VICII/spritecollisions/,sprite-sprite-collision-cycle.prg,exitcode,10000000,vicii-pal
 ../VICII/spritecollisions/,sprite-sprite.prg,exitcode,10000000,vicii-pal

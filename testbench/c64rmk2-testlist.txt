@@ -659,15 +659,15 @@
 ../VICII/spritegap/,spritegap3.prg,exitcode,1000000000
 ../VICII/spritemcbase/,spritemcbase.prg,interactive,0
 #FIXME: port tests to NTSC and make reference screenshots
-../VICII/spritesteal/,spritesteal_ntscold.prg,exitcode,100000000,vicii-ntscold
-../VICII/spritesteal/,spritesteal_ntsc.prg,exitcode,100000000,vicii-ntsc
 ../VICII/spritesteal/,spritesteal.prg,exitcode,100000000,vicii-pal
+../VICII/spritesteal/,spritesteal_ntsc.prg,exitcode,100000000,vicii-ntsc
+../VICII/spritesteal/,spritesteal_ntscold.prg,exitcode,100000000,vicii-ntscold
 ###(this is not a test)
 #../VICII/spritex/,demusinterruptus-emucheck.prg
 #FIXME: check on NTSCOLD
-../VICII/spritex/,testsuite_ntscold.prg,exitcode,10000000,vicii-ntscold
-../VICII/spritex/,testsuite_ntsc.prg,exitcode,10000000,vicii-ntsc
 ../VICII/spritex/,testsuite.prg,exitcode,10000000,vicii-pal
+../VICII/spritex/,testsuite_ntsc.prg,exitcode,10000000,vicii-ntsc
+../VICII/spritex/,testsuite_ntscold.prg,exitcode,10000000,vicii-ntscold
 #FIXME: port test to NTSC
 ../VICII/spritey/,spritey.prg,exitcode,100000000,vicii-pal
 ################################################################################
