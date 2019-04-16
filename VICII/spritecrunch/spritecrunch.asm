@@ -21,6 +21,16 @@
 
 .var scrptr = $02
 
+//.var DEBUG = $01
+//.var DELAY = $3c
+//.var OFFSET = $00
+.var DEBUG = [ cmdLineVars.get ("debug") .asNumber () ]
+.var DELAY = [ cmdLineVars.get ("delay") .asNumber () ]
+.var OFFSET = [ cmdLineVars.get ("offset") .asNumber () ]
+
+.var DBGCOLOR0 = cmdLineVars.get("debug") == "0" ? $dbff : $d020
+.var DBGCOLOR1 = cmdLineVars.get("debug") == "0" ? $dbff : $d021
+
 .pseudocommand nop x {
 	:ensureImmediateArgument(x)
 	.for (var i=0; i<x.getValue(); i++) nop
@@ -146,7 +156,7 @@ Stable_IRQ:
 
 switch:		
         // start line
-        inc $d020
+        inc DBGCOLOR0
 
         // adjustable delay, max 2 rasterlines (63*2=126 cycles)
         lda #126 - 1
@@ -155,7 +165,7 @@ switch:
         jsr adjdelay
 
         // perform the sprite crunch trick
-        dec $d021
+        dec DBGCOLOR1
 
         // the trick happens exactly here
 
@@ -169,7 +179,7 @@ delay2:
         lda #$ff
         sta $d017
 
-        inc $d021
+        inc DBGCOLOR1
 
         //-------------------------------------------
 
@@ -189,7 +199,13 @@ delay2:
         lda #>First_IRQ
         sta $ffff
 
-        dec $d020
+        dec DBGCOLOR0
+
+        dec framecounter
+        bne skp
+        lda #0
+        sta $d7ff
+skp:
 
         inc $d019
 
@@ -199,6 +215,8 @@ delay2:
         tax
         pla
         rti
+        
+framecounter: .byte 5
 
 First_IRQ:
         pha
@@ -213,7 +231,7 @@ First_IRQ:
         sbc $dc04
         jsr adjdelay
 
-        inc $d020
+        inc DBGCOLOR0
 
         // first line of the text screen
         //lda #50
@@ -227,7 +245,7 @@ First_IRQ:
         sta spr7Y
         sta spr8Y
 
-        dec $d020
+        dec DBGCOLOR0
         
         lda #startLine - 1
         cmp $d012
@@ -242,7 +260,7 @@ First_IRQ:
         lda #>Stable_IRQ
         sta $ffff
 
-        dec $d020
+        dec DBGCOLOR0
 
         inc $d019
 
@@ -294,6 +312,29 @@ setup:
         sta spr7Y
         sta spr8Y
 
+        // clear screen
+        ldx #0
+!:
+        lda #32
+        sta $0400,x
+        sta $0500,x
+        sta $0600,x
+        sta $0700,x
+        lda #1
+        sta $d800,x
+        sta $d900,x
+        sta $da00,x
+        sta $db00,x
+        inx
+        bne !-
+
+        ldx #79
+!:      
+        lda screendata,x
+        sta $0428,x
+        dex
+        bne !-
+
         lda #sprite/64
         sta $07f8
         sta $07f9
@@ -309,14 +350,6 @@ setup:
         lda #0
         sta $d01b
 
-        // clear screen
-        ldx #0
-        lda #32
-!:      sta $0400,x
-        sta $0500,x
-        sta $0500,x
-        inx
-        bne !-
         rts
 
 vblank:		
@@ -347,8 +380,8 @@ sm2:    bvc *
         rts
 
 topIRQDone: .by 0
-xStartOffset: .by $3c
-xStopOffset: .by 0
+xStartOffset: .by DELAY
+xStopOffset: .by OFFSET
 
 chkkeys:
         // Wait for the top IRQ to be triggered
@@ -417,13 +450,18 @@ o22:
 sk2:
 
 skEND:
-        lda #>[$0478+30]
+        lda #>[$0428]
         sta scrptr+1
-        lda #<[$0478+30]
+        lda #<[$0428]
         sta scrptr+0
 
         lda xStartOffset
         jsr hexout
+
+        lda #>[$0450]
+        sta scrptr+1
+        lda #<[$0450]
+        sta scrptr+0
 
         lda xStopOffset
         jsr hexout
@@ -459,6 +497,11 @@ sk:
 hextab:
         .by $30, $31, $32, $33, $34, $35, $36, $37, $38, $39
         .by $01, $02, $03, $04, $05, $06
+
+screendata:
+             //1234567890123456789012345678901234567890
+        .text ".. (1-2)                                "
+        .text ".. (a-s)                                "
 
         .pc = $2000	"sprite"
 

@@ -24,6 +24,14 @@
 .var delay2a = $fa
 .var delay2b = $fb
 
+//.var DEBUG = $01
+//.var DELAY = $08
+.var DEBUG = [ cmdLineVars.get ("debug") .asNumber () ]
+.var DELAY = [ cmdLineVars.get ("delay") .asNumber () ]
+
+.var DBGCOLOR0 = cmdLineVars.get("debug") == "0" ? $dbff : $d020
+.var DBGCOLOR1 = cmdLineVars.get("debug") == "0" ? $dbff : $d021
+
 .pseudocommand nop x {
 	:ensureImmediateArgument(x)
 	.for (var i=0; i<x.getValue(); i++) nop
@@ -148,7 +156,7 @@ Stable_IRQ:
 		
 switch:		
         // start line
-        inc $d020
+        inc DBGCOLOR0
 
         // adjustable delay, max 2 rasterlines (63*2=126 cycles)
         lda #126 - 1
@@ -157,7 +165,7 @@ switch:
         jsr adjdelay
 
 		// perform the sprite crunch trick 
-        dec $d021
+        dec DBGCOLOR1
 
         ldx #0
         ldy #$ff
@@ -173,7 +181,7 @@ switch:
 
         sty $d017
         :pause #36 - 0
-        inc $d021
+        inc DBGCOLOR1
 
     }
 
@@ -189,7 +197,7 @@ switch:
 
         sty $d017
         :pause #36 - 1
-        inc $d021
+        inc DBGCOLOR1
 
     }
 
@@ -205,7 +213,7 @@ switch:
 
         sty $d017
         :pause #36 - 2
-        inc $d021
+        inc DBGCOLOR1
 
     }
 
@@ -221,7 +229,7 @@ switch:
 
         sty $d017
         :pause #36 - 3
-        inc $d021
+        inc DBGCOLOR1
 
     }
 
@@ -237,7 +245,7 @@ switch:
 
         sty $d017
         :pause #36 - 4
-        inc $d021
+        inc DBGCOLOR1
 
     }
 
@@ -253,7 +261,7 @@ switch:
 
         sty $d017
         :pause #36 - 5
-        inc $d021
+        inc DBGCOLOR1
 
     }
 
@@ -261,8 +269,8 @@ delay2:
         lda #0
 
         lda #0
-        sta $d021
-        sta $d020
+        sta DBGCOLOR1
+        sta DBGCOLOR0
 
         sty $d017
 
@@ -284,7 +292,13 @@ delay2:
         lda #>First_IRQ
         sta $ffff
 		
-        dec $d020
+        dec DBGCOLOR0
+
+        dec framecounter
+        bne skp
+        lda #0
+        sta $d7ff
+skp:
 
         inc $d019
 
@@ -308,7 +322,7 @@ First_IRQ:
         sbc $dc04
         jsr adjdelay
 
-        inc $d020
+        inc DBGCOLOR0
 
         // first line of the text screen
         //lda #50
@@ -322,7 +336,7 @@ First_IRQ:
         sta spr7Y
         sta spr8Y
 
-        dec $d020
+        dec DBGCOLOR0
         
         lda #startLine - 1
         cmp $d012
@@ -337,7 +351,7 @@ First_IRQ:
         lda #>Stable_IRQ
         sta $ffff
 
-        dec $d020
+        dec DBGCOLOR0
 
         inc $d019
 
@@ -348,6 +362,8 @@ First_IRQ:
         pla
         rti
 
+framecounter: .byte 5
+        
         .align $100
 
 // ---------------------------------------------------------
@@ -397,6 +413,29 @@ setup:
         sta spr7Y
         sta spr8Y
 
+        // clear screen
+        ldx #0
+!:      
+        lda #32
+        sta $0400,x
+        sta $0500,x
+        sta $0600,x
+        sta $0700,x
+        lda #01
+        sta $d800,x
+        sta $d900,x
+        sta $da00,x
+        sta $db00,x
+        inx
+        bne !-
+
+        ldx #39
+!:      
+        lda screendata,x
+        sta $0428,x
+        dex
+        bne !-
+        
         lda #sprite/64
         sta $07f8
         sta $07f9
@@ -412,15 +451,6 @@ setup:
         sta $d015
         lda #0
         sta $d01b
-
-        // clear screen
-        ldx #0
-        lda #32
-!:      sta $0400,x
-        sta $0500,x
-        sta $0500,x
-        inx
-        bne !-
 
         rts
 
@@ -453,7 +483,7 @@ sm2:    bvc *
         rts
 
 topIRQDone: .by 0
-xStartOffset: .by $08
+xStartOffset: .by DELAY
 xStopOffset: .by 0
 
 chkkeys:
@@ -494,9 +524,9 @@ o22:
 sk2:
 
 skEND:
-        lda #>[$0478+30]
+        lda #>[$0428]
         sta scrptr+1
-        lda #<[$0478+30]
+        lda #<[$0428]
         sta scrptr+0
 
         lda xStartOffset
@@ -533,6 +563,10 @@ hextab:
         .by $30, $31, $32, $33, $34, $35, $36, $37, $38, $39
         .by $01, $02, $03, $04, $05, $06
 
+screendata:
+             //1234567890123456789012345678901234567890
+        .text ".. (1-2)                                "
+        
         .pc = $2000	"sprite"
 
 sprite:	
