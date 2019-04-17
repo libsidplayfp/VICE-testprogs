@@ -537,7 +537,7 @@ resultswiki: maketable
 resultscham: maketable
 	./maketable --html --list c64-testlist.in \
 		--results results/x64sc-r35968-result.txt "x64sc r35968" \
-		--results results/chameleon-9h-result.txt "TC64 9h" \
+		--results results/chameleon-9h-result.txt "TC64 9h (standalone)" \
 		--results results/chameleon-head-cartridge-result.txt "TC64 head (cartridge)" \
 		--results results/chameleon-head-standalone-result.txt "TC64 head (standalone)" \
 		\

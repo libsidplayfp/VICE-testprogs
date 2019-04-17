@@ -697,7 +697,7 @@
 ../VICII/dentest/,denrsel-s1_ntscold.prg,screenshot,10000000,vicii-ntscold
 ../VICII/dentest/,denrsel-s2_ntscold.prg,screenshot,10000000,vicii-ntscold
 ../VICII/dentest/,denrsel55_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/dmadelay/,test1.prg,interactive,0
+../VICII/dmadelay/,test1.prg,interactive,0,vicii-pal
 ../VICII/dmadelay/,test1-2a-03.prg,screenshot,10000000,vicii-pal
 ../VICII/dmadelay/,test1-2a-04.prg,screenshot,10000000,vicii-pal
 ../VICII/dmadelay/,test1-2a-10.prg,screenshot,10000000,vicii-pal
@@ -705,7 +705,7 @@
 ../VICII/dmadelay/,test1-2a-16.prg,screenshot,10000000,vicii-pal
 ../VICII/dmadelay/,test1-2a-17.prg,screenshot,10000000,vicii-pal
 ../VICII/dmadelay/,test1-2a-18.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test2.prg,interactive,0
+../VICII/dmadelay/,test2.prg,interactive,0,vicii-pal
 ../VICII/dmadelay/,test2-28-05.prg,screenshot,10000000,vicii-pal
 ../VICII/dmadelay/,test2-28-06.prg,screenshot,10000000,vicii-pal
 ../VICII/dmadelay/,test2-28-11.prg,screenshot,10000000,vicii-pal
@@ -713,7 +713,7 @@
 ../VICII/dmadelay/,test2-28-16.prg,screenshot,10000000,vicii-pal
 ../VICII/dmadelay/,test2-28-17.prg,screenshot,10000000,vicii-pal
 ../VICII/dmadelay/,test2-28-18.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test3.prg,interactive,0
+../VICII/dmadelay/,test3.prg,interactive,0,vicii-pal
 ../VICII/dmadelay/,test3-28-07.prg,screenshot,10000000,vicii-pal
 ../VICII/dmadelay/,test3-28-08.prg,screenshot,10000000,vicii-pal
 ../VICII/dmadelay/,test3-28-13.prg,screenshot,10000000,vicii-pal
@@ -722,7 +722,7 @@
 ../VICII/dmadelay/,test3-28-19.prg,screenshot,10000000,vicii-pal
 ../VICII/dmadelay/,test3-28-1a.prg,screenshot,10000000,vicii-pal
 #FIXME: doesnt work in emu, possibly unstable on real hw
-../VICII/dmadelay/,test4.prg,interactive,0
+../VICII/dmadelay/,test4.prg,interactive,0,vicii-pal
 ../VICII/fldscroll/,fldscroll.prg,interactive,0,vicii-pal
 ../VICII/fldscroll/,fldscroll-20-60.prg,screenshot,10000000,vicii-pal
 ../VICII/fldscroll/,fldscroll-21-60.prg,screenshot,10000000,vicii-pal
@@ -791,7 +791,7 @@
 ../VICII/videomode/,videomode-x_ntscold.prg,screenshot,10000000,vicii-ntscold
 ../VICII/videomode/,videomode-y_ntscold.prg,screenshot,10000000,vicii-ntscold
 ../VICII/videomode/,videomode-z_ntscold.prg,screenshot,10000000,vicii-ntscold
-../VICII/vspbug/,lft-safe-vsp.prg,interactive,0
+../VICII/vspbug/,lft-safe-vsp.prg,interactive,0,vicii-pal
 ################################################################################
 # Sprites
 # ../VICII/sprite runtime: 5min 12sec (chameleon)
