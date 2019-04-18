@@ -735,6 +735,7 @@
 ../VICII/spritesplit/,ss-unexp-exp-mc.prg,screenshot,10000000,vicii-pal
 ../VICII/spritesplit/,ss-xpos.prg,screenshot,10000000,vicii-pal
 ../VICII/spritesteal/,spritesteal.prg,exitcode,100000000,vicii-pal
+../VICII/spritevssprite/,spritevssprite.prg,exitcode,10000000,vicii-pal
 ###(this is not a test)
 #../VICII/spritex/,demusinterruptus-emucheck.prg
 #FIXME: check on NTSCOLD
