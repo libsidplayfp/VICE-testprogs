@@ -365,10 +365,13 @@ testz64kvic20:
 
 ##############################################################################
 
-prereq-chameleon: chameleon-helper.prg chameleon-crtoff.prg
+prereq-chameleon: chameleon-helper.prg chameleon-crtoff.prg chameleon-videomode.prg
 
 chameleon-helper.prg: chameleon-helper.asm
 	acme -f cbm -o chameleon-helper.prg chameleon-helper.asm
+
+chameleon-videomode.prg: chameleon-videomode.asm
+	acme -f cbm -o chameleon-videomode.prg chameleon-videomode.asm
 
 chameleon-crtoff.prg: chameleon-crtoff.asm
 	acme -f plain -o chameleon-crtoff.prg chameleon-crtoff.asm
@@ -404,8 +407,8 @@ results0: maketable
 		--results results/z64kc64-20181202-result.txt "z64k (c64) 20181202" \
 		--results results/z64kc128c64-20181202-result.txt "z64k (c128/c64) 20181202" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/chameleon-9h-result.txt "TC64 9h" \
-		--results results/u64-10c-result.txt "U64 1.0c"
+		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
+		--results results/u64-118-result.txt "U64 1.18"
 
 	./maketable --list vic20-testlist.in \
 		--results results/xvic-r35990-result.txt "xvic r35990" \
@@ -444,8 +447,8 @@ results: maketable
 		--results results/z64kc64-20181202-result.txt "z64k (c64) 20181202" \
 		--results results/z64kc128c64-20181202-result.txt "z64k (c128/c64) 20181202" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/chameleon-9h-result.txt "TC64 9h" \
-		--results results/u64-10c-result.txt "U64 1.0c" \
+		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
+		--results results/u64-118-result.txt "U64 1.18" \
 		\
 		> results/c64.html
 		
@@ -502,8 +505,8 @@ resultswiki: maketable
 		--results results/z64kc64-20181202-result.txt "z64k (c64) 20181202" \
 		--results results/z64kc128c64-20181202-result.txt "z64k (c128/c64) 20181202" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/chameleon-9h-result.txt "TC64 9h" \
-		--results results/u64-10c-result.txt "U64 1.0c"
+		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
+		--results results/u64-118-result.txt "U64 1.18"
 	@echo "=== VIC20 ==="
 	./maketable --wiki --list vic20-testlist.in \
 		--results results/xvic-r35990-result.txt "xvic r35990" \
@@ -538,7 +541,11 @@ resultscham: maketable
 	./maketable --html --list c64-testlist.in \
 		--results results/x64sc-r35968-result.txt "x64sc r35968" \
 		--results results/chameleon-9h-result.txt "TC64 9h (standalone)" \
-		--results results/chameleon-head-cartridge-result.txt "TC64 head (cartridge)" \
-		--results results/chameleon-head-standalone-result.txt "TC64 head (standalone)" \
+		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
+		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		\
 		> results/chameleon.html
+#
+#		--results results/chameleon-head-cartridge-result.txt "TC64 head (cartridge)" \
+#		--results results/chameleon-head-standalone-result.txt "TC64 head (standalone)" \
+#		

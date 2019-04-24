@@ -33,6 +33,8 @@ function chameleon_check_environment
 
 function chameleon_reset
 {
+#    echo "chameleon_reset"
+
     # clear the "ready"
     echo -ne "XXXXXX" > $RDUMMY
     chacocmd --addr 1224 --writemem $RDUMMY > /dev/null
@@ -192,11 +194,66 @@ function chameleon_make_helper_options
     chacocmd --addr 0x400 --writemem $RDUMMY > /dev/null
 }
 
+function chameleon_setup_videomode
+{
+#    echo "setup_videomode":"${videotype}":"$lastprogvideotype":"$testprogvideotype":
+
+    if [ x"$testprogvideotype"x = x-1x ]
+    then
+        # return if testprog has no mode and no mode was set
+        if [ x"${videotype}"x == xx ]; then
+            if [ $verbose == "1" ]; then
+                echo -ne "[videomode: not set] - "
+            fi
+            return
+        fi
+        nextprogvideotype="${videotype}"
+    else
+        nextprogvideotype="$testprogvideotype"
+    fi
+    
+    if [ $verbose == "1" ]; then
+        echo -ne "[videomode: "$nextprogvideotype"] - "
+    fi
+
+    # return if new mode is the same as the old mode
+    if [ x"$lastprogvideotype"x == x"$nextprogvideotype"x ]; then
+        return
+    fi
+    
+    if [ x"$nextprogvideotype"x == x"PAL"x ]; then
+        echo -ne "\x20" > $RDUMMY
+    fi
+    if [ x"$nextprogvideotype"x == x"NTSC"x ]; then
+        echo -ne "\x01" > $RDUMMY
+    fi
+    lastprogvideotype=$nextprogvideotype
+    
+    chacocmd --addr 0x400 --writemem $RDUMMY > /dev/null    
+    
+    # run helper program
+    chameleon_clear_returncode
+    chcodenet -x chameleon-videomode.prg > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
+    chameleon_poll_returncode 5
+
+    chameleon_reset
+    
+#    echo "setup_videomode done"
+}
+
 ################################################################################
 
 # called once before any tests run
 function chameleon_prepare
 {
+    lastprogvideotype=-1
+    if [ x"${videotype}"x == xx ]; then
+        testprogvideotype=-1
+    else
+        testprogvideotype="${videotype}"
+    fi
+
     echo -ne "preparing chameleon."
     # fill 0x00300000-0x003a8000 to prevent "killer tracks"
 #    dd if=/dev/zero of=$RDUMMY bs=64k count=58 > /dev/null 2> /dev/null 
@@ -210,6 +267,8 @@ function chameleon_prepare
     sleep 3
     echo -ne "."
     chameleon_reset
+    echo -ne "."
+    chameleon_setup_videomode
     echo "ok"
 }
 
@@ -365,6 +424,8 @@ function chameleon_run_screenshot
     # reset
     chameleon_reset
 
+    chameleon_setup_videomode
+    
     chameleon_make_helper_options 0
     if [ "$?" != "0" ]; then exit -1; fi
 
@@ -443,6 +504,8 @@ function chameleon_run_exitcode
 #        echo "no program given"
         # reset
         chameleon_reset
+        
+        chameleon_setup_videomode
 
         chameleon_make_helper_options 1
         if [ "$?" != "0" ]; then exit -1; fi
@@ -473,6 +536,8 @@ function chameleon_run_exitcode
         # reset
         chameleon_reset
 
+        chameleon_setup_videomode
+        
         chameleon_make_helper_options 0
         if [ "$?" != "0" ]; then exit -1; fi
 

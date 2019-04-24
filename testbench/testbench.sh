@@ -143,16 +143,30 @@ function getscreenshotname
     refscreenshotname=""
     screenshot_videosubtype=""
     if [ "$videosubtype" != "" ] ; then
+        # if a subtype was given on cmdline, use that
         screenshot_videosubtype=$videosubtype
     else
+        # if subtype was not given on cmdline, use the default value for this emu
         if [ "$emu_default_videosubtype" != "" ] ; then
+            # if the default is a specific type, use that for the screenshot
             screenshot_videosubtype=$emu_default_videosubtype
         fi
     fi
 
-    if [ "$testprogvideotype" == "NTSC" ] && [ "$screenshot_videosubtype" == "8565" ]
-    then
-        screenshot_videosubtype="8562"
+    # if the testprog is NTSC, and either the default or the cmdline is a PAL chip, change
+    # the screenshot type to the respective NTSC chip
+    if [ "$testprogvideotype" == "NTSC" ]; then
+        if [ "$screenshot_videosubtype" == "8565" ]; then
+            screenshot_videosubtype="8562"
+        else
+            if [ "$screenshot_videosubtype" == "8565early" ]; then
+                screenshot_videosubtype="8562early"
+            else
+                if [ "$screenshot_videosubtype" == "8565late" ]; then
+                    screenshot_videosubtype="8562late"
+                fi
+            fi
+        fi
     fi
 
     if [ "$screenshot_videosubtype" != "" ] ; then
@@ -161,7 +175,7 @@ function getscreenshotname
             refscreenshotname="$1"/references/"$2"-"$screenshot_videosubtype".png
             return 0
         fi
-        # if the exact subtype could not be found, try more general one
+        # if the exact subtype could not be found, try more general one (PAL)
         if [ "$screenshot_videosubtype" == "8565early" ] || [ "$screenshot_videosubtype" == "8565late" ]; then
             if [ -f "$1"/references/"$2"-"8565".png ]
             then
@@ -169,7 +183,7 @@ function getscreenshotname
                 return 0
             fi
         fi
-        # if the exact subtype could not be found, try more general one
+        # if the exact subtype could not be found, try more general one (NTSC)
         if [ "$screenshot_videosubtype" == "8562early" ] || [ "$screenshot_videosubtype" == "8562late" ]; then
             if [ -f "$1"/references/"$2"-"8562".png ]
             then
@@ -551,10 +565,12 @@ function showhelp
     echo "  --6569       target VICII type is 6569 (PAL)"
     echo "  --6567       target VICII type is 6567 (NTSC)"
     echo "  --8562       target VICII type is 8562 (NTSC, grey dot)"
+    echo "  --8562early  target VICII type is 8562 (NTSC, new color instead of grey dot)"
+    echo "  --8562late   target VICII type is 8562 (NTSC, old color instead of grey dot)"
     echo "  --8565       target VICII type is 8565 (PAL, grey dot)"
     echo "  --8565early  target VICII type is 8565 (PAL, new color instead of grey dot)"
     echo "  --8565late   target VICII type is 8565 (PAL, old color instead of grey dot)"
-    echo "  --8k         skip tests that do not work with 8k RAM expansion"
+    echo "  --8k         skip tests that do not work with 8k RAM expansion (VIC20)"
 }
 
 function checkparams
@@ -615,6 +631,12 @@ do
             ;;
         --8562) # "new" NTSC VICII (grey dot)
                 videosubtype="8562"
+            ;;
+        --8562early) # "new" NTSC VICII (no grey dot, new color instead)
+                videosubtype="8562early"
+            ;;
+        --8562late) # "new" NTSC VICII (no grey dot, old color instead)
+                videosubtype="8562late"
             ;;
         --8k) # 8k RAM expansion
                 memoryexpansion="8K"

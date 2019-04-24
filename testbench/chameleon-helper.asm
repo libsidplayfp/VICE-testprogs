@@ -105,8 +105,6 @@ oldcia:
         stx $d0a2
         sta $d0a3
 
-        lda #0
-        sta $d7ff
         ; try to somewhat reset the TOD
         ldx #0
         ; cia 1 tod
@@ -136,6 +134,9 @@ oldcia:
         lda $dd0d
         lda $df00 ; REU
 
+        lda #0      ; return code = 0
+        sta $d7ff
+        
         dec $d020
         cli
         rts
