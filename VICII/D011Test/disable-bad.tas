@@ -1,4 +1,13 @@
-  processor 6502
+
+DEBUG=0
+
+!if DEBUG=1 {
+DBGCOLOR0=$d020
+DBGCOLOR1=$d021
+} else {
+DBGCOLOR0=$dbff
+DBGCOLOR1=$dbff
+}
 
 ; Select the video timing (processor clock cycles per raster line)
 ;CYCLES = 65     ; 6567R8 and above, NTSC-M
@@ -10,30 +19,12 @@ cnmi = $318
 raster = 46     ; start of raster interrupt
 m = $fb         ; zero page variable
 
-  .org $801
-basic:
-  .word 0$      ; link to next line
-  .word 1995    ; line number
-  .byte $9E     ; SYS token
-
-; SYS digits
-
-  .if (* + 8) / 10000
-  .byte $30 + (* + 8) / 10000
-  .endif
-  .if (* + 7) / 1000
-  .byte $30 + (* + 7) % 10000 / 1000
-  .endif
-  .if (* + 6) / 100
-  .byte $30 + (* + 6) % 1000 / 100
-  .endif
-  .if (* + 5) / 10
-  .byte $30 + (* + 5) % 100 / 10
-  .endif
-  .byte $30 + (* + 4) % 10
-
-0$:
-  .byte 0,0,0   ; end of BASIC program
+    * = $0801
+    !byte $0b,$08,$01,$00,$9e
+    !convtab pet
+    !tx "2061"
+    !byte $00,$00,$00
+    jmp start
 
 start:
   jmp install
@@ -118,6 +109,8 @@ deinstall:
   cli
   rts
 
+  !align 255,0,0
+  
 ; Auxiliary raster interrupt (for syncronization)
 irq1:
 ; irq (event)   ; > 7 + at least 2 cycles of last instruction (9 to 16 total)
@@ -179,17 +172,17 @@ irq2:
   sta cinv+1
   ldx $d012
   nop
-#if CYCLES - 63
-#if CYCLES - 64
+!if CYCLES - 63 {
+!if CYCLES - 64 {
   nop           ; 6567R8, 65 cycles/line
   bit $24
-#else
+} else {
   nop           ; 6567R56A, 64 cycles/line
   nop
-#endif
-#else
+}
+} else {
   bit $24       ; 6569, 63 cycles/line
-#endif
+}
   cpx $d012     ; The comparison cycle is executed CYCLES or CYCLES+1 cycles
                 ; after the interrupt has occurred.
   beq *+2       ; Delay by one cycle if $d012 hadn't changed.
@@ -203,15 +196,28 @@ irq2:
 
 ; start action here
 
+!if CYCLES=63 {
+  ldx #83-3
+}
+!if CYCLES=65 {
   ldx #83
+}
 preloop:
   dex
   bne preloop
   bit $21
-
+!if CYCLES=63 {
+  bit $21
+}
+!if CYCLES=65 {
+  nop
+}
   nop
   nop
 
+  inc DBGCOLOR1     ;6
+  dec DBGCOLOR1     ;6
+  
   lda $d011
   tay
   and #$f8
@@ -219,14 +225,24 @@ preloop:
   sty $d011
 
 
+!if CYCLES=63 {
+  ldx #80-3
+}
+!if CYCLES=65 {
   ldx #80
+}
 loop2:
   dex
   bne loop2
   nop
-  nop
-  nop
 
+  nop
+  nop
+  bit $21
+
+  inc DBGCOLOR0     ;6
+  dec DBGCOLOR0     ;6
+  
   tax
   stx $d011
   sty $d011
@@ -239,10 +255,6 @@ postloop:
 
 
   jmp endirq
-
-
-
-
 
 endirq:
   lda $d011

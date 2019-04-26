@@ -1,10 +1,14 @@
 
-all: disable-bad.prg disable-bad_ntsc.prg disable-bad_ntscold.prg
+TESTS=disable-bad.prg disable-bad_ntsc.prg disable-bad_ntscold.prg
+
+all: $(TESTS)
 	
-%.prg: %.tas
-	dasm $< -o$@ -DCYCLES=63
-%_ntsc.prg:%.tas
-	dasm $*.tas -o$*_ntsc.prg -DCYCLES=65
-%_ntscold.prg:%.tas
-	dasm $*.tas -o$*_ntscold.prg -DCYCLES=64
-	
+disable-bad.prg: disable-bad.tas
+	acme -f cbm -DCYCLES=63 -o $@ $<
+disable-bad_ntsc.prg: disable-bad.tas
+	acme -f cbm -DCYCLES=65 -o $@ $<
+disable-bad_ntscold.prg: disable-bad.tas
+	acme -f cbm -DCYCLES=64 -o $@ $<
+
+clean:
+	$(RM) $(TESTS)	
