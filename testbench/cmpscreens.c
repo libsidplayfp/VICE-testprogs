@@ -9,6 +9,9 @@
 #define MAXCOLORS 0x100
 #define MAXPALETTES 3
 
+#define max(x, y) (((x) > (y)) ? (x) : (y))
+#define min(x, y) (((x) < (y)) ? (x) : (y))
+
 int verbose = 0;
 int numpalettes = MAXPALETTES;
 int numcolors = 16;
@@ -264,8 +267,9 @@ int main(int argc, char *argv[])
         yoff2 = 0;
     }
 
-    xsize = (xsize1 < xsize2) ? xsize1 : xsize2;     // FIXME
-    ysize = (ysize1 < ysize2) ? ysize1 : ysize2;     // FIXME
+    xsize = min(xoff1, xoff2) + min(xsize1 - xoff1, xsize2 - xoff2);
+    ysize = min(yoff1, yoff2) + min(ysize1 - yoff1, ysize2 - yoff2);
+
     if (verbose) printf("cmp size: %dx%d\n", xsize, ysize);
 
     // find out what palette the first picture uses
