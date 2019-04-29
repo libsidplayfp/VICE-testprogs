@@ -1,9 +1,11 @@
 
 .PHONY: unseen-grid unseen-greydot unseen-nogreydot
 .PHONY: zerox-8565r2 zerox-8565r2 zerox-6569r1 zerox-6569r5_1886_s
+.PHONY: encore-6567r8 encore-6567r56a
 
 all: unseen-grid unseen-greydot unseen-nogreydot \
-	zerox-8565r2 zerox-6569r1 zerox-6569r5_1886_s
+	zerox-8565r2 zerox-6569r1 zerox-6569r5_1886_s \
+	encore-6567r8 encore-6567r56a
 
 unseen-grid:
 	./anim4unseen.sh ../../../crtemulation/grid/grid.png    ./unseen-grid/unseen-grid.png           ./unseen-grid/unseen-grid
@@ -58,3 +60,20 @@ zerox-6569r5_1886_s:
 	./anim4zerox.sh ../references/videomode1.prg.png  ./zerox-6569r5_1886_s/6569R5_1886_S_videomode1.png  ./zerox-6569r5_1886_s/6569R5_1886_S_videomode1
 	./anim4zerox.sh ../references/videomode2.prg.png  ./zerox-6569r5_1886_s/6569R5_1886_S_videomode2.png  ./zerox-6569r5_1886_s/6569R5_1886_S_videomode2
 	
+encore-6567r8:
+	./anim4encore.sh ../references/videomode-v_ntsc.prg.png ./encore-6567r8/videomode-v.png ./encore-6567r8/encore-6567r8_videomode-v
+	./anim4encore.sh ../references/videomode-w_ntsc.prg.png ./encore-6567r8/videomode-w.png ./encore-6567r8/encore-6567r8_videomode-w
+	./anim4encore.sh ../references/videomode-x_ntsc.prg.png ./encore-6567r8/videomode-x.png ./encore-6567r8/encore-6567r8_videomode-x
+	./anim4encore.sh ../references/videomode-y_ntsc.prg.png ./encore-6567r8/videomode-y.png ./encore-6567r8/encore-6567r8_videomode-y
+	./anim4encore.sh ../references/videomode-z_ntsc.prg.png ./encore-6567r8/videomode-z.png ./encore-6567r8/encore-6567r8_videomode-z
+	./anim4encore.sh ../references/videomode1_ntsc.prg.png  ./encore-6567r8/videomode1.png  ./encore-6567r8/encore-6567r8_videomode1
+	./anim4encore.sh ../references/videomode2_ntsc.prg.png  ./encore-6567r8/videomode2.png  ./encore-6567r8/encore-6567r8_videomode2
+
+encore-6567r56a:
+	./anim4encore.sh ../references/videomode-v_ntscold.prg.png ./encore-6567r56a/videomode-v.png ./encore-6567r56a/encore-6567r56a_videomode-v
+	./anim4encore.sh ../references/videomode-w_ntscold.prg.png ./encore-6567r56a/videomode-w.png ./encore-6567r56a/encore-6567r56a_videomode-w
+	./anim4encore.sh ../references/videomode-x_ntscold.prg.png ./encore-6567r56a/videomode-x.png ./encore-6567r56a/encore-6567r56a_videomode-x
+	./anim4encore.sh ../references/videomode-y_ntscold.prg.png ./encore-6567r56a/videomode-y.png ./encore-6567r56a/encore-6567r56a_videomode-y
+	./anim4encore.sh ../references/videomode-z_ntscold.prg.png ./encore-6567r56a/videomode-z.png ./encore-6567r56a/encore-6567r56a_videomode-z
+	./anim4encore.sh ../references/videomode1_ntscold.prg.png  ./encore-6567r56a/videomode1.png  ./encore-6567r56a/encore-6567r56a_videomode1
+	./anim4encore.sh ../references/videomode2_ntscold.prg.png  ./encore-6567r56a/videomode2.png  ./encore-6567r56a/encore-6567r56a_videomode2
