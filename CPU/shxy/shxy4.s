@@ -26,8 +26,27 @@ zp_testbase = $f0
 testbase = $1100
 testbase2 = $c1fe
 pageoffset = 12
+ntscflag=$02a6
 
 start:
+                lda #1
+                sta ntscflag
+                sei
+l1:             lda $d012
+l2:             cmp $d012
+                beq l2
+                bmi l1
+                cmp #$20
+                bcs ispal
+                dec ntscflag
+                ; patch for ntsc
+                lda #$d1        ; cmp ($ea),y
+                sta irq1patch
+ispal:
+                cli
+
+                jsr makeref
+                
                 ldx #0
 -
                 lda #$20
@@ -159,6 +178,7 @@ irq0:
                 ASL     $D019
                 TSX
                 CLI
+
                 NOP
                 NOP
                 NOP
@@ -179,10 +199,11 @@ irq0:
 irq1:
                 TXS
 
-                LDX     #8
+                LDY     #8
 -
-                DEX
+                DEY
                 BNE     -
+irq1patch:
                 BIT     $ea
 
                 LDA     $D012
@@ -316,6 +337,35 @@ timeout: bvc timeout            ; 3     (jumps always)
          }
          rts                    ; 6
                                 ; = 19 (min, A=$ff) ... 274 (max, A=$00)
+                                
+makeref:
+        lda #$c2
+        ldx #0
+-
+        sta reference,x
+        inx
+        bne -
+
+        lda ntscflag
+        beq +
+        
+        lda #$ff
+        sta reference+12
+        sta reference+12+63-5
+        sta reference+12+(63*2)-(2*5)
+        sta reference+12+(63*3)-(3*5)+1
+        sta reference+12+(63*4)-(4*5)+1
+        rts
++
+        lda #$ff
+        sta reference+3
+        sta reference+3 +65-5
+        sta reference+3 +(65*2)-(2*5)
+        sta reference+3 +(65*3)-(3*5)+1
+        sta reference+3 +(65*4)-(4*5)+1
+        rts
+        
+refcount: !byte 0        
 
                 * = $1000
 reference:
