@@ -273,7 +273,14 @@ fill2:
   rts
 
 endirq:
+    dec framecount
+    bne skp
+    lda #0
+    sta $d7ff
+skp:
   jmp $ea81     ; return to the auxiliary raster interrupt
+  
+framecount: .byte 5
 
 restore:        ; disable the Restore key
   lda cnmi
