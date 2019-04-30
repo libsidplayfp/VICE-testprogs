@@ -172,6 +172,12 @@ irq_stable2_pal:
 is2_skp1:
 
 	jsr	test_perform
+	
+	dec framecount
+	bne skp
+	lda #0
+	sta $d7ff
+skp:
 		
 accstore	equ	.+1
 	lda	#0
@@ -181,6 +187,8 @@ ystore	equ	.+1
 	ldy	#0
 	rti
 
+framecount: dc.b 5
+	
 ;**************************************************************************
 ;*
 ;* NAME  wait_vb
