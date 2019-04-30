@@ -204,6 +204,11 @@ function x128_run_screenshot
     fi
     $X128 $X128OPTS $X128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x128.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
+    
+    if [ $verbose == "1" ]; then
+        echo $X128 "exited with: " $exitcode
+    fi
+    
     if [ $exitcode -ne 0 ]
     then
         if [ $exitcode -ne 1 ]
@@ -215,36 +220,40 @@ function x128_run_screenshot
             fi
         fi
     fi
-    if [ -f "$refscreenshotname" ]
-    then
-    
-        # FIXME: this only works for the VICII
-    
-        # defaults for PAL
-        X128REFSXO=32
-        X128REFSYO=35
-        X128SXO=32
-        X128SYO=35
-        
-#        echo [ "${refscreenshotvideotype}" "${videotype}" ]
-    
-        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
-            X128REFSXO=32
-            X128REFSYO=23
-        fi
-    
-        # when either the testbench was run with --ntsc, or the test is ntsc-specific,
-        # then we need the offsets on the NTSC screenshot
-        if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
-            X128SXO=32
-            X128SYO=23
-        fi
 
-        ./cmpscreens "$refscreenshotname" "$X128REFSXO" "$X128REFSYO" "$1"/.testbench/"$screenshottest"-x128.png "$X128SXO" "$X128SYO"
-        exitcode=$?
-    else
-        echo -ne "reference screenshot missing - "
-        exitcode=255
+    if [ $exitcode -eq 0 ]
+    then
+        if [ -f "$refscreenshotname" ]
+        then
+        
+            # FIXME: this only works for the VICII
+        
+            # defaults for PAL
+            X128REFSXO=32
+            X128REFSYO=35
+            X128SXO=32
+            X128SYO=35
+            
+    #        echo [ "${refscreenshotvideotype}" "${videotype}" ]
+        
+            if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+                X128REFSXO=32
+                X128REFSYO=23
+            fi
+        
+            # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+            # then we need the offsets on the NTSC screenshot
+            if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
+                X128SXO=32
+                X128SYO=23
+            fi
+
+            ./cmpscreens "$refscreenshotname" "$X128REFSXO" "$X128REFSYO" "$1"/.testbench/"$screenshottest"-x128.png "$X128SXO" "$X128SYO"
+            exitcode=$?
+        else
+            echo -ne "reference screenshot missing - "
+            exitcode=255
+        fi
     fi
 }
 

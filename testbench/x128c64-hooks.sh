@@ -218,6 +218,11 @@ function x128c64_run_screenshot
     fi
     $X128C64 $X128C64OPTS $X128C64GO64OPTS $X128C64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$screenshottest"-x128c64.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
+    
+    if [ $verbose == "1" ]; then
+        echo $X128C64 "exited with: " $exitcode
+    fi
+    
     if [ $exitcode -ne 0 ]
     then
         if [ $exitcode -ne 1 ]
@@ -229,32 +234,36 @@ function x128c64_run_screenshot
             fi
         fi
     fi
-    if [ -f "$refscreenshotname" ]
+
+    if [ $exitcode -eq 0 ]
     then
-    
-        # defaults for PAL
-        X128C64REFSXO=32
-        X128C64REFSYO=35
-        X128C64SXO=32
-        X128C64SYO=35
-    
-        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+        if [ -f "$refscreenshotname" ]
+        then
+        
+            # defaults for PAL
             X128C64REFSXO=32
-            X128C64REFSYO=23
-        fi
-
-        # when either the testbench was run with --ntsc, or the test is ntsc-specific,
-        # then we need the offsets on the NTSC screenshot
-        if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
+            X128C64REFSYO=35
             X128C64SXO=32
-            X128C64SYO=23
-        fi
+            X128C64SYO=35
+        
+            if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+                X128C64REFSXO=32
+                X128C64REFSYO=23
+            fi
 
-        ./cmpscreens "$refscreenshotname" "$X128C64REFSXO" "$X128C64REFSYO" "$1"/.testbench/"$screenshottest"-x128c64.png "$X128C64SXO" "$X128C64SYO"
-        exitcode=$?
-    else
-        echo -ne "reference screenshot missing - "
-        exitcode=255
+            # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+            # then we need the offsets on the NTSC screenshot
+            if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
+                X128C64SXO=32
+                X128C64SYO=23
+            fi
+
+            ./cmpscreens "$refscreenshotname" "$X128C64REFSXO" "$X128C64REFSYO" "$1"/.testbench/"$screenshottest"-x128c64.png "$X128C64SXO" "$X128C64SYO"
+            exitcode=$?
+        else
+            echo -ne "reference screenshot missing - "
+            exitcode=255
+        fi
     fi
 #    echo "exited with: " $exitcode
 }

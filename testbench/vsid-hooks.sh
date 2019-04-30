@@ -129,6 +129,11 @@ function vsid_run_screenshot
     fi
     $VSID $VSIDOPTS $VSIDOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-vsid.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
+    
+    if [ $verbose == "1" ]; then
+        echo $VSID "exited with: " $exitcode
+    fi
+    
     if [ $exitcode -ne 0 ]
     then
         if [ $exitcode -ne 1 ]
@@ -141,13 +146,16 @@ function vsid_run_screenshot
         fi
     fi
 
-    if [ -f "$refscreenshotname" ]
+    if [ $exitcode -eq 0 ]
     then
-        ./cmpscreens "$refscreenshotname" "$VSIDREFSXO" "$VSIDREFSYO" "$1"/.testbench/"$screenshottest"-vsid.png "$VSIDSXO" "$VSIDSYO"
-        exitcode=$?
-    else
-        echo -ne "reference screenshot missing - "
-        exitcode=255
+        if [ -f "$refscreenshotname" ]
+        then
+            ./cmpscreens "$refscreenshotname" "$VSIDREFSXO" "$VSIDREFSYO" "$1"/.testbench/"$screenshottest"-vsid.png "$VSIDSXO" "$VSIDSYO"
+            exitcode=$?
+        else
+            echo -ne "reference screenshot missing - "
+            exitcode=255
+        fi
     fi
 }
 

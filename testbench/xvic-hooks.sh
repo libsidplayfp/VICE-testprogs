@@ -144,6 +144,11 @@ function xvic_run_screenshot
     fi
     $XVIC $XVICOPTS $XVICOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xvic.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
+    
+    if [ $verbose == "1" ]; then
+        echo $XVIC "exited with: " $exitcode
+    fi
+    
     if [ $exitcode -ne 0 ]
     then
         if [ $exitcode -ne 1 ]
@@ -155,34 +160,38 @@ function xvic_run_screenshot
             fi
         fi
     fi
-    if [ -f "$refscreenshotname" ]
-    then
-        # defaults for PAL
-        XVICSXO=96
-        XVICSYO=48
-        XVICREFSXO=96
-        XVICREFSYO=48
-        
-#        echo [ "${refscreenshotvideotype}" "${videotype}" ]
-    
-        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
-            XVICREFSXO=40
-            XVICREFSYO=22
-        fi
-    
-        # when either the testbench was run with --ntsc, or the test is ntsc-specific,
-        # then we need the offsets on the NTSC screenshot
-        if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
-            XVICSXO=40
-            XVICSYO=22
-        fi
 
-#        echo ./cmpscreens "$refscreenshotname" "$XVICREFSXO" "$XVICREFSYO" "$1"/.testbench/"$screenshottest"-xvic.png "$XVICSXO" "$XVICSYO"
-        ./cmpscreens "$refscreenshotname" "$XVICREFSXO" "$XVICREFSYO" "$1"/.testbench/"$screenshottest"-xvic.png "$XVICSXO" "$XVICSYO"
-        exitcode=$?
-    else
-        echo -ne "reference screenshot missing - "
-        exitcode=255
+    if [ $exitcode -eq 0 ]
+    then
+        if [ -f "$refscreenshotname" ]
+        then
+            # defaults for PAL
+            XVICSXO=96
+            XVICSYO=48
+            XVICREFSXO=96
+            XVICREFSYO=48
+            
+    #        echo [ "${refscreenshotvideotype}" "${videotype}" ]
+        
+            if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+                XVICREFSXO=40
+                XVICREFSYO=22
+            fi
+        
+            # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+            # then we need the offsets on the NTSC screenshot
+            if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
+                XVICSXO=40
+                XVICSYO=22
+            fi
+
+    #        echo ./cmpscreens "$refscreenshotname" "$XVICREFSXO" "$XVICREFSYO" "$1"/.testbench/"$screenshottest"-xvic.png "$XVICSXO" "$XVICSYO"
+            ./cmpscreens "$refscreenshotname" "$XVICREFSXO" "$XVICREFSYO" "$1"/.testbench/"$screenshottest"-xvic.png "$XVICSXO" "$XVICSYO"
+            exitcode=$?
+        else
+            echo -ne "reference screenshot missing - "
+            exitcode=255
+        fi
     fi
 #    echo "exited with: " $exitcode
 }

@@ -114,6 +114,11 @@ function x64dtv_run_screenshot
     fi
     $X64DTV $X64DTVOPTS $X64DTVOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x64dtv.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
+    
+    if [ $verbose == "1" ]; then
+        echo $X64DTV "exited with: " $exitcode
+    fi
+    
     if [ $exitcode -ne 0 ]
     then
         if [ $exitcode -ne 1 ]
@@ -125,34 +130,38 @@ function x64dtv_run_screenshot
             fi
         fi
     fi
-    if [ -f "$refscreenshotname" ]
+
+    if [ $exitcode -eq 0 ]
     then
-    
-        # defaults for PAL
-        X64DTVREFSXO=32
-        X64DTVREFSYO=35
-        X64DTVSXO=32
-        X64DTVSYO=35
+        if [ -f "$refscreenshotname" ]
+        then
         
-#        echo [ "${refscreenshotvideotype}" "${videotype}" ]
-    
-        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+            # defaults for PAL
             X64DTVREFSXO=32
-            X64DTVREFSYO=23
-        fi
-    
-        # when either the testbench was run with --ntsc, or the test is ntsc-specific,
-        # then we need the offsets on the NTSC screenshot
-        if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
+            X64DTVREFSYO=35
             X64DTVSXO=32
-            XX64DTVSYO=23
+            X64DTVSYO=35
+            
+    #        echo [ "${refscreenshotvideotype}" "${videotype}" ]
+        
+            if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+                X64DTVREFSXO=32
+                X64DTVREFSYO=23
+            fi
+        
+            # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+            # then we need the offsets on the NTSC screenshot
+            if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
+                X64DTVSXO=32
+                XX64DTVSYO=23
+            fi
+        
+            ./cmpscreens "$refscreenshotname" "$X64DTVREFSXO" "$X64DTVREFSYO" "$1"/.testbench/"$screenshottest"-x64dtv.png "$X64DTVSXO" "$X64DTVSYO"
+            exitcode=$?
+        else
+            echo -ne "reference screenshot missing - "
+            exitcode=255
         fi
-    
-        ./cmpscreens "$refscreenshotname" "$X64DTVREFSXO" "$X64DTVREFSYO" "$1"/.testbench/"$screenshottest"-x64dtv.png "$X64DTVSXO" "$X64DTVSYO"
-        exitcode=$?
-    else
-        echo -ne "reference screenshot missing - "
-        exitcode=255
     fi
 }
 

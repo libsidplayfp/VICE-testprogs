@@ -216,6 +216,11 @@ function x64_run_screenshot
     fi
     $X64 $X64OPTS $X64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x64.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
+    
+    if [ $verbose == "1" ]; then
+        echo $X64 "exited with: " $exitcode
+    fi
+    
     if [ $exitcode -ne 0 ]
     then
         if [ $exitcode -ne 1 ]
@@ -227,32 +232,36 @@ function x64_run_screenshot
             fi
         fi
     fi
-    if [ -f "$refscreenshotname" ]
+
+    if [ $exitcode -eq 0 ]
     then
-    
-        # defaults for PAL
-        X64REFSXO=32
-        X64REFSYO=35
-        X64SXO=32
-        X64SYO=35
-    
-        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+        if [ -f "$refscreenshotname" ]
+        then
+        
+            # defaults for PAL
             X64REFSXO=32
-            X64REFSYO=23
-        fi
-
-        # when either the testbench was run with --ntsc, or the test is ntsc-specific,
-        # then we need the offsets on the NTSC screenshot
-        if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
+            X64REFSYO=35
             X64SXO=32
-            X64SYO=23
-        fi
+            X64SYO=35
+        
+            if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+                X64REFSXO=32
+                X64REFSYO=23
+            fi
 
-        ./cmpscreens "$refscreenshotname" "$X64REFSXO" "$X64REFSYO" "$1"/.testbench/"$screenshottest"-x64.png "$X64SXO" "$X64SYO"
-        exitcode=$?
-    else
-        echo -ne "reference screenshot missing - "
-        exitcode=255
+            # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+            # then we need the offsets on the NTSC screenshot
+            if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
+                X64SXO=32
+                X64SYO=23
+            fi
+
+            ./cmpscreens "$refscreenshotname" "$X64REFSXO" "$X64REFSYO" "$1"/.testbench/"$screenshottest"-x64.png "$X64SXO" "$X64SYO"
+            exitcode=$?
+        else
+            echo -ne "reference screenshot missing - "
+            exitcode=255
+        fi
     fi
 #    echo "exited with: " $exitcode
 }

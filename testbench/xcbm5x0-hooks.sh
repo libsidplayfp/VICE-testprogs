@@ -129,6 +129,11 @@ function xcbm5x0_run_screenshot
     fi
     $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xcbm5x0.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
+    
+    if [ $verbose == "1" ]; then
+        echo $XCBM5X0 "exited with: " $exitcode
+    fi
+    
     if [ $exitcode -ne 0 ]
     then
         if [ $exitcode -ne 1 ]
@@ -140,13 +145,17 @@ function xcbm5x0_run_screenshot
             fi
         fi
     fi
-    if [ -f "$refscreenshotname" ]
+
+    if [ $exitcode -eq 0 ]
     then
-        ./cmpscreens "$refscreenshotname" "$XCBM5X0REFSXO" "$XCBM5X0REFSYO" "$1"/.testbench/"$screenshottest"-xcbm5x0.png "$XCBM5X0SXO" "$XCBM5X0SYO"
-        exitcode=$?
-    else
-        echo -ne "reference screenshot missing - "
-        exitcode=255
+        if [ -f "$refscreenshotname" ]
+        then
+            ./cmpscreens "$refscreenshotname" "$XCBM5X0REFSXO" "$XCBM5X0REFSYO" "$1"/.testbench/"$screenshottest"-xcbm5x0.png "$XCBM5X0SXO" "$XCBM5X0SYO"
+            exitcode=$?
+        else
+            echo -ne "reference screenshot missing - "
+            exitcode=255
+        fi
     fi
 #    echo "exited with: " $exitcode
 }

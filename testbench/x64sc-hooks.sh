@@ -215,6 +215,11 @@ function x64sc_run_screenshot
     fi
     $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x64sc.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
+    
+    if [ $verbose == "1" ]; then
+        echo $X64SC "exited with: " $exitcode
+    fi
+    
     if [ $exitcode -ne 0 ]
     then
         if [ $exitcode -ne 1 ]
@@ -226,36 +231,41 @@ function x64sc_run_screenshot
             fi
         fi
     fi
-    if [ -f "$refscreenshotname" ]
-    then
 
-        # defaults for PAL
-        X64SCREFSXO=32
-        X64SCREFSYO=35
-        X64SCSXO=32
-        X64SCSYO=35
-        
-#        echo [ refscreenshotvideotype:"${refscreenshotvideotype}" videotype:"${videotype}" testprogvideomode:"${testprogvideomode}"]
-    
-        if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+    if [ $exitcode -eq 0 ]
+    then
+        if [ -f "$refscreenshotname" ]
+        then
+
+            # defaults for PAL
             X64SCREFSXO=32
-            X64SCREFSYO=23
-        fi
-    
-        # when either the testbench was run with --ntsc, or the test is ntsc-specific,
-        # then we need the offsets on the NTSC screenshot
-        if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
+            X64SCREFSYO=35
             X64SCSXO=32
-            X64SCSYO=23
+            X64SCSYO=35
+            
+    #        echo [ refscreenshotvideotype:"${refscreenshotvideotype}" videotype:"${videotype}" testprogvideomode:"${testprogvideomode}"]
+        
+            if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+                X64SCREFSXO=32
+                X64SCREFSYO=23
+            fi
+        
+            # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+            # then we need the offsets on the NTSC screenshot
+            if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
+                X64SCSXO=32
+                X64SCSYO=23
+            fi
+        
+    #        echo ./cmpscreens "$refscreenshotname" "$X64SCREFSXO" "$X64SCREFSYO" "$1"/.testbench/"$screenshottest"-x64sc.png "$X64SCSXO" "$X64SCSYO"
+            ./cmpscreens "$refscreenshotname" "$X64SCREFSXO" "$X64SCREFSYO" "$1"/.testbench/"$screenshottest"-x64sc.png "$X64SCSXO" "$X64SCSYO"
+            exitcode=$?
+        else
+            echo -ne "reference screenshot missing - "
+            exitcode=255
         fi
-    
-#        echo ./cmpscreens "$refscreenshotname" "$X64SCREFSXO" "$X64SCREFSYO" "$1"/.testbench/"$screenshottest"-x64sc.png "$X64SCSXO" "$X64SCSYO"
-        ./cmpscreens "$refscreenshotname" "$X64SCREFSXO" "$X64SCREFSYO" "$1"/.testbench/"$screenshottest"-x64sc.png "$X64SCSXO" "$X64SCSYO"
-        exitcode=$?
-    else
-        echo -ne "reference screenshot missing - "
-        exitcode=255
     fi
+
 }
 
 ################################################################################
