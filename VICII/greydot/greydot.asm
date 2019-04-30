@@ -146,6 +146,11 @@ is2_skp1:
 
 	jsr	render_dots
 
+	dec framecount
+	bne skp
+	lda #0
+	sta $d7ff
+skp
 
 accstore	equ	.+1
 	lda	#0
@@ -156,7 +161,7 @@ ystore	equ	.+1
 	rti
 
 
-
+framecount: dc.b 10
 
 render_dots:
 rd_sm1:
