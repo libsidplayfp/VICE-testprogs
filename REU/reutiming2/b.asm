@@ -108,8 +108,16 @@ reu2		.byte %10010001
 		sta $df00,x
 		dex
 		bne -
+
+		dec framecount
+		bne +
+		lda #0
+		sta $d7ff
++
 		jmp loop
 
+framecount: .byte 5
+		
 		.section bss
 tmp		.fill 63
 		.send bss
