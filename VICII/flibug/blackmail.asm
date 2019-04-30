@@ -396,15 +396,18 @@ loc_2AD6:
                 LDA        #$77
                 STA        $D011
 
-                JSR        $FF9F
-
+                JSR        $FF9F        ; jmp $ea87
+ 
                 LDA        #$7F
 -
                 BIT        $D011
                 BPL        -
 
                 STA        $D011
-                BIT        $DD0D
+                
+                jsr     docount
+                
+;                BIT        $DD0D
                 LDX        $57
                 LDY        $58
                 PLA
@@ -429,4 +432,13 @@ jumptable:      !word func2A6B
                 !word func2A9C
 ; ---------------------------------------------------------------------------
 
+framecount: !byte 5
 
+docount:
+                dec framecount
+                bne +
+                lda #0
+                sta $d7ff
++
+                BIT        $DD0D
+                rts
