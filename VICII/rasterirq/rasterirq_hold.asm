@@ -145,6 +145,11 @@ is2_skp1:
 
 	jsr	hold_off
 	
+	dec framecount
+	bne skp
+	lda #0
+	sta $d7ff
+skp:
 
 	lda	#LINE
 	sta	$d012
@@ -156,7 +161,7 @@ ystore	equ	.+1
 	ldy	#0
 	rti
 
-
+framecount: dc.b 5
 
 hold_off:
 ho_lp1:
