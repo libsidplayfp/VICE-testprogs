@@ -141,6 +141,15 @@ is2_sm1:
 	jsr	rast1		; 6
 	jsr	set_raster
 
+	cpx #0
+	bne notend
+	dec framecount
+	bne skp
+	lda #0
+	sta $d7ff
+skp:
+notend:
+
 accstore	equ	.+1
 	lda	#0
 xstore	equ	.+1
@@ -149,6 +158,7 @@ ystore	equ	.+1
 	ldy	#0
 	rti
 
+framecount: dc.b 5
 
 set_raster:
 	ldx	rcnt
