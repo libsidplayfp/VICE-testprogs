@@ -105,6 +105,8 @@ wv_lp2:
 ;* NAME  irq_stable, irq_stable2
 ;*   
 ;******
+	align	256
+
 irq_stable:
 	sta	accstore	; 4
 	sty	ystore		; 4
@@ -121,7 +123,8 @@ is_sm1:
 is_lp1:
 	sei
 	inc	$d020
-	jmp	is_lp1	
+	jmp	is_lp1
+
 irq_stable2:
 	ds.b	13,$ea		; 26
 	else
@@ -140,6 +143,17 @@ is2_sm1:
 	jsr	rast1		; 6
 	jsr	set_raster
 
+	cpx #0
+	bne notend
+	
+  	dec framecount
+  	bne skp
+  	lda #0
+  	sta $d7ff
+skp
+
+notend:
+	
 accstore	equ	.+1
 	lda	#0
 xstore	equ	.+1
@@ -148,6 +162,9 @@ ystore	equ	.+1
 	ldy	#0
 	rti
 
+framecount: ds.b 5
+
+	align	256
 
 set_raster:
 	ldx	rcnt
