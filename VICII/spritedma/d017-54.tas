@@ -208,9 +208,15 @@ postloop:
 
   lda #255
   sta $d017
+  
+  dec framecount
+  bne skp
+  lda #0
+  sta $d7ff
+skp:
   jmp endirq
 
-
+framecount: .byte 5
 
 
 
