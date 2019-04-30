@@ -685,6 +685,11 @@ line4:
 	lda	#0
 	sta	BC0
 	
+    dec framecount
+    bne skp
+    lda #0
+    sta $d7ff
+skp:
 	
 	; ========= Lower  Border =========
 	; Use $D011 register to detect start of new frame
@@ -704,7 +709,6 @@ jitter:
 	
 ;	lda	#EC_COL
 ;	sta EC
-	
 	jmp again
 	
 badline:
@@ -755,6 +759,7 @@ welcome_color_adj2:
 	bne welcome_color_adj2
 	rts
 
+framecount: .byte 5
 
 welcome_str_1:
 	.byte TEXT_COL, 147
