@@ -203,12 +203,18 @@ function z64kc128c64_prepare
 # $5- extra options for the emulator
 function z64kc128c64_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-x64.png
-    if [ $verbose == "1" ]; then
-        echo $Z64KC128C64 $Z64KC128C64OPTS $Z64KC128C64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$2"-z64kc128c64.png "$4"
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
     fi
-    $Z64KC128C64 $Z64KC128C64OPTS $Z64KC128C64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$2"-z64kc128c64.png "$4" 1> /dev/null 2> /dev/null
+
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-x64.png
+    if [ $verbose == "1" ]; then
+        echo $Z64KC128C64 $Z64KC128C64OPTS $Z64KC128C64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$screenshottest"-z64kc128c64.png "$4"
+    fi
+    $Z64KC128C64 $Z64KC128C64OPTS $Z64KC128C64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$screenshottest"-z64kc128c64.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -242,7 +248,7 @@ function z64kc128c64_run_screenshot
             Z64KC128C64SYO=23
         fi
 
-        ./cmpscreens "$refscreenshotname" "$Z64KC128C64REFSXO" "$Z64KC128C64REFSYO" "$1"/.testbench/"$2"-z64kc128c64.png "$Z64KC128C64SXO" "$Z64KC128C64SYO"
+        ./cmpscreens "$refscreenshotname" "$Z64KC128C64REFSXO" "$Z64KC128C64REFSYO" "$1"/.testbench/"$screenshottest"-z64kc128c64.png "$Z64KC128C64SXO" "$Z64KC128C64SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

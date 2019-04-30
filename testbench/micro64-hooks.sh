@@ -172,12 +172,18 @@ function micro64_prepare
 # $5- extra options for the emulator
 function micro64_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-micro64.png
-    if [ $verbose == "1" ]; then
-        echo $MICRO64 $MICRO64OPTS $MICRO64OPTSSCREENSHOT ${@:5} "+DEBUGLIMITCYCLES=""$3" "+DEBUGEXITVICBITMAP=""$1"/.testbench/"$2"-micro64.png "$4"
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
     fi
-    $MICRO64 $MICRO64OPTS $MICRO64OPTSSCREENSHOT ${@:5} "+DEBUGLIMITCYCLES=""$3" "+DEBUGEXITVICBITMAP=""$1"/.testbench/"$2"-micro64.png "$4" 1> /dev/null
+
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-micro64.png
+    if [ $verbose == "1" ]; then
+        echo $MICRO64 $MICRO64OPTS $MICRO64OPTSSCREENSHOT ${@:5} "+DEBUGLIMITCYCLES=""$3" "+DEBUGEXITVICBITMAP=""$1"/.testbench/"$screenshottest"-micro64.png "$4"
+    fi
+    $MICRO64 $MICRO64OPTS $MICRO64OPTSSCREENSHOT ${@:5} "+DEBUGLIMITCYCLES=""$3" "+DEBUGEXITVICBITMAP=""$1"/.testbench/"$screenshottest"-micro64.png "$4" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -202,9 +208,9 @@ function micro64_run_screenshot
 # micro64 cant do NTSC
     
         if [ $verbose == "1" ]; then
-            echo ./cmpscreens "$refscreenshotname" "$MICRO64REFSXO" "$MICRO64REFSYO" "$1"/.testbench/"$2"-micro64.png "$MICRO64SXO" "$MICRO64SYO"
+            echo ./cmpscreens "$refscreenshotname" "$MICRO64REFSXO" "$MICRO64REFSYO" "$1"/.testbench/"$screenshottest"-micro64.png "$MICRO64SXO" "$MICRO64SYO"
         fi
-        ./cmpscreens "$refscreenshotname" "$MICRO64REFSXO" "$MICRO64REFSYO" "$1"/.testbench/"$2"-micro64.png "$MICRO64SXO" "$MICRO64SYO"
+        ./cmpscreens "$refscreenshotname" "$MICRO64REFSXO" "$MICRO64REFSYO" "$1"/.testbench/"$screenshottest"-micro64.png "$MICRO64SXO" "$MICRO64SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

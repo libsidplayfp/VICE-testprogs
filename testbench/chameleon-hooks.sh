@@ -414,10 +414,16 @@ function chameleon_get_cmdline_options
 # $5- extra options for the emulator
 function chameleon_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-chameleon.png
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
+    fi
 
-    if [ X"$2"X == X""X ]
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-chameleon.png
+
+    if [ X"$screenshottest"X == X"$mounted_crt"X ]
     then
 #        echo "no program given"
         # reset
@@ -465,7 +471,7 @@ function chameleon_run_screenshot
         chameleon_clear_returncode
     
         # run program
-        chcodenet -x "$1"/"$2" > /dev/null
+        chcodenet -x "$1"/"$screenshottest" > /dev/null
         if [ "$?" != "0" ]; then exit -1; fi
     #    chameleon_poll_returncode 5
     #    exitcode=$?
@@ -476,15 +482,15 @@ function chameleon_run_screenshot
     timeoutsecs=`expr \( $3 + 999999 \) / 1000000`
     sleep $timeoutsecs
     if [ "${videotype}" == "NTSC" ]; then
-        chshot --ntsc -o "$1"/.testbench/"$2"-chameleon.png
+        chshot --ntsc -o "$1"/.testbench/"$screenshottest"-chameleon.png
         if [ "$?" != "0" ]; then exit -1; fi
     else
-        chshot -o "$1"/.testbench/"$2"-chameleon.png
+        chshot -o "$1"/.testbench/"$screenshottest"-chameleon.png
         if [ "$?" != "0" ]; then exit -1; fi
     fi
     
     # if the test was a cartrige, kill it
-    if [ X"$2"X == X""X ]; then
+    if [ X"$screenshottest"X == X"$mounted_crt"X ]; then
         # overwrite the CBM80 signature with generic "cartridge off" program
         chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
         if [ "$?" != "0" ]; then exit -1; fi
@@ -515,8 +521,8 @@ function chameleon_run_screenshot
             CHAMSYO=38
         fi
 
-#        echo ./cmpscreens "$refscreenshotname" "$CHAMREFSXO" "$CHAMREFSYO" "$1"/.testbench/"$2"-chameleon.png "$CHAMSXO" "$CHAMSYO"
-        ./cmpscreens "$refscreenshotname" "$CHAMREFSXO" "$CHAMREFSYO" "$1"/.testbench/"$2"-chameleon.png "$CHAMSXO" "$CHAMSYO"
+#        echo ./cmpscreens "$refscreenshotname" "$CHAMREFSXO" "$CHAMREFSYO" "$1"/.testbench/"$screenshottest"-chameleon.png "$CHAMSXO" "$CHAMSYO"
+        ./cmpscreens "$refscreenshotname" "$CHAMREFSXO" "$CHAMREFSYO" "$1"/.testbench/"$screenshottest"-chameleon.png "$CHAMSXO" "$CHAMSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing ("$refscreenshotname") - "

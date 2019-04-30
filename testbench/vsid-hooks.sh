@@ -116,12 +116,18 @@ function vsid_prepare
 # $5- extra options for the emulator
 function vsid_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-vsid.png
-    if [ $verbose == "1" ]; then
-        echo $VSID $VSIDOPTS $VSIDOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-vsid.png "$4"
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
     fi
-    $VSID $VSIDOPTS $VSIDOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-vsid.png "$4" 1> /dev/null 2> /dev/null
+
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-vsid.png
+    if [ $verbose == "1" ]; then
+        echo $VSID $VSIDOPTS $VSIDOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-vsid.png "$4"
+    fi
+    $VSID $VSIDOPTS $VSIDOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-vsid.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -137,7 +143,7 @@ function vsid_run_screenshot
 
     if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$refscreenshotname" "$VSIDREFSXO" "$VSIDREFSYO" "$1"/.testbench/"$2"-vsid.png "$VSIDSXO" "$VSIDSYO"
+        ./cmpscreens "$refscreenshotname" "$VSIDREFSXO" "$VSIDREFSYO" "$1"/.testbench/"$screenshottest"-vsid.png "$VSIDSXO" "$VSIDSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

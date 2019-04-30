@@ -232,11 +232,17 @@ function u64_get_cmdline_options
 # $5- extra options for the emulator
 function u64_run_screenshot
 {
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
+    fi
+
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-chameleon.png
+    rm -f "$1"/.testbench/"$screenshottest"-u64.png
 
     # overwrite the CBM80 signature with generic "cartridge off" program
-#    chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
+#    chacocmd --addr 0x00b00000 --writemem u64-crtoff.prg > /dev/null
 #    if [ "$?" != "0" ]; then exit -1; fi
     # reset
     ucodenet --resetwait
@@ -246,7 +252,7 @@ function u64_run_screenshot
 
     # run the helper program (enable I/O RAM at $d7xx)
 #    u64_clear_returncode
-#    chcodenet -x chameleon-helper.prg > /dev/null
+#    chcodenet -x u64-helper.prg > /dev/null
 #    if [ "$?" != "0" ]; then exit -1; fi
 #    u64_poll_returncode 5
 
@@ -261,10 +267,10 @@ function u64_run_screenshot
     sleep $timeoutsecs
 
 #    if [ "${videotype}" == "NTSC" ]; then
-#        chshot --ntsc -o "$1"/.testbench/"$2"-chameleon.png
+#        chshot --ntsc -o "$1"/.testbench/"$2"-u64.png
 #        if [ "$?" != "0" ]; then exit -1; fi
 #    else
-#        chshot -o "$1"/.testbench/"$2"-chameleon.png
+#        chshot -o "$1"/.testbench/"$2"-u64.png
 #        if [ "$?" != "0" ]; then exit -1; fi
 #    fi
 
@@ -291,8 +297,8 @@ function u64_run_screenshot
             U64SYO=38
         fi
 
-#        echo ./cmpscreens "$refscreenshotname" "$U64REFSXO" "$U64REFSYO" "$1"/.testbench/"$2"-chameleon.png "$U64SXO" "$U64SYO"
-        ./cmpscreens "$refscreenshotname" "$U64REFSXO" "$U64REFSYO" "$1"/.testbench/"$2"-chameleon.png "$U64SXO" "$U64SYO"
+#        echo ./cmpscreens "$refscreenshotname" "$U64REFSXO" "$U64REFSYO" "$1"/.testbench/"$screenshottest"-u64.png "$U64SXO" "$U64SYO"
+        ./cmpscreens "$refscreenshotname" "$U64REFSXO" "$U64REFSYO" "$1"/.testbench/"$screenshottest"-u64.png "$U64SXO" "$U64SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing ("$refscreenshotname") - "
@@ -314,7 +320,7 @@ function u64_run_screenshot
 # $5- extra options for the emulator
 function u64_run_exitcode
 {
-#    echo chameleon X"$1"X / X"$2"X
+#    echo u64 X"$1"X / X"$2"X
 
     if [ X"$2"X = X""X ]
     then
@@ -327,7 +333,7 @@ function u64_run_exitcode
 
         # run helper program
 #        u64_clear_returncode
-#        chcodenet -x chameleon-helper.prg > /dev/null
+#        chcodenet -x u64-helper.prg > /dev/null
 #        if [ "$?" != "0" ]; then exit -1; fi
 #        u64_poll_returncode 5
 
@@ -340,13 +346,13 @@ function u64_run_exitcode
         exitcode=$?
 
         # overwrite the CBM80 signature with generic "cartridge off" program
-#        chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
+#        chacocmd --addr 0x00b00000 --writemem u64-crtoff.prg > /dev/null
 #        if [ "$?" != "0" ]; then exit -1; fi
         # reset
         ucodenet --resetwait
     else
         # overwrite the CBM80 signature with generic "cartridge off" program
-#        chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
+#        chacocmd --addr 0x00b00000 --writemem u64-crtoff.prg > /dev/null
 #        if [ "$?" != "0" ]; then exit -1; fi
         # reset
         ucodenet --resetwait
@@ -357,7 +363,7 @@ function u64_run_exitcode
 
         # run the helper program (enable I/O RAM at $d7xx)
 #        u64_clear_returncode
-#        chcodenet -x chameleon-helper.prg > /dev/null
+#        chcodenet -x u64-helper.prg > /dev/null
 #        if [ "$?" != "0" ]; then exit -1; fi
 #        u64_poll_returncode 5
 

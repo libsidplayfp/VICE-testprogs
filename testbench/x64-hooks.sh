@@ -203,12 +203,18 @@ function x64_prepare
 # $5- extra options for the emulator
 function x64_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-x64.png
-    if [ $verbose == "1" ]; then
-        echo $X64 $X64OPTS $X64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$4"
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
     fi
-    $X64 $X64OPTS $X64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64.png "$4" 1> /dev/null 2> /dev/null
+
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-x64.png
+    if [ $verbose == "1" ]; then
+        echo $X64 $X64OPTS $X64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x64.png "$4"
+    fi
+    $X64 $X64OPTS $X64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x64.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -242,7 +248,7 @@ function x64_run_screenshot
             X64SYO=23
         fi
 
-        ./cmpscreens "$refscreenshotname" "$X64REFSXO" "$X64REFSYO" "$1"/.testbench/"$2"-x64.png "$X64SXO" "$X64SYO"
+        ./cmpscreens "$refscreenshotname" "$X64REFSXO" "$X64REFSYO" "$1"/.testbench/"$screenshottest"-x64.png "$X64SXO" "$X64SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

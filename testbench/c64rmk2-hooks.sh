@@ -272,6 +272,12 @@ function c64rmk2_get_cmdline_options
 # $3  timeout cycles
 #function c64rmk2_run_screenshot
 #{
+#    if [ "$2" == "" ] ; then
+#        screenshottest="$mounted_crt"
+#    else
+#        screenshottest="$2"
+#    fi
+#
 ##    echo chameleon "$1"/"$2"
 #    extraopts=""$4" "$5" "$6""
 #    mkdir -p "$1"/".testbench"

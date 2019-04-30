@@ -159,6 +159,12 @@ function yace_prepare
 # $5- extra options for the emulator
 function yace_run_screenshot
 {
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
+    fi
+
     TESTDIR=$(cd $1; pwd)
 
     if [ `uname` == "Linux" ]
@@ -185,12 +191,12 @@ function yace_run_screenshot
     cd $EMUDIR
 
     mkdir -p "$TESTDIR"/".testbench"
-    rm -f "$TESTDIR"/.testbench/"$2"-yace.png
+    rm -f "$TESTDIR"/.testbench/"$screenshottest"-yace.png
     
     if [ $verbose == "1" ]; then
-        echo "RUN: " $YACE $YACEOPTS $YACEOPTSSCREENSHOT $ROMARGS ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$TESTDIRWINE"/.testbench/"$2"-yace.png $TESTPROGWINE
+        echo "RUN: " $YACE $YACEOPTS $YACEOPTSSCREENSHOT $ROMARGS ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$TESTDIRWINE"/.testbench/"$screenshottest"-yace.png $TESTPROGWINE
     fi
-    $YACE $YACEOPTS $YACEOPTSSCREENSHOT $ROMARGS ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$TESTDIRWINE"/.testbench/"$2"-yace.png $TESTPROGWINE 1> /dev/null
+    $YACE $YACEOPTS $YACEOPTSSCREENSHOT $ROMARGS ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$TESTDIRWINE"/.testbench/"$screenshottest"-yace.png $TESTPROGWINE 1> /dev/null
     exitcode=$?
     cd $OLDCWD
 
@@ -226,7 +232,7 @@ function yace_run_screenshot
             YACESYO=23
         fi
 
-        ./cmpscreens "$refscreenshotname" "$YACEREFSXO" "$YACEREFSYO" "$TESTDIR"/.testbench/"$2"-yace.png "$YACESXO" "$YACESYO"
+        ./cmpscreens "$refscreenshotname" "$YACEREFSXO" "$YACEREFSYO" "$TESTDIR"/.testbench/"$screenshottest"-yace.png "$YACESXO" "$YACESYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

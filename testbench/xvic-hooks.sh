@@ -131,12 +131,18 @@ function xvic_prepare
 # $5- extra options for the emulator
 function xvic_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-xvic.png
-    if [ $verbose == "1" ]; then
-        echo $XVIC $XVICOPTS $XVICOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xvic.png "$4"
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
     fi
-    $XVIC $XVICOPTS $XVICOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xvic.png "$4" 1> /dev/null 2> /dev/null
+
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-xvic.png
+    if [ $verbose == "1" ]; then
+        echo $XVIC $XVICOPTS $XVICOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xvic.png "$4"
+    fi
+    $XVIC $XVICOPTS $XVICOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xvic.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -171,8 +177,8 @@ function xvic_run_screenshot
             XVICSYO=22
         fi
 
-#        echo ./cmpscreens "$refscreenshotname" "$XVICREFSXO" "$XVICREFSYO" "$1"/.testbench/"$2"-xvic.png "$XVICSXO" "$XVICSYO"
-        ./cmpscreens "$refscreenshotname" "$XVICREFSXO" "$XVICREFSYO" "$1"/.testbench/"$2"-xvic.png "$XVICSXO" "$XVICSYO"
+#        echo ./cmpscreens "$refscreenshotname" "$XVICREFSXO" "$XVICREFSYO" "$1"/.testbench/"$screenshottest"-xvic.png "$XVICSXO" "$XVICSYO"
+        ./cmpscreens "$refscreenshotname" "$XVICREFSXO" "$XVICREFSYO" "$1"/.testbench/"$screenshottest"-xvic.png "$XVICSXO" "$XVICSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

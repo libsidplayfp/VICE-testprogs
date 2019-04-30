@@ -202,12 +202,18 @@ function x64sc_prepare
 # $5- extra options for the emulator
 function x64sc_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-x64sc.png
-    if [ $verbose == "1" ]; then
-        echo $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$4"
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
     fi
-    $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64sc.png "$4" 1> /dev/null 2> /dev/null
+
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-x64sc.png
+    if [ $verbose == "1" ]; then
+        echo $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x64sc.png "$4"
+    fi
+    $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x64sc.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -243,8 +249,8 @@ function x64sc_run_screenshot
             X64SCSYO=23
         fi
     
-#        echo ./cmpscreens "$refscreenshotname" "$X64SCREFSXO" "$X64SCREFSYO" "$1"/.testbench/"$2"-x64sc.png "$X64SCSXO" "$X64SCSYO"
-        ./cmpscreens "$refscreenshotname" "$X64SCREFSXO" "$X64SCREFSYO" "$1"/.testbench/"$2"-x64sc.png "$X64SCSXO" "$X64SCSYO"
+#        echo ./cmpscreens "$refscreenshotname" "$X64SCREFSXO" "$X64SCREFSYO" "$1"/.testbench/"$screenshottest"-x64sc.png "$X64SCSXO" "$X64SCSYO"
+        ./cmpscreens "$refscreenshotname" "$X64SCREFSXO" "$X64SCREFSYO" "$1"/.testbench/"$screenshottest"-x64sc.png "$X64SCSXO" "$X64SCSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

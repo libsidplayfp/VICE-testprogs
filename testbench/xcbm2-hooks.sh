@@ -156,12 +156,18 @@ function xcbm2_prepare
 # $5- extra options for the emulator
 function xcbm2_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-xcbm2.png
-    if [ $verbose == "1" ]; then
-        echo $XCBM2 $XCBM2OPTS $XCBM2OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm2.png "$4"
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
     fi
-    $XCBM2 $XCBM2OPTS $XCBM2OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm2.png "$4" 1> /dev/null 2> /dev/null
+
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-xcbm2.png
+    if [ $verbose == "1" ]; then
+        echo $XCBM2 $XCBM2OPTS $XCBM2OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xcbm2.png "$4"
+    fi
+    $XCBM2 $XCBM2OPTS $XCBM2OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xcbm2.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -197,7 +203,7 @@ function xcbm2_run_screenshot
             XCBM2SYO=23
         fi
     
-        ./cmpscreens "$refscreenshotname" "$XCBM2REFSXO" "$XCBM2REFSYO" "$1"/.testbench/"$2"-xcbm2.png "$XCBM2SXO" "$XCBM2SYO"
+        ./cmpscreens "$refscreenshotname" "$XCBM2REFSXO" "$XCBM2REFSYO" "$1"/.testbench/"$screenshottest"-xcbm2.png "$XCBM2SXO" "$XCBM2SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

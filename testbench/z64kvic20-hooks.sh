@@ -137,12 +137,18 @@ function z64kvic20_prepare
 # $5- extra options for the emulator
 function z64kvic20_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-z64kvic20.png
-    if [ $verbose == "1" ]; then
-        echo "RUN: "$Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kvic20.png "$4"
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
     fi
-    $Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kvic20.png "$4" 1> /dev/null
+
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-z64kvic20.png
+    if [ $verbose == "1" ]; then
+        echo "RUN: "$Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-z64kvic20.png "$4"
+    fi
+    $Z64KVIC20 $Z64KVIC20OPTS $Z64KVIC20OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-z64kvic20.png "$4" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -177,8 +183,8 @@ function z64kvic20_run_screenshot
             Z64KVIC20SYO=22
         fi
 
-#        echo ./cmpscreens "$refscreenshotname" "$Z64KVIC20REFSXO" "$Z64KVIC20REFSYO" "$1"/.testbench/"$2"-z64kvic20.png "$Z64KVIC20SXO" "$Z64KVIC20SYO"
-        ./cmpscreens "$refscreenshotname" "$Z64KVIC20REFSXO" "$Z64KVIC20REFSYO" "$1"/.testbench/"$2"-z64kvic20.png "$Z64KVIC20SXO" "$Z64KVIC20SYO"
+#        echo ./cmpscreens "$refscreenshotname" "$Z64KVIC20REFSXO" "$Z64KVIC20REFSYO" "$1"/.testbench/"$screenshottest"-z64kvic20.png "$Z64KVIC20SXO" "$Z64KVIC20SYO"
+        ./cmpscreens "$refscreenshotname" "$Z64KVIC20REFSXO" "$Z64KVIC20REFSYO" "$1"/.testbench/"$screenshottest"-z64kvic20.png "$Z64KVIC20SXO" "$Z64KVIC20SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

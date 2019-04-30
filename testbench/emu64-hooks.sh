@@ -170,17 +170,23 @@ function emu64_prepare
 # $5- extra options for the emulator
 function emu64_run_screenshot
 {
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
+    fi
+
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-emu64.png
+    rm -f "$1"/.testbench/"$screenshottest"-emu64.png
     if [ x"$2"x == x""x ]; then
         TESTPROGFULLPATH=""
     else
         TESTPROGFULLPATH="--autostart "$1"/"$2""
     fi
     if [ $verbose == "1" ]; then
-        echo $EMU64 $EMU64OPTS $EMU64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--exitscreenshot" "$1"/.testbench/"$2"-emu64.png $TESTPROGFULLPATH
+        echo $EMU64 $EMU64OPTS $EMU64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--exitscreenshot" "$1"/.testbench/"$screenshottest"-emu64.png $TESTPROGFULLPATH
     fi
-    $EMU64 $EMU64OPTS $EMU64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--exitscreenshot" "$1"/.testbench/"$2"-emu64.png $TESTPROGFULLPATH 1> /dev/null 2> /dev/null
+    $EMU64 $EMU64OPTS $EMU64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--exitscreenshot" "$1"/.testbench/"$screenshottest"-emu64.png $TESTPROGFULLPATH 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -215,9 +221,9 @@ function emu64_run_screenshot
         fi
 
         if [ $verbose == "1" ]; then
-            echo ./cmpscreens "$refscreenshotname" "$EMU64REFSXO" "$EMU64REFSYO" "$1"/.testbench/"$2"-emu64.png "$EMU64SXO" "$EMU64SYO"
+            echo ./cmpscreens "$refscreenshotname" "$EMU64REFSXO" "$EMU64REFSYO" "$1"/.testbench/"$screenshottest"-emu64.png "$EMU64SXO" "$EMU64SYO"
         fi
-        ./cmpscreens "$refscreenshotname" "$EMU64REFSXO" "$EMU64REFSYO" "$1"/.testbench/"$2"-emu64.png "$EMU64SXO" "$EMU64SYO"
+        ./cmpscreens "$refscreenshotname" "$EMU64REFSXO" "$EMU64REFSYO" "$1"/.testbench/"$screenshottest"-emu64.png "$EMU64SXO" "$EMU64SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

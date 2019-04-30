@@ -101,12 +101,18 @@ function x64dtv_prepare
 # $5- extra options for the emulator
 function x64dtv_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-x64dtv.png
-    if [ $verbose == "1" ]; then
-        echo $X64DTV $X64DTVOPTS $X64DTVOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64dtv.png "$4"
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
     fi
-    $X64DTV $X64DTVOPTS $X64DTVOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x64dtv.png "$4" 1> /dev/null 2> /dev/null
+
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-x64dtv.png
+    if [ $verbose == "1" ]; then
+        echo $X64DTV $X64DTVOPTS $X64DTVOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x64dtv.png "$4"
+    fi
+    $X64DTV $X64DTVOPTS $X64DTVOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x64dtv.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -142,7 +148,7 @@ function x64dtv_run_screenshot
             XX64DTVSYO=23
         fi
     
-        ./cmpscreens "$refscreenshotname" "$X64DTVREFSXO" "$X64DTVREFSYO" "$1"/.testbench/"$2"-x64dtv.png "$X64DTVSXO" "$X64DTVSYO"
+        ./cmpscreens "$refscreenshotname" "$X64DTVREFSXO" "$X64DTVREFSYO" "$1"/.testbench/"$screenshottest"-x64dtv.png "$X64DTVSXO" "$X64DTVSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

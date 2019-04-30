@@ -212,8 +212,14 @@ function cham20_prepare
 # $5- extra options for the emulator
 function cham20_run_screenshot
 {
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
+    fi
+
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-cham20.png
+    rm -f "$1"/.testbench/"$screenshottest"-cham20.png
 
     # reset
     cham20_reset
@@ -228,10 +234,10 @@ function cham20_run_screenshot
     timeoutsecs=`expr \( $3 + 5000000 \) / 10000000`
     sleep $timeoutsecs
     if [ "${videotype}" == "NTSC" ]; then
-        chshot --vic20 --ntsc -o "$1"/.testbench/"$2"-cham20.png
+        chshot --vic20 --ntsc -o "$1"/.testbench/"$screenshottest"-cham20.png
         if [ "$?" != "0" ]; then exit -1; fi
     else
-        chshot --vic20 -o "$1"/.testbench/"$2"-cham20.png
+        chshot --vic20 -o "$1"/.testbench/"$screenshottest"-cham20.png
         if [ "$?" != "0" ]; then exit -1; fi
     fi
 #    echo "exited with: " $exitcode
@@ -255,8 +261,8 @@ function cham20_run_screenshot
 #           CHAM20SYO=38
 #       fi
 
-#        echo ./cmpscreens "$refscreenshotname" "$CHAM20REFSXO" "$CHAM20REFSYO" "$1"/.testbench/"$2"-cham20.png "$CHAM20SXO" "$CHAM20SYO"
-        ./cmpscreens "$refscreenshotname" "$CHAM20REFSXO" "$CHAM20REFSYO" "$1"/.testbench/"$2"-cham20.png "$CHAM20SXO" "$CHAM20SYO"
+#        echo ./cmpscreens "$refscreenshotname" "$CHAM20REFSXO" "$CHAM20REFSYO" "$1"/.testbench/"$screenshottest"-cham20.png "$CHAM20SXO" "$CHAM20SYO"
+        ./cmpscreens "$refscreenshotname" "$CHAM20REFSXO" "$CHAM20REFSYO" "$1"/.testbench/"$screenshottest"-cham20.png "$CHAM20SXO" "$CHAM20SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing ("$refscreenshotname") - "

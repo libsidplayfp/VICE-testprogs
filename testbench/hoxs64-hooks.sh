@@ -184,12 +184,18 @@ function hoxs64_prepare
 #       255 error
 function hoxs64_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-hoxs64.png
-    if [ $verbose == "1" ]; then
-        echo $HOXS64 $HOXS64OPTS $HOXS64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-hoxs64.png "-autoload" "$4"
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
     fi
-    $HOXS64 $HOXS64OPTS $HOXS64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-hoxs64.png "-autoload" "$4" 1> /dev/null
+
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-hoxs64.png
+    if [ $verbose == "1" ]; then
+        echo $HOXS64 $HOXS64OPTS $HOXS64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-hoxs64.png "-autoload" "$4"
+    fi
+    $HOXS64 $HOXS64OPTS $HOXS64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-hoxs64.png "-autoload" "$4" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -220,9 +226,9 @@ function hoxs64_run_screenshot
 # hoxs64 cant do NTSC
     
         if [ $verbose == "1" ]; then
-            echo ./cmpscreens "$refscreenshotname" "$HOXS64REFSXO" "$HOXS64REFSYO" "$1"/.testbench/"$2"-hoxs64.png "$HOXS64SXO" "$HOXS64SYO"
+            echo ./cmpscreens "$refscreenshotname" "$HOXS64REFSXO" "$HOXS64REFSYO" "$1"/.testbench/"$screenshottest"-hoxs64.png "$HOXS64SXO" "$HOXS64SYO"
         fi
-        ./cmpscreens "$refscreenshotname" "$HOXS64REFSXO" "$HOXS64REFSYO" "$1"/.testbench/"$2"-hoxs64.png "$HOXS64SXO" "$HOXS64SYO"
+        ./cmpscreens "$refscreenshotname" "$HOXS64REFSXO" "$HOXS64REFSYO" "$1"/.testbench/"$screenshottest"-hoxs64.png "$HOXS64SXO" "$HOXS64SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

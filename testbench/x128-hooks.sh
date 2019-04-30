@@ -191,12 +191,18 @@ function x128_prepare
 # $5- extra options for the emulator
 function x128_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-x128.png
-    if [ $verbose == "1" ]; then
-        echo $X128 $X128OPTS $X128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x128.png "$4"
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
     fi
-    $X128 $X128OPTS $X128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-x128.png "$4" 1> /dev/null 2> /dev/null
+
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-x128.png
+    if [ $verbose == "1" ]; then
+        echo $X128 $X128OPTS $X128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x128.png "$4"
+    fi
+    $X128 $X128OPTS $X128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x128.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -234,7 +240,7 @@ function x128_run_screenshot
             X128SYO=23
         fi
 
-        ./cmpscreens "$refscreenshotname" "$X128REFSXO" "$X128REFSYO" "$1"/.testbench/"$2"-x128.png "$X128SXO" "$X128SYO"
+        ./cmpscreens "$refscreenshotname" "$X128REFSXO" "$X128REFSYO" "$1"/.testbench/"$screenshottest"-x128.png "$X128SXO" "$X128SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

@@ -99,12 +99,18 @@ function xpet_prepare
 # $5- extra options for the emulator
 function xpet_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-xpet.png
-    if [ $verbose == "1" ]; then
-        echo $XPET $XPETOPTS $XPETOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xpet.png "$4"
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
     fi
-    $XPET $XPETOPTS $XPETOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xpet.png "$4" 1> /dev/null 2> /dev/null
+
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-xpet.png
+    if [ $verbose == "1" ]; then
+        echo $XPET $XPETOPTS $XPETOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xpet.png "$4"
+    fi
+    $XPET $XPETOPTS $XPETOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xpet.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -119,7 +125,7 @@ function xpet_run_screenshot
     fi
     if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$refscreenshotname" "$XPETREFSXO" "$XPETREFSYO" "$1"/.testbench/"$2"-xpet.png "$XPETSXO" "$XPETSYO"
+        ./cmpscreens "$refscreenshotname" "$XPETREFSXO" "$XPETREFSYO" "$1"/.testbench/"$screenshottest"-xpet.png "$XPETSXO" "$XPETSYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

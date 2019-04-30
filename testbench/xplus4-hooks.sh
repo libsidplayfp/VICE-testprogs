@@ -102,12 +102,18 @@ function xplus4_prepare
 # $5- extra options for the emulator
 function xplus4_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-xplus4.png
-    if [ $verbose == "1" ]; then
-        echo $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xplus4.png "$4"
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
     fi
-    $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xplus4.png "$4" 1> /dev/null 2> /dev/null
+
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-xplus4.png
+    if [ $verbose == "1" ]; then
+        echo $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xplus4.png "$4"
+    fi
+    $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xplus4.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -122,7 +128,7 @@ function xplus4_run_screenshot
     fi
     if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$refscreenshotname" "$XPLUS4REFSXO" "$XPLUS4REFSYO" "$1"/.testbench/"$2"-xplus4.png "$XPLUS4SXO" "$XPLUS4SYO"
+        ./cmpscreens "$refscreenshotname" "$XPLUS4REFSXO" "$XPLUS4REFSYO" "$1"/.testbench/"$screenshottest"-xplus4.png "$XPLUS4SXO" "$XPLUS4SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

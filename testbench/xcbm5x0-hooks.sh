@@ -116,12 +116,18 @@ function xcbm5x0_prepare
 # $5- extra options for the emulator
 function xcbm5x0_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-xcbm5x0.png
-    if [ $verbose == "1" ]; then
-        echo $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm5x0.png "$4"
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
     fi
-    $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-xcbm5x0.png "$4" 1> /dev/null 2> /dev/null
+
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-xcbm5x0.png
+    if [ $verbose == "1" ]; then
+        echo $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xcbm5x0.png "$4"
+    fi
+    $XCBM5X0 $XCBM5X0OPTS $XCBM5X0OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xcbm5x0.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -136,7 +142,7 @@ function xcbm5x0_run_screenshot
     fi
     if [ -f "$refscreenshotname" ]
     then
-        ./cmpscreens "$refscreenshotname" "$XCBM5X0REFSXO" "$XCBM5X0REFSYO" "$1"/.testbench/"$2"-xcbm5x0.png "$XCBM5X0SXO" "$XCBM5X0SYO"
+        ./cmpscreens "$refscreenshotname" "$XCBM5X0REFSXO" "$XCBM5X0REFSYO" "$1"/.testbench/"$screenshottest"-xcbm5x0.png "$XCBM5X0SXO" "$XCBM5X0SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

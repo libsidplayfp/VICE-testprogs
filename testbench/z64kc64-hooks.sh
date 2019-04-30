@@ -200,12 +200,18 @@ function z64kc64_prepare
 # $5- extra options for the emulator
 function z64kc64_run_screenshot
 {
-    mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$2"-z64kc64.png
-    if [ $verbose == "1" ]; then
-        echo "RUN: "$Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kc64.png "$4"
+    if [ "$2" == "" ] ; then
+        screenshottest="$mounted_crt"
+    else
+        screenshottest="$2"
     fi
-    $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$2"-z64kc64.png "$4" 1> /dev/null 2> /dev/null
+
+    mkdir -p "$1"/".testbench"
+    rm -f "$1"/.testbench/"$screenshottest"-z64kc64.png
+    if [ $verbose == "1" ]; then
+        echo "RUN: "$Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-z64kc64.png "$4"
+    fi
+    $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-z64kc64.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo exitcode:$exitcode
     if [ $exitcode -ne 0 ]
@@ -242,13 +248,13 @@ function z64kc64_run_screenshot
 
 #        echo "refscreenshotvideotype:" ${refscreenshotvideotype}
 #        echo "refscreenshotname:" $refscreenshotname
-#        echo "screenshotname": "$1"/.testbench/"$2"-z64kc64.png
+#        echo "screenshotname": "$1"/.testbench/"$screenshottest"-z64kc64.png
 #        echo "Z64KC64SXO:"$Z64KC64SXO
 #        echo "Z64KC64SYO:"$Z64KC64SYO
 #        echo "Z64KC64REFSXO:"$Z64KC64REFSXO
 #        echo "Z64KC64REFSYO:"$Z64KC64REFSYO
         
-        ./cmpscreens "$refscreenshotname" "$Z64KC64REFSXO" "$Z64KC64REFSYO" "$1"/.testbench/"$2"-z64kc64.png "$Z64KC64SXO" "$Z64KC64SYO"
+        ./cmpscreens "$refscreenshotname" "$Z64KC64REFSXO" "$Z64KC64REFSYO" "$1"/.testbench/"$screenshottest"-z64kc64.png "$Z64KC64SXO" "$Z64KC64SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "
