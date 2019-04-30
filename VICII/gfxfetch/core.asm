@@ -235,6 +235,13 @@ postloop:
   cmp $d012
   bne postloop
 endirq:
+
+    dec framecount
+    bne +
+    lda #0
+    sta $d7ff
++
+
   jmp $ea81     ; return to the auxiliary raster interrupt
 
 restore:        ; disable the Restore key
@@ -327,7 +334,8 @@ screenptr = * + 1
   bne --
   rts
 
-
+framecount: !byte 5
+  
 ; --- Data
 
 !ct scr
