@@ -138,10 +138,19 @@ function checktarget
 
 # $1  test path
 # $2  test program name
+# $3  mounted crt
 function getscreenshotname
 {
+    refscreenshottest=""
     refscreenshotname=""
     screenshot_videosubtype=""
+    
+    if [ "$2" == "" ] ; then
+        refscreenshottest="$3"
+    else
+        refscreenshottest="$2"
+    fi
+    
     if [ "$videosubtype" != "" ] ; then
         # if a subtype was given on cmdline, use that
         screenshot_videosubtype=$videosubtype
@@ -170,44 +179,44 @@ function getscreenshotname
     fi
 
     if [ "$screenshot_videosubtype" != "" ] ; then
-        if [ -f "$1"/references/"$2"-"$screenshot_videosubtype".png ]
+        if [ -f "$1"/references/"$refscreenshottest"-"$screenshot_videosubtype".png ]
         then
-            refscreenshotname="$1"/references/"$2"-"$screenshot_videosubtype".png
+            refscreenshotname="$1"/references/"$refscreenshottest"-"$screenshot_videosubtype".png
             return 0
         fi
         # if the exact subtype could not be found, try more general one (PAL)
         if [ "$screenshot_videosubtype" == "8565early" ] || [ "$screenshot_videosubtype" == "8565late" ]; then
-            if [ -f "$1"/references/"$2"-"8565".png ]
+            if [ -f "$1"/references/"$refscreenshottest"-"8565".png ]
             then
-                refscreenshotname="$1"/references/"$2"-"8565".png
+                refscreenshotname="$1"/references/"$refscreenshottest"-"8565".png
                 return 0
             fi
         fi
         # if the exact subtype could not be found, try more general one (NTSC)
         if [ "$screenshot_videosubtype" == "8562early" ] || [ "$screenshot_videosubtype" == "8562late" ]; then
-            if [ -f "$1"/references/"$2"-"8562".png ]
+            if [ -f "$1"/references/"$refscreenshottest"-"8562".png ]
             then
-                refscreenshotname="$1"/references/"$2"-"8562".png
+                refscreenshotname="$1"/references/"$refscreenshottest"-"8562".png
                 return 0
             fi
         fi
     fi
 
-    if [ "$testprogvideotype" == "NTSC" ] && [ -f "$1"/references/"$2"-ntsc.png ]
+    if [ "$testprogvideotype" == "NTSC" ] && [ -f "$1"/references/"$refscreenshottest"-ntsc.png ]
     then
-        refscreenshotname="$1"/references/"$2"-ntsc.png
+        refscreenshotname="$1"/references/"$refscreenshottest"-ntsc.png
         return 0
     fi
 
-    if [ "$testprogvideotype" == "NTSCOLD" ] && [ -f "$1"/references/"$2"-ntscold.png ]
+    if [ "$testprogvideotype" == "NTSCOLD" ] && [ -f "$1"/references/"$refscreenshottest"-ntscold.png ]
     then
-        refscreenshotname="$1"/references/"$2"-ntscold.png
+        refscreenshotname="$1"/references/"$refscreenshottest"-ntscold.png
         return 0
     fi
 
-    if [ -f "$1"/references/"$2".png ]
+    if [ -f "$1"/references/"$refscreenshottest".png ]
     then
-        refscreenshotname="$1"/references/"$2".png
+        refscreenshotname="$1"/references/"$refscreenshottest".png
         return 0
     fi
     return 255
@@ -463,11 +472,11 @@ function runprogsfortarget
 
                     if [ "${testtype}" == "screenshot" ]
                     then
-                        getscreenshotname "$testpath" "$testprog"
-#                        echo NAME:"$refscreenshotname"
+                        getscreenshotname "$testpath" "$testprog" "$mounted_crt"
                         refscreenshotvideotype="PAL"
                         if [ "${refscreenshotname#*_ntsc.prg}" != "$refscreenshotname" ] || 
-                           [ "${refscreenshotname#*_ntsc-8562.png}" != "$refscreenshotname" ]
+                           [ "${refscreenshotname#*_ntsc-8562.prg}" != "$refscreenshotname" ] ||
+                           [ "${refscreenshotname#*_ntsc-8562early.png}" != "$refscreenshotname" ]
                         then
                             refscreenshotvideotype="NTSC"
                         fi

@@ -198,12 +198,11 @@ function chameleon_setup_videomode
 {
 #    echo "setup_videomode":"${videotype}":"$lastprogvideotype":"$testprogvideotype":
 
-    if [ x"$testprogvideotype"x = x-1x ]
-    then
-        # return if testprog has no mode and no mode was set
+    if [ x"$testprogvideotype"x = x-1x ]; then
+        # if testprog has no mode and no mode was set -> do not switch
         if [ x"${videotype}"x == xx ]; then
             if [ $verbose == "1" ]; then
-                echo -ne "[videomode: not set] - "
+                echo -ne "[videomode: using last: "${lastprogvideotype}"] - "
             fi
             return
         fi
@@ -418,30 +417,62 @@ function chameleon_run_screenshot
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$2"-chameleon.png
 
-    # overwrite the CBM80 signature with generic "cartridge off" program
-    chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
-    if [ "$?" != "0" ]; then exit -1; fi
-    # reset
-    chameleon_reset
+    if [ X"$2"X == X""X ]
+    then
+#        echo "no program given"
+        # reset
+        chameleon_reset
+        
+        chameleon_setup_videomode
 
-    chameleon_setup_videomode
+        chameleon_make_helper_options 1
+        if [ "$?" != "0" ]; then exit -1; fi
+
+        # run helper program
+        chameleon_clear_returncode
+        chcodenet -x chameleon-helper.prg > /dev/null
+        if [ "$?" != "0" ]; then exit -1; fi
+        chameleon_poll_returncode 5
+
+        chameleon_clear_returncode
+        # trigger reset  (run cartridge)
+        echo -ne "X" > $RDUMMY
+        chacocmd --addr 0x80000000 --writemem $RDUMMY > /dev/null
+        if [ "$?" != "0" ]; then exit -1; fi
+#        chameleon_poll_returncode 5
+#        exitcode=$?
+
+    else
+
+        # overwrite the CBM80 signature with generic "cartridge off" program
+        chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
+        if [ "$?" != "0" ]; then exit -1; fi
+
+        # reset
+        chameleon_reset
+
+        chameleon_setup_videomode
+        
+        chameleon_make_helper_options 0
+        if [ "$?" != "0" ]; then exit -1; fi
+
+        # run the helper program (enable I/O RAM at $d7xx)
+        chameleon_clear_returncode
+        chcodenet -x chameleon-helper.prg > /dev/null
+        if [ "$?" != "0" ]; then exit -1; fi
+        chameleon_poll_returncode 5
+
+        chameleon_clear_returncode
     
-    chameleon_make_helper_options 0
-    if [ "$?" != "0" ]; then exit -1; fi
+        # run program
+        chcodenet -x "$1"/"$2" > /dev/null
+        if [ "$?" != "0" ]; then exit -1; fi
+    #    chameleon_poll_returncode 5
+    #    exitcode=$?
+    #    echo "exited with: " $exitcode
+    fi
 
-    # run the helper program (enable I/O RAM at $d7xx)
-    chameleon_clear_returncode
-    chcodenet -x chameleon-helper.prg > /dev/null
-    if [ "$?" != "0" ]; then exit -1; fi
-    chameleon_poll_returncode 5
-
-    # run program
-    chameleon_clear_returncode
-    chcodenet -x "$1"/"$2" > /dev/null
-    if [ "$?" != "0" ]; then exit -1; fi
-#    chameleon_poll_returncode 5
-#    exitcode=$?
-#    echo "exited with: " $exitcode
+    # sleep until timeout, then get the screenshot
     timeoutsecs=`expr \( $3 + 999999 \) / 1000000`
     sleep $timeoutsecs
     if [ "${videotype}" == "NTSC" ]; then
@@ -451,7 +482,17 @@ function chameleon_run_screenshot
         chshot -o "$1"/.testbench/"$2"-chameleon.png
         if [ "$?" != "0" ]; then exit -1; fi
     fi
-#    echo "exited with: " $exitcode
+    
+    # if the test was a cartrige, kill it
+    if [ X"$2"X == X""X ]; then
+        # overwrite the CBM80 signature with generic "cartridge off" program
+        chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
+        if [ "$?" != "0" ]; then exit -1; fi
+        # reset
+        chameleon_reset    
+    fi
+    
+    # compare screenshot against reference
     if [ -f "$refscreenshotname" ]
     then
         # defaults for PAL
@@ -460,7 +501,7 @@ function chameleon_run_screenshot
         CHAMSXO=53
         CHAMSYO=62
 
-#        echo [ "${refscreenshotvideotype}" "${videotype}" ]
+#        echo [ "${refscreenshotvideotype}":"${videotype}" ]
 
         if [ "${refscreenshotvideotype}" == "NTSC" ]; then
             CHAMREFSXO=32
@@ -499,7 +540,7 @@ function chameleon_run_exitcode
 {
 #    echo chameleon X"$1"X / X"$2"X
 
-    if [ X"$2"X = X""X ]
+    if [ X"$2"X == X""X ]
     then
 #        echo "no program given"
         # reset
