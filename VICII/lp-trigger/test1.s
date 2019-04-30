@@ -176,6 +176,12 @@ irq:
     inx
     iny
 
+    dec framecount
+    bne skp
+    lda #0
+    sta $d7ff
+skp:
+    
     pla
     tay
     pla
@@ -185,3 +191,5 @@ irq:
 
 hextab:
     .byte "0123456789",1,2,3,4,5,6,7,8
+framecount:
+    .byte 5
