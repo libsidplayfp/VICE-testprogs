@@ -42,9 +42,14 @@ tloop1:
 		bne		tloop1
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3*$05)+1), 1
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3*$05)+1), 1
+		}
 		;c"Incorrect DEX/BNE cycle count: %d"
-		
+
 		;test NOP
 		lda		#0
 		jsr		_waitVCount
@@ -57,7 +62,12 @@ tloop2:
 		bne		tloop2
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3 * $07)+2), 2
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3 * $07)+1), 2
+		}
 		;c"Incorrect NOP cycle count: %d-5"
 
 		;test LDA abs
@@ -72,7 +82,12 @@ tloop3:
 		bne		tloop3
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3*$09)+3), 3
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3*$09)+2), 3
+		}
 		;c"Incorrect LDA abs cycle count: %d-5"
 
 		;test LDA abs,X, no page crossing
@@ -87,7 +102,12 @@ tloop4:
 		bne		tloop4
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3*$09)+3), 4
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3*$09)+2), 4
+		}
 		;c"Incorrect LDA abs,X (1) cycle count: %d-5"
 
 		;test LDA abs,X, page crossing
@@ -103,7 +123,12 @@ tloop5:
 		bne		tloop5
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3*$0a)+3), 5
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3*$0a)+2), 5
+		}
 		;c"Incorrect LDA abs,X (2) cycle count: %d-5"
 		
 		;test STA abs,X, no page crossing
@@ -119,7 +144,12 @@ tloop6:
 		bne		tloop6
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3*$0a)+3), 6
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3*$0a)+2), 6
+		}
 		;c"Incorrect STA abs,X (1) cycle count: %d-5"
 		
 		;test STA abs,X, page crossing
@@ -135,7 +165,12 @@ tloop7:
 		bne		tloop7
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3*$0a)+3), 7
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3*$0a)+2), 7
+		}
 		;c"Incorrect STA abs,X (2) cycle count: %d-5"
 		
 		;test LDA zp
@@ -151,7 +186,12 @@ tloop8:
 		bne		tloop8
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3*$08)+2), 8
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3*$08)+2), 8
+		}
 		;c"Incorrect LDA zp cycle count: %d-5"
 		
 		;test LDA zp,X
@@ -167,7 +207,12 @@ tloop9:
 		bne		tloop9
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3*$09)+3), 9
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3*$09)+2), 9
+		}
 		;c"Incorrect LDA zp,X cycle count: %d-5"
 		
 		;test INC zp
@@ -183,7 +228,12 @@ tloop10:
 		bne		tloop10
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3*$0a)+3), 10
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3*$0a)+2), 10
+		}
 		;c"Incorrect INC zp cycle count: %d-5"
 		
 		;test INC zp,X
@@ -200,7 +250,12 @@ tloop11:
 		bne		tloop11
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3*$0b)+3), 11
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3*$0b)+2), 11
+		}
 		;c"Incorrect INC zp,X cycle count: %d-5"
 
 		;test INC abs
@@ -217,7 +272,12 @@ tloop12:
 		bne		tloop12
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3*$0b)+3), 12
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3*$0b)+2), 12
+		}
 		;c"Incorrect INC abs cycle count: %d-5"
 		
 		;test INC abs,X
@@ -234,7 +294,12 @@ tloop13:
 		bne		tloop13
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3*$0c)+4), 13
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3*$0c)+3), 13
+		}
 		;c"Incorrect INC abs,X cycle count: %d-5"
 		
 		;test LDA (zp),y, no page crossing
@@ -257,7 +322,12 @@ tloop14:
 		bne		tloop14
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3*$0a)+3), 14
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3*$0a)+2), 14
+		}
 		;c"Incorrect LDA (zp),Y (1) cycle count: %d-5"
 
 		;test LDA (zp),y, page crossing
@@ -280,7 +350,12 @@ tloop15:
 		bne		tloop15
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3*$0b)+0), 15
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3*$0a)+2), 15
+		}
 		;c"Incorrect LDA (zp),Y (2) cycle count: %d-5"
 		
 		;test LDA (zp),X
@@ -303,7 +378,12 @@ tloop16:
 		bne		tloop16
 		ldx		vcount
 		
+		!if (MODE = 0) {
 		+_ASSERTX ((3*$0b)+3), 16
+		}
+		!if (MODE = 1) {
+		+_ASSERTX ((3*$0b)+2), 16
+		}
 		;c"Incorrect LDA (zp,X) cycle count: %d-5"
 		
 		jmp		_testPassed
