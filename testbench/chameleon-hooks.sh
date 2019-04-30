@@ -77,6 +77,10 @@ function chameleon_clear_returncode
 #    echo "chameleon_clear_returncode done"
 }
 
+# should return:
+# 0   - test passed
+# 1   - timeout
+# 255 - test failed
 function chameleon_poll_returncode
 {
     # poll return code
@@ -99,7 +103,7 @@ function chameleon_poll_returncode
         if [ $SECONDS -gt $SECONDSEND ]
         then
             echo "timeout when waiting for return code"
-            RET=255
+            RET=1
             return $RET
         fi
     done;
@@ -600,6 +604,10 @@ function chameleon_run_exitcode
         if [ "$?" != "0" ]; then exit -1; fi
         chameleon_poll_returncode $(($3 + 1))
         exitcode=$?
+    fi
+
+    if [ $verbose == "1" ]; then
+        echo "got exitcode: " $exitcode
     fi
 #    echo "exited with: " $exitcode
 }

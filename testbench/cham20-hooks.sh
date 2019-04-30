@@ -73,6 +73,10 @@ function cham20_clear_returncode
 #    echo "cham20_clear_returncode done"
 }
 
+# should return:
+# 0   - test passed
+# 1   - timeout
+# 255 - test failed
 function cham20_poll_returncode
 {
     # poll return code
@@ -92,7 +96,7 @@ function cham20_poll_returncode
         if [ $SECONDS -gt $SECONDSEND ]
         then
             echo "timeout when waiting for return code"
-            RET=255
+            RET=1
             return $RET
         fi
     done;
