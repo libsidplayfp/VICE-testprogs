@@ -1,3 +1,5 @@
+framecount = $02
+
     !pseudopc PAYLOADLOC {
 
         ; Happify CPU ;-)
@@ -125,11 +127,27 @@ hbf:    sta $f000,x
         sta $01
 
         !if CARTTYPE = 0 {  ; easyflash
+        !if MODE = 0 {
         lda #%00000101      ; ultimax
+        }
+        !if MODE = 1 {
+        lda #%00000110      ; 8k
+        }
+        !if MODE = 2 {
+        lda #%00000111      ; 16k
+        }
         sta $de02
         }
         !if CARTTYPE = 1 {  ; retro replay
+        !if MODE = 0 {
         lda #%00000011      ; ultimax
+        }
+        !if MODE = 1 {
+        lda #%00000001      ; 8k
+        }
+        !if MODE = 2 {
+        lda #%00000000      ; 16k
+        }
         sta $de00
         }
 
@@ -181,11 +199,19 @@ hbf:    sta $f000,x
 
         lda #0
         sta $d020
+        
+        lda #5
+        sta framecount
 
+        jmp freezestart
+        
+        !align 255,0,0
 freezestart:
         
 loop:
 
+-       lda $d011
+        bpl -
 -       lda $d011
         bmi -
 
@@ -223,7 +249,7 @@ loop:
         beq -
 
         stx $d018
-        ; inc $d020
+;         inc $d020
         ldx #$ee        ; screen $3800 char $3800
 
         lda #$31+(3*8)
@@ -254,11 +280,13 @@ loop:
         bit $eaea
         bit $eaea
         bit $eaea
+        nop
+        nop
 
         sty $dd00
         stx $d018
         
-        ; inc $d020
+;         inc $d020
         ldx #$66        ; screen $1800 char $1800
 
         lda #$31+(5*8)
@@ -309,6 +337,8 @@ loop:
         bit $eaea
         bit $eaea
         bit $eaea
+        nop
+        nop
         
         sty $dd00
         stx $d018
@@ -364,6 +394,8 @@ loop:
         bit $eaea
         bit $eaea
         bit $eaea
+        nop
+        nop
         
         sty $dd00
         stx $d018
@@ -463,6 +495,11 @@ loop:
         stx $de00
         }
         
++
+        dec framecount
+        bne +
+        lda #0
+        sta $d7ff
 +
         jmp loop
 
