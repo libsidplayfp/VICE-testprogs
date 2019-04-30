@@ -249,7 +249,15 @@ endirq:
     lda #0
     sta $d020
 
+    dec framecount
+    bne +
+    lda #0
+    sta $d7ff
++
+
     jmp $ea81     ; return to the auxiliary raster interrupt
+
+framecount: !byte 5
 
 restore:        ; disable the Restore key
     lda cnmi
