@@ -201,7 +201,14 @@ postloop:
 
 
 endirq:
+    dec framecount
+    bne skpf
+    lda #0
+    sta $d7ff
+skpf:
   jmp $ea81     ; return to the auxiliary raster interrupt
+
+framecount: .byte 5
 
 restore:        ; disable the Restore key
   lda cnmi
