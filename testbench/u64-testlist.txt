@@ -408,24 +408,26 @@
 ../CPU/kdormann/,6502_functional_test.prg,exitcode,180000000
 #FIXME
 #../CPU/kdormann/,6502_interrupt_test.prg,exitcode,4294967295
+#FIXME: make NTSC fixes
 ../CPU/sha/,shaabsy1.prg,exitcode,6000000
-../CPU/sha/,shaabsy2.prg,exitcode,6500000
-../CPU/sha/,shaabsy3.prg,exitcode,18000000
+../CPU/sha/,shaabsy2.prg,exitcode,6500000,vicii-pal
+../CPU/sha/,shaabsy3.prg,exitcode,18000000,vicii-pal
 ../CPU/sha/,shazpy1.prg,exitcode,5500000
-../CPU/sha/,shazpy2.prg,exitcode,6500000
-../CPU/sha/,shazpy3.prg,exitcode,20000000
+../CPU/sha/,shazpy2.prg,exitcode,6500000,vicii-pal
+../CPU/sha/,shazpy3.prg,exitcode,20000000,vicii-pal
 ../CPU/shs/,shsabsy1.prg,exitcode,5500000
-../CPU/shs/,shsabsy2.prg,exitcode,7000000
-../CPU/shs/,shsabsy3.prg,exitcode,20000000
+../CPU/shs/,shsabsy2.prg,exitcode,7000000,vicii-pal
+../CPU/shs/,shsabsy3.prg,exitcode,20000000,vicii-pal
 #FIXME:
 #../CPU/shxy/,shx-t2.prg
 #../CPU/shxy/,shx-test.prg
+#FIXME: make NTSC fixes
 ../CPU/shxy/,shxy1.prg,exitcode,8000000
-../CPU/shxy/,shxy2.prg,exitcode,20000000
+../CPU/shxy/,shxy2.prg,exitcode,20000000,vicii-pal
 ../CPU/shxy/,shxy3.prg,exitcode,20000000
 ../CPU/shxy/,shxy4.prg,exitcode,20000000
 ../CPU/shxy/,shyx1.prg,exitcode,9000000
-../CPU/shxy/,shyx2.prg,exitcode,20000000
+../CPU/shxy/,shyx2.prg,exitcode,20000000,vicii-pal
 ../CPU/shxy/,shyx3.prg,exitcode,20000000
 ../CPU/shxy/,shyx4.prg,exitcode,20000000
 #FIXME:
@@ -533,16 +535,18 @@
 ../CIA/tod/,hammerfist0.prg,exitcode,10000000
 ../CIA/tod/,hammerfist1.prg,exitcode,10000000
 ../CIA/tod/,hour-test.prg,exitcode,100000000
-../CIA/tod/,hzsync0.prg,exitcode,100000000
-../CIA/tod/,hzsync1.prg,exitcode,100000000
-../CIA/tod/,hzsync2.prg,exitcode,100000000
-../CIA/tod/,hzsync3.prg,exitcode,100000000
-../CIA/tod/,hzsync4.prg,exitcode,100000000
-../CIA/tod/,hzsync5.prg,exitcode,100000000
+../CIA/tod/,hzsync0.prg,exitcode,100000000,vicii-pal
+../CIA/tod/,hzsync1.prg,exitcode,100000000,vicii-pal
+../CIA/tod/,hzsync2.prg,exitcode,100000000,vicii-pal
+../CIA/tod/,hzsync3.prg,exitcode,100000000,vicii-pal
+../CIA/tod/,hzsync4.prg,exitcode,100000000,vicii-pal
+../CIA/tod/,hzsync5.prg,exitcode,100000000,vicii-pal
 ../CIA/tod/,powerup.prg,exitcode,100000000
-../CIA/tod/,read-latch.prg,exitcode,100000000
+../CIA/tod/,read-latch.prg,exitcode,100000000,vicii-pal
 ../CIA/tod/,stability.prg,interactive,0,vicii-pal
 ../CIA/tod/,write-stop.prg,exitcode,100000000
+#FIXME: make automatic version
+../CIA/transactor/,ciatest64.prg,interactive,0
 ################################################################################
 # VICII
 ################################################################################
@@ -550,8 +554,20 @@
 ../VICII/border/,vborder.prg,interactive,0,vicii-pal
 ../VICII/border/,vborder2.prg,interactive,0,vicii-pal
 ../VICII/colorram/,test.prg,exitcode,100000000
-#FIXME: this test is broken on NTSC
-#FIXME: check on NTSCOLD
+#FIXME: various interactive tests that need better documentation
+../VICII/D011Test/,d011h1.prg,interactive,0,vicii-pal
+../VICII/D011Test/,d011h2.prg,interactive,0,vicii-pal
+../VICII/D011Test/,d011n.prg,interactive,0,vicii-pal
+../VICII/D011Test/,d011sc.prg,interactive,0,vicii-pal
+../VICII/D011Test/,d011v1.prg,interactive,0,vicii-pal
+../VICII/D011Test/,d011v2.prg,interactive,0,vicii-pal
+../VICII/D011Test/,d011ver.prg,interactive,0,vicii-pal
+../VICII/D011Test/,d011vt.prg,interactive,0,vicii-pal
+../VICII/D011Test/,hh3.prg,interactive,0,vicii-pal
+../VICII/D011Test/,hh.prg,interactive,0,vicii-pal
+../VICII/D011Test/,s1.prg,interactive,0,vicii-pal
+../VICII/D011Test/,vicnt2.prg,interactive,0,vicii-pal
+#FIXME: fix and check on NTSCOLD
 #FIXME: this test is broken on NTSC
 #FIXME: this test is broken on NTSC
 #FIXME: this test is broken on NTSC
@@ -581,8 +597,8 @@
 #FIXME: port to NTSC/dump reference data
 ../VICII/split-tests/spritescan/,spritescan.prg,exitcode,1000000000,vicii-pal
 #TODO: add "drean" support to testbench
-#FIXME: VICE output doesnt match my C64
-#FIXME: check on NTSCOLD
+#FIXME: VICE output doesnt match my C64 (better captures needed)
+#FIXME: check on NTSCOLD (better captures needed)
 ../VICII/vspbug/,lft-safe-vsp.prg,interactive,0,vicii-pal
 ################################################################################
 # Sprites
@@ -825,10 +841,10 @@
 ../C64/carts/,mmcrplugin.prg,interactive,0
 #TODO: do more research and make a proper automatic test
 #TODO: make this automatic
+#TODO: make this automatic
+#TODO: make this automatic
 ../C64/carts/ultimax,ultimax-ef.crt,interactive,0
 ../C64/carts/ultimax,ultimax-rr.crt,interactive,0
-../C64/carts/ultimax,ultimax-vic-ef.crt,interactive,0
-../C64/carts/ultimax,ultimax-vic-rr.crt,interactive,0
 ../C64/freezer/ciairq,ciairq1t1.prg,interactive,0
 ../C64/freezer/ciairq,ciairq1t2.prg,interactive,0
 ../C64/freezer/ciairq,ciairq2t1.prg,interactive,0
@@ -877,6 +893,7 @@
 # ../drive runtime 93 minutes and 36 seconds (chameleon)
 ################################################################################
 ../drive/diskchange/,pollwp.prg,interactive,0
+#FIXME: use an empty g64 too
 ../drive/iecdelay/,iec-bus-delay-auto.prg,exitcode,80000000
 ../drive/interrupts/,timera.prg,exitcode,20000000
 ../drive/interrupts/,watchdog,interactive,0
