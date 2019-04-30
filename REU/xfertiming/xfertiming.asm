@@ -230,8 +230,11 @@ irq:
 }
     inc $d019
 
-
-
+    dec framecount
+    bne +
+    lda #0
+    sta $d7ff
++
 
     pla
     tay
@@ -240,6 +243,8 @@ irq:
     pla
     rti
 
+framecount: !byte 5
+    
 buffer:
 
 !if TYPE = 1 {
