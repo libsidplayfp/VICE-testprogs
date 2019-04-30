@@ -360,15 +360,16 @@ testname:
           ;1234567890123456789012345678901234567890
     .byte "SPRITEGAP3                              "
 
-NUMREFS = 5
+NUMREFS = 4
 
     .align 256
 reftext:
     .byte "6569            "
     .byte "6569R1 / 8565R2 "
     .byte "6572            "
-    .byte "C128NTSC        "
+    .byte "C128NTSC/ 6567R8"
 ;    .byte "NEW PAL         "
+;    .byte "C128NTSC/ 6567R8"
 
     .align 256
 reference:
@@ -382,6 +383,9 @@ reference:
 ; this dump is equal to the 6569r1 one
 ;    .align 256
 ;    .incbin "dumps/spritegap3-pal-newvic.bin" ; 444
+; this dump is equal to the ntsc-c128 one
+;    .align 256
+;    .incbin "dumps/spritegap3-6567r8.bin" ; 340
     .align 256
     .byte 0
   

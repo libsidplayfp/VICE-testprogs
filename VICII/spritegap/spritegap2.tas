@@ -375,8 +375,9 @@ NUMREFS = 2
 
     .align 256
 reftext:
-    .byte "C128NTSC        "
+    .byte "C128NTSC/ 6567R8"
     .byte "6569R1 / 8565R2 "
+;    .byte "C128NTSC/ 6567R8"
 
     .align 256
 reference:
@@ -384,6 +385,9 @@ reference:
     .align 256
     .incbin "dumps/spritegap2-8565r2.bin"    ; 668
     .align 256
+; this dump is equal to the ntsc-c128 one
+;    .incbin "dumps/spritegap2-6567r8.bin" ; 676
+;    .align 256
     .byte 0
 
   

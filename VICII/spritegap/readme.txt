@@ -110,4 +110,17 @@ CIA2 „new“ MOS / 6526 / 1888 216A
 VIC-II „new“ MOS / 8565R2 / 1688 22
 SID „new“ MOS / 8580R5 / 1788 25
 
+spritegap2-6567r8.bin
+spritegap3-6567r8.bin
+---------------------
+
+created on Machine M6 (gpz). 
+identical to spritegap2-ntsc-c128.bin / spritegap3-ntsc-c128.bin
+
+CPU: 6510 CBM / 0785
+SID: 6581
+CIA1: 6526 / 0786
+CIA2: 6526 / 0786
+VIC-II: 6567R8 / 1384
+
 ---------------------------------------------------------------------------
