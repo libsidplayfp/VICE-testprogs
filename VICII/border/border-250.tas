@@ -140,8 +140,8 @@ main_loop
 
         ; since we need cycle exact non jittering timing we must stabilize the raster
 
-        ldx #$d0
-       jsr rastersync
+        ldx #$d1
+        jsr rastersync
 
         ldy #$c8        ; value for 40 columns mode
 
@@ -188,6 +188,11 @@ sk1
         bpl ol1         ; 3
                         ; -> 46 ( 63-((8*2)+1) )
 
+        dec framecount
+        bne +
+        lda #0
+        sta $d7ff
++
         jmp main_loop
 
 ;--------------------------------------------------
@@ -229,6 +234,8 @@ lp2:     dey
          nop
          nop
          rts
+
+framecount: !byte 5
 
 spritedata:
     !by %00000000,%00000000,%00000001

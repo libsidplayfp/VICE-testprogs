@@ -106,7 +106,7 @@ spr1
         ; x-pos MSB
         lda #%11000001
         sta $d010
-
+        
         jmp main_loop
         
 *=$0900 ; align to some page so branches do not cross a page boundary and fuck up the timing        
@@ -175,6 +175,11 @@ sk1
         lda #$18
         sta $d011
 
+        dec framecount
+        bne +
+        lda #0
+        sta $d7ff
++
         jmp main_loop
         
 }
@@ -236,6 +241,11 @@ sk1
         bpl ol1         ; 3
                         ; -> 46 ( 63-((8*2)+1) )
 
+        dec framecount
+        bne +
+        lda #0
+        sta $d7ff
++
         jmp main_loop
 }
 
@@ -278,6 +288,8 @@ lp2:     dey
          nop
          nop
          rts
+         
+framecount: !byte 5
 
 screen:
     !scr "                                        "

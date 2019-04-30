@@ -192,6 +192,12 @@ sk1
 
         ldx #$3b
         stx $d011
+
+        dec framecount
+        bne +
+        lda #0
+        sta $d7ff
++
         jmp main_loop
 
 ;--------------------------------------------------
@@ -233,6 +239,8 @@ lp2:     dey
          nop
          nop
          rts
+
+framecount: !byte 5
 
 spritedata:
     !by %00000000,%00000000,%00000001
