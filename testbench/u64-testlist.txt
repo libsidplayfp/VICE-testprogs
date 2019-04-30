@@ -620,7 +620,7 @@
 ../VICII/spritemcbase/,spritemcbase.prg,interactive,0
 #FIXME: port tests to NTSC and make reference screenshots
 ../VICII/spritesteal/,spritesteal.prg,exitcode,100000000,vicii-pal
-../VICII/spritevssprite/,spritevssprite.prg,exitcode,10000000,vicii-pal
+../VICII/spritevssprite/,spritevssprite.prg,exitcode,32000000,vicii-pal
 ###(this is not a test)
 #../VICII/spritex/,demusinterruptus-emucheck.prg
 #FIXME: check on NTSCOLD
@@ -871,7 +871,9 @@
 ../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,exitcode,100000000,reu512k
 ../REU/reudetect/,reudetect.prg,exitcode,100000000,reu512k
 ../REU/reutiming/,reutiming.prg,exitcode,100000000,reu512k
+#FIXME: NTSC fix
 ../REU/spriteba/,spriteba.prg,interactive,0
+#FIXME: NTSC fix
 #TODO: clean up and add all the other reu timing tests....
 ################################################################################
 # GEO-RAM
@@ -887,6 +889,7 @@
 ################################################################################
 # plus256k
 ################################################################################
+#FIXME: autostart is broken with plus256k
 ################################################################################
 # 1541 Drive
 # ../drive runtime 8 minutes and 20 seconds (x64sc)

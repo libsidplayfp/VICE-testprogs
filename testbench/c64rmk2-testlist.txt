@@ -680,7 +680,7 @@
 ../VICII/spritesteal/,spritesteal.prg,exitcode,100000000,vicii-pal
 ../VICII/spritesteal/,spritesteal_ntsc.prg,exitcode,100000000,vicii-ntsc
 ../VICII/spritesteal/,spritesteal_ntscold.prg,exitcode,100000000,vicii-ntscold
-../VICII/spritevssprite/,spritevssprite.prg,exitcode,10000000,vicii-pal
+../VICII/spritevssprite/,spritevssprite.prg,exitcode,32000000,vicii-pal
 ###(this is not a test)
 #../VICII/spritex/,demusinterruptus-emucheck.prg
 #FIXME: check on NTSCOLD
@@ -921,7 +921,9 @@
 ################################################################################
 ../REU/colorram/,dmacolortest.prg,interactive,0
 #TODO: split into behaviour- and timing- test
+#FIXME: NTSC fix
 ../REU/spriteba/,spriteba.prg,interactive,0
+#FIXME: NTSC fix
 #TODO: clean up and add all the other reu timing tests....
 ################################################################################
 # GEO-RAM
@@ -932,6 +934,7 @@
 ################################################################################
 # plus256k
 ################################################################################
+#FIXME: autostart is broken with plus256k
 ################################################################################
 # 1541 Drive
 # ../drive runtime 8 minutes and 20 seconds (x64sc)

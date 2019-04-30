@@ -611,21 +611,21 @@
 ../VICII/border/,hvborder1.prg,screenshot,10000000,vicii-pal
 ../VICII/border/,hvborder2.prg,screenshot,10000000,vicii-pal
 ../VICII/border/,vborder.prg,interactive,0,vicii-pal
-../VICII/border/,vborder-32-08.prg,screenshot,10000000,vicii-pal
-../VICII/border/,vborder-32-09.prg,screenshot,10000000,vicii-pal
-../VICII/border/,vborder-33-08.prg,screenshot,10000000,vicii-pal
-../VICII/border/,vborder-33-09.prg,screenshot,10000000,vicii-pal
+../VICII/border/,vborder-32-08.prg,screenshot,12000000,vicii-pal
+../VICII/border/,vborder-32-09.prg,screenshot,12000000,vicii-pal
+../VICII/border/,vborder-33-08.prg,screenshot,12000000,vicii-pal
+../VICII/border/,vborder-33-09.prg,screenshot,12000000,vicii-pal
 ../VICII/border/,vborder2.prg,interactive,0,vicii-pal
-../VICII/border/,vborder2-21.prg,screenshot,10000000,vicii-pal
-../VICII/border/,vborder2-22.prg,screenshot,10000000,vicii-pal
-../VICII/border/,vborder2-35.prg,screenshot,10000000,vicii-pal
-../VICII/border/,vborder2-36.prg,screenshot,10000000,vicii-pal
-../VICII/border/,vborder2-63.prg,screenshot,10000000,vicii-pal
-../VICII/border/,vborder2-64.prg,screenshot,10000000,vicii-pal
+../VICII/border/,vborder2-21.prg,screenshot,12000000,vicii-pal
+../VICII/border/,vborder2-22.prg,screenshot,12000000,vicii-pal
+../VICII/border/,vborder2-35.prg,screenshot,12000000,vicii-pal
+../VICII/border/,vborder2-36.prg,screenshot,12000000,vicii-pal
+../VICII/border/,vborder2-63.prg,screenshot,12000000,vicii-pal
+../VICII/border/,vborder2-64.prg,screenshot,12000000,vicii-pal
 ../VICII/border/,vborder_ntsc.prg,interactive,0,vicii-ntsc
 ../VICII/border/,vborder2_ntsc.prg,interactive,0,vicii-ntsc
 ../VICII/colorram/,test.prg,exitcode,100000000
-../VICII/colorsplit,colorsplit.prg,screenshot,10000000,vicii-pal
+../VICII/colorsplit,colorsplit.prg,screenshot,14000000,vicii-pal
 #FIXME: various interactive tests that need better documentation
 ../VICII/D011Test/,d011h1.prg,interactive,0,vicii-pal
 ../VICII/D011Test/,d011h2.prg,interactive,0,vicii-pal
@@ -753,7 +753,7 @@
 #FIXME: port to NTSC/dump reference data
 ../VICII/split-tests/spritescan/,spritescan.prg,exitcode,1000000000,vicii-pal
 #TODO: add "drean" support to testbench
-../VICII/vicii_timing/,vicii_reg_timing.prg,screenshot,50000000,vicii-pal
+../VICII/vicii_timing/,vicii_reg_timing.prg,screenshot,35000000,vicii-pal
 ../VICII/videomode/,rmwtest.prg,screenshot,10000000,vicii-pal
 ../VICII/videomode/,rmwtest_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/videomode/,videomode1.prg,screenshot,10000000,vicii-pal
@@ -791,18 +791,18 @@
 #../VICII/spritecollisions/,sprite-sprite-collision-cycle_ntsc.prg,exitcode,10000000,vicii-ntsc
 #../VICII/spritecollisions/,sprite-sprite_ntsc.prg,exitcode,10000000,vicii-ntsc
 ../VICII/spritecrunch/,spritecrunch.prg,interactive,0,vicii-pal
-../VICII/spritecrunch/,spritecrunch-3b-00.prg,screenshot,10000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch-3c-00.prg,screenshot,10000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch-3d-00.prg,screenshot,10000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch-3b-00.prg,screenshot,21000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch-3c-00.prg,screenshot,21000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch-3d-00.prg,screenshot,21000000,vicii-pal
 ../VICII/spritecrunch/,spritecrunch2.prg,interactive,0,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-07.prg,screenshot,10000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-08.prg,screenshot,10000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-09.prg,screenshot,10000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-25.prg,screenshot,10000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-26.prg,screenshot,10000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-27.prg,screenshot,10000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-28.prg,screenshot,10000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-29.prg,screenshot,10000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-07.prg,screenshot,21000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-08.prg,screenshot,21000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-09.prg,screenshot,21000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-25.prg,screenshot,21000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-26.prg,screenshot,21000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-27.prg,screenshot,21000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-28.prg,screenshot,21000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch2-29.prg,screenshot,21000000,vicii-pal
 #FIXME: check on NTSCOLD and make reference screenshots
 ../VICII/spritedma/,d017-54.prg,screenshot,10000000,vicii-pal
 ../VICII/spritedma/,d017-57.prg,screenshot,10000000,vicii-pal
@@ -845,7 +845,7 @@
 ../VICII/spritesplit/,ss-xpos.prg,screenshot,10000000,vicii-pal
 ../VICII/spritesteal/,spritesteal.prg,exitcode,100000000,vicii-pal
 ../VICII/spritesteal/,spritesteal_ntsc.prg,exitcode,100000000,vicii-ntsc
-../VICII/spritevssprite/,spritevssprite.prg,exitcode,10000000,vicii-pal
+../VICII/spritevssprite/,spritevssprite.prg,exitcode,32000000,vicii-pal
 ###(this is not a test)
 #../VICII/spritex/,demusinterruptus-emucheck.prg
 #FIXME: check on NTSCOLD
@@ -1119,14 +1119,16 @@
 ../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,exitcode,100000000,reu512k
 ../REU/reudetect/,reudetect.prg,exitcode,100000000,reu512k
 ../REU/reutiming/,reutiming.prg,exitcode,100000000,reu512k
-../REU/reutiming2/,a.prg,screenshot,40000000,reu512k
-../REU/reutiming2/,b.prg,screenshot,20000000,reu512k
+#FIXME: NTSC fix
+../REU/reutiming2/,a.prg,screenshot,40000000,reu512k,vicii-pal
+../REU/reutiming2/,b.prg,screenshot,20000000,reu512k,vicii-pal
 ../REU/spriteba/,spriteba.prg,interactive,0
-../REU/xfertiming/,xfertiming-cmp.prg,screenshot,20000000,reu512k
-../REU/xfertiming/,xfertiming-swap.prg,screenshot,20000000,reu512k
-../REU/xfertiming/,xfertiming-swap2.prg,screenshot,20000000,reu512k
-../REU/xfertiming/,xfertiming-toreu.prg,screenshot,20000000,reu512k
-../REU/xfertiming/,xfertiming-toc64.prg,screenshot,20000000,reu512k
+#FIXME: NTSC fix
+../REU/xfertiming/,xfertiming-cmp.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/xfertiming/,xfertiming-swap.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/xfertiming/,xfertiming-swap2.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/xfertiming/,xfertiming-toreu.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/xfertiming/,xfertiming-toc64.prg,screenshot,20000000,reu512k,vicii-pal
 #TODO: clean up and add all the other reu timing tests....
 ################################################################################
 # GEO-RAM
@@ -1142,6 +1144,7 @@
 ################################################################################
 # plus256k
 ################################################################################
+#FIXME: autostart is broken with plus256k
 ################################################################################
 # 1541 Drive
 # ../drive runtime 8 minutes and 20 seconds (x64sc)
