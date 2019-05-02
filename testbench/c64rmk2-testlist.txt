@@ -157,7 +157,7 @@
 ../general/Lorenz-2.15/src/,adciy.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,sbcb.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,sbcz.prg,exitcode,30000000
-../general/Lorenz-2.15/src/,sbczx.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,sbczx.prg,exitcode,30500000
 ../general/Lorenz-2.15/src/,sbca.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,sbcax.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,sbcay.prg,exitcode,40000000
@@ -255,7 +255,7 @@
 ../general/Lorenz-2.15/src/,alrb.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,arrb.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,aneb.prg,exitcode,102000000
-../general/Lorenz-2.15/src/,lxab.prg,exitcode,100000000
+../general/Lorenz-2.15/src/,lxab.prg,exitcode,100300000
 ../general/Lorenz-2.15/src/,sbxb.prg,exitcode,80000000
 ../general/Lorenz-2.15/src/,shaay.prg,exitcode,133000000
 ../general/Lorenz-2.15/src/,shaiy.prg,exitcode,133000000
@@ -289,7 +289,7 @@
 ../general/Lorenz-2.15/src/,cpuport.prg,exitcode,20000000
 ../general/Lorenz-2.15/src/,cputiming.prg,exitcode,20000000
 # Lorenz-Suite Disk3 (old CIA):
-../general/Lorenz-2.15/src/,irq.prg,exitcode,20000000,cia-old
+../general/Lorenz-2.15/src/,irq.prg,exitcode,26000000,cia-old
 ../general/Lorenz-2.15/src/,nmi.prg,exitcode,20000000,cia-old
 ../general/Lorenz-2.15/src/,cia1tb123.prg,exitcode,20000000,cia-old
 ../general/Lorenz-2.15/src/,cia2tb123.prg,exitcode,20000000,cia-old
@@ -305,10 +305,10 @@
 ../general/Lorenz-2.15/src/,flipos.prg,exitcode,20000000,cia-old
 ../general/Lorenz-2.15/src/,oneshot.prg,exitcode,20000000,cia-old
 ../general/Lorenz-2.15/src/,cntdef.prg,exitcode,20000000,cia-old
-../general/Lorenz-2.15/src/,cia1ta.prg,exitcode,80000000,cia-old
-../general/Lorenz-2.15/src/,cia1tb.prg,exitcode,50000000,cia-old
-../general/Lorenz-2.15/src/,cia2ta.prg,exitcode,50000000,cia-old
-../general/Lorenz-2.15/src/,cia2tb.prg,exitcode,50000000,cia-old
+../general/Lorenz-2.15/src/,cia1ta.prg,exitcode,190000000,cia-old
+../general/Lorenz-2.15/src/,cia1tb.prg,exitcode,80000000,cia-old
+../general/Lorenz-2.15/src/,cia2ta.prg,exitcode,75000000,cia-old
+../general/Lorenz-2.15/src/,cia2tb.prg,exitcode,75000000,cia-old
 # Lorenz-Suite Disk3 (new CIA):
 ../general/Lorenz-2.15/src/,irqnew.prg,exitcode,20000000,cia-new
 ../general/Lorenz-2.15/src/,nminew.prg,exitcode,20000000,cia-new
@@ -326,11 +326,11 @@
 ../general/Lorenz-2.15/src/,flipos.prg,exitcode,10000000,cia-new
 ../general/Lorenz-2.15/src/,oneshot.prg,exitcode,10000000,cia-new
 ../general/Lorenz-2.15/src/,cntdef.prg,exitcode,10000000,cia-new
-../general/Lorenz-2.15/src/,cia1tanew.prg,exitcode,80000000,cia-new
-../general/Lorenz-2.15/src/,cia1tbnew.prg,exitcode,50000000,cia-new
+../general/Lorenz-2.15/src/,cia1tanew.prg,exitcode,190000000,cia-new
+../general/Lorenz-2.15/src/,cia1tbnew.prg,exitcode,80000000,cia-new
 #FIXME: these two dont work!
-../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,50000000,cia-new
-../general/Lorenz-2.15/src/,cia2tbnew.prg,exitcode,50000000,cia-new
+../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,75000000,cia-new
+../general/Lorenz-2.15/src/,cia2tbnew.prg,exitcode,75000000,cia-new
 ################################################################################
 ../general/ram0001/,quicktest.prg,interactive,0
 ../general/ram0001/,test1.prg,exitcode,10000000

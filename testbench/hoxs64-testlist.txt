@@ -162,7 +162,7 @@
 ../general/Lorenz-2.15/src/,adciy.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,sbcb.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,sbcz.prg,exitcode,30000000
-../general/Lorenz-2.15/src/,sbczx.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,sbczx.prg,exitcode,30500000
 ../general/Lorenz-2.15/src/,sbca.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,sbcax.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,sbcay.prg,exitcode,40000000
@@ -260,7 +260,7 @@
 ../general/Lorenz-2.15/src/,alrb.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,arrb.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,aneb.prg,exitcode,102000000
-../general/Lorenz-2.15/src/,lxab.prg,exitcode,100000000
+../general/Lorenz-2.15/src/,lxab.prg,exitcode,100300000
 ../general/Lorenz-2.15/src/,sbxb.prg,exitcode,80000000
 ../general/Lorenz-2.15/src/,shaay.prg,exitcode,133000000
 ../general/Lorenz-2.15/src/,shaiy.prg,exitcode,133000000
@@ -294,7 +294,7 @@
 ../general/Lorenz-2.15/src/,cpuport.prg,exitcode,20000000
 ../general/Lorenz-2.15/src/,cputiming.prg,exitcode,20000000
 # Lorenz-Suite Disk3 (old CIA):
-../general/Lorenz-2.15/src/,irq.prg,exitcode,20000000,cia-old
+../general/Lorenz-2.15/src/,irq.prg,exitcode,26000000,cia-old
 ../general/Lorenz-2.15/src/,nmi.prg,exitcode,20000000,cia-old
 ../general/Lorenz-2.15/src/,cia1tb123.prg,exitcode,20000000,cia-old
 ../general/Lorenz-2.15/src/,cia2tb123.prg,exitcode,20000000,cia-old
@@ -310,10 +310,10 @@
 ../general/Lorenz-2.15/src/,flipos.prg,exitcode,20000000,cia-old
 ../general/Lorenz-2.15/src/,oneshot.prg,exitcode,20000000,cia-old
 ../general/Lorenz-2.15/src/,cntdef.prg,exitcode,20000000,cia-old
-../general/Lorenz-2.15/src/,cia1ta.prg,exitcode,80000000,cia-old
-../general/Lorenz-2.15/src/,cia1tb.prg,exitcode,50000000,cia-old
-../general/Lorenz-2.15/src/,cia2ta.prg,exitcode,50000000,cia-old
-../general/Lorenz-2.15/src/,cia2tb.prg,exitcode,50000000,cia-old
+../general/Lorenz-2.15/src/,cia1ta.prg,exitcode,190000000,cia-old
+../general/Lorenz-2.15/src/,cia1tb.prg,exitcode,80000000,cia-old
+../general/Lorenz-2.15/src/,cia2ta.prg,exitcode,75000000,cia-old
+../general/Lorenz-2.15/src/,cia2tb.prg,exitcode,75000000,cia-old
 # Lorenz-Suite Disk3 (new CIA):
 ../general/Lorenz-2.15/src/,irqnew.prg,exitcode,20000000,cia-new
 ../general/Lorenz-2.15/src/,nminew.prg,exitcode,20000000,cia-new
@@ -331,11 +331,11 @@
 ../general/Lorenz-2.15/src/,flipos.prg,exitcode,10000000,cia-new
 ../general/Lorenz-2.15/src/,oneshot.prg,exitcode,10000000,cia-new
 ../general/Lorenz-2.15/src/,cntdef.prg,exitcode,10000000,cia-new
-../general/Lorenz-2.15/src/,cia1tanew.prg,exitcode,80000000,cia-new
-../general/Lorenz-2.15/src/,cia1tbnew.prg,exitcode,50000000,cia-new
+../general/Lorenz-2.15/src/,cia1tanew.prg,exitcode,190000000,cia-new
+../general/Lorenz-2.15/src/,cia1tbnew.prg,exitcode,80000000,cia-new
 #FIXME: these two dont work!
-../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,50000000,cia-new
-../general/Lorenz-2.15/src/,cia2tbnew.prg,exitcode,50000000,cia-new
+../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,75000000,cia-new
+../general/Lorenz-2.15/src/,cia2tbnew.prg,exitcode,75000000,cia-new
 ################################################################################
 ../general/ram0001/,quicktest.prg,interactive,0
 ../general/ram0001/,test1.prg,exitcode,10000000
@@ -985,8 +985,8 @@
 # ../drive runtime 8 minutes and 20 seconds (x64sc)
 # ../drive runtime 93 minutes and 36 seconds (chameleon)
 ################################################################################
-../drive/1541-testsuite,1541-testsuite.prg,exitcode,2200000000,mountd64:disks/pc64_1.d64
-../drive/1541-testsuite,1541-testsuite.prg,exitcode,1800000000,mountd64:disks/pc64_2.d64
+../drive/1541-testsuite,1541-testsuite.prg,exitcode,2220000000,mountd64:disks/pc64_1.d64
+../drive/1541-testsuite,1541-testsuite.prg,exitcode,1850000000,mountd64:disks/pc64_2.d64
 ../drive/defaults/,defaults.prg,exitcode,9500000,mountd64:defaults.d64
 ../drive/diskchange/,pollwp.prg,interactive,0
 ../drive/diskid/,diskid1.prg,exitcode,8500000,mountd64:diskid.d64
@@ -999,12 +999,12 @@
 ../drive/rpm/,rpm.d64,interactive,0
 ../drive/rpm/,rpm.g64,interactive,0
 ../drive/rpm/,rpm.p64,interactive,0
-../drive/scanner/,scanner35.prg,exitcode,25000000,mountd64:scan35.d64
-../drive/scanner/,scanner35e.prg,exitcode,25000000,mountd64:scan35err.d64
-../drive/scanner/,scanner40.prg,exitcode,25000000,mountd64:scan40.d64
-../drive/scanner/,scanner40e.prg,exitcode,25000000,mountd64:scan40err.d64
-../drive/scanner/,scanner42.prg,exitcode,25000000,mountd64:scan42.d64
-../drive/scanner/,scanner42e.prg,exitcode,25000000,mountd64:scan42err.d64
+../drive/scanner/,scanner35.prg,exitcode,25300000,mountd64:scan35.d64
+../drive/scanner/,scanner35e.prg,exitcode,25500000,mountd64:scan35err.d64
+../drive/scanner/,scanner40.prg,exitcode,26000000,mountd64:scan40.d64
+../drive/scanner/,scanner40e.prg,exitcode,26000000,mountd64:scan40err.d64
+../drive/scanner/,scanner42.prg,exitcode,26100000,mountd64:scan42.d64
+../drive/scanner/,scanner42e.prg,exitcode,26200000,mountd64:scan42err.d64
 ../drive/scanner/,scanner35.prg,exitcode,30000000,mountg64:scan35.g64
 ../drive/scanner/,scanner40.prg,exitcode,30000000,mountg64:scan40.g64
 ../drive/scanner/,scanner42.prg,exitcode,30000000,mountg64:scan42.g64
