@@ -169,6 +169,9 @@ running the tests
 ================================================================================
 --------------------------------------------------------------------------------
 
+first of all copy Makefile.config.example to Makefile.config and edit it to your
+needs (see instructions inside this file).
+
 the Makefile in this directory serves as the main frontend to the testbench. to
 get a list of things you can do just run "make".
 
@@ -187,6 +190,9 @@ usage: ./testbench.sh [target] <filter> <options>
   --cianew     run tests on 'new' CIA, skip tests that do not work on 'old' CIA
   --6581       run tests on 6581 (old SID), skip tests that do not work on 8580 (new SID)
   --8580       run tests on 8580 (new SID), skip tests that do not work on 6581 (old SID)
+  --8562       target VICII type is 8562 (grey dot)
+  --8562early  target VICII type is 8562 (new color instead of grey dot)
+  --8562late   target VICII type is 8562 (old color instead of grey dot)
   --8565       target VICII type is 8565 (grey dot)
   --8565early  target VICII type is 8565 (new color instead of grey dot)
   --8565late   target VICII type is 8565 (old color instead of grey dot)
