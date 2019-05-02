@@ -1,5 +1,9 @@
 this is a collection of test programs, primarily used for the VICE project, but
 useful for other commodore emulators too.
+--------------------------------------------------------------------------------
+
+./testbench contains the testbench scripts. see the readme.txt in this directory
+for instructions on how to do automated testing.
 
 --------------------------------------------------------------------------------
 this is a (very) brief overview of the contents in this repository:
