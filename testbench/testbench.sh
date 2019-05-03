@@ -178,6 +178,22 @@ function getscreenshotname
         fi
     fi
 
+    # if the testprog is PAL, and either the default or the cmdline is a NTSC chip, change
+    # the screenshot type to the respective PAL chip
+    if [ "$testprogvideotype" == "PAL" ]; then
+        if [ "$screenshot_videosubtype" == "8562" ]; then
+            screenshot_videosubtype="8565"
+        else
+            if [ "$screenshot_videosubtype" == "8562early" ]; then
+                screenshot_videosubtype="8565early"
+            else
+                if [ "$screenshot_videosubtype" == "8562late" ]; then
+                    screenshot_videosubtype="8565late"
+                fi
+            fi
+        fi
+    fi
+
     if [ "$screenshot_videosubtype" != "" ] ; then
         if [ -f "$1"/references/"$refscreenshottest"-"$screenshot_videosubtype".png ]
         then
