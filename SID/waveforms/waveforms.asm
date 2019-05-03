@@ -127,7 +127,7 @@ skip
 +
                 sty $d7ff
 
-                jmp *
+                jmp +
                 }
                 
 ;-------------------------------------------------------------------------------
@@ -348,6 +348,17 @@ dotest
                 bit $ea     ; 3
                 +endsampling
 
+                ; if NTSC, wait again for bottom of frame
+                lda $02a6
+                bne +
+                ldx #$fe
+-               cpx $d012
+                bne -
+-               ldx $d012
+                bne -
+                stx $d020
++
+                
                 ; sample 5
                 +startsampling
                 nop     ; 2
