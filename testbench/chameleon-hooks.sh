@@ -245,6 +245,21 @@ function chameleon_setup_videomode
 #    echo "setup_videomode done"
 }
 
+function chameleon_remove_cartridge
+{
+    # overwrite the CBM80 signature with generic "cartridge off" program
+    chacocmd --addr 0x00a00000 --writemem chameleon-crtoff.prg > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
+    chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
+    chacocmd --addr 0x01100000 --writemem chameleon-crtoff.prg > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
+    chacocmd --addr 0x01200000 --writemem chameleon-crtoff.prg > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
+    # reset
+    chameleon_reset
+}
+
 ################################################################################
 
 # called once before any tests run
@@ -430,7 +445,7 @@ function chameleon_run_screenshot
     if [ X"$screenshottest"X == X"$mounted_crt"X ]
     then
 #        echo "no program given"
-        # reset
+# a cartridge was mounted before
         chameleon_reset
         
         chameleon_setup_videomode
@@ -454,12 +469,7 @@ function chameleon_run_screenshot
 
     else
 
-        # overwrite the CBM80 signature with generic "cartridge off" program
-        chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
-        if [ "$?" != "0" ]; then exit -1; fi
-
-        # reset
-        chameleon_reset
+        chameleon_remove_cartridge
 
         chameleon_setup_videomode
         
@@ -495,11 +505,7 @@ function chameleon_run_screenshot
     
     # if the test was a cartrige, kill it
     if [ X"$screenshottest"X == X"$mounted_crt"X ]; then
-        # overwrite the CBM80 signature with generic "cartridge off" program
-        chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
-        if [ "$?" != "0" ]; then exit -1; fi
-        # reset
-        chameleon_reset    
+        chameleon_remove_cartridge
     fi
     
     # compare screenshot against reference
@@ -552,10 +558,9 @@ function chameleon_run_exitcode
 
     if [ X"$2"X == X""X ]
     then
-#        echo "no program given"
-        # reset
+# a cartridge was mounted before
         chameleon_reset
-        
+
         chameleon_setup_videomode
 
         chameleon_make_helper_options 1
@@ -575,17 +580,9 @@ function chameleon_run_exitcode
         chameleon_poll_returncode 5
         exitcode=$?
 
-        # overwrite the CBM80 signature with generic "cartridge off" program
-        chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
-        if [ "$?" != "0" ]; then exit -1; fi
-        # reset
-        chameleon_reset
+        chameleon_remove_cartridge
     else
-        # overwrite the CBM80 signature with generic "cartridge off" program
-        chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
-        if [ "$?" != "0" ]; then exit -1; fi
-        # reset
-        chameleon_reset
+        chameleon_remove_cartridge
 
         chameleon_setup_videomode
         
