@@ -260,7 +260,7 @@
 ../general/Lorenz-2.15/src/,alrb.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,arrb.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,aneb.prg,exitcode,102000000
-../general/Lorenz-2.15/src/,lxab.prg,exitcode,100300000
+../general/Lorenz-2.15/src/,lxab.prg,exitcode,101000000
 ../general/Lorenz-2.15/src/,sbxb.prg,exitcode,80000000
 ../general/Lorenz-2.15/src/,shaay.prg,exitcode,133000000
 ../general/Lorenz-2.15/src/,shaiy.prg,exitcode,133000000
@@ -315,7 +315,7 @@
 ../general/Lorenz-2.15/src/,cia2ta.prg,exitcode,75000000,cia-old
 ../general/Lorenz-2.15/src/,cia2tb.prg,exitcode,75000000,cia-old
 # Lorenz-Suite Disk3 (new CIA):
-../general/Lorenz-2.15/src/,irqnew.prg,exitcode,20000000,cia-new
+../general/Lorenz-2.15/src/,irqnew.prg,exitcode,26000000,cia-new
 ../general/Lorenz-2.15/src/,nminew.prg,exitcode,20000000,cia-new
 ../general/Lorenz-2.15/src/,cia1tb123.prg,exitcode,10000000,cia-new
 ../general/Lorenz-2.15/src/,cia2tb123.prg,exitcode,10000000,cia-new
@@ -387,7 +387,7 @@
 #../CPU/cpuport/,delaytime.prg
 ../CPU/cpuport/,test1.prg,exitcode,5500000
 ../CPU/cpuport/,,exitcode,100000,mountcrt:initvalue.crt
-../CPU/decimalmode/,scanner.prg,exitcode,5500000000
+../CPU/decimalmode/,scanner.prg,exitcode,750000000
 ../CPU/decimalmode/,adc00.prg,exitcode,550000000
 ../CPU/decimalmode/,adc01.prg,exitcode,550000000
 ../CPU/decimalmode/,adc02.prg,exitcode,550000000
@@ -809,7 +809,7 @@
 ../SID/bitfade/,test1env3.prg,interactive,0
 ../SID/bitfade/,test1frq0.prg,interactive,0
 ../SID/bitfade/,test1osc3.prg,interactive,0
-../SID/busvalue/,busvalue.prg,exitcode,5300000
+../SID/busvalue/,busvalue.prg,exitcode,5500000
 ../SID/detect/,detect.prg,interactive,0
 ../SID/detect/,detect-1-new.prg,exitcode,5500000,sid-new
 ../SID/detect/,detect-2-new.prg,exitcode,5500000,sid-new
@@ -920,7 +920,7 @@
 # ../C64/carts runtime 0 minutes and 44 seconds (chameleon)
 ################################################################################
 ../C64/autostart/cartio/,test.prg,interactive,0
-../C64/autostart/defaults/,,exitcode,3000000,mountcrt:test.crt
+../C64/autostart/defaults/,,exitcode,4000000,mountcrt:test.crt
 #TODO:
 #../C64/carts/,exos.prg
 ../C64/carts/,mmcrplugin.prg,interactive,0

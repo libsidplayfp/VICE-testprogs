@@ -257,7 +257,7 @@
 ../general/Lorenz-2.15/src/,alrb.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,arrb.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,aneb.prg,exitcode,102000000
-../general/Lorenz-2.15/src/,lxab.prg,exitcode,100300000
+../general/Lorenz-2.15/src/,lxab.prg,exitcode,101000000
 ../general/Lorenz-2.15/src/,sbxb.prg,exitcode,80000000
 ../general/Lorenz-2.15/src/,shaay.prg,exitcode,133000000
 ../general/Lorenz-2.15/src/,shaiy.prg,exitcode,133000000
@@ -363,7 +363,7 @@
 #../CPU/cpuport/,bitfade.prg
 #../CPU/cpuport/,delaytime.prg
 ../CPU/cpuport/,test1.prg,exitcode,5500000
-../CPU/decimalmode/,scanner.prg,exitcode,5500000000
+../CPU/decimalmode/,scanner.prg,exitcode,750000000
 ../CPU/decimalmode/,adc00.prg,exitcode,550000000
 ../CPU/decimalmode/,adc01.prg,exitcode,550000000
 ../CPU/decimalmode/,adc02.prg,exitcode,550000000
@@ -638,7 +638,7 @@
 ../SID/bitfade/,test1env3.prg,interactive,0
 ../SID/bitfade/,test1frq0.prg,interactive,0
 ../SID/bitfade/,test1osc3.prg,interactive,0
-../SID/busvalue/,busvalue.prg,exitcode,5300000
+../SID/busvalue/,busvalue.prg,exitcode,5500000
 ../SID/detect/,detect.prg,interactive,0
 ../SID/detect/,detect-1-old.prg,exitcode,6200000,sid-old
 ../SID/detect/,detect-1-new.prg,exitcode,5500000,sid-new
