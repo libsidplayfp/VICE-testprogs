@@ -1,5 +1,6 @@
 
 all: c64-pass.prg c64-fail.prg \
+	c64-pass.crt c64-fail.crt \
 	plus4-pass.prg plus4-fail.prg \
 	scpu-pass.prg scpu-fail.prg \
 	dtv-pass.prg dtv-fail.prg \
@@ -11,9 +12,15 @@ all: c64-pass.prg c64-fail.prg \
 	vsid-pass.prg vsid-fail.prg
 
 c64-pass.prg: c64.asm
-	acme -DFAIL=0 -f cbm -o c64-pass.prg c64.asm
+	acme -DCART=0 -DFAIL=0 -f cbm -o c64-pass.prg c64.asm
 c64-fail.prg: c64.asm
-	acme -DFAIL=1 -f cbm -o c64-fail.prg c64.asm
+	acme -DCART=0 -DFAIL=1 -f cbm -o c64-fail.prg c64.asm
+c64-pass.crt: c64.asm
+	acme -DCART=1 -DFAIL=0 -f plain -o c64-pass.bin c64.asm
+	cartconv -p -t normal -i c64-pass.bin -o c64-pass.crt
+c64-fail.crt: c64.asm
+	acme -DCART=1 -DFAIL=1 -f plain -o c64-fail.bin c64.asm
+	cartconv -p -t normal -i c64-fail.bin -o c64-fail.crt
 plus4-pass.prg: plus4.asm
 	acme -DFAIL=0 -f cbm -o plus4-pass.prg plus4.asm
 plus4-fail.prg: plus4.asm
