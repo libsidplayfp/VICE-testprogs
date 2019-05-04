@@ -117,15 +117,20 @@ function chameleon_poll_returncode
     return $RET
 }
 
+# $1 test path
+# $2 cartridge name
 function chameleon_make_crtid
 {
+    dd if="$1/$2" bs=1 skip=23 count=1 of=$CDUMMY 2> /dev/null > /dev/null
 # use od instead of hex, since that always works
 #    crtid=`hex $CDUMMY`
 #    crtid="${crtid:6:2}"
-    crtid=`od -An -t x1 $CDUMMY`
-    crtid="${crtid:1:2}"
-#    echo X"$crtid"X
-    case "$crtid" in
+#    echo -ne "[chameleon_make_crtid:"$1":"$2"]"
+    crtlit=`od -An -t x1 $CDUMMY`
+    crtlit="${crtlit:1:2}"
+#    echo -ne "[id:"$crtlit"]"
+
+    case "$crtlit" in
         "00")
                 # generic
                 crtid="\xfc"
@@ -147,20 +152,41 @@ function chameleon_make_crtid
                 crtid="\x35"
             ;;
         *)
-                echo " unsupported crt id: 0x"$crtid
+                echo " unsupported crt id: 0x"$crtlit
                 crtid="\x00"
             ;;
     esac
-#    echo "crtid:" "$crtid"
+    echo -ne "(crtid:\$"$crtlit")"
+}
+
+# $1 test path
+# $2 cartridge name
+function chameleon_mount_cartridge
+{
+# put a message on C64 screen
+# "uploading cartridge image, please wait  "
+    echo -ne "\x15\x10\x0c\x0f\x01\x04\x09\x0e\x07\x20\x03\x01\x12\x14\x12\x09\x04\x07\x05\x20\x09\x0d\x01\x07\x05\x2c\x20\x10\x0c\x05\x01\x13\x05\x20\x17\x01\x09\x14\x20\x20" > $RDUMMY
+    chacocmd --addr 1984 --writemem $RDUMMY > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
+# send cartridge image
+    echo -ne "(cartridge:$2) "
+    chmount -crt "$1/$2" > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
+# remove message from C64 screen
+    echo -ne "                                        " > $RDUMMY
+    chacocmd --addr 1984 --writemem $RDUMMY > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
 }
 
 # $1 = 1 - enable cartridge
+# $2 test path
 function chameleon_make_helper_options
 {
+#    echo -ne "[chameleon_make_helper_options:"$1":"$2"]"
     # set cartridge type
     if [ X"$1"X = X"1"X ]
     then
-        chameleon_make_crtid
+        chameleon_make_crtid "$2" "$mounted_crt"
         echo -ne "\x00" > $RDUMMY
         echo -ne "$crtid" >> $RDUMMY
     else
@@ -284,7 +310,7 @@ function chameleon_prepare
     chacocmd --addr 0x001300b4 --writemem $RDUMMY > /dev/null    
     sleep 3
     echo -ne "."
-    chameleon_reset
+    chameleon_remove_cartridge
     echo -ne "."
     chameleon_setup_videomode
     echo "ok"
@@ -373,10 +399,10 @@ function chameleon_get_options
                     mounted_g64="${1:9}"
                 fi
                 if [ "${1:0:9}" == "mountcrt:" ]; then
-                    echo -ne "(cartridge:${1:9}) "
-                    chmount -crt "$2/${1:9}" > /dev/null
-                    if [ "$?" != "0" ]; then exit -1; fi
-                    dd if="$2/${1:9}" bs=1 skip=23 count=1 of=$CDUMMY 2> /dev/null > /dev/null
+#                    echo -ne "(cartridge:${1:9}) "
+#                    chmount -crt "$2/${1:9}" > /dev/null
+#                    if [ "$?" != "0" ]; then exit -1; fi
+#                    dd if="$2/${1:9}" bs=1 skip=23 count=1 of=$CDUMMY 2> /dev/null > /dev/null
                     mounted_crt="${1:9}"
                 fi
             ;;
@@ -446,11 +472,12 @@ function chameleon_run_screenshot
     then
 #        echo "no program given"
 # a cartridge was mounted before
-        chameleon_reset
+#        chameleon_reset
+        chameleon_remove_cartridge
         
         chameleon_setup_videomode
 
-        chameleon_make_helper_options 1
+        chameleon_make_helper_options 1 "$1"
         if [ "$?" != "0" ]; then exit -1; fi
 
         # run helper program
@@ -459,21 +486,21 @@ function chameleon_run_screenshot
         if [ "$?" != "0" ]; then exit -1; fi
         chameleon_poll_returncode 5
 
+        chameleon_mount_cartridge "$1" "$mounted_crt"
+        
         chameleon_clear_returncode
         # trigger reset  (run cartridge)
-        echo -ne "X" > $RDUMMY
-        chacocmd --addr 0x80000000 --writemem $RDUMMY > /dev/null
+        chcodenet --reset
         if [ "$?" != "0" ]; then exit -1; fi
-#        chameleon_poll_returncode 5
+        chameleon_poll_returncode $(($3 + 1))
 #        exitcode=$?
-
     else
 
         chameleon_remove_cartridge
 
         chameleon_setup_videomode
         
-        chameleon_make_helper_options 0
+        chameleon_make_helper_options 0 "$1"
         if [ "$?" != "0" ]; then exit -1; fi
 
         # run the helper program (enable I/O RAM at $d7xx)
@@ -487,14 +514,13 @@ function chameleon_run_screenshot
         # run program
         chcodenet -x "$1"/"$screenshottest" > /dev/null
         if [ "$?" != "0" ]; then exit -1; fi
-    #    chameleon_poll_returncode 5
-    #    exitcode=$?
-    #    echo "exited with: " $exitcode
+        chameleon_poll_returncode $(($3 + 1))
+#        exitcode=$?
     fi
 
     # sleep until timeout, then get the screenshot
-    timeoutsecs=`expr \( $3 + 999999 \) / 1000000`
-    sleep $timeoutsecs
+#    timeoutsecs=`expr \( $3 + 999999 \) / 1000000`
+#    sleep $timeoutsecs
     if [ "${videotype}" == "NTSC" ]; then
         chshot --ntsc -o "$1"/.testbench/"$screenshottest"-chameleon.png
         if [ "$?" != "0" ]; then exit -1; fi
@@ -538,7 +564,11 @@ function chameleon_run_screenshot
         echo -ne "reference screenshot missing ("$refscreenshotname") - "
         exitcode=255
     fi
-#    echo -ne "exitcode:" $exitcode
+
+    if [ $verbose == "1" ]; then
+        echo -ne "[exitcode: "$exitcode"] "
+    fi
+
 }
 
 ################################################################################
@@ -559,11 +589,12 @@ function chameleon_run_exitcode
     if [ X"$2"X == X""X ]
     then
 # a cartridge was mounted before
-        chameleon_reset
+#        chameleon_reset
+        chameleon_remove_cartridge
 
         chameleon_setup_videomode
 
-        chameleon_make_helper_options 1
+        chameleon_make_helper_options 1 "$1"
         if [ "$?" != "0" ]; then exit -1; fi
 
         # run helper program
@@ -572,12 +603,14 @@ function chameleon_run_exitcode
         if [ "$?" != "0" ]; then exit -1; fi
         chameleon_poll_returncode 5
 
+        chameleon_mount_cartridge "$1" "$mounted_crt"
+
         chameleon_clear_returncode
+
         # trigger reset  (run cartridge)
-        echo -ne "X" > $RDUMMY
-        chacocmd --addr 0x80000000 --writemem $RDUMMY > /dev/null
+        chcodenet --reset
         if [ "$?" != "0" ]; then exit -1; fi
-        chameleon_poll_returncode 5
+        chameleon_poll_returncode $(($3 + 1))
         exitcode=$?
 
         chameleon_remove_cartridge
@@ -586,7 +619,7 @@ function chameleon_run_exitcode
 
         chameleon_setup_videomode
         
-        chameleon_make_helper_options 0
+        chameleon_make_helper_options 0 "$1"
         if [ "$?" != "0" ]; then exit -1; fi
 
         # run the helper program (enable I/O RAM at $d7xx)
@@ -604,7 +637,7 @@ function chameleon_run_exitcode
     fi
 
     if [ $verbose == "1" ]; then
-        echo "got exitcode: " $exitcode
+        echo -ne "[exitcode: "$exitcode"] "
     fi
 #    echo "exited with: " $exitcode
 }
