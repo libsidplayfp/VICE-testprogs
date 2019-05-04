@@ -21,6 +21,7 @@
 ../c128/mmu/,mmutest.prg,exitcode,6000000
 ../c128/mmu/,mmutest2.prg,exitcode,6000000
 ../c128/mmu/,mmuregister-should-not-mirror.prg,exitcode,6000000
+../c128/mmu/,mmuversion.prg,exitcode,6000000
 ../c128/mmu/,p0h-is-set-after-p0l.prg,exitcode,7000000
 ../c128/mmu/,p0h-rw-test.prg,exitcode,7000000
 ../c128/mmu/,p1h-is-set-after-p1l.prg,exitcode,7000000
