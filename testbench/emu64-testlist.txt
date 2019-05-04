@@ -15,6 +15,10 @@
 ./selftest/,c64-pass.prg,exitcode,10000000
 ./selftest/,c64-fail.prg,screenshot,10000000
 ./selftest/,c64-pass.prg,screenshot,10000000
+./selftest/,,exitcode,10000000,mountcrt:c64-fail.crt
+./selftest/,,exitcode,10000000,mountcrt:c64-pass.crt
+./selftest/,,screenshot,10000000,mountcrt:c64-fail.crt
+./selftest/,,screenshot,10000000,mountcrt:c64-pass.crt
 ################################################################################
 # general
 ################################################################################
@@ -874,7 +878,7 @@
 ../SID/osc_topbit/,osc_topbit_test_triangle_old.prg,exitcode,15000000,sid-old
 ../SID/oscinit/,oscinit.prg,exitcode,5200000
 ../SID/oscinit/,noiseinit.prg,exitcode,5200000
-../SID/oscinit/,allinit.prg,exitcode,5200000
+../SID/oscinit/,allinit.prg,exitcode,5500000
 ../SID/paddles/,paddle.prg,interactive,0
 ../SID/ringmod/,ringmodtest.prg,exitcode,5200000
 ../SID/stereo/,stereo.prg,interactive,0
