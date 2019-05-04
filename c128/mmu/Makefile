@@ -1,5 +1,6 @@
 
 all: \
+	mmuversion.prg \
 	mmutest.prg \
 	mmutest2.prg \
 	mmuregister-should-not-mirror.prg \
@@ -8,6 +9,9 @@ all: \
 	p1h-is-set-after-p1l.prg \
 	p1h-rw-test.prg
 
+
+mmuversion.prg: mmuversion.asm
+	acme -f cbm -o mmuversion.prg mmuversion.asm
 
 mmutest.prg: mmutest.asm
 	acme -f cbm -o mmutest.prg mmutest.asm
@@ -31,6 +35,6 @@ p1h-rw-test.prg: p1h-rw-test.asm
 	acme -f cbm -o p1h-rw-test.prg p1h-rw-test.asm
 	
 clean:
-	rm -f mmutest2.prg mmutest.prg mmuregister-should-not-mirror.prg
+	rm -f mmuversion.prg mmutest2.prg mmutest.prg mmuregister-should-not-mirror.prg
 	rm -f p0h-is-set-after-p0l.prg p0h-rw-test.prg
 	rm -f p1h-is-set-after-p1l.prg p1h-rw-test.prg
