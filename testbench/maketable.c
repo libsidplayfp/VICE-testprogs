@@ -79,6 +79,26 @@ int testnum[MAXLISTS];
 char *sfurl = "https://sourceforge.net/p/vice-emu/code/HEAD/tree/testprogs/testbench";
 
 //------------------------------------------------------------------------------
+void dumplist(TEST *list, int num)
+{
+    int i;
+    fprintf(stderr, "dumping %d tests:\n", num);
+    for(i = 0; i < num; i++) {
+        fprintf(stderr, "%s,%s,%d,%d,%s,%d,%d,%d,%d\n",
+            list[i].path,
+            list[i].prog,
+            list[i].result,
+            list[i].type,
+            list[i].media,
+            list[i].mediatype,
+            list[i].ciatype,
+            list[i].sidtype,
+            list[i].videotype
+        );
+    }
+}
+
+//------------------------------------------------------------------------------
 
 char *copytocomma(char *dest, char *src)
 {
@@ -266,6 +286,7 @@ int findresult(TEST *list, TEST *reflist)
     for (i = 0; i < refnum; i++) {
         if(!strcmp(list->path, reflist->path) && 
            !strcmp(list->prog, reflist->prog) &&
+           !strcmp(list->media, reflist->media) &&
            (list->type == reflist->type) &&
            ((reflist->ciatype == CIATYPE_UNSET) || (list->ciatype == reflist->ciatype)) &&
            ((reflist->sidtype == SIDTYPE_UNSET) || (list->sidtype == reflist->sidtype)) &&
@@ -636,6 +657,8 @@ int main(int argc, char *argv[])
         testnum[i] = readlist(testlist[i], infilename[i], 1);
         if (verbose) printf("%d tests in %s\n", testnum[i], infilename[i]);
     }
+
+//    dumplist(reflist, refnum);
 
     // output the table
     printtable();
