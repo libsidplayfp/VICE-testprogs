@@ -8,3 +8,6 @@ mmtest-port2.prg: mmtest.asm
 
 mssiah.prg: mssiah.asm
 	acme -o mssiah.prg -f cbm mssiah.asm
+
+clean:
+	$(RM) mmtest-port1.prg mmtest-port2.prg mssiah.prg

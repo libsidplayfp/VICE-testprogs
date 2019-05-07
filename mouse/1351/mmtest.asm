@@ -4,7 +4,7 @@
         !byte	8
         !byte	0
         !byte	0
-        !byte $9E ; ž
+        !byte $9E ; SYS
         !byte $32 ; 2
         !byte $30 ; 0
         !byte $36 ; 6
@@ -43,47 +43,51 @@ loc_838:
         inc $d020
 
         LDX	#0
-        STX	$C004
-        LDA	$D419
-        STA	$C001
+        STX	$C004   ; "changed" flag
+
+        ; handle X
+        LDA	$D419   ; POTX
+        STA	$C001   ; current potx
         SEC
-        SBC	$C000
-        AND	#$7F ; ''
-        CMP	#$40 ; '@'
+        SBC	$C000   ; substract old potx
+        AND	#$7F
+        CMP	#$40
         BCS	loc_853
         LSR
-        BEQ	loc_866
+        BEQ	loc_866 ; nothing changed
         JMP	loc_85C
 
 loc_853:
-        EOR	#$7F ; ''
+        EOR	#$7F
         ADC	#0
         LSR
-        BEQ	loc_866
-        ORA	#$80 ; '€'
+        BEQ	loc_866 ; nothing changed
+        ORA	#$80
 
 loc_85C:
         TAX
-        LDA	$C001
-        STA	$C000
-        INC	$C004
+        LDA	$C001   ; current potx
+        STA	$C000   ; to old potx
 
+        INC	$C004   ; "changed" flag
+
+        ; handle Y
 loc_866:
         LDY	#0
         LDA	$D41A
-        STA	$C003
+        STA	$C003   ; current poty
         SEC
-        SBC	$C002
-        AND	#$7F ; ''
-        CMP	#$40 ; '@'
+        SBC	$C002   ; substract old poty
+        AND	#$7F
+        CMP	#$40
         BCS	loc_880
         LSR
-        BEQ	loc_892
-        ORA	#$80 ; '€'
+        BEQ	loc_892 ; nothing changed
+        ORA	#$80
         JMP	loc_888
 
 loc_880:
-        EOR	#$7F ; ''
+        EOR	#$7F
         CLC
         ADC	#1
         LSR
@@ -91,9 +95,9 @@ loc_880:
 
 loc_888:
         TAY
-        LDA	$C003
-        STA	$C002
-        INC	$C004
+        LDA	$C003   ; current poty
+        STA	$C002   ; to old poty
+        INC	$C004   ; "changed" flag
 
 loc_892:
 !if PORT = 1 {
@@ -114,6 +118,8 @@ loc_8A2:
         CMP	$C004
         BEQ	loc_838
 
+        ;-----------------------------------------------------------------
+        
 loc_8A9:
 
         TYA
