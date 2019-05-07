@@ -626,6 +626,15 @@
 #FIXME: doesnt work in emu, possibly unstable on real hw
 ../VICII/dmadelay/,test4.prg,interactive,0,vicii-pal
 ../VICII/fldscroll/,fldscroll.prg,interactive,0,vicii-pal
+#TODO: some of the frodo tests can be made automatic
+../VICII/frodotests/,3fff.prg,interactive,0,vicii-pal
+../VICII/frodotests/,d011h3.prg,interactive,0,vicii-pal
+../VICII/frodotests/,fld.prg,interactive,0,vicii-pal
+../VICII/frodotests/,lrborder.prg,interactive,0,vicii-pal
+../VICII/frodotests/,sprsync.prg,interactive,0,vicii-pal
+../VICII/frodotests/,stretch.prg,interactive,0,vicii-pal
+../VICII/frodotests/,tech-tech.prg,interactive,0,vicii-pal
+../VICII/frodotests/,text26.prg,interactive,0,vicii-pal
 #FIXME: check on NTSCOLD
 ../VICII/lpcoordinates/,lpcoords.prg,interactive,0
 ../VICII/lplatency/,lplatency.prg,exitcode,10000000,vicii-pal
@@ -972,8 +981,12 @@
 # Joystick/Mouse
 ################################################################################
 ../userportjoy/,testjoy_c64.prg,interactive,0
+../mouse/1351/,mmtest-port1.prg,interactive,0
+../mouse/1351/,mmtest-port2.prg,interactive,0
+../mouse/1351/,mssiah.prg,interactive,0
 ../mouse/,mouse-c64-1351.prg,interactive,0
 ../mouse/,mouse-c64-pot.prg,interactive,0
+../mouse/mousescan,mousescan.prg,interactive,0
 ../propmouse/,prop_c64_amiga.prg,interactive,0
 ../propmouse/,prop_c64_cx22.prg,interactive,0
 ../propmouse/,prop_c64_st.prg,interactive,0
