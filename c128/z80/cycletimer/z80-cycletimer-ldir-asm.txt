@@ -1,0 +1,162 @@
+
+; MMU BitSwitch guide - https://pastebin.com/Wh2EKdwt
+;
+; CIA Timer A control register @ $DC0E (56334)
+; BitSwitch guide:
+; - Bit #0          : 0 = Stop timer; 1 = Start timer.
+; - Bit #1          : 1 = Indicate timer underflow on port B bit #6.
+; - Bit #2          : 0 = Upon timer underflow, invert port B bit #6.
+;                   : 1 = upon timer underflow, generate positive edge on port B bit #6 for 1 system cycle.
+; - Bit #3          : 0 = Timer restarts upon underflow; 1 = Timer stops upon underflow.
+; - Bit #4          : 1 = Load start value into timer.
+; - Bit #5          : 0 = Timer counts system cycles; 1 = Timer counts positive edges on CNT pin.
+; - Bit #6          : Serial shift register direction; 0 = Input, read; 1 = Output, write.
+; - Bit #7          : TOD speed; 0 = 60 Hz; 1 = 50 Hz.
+;
+
+; 1000 rem 8502 code block
+; start code at $2e00
+;
+; grind down all IRQs, overkill, no loose ends !
+. f2e00  a9 00    lda #$00          ; specifically disable VIC-II IRQ
+. f2e02  8d 1a d0 sta $d01a
+
+. f2e05  a9 7f    lda #$7f          ; specifically disable CIA IRQ
+. f2e07  8d 0d dc sta $dc0d
+
+. f2e0a  78       sei               ; disable all IRQs for good measure
+
+. f2e0b  a9 3e    lda #$3e          ; Store 00111110 (#$3e) into mmu configuration reg in high ram mirror
+. f2e0d  8d 00 ff sta $ff00         ; see MMU BitSwitch guide.
+
+. f2e10  a2 03    ldx #$03          ; copy four bytes of Z80 code from $2e70-$2e73 to $ffee.
+. f2e12  bd 70 2e lda $2e70,x
+. f2e15  9d ee ff sta $ffee,x       ; $ffee is where Z80 will start on activation, thanks to prior work from bootlink ROM setup.
+. f2e18  ca       dex
+. f2e19  10 f7    bpl $2e12
+
+. f2e1b  ee 20 d0 inc $d020         ; border color tickle, for potential debug
+
+. f2e1e  a9 0b    lda #$0b          ; disable the 40 column screen
+. f2e20  8d 11 d0 sta $d011
+. f2e23  ad 11 d0 lda $d011         ; don't disable the screen while the electron gun is still
+. f2e26  30 fb    bmi $2e23         ; in the visible area, so we wait for vertical-blank here
+. f2e28  ad 11 d0 lda $d011
+. f2e2b  10 fb    bpl $2e28
+
+. f2e2d  a9 00    lda #$00          ; stop CIA Timer A
+. f2e2f  8d 0e dc sta $dc0e         ; see CIA Timer A BitSwitch guide.
+
+. f2e32  a9 ff    lda #$ff          ; pre-load CIA Timer A with #$ffff (which is the max 16 bit value 65535)
+. f2e34  8d 04 dc sta $dc04
+. f2e37  8d 05 dc sta $dc05
+
+. f2e3a  a9 18    lda #$18          ; force load (0001 1000) .. see CIA Timer A BitSwitch guide.
+. f2e3c  8d 0e dc sta $dc0e
+
+. f2e3f  a9 b0    lda #$b0          ; Store 10110000 (#$b0) into MMU mode configuration reg .. see MMU BitSwitch guide.
+. f2e41  8d 05 d5 sta $d505         ; This sends 8502 into tristate and activates Z80.
+. f2e44  ea       nop
+          : NOP at $2e44 because ROM routines also issue NOP when switching 8502 / Z80 to give the next CPU a moment of time to switch in.
+          ; 
+          ;--
+          ; Please note: CIA timer start/stop is perfomed in Z80 mode, after NOP at $2e44.
+          ; Timers are not started or stopped in 8502 mode because we can't be sure if CPU switching always takes
+          ; the same amount of cycles.  We don't want to measure any kind of CPU switching, only pure Z80 mode action.
+          ;
+          ; All "cycles" timings here always refer to 1 MHz clock, since our CIA timer counts at 1 MHz ticks.
+          ;--
+
+. f2e45  38       sec               ; When 8502 is reactivated, this "sec" is what it will execute first thanks to the program counter.
+          ; Reminder :: The carry flag is automatically set during normal operations IF the last
+          ; operation caused an overflow from BIT 7 of the result or an underflow from BIT 0.
+          ; This flag is normally set during arithmetic, comparison, and during logical shifts.
+          ;
+          ; For purposes below, we explicitly use SEC here to Set Carry Flag in the Processor Status register.
+
+. f2e46  ad 04 dc lda $dc04         ; read $dc04 low-byte of the two-byte (16 bit) CIA Timer value
+. f2e49  49 ff    eor #$ff          ; Timer counts from #$FFFF downwards. EOR $dc04 value with #$FF to invert the value.
+                                    ; For creature-comforts, inverted timer behaves as if it counted from #$0000 upwards.
+. f2e4b  e9 39    sbc #$39
+          ; subtract a correction value to weed out noise (for this test program, correction is #$39)
+          ; This value depends on the cycles wasted before/after the z80 routine you want to measure.
+          ;
+          ; HOW-TO :: The correction value can be obtained by setting the SBC value to $00, removing the Z80 routine you
+          ; want to measure, and then only measure the z80 stuff which starts / stops the CIA timers.
+          ; If there is other extra stuff that you choose not to measure, you can calibrate and account for it here.
+
+. f2e4d  8d fe 2d sta $2dfe         ; store EOR'ed and SBC'ed $dc04 low-byte value in $2dfe, for low-byte lookup by BASIC script.
+
+. f2e50  ad 05 dc lda $dc05         ; read $dc04 low-byte of the two-byte (16 bit) CIA timer value
+. f2e53  49 ff    eor #$ff          ; as before - EOR $dc04 value with #$FF to invert the value. Timer counts from #$FFFF downwards.
+. f2e55  e9 00    sbc #$00          ; we have SBC ready and waiting for the high-byte if needed, but in this test it isn't used.
+. f2e57  8d ff 2d sta $2dff         ; store EOR'ed $dc05 high-byte value in $2dff, for high-byte lookup by BASIC script.
+
+. f2e5a  a9 1b    lda #$1b          ; enable the 40 column screen
+. f2e5c  8d 11 d0 sta $d011
+. f2e5f  ee 20 d0 inc $d020         ; border color tickle, for potential debug
+
+; restore all IRQs and the Clear the Carry Flag, no loose ends !
+. f2e62  58       cli               ; enable all IRQ
+. f2e63  a9 00    lda #$00          ; specifically enable CIA IRQ
+. f2e65  8d 0d dc sta $dc0d
+. f2e68  a9 f1    lda #$f1          ; specifically enable VIC-II IRQ
+. f2e6a  8d 1a d0 sta $d01a
+. f2e6d  18       clc               ; Clear the Carry Flag
+
+. f2e6e  60       rts               ; return from subroutine, pass control back to BASIC script.
+
+. f2e6f  ff                         ; .byte #$ff - space-filler byte
+
+; 1100 rem z80 code block (raw code)
+. f2e70  21 74 2E    LD HL, #$2E74          ; 21 74 2E E9 opcode bytes are copied over to $ffee by 8502 code above.
+                                            ; When Z80 activates, it executes these opcodes starting first at $ffee.
+. f2e73  E9          LD PC,HL               ; However, there is limited space in $ffee for Z80 code.  Z80 code must either jump
+                                            ; out to another address or change the Z80 Program Counter to point to another address.
+                                            ; $2e74 is loaded into Z80 program counter, and the rest of Z80 code starts from there.
+
+. f2e74  F3          DI                     ; Disable Z80 IRQs
+
+. f2e75  3E 3E       LD A, #$3E             ; Store 00111110 (#$3e) into mmu configuration reg in high ram mirror
+. f2e77  32 00 FF    LD ($FF00),A
+
+. f2e7a  01 0E DC    LD BC, #$DC0E          ; force load and start (0001 1001) CIA Timer A
+. f2e7d  3E 19       LD A, #$19             ; see CIA Timer A BitSwitch guide.
+. f2e7f  ED 79       OUT BC,A
+
+. f2e81  01 30 D0    LD BC, #$D030          ; Force 1 MHz slow mode
+. f2e84  3E 00       LD A, #$00
+. f2e86  ED 79       OUT BC,A
+
+; Z80 test instruction segment begins at $2e88 (LDIR in this test case, but any rational Z80 instruction can be substituted here)
+; Remember to keep in mind those cycles lost from initializations -- if this is relevant to your SBC correction value at 8502 side.
+; For example, simply loading 16 bit immediate into BC etc is 5 cycles lost.
+;
+. f2e88  21 00 20    LD HL, #$2000          ; standard LDIR setup, start address
+. f2e8b  11 00 48    LD DE, #$4800          ; destination addresss
+. f2e8e  01 00 08    LD BC, #$0800          ; amount of bytes to copy (2048 bytes) starting from start address
+. f2e91  ED B0       LDIR                   ; LDIR copies 2048 bytes starting from $2000 to $4800
+                                            ; measured at 10.5063477 1 MHz CIA cycles per byte on physical PAL C-128.
+; Z80 test instruction segment ends at $2e92 (this segment can be variable in length)
+
+. f2e93  01 30 D0    LD BC, #$D030          ; Force 1 MHz slow mode (yes, again)
+. f2e96  3E 00       LD A, #$00
+. f2e98  ED 79       OUT BC,A
+
+. f2e9a  01 21 D0    LD BC, #$D021          ; background color tickle, for potential debug
+. f2e9d  3E C2       LD A, #$C2
+. f2e9f  ED 79       OUT BC,A
+
+. f2ea1  01 0E DC    LD BC, #$DC0E          ; Stop CIA Timer A on underflow (0000 1000)
+. f2ea4  3E 08       LD A, #$08             ; see CIA Timer A BitSwitch guide.
+. f2ea6  ED 79       OUT BC,A
+
+. f2ea8  FB          EI                     ; Enable Z80 IRQs
+
+. f2ea9  01 05 D5    LD BC, #$D505          ; Store 10110001 (#$b1) into MMU mode configuration reg .. see MMU BitSwitch guide. 
+. f2eac  3E B1       LD A, #$B1             ; This sends Z80 into tristate and activates 8502.
+. f2eae  ED 79       OUT BC,A
+. f2eb0  00          NOP
+          : NOP at $2eb0 because ROM routines also issue NOP when switching 8502 / Z80 to give the next CPU a moment of time to switch in.
+. f2eb1  CF          RST 08                 ; Legacy Z80 restart 08h init (at C-128 Z80 boot rom), stands here as fallthrough backup.
+ 
