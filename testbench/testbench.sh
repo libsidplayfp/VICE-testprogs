@@ -7,6 +7,7 @@ NAME=$0
 target=""
 filter=""
 verbose=0
+resume=0
 # extra options
 videotype=""
 videosubtype=""
@@ -249,6 +250,17 @@ function gettestsfortarget
     IFS=$'\n' read -d '' -r -a testlist < "$1"-testlist.txt
 }
 
+# read the existing list of results for the given target
+function getresultsfortarget
+{
+    if [ "${resume}" == "1" ]; then
+#    echo "reading list of tests for" "$1".
+# readarray does only work on bash4 (not in mingw)
+#    readarray -t resultlist < "$1"-results.txt
+        IFS=$'\n' read -d '' -r -a resultlist < "$1"-result.txt
+    fi
+}
+
 ###############################################################################
 
 # reset all flags used for options per test
@@ -294,7 +306,9 @@ function resultstartlog
 {
     RESULT_LOG_NAME="$target"
     RESULT_LOG_NAME+="-result.txt"
-    rm -f "$RESULT_LOG_NAME"
+    if [ "${resume}" == "0" ]; then
+        rm -f "$RESULT_LOG_NAME"
+    fi
 }
 
 # $1 - path
@@ -311,6 +325,34 @@ function resultstoplog
     echo "$1""$2""$3""$4" >> "$RESULT_LOG_NAME"
 }
 
+# check if a result exists in the resultfile already
+# $1 - path
+# $2 - exe name
+# $3 - status
+# $4 - test type
+function resultfind
+{
+#    echo "find:""$1","$2","$3","$4","$mounted_d64","$mounted_g64","$mounted_crt","${new_cia_enabled}","${new_sid_enabled}","${testprogvideotype}"
+    for re in "${resultlist[@]}"
+    do
+#        echo "$re"
+        if [ "${re:0:1}" != "#" ]; then
+            IFS=',' read -a rarray <<< "$re"
+#            echo "check:""${rarray[0]}","${rarray[1]}","${rarray[2]}","${rarray[3]}","${rarray[4]}","${rarray[5]}","${rarray[6]}","${rarray[7]}","${rarray[8]}","${rarray[9]}"
+            if [ x"$1"x == x"${rarray[0]}"x ] && [ x"$2"x == x"${rarray[1]}"x ] &&
+               [ x"$4"x == x"${rarray[3]}"x ] && [ x"$mounted_d64"x == x"${rarray[4]}"x ] &&
+               [ x"$mounted_g64"x == x"${rarray[5]}"x ] && [ x"$mounted_crt"x == x"${rarray[6]}"x ] &&
+               [ x"${new_cia_enabled}"x == x"${rarray[7]}"x ] && [ x"${new_sid_enabled}"x == x"${rarray[8]}"x ] &&
+               [ x"${testprogvideotype}"x == x"${rarray[9]}"x ]
+            then
+#                echo "found:""${rarray[0]}","${rarray[1]}","${rarray[2]}","${rarray[3]}","${rarray[4]}","${rarray[5]}","${rarray[6]}","${rarray[7]}","${rarray[8]}","${rarray[9]}"
+                return 1
+            fi
+        fi
+    done
+    return 0
+}
+
 ###############################################################################
 
 # $1 - target
@@ -325,6 +367,7 @@ function runprogsfortarget
 #    fi
 
     gettestsfortarget "$target"
+    getresultsfortarget "$target"
     resultstartlog
 
     "$target"_prepare
@@ -479,6 +522,13 @@ function runprogsfortarget
                 echo "$testpath" "$testprog" "- " "interactive (skipped)"
                 skiptest=1
             fi
+            if [ "${resume}" == "1" ] &&  [ "${skiptest}" == "0" ] && [ "${testtype}" != "interactive" ]; then
+                resultfind "$testpath" "$testprog" "$exitstatus" "${testtype}"
+                if [ "$?" == "1" ]; then
+                    echo "$testpath" "$testprog" "(skipped)"
+                    skiptest=1
+                fi
+            fi
             if [ "${skiptest}" == "0" ]; then
 #                if [ "$2" == "" ] || [ "${testpath#*$2}" != "$testpath" ]; then
                     echo -ne "$testpath" "$testprog" "- "
@@ -547,9 +597,7 @@ function runprogsfortarget
                         echo -e "$exitstatus" $NC
                         resultprintline "$testpath" "$testprog" "$exitstatus" "${testtype}"
                     fi
-                    
-#                fi
-            fi
+                fi
             fi
         fi
     done
@@ -580,6 +628,7 @@ function showhelp
     echo "  <filter> is a substring of the path of tests to restrict to"
     echo "  --help       show this help"
     echo "  --verbose    be more verbose"
+    echo "  --resume     resume previously aborted testrun"
     echo "  --pal        run tests in PAL, skip tests that do not work on PAL"
     echo "  --ntsc       run tests in NTSC, skip tests that do not work on NTSC"
     echo "  --ntscold    run tests in NTSC(old), skip tests that do not work on NTSC(old)"
@@ -617,6 +666,9 @@ do
             ;;
         --verbose)
                 verbose=1
+            ;;
+        --resume)
+                resume=1
             ;;
         --pal)
                 videotype="PAL"
