@@ -11,13 +11,13 @@
 ################################################################################
 # selftest
 ################################################################################
-./selftest/,c64-fail.prg,exitcode,10000000
+./selftest/,c64-fail.prg,exitcode,10000000,comment:must always fail
 ./selftest/,c64-pass.prg,exitcode,10000000
-./selftest/,c64-fail.prg,screenshot,10000000
+./selftest/,c64-fail.prg,screenshot,10000000,comment:must always fail
 ./selftest/,c64-pass.prg,screenshot,10000000
-./selftest/,,exitcode,10000000,mountcrt:c64-fail.crt
+./selftest/,,exitcode,10000000,mountcrt:c64-fail.crt,comment:must always fail
 ./selftest/,,exitcode,10000000,mountcrt:c64-pass.crt
-./selftest/,,screenshot,10000000,mountcrt:c64-fail.crt
+./selftest/,,screenshot,10000000,mountcrt:c64-fail.crt,comment:must always fail
 ./selftest/,,screenshot,10000000,mountcrt:c64-pass.crt
 ################################################################################
 # general
@@ -31,8 +31,8 @@
 ../C64/autostart/basic/,printpoint.prg,exitcode,10000000
 ../C64/autostart/basic/,printpoint2.prg,exitcode,10000000
 #FIXME: test.prg fails when not loaded by LOAD"TEST",8
-../C64/autostart/defaults/,test.prg,exitcode,50000000
-../C64/autostart/defaults/,test.prg,exitcode,50000000,mountd64:test.d64
+../C64/autostart/defaults/,test.prg,exitcode,50000000,comment:it is actually almost impossible to meet the requirements of this program when not going through kernal LOAD
+../C64/autostart/defaults/,test.prg,exitcode,50000000,mountd64:test.d64,comment:load the test manually using "TEST" as filename
 ../C64/autostart/random/,raster.prg,interactive,0
 ../C64/bankio/,bankio.prg,exitcode,10000000
 ../C64/openio/,dadb.prg,interactive,0
@@ -338,8 +338,8 @@
 ../general/Lorenz-2.15/src/,cia1tanew.prg,exitcode,190000000,cia-new
 ../general/Lorenz-2.15/src/,cia1tbnew.prg,exitcode,80000000,cia-new
 #FIXME: these two dont work!
-../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,75000000,cia-new
-../general/Lorenz-2.15/src/,cia2tbnew.prg,exitcode,75000000,cia-new
+../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,75000000,cia-new,comment:broken test, always fails
+../general/Lorenz-2.15/src/,cia2tbnew.prg,exitcode,75000000,cia-new,comment:broken test, always fails
 ################################################################################
 ../general/ram0001/,quicktest.prg,interactive,0
 ../general/ram0001/,test1.prg,exitcode,10000000
@@ -474,8 +474,8 @@
 ../interrupts/irq-ackn-bug/,cia2new.prg,exitcode,10000000,cia-new
 ../interrupts/irq-ackn-bug/,cia2.prg,exitcode,10000000,cia-old
 #FIXME: fix tests for NTSC/NTSCOLD
-../interrupts/irq-ackn-bug/,irq-ackn_after_cli2.prg,interactive,0,vicii-pal
-../interrupts/irq-ackn-bug/,irq-ackn_after_cli.prg,interactive,0,vicii-pal
+../interrupts/irq-ackn-bug/,irq-ackn_after_cli2.prg,interactive,0,vicii-pal,comment:non deterministic test which has to be judged by eye comparison
+../interrupts/irq-ackn-bug/,irq-ackn_after_cli.prg,interactive,0,vicii-pal,comment:non deterministic test which has to be judged by eye comparison
 #FIXME: fix tests for NTSC/NTSCOLD
 ../interrupts/irq-ackn-bug/,irq-ack-vicii.prg,exitcode,10000000,vicii-pal
 #FIXME: fix tests for NTSC/NTSCOLD
@@ -498,8 +498,8 @@
 ../interrupts/irqdummy/,irqdummy.prg,exitcode,9000000
 ../interrupts/irqnmi/,irqnmi-new.prg,exitcode,20000000,cia-new
 ../interrupts/irqnmi/,irqnmi-old.prg,exitcode,20000000,cia-old
-../interrupts/nmitest/,nmitest.prg,interactive,0
-../interrupts/nmitest/,nmitest2.prg,interactive,0
+../interrupts/nmitest/,nmitest.prg,interactive,0,comment:repeatedly press RESTORE
+../interrupts/nmitest/,nmitest2.prg,interactive,0,comment:repeatedly press RESTORE
 ################################################################################
 # CIA 6526
 #
@@ -512,8 +512,8 @@
 #FIXME: fix the following three tests also for NTSCOLD
 ../CIA/cia-timer/,cia-timer-oldcias.prg,exitcode,200000000,cia-old
 ../CIA/cia-timer/,cia-timer-newcias.prg,exitcode,200000000,cia-new
-../CIA/ciaports/,ciaports.prg,interactive,0
-../CIA/ciaports/,ghosting.prg,interactive,0
+../CIA/ciaports/,ciaports.prg,interactive,0,comment:various Keys must be pressed and results compared manually
+../CIA/ciaports/,ghosting.prg,interactive,0,comment:various Keys must be pressed and results compared manually
 ../CIA/ciavarious/,cia1.prg,exitcode,10000000
 ../CIA/ciavarious/,cia2.prg,exitcode,20000000
 ../CIA/ciavarious/,cia3.prg,exitcode,10000000,cia-old
@@ -841,6 +841,7 @@
 #TODO (fix noisemapper program)
 #../SID/noise
 ../SID/noisewriteback/,noisewriteback.prg,interactive,0
+#TODO: remove?
 #../SID/noisewriteback/,noise_writeback_with_test_bit1.prg,exitcode,100000000
 #../SID/noisewriteback/,noise_writeback_with_test_bit2.prg,exitcode,100000000
 #../SID/noisewriteback/,noise_writeback_with_test_bit.prg,exitcode,100000000
@@ -918,6 +919,7 @@
 ../SID/ringmod/,ringmodtest.prg,exitcode,5200000
 ../SID/stereo/,stereo.prg,interactive,0
 ../SID/sidcheck/,sidcheck.prg,interactive,0
+../SID/testwave00/,testWave00.prg,interactive,0
 #TODO:
 #../SID/waveforms/,waveforms-6581.prg
 #../SID/waveforms/,waveforms-8580.prg
@@ -933,7 +935,7 @@
 # ../C64/carts runtime 0 minutes and 44 seconds (chameleon)
 ################################################################################
 ../C64/autostart/cartio/,test.prg,interactive,0
-../C64/autostart/defaults/,,exitcode,4000000,mountcrt:test.crt
+../C64/autostart/defaults/,,exitcode,4000000,mountcrt:test.crt,comment:repeatedly press reset to check i/o register reset behaviour
 #TODO:
 #../C64/carts/,exos.prg
 ../C64/carts/,mmcrplugin.prg,interactive,0
@@ -963,17 +965,17 @@
 ../C64/carts/ultimax,,screenshot,1000000,mountcrt:16k-vic-ef.crt,vicii-pal
 ../C64/carts/ultimax,,screenshot,1000000,mountcrt:ultimax-vic-rr.crt,vicii-pal
 ../C64/carts/ultimax,,screenshot,1000000,mountcrt:ultimax-vic-ef.crt,vicii-pal
-../C64/freezer/ciairq,ciairq1t1.prg,interactive,0
-../C64/freezer/ciairq,ciairq1t2.prg,interactive,0
-../C64/freezer/ciairq,ciairq2t1.prg,interactive,0
-../C64/freezer/ciairq,ciairq2t2.prg,interactive,0
-../C64/freezer/batest,batest.prg,interactive,0
-../C64/freezer/,freezeblock.prg,interactive,0
-../C64/freezer/,freeze-cia1.prg,interactive,0
-../C64/freezer/,freeze-cia2.prg,interactive,0
-../C64/freezer/,freeze-combined.prg,interactive,0
-../C64/freezer/,freeze-raster.prg,interactive,0
-../C64/freezer/,freeze-test.prg,interactive,0
+../C64/freezer/ciairq,ciairq1t1.prg,interactive,0,comment:freeze and restart
+../C64/freezer/ciairq,ciairq1t2.prg,interactive,0,comment:freeze and restart
+../C64/freezer/ciairq,ciairq2t1.prg,interactive,0,comment:freeze and restart
+../C64/freezer/ciairq,ciairq2t2.prg,interactive,0,comment:freeze and restart
+../C64/freezer/batest,batest.prg,interactive,0,comment:freeze and restart
+../C64/freezer/,freezeblock.prg,interactive,0,comment:freeze and restart
+../C64/freezer/,freeze-cia1.prg,interactive,0,comment:freeze and restart
+../C64/freezer/,freeze-cia2.prg,interactive,0,comment:freeze and restart
+../C64/freezer/,freeze-combined.prg,interactive,0,comment:freeze and restart
+../C64/freezer/,freeze-raster.prg,interactive,0,comment:freeze and restart
+../C64/freezer/,freeze-test.prg,interactive,0,comment:freeze and restart
 ################################################################################
 # REU
 ################################################################################
@@ -1001,13 +1003,13 @@
 ../drive/1541-testsuite,1541-testsuite.prg,exitcode,2220000000,mountd64:disks/pc64_1.d64
 ../drive/1541-testsuite,1541-testsuite.prg,exitcode,1850000000,mountd64:disks/pc64_2.d64
 ../drive/defaults/,defaults.prg,exitcode,9500000,mountd64:defaults.d64
-../drive/diskchange/,pollwp.prg,interactive,0
+../drive/diskchange/,pollwp.prg,interactive,0,comment:change the disk using the fliplist and/or the menu
 ../drive/diskid/,diskid1.prg,exitcode,8500000,mountd64:diskid.d64
 #FIXME: use an empty g64 too
 ../drive/format/,format.prg,exitcode,80000000,mountd64:format.d64
 ../drive/iecdelay/,iec-bus-delay-auto.prg,exitcode,80000000
-../drive/interrupts/,timera.prg,exitcode,20000000
-../drive/interrupts/,watchdog,interactive,0
+../drive/interrupts/,timera.prg,exitcode,20000000,comment:results depend on the physical properties of the drive and vary between real drives/mechs too.
+../drive/interrupts/,watchdog,interactive,0,comment:this is a freezer test - run/freeze/restart. it should not hang
 ../drive/pwm/,pwm.prg,interactive,0
 ../drive/rpm/,rpm.d64,interactive,0
 ../drive/rpm/,rpm.g64,interactive,0
@@ -1035,7 +1037,7 @@
 ../drive/viavarious/,via11.prg,exitcode,87000000
 ../drive/viavarious/,via12.prg,exitcode,87000000
 ../drive/viavarious/,via13.prg,exitcode,87000000
-../drive/writeprotect/,write.d64,interactive,0
+../drive/writeprotect/,write.d64,interactive,0,comment:mount image write protected - the test should not be able to write to the disk (and kill the dir track)
 ################################################################################
 # virtual Drive
 ################################################################################
