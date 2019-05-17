@@ -22,6 +22,7 @@
 int verbose = 0;
 int format = 0;
 int errormode = 0;
+int filterntscold = 0;
 
 char *infilename[MAXLISTS];
 int numfiles = 0;
@@ -67,6 +68,7 @@ typedef struct
     int ciatype;
     int sidtype;
     int videotype;
+    char *comment;
 } TEST;
 
 char *refname = NULL;
@@ -188,6 +190,7 @@ int readlist(TEST *list, char *name, int isresultfile)
         list->ciatype = CIATYPE_UNSET;
         list->sidtype = SIDTYPE_UNSET;
         list->videotype = VIDEOTYPE_UNSET;
+        list->comment = NULL;
         if (isresultfile) {
             // 1) d64
             len = strlen(opt[0]);
@@ -263,6 +266,11 @@ int readlist(TEST *list, char *name, int isresultfile)
                     strcpy(list->media, &opt[i][9]);
                     list->mediatype = MEDIA_CRT;
                 }
+                
+                if (!strncmp(opt[i], "comment:", 8)) {
+                    list->comment = strdup(&opt[i][8]);
+                }
+                
             }
         }
 
@@ -398,9 +406,11 @@ void printrowtestpath(int row)
         case FORMAT_HTML:
             printf("<td>");
             printf("<a href=\"%s/%s/\">%s</a>", 
-                   sfurl, reflist[row].path, reflist[row].path); 
-            printf(" <a href=\"%s/%s/%s?format=raw\">%s</a>", 
-                   sfurl, reflist[row].path, reflist[row].prog, reflist[row].prog); 
+                   sfurl, reflist[row].path, reflist[row].path);
+            if (strlen(reflist[row].prog) > 0) {
+                printf(" <a href=\"%s/%s/%s?format=raw\">%s</a>", 
+                    sfurl, reflist[row].path, reflist[row].prog, reflist[row].prog); 
+            }
             switch (reflist[row].mediatype) {
                 case MEDIA_D64:
                 case MEDIA_G64:
@@ -409,14 +419,19 @@ void printrowtestpath(int row)
                            sfurl, reflist[row].path, reflist[row].media, reflist[row].media); 
                     break;
             }
+            if (reflist[row].comment) {
+                printf(" <small>(%s)</small>", reflist[row].comment); 
+            }
             printf("</td>");
         break;
         case FORMAT_WIKI:
             printf("||");
             printf("[%s/%s/ %s]", 
                    sfurl, reflist[row].path, reflist[row].path); 
-            printf(" [%s/%s/%s?format=raw %s]", 
-                   sfurl, reflist[row].path, reflist[row].prog, reflist[row].prog); 
+            if (strlen(reflist[row].prog) > 0) {
+                printf(" [%s/%s/%s?format=raw %s]", 
+                    sfurl, reflist[row].path, reflist[row].prog, reflist[row].prog); 
+            }
             switch (reflist[row].mediatype) {
                 case MEDIA_D64:
                 case MEDIA_G64:
@@ -424,6 +439,9 @@ void printrowtestpath(int row)
                     printf(" ([%s/%s/%s?format=raw %s])", 
                            sfurl, reflist[row].path, reflist[row].media, reflist[row].media); 
                     break;
+            }
+            if (reflist[row].comment) {
+                printf(" <small>(%s)</small>", reflist[row].comment); 
             }
             printf("\n");
         break;
@@ -579,6 +597,7 @@ void printtable(void)
     // loop over all tests
     for (i = 0; i < refnum; i++) {
         iserror = 0;
+        
         // loop over all result files
         for (ii = 0; ii < numfiles; ii++) {
             res[ii] = findresult(testlist[ii], &reflist[i]);
@@ -586,6 +605,8 @@ void printtable(void)
         }
         // skip this line if we only want to see errors
         if (errormode && !iserror) continue;
+        // skip this line if we dont want to see results for ntscold
+        if (filterntscold && (reflist[i].videotype == VIDEOTYPE_NTSCOLD)) continue;
 
         printrow(i, res);
     }
@@ -605,6 +626,7 @@ void usage(char *name)
     "  --results <file> <header>    add a results file\n"
     "  --html                       output html\n"
     "  --wiki                       output mediawiki format\n"
+    "  --filter-ntscold             omit ntsc-old tests\n"
     "  --errors                     output only rows that contain errors\n"
     "  --verbose                    be more verbose\n", name, name
     );
@@ -618,6 +640,8 @@ int main(int argc, char *argv[])
             verbose = 1;
         } else if(!strcmp(argv[i], "--errors")) {
             errormode = 1;
+        } else if(!strcmp(argv[i], "--filter-ntscold")) {
+            filterntscold = 1;
         } else if(!strcmp(argv[i], "--html")) {
             format = FORMAT_HTML;
         } else if(!strcmp(argv[i], "--wiki")) {
