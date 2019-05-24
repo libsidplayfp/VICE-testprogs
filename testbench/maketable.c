@@ -23,6 +23,14 @@ int verbose = 0;
 int format = 0;
 int errormode = 0;
 int filterntscold = 0;
+int firstcolisref = 0;
+char *referrorstring = NULL;
+int firstrowispercent = 0;
+char *percentagestring = NULL;
+int warnvicfetch = 0;
+char *vicfetchstring = NULL;
+int warnvicefail = 0;
+char *vicefailstring = NULL;
 
 char *infilename[MAXLISTS];
 int numfiles = 0;
@@ -69,6 +77,8 @@ typedef struct
     int sidtype;
     int videotype;
     char *comment;
+    int warnvicfetch;
+    int warnvicefail;
 } TEST;
 
 char *refname = NULL;
@@ -77,6 +87,7 @@ int refnum = 0;
 
 TEST testlist[MAXLISTS][MAXTESTS];
 int testnum[MAXLISTS];
+int testfailed[MAXLISTS];
 
 char *sfurl = "https://sourceforge.net/p/vice-emu/code/HEAD/tree/testprogs/testbench";
 
@@ -191,6 +202,8 @@ int readlist(TEST *list, char *name, int isresultfile)
         list->sidtype = SIDTYPE_UNSET;
         list->videotype = VIDEOTYPE_UNSET;
         list->comment = NULL;
+        list->warnvicfetch = 0;
+        list->warnvicefail = 0;
         if (isresultfile) {
             // 1) d64
             len = strlen(opt[0]);
@@ -270,6 +283,12 @@ int readlist(TEST *list, char *name, int isresultfile)
                 if (!strncmp(opt[i], "comment:", 8)) {
                     list->comment = strdup(&opt[i][8]);
                 }
+                if (!strncmp(opt[i], "warn:vicfetch", 13)) {
+                    list->warnvicfetch = 1;
+                }
+                if (!strncmp(opt[i], "warn:vicefail", 13)) {
+                    list->warnvicefail = 1;
+                }
                 
             }
         }
@@ -328,7 +347,7 @@ void printstart(void)
             "</style>"
             "</head>"
             "<body>"
-            "<hr><table style=\"width: 100%%\" id=\"maintable\">"
+            "<table style=\"width: 100%%\" id=\"maintable\">"
             "\n"
         );
     } else if (format == FORMAT_WIKI) {
@@ -351,7 +370,7 @@ void printend(void)
 void printheader(void)
 {
     char tmp[0x100];
-    int i;
+    int i, num, pass;
 
     if (format == FORMAT_HTML) {
         printf("<tr>"
@@ -367,17 +386,30 @@ void printheader(void)
         );
     }
 
-    for (i = 0; i < numfiles; i++) {
+    for (i = (firstcolisref ? 1 : 0); i < numfiles; i++) {
+        num = testnum[i]; pass = testnum[i] - testfailed[i];
         switch (format) {
             case FORMAT_TEXT: 
                 strcpy(tmp, headline[i]); tmp[8] = 0;
                 printf(WHITE "%-8s" NC, tmp); 
                 break;
-            case FORMAT_HTML: 
-                printf("<th width=110>%s</th>", headline[i]); 
+            case FORMAT_HTML:
+                if (firstrowispercent) {
+                    printf("<th width=110>%s<br>", headline[i]);
+                    printf(percentagestring, (pass * 100) / num, pass, num);
+                    printf("</th>");
+                } else {
+                    printf("<th width=110>%s</th>", headline[i]);
+                }
                 break;
             case FORMAT_WIKI: 
-                printf("! width=\"80pt\" |%s\n", headline[i]); 
+                if (firstrowispercent) {
+                    printf("! width=\"80pt\" |%s ", headline[i]); 
+                    printf(percentagestring, (pass * 100) / num, pass, num);
+                    printf("\n"); 
+                } else {
+                    printf("! width=\"80pt\" |%s\n", headline[i]); 
+                }
                 break;
         }
     }
@@ -390,7 +422,7 @@ void printheader(void)
 
 }
 
-void printrowtestpath(int row)
+void printrowtestpath(int row, int res)
 {
     switch (format) {
         case FORMAT_TEXT:
@@ -422,10 +454,21 @@ void printrowtestpath(int row)
             if (reflist[row].comment) {
                 printf(" <small>(%s)</small>", reflist[row].comment); 
             }
+            if ((warnvicfetch) && (reflist[row].warnvicfetch)) {
+                printf(" <small>(%s)</small>", vicfetchstring); 
+            }
+            if ((firstcolisref) && (res == RESULT_ERROR)) {
+                printf(" %s", referrorstring);
+            } else if ((warnvicefail) && (reflist[row].warnvicefail)) {
+                printf(" %s", vicefailstring); 
+            }
             printf("</td>");
         break;
         case FORMAT_WIKI:
-            printf("||");
+            switch (reflist[row].type) {
+                case TYPE_INTERACTIVE: printf("|style=\"background:lightgrey;\"|"); break;
+                default: printf("||"); break;
+            }
             printf("[%s/%s/ %s]", 
                    sfurl, reflist[row].path, reflist[row].path); 
             if (strlen(reflist[row].prog) > 0) {
@@ -442,6 +485,14 @@ void printrowtestpath(int row)
             }
             if (reflist[row].comment) {
                 printf(" <small>(%s)</small>", reflist[row].comment); 
+            }
+            if ((warnvicfetch) && (reflist[row].warnvicfetch)) {
+                printf(" %s", vicfetchstring); 
+            }
+            if ((firstcolisref) && (res == RESULT_ERROR)) {
+                printf(" %s", referrorstring);
+            } else if ((warnvicefail) && (reflist[row].warnvicefail)) {
+                printf(" %s", vicefailstring); 
             }
             printf("\n");
         break;
@@ -482,7 +533,11 @@ void printrowtesttype(int row)
             }
         break;
         case FORMAT_WIKI:
-            printf("||");
+            switch (reflist[row].type) {
+                case TYPE_EXITCODE: printf("||"); break;
+                case TYPE_SCREENSHOT: printf("||"); break;
+                case TYPE_INTERACTIVE: printf("|style=\"background:lightgrey;\"|"); break;
+            }
             switch (reflist[row].videotype) {
                 case VIDEOTYPE_PAL: printf("PAL "); break;
                 case VIDEOTYPE_NTSC: printf("NTSC "); break;
@@ -562,21 +617,21 @@ void printrow(int row, int *res)
 
     if (format == FORMAT_HTML) {
         printf("<tr>");
-        printrowtestpath(row);
+        printrowtestpath(row, res[0]);
         printrowtesttype(row);
     } else if (format == FORMAT_WIKI) {
         printf("|-\n");
-        printrowtestpath(row);
+        printrowtestpath(row, res[0]);
         printrowtesttype(row);
     }
 
-    for (ii = 0; ii < numfiles; ii++) {
+    for (ii = (firstcolisref ? 1 : 0); ii < numfiles; ii++) {
         printrowtestresult(row, res[ii]);
     }
 
     if (format == FORMAT_TEXT) {
         printrowtesttype(row);
-        printrowtestpath(row);
+        printrowtestpath(row, res[0]);
         printf("\n");
     } else if (format == FORMAT_HTML) {
         printf("</tr>\n");
@@ -627,6 +682,10 @@ void usage(char *name)
     "  --html                       output html\n"
     "  --wiki                       output mediawiki format\n"
     "  --filter-ntscold             omit ntsc-old tests\n"
+    "  --firstcolisref <string>     first resultlist is a reference\n"
+    "  --warnvicefail <string>      warn if test is marked as failing in VICE\n"
+    "  --warnvicfetch <string>      warn if test is marked as being critical for VIC fetches\n"
+    "  --percentages <format>       print percentages in first row\n"
     "  --errors                     output only rows that contain errors\n"
     "  --verbose                    be more verbose\n", name, name
     );
@@ -634,7 +693,7 @@ void usage(char *name)
 
 int main(int argc, char *argv[])
 {
-    int i;
+    int i, ii;
     for (i = 1; i < argc; i++) {
         if(!strcmp(argv[i], "--verbose")) {
             verbose = 1;
@@ -649,6 +708,22 @@ int main(int argc, char *argv[])
         } else if(!strcmp(argv[i], "--help")) {
             usage(argv[0]);
             exit(EXIT_SUCCESS);
+        } else if(!strcmp(argv[i], "--firstcolisref")) {
+            i++;
+            firstcolisref = 1;
+            referrorstring = argv[i];
+        } else if(!strcmp(argv[i], "--percentages")) {
+            i++;
+            firstrowispercent = 1;
+            percentagestring = argv[i];
+        } else if(!strcmp(argv[i], "--warnvicfetch")) {
+            i++;
+            warnvicfetch = 1;
+            vicfetchstring = argv[i];
+        } else if(!strcmp(argv[i], "--warnvicefail")) {
+            i++;
+            warnvicefail = 1;
+            vicefailstring = argv[i];
         } else if(!strcmp(argv[i], "--list")) {
             i++;
             refname = argv[i];
@@ -679,7 +754,13 @@ int main(int argc, char *argv[])
     // read the results
     for (i = 0; i < numfiles; i++) {
         testnum[i] = readlist(testlist[i], infilename[i], 1);
-        if (verbose) printf("%d tests in %s\n", testnum[i], infilename[i]);
+        testfailed[i] = 0;
+        for (ii = 0; ii < testnum[i]; ii++) {
+            if (testlist[i][ii].result == RESULT_ERROR) {
+                testfailed[i]++;
+            }
+        }
+        if (verbose) printf("%d tests (%d failed) in %s\n", testnum[i], testfailed[i], infilename[i]);
     }
 
 //    dumplist(reflist, refnum);
