@@ -535,6 +535,7 @@
 ../CIA/ciavarious/,cia4new.prg,exitcode,20000000,cia-new
 ../CIA/ciavarious/,cia8new.prg,exitcode,10000000,cia-new
 ../CIA/dd0dtest/,dd0dtest.prg,exitcode,100000000
+../CIA/mirrors/,ciamirrors.prg,exitcode,9000000
 ../CIA/irqdelay/,irqdelay.prg,interactive,0
 ../CIA/irqdelay/,irqdelay2.prg,interactive,0
 ../CIA/irqdelay/,irqdelay-oneshot.prg,interactive,0
