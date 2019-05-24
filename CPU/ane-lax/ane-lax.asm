@@ -285,7 +285,7 @@ IDENT_LEN	equ	.-ident
 ;*
 ;******
 test_perform:
-	lda	#$0b
+	lda	#$0b           ; screen off
 	sta	$d011
 	lda	$dd00
 	and	#%11111100
@@ -316,7 +316,7 @@ test_perform:
 	rts
 
 run_tests:
-	sta	iut_op
+	sta	iut_op         ; change opcode
 	lda	#$ff
 	jsr	run_test
 	lda	#0
@@ -333,7 +333,7 @@ X_STRIDE	equ	5
 SCAN_LEN	equ	$1200
 
 run_test:
-	sta	iut_op+1
+	sta	iut_op+1       ; change imm value
 	lda	#0
 	sta	acc_zp
 	lda	#0
@@ -347,7 +347,7 @@ run_test:
 	sta	eptr_zp+1
 
 rt_lp1:
-	jsr	iut
+	jsr	iut            ; test opcode
 
 	ldy	#0
 	sta	(ptr_zp),y

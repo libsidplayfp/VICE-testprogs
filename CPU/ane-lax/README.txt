@@ -1,6 +1,23 @@
 Readme for ane-lax
 ------------------
 
+format of the dump files:
+
+; results for ANE #imm
+;  $1200 bytes with imm value $ff
+;  $1200 bytes with imm value $00
+;  $1200 bytes with imm value $5a
+;  $1200 bytes with imm value $a5
+
+; results for LAX #imm
+;  $1200 bytes with imm value $ff
+;  $1200 bytes with imm value $00
+;  $1200 bytes with imm value $5a
+;  $1200 bytes with imm value $a5
+
+for each $1200 bytes, the tests start with A=X=0, A is incremented by 3, X is
+incremented by 5 for each test.
+
 -----------------------------------------------------------------------
 
 dump6510_3184.prg
