@@ -10,6 +10,7 @@
 ;******
 	processor 6502
 
+SCREENSHOTEXIT  equ 0
 
     if VICTYPE = 6569
                   ;123456789012345678901234567890

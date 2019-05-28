@@ -8,6 +8,8 @@
 ;*
 ;******
 	processor 6502
+	
+SCREENSHOTEXIT  equ 0
 
 TEST_NAME	eqm	"BASCAN"
 TEST_REVISION	eqm	"R??"

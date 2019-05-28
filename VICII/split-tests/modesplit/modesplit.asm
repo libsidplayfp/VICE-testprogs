@@ -9,6 +9,8 @@
 ;******
 	processor 6502
 
+SCREENSHOTEXIT  equ 1
+	
 LINE		equ	56
 TEST_NAME	eqm	"modesplit"
 TEST_REVISION	eqm	"r03"

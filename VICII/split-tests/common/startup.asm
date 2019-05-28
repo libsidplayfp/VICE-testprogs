@@ -172,13 +172,13 @@ irq_stable2_pal:
 is2_skp1:
 
 	jsr	test_perform
-	
+#if SCREENSHOTEXIT	
 	dec framecount
 	bne skp
 	lda #0
 	sta $d7ff
 skp:
-		
+#endif
 accstore	equ	.+1
 	lda	#0
 xstore	equ	.+1

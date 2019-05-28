@@ -9,6 +9,8 @@
 ;******
 	processor 6502
 
+SCREENSHOTEXIT  equ 0
+
 TEST_NAME	eqm	"LIGHTPEN"
 TEST_REVISION	eqm	"R04"
 
