@@ -6,6 +6,8 @@
 	.include "vicii_reg_timing_gfx.asm"
 	.code
 
+DEBUGSTABLE = 0	
+	
 REGENPOS = $0400
 SPRBASE0 = REGENPOS+1016
 SPRBASE1 = REGENPOS+1017
@@ -208,9 +210,15 @@ stable:
 	nop
 ;	nop
 stable1:
+.if DEBUGSTABLE = 1
 	inc	EC
 	lda	RASTER
 	dec	EC
+.else 
+	inc	INCADDR+1
+	lda	RASTER
+	dec	INCADDR+1
+.endif
 	lda	RASTER
 	lda	RASTER
 	lda	RASTER
