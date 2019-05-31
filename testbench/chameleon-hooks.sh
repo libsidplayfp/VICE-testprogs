@@ -129,11 +129,31 @@ function chameleon_make_crtid
     crtlit=`od -An -t x1 $CDUMMY`
     crtlit="${crtlit:1:2}"
 #    echo -ne "[id:"$crtlit"]"
+    dd if="$1/$2" bs=1 skip=24 count=1 of=$CDUMMY 2> /dev/null > /dev/null
+    crtexrom=`od -An -t x1 $CDUMMY`
+    crtexrom="${crtexrom:1:2}"
+    dd if="$1/$2" bs=1 skip=25 count=1 of=$CDUMMY 2> /dev/null > /dev/null
+    crtgame=`od -An -t x1 $CDUMMY`
+    crtgame="${crtgame:1:2}"
 
+#    echo "exrom:"$crtexrom
+#    echo "game:"$crtgame
+    
     case "$crtlit" in
         "00")
-                # generic
-                crtid="\xfc"
+                # generic (16k ultimax)
+                crtid="\xfd"
+                if [ "$crtexrom" == "00" ] && [ "$crtgame" == "01" ]
+                then
+                    # generic (8k)
+                    crtid="\xfe"
+                fi
+                if [ "$crtexrom" == "00" ] && [ "$crtgame" == "00" ]
+                then
+                    # generic (16k)
+                    crtid="\xfc"
+                fi
+        
             ;;
         "08")
                 # supergames
