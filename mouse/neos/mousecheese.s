@@ -1,4 +1,7 @@
 
+; this code was extracted from the "mouse cheese" program and serves as a 
+; literal reference - DONT CHANGE
+
 cheesemouseport=1 ; 1 for port1, 0 for port0
 
 readmouse:  ; 3a52

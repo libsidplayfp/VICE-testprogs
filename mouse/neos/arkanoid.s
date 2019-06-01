@@ -1,4 +1,7 @@
 
+; this code was extracted from arkanoid and serves as a literal reference - 
+; DONT CHANGE!
+
 i0940: !byte 0      ; player 1 or 2
 
 
