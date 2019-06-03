@@ -78,6 +78,7 @@ mod_c04e = * + 2
         LDA #$00
         STA $033C
         STA $033D
+        LDA #$01
         STA $033E
 -
         TYA

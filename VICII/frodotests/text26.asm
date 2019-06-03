@@ -24,7 +24,19 @@ entrypoint:
         LDA #>irq
         STA $0315
         CLI
+        
+        ldx #39
+-
+        lda textline,x
+        sta $0800+(40*24),x
+        dex
+        bpl -
+        
         RTS
+        
+textline:
+        !scr "1234567890123456789012345678901234567890"
+        
 irq:
         LDA $D019
         STA $D019
@@ -35,14 +47,14 @@ irq:
         BEQ firstline
         LDA #$18
         STA $D011
-        LDA #$14
+        LDA #$14        ; normal screen at $400
         STA $D018
         LDA #$F3
         BNE skp
 firstline:
         LDA #$1F
         STA $D011
-        LDA #$04
+        LDA #$24        ; second screen at $800
         STA $D018
         LDA #$F8
 skp:
