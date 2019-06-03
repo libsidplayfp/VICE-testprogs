@@ -338,8 +338,8 @@
 ../general/Lorenz-2.15/src/,cia1tanew.prg,exitcode,190000000,cia-new
 ../general/Lorenz-2.15/src/,cia1tbnew.prg,exitcode,80000000,cia-new
 #FIXME: these two dont work!
-../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,75000000,cia-new,comment:broken test, always fails
-../general/Lorenz-2.15/src/,cia2tbnew.prg,exitcode,75000000,cia-new,comment:broken test, always fails
+../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,75000000,cia-new,comment:broken test - always fails
+../general/Lorenz-2.15/src/,cia2tbnew.prg,exitcode,75000000,cia-new,comment:broken test - always fails
 ################################################################################
 ../general/ram0001/,quicktest.prg,interactive,0
 ../general/ram0001/,test1.prg,exitcode,10000000
@@ -357,13 +357,6 @@
 #../CPU/64doc/,sbx-c100.prg
 #../CPU/64doc/,sbx.prg
 #../CPU/64doc/,vsbx.prg
-../CPU/asap/,cpu_ane.prg,exitcode,10000000
-../CPU/asap/,cpu_anx.prg,exitcode,10000000
-../CPU/asap/,cpu_decimal.prg,exitcode,160000000
-../CPU/asap/,cpu_las.prg,exitcode,10000000
-../CPU/asap/,cpu_shx.prg,exitcode,40000000
-#FIXME:
-#../CPU/ane-lax
 ../CPU/Acid800/,cpu_decimal.prg,exitcode,22000000
 ../CPU/Acid800/,cpu_flags.prg,exitcode,22000000
 ../CPU/Acid800/,cpu_illegal.prg,exitcode,41000000
@@ -372,6 +365,16 @@
 #FIXME:
 #../CPU/Acid800/,cpu_bugs.prg,exitcode,100000000
 #../CPU/Acid800/,cpu_clisei.prg,exitcode,100000000
+#FIXME: make automatic
+../CPU/ane/,ane.prg,interactive,0,vicii-pal
+../CPU/ane/,ane-none.prg,interactive,0,vicii-pal
+../CPU/ane/,ane-border.prg,interactive,0,vicii-pal
+../CPU/ane-lax/,ane-lax.prg,interactive,0
+../CPU/asap/,cpu_ane.prg,exitcode,10000000
+../CPU/asap/,cpu_anx.prg,exitcode,10000000
+../CPU/asap/,cpu_decimal.prg,exitcode,160000000
+../CPU/asap/,cpu_las.prg,exitcode,10000000
+../CPU/asap/,cpu_shx.prg,exitcode,40000000
 ../CPU/bclark/,decimalmode.prg,exitcode,65000000
 #TODO:
 #../CPU/cpujam/,cpujam02.prg
@@ -436,6 +439,10 @@
 ../CPU/kdormann/,6502_functional_test.prg,exitcode,180000000
 #FIXME
 #../CPU/kdormann/,6502_interrupt_test.prg,exitcode,4294967295
+#FIXME: make automatic
+../CPU/lax/,lax.prg,interactive,0,vicii-pal
+../CPU/lax/,lax-none.prg,interactive,0,vicii-pal
+../CPU/lax/,lax-border.prg,interactive,0,vicii-pal
 #FIXME: make NTSC fixes
 ../CPU/sha/,shaabsy1.prg,exitcode,6000000
 ../CPU/sha/,shaabsy2.prg,exitcode,6500000,vicii-pal
@@ -465,6 +472,10 @@
 #
 # ../interrupts/ runtime 89 minutes and 27 seconds (chameleon)
 ################################################################################
+../interrupts/branchquirk/,branchquirk-new.prg,exitcode,15000000,cia-new
+../interrupts/branchquirk/,branchquirk-old.prg,exitcode,15000000,cia-old
+../interrupts/branchquirk/,branchquirk-nminew.prg,exitcode,15000000,cia-new
+../interrupts/branchquirk/,branchquirk-nmiold.prg,exitcode,15000000,cia-old
 ../interrupts/cia-int/,cia-int-irq-new.prg,exitcode,10000000,cia-new
 ../interrupts/cia-int/,cia-int-irq.prg,exitcode,10000000,cia-old
 ../interrupts/cia-int/,cia-int-nmi-new.prg,exitcode,10000000,cia-new
@@ -666,40 +677,40 @@
 #FIXME: this test is broken on NTSC
 #FIXME: this test is broken on NTSC
 #FIXME: check tests on NTSCOLD
-../VICII/dmadelay/,test1.prg,interactive,0,vicii-pal
-../VICII/dmadelay/,test1-2a-03.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test1-2a-04.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test1-2a-10.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test1-2a-11.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test1-2a-16.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test1-2a-17.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test1-2a-18.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test2.prg,interactive,0,vicii-pal
-../VICII/dmadelay/,test2-28-05.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test2-28-06.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test2-28-11.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test2-28-12.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test2-28-16.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test2-28-17.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test2-28-18.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test3.prg,interactive,0,vicii-pal
-../VICII/dmadelay/,test3-28-07.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test3-28-08.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test3-28-13.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test3-28-14.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test3-28-18.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test3-28-19.prg,screenshot,10000000,vicii-pal
-../VICII/dmadelay/,test3-28-1a.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test1.prg,interactive,0,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test1-2a-03.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test1-2a-04.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test1-2a-10.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test1-2a-11.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test1-2a-16.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test1-2a-17.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test1-2a-18.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test2.prg,interactive,0,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test2-28-05.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test2-28-06.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test2-28-11.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test2-28-12.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test2-28-16.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test2-28-17.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test2-28-18.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test3.prg,interactive,0,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test3-28-07.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test3-28-08.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test3-28-13.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test3-28-14.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test3-28-18.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test3-28-19.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test3-28-1a.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 #FIXME: doesnt work in emu, possibly unstable on real hw
-../VICII/dmadelay/,test4.prg,interactive,0,vicii-pal
-../VICII/fldscroll/,fldscroll.prg,interactive,0,vicii-pal
-../VICII/fldscroll/,fldscroll-20-60.prg,screenshot,10000000,vicii-pal
-../VICII/fldscroll/,fldscroll-21-60.prg,screenshot,10000000,vicii-pal
-../VICII/fldscroll/,fldscroll-22-60.prg,screenshot,10000000,vicii-pal
-../VICII/fldscroll/,fldscroll-29-60.prg,screenshot,10000000,vicii-pal
-../VICII/fldscroll/,fldscroll-2A-60.prg,screenshot,10000000,vicii-pal
-../VICII/fldscroll/,fldscroll-2B-60.prg,screenshot,10000000,vicii-pal
-../VICII/flibug/,blackmail.prg,screenshot,10000000,vicii-pal
+../VICII/dmadelay/,test4.prg,interactive,0,vicii-pal,warn:vicfetch,warn:vicefail
+../VICII/fldscroll/,fldscroll.prg,interactive,0,vicii-pal,warn:vicfetch
+../VICII/fldscroll/,fldscroll-20-60.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/fldscroll/,fldscroll-21-60.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/fldscroll/,fldscroll-22-60.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/fldscroll/,fldscroll-29-60.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/fldscroll/,fldscroll-2A-60.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/fldscroll/,fldscroll-2B-60.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/flibug/,blackmail.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 #TODO: some of the frodo tests can be made automatic
 ../VICII/frodotests/,3fff.prg,interactive,0,vicii-pal
 ../VICII/frodotests/,d011h3.prg,interactive,0,vicii-pal
@@ -709,7 +720,7 @@
 ../VICII/frodotests/,stretch.prg,interactive,0,vicii-pal
 ../VICII/frodotests/,tech-tech.prg,interactive,0,vicii-pal
 ../VICII/frodotests/,text26.prg,interactive,0,vicii-pal
-../VICII/gfxfetch/,gfxfetch.prg,screenshot,10000000,vicii-pal
+../VICII/gfxfetch/,gfxfetch.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 #FIXME: check on NTSCOLD
 ../VICII/greydot/,greydot.prg,screenshot,20000000,vicii-pal
 ../VICII/lpcoordinates/,lpcoords.prg,interactive,0
@@ -719,13 +730,13 @@
 ../VICII/lp-trigger/,test2.prg,exitcode,20000000,vicii-pal,vicii-old
 ../VICII/lp-trigger/,test2new.prg,exitcode,20000000,vicii-pal,vicii-new
 ../VICII/movesplit/,movesplit.prg,interactive,0,vicii-pal
-../VICII/phi1timing/,phi1timing.prg,exitcode,10000000,vicii-pal
+../VICII/phi1timing/,phi1timing.prg,exitcode,10000000,vicii-pal,warn:vicfetch
 ../VICII/rasterirq/,rasterirq_hold.prg,screenshot,10000000,vicii-pal
 ../VICII/screenpos/,screenpos.prg,screenshot,10000000,vicii-pal
 #FIXME: check tests on NTSCOLD
 #FIXME: fix test for NTSC, dump reference data
 ../VICII/split-tests/bascan/,bascan.prg,exitcode,100000000,vicii-pal
-../VICII/split-tests/fetchsplit/,fetchsplit.prg,screenshot,20000000,vicii-pal
+../VICII/split-tests/fetchsplit/,fetchsplit.prg,screenshot,20000000,vicii-pal,warn:vicfetch
 #FIXME: assemble seperate tests per VIC type
 ../VICII/split-tests/lightpen/,lightpen.prg,exitcode,1000000000
 #FIXME: apparently fails randomly, perhaps uninitialized memory is shown
@@ -733,7 +744,7 @@
 #FIXME: port to NTSC/dump reference data
 ../VICII/split-tests/spritescan/,spritescan.prg,exitcode,1000000000,vicii-pal
 #TODO: add "drean" support to testbench
-../VICII/vicii_timing/,vicii_reg_timing.prg,screenshot,35000000,vicii-pal
+../VICII/vicii_timing/,vicii_reg_timing.prg,screenshot,35000000,vicii-pal,warn:vicfetch
 ../VICII/videomode/,rmwtest.prg,screenshot,10000000,vicii-pal
 ../VICII/videomode/,videomode1.prg,screenshot,10000000,vicii-pal
 ../VICII/videomode/,videomode2.prg,screenshot,10000000,vicii-pal
@@ -758,27 +769,27 @@
 ../VICII/spritecollisions/,sprite-sprite-collision-cycle.prg,exitcode,10000000,vicii-pal
 ../VICII/spritecollisions/,sprite-sprite.prg,exitcode,10000000,vicii-pal
 #FIXME: tests are broken on NTSC
-../VICII/spritecrunch/,spritecrunch.prg,interactive,0,vicii-pal
-../VICII/spritecrunch/,spritecrunch-3b-00.prg,screenshot,21000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch-3c-00.prg,screenshot,21000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch-3d-00.prg,screenshot,21000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch2.prg,interactive,0,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-07.prg,screenshot,21000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-08.prg,screenshot,21000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-09.prg,screenshot,21000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-25.prg,screenshot,21000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-26.prg,screenshot,21000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-27.prg,screenshot,21000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-28.prg,screenshot,21000000,vicii-pal
-../VICII/spritecrunch/,spritecrunch2-29.prg,screenshot,21000000,vicii-pal
+../VICII/spritecrunch/,spritecrunch.prg,interactive,0,vicii-pal,warn:vicfetch
+../VICII/spritecrunch/,spritecrunch-3b-00.prg,screenshot,21000000,vicii-pal,warn:vicfetch
+../VICII/spritecrunch/,spritecrunch-3c-00.prg,screenshot,21000000,vicii-pal,warn:vicfetch
+../VICII/spritecrunch/,spritecrunch-3d-00.prg,screenshot,21000000,vicii-pal,warn:vicfetch
+../VICII/spritecrunch/,spritecrunch2.prg,interactive,0,vicii-pal,warn:vicfetch
+../VICII/spritecrunch/,spritecrunch2-07.prg,screenshot,21000000,vicii-pal,warn:vicfetch
+../VICII/spritecrunch/,spritecrunch2-08.prg,screenshot,21000000,vicii-pal,warn:vicfetch
+../VICII/spritecrunch/,spritecrunch2-09.prg,screenshot,21000000,vicii-pal,warn:vicfetch
+../VICII/spritecrunch/,spritecrunch2-25.prg,screenshot,21000000,vicii-pal,warn:vicfetch
+../VICII/spritecrunch/,spritecrunch2-26.prg,screenshot,21000000,vicii-pal,warn:vicfetch
+../VICII/spritecrunch/,spritecrunch2-27.prg,screenshot,21000000,vicii-pal,warn:vicfetch
+../VICII/spritecrunch/,spritecrunch2-28.prg,screenshot,21000000,vicii-pal,warn:vicfetch
+../VICII/spritecrunch/,spritecrunch2-29.prg,screenshot,21000000,vicii-pal,warn:vicfetch
 #FIXME: check on NTSCOLD and make reference screenshots
-../VICII/spritedma/,d017-54.prg,screenshot,10000000,vicii-pal
-../VICII/spritedma/,d017-57.prg,screenshot,10000000,vicii-pal
-../VICII/spriteenable/,spriteenable1.prg,screenshot,10000000,vicii-pal
-../VICII/spriteenable/,spriteenable2.prg,screenshot,10000000,vicii-pal
-../VICII/spriteenable/,spriteenable3.prg,screenshot,10000000,vicii-pal
-../VICII/spriteenable/,spriteenable4.prg,screenshot,10000000,vicii-pal
-../VICII/spriteenable/,spriteenable5.prg,screenshot,10000000,vicii-pal
+../VICII/spritedma/,d017-54.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/spritedma/,d017-57.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/spriteenable/,spriteenable1.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/spriteenable/,spriteenable2.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/spriteenable/,spriteenable3.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/spriteenable/,spriteenable4.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/spriteenable/,spriteenable5.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/spritefetchbug/,test.prg,interactive,0,vicii-pal
 ../VICII/spritefetchbug/,test-136-2a.prg,screenshot,10000000,vicii-pal
 #FIXME: seems to fail randomly, hard to reproduce

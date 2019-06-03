@@ -330,13 +330,6 @@
 #../CPU/64doc/,sbx-c100.prg
 #../CPU/64doc/,sbx.prg
 #../CPU/64doc/,vsbx.prg
-../CPU/asap/,cpu_ane.prg,exitcode,10000000
-../CPU/asap/,cpu_anx.prg,exitcode,10000000
-../CPU/asap/,cpu_decimal.prg,exitcode,160000000
-../CPU/asap/,cpu_las.prg,exitcode,10000000
-../CPU/asap/,cpu_shx.prg,exitcode,40000000
-#FIXME:
-#../CPU/ane-lax
 ../CPU/Acid800/,cpu_decimal.prg,exitcode,22000000
 ../CPU/Acid800/,cpu_flags.prg,exitcode,22000000
 ../CPU/Acid800/,cpu_illegal.prg,exitcode,41000000
@@ -345,6 +338,16 @@
 #FIXME:
 #../CPU/Acid800/,cpu_bugs.prg,exitcode,100000000
 #../CPU/Acid800/,cpu_clisei.prg,exitcode,100000000
+#FIXME: make automatic
+../CPU/ane/,ane.prg,interactive,0,vicii-pal
+../CPU/ane/,ane-none.prg,interactive,0,vicii-pal
+../CPU/ane/,ane-border.prg,interactive,0,vicii-pal
+../CPU/ane-lax/,ane-lax.prg,interactive,0
+../CPU/asap/,cpu_ane.prg,exitcode,10000000
+../CPU/asap/,cpu_anx.prg,exitcode,10000000
+../CPU/asap/,cpu_decimal.prg,exitcode,160000000
+../CPU/asap/,cpu_las.prg,exitcode,10000000
+../CPU/asap/,cpu_shx.prg,exitcode,40000000
 ../CPU/bclark/,decimalmode.prg,exitcode,65000000
 #TODO:
 #../CPU/cpujam/,cpujam02.prg
@@ -408,6 +411,10 @@
 ../CPU/kdormann/,6502_functional_test.prg,exitcode,180000000
 #FIXME
 #../CPU/kdormann/,6502_interrupt_test.prg,exitcode,4294967295
+#FIXME: make automatic
+../CPU/lax/,lax.prg,interactive,0,vicii-pal
+../CPU/lax/,lax-none.prg,interactive,0,vicii-pal
+../CPU/lax/,lax-border.prg,interactive,0,vicii-pal
 #FIXME: make NTSC fixes
 ../CPU/sha/,shaabsy1.prg,exitcode,6000000
 ../CPU/sha/,shaabsy2.prg,exitcode,6500000,vicii-pal
@@ -437,6 +444,8 @@
 #
 # ../interrupts/ runtime 89 minutes and 27 seconds (chameleon)
 ################################################################################
+../interrupts/branchquirk/,branchquirk-old.prg,exitcode,15000000,cia-old
+../interrupts/branchquirk/,branchquirk-nmiold.prg,exitcode,15000000,cia-old
 ../interrupts/cia-int/,cia-int-irq.prg,exitcode,10000000,cia-old
 ../interrupts/cia-int/,cia-int-nmi.prg,exitcode,10000000,cia-old
 ../interrupts/irq-ackn-bug/,cia1.prg,exitcode,10000000,cia-old
@@ -496,6 +505,7 @@
 ../CIA/ciavarious/,cia14.prg,exitcode,10000000
 ../CIA/ciavarious/,cia15.prg,exitcode,160000000
 ../CIA/dd0dtest/,dd0dtest.prg,exitcode,100000000
+../CIA/mirrors/,ciamirrors.prg,exitcode,9000000
 ../CIA/irqdelay/,irqdelay.prg,interactive,0
 ../CIA/irqdelay/,irqdelay2.prg,interactive,0
 ../CIA/irqdelay/,irqdelay-oneshot.prg,interactive,0
@@ -574,12 +584,12 @@
 #FIXME: this test is broken on NTSC
 #FIXME: this test is broken on NTSC
 #FIXME: check tests on NTSCOLD
-../VICII/dmadelay/,test1.prg,interactive,0,vicii-pal
-../VICII/dmadelay/,test2.prg,interactive,0,vicii-pal
-../VICII/dmadelay/,test3.prg,interactive,0,vicii-pal
+../VICII/dmadelay/,test1.prg,interactive,0,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test2.prg,interactive,0,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test3.prg,interactive,0,vicii-pal,warn:vicfetch
 #FIXME: doesnt work in emu, possibly unstable on real hw
-../VICII/dmadelay/,test4.prg,interactive,0,vicii-pal
-../VICII/fldscroll/,fldscroll.prg,interactive,0,vicii-pal
+../VICII/dmadelay/,test4.prg,interactive,0,vicii-pal,warn:vicfetch,warn:vicefail
+../VICII/fldscroll/,fldscroll.prg,interactive,0,vicii-pal,warn:vicfetch
 #TODO: some of the frodo tests can be made automatic
 ../VICII/frodotests/,3fff.prg,interactive,0,vicii-pal
 ../VICII/frodotests/,d011h3.prg,interactive,0,vicii-pal
@@ -596,7 +606,7 @@
 ../VICII/lp-trigger/,test2.prg,exitcode,20000000,vicii-pal,vicii-old
 ../VICII/lp-trigger/,test2new.prg,exitcode,20000000,vicii-pal,vicii-new
 ../VICII/movesplit/,movesplit.prg,interactive,0,vicii-pal
-../VICII/phi1timing/,phi1timing.prg,exitcode,10000000,vicii-pal
+../VICII/phi1timing/,phi1timing.prg,exitcode,10000000,vicii-pal,warn:vicfetch
 #FIXME: check tests on NTSCOLD
 #FIXME: fix test for NTSC, dump reference data
 ../VICII/split-tests/bascan/,bascan.prg,exitcode,100000000,vicii-pal
@@ -619,8 +629,8 @@
 ../VICII/spritecollisions/,sprite-sprite-collision-cycle.prg,exitcode,10000000,vicii-pal
 ../VICII/spritecollisions/,sprite-sprite.prg,exitcode,10000000,vicii-pal
 #FIXME: tests are broken on NTSC
-../VICII/spritecrunch/,spritecrunch.prg,interactive,0,vicii-pal
-../VICII/spritecrunch/,spritecrunch2.prg,interactive,0,vicii-pal
+../VICII/spritecrunch/,spritecrunch.prg,interactive,0,vicii-pal,warn:vicfetch
+../VICII/spritecrunch/,spritecrunch2.prg,interactive,0,vicii-pal,warn:vicfetch
 #FIXME: check on NTSCOLD and make reference screenshots
 ../VICII/spritefetchbug/,test.prg,interactive,0,vicii-pal
 #FIXME: seems to fail randomly, hard to reproduce
