@@ -239,10 +239,10 @@ result = * + 1
         lda #0
         sta $d020
         cmp #5
-        bne +
+        beq +
         ldy #$ff
 +
-        sta $d7ff
+        sty $d7ff
         rts
         
         !align 255,0,0
