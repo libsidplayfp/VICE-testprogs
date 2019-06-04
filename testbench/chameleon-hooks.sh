@@ -198,6 +198,44 @@ function chameleon_mount_cartridge
     if [ "$?" != "0" ]; then exit -1; fi
 }
 
+# $1 test path
+# $2 d64 name
+function chameleon_mount_d64
+{
+# put a message on C64 screen
+# "uploading cartridge image, please wait  "
+    echo -ne "\x15\x10\x0c\x0f\x01\x04\x09\x0e\x07\x20\x04\x09\x13\x0b\x20\x09\x0d\x01\x07\x05\x2c\x20\x10\x0c\x05\x01\x13\x05\x20\x17\x01\x09\x14\x20\x20\x20\x20\x20\x20\x20" > $RDUMMY
+    chacocmd --addr 1984 --writemem $RDUMMY > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
+# send cartridge image
+    echo -ne "(disk:$2) "
+    chmount -d64 "$1/$2" > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
+# remove message from C64 screen
+    echo -ne "                                        " > $RDUMMY
+    chacocmd --addr 1984 --writemem $RDUMMY > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
+}
+
+# $1 test path
+# $2 g64 name
+function chameleon_mount_g64
+{
+# put a message on C64 screen
+# "uploading cartridge image, please wait  "
+    echo -ne "\x15\x10\x0c\x0f\x01\x04\x09\x0e\x07\x20\x04\x09\x13\x0b\x20\x09\x0d\x01\x07\x05\x2c\x20\x10\x0c\x05\x01\x13\x05\x20\x17\x01\x09\x14\x20\x20\x20\x20\x20\x20\x20" > $RDUMMY
+    chacocmd --addr 1984 --writemem $RDUMMY > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
+# send cartridge image
+    echo -ne "(disk:$2) "
+    chmount -g64 "$1/$2" > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
+# remove message from C64 screen
+    echo -ne "                                        " > $RDUMMY
+    chacocmd --addr 1984 --writemem $RDUMMY > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
+}
+
 # $1 = 1 - enable cartridge
 # $2 test path
 function chameleon_make_helper_options
@@ -306,6 +344,13 @@ function chameleon_remove_cartridge
     chameleon_reset
 }
 
+# FIXME
+function chameleon_remove_disk
+{
+    # reset here so the previous test doesnt keep reading from drive
+    chameleon_reset
+}
+
 ################################################################################
 
 # called once before any tests run
@@ -407,22 +452,14 @@ function chameleon_get_options
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then
-                    echo -ne "(disk:${1:9}) "
-                    chmount -d64 "$2/${1:9}" > /dev/null
-                    if [ "$?" != "0" ]; then exit -1; fi
+                    chameleon_mount_d64 "$2" "${1:9}"
                     mounted_d64="${1:9}"
                 fi
                 if [ "${1:0:9}" == "mountg64:" ]; then
-                    echo -ne "(disk:${1:9}) "
-                    chmount -g64 "$2/${1:9}" > /dev/null
-                    if [ "$?" != "0" ]; then exit -1; fi
+                    chameleon_mount_g64 "$2" "${1:9}"
                     mounted_g64="${1:9}"
                 fi
                 if [ "${1:0:9}" == "mountcrt:" ]; then
-#                    echo -ne "(cartridge:${1:9}) "
-#                    chmount -crt "$2/${1:9}" > /dev/null
-#                    if [ "$?" != "0" ]; then exit -1; fi
-#                    dd if="$2/${1:9}" bs=1 skip=23 count=1 of=$CDUMMY 2> /dev/null > /dev/null
                     mounted_crt="${1:9}"
                 fi
             ;;
@@ -554,6 +591,11 @@ function chameleon_run_screenshot
         chameleon_remove_cartridge
     fi
     
+    # if test used a diskimage, remove it
+    if [ x"$mounted_d64"x != x""x ] || [ x"$mounted_g64"x != x""x ]; then
+        chameleon_remove_disk
+    fi
+    
     # compare screenshot against reference
     if [ -f "$refscreenshotname" ]
     then
@@ -654,6 +696,11 @@ function chameleon_run_exitcode
         if [ "$?" != "0" ]; then exit -1; fi
         chameleon_poll_returncode $(($3 + 1))
         exitcode=$?
+    fi
+    
+    # if test used a diskimage, remove it
+    if [ x"$mounted_d64"x != x""x ] || [ x"$mounted_g64"x != x""x ]; then
+        chameleon_remove_disk
     fi
 
     if [ $verbose == "1" ]; then
