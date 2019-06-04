@@ -285,6 +285,7 @@ function resetflags
     
     mounted_d64=""
     mounted_g64=""
+    mounted_p64=""
     mounted_crt=""
 }
 
@@ -315,6 +316,8 @@ function resultstartlog
 # $2 - exe name
 # $3 - status
 # $4 - test type
+
+#FIXME: p64 is not included
 function resultprintline
 {
     echo "$1","$2","$3","$4","$mounted_d64","$mounted_g64","$mounted_crt","${new_cia_enabled}","${new_sid_enabled}","${testprogvideotype}" >> "$RESULT_LOG_NAME"
@@ -330,6 +333,8 @@ function resultstoplog
 # $2 - exe name
 # $3 - status
 # $4 - test type
+
+#FIXME: p64 is not included
 function resultfind
 {
 #    echo "find:""$1","$2","$3","$4","$mounted_d64","$mounted_g64","$mounted_crt","${new_cia_enabled}","${new_sid_enabled}","${testprogvideotype}"
