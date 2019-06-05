@@ -772,7 +772,7 @@
 ../VICII/frodotests/,sprsync.prg,interactive,0,vicii-pal
 ../VICII/frodotests/,stretch.prg,interactive,0,vicii-pal
 ../VICII/frodotests/,tech-tech.prg,interactive,0,vicii-pal
-../VICII/frodotests/,text26.prg,interactive,0,vicii-pal
+../VICII/frodotests/,text26.prg,screenshot,9000000,vicii-pal
 ../VICII/gfxfetch/,gfxfetch.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/gfxfetch/,gfxfetch_ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
 #FIXME: check on NTSCOLD

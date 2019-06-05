@@ -597,7 +597,6 @@
 ../VICII/frodotests/,sprsync.prg,interactive,0,vicii-pal
 ../VICII/frodotests/,stretch.prg,interactive,0,vicii-pal
 ../VICII/frodotests/,tech-tech.prg,interactive,0,vicii-pal
-../VICII/frodotests/,text26.prg,interactive,0,vicii-pal
 #FIXME: check on NTSCOLD
 ../VICII/lpcoordinates/,lpcoords.prg,interactive,0
 ../VICII/lplatency/,lplatency.prg,exitcode,10000000,vicii-pal
