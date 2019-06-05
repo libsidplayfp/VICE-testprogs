@@ -286,14 +286,36 @@ dt_ex1:
 ;*
 ;******
 update_passed:
+
+    ; for automatic testing, exit with OK after $ff passed tests
+testcount:
+    lda #$ff
+    bne notyet
+    lda #$00
+    sta $d7ff
+notyet:
+    dec testcount+1
+
 	ldx	#pass_zp
 	ldy	#40*0
 	jmp	update_common
+
 update_ram2io_fail:
+
+    ; for automatic testing
+    lda #$ff
+    sta $d7ff
+
 	ldx	#ram2io_fail_zp
 	ldy	#40*1
 	jmp	update_common
+
 update_io2ram_fail:
+
+    ; for automatic testing
+    lda #$ff
+    sta $d7ff
+
 	ldx	#io2ram_fail_zp
 	ldy	#40*2
 	jmp	update_common
