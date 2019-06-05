@@ -41,8 +41,7 @@
 ../C64/openio/,gauntlet.prg,exitcode,8000000
 ../crtemulation/paltest/,paltest.prg,interactive,0
 ../crtemulation/,emusuxX0r-crest.prg,interactive,0
-#FIXME: exit with status after a while
-../general/banking00/,banking00.prg,interactive,0
+../general/banking00/,banking00.prg,exitcode,10000000
 ################################################################################
 # Lorenz Suite
 #
