@@ -217,9 +217,12 @@ function x64sc_run_screenshot
     rm -f "$1"/.testbench/"$screenshottest"-x64sc.png
     if [ $verbose == "1" ]; then
         echo $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x64sc.png "$4"
-    fi
-    $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x64sc.png "$4" 1> /dev/null 2> /dev/null
-    exitcode=$?
+        $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x64sc.png "$4" 2> /dev/null | grep "cycles elapsed" | tr '\n' '-'
+        exitcode=${PIPESTATUS[0]}
+    else
+        $X64SC $X64SCOPTS $X64SCOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x64sc.png "$4" 1> /dev/null 2> /dev/null
+        exitcode=$?
+    fi    
     
     if [ $verbose == "1" ]; then
         echo $X64SC "exited with: " $exitcode
