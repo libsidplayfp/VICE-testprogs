@@ -274,6 +274,9 @@
 	dey
 	bne .bittestc4
 
+	lda #$00
+	sta $d7ff
+	
 	jmp .lscre9
 
 .copy1
@@ -286,6 +289,8 @@
 	beq .lcheckram1
 	lda #$01	; when broken border white
 	sta $d020
+	lda #$ff
+	sta $d7ff
 	jmp *
 .lcheckram1
 .mcheckvalc4
@@ -466,6 +471,8 @@
 	jmp $8000
 .startende
 .errorloop
+    lda #$ff
+    sta $d7ff
 	jmp .errorloop
 .normalboot
 	ldx #<(.defcodeende-.defcode-1)
