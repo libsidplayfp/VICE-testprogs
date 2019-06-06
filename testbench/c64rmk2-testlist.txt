@@ -926,7 +926,6 @@
 #TODO: do more research and make a proper automatic test
 #TODO: make this automatic
 #TODO: make this automatic
-#TODO: make this automatic
 ../C64/freezer/ciairq,ciairq1t1.prg,interactive,0,comment:freeze and restart
 ../C64/freezer/ciairq,ciairq1t2.prg,interactive,0,comment:freeze and restart
 ../C64/freezer/ciairq,ciairq2t1.prg,interactive,0,comment:freeze and restart

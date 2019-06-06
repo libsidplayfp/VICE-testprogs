@@ -861,7 +861,6 @@
 #TODO: do more research and make a proper automatic test
 #TODO: make this automatic
 #TODO: make this automatic
-#TODO: make this automatic
 ../C64/carts/ultimax,ultimax-ef.crt,interactive,0
 ../C64/carts/ultimax,ultimax-rr.crt,interactive,0
 ../C64/freezer/ciairq,ciairq1t1.prg,interactive,0,comment:freeze and restart

@@ -992,8 +992,7 @@
 ../C64/carts/nordicpower/,,interactive,0,mountcrt:nptest.crt
 ../C64/carts/nordicpower/,,interactive,0,mountcrt:rrtest.crt
 ../C64/carts/supergames/,,exitcode,100000,mountcrt:supergames.crt
-#TODO: make this automatic
-../C64/carts/tamtest/,,interactive,0,mountcrt:tamtest.crt
+../C64/carts/tamtest/,,exitcode,35000000,mountcrt:tamtest.crt
 #TODO: make this automatic
 ../C64/carts/ultimax,ultimax-ef.crt,interactive,0
 ../C64/carts/ultimax,ultimax-rr.crt,interactive,0
