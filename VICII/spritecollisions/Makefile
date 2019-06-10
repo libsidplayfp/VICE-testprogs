@@ -14,7 +14,10 @@ TESTSNTSCOLD=\
 	sprite-sprite-collision-cycle_ntscold.prg \
 	sprite-sprite_ntscold.prg
 
-all: $(TESTS) $(TESTSNTSC) $(TESTSNTSCOLD)
+all: $(TESTS) 
+
+# FIXME: NTSC tests are not working
+#$(TESTSNTSC) $(TESTSNTSCOLD)
 
 %.prg:%.tas
 	dasm $*.tas -o$*.prg -DCYCLES=63 -DDTV=0
