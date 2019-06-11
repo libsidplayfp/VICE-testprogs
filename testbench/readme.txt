@@ -125,6 +125,7 @@ test type:
     exitcode
     screenshot
     interactive
+    analyzer
 
 options:
     - extra options, which are translated to actual commandline options by the
@@ -159,6 +160,12 @@ options:
     vic20-unexp
     vic20-8k
     vic20-32k
+    
+    - more extra options which are used by the maketable program:
+    
+    comment:<comment> (CAUTION: may not include commas!)
+    warn:vicfetch
+    warn:vicefail
 
 TODO: when you add support for certain features that require options as above,
       don't forget to add them here :)
