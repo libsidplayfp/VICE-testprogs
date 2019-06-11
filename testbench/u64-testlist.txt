@@ -18,7 +18,7 @@
 ################################################################################
 ../C64/raminitpattern/,cyberloadtest.prg,exitcode,6000000
 ../C64/raminitpattern/,darkstarbbstest.prg,exitcode,8000000
-../C64/raminitpattern/,pattern00ff.prg,interactive,0
+../C64/raminitpattern/,pattern00ff.prg,analyzer,0
 ../C64/raminitpattern/,platoontest.prg,exitcode,8000000
 ../C64/raminitpattern/,typicaltest.prg,exitcode,8000000
 ../C64/autostart/basic/,basictest.prg,exitcode,9000000
@@ -341,7 +341,7 @@
 ../CPU/ane/,ane.prg,interactive,0,vicii-pal
 ../CPU/ane/,ane-none.prg,interactive,0,vicii-pal
 ../CPU/ane/,ane-border.prg,interactive,0,vicii-pal
-../CPU/ane-lax/,ane-lax.prg,interactive,0
+../CPU/ane-lax/,ane-lax.prg,analyzer,0
 ../CPU/asap/,cpu_ane.prg,exitcode,10000000
 ../CPU/asap/,cpu_anx.prg,exitcode,10000000
 ../CPU/asap/,cpu_decimal.prg,exitcode,160000000
@@ -603,7 +603,7 @@
 #FIXME: port to NTSC
 ../VICII/lp-trigger/,test2.prg,exitcode,20000000,vicii-pal,vicii-old
 ../VICII/lp-trigger/,test2new.prg,exitcode,20000000,vicii-pal,vicii-new
-../VICII/movesplit/,movesplit.prg,interactive,0,vicii-pal
+../VICII/movesplit/,movesplit.prg,analyzer,0,vicii-pal
 ../VICII/phi1timing/,phi1timing.prg,exitcode,10000000,vicii-pal,warn:vicfetch
 #FIXME: check tests on NTSCOLD
 #FIXME: fix test for NTSC, dump reference data
@@ -621,7 +621,7 @@
 # Sprites
 # ../VICII/sprite runtime: 5min 12sec (chameleon)
 ################################################################################
-../VICII/sprite0move/,sprite0move.prg,interactive,0,vicii-pal
+../VICII/sprite0move/,sprite0move.prg,analyzer,0,vicii-pal
 #FIXME: tests are broken on NTSC
 ../VICII/spritebug/,spritebug.prg,interactive,0,vicii-pal
 ../VICII/spritecollisions/,sprite-gfx-collision-cycle.prg,exitcode,10000000,vicii-pal
@@ -649,13 +649,13 @@
 # SID 6581/8580
 ################################################################################
 #TODO:
-../SID/bitfade/,delayenv3.prg,interactive,0
-../SID/bitfade/,delayfrq0.prg,interactive,0
-../SID/bitfade/,delayosc3.prg,interactive,0
-../SID/bitfade/,delaynoise.prg,interactive,0
-../SID/bitfade/,test1env3.prg,interactive,0
-../SID/bitfade/,test1frq0.prg,interactive,0
-../SID/bitfade/,test1osc3.prg,interactive,0
+../SID/bitfade/,delayenv3.prg,analyzer,0
+../SID/bitfade/,delayfrq0.prg,analyzer,0
+../SID/bitfade/,delayosc3.prg,analyzer,0
+../SID/bitfade/,delaynoise.prg,analyzer,0
+../SID/bitfade/,test1env3.prg,analyzer,0
+../SID/bitfade/,test1frq0.prg,analyzer,0
+../SID/bitfade/,test1osc3.prg,analyzer,0
 ../SID/busvalue/,busvalue.prg,exitcode,5500000
 ../SID/detect/,detect.prg,interactive,0
 ../SID/detect/,detect-1-old.prg,exitcode,6200000,sid-old
@@ -834,8 +834,8 @@
 ../SID/paddles/,paddle.prg,interactive,0
 ../SID/ringmod/,ringmodtest.prg,exitcode,5200000
 ../SID/stereo/,stereo.prg,interactive,0
-../SID/sidcheck/,sidcheck.prg,interactive,0
-../SID/testwave00/,testWave00.prg,interactive,0
+../SID/sidcheck/,sidcheck.prg,analyzer,0
+../SID/testwave00/,testWave00.prg,analyzer,0
 #TODO:
 #../SID/waveforms/,waveforms-6581.prg
 #../SID/waveforms/,waveforms-8580.prg
@@ -855,10 +855,10 @@
 #
 # ../C64/carts runtime 0 minutes and 44 seconds (chameleon)
 ################################################################################
-../C64/autostart/cartio/,test.prg,interactive,0
+../C64/autostart/cartio/,test.prg,analyzer,0
 #TODO:
 #../C64/carts/,exos.prg
-../C64/carts/,mmcrplugin.prg,interactive,0
+../C64/carts/,mmcrplugin.prg,analyzer,0
 #TODO: do more research and make a proper automatic test
 #TODO: make this automatic
 #TODO: make this automatic
@@ -891,7 +891,7 @@
 ../REU/reudetect/,reudetect.prg,exitcode,100000000,reu512k,comment:load the "blu.reu" file first
 ../REU/reutiming/,reutiming.prg,exitcode,100000000,reu512k
 #FIXME: NTSC fix
-../REU/spriteba/,spriteba.prg,interactive,0
+../REU/spriteba/,spriteba.prg,analyzer,0
 #FIXME: NTSC fix
 #TODO: clean up and add all the other reu timing tests....
 ################################################################################
