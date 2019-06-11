@@ -98,7 +98,36 @@ done:
     sta $d011
 .endif
 
+    ldy #10
+    
+    ldx #18
+@chk1:    
+    lda $0400+20,x
+.ifdef TESTNEW
+    cmp refnew,x
+.else
+    cmp refold,x
+.endif
+    bne @fail
+    lda $0428+20,x
+.ifdef TESTNEW
+    cmp refnew,x
+.else
+    cmp refold,x
+.endif
+    bne @fail
+    dex
+    bpl @chk1
+    
+    ldy #0
+    
+@fail:    
     lda #5
+    sty $d7ff
+    cpy #0
+    beq @sk1
+    lda #10
+@sk1:
     sta $d020
 
     ldx #50
@@ -122,7 +151,10 @@ screen:
     scrcode "cia2                                    "
     scrcode "                                        "
     scrcode "expected:                               "
+refold = * + 20
+            ;1234567890123456789012345678901234567890
     scrcode "old (6526)          0b 0b 0c 0c 0d      "
+refnew = * + 20
     scrcode "new (6526a)         0a 0b 0b 0c 0c      "
     scrcode "                                        "
 

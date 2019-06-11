@@ -187,8 +187,35 @@ continue2:
     cpy #4+4
     bne @l2
     
-    lda #5
-    sta $d020
+    ldy #0
+    ldx #5
+    
+    lda oldCIA1
+.ifdef TESTNEW
+    cmp #0
+.else
+    cmp #1
+.endif
+    beq @sk1
+
+    ldy #$ff
+    ldx #10
+@sk1:    
+    
+    lda oldCIA2
+.ifdef TESTNEW
+    cmp #0
+.else
+    cmp #1
+.endif
+    beq @sk2
+
+    ldy #$ff
+    ldx #10
+@sk2:    
+
+    stx $d020
+    sty $d7ff
 
     ldx #50
 @lp:
