@@ -25,13 +25,17 @@ reference data.
 
 The test for each waveform basically executes and shows results as follows.
 
-    The waveform is set with TEST enabled. The 1st value in the results is the 
-    osc value read after noise register is given time to reset.
-    The waveform is set with TEST disabled. The 2nd value in the results is the 
-    osc value read directly after this.
-    The waveform is set with TEST enabled again. The 3rd value in he 2nd value 
-    in the results is the osc value read directly after this.
-    The waveform is set to noise only with TEST disabled. Results are read from 
-    osc until 2 lines are filled.
+- The waveform is set with TEST enabled. The 1st value in the results is the 
+  osc value read after noise register is given time to reset.
+- The waveform is set with TEST disabled. The 2nd value in the results is the 
+  osc value read directly after this.
+- The waveform is set with TEST enabled again. The 3rd value in he 2nd value 
+  in the results is the osc value read directly after this.
+- The waveform is set to noise only with TEST disabled. Results are read from 
+  osc until 2 lines are filled.
 
-It can be seen in the results for waveform 12 the first value read is 252 before the TEST bit is released (5th set of results). This seems to affect the noise writeback as discussed in bug# 746. In VICE for waveform 12 the results are exactly the same as the noise waveform by itself (ie. waveform 8, the 1st set of results). 
+It can be seen in the results for waveform 12 the first value read is 252 before 
+the TEST bit is released (5th set of results). This seems to affect the noise 
+writeback as discussed in bug# 746. In VICE for waveform 12 the results are 
+exactly the same as the noise waveform by itself (ie. waveform 8, the 1st set 
+of results). 
