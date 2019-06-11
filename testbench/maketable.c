@@ -44,6 +44,7 @@ char *headline[MAXLISTS];
 #define TYPE_EXITCODE       0
 #define TYPE_SCREENSHOT     1
 #define TYPE_INTERACTIVE    2
+#define TYPE_ANALYZER       3
 #define TYPE_NA             -1
 
 #define MEDIA_NONE  -1
@@ -193,6 +194,8 @@ int readlist(TEST *list, char *name, int isresultfile)
             list->type = TYPE_SCREENSHOT;
         } else if (!strcmp(type, "interactive")) {
             list->type = TYPE_INTERACTIVE;
+        } else if (!strcmp(type, "analyzer")) {
+            list->type = TYPE_ANALYZER;
         } else {
             list->type = TYPE_NA;
         }
@@ -467,6 +470,7 @@ void printrowtestpath(int row, int res)
         case FORMAT_WIKI:
             switch (reflist[row].type) {
                 case TYPE_INTERACTIVE: printf("|style=\"background:lightgrey;\"|"); break;
+                case TYPE_ANALYZER: printf("|style=\"background:lightgrey;\"|"); break;
                 default: printf("||"); break;
             }
             printf("[%s/%s/ %s]", 
@@ -507,6 +511,7 @@ void printrowtesttype(int row)
                 case TYPE_EXITCODE: printf("        "); break;
                 case TYPE_SCREENSHOT: printf("screens "); break;
                 case TYPE_INTERACTIVE: printf("interac "); break;
+                case TYPE_ANALYZER: printf("analyze "); break;
             }
         break;
         case FORMAT_HTML:
@@ -530,6 +535,7 @@ void printrowtesttype(int row)
                 case TYPE_EXITCODE: printf("<td></td>"); break;
                 case TYPE_SCREENSHOT: printf("<td>screenshot</td>"); break;
                 case TYPE_INTERACTIVE: printf("<td>interactive</td>"); break;
+                case TYPE_ANALYZER: printf("<td>analyzer</td>"); break;
             }
         break;
         case FORMAT_WIKI:
@@ -537,6 +543,7 @@ void printrowtesttype(int row)
                 case TYPE_EXITCODE: printf("||"); break;
                 case TYPE_SCREENSHOT: printf("||"); break;
                 case TYPE_INTERACTIVE: printf("|style=\"background:lightgrey;\"|"); break;
+                case TYPE_ANALYZER: printf("|style=\"background:lightgrey;\"|"); break;
             }
             switch (reflist[row].videotype) {
                 case VIDEOTYPE_PAL: printf("PAL "); break;
@@ -557,6 +564,7 @@ void printrowtesttype(int row)
                 case TYPE_EXITCODE: printf("||\n"); break;
                 case TYPE_SCREENSHOT: printf("||screenshot\n"); break;
                 case TYPE_INTERACTIVE: printf("|style=\"background:lightgrey;\"|interactive\n"); break;
+                case TYPE_ANALYZER: printf("|style=\"background:lightgrey;\"|analyzer\n"); break;
             }
         break;
     }

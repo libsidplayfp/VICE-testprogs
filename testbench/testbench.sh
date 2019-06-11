@@ -296,7 +296,7 @@ function resetflags
 # 1) path of the test
 # 2) executable name of the test
 # 3) exit status (0:ok, $ff:error, 1:timeout, noref)
-# 4) type of the test (exitstatus,screenshot,interactive)
+# 4) type of the test (exitstatus,screenshot,interactive,analyzer)
 # 5) mounted d64 (if any)
 # 6) mounted g64 (if any)
 # 7) mounted crt (if any)
@@ -527,7 +527,11 @@ function runprogsfortarget
                 echo "$testpath" "$testprog" "- " "interactive (skipped)"
                 skiptest=1
             fi
-            if [ "${resume}" == "1" ] &&  [ "${skiptest}" == "0" ] && [ "${testtype}" != "interactive" ]; then
+            if [ "${skiptest}" == "0" ] && [ "${testtype}" == "analyzer" ]; then
+                echo "$testpath" "$testprog" "- " "analyzer (skipped)"
+                skiptest=1
+            fi
+            if [ "${resume}" == "1" ] &&  [ "${skiptest}" == "0" ] && [ "${testtype}" != "interactive" ] && [ "${testtype}" != "analyzer" ]; then
                 resultfind "$testpath" "$testprog" "$exitstatus" "${testtype}"
                 if [ "$?" == "1" ]; then
                     echo "$testpath" "$testprog" "(skipped)"
