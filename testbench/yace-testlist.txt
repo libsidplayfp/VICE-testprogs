@@ -516,9 +516,9 @@
 ../CIA/ciavarious/,cia15.prg,exitcode,160000000
 ../CIA/dd0dtest/,dd0dtest.prg,exitcode,100000000
 ../CIA/mirrors/,ciamirrors.prg,exitcode,9000000
-../CIA/irqdelay/,irqdelay.prg,interactive,0
-../CIA/irqdelay/,irqdelay2.prg,interactive,0
-../CIA/irqdelay/,irqdelay-oneshot.prg,interactive,0
+../CIA/irqdelay/,irqdelay.prg,exitcode,7000000,cia-old
+../CIA/irqdelay/,irqdelay-oneshot.prg,exitcode,7000000,cia-old
+../CIA/irqdelay/,irqdelay2.prg,exitcode,9000000,cia-old
 ../CIA/irqdelay/,irqdelay-cia1-4-old.prg,exitcode,10000000,cia-old
 ../CIA/irqdelay/,irqdelay-cia1-oneshot-4-old.prg,exitcode,10000000,cia-old
 ../CIA/irqdelay/,irqdelay-cia1-oneshot.prg,exitcode,10000000
@@ -759,7 +759,8 @@
 # ../VICII/sprite runtime: 5min 12sec (chameleon)
 ################################################################################
 ../VICII/sprite0move/,sprite0move.prg,interactive,0,vicii-pal
-../VICII/sprite0move/,sprite0move.prg_ntsc,interactive,0,vicii-ntsc
+#FIXME: tests are broken on NTSC
+#../VICII/sprite0move/,sprite0move.prg_ntsc,interactive,0,vicii-ntsc
 ../VICII/spritebug/,spritebug.prg,interactive,0,vicii-pal
 ../VICII/spritebug/,spritebug-104.prg,screenshot,10000000,vicii-pal
 ../VICII/spritebug/,spritebug-105.prg,screenshot,10000000,vicii-pal
