@@ -1,4 +1,13 @@
 
+NUM_TESTS = $20
+
+STRIDE_A   = 13
+STRIDE_IMM = $100 - 1
+
+START_A    = 0
+START_IMM  = $ff
+
+
         !cpu 6510
 
 basicstart = $0801
@@ -21,16 +30,20 @@ irqline=$34
 irqline=$1C
 }
 
-lax_constant = $02
-
-zp_testbase = $f0
-;patternbase = $f3
+lax_constant          = $02
+lax_unstable          = $03
+lax_stable            = $04
+lax_resultX           = $05
+lax_expected_resultX  = $06
+lax_resultA           = $07
+lax_expected_resultA  = $08
 
 spriteblock = $0800
 
         * = $0900
 start:
         ldx #0
+        stx $3fff
 -
         lda #$20
         sta $0400,x
@@ -54,6 +67,13 @@ start:
         cpx #(40*4)
         bne -
 
+        ldx #39
+-
+        lda textline,x
+        sta $0400+(24*40),x
+        dex
+        bpl -
+        
         lda #$ff
         ldx #$3f
 -
@@ -74,42 +94,42 @@ start:
         !byte $ff
         sta lax_constant
                 
-                SEI
+        SEI
 ; timer NMI and IRQ off
-                LDA     #$7F
-                STA     $DC0D
-                STA     $DD0D
+        LDA     #$7F
+        STA     $DC0D
+        STA     $DD0D
 ; set NMI
-                LDA     #<nmi0
-                LDX     #>nmi0
-                STA     $FFFA
-                STX     $FFFB
+        LDA     #<nmi0
+        LDX     #>nmi0
+        STA     $FFFA
+        STX     $FFFB
 ; set IRQ0
-                LDA     #<irq0
-                LDX     #>irq0
-                STA     $FFFE
-                STX     $FFFF
+        LDA     #<irq0
+        LDX     #>irq0
+        STA     $FFFE
+        STX     $FFFF
 ; all RAM
-                LDA     #$35
-                STA     $01
+        LDA     #$35
+        STA     $01
 ; raster IRQ on
-                LDA     #1
-                STA     $D01A
+        LDA     #1
+        STA     $D01A
 
-                lda #irqline
-                STA     $D012
-                LDA     #$1B
-                STA     $D011
+        lda #irqline
+        STA     $D012
+        LDA     #$1B
+        STA     $D011
 ; timer NMI on
 ; it triggers on next cycle to disable RESTORE
-                LDX     #$81
-                STX     $DD0D
-                LDX     #0
-                STX     $DD05
-                INX
-                STX     $DD04
-                LDX     #$DD
-                STX     $DD0E
+        LDX     #$81
+        STX     $DD0D
+        LDX     #0
+        STX     $DD05
+        INX
+        STX     $DD04
+        LDX     #$DD
+        STX     $DD0E
 ; setup sprite
         LDx     #$A0 ;
         STx     $D000
@@ -237,6 +257,10 @@ COLSOFFS=5
         cli
         jmp *
 
+textline:
+         ;1234567890123456789012345678901234567890
+    !scr "a:.. imm:.. con:.. rA:.. rX:.. unstbl:.."
+        
 ;----------------------------------------------------------------------------
 
 nmi0:
@@ -294,82 +318,139 @@ irq1:
         sta $d015
 
 
-                LDA     #$01
-                STA     $D020
-                STA     $D021
+        LDA     #$01
+        STA     $D020
+        STA     $D021
 
-                inc $d021
-                inc $d021
-                inc $d021
-                
-offs:           lda     #0
-                jsr docycles
+        inc $d021
+        inc $d021
+        inc $d021
+        
+offs:   lda     #0
+        jsr docycles
 
-                inc $d021
+        inc $d021
 
-                ; args for LAX
-                clc
-                cld
+        ; args for LAX
+        clc
+        cld
                 
 lax_a = * + 1
-                lda #$ff
-;                tax
-
+        lda #START_A
 lax_imm = * + 1
-                ;lax #$ff
-                !byte $ab, $ff
+        ;lax #$ff
+        !byte $ab, START_IMM
 
-                sta spres0+1
-                stx spres1+1
-                
-                php
-                pla
+        sta lax_resultA
+        stx lax_resultX
+        
+        php
+        pla
 
-                sta fpres0+1
-                
-                ; show result
-                inc $d021
+        sta fpres0+1
+        
+        ; show result
+        inc $d021
 
-                ;ldx #0
-                ldx offs+1
+        ;ldx #0
+        ldx offs+1
 
-                lda testframes
-                bne tf1
-spres0:          lda #0
-                sta $0400+(40*5),x
+        ; on first frame write results to screen
+        lda testframes
+        bne tf1
 
-spres1:          lda #0
-                sta $0400+(40*15),x
+        lda lax_resultA
+        sta $0400+(40*5),x
 
-fpres0:          lda #0
-                sta $0400+(40*20),x
-tf1
-                lda testframes
-                beq tf2
-                
-                lda spres0+1
-                cmp $0400+(40*5),x
-                beq +
-                inc $0400+(40*0),x
+        lda lax_resultX
+        sta $0400+(40*15),x
+
+fpres0: lda #0
+        sta $0400+(40*20),x
+tf1:
+
+        ; on second frame compare against from last frame
+        lda testframes
+        beq tf2
+        
+        lda lax_resultA
+        cmp $0400+(40*5),x
+        beq +
+        inc $0400+(40*0),x
 +
-                lda fpres0+1
-                cmp $0400+(40*20),x
-                beq +
-                inc $0400+(40*0),x
+        lda fpres0+1
+        cmp $0400+(40*20),x
+        beq +
+        inc $0400+(40*0),x
 +
-tf2
+tf2:
 
-                lda $0400+(40*5)
-                eor $0400+(40*5),x
-                sta $0400+(40*10),x
+        lda $0400+(40*5)
+        eor $0400+(40*5),x
+        sta $0400+(40*10),x
 
+        inc $d020
+        
+        ; compute expected result
+        lda lax_a
+        ora lax_constant
+        and lax_imm
+        sta lax_expected_resultA
+        sta lax_expected_resultX
+                
+        ; compute unstable bits
+        lda lax_a
+        eor #$ff
+        and lax_imm
+        sta lax_unstable
+        eor #$ff
+        sta lax_stable
+
+        inc $d020
+        
         sed
         lda lax_a
         and #$0f
         cmp #$0a
         adc #$30
-        sta $0400+(24*40)+23
+        sta $0400+(24*40)+3
         lda lax_a
+        lsr
+        lsr
+        lsr
+        lsr
+        cmp #$0a
+        adc #$30
+        sta $0400+(24*40)+2
+        cld
+
+        inc $d020
+        
+        sed
+        lda lax_imm
+        and #$0f
+        cmp #$0a
+        adc #$30
+        sta $0400+(24*40)+10
+        lda lax_imm
+        lsr
+        lsr
+        lsr
+        lsr
+        cmp #$0a
+        adc #$30
+        sta $0400+(24*40)+9
+        cld
+
+        inc $d020
+        
+        sed
+        lda lax_resultA
+        and #$0f
+        cmp #$0a
+        adc #$30
+        sta $0400+(24*40)+23
+        lda lax_resultA
         lsr
         lsr
         lsr
@@ -378,25 +459,88 @@ tf2
         adc #$30
         sta $0400+(24*40)+22
         cld
-                
-                
+
+        inc $d020
+        
         sed
-        lda lax_imm
+        lda lax_resultX
         and #$0f
         cmp #$0a
         adc #$30
-        sta $0400+(24*40)+26
-        lda lax_imm
+        sta $0400+(24*40)+29
+        lda lax_resultX
         lsr
         lsr
         lsr
         lsr
         cmp #$0a
         adc #$30
-        sta $0400+(24*40)+25
+        sta $0400+(24*40)+28
         cld
 
+        inc $d020
+        
+        sed
+        lda lax_constant
+        and #$0f
+        cmp #$0a
+        adc #$30
+        sta $0400+(24*40)+17
+        lda lax_constant
+        lsr
+        lsr
+        lsr
+        lsr
+        cmp #$0a
+        adc #$30
+        sta $0400+(24*40)+16
+        cld
 
+        inc $d020
+        
+        sed
+        lda lax_unstable
+        and #$0f
+        cmp #$0a
+        adc #$30
+        sta $0400+(24*40)+39
+        lda lax_unstable
+        lsr
+        lsr
+        lsr
+        lsr
+        cmp #$0a
+        adc #$30
+        sta $0400+(24*40)+38
+        cld
+
+        inc $d020
+        
+        ; check if stable bits are the expected result
+        ldy #5
+        lda lax_resultA
+        eor lax_expected_resultA
+        and lax_stable
+        beq +
+        ldy #10
++
+        ; result in A and X must be equal
+        lda lax_resultA
+        cmp lax_resultX
+        beq +
+        ldy #10
++
+        sty $d800+(24*40)+22
+        sty $d800+(24*40)+23
+        sty $d800+(24*40)+28
+        sty $d800+(24*40)+29
+
+        cpy #10
+        bne +
+        lda #1
+        sta failedtests
++ 
+        
         inc testframes
         lda testframes
         cmp #2
@@ -406,23 +550,30 @@ tf2
         
         inc offs+1
         lda offs+1
-        cmp #40*4
+        cmp #40
         bne +
 
         ; prepare first frame/offset
         lda #0
         sta offs+1
 
-        inc lax_imm
-        inc lax_imm
-        dec lax_a
-
+        jsr nexttest
 +
 
+bordercolor = * + 1
         lda #0
         sta $d020
         sta $d021
 
+        LDA     #$F0
+-
+        CMP     $D012
+        BNE     -
+
+        lda #$0b
+        sta $d020
+        sta $d021
+        
         ; open lower border
         LDA     #$F8
 
@@ -449,25 +600,10 @@ tf2
         !byte $ab
         !byte $ff
         sta lax_constant
-           
-        sed
-        lda lax_constant
-        and #$0f
-        cmp #$0a
-        adc #$30
-        sta $0400+(24*40)+39
-        lda lax_constant
-        lsr
-        lsr
-        lsr
-        lsr
-        cmp #$0a
-        adc #$30
-        sta $0400+(24*40)+38
-        cld
                 
-        dec $d020
-        dec $d021
+        lda #$0
+        sta $d020
+        sta $d021
         
         
         LDA     #$1B
@@ -488,6 +624,38 @@ tf2
         ASL     $D019
         RTI
 
+nexttest:        
+        lda lax_imm
+        clc
+        adc #STRIDE_IMM
+        sta lax_imm
+
+        lda lax_a
+        clc
+        adc #STRIDE_A
+        sta lax_a
+        
+testcount = * + 1
+        lda #0
+        cmp #NUM_TESTS
+        bne ++
+
+        ldy #0
+        ldx #5
+        
+failedtests = * + 1
+        lda #0
+        beq +
+        ldy #$ff
+        ldx #2
++
+        sty $d7ff
+        stx bordercolor
+++        
+        inc testcount
+        
+        rts
+        
 ;-------------------------------------------------------------------------------
         !align 255, 0
 docycles:

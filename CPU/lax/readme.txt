@@ -49,3 +49,11 @@ effects.
 --------------------------------------------------------------------------------
 
 lax.prg and lax-border.prg are verified on my c64c (gpz)
+
+the values after rA: and rX: in the bottom line should always be green (it will 
+be green when all stable bits match what we expect them to be)
+
+--------------------------------------------------------------------------------
+
+WANTED: examples of real world usage of this opcode, especially when its used
+in a way that the instable bits matter (not the common LAX #0).
