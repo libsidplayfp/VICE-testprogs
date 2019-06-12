@@ -48,7 +48,24 @@ effects.
 
 --------------------------------------------------------------------------------
 
-ane.prg and ane-border.prg are verified on my c64c (gpz)
+ane.prg and ane-border.prg are verified on my c64c (gpz) 
+
+note that the magic constant is being checked against the desirable properties 
+outlined below in the code analysis from real world programs. 
+
+THIS MEANS THE TEST WILL ALSO FAIL ON SOME REAL C64s.
+
+the value after RES: in the bottom line should always be green (it will be green
+when all stable bits match what we expect them to be)
+
+if the value after CON: is red, then the magic constant does not match the
+desirable properties - and the test will fail. this does not actually mean that
+ANE does not work as expected, but it means that it behaves in a way that will
+make some or all of the analysed real world programs not work correctly.
+
+For Emulation the best compromise between "proper emulation" and "making things
+work" seems to be to use a "magic contant" of $EF in regular cycles, and $EE in
+the RDY cycle.
 
 --------------------------------------------------------------------------------
 analysis of some real world programs
@@ -84,8 +101,8 @@ spectipede - original tape ("burner" loader)
 
 this code works correctly with ANE magic constant "$FF" but not with "$EE"
 
-for the game to load bits 7,6,5,0 of the constant must be 1, bits 4,3,2,1 must
-be 0. -> constant $ef will work
+for the game to load, the high nybble of the constant must be $4,$5,$e or $f and
+bit 0 must be 1, bits 3,2,1 are "don't care". -> constant $ef will work
 
 
 rambo II - original tape (ocean/imagine loader)

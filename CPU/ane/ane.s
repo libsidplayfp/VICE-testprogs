@@ -1,4 +1,18 @@
 
+NUM_TESTS = $20
+
+STRIDE_A = 13
+STRIDE_IMM = $100 - 1
+STRIDE_X = $100 - 3
+
+;STRIDE_A   = 0
+;STRIDE_X   = 0
+;STRIDE_IMM = 0
+
+START_A    = 0
+START_X    = $ff
+START_IMM  = $ff
+
         !cpu 6510
 
 basicstart = $0801
@@ -22,13 +36,19 @@ irqline=$34
 irqline=$1c
 }
 
-ane_constant = $02
+ane_constant          = $02
+ane_unstable          = $03
+ane_stable            = $04
+ane_result            = $05
+ane_expected_result   = $06
+ane_status            = $07
 
 spriteblock = $0800
 
         * = $0900
 start:
         ldx #0
+        stx $3fff
 -
         lda #$20
         sta $0400,x
@@ -43,6 +63,13 @@ start:
         dex
         bne -
 
+        ldx #39
+-
+        lda textline,x
+        sta $0400+(24*40),x
+        dex
+        bpl -
+        
         lda #$ff
         ldx #$3f
 -
@@ -223,6 +250,10 @@ coloffs1=5
         cli
         jmp *
 
+textline:
+         ;1234567890123456789012345678901234567890
+    !scr "a:.. x:.. imm:.. con:.. res:.. unstbl:.."
+        
 ;----------------------------------------------------------------------------
 
 nmi0:
@@ -282,22 +313,22 @@ irq1:
 +
         ; irq is stable now
 !if SPRITES=1 {
-        lda     #$ff
+        lda #$ff
 } else {
-        lda     #0
+        lda #0
 }
         sta $d015
 
 
-        lda     #$01
-        sta     $d020
-        sta     $d021
+        lda #$01
+        sta $d020
+        sta $d021
 
         inc $d021
         inc $d021
         inc $d021
         
-offs:           lda     #0
+offs:   lda     #0
         jsr docycles
 
         inc $d021
@@ -306,18 +337,18 @@ offs:           lda     #0
         clc
         cld
 ane_a = * + 1
-        lda #$ff
+        lda #START_A
 ane_x = * + 1
-        ldx #$ff
+        ldx #START_X
 ane_imm = * + 1
-        ane #$ff
+        ane #START_IMM
 
-        sta spres0+1
+        sta ane_result
         
         php
         pla
 
-        sta fpres0+1
+        sta ane_status
         
         ; show result
         inc $d021
@@ -325,36 +356,38 @@ ane_imm = * + 1
         ;ldx #0
         ldx offs+1
 
+        ; on first frame write results to screen
         lda testframes
         bne tf1
-spres0:          lda #0
-        sta $0400+(40*10),x
 
-fpres0:          lda #0
-        sta $0400+(40*18),x
+        lda ane_result
+        sta $0400+(40*10),x   ;ane_result
+        lda ane_status
+        sta $0400+(40*18),x   ;status
 tf1
+        ; on second frame compare against from last frame
         lda testframes
         beq tf2
         
-        lda spres0+1
-        cmp $0400+(40*10),x
+        lda ane_result
+        cmp $0400+(40*10),x   ;ane_result
         beq +
         inc $0400+(40*2),x
 +
-        lda fpres0+1
+        lda ane_status
         cmp $0400+(40*18),x
         beq +
         inc $0400+(40*2),x
 +
 tf2
 
-        lda $0400+(40*10)
-        eor $0400+(40*10),x
-        sta $0400+(40*10)+40,x
+        lda $0400+(40*10)      ;first ane_result
+        eor $0400+(40*10),x    ;ane_result
+        sta $0400+(40*10)+40,x ;different ane_result bits
 
-        lda $0400+(40*18)
-        eor $0400+(40*18),x
-        sta $0400+(40*18)+40,x
+        lda $0400+(40*18)      ;first status
+        eor $0400+(40*18),x    ;status
+        sta $0400+(40*18)+40,x ;different status bits
 
 !if BORDER=0 {
         ldx #5
@@ -364,58 +397,79 @@ tf2
         cpx offs+1
         bne notedge
 
+        ; compute expected result
         lda ane_a
         ora ane_constant
         and ane_x
         and ane_imm
-        sta $0400+(40*10)+80-1,x
+        sta $0400+(40*10)+80-1,x        ; expected ane_result
 
+        lda $0400+(40*10)               ; first ane_result
+        eor $0400+(40*10)+80-1,x        ; expected ane_result
+        sta $0400+(40*10)+120-1,x       ; different bits
+
+        ldy #13
+        lda $0400+(40*10)+40-1,x       ;different ane_result bits
+        cmp $0400+(40*10)+120-1,x
+        beq +
+        ldy #10
++
+        tya
+        sta $d800+(40*10)+120-1,x
+        
 !if SPRITES=1 {
         ; rdy
-        lda ane_a
-        ora ane_constant
-        and #$ee
+        lda ane_constant
+        and #$ee                        ; bit 4 and bit 0 may drop in rdy cycle
+        ora ane_a
         and ane_x
         and ane_imm
         sta $0400+(40*10)+80,x
 } else {
+        sta $0400+(40*10)+80-1,x        ; expected ane_result
         sta $0400+(40*10)+80,x
 }
-        
-        lda $0400+(40*10)
-        eor $0400+(40*10)+80-1,x
-        sta $0400+(40*10)+40*3-1,x
-
         lda $0400+(40*10)
         eor $0400+(40*10)+80,x
-        sta $0400+(40*10)+40*3,x
-
-        ldy #13
-        lda $0400+(40*10)+40-1,x
-        cmp $0400+(40*10)+40*3-1,x
-        beq +
-        ldy #10
-+
-        tya
-        sta $d800+(40*10)+40*3-1,x
+        sta $0400+(40*10)+120,x
         
         ldy #13
         lda $0400+(40*10)+40,x
-        cmp $0400+(40*10)+40*3,x
+        cmp $0400+(40*10)+120,x
         beq +
         ldy #10
 +
         tya
-        sta $d800+(40*10)+40*3,x
+        sta $d800+(40*10)+120,x
 
 notedge
 
+        inc $d020
+
+        ; compute unstable bits
+        lda ane_a
+        eor #$ff
+        and ane_x
+        and ane_imm
+        sta ane_unstable
+        eor #$ff
+        sta ane_stable
+
+        ; compute expected result
+        lda ane_a
+        ora ane_constant
+        and ane_x
+        and ane_imm
+        sta ane_expected_result
+
+        inc $d020
+        
         sed
         lda ane_a
         and #$0f
         cmp #$0a
         adc #$30
-        sta $0400+(24*40)+20
+        sta $0400+(24*40)+3
         lda ane_a
         lsr
         lsr
@@ -423,41 +477,136 @@ notedge
         lsr
         cmp #$0a
         adc #$30
-        sta $0400+(24*40)+19
+        sta $0400+(24*40)+2
         cld
-                
+
+        inc $d020
+        
         sed
         lda ane_x
         and #$0f
         cmp #$0a
         adc #$30
-        sta $0400+(24*40)+23
+        sta $0400+(24*40)+8
         lda ane_x
         lsr
         lsr
         lsr
         lsr
+        cmp #$0a
+        adc #$30
+        sta $0400+(24*40)+7
+        cld
+
+        inc $d020
+        
+        sed
+        lda ane_imm
+        and #$0f
+        cmp #$0a
+        adc #$30
+        sta $0400+(24*40)+15
+        lda ane_imm
+        lsr
+        lsr
+        lsr
+        lsr
+        cmp #$0a
+        adc #$30
+        sta $0400+(24*40)+14
+        cld
+
+        inc $d020
+        
+        sed
+        lda ane_constant
+        and #$0f
         cmp #$0a
         adc #$30
         sta $0400+(24*40)+22
+        lda ane_constant
+        lsr
+        lsr
+        lsr
+        lsr
+        cmp #$0a
+        adc #$30
+        sta $0400+(24*40)+21
         cld
-                
+
+        inc $d020
+        
         sed
-        lda ane_imm
+        lda ane_result
         and #$0f
         cmp #$0a
         adc #$30
-        sta $0400+(24*40)+26
-        lda ane_imm
+        sta $0400+(24*40)+29
+        lda ane_result
         lsr
         lsr
         lsr
         lsr
         cmp #$0a
         adc #$30
-        sta $0400+(24*40)+25
+        sta $0400+(24*40)+28
         cld
+
+        inc $d020
         
+        sed
+        lda ane_unstable
+        and #$0f
+        cmp #$0a
+        adc #$30
+        sta $0400+(24*40)+39
+        lda ane_unstable
+        lsr
+        lsr
+        lsr
+        lsr
+        cmp #$0a
+        adc #$30
+        sta $0400+(24*40)+38
+        cld
+
+        inc $d020
+        
+        ; check if stable bits are the expected result
+        ldy #10
+        lda ane_result
+        eor ane_expected_result
+        and ane_stable
+        bne +
+        ldy #13
++
+        sty $d800+(24*40)+28
+        sty $d800+(24*40)+29
+
+        cpy #10
+        bne +
+        lda #1
+        sta failedtests
++        
+        
+        ; check if constant behaves as desired (works for spectipede and turrican3)
+        ; for spectipede to load the high nybble of the constant must be $4,$5,$e or $f 
+        ; and bit 0 must be 1, bits 3,2,1 are "don't care".
+        ; for turrican3 bit0 and bit1 must be 1
+        ldy #13
+        ldx ane_constant
+        lda constbits,x
+        bne +
+        ldy #10
++
+        sty $d800+(24*40)+22
+        sty $d800+(24*40)+21
+
+        cpy #10
+        bne +
+        lda #1
+        sta failedtests
++        
         inc testframes
         lda testframes
         cmp #2
@@ -465,7 +614,7 @@ notedge
 
         lda #0
         sta testframes
-        
+
         inc offs+1
         lda offs+1
         cmp #40
@@ -474,12 +623,21 @@ notedge
         lda #0
         sta offs+1
         
-        inc ane_a
-        dec ane_x
-        ;inc ane_imm
+        jsr nexttest
+        
 +
         
-        lda #0
+bordercolor = * + 1
+        lda #$00
+        sta $d020
+        sta $d021
+
+        lda     #$f0
+-
+        cmp     $d012
+        bne     -
+
+        lda #$0b
         sta $d020
         sta $d021
         
@@ -488,7 +646,7 @@ notedge
 -
         cmp     $d012
         bne     -
-
+        
         lda     #$13
         sta     $d011
 
@@ -508,25 +666,10 @@ notedge
         ldx #$ff
         ane #$ff
         sta ane_constant
-                
-        sed
-        lda ane_constant
-        and #$0f
-        cmp #$0a
-        adc #$30
-        sta $0400+(24*40)+39
-        lda ane_constant
-        lsr
-        lsr
-        lsr
-        lsr
-        cmp #$0a
-        adc #$30
-        sta $0400+(24*40)+38
-        cld
-                
-        dec $d020
-        dec $d021
+
+        lda #0
+        sta $d020
+        sta $d021
 
         lda     #$1b
         sta     $d011
@@ -546,6 +689,44 @@ notedge
         asl     $d019
         rti
 
+nexttest:
+
+        lda ane_imm
+        clc
+        adc #STRIDE_IMM
+        sta ane_imm
+
+        lda ane_a
+        clc
+        adc #STRIDE_A
+        sta ane_a
+
+        lda ane_x
+        clc
+        adc #STRIDE_X
+        sta ane_x
+
+testcount = * + 1
+        lda #0
+        cmp #NUM_TESTS
+        bne ++
+
+        ldy #0
+        ldx #5
+        
+failedtests = * + 1
+        lda #0
+        beq +
+        ldy #$ff
+        ldx #2
++
+        sty $d7ff
+        stx bordercolor
+++        
+        inc testcount
+
+        rts
+        
 ;-------------------------------------------------------------------------------
         !align 255, 0
 docycles:
@@ -564,3 +745,12 @@ timeout:
 
 testframes: !byte 0
 
+        !align 255, 0
+constbits:
+    !for n, 0, 255 {
+        !if (((n & 3) = 3) & (((n & $f0) = $40) | ((n & $f0) = $50) | ((n & $f0) = $e0) | ((n & $f0) = $f0))) {
+            !byte 1
+        } else {
+            !byte 0
+        }
+    }
