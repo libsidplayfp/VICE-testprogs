@@ -348,21 +348,21 @@
 ../CPU/asap/,cpu_shx.prg,exitcode,40000000
 ../CPU/bclark/,decimalmode.prg,exitcode,65000000
 #TODO:
-#../CPU/cpujam/,cpujam02.prg
-#../CPU/cpujam/,cpujam12.prg
-#../CPU/cpujam/,cpujam22.prg
-#../CPU/cpujam/,cpujam32.prg
-#../CPU/cpujam/,cpujam42.prg
-#../CPU/cpujam/,cpujam52.prg
-#../CPU/cpujam/,cpujam62.prg
-#../CPU/cpujam/,cpujam72.prg
-#../CPU/cpujam/,cpujam92.prg
-#../CPU/cpujam/,cpujamb2.prg
-#../CPU/cpujam/,cpujamd2.prg
-#../CPU/cpujam/,cpujamf2.prg
-#../CPU/cpujam/,nojam.prg
-#../CPU/cpuport/,bitfade.prg
-#../CPU/cpuport/,delaytime.prg
+../CPU/cpujam/,cpujam02.prg,exitcode,5500000,comment:timeout means it works correctly
+../CPU/cpujam/,cpujam12.prg,exitcode,5500000,comment:timeout means it works correctly
+../CPU/cpujam/,cpujam22.prg,exitcode,5500000,comment:timeout means it works correctly
+../CPU/cpujam/,cpujam32.prg,exitcode,5500000,comment:timeout means it works correctly
+../CPU/cpujam/,cpujam42.prg,exitcode,5500000,comment:timeout means it works correctly
+../CPU/cpujam/,cpujam52.prg,exitcode,5500000,comment:timeout means it works correctly
+../CPU/cpujam/,cpujam62.prg,exitcode,5500000,comment:timeout means it works correctly
+../CPU/cpujam/,cpujam72.prg,exitcode,5500000,comment:timeout means it works correctly
+../CPU/cpujam/,cpujam92.prg,exitcode,5500000,comment:timeout means it works correctly
+../CPU/cpujam/,cpujamb2.prg,exitcode,5500000,comment:timeout means it works correctly
+../CPU/cpujam/,cpujamd2.prg,exitcode,5500000,comment:timeout means it works correctly
+../CPU/cpujam/,cpujamf2.prg,exitcode,5500000,comment:timeout means it works correctly
+../CPU/cpujam/,nojam.prg,exitcode,5500000
+../CPU/cpuport/,bitfade.prg,analyzer,0
+../CPU/cpuport/,delaytime.prg,analyzer,0
 ../CPU/cpuport/,test1.prg,exitcode,5500000
 ../CPU/decimalmode/,scanner.prg,exitcode,750000000
 ../CPU/decimalmode/,adc00.prg,exitcode,550000000
