@@ -364,10 +364,9 @@
 #FIXME:
 #../CPU/Acid800/,cpu_bugs.prg,exitcode,100000000
 #../CPU/Acid800/,cpu_clisei.prg,exitcode,100000000
-#FIXME: make automatic
-../CPU/ane/,ane.prg,interactive,0,vicii-pal
-../CPU/ane/,ane-none.prg,interactive,0,vicii-pal
-../CPU/ane/,ane-border.prg,interactive,0,vicii-pal
+../CPU/ane/,ane.prg,exitcode,70000000,vicii-pal
+../CPU/ane/,ane-none.prg,exitcode,70000000,vicii-pal
+../CPU/ane/,ane-border.prg,exitcode,70000000,vicii-pal
 ../CPU/ane-lax/,ane-lax.prg,analyzer,0
 ../CPU/asap/,cpu_ane.prg,exitcode,10000000
 ../CPU/asap/,cpu_anx.prg,exitcode,10000000
@@ -438,10 +437,9 @@
 ../CPU/kdormann/,6502_functional_test.prg,exitcode,180000000
 #FIXME
 #../CPU/kdormann/,6502_interrupt_test.prg,exitcode,4294967295
-#FIXME: make automatic
-../CPU/lax/,lax.prg,interactive,0,vicii-pal
-../CPU/lax/,lax-none.prg,interactive,0,vicii-pal
-../CPU/lax/,lax-border.prg,interactive,0,vicii-pal
+../CPU/lax/,lax.prg,exitcode,70000000,vicii-pal
+../CPU/lax/,lax-none.prg,exitcode,70000000,vicii-pal
+../CPU/lax/,lax-border.prg,exitcode,70000000,vicii-pal
 #FIXME: make NTSC fixes
 ../CPU/sha/,shaabsy1.prg,exitcode,6000000
 ../CPU/sha/,shaabsy2.prg,exitcode,6500000,vicii-pal
@@ -933,7 +931,6 @@
 ################################################################################
 # SID 6581/8580
 ################################################################################
-#TODO:
 ../SID/bitfade/,delayenv3.prg,analyzer,0
 ../SID/bitfade/,delayfrq0.prg,analyzer,0
 ../SID/bitfade/,delayosc3.prg,analyzer,0
