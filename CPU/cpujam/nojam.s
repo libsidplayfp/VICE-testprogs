@@ -96,6 +96,8 @@ mlp:
         ; if we ever come here, something is seriously wrong
         lda #2
         sta $d020
+        lda #$ff
+        sta $d7ff
         jmp mlp
 
         ; we do not ack the irq, it will keep triggering

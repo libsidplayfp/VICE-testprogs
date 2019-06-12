@@ -17,6 +17,8 @@ Start:
         ; if we return here, the JAM behaved like RTS
         lda #2
         sta $d020
+        lda #$ff
+        sta $d7ff
         jmp *
 
         nop
@@ -28,6 +30,8 @@ Start:
         ; if we come here, the JAM behaved like branch
         lda #2
         sta $d020
+        lda #$ff
+        sta $d7ff
         jmp *
 
 dojam:
@@ -37,10 +41,14 @@ dojam:
         ; if we come here, the JAM did not halt the CPU
         lda #2
         sta $d020
+        lda #$ff
+        sta $d7ff
         jmp *
 
 eaeahook:
         ; if we come here, the JAM did behave like JMP or JSR
         lda #2
         sta $d020
+        lda #$ff
+        sta $d7ff
         jmp *
