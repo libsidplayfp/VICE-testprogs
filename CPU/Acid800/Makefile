@@ -1,6 +1,5 @@
 all: cpu_decimal.prg cpu_flags.prg cpu_timing.prg cpu_insn.prg cpu_illegal.prg \
-	cpu_timing_ntsc.prg
-wip: cpu_bugs.prg cpu_clisei.prg
+	cpu_timing_ntsc.prg cpu_bugs.prg cpu_clisei.prg
 
 cpu_decimal.prg: cpu_decimal.s common.s
 	acme -o cpu_decimal.prg cpu_decimal.s

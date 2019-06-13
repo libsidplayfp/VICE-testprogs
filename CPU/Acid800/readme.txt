@@ -12,17 +12,14 @@ cpu_decimal.prg:
  - check decimal mode
 cpu_timing.prg:
  - checks instruction timing
-
+cpu_bugs.prg:
+ - checks BRK and JMP() bugs
+cpu_clisei.prg:
+ - checks some interrupt flag corner cases
+ 
 --------------------------------------------------------------------------------
 
 TODO:
 -----
-
-cpu_bugs.prg:
- - hangs
-
-cpu_clisei.prg:
- - fails
-
 cpu_timing.prg:
  - should probably use CIA timers instead of rasterlines
