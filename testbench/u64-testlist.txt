@@ -334,9 +334,8 @@
 ../CPU/Acid800/,cpu_illegal.prg,exitcode,41000000
 ../CPU/Acid800/,cpu_insn.prg,exitcode,35000000
 ../CPU/Acid800/,cpu_timing.prg,exitcode,22000000,vicii-pal
-#FIXME:
-#../CPU/Acid800/,cpu_bugs.prg,exitcode,100000000
-#../CPU/Acid800/,cpu_clisei.prg,exitcode,100000000
+../CPU/Acid800/,cpu_bugs.prg,exitcode,25000000
+../CPU/Acid800/,cpu_clisei.prg,exitcode,23000000
 ../CPU/ane/,ane.prg,exitcode,70000000,vicii-pal
 ../CPU/ane/,ane-none.prg,exitcode,70000000,vicii-pal
 ../CPU/ane/,ane-border.prg,exitcode,70000000,vicii-pal
