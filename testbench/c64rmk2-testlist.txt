@@ -452,7 +452,6 @@
 ../CPU/shxy/,shyx2.prg,exitcode,20000000,vicii-pal
 ../CPU/shxy/,shyx3.prg,exitcode,20000000
 ../CPU/shxy/,shyx4.prg,exitcode,20000000
-#FIXME:
 ################################################################################
 # Interrupts
 #
