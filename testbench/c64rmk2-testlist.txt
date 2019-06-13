@@ -699,8 +699,7 @@
 ../VICII/spritesteal/,spritesteal_ntsc.prg,exitcode,100000000,vicii-ntsc
 ../VICII/spritesteal/,spritesteal_ntscold.prg,exitcode,100000000,vicii-ntscold
 ../VICII/spritevssprite/,spritevssprite.prg,exitcode,32000000,vicii-pal
-###(this is not a test)
-#../VICII/spritex/,demusinterruptus-emucheck.prg
+../VICII/spritex/,demusinterruptus.prg,exitcode,6500000,vicii-pal
 #FIXME: check on NTSCOLD
 ../VICII/spritex/,testsuite.prg,exitcode,10000000,vicii-pal
 ../VICII/spritex/,testsuite_ntsc.prg,exitcode,10000000,vicii-ntsc

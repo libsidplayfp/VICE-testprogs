@@ -632,8 +632,7 @@
 #FIXME: port tests to NTSC and make reference screenshots
 ../VICII/spritesteal/,spritesteal.prg,exitcode,100000000,vicii-pal
 ../VICII/spritevssprite/,spritevssprite.prg,exitcode,32000000,vicii-pal
-###(this is not a test)
-#../VICII/spritex/,demusinterruptus-emucheck.prg
+../VICII/spritex/,demusinterruptus.prg,exitcode,6500000,vicii-pal
 #FIXME: check on NTSCOLD
 ../VICII/spritex/,testsuite.prg,exitcode,10000000,vicii-pal
 #FIXME: port test to NTSC
