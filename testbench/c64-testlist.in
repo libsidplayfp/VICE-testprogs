@@ -368,8 +368,8 @@
 ../CPU/ane/,ane-none.prg,exitcode,70000000,vicii-pal
 ../CPU/ane/,ane-border.prg,exitcode,70000000,vicii-pal
 ../CPU/ane-lax/,ane-lax.prg,analyzer,0
-../CPU/asap/,cpu_ane.prg,exitcode,10000000
-../CPU/asap/,cpu_anx.prg,exitcode,10000000
+../CPU/asap/,cpu_ane.prg,exitcode,18000000
+../CPU/asap/,cpu_anx.prg,exitcode,18000000
 ../CPU/asap/,cpu_decimal.prg,exitcode,160000000
 ../CPU/asap/,cpu_las.prg,exitcode,10000000
 ../CPU/asap/,cpu_shx.prg,exitcode,40000000
@@ -608,7 +608,6 @@
 ../CIA/tod/,stability.prg,interactive,0,vicii-pal
 ../CIA/tod/,stability-ntsc.prg,interactive,0,vicii-ntsc
 ../CIA/tod/,write-stop.prg,exitcode,100000000
-#FIXME: make automatic version
 ../CIA/transactor/,ciatest64.prg,interactive,0
 ################################################################################
 # VICII
