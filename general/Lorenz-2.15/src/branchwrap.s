@@ -1,5 +1,5 @@
 ; original source file: n/a (broken), this was recreated from a disassembly
-; FIXME: this test can not fail?!
+; slightly updated so the test does actually fail when it behaves wrong
 ;-------------------------------------------------------------------------------
         * = $0801
 
@@ -42,26 +42,122 @@ main
         sta $ffbe
         lda #$42  ; $0002
         sta $ffbf
-        lda #$60  ; rts
+        lda #$a9  ; lda #
         sta $ffc0
+        lda #$00  ; $00
+        sta $ffc1
+        lda #$60  ; rts
+        sta $ffc2
+        lda #$a9  ; lda #
         sta $02
-i085c
+        lda #$01  ; $01
+        sta $03
+        lda #$60  ; rts
+        sta $04
+        lda #$4c  ; jmp
+        sta $ff02
+        lda #<failed
+        sta $ff02
+        lda #>failed
+        sta $ff02
+lp1
+        ; flag cleared, branch taken
+        ;
+        ; NV-BDIZC 
+        ; 00110000
         lda #$30
         pha
         plp
         jsr $ffbe
+        ; $ffbe bpl, bvc, bcc, bne $0002
+        ; $ffc0 lda #$00
+        ; $ffc2 rts
+        ; $0002 lda #$01    <-
+        ; $0004 rts
+        bne ok1
+        jmp failed
+ok1:        
+        ; flag set, branch not taken
+        ;
+        ; NV-BDIZC 
+        ; 11110011
         lda #$f3
         pha
         plp
         jsr $ffbe
+        ; $ffbe bmi, bvs, bcs, beq $0002
+        ; $ffc0 lda #$00    <-
+        ; $ffc2 rts
+        ; $0002 lda #$01
+        ; $0004 rts
+        beq ok2
+        jmp failed
+ok2:        
+        
         clc
         lda $ffbe
-        adc #$20
+        adc #$40
         sta $ffbe
-        bcc i085c
+        bcc lp1
 
+        lda #$30  ; bmi
+        sta $ffbe
+        
+lp2
+        ; flag cleared, branch not taken
+        ;
+        ; NV-BDIZC 
+        ; 00110000
+        lda #$30
+        pha
+        plp
+        jsr $ffbe
+        ; $ffbe bpl, bvc, bcc, bne $0002
+        ; $ffc0 lda #$00   <-
+        ; $ffc2 rts
+        ; $0002 lda #$01    
+        ; $0004 rts
+        beq ok3
+        jmp failed
+ok3:        
+        ; flag set, branch taken
+        ;
+        ; NV-BDIZC 
+        ; 11110011
+        lda #$f3
+        pha
+        plp
+        jsr $ffbe
+        ; $ffbe bmi, bvs, bcs, beq $0002
+        ; $ffc0 lda #$00    
+        ; $ffc2 rts
+        ; $0002 lda #$01    <-
+        ; $0004 rts
+        bne ok4
+        jmp failed
+ok4:        
+        
+        clc
+        lda $ffbe
+        adc #$40
+        sta $ffbe
+        bcc lp2
+        
         jsr irqenable
+        jmp passed
+        
+failed:        
+        jsr print
+        .text " - error"
+        .byte $0d, 0
 
+        lda #$ff       ; failure
+        sta $d7ff
+        lda #10
+        sta $d020
+        jmp *
+        
+passed:
         jsr print
         .text " - ok"
         .byte $0d, 0

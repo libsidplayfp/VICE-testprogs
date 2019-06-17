@@ -75,6 +75,7 @@ main
          lda #$36
          sta 1          ; BASIC off
 
+         ; save RAM a4df-a4e3
          lda $a4df
          pha
          lda $a4e0
@@ -86,19 +87,25 @@ main
          lda $a4e3
          pha
 
-         lda #$86
+         lda #$86   ; stx
          sta $a4df
-         lda #1
+         lda #1     ; $01
          sta $a4e0
-         lda #0
+         lda #0     ; brk
          sta $a4e1
          sta $a4e2
-         lda #$60
+         lda #$60   ; rts
          sta $a4e3
+
          lda #$36
          ldx #$37
          jsr $a4df
+         ; a4df stx $01     ; should switch to ROM
+         ; RAM a4e1 brk
+         ; RAM a4e2 brk
+         ; RAM a4e3 rts
 
+         ; restore RAM a4df-a4e3
          pla
          sta $a4e3
          pla
@@ -117,8 +124,11 @@ main
          sty $14
          dey
          sty $15
+         
          lda #$36
          sta 1
+         
+         ; save b828-b82c
          lda $b828
          pha
          lda $b829
@@ -129,18 +139,26 @@ main
          pha
          lda $b82c
          pha
-         lda #$86
+         
+         lda #$86   ; stx
          sta $b828
-         lda #1
+         lda #1     ; $01
          sta $b829
-         lda #0
+         lda #0     ; brk
          sta $b82a
          sta $b82b
-         lda #$60
+         lda #$60   ; rts
          sta $b82c
+         
          lda #$36
          ldx #$37
          jsr $b828
+         ; b828 stx $01     ; should switch to ROM
+         ; RAM b829 brk
+         ; RAM b82a brk
+         ; RAM b82b rts
+         
+         ; restore b828-b82c
          pla
          sta $b82c
          pla
@@ -155,19 +173,24 @@ main
          inc $0400  ; 2
          
 ;e000 ram-rom-ram
-         lda #$86
+         lda #$86   ; stx
          sta $ea77
-         lda #1
+         lda #1     ; $01
          sta $ea78
-         lda #0
+         lda #0     ; brk
          sta $ea79
          sta $ea7a
-         lda #$60
+         lda #$60   ; rts
          sta $ea7b
+         
          lda #$35
          ldx #$37
          sta 1
          jsr $ea77
+         ; ea77 stx $01     ; should switch to ROM
+         ; RAM ea78 brk
+         ; RAM ea79 brk
+         ; RAM ea7a rts
 
          inc $0400  ; 3
          
@@ -176,19 +199,25 @@ main
          sty $c3
          dey
          sty $c4
-         lda #$86
+         
+         lda #$86   ; stx
          sta $fd25
-         lda #1
-         sta $fd26
-         lda #0
+         lda #1     ; $01
+         sta $fd26  
+         lda #0     ; brk
          sta $fd27
          sta $fd28
-         lda #$60
+         lda #$60   ; rts
          sta $fd29
+         
          lda #$35
          ldx #$37
          sta 1
          jsr $fd25
+         ; fd25 stx $01     ; should switch to ROM
+         ; RAM fd27 brk
+         ; RAM fd28 brk
+         ; RAM fd29 rts
 
          inc $0400  ; 4
          
@@ -202,21 +231,27 @@ main
          sty $91
          dey
          sty $92
+         
          lda #$34
          sta 1
-         lda #$86
+         
+         lda #$86   ; stx
          sta $d400
-         lda #1
+         lda #1     ; $01
          sta $d401
-         lda #0
+         lda #0     ; brk
          sta $d402
          sta $d403
-         lda #$60
+         lda #$60   ; rts
          sta $d404
+         
          lda #$34
          ldx #$33
-         sta 1
+         sta 1              ; switch to RAM
          jsr $d400
+         ; RAM d400 stx $01     ; should switch to ROM
+         ; ROM d402 STA ($91),Y ; should switch to RAM
+         ; RAM d404 rts
 
          pla
          sta $92
