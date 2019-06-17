@@ -7,7 +7,9 @@ TODO:
 - 65C02 testsuite obviously doesnt make sense running on the C64 and should
   be changed to run on a PET/CBM2/whatever
 
-- 6502 interrupt tests do not work/have not been ported completely.
+- 6502 interrupt tests require writeable IRQ vector (FFFE/FFFF) and extra
+  hardware (feedback register connected to IRQ lines), so they can not work
+  on C64 etc, the have been removed from here.
 
 -----------------------------------------------------------------------------
 
