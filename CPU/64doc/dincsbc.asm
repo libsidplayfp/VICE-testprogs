@@ -1,104 +1,123 @@
-                * =  $801
-                !word nextline
-                ; 1993 SYSPEEK(43)+256*PEEK(44)+26
-                !word 1993
-                !byte $9e, $c2, $28, $34, $33, $29, $aa
-                !byte $32, $35, $36, $ac, $c2, $28, $34, $34
-                !byte $29, $aa, $32, $36
-                !byte 0
-nextline:
-                !word 0
-; --------------------------------------
-		SEI
-		LDA	#$18
+; Obviously the undocumented instructions RRA (ROR+ADC) and ISB (INC+SBC) have 
+; inherited also the decimal operation from the official instructions ADC and SBC. 
+; The dincsbc test proves this for ISB.
 
-loc_81E:
-		LDY	#0
-		STY	$FB
-		STY	$FC
+        * =  $801
+basicstart:
+        !word nextline
+        ; 1993 syspeek(43)+256*peek(44)+26
+        !word 1993
+        !byte $9e, $c2, $28, $34, $33, $29, $aa
+        !byte $32, $35, $36, $ac, $c2, $28, $34, $34
+        !byte $29, $aa, $32, $36
+        !byte 0
+nextline:
+        !word 0
+; --------------------------------------
+        sei
+        lda #$18
+
+loc_81e:
+        ldy #0
+        sty $fb
+        sty $fc
 
 loc_824:
-		PHA
-		LDY	#$2C
-		STA	($2B),Y
-		LDY	#$76
-		STA	($2B),Y
+        pha
+        ldy #loc_82d - basicstart
+        sta ($2b),y     ; $0801+$2c=$082d
+        ldy #loc_877 - basicstart
+        sta ($2b),y     ; $0801+$76=$0877
 
-loc_82D:
-		SEC
-		PHP
-		LDA	$FC
-		AND	#$F
-		STA	$FD
-		LDA	$FB
-		AND	#$F
-		SBC	$FD
-		BCS	loc_840
-		SBC	#5
-		CLC
+loc_82d:
+        sec
+        php
+        lda $fc
+        and #$f
+        sta $fd
+        lda $fb
+        and #$f
+        sbc $fd
+        bcs loc_840
+        sbc #5
+        clc
 
 loc_840:
-		AND	#$F
-		TAY
-		LDA	$FC
-		AND	#$F0
-		STA	$FD
-		LDA	$FB
-		AND	#$F0
-		PHP
-		SEC
-		SBC	$FD
-		AND	#$F0
-		BCS	loc_85F
-		SBC	#$5F
-		PLP
-		BCS	loc_868
-		SBC	#$F
-		SEC
-		BCS	loc_868
+        and #$f
+        tay
+        lda $fc
+        and #$f0
+        sta $fd
+        lda $fb
+        and #$f0
+        php
+        sec
+        sbc $fd
+        and #$f0
+        bcs loc_85f
+        sbc #$5f
+        plp
+        bcs loc_868
+        sbc #$f
+        sec
+        bcs loc_868
 
-loc_85F:
-		PLP
-		BCS	loc_868
-		SBC	#$F
-		BCS	loc_868
-		SBC	#$5F
+loc_85f:
+        plp
+        bcs loc_868
+        sbc #$f
+        bcs loc_868
+        sbc #$5f
 
 loc_868:
-		STY	$FD
-		ORA	$FD
-		STA	$FD
-		PLP
-		CLV
-		LDA	$FB
-		SBC	$FC
-		PHP
-		PLA
-		TAY
-		SEC
-		CLV
-		SED
-		LDA	$FB
-		DEC	$FC
-		ISC	$FC
-		CLD
-		PHP
-		EOR	$FD
-		BNE	loc_81E+1
-		PLA
-		STY	$FD
-		EOR	$FD
-		BNE	loc_81E+1
-		INC	$FB
-		BNE	loc_82D
-		INC	$FC
-		BNE	loc_82D
-		PLA
-		EOR	#$18
-		BNE	loc_89E
-		LDA	#$38 
-		BNE	loc_824
+        sty $fd
+        ora $fd
+        sta $fd
+        plp
+        clv
+        lda $fb
+        sbc $fc
+        php
+        pla
+        tay
+loc_877:
+        sec
+        clv
+        sed
+        lda $fb
+        dec $fc
+        isc $fc
+        cld
+        php
+        eor $fd
+        bne failure
+        pla
+        sty $fd
+        eor $fd
+        bne failure
+        inc $fb
+        bne loc_82d
+        inc $fc
+        bne loc_82d
+        pla
+        eor #$18
+        bne loc_89e
+        lda #$38 
+        bne loc_824
 
-loc_89E:
-		CLI
-		RTS
+loc_89e:
+        cli
+pass:
+        ;rts
+        lda #5 
+        sta $d020
+        lda #$00
+        sta $d7ff
+        jmp *
+failure:
+        ;brk
+        lda #10
+        sta $d020
+        lda #$ff
+        sta $d7ff
+        jmp *

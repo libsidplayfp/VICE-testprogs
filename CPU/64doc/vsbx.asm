@@ -1,81 +1,104 @@
-                * =  $801
-                !word nextline
-                ; 1993 SYSPEEK(43)+256*PEEK(44)+26
-                !word 1993
-                !byte $9e, $c2, $28, $34, $33, $29, $aa
-                !byte $32, $35, $36, $ac, $c2, $28, $34, $34
-                !byte $29, $aa, $32, $36
-                !byte 0
+; This test program shows if your machine is compatible with ours regarding the 
+; opcode $CB. The test proves that SBX does not affect the V flag. 
+; It tests 33554432 SBX combinations (16777216 different A, X and Immediate 
+; combinations, and two different V flag states).
+
+        * =  $801
+basicstart:
+        !word nextline
+        ; 1993 syspeek(43)+256*peek(44)+26
+        !word 1993
+        !byte $9e, $c2, $28, $34, $33, $29, $aa
+        !byte $32, $35, $36, $ac, $c2, $28, $34, $34
+        !byte $29, $aa, $32, $36
+        !byte 0
 nextline:
-                !word 0
+        !word 0
 ; --------------------------------------
-		LDA	#0
-		LDY	#$3D
-		STA	($2B),Y
-		LDY	#$3F
-		STA	($2B),Y
-		LDY	#$41
-		STA	($2B),Y
-		LDA	#7
-		STA	$FB
+        lda #0
+        ldy #loc_083e - basicstart
+        sta ($2b),y     ; $0801+$3d=$083e
+        ldy #loc_0840 - basicstart
+        sta ($2b),y     ; $0801+$3f=$0840
+        ldy #loc_0842 - basicstart
+        sta ($2b),y     ; $0801+$41=$0842
+        lda #7
+        sta $fb
 
-loc_102D:
-		CLC
-		LDA	$FB
-		ADC	#$7A
-		TAY
-		LDA	($2B),Y
-		LDY	#$39
-		STA	($2B),Y
+loc_082d:
+        clc
+        lda $fb
+        adc #loc_087b - basicstart
+        tay
+        lda ($2b),y     ; $0801+$7a+n=$087b+n
+        ldy #loc_083a - basicstart
+        sta ($2b),y     ; $0801+$39=$083a
 
-loc_1039:
-		LDA	#0
-		PHA
-		PLP
-		LDA	#0
-		LDX	#0
-		SBX	#0
-		PHP
-		PLA
-		CLD
-		LDY	#$39
-		EOR	($2B),Y
-		AND	#$40
-		BEQ	loc_1050
-		CLI
-		BRK
+loc_0839:
+loc_083a = * + 1
+        lda #0
+        pha
+        plp
+loc_083e = * + 1
+        lda #0
+loc_0840 = * + 1
+        ldx #0
+loc_0842 = * + 1
+        sbx #0
+        php
+        pla
+        cld
+        ldy #loc_083a - basicstart
+        eor ($2b),y     ; $0801+$39=$083a
+        and #$40
+        beq loc_0850
+        cli
+failure:
+        ;brk
+        lda #10
+        sta $d020
+        lda #$ff
+        sta $d7ff
+        jmp *
 ; --------------------------------------
 
-loc_1050:
-		LDY	#$3D
-		LDA	($2B),Y
-		SEC
-		ADC	#0
-		STA	($2B),Y
-		BCC	loc_1039
-		LDY	#$3F
-		LDA	($2B),Y
-		ADC	#0
-		STA	($2B),Y
-		BCC	loc_1039
-		LDA	#$2E
-		JSR	$FFD2
-		SEC
-		LDY	#$41
-		LDA	($2B),Y
-		ADC	#0
-		STA	($2B),Y
-		BCC	loc_1039
-		DEC	$FB
-		BPL	loc_102D
-		CLI
-		RTS
+loc_0850:
+        ldy #loc_083e - basicstart
+        lda ($2b),y     ; $0801+$3d=$083e
+        sec
+        adc #0
+        sta ($2b),y     ; $0801+$3d=$083e
+        bcc loc_0839
+        ldy #loc_0840 - basicstart
+        lda ($2b),y     ; $0801+$3f=$0840
+        adc #0
+        sta ($2b),y     ; $0801+$3f=$0840
+        bcc loc_0839
+        lda #$2e
+        jsr $ffd2
+        sec
+        ldy #loc_0842 - basicstart
+        lda ($2b),y     ; $0801+$41=$0842
+        adc #0
+        sta ($2b),y     ; $0801+$41=$0842
+        bcc loc_0839
+        dec $fb
+        bpl loc_082d
+        cli
+pass:
+        ;rts
+        lda #5 
+        sta $d020
+        lda #$00
+        sta $d7ff
+        jmp *
 ; --------------------------------------
-		!byte $FF
-		!byte $FE
-		!byte $F7
-		!byte $F6
-		!byte $BF
-		!byte $BE
-		!byte $B7
-		!byte $B6 
+loc_087b:
+        !byte $ff
+        !byte $fe
+        !byte $f7
+        !byte $f6
+        !byte $bf
+        !byte $be
+        !byte $b7
+        !byte $b6 

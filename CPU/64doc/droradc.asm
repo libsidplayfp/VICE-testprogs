@@ -1,134 +1,155 @@
-                * =  $801
-                !word nextline
-                ; 1993 SYSPEEK(43)+256*PEEK(44)+26
-                !word 1993
-                !byte $9e, $c2, $28, $34, $33, $29, $aa
-                !byte $32, $35, $36, $ac, $c2, $28, $34, $34
-                !byte $29, $aa, $32, $36
-                !byte 0
-nextline:
-                !word 0
-; --------------------------------------
-		SEI
-		LDA	#$18
-		LDY	#0
-		STY	$FB
-		STY	$FC
-		PHA
-		LDY	#$2C
-		STA	($2B),Y
-		LDY	#$8D
-		STA	($2B),Y
+; Obviously the undocumented instructions RRA (ROR+ADC) and ISB (INC+SBC) have 
+; inherited also the decimal operation from the official instructions ADC and SBC. 
+; The program droradc proves this statement for ROR,
 
-loc_82D:
-		SEC
-		PHP
-		LDA	$FC
-		AND	#$F
-		STA	$FD
-		LDA	$FB
-		AND	#$F
-		ADC	$FD
-		CMP	#$A
-		BCC	loc_841
-		ADC	#5
+        * =  $801
+basicstart:
+        !word nextline
+        ; 1993 syspeek(43)+256*peek(44)+26
+        !word 1993
+        !byte $9e, $c2, $28, $34, $33, $29, $aa
+        !byte $32, $35, $36, $ac, $c2, $28, $34, $34
+        !byte $29, $aa, $32, $36
+        !byte 0
+nextline:
+        !word 0
+; --------------------------------------
+        sei
+        lda #$18
+loc_81e:
+        ldy #0
+        sty $fb
+        sty $fc
+        pha
+        ldy #loc_82d - basicstart
+        sta ($2b),y     ; $0801+$2c=$082d
+        ldy #loc_88e - basicstart
+        sta ($2b),y     ; $0801+$8d=$088e
+
+loc_82d:
+        sec
+        php
+        lda $fc
+        and #$f
+        sta $fd
+        lda $fb
+        and #$f
+        adc $fd
+        cmp #$a
+        bcc loc_841
+        adc #5
 
 loc_841:
-		TAY
-		AND	#$F
-		STA	$FD
-		LDA	$FB
-		AND	#$F0
-		ADC	$FC
-		AND	#$F0
-		PHP
-		CPY	#$10
-		BCC	loc_855
-		ADC	#$F
+        tay
+        and #$f
+        sta $fd
+        lda $fb
+        and #$f0
+        adc $fc
+        and #$f0
+        php
+        cpy #$10
+        bcc loc_855
+        adc #$f
 
 loc_855:
-		TAX
-		BCS	loc_860
-		PLP
-		BCS	loc_862
-		CMP	#$A0
-		BCC	loc_865
-		PHP
+        tax
+        bcs loc_860
+        plp
+        bcs loc_862
+        cmp #$a0
+        bcc loc_865
+        php
 
 loc_860:
-		PLP
-		SEC
+        plp
+        sec
 
 loc_862:
-		ADC	#$5F
-		SEC
+        adc #$5f
+        sec
 
 loc_865:
-		ORA	$FD
-		STA	$FD
-		PHP
-		PLA
-		AND	#$3D
-		CPX	#0
-		BPL	loc_873
-		ORA	#$80
+        ora $fd
+        sta $fd
+        php
+        pla
+        and #$3d
+        cpx #0
+        bpl loc_873
+        ora #$80
 
 loc_873:
-		TAY
-		TXA
-		EOR	$FB
-		BPL	loc_883
-		LDA	$FB
-		EOR	$FC
-		BMI	loc_883
-		TYA
-		ORA	#$40
-		TAY
+        tay
+        txa
+        eor $fb
+        bpl loc_883
+        lda $fb
+        eor $fc
+        bmi loc_883
+        tya
+        ora #$40
+        tay
 
 loc_883:
-		PLP
-		LDA	$FB
-		ADC	$FC
-		BNE	loc_88E
-		TYA
-		ORA	#2
-		TAY
+        plp
+        lda $fb
+        adc $fc
+        bne loc_88e
+        tya
+        ora #2
+        tay
 
-loc_88E:
-		SEC
-		CLV
-		SED
-		LDA	$FB
-		ROL	$FC
-		RRA	$FC
-		CLD
-		PHP
-		EOR	$FD
-		BNE	loc_8C2+2
-		PLA
-		STY	$FD
-		EOR	$FD
-		BNE	loc_8C2+2
-		INC	$FB
-		BNE	loc_82D
-		INC	$FC
-		BNE	loc_82D
-		PLA
-		EOR	#$18
-		BEQ	loc_8B3
-		CLI
-		RTS
+loc_88e:
+        sec
+        clv
+        sed
+        lda $fb
+        rol $fc
+        rra $fc
+        cld
+        php
+        eor $fd
+        bne failure
+        pla
+        sty $fd
+        eor $fd
+        bne failure
+        inc $fb
+        bne loc_82d
+        inc $fc
+        bne loc_82d
+        pla
+        eor #$18
+        beq loc_8b3
+        cli
+pass:
+        ;rts
+        lda #5 
+        sta $d020
+        lda #$00
+        sta $d7ff
+        jmp *
 ; --------------------------------------
 
-loc_8B3:
-		LDA	#$1D
-		CLC
-		ADC	$2B
-		STA	$FB
-		LDA	#0
-		ADC	$2C
-		STA	$FC
-		LDA	#$38 
+loc_8b3:
+        lda #<(loc_81e - basicstart)
+        clc
+        adc $2b          ; $0801+$1d=$081e
+        sta $fb
+        lda #>(loc_81e - basicstart)
+        adc $2c
+        sta $fc
+        lda #$38 
 
-loc_8C2:
-		JMP	($FB)
+loc_8c2:
+        jmp ($fb)
+
+failure:
+        ;brk
+        lda #10
+        sta $d020
+        lda #$ff
+        sta $d7ff
+        jmp *
+        
