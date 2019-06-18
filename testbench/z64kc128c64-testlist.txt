@@ -346,16 +346,15 @@
 ################################################################################
 # CPU 6510
 ################################################################################
-#FIXME:
-#../CPU/64doc/,dadc.prg
-#../CPU/64doc/,dincsbc-deccmp.prg
-#../CPU/64doc/,dincsbc.prg
-#../CPU/64doc/,droradc.prg
-#../CPU/64doc/,dsbc-cmp-flags.prg
-#../CPU/64doc/,dsbc.prg
-#../CPU/64doc/,sbx-c100.prg
-#../CPU/64doc/,sbx.prg
-#../CPU/64doc/,vsbx.prg
+../CPU/64doc/,dadc.prg,exitcode,29000000
+../CPU/64doc/,dincsbc-deccmp.prg,exitcode,26000000
+../CPU/64doc/,dincsbc.prg,exitcode,26000000
+../CPU/64doc/,droradc.prg,exitcode,30000000
+../CPU/64doc/,dsbc-cmp-flags.prg,exitcode,22000000
+../CPU/64doc/,dsbc.prg,exitcode,26000000
+../CPU/64doc/,sbx-c100.prg,exitcode,14000000
+../CPU/64doc/,sbx.prg,exitcode,2300000000
+../CPU/64doc/,vsbx.prg,exitcode,3800000000
 ../CPU/Acid800/,cpu_decimal.prg,exitcode,22000000
 ../CPU/Acid800/,cpu_flags.prg,exitcode,22000000
 ../CPU/Acid800/,cpu_illegal.prg,exitcode,41000000
@@ -434,8 +433,6 @@
 ../CPU/decimalmode/,rra13.prg,exitcode,550000000
 ../CPU/hmc6502/,AllSuiteA.prg,exitcode,45000000
 ../CPU/kdormann/,6502_functional_test.prg,exitcode,180000000
-#FIXME
-#../CPU/kdormann/,6502_interrupt_test.prg,exitcode,4294967295
 ../CPU/lax/,lax.prg,exitcode,70000000,vicii-pal
 ../CPU/lax/,lax-none.prg,exitcode,70000000,vicii-pal
 ../CPU/lax/,lax-border.prg,exitcode,70000000,vicii-pal
@@ -449,10 +446,9 @@
 ../CPU/shs/,shsabsy1.prg,exitcode,5500000
 ../CPU/shs/,shsabsy2.prg,exitcode,7000000,vicii-pal
 ../CPU/shs/,shsabsy3.prg,exitcode,20000000,vicii-pal
-#FIXME:
-#../CPU/shxy/,shx-t2.prg
-#../CPU/shxy/,shx-test.prg
 #FIXME: make NTSC fixes
+../CPU/shxy/,shx-t2.prg,interactive,0,vicii-pal
+../CPU/shxy/,shx-test.prg,exitcode,170000000,vicii-pal
 ../CPU/shxy/,shxy1.prg,exitcode,8000000
 ../CPU/shxy/,shxy2.prg,exitcode,20000000,vicii-pal
 ../CPU/shxy/,shxy3.prg,exitcode,20000000
