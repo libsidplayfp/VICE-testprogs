@@ -50,28 +50,47 @@ start:
     inc $d019
     lda $d01e
     lda $d01f
+    jsr waitframes2
     
-  ldx #$09
+    ; save and clear zp
+    ldx #$09
 pushloop:
-  lda $ef,x
-  pha
-  dex
-  bne pushloop
+    lda $ef,x
+    pha
+    lda #0
+    sta $ef,x
+    dex
+    bne pushloop
 
-  ldx #0
+    ldx #0
 clrlp:
-  lda #$20
-  sta $0400,x
-  sta $0500,x
-  sta $0600,x
-  sta $0700,x
-  lda #$01
-  sta $d800,x
-  sta $d900,x
-  sta $da00,x
-  sta $db00,x
-  inx
-  bne clrlp
+    lda #$20
+    sta $0400,x
+    sta $0500,x
+    sta $0600,x
+    sta $0700,x
+    lda #$01
+    sta $d800,x
+    sta $d900,x
+    sta $da00,x
+    sta $db00,x
+    inx
+    bne clrlp
+
+    ; set up all sprite pointers and positions
+    ldx #$07
+clrlp2:
+    lda #$ff
+    sta $07f8,x
+    dex
+    bpl clrlp2
+
+    ldx #$10
+clrlp3:
+    lda #0
+    sta $d000,x
+    dex
+    bpl clrlp3
 
   ldx #39
 namelp:
@@ -215,6 +234,8 @@ delay0:
   cmp #$90
   bne delay0
 
+  inc $d020
+  
   ldy $d01e
 
 delay1:
@@ -222,6 +243,8 @@ delay1:
   cmp #$a0
   bne delay1
 
+  dec $d020
+  
   ldx $d01e
   cpx $f8
   beq nolog
