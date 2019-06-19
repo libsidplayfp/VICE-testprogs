@@ -15,6 +15,8 @@ spr_act       = $02
             !text "2061"
             !byte 0,0,0
 
+            jsr mkscreen
+            
             sei
             lda #$35
             sta $01
@@ -141,3 +143,34 @@ delay:
             }
             !byte $24,$ea
             rts
+
+mkscreen:
+            ldx #0
+-
+            lda #$20
+            sta $0400,x
+            sta $0500,x
+            sta $0600,x
+            sta $0700,x
+            lda #$01
+            sta $d800,x
+            sta $d900,x
+            sta $da00,x
+            sta $db00,x
+            inx
+            bne -
+            ldx #0
+-
+            lda screendata,x
+            sta $0401+(15*40),x
+            inx
+            cpx #40*4
+            bne -
+            rts
+screendata:
+
+         ;1234567890123456789012345678901234567890
+    !scr "1 enables the sprite -> dma/rdy ->      "
+    !scr "  shx puts 14 (light blue) into border  "
+    !scr $1f, " disables the sprite -> no dma/rdy ->  "
+    !scr "  shx writes elsewhere (black border)   "  

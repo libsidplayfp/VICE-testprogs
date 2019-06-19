@@ -191,6 +191,15 @@ print_ok:
             jsr $ab1e
             jsr print_info
             cli
+            
+            ldx #$00
+            lda $d020
+            and #$0f
+            cmp #5
+            beq +
+            ldx #$ff
++            
+            stx $d7ff
             rts
 
 print_info:
