@@ -596,7 +596,7 @@
 ../CIA/tod/,hzsync5.prg,exitcode,100000000,vicii-pal
 ../CIA/tod/,powerup.prg,exitcode,100000000
 ../CIA/tod/,read-latch.prg,exitcode,100000000,vicii-pal
-../CIA/tod/,stability.prg,interactive,0,vicii-pal
+../CIA/tod/,stability.prg,exitcode,40000000,vicii-pal
 ../CIA/tod/,write-stop.prg,exitcode,100000000
 ../CIA/transactor/,ciatest64.prg,interactive,0
 ################################################################################
