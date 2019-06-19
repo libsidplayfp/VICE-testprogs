@@ -3,23 +3,38 @@
 _main:
         sei
 
-        LDX #$00
+        lda #$7f
+        sta $dc0d
+        lda $dc0d
+        
+        ldx #$00
         stx $d020
         stx $d021
-l240A:
-        LDA #$20
-        STA $0400,X
-        STA $0500,X
-        STA $0600,X
-        STA $0700,X
-        LDA #$01
-        STA $D800,X
-        STA $D900,X
-        STA $DA00,X
-        STA $DB00,X
-        INX
-        BNE l240A
+l240a:
+        lda #$20
+        sta $0400,x
+        sta $0500,x
+        sta $0600,x
+        sta $0700,x
+        lda #$01
+        sta $d800,x
+        sta $d900,x
+        sta $da00,x
+        sta $db00,x
+        inx
+        bne l240a
+        
+loop:
+        bit $d011
+        bpl *-3
+        bit $d011
+        bmi *-3
 
+        inc $d020
+        
+        lda #%00000000  ; stop timer
+        sta $dc0e
+        
         lda #$ff
         sta $dc04
         sta $dc05
@@ -64,6 +79,8 @@ l240A:
         lda hextab,y
         sta $0400 + 40 + 4
 
+        dec $d020
+        
         pla
         sta $0400 + 40
         cmp #$ff - ($10 + 7)    ; $e8
@@ -73,14 +90,14 @@ l240A:
         sta $d020
         lda #$ff ; failure
         sta $d7ff
-        jmp *
+        jmp loop
 
 allok:
         lda #5
         sta $d020
         lda #$00 ; success
         sta $d7ff
-        jmp *
+        jmp loop
 
 hextab:
         .byte "0123456789"
