@@ -133,10 +133,10 @@ start:
 
             ; stop timer
     !if SYNC = 0 {
-            lda #%10000000
+            lda #%10000000  ; PAL
     }
     !if SYNC > 0 {
-            lda #%00000000
+            lda #%00000000  ; NTSC
     }
             sta $dc0e
             lda #%01000000
@@ -150,10 +150,10 @@ start:
 
             ; start timer
     !if SYNC = 0 {
-            lda #%10010001
+            lda #%10010001  ; PAL
     }
     !if SYNC > 0 {
-            lda #%00010001
+            lda #%00010001  ; NTSC
     }
             sta $dc0e
             lda #%01010001      ; set clock
@@ -560,6 +560,89 @@ lp6:
             lda idealtime+0
             jsr hexout
 
+            lda #0
+            sta linepos
+            lda #>($400+40*23)
+            sta scrptr+1
+            lda #<($400+40*23)
+            sta scrptr+0
+            
+            ; min
+            lda mintime + 3
+            jsr hexout
+            lda mintime + 2
+            jsr hexout
+            lda mintime + 1
+            jsr hexout
+            lda mintime + 0
+            jsr hexout
+
+            inc linepos
+
+            ; max
+            lda maxtime + 3
+            jsr hexout
+            lda maxtime + 2
+            jsr hexout
+            lda maxtime + 1
+            jsr hexout
+            lda maxtime + 0
+            jsr hexout
+            
+            ; measured min - min
+            ldx #5
+            ldy #13
+            lda diffbuf + $0000
+            cmp mintime + 0
+            lda diffbuf + $0100
+            sbc mintime + 1
+            lda diffbuf + $0200
+            sbc mintime + 2
+            lda diffbuf + $0300
+            sbc mintime + 3
+            bcs +
+            ldy #10
+            ldx #10
++
+            sty $d800 + 40*23
+            sty $d801 + 40*23
+            sty $d802 + 40*23
+            sty $d803 + 40*23
+            sty $d804 + 40*23
+            sty $d805 + 40*23
+            sty $d806 + 40*23
+            sty $d807 + 40*23
+             
+            ; measured max - max
+            ldy #13
+            lda maxtime + 0
+            cmp diffbuf + $00ff
+            lda maxtime + 1
+            sbc diffbuf + $01ff
+            lda maxtime + 2
+            sbc diffbuf + $02ff
+            lda maxtime + 3
+            sbc diffbuf + $03ff
+            bcs +
+            ldy #10
+            ldx #10
++
+            sty $d809 + 40*23
+            sty $d80a + 40*23
+            sty $d80b + 40*23
+            sty $d80c + 40*23
+            sty $d80d + 40*23
+            sty $d80e + 40*23
+            sty $d80f + 40*23
+            sty $d810 + 40*23
+
+            ldy #0
+            stx $d020
+            cpx #5
+            beq +
+            ldy #$ff
++
+            sty $d7ff
             rts
 
 avgtime:
@@ -617,25 +700,50 @@ descr:
 space:
             !scr "                  space to measure again"
 
+;
 ;timing:
+;
+; cycles per second:
+; PAL       985248
+; NTSC     1022730
+; NTSCOLD  1022730
+; PALN     1023440
+;
+
+!if SYNC = 0 {
+    ; PAL
+    CYCLESPERSEC = 985248
+}
+!if SYNC = 1 {
+    ; NTSC
+    CYCLESPERSEC = 1022730
+}
+!if SYNC = 2 {
+    ; NTSCOLD
+    CYCLESPERSEC = 1022730
+}
+!if SYNC = 3 {
+    ; PALN
+    CYCLESPERSEC = 1023440
+}
+
+; we measure time between 1/10th second ticks
+CYCLESPER10THSEC = (CYCLESPERSEC / 10)
+
 idealtime:
-    !if SYNC = 0 {
-        ; PAL
-        !word 98525 & $ffff
-        !word 98525 >> 16
-    }
-    !if SYNC = 1 {
-        ; NTSC
-        !word 102273 & $ffff
-        !word 102273 >> 16
-    }
-    !if SYNC = 2 {
-        ; NTSCOLD
-        !word 102273 & $ffff
-        !word 102273 >> 16
-    }
-    !if SYNC = 3 {
-        ; PALN
-        !word 102344 & $ffff
-        !word 102344 >> 16
-    }
+    !word CYCLESPER10THSEC & $ffff
+    !word CYCLESPER10THSEC >> 16
+    
+; the maximum deviation should be less than 0,1Hz
+CYCLESPER10THSECMIN = CYCLESPER10THSEC - (CYCLESPER10THSEC / 100)
+CYCLESPER10THSECMAX = CYCLESPER10THSEC + (CYCLESPER10THSEC / 100)
+
+mintime:
+    !word CYCLESPER10THSECMIN & $ffff
+    !word CYCLESPER10THSECMIN >> 16
+
+maxtime:
+    !word CYCLESPER10THSECMAX & $ffff
+    !word CYCLESPER10THSECMAX >> 16
+
+
