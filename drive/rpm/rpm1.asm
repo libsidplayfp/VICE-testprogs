@@ -4,6 +4,8 @@
 
 ;-------------------------------------------------------------------------------
 
+rpmline = $0400 + (20 * 40)
+
 drivecode_start = $0300
 drivecode_exec = drvstart ; skip $10 bytes table
 
@@ -25,6 +27,8 @@ start:
 
         dec $d021
 
+        lda #$01
+        sta $286
         lda #$93
         jsr $ffd2
 
@@ -144,11 +148,82 @@ nonzero: lda #0
         jsr $bb12       ; FAC = ARG / FAC
 
         jsr $aabc       ; print FAC
+        
+        ; give the test two loops to settle
+framecount = * + 1
+        lda #2
+        beq +
+        dec framecount
+        jmp lp
++
+        ; compare, we consider 299,300,301 as acceptable
+        ldy #10
+
+        lda rpmline+1
+        cmp #$32    ; 2
+        bne cmp300
+        lda rpmline+2
+        cmp #$39    ; 9
+        bne cmp300
+        lda rpmline+3
+        cmp #$39    ; 9
+        bne cmp300
+        ; is 299
+        ldy #5
+cmp300:        
+        lda rpmline+1
+        cmp #$33    ; 3
+        bne cmp301
+        lda rpmline+2
+        cmp #$30    ; 0
+        bne cmp301
+        lda rpmline+3
+        cmp #$30    ; 0
+        bne cmp301
+        ; is 301
+        ldy #5
+cmp301:        
+        lda rpmline+1
+        cmp #$33    ; 3
+        bne cmpfail
+        lda rpmline+2
+        cmp #$30    ; 0
+        bne cmpfail
+        lda rpmline+3
+        cmp #$31    ; 1
+        bne cmpfail
+        ; is 301
+        ldy #5
+cmpfail:       
+        
+        sty rpmline+$d401
+        sty rpmline+$d402 
+        sty rpmline+$d403 
+        sty $d020
+        
+        lda #$ff
+        cpy #5
+        bne +
+        lda #0
++        
+        sta $d7ff
+
+        jsr wait2frame
+      
         jmp lp
 
 c6000000:
         !byte $9a,$64,$e1,$c0,$00
 
+wait2frame:
+        jsr waitframe
+waitframe:
+-       lda $d011
+        bpl -
+-       lda $d011
+        bmi -
+        rts
+        
 ;-------------------------------------------------------------------------------
 
 drivecode:

@@ -1,12 +1,15 @@
 all: rpm1.prg rpm.d64 rpm.g64 rpm.p64
 
+imggen:
+	make -C ./../util/ imggen
+
 rpm1.prg: rpm1.asm
 	acme rpm1.asm
 
 rpm.d64: rpm1.prg
 	c1541 -format "rpm,00" d64 rpm.d64 -write "rpm1.prg" "rpm1"
 
-rpm.g64: rpm.d64
+rpm.g64: rpm.d64 imggen
 	./../util/imggen d64tog64 rpm.d64 rpm.g64 35
 
 rpm.p64: rpm.g64
