@@ -322,7 +322,7 @@
 ################################################################################
 ../general/ram0001/,quicktest.prg,interactive,0
 ../general/ram0001/,test1.prg,exitcode,10000000
-../general/fuxxortest,test-fuxxored.prg,exitcode,14000000
+../general/fuxxortest,test-fuxxored.prg,exitcode,14000000,comment:timeout on failure
 ################################################################################
 # CPU 6510
 ################################################################################
@@ -333,8 +333,9 @@
 ../CPU/64doc/,dsbc-cmp-flags.prg,exitcode,22000000
 ../CPU/64doc/,dsbc.prg,exitcode,26000000
 ../CPU/64doc/,sbx-c100.prg,exitcode,14000000
-../CPU/64doc/,sbx.prg,exitcode,2300000000
-../CPU/64doc/,vsbx.prg,exitcode,3800000000
+# FIXME: these run VERY long. we need a 64bit timeout
+#../CPU/64doc/,sbx.prg,exitcode,2300000000
+#../CPU/64doc/,vsbx.prg,exitcode,3800000000
 ../CPU/Acid800/,cpu_decimal.prg,exitcode,22000000
 ../CPU/Acid800/,cpu_flags.prg,exitcode,22000000
 ../CPU/Acid800/,cpu_illegal.prg,exitcode,41000000
@@ -436,7 +437,7 @@
 ../CPU/shxy/,shyx2.prg,exitcode,20000000,vicii-pal
 ../CPU/shxy/,shyx3.prg,exitcode,20000000
 ../CPU/shxy/,shyx4.prg,exitcode,20000000
-../CPU/cputest/,,analyzer,0,mountd64:cputest.d64
+../CPU/cputest/,start-c64.prg,analyzer,0,mountd64:cputest-c64.d64
 ################################################################################
 # Interrupts
 #
