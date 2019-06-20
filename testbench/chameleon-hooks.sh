@@ -60,7 +60,9 @@ function chameleon_reset
  #      echo "poll:" "$RET"
         if [ $SECONDS -gt $SECONDSEND ]
         then
-            echo "timeout when waiting for reset"
+            if [ $verbose == "1" ]; then
+                echo -ne "[timeout when waiting for reset] "
+            fi
             return
         fi
     done;
@@ -88,9 +90,11 @@ function chameleon_poll_returncode
     RET="58"
 #    RET="58"
 #    echo "poll1:" "$RET"
+    SECONDSSTART=$((SECONDS + 1 + ((0 + 999999) / 1000000)))
     SECONDSEND=$((SECONDS + 1 + (($1 + 999999) / 1000000)))
-#    echo 1: $1
+#    echo timeout cycles: $1
 #    echo secs: $SECONDS
+#    echo secsstart: $SECONDSSTART
 #    echo secsend: $SECONDSEND
     while [ "$RET" = "58" ]
     do
@@ -102,16 +106,24 @@ function chameleon_poll_returncode
 #        echo "poll:" "$RET"
         if [ $SECONDS -gt $SECONDSEND ]
         then
-            echo "timeout when waiting for return code"
+            if [ $verbose == "1" ]; then
+                echo -ne "[timeout when waiting for return code, start:"$SECONDSSTART" end:"$SECONDSEND"] "
+            fi
             RET=1
             return $RET
         fi
+#        echo "$SECONDS"" -gt ""$SECONDSEND"
+#        sleep 1
     done;
 
     if [ "$RET" = "ff" ]; then
         RET=255
     fi
 
+    if [ $verbose == "1" ]; then
+        echo -ne "[start:"$SECONDSSTART" end:"$SECONDSEND"] "
+    fi
+    
 #    echo "chameleon_poll_returncode done"
 #    echo "poll:" "$RET"
     return $RET
@@ -203,12 +215,15 @@ function chameleon_mount_cartridge
 function chameleon_mount_d64
 {
 # put a message on C64 screen
-# "uploading cartridge image, please wait  "
+# "uploading disk image, please wait  "
     echo -ne "\x15\x10\x0c\x0f\x01\x04\x09\x0e\x07\x20\x04\x09\x13\x0b\x20\x09\x0d\x01\x07\x05\x2c\x20\x10\x0c\x05\x01\x13\x05\x20\x17\x01\x09\x14\x20\x20\x20\x20\x20\x20\x20" > $RDUMMY
     chacocmd --addr 1984 --writemem $RDUMMY > /dev/null
     if [ "$?" != "0" ]; then exit -1; fi
 # send cartridge image
     echo -ne "(disk:$2) "
+    if [ $verbose == "1" ]; then
+        echo "[chmount -d64 ""$1/$2""]"
+    fi
     chmount -d64 "$1/$2" > /dev/null
     if [ "$?" != "0" ]; then exit -1; fi
 # remove message from C64 screen
@@ -222,7 +237,7 @@ function chameleon_mount_d64
 function chameleon_mount_g64
 {
 # put a message on C64 screen
-# "uploading cartridge image, please wait  "
+# "uploading disk image, please wait  "
     echo -ne "\x15\x10\x0c\x0f\x01\x04\x09\x0e\x07\x20\x04\x09\x13\x0b\x20\x09\x0d\x01\x07\x05\x2c\x20\x10\x0c\x05\x01\x13\x05\x20\x17\x01\x09\x14\x20\x20\x20\x20\x20\x20\x20" > $RDUMMY
     chacocmd --addr 1984 --writemem $RDUMMY > /dev/null
     if [ "$?" != "0" ]; then exit -1; fi
@@ -234,6 +249,18 @@ function chameleon_mount_g64
     echo -ne "                                        " > $RDUMMY
     chacocmd --addr 1984 --writemem $RDUMMY > /dev/null
     if [ "$?" != "0" ]; then exit -1; fi
+}
+
+# $1 test path
+function chameleon_mount_diskimage
+{
+    # if test uses a diskimage, mount it
+    if [ x"$mounted_d64"x != x""x ]; then
+        chameleon_mount_d64 "$1" "$mounted_d64"
+    fi
+    if [ x"$mounted_g64"x != x""x ]; then
+        chameleon_mount_g64 "$1" "$mounted_g64"
+    fi
 }
 
 # $1 = 1 - enable cartridge
@@ -452,11 +479,9 @@ function chameleon_get_options
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then
-                    chameleon_mount_d64 "$2" "${1:9}"
                     mounted_d64="${1:9}"
                 fi
                 if [ "${1:0:9}" == "mountg64:" ]; then
-                    chameleon_mount_g64 "$2" "${1:9}"
                     mounted_g64="${1:9}"
                 fi
                 if [ "${1:0:9}" == "mountcrt:" ]; then
@@ -527,10 +552,11 @@ function chameleon_run_screenshot
 
     if [ X"$screenshottest"X == X"$mounted_crt"X ]
     then
-#        echo "no program given"
 # a cartridge was mounted before
-#        chameleon_reset
+#       also resets c64
         chameleon_remove_cartridge
+        
+        chameleon_mount_diskimage "$1"
         
         chameleon_setup_videomode
 
@@ -553,8 +579,11 @@ function chameleon_run_screenshot
 #        exitcode=$?
     else
 
+#       also resets c64
         chameleon_remove_cartridge
 
+        chameleon_mount_diskimage "$1"
+        
         chameleon_setup_videomode
         
         chameleon_make_helper_options 0 "$1"
@@ -651,8 +680,10 @@ function chameleon_run_exitcode
     if [ X"$2"X == X""X ]
     then
 # a cartridge was mounted before
-#        chameleon_reset
+#       also resets c64
         chameleon_remove_cartridge
+        
+        chameleon_mount_diskimage "$1"
 
         chameleon_setup_videomode
 
@@ -677,8 +708,11 @@ function chameleon_run_exitcode
 
         chameleon_remove_cartridge
     else
+#       also resets c64
         chameleon_remove_cartridge
 
+        chameleon_mount_diskimage "$1"
+        
         chameleon_setup_videomode
         
         chameleon_make_helper_options 0 "$1"
