@@ -798,6 +798,7 @@
 ../VICII/spritegap/,spritegap3.prg,exitcode,1000000000
 ../VICII/spritemcbase/,spritemcbase.prg,interactive,0
 ../VICII/spritepriorities/,test1.prg,screenshot,20000000
+../VICII/spriterestart/,spriterestart.prg,exitcode,9000000,vicii-pal
 #FIXME: port tests to NTSC and make reference screenshots
 ../VICII/spritesplit/,ss-exp-unexp-hires.prg,screenshot,10000000,vicii-pal
 ../VICII/spritesplit/,ss-exp-unexp-mc.prg,screenshot,10000000,vicii-pal
