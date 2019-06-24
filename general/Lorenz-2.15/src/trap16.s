@@ -34,6 +34,28 @@ anemagic = * + 1
            ora #$02
            sta aneresultstatus
 sk1
+           ; read the LAX "magic constant"
+           lda #0
+           .byte $ab, $ff
+           sta laxmagic
+           ; calc reference test result
+           lda #$c6 ; value in A
+laxmagic = * + 1
+           ora #0
+           and #$1b ; immediate value used in the test
+           sta laxresulta
+           sta laxresultx
+           ; reference status
+           lda laxresulta
+           and #$80
+           ora #$30
+           sta laxresultstatus
+           lda laxresulta
+           bne sk2
+           lda laxresultstatus
+           ora #$02
+           sta laxresultstatus
+sk2:          
            
            jmp main
 
@@ -1498,106 +1520,109 @@ table
            .text "txa"
            .word n
            .byte $1b,$b1,$b1,$6c,$b0
-           .text "ane"
+           .text "ane" ;8b
            .word b
 aneresult = * + 1
 aneresultstatus = * + 4
            .byte $1b,$00,$b1,$6c,$32
-           .text "sty"
+           .text "sty" ;8c
            .word ac
            .byte $6c,$c6,$b1,$6c,$30
-           .text "sta"
+           .text "sta" ;8d
            .word ac
            .byte $c6,$c6,$b1,$6c,$30
-           .text "stx"
+           .text "stx" ;8e
            .word ac
            .byte $b1,$c6,$b1,$6c,$30
-           .text "axs"
+           .text "axs" ;8f
            .word ac
            .byte $80,$c6,$b1,$6c,$30
-           .text "bcc"
+           .text "bcc" ;90
            .word r
            .byte $1b,$c6,$b1,$6c,$f3
-           .text "sta"
+           .text "sta" ;91
            .word iy
            .byte $c6,$c6,$b1,$6c,$30
-           .text "hlt"
+           .text "hlt" ;92
            .word hltn
            .byte $00,$00,$00,$00,$00
-           .text "sha"
+           .text "sha" ;93
            .word shaiy
            .byte $00,$c6,$b1,$6c,$30
-           .text "sty"
+           .text "sty" ;94
            .word zx
            .byte $6c,$c6,$b1,$6c,$30
-           .text "sta"
+           .text "sta" ;95
            .word zx
            .byte $c6,$c6,$b1,$6c,$30
-           .text "stx"
+           .text "stx" ;96
            .word zy
            .byte $b1,$c6,$b1,$6c,$30
-           .text "axs"
+           .text "axs" ;97
            .word zy
            .byte $80,$c6,$b1,$6c,$30
-           .text "tya"
+           .text "tya" ;98
            .word n
            .byte $1b,$6c,$b1,$6c,$30
-           .text "sta"
+           .text "sta" ;99
            .word ay
            .byte $c6,$c6,$b1,$6c,$30
-           .text "txs"
+           .text "txs" ;9a
            .word txsn
            .byte $1b,$c6,$b1,$6c,$30
-           .text "shs"
+           .text "shs" ;9b
            .word shsay
            .byte $00,$c6,$b1,$6c,$30
-           .text "shy"
+           .text "shy" ;9c
            .word shyax
            .byte $00,$c6,$b1,$6c,$30
-           .text "sta"
+           .text "sta" ;9d
            .word ax
            .byte $c6,$c6,$b1,$6c,$30
-           .text "shx"
+           .text "shx" ;9e
            .word shxay
            .byte $00,$c6,$b1,$6c,$30
-           .text "sha"
+           .text "sha" ;9f
            .word shaay
            .byte $00,$c6,$b1,$6c,$30
-           .text "ldy"
+           .text "ldy" ;a0
            .word b
            .byte $1b,$c6,$b1,$1b,$30
-           .text "lda"
+           .text "lda" ;a1
            .word ix
            .byte $1b,$1b,$b1,$6c,$30
-           .text "ldx"
+           .text "ldx" ;a2
            .word b
            .byte $1b,$c6,$1b,$6c,$30
-           .text "lax"
+           .text "lax" ;a3
            .word ix
            .byte $1b,$1b,$1b,$6c,$30
-           .text "ldy"
+           .text "ldy" ;a4
            .word z
            .byte $1b,$c6,$b1,$1b,$30
-           .text "lda"
+           .text "lda" ;a5
            .word z
            .byte $1b,$1b,$b1,$6c,$30
-           .text "ldx"
+           .text "ldx" ;a6
            .word z
            .byte $1b,$c6,$1b,$6c,$30
-           .text "lax"
+           .text "lax" ;a7
            .word z
            .byte $1b,$1b,$1b,$6c,$30
-           .text "tay"
+           .text "tay" ;a8
            .word n
            .byte $1b,$c6,$b1,$c6,$b0
-           .text "lda"
+           .text "lda" ;a9
            .word b
            .byte $1b,$1b,$b1,$6c,$30
-           .text "tax"
+           .text "tax" ;aa
            .word n
            .byte $1b,$c6,$c6,$6c,$b0
-           .text "lxa"
+           .text "lxa" ;ab
            .word b
+laxresulta = * + 1
+laxresultx = * + 2
+laxresultstatus = * + 4
            .byte $1b,$0a,$0a,$6c,$30
            .text "ldy"
            .word ac
