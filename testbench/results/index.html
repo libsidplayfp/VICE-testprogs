@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <title>VICE Testsuite results</title>
+    <style type="text/css">
+    body                  { background-color: #ffffff; color: #000000; font: normal 10px Verdana, Arial, sans-serif;}
+    </style>  
+  </head>
+  <body>
+<h1>VICE Testbench Results</h1>
+  
+  From this page all the various results gathered by the VICE testsuite are
+  linked. The linked pages have been created like this:
+<tt><pre>
+  $EMUDIR="/home/foo/bar/z64k/" ./testbench.sh z64k
+  $EMUDIR="/home/foo/bar/z64k/" ./testbench.sh z64kc128c64
+  $EMUDIR="/home/foo/bar/hoxs64/" ./testbench.sh hoxs64 --pal --cianew --8565early
+  $EMUDIR="/home/foo/bar/micro64/" ./testbench.sh micro64 --pal
+  $EMUDIR="/home/foo/bar/emu64/" ./testbench.sh emu64
+  $EMUDIR="/home/foo/bar/yace/" ./testbench.sh yace
+  $./testbench.sh cham20 --8k
+  $EMUDIR="/home/foo/bar/z64k/" ./testbench.sh z64kvic20
+  $EMUDIR="/home/foo/bar/z64k/" ./testbench.sh z64kc128
+</pre></tt>
+  and
+<tt><pre>
+  $./testbench.sh vsid / x64 / x64sc / x128 / xplus4 / xpet / x64dtv / xscpu64 / xcbm2 / xcbm5x0
+</pre></tt>
+  then
+<tt><pre>
+  $./testresults.sh sid / c64 / vic20 / c128 / plus4 / pet / dtv / scpu / cbm2 / cbm5x0 --html
+</pre></tt>
+
+  <h1>Results</h1>
+
+<p>
+Comparing latest results from various emulators for each system:
+</p>
+  
+<p>
+  <a href="sid.html">sid</a>
+  <a href="c64.html">c64</a>
+  <a href="vic20.html">vic20</a>
+  <a href="c128.html">c128</a>
+  <a href="plus4.html">plus4</a>
+  <a href="pet.html">pet</a>
+  <a href="dtv.html">dtv</a>
+  <a href="scpu.html">scpu</a>
+  <a href="cbm5x0.html">cbm5x0</a>
+  <a href="cbm2.html">cbm2</a>
+</p>
+
+<p>
+Comparing old and new results from one emulator for regression testing:
+</p>
+
+<p>
+  <a href="x64.html">x64/x64sc</a>
+  <a href="hoxs64.html">hoxs64</a>
+  <a href="chameleon.html">Turbo Chameleon 64</a>
+  <a href="u64.html">Ultimate64</a>
+</p>
+
+  </body>
+</html>

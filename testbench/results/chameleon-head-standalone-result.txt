@@ -311,8 +311,6 @@
 ../CPU/64doc/,dsbc-cmp-flags.prg,ok,exitcode,,,,-1,-1,-1
 ../CPU/64doc/,dsbc.prg,ok,exitcode,,,,-1,-1,-1
 ../CPU/64doc/,sbx-c100.prg,ok,exitcode,,,,-1,-1,-1
-../CPU/64doc/,sbx.prg,timeout,exitcode,,,,-1,-1,-1
-../CPU/64doc/,vsbx.prg,timeout,exitcode,,,,-1,-1,-1
 ../CPU/Acid800/,cpu_decimal.prg,ok,exitcode,,,,-1,-1,-1
 ../CPU/Acid800/,cpu_flags.prg,ok,exitcode,,,,-1,-1,-1
 ../CPU/Acid800/,cpu_illegal.prg,ok,exitcode,,,,-1,-1,-1
@@ -321,9 +319,9 @@
 ../CPU/Acid800/,cpu_timing_ntsc.prg,ok,exitcode,,,,-1,-1,NTSC
 ../CPU/Acid800/,cpu_bugs.prg,ok,exitcode,,,,-1,-1,-1
 ../CPU/Acid800/,cpu_clisei.prg,ok,exitcode,,,,-1,-1,-1
-../CPU/ane/,ane.prg,error,exitcode,,,,-1,-1,PAL
-../CPU/ane/,ane-none.prg,error,exitcode,,,,-1,-1,PAL
-../CPU/ane/,ane-border.prg,error,exitcode,,,,-1,-1,PAL
+../CPU/ane/,ane.prg,ok,exitcode,,,,-1,-1,PAL
+../CPU/ane/,ane-none.prg,ok,exitcode,,,,-1,-1,PAL
+../CPU/ane/,ane-border.prg,ok,exitcode,,,,-1,-1,PAL
 ../CPU/asap/,cpu_ane.prg,ok,exitcode,,,,-1,-1,-1
 ../CPU/asap/,cpu_anx.prg,ok,exitcode,,,,-1,-1,-1
 ../CPU/asap/,cpu_decimal.prg,ok,exitcode,,,,-1,-1,-1
@@ -344,7 +342,7 @@
 ../CPU/cpujam/,cpujamf2.prg,timeout,exitcode,,,,-1,-1,-1
 ../CPU/cpujam/,nojam.prg,timeout,exitcode,,,,-1,-1,-1
 ../CPU/cpuport/,test1.prg,ok,exitcode,,,,-1,-1,-1
-../CPU/cpuport/,,error,exitcode,,,initvalue.crt,-1,-1,-1
+../CPU/cpuport/,,ok,exitcode,,,initvalue.crt,-1,-1,-1
 ../CPU/decimalmode/,scanner.prg,ok,exitcode,,,,-1,-1,-1
 ../CPU/decimalmode/,adc00.prg,ok,exitcode,,,,-1,-1,-1
 ../CPU/decimalmode/,adc01.prg,ok,exitcode,,,,-1,-1,-1
@@ -663,7 +661,7 @@
 ../VICII/videomode/,videomode2_ntsc.prg,error,screenshot,,,,-1,-1,NTSC
 ../VICII/videomode/,videomode1_ntsc.prg,error,screenshot,,,,-1,-1,NTSC
 ../VICII/spritebug/,spritebug-104.prg,ok,screenshot,,,,-1,-1,PAL
-../VICII/spritebug/,spritebug-105.prg,ok,screenshot,,,,-1,-1,PAL
+../VICII/spritebug/,spritebug-105.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/spritebug/,spritebug-106.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/spritecollisions/,sprite-gfx-collision-cycle.prg,error,exitcode,,,,-1,-1,PAL
 ../VICII/spritecollisions/,sprite-sprite-collision-cycle.prg,error,exitcode,,,,-1,-1,PAL
@@ -725,7 +723,7 @@
 ../SID/busvalue/,busvalue.prg,ok,exitcode,,,,-1,-1,-1
 ../SID/detect/,detect-1-old.prg,ok,exitcode,,,,-1,0,-1
 ../SID/detect/,detect-1-new.prg,ok,exitcode,,,,-1,1,-1
-../SID/detect/,detect-2-old.prg,error,exitcode,,,,-1,0,-1
+../SID/detect/,detect-2-old.prg,ok,exitcode,,,,-1,0,-1
 ../SID/detect/,detect-2-new.prg,ok,exitcode,,,,-1,1,-1
 ../SID/env_test/,env_test_ra_0000.prg,error,exitcode,,,,-1,-1,-1
 ../SID/env_test/,env_test_ra_0100.prg,error,exitcode,,,,-1,-1,-1
@@ -862,9 +860,9 @@
 ../SID/oscinit/,noiseinit.prg,error,exitcode,,,,-1,-1,-1
 ../SID/oscinit/,allinit.prg,error,exitcode,,,,-1,-1,-1
 ../SID/ringmod/,ringmodtest.prg,error,exitcode,,,,-1,-1,-1
-../SID/waveforms/,waveforms-10-6581.prg,error,exitcode,,,,-1,0,-1
-../SID/waveforms/,waveforms-20-6581.prg,error,exitcode,,,,-1,0,-1
-../SID/waveforms/,waveforms-40-6581.prg,ok,exitcode,,,,-1,0,-1
+../SID/waveforms/,waveforms-10-6581.prg,ok,exitcode,,,,-1,0,-1
+../SID/waveforms/,waveforms-20-6581.prg,ok,exitcode,,,,-1,0,-1
+../SID/waveforms/,waveforms-40-6581.prg,error,exitcode,,,,-1,0,-1
 ../SID/waveforms/,waveforms-80-6581.prg,error,exitcode,,,,-1,0,-1
 ../SID/waveforms/,waveforms-10-8580.prg,ok,exitcode,,,,-1,1,-1
 ../SID/waveforms/,waveforms-20-8580.prg,ok,exitcode,,,,-1,1,-1
@@ -946,4 +944,4 @@
 ../memory-expansions/,c64-georam-emd.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c64-reu-emd.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c64-ram-emd.prg,ok,exitcode,,,,-1,-1,-1
-# 339 minutes and 3 seconds elapsed.
+# 492 minutes and 21 seconds elapsed.
