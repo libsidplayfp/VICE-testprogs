@@ -517,7 +517,7 @@ tf2:
         inc $d020
         
         ; check if stable bits are the expected result
-        ldy #5
+        ldy #13
         lda lax_resultA
         eor lax_expected_resultA
         and lax_stable
@@ -540,6 +540,22 @@ tf2:
         lda #1
         sta failedtests
 + 
+        ; check if constant behaves as desired (works for blackmail-fli)
+        ; for blackmali-fli to work bits 0,1,2 must be 1s
+        ldy #13
+        ldx lax_constant
+        lda constbits,x
+        bne +
+        ldy #10
++
+        sty $d800+(24*40)+17
+        sty $d800+(24*40)+16
+
+        cpy #10
+        bne +
+        lda #1
+        sta failedtests
++        
         
         inc testframes
         lda testframes
@@ -674,3 +690,12 @@ timeout:
 
 testframes: !byte 0
 
+        !align 255, 0
+constbits:
+    !for n, 0, 255 {
+        !if ((n & 7) = 7) {
+            !byte 1
+        } else {
+            !byte 0
+        }
+    }

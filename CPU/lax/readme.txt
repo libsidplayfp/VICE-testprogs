@@ -50,10 +50,36 @@ effects.
 
 lax.prg and lax-border.prg are verified on my c64c (gpz)
 
+note that the magic constant is being checked against the desirable properties 
+outlined below in the code analysis from real world programs. 
+
+THIS MEANS THE TEST WILL ALSO FAIL ON SOME REAL C64s.
+
 the values after rA: and rX: in the bottom line should always be green (it will 
 be green when all stable bits match what we expect them to be)
 
+if the value after CON: is red, then the magic constant does not match the
+desirable properties - and the test will fail. this does not actually mean that
+ANE does not work as expected, but it means that it behaves in a way that will
+make some or all of the analysed real world programs not work correctly.
+
+For Emulation the best compromise between "proper emulation" and "making things
+work" seems to be to use a "magic contant" of $EF in regular cycles, and $EE in
+the RDY cycle.
+
+--------------------------------------------------------------------------------
+analysis of some real world programs
 --------------------------------------------------------------------------------
 
-WANTED: examples of real world usage of this opcode, especially when its used
-in a way that the instable bits matter (not the common LAX #0).
+Blackmail-FLI
+-------------
+
+20be  A6 6F       LDX $6F
+20c0  A9 38       LDA #$38       ; $08,$18...$78 are used here
+20c2  8D 18 D0    STA $D018
+20c5  8E 11 D0    STX $D011
+20c8  AB 00       LXA #$00       ; $0-$f is loaded as color
+20ca  8F 21 D0    SAX $D021
+
+for the displayer to work with all colors, bit 0,1,2 must be 1 -> constant 
+$ef will work
