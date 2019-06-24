@@ -6,36 +6,36 @@ CDUMMY=.dummyfile3
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
 # top left character on screen.
-U64SXO=53
-U64SYO=62
+U64SXO=32
+U64SYO=35
 
 function u64_check_environment
 {
-#    if ! [ -x "$(command -v chacocmd)" ]; then
-#        echo 'Error: chacocmd is not installed.' >&2
-#        exit 1
-#    fi
-#    if ! [ -x "$(command -v chshot)" ]; then
-#        echo 'Error: chshot is not installed.' >&2
-#        exit 1
-#    fi
     if ! [ -x "$(command -v ucodenet)" ]; then
         echo 'Error: ucodenet is not installed.' >&2
         exit 1
     fi
-#    if ! [ -x "$(command -v chmount)" ]; then
-#        echo 'Error: chmount is not installed.' >&2
-#        exit 1
-#    fi
+    if ! [ -x "$(command -v ugrab)" ]; then
+        echo 'Error: ugrab is not installed.' >&2
+        exit 1
+    fi
 
-    emu_default_videosubtype="8565early"
+# OLD cia
+# 6581 bus interface with 8580 alike sounds.
+# VIC 6567 and 6569, no gray dots.    
+    emu_default_videosubtype="6569"
 }
 
 function u64_clear_returncode
 {
     # clear the return code
     ucodenet --writedbg 42
+
 #    if [ "$?"<"0" ]; then exit -1; fi
+#    ucodenet --readdbg
+#    if [ "$?" != "0" ]; then exit -1; fi
+#    RET="$?"
+#    echo "clear:" "$RET"
 #    echo "u64_clear_returncode done"
 }
 
@@ -61,7 +61,7 @@ function u64_poll_returncode
 #        echo "poll:" "$RET"
         if [ $SECONDS -gt $SECONDSEND ]
         then
-            echo "timeout when waiting for return code"
+#            echo "timeout when waiting for return code"
             RET=255
             return $RET
         fi
@@ -160,8 +160,11 @@ function u64_get_options
                 if [ "${1:0:9}" == "mountd64:" ]; then
                     echo -ne "(disk:${1:9}) "
 #                    chmount -d64 "$2/${1:9}" > /dev/null
+                    echo "mount image"
                     ucodenet --mountimage "$2/${1:9}"
                     if [ "$?" != "0" ]; then exit -1; fi
+                    echo "mount image done"
+                    sleep 1
                     mounted_d64="${1:9}"
                 fi
                 if [ "${1:0:9}" == "mountg64:" ]; then
@@ -263,25 +266,33 @@ function u64_run_screenshot
 #    u64_poll_returncode 5
 #    exitcode=$?
 #    echo "exited with: " $exitcode
-    timeoutsecs=`expr \( $3 + 999999 \) / 1000000`
-    sleep $timeoutsecs
+#    timeoutsecs=`expr \( $3 + 999999 \) / 1000000`
+#    sleep $timeoutsecs
 
+    u64_poll_returncode $(($3 + 1))
+    exitcode=$?
+    
 #    if [ "${videotype}" == "NTSC" ]; then
 #        chshot --ntsc -o "$1"/.testbench/"$2"-u64.png
 #        if [ "$?" != "0" ]; then exit -1; fi
 #    else
-#        chshot -o "$1"/.testbench/"$2"-u64.png
-#        if [ "$?" != "0" ]; then exit -1; fi
+        ucodenet --vicstream-start
+        if [ "$?" != "0" ]; then exit -1; fi
+        ugrab "$1"/.testbench/"$2"-u64.png
+        if [ "$?" != "0" ]; then exit -1; fi
+        ucodenet --vicstream-stop
+        if [ "$?" != "0" ]; then exit -1; fi
 #    fi
 
 #    echo "exited with: " $exitcode
+
     if [ -f "$refscreenshotname" ]
     then
         # defaults for PAL
         U64REFSXO=32
         U64REFSYO=35
-        U64SXO=53
-        U64SYO=62
+        U64SXO=32
+        U64SYO=35
 
 #        echo [ "${refscreenshotvideotype}" "${videotype}" ]
 
@@ -293,8 +304,8 @@ function u64_run_screenshot
         # when either the testbench was run with --ntsc, or the test is ntsc-specific,
         # then we need the offsets on the NTSC screenshot
         if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
-            U64SXO=61
-            U64SYO=38
+            U64SXO=32
+            U64SYO=35
         fi
 
 #        echo ./cmpscreens "$refscreenshotname" "$U64REFSXO" "$U64REFSYO" "$1"/.testbench/"$screenshottest"-u64.png "$U64SXO" "$U64SYO"
@@ -353,10 +364,14 @@ function u64_run_exitcode
     else
         # overwrite the CBM80 signature with generic "cartridge off" program
 #        chacocmd --addr 0x00b00000 --writemem u64-crtoff.prg > /dev/null
+
+#        sleep 5
 #        if [ "$?" != "0" ]; then exit -1; fi
+#        echo "reset"
         # reset
         ucodenet --resetwait
         if [ "$?" != "0" ]; then exit -1; fi
+#        echo "reset done"
 
 #        u64_make_helper_options 0
  #       if [ "$?" != "0" ]; then exit -1; fi
