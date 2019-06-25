@@ -79,7 +79,7 @@ verified on:
 - C64C(new) with 8500 (gpz)
 --------------------------------------------------------------------------------
 
-shx-text.prg
+shx-test.prg
 
 another test by ninja/the dreams. combination of &H+1 drop-off and page-boundary
 crossing.
