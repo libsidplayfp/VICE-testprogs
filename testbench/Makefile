@@ -415,7 +415,7 @@ results0: maketable
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
-		--results results/u64-118-pal-result.txt "U64 1.18 (PAL)"
+		--results results/u64-121-pal-result.txt "U64 1.21 (PAL)"
 
 	./maketable --list vic20-testlist.in \
 		--results results/xvic-r35990-result.txt "xvic r35990" \
@@ -457,8 +457,7 @@ results: maketable
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
-		--results results/u64-118-pal-result.txt "U64 1.18 (PAL)" \
-		--results results/u64-118-ntsc-result.txt "U64 1.18 (NTSC)" \
+		--results results/u64-121-pal-result.txt "U64 1.21 (PAL)" \
 		\
 		> results/c64.html
 		
@@ -513,7 +512,7 @@ results: maketable
 		\
 		> results/cbm2.html
 		
-# use with something like "make resultchamwiki | xclip -selection clipboard"
+# use with something like "make resultswiki | xclip -selection clipboard"
 		
 resultswiki: maketable
 	@echo "== Results =="
@@ -529,7 +528,7 @@ resultswiki: maketable
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
-		--results results/u64-118-pal-result.txt "U64 1.18 (PAL)"
+		--results results/u64-121-pal-result.txt "U64 1.21 (PAL)"
 	@echo "=== VIC20 ==="
 	./maketable --wiki --list vic20-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
@@ -635,6 +634,7 @@ resultsu64: maketable u64-testlist.txt
 		--results results/u64-118-ntsc-result.txt "U64 PAL (1.18)" \
 		--results results/u64-118-pal-result.txt "U64 NTSC (1.18)" \
 		--results results/u64-118-result.txt "U64 (1.18)" \
+		--results results/u64-121-pal-result.txt "U64 PAL (1.21)" \
 		\
 		> results/u64.html
 		
