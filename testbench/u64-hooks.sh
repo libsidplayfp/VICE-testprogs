@@ -39,6 +39,10 @@ function u64_clear_returncode
 #    echo "u64_clear_returncode done"
 }
 
+# should return:
+# 0   - test passed
+# 1   - timeout
+# 255 - test failed
 function u64_poll_returncode
 {
     # poll return code
@@ -62,7 +66,7 @@ function u64_poll_returncode
         if [ $SECONDS -gt $SECONDSEND ]
         then
 #            echo "timeout when waiting for return code"
-            RET=255
+            RET=1
             return $RET
         fi
     done;
