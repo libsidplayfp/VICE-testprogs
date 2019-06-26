@@ -404,12 +404,12 @@ entry_0_2_9_b:
 
         ; 1: white
         ;
-        ; a1 xx     lda (zp,x)
+        ; a1 xx     lda (zp,x)  ; ((color << 1) + $59) - ((line & 7) | $b8)
         ; 8d 21 d0  sta $d021
 
         ; 3: cyan
         ;
-        ; a3 xx     lax (zp,x)
+        ; a3 xx     lax (zp,x)  ; ((color << 1) + $59) - ((line & 7) | $b8)
         ; 8f 21 d0  sax $d021
 entry_1_3:
         asl
@@ -532,14 +532,14 @@ loc_2aa3:
         
         ; 8: orange
         ;
-        ; --        tay
+        ; a8        tay
         ; a0 xx     ldy # <color>
         ; 8c 21 d0  sty $d021
         ; ea        nop
         
         ; a: l.red
         ;
-        ; --        tax
+        ; aa        tax
         ; a2 xx     ldx # <color>
         ; 8e 21 d0  stx $d021
         ; ea        nop
