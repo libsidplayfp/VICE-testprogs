@@ -406,9 +406,9 @@ testu64: prereq
 
 results0: maketable
 	./maketable --list c64-testlist.in \
-		--results results/x64-r35968-result.txt "x64 r35968" \
-		--results results/x64sc-r36351-result.txt "x64sc r36351" \
-		--results results/x128c64-r35968-result.txt "x128 (c64) r35968" \
+		--results results/x64-r36700-result.txt "x64 r36700" \
+		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--results results/x128c64-r36700-result.txt "x128 (c64) r36700" \
 		--results results/hoxs64-1-0-21-0-result.txt "hoxs64 1.0.21.0" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
@@ -418,39 +418,39 @@ results0: maketable
 		--results results/u64-121-pal-result.txt "U64 1.21 (PAL)"
 
 	./maketable --list vic20-testlist.in \
-		--results results/xvic-r35990-result.txt "xvic r35990" \
+		--results results/xvic-r36700-result.txt "xvic r36700" \
 		--results results/z64kvic20-1_2-result.txt "z64k (vic20) 1.2" \
 		--results results/cham20-20150818-result.txt "cham20 20150818"
 
 	./maketable --list c128-testlist.in \
-		--results results/x128-r36014-result.txt "x128 r36014" \
+		--results results/x128-r36700-result.txt "x128 r36700" \
 		--results results/z64kc128-1_2-result.txt "z64k (c128) 1.2"
 
 	./maketable --list plus4-testlist.in \
-		--results results/xplus4-r35990-result.txt "xplus4 r35990"
+		--results results/xplus4-r36700-result.txt "xplus4 r36700"
 
 	./maketable --list pet-testlist.in \
-		--results results/xpet-r35990-result.txt "xpet r35990"
+		--results results/xpet-r36700-result.txt "xpet r36700"
 
 	./maketable --list dtv-testlist.in \
-		--results results/x64dtv-r35990-result.txt "x64dtv r35990"
+		--results results/x64dtv-r36700-result.txt "x64dtv r36700"
 
 	./maketable --list scpu-testlist.in \
-		--results results/xscpu64-r35990-result.txt "xscpu64 r35990"
+		--results results/xscpu64-r36700-result.txt "xscpu64 r36700"
 		
 	./maketable --list cbm510-testlist.in \
-		--results results/xcbm5x0-r35990-result.txt "xcbm5x0 r35990"
+		--results results/xcbm5x0-r36700-result.txt "xcbm5x0 r36700"
 		
 	./maketable --list cbm610-testlist.in \
-		--results results/xcbm2-r35990-result.txt "xcbm2 r35990"
+		--results results/xcbm2-r36700-result.txt "xcbm2 r36700"
 		
 		
 results: maketable
 	./maketable --html --list c64-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64-r35968-result.txt "x64 r35968" \
-		--results results/x64sc-r36351-result.txt "x64sc r36351" \
-		--results results/x128c64-r35968-result.txt "x128 (c64) r35968" \
+		--results results/x64-r36700-result.txt "x64 r36700" \
+		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--results results/x128c64-r36700-result.txt "x128 (c64) r36700" \
 		--results results/hoxs64-1-0-21-0-result.txt "hoxs64 1.0.21.0" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
@@ -463,7 +463,7 @@ results: maketable
 		
 	./maketable --html --list vic20-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xvic-r35990-result.txt "xvic r35990" \
+		--results results/xvic-r36700-result.txt "xvic r36700" \
 		--results results/z64kvic20-1_2-result.txt "z64k (vic20) 1.2" \
 		--results results/cham20-20150818-result.txt "cham20 20150818" \
 		\
@@ -471,44 +471,44 @@ results: maketable
 		
 	./maketable --html --list c128-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x128-r36014-result.txt "x128 r36014" \
+		--results results/x128-r36700-result.txt "x128 r36700" \
 		--results results/z64kc128-1_2-result.txt "z64k (c128) 1.2" \
 		\
 		> results/c128.html
 
 	./maketable --html --list plus4-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xplus4-r35990-result.txt "xplus4 r35990" \
+		--results results/xplus4-r36700-result.txt "xplus4 r36700" \
 		\
 		> results/plus4.html
 
 	./maketable --html --list pet-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xpet-r35990-result.txt "xpet r35990" \
+		--results results/xpet-r36700-result.txt "xpet r36700" \
 		\
 		> results/pet.html
 
 	./maketable --html --list dtv-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64dtv-r35990-result.txt "x64dtv r35990" \
+		--results results/x64dtv-r36700-result.txt "x64dtv r36700" \
 		\
 		> results/dtv.html
 
 	./maketable --html --list scpu-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xscpu64-r35990-result.txt "xscpu64 r35990" \
+		--results results/xscpu64-r36700-result.txt "xscpu64 r36700" \
 		\
 		> results/scpu.html
 		
 	./maketable --html --list cbm510-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xcbm5x0-r35990-result.txt "xcbm5x0 r35990" \
+		--results results/xcbm5x0-r36700-result.txt "xcbm5x0 r36700" \
 		\
 		> results/cbm5x0.html
 		
 	./maketable --html --list cbm610-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xcbm2-r35990-result.txt "xcbm2 r35990" \
+		--results results/xcbm2-r36700-result.txt "xcbm2 r36700" \
 		\
 		> results/cbm2.html
 		
@@ -519,9 +519,9 @@ resultswiki: maketable
 	@echo "=== C64 ==="
 	./maketable --wiki --list c64-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
-		--results results/x64-r35968-result.txt "x64 r35968" \
-		--results results/x64sc-r36351-result.txt "x64sc r36351" \
-		--results results/x128c64-r35968-result.txt "x128 (c64) r35968" \
+		--results results/x64-r36700-result.txt "x64 r36700" \
+		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--results results/x128c64-r36700-result.txt "x128 (c64) r36700" \
 		--results results/hoxs64-1-0-21-0-result.txt "hoxs64 1.0.21.0" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
@@ -532,48 +532,52 @@ resultswiki: maketable
 	@echo "=== VIC20 ==="
 	./maketable --wiki --list vic20-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
-		--results results/xvic-r35990-result.txt "xvic r35990" \
+		--results results/xvic-r36700-result.txt "xvic r36700" \
 		--results results/z64kvic20-1_2-result.txt "z64k (vic20) 1.2" \
 		--results results/cham20-20150818-result.txt "cham20 20150818"
 	@echo "=== C128 ==="
 	./maketable --wiki --list c128-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
-		--results results/x128-r36014-result.txt "x128 r36014" \
+		--results results/x128-r36700-result.txt "x128 r36700" \
 		--results results/z64kc128-1_2-result.txt "z64k (c128) 1.2"
 	@echo "=== PLUS4 ==="
 	./maketable --wiki --list plus4-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
-		--results results/xplus4-r35990-result.txt "xplus4 r35990"
+		--results results/xplus4-r36700-result.txt "xplus4 r36700"
 	@echo "=== PET ==="
 	./maketable --wiki --list pet-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
-		--results results/xpet-r35990-result.txt "xpet r35990"
+		--results results/xpet-r36700-result.txt "xpet r36700"
 	@echo "=== DTV ==="
 	./maketable --wiki --list dtv-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
-		--results results/x64dtv-r35990-result.txt "x64dtv r35990"
+		--results results/x64dtv-r36700-result.txt "x64dtv r36700"
 	@echo "=== SCPU ==="
 	./maketable --wiki --list scpu-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
-		--results results/xscpu64-r35990-result.txt "xscpu64 r35990"
+		--results results/xscpu64-r36700-result.txt "xscpu64 r36700"
 	@echo "=== CBM5x0 ==="
 	./maketable --wiki --list cbm510-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
-		--results results/xcbm5x0-r35990-result.txt "xcbm5x0 r35990"
+		--results results/xcbm5x0-r36700-result.txt "xcbm5x0 r36700"
 	@echo "=== CBM2 ==="
 	./maketable --wiki --list cbm610-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
-		--results results/xcbm2-r35990-result.txt "xcbm2 r35990"
+		--results results/xcbm2-r36700-result.txt "xcbm2 r36700"
 	@echo "=== SID ==="
+
+################################################################################
 
 .PHONY: resultsx64
 resultsx64: maketable
 	./maketable --html --list c64-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64-r35968-result.txt "x64 r35968" \
+		--results results/x64-r36700-result.txt "x64 r36700" \
 		--results results/x64sc-r36320-pal-result.txt "x64sc r36320 PAL" \
 		--results results/x64sc-r36320-ntsc-result.txt "x64sc r36320 NTSC" \
 		--results results/x64sc-r36351-result.txt "x64sc r36351" \
+		--results results/x64sc-r36700-result.txt "x64sc r36700" \
 		\
 		> results/x64.html
 
@@ -581,7 +585,7 @@ resultsx64: maketable
 resultshoxs64: maketable hoxs64-testlist.txt
 	./maketable --html --list hoxs64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r36351-result.txt "x64sc r36351" \
+		--results results/x64sc-r36700-result.txt "x64sc r36700" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/hoxs64-1-0-16-0-result.txt "hoxs64 1.0.16.0" \
 		--results results/hoxs64-1-0-21-0-result.txt "hoxs64 1.0.21.0" \
@@ -594,7 +598,7 @@ resultshoxs64: maketable hoxs64-testlist.txt
 resultscham: maketable chameleon-testlist.txt 
 	./maketable --filter-ntscold --html --list chameleon-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r36351-result.txt "x64sc r36351" \
+		--results results/x64sc-r36700-result.txt "x64sc r36700" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--warnvicefail "<small><b>fails on VICE</b></small>" \
 		--warnvicfetch "<small><b>VIC may be wrong!</b></small>" \
@@ -612,7 +616,7 @@ resultschamwiki: maketable chameleon-testlist.txt
 	@echo "=== Results ==="
 	./maketable --filter-ntscold --wiki --list chameleon-testlist.txt \
 		--percentages "{{Progress|%d|%d|%d|}}" \
-		--results results/x64sc-r36351-result.txt "x64sc r36351" \
+		--results results/x64sc-r36700-result.txt "x64sc r36700" \
 		--firstcolisref "{{BREAKSEMU}}" \
 		--warnvicefail "{{BREAKSEMU}}" \
 		--warnvicfetch "{{BREAKSVIC}}" \
@@ -627,7 +631,7 @@ resultschamwiki: maketable chameleon-testlist.txt
 resultsu64: maketable u64-testlist.txt 
 	./maketable --filter-ntscold --html --list u64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r36351-result.txt "x64sc r36351" \
+		--results results/x64sc-r36700-result.txt "x64sc r36700" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--warnvicefail "<small><b>fails on VICE</b></small>" \
 		--results results/u64-10c-result.txt "U64 (1.0c)" \
@@ -637,4 +641,8 @@ resultsu64: maketable u64-testlist.txt
 		--results results/u64-121-pal-result.txt "U64 PAL (1.21)" \
 		\
 		> results/u64.html
+		
+################################################################################
+.PHONY: allresults
+allresults: resultsx64 resultshoxs64 resultscham resultsu64
 		
