@@ -1,3 +1,5 @@
+https://www.linusakesson.net/scene/safevsp/index.php
+
 the dreaded vsp crash is caused by a metastability condition in the dram. some 
 have speculated that it has to do with refresh cycles, but hopefully the 
 detailed explanation in this scroller will crush that myth once and for all. 
@@ -68,3 +70,47 @@ on the motherboard, power supply ripple and interference with other parts of the
 machine such as the phase of the colour carrier with respect to the dotclock. 
 the latter is assigned randomly at power-on, by the way, which could be the 
 reason why a power-cycle sometimes helps. this is lft signing off. 
+
+--------------------------------------------------------------------------------
+
+Please could you explain why you can say this:
+"the phase of the colour carrier with respect to the dotclock. The latter is 
+assigned randomly at power-on". I believe the MOS-8701 works with fixed delays 
+to generate the dot clock, so it should come up with always the same phase with 
+respect to the color clock.
+
+Hi!
+
+The MOS-8701 produces a 7.88 MHz dotclock and a 4.43 MHz colour carrier from the 
+same internal signal. Their ratio is exactly 16:9, which means that 16 hi-res 
+pixels on the screen correspond to nine complete cycles of the colour signal.
+
+It follows that for each hi-res pixel, the phase of the colour carrier is 
+advanced by 9/16 revolutions, which is 202.5 degrees. If it starts at 0 degrees, 
+then after 8 hi-res pixels it will be at 180 degrees. Hence the familiar 
+red/green vertical banding that repeats after 16 pixels; red and green are 180 
+degrees apart in YUV.
+
+Now, at which pixel is the colour carrier at 0 degrees?
+
+This depends on the timing relationship between the 8701 and the VIC chip. The 
+8701 has a reset pin, but it doesn't seem to be connected in the C64. The VIC 
+doesn't even have a reset pin.
+
+So, during power-on, there will be a brief period before the 8701 is outputting 
+a stable signal, and during this period the VIC state machine may or may not 
+respond properly. Meanwhile, the internal clock-divide counters of the 8701 
+might not even start from zero.
+
+That is where the random assignment happens.
+
+--------------------------------------------------------------------------------
+
+Can any byte in ram matching the $0007 pattern be changed?
+I guess what is banked out would not suffer?
+
+Yes, and often several bytes at the same time.
+
+Banking doesn't affect anything, I'm afraid, because the Row Select procedure 
+(LSB) is carried out regardless of what the MSB will be. The corruption happens 
+inside the RAM chips themselves.
