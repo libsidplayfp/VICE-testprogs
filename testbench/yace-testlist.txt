@@ -745,6 +745,7 @@
 ../VICII/videomode/,videomode1_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: check on NTSCOLD (better captures needed)
 ../VICII/vspbug/,lft-safe-vsp.prg,interactive,0,vicii-pal
+../VICII/vspbug/,vsp_bug.prg,exitcode,13000000
 ################################################################################
 # Sprites
 # ../VICII/sprite runtime: 5min 12sec (chameleon)
