@@ -1,0 +1,238 @@
+; noisetest.a65 - Verify the effect of the test bit on the noise shift register
+;
+; Dag Lem <resid@nimrod.no>
+;
+.word $0801
+
+zINDEX  = $22
+kCHROUT = $FFD2
+
+    * = $0801
+    .byte $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
+    jmp start
+        
+    .dsb $1000 - *, 0
+
+*=$1000
+start
+
+; Initialize SID to known state
+	lda #$00
+	ldx #$18
+clear	sta $d400,x
+	dex
+	bpl clear
+
+; Initialize noise register - wait $8000 cycles for register to settle.
+	lda #$88
+	sta $d412
+	ldx #$00
+	ldy #$80
+	jsr sleep
+
+; Initialize emulation register to identical state.
+	lda #$ff
+	sta sreg
+	sta sreg+1
+	lda #$7f
+	sta sreg+2
+
+; Shift noise register and check for difference between hardware and emulation.
+; Run $0100 shifts.
+	lda #$00
+	sta loopc
+	sta loopc+1
+sloop
+	lda $d41b
+	; Set test bit
+	ldx #$88
+	stx $d412
+	cmp $d41b
+	; OSC3 should be unchanged (no shift when test bit is set).
+	bne fail
+	; Clear test bit
+	ldx #$80
+	stx $d412
+
+	jsr shift
+
+; Print hardware OSC3 together with emulated value
+	lda $d41b
+	jsr byteout
+	lda #$20
+	jsr kCHROUT
+	lda osc3
+	jsr byteout
+	lda #$20
+	jsr kCHROUT
+; Print emulated shift register value
+	lda sreg+2
+	jsr byteout
+	lda sreg+1
+	jsr byteout
+	lda sreg
+	jsr byteout
+	lda #13
+	jsr kCHROUT
+
+	lda $d41b
+	cmp osc3
+	bne fail
+
+	inc loopc
+	bne sloop
+	inc loopc+1
+	lda loopc+1
+	cmp #$01
+	bne sloop
+
+	ldx #<text_ok
+	ldy #>text_ok
+	jsr print
+	rts
+
+fail	ldx #<text_f
+	ldy #>text_f
+	jsr print
+	rts
+
+; Shift register
+shift
+	; Extract bit 17
+	lda sreg+2
+	lsr
+	sta bit17
+	; Extract bit 22
+	lsr
+	lsr
+	lsr
+	lsr
+	lsr
+	sta bit22
+
+	; Test bit set: bit0 = !bit17
+	ora #$01
+        eor bit17
+	lsr
+
+	; Test bit clear: Shift register
+	rol sreg
+	rol sreg+1
+	rol sreg+2
+	lda sreg+2
+	and #$7f
+	sta sreg+2
+
+	; Compute OSC3 output.
+	lda #$00
+	sta osc3
+
+	lda sreg
+	and #$01; $01
+	ora osc3
+	sta osc3
+	lda sreg
+	and #$04
+	lsr	; $02
+	ora osc3
+	sta osc3
+	lda sreg
+	and #$20
+	lsr
+	lsr
+	lsr	; $04
+	ora osc3
+	sta osc3
+
+	lda sreg+1
+	and #$02
+	asl
+	asl	; $08
+	ora osc3
+	sta osc3
+	lda sreg+1
+	and #$08
+	asl	; $10
+	ora osc3
+	sta osc3
+	lda sreg+1
+	and #$40
+	lsr	; $20
+	ora osc3
+	sta osc3
+
+	lda sreg+2
+	and #$04
+	asl
+	asl
+	asl
+	asl	; $40
+	ora osc3
+	sta osc3
+	lda sreg+2
+	and #$10
+	asl
+	asl
+	asl	; $80
+	ora osc3
+	sta osc3
+
+	rts
+
+; Sleep using CIA TIMER B.
+sleep	lda #$08
+	sta $dc0f
+	stx $dc06
+	sty $dc07
+	lda #$09
+	sta $dc0f
+chi	lda $dc07
+	bne chi
+clo	lda $dc06
+	bne clo
+	rts
+
+byteout	pha
+	lsr
+	lsr
+	lsr
+	lsr
+	jsr nybout
+	pla
+	and #$0f
+	jsr nybout
+	rts
+
+nybout  CMP #10
+        BCC digit
+        CLC
+        ADC #$07
+digit   ADC #$30
+        JSR kCHROUT
+        RTS
+
+print   STX zINDEX
+        STY zINDEX+1
+        LDY #$00
+nxtchr  LDA (zINDEX),Y
+        BEQ nul
+        JSR kCHROUT
+        INY
+        JMP nxtchr
+nul     RTS
+
+sreg	.byte $ff, $ff, $ff
+osc3	.byte 0
+
+bit0	.byte 0
+bit17	.byte 0
+bit22	.byte 0
+
+loopc	.word 0
+
+text_ok .byte 13
+        .asc "NOISE REGISTER EMULATION VERIFIED"
+        .byte 13, 13, 0
+text_f  .byte 13
+        .asc "NOISE REGISTER EMULATION ERROR"
+        .byte 13, 13, 0

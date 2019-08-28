@@ -1,0 +1,195 @@
+ .word $0801
+
+; *** Symbol table  follows ***
+ zINDEX        = $22
+ vControl      = $D011
+ vSprEnable    = $D015
+ sVoc3Control  = $D412
+ sVoc3AttDec   = $D413
+ sVoc3SusRel   = $D414
+ sVoc3Env      = $D41C
+ c1TimerALo    = $DC04
+ c1TimerAHi    = $DC05
+ c1TimerBLo    = $DC06
+ c1TimerBHi    = $DC07
+ c1ControlA    = $DC0E
+ c1ControlB    = $DC0F
+ kCHROUT       = $FFD2
+
+; *** text follows ***
+
+    * = $0801
+    .byte $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
+    jmp start
+        
+    .dsb $1000 - *, 0
+
+ *=$1000
+start
+
+	JSR disable
+
+	LDX #<text
+	LDY #>text
+	JSR print
+
+	LDY #$00
+nxtenv	TYA
+	ASL
+	ASL
+	ASL
+	ASL
+	STA sVoc3AttDec
+	LDA #$00
+	STA sVoc3SusRel
+	LDA #$00
+	STA c1ControlA
+	STA c1ControlB
+	LDA #$FF
+	STA c1TimerALo
+	STA c1TimerAHi
+	STA c1TimerBLo
+	STA c1TimerBHi
+	LDA #$41
+	STA c1ControlB
+
+	; Release to zero
+	LDA #$00
+	STA sVoc3Control
+
+	LDA #$00
+zero	CMP sVoc3Env
+	BNE zero
+
+	; Start attack
+	LDA #$01
+	STA sVoc3Control
+
+	; Wait for env = $01
+env01	CMP sVoc3Env
+	BNE env01
+
+	; Start timer
+	LDA #$01
+	STA c1ControlA
+
+	; Wait for env = $ff
+	LDA #$81
+envff	CMP sVoc3Env
+	BNE envff
+
+	; Stop timer
+	LDA #$00
+	STA c1ControlA
+
+	; Calculate cycles spent
+	SEC
+	LDA #$FF
+	SBC c1TimerALo
+	STA timer
+	LDA #$FF
+	SBC c1TimerAHi
+	STA timer+1
+	LDA #$FF
+	SBC c1TimerBLo
+	STA timer+2
+	LDA #$FF
+	SBC c1TimerBHi
+	STA timer+3
+
+	; Divide by $80 by first multiplying by two and then dropping
+	; the low byte.
+	CLC
+	ROL timer
+	ROL timer+1
+	ROL timer+2
+	ROL timer+3
+	; The MSB is always zero, so we don't bother storing it.
+
+	; Perform round.
+	BIT timer
+	BPL down
+up	SEC
+	LDA #$00
+	ADC timer+1
+	STA timer+1
+	LDA #$00
+	ADC timer+2
+	STA timer+2
+	LDA #$00
+	ADC timer+3
+	STA timer+3
+down
+
+	; Print timer in hex
+	LDX #$01
+nxtdig	LDA timer+1,X
+	PHA
+	LSR
+	LSR
+	LSR
+	LSR
+	JSR hexout
+	PLA
+	AND #$0F
+	JSR hexout
+	DEX
+	BPL nxtdig
+	LDA #13
+	JSR kCHROUT
+	INY
+	CPY #$10
+	BEQ done
+	JMP nxtenv
+
+	; Reset timer
+done	LDX #$25
+	LDY #$40
+	STX c1TimerALo
+	STY c1TimerAHi
+	LDA #$01
+	STA c1ControlA
+	JSR enable
+	RTS
+
+disable	SEI
+	LDA #$00
+	STA vSprEnable
+	LDA vControl
+	AND #$EF
+	STA vControl
+vblank	; Wait for vblank (raster = 0)
+raslo	BIT vControl
+	BPL raslo
+rashi	BIT vControl
+	BMI rashi
+	RTS
+
+enable	LDA vControl
+	ORA #$10
+	STA vControl
+	CLI
+	RTS
+
+hexout	CMP #10
+	BCC digit
+	CLC
+	ADC #$07
+digit	ADC #$30
+	JSR kCHROUT
+	RTS
+
+print	STX zINDEX
+	STY zINDEX+1
+	LDY #$00
+nxtchr	LDA (zINDEX),Y
+	BEQ nul
+	JSR kCHROUT
+	INY
+	JMP nxtchr
+nul	RTS
+
+text	.byte 13
+	.asc "RATE COUNTER PERIODS IN CYCLES:"
+	.byte 13, 13, 0
+timer	.byte 0, 0, 0, 0

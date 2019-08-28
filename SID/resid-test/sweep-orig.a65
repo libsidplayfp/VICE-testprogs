@@ -1,0 +1,196 @@
+	.word $0801
+
+; *** Symbol table  follows ***
+
+ zFREKZP       = $FB
+ vControl      = $D011
+ vBorderCol    = $D020
+ vSprEnable    = $D015
+ sStart        = $D400
+
+ sVoc1         = sStart + 0*7
+ sVoc2         = sStart + 1*7
+ sVoc3         = sStart + 2*7
+
+ sVoc1FreqLo   = sVoc1 + 0
+ sVoc1FreqHi   = sVoc1 + 1
+ sVoc1PwLo     = sVoc1 + 2
+ sVoc1PwHi     = sVoc1 + 3
+ sVoc1Control  = sVoc1 + 4
+ sVoc1AttDec   = sVoc1 + 5
+ sVoc1SusRel   = sVoc1 + 6
+
+ sVoc2FreqLo   = sVoc2 + 0
+ sVoc2FreqHi   = sVoc2 + 1
+ sVoc2PwLo     = sVoc2 + 2
+ sVoc2PwHi     = sVoc2 + 3
+ sVoc2Control  = sVoc2 + 4
+ sVoc2AttDec   = sVoc2 + 5
+ sVoc2SusRel   = sVoc2 + 6
+
+ sVoc3FreqLo   = sVoc3 + 0
+ sVoc3FreqHi   = sVoc3 + 1
+ sVoc3PwLo     = sVoc3 + 2
+ sVoc3PwHi     = sVoc3 + 3
+ sVoc3Control  = sVoc3 + 4
+ sVoc3AttDec   = sVoc3 + 5
+ sVoc3SusRel   = sVoc3 + 6
+
+ sFcLo         = $D415
+ sFcHi         = $D416
+ sResFilt      = $D417
+ sVolume       = $D418
+ sVoc3Env      = $D41C
+
+; *** text follows ***
+
+    * = $0801
+    .byte $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
+    jmp start
+        
+    .dsb $1000 - *, 0
+
+	* = $1000
+start
+
+	; Turn off interrupts
+	sei
+	; Standard memory map
+	lda #$e7
+	sta $01
+	; Disable sprites
+	lda #$00
+	sta vSprEnable
+	; Blank screen
+	lda vControl
+	and #$ef
+	sta vControl
+	; Light blue
+redo	lda #$0e
+	sta vBorderCol
+
+	; Clear SID
+	ldx #$18
+	lda #$00
+clear	sta sStart,x
+	dex
+	bpl clear
+
+	; Set test bit to reset oscillator, clear gate bit
+	lda #$08
+	sta sVoc3Control
+	; Output high-pass
+	lda #$4f
+	sta sVolume
+
+	; Wait for key 1 - 4
+getkey	jsr keyscan
+	sec
+	sbc #$31
+	bcc getkey
+	cmp #8
+	bcs getkey
+
+	tax
+	; Set sustain level
+	lda susrel,x
+	sta sVoc3SusRel
+	; Set filter cutoff frequency
+	lda fchi,x
+	sta sFcHi
+	; Set resonance and filter input
+	lda resfilt,x
+	; Route ext in to filter in order to measure high-pass op-amp input
+	ora #$08
+	; Voice 3
+	ora #$04
+	sta sResFilt
+
+	; Keep test bit on, set gate bit to start envelope
+	lda #$09
+	sta sVoc3Control
+
+	; Wait a complete envelope to ensure that sustain state is reached
+	; A complete envelope is 32352 cycles, we wait ca. 33 * 1000 cycles.
+	ldy #33
+delayy	ldx #199
+delayx	dex
+	bne delayx
+	dey
+	bne delayy
+
+	; Black
+	lda #$00
+	sta vBorderCol
+
+	; Wait for return key
+getcr	jsr keyscan
+	cmp #$0d
+	bne getcr
+
+	; Start triangle waveform
+	lda #$11
+	sta sVoc3Control
+	lda #$00
+	sta zFREKZP
+	lda #$00
+	sta zFREKZP+1
+sweep	lda zFREKZP
+	clc
+	adc #$01
+	sta zFREKZP
+	lda zFREKZP+1
+	adc #$00
+	bcs done
+	sta zFREKZP+1
+	lda zFREKZP
+	sta sVoc3FreqLo
+	lda zFREKZP+1
+	sta sVoc3FreqHi
+	clc
+	bcc sweep
+done	jmp redo
+
+	lda #$00
+	sta sVolume
+	lda #$0e
+	sta vBorderCol
+	lda vControl
+	ora #$10
+	sta vControl
+	lda #$e7
+	sta $01
+	cli
+	rts
+
+	; Scan keyboard matrix
+keyscan	lda #$ff
+	sta $dc02
+	lda #$00
+	sta $dc03
+matrix	ldy #$00
+	lda #$01
+row	pha
+	eor #$ff
+	sta $dc00
+wait	lda $dc01
+	cmp $dc01
+	bne wait
+	eor #$ff
+	ldx #$08
+col	lsr
+	bcs key
+	iny
+	dex
+	bne col
+	pla
+	asl
+	bcc row
+	bcs matrix
+key	pla
+	lda $eb81,y
+	rts
+
+susrel	.byte $40, $40, $f0, $f0, $40, $40, $f0, $f0
+fchi	.byte $40, $40, $40, $40, $80, $80, $80, $80 
+resfilt	.byte $00, $f0, $00, $f0, $00, $f0, $00, $f0

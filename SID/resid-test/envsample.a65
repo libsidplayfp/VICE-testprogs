@@ -1,0 +1,358 @@
+ .word $0801
+
+; *** Symbol table  follows ***
+
+ sstart     = $7000
+ sstop      = $D000
+
+ zINDEX        = $22
+ zFREKZP       = $FB
+ vControl      = $D011
+ vSprEnable    = $D015
+ sVoc3Control  = $D412
+ sVoc3AttDec   = $D413
+ sVoc3SusRel   = $D414
+ sVoc3Env      = $D41C
+ kCHROUT       = $FFD2
+ kSETLFS       = $FFBA
+ kSETNAM       = $FFBD
+ kSAVE         = $FFD8
+
+; *** text follows ***
+
+    * = $0801
+    .byte $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
+    jmp start
+        
+    .dsb $1000 - *, 0
+
+ *=$1000
+start
+
+	; Sample with release values from $0 to $3.
+	LDX #$00
+nxtfile	TXA
+	STA atkdec
+	PHA	
+
+	; Generate and run sampling code
+	JSR disable
+	JSR genrun
+	JSR enable
+
+	; Set up logical file
+	LDA #$01
+	LDX #$08
+	LDY #$00
+	JSR kSETLFS
+
+	; Get index and multiply with number of chars in file name (8)
+	PLA
+	PHA
+	ASL
+	ASL
+	ASL
+
+	; Set up file name
+	CLC
+	ADC #<files
+	TAX
+	LDA #$00
+	ADC #>files
+	TAY
+	LDA #$08
+	JSR kSETNAM
+
+	; Map out BASIC ROM.
+	LDA #$36
+	STA $01
+
+	; Save sample data sstart-sstop
+	LDA #<sstart
+	STA zINDEX
+	LDA #>sstart
+	STA zINDEX+1
+	LDX #<sstop
+	LDY #>sstop
+	LDA #zINDEX
+	JSR kSAVE
+
+	; Map in BASIC ROM.
+	LDA #$37
+	STA $01
+
+	PLA
+	TAX
+	INX
+	CPX #$04
+	BNE nxtfile
+
+	RTS
+
+; File names
+files	.asc "DEC0.DAT"
+	.asc "DEC1.DAT"
+	.asc "DEC2.DAT"
+	.asc "DEC3.DAT"
+
+atkdec	.byte $00
+
+; Generate and run sampling code.
+genrun	LDA #<scode
+	STA zINDEX
+	LDA #>scode
+	STA zINDEX+1
+
+	; X holds code offset, Y holds sample offset
+	LDX #$00
+	LDY #$00
+	JSR gencode
+
+	; no delay
+	JSR sample
+
+	LDX #$00
+	LDY #$01
+	JSR gencode
+
+	; lda $d3f0,x (one cycle delay)
+	LDY #$00
+	LDA #$BD
+	STA (zINDEX),Y
+	INY	
+	LDA #$F0
+	STA (zINDEX),Y
+	INY	
+	LDA #$D3
+	STA (zINDEX),Y
+	; Offset for lda,x
+	LDX #$2C
+	JSR sample
+
+	LDX #$01
+	LDY #$02
+	JSR gencode
+
+	; nop (two cycle delay)
+	LDY #$00
+	LDA #$EA
+	STA (zINDEX),Y
+	JSR sample
+
+	LDX #$02
+	LDY #$03
+	JSR gencode
+
+	; bit $ff (three cycle delay)
+	LDY #$00
+	LDA #$24
+	STA (zINDEX),Y
+	INY	
+	LDA #$FF
+	STA (zINDEX),Y
+	JSR sample
+
+	LDX #$02
+	LDY #$04
+	JSR gencode
+
+	; nop nop (four cycle delay)
+	LDY #$00
+	LDA #$EA
+	STA (zINDEX),Y
+	INY	
+	LDA #$EA
+	STA (zINDEX),Y
+	JSR sample
+
+	LDX #$02
+	LDY #$05
+	JSR gencode
+
+	; asl $ff (five cycle delay)
+	LDY #$00
+	LDA #$06
+	STA (zINDEX),Y
+	INY	
+	LDA #$FF
+	STA (zINDEX),Y
+	JSR sample
+
+	LDX #$02
+	LDY #$06
+	JSR gencode
+
+	; asl $ff,x (six cycle delay)
+	LDY #$00
+	LDA #$16
+	STA (zINDEX),Y
+	INY	
+	LDA #$FF
+	STA (zINDEX),Y
+	; Offset for asl,x
+	LDX #$00
+	JSR sample
+
+	LDX #$03
+	LDY #$07
+	JSR gencode
+
+	; asl $00ff,x (seven cycle delay)
+	LDY #$00
+	LDA #$1E
+	STA (zINDEX),Y
+	INY	
+	LDA #$FF
+	STA (zINDEX),Y
+	INY	
+	LDA #$00
+	STA (zINDEX),Y
+	; Offset for asl,x
+	LDX #$00
+	JSR sample
+
+	RTS	
+
+; Generate code on the form
+; LDA $D41C
+; STA $8000
+; LDA $D41C
+; STA $8008
+; ...
+gencode	TXA	
+	CLC	
+	ADC zINDEX
+	STA zFREKZP
+	LDA #$00
+	ADC zINDEX+1
+	STA zFREKZP+1
+	TYA	
+	CLC
+	ADC #<sstart
+	STA zFREKZP+2
+	LDA #$00
+	ADC #>sstart
+	STA zFREKZP+3
+nxtinst	LDY #$00
+
+	; lda $d41c
+	LDA #$AD
+	STA (zFREKZP),Y
+	INY	
+	LDA #$1C
+	STA (zFREKZP),Y
+	INY	
+	LDA #$D4
+	STA (zFREKZP),Y
+	INY	
+
+	; sta $xxxx
+	LDA #$8D
+	STA (zFREKZP),Y
+	INY	
+	LDA zFREKZP+2
+	STA (zFREKZP),Y
+	INY	
+	LDA zFREKZP+3
+	STA (zFREKZP),Y
+
+	INY	
+	TYA	
+	CLC	
+	ADC zFREKZP
+	STA zFREKZP
+	LDA #$00
+	ADC zFREKZP+1
+	STA zFREKZP+1
+	LDA #$08
+	CLC	
+	ADC zFREKZP+2
+	STA zFREKZP+2
+	LDA #$00
+	ADC zFREKZP+3
+	STA zFREKZP+3
+	SEC
+	LDA zFREKZP+2
+	SBC #<sstop
+	LDA zFREKZP+3
+	SBC #>sstop
+	BCC nxtinst
+	LDY #$00
+
+	; rts
+	LDA #$60
+	STA (zFREKZP),Y
+	RTS	
+
+disable	SEI
+	LDA #$00
+	STA vSprEnable
+	LDA vControl
+	AND #$EF
+	STA vControl
+vblank	; Wait for vblank (raster = 0)
+raslo	BIT vControl
+	BPL raslo
+rashi	BIT vControl
+	BMI rashi
+	RTS	
+
+enable	LDA vControl
+	ORA #$10
+	STA vControl
+	CLI	
+	RTS	
+
+sample
+	; attack = 0 (rate period = 9 cycles)
+	LDA atkdec
+	STA sVoc3AttDec
+	; Release to zero
+	LDA #$00
+	STA sVoc3SusRel
+	STA sVoc3Control
+
+	; Release to zero.
+	LDA #$00
+env00	CMP sVoc3Env
+	BNE env00
+
+	LDA #$01
+	STA sVoc3Control
+
+	; Wait for env = $01
+env01	CMP sVoc3Env
+	BNE env01
+
+	; If the envelope counter is the same for 9 cycles
+	; we have hit the first and the last cycle of the 9 cycle period.
+	; I.e. wait 8 cycles before next read (NOP*2 (4) + CPX (4)),
+align_r	NOP
+	LDY sVoc3Env
+	NOP
+	NOP
+	CPY sVoc3Env
+	; Unless hit, wait 9 + 8 = 17 cycles for next period and try again.
+	; (NOP (2) + LDY (4) + NOP*2 (4) + CPY (4) + BNE (3))
+	; We will get a hit within 9 iterations.
+	BNE align_r	; NB! Must branch to same page.
+
+	; We're synchronized with the rate counter,
+	; now synchronize with the envelope counter.
+	
+	; Loop must be 9 cycles (NOP (2) + INY (2) + CPY (2) + BNE (3))
+align_e	NOP
+	INY
+	CPY #$FF-2	; Requested envelope counter start value - 2.
+	BNE align_e	; NB! Must branch to same page.
+	; We're now fully synchronized with ENV3, but which value does
+	; the rate counter have?
+	; At the point of the rate sync we were at the last cycle of
+	; the period. We're now offset by the following instructions:
+	; BNE (2) - BNE (1) = 1 cycles, i.e. we're at the first cycle.
+	; To take our first ENV3 sample on the first cycle of the next period
+	; we must wait 9 cycles. An ASL (5) before the LDA (4) does
+	; the job.
+	ASL zFREKZP
+
+scode	.byte $00

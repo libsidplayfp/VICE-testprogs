@@ -1,0 +1,16 @@
+	; Print value.
+hexout	PHA
+	LSR
+	LSR
+	LSR
+	LSR
+	JSR nibout
+	PLA
+	AND #$0F
+nibout	CMP #10
+	BCC digit
+	CLC
+	ADC #$07
+digit	ADC #$30
+	JSR kCHROUT
+	RTS
