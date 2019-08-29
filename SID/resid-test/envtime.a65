@@ -26,162 +26,208 @@
 
  *=$1000
 start
+    ldx #0
+    stx fails+1
+    stx $d020 
+    stx $d021
+    inx
+    stx $0286
 
-	JSR disable
+    JSR disable
 
-	LDX #<text
-	LDY #>text
-	JSR print
+    LDX #<text
+    LDY #>text
+    JSR print
 
-	; attack = decay = release = 1 (rate period = 32 cycles)
-	LDA #$11
-	STA sVoc3AttDec
-	LDA #$01
-	STA sVoc3SusRel
+    ; attack = decay = release = 1 (rate period = 32 cycles)
+    LDA #$11
+    STA sVoc3AttDec
+    LDA #$01
+    STA sVoc3SusRel
 
-	; Release to zero.
-	LDA #$00
-	STA sVoc3Control
-	LDA #$00
-zero	CMP sVoc3Env
-	BNE zero
-	
-	LDA #$00
-	STA c1ControlA
-	STA c1ControlB
-	LDA #$FF
-	STA c1TimerALo
-	STA c1TimerAHi
-	STA c1TimerBLo
-	STA c1TimerBHi
-	LDA #$41
-	STA c1ControlB
+    ; Release to zero.
+    LDA #$00
+    STA sVoc3Control
+    LDA #$00
+zero    
+    CMP sVoc3Env
+    BNE zero
+    
+    LDA #$00
+    STA c1ControlA
+    STA c1ControlB
+    LDA #$FF
+    STA c1TimerALo
+    STA c1TimerAHi
+    STA c1TimerBLo
+    STA c1TimerBHi
+    LDA #$41
+    STA c1ControlB
 
-	; Start timer
-	LDA #$01
-	STA c1ControlA
-	LDX #$00
+    ; Start timer
+    LDA #$01
+    STA c1ControlA
+    LDX #$00
 
-	; Start attack
-fullenv	LDA #$01
-	STA sVoc3Control
+    ; Start attack
+fullenv    
+    LDA #$01
+    STA sVoc3Control
 
-	; Wait for env = $ff
-	LDA #$FF
-envff	CMP sVoc3Env
-	BNE envff
+    ; Wait for env = $ff
+    LDA #$FF
+envff    
+    CMP sVoc3Env
+    BNE envff
 
-	; Wait for env = $00
-	LDA #$00
-env00	CMP sVoc3Env
-	BNE env00
+    ; Wait for env = $00
+    LDA #$00
+env00    
+    CMP sVoc3Env
+    BNE env00
 
-	; Release
-	LDA #$00
-	STA sVoc3Control
+    ; Release
+    LDA #$00
+    STA sVoc3Control
 
-	DEX	
-	BNE fullenv
+    DEX    
+    BNE fullenv
 
-	; Stop timer
-	LDA #$00
-	STA c1ControlA
+    ; Stop timer
+    LDA #$00
+    STA c1ControlA
 
-	; Calculate cycles spent
-	SEC
-	LDA #$FF
-	SBC c1TimerALo
-	STA timer
-	LDA #$FF
-	SBC c1TimerAHi
-	STA timer+1
-	LDA #$FF
-	SBC c1TimerBLo
-	STA timer+2
-	LDA #$FF
-	SBC c1TimerBHi
-	STA timer+3
+    ; Calculate cycles spent
+    SEC
+    LDA #$FF
+    SBC c1TimerALo
+    STA timer
+    LDA #$FF
+    SBC c1TimerAHi
+    STA timer+1
+    LDA #$FF
+    SBC c1TimerBLo
+    STA timer+2
+    LDA #$FF
+    SBC c1TimerBHi
+    STA timer+3
 
-	; Divide by 256 by dropping the low byte.
-	; First perform round.
-	BIT timer
-	BPL down
-up	SEC
-	LDA #$00
-	ADC timer+1
-	STA timer+1
-	LDA #$00
-	ADC timer+2
-	STA timer+2
-	LDA #$00
-	ADC timer+3
-	STA timer+3
+    ; Divide by 256 by dropping the low byte.
+    ; First perform round.
+    BIT timer
+    BPL down
+up    
+    SEC
+    LDA #$00
+    ADC timer+1
+    STA timer+1
+    LDA #$00
+    ADC timer+2
+    STA timer+2
+    LDA #$00
+    ADC timer+3
+    STA timer+3
 down
-	; Print timer in hex
-	LDX #$01
-nxtdig	LDA timer+1,X
-	PHA
-	LSR
-	LSR
-	LSR
-	LSR
-	JSR hexout
-	PLA
-	AND #$0F
-	JSR hexout
-	DEX
-	BPL nxtdig
-	LDA #13
-	JSR kCHROUT
 
-	; Reset timer
-	LDX #$25
-	LDY #$40
-	STX c1TimerALo
-	STY c1TimerAHi
-	LDA #$01
-	STA c1ControlA
-	JSR enable
-	RTS
+    ldx #13    ; l.green
+    lda #<$7e60
+    cmp timer+1
+    lda #>$7e60
+    sbc timer+2
+    beq pass
+    ldx #10    ; l.red
+    inc fails+1
+pass
+    stx $0286
 
-disable	SEI
-	LDA #$00
-	STA vSprEnable
-	LDA vControl
-	AND #$EF
-	STA vControl
-vblank	; Wait for vblank (raster = 0)
-raslo	BIT vControl
-	BPL raslo
-rashi	BIT vControl
-	BMI rashi
-	RTS
+    ; Print timer in hex
+    LDX #$01
+nxtdig    
+    LDA timer+1,X
+    PHA
+    LSR
+    LSR
+    LSR
+    LSR
+    JSR hexout
+    PLA
+    AND #$0F
+    JSR hexout
+    DEX
+    BPL nxtdig
+    LDA #13
+    JSR kCHROUT
 
-enable	LDA vControl
-	ORA #$10
-	STA vControl
-	CLI
-	RTS
+    ; Reset timer
+    LDX #$25
+    LDY #$40
+    STX c1TimerALo
+    STY c1TimerAHi
+    LDA #$01
+    STA c1ControlA
+    JSR enable
+    
+    ldx #13    ; l.green
+    ldy #0
+fails
+    lda #0
+    beq allpass
+    ldx #10    ; l.red
+    ldy #$ff
+allpass
+    stx $d020
+    sty $d7ff
+    
+    jmp *
 
-hexout	CMP #10
-	BCC digit
-	CLC
-	ADC #$07
-digit	ADC #$30
-	JSR kCHROUT
-	RTS
+disable    SEI
+    LDA #$00
+    STA vSprEnable
+    LDA vControl
+    AND #$EF
+    STA vControl
+vblank    ; Wait for vblank (raster = 0)
+raslo    
+    BIT vControl
+    BPL raslo
+rashi    
+    BIT vControl
+    BMI rashi
+    RTS
 
-print	STX zINDEX
-	STY zINDEX+1
-	LDY #$00
-nxtchr	LDA (zINDEX),Y
-	BEQ nul
-	JSR kCHROUT
-	INY
-	JMP nxtchr
-nul	RTS
+enable    
+    LDA vControl
+    ORA #$10
+    STA vControl
+    CLI
+    RTS
 
-text	.byte 13
-	.asc "CYCLES FOR COMPLETE ENVELOPE (A=D=R=1):"
-	.byte 13, 13, 0
-timer	.byte 0, 0, 0, 0
+hexout    
+    CMP #10
+    BCC digit
+    CLC
+    ADC #$07
+digit    
+    ADC #$30
+    JSR kCHROUT
+    RTS
+
+print    
+    STX zINDEX
+    STY zINDEX+1
+    LDY #$00
+nxtchr    
+    LDA (zINDEX),Y
+    BEQ nul
+    JSR kCHROUT
+    INY
+    JMP nxtchr
+nul    
+    RTS
+
+text    
+    .byte $93
+    .asc "CYCLES FOR COMPLETE ENVELOPE (A=D=R=1):"
+    .byte 13, 13, 0
+timer    
+    .byte 0, 0, 0, 0
