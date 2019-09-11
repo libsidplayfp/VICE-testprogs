@@ -23,3 +23,6 @@ YACEDIR="~/c64stuff/yace/"
 
 # should point to directoy containing emu64
 EMU64DIR="~/c64stuff/emu64/"
+
+# should point to directoy containing denise
+DENISEDIR="~/c64stuff/denise/"

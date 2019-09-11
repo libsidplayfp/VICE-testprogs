@@ -65,7 +65,8 @@ testlist: \
 	z64kc64-testlist.txt \
 	z64kc128-testlist.txt \
 	z64kc128c64-testlist.txt \
-	z64kvic20-testlist.txt
+	z64kvic20-testlist.txt \
+	denise-testlist.txt
 
 x64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  x64-testlist.txt
@@ -192,6 +193,24 @@ emu64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
 		>> emu64-testlist.txt
+
+denise-testlist.txt: c64-testlist.in Makefile
+	echo "# this is a generated file, do not edit." >  denise-testlist.txt
+	cat  c64-testlist.in \
+		| grep -v ",mountd64" \
+		| grep -v ",mountg64" \
+		| grep -v ",mountp64" \
+		| grep -v ",screenshot" \
+		| grep -v ",vicii-ntscold" \
+		| grep -v ",vicii-drean" \
+		| grep -v ",reu512k" \
+		| grep -v ",geo256k" \
+		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
+		>> denise-testlist.txt
 
 yace-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  yace-testlist.txt
@@ -362,9 +381,12 @@ testz64kc128c64:
 	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc128c64
 testz64kc128:	
 	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc128
-testz64kvic20:	
+testz64kvic20:
 	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kvic20
 
+testdenise:
+	EMUDIR="$(DENISEDIR)" ./testbench.sh denise
+	
 ##############################################################################
 
 prereq-chameleon: chameleon-helper.prg chameleon-crtoff.prg chameleon-videomode.prg
@@ -382,7 +404,7 @@ testchameleon: chameleon-helper.prg prereq
 	./testbench.sh chameleon --8565early
 # for testing in cartridge mode on "new" c64 / PAL
 testchameleoncart: chameleon-helper.prg prereq
-	./testbench.sh chameleon VICII --pal --8565early --cianew --8580
+	./testbench.sh chameleon --pal --8565early --cianew --8580
 
 testcham20: chameleon-helper.prg prereq
 	./testbench.sh cham20 --8k
@@ -606,6 +628,8 @@ resultscham: maketable chameleon-testlist.txt
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/chameleon-head-standalone-result.txt "TC64 head (standalone)" \
+		--results results/chameleon-head-20190802.txt "TC64 head (20190802)" \
+		--results results/chameleon-head-20190805.txt "TC64 head (20190805)" \
 		\
 		> results/chameleon.html
 
