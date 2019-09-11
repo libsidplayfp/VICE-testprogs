@@ -63,8 +63,8 @@ function emu64_get_options
                 fi
                 if [ x"$testprogvideotype"x == x"NTSC"x ]; then
                     # "old" NTSC
-#                    exitoptions="-VICIImodel 6562"
-                    testprogvideosubtype="6562"
+#                    exitoptions="-VICIImodel 6567"
+                    testprogvideosubtype="6567"
                 fi
             ;;
         "vicii-new") 

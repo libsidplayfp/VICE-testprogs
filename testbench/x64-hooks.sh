@@ -64,8 +64,8 @@ function x64_get_options
                 fi
                 if [ x"$testprogvideotype"x == x"NTSC"x ]; then
                     # "old" NTSC
-#                    exitoptions="-VICIImodel 6562"
-                    testprogvideosubtype="6562"
+#                    exitoptions="-VICIImodel 6567"
+                    testprogvideosubtype="6567"
                 fi
             ;;
         "vicii-new") 
@@ -173,8 +173,8 @@ function x64_get_cmdline_options
 #        "8565") # "new" PAL
 #                exitoptions="-VICIImodel 8565"
 #            ;;
-#        "6562") # "old" NTSC
-#                exitoptions="-VICIImodel 6562"
+#        "6567") # "old" NTSC
+#                exitoptions="-VICIImodel 6567"
 #            ;;
 #        "8562") # "new" NTSC
 #                exitoptions="-VICIImodel 8562"
@@ -261,6 +261,7 @@ function x64_run_screenshot
                 X64SYO=23
             fi
 
+#            echo ./cmpscreens "$refscreenshotname" "$X64REFSXO" "$X64REFSYO" "$1"/.testbench/"$screenshottest"-x64.png "$X64SXO" "$X64SYO"
             ./cmpscreens "$refscreenshotname" "$X64REFSXO" "$X64REFSYO" "$1"/.testbench/"$screenshottest"-x64.png "$X64SXO" "$X64SYO"
             exitcode=$?
         else

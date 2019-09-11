@@ -60,8 +60,8 @@ function xcbm2_get_options
                 fi
                 if [ x"$testprogvideotype"x == x"NTSC"x ]; then
                     # "old" NTSC
-#                    exitoptions="-VICIImodel 6562"
-                    testprogvideosubtype="6562"
+#                    exitoptions="-VICIImodel 6567"
+                    testprogvideosubtype="6567"
                 fi
             ;;
         "vicii-new") 
@@ -121,11 +121,11 @@ function xcbm2_get_cmdline_options
 #        "8565") # "new" PAL
 #                exitoptions="-VICIImodel 8565"
 #            ;;
-#        "6562") # "old" NTSC
-#                exitoptions="-VICIImodel 6562"
+#        "6567") # "old" NTSC
+#                exitoptions="-VICIImodel 6567"
 #            ;;
 #        "8562") # "new" NTSC
-#                exitoptions="-VICIImodel 8562"
+#                exitoptions="-VICIImodel 8567"
 #            ;;
         "6526") # "old" CIA
                 exitoptions="-ciamodel 0"
