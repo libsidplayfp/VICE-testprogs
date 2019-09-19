@@ -1,4 +1,4 @@
-	.word $0801
+    .word $0801
 
 ; *** Symbol table  follows ***
 
@@ -50,108 +50,118 @@
         
     .dsb $1000 - *, 0
 
-	* = $1000
+    * = $1000
 start
 
-	; Turn off interrupts
-	sei
-	; Standard memory map
-	lda #$e7
-	sta $01
-	; Disable sprites
-	lda #$00
-	sta vSprEnable
-	; Blank screen
-	lda vControl
-	and #$ef
-	sta vControl
-	; Black border
-	lda #$00
-	sta vBorderCol
+    ; Turn off interrupts
+    sei
+    ; Standard memory map
+    lda #$e7
+    sta $01
+    ; Disable sprites
+    lda #$00
+    sta vSprEnable
+    ; Blank screen
+    lda vControl
+    and #$ef
+    sta vControl
+    ; Black border
+    lda #$00
+    sta vBorderCol
 
-	; Clear SID
-	ldx #$18
-	lda #$00
-clear	sta sStart,x
-	dex
-	bpl clear
+    ; Clear SID
+    ldx #$18
+    lda #$00
+clear    sta sStart,x
+    dex
+    bpl clear
 
-	; Set test bit to reset oscillator, clear gate bit
-	lda #$08
-	sta sVoc1Control
-	sta sVoc2Control
-	sta sVoc3Control
+    ; Set test bit to reset oscillator, clear gate bit
+    lda #$08
+    sta sVoc1Control
+    sta sVoc2Control
+    sta sVoc3Control
 
-	; Route ext in to filter (no voices routed to filter)
-	lda #$f8
-	sta sResFilt
+    ; Route ext in to filter (no voices routed to filter)
+    lda #$f8
+    sta sResFilt
 
-	; Output high-pass
-	lda #$4f
-	sta sVolume
+    ; Output high-pass
+    lda #$4f
+    sta sVolume
 
-	; Wait for key 0 - 9
-getkey	jsr keyscan
-	sec
-	sbc #$30
-	bcc getkey
-	cmp #10
-	bcs getkey
-	cmp #9
-	bne onebit
-	; Max cutoff
-	lda #$ff
-	sta sFcHi
-	sta sFcLo
-	bne getkey
-	; Single bit in FCHI (0, 1, 2, 4, 8, 16, 32, 64, 128)
-onebit	tax
-	lda #$80
-	clc
-shift	rol
-	dex
-	bpl shift
-	sta sFcHi
-	lda #$00
-	sta sFcLo
-	beq getkey
+    ; Wait for key 0 - 9
+getkey    
+    jsr keyscan
+    sec
+    sbc #$30
+    bcc getkey
+    cmp #10
+    bcs getkey
+    cmp #9
+    bne onebit
+    ; Max cutoff
+    lda #$ff
+    sta sFcHi
+    sta sFcLo
+    bne getkey
+    
+    ; Single bit in FCHI (0, 1, 2, 4, 8, 16, 32, 64, 128)
+onebit    tax
+    lda #$80
+    clc
+shift    
+    rol
+    dex
+    bpl shift
+    sta sFcHi
+    lda #$00
+    sta sFcLo
+    beq getkey
 
-exit	lda #$00
-	sta sVolume
-	lda #$0e
-	sta vBorderCol
-	lda vControl
-	ora #$10
-	sta vControl
-	lda #$e7
-	sta $01
-	cli
-	rts
+exit    
+    lda #$00
+    sta sVolume
+    lda #$0e
+    sta vBorderCol
+    lda vControl
+    ora #$10
+    sta vControl
+    lda #$e7
+    sta $01
+    cli
+    rts
 
-	; Scan keyboard matrix
-keyscan	lda #$ff
-	sta $dc02
-	lda #$00
-	sta $dc03
-matrix	ldy #$00
-	lda #$01
-row	pha
-	eor #$ff
-	sta $dc00
-wait	lda $dc01
-	cmp $dc01
-	bne wait
-	eor #$ff
-	ldx #$08
-col	lsr
-	bcs key
-	iny
-	dex
-	bne col
-	pla
-	asl
-	bcc row
-	bcs matrix
-key	pla
-	lda $eb81,y
-	rts
+    ; Scan keyboard matrix
+keyscan    
+    lda #$ff
+    sta $dc02
+    lda #$00
+    sta $dc03
+matrix    
+    ldy #$00
+    lda #$01
+row    
+    pha
+    eor #$ff
+    sta $dc00
+wait    
+    lda $dc01
+    cmp $dc01
+    bne wait
+    eor #$ff
+    ldx #$08
+col    
+    lsr
+    bcs key
+    iny
+    dex
+    bne col
+    pla
+    asl
+    bcc row
+    bcs matrix
+key    
+    pla
+    lda $eb81,y
+    rts

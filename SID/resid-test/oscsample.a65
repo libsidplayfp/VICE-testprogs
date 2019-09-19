@@ -1,9 +1,12 @@
+;PULSEHI = 0 ; original
+;PULSEHI = 1 ; test.a65
+
  .word $0801
 
 ; *** Symbol table  follows ***
 
- sstart     = $8000
- sstop      = $9000
+ sstart     = $c000
+ sstop      = $d000
 
  zINDEX        = $22
  zFREKZP       = $FB
@@ -27,225 +30,442 @@
         
     .dsb $1000 - *, 0
 
- *=$1000
+    *=$1000
 start
+    ldx #0
+    stx $d020
+    stx $d021
+slp:
+    lda #$20
+    sta $0400,x
+    sta $0500,x
+    sta $0600,x
+    sta $0700,x
+    lda #1
+    sta $d800,x
+    sta $d900,x
+    sta $da00,x
+    sta $db00,x
+    inx
+    bne slp
+    
 
-	; We miss the first four cycles of the sample (three cycles for
-	; MOS8580), so we blank the first four bytes.
-	LDA #$00
-	STA sstart
-	STA sstart+1
-	STA sstart+2
-	STA sstart+3
+    ; We miss the first four cycles of the sample (three cycles for
+    ; MOS8580), so we blank the first four bytes.
+    LDA #$00
+    STA sstart
+    STA sstart+1
+    STA sstart+2
+    STA sstart+3
 
-	; Detect SID model.
-	JSR disable
-	JSR sidver
-	STA model
-	JSR enable
+    ; Detect SID model.
+    JSR disable
+    JSR sidver
+    STA model
+    JSR enable
 
-	LDX #$00
-	; Select waveform
-nxtfile	LDA waves,X
-	STA curwave
-	TXA	
-	PHA	
+    LDX #$00
+    ; Select waveform
+nxtfile    
+    LDA waves,X
+    STA curwave
+    TXA    
+    PHA    
+    
+    lda curwave
+    cmp #$80
+    bne notnoise
+    jsr resetnoise
+    pla
+    tax
+    pha
+notnoise
+    
+    lda #'*'
+    sta $0400,x
 
-	; Generate and run sampling code
-	JSR disable
-	JSR genrun
-	JSR enable
+    ; Generate and run sampling code
+    JSR disable
+    JSR genrun
+    JSR enable
 
-	; Set up logical file
-	LDA #$01
-	LDX #$08
-	LDY #$00
-	JSR kSETLFS
+    ; Set up logical file
+    LDA #$01
+    LDX #$08
+    LDY #$00
+    JSR kSETLFS
 
-	; Get index and multiply with number of chars in file name (12).
-	PLA
-	PHA
-	ASL
-	ASL
-	STA zINDEX
-	ASL
-	ADC zINDEX
+    ; Get index and multiply with number of chars in file name (12).
+    PLA
+    PHA
+    ASL
+    ASL
+    STA zINDEX
+    ASL
+    ADC zINDEX
 
-	; Add offset for MOS8580 file names.
-	LDX model
-	BNE oldsid
-	CLC
-	ADC #8*12
+    ; Add offset for MOS8580 file names.
+    LDX model
+    BNE oldsid
+    CLC
+    ADC #8*12
 oldsid
-	; Set up file name
-	CLC
-	ADC #<files65
-	TAX
-	LDA #$00
-	ADC #>files65
-	TAY
-	LDA #12
-	JSR kSETNAM
+    ; Set up file name
+    CLC
+    ADC #<files65
+    TAX
+    LDA #$00
+    ADC #>files65
+    TAY
+    LDA #12
+    JSR kSETNAM
 
-	; Save sample data sstart-sstop
-	LDA #<sstart
-	STA zINDEX
-	LDA #>sstart
-	STA zINDEX+1
-	LDX #<sstop
-	LDY #>sstop
-	LDA #zINDEX
-	JSR kSAVE
+#if DUMP = 1
+    ; Save sample data sstart-sstop
+    LDA #<sstart
+    STA zINDEX
+    LDA #>sstart
+    STA zINDEX+1
+    LDX #<sstop
+    LDY #>sstop
+    LDA #zINDEX
+    JSR kSAVE
+#endif
+#if DUMP = 0
+    lda #5
+    sta verifyres+1
+    lda #>sstart
+    sta starthi+2
+    ldy #$10
+vlp2:
+    ldx #0
+vlp1:
+refhi:
+    lda refdata,x
+starthi:
+    cmp sstart,x
+    beq verifyok
+    lda #2
+    sta verifyres+1
+verifyok:    
+    inx
+    bne vlp1
+    inc refhi+2
+    inc starthi+2
+    dey
+    bne vlp2
+    
+#endif
 
-	PLA	
-	TAX	
-	INX	
-	CPX #$08
-	BNE nxtfile
-	RTS	
+    PLA    
+    TAX    
+    
+verifyres: 
+    lda #5
+    sta $d800,x
+    sta $0400+40,x
+    
+    INX    
+    CPX #$08
+    beq testdone
+    jmp nxtfile
+testdone
+
+    ; make test only fail overall when one of the basic waveforms does not match
+    ; the combined waveforms are kinda random and may be different on individual
+    ; machines
+    lda $0400+40 ; wf 1
+    cmp #5
+    bne verifyerror
+    lda $0400+41 ; wf 2
+    cmp #5
+    bne verifyerror
+    lda $0400+43 ; wf 4
+    cmp #5
+    bne verifyerror
+    lda $0400+47 ; wf 8
+    cmp #5
+    bne verifyerror
+    
+    lda #5
+    sta $d020
+    lda #$00
+    sta $d7ff
+    
+    jmp *
+
+verifyerror:
+    lda #2
+    sta $d020
+    lda #$ff
+    sta $d7ff
+    jmp *
 
 ; Waveforms
-waves	.byte $10, $20, $30, $40, $50, $60, $70, $80
+waves    
+    .byte $10, $20, $30, $40, $50, $60, $70, $80
 
 ; File names
-files65	.asc "6581WF10.DAT"
-	.asc "6581WF20.DAT"
-	.asc "6581WF30.DAT"
-	.asc "6581WF40.DAT"
-	.asc "6581WF50.DAT"
-	.asc "6581WF60.DAT"
-	.asc "6581WF70.DAT"
-	.asc "6581WF80.DAT"
-files85	.asc "8580WF10.DAT"
-	.asc "8580WF20.DAT"
-	.asc "8580WF30.DAT"
-	.asc "8580WF40.DAT"
-	.asc "8580WF50.DAT"
-	.asc "8580WF60.DAT"
-	.asc "8580WF70.DAT"
-	.asc "8580WF80.DAT"
+files65    
+    .asc "6581WF10.DAT"
+    .asc "6581WF20.DAT"
+    .asc "6581WF30.DAT"
+    .asc "6581WF40.DAT"
+    .asc "6581WF50.DAT"
+    .asc "6581WF60.DAT"
+    .asc "6581WF70.DAT"
+    .asc "6581WF80.DAT"
+files85    
+    .asc "8580WF10.DAT"
+    .asc "8580WF20.DAT"
+    .asc "8580WF30.DAT"
+    .asc "8580WF40.DAT"
+    .asc "8580WF50.DAT"
+    .asc "8580WF60.DAT"
+    .asc "8580WF70.DAT"
+    .asc "8580WF80.DAT"
 
+refdata
+#if DUMP = 0
+#if PULSEHI = 0
+#if SID = 0
+    .bin 2,$1000,"oscsample0-6581wf10.dat"
+    .bin 2,$1000,"oscsample0-6581wf20.dat"
+    .bin 2,$1000,"oscsample0-6581wf30.dat"
+    .bin 2,$1000,"oscsample0-6581wf40.dat"
+    .bin 2,$1000,"oscsample0-6581wf50.dat"
+    .bin 2,$1000,"oscsample0-6581wf60.dat"
+    .bin 2,$1000,"oscsample0-6581wf70.dat"
+    .bin 2,$1000,"oscsample0-6581wf80.dat"
+#endif
+#if SID = 1
+    .bin 2,$1000,"oscsample0-8580wf10.dat"
+    .bin 2,$1000,"oscsample0-8580wf20.dat"
+    .bin 2,$1000,"oscsample0-8580wf30.dat"
+    .bin 2,$1000,"oscsample0-8580wf40.dat"
+    .bin 2,$1000,"oscsample0-8580wf50.dat"
+    .bin 2,$1000,"oscsample0-8580wf60.dat"
+    .bin 2,$1000,"oscsample0-8580wf70.dat"
+    .bin 2,$1000,"oscsample0-8580wf80.dat"
+#endif
+#endif
+#if PULSEHI = 1
+#if SID = 0
+    .bin 2,$1000,"oscsample1-6581wf10.dat"
+    .bin 2,$1000,"oscsample1-6581wf20.dat"
+    .bin 2,$1000,"oscsample1-6581wf30.dat"
+    .bin 2,$1000,"oscsample1-6581wf40.dat"
+    .bin 2,$1000,"oscsample1-6581wf50.dat"
+    .bin 2,$1000,"oscsample1-6581wf60.dat"
+    .bin 2,$1000,"oscsample1-6581wf70.dat"
+    .bin 2,$1000,"oscsample1-6581wf80.dat"
+#endif
+#if SID = 1
+    .bin 2,$1000,"oscsample1-8580wf10.dat"
+    .bin 2,$1000,"oscsample1-8580wf20.dat"
+    .bin 2,$1000,"oscsample1-8580wf30.dat"
+    .bin 2,$1000,"oscsample1-8580wf40.dat"
+    .bin 2,$1000,"oscsample1-8580wf50.dat"
+    .bin 2,$1000,"oscsample1-8580wf60.dat"
+    .bin 2,$1000,"oscsample1-8580wf70.dat"
+    .bin 2,$1000,"oscsample1-8580wf80.dat"
+#endif
+#endif
+#endif
+    
 ; Current waveform
-curwave .byte $00
+curwave 
+    .byte $00
 
 ; SID chip model
-model	.byte $00
+model    
+    .byte $00
 
+resetnoise:
+; Initialize SID to known state
+    lda #$00
+    ldx #$18
+clear    
+    sta $d400,x
+    dex
+    bpl clear
+
+; Initialize noise register - wait $8000 cycles for register to settle.
+; on 8580 it takes MUCH longer
+    lda #$88
+    sta $d412
+    
+    ldx #$f0
+sleeplp:
+    txa
+    pha
+    
+    ldx #$00
+    ldy #$80
+    jsr sleep
+    
+    
+    ldx #$00
+    ldy #$80
+    jsr sleep
+    
+    inc $d020
+    
+    ldx #$00
+    ldy #$80
+    jsr sleep
+    
+    dec $d020
+    
+    pla
+    tax
+    dex
+    bne sleeplp
+    rts
+    
+; Sleep using CIA TIMER B.
+sleep
+    sei
+    lda #$7f
+    sta $dc0d
+    lda #$08    ; oneshot, stop
+    sta $dc0f
+    stx $dc06
+    sty $dc07
+    lda $dc0d
+    lda #$19    ; oneshot, start, force reload
+    sta $dc0f
+chi    
+    lda $dc07
+    sta $0400+39
+    bne chi
+clo    
+    lda $dc06
+    sta $0400+38
+    bne clo
+;sleepl:
+;    lda $dc0d
+;    lsr
+;    lsr
+;    bcc sleepl
+    rts
+    
 ; Generate and run sampling code.
-genrun	LDA #<scode
-	STA zINDEX
-	LDA #>scode
-	STA zINDEX+1
+genrun    
+    LDA #<scode
+    STA zINDEX
+    LDA #>scode
+    STA zINDEX+1
 
-	; X holds code offset, Y holds sample offset
-	LDX #$00
-	LDY #$00
-	JSR gencode
+    ; X holds code offset, Y holds sample offset
+    LDX #$00
+    LDY #$00
+    JSR gencode
 
-	; no delay
-	JSR sample
+    ; no delay
+    JSR sample
 
-	LDX #$00
-	LDY #$01
-	JSR gencode
+    LDX #$00
+    LDY #$01
+    JSR gencode
 
-	; lda $d3f0,x (one cycle delay)
-	LDY #$00
-	LDA #$BD
-	STA (zINDEX),Y
-	INY	
-	LDA #$F0
-	STA (zINDEX),Y
-	INY	
-	LDA #$D3
-	STA (zINDEX),Y
-	; Offset for lda,x
-	LDX #$2B
-	JSR sample
+    ; lda $d3f0,x (one cycle delay)
+    LDY #$00
+    LDA #$BD
+    STA (zINDEX),Y
+    INY    
+    LDA #$F0
+    STA (zINDEX),Y
+    INY    
+    LDA #$D3
+    STA (zINDEX),Y
+    ; Offset for lda,x
+    LDX #$2B
+    JSR sample
 
-	LDX #$01
-	LDY #$02
-	JSR gencode
+    LDX #$01
+    LDY #$02
+    JSR gencode
 
-	; nop (two cycle delay)
-	LDY #$00
-	LDA #$EA
-	STA (zINDEX),Y
-	JSR sample
+    ; nop (two cycle delay)
+    LDY #$00
+    LDA #$EA
+    STA (zINDEX),Y
+    JSR sample
 
-	LDX #$02
-	LDY #$03
-	JSR gencode
+    LDX #$02
+    LDY #$03
+    JSR gencode
 
-	; bit $ff (three cycle delay)
-	LDY #$00
-	LDA #$24
-	STA (zINDEX),Y
-	INY	
-	LDA #$FF
-	STA (zINDEX),Y
-	JSR sample
+    ; bit $ff (three cycle delay)
+    LDY #$00
+    LDA #$24
+    STA (zINDEX),Y
+    INY    
+    LDA #$FF
+    STA (zINDEX),Y
+    JSR sample
 
-	LDX #$02
-	LDY #$04
-	JSR gencode
+    LDX #$02
+    LDY #$04
+    JSR gencode
 
-	; nop nop (four cycle delay)
-	LDY #$00
-	LDA #$EA
-	STA (zINDEX),Y
-	INY	
-	LDA #$EA
-	STA (zINDEX),Y
-	JSR sample
+    ; nop nop (four cycle delay)
+    LDY #$00
+    LDA #$EA
+    STA (zINDEX),Y
+    INY    
+    LDA #$EA
+    STA (zINDEX),Y
+    JSR sample
 
-	LDX #$02
-	LDY #$05
-	JSR gencode
+    LDX #$02
+    LDY #$05
+    JSR gencode
 
-	; asl $ff (five cycle delay)
-	LDY #$00
-	LDA #$06
-	STA (zINDEX),Y
-	INY	
-	LDA #$FF
-	STA (zINDEX),Y
-	JSR sample
+    ; asl $ff (five cycle delay)
+    LDY #$00
+    LDA #$06
+    STA (zINDEX),Y
+    INY    
+    LDA #$FF
+    STA (zINDEX),Y
+    JSR sample
 
-	LDX #$02
-	LDY #$06
-	JSR gencode
+    LDX #$02
+    LDY #$06
+    JSR gencode
 
-	; asl $ff,x (six cycle delay)
-	LDY #$00
-	LDA #$16
-	STA (zINDEX),Y
-	INY	
-	LDA #$FF
-	STA (zINDEX),Y
-	; Offset for asl,x
-	LDX #$00
-	JSR sample
+    ; asl $ff,x (six cycle delay)
+    LDY #$00
+    LDA #$16
+    STA (zINDEX),Y
+    INY    
+    LDA #$FF
+    STA (zINDEX),Y
+    ; Offset for asl,x
+    LDX #$00
+    JSR sample
 
-	LDX #$03
-	LDY #$07
-	JSR gencode
+    LDX #$03
+    LDY #$07
+    JSR gencode
 
-	; asl $00ff,x (seven cycle delay)
-	LDY #$00
-	LDA #$1E
-	STA (zINDEX),Y
-	INY	
-	LDA #$FF
-	STA (zINDEX),Y
-	INY	
-	LDA #$00
-	STA (zINDEX),Y
-	; Offset for asl,x
-	LDX #$00
-	JSR sample
+    ; asl $00ff,x (seven cycle delay)
+    LDY #$00
+    LDA #$1E
+    STA (zINDEX),Y
+    INY    
+    LDA #$FF
+    STA (zINDEX),Y
+    INY    
+    LDA #$00
+    STA (zINDEX),Y
+    ; Offset for asl,x
+    LDX #$00
+    JSR sample
 
-	RTS	
+    RTS    
 
 ; Generate code on the form
 ; LDA $D41B
@@ -253,124 +473,136 @@ genrun	LDA #<scode
 ; LDA $D41B
 ; STA $800C
 ; ...
-gencode	TXA	
-	CLC	
-	ADC zINDEX
-	STA zFREKZP
-	LDA #$00
-	ADC zINDEX+1
-	STA zFREKZP+1
-	TYA	
-	CLC
+gencode    
+    TXA    
+    CLC    
+    ADC zINDEX
+    STA zFREKZP
+    LDA #$00
+    ADC zINDEX+1
+    STA zFREKZP+1
+    TYA    
+    CLC
 
-	; Add three cycles for MOS8580, four cycles for MOS6581.
-	ADC #$03
-	ADC model
-	ADC #<sstart
-	STA zFREKZP+2
-	LDA #$00
-	ADC #>sstart
-	STA zFREKZP+3
-nxtinst	LDY #$00
+    ; Add three cycles for MOS8580, four cycles for MOS6581.
+    ADC #$03
+    ADC model
+    ADC #<sstart
+    STA zFREKZP+2
+    LDA #$00
+    ADC #>sstart
+    STA zFREKZP+3
+nxtinst    
+    LDY #$00
 
-	; lda $d41b
-	LDA #$AD
-	STA (zFREKZP),Y
-	INY	
-	LDA #$1B
-	STA (zFREKZP),Y
-	INY	
-	LDA #$D4
-	STA (zFREKZP),Y
-	INY	
+    ; lda $d41b
+    LDA #$AD
+    STA (zFREKZP),Y
+    INY    
+    LDA #$1B
+    STA (zFREKZP),Y
+    INY    
+    LDA #$D4
+    STA (zFREKZP),Y
+    INY    
 
-	; sta $xxxx
-	LDA #$8D
-	STA (zFREKZP),Y
-	INY	
-	LDA zFREKZP+2
-	STA (zFREKZP),Y
-	INY	
-	LDA zFREKZP+3
-	STA (zFREKZP),Y
+    ; sta $xxxx
+    LDA #$8D
+    STA (zFREKZP),Y
+    INY    
+    LDA zFREKZP+2
+    STA (zFREKZP),Y
+    INY    
+    LDA zFREKZP+3
+    STA (zFREKZP),Y
 
-	INY	
-	TYA	
-	CLC	
-	ADC zFREKZP
-	STA zFREKZP
-	LDA #$00
-	ADC zFREKZP+1
-	STA zFREKZP+1
-	LDA #$08
-	CLC	
-	ADC zFREKZP+2
-	STA zFREKZP+2
-	LDA #$00
-	ADC zFREKZP+3
-	STA zFREKZP+3
-	SEC
-	LDA zFREKZP+2
-	SBC #<sstop
-	LDA zFREKZP+3
-	SBC #>sstop
-	BCC nxtinst
-	LDY #$00
+    INY    
+    TYA    
+    CLC    
+    ADC zFREKZP
+    STA zFREKZP
+    LDA #$00
+    ADC zFREKZP+1
+    STA zFREKZP+1
+    LDA #$08
+    CLC    
+    ADC zFREKZP+2
+    STA zFREKZP+2
+    LDA #$00
+    ADC zFREKZP+3
+    STA zFREKZP+3
+    SEC
+    LDA zFREKZP+2
+    SBC #<sstop
+    LDA zFREKZP+3
+    SBC #>sstop
+    BCC nxtinst
+    LDY #$00
 
-	; rts
-	LDA #$60
-	STA (zFREKZP),Y
-	RTS	
+    ; rts
+    LDA #$60
+    STA (zFREKZP),Y
+    RTS    
 
-disable	SEI	
-	LDA #$00
-	STA vSprEnable
-	LDA vControl
-	AND #$EF
-	STA vControl
-vblank	; Wait for vblank (raster = 0)
-raslo	BIT vControl
-	BPL raslo
-rashi	BIT vControl
-	BMI rashi
-	RTS	
+disable    
+    SEI    
+    LDA #$00
+    STA vSprEnable
+    LDA vControl
+    AND #$EF
+    STA vControl
+vblank    ; Wait for vblank (raster = 0)
+raslo    
+    BIT vControl
+    BPL raslo
+rashi    
+    BIT vControl
+    BMI rashi
+    RTS    
 
-enable	LDA vControl
-	ORA #$10
-	STA vControl
-	CLI	
-	RTS	
+enable    
+    LDA vControl
+    ORA #$10
+    STA vControl
+    CLI    
+    RTS    
 
-sidver	LDA #$08
-	STA sVoc3Control
-	LDA #$00
-	STA sVoc3FreqLo
-	LDA #$40
-	STA sVoc3FreqHi
-	LDA #$20
-	STA sVoc3Control
-	LDA sVoc3Osc
-	; 1 = 6581, 0 = 8580
-	; The MOS8580 waveform is delayed one cycle.
-	RTS
+sidver    
+    LDA #$08
+    STA sVoc3Control
+    LDA #$00
+    STA sVoc3FreqLo
+    LDA #$40
+    STA sVoc3FreqHi
+    LDA #$20
+    STA sVoc3Control
+    LDA sVoc3Osc
+    ; 1 = 6581, 0 = 8580
+    ; The MOS8580 waveform is delayed one cycle.
+    RTS
 
-sample	LDA #$08
-	STA sVoc3Control
-	LDA #$00
-	STA sVoc3FreqLo
-	LDA #$10
-	STA sVoc3FreqHi
-	LDA #$00
-	STA sVoc3PWidthLo
-	LDA #$00
-	STA sVoc3PWidthHi
-	LDA curwave
-	CMP #$80
-	BNE gate
-	; Allow the shift register to clear (takes $2000-$4000 cycles).
-	; We wait at least one frame (one frame = 19656 cycles).
-	JSR vblank
-	JSR vblank
-gate	STA sVoc3Control
+sample    
+    LDA #$08
+    STA sVoc3Control
+    LDA #$00
+    STA sVoc3FreqLo
+    LDA #$10
+    STA sVoc3FreqHi
+    LDA #$00
+    STA sVoc3PWidthLo
+    LDA #PULSEHI
+    STA sVoc3PWidthHi
+    LDA curwave
+    CMP #$80
+    BNE gate
+    ; Allow the shift register to clear (takes $2000-$4000 cycles).
+    ; We wait at least one frame (one frame = 19656 cycles).
+    JSR vblank
+    JSR vblank
+gate    
+    STA sVoc3Control
 
-scode	.byte $00
+scode    
+    .byte $00
+
+    

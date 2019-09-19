@@ -1,4 +1,4 @@
-	.word $0801
+    .word $0801
 
 ; *** Symbol table  follows ***
 
@@ -34,116 +34,124 @@
         
     .dsb $1000 - *, 0
 
-	* = $1000
+    * = $1000
 start
 
-	sei
-	lda #$36
-	sta $01
-	lda #$00
-	sta vSprEnable
-	lda vControl
-	and #$ef
-	sta vControl
-redo	lda #$0e
-	sta vBorderCol
-	lda #$00
-	sta sVoc3FreqLo
-	lda #$00
-	sta sVoc3FreqHi
-	lda #$00
-	sta sVoc3PwLo
-	lda #$08
-	sta sVoc3PwHi
-	lda #$00
-	sta sVoc3AttDec
-	; Set test bit to reset oscillator, clear gate bit in case it was set
-	lda #$08
-	sta sVoc3Control
-	; Filter cutoff frequency
-	lda #$00
-	sta sFcLo
-	lda #$40
-	stx sFcHi
-	; Bandpass output
-	lda #$2f
-	sta sVolume
+    sei
+    lda #$36
+    sta $01
+    lda #$00
+    sta vSprEnable
+    lda vControl
+    and #$ef
+    sta vControl
+redo    
+    lda #$0e
+    sta vBorderCol
+    lda #$00
+    sta sVoc3FreqLo
+    lda #$00
+    sta sVoc3FreqHi
+    lda #$00
+    sta sVoc3PwLo
+    lda #$08
+    sta sVoc3PwHi
+    lda #$00
+    sta sVoc3AttDec
+    ; Set test bit to reset oscillator, clear gate bit in case it was set
+    lda #$08
+    sta sVoc3Control
+    ; Filter cutoff frequency
+    lda #$00
+    sta sFcLo
+    lda #$40
+    stx sFcHi
+    ; Bandpass output
+    lda #$2f
+    sta sVolume
 
-	; Wait for key 1 - 4
-getnum	jsr kSCNKEY
-	jsr kGETIN
-	sec
-	sbc #$31
-	bcc getnum
-	cmp #4
-	bcs getnum
-	tax
-	lda susrel,x
-	ldy resfilt,x
-	tax
+    ; Wait for key 1 - 4
+getnum    
+    jsr kSCNKEY
+    jsr kGETIN
+    sec
+    sbc #$31
+    bcc getnum
+    cmp #4
+    bcs getnum
+    tax
+    lda susrel,x
+    ldy resfilt,x
+    tax
 
-	; Set sustain level
-	stx sVoc3SusRel
-	; Set resonance and filter input
-	sty sResFilt
+    ; Set sustain level
+    stx sVoc3SusRel
+    ; Set resonance and filter input
+    sty sResFilt
 
-	; Keep test bit on, set gate bit to start envelope
-	lda #$09
-	sta sVoc3Control
+    ; Keep test bit on, set gate bit to start envelope
+    lda #$09
+    sta sVoc3Control
 
-	; Wait a complete envelope to ensure that sustain state is reached
-	; A complete envelope is 32352 cycles, we wait ca. 33 * 1000 cycles.
-	ldy #33
-delayy	ldx #199
-delayx	dex
-	bne delayx
-	dey
-	bne delayy
+    ; Wait a complete envelope to ensure that sustain state is reached
+    ; A complete envelope is 32352 cycles, we wait ca. 33 * 1000 cycles.
+    ldy #33
+delayy    
+    ldx #199
+delayx    
+    dex
+    bne delayx
+    dey
+    bne delayy
 
-	lda #$00
-	sta vBorderCol
+    lda #$00
+    sta vBorderCol
 
-getcr	jsr kSCNKEY
-	jsr kGETIN
-	cmp #$0d
-	bne getcr
+getcr    
+    jsr kSCNKEY
+    jsr kGETIN
+    cmp #$0d
+    bne getcr
 
-	; Start triangle waveform
-	lda #$11
-	sta sVoc3Control
-	lda #$00
-	sta zFREKZP
-	lda #$00
-	sta zFREKZP+1
-sweep	lda zFREKZP
-	clc
-	adc #$01
-	sta zFREKZP
-	lda zFREKZP+1
-	adc #$00
-	bcs done
-	sta zFREKZP+1
-	lda zFREKZP
-	sta sVoc3FreqLo
-	lda zFREKZP+1
-	sta sVoc3FreqHi
-	clc
-	bcc sweep
-done	jmp redo
+    ; Start triangle waveform
+    lda #$11
+    sta sVoc3Control
+    lda #$00
+    sta zFREKZP
+    lda #$00
+    sta zFREKZP+1
+sweep    
+    lda zFREKZP
+    clc
+    adc #$01
+    sta zFREKZP
+    lda zFREKZP+1
+    adc #$00
+    bcs done
+    sta zFREKZP+1
+    lda zFREKZP
+    sta sVoc3FreqLo
+    lda zFREKZP+1
+    sta sVoc3FreqHi
+    clc
+    bcc sweep
+done    jmp redo
 
-	lda #$00
-	sta sVoc3Control
-	lda #$00
-	sta sVolume
-	lda #$0e
-	sta vBorderCol
-	lda vControl
-	ora #$10
-	sta vControl
-	lda #$37
-	sta $01
-	cli
-	rts
+    lda #$00
+    sta sVoc3Control
+    lda #$00
+    sta sVolume
+    lda #$0e
+    sta vBorderCol
+    lda vControl
+    ora #$10
+    sta vControl
+    lda #$37
+    sta $01
+    cli
+    rts
 
-susrel	.byte $40, $40, $f0, $f0
-resfilt	.byte $04, $f4, $04, $f4
+susrel    
+    .byte $40, $40, $f0, $f0
+resfilt    
+    .byte $04, $f4, $04, $f4

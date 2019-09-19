@@ -7,18 +7,16 @@ Envelope
 ================================================================================
 
 boundary.prg:
--------------
+boundary-dump.prg:
+------------------
 
-envelope test (decay), saves result to disk (97 blocks)
+envelope test (decay)
 
-TODO: include reference data
+boundary-dump.prg saves result to disk (97 blocks, $6000 bytes)
+boundary.prg compares data on disk against sampled data
 
-envboundary.prg:
-----------------
+verified: C64C+8580,C64+6581
 
-BUGBUG: hangs in endless loop
-
-TODO: fix(?)
 
 envdelay.prg:
 -------------
@@ -41,6 +39,7 @@ verified: C64C+8580,C64+6581 - output:
 8011
 8011
 8011
+
 
 envrate.prg:
 ------------
@@ -66,12 +65,18 @@ verified: C64C+8580,C64+6581 - output:
 4c4c
 7a13
 
+
 envsample.prg:
---------------
+envsample-dump.prg:
+-------------------
 
-envelope test (decay), saves result to disk (4 times 97 blocks)
+envelope test (decay)
 
-TODO: include reference data
+envsample-dump.prg saves result to disk (4 times 97 blocks, $6000 bytes)
+envsample.prg compares saved data against sampled data
+
+verified: C64C+8580,C64+6581
+
 
 envsustain.prg:
 ---------------
@@ -97,6 +102,7 @@ aa
 11
 00
 
+
 envtime.prg:
 ------------
 
@@ -110,19 +116,28 @@ verified: C64C+8580,C64+6581 -  output:
 Oscillator
 ================================================================================
 
-oscsample.prg:
---------------
+oscsample0-dump.prg:
+oscsample0-6581.prg:
+oscsample0-8580.prg:
+oscsample1-dump.prg:
+oscsample1-6581.prg:
+oscsample1-8580.prg:
+--------------------
 
-samples OSC3 for all waveforms, saves result to disk (8 times 17 blocks)
+oscsample0-dump.prg/oscsample1-dump.prg samples OSC3 for all waveforms, 
+saves result to disk (8 times 17 blocks, $1000 bytes)
 
-TODO: include reference data
+Note: after dumping, confirm that the rebuild test passes on the same machine -
+      apparently sometimes the noise waveform dump doesnt come out correctly.
 
-test.prg:
----------
+oscsample0-6581.prg/oscsample1-6581.prg/oscsample0-8580.prg/oscsample1-8580.prg
+compares sampled data with included reference
 
-samples OSC3 for all waveforms, saves result to disk (8 times 17 blocks)
+Note: only the regular "pure" waveforms have to match for the test to pass
+      overall. the mixed waveforms contain random bits due to how they are
+      combined in the SID, which makes them fail randomly too.
 
-TODO: include reference data
+verified: C64C+8580,C64+6581
 
 ================================================================================
 Noise LFSR
@@ -184,12 +199,4 @@ Misc
 chipmodel.prg:
 --------------
 
-detect SID model.
-
-chipmodel-testbit.prg:
-----------------------
-
-detect SID model.
-
-BUGBUG: shows 6581 on 8580 too!
-
+detects SID model.

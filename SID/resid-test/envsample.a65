@@ -16,6 +16,7 @@
  kCHROUT       = $FFD2
  kSETLFS       = $FFBA
  kSETNAM       = $FFBD
+ kLOAD         = $FFD5
  kSAVE         = $FFD8
 
 ; *** text follows ***
@@ -67,6 +68,7 @@ nxtfile	TXA
 	LDA #$36
 	STA $01
 
+#if DUMP = 1
 	; Save sample data sstart-sstop
 	LDA #<sstart
 	STA zINDEX
@@ -76,6 +78,18 @@ nxtfile	TXA
 	LDY #>sstop
 	LDA #zINDEX
 	JSR kSAVE
+#endif
+#if DUMP = 0
+    ; verify sample data sstart-sstop
+    LDX #<sstart
+    LDY #>sstart
+    lda #1          ; 0 load 1 verify
+    JSR kLOAD
+    bcs verifyerror ; branch on disk error
+    lda $90
+    and #$10
+    bne verifyerror ; branch on verify error
+#endif
 
 	; Map in BASIC ROM.
 	LDA #$37
@@ -87,7 +101,19 @@ nxtfile	TXA
 	CPX #$04
 	BNE nxtfile
 
-	RTS
+    lda #5
+    sta $d020
+    lda #$00
+    sta $d7ff
+    
+    jmp *
+
+verifyerror:
+    lda #2
+    sta $d020
+    lda #$ff
+    sta $d7ff
+    jmp *
 
 ; File names
 files	.asc "DEC0.DAT"
