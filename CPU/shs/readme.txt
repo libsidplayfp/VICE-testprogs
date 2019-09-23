@@ -8,28 +8,34 @@ note: this opcode have appeared marked "unstable" on certain lists that
 generally under "stable" conditions, the instruction works like
 
 SP = A & X
-addr = SP & M+1
+addr = SP & (H+1)  (*)
 
 stable conditions are when no character or sprite DMA is going on, traditionally
 tests for these conditions (->lorenz) run in the border area with no sprites.
 
-there are two unstable conditions, the first is when a DMA is going on while the
-instruction executes (the CPU is halted by the VIC-II) then the & M+1 part drops
-off and the instruction becomes
+there are two conditions that lead to somewhat surprising behaviour. the first
+is when a DMA is going on while the instruction executes (the CPU is halted by
+the VIC-II) then the & H+1 part drops off and the instruction becomes
 
 SP = A & X
 addr = SP
 
-the other unstable condition is when the addressing/indexing causes a page
-boundary crossing, in that case the highbyte of the target address may become
-equal to the value stored. this is usually avoided in code by keeping the index
-in a suitable range
+the other condition that was once deemed to lead to unstable behavior is when the
+addressing/indexing causes a page boundary crossing, in that case the highbyte
+of the target address is ANDed with the value to be stored (cf test 5).
 
-the exact technical cause of both instabilities is still a bit unclear, and they
+this can be avoided in code by keeping the index in a suitable range.
+
+note that the target address is not affected by the DMA condition; even if the
+& (H+1) is dropped from computation of the value to be stored, it is still
+preformed in the computation of the high byte of the the target address.
+
+
+the exact technical cause of both behaviours is still a bit unclear, and they
 can not be fully explained yet
 
-(*) M+1 is the highbyte of the target address + 1, eg when the address is $1234
-    then M+1 is $13
+(*) H+1 is the highbyte of the target address + 1, eg when the address is $1234
+    then H+1 is $13
 
 --------------------------------------------------------------------------------
 
@@ -47,9 +53,9 @@ verified on:
 shsabsy2.prg
 
 the second tests checks for the correct behaviour of the "unstable" part of
-this opcode, in particular the case that the & M+1 drops off and the stored
+this opcode, in particular the case that the & (H+1) drops off and the stored
 value becomes A & X. this happens if the instruction is being interupted by
-sprite DMA (?: TODO: exact description, accurate timings)
+sprite DMA
 
 works in x64sc, fails in x64
 
@@ -72,4 +78,62 @@ verified on:
 - C64C(new) with 8500 (gpz)
 --------------------------------------------------------------------------------
 
-TODO: test for page boundary crossing bug
+shsabsy4.prg
+
+checks the timing of the above tested behaviour relative to cycle stealing,
+for both sprite and character DMA
+
+Each column is one cycle later execution of SHS
+top three rows are
+- value of SP after instruction,
+- value written to memory, 
+- non-stolen cycles taken to execute
+next three rows are the reference data
+
+The first '4' is when it steals a cycle from a sprite DMA, the second '4' is
+when it steals a cycle from char DMA.  In each case, one cycle later, and it
+doesn't perform the & (H+1) on the written value
+
+The ANDing of the value to be stored with (H+1) is dropped off iff the
+instruction is executed one cycle later than it would need to execute in order
+to steal a cycle from a sprite or character DMA, i.e. if it is paused
+between the third and fourth cycles.
+
+
+works in x64sc (r37007)
+
+verified on:
+- C64(old) with 6510 (shrydar)
+--------------------------------------------------------------------------------
+
+shsabsy5.prg
+
+checks the timing of the above tested behaviour relative to cycle stealing,
+for both sprite and character DMA, when a page crossing is executed
+
+Each column is one cycle later execution of SHS
+top three rows are
+- value of SP after instruction,
+- value written to memory, 
+- non-stolen cycles taken to execute
+next three rows are the reference data
+
+The first '4' is when it steals a cycle from a sprite DMA, the second '4' is
+when it steals a cycle from char DMA.  In each case, one cycle later, and it
+doesn't perform the &(H+1) on the written value
+
+The ANDing of the value to be stored with (H+1) is dropped off iff the
+instruction is executed one cycle later than it would need to execute in order
+to steal a cycle from a sprite or character DMA, i.e. if it is paused
+between the third and fourth cycles.
+
+The address written to always has its high byte replaced with A & X & (H+1),
+regardless of whether the & (H+1) is dropped from the computation of the value
+to be stored.  In this instance, the destination address is always $0614.
+
+
+works in x64sc (r37007)
+
+verified on:
+- C64(old) with 6510 (shrydar)
+--------------------------------------------------------------------------------
