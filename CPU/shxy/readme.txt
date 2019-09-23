@@ -135,6 +135,7 @@ works in x64sc (r37007)
 
 verified on:
 - C64(old) with 6510 (shrydar)
+- C64C(new) with 8500 (gpz)
 --------------------------------------------------------------------------------
 
 TODO: try finding a machine where page boundary crossing behaviour is
