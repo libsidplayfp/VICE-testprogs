@@ -120,7 +120,7 @@ The first '4' is when the instruction steals a cycle from a sprite DMA, the
 second '4' is when it steals a cycle from charactor DMA.  In each case, one
 cycle later, and it doesn't perform the &(H+1) on the written value
 
-The ANDing of the value to be stored with (H+1) is dropped off iff the
+The ANDing of the value to be stored with (H+1) is dropped off if the
 instruction is executed one cycle later than it would need to execute in order
 to steal a cycle from a sprite or character DMA, i.e. if it the instruction is
 paused between the third and fourth cycles.
@@ -139,5 +139,5 @@ verified on:
 --------------------------------------------------------------------------------
 
 TODO: try finding a machine where page boundary crossing behaviour is
-anything other than the behaviour documented above.
+      anything other than the behaviour documented above.
 

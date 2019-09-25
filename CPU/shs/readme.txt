@@ -94,7 +94,7 @@ The first '4' is when it steals a cycle from a sprite DMA, the second '4' is
 when it steals a cycle from char DMA.  In each case, one cycle later, and it
 doesn't perform the & (H+1) on the written value
 
-The ANDing of the value to be stored with (H+1) is dropped off iff the
+The ANDing of the value to be stored with (H+1) is dropped off if the
 instruction is executed one cycle later than it would need to execute in order
 to steal a cycle from a sprite or character DMA, i.e. if it is paused
 between the third and fourth cycles.
@@ -123,7 +123,7 @@ The first '4' is when it steals a cycle from a sprite DMA, the second '4' is
 when it steals a cycle from char DMA.  In each case, one cycle later, and it
 doesn't perform the &(H+1) on the written value
 
-The ANDing of the value to be stored with (H+1) is dropped off iff the
+The ANDing of the value to be stored with (H+1) is dropped off if the
 instruction is executed one cycle later than it would need to execute in order
 to steal a cycle from a sprite or character DMA, i.e. if it is paused
 between the third and fourth cycles.
