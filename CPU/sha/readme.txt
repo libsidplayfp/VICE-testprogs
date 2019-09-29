@@ -93,7 +93,7 @@ between the third last and second last cycles.
 works in x64sc (r37007)
 
 verified on:
-????- C64(old) with 6510 (shrydar)
+- C64(old) with 6510 (shrydar)
 --------------------------------------------------------------------------------
 
 shsabsy5.prg
@@ -127,5 +127,5 @@ to be stored.  In this instance, the destination address is always $0614.
 works in x64sc (r37007)
 
 verified on:
-????- C64(old) with 6510 (shrydar)
+- C64(old) with 6510 (shrydar)
 --------------------------------------------------------------------------------
