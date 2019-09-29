@@ -69,4 +69,63 @@ verified on:
 - C64C(new) with 8500 (gpz)
 --------------------------------------------------------------------------------
 
-TODO: test for page boundary crossing bug
+shsabsy4.prg
+
+checks the timing of the &(H+1) drop off relative to cycle stealing,
+for both sprite and character DMA
+
+Each column is one cycle later execution of SHA
+top two rows are
+- value written to memory, 
+- non-stolen cycles taken to execute
+next two rows are the reference data
+
+The first '4' is when it steals a cycle from a sprite DMA, the second '4' is
+when it steals a cycle from char DMA.  In each case, one cycle later, and it
+doesn't perform the &(H+1) on the written value
+
+The ANDing of the value to be stored with (H+1) is dropped off iff the
+instruction is executed one cycle later than it would need to execute in order
+to steal a cycle from a sprite or character DMA, i.e. if it is paused
+between the third last and second last cycles.
+
+
+works in x64sc (r37007)
+
+verified on:
+????- C64(old) with 6510 (shrydar)
+--------------------------------------------------------------------------------
+
+shsabsy5.prg
+
+checks the timing of the &(H+1) drop off relative to cycle stealing,
+for both sprite and character DMA, when a page crossing is executed.
+
+Also tests that the destination address has it's high byte ANDed with
+A&X regardles of when/whetherthe instruction is interrupted.
+
+Each column is one cycle later execution of SHA
+top two rows are
+- value written to memory, 
+- non-stolen cycles taken to execute
+next two rows are the reference data
+
+The first '4' is when it steals a cycle from a sprite DMA, the second '4' is
+when it steals a cycle from char DMA.  In each case, one cycle later, and it
+doesn't perform the &(H+1) on the written value
+
+The ANDing of the value to be stored with (H+1) is dropped off iff the
+instruction is executed one cycle later than it would need to execute in order
+to steal a cycle from a sprite or character DMA, i.e. if it is paused
+between the third last and second last cycles.
+
+The address written to always has its high byte replaced with A & X & (H+1),
+regardless of whether the & (H+1) is dropped from the computation of the value
+to be stored.  In this instance, the destination address is always $0614.
+
+
+works in x64sc (r37007)
+
+verified on:
+????- C64(old) with 6510 (shrydar)
+--------------------------------------------------------------------------------
