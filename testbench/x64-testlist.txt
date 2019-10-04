@@ -441,9 +441,13 @@
 ../CPU/sha/,shaabsy1.prg,exitcode,6000000
 ../CPU/sha/,shaabsy2.prg,exitcode,6500000,vicii-pal
 ../CPU/sha/,shaabsy3.prg,exitcode,18000000,vicii-pal
+../CPU/sha/,shaabsy4.prg,exitcode,7000000,vicii-pal
+../CPU/sha/,shaabsy5.prg,exitcode,7000000,vicii-pal
 ../CPU/sha/,shazpy1.prg,exitcode,5500000
 ../CPU/sha/,shazpy2.prg,exitcode,6500000,vicii-pal
 ../CPU/sha/,shazpy3.prg,exitcode,20000000,vicii-pal
+../CPU/sha/,shazpy4.prg,exitcode,7000000,vicii-pal
+../CPU/sha/,shazpy5.prg,exitcode,7000000,vicii-pal
 ../CPU/shs/,shsabsy1.prg,exitcode,5500000
 ../CPU/shs/,shsabsy2.prg,exitcode,7000000,vicii-pal
 ../CPU/shs/,shsabsy3.prg,exitcode,20000000,vicii-pal
