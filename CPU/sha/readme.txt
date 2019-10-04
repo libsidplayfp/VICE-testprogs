@@ -69,7 +69,7 @@ verified on:
 - C64C(new) with 8500 (gpz)
 --------------------------------------------------------------------------------
 
-shsabsy4.prg
+shaabsy4.prg shazpy4.prg
 
 checks the timing of the &(H+1) drop off relative to cycle stealing,
 for both sprite and character DMA
@@ -84,7 +84,7 @@ The first '4' is when it steals a cycle from a sprite DMA, the second '4' is
 when it steals a cycle from char DMA.  In each case, one cycle later, and it
 doesn't perform the &(H+1) on the written value
 
-The ANDing of the value to be stored with (H+1) is dropped off iff the
+The ANDing of the value to be stored with (H+1) is dropped off if the
 instruction is executed one cycle later than it would need to execute in order
 to steal a cycle from a sprite or character DMA, i.e. if it is paused
 between the third last and second last cycles.
@@ -94,9 +94,10 @@ works in x64sc (r37007)
 
 verified on:
 - C64(old) with 6510 (shrydar)
+- C64C(new) with 8500 (gpz)
 --------------------------------------------------------------------------------
 
-shsabsy5.prg
+shaabsy5.prg shazpy5.prg
 
 checks the timing of the &(H+1) drop off relative to cycle stealing,
 for both sprite and character DMA, when a page crossing is executed.
@@ -114,7 +115,7 @@ The first '4' is when it steals a cycle from a sprite DMA, the second '4' is
 when it steals a cycle from char DMA.  In each case, one cycle later, and it
 doesn't perform the &(H+1) on the written value
 
-The ANDing of the value to be stored with (H+1) is dropped off iff the
+The ANDing of the value to be stored with (H+1) is dropped off if the
 instruction is executed one cycle later than it would need to execute in order
 to steal a cycle from a sprite or character DMA, i.e. if it is paused
 between the third last and second last cycles.
@@ -128,4 +129,5 @@ works in x64sc (r37007)
 
 verified on:
 - C64(old) with 6510 (shrydar)
+- C64C(new) with 8500 (gpz)
 --------------------------------------------------------------------------------
