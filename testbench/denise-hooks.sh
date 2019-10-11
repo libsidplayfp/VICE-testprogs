@@ -1,7 +1,5 @@
 
 # FIXME: set default config, old c64, pepto palette
-#DENISEOPTS+=" -PAL"
-#DENISEOPTS+=" -raminitstartvalue 255 -raminitvalueinvert 4"
 DENISEOPTS+=" -no-driver"
 DENISEOPTS+=" -debugcart"
 

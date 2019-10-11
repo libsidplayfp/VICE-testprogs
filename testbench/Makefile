@@ -197,8 +197,6 @@ emu64-testlist.txt: c64-testlist.in Makefile
 denise-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  denise-testlist.txt
 	cat  c64-testlist.in \
-		| grep -v ",mountd64" \
-		| grep -v ",mountg64" \
 		| grep -v ",mountp64" \
 		| grep -v ",screenshot" \
 		| grep -v ",vicii-ntscold" \
@@ -211,7 +209,7 @@ denise-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
 		>> denise-testlist.txt
-
+		
 yace-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  yace-testlist.txt
 	cat  c64-testlist.in \
@@ -435,6 +433,7 @@ results0: maketable
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
+		--results results/denise-20191112-result.txt "denise 20191112" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/u64-121-pal-result.txt "U64 1.21 (PAL)"
@@ -477,6 +476,7 @@ results: maketable
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
+		--results results/denise-20191112-result.txt "denise 20191112" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/u64-121-pal-result.txt "U64 1.21 (PAL)" \
@@ -548,6 +548,7 @@ resultswiki: maketable
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
+		--results results/denise-20191112-result.txt "denise 20191112" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/u64-121-pal-result.txt "U64 1.21 (PAL)"
@@ -614,6 +615,20 @@ resultshoxs64: maketable hoxs64-testlist.txt
 		\
 		> results/hoxs64.html
 
+		
+		
+
+.PHONY: resultsdenise
+resultsdenise: maketable denise-testlist.txt
+	./maketable --html --list denise-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--firstcolisref "<small><b>fails on VICE</b></small>" \
+		--results results/denise-1-0-5-result.txt "denise 1.0.5" \
+		--results results/denise-20191112-result.txt "denise 20191112" \
+		\
+		> results/denise.html
+		
 ################################################################################
 		
 .PHONY: resultscham
@@ -668,5 +683,5 @@ resultsu64: maketable u64-testlist.txt
 		
 ################################################################################
 .PHONY: allresults
-allresults: resultsx64 resultshoxs64 resultscham resultsu64
+allresults: resultsx64 resultshoxs64 resultscham resultsu64 resultsdenise
 		
