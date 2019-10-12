@@ -429,7 +429,7 @@ results0: maketable
 		--results results/x64-r36700-result.txt "x64 r36700" \
 		--results results/x64sc-r36700-result.txt "x64sc r36700" \
 		--results results/x128c64-r36700-result.txt "x128 (c64) r36700" \
-		--results results/hoxs64-1-0-21-0-result.txt "hoxs64 1.0.21.0" \
+		--results results/hoxs64-1-0-21-2-result.txt "hoxs64 1.0.21.2" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
@@ -472,7 +472,7 @@ results: maketable
 		--results results/x64-r36700-result.txt "x64 r36700" \
 		--results results/x64sc-r36700-result.txt "x64sc r36700" \
 		--results results/x128c64-r36700-result.txt "x128 (c64) r36700" \
-		--results results/hoxs64-1-0-21-0-result.txt "hoxs64 1.0.21.0" \
+		--results results/hoxs64-1-0-21-2-result.txt "hoxs64 1.0.21.2" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
@@ -534,6 +534,12 @@ results: maketable
 		\
 		> results/cbm2.html
 		
+	./maketable --html --list vsid-testlist.in \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/vsid-r36700-result.txt "vsid r36700" \
+		\
+		> results/sid.html
+		
 # use with something like "make resultswiki | xclip -selection clipboard"
 		
 resultswiki: maketable
@@ -544,7 +550,7 @@ resultswiki: maketable
 		--results results/x64-r36700-result.txt "x64 r36700" \
 		--results results/x64sc-r36700-result.txt "x64sc r36700" \
 		--results results/x128c64-r36700-result.txt "x128 (c64) r36700" \
-		--results results/hoxs64-1-0-21-0-result.txt "hoxs64 1.0.21.0" \
+		--results results/hoxs64-1-0-21-2-result.txt "hoxs64 1.0.21.2" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
@@ -588,6 +594,9 @@ resultswiki: maketable
 		--percentages "{{Progress|%d|%d|%d|}}" \
 		--results results/xcbm2-r36700-result.txt "xcbm2 r36700"
 	@echo "=== SID ==="
+	./maketable --wiki --list vsid-testlist.in \
+		--percentages "{{Progress|%d|%d|%d|}}" \
+		--results results/vsid-r36700-result.txt "vsid r36700"
 
 ################################################################################
 
@@ -604,6 +613,146 @@ resultsx64: maketable
 		\
 		> results/x64.html
 
+.PHONY: resultsx128
+resultsx128: maketable
+	./maketable --html --list c128-testlist.in \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/x128-r35990-result.txt "x128 r35990" \
+		--results results/x128-r36014-result.txt "x128 r36014" \
+		--results results/x128-r36700-result.txt "x128 r36700" \
+		\
+		> results/x128.html
+
+.PHONY: resultsx128c64
+resultsx128c64: maketable
+	./maketable --html --list c64-testlist.in \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/x128c64-r35968-result.txt "x128c64 r35968" \
+		--results results/x128c64-r36700-result.txt "x128c64 r36700" \
+		\
+		> results/x128c64.html
+
+.PHONY: resultsxcbm2
+resultsxcbm2: maketable
+	./maketable --html --list cbm610-testlist.in \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/xcbm2-r35990-result.txt "xcbm2 r35990" \
+		--results results/xcbm2-r36700-result.txt "xcbm2 r36700" \
+		\
+		> results/xcbm2.html
+
+.PHONY: resultsxcbm5x0
+resultsxcbm5x0: maketable
+	./maketable --html --list cbm510-testlist.in \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/xcbm5x0-r35990-result.txt "xcbm5x0 r35990" \
+		--results results/xcbm5x0-r36700-result.txt "xcbm5x0 r36700" \
+		\
+		> results/xcbm5x0.html
+
+.PHONY: resultsx64dtv
+resultsx64dtv: maketable
+	./maketable --html --list dtv-testlist.in \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/x64dtv-r35990-result.txt "x64dtv r35990" \
+		--results results/x64dtv-r36700-result.txt "x64dtv r36700" \
+		\
+		> results/x64dtv.html
+
+.PHONY: resultsxpet
+resultsxpet: maketable
+	./maketable --html --list pet-testlist.in \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/xpet-r35990-result.txt "xpet r35990" \
+		--results results/xpet-r36700-result.txt "xpet r36700" \
+		\
+		> results/xpet.html
+
+.PHONY: resultsxplus4
+resultsxplus4: maketable
+	./maketable --html --list plus4-testlist.in \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/xplus4-r35990-result.txt "xplus4 r35990" \
+		--results results/xplus4-r36700-result.txt "xplus4 r36700" \
+		\
+		> results/xplus4.html
+
+.PHONY: resultsxscpu64
+resultsxscpu64: maketable
+	./maketable --html --list scpu-testlist.in \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/xscpu64-r35990-result.txt "xscpu64 r35990" \
+		--results results/xscpu64-r36700-result.txt "xscpu64 r36700" \
+		\
+		> results/xscpu64.html
+
+.PHONY: resultsxvic
+resultsxvic: maketable
+	./maketable --html --list vic20-testlist.in \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/xvic-r35990-result.txt "xvic r35990" \
+		--results results/xvic-r36700-result.txt "xvic r36700" \
+		\
+		> results/xvic.html
+
+.PHONY: resultsvsid
+resultsvsid: maketable
+	./maketable --html --list vsid-testlist.in \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/vsid-r35990-result.txt "vsid r35990" \
+		--results results/vsid-r36700-result.txt "vsid r36700" \
+		\
+		> results/vsid.html
+
+################################################################################
+
+#results/emu64-result.txt
+
+.PHONY: resultsz64kc64
+resultsz64kc64: maketable z64kc64-testlist.txt
+	./maketable --html --list z64kc64-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--firstcolisref "<small><b>fails on VICE</b></small>" \
+		--results results/z64kc64-20181202-result.txt "z64kc64 20181202" \
+		--results results/z64kc64-1_2-result.txt "z64kc64 1.2" \
+		\
+		> results/z64kc64.html
+
+.PHONY: resultsz64kc128
+resultsz64kc128: maketable z64kc128-testlist.txt
+	./maketable --html --list z64kc128-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--firstcolisref "<small><b>fails on VICE</b></small>" \
+		--results results/z64kc128-20181202-result.txt "z64kc128 20181202" \
+		--results results/z64kc128-1_2-result.txt "z64kc128 1.2" \
+		\
+		> results/z64kc128.html
+
+.PHONY: resultsz64kc128c64
+resultsz64kc128c64: maketable z64kc128c64-testlist.txt
+	./maketable --html --list z64kc128c64-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--firstcolisref "<small><b>fails on VICE</b></small>" \
+		--results results/z64kc128c64-20181202-result.txt "z64kc128c64 20181202" \
+		--results results/z64kc128c64-1_2-result.txt "z64kc128c64 1.2" \
+		\
+		> results/z64kc128c64.html
+
+.PHONY: resultsz64kvic20
+resultsz64kvic20: maketable z64kvic20-testlist.txt
+	./maketable --html --list z64kvic20-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/xvic-r36700-result.txt "xvic r36700" \
+		--firstcolisref "<small><b>fails on VICE</b></small>" \
+		--results results/z64kvic20-20181202-result.txt "z64kvic20 20181202" \
+		--results results/z64kvic20-1_2-result.txt "z64kvic20 1.2" \
+		\
+		> results/z64kvic20.html
+
+		
 .PHONY: resultshoxs64
 resultshoxs64: maketable hoxs64-testlist.txt
 	./maketable --html --list hoxs64-testlist.txt \
@@ -612,11 +761,9 @@ resultshoxs64: maketable hoxs64-testlist.txt
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/hoxs64-1-0-16-0-result.txt "hoxs64 1.0.16.0" \
 		--results results/hoxs64-1-0-21-0-result.txt "hoxs64 1.0.21.0" \
+		--results results/hoxs64-1-0-21-2-result.txt "hoxs64 1.0.21.2" \
 		\
 		> results/hoxs64.html
-
-		
-		
 
 .PHONY: resultsdenise
 resultsdenise: maketable denise-testlist.txt
@@ -628,6 +775,16 @@ resultsdenise: maketable denise-testlist.txt
 		--results results/denise-20191112-result.txt "denise 20191112" \
 		\
 		> results/denise.html
+		
+.PHONY: resultsmicro64
+resultsmicro64: maketable micro64-testlist.txt
+	./maketable --html --list micro64-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--firstcolisref "<small><b>fails on VICE</b></small>" \
+		--results results/micro64-20180314-result.txt "micro64 20180314" \
+		\
+		> results/micro64.html
 		
 ################################################################################
 		
@@ -664,6 +821,19 @@ resultschamwiki: maketable chameleon-testlist.txt
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/chameleon-head-standalone-result.txt "TC64 head (standalone)"
 
+.PHONY: resultscham20
+resultscham20: maketable cham20-testlist.txt 
+	./maketable --filter-ntscold --html --list cham20-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/xvic-r36700-result.txt "xvic r36700" \
+		--firstcolisref "<small><b>fails on VICE</b></small>" \
+		--warnvicefail "<small><b>fails on VICE</b></small>" \
+		--warnvicfetch "<small><b>VIC may be wrong!</b></small>" \
+		--results results/cham20-20150818-result.txt "cham20 20150818" \
+		\
+		> results/cham20.html
+
+		
 ################################################################################
 		
 .PHONY: resultsu64
@@ -683,5 +853,9 @@ resultsu64: maketable u64-testlist.txt
 		
 ################################################################################
 .PHONY: allresults
-allresults: resultsx64 resultshoxs64 resultscham resultsu64 resultsdenise
-		
+allresults: results resultsx64 resultsx128 resultsx128c64 resultsxcbm2 resultsxcbm5x0 resultsx64dtv \
+		resultsxpet resultsxplus4 resultsxscpu64 resultsxvic resultsvsid \
+		resultsz64kc64 resultsz64kc128 resultsz64kc128c64 resultsz64kvic20 \
+		resultshoxs64 resultsdenise resultsmicro64 \
+		resultscham resultscham20 resultsu64 
+
