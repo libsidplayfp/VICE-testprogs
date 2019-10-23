@@ -142,6 +142,10 @@ lpp1c:
 nofail:
             stx $d7ff
 
+!if (CRTMODE = 1) {
+            jmp crtstartup
+}            
+normalstartup:
             ; wait until key pressed
 wait3a:
             inc $d020
@@ -209,6 +213,87 @@ iopage:
             lda #$de
             sta currpage
             jmp mainlp
+            
+!if (CRTMODE = 1) {
+crtstartup:
+            lda #>irqnmi
+            sta $ffff
+            sta $fffb
+            lda #<irqnmi
+            sta $fffe 
+            sta $fffa
+            
+            ldx #6
+-
+            lda SIGBUFFER,x
+            cmp signature,x
+            bne firststart
+            dex
+            bpl -
+            
+            lda SIGBUFFER+7
+            cmp #'1'
+            beq secondstart
+            jmp thirdstart
+
+firststart:
+            lda #'0'
+            sta $0400+(0*40)+39
+            
+            ldx #7
+-
+            lda signature,x
+            sta SIGBUFFER,x
+            dex
+            bpl -
+            
+            ; preload registers after first start
+            lda #$ff
+            ldx #$ff
+            ldy #$ff
+            txs
+            php
+            sta $00
+            sta $01
+            jmp *
+
+secondstart:            
+            inc SIGBUFFER+7
+            
+            lda #'1'
+            sta $0400+(0*40)+39
+            
+            ; preload registers after second start
+            lda #$00
+            ldx #$00
+            ldy #$00
+            txs
+            php
+            sta $00
+            sta $01
+            jmp *
+
+thirdstart:            
+            dec SIGBUFFER+7
+            lda #'2'
+            sta $0400+(0*40)+39
+            
+            ; preload registers after second start
+            lda #$ff
+            ldx #$ff
+            ldy #$ff
+            txs
+            php
+            jmp normalstartup
+            
+            
+signature:    
+            !scr "sTaRtCy1"
+            
+}
+
+irqnmi:
+            rti
 
 keyscan:
             lda #$ff
@@ -621,12 +706,12 @@ lp1:
             sta $0400,y
             sta $0500,y
             sta $0600,y
-            sta $0700,y
+            sta $06e8,y
             lda #$01
             sta $d800,y
             sta $d900,y
             sta $da00,y
-            sta $db00,y
+            sta $dae8,y
             iny
             bne lp1
     

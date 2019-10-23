@@ -1,7 +1,6 @@
 USEULTIMAX = 0
 
-    !to "test.prg",cbm
-
+SIGBUFFER = $07E8
 MEMBUFFER = $c000
 REGBUFFER = $c000 + $0400
 

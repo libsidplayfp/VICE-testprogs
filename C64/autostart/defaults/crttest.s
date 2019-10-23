@@ -1,8 +1,7 @@
 USEULTIMAX = 1
 ROMSTART = $e000
 
-    !to "test.crt",plain
-
+SIGBUFFER = $07E8
 MEMBUFFER = $0800
 REGBUFFER = $0800 + $0400
 

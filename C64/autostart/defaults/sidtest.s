@@ -1,8 +1,7 @@
 
 USEULTIMAX = 0
 
-    !to "test.sid",plain
-
+SIGBUFFER = $07E8
 MEMBUFFER = $c000
 REGBUFFER = $c000 + $0400
 
