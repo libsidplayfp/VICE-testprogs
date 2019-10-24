@@ -29,10 +29,23 @@ KLUDGES:
 ================================================================================
 --------------------------------------------------------------------------------
 
+* prerequisites
 * preparing tests
 * adding new tests
 * running the tests
 * adding support for another target/emulator
+
+--------------------------------------------------------------------------------
+================================================================================
+prerequisites
+================================================================================
+--------------------------------------------------------------------------------
+
+a little bit of setup is needed to use the testbench:
+
+* a C compiler must be available (to build some support tools)
+* the "acme" crossassembler must be installed (to (re)build the selftests)
+* copy "Makefile.config.example" to "Makefile.config" and edit it to your needs
 
 --------------------------------------------------------------------------------
 ================================================================================
