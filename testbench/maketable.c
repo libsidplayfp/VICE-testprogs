@@ -31,6 +31,7 @@ int warnvicfetch = 0;
 char *vicfetchstring = NULL;
 int warnvicefail = 0;
 char *vicefailstring = NULL;
+int ranking = 0;
 
 char *infilename[MAXLISTS];
 int numfiles = 0;
@@ -331,7 +332,7 @@ int findresult(TEST *list, TEST *reflist)
 }
 
 //------------------------------------------------------------------------------
-void printstart(void)
+void printdocumentstart(void)
 {
     if (format == FORMAT_HTML) {
         printf(
@@ -347,9 +348,31 @@ void printstart(void)
             "#maintable td.ok      { background-color: #ccffcc; color: #00ff00; }"
             "#maintable td.error   { background-color: #ffcccc; color: #ff0000; }"
             "#maintable td.timeout { background-color: #ccccff; color: #0000ff; }"
+            "#rankstable            { border-collapse: collapse; border: 1px solid black; }"
+            "#rankstable td         { border: 1px solid black; }"
             "</style>"
             "</head>"
             "<body>"
+            "\n"
+        );
+    } else if (format == FORMAT_WIKI) {
+    }
+}
+
+void printdocumentend(void)
+{
+    if (format == FORMAT_HTML) {
+        printf("</html>"
+               "\n"
+        );
+    } else if (format == FORMAT_WIKI) {
+    }
+}
+
+void printtablestart(void)
+{
+    if (format == FORMAT_HTML) {
+        printf(
             "<table style=\"width: 100%%\" id=\"maintable\">"
             "\n"
         );
@@ -358,16 +381,137 @@ void printstart(void)
     }
 }
 
-void printend(void)
+void printtableend(void)
 {
     if (format == FORMAT_HTML) {
         printf("</table>"
-               "</html>"
                "\n"
         );
     } else if (format == FORMAT_WIKI) {
         printf("|}\n");
     }
+}
+
+
+void printranking(void)
+{
+    char tmp[0x100];
+    int i, num, pass, percent;
+    int sorted[0x100], sortnum = 0;
+    int flipped, idx0, ii;
+
+    for (i = (firstcolisref ? 1 : 0); i < numfiles; i++) {
+        sorted[sortnum] = i;
+        sortnum++;
+    }
+    
+    // stupid bubblesort
+    do {
+        int idx0, num0, pass0, percent0;
+        int idx1, num1, pass1, percent1;
+        flipped = 0;
+        for (i = 0; i < (sortnum-1); i++) {
+            idx0 = sorted[i];
+            num0 = testnum[idx0]; 
+            pass0 = testnum[idx0] - testfailed[idx0];
+            percent0 = (pass0 * 100) / num0;
+            idx1 = sorted[i+1];
+            num1 = testnum[idx1]; 
+            pass1 = testnum[idx1] - testfailed[idx1];
+            percent1 = (pass1 * 100) / num1;
+            if ((percent1 > percent0) || 
+                ((percent1 == percent0) && (pass1 > pass0))) {
+                sorted[i] = idx1;
+                sorted[i+1] = idx0;
+                flipped=1;
+            }
+        }
+    } while (flipped);
+
+    switch (format) {
+        case FORMAT_TEXT: 
+            break;
+        case FORMAT_HTML:
+            printf("<table id=\"rankstable\"><tr>"
+                   "<th></th>"
+                   "<th>tested</th>"
+                   "<th>passed</th>"
+                   "<th>percent</th>"
+                   "<th></th>"
+                   "</tr>");
+            break;
+        case FORMAT_WIKI: 
+            printf("{| class=\"wikitable sortable\" border=\"1\" cellpadding=\"2\" cellspacing=\"0\"\n"
+                   "! |\n"
+                   "! | tested\n"
+                   "! | passed\n"
+                   "! | percent\n"
+                   "! |\n"
+                   "|-\n"
+            );
+            break;
+    }
+    
+    for (i = 0; i < sortnum; i++) {
+        idx0 = sorted[i];
+        num = testnum[idx0]; 
+        pass = testnum[idx0] - testfailed[idx0];
+        percent = (pass * 100) / num;
+        switch (format) {
+            case FORMAT_TEXT: 
+                strcpy(tmp, headline[idx0]); tmp[19] = 0;
+                printf(WHITE "%-20s " NC, tmp); 
+                printf("[");
+                for (ii = 0; ii < (percent / 4); ii++) {
+                    printf("#");
+                }
+                for (; ii < (100 / 4); ii++) {
+                    printf(" ");
+                }
+                printf("] %3d%%\n", percent);
+                break;
+            case FORMAT_HTML:
+                printf("<tr>");
+                printf("<td>%s</td>", headline[idx0]);
+                printf("<td>%4d</td>", num);
+                printf("<td>%4d</td>", pass);
+                printf("<td>%3d%%</td><td>", percent);
+                printf("<pre>");
+                for (ii = 0; ii < (percent / 2); ii++) {
+                    printf("#");
+                }
+                for (; ii < (100 / 2); ii++) {
+                    printf("-");
+                }
+                printf("</pre>");
+                printf("</td>");
+                printf("</tr>");
+                
+                break;
+            case FORMAT_WIKI: 
+                printf("||%s\n", headline[idx0]); 
+                printf("||%d\n", num); 
+                printf("||%d\n", pass); 
+                printf("||%d%%\n", percent); 
+                printf("||"); 
+                printf(percentagestring, percent, pass, num);
+                printf("\n"); 
+                printf("|-\n"); 
+                break;
+        }
+    }
+    
+    switch (format) {
+        case FORMAT_TEXT: 
+            break;
+        case FORMAT_HTML:
+            printf("</table><p></p>");
+            break;
+        case FORMAT_WIKI:
+            printf("|}\n");
+            break;
+    }
+    printf("\n");
 }
 
 void printheader(void)
@@ -652,8 +796,8 @@ void printtable(void)
     int i, ii, iserror;
     int res[MAXLISTS];
 
-    printstart();
-
+    
+    printtablestart();
     // first the headers
     printheader();
 
@@ -673,8 +817,8 @@ void printtable(void)
 
         printrow(i, res);
     }
-
-    printend();
+    
+    printtableend();
 }
 
 //------------------------------------------------------------------------------
@@ -689,6 +833,7 @@ void usage(char *name)
     "  --results <file> <header>    add a results file\n"
     "  --html                       output html\n"
     "  --wiki                       output mediawiki format\n"
+    "  --ranking                    output ranking first\n"
     "  --filter-ntscold             omit ntsc-old tests\n"
     "  --firstcolisref <string>     first resultlist is a reference\n"
     "  --warnvicefail <string>      warn if test is marked as failing in VICE\n"
@@ -713,6 +858,8 @@ int main(int argc, char *argv[])
             format = FORMAT_HTML;
         } else if(!strcmp(argv[i], "--wiki")) {
             format = FORMAT_WIKI;
+        } else if(!strcmp(argv[i], "--ranking")) {
+            ranking = 1;
         } else if(!strcmp(argv[i], "--help")) {
             usage(argv[0]);
             exit(EXIT_SUCCESS);
@@ -773,9 +920,17 @@ int main(int argc, char *argv[])
 
 //    dumplist(reflist, refnum);
 
+    printdocumentstart();
+    
+    if (ranking) {
+        printranking();
+    }
+    
     // output the table
     printtable();
 
+    printdocumentend();
+    
     return EXIT_SUCCESS;
 }
 

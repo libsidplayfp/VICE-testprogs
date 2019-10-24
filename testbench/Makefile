@@ -384,6 +384,8 @@ testz64kvic20:
 
 testdenise:
 	EMUDIR="$(DENISEDIR)" ./testbench.sh denise
+testemu64:
+	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64
 	
 ##############################################################################
 
@@ -467,7 +469,7 @@ results0: maketable
 		
 		
 results: maketable
-	./maketable --html --list c64-testlist.in \
+	./maketable --ranking --html --list c64-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64-r36700-result.txt "x64 r36700" \
 		--results results/x64sc-r36700-result.txt "x64sc r36700" \
@@ -483,7 +485,7 @@ results: maketable
 		\
 		> results/c64.html
 		
-	./maketable --html --list vic20-testlist.in \
+	./maketable --ranking --html --list vic20-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xvic-r36700-result.txt "xvic r36700" \
 		--results results/z64kvic20-1_2-result.txt "z64k (vic20) 1.2" \
@@ -491,50 +493,50 @@ results: maketable
 		\
 		> results/vic20.html
 		
-	./maketable --html --list c128-testlist.in \
+	./maketable --ranking --html --list c128-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x128-r36700-result.txt "x128 r36700" \
 		--results results/z64kc128-1_2-result.txt "z64k (c128) 1.2" \
 		\
 		> results/c128.html
 
-	./maketable --html --list plus4-testlist.in \
+	./maketable --ranking --html --list plus4-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xplus4-r36700-result.txt "xplus4 r36700" \
 		\
 		> results/plus4.html
 
-	./maketable --html --list pet-testlist.in \
+	./maketable --ranking --html --list pet-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xpet-r36700-result.txt "xpet r36700" \
 		\
 		> results/pet.html
 
-	./maketable --html --list dtv-testlist.in \
+	./maketable --ranking --html --list dtv-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64dtv-r36700-result.txt "x64dtv r36700" \
 		\
 		> results/dtv.html
 
-	./maketable --html --list scpu-testlist.in \
+	./maketable --ranking --html --list scpu-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xscpu64-r36700-result.txt "xscpu64 r36700" \
 		\
 		> results/scpu.html
 		
-	./maketable --html --list cbm510-testlist.in \
+	./maketable --ranking --html --list cbm510-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xcbm5x0-r36700-result.txt "xcbm5x0 r36700" \
 		\
 		> results/cbm5x0.html
 		
-	./maketable --html --list cbm610-testlist.in \
+	./maketable --ranking --html --list cbm610-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xcbm2-r36700-result.txt "xcbm2 r36700" \
 		\
 		> results/cbm2.html
 		
-	./maketable --html --list vsid-testlist.in \
+	./maketable --ranking --html --list vsid-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/vsid-r36700-result.txt "vsid r36700" \
 		\
@@ -545,7 +547,7 @@ results: maketable
 resultswiki: maketable
 	@echo "== Results =="
 	@echo "=== C64 ==="
-	./maketable --wiki --list c64-testlist.in \
+	./maketable --ranking --wiki --list c64-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
 		--results results/x64-r36700-result.txt "x64 r36700" \
 		--results results/x64sc-r36700-result.txt "x64sc r36700" \
@@ -559,42 +561,42 @@ resultswiki: maketable
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/u64-121-pal-result.txt "U64 1.21 (PAL)"
 	@echo "=== VIC20 ==="
-	./maketable --wiki --list vic20-testlist.in \
+	./maketable --ranking --wiki --list vic20-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
 		--results results/xvic-r36700-result.txt "xvic r36700" \
 		--results results/z64kvic20-1_2-result.txt "z64k (vic20) 1.2" \
 		--results results/cham20-20150818-result.txt "cham20 20150818"
 	@echo "=== C128 ==="
-	./maketable --wiki --list c128-testlist.in \
+	./maketable --ranking --wiki --list c128-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
 		--results results/x128-r36700-result.txt "x128 r36700" \
 		--results results/z64kc128-1_2-result.txt "z64k (c128) 1.2"
 	@echo "=== PLUS4 ==="
-	./maketable --wiki --list plus4-testlist.in \
+	./maketable --ranking --wiki --list plus4-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
 		--results results/xplus4-r36700-result.txt "xplus4 r36700"
 	@echo "=== PET ==="
-	./maketable --wiki --list pet-testlist.in \
+	./maketable --ranking --wiki --list pet-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
 		--results results/xpet-r36700-result.txt "xpet r36700"
 	@echo "=== DTV ==="
-	./maketable --wiki --list dtv-testlist.in \
+	./maketable --ranking --wiki --list dtv-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
 		--results results/x64dtv-r36700-result.txt "x64dtv r36700"
 	@echo "=== SCPU ==="
-	./maketable --wiki --list scpu-testlist.in \
+	./maketable --ranking --wiki --list scpu-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
 		--results results/xscpu64-r36700-result.txt "xscpu64 r36700"
 	@echo "=== CBM5x0 ==="
-	./maketable --wiki --list cbm510-testlist.in \
+	./maketable --ranking --wiki --list cbm510-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
 		--results results/xcbm5x0-r36700-result.txt "xcbm5x0 r36700"
 	@echo "=== CBM2 ==="
-	./maketable --wiki --list cbm610-testlist.in \
+	./maketable --ranking --wiki --list cbm610-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
 		--results results/xcbm2-r36700-result.txt "xcbm2 r36700"
 	@echo "=== SID ==="
-	./maketable --wiki --list vsid-testlist.in \
+	./maketable --ranking --wiki --list vsid-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
 		--results results/vsid-r36700-result.txt "vsid r36700"
 
