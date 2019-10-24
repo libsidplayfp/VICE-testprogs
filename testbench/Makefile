@@ -382,9 +382,13 @@ testz64kc128:
 testz64kvic20:
 	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kvic20
 
+testyace:
+#	EMUDIR="$(YACEDIR)" ./testbench.sh yace --verbose
+	EMUDIR="$(YACEDIR)" ./testbench.sh yace
 testdenise:
 	EMUDIR="$(DENISEDIR)" ./testbench.sh denise
 testemu64:
+#	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --verbose
 	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64
 	
 ##############################################################################

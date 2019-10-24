@@ -10,6 +10,8 @@ YACEOPTS+=" -silent" # don't show output
 #YACEOPTS+=" -debugcart" # not need, only active in YACETest.exe
 #YACEOPTS+=" -console"   # not need, YACETest.exe is already console application
 YACEOPTS+=" -con off"
+YACEOPTS+=" -8 on"
+YACEOPTS+=" -9 off"
 
 # extra options for the different ways tests can be run
 #YACEOPTSEXITCODE+=" -console"
@@ -95,17 +97,17 @@ function yace_get_options
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then # d64 supported by yace, but currently not by YACETest.exe
-                    exitoptions="-8 $2/${1:9}"
+                    exitoptions="-l8 $2/${1:9}"
                     mounted_d64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
                 if [ "${1:0:9}" == "mountg64:" ]; then # g64 supported by yace, but currently not by YACETest.exe
-                    exitoptions="-8 $2/${1:9}"
+                    exitoptions="-l8 $2/${1:9}"
                     mounted_g64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
                 if [ "${1:0:9}" == "mountcrt:" ]; then # crt supported by yace, but currently not by YACETest.exe
-                    exitoptions="-cartcrt $2/${1:9}"
+                    exitoptions="-crt $2/${1:9}"
                     mounted_crt="${1:9}"
                     echo -ne "(cartridge:${1:9}) "
                 fi
@@ -177,7 +179,7 @@ function yace_run_screenshot
     if [ x"$2"x == x""x ]; then
         TESTPROGWINE=""
     else
-        TESTPROGWINE=-ar -l "$TESTDIRWINE"/"$2"
+        TESTPROGWINE="-ar -l ""$TESTDIRWINE"/"$2"
     fi
     
     # FIXMEFIXMEFIXME
@@ -265,7 +267,7 @@ function yace_run_exitcode
     if [ x"$2"x == x""x ]; then
         TESTPROGWINE=""
     else
-        TESTPROGWINE=-ar -l "$TESTDIRWINE"/"$2"
+		TESTPROGWINE="-ar -l ""$TESTDIRWINE"/"$2"
     fi
     
     OLDCWD=`pwd`

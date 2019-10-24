@@ -24,15 +24,22 @@ function u64_check_environment
 # 6581 bus interface with 8580 alike sounds.
 # VIC 6567 and 6569, no gray dots.    
     emu_default_videosubtype="6569"
+    
+    u64_ip="192.168.100.210"
+}
+
+function u64_ucodenet
+{
+    ucodenet -n $u64_ip $1 $2 $3 $4 $5 $6 $7 $8 $9
 }
 
 function u64_clear_returncode
 {
     # clear the return code
-    ucodenet --writedbg 42
+    u64_ucodenet --writedbg 42
 
 #    if [ "$?"<"0" ]; then exit -1; fi
-#    ucodenet --readdbg
+#    u64_ucodenet --readdbg
 #    if [ "$?" != "0" ]; then exit -1; fi
 #    RET="$?"
 #    echo "clear:" "$RET"
@@ -59,7 +66,7 @@ function u64_poll_returncode
 #        chacocmd --len 1 --addr 0x000100ff --dumpmem
 #        chacocmd --len 1 --addr 0x000100ff --readmem $DUMMY > /dev/null
 #        e=`chacocmd --noprogress --len 1 --addr 0x000100ff --dumpmem`
-        ucodenet --readdbg
+        u64_ucodenet --readdbg
 #        if [ "$?" != "0" ]; then exit -1; fi
         RET="$?"
 #        echo "poll:" "$RET"
@@ -87,7 +94,7 @@ function u64_prepare
 {
     echo -ne "preparing u64."
     echo -ne "."
-    ucodenet --resetwait
+    u64_ucodenet --resetwait
     echo "ok"
 }
 
@@ -165,7 +172,7 @@ function u64_get_options
                     echo -ne "(disk:${1:9}) "
 #                    chmount -d64 "$2/${1:9}" > /dev/null
                     echo "mount image"
-                    ucodenet --mountimage "$2/${1:9}"
+                    u64_ucodenet --mountimage "$2/${1:9}"
                     if [ "$?" != "0" ]; then exit -1; fi
                     echo "mount image done"
                     sleep 1
@@ -174,7 +181,7 @@ function u64_get_options
                 if [ "${1:0:9}" == "mountg64:" ]; then
                     echo -ne "(disk:${1:9}) "
 #                    chmount -g64 "$2/${1:9}" > /dev/null
-                    ucodenet --mountimage "$2/${1:9}"
+                    u64_ucodenet --mountimage "$2/${1:9}"
                     if [ "$?" != "0" ]; then exit -1; fi
                     mounted_g64="${1:9}"
                 fi
@@ -252,7 +259,7 @@ function u64_run_screenshot
 #    chacocmd --addr 0x00b00000 --writemem u64-crtoff.prg > /dev/null
 #    if [ "$?" != "0" ]; then exit -1; fi
     # reset
-    ucodenet --resetwait
+    u64_ucodenet --resetwait
 
 #    u64_make_helper_options 0
 #    if [ "$?" != "0" ]; then exit -1; fi
@@ -265,7 +272,7 @@ function u64_run_screenshot
 
     # run program
     u64_clear_returncode
-    ucodenet -x "$1"/"$2" > /dev/null
+    u64_ucodenet -x "$1"/"$2" > /dev/null
     if [ "$?" != "0" ]; then exit -1; fi
 #    u64_poll_returncode 5
 #    exitcode=$?
@@ -280,11 +287,11 @@ function u64_run_screenshot
 #        chshot --ntsc -o "$1"/.testbench/"$2"-u64.png
 #        if [ "$?" != "0" ]; then exit -1; fi
 #    else
-        ucodenet --vicstream-start
+        u64_ucodenet --vicstream-start
         if [ "$?" != "0" ]; then exit -1; fi
-        ugrab "$1"/.testbench/"$2"-u64.png
+        ugrab "$1"/.testbench/"$screenshottest"-u64.png
         if [ "$?" != "0" ]; then exit -1; fi
-        ucodenet --vicstream-stop
+        u64_ucodenet --vicstream-stop
         if [ "$?" != "0" ]; then exit -1; fi
 #    fi
 
@@ -341,7 +348,7 @@ function u64_run_exitcode
     then
 #        echo "no program given"
         # reset
-        ucodenet --resetwait
+        u64_ucodenet --resetwait
 
 #        u64_make_helper_options 1
  #       if [ "$?" != "0" ]; then exit -1; fi
@@ -354,17 +361,22 @@ function u64_run_exitcode
 
         u64_clear_returncode
         # trigger reset  (run cartridge)
-        echo -ne "X" > $RDUMMY
+#        echo -ne "X" > $RDUMMY
 #        chacocmd --addr 0x80000000 --writemem $RDUMMY > /dev/null
-        if [ "$?" != "0" ]; then exit -1; fi
-        u64_poll_returncode 5
+#        if [ "$?" != "0" ]; then exit -1; fi
+#        u64_poll_returncode 5
+#        exitcode=$?
+        
+        u64_ucodenet --mountimage "$1"/"$mounted_crt"
+        u64_poll_returncode $(($3 + 1))
         exitcode=$?
-
+        
+        
         # overwrite the CBM80 signature with generic "cartridge off" program
 #        chacocmd --addr 0x00b00000 --writemem u64-crtoff.prg > /dev/null
 #        if [ "$?" != "0" ]; then exit -1; fi
         # reset
-        ucodenet --resetwait
+        u64_ucodenet --resetwait
     else
         # overwrite the CBM80 signature with generic "cartridge off" program
 #        chacocmd --addr 0x00b00000 --writemem u64-crtoff.prg > /dev/null
@@ -373,7 +385,7 @@ function u64_run_exitcode
 #        if [ "$?" != "0" ]; then exit -1; fi
 #        echo "reset"
         # reset
-        ucodenet --resetwait
+        u64_ucodenet --resetwait
         if [ "$?" != "0" ]; then exit -1; fi
 #        echo "reset done"
 
@@ -388,7 +400,7 @@ function u64_run_exitcode
 
         # run program
         u64_clear_returncode
-        ucodenet -x "$1"/"$2" > /dev/null
+        u64_ucodenet -x "$1"/"$2" > /dev/null
         if [ "$?" != "0" ]; then exit -1; fi
         u64_poll_returncode $(($3 + 1))
         exitcode=$?

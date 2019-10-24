@@ -19,7 +19,7 @@ EMU64OPTSSCREENSHOT+=" --nosplash"
 # for PAL use  32x35
 # for NTSC use 32x23
 EMU64SXO=32
-EMU64SYO=35
+EMU64SYO=25
 
 # the same for the reference screenshots
 EMU64REFSXO=32
@@ -206,7 +206,7 @@ function emu64_run_screenshot
         EMU64REFSXO=32
         EMU64REFSYO=35
         EMU64SXO=32
-        EMU64SYO=35
+        EMU64SYO=25
     
         if [ "${refscreenshotvideotype}" == "NTSC" ]; then
             EMU64REFSXO=32

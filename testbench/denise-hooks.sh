@@ -178,9 +178,9 @@ function denise_run_screenshot
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$screenshottest"-denise.png
     if [ $verbose == "1" ]; then
-        echo $DENISE $DENISEOPTS $DENISEOPTSSCREENSHOT ${@:5} "-limitcycles""$3" "+DEBUGEXITVICBITMAP=""$1"/.testbench/"$screenshottest"-denise.png "$4"
+        echo $DENISE $DENISEOPTS $DENISEOPTSSCREENSHOT ${@:5} "-limitcycles""$3" "+TODOEXITVICBITMAP=""$1"/.testbench/"$screenshottest"-denise.png "$4"
     fi
-    $DENISE $DENISEOPTS $DENISEOPTSSCREENSHOT ${@:5} "-limitcycles""$3" "+DEBUGEXITVICBITMAP=""$1"/.testbench/"$screenshottest"-denise.png "$4" 1> /dev/null
+    $DENISE $DENISEOPTS $DENISEOPTSSCREENSHOT ${@:5} "-limitcycles""$3" "+TODOEXITVICBITMAP=""$1"/.testbench/"$screenshottest"-denise.png "$4" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
