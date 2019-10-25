@@ -103,7 +103,7 @@ checks the timing of the &(H+1) drop off relative to cycle stealing,
 for both sprite and character DMA, when a page crossing is executed.
 
 Also tests that the destination address has it's high byte ANDed with
-A&X regardles of when/whetherthe instruction is interrupted.
+A&X regardles of when/whether the instruction is interrupted.
 
 Each column is one cycle later execution of SHA
 top two rows are
