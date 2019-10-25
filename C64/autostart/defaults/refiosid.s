@@ -6,6 +6,7 @@
 
 
 cpuref:
+            ;      A    X    Y  stack stat n/a  $00  $01
             !byte $01, $01, $01, $00, $00, $00, $2f, $37
 
 vicref:
@@ -29,6 +30,7 @@ rameref:
 ;-----------------------------------------------------------
 
 cpumask:
+            ;      A    X    Y  stack stat n/a  $00  $01
             !byte $ff, $ff, $ff, $00, $00, $00, $ff, $ff
 
 vicmask:
