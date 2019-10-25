@@ -6,9 +6,9 @@
 # selftest
 ################################################################################
 ./selftest/,vic20-pass.prg,exitcode,100000000,vic20-8k
-./selftest/,vic20-fail.prg,exitcode,100000000,vic20-8k
+./selftest/,vic20-fail.prg,exitcode,100000000,vic20-8k,expect:error
 ./selftest/,vic20-pass.prg,screenshot,100000000,vic20-8k
-./selftest/,vic20-fail.prg,screenshot,100000000,vic20-8k
+./selftest/,vic20-fail.prg,screenshot,100000000,vic20-8k,expect:error
 #TODO:
 #../crtemulation/vic20
 #../VIC20/fe3diag/,f3diag.prg,exitcode,10000000

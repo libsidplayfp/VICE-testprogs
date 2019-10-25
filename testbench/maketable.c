@@ -72,6 +72,7 @@ typedef struct
     char path[MAXPATHLEN];
     char prog[MAXPATHLEN];
     int result;
+    int expect;
     int type;
     char media[MAXPATHLEN];
     int mediatype;
@@ -188,6 +189,8 @@ int readlist(TEST *list, char *name, int isresultfile)
         } else {
             list->result = RESULT_NA;
         }
+        list->expect = RESULT_OK;
+
         // check test type
         if (!strcmp(type, "exitcode")) {
             list->type = TYPE_EXITCODE;
@@ -293,6 +296,12 @@ int readlist(TEST *list, char *name, int isresultfile)
                 if (!strncmp(opt[i], "warn:vicefail", 13)) {
                     list->warnvicefail = 1;
                 }
+                if (!strncmp(opt[i], "expect:error", 12)) {
+                    list->expect = RESULT_ERROR;
+                }
+                if (!strncmp(opt[i], "expect:timeout", 14)) {
+                    list->expect = RESULT_TIMEOUT;
+                }
                 
             }
         }
@@ -310,19 +319,42 @@ int readlist(TEST *list, char *name, int isresultfile)
     return num;
 }
 
-int findresult(TEST *list, TEST *reflist)
+/* finds "item" in "list", returns pointer to list */
+TEST *findresultitem(TEST *list, TEST *item)
 {
     int i;
     // loop over all tests
     for (i = 0; i < refnum; i++) {
-        if(!strcmp(list->path, reflist->path) && 
-           !strcmp(list->prog, reflist->prog) &&
-           !strcmp(list->media, reflist->media) &&
-           (list->type == reflist->type) &&
-           ((reflist->ciatype == CIATYPE_UNSET) || (list->ciatype == reflist->ciatype)) &&
-           ((reflist->sidtype == SIDTYPE_UNSET) || (list->sidtype == reflist->sidtype)) &&
-           ((reflist->videotype == VIDEOTYPE_UNSET) || (list->videotype == reflist->videotype)) &&
-           (list->mediatype == reflist->mediatype)
+        if(!strcmp(list->path, item->path) && 
+           !strcmp(list->prog, item->prog) &&
+           !strcmp(list->media, item->media) &&
+           (list->type == item->type) &&
+           ((item->ciatype == CIATYPE_UNSET) || (list->ciatype == item->ciatype)) &&
+           ((item->sidtype == SIDTYPE_UNSET) || (list->sidtype == item->sidtype)) &&
+           ((item->videotype == VIDEOTYPE_UNSET) || (list->videotype == item->videotype)) &&
+           (list->mediatype == item->mediatype)
+          ) {
+            return list;
+        }
+        list++;
+    }
+    return NULL; // not found
+}
+
+/* finds "item" in "list", returns result stored in "list" */
+int findresult(TEST *list, TEST *item)
+{
+    int i;
+    // loop over all tests
+    for (i = 0; i < refnum; i++) {
+        if(!strcmp(list->path, item->path) && 
+           !strcmp(list->prog, item->prog) &&
+           !strcmp(list->media, item->media) &&
+           (list->type == item->type) &&
+           ((item->ciatype == CIATYPE_UNSET) || (list->ciatype == item->ciatype)) &&
+           ((item->sidtype == SIDTYPE_UNSET) || (list->sidtype == item->sidtype)) &&
+           ((item->videotype == VIDEOTYPE_UNSET) || (list->videotype == item->videotype)) &&
+           (list->mediatype == item->mediatype)
           ) {
             return list->result;
         }
@@ -330,6 +362,7 @@ int findresult(TEST *list, TEST *reflist)
     }
     return -1; // not found
 }
+
 
 //------------------------------------------------------------------------------
 void printdocumentstart(void)
@@ -598,6 +631,12 @@ void printrowtestpath(int row, int res)
                            sfurl, reflist[row].path, reflist[row].media, reflist[row].media); 
                     break;
             }
+            if (reflist[row].expect == RESULT_ERROR) {
+                printf(" <small>(must always fail)</small>");
+            }
+            if (reflist[row].expect == RESULT_TIMEOUT) {
+                printf(" <small>(must always timeout)</small>");
+            }            
             if (reflist[row].comment) {
                 printf(" <small>(%s)</small>", reflist[row].comment); 
             }
@@ -631,6 +670,12 @@ void printrowtestpath(int row, int res)
                            sfurl, reflist[row].path, reflist[row].media, reflist[row].media); 
                     break;
             }
+            if (reflist[row].expect == RESULT_ERROR) {
+                printf(" <small>(must always fail)</small>");
+            }
+            if (reflist[row].expect == RESULT_TIMEOUT) {
+                printf(" <small>(must always timeout)</small>");
+            }            
             if (reflist[row].comment) {
                 printf(" <small>(%s)</small>", reflist[row].comment); 
             }
@@ -733,9 +778,24 @@ void printrowtestresult(int row, int res)
         break;
         case FORMAT_HTML:
             switch (res) {
-                case RESULT_ERROR:  printf("<td class=\"error\">error"); break;
-                case RESULT_OK:  printf("<td class=\"ok\">ok"); break;
-                case RESULT_TIMEOUT:  printf("<td class=\"timeout\">timeout"); break;
+                case RESULT_ERROR:  
+                    printf("<td class=\"error\">error"); 
+                    if (reflist[row].expect == RESULT_ERROR) {
+                        printf(" (ok)");
+                    }
+                    break;
+                case RESULT_OK:  
+                    printf("<td class=\"ok\">ok"); 
+                    if (reflist[row].expect != RESULT_OK) {
+                        printf(" (error)");
+                    }
+                    break;
+                case RESULT_TIMEOUT:  
+                    printf("<td class=\"timeout\">timeout"); 
+                    if (reflist[row].expect == RESULT_TIMEOUT) {
+                        printf(" (ok)");
+                    }
+                    break;
                 case RESULT_NA: 
                     if (reflist[row].type == TYPE_INTERACTIVE) {
                         printf("<td class=\"inter\">interactive");
@@ -748,9 +808,21 @@ void printrowtestresult(int row, int res)
         break;
         case FORMAT_WIKI:
             switch (res) {
-                case RESULT_ERROR:  printf("|style=\"background:red;\"|error\n"); break;
-                case RESULT_OK:  printf("|style=\"background:lime;\"|ok\n"); break;
-                case RESULT_TIMEOUT:  printf("|style=\"background:lightblue;\"|timeout\n"); break;
+                case RESULT_ERROR:  
+                    printf("|style=\"background:red;\"|error%s\n",
+                        (reflist[row].expect == RESULT_ERROR) ? " (ok)":""
+                    ); 
+                    break;
+                case RESULT_OK:  
+                    printf("|style=\"background:lime;\"|ok%s\n",
+                        (reflist[row].expect != RESULT_OK) ? " (error)":""
+                    ); 
+                    break;
+                case RESULT_TIMEOUT:  
+                    printf("|style=\"background:lightblue;\"|timeout%s\n",
+                        (reflist[row].expect == RESULT_TIMEOUT) ? " (ok)":""
+                    ); 
+                    break;
                 case RESULT_NA: 
                     if (reflist[row].type == TYPE_INTERACTIVE) {
                         printf("|style=\"background:lightgrey;\"|manual\n");
@@ -910,14 +982,23 @@ int main(int argc, char *argv[])
     for (i = 0; i < numfiles; i++) {
         testnum[i] = readlist(testlist[i], infilename[i], 1);
         testfailed[i] = 0;
-        for (ii = 0; ii < testnum[i]; ii++) {
-            if (testlist[i][ii].result == RESULT_ERROR) {
-                testfailed[i]++;
+        
+        // loop over all tests
+        for (ii = 0; ii < refnum; ii++) {
+            TEST *itm = findresultitem(testlist[i], &reflist[ii]);
+            if (itm) {
+                if ((itm->result == RESULT_ERROR) && (reflist[ii].expect != RESULT_ERROR)) {
+                    testfailed[i]++;
+                } else if ((itm->result == RESULT_TIMEOUT) && (reflist[ii].expect != RESULT_TIMEOUT)) {
+                    testfailed[i]++;
+                } else if ((itm->result == RESULT_OK) && (reflist[ii].expect != RESULT_OK)) {
+                    testfailed[i]++;
+                }
             }
         }
         if (verbose) printf("%d tests (%d failed) in %s\n", testnum[i], testfailed[i], infilename[i]);
     }
-
+    
 //    dumplist(reflist, refnum);
 
     printdocumentstart();

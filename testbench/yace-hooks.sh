@@ -70,22 +70,22 @@ function yace_get_options
 #        "vicii-ntscold")
 #                exitoptions="-ntscold" # not supported by yace
 #            ;;
-#        "cia-old")
+        "cia-old")
 #                exitoptions="-ciamodel 0" # not supported by yace
-#                new_cia_enabled=0
-#            ;;
-#        "cia-new")
+                new_cia_enabled=0
+            ;;
+        "cia-new")
 #                exitoptions="-ciamodel 1" # not supported by yace
-#                new_cia_enabled=1
-#            ;;
-#        "sid-old")
+                new_cia_enabled=1
+            ;;
+        "sid-old")
 #                exitoptions="-sidenginemodel 256" # ??? should always be the old one
-#                new_sid_enabled=0
-#            ;;
-#        "sid-new")
+                new_sid_enabled=0
+            ;;
+        "sid-new")
 #                exitoptions="-sidenginemodel 257" # not supported by yace
-#                new_sid_enabled=1
-#            ;;
+                new_sid_enabled=1
+            ;;
         "reu512k")
                 exitoptions="-reu 512"
                 reu_enabled=1

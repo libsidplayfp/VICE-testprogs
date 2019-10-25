@@ -5,7 +5,7 @@
 # selftest
 ################################################################################
 ./selftest/,dtv-pass.prg,exitcode,10000000
-./selftest/,dtv-fail.prg,exitcode,10000000
+./selftest/,dtv-fail.prg,exitcode,10000000,expect:error
 ../DTV/blitregt/,blitregt.prg,interactive,0
 ../DTV/bmsac/,bmsac.prg,interactive,0
 #TODO:

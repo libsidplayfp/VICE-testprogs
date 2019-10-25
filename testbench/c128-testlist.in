@@ -7,7 +7,7 @@
 # selftest
 ################################################################################
 ./selftest/,c128-pass.prg,exitcode,10000000
-./selftest/,c128-fail.prg,exitcode,10000000
+./selftest/,c128-fail.prg,exitcode,10000000,expect:error
 # FIXME: once these work, we can use screenshots
 ../c128/2mhzVIC,2mhz-vic-hires.prg,interactive,0
 ../c128/2mhzVIC,2mhz-vic-multicolor.prg,interactive,0

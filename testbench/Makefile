@@ -386,10 +386,10 @@ testyace:
 #	EMUDIR="$(YACEDIR)" ./testbench.sh yace --verbose
 	EMUDIR="$(YACEDIR)" ./testbench.sh yace
 testdenise:
-	EMUDIR="$(DENISEDIR)" ./testbench.sh denise
+	EMUDIR="$(DENISEDIR)" ./testbench.sh denise --resume
 testemu64:
 #	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --verbose
-	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64
+	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --resume
 	
 ##############################################################################
 
@@ -418,7 +418,7 @@ testcham20: chameleon-helper.prg prereq
 # 6581 bus interface with 8580 alike sounds.
 # VIC 6567 and 6569, no gray dots.	
 testu64: prereq
-	./testbench.sh u64 --ciaold --6581 --pal
+	./testbench.sh u64 --resume --ciaold --6581 --pal
 
 ################################################################################
 # the following must be manually updated to use the right files
@@ -439,10 +439,10 @@ results0: maketable
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/denise-20191112-result.txt "denise 20191112" \
+		--results results/denise-20191012-result.txt "denise 20191012" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
-		--results results/u64-121-pal-result.txt "U64 1.21 (PAL)"
+		--results results/u64-124-pal-result.txt "U64 1.24 (PAL)"
 
 	./maketable --list vic20-testlist.in \
 		--results results/xvic-r36700-result.txt "xvic r36700" \
@@ -482,10 +482,12 @@ results: maketable
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/denise-20191112-result.txt "denise 20191112" \
+		--results results/denise-20191012-result.txt "denise 20191012" \
+		--results results/emu64-20191025-result.txt "emu64 20191025" \
+		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
-		--results results/u64-121-pal-result.txt "U64 1.21 (PAL)" \
+		--results results/u64-124-pal-result.txt "U64 1.24 (PAL)" \
 		\
 		> results/c64.html
 		
@@ -560,10 +562,12 @@ resultswiki: maketable
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/denise-20191112-result.txt "denise 20191112" \
+		--results results/denise-20191012-result.txt "denise 20191012" \
+		--results results/emu64-20191025-result.txt "emu64 20191025" \
+		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
-		--results results/u64-121-pal-result.txt "U64 1.21 (PAL)"
+		--results results/u64-124-pal-result.txt "U64 1.24 (PAL)"
 	@echo "=== VIC20 ==="
 	./maketable --ranking --wiki --list vic20-testlist.in \
 		--percentages "{{Progress|%d|%d|%d|}}" \
@@ -778,7 +782,7 @@ resultsdenise: maketable denise-testlist.txt
 		--results results/x64sc-r36700-result.txt "x64sc r36700" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/denise-1-0-5-result.txt "denise 1.0.5" \
-		--results results/denise-20191112-result.txt "denise 20191112" \
+		--results results/denise-20191012-result.txt "denise 20191012" \
 		\
 		> results/denise.html
 		
@@ -791,6 +795,26 @@ resultsmicro64: maketable micro64-testlist.txt
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		\
 		> results/micro64.html
+		
+.PHONY: resultsyace
+resultsyace: maketable yace-testlist.txt
+	./maketable --html --list yace-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--firstcolisref "<small><b>fails on VICE</b></small>" \
+		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
+		\
+		> results/yace.html
+		
+.PHONY: resultsemu64
+resultsemu64: maketable emu64-testlist.txt
+	./maketable --html --list emu64-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--firstcolisref "<small><b>fails on VICE</b></small>" \
+		--results results/emu64-20191025-result.txt "emu64 20191025" \
+		\
+		> results/emu64.html
 		
 ################################################################################
 		
@@ -854,6 +878,7 @@ resultsu64: maketable u64-testlist.txt
 		--results results/u64-118-pal-result.txt "U64 NTSC (1.18)" \
 		--results results/u64-118-result.txt "U64 (1.18)" \
 		--results results/u64-121-pal-result.txt "U64 PAL (1.21)" \
+		--results results/u64-124-pal-result.txt "U64 PAL (1.24)" \
 		\
 		> results/u64.html
 		
@@ -862,6 +887,6 @@ resultsu64: maketable u64-testlist.txt
 allresults: results resultsx64 resultsx128 resultsx128c64 resultsxcbm2 resultsxcbm5x0 resultsx64dtv \
 		resultsxpet resultsxplus4 resultsxscpu64 resultsxvic resultsvsid \
 		resultsz64kc64 resultsz64kc128 resultsz64kc128c64 resultsz64kvic20 \
-		resultshoxs64 resultsdenise resultsmicro64 \
+		resultshoxs64 resultsdenise resultsmicro64 resultsyace resultsemu64 \
 		resultscham resultscham20 resultsu64 
 
