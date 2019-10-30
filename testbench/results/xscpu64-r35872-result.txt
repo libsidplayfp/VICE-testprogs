@@ -1,0 +1,8 @@
+./selftest/,scpu-pass.prg,ok,exitcode,,,,-1,-1,-1
+./selftest/,scpu-fail.prg,error,exitcode,,,,-1,-1,-1
+../CPU/jeek816/,suite-a.prg,timeout,exitcode,,,,-1,-1,-1
+../memory-expansions/,c64-ram-emd.prg,timeout,exitcode,,,,-1,-1,-1
+../memory-expansions/,c64-dqbb-emd.prg,timeout,exitcode,,,,-1,-1,-1
+../memory-expansions/,c64-georam-emd.prg,timeout,exitcode,,,,-1,-1,-1
+../memory-expansions/,c64-reu-emd.prg,error,exitcode,,,,-1,-1,-1
+# 1 minutes and 4 seconds elapsed.

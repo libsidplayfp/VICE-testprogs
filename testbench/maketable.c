@@ -27,6 +27,7 @@ int firstcolisref = 0;
 char *referrorstring = NULL;
 int firstrowispercent = 0;
 char *percentagestring = NULL;
+char *rankingpercentagestring = NULL;
 int warnvicfetch = 0;
 char *vicfetchstring = NULL;
 int warnvicefail = 0;
@@ -527,7 +528,7 @@ void printranking(void)
                 printf("||%d\n", pass); 
                 printf("||%d%%\n", percent); 
                 printf("||"); 
-                printf(percentagestring, percent, pass, num);
+                printf(rankingpercentagestring, percent, pass, num);
                 printf("\n"); 
                 printf("|-\n"); 
                 break;
@@ -643,7 +644,8 @@ void printrowtestpath(int row, int res)
             if ((warnvicfetch) && (reflist[row].warnvicfetch)) {
                 printf(" <small>(%s)</small>", vicfetchstring); 
             }
-            if ((firstcolisref) && (res == RESULT_ERROR)) {
+            if ((firstcolisref) && (res == RESULT_ERROR) &&
+                (reflist[row].expect != RESULT_ERROR)) {
                 printf(" %s", referrorstring);
             } else if ((warnvicefail) && (reflist[row].warnvicefail)) {
                 printf(" %s", vicefailstring); 
@@ -682,7 +684,8 @@ void printrowtestpath(int row, int res)
             if ((warnvicfetch) && (reflist[row].warnvicfetch)) {
                 printf(" %s", vicfetchstring); 
             }
-            if ((firstcolisref) && (res == RESULT_ERROR)) {
+            if ((firstcolisref) && (res == RESULT_ERROR) &&
+                (reflist[row].expect != RESULT_ERROR)) {
                 printf(" %s", referrorstring);
             } else if ((warnvicefail) && (reflist[row].warnvicefail)) {
                 printf(" %s", vicefailstring); 
@@ -764,7 +767,7 @@ void printrowtestresult(int row, int res)
     switch (format) {
         case FORMAT_TEXT:
             switch (res) {
-                case RESULT_ERROR:  printf(RED "error   " NC); break;
+                case RESULT_ERROR:  printf(RED "fail    " NC); break;
                 case RESULT_OK:  printf(GREEN "ok      " NC); break;
                 case RESULT_TIMEOUT:  printf(BLUE "timeout " NC); break;
                 case RESULT_NA: 
@@ -779,21 +782,24 @@ void printrowtestresult(int row, int res)
         case FORMAT_HTML:
             switch (res) {
                 case RESULT_ERROR:  
-                    printf("<td class=\"error\">error"); 
                     if (reflist[row].expect == RESULT_ERROR) {
-                        printf(" (ok)");
+                        printf("<td class=\"ok\">fail (ok)"); 
+                    } else {
+                        printf("<td class=\"error\">fail"); 
                     }
                     break;
                 case RESULT_OK:  
-                    printf("<td class=\"ok\">ok"); 
                     if (reflist[row].expect != RESULT_OK) {
-                        printf(" (error)");
+                        printf("<td class=\"error\">ok (fail)"); 
+                    } else {
+                        printf("<td class=\"ok\">ok"); 
                     }
                     break;
                 case RESULT_TIMEOUT:  
-                    printf("<td class=\"timeout\">timeout"); 
                     if (reflist[row].expect == RESULT_TIMEOUT) {
-                        printf(" (ok)");
+                        printf("<td class=\"ok\">timeout (ok)"); 
+                    } else {
+                        printf("<td class=\"timeout\">timeout"); 
                     }
                     break;
                 case RESULT_NA: 
@@ -809,19 +815,25 @@ void printrowtestresult(int row, int res)
         case FORMAT_WIKI:
             switch (res) {
                 case RESULT_ERROR:  
-                    printf("|style=\"background:red;\"|error%s\n",
-                        (reflist[row].expect == RESULT_ERROR) ? " (ok)":""
-                    ); 
+                    if (reflist[row].expect == RESULT_ERROR) {
+                        printf("|style=\"background:lime;\"|fail (ok)\n");
+                    } else {
+                        printf("|style=\"background:red;\"|fail\n");
+                    }
                     break;
                 case RESULT_OK:  
-                    printf("|style=\"background:lime;\"|ok%s\n",
-                        (reflist[row].expect != RESULT_OK) ? " (error)":""
-                    ); 
+                    if (reflist[row].expect != RESULT_OK) {
+                        printf("|style=\"background:red;\"|ok (fail)\n");
+                    } else {
+                        printf("|style=\"background:lime;\"|ok\n");
+                    }
                     break;
                 case RESULT_TIMEOUT:  
-                    printf("|style=\"background:lightblue;\"|timeout%s\n",
-                        (reflist[row].expect == RESULT_TIMEOUT) ? " (ok)":""
-                    ); 
+                    if (reflist[row].expect == RESULT_TIMEOUT) {
+                        printf("|style=\"background:lime;\"|timeout (ok)\n");
+                    } else {
+                        printf("|style=\"background:lightblue;\"|timeout\n");
+                    }
                     break;
                 case RESULT_NA: 
                     if (reflist[row].type == TYPE_INTERACTIVE) {
@@ -905,7 +917,7 @@ void usage(char *name)
     "  --results <file> <header>    add a results file\n"
     "  --html                       output html\n"
     "  --wiki                       output mediawiki format\n"
-    "  --ranking                    output ranking first\n"
+    "  --ranking <format>           output ranking first, using format for percentages\n"
     "  --filter-ntscold             omit ntsc-old tests\n"
     "  --firstcolisref <string>     first resultlist is a reference\n"
     "  --warnvicefail <string>      warn if test is marked as failing in VICE\n"
@@ -932,6 +944,8 @@ int main(int argc, char *argv[])
             format = FORMAT_WIKI;
         } else if(!strcmp(argv[i], "--ranking")) {
             ranking = 1;
+            i++;
+            rankingpercentagestring = argv[i];
         } else if(!strcmp(argv[i], "--help")) {
             usage(argv[0]);
             exit(EXIT_SUCCESS);

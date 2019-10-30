@@ -6,7 +6,7 @@
 # selftest
 ################################################################################
 ./selftest/,vsid-pass.sid,exitcode,10000000
-./selftest/,vsid-fail.sid,exitcode,10000000
+./selftest/,vsid-fail.sid,exitcode,10000000,expect:error
 #TODO:
 #../vsid/environment/,basicram-v1.sid
 #../vsid/environment/,basicram-v2.sid

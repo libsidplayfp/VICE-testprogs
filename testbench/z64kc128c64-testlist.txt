@@ -342,7 +342,14 @@
 ################################################################################
 ../general/ram0001/,quicktest.prg,interactive,0
 ../general/ram0001/,test1.prg,exitcode,10000000
-../general/fuxxortest,test-fuxxored.prg,exitcode,14000000,comment:timeout on failure
+../general/fuxxortest,test-fuxxored.prg,exitcode,14000000
+../general/fuxxortest,ef1-nmi.prg,exitcode,7000000
+../general/fuxxortest,ef2-inst1.prg,exitcode,7000000
+../general/fuxxortest,ef2-inst2.prg,exitcode,9000000
+../general/fuxxortest,ef2-inst3.prg,exitcode,8000000
+../general/fuxxortest,ef2-inst4a.prg,exitcode,8300000
+../general/fuxxortest,ef2-inst4b.prg,exitcode,8000000
+../general/fuxxortest,ef2-inst4c.prg,exitcode,8000000
 ################################################################################
 # CPU 6510
 ################################################################################
@@ -1077,10 +1084,10 @@
 ../SID/resid-test/,envtime.prg,exitcode,21000000
 ../SID/resid-test/,extfilt.prg,analyzer,0
 ../SID/resid-test/,noisetest.prg,exitcode,46000000
-../SID/resid-test/,oscsample0-6581.prg,exitcode,100000000,sid-old
-../SID/resid-test/,oscsample0-8580.prg,exitcode,100000000,sid-new
-../SID/resid-test/,oscsample1-6581.prg,exitcode,100000000,sid-old
-../SID/resid-test/,oscsample1-8580.prg,exitcode,100000000,sid-new
+../SID/resid-test/,oscsample0-6581.prg,exitcode,130000000,sid-old
+../SID/resid-test/,oscsample0-8580.prg,exitcode,130000000,sid-new
+../SID/resid-test/,oscsample1-6581.prg,exitcode,130000000,sid-old
+../SID/resid-test/,oscsample1-8580.prg,exitcode,130000000,sid-new
 ../SID/resid-test/,sweep-kern.prg,analyzer,0
 ../SID/resid-test/,sweep-orig.prg,analyzer,0
 ../SID/resid-test/,sweep.prg,analyzer,0
@@ -1197,7 +1204,7 @@
 ../drive/diskchange/,pollwp.prg,interactive,0,comment:change the disk using the fliplist and/or the menu
 ../drive/diskid/,diskid1.prg,exitcode,8500000,mountd64:diskid.d64
 #FIXME: use an empty g64 too
-../drive/format/,format.prg,exitcode,80000000,mountd64:format.d64
+../drive/format/,format.prg,exitcode,80000000,mountd64:format.d64,comment: make sure format.d64
 ../drive/iecdelay/,iec-bus-delay-auto.prg,exitcode,80000000
 ../drive/interrupts/,timera.prg,exitcode,20000000,comment:results depend on the physical properties of the drive and vary between real drives/mechs too.
 ../drive/interrupts/,watchdog,interactive,0,comment:this is a freezer test - run/freeze/restart. it should not hang

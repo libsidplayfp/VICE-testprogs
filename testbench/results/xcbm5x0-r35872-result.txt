@@ -1,0 +1,3 @@
+./selftest/,cbm510-pass.prg,timeout,exitcode,,,,-1,-1,-1
+./selftest/,cbm510-fail.prg,timeout,exitcode,,,,-1,-1,-1
+# 0 minutes and 11 seconds elapsed.
