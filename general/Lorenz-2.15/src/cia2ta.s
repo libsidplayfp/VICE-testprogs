@@ -11,6 +11,7 @@ turboass   = 780
            lda #1
            sta turboass
            jmp main
+;-------------------------------------------------------------------------------
 
 
 print
@@ -59,6 +60,7 @@ printhn0
            rts
            .bend
 
+;-------------------------------------------------------------------------------
 
 waitborder
            .block
@@ -147,6 +149,7 @@ print2
            .bend
 
 
+;-------------------------------------------------------------------------------
 
 ;combinations tested
 ;before
@@ -193,7 +196,7 @@ main
            jsr print
            .byte 13
 .ifeq NEWCIA - 1
-           .text "{up}cia2ta (new cia)"
+           .text "{up}cia2ta (new cia) - (incomplete!)"
 .else
            .text "{up}cia2ta (old cia)"
 .endif
@@ -224,13 +227,13 @@ loop
            lda #>nmi
            sta $0319
            lda #$7f
-           sta $dd0d
+           sta $dd0d    ; disable all CIA interrupts (NMI)
            lda #$81
-           sta $dd0d
+           sta $dd0d    ; enable timer A interrupts (NMI)
            jsr waitborder
            lda #0
-           sta $dd0e
-           sta $dd05
+           sta $dd0e    ; ctrl reg a
+           sta $dd05    ; timer a hi
            ldx ieindex
            lda ietab,x
            sta ie
@@ -238,17 +241,17 @@ loop
            ldy betab,x
            sty be
            ldx i4
-           stx $dd04
+           stx $dd04    ; timer a lo
            ldx #$10
-           stx $dd0e
-           bit $dd0d
-           sta $dd0e
+           stx $dd0e    ; ctrl reg a
+           bit $dd0d    ; ACK interrupts
+           sta $dd0e    ; ctrl reg a
            lda b4
-           sta $dd04
-           sty $dd0e
-           lda $dd04
+           sta $dd04    ; timer a lo
+           sty $dd0e    ; ctrl reg a
+           lda $dd04    ; timer a lo
            ldx $dd0d
-           ldy $dd0e
+           ldy $dd0e    ; ctrl reg a
            sta a4
            stx ad
            sty ae
@@ -257,7 +260,7 @@ loop
            sta $0318
            lda #$fe
            sta $0319
-           bit $dd0d
+           bit $dd0d    ; ACK interrupts
            cli
 
            lda ieindex
@@ -278,16 +281,18 @@ jumptab    .word x000,x001,x008,x009
            .word x010,x011,x018,x019
            .word x100,x101,x108,x109
            .word x110,x111,x118,x119
+           
            .word x800,x801,x808,x809
            .word x810,x811,x818,x819
            .word x900,x901,x908,x909
            .word x910,x911,x918,x919
 
 
-x000
-x008
-x800
-x808
+;-------------------------------------------------------------------------------
+x000 ; test $00
+x008 ; test $02
+x800 ; test $10
+x808 ; test $12
            .block
            lda i4
            sta r4
@@ -299,8 +304,9 @@ x808
            .bend
 
 
+;-------------------------------------------------------------------------------
 x001 ; test $01
-x801
+x801 ; test $11
            .block
            lda i4
            sec
@@ -339,8 +345,9 @@ nobit7
            .bend
 
 
+;-------------------------------------------------------------------------------
 x009 ; test $03
-x809
+x809 ; test $13
            .block
            lda i4
            sec
@@ -377,6 +384,7 @@ nostop
            .bend
 
 
+;-------------------------------------------------------------------------------
 x010
 x018
 x810
@@ -393,6 +401,7 @@ x818
            .bend
 
 
+;-------------------------------------------------------------------------------
 x011 ; test $05
 x811
            .block
@@ -429,6 +438,7 @@ nobit07
            .bend
 
 
+;-------------------------------------------------------------------------------
 x019 ; test $07
 x819
            .block
@@ -474,8 +484,25 @@ nostop
            .bend
 
 
-x100
-x108
+;-------------------------------------------------------------------------------
+x100 ; test $08
+x108 ; test $0a
+
+.ifeq NEWCIA - 1
+           ; new cia
+           
+           lda a4
+           sta r4
+           lda ad
+           sta rd
+           lda ae
+           sta re
+           
+           jmp compare
+.else
+           ; old cia
+.endif
+
            .block
            lda i4
            ldx #$00
@@ -550,7 +577,24 @@ corr       .byte $00,$01,$02,$00,$00
            .bend
 
 
+;-------------------------------------------------------------------------------
 x101 ; test $09
+
+.ifeq NEWCIA - 1
+           ; new cia
+           
+           lda a4
+           sta r4
+           lda ad
+           sta rd
+           lda ae
+           sta re
+           
+           jmp compare
+.else
+           ; old cia
+.endif
+
            .block
            lda i4
            sec
@@ -626,6 +670,7 @@ nmisub
            bcs nonmiload
 nmiload
            lda b4
+           
 nonmiload
            sta r4
 nonmi
@@ -650,8 +695,24 @@ corr       .byte $01,$02,$03,$01,$04
            .byte $02,$01
            .bend
 
-
+;-------------------------------------------------------------------------------
 x109 ; test $0b
+
+.ifeq NEWCIA - 1
+           ; new cia
+           
+           lda a4
+           sta r4
+           lda ad
+           sta rd
+           lda ae
+           sta re
+           
+           jmp compare
+.else
+           ; old cia
+.endif
+
            .block
            lda i4
            sec
@@ -773,8 +834,9 @@ b4comp     .byte $10,$10,$10,$0e,$0c
            .bend
 
 
-x110
-x118
+;-------------------------------------------------------------------------------
+x110 ; test $0c
+x118 ; test $0e
            .block
            lda b4
            sta r4
@@ -792,7 +854,24 @@ nofire
            .bend
 
 
+;-------------------------------------------------------------------------------
 x111 ; test $0d
+
+.ifeq NEWCIA - 1
+           ; new cia
+           
+           lda a4
+           sta r4
+           lda ad
+           sta rd
+           lda ae
+           sta re
+           
+           jmp compare
+.else
+           ; old cia
+.endif
+
            .block
            ldx b4
            cpx #2
@@ -856,7 +935,24 @@ nmitab     .byte $ff,$ff,$02,$ff,$ff
            .bend
 
 
+;-------------------------------------------------------------------------------
 x119 ; test $0f
+
+.ifeq NEWCIA - 1
+           ; new cia
+           
+           lda a4
+           sta r4
+           lda ad
+           sta rd
+           lda ae
+           sta re
+           
+           jmp compare
+.else
+           ; old cia
+.endif
+
            .block
            ldx b4
            cpx #2
@@ -993,8 +1089,9 @@ nodectab   .byte $82,$73,$72,$64,$63
            .bend
 
 
-x900
-x908
+;-------------------------------------------------------------------------------
+x900 ; test $18
+x908 ; test $1a
            .block
            lda i4
            cmp #$05
@@ -1015,7 +1112,24 @@ noload
            .bend
 
 
+;-------------------------------------------------------------------------------
 x901 ; test $19
+
+.ifeq NEWCIA - 1
+           ; new cia
+           
+           lda a4
+           sta r4
+           lda ad
+           sta rd
+           lda ae
+           sta re
+           
+           jmp compare
+.else
+           ; old cia
+.endif
+
            .block
            lda i4
            cmp #$0e
@@ -1095,7 +1209,24 @@ subtab     .byte 1,0,0,0,0,2,2,2,2,2
            .bend
 
 
+;-------------------------------------------------------------------------------
 x909 ; test $1b
+
+.ifeq NEWCIA - 1
+           ; new cia
+           
+           lda a4
+           sta r4
+           lda ad
+           sta rd
+           lda ae
+           sta re
+           
+           jmp compare
+.else
+           ; old cia
+.endif
+
            .block
            lda i4
            cmp #4
@@ -1177,8 +1308,9 @@ subtab     .byte 0,0,0,0,0,2,2,2,2,2
            .bend
 
 
-x910
-x918
+;-------------------------------------------------------------------------------
+x910 ; test $1c
+x918 ; test $1e
            .block
            lda b4
            sta r4
@@ -1196,7 +1328,24 @@ setd
            .bend
 
 
+;-------------------------------------------------------------------------------
 x911 ; test $1d
+
+.ifeq NEWCIA - 1
+           ; new cia
+           
+           lda a4
+           sta r4
+           lda ad
+           sta rd
+           lda ae
+           sta re
+           
+           jmp compare
+.else
+           ; old cia
+.endif
+
            .block
            lda b4
            ldx i4
@@ -1255,7 +1404,24 @@ nmitab     .byte $ff,$ff,$02,$ff,$ff
            .bend
 
 
+;-------------------------------------------------------------------------------
 x919 ; test 1f
+
+.ifeq NEWCIA - 1
+           ; new cia
+           
+           lda a4
+           sta r4
+           lda ad
+           sta rd
+           lda ae
+           sta re
+           
+           jmp compare
+.else
+           ; old cia
+.endif
+
            .block
            ldx i4
            beq load
@@ -1339,6 +1505,7 @@ nonmireload
            jmp compare
            .bend
 
+;-------------------------------------------------------------------------------
 
 compare
            lda a4

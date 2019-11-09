@@ -16,15 +16,16 @@ particular emulator is compatible to my C64 regarding every tested detail. Of
 course, the emulator may still have bugs in parts which are not tested by the 
 suite. There may also be a difference between your C64 and my C64."
 
-While the Test Suite is running, the Datasette should be disconnected. Needs 
-about 80 min to complete.
+>>> While the Test Suite is running, the Datasette should be disconnected. <<<
+
+Needs about 80 min to complete.
 
 IMPORTANT: some tests (irq, imr, nmi, icr01, cia1ta, cia1tb, cia1tab, cia2ta, 
            cia2tb) depend on the type of CIAs in the C64 ("old" or "new") - use 
            the respective programs/disk images.
 
-           imr, cia2ta, cia2tb have NOT been (fully) updated yet and currently 
-           fail on "new" CIAs (see TODO)
+           cia2ta and cia2tb have NOT been (fully) updated yet and currently 
+           a few tests will be skipped on "new" CIAs (see TODO)
 
 disable virtual device traps for best results in VICE
 
@@ -60,9 +61,9 @@ TODO:
 - improve tests for illegal opcodes to make them work on all CPUs
 
 cia12a.s
-    - fix to work on "new" CIA.
+    - fix all tests to work on "new" CIA.
 cia2tb.s
-    - fix to work on "new" CIA.
+    - fix all tests to work on "new" CIA.
 
 ///////////////////////////////////////////////////////////////////////////////
 Program START - some 6510 basic commands, just as an insurance
