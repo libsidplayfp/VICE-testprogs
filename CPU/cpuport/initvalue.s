@@ -1,11 +1,13 @@
 
+c128detected = $02
+
     * = $8000
 
     !word copycode
     !word copycode
     !byte $c3, $c2, $cd, $38, $30
-		 
-		 
+
+
 copycode:
             sei
 
@@ -46,10 +48,40 @@ copycode:
             inx
             bne -
             
+            ; detect C128 in C64 mode
+            ldx #1
+            lda #$cc
+            sta $d030
+            lda $d030   ; will read $ff on C64
+            cmp #$fc
+            beq isc128
+            ldx #0
+isc128:
+            stx c128detected
+    
             jmp $0800
 
 ramcode:
 !pseudopc $0800 {
+
+
+    lda c128detected
+    beq +
+    ; $01 will be $57 by default on C128
+    lda #$57
+    sta default01
+    
+    ldx #5
+-
+    lda c128string,x
+    sta $0400+(24*40)+34,x
+    lda #1
+    sta $d800+(24*40)+34,x
+    dex
+    bpl -
+    
++
+
             lda $00
             sta $0400
             ldy #5
@@ -90,6 +122,7 @@ ramcode:
             cmp #$00
             bne failed
             lda $0401
+default01 = * + 1
             cmp #$17
             bne failed
             lda $0402
@@ -130,6 +163,8 @@ hexout:
             rts
 hextab:
             !scr "0123456789abcdef"
+            
+c128string: !scr "(c128)"            
 }
 
             * = $a000-1
