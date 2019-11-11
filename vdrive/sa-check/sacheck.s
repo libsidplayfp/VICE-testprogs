@@ -161,7 +161,7 @@ failed:
 
 ;-------------------------------------------------------------------------------
 fname
-	!text "SACHECK.PRG"
+	!text "SACHECK"
 fnameend
 
 testname:
