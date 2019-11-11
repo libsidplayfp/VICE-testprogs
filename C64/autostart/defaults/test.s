@@ -14,6 +14,9 @@ currcol = $14
 currpage = $18
 
 failed = $20
+
+c128detected = $30
+
 ;-------------------------------------------------------------------------------
 
 ; $08 bytes
@@ -88,6 +91,23 @@ start:
             ldx #$ff
             txs
 
+            ; detect C128 in C64 mode
+            ldx #0
+            lda #$cc
+            sta $d030
+            lda $d030
+            cmp #$fc
+            beq isc128
+            ldx #1
+isc128:
+            stx c128detected
+            
+            lda c128detected
+            bne +
+            lda #$77
+            sta cpuref + 7  ; $01
++
+
             lda #5
             sta failed
 
@@ -132,6 +152,18 @@ lpp1c:
             jsr showioblock
             jsr showpage
 
+            lda c128detected
+            bne +
+            
+            ldx #5
+-
+            lda c128string,x
+            sta $0428+30,x
+            dex
+            bpl -
+            
++
+            
             lda failed
             sta $d020
 
@@ -291,6 +323,8 @@ signature:
             !scr "sTaRtCy1"
             
 }
+
+c128string: !scr "(c128)"
 
 irqnmi:
             rti
