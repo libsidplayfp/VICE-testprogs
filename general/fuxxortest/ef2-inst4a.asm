@@ -60,6 +60,10 @@ instanc4:
         lda #%10000000
         sta $0100
 
+        lda #$ff
+        sta $3bff
+        sta $3fff
+        
         lda $3bff
         pha
         txa
