@@ -21,23 +21,23 @@ scanner42e.prg: main.asm
 
 scan35.d64: scanner35.prg
 	./../util/imggen tagd64 scan35.d64 35
-	c1541 -attach scan35.d64 -@ n:scanner -write "scanner35.prg" "scanner"
+	c1541 -attach scan35.d64 -@ n:scanner -write "scanner35.prg" "scanner35"
 scan40.d64: scanner40.prg
 	./../util/imggen tagd64 scan40.d64 40
-	c1541 -attach scan40.d64 -@ n:scanner -write "scanner40.prg" "scanner"
+	c1541 -attach scan40.d64 -@ n:scanner -write "scanner40.prg" "scanner40"
 scan42.d64: scanner42.prg
 	./../util/imggen tagd64 scan42.d64 42
-	c1541 -attach scan42.d64 -@ n:scanner -write "scanner42.prg" "scanner"
+	c1541 -attach scan42.d64 -@ n:scanner -write "scanner42.prg" "scanner42"
 
 scan35err.d64: scanner35e.prg
 	./../util/imggen tagd64err scan35err.d64 35
-	c1541 -attach scan35err.d64 -@ n:scanner -write "scanner35e.prg" "scanner"
+	c1541 -attach scan35err.d64 -@ n:scanner -write "scanner35e.prg" "scanner35e"
 scan40err.d64: scanner40e.prg
 	./../util/imggen tagd64err scan40err.d64 40
-	c1541 -attach scan40err.d64 -@ n:scanner -write "scanner40e.prg" "scanner"
+	c1541 -attach scan40err.d64 -@ n:scanner -write "scanner40e.prg" "scanner40e"
 scan42err.d64: scanner42e.prg
 	./../util/imggen tagd64err scan42err.d64 42
-	c1541 -attach scan42err.d64 -@ n:scanner -write "scanner42e.prg" "scanner"
+	c1541 -attach scan42err.d64 -@ n:scanner -write "scanner42e.prg" "scanner42e"
 	
 scan35.g64: scan35.d64
 	./../util/imggen d64tog64 scan35.d64 scan35.g64 35
