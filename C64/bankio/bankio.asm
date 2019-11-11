@@ -1,3 +1,5 @@
+c128detected = $30
+
             *=$0801
             !word bend
             !word 10
@@ -24,6 +26,37 @@ bend:       !word 0
     sta $0700,x
     inx
     bne -
+
+    ; detect C128 in C64 mode
+    ldx #0
+    lda #$cc
+    sta $d030
+    lda $d030
+    cmp #$fc
+    beq isc128
+    ldx #1
+isc128:
+    stx c128detected
+    
+    lda c128detected
+    bne +
+    ; no SID mirrors at d5/d7
+    lda #$20
+    sta refmask + (1 * 40) + 5
+    sta refmask + (1 * 40) + 7
+    sta refmask + (2 * 40) + 5
+    sta refmask + (2 * 40) + 7
+    sta refmask + (2 * 40) + 5 + 20
+    sta refmask + (2 * 40) + 7 + 20
+    
+    ldx #5
+-
+    lda c128string,x
+    sta $0400+(24*40)+34,x
+    dex
+    bpl -
+    
++
 
 loop:    
     lda #$d0
@@ -214,6 +247,7 @@ border:
     
     jmp loop
 
+c128string: !scr "(c128)"
     
 reference:
     !binary "reference.bin"
