@@ -1,6 +1,6 @@
 ;this is for a easyflash cart!!
 
-!to "tamtest.crt",plain
+
 
 *= $8000-80
 
@@ -285,6 +285,7 @@
 	lda #$35
 	sta $01
 	lda $01
+	and #$3f    ; c128 uses bit 6
 	cmp #$35	; check if $01 can store #$35
 	beq .lcheckram1
 	lda #$01	; when broken border white
@@ -448,6 +449,7 @@
 	iny
 .weiter1
 	lda $01
+	and #$3f   ; c128 uses bit 6
 	cmp #$37
 	beq .weiter2
 	lda #$02	; background = red => $01 is broken (can't store #$37)
