@@ -268,6 +268,11 @@ _attributes
 +
         dec ZPTemp1
         bpl _attributes
+        
+        lda #5
+        sta $d020
+        lda #0
+        sta $d7ff
 -  
         jmp -
 
