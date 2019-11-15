@@ -1,5 +1,0 @@
-
-Blanking test over text field.
-PAL 64us/312 lines, double pixel.
-If the start and end positions are the same
-the result is not stable.

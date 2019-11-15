@@ -1,7 +1,0 @@
-
-Double pixel text mode with 8x9 characters with attributes.
-64us/263 lines ntsc timing.
-Text mode is 40x25. Only reverse attribute is applied every
-256th char.
-Screen is reversed, charset bitmap is reversed.
-Display of characters is cropped to 8x8 in a 9x9 matrix.

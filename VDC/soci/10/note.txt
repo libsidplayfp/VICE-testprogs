@@ -1,4 +1,0 @@
-
-Shift test. All combinations of horizontal shift and
-character stop positions by using 8x8 characters on
-a 20x33 text field. PAL 64us/312 lines.

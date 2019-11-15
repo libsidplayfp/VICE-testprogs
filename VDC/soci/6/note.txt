@@ -1,6 +1,0 @@
-
-Double pixel text mode with 6x12 characters with attributes.
-64us/263 lines ntsc timing.
-Text mode is 64x18. Only color attribute is applied.
-Screen is reversed, charset bitmap is reversed, and vertical
-scrolling is applied, which results in the upper line.

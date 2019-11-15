@@ -1,4 +1,0 @@
-
-Raster test. Text is the same color as background, just brighter.
-Using 40x25 text with 32 pixel borders.
-PAL timing 64us/312 lines.

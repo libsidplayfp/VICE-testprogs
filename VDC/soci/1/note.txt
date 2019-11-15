@@ -1,5 +1,0 @@
-
-Double pixel text mode with 8x8 characters in mono.
-Exact 64us/312 lines pal timing.
-There's 1 extra junk pixel column on the right side.
-The cursor is in the top left corner inverting @.
