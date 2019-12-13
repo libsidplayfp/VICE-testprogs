@@ -846,14 +846,14 @@ bitmap1:
 	sta	$3500,x
 	sta	$3600,x
 	sta	$3700,x
-;	sta	$3800,x
-;	sta	$3900,x
-;	sta	$3A00,x
-;	sta	$3B00,x
-;	sta	$3C00,x
-;	sta	$3D00,x
-;	sta	$3E00,x
-	sta	$3F00,x
+	sta	$3800,x
+	sta	$3900,x
+	sta	$3A00,x
+	sta	$3B00,x
+	sta	$3C00,x
+	sta	$3D00,x
+	sta	$3E00,x
+    sta	$3F00,x
 	inx
 	bne	bitmap1
 	rts
