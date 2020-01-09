@@ -25,7 +25,7 @@
 ../C64/autostart/basic/,printpoint.prg,exitcode,10000000
 ../C64/autostart/basic/,printpoint2.prg,exitcode,10000000
 #FIXME: test.prg fails when not loaded by LOAD"TEST",8
-../C64/autostart/defaults/,test.prg,exitcode,50000000,comment:it is actually almost impossible to meet the requirements of this program when not going through kernal LOAD
+../C64/autostart/defaults/,test.prg,exitcode,50000000,comment:load the test using "TEST" as filename
 ../C64/autostart/random/,raster.prg,interactive,0,comment: should show different numbers on repeated runs
 ../C64/bankio/,bankio.prg,exitcode,10000000
 ../C64/openio/,dadb.prg,interactive,0
@@ -327,9 +327,8 @@
 ../general/Lorenz-2.15/src/,cntdef.prg,exitcode,10000000,cia-new
 ../general/Lorenz-2.15/src/,cia1tanew.prg,exitcode,190000000,cia-new
 ../general/Lorenz-2.15/src/,cia1tbnew.prg,exitcode,80000000,cia-new
-#FIXME: these two dont work!
-../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,75000000,cia-new,comment:broken test - always fails
-../general/Lorenz-2.15/src/,cia2tbnew.prg,exitcode,75000000,cia-new,comment:broken test - always fails
+../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,75000000,cia-new,comment:TODO - incomplete
+../general/Lorenz-2.15/src/,cia2tbnew.prg,exitcode,75000000,cia-new,comment:TODO - incomplete
 ################################################################################
 ../general/ram0001/,quicktest.prg,interactive,0
 ../general/ram0001/,test1.prg,exitcode,10000000

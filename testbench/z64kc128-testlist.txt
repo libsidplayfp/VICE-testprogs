@@ -10,6 +10,7 @@
 ./selftest/,c128-pass.prg,exitcode,10000000
 ./selftest/,c128-fail.prg,exitcode,10000000,expect:error
 # FIXME: once these work, we can use screenshots
+../c128/2mhztest,2mhztest.prg,interactive,0
 ../c128/2mhzVIC,2mhz-vic-hires.prg,interactive,0
 ../c128/2mhzVIC,2mhz-vic-multicolor.prg,interactive,0
 ../c128/2mhzVIC,2mhz-vic-extended.prg,interactive,0
@@ -24,6 +25,9 @@
 ../c128/mmu/,p0h-rw-test.prg,exitcode,7000000
 ../c128/mmu/,p1h-is-set-after-p1l.prg,exitcode,7000000
 ../c128/mmu/,p1h-rw-test.prg,exitcode,7000000
+../c128/vdc4/,vdc4.prg,interactive,0
+../c128/vdccrash/,crash.prg,exitcode,7000000
+../c128/vdccrash/,nocrash.prg,exitcode,7000000
 # TODO: make automatic
 ../c128/z80/cycletimer/,z80-cycletimer-ldir.prg,interactive,0
 ################################################################################
@@ -31,23 +35,23 @@
 ################################################################################
 # TODO: make all these automatic
 ../VDC/40columns/,40COLVDC.PRG,interactive,0
-#../VDC/soci/1/,
-#../VDC/soci/2/,
-#../VDC/soci/3/,
-#../VDC/soci/4/,
-#../VDC/soci/5/,
-#../VDC/soci/6/,
-#../VDC/soci/7/,
-#../VDC/soci/8/,
-#../VDC/soci/9/,
-#../VDC/soci/10/,
-#../VDC/soci/11/,
-#../VDC/soci/12/,
+../VDC/soci/,test01.prg,interactive,0
+../VDC/soci/,test02.prg,interactive,0
+../VDC/soci/,test03.prg,interactive,0
+../VDC/soci/,test04.prg,interactive,0
+../VDC/soci/,test05.prg,interactive,0
+../VDC/soci/,test06.prg,interactive,0
+../VDC/soci/,test07.prg,interactive,0
+../VDC/soci/,test08.prg,interactive,0
+../VDC/soci/,test09.prg,interactive,0
+../VDC/soci/,test10.prg,interactive,0
+../VDC/soci/,test11.prg,interactive,0
+../VDC/soci/,test12.prg,interactive,0
 ../VDC/vdcattr/,vdcattr.prg,interactive,0
 ../VDC/vdcdump/,vdcdump.prg,interactive,0
-#../VDC/vdctiming/,
-# TODO: should be a .prg instead
-#../VDC/,vdclptext.p00
+../VDC/vdctiming/,tt.prg,interactive,0
+../VDC/vdctiming/,vdc-explorer.prg,interactive,0
+../VDC/vdclptest/,vdclptest.prg,interactive,0
 ################################################################################
 # REU
 ################################################################################

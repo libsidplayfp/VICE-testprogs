@@ -31,8 +31,8 @@
 ../C64/autostart/basic/,printpoint.prg,exitcode,10000000
 ../C64/autostart/basic/,printpoint2.prg,exitcode,10000000
 #FIXME: test.prg fails when not loaded by LOAD"TEST",8
-../C64/autostart/defaults/,test.prg,exitcode,50000000,comment:it is actually almost impossible to meet the requirements of this program when not going through kernal LOAD
-../C64/autostart/defaults/,test.prg,exitcode,50000000,mountd64:test.d64,comment:load the test manually using "TEST" as filename
+../C64/autostart/defaults/,test.prg,exitcode,50000000,comment:load the test using "TEST" as filename
+../C64/autostart/defaults/,test.prg,exitcode,50000000,mountd64:test.d64,comment:load the test using "TEST" as filename
 ../C64/autostart/random/,raster.prg,interactive,0,comment: should show different numbers on repeated runs
 ../C64/bankio/,bankio.prg,exitcode,10000000
 ../C64/openio/,dadb.prg,interactive,0
@@ -336,9 +336,8 @@
 ../general/Lorenz-2.15/src/,cntdef.prg,exitcode,10000000,cia-new
 ../general/Lorenz-2.15/src/,cia1tanew.prg,exitcode,190000000,cia-new
 ../general/Lorenz-2.15/src/,cia1tbnew.prg,exitcode,80000000,cia-new
-#FIXME: these two dont work!
-../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,75000000,cia-new,comment:broken test - always fails
-../general/Lorenz-2.15/src/,cia2tbnew.prg,exitcode,75000000,cia-new,comment:broken test - always fails
+../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,75000000,cia-new,comment:TODO - incomplete
+../general/Lorenz-2.15/src/,cia2tbnew.prg,exitcode,75000000,cia-new,comment:TODO - incomplete
 ################################################################################
 ../general/ram0001/,quicktest.prg,interactive,0
 ../general/ram0001/,test1.prg,exitcode,10000000
@@ -753,6 +752,8 @@
 ../VICII/split-tests/spritescan/,spritescan.prg,exitcode,1000000000,vicii-pal
 #TODO: add "drean" support to testbench
 ../VICII/vicii_timing/,vicii_reg_timing.prg,screenshot,35000000,vicii-pal,warn:vicfetch
+../VICII/vicii_timing/,vicii_reg_timing-a5.prg,screenshot,35000000,vicii-pal,warn:vicfetch
+../VICII/vicii_timing/,vicii_reg_timing-ff.prg,screenshot,35000000,vicii-pal,warn:vicfetch
 ../VICII/videomode/,rmwtest.prg,screenshot,10000000,vicii-pal
 ../VICII/videomode/,videomode1.prg,screenshot,10000000,vicii-pal
 ../VICII/videomode/,videomode2.prg,screenshot,10000000,vicii-pal
@@ -1162,15 +1163,15 @@
 ../drive/rpm/,rpm1.prg,exitcode,10500000,mountd64:rpm.d64,vicii-pal
 ../drive/rpm/,rpm1.prg,exitcode,10500000,mountg64:rpm.g64,vicii-pal
 ../drive/rpm/,rpm1.prg,exitcode,10500000,mountp64:rpm.p64,vicii-pal
-../drive/scanner/,scanner35.prg,exitcode,25300000,mountd64:scan35.d64
-../drive/scanner/,scanner35e.prg,exitcode,25500000,mountd64:scan35err.d64
-../drive/scanner/,scanner40.prg,exitcode,26000000,mountd64:scan40.d64
-../drive/scanner/,scanner40e.prg,exitcode,26000000,mountd64:scan40err.d64
-../drive/scanner/,scanner42.prg,exitcode,26100000,mountd64:scan42.d64
-../drive/scanner/,scanner42e.prg,exitcode,26200000,mountd64:scan42err.d64
-../drive/scanner/,scanner35.prg,exitcode,30000000,mountg64:scan35.g64
-../drive/scanner/,scanner40.prg,exitcode,30000000,mountg64:scan40.g64
-../drive/scanner/,scanner42.prg,exitcode,30000000,mountg64:scan42.g64
+../drive/scanner/,scanner35.prg,exitcode,26000000,mountd64:scan35.d64
+../drive/scanner/,scanner35e.prg,exitcode,26000000,mountd64:scan35err.d64
+../drive/scanner/,scanner40.prg,exitcode,27000000,mountd64:scan40.d64
+../drive/scanner/,scanner40e.prg,exitcode,27000000,mountd64:scan40err.d64
+../drive/scanner/,scanner42.prg,exitcode,27000000,mountd64:scan42.d64
+../drive/scanner/,scanner42e.prg,exitcode,27000000,mountd64:scan42err.d64
+../drive/scanner/,scanner35.prg,exitcode,31000000,mountg64:scan35.g64
+../drive/scanner/,scanner40.prg,exitcode,31000000,mountg64:scan40.g64
+../drive/scanner/,scanner42.prg,exitcode,31000000,mountg64:scan42.g64
 ../drive/skew/,skew1.prg,exitcode,30000000,mountd64:skew.d64
 ../drive/skew/,skew1.prg,exitcode,30000000,mountg64:skew.g64
 ../drive/selftest/,selftest.prg,exitcode,8000000
