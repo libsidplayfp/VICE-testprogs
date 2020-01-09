@@ -2,6 +2,7 @@
 # FIXME: set default config, old c64, pepto palette
 DENISEOPTS+=" -no-driver"
 DENISEOPTS+=" -debugcart"
+DENISEOPTS+=" -ane-magic 0xef"
 
 # extra options for the different ways tests can be run
 DENISEOPTSEXITCODE+=" -no-gui"
@@ -42,7 +43,7 @@ function denise_get_options
                 testprogvideotype="PAL"
             ;;
         "vicii-ntsc")
-                exitoptions="-vic-8565"
+                exitoptions="-vic-8562"
                 testprogvideotype="NTSC"
             ;;
 #        "vicii-ntscold")
@@ -89,10 +90,10 @@ function denise_get_options
                 exitoptions="-sid-8580"
                 new_sid_enabled=1
             ;;
-#        "reu512k")
-#                exitoptions="+REUMODE=3"
-#                reu_enabled=1
-#            ;;
+        "reu512k")
+                exitoptions="-reu"
+                reu_enabled=1
+            ;;
 #        "geo256k")
 #                exitoptions="+NEORAMMODE=2"
 #                georam_enabled=1
