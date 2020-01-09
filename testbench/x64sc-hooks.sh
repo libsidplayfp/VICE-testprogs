@@ -12,6 +12,15 @@ X64SCOPTS+=" -debugcart"
 
 #X64SCOPTS+=" -autostartprgmode 1"
 
+#X64SCOPTS+=" -raminitstartvalue 0"
+#X64SCOPTS+=" -raminitvalueinvert 8"
+#X64SCOPTS+=" -raminitpatterninvert 0"
+#X64SCOPTS+=" -raminitvalueoffset 0"
+#X64SCOPTS+=" -raminitpatterninvertvalue 0"
+#X64SCOPTS+=" -raminitstartrandom 0"
+#X64SCOPTS+=" -raminitrepeatrandom 0"
+#X64SCOPTS+=" -raminitrandomchance 1"
+
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started
 #        with -console
