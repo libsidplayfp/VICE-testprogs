@@ -840,7 +840,8 @@ sprites1:
 
 bitmap:
 	ldx	#$00
-	lda	#$5A
+	; bitmap data visible in the BMM and E+B tests
+	lda	#BMVALUE
 bitmap1:
 	sta	$3400,x
 	sta	$3500,x
