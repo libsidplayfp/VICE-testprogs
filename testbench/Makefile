@@ -194,14 +194,13 @@ emu64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",ramcart128k" \
 		>> emu64-testlist.txt
 
+		
 denise-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  denise-testlist.txt
 	cat  c64-testlist.in \
 		| grep -v ",mountp64" \
-		| grep -v ",screenshot" \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
-		| grep -v ",reu512k" \
 		| grep -v ",geo256k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
@@ -209,6 +208,8 @@ denise-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
 		>> denise-testlist.txt
+
+#		| grep -v ",screenshot" \
 		
 yace-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  yace-testlist.txt
@@ -386,7 +387,8 @@ testyace:
 #	EMUDIR="$(YACEDIR)" ./testbench.sh yace --verbose
 	EMUDIR="$(YACEDIR)" ./testbench.sh yace
 testdenise:
-	EMUDIR="$(DENISEDIR)" ./testbench.sh denise --resume
+#	EMUDIR="$(DENISEDIR)" ./testbench.sh denise --resume
+	EMUDIR="$(DENISEDIR)" ./testbench.sh denise
 testemu64:
 #	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --verbose
 	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --resume
@@ -434,14 +436,14 @@ testu64: prereq
 
 results0: maketable
 	./maketable --list c64-testlist.in \
-		--results results/x64sc-r37109-result.txt "x64sc r37109" \
+		--results results/x64sc-r37145-result.txt "x64sc r37145" \
 		--results results/x64-r37109-result.txt "x64 r37109" \
 		--results results/x128c64-r37109-result.txt "x128 (c64) r37109" \
 		--results results/hoxs64-1-0-21-2-result.txt "hoxs64 1.0.21.2" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/denise-20191012-result.txt "denise 20191012" \
+		--results results/denise-20200110-result.txt "denise 20200110" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/u64-124-pal-result.txt "U64 1.24 (PAL)"
@@ -452,7 +454,7 @@ results0: maketable
 		--results results/cham20-20150818-result.txt "cham20 20150818"
 
 	./maketable --list c128-testlist.in \
-		--results results/x128-r37109-result.txt "x128 r37109" \
+		--results results/x128-r37166-result.txt "x128 r37166" \
 		--results results/z64kc128-1_2-result.txt "z64k (c128) 1.2"
 
 	./maketable --list plus4-testlist.in \
@@ -477,14 +479,14 @@ results0: maketable
 results: maketable
 	./maketable --html --list c64-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r37109-result.txt "x64sc r37109" \
+		--results results/x64sc-r37145-result.txt "x64sc r37145" \
 		--results results/x64-r37109-result.txt "x64 r37109" \
 		--results results/x128c64-r37109-result.txt "x128 (c64) r37109" \
 		--results results/hoxs64-1-0-21-2-result.txt "hoxs64 1.0.21.2" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/denise-20191012-result.txt "denise 20191012" \
+		--results results/denise-20200110-result.txt "denise 20200110" \
 		--results results/emu64-20191025-result.txt "emu64 20191025" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
@@ -503,7 +505,7 @@ results: maketable
 		
 	./maketable  --html --list c128-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x128-r37109-result.txt "x128 r37109" \
+		--results results/x128-r37166-result.txt "x128 r37166" \
 		--results results/z64kc128-1_2-result.txt "z64k (c128) 1.2" \
 		\
 		> results/c128.html
@@ -557,14 +559,14 @@ resultswiki: maketable
 	@echo "=== C64 ==="
 	./maketable  --wiki --list c64-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/x64sc-r37109-result.txt "x64sc r37109" \
+		--results results/x64sc-r37145-result.txt "x64sc r37145" \
 		--results results/x64-r37109-result.txt "x64 r37109" \
 		--results results/x128c64-r37109-result.txt "x128 (c64) r37109" \
 		--results results/hoxs64-1-0-21-2-result.txt "hoxs64 1.0.21.2" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/denise-20191012-result.txt "denise 20191012" \
+		--results results/denise-20200110-result.txt "denise 20200110" \
 		--results results/emu64-20191025-result.txt "emu64 20191025" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
@@ -579,7 +581,7 @@ resultswiki: maketable
 	@echo "=== C128 ==="
 	./maketable  --wiki --list c128-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/x128-r37109-result.txt "x128 r37109" \
+		--results results/x128-r37166-result.txt "x128 r37166" \
 		--results results/z64kc128-1_2-result.txt "z64k (c128) 1.2"
 	@echo "=== PLUS4 ==="
 	./maketable  --wiki --list plus4-testlist.in \
@@ -631,6 +633,7 @@ resultsx64sc: maketable
 		--results results/x64sc-r36351-result.txt "x64sc r36351" \
 		--results results/x64sc-r36700-result.txt "x64sc r36700" \
 		--results results/x64sc-r37109-result.txt "x64sc r37109" \
+		--results results/x64sc-r37145-result.txt "x64sc r37145" \
 		\
 		> results/x64sc.html
 
@@ -643,6 +646,7 @@ resultsx128: maketable
 		--results results/x128-r36014-result.txt "x128 r36014" \
 		--results results/x128-r36700-result.txt "x128 r36700" \
 		--results results/x128-r37109-result.txt "x128 r37109" \
+		--results results/x128-r37166-result.txt "x128 r37166" \
 		\
 		> results/x128.html
 
@@ -813,6 +817,7 @@ resultsdenise: maketable denise-testlist.txt
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/denise-1-0-5-result.txt "denise 1.0.5" \
 		--results results/denise-20191012-result.txt "denise 20191012" \
+		--results results/denise-20200110-result.txt "denise 20200110" \
 		\
 		> results/denise.html
 		

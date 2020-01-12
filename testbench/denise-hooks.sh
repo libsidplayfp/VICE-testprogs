@@ -12,7 +12,7 @@ DENISEOPTSSCREENSHOT+=" -no-gui"
 # computers reset/startup screen, the offset gives the top left pixel of the
 # top left character on screen.
 DENISESXO=32
-DENISESYO=40
+DENISESYO=35
 
 DENISEREFSXO=32
 DENISEREFSYO=35
@@ -179,9 +179,9 @@ function denise_run_screenshot
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$screenshottest"-denise.png
     if [ $verbose == "1" ]; then
-        echo $DENISE $DENISEOPTS $DENISEOPTSSCREENSHOT ${@:5} "-limitcycles""$3" "+TODOEXITVICBITMAP=""$1"/.testbench/"$screenshottest"-denise.png "$4"
+        echo $DENISE $DENISEOPTS $DENISEOPTSSCREENSHOT ${@:5} "-limitcycles""$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-denise.png "$4"
     fi
-    $DENISE $DENISEOPTS $DENISEOPTSSCREENSHOT ${@:5} "-limitcycles""$3" "+TODOEXITVICBITMAP=""$1"/.testbench/"$screenshottest"-denise.png "$4" 1> /dev/null
+    $DENISE $DENISEOPTS $DENISEOPTSSCREENSHOT ${@:5} "-limitcycles""$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-denise.png "$4" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -201,7 +201,7 @@ function denise_run_screenshot
         DENISEREFSXO=32
         DENISEREFSYO=35
         DENISESXO=32
-        DENISESYO=40
+        DENISESYO=35
         
         #FIXME: NTSC
     
