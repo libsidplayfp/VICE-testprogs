@@ -373,6 +373,8 @@
 ../CPU/cpujam/,cpujamd2.prg,exitcode,5500000,expect:timeout
 ../CPU/cpujam/,cpujamf2.prg,exitcode,5500000,expect:timeout
 ../CPU/cpujam/,nojam.prg,exitcode,5500000,expect:timeout
+../CPU/cpujam/,jamirq.prg,exitcode,5500000,expect:timeout
+../CPU/cpujam/,jamnmi.prg,exitcode,5500000,expect:timeout
 ../CPU/cpuport/,bitfade.prg,analyzer,0
 ../CPU/cpuport/,delaytime.prg,analyzer,0
 ../CPU/cpuport/,test1.prg,exitcode,5500000
