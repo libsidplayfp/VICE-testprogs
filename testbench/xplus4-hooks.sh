@@ -6,6 +6,7 @@ XPLUS4OPTS+=" -default"
 XPLUS4OPTS+=" -warp"
 XPLUS4OPTS+=" -debugcart"
 #XPLUS4OPTS+=" -console"
+XPLUS4OPTS+=" -jamaction 1"
 
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started

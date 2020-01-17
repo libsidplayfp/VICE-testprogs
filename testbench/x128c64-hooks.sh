@@ -7,6 +7,7 @@ X128C64OPTS+=" -VICIIextpal"
 X128C64OPTS+=" -VICIIpalette pepto-pal.vpl"
 X128C64OPTS+=" -warp"
 X128C64OPTS+=" -debugcart"
+X128C64OPTS+=" -jamaction 1"
 #X128C64OPTS+=" -console"
 
 # extra options for the different ways tests can be run

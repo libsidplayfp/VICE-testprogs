@@ -6,6 +6,7 @@ XPETOPTS+=" -default"
 XPETOPTS+=" -warp"
 #XPETOPTS+=" -console"
 XPETOPTS+=" -debugcart"
+XPETOPTS+=" -jamaction 1"
 
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started

@@ -7,6 +7,7 @@ X64OPTS+=" -VICIIpalette pepto-pal.vpl"
 X64OPTS+=" -warp"
 X64OPTS+=" -debugcart"
 #X64OPTS+=" -console"
+X64OPTS+=" -jamaction 1"
 
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started

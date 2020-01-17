@@ -6,6 +6,7 @@ X64DTVOPTS+=" -VICIIextpal"
 X64DTVOPTS+=" -warp"
 #X64DTVOPTS+=" -console"
 X64DTVOPTS+=" -debugcart"
+X64DTVOPTS+=" -jamaction 1"
 
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started

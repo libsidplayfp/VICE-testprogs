@@ -8,6 +8,7 @@ XCBM2OPTS+=" +truedrive"
 #XCBM5X0OPTS+=" -VICIIpalette pepto-pal.vpl"
 XCBM5X0OPTS+=" -warp"
 XCBM5X0OPTS+=" -debugcart"
+XCBM5X0OPTS+=" -jamaction 1"
 #XCBM5X0OPTS+=" -console"
 
 # extra options for the different ways tests can be run

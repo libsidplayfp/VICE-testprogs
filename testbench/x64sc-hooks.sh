@@ -8,6 +8,7 @@ X64SCOPTS+=" -VICIIpalette pepto-pal.vpl"
 X64SCOPTS+=" -warp"
 #X64SCOPTS+=" -console"
 X64SCOPTS+=" -debugcart"
+X64SCOPTS+=" -jamaction 1"
 #X64SCOPTS+=" -raminitstartvalue 255 -raminitvalueinvert 4"
 
 #X64SCOPTS+=" -autostartprgmode 1"
