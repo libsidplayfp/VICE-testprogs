@@ -215,3 +215,5 @@ vic20-georam-emd.s: $(shell cl65 --print-target-path)/vic20/drv/emd/vic20-georam
 clean:
 	rm -f *.o
 	rm -f *.s
+	rm -f *.prg
+
