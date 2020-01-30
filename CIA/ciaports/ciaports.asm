@@ -339,68 +339,139 @@ loop:
     ldy #>($0400+(40*9)+30)
     jsr printbits
 
+    lda #2
+    sta flagspace
+    sta flagshiftlock
+    sta flagshiftright
+    sta flagshiftleft
+    
+    ; check space (only)
     ldy #5
-    ldx #0
-l1
+    ldx #(2*7)-1
+-
     lda result,x
     cmp resultspc,x
-    beq nofail1
+    beq +
     ldy #2
-nofail1
-    inx
-    cpx #2*7
-    bne l1
++
+    dex
+    bpl - 
 
-    tya
-    ldx #0
-l1a
-    sta $d800+(40*11),x
-    inx
-    cpx #40
-    bne l1a
-
+    cpy #5
+    bne +
+    sty flagspace
++
+    ; check shift-lock (only)
+    
     ldy #5
-    ldx #0
-l2
+    ldx #(2*7)-1
+-
     lda result,x
     cmp resultshiftlock,x
-    beq nofail2
+    beq +
     ldy #2
-nofail2
-    inx
-    cpx #2*7
-    bne l2
++
+    dex
+    bpl - 
 
-    tya
-    ldx #0
-l2a
-    sta $d800+(40*13),x
-    inx
-    cpx #40
-    bne l2a
+    cpy #5
+    bne +
+    sty flagshiftlock
++
 
+    ; check left shift (only)
+    
     ldy #5
-    ldx #0
-l3
+    ldx #(2*7)-1
+-
     lda result,x
-    cmp resultleftshift,x
-    beq nofail3
+    cmp resultshiftleft,x
+    beq +
     ldy #2
-nofail3
-    inx
-    cpx #2*7
-    bne l3
++
+    dex
+    bpl - 
 
-    tya
-    ldx #0
-l3a
+    cpy #5
+    bne +
+    sty flagshiftleft
++
+
+    ; check right shift (only)
+    
+    ldy #5
+    ldx #(2*7)-1
+-
+    lda result,x
+    cmp resultshiftright,x
+    beq +
+    ldy #2
++
+    dex
+    bpl - 
+
+    cpy #5
+    bne +
+    sty flagshiftright
++
+
+    ; check right shift + shift-lock
+    
+    ldy #5
+    ldx #(2*7)-1
+-
+    lda result,x
+    cmp resultshiftrightandlock,x
+    beq +
+    ldy #2
++
+    dex
+    bpl - 
+
+    cpy #5
+    bne +
+    sty flagshiftright
+    sty flagshiftlock
++
+
+    ; check both shift
+    ldy #5
+    ldx #(2*7)-1
+-
+    lda result,x
+    cmp resultshiftboth,x
+    beq +
+    ldy #2
++
+    dex
+    bpl - 
+
+    cpy #5
+    bne +
+    sty flagshiftright
+    sty flagshiftleft
++
+
+    ldx #39
+-
+    lda flagspace
+    sta $d800+(40*11),x
+    lda flagshiftlock
+    sta $d800+(40*13),x
+    lda flagshiftleft
     sta $d800+(40*15),x
-    inx
-    cpx #40
-    bne l3a
-
+    lda flagshiftright
+    sta $d800+(40*17),x
+    dex
+    bpl -  
+    
     jmp loop
 
+flagspace:      !byte 0    
+flagshiftlock:  !byte 0    
+flagshiftleft:  !byte 0    
+flagshiftright: !byte 0    
+    
 ;-----------------------------------------------------------------------------
 
 result:
@@ -410,8 +481,14 @@ resultspc:
     !byte $00,$ef,$7f,$00,$ff,$ff,$00,$00,$00,$ff,$7f,$00,$ff,$ff
 resultshiftlock:
     !byte $00,$7f,$fd,$00,$ff,$ff,$00,$00,$00,$7f,$fd,$00,$ff,$ff
-resultleftshift:
+resultshiftleft:
     !byte $00,$7f,$fd,$00,$ff,$ff,$00,$00,$00,$ff,$fd,$00,$ff,$ff
+resultshiftright:
+    !byte $00,$ef,$bf,$00,$ff,$ff,$00,$00,$00,$ff,$bf,$00,$ff,$ff
+resultshiftboth:
+    !byte $00,$6f,$bd,$00,$ff,$ff,$00,$00,$00,$ff,$bd,$00,$ff,$ff
+resultshiftrightandlock:
+    !byte $00,$6f,$bd,$00,$ff,$ff,$00,$00,$00,$7f,$bd,$00,$ff,$ff
 
 hextab:
     !scr "0123456789abcdef"
@@ -435,7 +512,7 @@ screen:
     !scr "                                        "
     !scr "press left shift                        "
     !scr "                                        "
-    !scr "                                        "
+    !scr "press right shift                       "
     !scr "                                        "
     !scr "                                        "
     !scr "                                        "

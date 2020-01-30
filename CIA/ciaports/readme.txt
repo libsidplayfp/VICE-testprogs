@@ -30,6 +30,17 @@ This case is a bit special and has some interesting properties:
   keys, instead -depending on the keyboard- pressing two or more keys of the same
   column is required. a special case is the shift-lock key, which will also work
   and which you can seperate from the normal left shift key in this configuration.
+  
+following combinations of SHIFT can be tested:
+
+* left shift (alone)
+* right shift (alone)
+* shift-lock (alone)
+* left+right shift
+* shift-lock+right shift
+  
+note that combinations of SPACE and SHIFT are not tested.  
+  
 
 ghosting.prg
 ------------
