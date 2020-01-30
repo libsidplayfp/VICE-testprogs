@@ -35,6 +35,10 @@ this:
 if in doubt, save the entire memory range (AR: s"dump" 8 0000 ffff) and send the
 file to someone from the VICE team for examination
 
+alternatively you can this oneliner in BASIC:
+
+poke43,0:poke44,0:poke45,255:poke46,255:poke55,255:poke56,255:save"mem",8,1
+
 ================================================================================
 
 pattern00ff.prg
@@ -82,13 +86,24 @@ patterns used by emulators
 
 CCS64 (3.9)
 
-- page starts with 64 times $ff, then 64 times $00 etc. additionally the bytes
+- page starts with 64 times $ff, then 64 times $00 etc. TODO: additionally the bytes
   at offset $13, $53, $93, $d3 seem to be random
 
   -raminitstartvalue    255
   -raminitvalueinvert   64
   -raminitpatterninvert 0
 
+  -raminitvalueoffset 0
+  -raminitpatterninvertvalue 0
+  -raminitstartrandom 0
+  -raminitrepeatrandom 0
+  -raminitrandomchance 0
+
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - error 
+platoontest.prg - ok 
+typicaltest.prg - ok 
+  
 HOXS54 (1.0.8.8)
 
 - first come two pages with 128 bytes $ff, then 128 bytes $00... followed by two
@@ -97,8 +112,19 @@ HOXS54 (1.0.8.8)
 
   -raminitstartvalue    255
   -raminitvalueinvert   128
-  -raminitpatterninvert 0       (the $99/$66 stuff is not produced)
+  -raminitpatterninvert 512
 
+  -raminitvalueoffset 0
+  -raminitpatterninvertvalue 0x66
+  -raminitstartrandom 8
+  -raminitrepeatrandom 256
+  -raminitrandomchance 0
+  
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - ok
+platoontest.prg - ok 
+typicaltest.prg - error
+  
 Micro64 (1.00.2013.05.11 - build 714)
 VICE (2.4.27, rev 31063)
 
@@ -108,6 +134,17 @@ VICE (2.4.27, rev 31063)
   -raminitvalueinvert   64
   -raminitpatterninvert 0
 
+  -raminitvalueoffset 0
+  -raminitpatterninvertvalue 0
+  -raminitstartrandom 0
+  -raminitrepeatrandom 0
+  -raminitrandomchance 0
+
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - error
+platoontest.prg - ok 
+typicaltest.prg - error
+  
 ================================================================================
 
 results from real C64s
@@ -115,7 +152,7 @@ results from real C64s
 
 C64 PAL (Impetigo) (ASSY: KU-14194HB, RAM: MB8264-15 / JAPAN 8241 R43 BG)
 
-- page starts with 64 times $ff, then 64 times $00 etc. some random bytes, more
+- page starts with 64 times $ff, then 64 times $00 etc. TODO: some random bytes, more
   or less systematically at offsets:
     $00, $25, $37, $3e, $47, $5f, $69, $6b
     $80, $a5, $b7, $be, $c7, $df, $e9, $eb
@@ -124,6 +161,12 @@ C64 PAL (Impetigo) (ASSY: KU-14194HB, RAM: MB8264-15 / JAPAN 8241 R43 BG)
   -raminitvalueinvert   64
   -raminitpatterninvert 0
 
+  -raminitvalueoffset 0
+  -raminitpatterninvertvalue 0
+  -raminitstartrandom 0
+  -raminitrepeatrandom 0
+  -raminitrandomchance 0
+  
   this seems to match the pattern CCS64 uses
 
 C64 PAL Breadbox (gpz) (ASSY NO 250407, RAM: mT4264-15 / USA)
@@ -132,6 +175,21 @@ C64 PAL Breadbox (gpz) (ASSY NO 250407, RAM: mT4264-15 / USA)
   completely random. some more occasional random bytes in the rest of the page.
   pattern seems consistant across the whole memory range.
 
+  -raminitstartvalue    0
+  -raminitvalueinvert   1
+  -raminitpatterninvert 0
+
+  -raminitvalueoffset 0
+  -raminitpatterninvertvalue 0
+  -raminitstartrandom 16
+  -raminitrepeatrandom 256
+  -raminitrandomchance 1
+  
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - ok
+platoontest.prg - ok 
+typicaltest.prg - error
+  
 C64 PAL Breadbox (TMR) (ASSY: 250425, RAM: MCM6665BP20 / FQQ8502)
 
 - tendency to alternating $00, $ff but lots of other values. apparently takes a
@@ -141,6 +199,17 @@ C64 PAL Breadbox (TMR) (ASSY: 250425, RAM: MCM6665BP20 / FQQ8502)
   -raminitvalueinvert   1
   -raminitpatterninvert 0
 
+  -raminitvalueoffset 0
+  -raminitpatterninvertvalue 0
+  -raminitstartrandom 0
+  -raminitrepeatrandom 0
+  -raminitrandomchance 10
+
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - ok
+platoontest.prg - ok 
+typicaltest.prg - error
+  
 C64 1983 Breadbox (pitcher) (ASSY 250407, RAM: mn4164p / 3n6-15)
 C64 1984 Breadbox (pitcher) (ASSY 250425, RAM: mn4164p / 4d1-15)
 Educator64 PAL (shock) (ASSY: 326298, RAM: ???)
@@ -151,17 +220,39 @@ Educator64 PAL (shock) (ASSY: 326298, RAM: ???)
   -raminitvalueinvert   1
   -raminitpatterninvert 0
 
+  -raminitvalueoffset 0
+  -raminitpatterninvertvalue 0
+  -raminitstartrandom 0
+  -raminitrepeatrandom 0
+  -raminitrandomchance 10
+
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - ok
+platoontest.prg - ok 
+typicaltest.prg - error
+  
 C64 PAL Breadbox (flavioweb) (ASSY 250407 rev C, RAM: JAPAN3L4U / HM4864P-3)
 C64 PAL Breadbox (TMR) (ASSY: 250425, RAM: JAPAN4L3U / HM4864P-3)
 
 - page starts with 2 times $ff, then two times $00. pattern is inverted every
-  256 bytes. occasional random bytes mostly at offsets $71, $7f, $f1, $ff in
+  256 bytes. TODO: occasional random bytes mostly at offsets $71, $7f, $f1, $ff in
   each page.
 
   -raminitstartvalue    255
   -raminitvalueinvert   2
   -raminitpatterninvert 256
 
+  -raminitvalueoffset 0
+  -raminitpatterninvertvalue 255
+  -raminitstartrandom 0
+  -raminitrepeatrandom 0
+  -raminitrandomchance 0
+
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - ok
+platoontest.prg - ok 
+typicaltest.prg - error
+  
 (fierman) (ASSY:250407, RAM: MB8264-15 / JAPAN 8313 R46 BG, RAM: TMM4164P-3 / 3-CC3)
 (flavioweb) (ASSY: 240407 REV.A, RAM (ceramic): (F) MB8264-15 / JAPAN 8307 R84 BG)
 
@@ -172,6 +263,17 @@ C64 PAL Breadbox (TMR) (ASSY: 250425, RAM: JAPAN4L3U / HM4864P-3)
   -raminitvalueinvert   32
   -raminitpatterninvert 0
 
+  -raminitvalueoffset 0
+  -raminitpatterninvertvalue 0
+  -raminitstartrandom 0
+  -raminitrepeatrandom 0
+  -raminitrandomchance 512
+
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - ok
+platoontest.prg - ok 
+typicaltest.prg - error
+  
 C64 NTSC Breadbox (gpz) (ASSY 250425, RAM: KM4164B-10 / 931C KOREA)
 
 - page starts with 8 times $00, then 8 times $ff, etc. lots of random bytes at
@@ -181,6 +283,17 @@ C64 NTSC Breadbox (gpz) (ASSY 250425, RAM: KM4164B-10 / 931C KOREA)
   -raminitvalueinvert   8
   -raminitpatterninvert 0
 
+  -raminitvalueoffset 0
+  -raminitpatterninvertvalue 0
+  -raminitstartrandom 0
+  -raminitrepeatrandom 0
+  -raminitrandomchance 512
+  
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - ok
+platoontest.prg - ok 
+typicaltest.prg - error
+  
 C64C PAL (magervalp) (ASSY NO 250469 R3, RAM: M41464-15 / OKI / JAPAN 713028)
 
 - repeating ff,ff,00,00,00,00,ff,ff pattern, $every $4000 bytes the pattern
@@ -189,8 +302,19 @@ C64C PAL (magervalp) (ASSY NO 250469 R3, RAM: M41464-15 / OKI / JAPAN 713028)
 
   -raminitstartvalue    255
   -raminitvalueinvert   4
-  -raminitpatterninvert 16384   (pattern starts with 4 $ff instead of 2)
+  -raminitpatterninvert 16384
 
+  -raminitvalueoffset 2
+  -raminitpatterninvertvalue 255
+  -raminitstartrandom 0
+  -raminitrepeatrandom 0
+  -raminitrandomchance 0
+  
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - ok
+platoontest.prg - ok 
+typicaltest.prg - error
+  
 C64G PAL (flavioweb) (ASSY: ???, RAM: ???)
 C64C PAL (Impetigo) (ASSY: 250469 R3, RAM: JAPAN 8704 / HM50464P-15 / U1005ZZ)
 
@@ -198,8 +322,21 @@ C64C PAL (Impetigo) (ASSY: 250469 R3, RAM: JAPAN 8704 / HM50464P-15 / U1005ZZ)
 
   -raminitstartvalue    0
   -raminitvalueinvert   4
-  -raminitpatterninvert 0       (pattern starts with 4 zeros instead of 2)
+  -raminitpatterninvert 0
 
+  -raminitvalueoffset 2
+  -raminitpatterninvertvalue 0
+  -raminitstartrandom 0
+  -raminitrepeatrandom 0
+  -raminitrandomchance 0
+  
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - ok
+platoontest.prg - ok 
+typicaltest.prg - ok
+
+-> all ok!
+  
 C64C PAL (gpz) (ASSY NO 250469 R4, RAM: M41464-10 / OKI / JAPAN 833050)
 
 - repeating 00,00,ff,ff,ff,ff,00,00 pattern, $every $4000 bytes the pattern
@@ -209,13 +346,26 @@ C64C PAL (gpz) (ASSY NO 250469 R4, RAM: M41464-10 / OKI / JAPAN 833050)
 
   -raminitstartvalue    0
   -raminitvalueinvert   4
-  -raminitpatterninvert 16384   (pattern starts with 4 zeros instead of 2)
+  -raminitpatterninvert 16384
 
+  -raminitvalueoffset 2
+  -raminitpatterninvertvalue 255
+  -raminitstartrandom 0
+  -raminitrepeatrandom 0
+  -raminitrandomchance 1
+  
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - ok
+platoontest.prg - ok 
+typicaltest.prg - ok
+
+-> all ok!
+  
 C64C PAL (gpz) (ASSY NO 250469 R4, RAM: MN414644-08 / JAPAN 75252)
 C64C (christopher jam) (ASSY: ???, RAM: ???)
 
 - page starts with $80 times $00, then $80 times $ff, etc. random bytes only at
-  offset 0 of each page. oddly enough $4000-$cfff show the inverted pattern
+  offset 0 of each page. TODO: oddly enough $4000-$cfff show the inverted pattern
   In this C64 the RAM content is persistant for literally minutes after power
   off!
 
@@ -223,37 +373,81 @@ C64C (christopher jam) (ASSY: ???, RAM: ???)
   -raminitvalueinvert   128
   -raminitpatterninvert 16384   ($4000-$7fff and $c000-$ffff will be inverted)
 
+  -raminitvalueoffset 2
+  -raminitpatterninvertvalue 255
+  -raminitstartrandom 1
+  -raminitrepeatrandom 256
+  -raminitrandomchance 0
+  
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - error
+platoontest.prg - ok 
+typicaltest.prg - ok
+  
 C64C PAL (flavioweb) (ASSY: ???, RAM: ???)
 C64C PAL (david horrocks) (ASSY NO. 260469 NO252311 REV.4, RAM: LH2464-12 SHARP JAPAN 9018 1 SA)
 
 - first come two pages with 128 bytes $ff, then 128 bytes $00... followed by two
-  pages with 128 bytes $99, then 128 bytes $66. very few random bytes, mostly in
+  pages with 128 bytes $99, then 128 bytes $66. TODO: very few random bytes, mostly in
   the last byte of each page.
 
   -raminitstartvalue    255
   -raminitvalueinvert   128
-  -raminitpatterninvert 0       (the $99/$66 stuff is not produced)
+  -raminitpatterninvert 512
+
+  -raminitvalueoffset 0
+  -raminitpatterninvertvalue 0x66
+  -raminitstartrandom 0
+  -raminitrepeatrandom 0
+  -raminitrandomchance 0
 
   this seems to match the pattern HOXS64 uses
 
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - error
+platoontest.prg - ok 
+typicaltest.prg - error
+  
 (hypnosis) (ASSY: 250407, RAM: M3764-20RS OKI Japan 3Y311)
 
-- 128 bytes $ff, then 128 bytes $00... random bytes somewhat systematically at
+- 128 bytes $ff, then 128 bytes $00... TODO: random bytes somewhat systematically at
   offsets $0f, $10, $18, $38, $3a, $fe, $ff
 
   -raminitstartvalue    255
   -raminitvalueinvert   128
   -raminitpatterninvert 0
 
+  -raminitvalueoffset 0
+  -raminitpatterninvertvalue 0
+  -raminitstartrandom 0
+  -raminitrepeatrandom 0
+  -raminitrandomchance 0
+ 
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - error
+platoontest.prg - ok 
+typicaltest.prg - ok
+ 
 C64C PAL (willymanilly) (ASSY: 250466, RAM: MN41464-15 / JAPAN 6D632)
 
 - page starts with 128 times $ff, then 128 times $00. pattern is inverted every
-  16k ($4000-$7fff and $c000-$ffff show the inverted pattern). few random bytes.
+  16k ($4000-$7fff and $c000-$ffff show the inverted pattern). TODO: few random bytes.
 
   -raminitstartvalue    255
   -raminitvalueinvert   128
   -raminitpatterninvert 16384
 
+  -raminitvalueoffset 0
+  -raminitpatterninvertvalue 255
+  -raminitstartrandom 0
+  -raminitrepeatrandom 0
+  -raminitrandomchance 0
+  
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - error
+platoontest.prg - ok 
+typicaltest.prg - ok
+  
 C64reloaded (gpz)
 
 - page starts with 8 times $00, then 8 times $ff, etc. very few random bytes
@@ -262,16 +456,23 @@ C64reloaded (gpz)
   -raminitvalueinvert   8
   -raminitpatterninvert 0
 
+  -raminitvalueoffset 0
+  -raminitpatterninvertvalue 0
+  -raminitstartrandom 0
+  -raminitrepeatrandom 0
+  -raminitrandomchance 1
+  
+cyberloadtest.prg - ok 
+darkstarbbstest.prg - ok
+platoontest.prg - ok 
+typicaltest.prg - error
+  
 (karmic) (ASSY: 250466, RAM: NEC D41464C / 8605FU037)
 
-.:c000 03 f0 00 f0 00 f0 03 f0
-.:c008 0f ff 0f ff 0f ff 0f ff
-.:c010 81 ff ff ef ff 0f ff 0f
-.:c018 f0 00 f0 00 f0 00 f0 00
-.:c020 00 f0 00 f0 b0 f0 00 f0
-.:c028 0f ff 0f ff 0f ff 0f ff
-.:c030 ff c0 ff 0f ff ef 80 0f
-.:c038 f0 00 f0 00 f0 00 f0 01
+.:c000 03 f0 00 f0 00 f0 03 f0 0f ff 0f ff 0f ff 0f ff
+.:c010 81 ff ff ef ff 0f ff 0f f0 00 f0 00 f0 00 f0 00
+.:c020 00 f0 00 f0 b0 f0 00 f0 0f ff 0f ff 0f ff 0f ff
+.:c030 ff c0 ff 0f ff ef 80 0f f0 00 f0 00 f0 00 f0 01
 
 ================================================================================
 
