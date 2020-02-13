@@ -812,6 +812,7 @@
 ../SID/envelope/,testFlip00toFF.prg,exitcode,5500000
 ../SID/envelope/,testFlipFFto00.prg,exitcode,5500000
 ../SID/envelope/,lft-adsr-test.prg,exitcode,5500000
+../SID/exp_counter_reset/,env_test_exr.prg,exitcode,5500000
 ../SID/mapping/,sid-detect2.prg,interactive,0
 #TODO (fix noisemapper program)
 #../SID/noise
