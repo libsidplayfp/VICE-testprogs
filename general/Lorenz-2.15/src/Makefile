@@ -251,6 +251,109 @@ DISK2PROGS = \
 	cpuport.prg \
 	cputiming.prg
 
+DISK2PROGS128 = \
+	beqr.prg \
+	bner.prg \
+	bmir.prg \
+	bplr.prg \
+	bcsr.prg \
+	bccr.prg \
+	bvsr.prg \
+	bvcr.prg \
+	nopn.prg \
+	nopb.prg \
+	nopz.prg \
+	nopzx.prg \
+	nopa.prg \
+	nopax.prg \
+	asoz.prg \
+	asozx.prg \
+	asoa.prg \
+	asoax.prg \
+	asoay.prg \
+	asoix.prg \
+	asoiy.prg \
+	rlaz.prg \
+	rlazx.prg \
+	rlaa.prg \
+	rlaax.prg \
+	rlaay.prg \
+	rlaix.prg \
+	rlaiy.prg \
+	lsez.prg \
+	lsezx.prg \
+	lsea.prg \
+	lseax.prg \
+	lseay.prg \
+	lseix.prg \
+	lseiy.prg \
+	rraz.prg \
+	rrazx.prg \
+	rraa.prg \
+	rraax.prg \
+	rraay.prg \
+	rraix.prg \
+	rraiy.prg \
+	dcmz.prg \
+	dcmzx.prg \
+	dcma.prg \
+	dcmax.prg \
+	dcmay.prg \
+	dcmix.prg \
+	dcmiy.prg \
+	insz.prg \
+	inszx.prg \
+	insa.prg \
+	insax.prg \
+	insay.prg \
+	insix.prg \
+	insiy.prg \
+	laxz.prg \
+	laxzy.prg \
+	laxa.prg \
+	laxay.prg \
+	laxix.prg \
+	laxiy.prg \
+	axsz.prg \
+	axszy.prg \
+	axsa.prg \
+	axsix.prg \
+	alrb.prg \
+	arrb.prg \
+	aneb.prg \
+	lxab.prg \
+	sbxb.prg \
+	shaay.prg \
+	shaiy.prg \
+	shxay.prg \
+	shyax.prg \
+	shsay.prg \
+	ancb.prg \
+	lasay.prg \
+	sbcb-eb.prg \
+	trap1.prg \
+	trap2.prg \
+	trap3.prg \
+	trap4.prg \
+	trap5.prg \
+	trap6.prg \
+	trap7.prg \
+	trap8.prg \
+	trap9.prg \
+	trap10.prg \
+	trap11.prg \
+	trap12.prg \
+	trap13.prg \
+	trap14.prg \
+	trap15.prg \
+	trap16.prg \
+	trap17.prg \
+	branchwrap.prg \
+	mmufetch.prg \
+	mmu.prg \
+	cpuport128.prg \
+	cputiming.prg
+	
 DISK2NEXT = irq.prg
 
 DISK3PROGSOLD = \
@@ -312,9 +415,20 @@ ALLPROGSNEW = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSNEW)
 ALLPROGS = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSOLD) $(DISK3PROGSNEW)
 ALLDISKS = Disk1.d64 Disk2.d64 Disk3.d64 Disk3new.d64 Lorenz.d81 Lorenznew.d81
 
+ALLPROGSOLD128 = $(DISK1PROGS) $(DISK2PROGS128) $(DISK3PROGSOLD)
+ALLPROGSNEW128 = $(DISK1PROGS) $(DISK2PROGS128) $(DISK3PROGSNEW)
+	
+ALLPROGS128 = $(DISK1PROGS) $(DISK2PROGS128) $(DISK3PROGSOLD) $(DISK3PROGSNEW)
+ALLDISKS128 = Disk1.d64 Disk2c128.d64 Disk3.d64 Disk3new.d64
+
 ASFLAGS=-C -T -a -q
 
-all: $(ALLPROGS) $(ALLDISKS)
+all: $(ALLPROGS) $(ALLDISKS) $(ALLPROGS128) $(ALLDISKS128)
+
+cpuport.prg: cpuport.s
+	64tass $(ASFLAGS) -D ISC128C64=0 -i cpuport.s -o cpuport.prg
+cpuport128.prg: cpuport.s
+	64tass $(ASFLAGS) -D ISC128C64=1 -i cpuport.s -o cpuport128.prg
 
 trap1.prg: trap1-15.s
 	64tass $(ASFLAGS) -D TRAP=1 -i trap1-15.s -o trap1.prg
@@ -430,6 +544,14 @@ Lorenznew.d81: $(ALLPROGSNEW)
 		c1541 Lorenznew.d81 -write "$$I.prg" `echo "$$I" | sed -e 's:new$$::'`; \
 	done
 #	c1541 Lorenznew.d81 -list
+
+Disk2c128.d64: $(DISK2PROGS128) nextdisk2.prg
+	c1541 -format "test suite 2.15+,#2" d64 Disk2c128.d64 > /dev/null
+	for I in $(basename $(DISK2PROGS128)); do \
+		c1541 Disk2c128.d64 -write "$$I.prg" `echo "$$I" | sed -e 's:128$$::'`; \
+	done
+	c1541 Disk2c128.d64 -write "nextdisk2.prg" "$(basename $(DISK2NEXT))" > /dev/null
+#	c1541 Disk2c128.d64 -list
 
 clean:
 	rm -f *~
