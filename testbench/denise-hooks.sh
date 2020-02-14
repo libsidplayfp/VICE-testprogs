@@ -91,7 +91,7 @@ function denise_get_options
                 new_sid_enabled=1
             ;;
         "reu512k")
-                exitoptions="-reu"
+                exitoptions="-reu 512"
                 reu_enabled=1
             ;;
 #        "geo256k")
