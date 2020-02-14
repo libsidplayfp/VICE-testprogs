@@ -294,7 +294,7 @@
 ../general/Lorenz-2.15/src/,branchwrap.prg,exitcode,20000000
 ../general/Lorenz-2.15/src/,mmufetch.prg,exitcode,20000000
 ../general/Lorenz-2.15/src/,mmu.prg,exitcode,35000000
-../general/Lorenz-2.15/src/,cpuport.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,cpuport128.prg,exitcode,20000000
 ../general/Lorenz-2.15/src/,cputiming.prg,exitcode,20000000
 # Lorenz-Suite Disk3 (old CIA):
 ../general/Lorenz-2.15/src/,irq.prg,exitcode,26000000,cia-old

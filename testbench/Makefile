@@ -79,6 +79,7 @@ x64sc-testlist.txt: c64-testlist.in Makefile
 x128c64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  x128c64-testlist.txt
 	cat  c64-testlist.in \
+		| sed -e 's/cpuport.prg/cpuport128.prg/g' \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
 		| grep -v ",plus60k" \
@@ -241,6 +242,7 @@ z64kc64-testlist.txt: c64-testlist.in Makefile
 z64kc128c64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  z64kc128c64-testlist.txt
 	cat  c64-testlist.in \
+		| sed -e 's/cpuport.prg/cpuport128.prg/g' \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
 		| grep -v ",geo256k" \
