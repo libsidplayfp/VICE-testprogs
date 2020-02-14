@@ -82,7 +82,7 @@ ya         .byte 0
 pa         .byte 0
 
 ram
-           lda #127
+           lda #$7f
            sta $dc0d
            lda #$e3
            sta 0
@@ -95,7 +95,7 @@ rom
            sta 0
            lda #$37
            sta 1
-           lda #129
+           lda #$81
            sta $dc0d
            rts
 
@@ -105,6 +105,8 @@ main
            .byte 13
            .text "{up}trap17"
            .byte 0
+           
+           ; pcode = $ffff
            lda #$ff
            sta pcode+0
            lda #$ff
@@ -126,13 +128,15 @@ waitborder
 ;           bcs waitborder
 ;isborder
            jsr ram
+           
            lda #$60
            sta $ffff
            sta 2
            sta 3
+           
            ldy #0
            lda bcmd
-           sta (pcode),y
+           sta (pcode),y    ; $ffff
 
            ldy #3
            lda (ptable),y
@@ -174,6 +178,7 @@ nostop
            lda ptable+1
            adc #0
            sta ptable+1
+           
            inc bcmd
            bne jmpnextcommand
            jmp ok
@@ -393,7 +398,7 @@ execute
            rts
 
 jmppcode
-           jmp (pcode)
+           jmp (pcode)  ; $ffff/$0000
 
 n
            lda #$87
@@ -410,7 +415,7 @@ b
 z
            lda #zerodata
            ldy #1
-           sta (pcode),y
+           sta (pcode),y    ; $0000
            lda #db
            sta zerodata
            jsr execute
@@ -433,7 +438,7 @@ zy
            sta 0
            lda #zerodata-yb&$ff
            ldy #1
-           sta (pcode),y
+           sta (pcode),y    ; $0000
            lda #db
            sta zerodata
            jsr execute
@@ -444,10 +449,10 @@ zy
 ac
            ldy #1
            lda #<da
-           sta (pcode),y
+           sta (pcode),y    ; $0000
            iny
            lda #>da
-           sta (pcode),y
+           sta (pcode),y    ; $0001
            jsr execute
            rts
 
@@ -499,7 +504,7 @@ iy
            sta 0
            ldy #1
            lda #zeroptr
-           sta (pcode),y
+           sta (pcode),y    ; $0000
            lda #<(da-yb)
            sta zeroptr+0&$ff
            lda #>(da-yb)
@@ -587,7 +592,7 @@ brkn
            ldx #xb
            ldy #yb
            plp
-           jmp (pcode)
+           jmp (pcode)  ; $ffff/$0000
 continue
            php
            cld
@@ -618,7 +623,7 @@ jmpi
            ldx #xb
            ldy #yb
            plp
-           jmp (pcode)
+           jmp (pcode)  ; $ffff/$0000
 continue
            php
            cld
@@ -646,7 +651,7 @@ jmpw
            ldx #xb
            ldy #yb
            plp
-           jmp (pcode)
+           jmp (pcode)  ; $ffff/$0000
 continue
            php
            cld
@@ -674,7 +679,7 @@ jsrw
            ldx #xb
            ldy #yb
            plp
-           jmp (pcode)
+           jmp (pcode)  ; $ffff/$0000
 continue
            php
            cld
@@ -707,7 +712,7 @@ rtin
            ldx #xb
            ldy #yb
            plp
-           jmp (pcode)
+           jmp (pcode)  ; $ffff/$0000
 continue
            php
            cld
@@ -796,7 +801,7 @@ andx
            ldx #xb
            ldy #yb
            plp
-           jmp (pcode)
+           jmp (pcode)  ; $ffff/$0000
 continue
            php
            cld
@@ -852,7 +857,7 @@ txsn
            ldx #xb
            ldy #yb
            plp
-           jmp (pcode)
+           jmp (pcode)  ; $ffff/$0000
 continue
            php
            cld
@@ -895,7 +900,7 @@ plan
            ldx #xb
            ldy #yb
            plp
-           jmp (pcode)
+           jmp (pcode)  ; $ffff/$0000
 continue
            php
            cld
@@ -925,7 +930,7 @@ phan
            ldx #xb
            ldy #yb
            plp
-           jmp (pcode)
+           jmp (pcode)  ; $ffff/$0000
 continue
            php
            cld
@@ -964,7 +969,7 @@ plpn
            ldx #xb
            ldy #yb
            plp
-           jmp (pcode)
+           jmp (pcode)  ; $ffff/$0000
 continue
            php
            cld
@@ -994,7 +999,7 @@ phpn
            ldx #xb
            ldy #yb
            plp
-           jmp (pcode)
+           jmp (pcode)  ; $ffff/$0000
 continue
            php
            cld
@@ -1050,7 +1055,7 @@ lasay
            ldx #xb
            ldy #yb
            plp
-           jmp (pcode)
+           jmp (pcode)  ; $ffff/$0000
 continue
            php
            cld
