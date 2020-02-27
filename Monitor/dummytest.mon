@@ -1,0 +1,5 @@
+break e5d4
+break 0ffd
+command 1 "l \"dummytest.prg\" 0;del 1;trace exec load store 0 ffff;dummy on;log off;sw reset;g 1000"
+command 2 "log on;sw reset;x"
+#command 1 "l \"dummytest.prg\" 0;del 1;trace exec 1000 1dff;trace exec load store 1e00 1fff;trace load store 0000 00ff;trace load store 0100 01ff;trace load store 2000 2fff;dummy on;log on;g 1000"
