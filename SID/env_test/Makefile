@@ -1,6 +1,7 @@
 
 all: env_test_ra_0000.prg \
     env_test_ra_0100.prg \
+    env_test_ra_ff00.prg \
     env_test_ar_1.prg \
     env_test_ar_2.prg \
     env_test_ar_3.prg \
