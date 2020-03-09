@@ -50,8 +50,11 @@ tracestart:
         sei
         lda #$35
         sta $01
-        
-        ldx #3
+
+        lda #$0b    ; disable the screen/badlines
+        sta $d011
+                    
+        ldx #3      ; wait for at least one frame so its actually off
 --        
 -       bit $d011
         bpl -
@@ -64,6 +67,13 @@ tracestart:
         sta $fffe
         lda #>irqhandler
         sta $ffff
+         
+        ldx #0      ; init stack with known values
+-
+        txa
+        sta $0100,x
+        inx
+        bne -
         
         ldx #$ff
         txs
