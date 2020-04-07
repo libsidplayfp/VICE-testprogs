@@ -1,6 +1,8 @@
 
 ###############################################################################
 # copy this file and rename it to "Makefile.config" and edit it to your needs
+#
+# this file is included by "Makefile" and "testbench.sh"
 ###############################################################################
 
 # should point to the directory contain VICE x64 binary.
@@ -26,3 +28,6 @@ EMU64DIR="~/c64stuff/emu64/"
 
 # should point to directoy containing denise
 DENISEDIR="~/c64stuff/denise/"
+
+# the IP used for the U64 remote interface
+U64IP="192.168.100.210"

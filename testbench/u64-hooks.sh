@@ -25,7 +25,7 @@ function u64_check_environment
 # VIC 6567 and 6569, no gray dots.    
     emu_default_videosubtype="6569"
     
-    u64_ip="192.168.100.210"
+    u64_ip="$U64IP"
 }
 
 function u64_ucodenet
@@ -171,10 +171,10 @@ function u64_get_options
                 if [ "${1:0:9}" == "mountd64:" ]; then
                     echo -ne "(disk:${1:9}) "
 #                    chmount -d64 "$2/${1:9}" > /dev/null
-                    echo "mount image"
+#                    echo "mount image"
                     u64_ucodenet --mountimage "$2/${1:9}"
                     if [ "$?" != "0" ]; then exit -1; fi
-                    echo "mount image done"
+#                    echo "mount image done"
                     sleep 1
                     mounted_d64="${1:9}"
                 fi

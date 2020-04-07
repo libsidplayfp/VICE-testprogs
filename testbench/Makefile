@@ -103,9 +103,6 @@ chameleon-testlist.txt: c64-testlist.in Makefile
 u64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  u64-testlist.txt
 	cat  c64-testlist.in \
-		| grep -v ",mountd64" \
-		| grep -v ",mountcrt" \
-		| grep -v ",mountg64" \
 		| grep -v ",cia-new" \
 		| grep -v ",vicii-ntsc" \
 		| grep -v ",vicii-ntscold" \
@@ -117,6 +114,10 @@ u64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",ramcart128k" \
 		>> u64-testlist.txt
 
+#		| grep -v ",mountd64" \
+#		| grep -v ",mountcrt" \
+#		| grep -v ",mountg64" \
+		
 c64rmk2-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  c64rmk2-testlist.txt
 	cat  c64-testlist.in \
@@ -448,7 +449,7 @@ results0: maketable
 		--results results/denise-20200110-result.txt "denise 20200110" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
-		--results results/u64-124-pal-result.txt "U64 1.24 (PAL)"
+		--results results/u64-128-result.txt "U64 1.28 (PAL)"
 
 	./maketable --list vic20-testlist.in \
 		--results results/xvic-r37109-result.txt "xvic r37109" \
@@ -493,7 +494,7 @@ results: maketable
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
-		--results results/u64-124-pal-result.txt "U64 1.24 (PAL)" \
+		--results results/u64-128-result.txt "U64 1.28 (PAL)" \
 		\
 		> results/c64.html
 		
@@ -573,7 +574,7 @@ resultswiki: maketable
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
-		--results results/u64-124-pal-result.txt "U64 1.24 (PAL)"
+		--results results/u64-128-result.txt "U64 1.28 (PAL)"
 	@echo "=== VIC20 ==="
 	./maketable  --wiki --list vic20-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
@@ -917,6 +918,7 @@ resultsu64: maketable u64-testlist.txt
 		--results results/u64-118-result.txt "U64 (1.18)" \
 		--results results/u64-121-pal-result.txt "U64 PAL (1.21)" \
 		--results results/u64-124-pal-result.txt "U64 PAL (1.24)" \
+		--results results/u64-128-result.txt "U64 PAL (1.28)" \
 		\
 		> results/u64.html
 		

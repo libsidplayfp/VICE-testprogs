@@ -1,6 +1,8 @@
 #!/bin/bash
 ###############################################################################
 
+source "./Makefile.config"
+
 NAME=$0
 
 # defaults for global variables set by commandline
