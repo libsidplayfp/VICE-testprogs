@@ -1,0 +1,143 @@
+
+	.word $0401
+	*=$0401
+
+	.word endline
+	.word 10
+
+	.byt $9e
+	.asc "1056", 0
+endline	.word 0
+	.dsb 1056-*, 0
+
+	; start of prg 
+
+irqvec	=$90
+irqmode	=$033c
+irqsave	=$033d
+
+        lda #142        ; graphics/uppercase
+        jsr $ffd2
+        lda #147        ; clr home
+        jsr $ffd2
+        lda #17         ; crsr down
+        jsr $ffd2
+
+	lda irqvec
+	sta irqsave
+	lda irqvec+1
+	sta irqsave+1
+
+	lda #0
+	sta irqmode
+
+	sei
+	lda #<newirq
+	sta irqvec
+	lda #>newirq
+	sta irqvec+1
+	cli
+
+	rts
+
+	; Interrupt routine. 
+	; The CRTC interrupt is triggered at the leading edge of
+	; the vertical sync pulse. 
+	;
+	; For a 50Hz (europe) 80 columns machine in graphics/upper case
+ 	; mode (8 rasterlines/char, 59 cycles/rasterline)
+	; a frame takes 20001 cycles. vsync starts at cycle 16048 
+	; counted from the first visible screen cycle (first rasterline
+	; of character at $8000), so we have about 3953 cycles till
+	; start of screen.
+	;
+	; The ROM interrupt routine takes 36 cycles.
+	; 
+
+	; This routine creates a video artefact, because it inverts the 
+	; character while the CRTC is reading them. The routine 
+	; inverts the first character line only.
+	; The artefact starts in the 4th column where it seems that
+ 	; the uppermost rasterline is inverted from the rest.
+	; (The flickering can make you mad, but you have to take a 
+	; close look). Every three or four characters the rasterline
+	; is changed one down. 
+	; In columns 18 it seems that two of the rasterline
+	; artefacts overlap, because the effect seems to be two
+	; rasterlines high.
+	; 
+
+newirq	.(
+	; IRQ routine		; 36 cycles
+	ldy #0			; 2 cycles
+l1	dey			; 256*5-1 = 1279
+	bne l1
+l2	dey			; 256*5-1 = 1279
+	bne l2
+l3	dey			; 256*5-1 = 1279
+	bne l3
+
+	ldy #256-80		; 2 cycles
+				; -----
+				; 3877 cycles
+
+	; this loop needs 17 cycles per iteration
+l0	lda $8000-256+80,y	; 5 cycles (page boundary crossing)
+	eor #$80		; 2
+	sta $8000-256+80,y	; 5 cycles (page boundary crossing)
+	iny			; 2
+	bne l0			; 3
+	jmp (irqsave)
+
+	; so the characters are inverted (write operation) at
+	; char          invert at	read by CRTC
+	; $8000		IRQ + 3188	(rl + 0)
+	; Argh. miscounted on the first try. Add 768 (3188-3120) 
+	; to all clk values below.
+	; $8000		IRQ + 3120	(rl + 0)
+	; $8000 + 1	IRQ + 3137	(rl + 0)
+	; $8000 + 2	IRQ + 3154	(rl + 1)
+	; $8000 + 3	IRQ + 3171	(rl + 1)
+	; start of 1st rasterline rl+1 > 3171, rl+2 < 3188
+	; $8000 + 4	IRQ + 3188	(rl + 2)
+	; $8000 + 5	IRQ + 3205 	(rl + 2)
+	; $8000 + 6 	IRQ + 3222 	(rl + 3)
+	; $8000 + 7 	IRQ + 3239 	(rl + 3)
+	; start of 2nd rasterline rl+59+3 > 3239, rl+59+4 < 3256
+	; $8000 + 8 	IRQ + 3256	(rl + 4)
+	; $8000 + 9 	IRQ + 3273	(rl + 4)
+	; $8000 + 10 	IRQ + 3290	(rl + 5)
+	; start of 3rd rasterline rl+2*59+5 > 3290, rl+2*59+5 < 3307
+	; $8000 + 11 	IRQ + 3307	(rl + 5)
+	; $8000 + 12 	IRQ + 3324	(rl + 6)
+	; $8000 + 13 	IRQ + 3341	(rl + 6)
+	; $8000 + 14 	IRQ + 3358	(rl + 7)
+	; start of 4th rasterline rl+3*59+7 > 3358, rl+3*59+7 < 3375
+	; $8000 + 15	IRQ + 3375	(rl + 7)
+	; $8000 + 16	IRQ + 3392	(rl + 8)
+	; $8000 + 17	IRQ + 3409	(rl + 8)
+	; start of 5th rasterline rl+4*59+8 > 3409, rl+4*59+9 < 3443
+	; IRQ approx rl+4*59+9 = 3426 -> rl approx 3181
+	; $8000 + 18	IRQ + 3426	(rl + 9) effect _sometimes_ there 
+	; $8000 + 19	IRQ + 3443	(rl + 9)
+	; $8000 + 20	IRQ + 3460	(rl + 10)
+	; $8000 + 21	IRQ + 3477	(rl + 10)
+	; start of 6th rasterline rl+5*59+10 > 3477, rl+5*59+11 < 3494
+	; $8000 + 22	IRQ + 3494	(rl + 11)
+	; $8000 + 23	IRQ + 3511	(rl + 11)
+	; $8000 + 24	IRQ + 3528	(rl + 12)
+	; $8000 + 25	IRQ + 3545	(rl + 12)
+	; start of 7th rasterline rl+6*59+12 > 3545, rl+6*59+13 < 3562
+	; $8000 + 26	IRQ + 3562	(rl + 13)
+	; $8000 + 27	IRQ + 3579	(rl + 13)
+	; $8000 + 28	IRQ + 3596	(rl + 14)
+	; start of 8th rasterline rl+7*59+14 > 3596, rl+7*59+14 < 3613
+	; $8000 + 29	IRQ + 3613	(rl + 14)
+	; $8000 + 30	IRQ + 3630	(rl + 15)
+	;
+	; This results in the first rasterline starting at IRQ cycles
+	; 3947,...,3952, Bingo!
+	; (might be lower due to delay cycles in opcode)
+
+	.)
+

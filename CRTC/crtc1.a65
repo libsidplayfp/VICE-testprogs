@@ -1,0 +1,142 @@
+
+	.word $0401
+	*=$0401
+
+	.word endline
+	.word 10
+
+	.byt $9e
+	.asc "1056", 0
+endline	.word 0
+	.dsb 1056-*, 0
+
+	; start of prg 
+
+irqvec	=$90
+irqmode	=$033c
+irqsave	=$033d
+
+	lda #14		; upper/lower mode
+	jsr $ffd2
+	lda #147	; clr home
+	jsr $ffd2
+	lda #17		; crsr down
+	jsr $ffd2
+
+	lda irqvec
+	sta irqsave
+	lda irqvec+1
+	sta irqsave+1
+
+	lda #0
+	sta irqmode
+
+	sei
+	lda #<newirq
+	sta irqvec
+	lda #>newirq
+	sta irqvec+1
+	cli
+
+	rts
+
+	; Interrupt routine. 
+	; The CRTC interrupt is triggered at the leading edge of
+	; the vertical sync pulse. 
+	;
+	; For a 50Hz (europe) 80 columns machine in upper/lower case
+ 	; mode (10 rasterlines/char, 59 cycles/rasterline)
+	; a frame takes 20001 cycles. vsync starts at cycle 17110 
+	; counted from the first visible screen cycle (first rasterline
+	; of character at $8000), so we have about 2891 cycles till
+	; start of screen.
+	;
+	; The ROM interrupt routine takes 36 cycles.
+	; 
+
+	; This routine creates a video artefact, because it inverts the 
+	; character while the CRTC is reading them. The routine 
+	; inverts the first character line only.
+	; The artefact starts in the 8th column where it seems that
+ 	; the uppermost rasterline is inverted from the rest.
+	; (The flickering can make you mad, but you have to take a 
+	; close look). Every three or four characters the rasterline
+	; is changed one down. 
+	; In columns 18 and 25 it seems that two of the rasterline
+	; artefacts overlap, because the effect seems to be two
+	; rasterlines high.
+	; 
+
+newirq	.(
+	; IRQ routine		; 36 cycles
+	ldy #$20		; 2 cycles
+l1	dey			; 32*5-1 = 159
+	bne l1
+l2	dey			; 256*5-1 = 1279
+	bne l2
+l3	dey			; 256*5-1 = 1279
+	bne l3
+
+	ldy #256-80		; 2 cycles
+				; -----
+				; 2757 cycles (416 more than prev. calc.)
+
+	; this loop needs 17 cycles per iteration
+l0	lda $8000-256+80,y	; 5 cycles (page boundary crossing)
+	eor #$80		; 2
+	sta $8000-256+80,y	; 5 cycles (page boundary crossing)
+	iny			; 2
+	bne l0			; 3
+	jmp (irqsave)
+
+	; so the characters are inverted (write operation) at
+	; char          invert at	read by CRTC
+	; $8000		IRQ + 2768	(rl + 0)
+	; $8000 + 1	IRQ + 2785	(rl + 0)
+	; ...
+	; $8000 + 6	IRQ + 2870	(rl + 3)
+	; $8000 + 7	IRQ + 2887	(rl + 3)
+	; start of 1st rasterline rl+3 > 2887, rl+4 < 2904
+	; $8000 + 8	IRQ + 2904 	(rl + 4)
+	; $8000 + 9 	IRQ + 2921 	(rl + 4)
+	; $8000 + 10 	IRQ + 2938 	(rl + 5)
+	; start of 2nd rasterline rl+59+5 > 2938, rl+59+5 < 2955
+	; $8000 + 11 	IRQ + 2955	(rl + 5)
+	; $8000 + 12 	IRQ + 2972	(rl + 6)
+	; $8000 + 13 	IRQ + 2989	(rl + 6)
+	; $8000 + 14 	IRQ + 3006	(rl + 7)
+	; start of 3rd rasterline rl+2*59+7 > 3006, rl+2*59+7 < 3023
+	; $8000 + 15 	IRQ + 3023	(rl + 7)
+	; $8000 + 16 	IRQ + 3040	(rl + 8)
+	; $8000 + 17 	IRQ + 3057	(rl + 8)
+	; start of 4th rasterline rl+3*59+8 > 3057, rl+3*59+9 < 3091
+	; approx IRQ + 3074 - 9 = 3065 -> rl approx 2888
+	; $8000 + 18	IRQ + 3074	(rl + 9) effect _sometimes_ there 
+	; $8000 + 19	IRQ + 3091	(rl + 9)
+	; $8000 + 20	IRQ + 3108	(rl + 10)
+	; $8000 + 21	IRQ + 3125	(rl + 10)
+	; start of 5th rasterline rl+4*59+10 > 3125, rl+4*59+11 < 3142
+	; $8000 + 22	IRQ + 3142	(rl + 11)
+	; $8000 + 23	IRQ + 3159	(rl + 11)
+	; $8000 + 24	IRQ + 3176	(rl + 12)
+	; start of 6th rasterline rl+5*59+12 > 3176, rl+5*59+12 < 3210
+	; approx IRQ + 3193 - 12 = 3181 -> rl approx 2886
+	; $8000 + 25	IRQ + 3193	(rl + 12) effect _sometimes_ there
+	; $8000 + 26	IRQ + 3210	(rl + 13)
+	; $8000 + 27	IRQ + 3227	(rl + 13)
+	; $8000 + 28	IRQ + 3244	(rl + 14)
+	; start of 7th rasterline rl+6*59+14 > 3244, rl+6*59+14 < 3261
+	; $8000 + 29	IRQ + 3261	(rl + 14)
+	; $8000 + 30	IRQ + 3278	(rl + 15)
+	; $8000 + 31	IRQ + 3295	(rl + 15)
+	; $8000 + 32	IRQ + 3312	(rl + 16)
+	; start of 8th rasterline rl+7*59+16 > 3312, rl+7*59+16 < 3329
+	; $8000 + 33	IRQ + 3329	(rl + 16)
+	;
+	; This results in the first rasterline starting at IRQ cycles
+	; 2884 < rl < 2891. Bingo!
+	; (might be less cycles because of IRQ delays during 
+	; opcodes)
+
+	.)
+

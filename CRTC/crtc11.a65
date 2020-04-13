@@ -1,0 +1,151 @@
+
+	; This program utilizes the vertical retrace IRQ 
+	; to change the height of one charline.
+	; It assumes graphics/uppercase mode:
+	; 
+ 	; cycles/line = 59
+	; irq-to-screen-cycles = 3953 
+	; lines/char = 8
+	; original hsync value = $2c = 44
+	;	
+	; It uses the VIA timer to step from the original vsync IRQ to
+	; the next rasterline. This or course doubles the jitter,
+	; well...
+	
+
+IRQ2SCREEN	= 3953
+CYCLESPERLINE	= 59
+LINESPERCHAR	= 8
+ORIGHSYNC	= 44
+
+	; ADJUST is to account for the interrupt code
+	; 2* ROM irq code + time from newirq to rl=0
+ADJUST		= (2*36+10)
+
+	; value to set the VIA timer to after vsync
+	; we have to substract one rasterline because the position is 
+	; determined by the time between the last line´s sync and 
+	; the first cycle of the line.
+OFFSET = IRQ2SCREEN + (CYCLESPERLINE * ((LINESPERCHAR * 23) - 1)) - ADJUST
+
+	.word $0401
+	*=$0401
+
+	.word endline
+	.word 10
+
+	.byt $9e
+	.asc "1056", 0
+endline	.word 0
+	.dsb 1056-*, 0
+
+	; start of prg 
+
+irqvec	=$90
+irqmode	=$033c
+irqsave	=$033d
+
+        lda #142        ; graphics/uppercase
+        jsr $ffd2
+        lda #147        ; clr home
+        jsr $ffd2
+
+        lda #"0"
+        jsr $ffd2
+        ldy #24
+        lda #"1"
+lll1
+        pha
+        lda #17
+        jsr $ffd2
+        pla
+        jsr $ffd2
+        clc
+        adc #1
+        cmp #"9"+1
+        bne lll
+        lda #"0"
+lll     dey
+        bne lll1
+        lda #19
+        jsr $ffd2
+
+	lda irqvec
+	sta irqsave
+	lda irqvec+1
+	sta irqsave+1
+
+	lda #0
+	sta irqmode
+
+	sei
+	lda #<newirq
+	sta irqvec
+	lda #>newirq
+	sta irqvec+1
+	cli
+
+	rts
+
+	; Interrupt routine. 
+	; The CRTC interrupt is triggered at the leading edge of
+	; the vertical sync pulse. 
+	;
+	; For a 50Hz (europe) 80 columns machine in graphics/upper case
+ 	; mode (8 rasterlines/char, 59 cycles/rasterline)
+	; a frame takes 20001 cycles. vsync starts at cycle 16048 
+	; counted from the first visible screen cycle (first rasterline
+	; of character at $8000), so we have about 3953 cycles till
+	; start of screen.
+	;
+	; The ROM interrupt routine takes 36 cycles.
+
+newirq	.(
+	lda $e813
+	bmi vsync
+
+	lda $e848	; clear VIA T2 IRQ flag
+
+	; this is at the beginning of the 23rd charline rasterline
+
+	;rl = 0
+        lda #9
+        sta $e880
+        lda #3
+        sta $e881               ; charline height to 4 rasterlines
+
+	ldy #92
+	; rl=13
+ll0	dey			; wait 8 rasterlines
+	bne ll0
+
+	; rl=472
+	lda #9
+	sta $e880
+	lda #7
+	sta $e881		; charline height to 8 rasterlines
+
+	lda #5
+	sta $e880
+	lda #3+4
+	sta $e881		; add 8 rasterlines to vertical adjust
+
+	jmp $e600
+
+vsync
+	; set IRQ to the beginning of the 1st scanline of the 23rd charline
+	; this routine takes approx. 33 cycles
+	; jmp (irqsave)
+
+	lda #0
+	sta $e84b	; T1 oneshot mode
+	lda #$a0
+	sta $e84e	; enable T2 IRQ
+	sta $e84d	; clear T2 IRQ flag
+	lda #<OFFSET-33
+	ldy #>OFFSET-33
+	sta $e848
+	sty $e849	
+	jmp (irqsave)
+	.)
+
