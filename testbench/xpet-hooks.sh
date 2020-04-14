@@ -1,8 +1,14 @@
 
 XPETOPTS+=" -default"
-#XPETOPTS+=" -VICIIfilter 0"
-#XPETOPTS+=" -VICIIextpal"
-#XPETOPTS+=" -VICIIpalette pepto-pal.vpl"
+XPETOPTS+=" -model 8096"
+# FIXME: 8296 does not work with debug register?
+#XPETOPTS+=" -model 8296"
+XPETOPTS+=" +CRTCdsize"
+XPETOPTS+=" +CRTCdscan"
+XPETOPTS+=" +CRTCstretchvertical"
+XPETOPTS+=" -CRTCfilter 0"
+XPETOPTS+=" -CRTCextpal"
+XPETOPTS+=" -CRTCpalette green.vpl"
 XPETOPTS+=" -warp"
 #XPETOPTS+=" -console"
 XPETOPTS+=" -debugcart"

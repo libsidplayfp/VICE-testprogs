@@ -38,6 +38,9 @@ lp2:
             ldx #5      ; green
 fail1:
             stx BORDERCOLOR
+            
+            jsr waitframe
+            
 ; additionally when a test is done, write the result code to the debug register
 ; (0 for success, $ff for failure). this part has no effect on real hw or when
 ; the debug register is not available
@@ -58,7 +61,20 @@ _CHAROUT:
             jsr CHAROUT
             sei
             rts
-
+            
+waitframe:
+            ldx #0
+-
+            jsr waitframe2
+            dex
+            bne -
+waitframe2:
+            ldy #0
+-
+            dey
+            bne -
+            rts
+            
 testname:
             !if FAIL=1 {
                  ;1234567890123456789012345678901234567890

@@ -7,6 +7,24 @@
 ################################################################################
 ./selftest/,pet-pass.prg,exitcode,10000000
 ./selftest/,pet-fail.prg,exitcode,10000000,expect:error
+./selftest/,pet-pass.prg,screenshot,10000000
+./selftest/,pet-fail.prg,screenshot,10000000,expect:error
+################################################################################
+# CRTC
+################################################################################
+../CRTC/,crtc1.prg,screenshot,100000000
+../CRTC/,crtc2.prg,screenshot,100000000
+../CRTC/,crtc3.prg,screenshot,100000000
+../CRTC/,crtc4.prg,screenshot,100000000
+../CRTC/,crtc5.prg,screenshot,100000000
+../CRTC/,crtc6.prg,screenshot,100000000
+../CRTC/,crtc7.prg,screenshot,100000000
+../CRTC/,crtc8.prg,screenshot,100000000
+../CRTC/,crtc9.prg,screenshot,100000000
+../CRTC/,crtc10.prg,screenshot,100000000
+../CRTC/,crtc11.prg,screenshot,100000000
+../CRTC/,crtc12.prg,screenshot,100000000
+../CRTC/,crtc13.prg,screenshot,100000000
 ################################################################################
 # Joystick/Mouse
 ################################################################################
