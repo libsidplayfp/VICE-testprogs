@@ -1,3 +1,4 @@
+DEBUGREG = $8bff
 
 	; This program utilizes the vertical retrace IRQ 
 	; to move the next to last line of the screen two chars to the 
@@ -98,7 +99,7 @@ lll2    lda (1),y
 	sta irqvec+1
 	cli
 
-	rts
+	jmp theend
 
 	; Interrupt routine. 
 	; The CRTC interrupt is triggered at the leading edge of
@@ -186,3 +187,33 @@ vsync
 	jmp (irqsave)
 	.)
 
+theend:
+            jsr waitframe
+            lda #0
+            sta DEBUGREG
+            jmp *
+	
+waitframe:
+
+            ldx #$10
+ll3
+            txa
+            pha
+            jsr waitframe1
+            pla
+            tax
+            dex
+            bne ll3
+
+waitframe1
+            ldx #0
+ll1
+            jsr waitframe2
+            dex
+            bne ll1
+waitframe2:
+            ldy #0
+ll2
+            dey
+            bne ll2
+            rts
