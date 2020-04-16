@@ -1,5 +1,6 @@
 
-all: crtc1.prg \
+all: crtc0.prg \
+	crtc1.prg \
 	crtc2.prg \
 	crtc3.prg \
 	crtc4.prg \
@@ -13,6 +14,8 @@ all: crtc1.prg \
 	crtc12.prg \
 	crtc13.prg
 
+crtc0.prg: crtc0.a65
+	xa -o crtc0.prg crtc0.a65
 crtc1.prg: crtc1.a65
 	xa -o crtc1.prg crtc1.a65
 crtc2.prg: crtc2.a65
@@ -41,7 +44,8 @@ crtc13.prg: crtc13.a65
 	xa -o crtc13.prg crtc13.a65
 
 clean:
-	$(RM) crtc1.prg \
+	$(RM) crtc0.prg \ 
+		crtc1.prg \
 		crtc2.prg \
 		crtc3.prg \
 		crtc4.prg \

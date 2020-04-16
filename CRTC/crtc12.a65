@@ -51,6 +51,8 @@ irqsave	=$033d
         lda #147        ; clr home
         jsr $ffd2
 
+	jsr setcrtc
+        
         lda #"0"
         jsr $ffd2
         ldy #24
@@ -147,36 +149,37 @@ vsync
 	ldy #>OFFSET-33
 	sta $e848
 	sty $e849	
+	inc framecount
 	jmp (irqsave)
 	.)
 
 theend:
+
             jsr waitframe
             lda #0
             sta DEBUGREG
             jmp *
-	
+
+framecount:
+    .byt $ff - 20
+            
 waitframe:
-
-            ldx #$10
-ll3
-            txa
-            pha
-            jsr waitframe1
-            pla
-            tax
-            dex
-            bne ll3
-
-waitframe1
-            ldx #0
-ll1
-            jsr waitframe2
-            dex
-            bne ll1
-waitframe2:
-            ldy #0
-ll2
-            dey
-            bne ll2
+            lda framecount
+            bne waitframe
             rts
+
+setcrtc .(
+        ldx #0
+loop    lda regs,x
+        stx $e880
+        sta $e881
+        inx
+        cpx #10
+        bcc loop
+        rts
+
+regs    .byt $3a, $28, $2c, $08
+        .byt $29, $03, $19, $22
+        .byt $00, $07
+        .)
+            

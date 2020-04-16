@@ -24,6 +24,8 @@ irqsave	=$033d
         lda #17         ; crsr down
         jsr $ffd2
 
+	jsr setcrtc
+        
 	lda irqvec
 	sta irqsave
 	lda irqvec+1
@@ -88,6 +90,7 @@ l0	lda $8000-256+80,y	; 5 cycles (page boundary crossing)
 	sta $8000-256+80,y	; 5 cycles (page boundary crossing)
 	iny			; 2
 	bne l0			; 3
+	inc framecount
 	jmp (irqsave)
 
 	; so the characters are inverted (write operation) at
@@ -143,32 +146,32 @@ l0	lda $8000-256+80,y	; 5 cycles (page boundary crossing)
 	.)
 
 theend:
+
             jsr waitframe
             lda #0
             sta DEBUGREG
             jmp *
-	
+
+framecount:
+    .byt $ff - 20
+            
 waitframe:
-
-            ldx #$10
-ll3
-            txa
-            pha
-            jsr waitframe1
-            pla
-            tax
-            dex
-            bne ll3
-
-waitframe1
-            ldx #0
-ll1
-            jsr waitframe2
-            dex
-            bne ll1
-waitframe2:
-            ldy #0
-ll2
-            dey
-            bne ll2
+            lda framecount
+            bne waitframe
             rts
+
+setcrtc .(
+        ldx #0
+loop    lda regs,x
+        stx $e880
+        sta $e881
+        inx
+        cpx #10
+        bcc loop
+        rts
+
+regs    .byt $3a, $28, $2c, $08
+        .byt $29, $03, $19, $22
+        .byt $00, $07
+        .)
+            

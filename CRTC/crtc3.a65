@@ -4,7 +4,9 @@ DEBUGREG = $8bff
 	; to move the next to last line of the screen two chars to the 
 	; left. It assumes graphics/uppercase mode:
 	; 
- 	; cycles/line = 59
+	; cycles/line = 59
+	; 
+	; full screen time minus start of VSYNC where IRQ occurs 	
 	; irq-to-screen-cycles = 3953 
 	; lines/char = 8
 	; original hsync value = $2c = 44
@@ -14,12 +16,15 @@ DEBUGREG = $8bff
 	; well...
 	
 
-IRQ2SCREEN	= 3953
 CYCLESPERLINE	= 59
 LINESPERCHAR	= 8
+VSYNCPOS	= 34
+IRQ2SCREEN	= 3953
+
 ORIGHSYNC	= 44
 
-	; ADJUST is to account for the interrupt code
+	; ADJUST is to account for the interrupt code in the kernel
+	; and vsync code
 ADJUST		= 2*36
 
 	; value to set the VIA timer to after vsync
@@ -50,6 +55,8 @@ irqsave	=$033d
         lda #147        ; clr home
         jsr $ffd2
 
+	jsr setcrtc
+        
 	lda #"0"
 	jsr $ffd2
 	ldy #24
@@ -120,7 +127,6 @@ newirq	.(
 
 	lda $e844	; clear VIA T1 IRQ flag
 
-	; jmp $e600
 	
 	; this is at the beginning of the 23rd charline
 	lda #2
@@ -141,7 +147,7 @@ ll	dey	; 90*5-1 = 449
 
 vsync
 	; set IRQ to the beginning of the 1st scanline of the 23rd charline
-	; this routine takes approx. 33 cycles
+	; this routine takes approx. 33 cycles until start of timer
 	; jmp (irqsave)
 
 	lda #0
@@ -153,37 +159,37 @@ vsync
 	ldy #>OFFSET-33
 	sta $e844
 	sty $e845	
+	inc framecount
 	jmp (irqsave)
 	.)
 
 theend:
+
             jsr waitframe
             lda #0
             sta DEBUGREG
             jmp *
-	
-waitframe:
 
-            ldx #$10
-ll3
-            txa
-            pha
-            jsr waitframe1
-            pla
-            tax
-            dex
-            bne ll3
-
-waitframe1
-            ldx #0
-ll1
-            jsr waitframe2
-            dex
-            bne ll1
-waitframe2:
-            ldy #0
-ll2
-            dey
-            bne ll2
-            rts
+framecount:
+    .byt $ff - 20
             
+waitframe:
+            lda framecount
+            bne waitframe
+            rts
+
+setcrtc .(
+        ldx #0
+loop    lda regs,x
+        stx $e880
+        sta $e881
+        inx
+        cpx #10
+        bcc loop
+        rts
+
+regs    .byt $3a, $28, $2c, $08
+        .byt $29, $03, $19, $22
+        .byt $00, $07
+        .)
+                        

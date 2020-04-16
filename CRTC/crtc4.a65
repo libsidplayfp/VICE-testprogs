@@ -14,12 +14,15 @@ DEBUGREG = $8bff
 	; well...
 	
 
-IRQ2SCREEN	= 3953
 CYCLESPERLINE	= 59
 LINESPERCHAR	= 8
+VSYNCPOS	= 34
+IRQ2SCREEN	= 3953
+
 ORIGHSYNC	= 44
 
-	; ADJUST is to account for the interrupt code
+	; ADJUST is to account for the interrupt code in the kernel
+	; and the vsync routine
 ADJUST		= 2*36
 
 	; value to set the VIA timer to after vsync
@@ -50,12 +53,18 @@ irqsave	=$033d
         lda #147        ; clr home
         jsr $ffd2
 
+	jsr setcrtc
+        
         lda #"0"
         jsr $ffd2
         ldy #24
         lda #"1"
 lll1
         pha
+        lda #230	; checkerboard
+        jsr $ffd2
+        lda #$9d	; crsr left
+        jsr $ffd2        
         lda #17
         jsr $ffd2
         pla
@@ -67,6 +76,8 @@ lll1
         lda #"0"
 lll     dey
         bne lll1
+        lda #230	; checkerboard
+        jsr $ffd2        
         lda #19
         jsr $ffd2
 
@@ -128,6 +139,9 @@ newirq	.(
 	lda #CYCLESPERLINE-1+1	; register 0 is minus 1
 	sta $e881		; increase line length by one cycle
 
+	; here 22 cycles into routine, ~58 cycles after IRQ
+
+	; 9*5+2 = 47 cycles	
 	ldy #9
 ll0	dey			; wait till end of rasterline
 	bne ll0
@@ -144,7 +158,7 @@ ll0	dey			; wait till end of rasterline
 
 	; now wait (LINESPERCHAR - 1) * CYCLESPERLINE cycles to get to the next
 	; charline
-	ldy #78
+	ldy #77
 ll	dey	; 78*5-1 = 389
 	bne ll
 
@@ -172,7 +186,7 @@ ll1	dey			; wait one rasterline
 
 vsync
 	; set IRQ to the beginning of the 1st scanline of the 23rd charline
-	; this routine takes approx. 33 cycles
+	; this routine takes approx. 33 cycles until timer start
 	; jmp (irqsave)
 
 	lda #0
@@ -180,40 +194,41 @@ vsync
 	lda #$c0
 	sta $e84e	; enable T1 IRQ
 	sta $e84d	; clear T1 IRQ flag
-	lda #<OFFSET-33
-	ldy #>OFFSET-33
+	lda #<OFFSET-28
+	ldy #>OFFSET-28
 	sta $e844
 	sty $e845	
+	inc framecount
 	jmp (irqsave)
 	.)
 
 theend:
+
             jsr waitframe
             lda #0
             sta DEBUGREG
             jmp *
-	
+
+framecount:
+    .byt $ff - 20
+            
 waitframe:
-
-            ldx #$10
-ll3
-            txa
-            pha
-            jsr waitframe1
-            pla
-            tax
-            dex
-            bne ll3
-
-waitframe1
-            ldx #0
-ll1
-            jsr waitframe2
-            dex
-            bne ll1
-waitframe2:
-            ldy #0
-ll2
-            dey
-            bne ll2
+            lda framecount
+            bne waitframe
             rts
+
+setcrtc .(
+        ldx #0
+loop    lda regs,x
+        stx $e880
+        sta $e881
+        inx
+        cpx #10
+        bcc loop
+        rts
+
+regs    .byt $3a, $28, $2c, $08
+        .byt $29, $03, $19, $22
+        .byt $00, $07
+        .)
+            

@@ -12,22 +12,23 @@ DEBUGREG = $8bff
 	; It uses the VIA timer to step from the original vsync IRQ to
 	; the next rasterline. This or course doubles the jitter,
 	; well...
-	
 
-IRQ2SCREEN	= 3953
 CYCLESPERLINE	= 59
 LINESPERCHAR	= 8
+VSYNCPOS	= 34
+IRQ2SCREEN	= 3953
+
 ORIGHSYNC	= 44
 
-	; ADJUST is to account for the interrupt code
-	; 2* ROM interrupt code + code from newirq to rl=0
-ADJUST		= (2*36+10)
+	; ADJUST is to account for the interrupt code in the kernel
+	; and the vsync routine
+ADJUST		= 2*36 
 
 	; value to set the VIA timer to after vsync
-	; we have to substract one rasterline because the position is 
-	; determined by the time between the last line´s sync and 
+	; we have to subtract one rasterline because the position is 
+	; determined by the time between the last lineÂ´s sync and 
 	; the first cycle of the line.
-OFFSET = IRQ2SCREEN + (CYCLESPERLINE * ((LINESPERCHAR * 23) - 0)) - ADJUST
+OFFSET = IRQ2SCREEN + (CYCLESPERLINE * ((LINESPERCHAR * 23) - 1)) - ADJUST
 
 	.word $0401
 	*=$0401
@@ -52,13 +53,17 @@ irqsave	=$033d
         jsr $ffd2
 
 	jsr setcrtc
-        
+
         lda #"0"
         jsr $ffd2
         ldy #24
         lda #"1"
 lll1
         pha
+	lda #230	; checkerboard
+	jsr $ffd2
+	lda #$9d	; crsr left
+	jsr $ffd2
         lda #17
         jsr $ffd2
         pla
@@ -70,6 +75,8 @@ lll1
         lda #"0"
 lll     dey
         bne lll1
+	lda #230	; checkerboard
+	jsr $ffd2
         lda #19
         jsr $ffd2
 
@@ -86,6 +93,9 @@ lll2    lda (1),y
         inc 2
         dex
         bne lll2
+	
+;rts    ; ???
+    jmp theend0
 
 	lda irqvec
 	sta irqsave
@@ -121,61 +131,82 @@ newirq	.(
 	lda $e813
 	bmi vsync
 
-	lda $e848	; clear VIA T2 IRQ flag
+	lda $e844	; clear VIA T1 IRQ flag
 
 	; this is at the beginning of the 23rd charline - 1 rasterline
 
 	;rl = 0
-        lda #1
-        sta $e880
-        lda #10
-        sta $e881               ; visible line length to 20 chars
+	lda #0
+	sta $e880
+	lda #CYCLESPERLINE-1+1	; register 0 is minus 1
+	sta $e881		; increase line length by one cycle
 
-	ldy #92
-	; rl=13
-ll0	dey			; wait till end of charline - 1 rasterline
+	; here 22 cycles into routine, ~58 cycles after IRQ
+
+	; 5*5+2 = 27 cycles
+	ldy #4
+ll0	dey			; wait till end of rasterline
 	bne ll0
 
-	; rl=472
-	lda #1
+	; rl=58
+	lda #2
 	sta $e880
-	lda #40
-	sta $e881               ; visible line length to 80 chars
+	lda #ORIGHSYNC-1
+	sta $e881		; move the sync one cycle back
+	lda #0
+	sta $e880
+	lda #CYCLESPERLINE-1	; register 0 is minus 1
+	sta $e881		; change line length back to original
+
+	; now wait (LINESPERCHAR - 1) * CYCLESPERLINE cycles to get to the next
+	; charline
+	; 7*50 = 350; 
+	; 350 - 2 (for initial ldy) = 348
+	; 348 / 5 (loop length) = 69.6
+	ldy #65
+ll	dey	; 78*5-1 = 389
+	bne ll
+
+	; rl = 473
+	lda #0
+	sta $e880
+	lda #CYCLESPERLINE-1-1	; register 0 is minus 1
+	sta $e881		; decrease line length by one cycle
+
+	; 9*5+2 = 
+	ldy #5
+ll1	dey			; wait one rasterline
+	bne ll1
+
+	; rl = 531
+	lda #2
+	sta $e880
+	lda #ORIGHSYNC
+	sta $e881
+	lda #0
+	sta $e880
+	lda #CYCLESPERLINE-1	; register 0 is minus 1
+	sta $e881		; change line length back to original
 
 	jmp $e600
 
 vsync
 	; set IRQ to the beginning of the 1st scanline of the 23rd charline
-	; this routine takes approx. 33 cycles
+	; this routine takes approx. 33 cycles until timer start
 	; jmp (irqsave)
 
 	lda #0
 	sta $e84b	; T1 oneshot mode
-	lda #$a0
-	sta $e84e	; enable T2 IRQ
-	sta $e84d	; clear T2 IRQ flag
-	lda #<OFFSET-33
-	ldy #>OFFSET-33
-	sta $e848
-	sty $e849	
+	lda #$c0
+	sta $e84e	; enable T1 IRQ
+	sta $e84d	; clear T1 IRQ flag
+	lda #<OFFSET-28
+	ldy #>OFFSET-28
+	sta $e844
+	sty $e845	
 	inc framecount
 	jmp (irqsave)
 	.)
-
-theend:
-
-            jsr waitframe
-            lda #0
-            sta DEBUGREG
-            jmp *
-
-framecount:
-    .byt $ff - 20
-            
-waitframe:
-            lda framecount
-            bne waitframe
-            rts
 
 setcrtc .(
         ldx #0
@@ -187,8 +218,46 @@ loop    lda regs,x
         bcc loop
         rts
 
-regs    .byt $3a, $28, $2c, $08
-        .byt $29, $03, $19, $22
-        .byt $00, $07
+regs   .byt $3a, $28, $2c, $08
+       .byt $29, $03, $19, $22
+       .byt $00, $07
         .)
+
+theend:
+
+            jsr waitframe
+            lda #0
+            sta DEBUGREG
+            jmp *
+theend0:
+
+            ldy #0
+ll2         ldx #0
+ll1         
+            ;jsr delay
+            dex
+            bne ll1
+            dey
+            bne ll2
+
+            lda #0
+            sta DEBUGREG
+            jmp *
             
+delay:
+            txa
+            pha
+            ldx #0
+ll3         dex
+            bne ll3
+            pla
+            tax
+            rts
+
+framecount:
+    .byt $ff - 30
+            
+waitframe:
+            lda framecount
+            bne waitframe
+            rts
