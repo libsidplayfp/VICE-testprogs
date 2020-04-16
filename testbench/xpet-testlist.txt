@@ -13,8 +13,8 @@
 # CRTC
 ################################################################################
 ../CRTC/,crtc0.prg,screenshot,100000000
-../CRTC/,crtc1.prg,screenshot,100000000
-../CRTC/,crtc2.prg,screenshot,100000000
+../CRTC/,crtc1.prg,interactive,100000000
+../CRTC/,crtc2.prg,interactive,100000000
 ../CRTC/,crtc3.prg,screenshot,100000000
 ../CRTC/,crtc4.prg,screenshot,100000000
 ../CRTC/,crtc5.prg,screenshot,100000000
