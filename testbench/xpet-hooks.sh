@@ -24,10 +24,10 @@ XPETOPTSSCREENSHOT+=" -minimized"
 # computers reset/startup screen, the offset gives the top left pixel of the
 # top left character on screen.
 XPETSXO=32
-XPETSYO=35
+XPETSYO=33
 
 XPETREFSXO=32
-XPETREFSYO=35
+XPETREFSYO=33
 
 function xpet_check_environment
 {
