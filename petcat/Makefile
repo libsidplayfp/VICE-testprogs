@@ -7,179 +7,179 @@ all: test
 
 # all valid basic v2 tokens in a "basic program"
 tokensv2.prg: tokensv2.s
-	acme tokensv2.s
+	acme -Wno-old-for tokensv2.s
 
 # all character codes (0-255)
 petscii.bin: petscii.s
-	acme petscii.s
+	acme -Wno-old-for petscii.s
 
 # all basic v1 keywords in a "basic program"
 keywordsv1.prg: keywordsv1.s
-	acme keywordsv1.s
+	acme -Wno-old-for keywordsv1.s
 
 # all basic v2 keywords in a "basic program"
 keywordsv2.prg: keywordsv2.s
-	acme keywordsv2.s
+	acme -Wno-old-for keywordsv2.s
 
 # all basic v2 + Super Expander keywords in a "basic program"
 keywordsv2superexp.prg: keywordsv2superexp.s
-	acme keywordsv2superexp.s
+	acme -Wno-old-for keywordsv2superexp.s
 
 # all basic v2 + Speech Basic v2.7 keywords in a "basic program"
 keywordsv2speech.prg: keywordsv2speech.s
-	acme keywordsv2speech.s
+	acme -Wno-old-for keywordsv2speech.s
 
 # all basic v2 + at Basic keywords in a "basic program"
 keywordsv2at.prg: keywordsv2at.s
-	acme keywordsv2at.s
+	acme -Wno-old-for keywordsv2at.s
 
 # all basic v2 + FC3 keywords in a "basic program"
 keywordsv2fc3.prg: keywordsv2fc3.s
-	acme keywordsv2fc3.s
+	acme -Wno-old-for keywordsv2fc3.s
 
 # all basic v2 + Ultra Basic 64 keywords in a "basic program"
 keywordsv2ultra64.prg: keywordsv2ultra64.s
-	acme keywordsv2ultra64.s
+	acme -Wno-old-for keywordsv2ultra64.s
 
 # all basic v2 + Graphics Basic keywords in a "basic program"
 keywordsv2graph.prg: keywordsv2graph.s
-	acme keywordsv2graph.s
+	acme -Wno-old-for keywordsv2graph.s
 
 # all basic v2 + WS Basic keywords in a "basic program"
 keywordsv2ws.prg: keywordsv2ws.s
-	acme keywordsv2ws.s
+	acme -Wno-old-for keywordsv2ws.s
 
 # all basic v2 + WS Basic Final keywords in a "basic program"
 keywordsv2wsf.prg: keywordsv2wsf.s
-	acme keywordsv2wsf.s
+	acme -Wno-old-for keywordsv2wsf.s
 
 # all basic v2 + Turtle Basic keywords in a "basic program"
 keywordsv2turtle.prg: keywordsv2turtle.s
-	acme keywordsv2turtle.s
+	acme -Wno-old-for keywordsv2turtle.s
 
 # all basic v2 + Mighty Basic keywords in a "basic program"
 keywordsv2mighty.prg: keywordsv2mighty.s
-	acme keywordsv2mighty.s
+	acme -Wno-old-for keywordsv2mighty.s
 
 # all basic v2 + Pegasus Basic 4.0 keywords in a "basic program"
 keywordsv2peg40.prg: keywordsv2peg40.s
-	acme keywordsv2peg40.s
+	acme -Wno-old-for keywordsv2peg40.s
 
 # all basic v2 + Xbasic keywords in a "basic program"
 keywordsv2xbas.prg: keywordsv2xbas.s
-	acme keywordsv2xbas.s
+	acme -Wno-old-for keywordsv2xbas.s
 
 # all basic v2 + Drago Basic v2.2 keywords in a "basic program"
 keywordsv2drago.prg: keywordsv2drago.s
-	acme keywordsv2drago.s
+	acme -Wno-old-for keywordsv2drago.s
 
 # all basic v2 + REU Basic keywords in a "basic program"
 keywordsv2reu.prg: keywordsv2reu.s
-	acme keywordsv2reu.s
+	acme -Wno-old-for keywordsv2reu.s
 
 # all basic v2 + Basic Lightning keywords in a "basic program"
 keywordsv2lightning.prg: keywordsv2lightning.s
-	acme keywordsv2lightning.s
+	acme -Wno-old-for keywordsv2lightning.s
 
 # all basic v2 + Magic Basic keywords in a "basic program"
 keywordsv2magic.prg: keywordsv2magic.s
-	acme keywordsv2magic.s
+	acme -Wno-old-for keywordsv2magic.s
 
 # all basic v2 + Easy Basic keywords in a "basic program"
 keywordsv2easy.prg: keywordsv2easy.s
-	acme keywordsv2easy.s
+	acme -Wno-old-for keywordsv2easy.s
 
 # all basic v2 + Blarg keywords in a "basic program"
 keywordsv2blarg.prg: keywordsv2blarg.s
-	acme keywordsv2blarg.s
+	acme -Wno-old-for keywordsv2blarg.s
 
 # all basic v2 + Game Basic keywords in a "basic program"
 keywordsv2game.prg: keywordsv2game.s
-	acme keywordsv2game.s
+	acme -Wno-old-for keywordsv2game.s
 
 # all basic v2 + Super Basic keywords in a "basic program"
 keywordsv2superbas.prg: keywordsv2superbas.s
-	acme keywordsv2superbas.s
+	acme -Wno-old-for keywordsv2superbas.s
 
 # all basic v2 + Expanded Basic 20 keywords in a "basic program"
 keywordsv2exp20.prg: keywordsv2exp20.s
-	acme keywordsv2exp20.s
+	acme -Wno-old-for keywordsv2exp20.s
 
 # all basic v2 + Expanded Basic 64 keywords in a "basic program"
 keywordsv2exp64.prg: keywordsv2exp64.s
-	acme keywordsv2exp64.s
+	acme -Wno-old-for keywordsv2exp64.s
 
 # all basic v2 + Super Expander Chip keywords in a "basic program"
 keywordsv2sxc.prg: keywordsv2sxc.s
-	acme keywordsv2sxc.s
+	acme -Wno-old-for keywordsv2sxc.s
 
 # all basic v2 + Warsaw Basic keywords in a "basic program"
 keywordsv2warsaw.prg: keywordsv2warsaw.s
-	acme keywordsv2warsaw.s
+	acme -Wno-old-for keywordsv2warsaw.s
 
 # all basic v2 + Super Grafik 64 keywords in a "basic program"
 keywordsv2supergraph.prg: keywordsv2supergraph.s
-	acme keywordsv2supergraph.s
+	acme -Wno-old-for keywordsv2supergraph.s
 
 # all basic v2 + Kipper Basic keywords in a "basic program"
 keywordsv2kipper.prg: keywordsv2kipper.s
-	acme keywordsv2kipper.s
+	acme -Wno-old-for keywordsv2kipper.s
 
 # all basic v2 + Basic On Bails keywords in a "basic program"
 keywordsv2bob.prg: keywordsv2bob.s
-	acme keywordsv2bob.s
+	acme -Wno-old-for keywordsv2bob.s
 
 # all basic v2 + Eve Basic keywords in a "basic program"
 keywordsv2eve.prg: keywordsv2eve.s
-	acme keywordsv2eve.s
+	acme -Wno-old-for keywordsv2eve.s
 
 # all basic v2 + The Tool 64 keywords in a "basic program"
 keywordsv2tt64.prg: keywordsv2tt64.s
-	acme keywordsv2tt64.s
+	acme -Wno-old-for keywordsv2tt64.s
 
 # all basic v2 + Basex keywords in a "basic program"
 keywordsv2basex.prg: keywordsv2basex.s
-	acme keywordsv2basex.s
+	acme -Wno-old-for keywordsv2basex.s
 
 # all basic v4 keywords in a "basic program"
 keywordsv4.prg: keywordsv4.s
-	acme keywordsv4.s
+	acme -Wno-old-for keywordsv4.s
 
 # all basic v4 for C64 keywords in a "basic program"
 keywordsv4c64.prg: keywordsv4c64.s
-	acme keywordsv4c64.s
+	acme -Wno-old-for keywordsv4c64.s
 
 # all basic v4 for VIC20 keywords in a "basic program"
 keywordsv4vic20.prg: keywordsv4vic20.s
-	acme keywordsv4vic20.s
+	acme -Wno-old-for keywordsv4vic20.s
 
 # all basic v5 keywords in a "basic program"
 keywordsv5.prg: keywordsv5.s
-	acme keywordsv5.s
+	acme -Wno-old-for keywordsv5.s
 
 # all basic v3.5 keywords in a "basic program"
 keywordsv35.prg: keywordsv35.s
-	acme keywordsv35.s
+	acme -Wno-old-for keywordsv35.s
 
 # all basic v7 keywords in a "basic program"
 keywordsv7.prg: keywordsv7.s
-	acme keywordsv7.s
+	acme -Wno-old-for keywordsv7.s
 
 # all basic v7.1 keywords in a "basic program"
 keywordsv71.prg: keywordsv71.s
-	acme keywordsv71.s
+	acme -Wno-old-for keywordsv71.s
 
 # all basic v10 keywords in a "basic program"
 keywordsv10.prg: keywordsv10.s
-	acme keywordsv10.s
+	acme -Wno-old-for keywordsv10.s
 
 # all basic v2 + Simons Basic keywords in a "basic program"
 keywordsv2simon.prg: keywordsv2simon.s
-	acme keywordsv2simon.s
+	acme -Wno-old-for keywordsv2simon.s
 
 # all basic v2 + Handy Basic keywords in a "basic program"
 keywordsv2handy.prg: keywordsv2handy.s
-	acme keywordsv2handy.s
+	acme -Wno-old-for keywordsv2handy.s
 
 .PHONY: test test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \

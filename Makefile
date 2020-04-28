@@ -22,7 +22,7 @@ buildtests:
 .PHONY: petcat c1541 cartconv vice testbench
 
 petcat:
-	@$(MAKE) -C petcat
+	@$(MAKE) -C petcat clean all clean
 
 # TODO
 c1541:
