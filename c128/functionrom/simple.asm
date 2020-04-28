@@ -3,24 +3,21 @@
 ;-------------------------------------------------------------------------------        
 
         *= $8000
-        jmp ColdStart       ; reset vector
-        jmp WarmStart
+        jsr startfuncrom    ; yes, really JSR
+        !byte 0,0,0         ; unused
         
         !byte 2             ; 0 = off, 1 = run early, >0 = run later
         !byte $43,$42,$4d   ; CBM
 
 ;-------------------------------------------------------------------------------        
     
-ColdStart:
-WarmStart:
+startfuncrom:
 
 ; first we remove and check the return address: kernal checks for module id
 ; both at $8000 and at $c000. chips smaller than 32 K are visible multiple
 ; times, so the module could be entered twice. as we don't want that, we only
 ; act if called via $8000:
 
-        jsr +
-+
         pla             ; get low byte of "return address minus 1"
         pla             ; get high byte of "return address minus 1"
         cmp #$80
@@ -31,19 +28,12 @@ WarmStart:
         lda $ff00
         and #$ce
         sta $ff00
-        
-        ; put welcome message
--   
-        lda WelcomeText,x
-        beq +
-        jsr $ffd2
-        inx
-        jmp -
-+   
-        rts
 
-WelcomeText:
+        ; put welcome message
+        jsr $ff7d
         !pet "hello world",0 
+        
+        rts ; back to BASIC
 
 ;-------------------------------------------------------------------------------        
         
