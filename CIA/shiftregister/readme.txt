@@ -33,3 +33,34 @@ cia-icr-test2-oneshot.prg
 -----------------------------
 
 related ICR ($dc0d) behaviour checks
+
+
+cia-sdr-load.prg
+----------------
+
+from https://sourceforge.net/p/vice-emu/bugs/1219/
+
+It seems the new byte is only taken into the shift register on the first timer 
+underflow. So one has to introduce the delay to make sure one timer underflow 
+appears before writing a new byte.
+
+The CIA datasheet however says: "The data in the Serial Data Register will be 
+loaded into the shift register, then shift out to the SP pin when a CNT pulse 
+occurs."
+
+So it should be possible (and in my previous (historic) experience I think it 
+is) that when the SDR is empty one can directly write two bytes without delays: 
+one that is immediately passed through to the actual shift register, while the 
+second byte stops in the SDR, to be loaded into the shift register when it ran 
+empty. (I probably should confirm this next week, but the code without the delay 
+ran successfully in older days on real hardware)
+
+The test program shows different timing between the x64sc and a C128 in C64 
+mode or a C64. VICE prints out 10 times "$FCF2" while the C64 prints out "$FCEB" 
+(with only 1-2 cycles off in the first iterations each).
+
+However, that does not show the actual problem when shifting out the data. The 
+test writes to SDR twice directly after each other. In the real machine, the 
+RS232 transmits all 16 bits - in VICE SDR, the rs232 code only gets a single 
+byte - so output is mangled. But that is not something an all-in-the-machine 
+test can show.

@@ -9,7 +9,8 @@ TESTS=\
 	cia-icr-test-oneshot-new.prg \
 	cia-icr-test-continues-new.prg \
 	cia-icr-test2-oneshot.prg \
-	cia-icr-test2-continues.prg
+	cia-icr-test2-continues.prg \
+	cia-sdr-load.prg
 
 all: $(TESTS)
 
@@ -38,5 +39,8 @@ cia-icr-test2-oneshot.prg: cia-icr-test2.asm
 cia-icr-test2-continues.prg: cia-icr-test2.asm
 	acme -DONESHOT=0 -f cbm -o cia-icr-test2-continues.prg cia-icr-test2.asm
 
+cia-sdr-load.prg: cia-sdr-load.a65
+	xa -o cia-sdr-load.prg cia-sdr-load.a65
+	
 clean:
 	rm -f *.prg
