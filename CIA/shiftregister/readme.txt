@@ -64,3 +64,14 @@ test writes to SDR twice directly after each other. In the real machine, the
 RS232 transmits all 16 bits - in VICE SDR, the rs232 code only gets a single 
 byte - so output is mangled. But that is not something an all-in-the-machine 
 test can show.
+
+cia-sdr-init.prg
+----------------
+
+from https://sourceforge.net/p/vice-emu/bugs/1219/
+
+"This simply tests when the shift register acknowledges it is empty with 1 byte 
+writen to the SDR register. 
+
+This passes on my real c64c and c128D in c64 mode. It fails in VICE. VICE result 
+is FCF1, real result is FCEA."

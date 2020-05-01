@@ -10,7 +10,8 @@ TESTS=\
 	cia-icr-test-continues-new.prg \
 	cia-icr-test2-oneshot.prg \
 	cia-icr-test2-continues.prg \
-	cia-sdr-load.prg
+	cia-sdr-load.prg \
+	cia-sdr-init.prg
 
 all: $(TESTS)
 
@@ -41,6 +42,8 @@ cia-icr-test2-continues.prg: cia-icr-test2.asm
 
 cia-sdr-load.prg: cia-sdr-load.a65
 	xa -o cia-sdr-load.prg cia-sdr-load.a65
+cia-sdr-init.prg: cia-sdr-init.asm
+	acme -f cbm -o cia-sdr-init.prg cia-sdr-init.asm
 	
 clean:
 	rm -f *.prg
