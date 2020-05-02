@@ -65,6 +65,7 @@ RS232 transmits all 16 bits - in VICE SDR, the rs232 code only gets a single
 byte - so output is mangled. But that is not something an all-in-the-machine 
 test can show.
 
+
 cia-sdr-init.prg
 ----------------
 
@@ -75,3 +76,21 @@ writen to the SDR register.
 
 This passes on my real c64c and c128D in c64 mode. It fails in VICE. VICE result 
 is FCF1, real result is FCEA."
+
+
+cia-sdr-delay.prg
+----------------
+
+from https://sourceforge.net/p/vice-emu/bugs/1219/
+
+"Another test which adds a delay before writing a byte to the SDR after Timer A 
+has started and waits until the SDR flag is set. The test executes 21 times 
+decreasing the delay by 1 cycle each run. Red text in results shows mismatch in 
+timing compared to my real hardware(same systems as decribed above) .
+
+Pattern on real hardware:  FCE6, FCE7, FCE8, FCE9, FCEA, FCE4, FCE5
+Pattern on VICE:           FCED, FCEE, FCE8, FCE9, FCEA, FCEB, FCEC
+
+Based on these results it looks like there is a 4 cycle delay on real hardware 
+compared to VICE for when the SDR flag is set. More tests should probably be 
+done with different baud rates to see if the delay is consistent."
