@@ -94,3 +94,9 @@ Pattern on VICE:           FCED, FCEE, FCE8, FCE9, FCEA, FCEB, FCEC
 Based on these results it looks like there is a 4 cycle delay on real hardware 
 compared to VICE for when the SDR flag is set. More tests should probably be 
 done with different baud rates to see if the delay is consistent."
+
+cia-sdr-icr-new.prg
+cia-sdr-icr-old.prg
+-------------------
+
+from https://sourceforge.net/p/vice-emu/bugs/1219/
