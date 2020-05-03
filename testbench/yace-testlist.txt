@@ -543,6 +543,8 @@
 ../CIA/shiftregister/,cia-icr-test-oneshot-old.prg,exitcode,10000000,cia-old
 ../CIA/shiftregister/,cia-sdr-load.prg,exitcode,7000000
 ../CIA/shiftregister/,cia-sdr-init.prg,exitcode,7000000
+../CIA/shiftregister/,cia-sdr-delay.prg,exitcode,7000000
+../CIA/shiftregister/,cia-sdr-icr-old.prg,exitcode,16000000,cia-old
 ../CIA/shiftregister/,cia-sp-test-continues-old.prg,exitcode,50000000,cia-old
 ../CIA/shiftregister/,cia-sp-test-oneshot-old.prg,exitcode,50000000,cia-old
 ../CIA/timerbasics/,test.prg,exitcode,100000000,cia-old
