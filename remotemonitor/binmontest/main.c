@@ -886,6 +886,37 @@ void advance_instructions_works(CuTest *tc) {
     CuAssertIntEquals(tc, 0x62, response[RESPONSE_TYPE]);
 }
 
+void execute_until_return_works(CuTest *tc) {
+    int length;
+
+    unsigned char command[] = {
+        0x02, 0x01, 
+        0xff, 0xff, 0xff, 0xff, 
+        0xb3, 0xe4, 0x2d, 0x30, 
+
+        0x73,
+
+        0x00,
+        0x01, 0x00,
+    };
+
+    setup(tc);
+
+    send_command(command);
+
+    length = wait_for_response_id(tc, command);
+
+    CuAssertIntEquals(tc, 0x73, response[RESPONSE_TYPE]);
+
+    length = wait_for_response_type(tc, 0x63);
+
+    CuAssertIntEquals(tc, 0x63, response[RESPONSE_TYPE]);
+
+    length = wait_for_response_type(tc, 0x62);
+
+    CuAssertIntEquals(tc, 0x62, response[RESPONSE_TYPE]);
+}
+
 void reset_works(CuTest *tc) {
     int length;
 
@@ -1069,6 +1100,7 @@ CuSuite* get_suite(void)
     SUITE_ADD_TEST(suite, mem_get_works);
 
     SUITE_ADD_TEST(suite, advance_instructions_works);
+    SUITE_ADD_TEST(suite, execute_until_return_works);
 
     SUITE_ADD_TEST(suite, exit_works);
     SUITE_ADD_TEST(suite, reset_works);
