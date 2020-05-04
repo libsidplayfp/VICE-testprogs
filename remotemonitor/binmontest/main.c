@@ -690,6 +690,8 @@ void registers_set_works(CuTest *tc) {
 
     count = little_endian_to_uint16(&response[HEADER_LENGTH]);
 
+    CuAssertIntEquals(tc, 8, count);
+
     cursor = &response[HEADER_LENGTH + 2];
 
     for (i = 0 ; i < count ; i++) {
@@ -703,12 +705,16 @@ void registers_set_works(CuTest *tc) {
         } else if (id == 0x01) {
             CuAssertIntEquals(tc, little_endian_to_uint16(&set_command[COMMAND_HEADER_LENGTH + 8]), val);
             ++assert_count;
+        } else if (id == 0x35) {
+            ++assert_count;
+        } else if (id == 0x36) {
+            ++assert_count;
         }
 
         cursor += item_size + 1;
     }
 
-    CuAssertIntEquals(tc, 2, assert_count);
+    CuAssertIntEquals(tc, 4, assert_count);
 }
 
 void registers_get_works(CuTest *tc) {
@@ -1019,20 +1025,24 @@ void registers_available_works(CuTest *tc) {
         uint8_t name_length = cursor[3];
         unsigned char* name = &cursor[4];
 
-        if (id == 3) {
+        if (id == 0x03) {
             CuAssertTrue(tc, strncmp(name, "PC", 2) == 0);
             CuAssertIntEquals(tc, 16, size);
             ++assert_count;
-        } else if (id == 0) {
+        } else if (id == 0x00) {
             CuAssertTrue(tc, strncmp(name, "A", 1) == 0);
             CuAssertIntEquals(tc, 8, size);
+            ++assert_count;
+        } else if (id == 0x35) {
+            ++assert_count;
+        } else if (id == 0x36) {
             ++assert_count;
         }
 
         cursor += item_size + 1;
     }
 
-    CuAssertIntEquals(tc, 2, assert_count);
+    CuAssertIntEquals(tc, 4, assert_count);
 }
 
 CuSuite* get_suite(void)
