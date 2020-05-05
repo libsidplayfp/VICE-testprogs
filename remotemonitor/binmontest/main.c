@@ -887,9 +887,37 @@ void advance_instructions_works(CuTest *tc) {
 }
 
 void execute_until_return_works(CuTest *tc) {
+    unsigned char real_command[10000];
     int length;
+    long prg_size;
+    FILE* fil = fopen("./cc65-test.prg", "rb");
 
-    unsigned char command[] = {
+    unsigned char mem_command[] = {
+        0x02, 0x01, 
+        0xff, 0xff, 0xff, 0xff, 
+        0xa9, 0xe3, 0x28, 0x37, 
+
+        0x02,
+
+        0x00,
+        0xff, 0x07,
+        0xff, 0xff,
+        0x00,
+        0x01, 0x00,
+    };
+
+    unsigned char keyboard_command[] = { 
+        "\x02\x01"
+        "\xff\xff\xff\xff"
+        "\xad\xe5\x30\x45"
+
+        "\x72"
+
+        "\x0a"
+        "sys 2061\\n"
+    };
+
+    unsigned char exec_command[] = {
         0x02, 0x01, 
         0xff, 0xff, 0xff, 0xff, 
         0xb3, 0xe4, 0x2d, 0x30, 
@@ -900,11 +928,86 @@ void execute_until_return_works(CuTest *tc) {
         0x01, 0x00,
     };
 
+    unsigned char brk_command[] = { 
+        0x02, 0x01, 
+        0xff, 0xff, 0xff, 0xff, 
+        0xb4, 0xd8, 0x44, 0x19, 
+
+        0x12, 
+
+        0x0d, 0x08,
+        0x0d, 0x08,
+        0x01,
+        0x01,
+        0x04,
+        0x00,
+    };
+
+    unsigned char exit_command[] = {
+        0x02, 0x01, 
+        0xff, 0xff, 0xff, 0xff, 
+        0xaf, 0xe9, 0x23, 0x3d, 
+
+        0xaa,
+    };
+
+    // set mem
+
     setup(tc);
 
-    send_command(command);
+    CuAssertIntEquals(tc, 0, fseek(fil, 0, SEEK_END));
+    prg_size = ftell(fil);
+    rewind(fil);
 
-    length = wait_for_response_id(tc, command);
+    memcpy(real_command, mem_command, sizeof(mem_command));
+
+    write_uint16(0x7ff + prg_size - 1, &real_command[COMMAND_HEADER_LENGTH + 3]);
+
+    CuAssertTrue(tc, fread(&real_command[sizeof(mem_command)], prg_size, 1, fil) > 0);
+
+    really_send_command(real_command, sizeof(mem_command) + prg_size);
+
+    length = wait_for_response_id(tc, mem_command);
+
+    CuAssertIntEquals(tc, 0x02, response[RESPONSE_TYPE]);
+
+    // break
+
+    send_command(brk_command);
+
+    length = wait_for_response_id(tc, brk_command);
+
+    CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
+
+    // keyboard
+
+    send_command(keyboard_command);
+
+    length = wait_for_response_id(tc, keyboard_command);
+
+    CuAssertIntEquals(tc, 0x72, response[RESPONSE_TYPE]);
+
+    // continue
+
+    send_command(exit_command);
+
+    length = wait_for_response_id(tc, exit_command);
+
+    CuAssertIntEquals(tc, 0xaa, response[RESPONSE_TYPE]);
+
+    length = wait_for_response_type(tc, 0x63);
+
+    CuAssertIntEquals(tc, 0x63, response[RESPONSE_TYPE]);
+
+    length = wait_for_response_type(tc, 0x62);
+
+    CuAssertIntEquals(tc, 0x62, response[RESPONSE_TYPE]);
+
+    // exec
+
+    send_command(exec_command);
+
+    length = wait_for_response_id(tc, exec_command);
 
     CuAssertIntEquals(tc, 0x73, response[RESPONSE_TYPE]);
 
