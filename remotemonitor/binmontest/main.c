@@ -1229,9 +1229,26 @@ int run_tests(CuSuite* inner)
     return suite->failCount;
 }
 
+void mon_quit() {
+    int length;
+
+    unsigned char command[] = {
+        0x02, 0x01, 
+        0xff, 0xff, 0xff, 0xff, 
+        0xaf, 0xe9, 0x23, 0x3d, 
+
+        0xbb,
+    };
+
+    send_command(command);
+
+    sleep(1);
+}
+
 int main(int argc, unsigned char** argv)
 {
     unsigned char* single_test_name = NULL;
+    int ret;
     if (argc < 2) {
         printf("Syntax: %s <port of x64sc binary monitor> [name of test to run]", argv[0]);
         return EXIT_FAILURE;
@@ -1255,14 +1272,18 @@ int main(int argc, unsigned char** argv)
 
                 CuSuiteAdd(single_suite, test);
 
-                return run_tests(single_suite);
+                ret = run_tests(single_suite);
             }
         }
     } else {
-        return run_tests(get_suite());
+        ret = run_tests(get_suite());
+    }
+
+    if (getenv("MON_QUIT") && getenv("MON_QUIT")[0] == '1') {
+        mon_quit();
     }
 
     close(sock);
 
-    return EXIT_SUCCESS;
+    return ret;
 }

@@ -9,8 +9,7 @@ test: remotetest
 	x64sc -default -binarymonitor -minimized > /dev/null & \
 		PID=$$! ;\
 		sleep 1 ;\
-		./remotetest 6502 ;\
-		kill $$PID
+		MON_QUIT=1 ./remotetest 6502
 
 clean:
 	rm *.o remotetest
