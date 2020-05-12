@@ -540,13 +540,15 @@ tf2:
         lda #1
         sta failedtests
 + 
+
+!if (0 = 1) {
         ; check if constant behaves as desired (works for blackmail-fli)
         ; for blackmali-fli to work bits 0,1,2 must be 1s
-        ldy #13
+        ldy #13 ; green
         ldx lax_constant
         lda constbits,x
         bne +
-        ldy #10
+        ldy #10 ; red
 +
         sty $d800+(24*40)+17
         sty $d800+(24*40)+16
@@ -555,7 +557,19 @@ tf2:
         bne +
         lda #1
         sta failedtests
-+        
++
+}
+        ; check if the constant is $EE, as required by wizball
+        ldy #13 ; green
+        lda lax_constant
+        cmp #$ee
+        beq +
+        lda #1
+        sta failedtests
+        ldy #10 ; red
++
+        sty $d800+(24*40)+17
+        sty $d800+(24*40)+16
         
         inc testframes
         lda testframes
@@ -690,6 +704,7 @@ timeout:
 
 testframes: !byte 0
 
+!if (0 = 1) {
         !align 255, 0
 constbits:
     !for n, 0, 255 {
@@ -699,3 +714,4 @@ constbits:
             !byte 0
         }
     }
+}

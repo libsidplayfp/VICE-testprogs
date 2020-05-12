@@ -64,8 +64,9 @@ ANE does not work as expected, but it means that it behaves in a way that will
 make some or all of the analysed real world programs not work correctly.
 
 For Emulation the best compromise between "proper emulation" and "making things
-work" seems to be to use a "magic contant" of $EF in regular cycles, and $EE in
-the RDY cycle.
+work" seems to be to use a "magic contant" of $EE in regular cycles, and $EE in
+the RDY cycle. This will "break" the "Blackmail FLI" program, but "Wizball"
+requires it, which seems to be a much more convincing reason.
 
 --------------------------------------------------------------------------------
 analysis of some real world programs
@@ -83,3 +84,16 @@ Blackmail-FLI
 
 for the displayer to work with all colors, bit 0,1,2 must be 1 -> constant 
 $ef will work
+
+Wizball
+-------
+
+The location in Wizball where LXA is executed is at b58b.
+
+b589  A9 00       LDA #$00 
+b58b  AB FF       LXA #$FF      ; A = X = (($00 | CONST) & $ff) = $EE
+b58d  DF 97 FF    DCP $FF97,X   ; decrement mem (=$85), compare with akku (=$EE)
+b590  60          RTS
+
+$85 is used as a delay(?) counter at various places in the game, so $EE really
+seems to be the one and only value to make it work correctly.
