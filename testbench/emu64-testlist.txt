@@ -678,7 +678,8 @@
 ../VICII/fldscroll/,fldscroll-29-60.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/fldscroll/,fldscroll-2A-60.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/fldscroll/,fldscroll-2B-60.prg,screenshot,10000000,vicii-pal,warn:vicfetch
-../VICII/flibug/,blackmail.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/flibug/,blackmail-ee.prg,screenshot,10000000,vicii-pal,warn:vicfetch,comment:relies on LAX magic constant being 0xee
+../VICII/flibug/,blackmail-fixed.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 #TODO: some of the frodo tests can be made automatic
 ../VICII/frodotests/,3fff.prg,interactive,0,vicii-pal
 ../VICII/frodotests/,d011h3.prg,interactive,0,vicii-pal
