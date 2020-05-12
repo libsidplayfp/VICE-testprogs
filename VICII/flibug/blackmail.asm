@@ -1,5 +1,5 @@
 
-STABLEFIX = 0
+;STABLEFIX = 0
 
 codeptr = $4d
 

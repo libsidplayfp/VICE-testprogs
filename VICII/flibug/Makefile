@@ -1,8 +1,10 @@
 
-all: blackmail.prg
+all: blackmail-ee.prg blackmail-fixed.prg
 
-blackmail.prg: blackmail.asm
-	acme -f cbm -o blackmail.prg blackmail.asm
+blackmail-ee.prg: blackmail.asm
+	acme -f cbm -DSTABLEFIX=0 -o blackmail-ee.prg blackmail.asm
+blackmail-fixed.prg: blackmail.asm
+	acme -f cbm -DSTABLEFIX=1 -o blackmail-fixed.prg blackmail.asm
 
 clean:
-	rm -f blackmail.prg
+	rm -f blackmail-ee.prg
