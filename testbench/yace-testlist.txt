@@ -1063,6 +1063,8 @@
 #FIXME: NTSC fix
 ../REU/reutiming2/,a.prg,screenshot,40000000,reu512k,vicii-pal
 ../REU/reutiming2/,b.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/rmw-trigger/,rmwtrigger-rom.prg,exitcode,1000000000,reu512k
+../REU/rmw-trigger/,rmwtrigger-ram.prg,exitcode,1000000000,reu512k
 ../REU/spriteba/,spriteba.prg,analyzer,0
 #FIXME: NTSC fix
 ../REU/xfertiming/,xfertiming-cmp.prg,screenshot,20000000,reu512k,vicii-pal
