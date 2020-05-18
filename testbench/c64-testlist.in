@@ -807,6 +807,8 @@
 ../VICII/phi1timing/,phi1timing_ntscold.prg,exitcode,10000000,vicii-ntscold,warn:vicfetch
 ../VICII/rasterirq/,rasterirq_hold.prg,screenshot,10000000,vicii-pal
 ../VICII/screenpos/,screenpos.prg,screenshot,10000000,vicii-pal
+../VICII/sb_sprite_fetch/,sbsprf24-163.prg,screenshot,11000000,vicii-pal
+../VICII/sb_sprite_fetch/,sbsprf24-164.prg,screenshot,11000000,vicii-pal
 ../VICII/screenpos/,screenpos_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: check tests on NTSCOLD
 ../VICII/screenpos/,screenpos_ntscold.prg,screenshot,10000000,vicii-ntscold
