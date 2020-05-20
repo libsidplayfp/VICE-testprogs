@@ -1196,6 +1196,11 @@
 ../C64/carts/rr-freeze/,,analyzer,0,mountcrt:rr-freeze.crt
 ../C64/carts/nordicpower/,,interactive,0,mountcrt:nptest.crt
 ../C64/carts/nordicpower/,,interactive,0,mountcrt:rrtest.crt
+../C64/carts/nordicpower/,,interactive,0,mountcrt:nrtest.crt
+../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:npramwrite.crt
+../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:nrramwrite.crt
+../C64/carts/nordicpower/,ramwrite.prg,exitcode,10000000,mountcrt:npdummy.crt
+../C64/carts/nordicpower/,ramwrite.prg,exitcode,10000000,mountcrt:nrdummy.crt
 ../C64/carts/supergames/,,exitcode,100000,mountcrt:supergames.crt
 ../C64/carts/tamtest/,,exitcode,35000000,mountcrt:tamtest.crt
 #TODO: make this automatic
