@@ -30,6 +30,10 @@ next
     jsr reset
 
 ; at this point all bit should be high
+    lda $d41b
+    cmp #$ff
+    bne next
+
     ldx #$00
     jsr plot
 
@@ -40,11 +44,15 @@ next
     asl
     asl
     sta $d412
+    tay
+    lda $d41b
     jsr plot
+    tya
 
 ; set testbit and waveform
     ora #$08
     sta $d412
+    lda $d41b
     jsr plot
 
     lda #$80
@@ -103,8 +111,6 @@ xcount
     jmp refptr
 
 plot
-    lda $d41b
-plotloc
     sta $400,x
     inx
     rts
@@ -140,38 +146,37 @@ keyrelease
     jmp keypress
 
 reset
-; noise reg may need some time
-; to reset
     txa
     asl
     tay
     lda result1,y
     sta result+1
-    sta plotloc+1
+    sta plot+1
     lda result1+1,y
     sta result+2
-    sta plotloc+2
+    sta plot+2
 
-    lda test,x
-    asl
-    asl
-    asl
-    asl
-    ora #$08
+; set testbit to reset noise
+    lda #$88
     sta $d412
 
-    ldy #$10
-branch3
-    ldx #$00
-branch2
-    lda #$f0
-branch1
-    cmp $d012
-    bne branch1
+; noise reg need some time to reset
+!if NEWSID = 0 {
+    ldy #1    ; wait ~1 sec for 6581
+} else {
+    ldy #10   ; wait ~10 sec for 8580
+}
+---
+    ldx #60   ; sixty frames = 1 sec for NTSC, 1.2 sec for PAL
+--
+w1: bit $d011
+    bpl w1
+w2: bit $d011
+    bmi w2
     dex
-    bne branch2
+    bne --
     dey
-    bne branch3
+    bne ---
     rts
 clrscreen
     lda #$20    ;Clear the screen

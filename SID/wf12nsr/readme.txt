@@ -17,7 +17,7 @@ wf12nsr.prg:
 
 This is another test program with reference data from my real c64. The test is 
 an extension of the noise writeback tests which does take sometime to complete. 
-The screen changes colour for each waeform. The program provides results for 
+The screen changes colour for each wafeform. The program provides results for 
 waveform 8,9,10,11,12,13,14,and 15 each with 2 rows of data. Text in green 
 matches reference data. Text in red highlights mismatch. Green border all data 
 matches. Red border indicates an error was detected. Hold space bar down to see 
@@ -39,3 +39,6 @@ the TEST bit is released (5th set of results). This seems to affect the noise
 writeback as discussed in bug# 746. In VICE for waveform 12 the results are 
 exactly the same as the noise waveform by itself (ie. waveform 8, the 1st set 
 of results). 
+
+NOTE: for the test to work the chip must be "warmed up". especially 8580 may
+not reset correctly when cold.
