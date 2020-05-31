@@ -442,11 +442,11 @@ results0: maketable
 		--results results/x64sc-r37145-result.txt "x64sc r37145" \
 		--results results/x64-r37109-result.txt "x64 r37109" \
 		--results results/x128c64-r37109-result.txt "x128 (c64) r37109" \
-		--results results/hoxs64-1-0-21-2-result.txt "hoxs64 1.0.21.2" \
+		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.3" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/denise-20200110-result.txt "denise 20200110" \
+		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/u64-128-result.txt "U64 1.28 (PAL)"
@@ -485,11 +485,11 @@ results: maketable
 		--results results/x64sc-r37145-result.txt "x64sc r37145" \
 		--results results/x64-r37109-result.txt "x64 r37109" \
 		--results results/x128c64-r37109-result.txt "x128 (c64) r37109" \
-		--results results/hoxs64-1-0-21-2-result.txt "hoxs64 1.0.21.2" \
+		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.3" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/denise-20200110-result.txt "denise 20200110" \
+		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
 		--results results/emu64-20191025-result.txt "emu64 20191025" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
@@ -565,11 +565,11 @@ resultswiki: maketable
 		--results results/x64sc-r37145-result.txt "x64sc r37145" \
 		--results results/x64-r37109-result.txt "x64 r37109" \
 		--results results/x128c64-r37109-result.txt "x128 (c64) r37109" \
-		--results results/hoxs64-1-0-21-2-result.txt "hoxs64 1.0.21.2" \
+		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.3" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/denise-20200110-result.txt "denise 20200110" \
+		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
 		--results results/emu64-20191025-result.txt "emu64 20191025" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
@@ -809,6 +809,7 @@ resultshoxs64: maketable hoxs64-testlist.txt
 		--results results/hoxs64-1-0-16-0-result.txt "hoxs64 1.0.16.0" \
 		--results results/hoxs64-1-0-21-0-result.txt "hoxs64 1.0.21.0" \
 		--results results/hoxs64-1-0-21-2-result.txt "hoxs64 1.0.21.2" \
+		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.32" \
 		\
 		> results/hoxs64.html
 
@@ -821,6 +822,7 @@ resultsdenise: maketable denise-testlist.txt
 		--results results/denise-1-0-5-result.txt "denise 1.0.5" \
 		--results results/denise-20191012-result.txt "denise 20191012" \
 		--results results/denise-20200110-result.txt "denise 20200110" \
+		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
 		\
 		> results/denise.html
 		
@@ -871,6 +873,8 @@ resultscham: maketable chameleon-testlist.txt
 		--results results/chameleon-head-20190802.txt "TC64 head (20190802)" \
 		--results results/chameleon-head-20190805.txt "TC64 head (20190805)" \
 		--results results/chameleon-head-20191026-result.txt "TC64 head (20191026)" \
+		--results results/chameleon-20200429.txt "TC64 head (20200429)" \
+		--results results/chameleon-head-20200511-result.txt "TC64 head (20200511)" \
 		\
 		> results/chameleon.html
 
