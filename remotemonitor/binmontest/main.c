@@ -1185,8 +1185,6 @@ CuSuite* get_suite(void)
 
     SUITE_ADD_TEST(suite, request_id_is_set);
 
-    SUITE_ADD_TEST(suite, autostart_works);
-
     SUITE_ADD_TEST(suite, checkpoint_set_works);
     SUITE_ADD_TEST(suite, checkpoint_get_works);
     SUITE_ADD_TEST(suite, checkpoint_delete_works);
@@ -1210,6 +1208,8 @@ CuSuite* get_suite(void)
 
     SUITE_ADD_TEST(suite, banks_available_works);
     SUITE_ADD_TEST(suite, registers_available_works);
+
+    SUITE_ADD_TEST(suite, autostart_works);
 
     return suite;
 }
