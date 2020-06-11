@@ -48,7 +48,8 @@ SysAddress:
 	lda	#$0f
 	sta	$d019		; clear interrupts
 
-	ldx	$d018
+	ldx	#$15
+	stx	$d018
 	lda	#$01
 	sta	$00,x
 	lda	#$dc
