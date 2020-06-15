@@ -112,10 +112,10 @@ u64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",isepic" \
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
+		| grep -v ",mountcrt" \
 		>> u64-testlist.txt
 
 #		| grep -v ",mountd64" \
-#		| grep -v ",mountcrt" \
 #		| grep -v ",mountg64" \
 		
 c64rmk2-testlist.txt: c64-testlist.in Makefile
@@ -449,7 +449,7 @@ results0: maketable
 		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
-		--results results/u64-128-result.txt "U64 1.28 (PAL)"
+		--results results/u64-133-result.txt "U64 1.33 (PAL)"
 
 	./maketable --list vic20-testlist.in \
 		--results results/xvic-r37109-result.txt "xvic r37109" \
@@ -494,7 +494,7 @@ results: maketable
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
-		--results results/u64-128-result.txt "U64 1.28 (PAL)" \
+		--results results/u64-133-result.txt "U64 1.33 (PAL)" \
 		\
 		> results/c64.html
 		
@@ -574,7 +574,7 @@ resultswiki: maketable
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
-		--results results/u64-128-result.txt "U64 1.28 (PAL)"
+		--results results/u64-133-result.txt "U64 1.33 (PAL)"
 	@echo "=== VIC20 ==="
 	./maketable  --wiki --list vic20-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
@@ -923,6 +923,7 @@ resultsu64: maketable u64-testlist.txt
 		--results results/u64-121-pal-result.txt "U64 PAL (1.21)" \
 		--results results/u64-124-pal-result.txt "U64 PAL (1.24)" \
 		--results results/u64-128-result.txt "U64 PAL (1.28)" \
+		--results results/u64-133-result.txt "U64 PAL (1.33)" \
 		\
 		> results/u64.html
 		
