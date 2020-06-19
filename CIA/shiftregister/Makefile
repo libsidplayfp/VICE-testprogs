@@ -12,8 +12,6 @@ TESTS=\
 	cia-icr-test2-continues.prg \
 	cia-sdr-load.prg \
 	cia-sdr-delay.prg \
-	cia-sdr-icr-new.prg \
-	cia-sdr-icr-old.prg \
 	cia-sdr-init.prg
 
 all: $(TESTS)
@@ -49,10 +47,6 @@ cia-sdr-init.prg: cia-sdr-init.asm
 	acme -f cbm -o cia-sdr-init.prg cia-sdr-init.asm
 cia-sdr-delay.prg: cia-sdr-delay.asm
 	acme -f cbm -o cia-sdr-delay.prg cia-sdr-delay.asm
-cia-sdr-icr-new.prg: cia-sdr-icr.asm
-	acme -f cbm -DNEWCIA=1 -o cia-sdr-icr-new.prg cia-sdr-icr.asm
-cia-sdr-icr-old.prg: cia-sdr-icr.asm
-	acme -f cbm -DNEWCIA=0 -o cia-sdr-icr-old.prg cia-sdr-icr.asm
 	
 clean:
 	rm -f *.prg
