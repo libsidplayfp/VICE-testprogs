@@ -544,7 +544,32 @@
 ../CIA/shiftregister/,cia-sdr-load.prg,exitcode,7000000
 ../CIA/shiftregister/,cia-sdr-init.prg,exitcode,7000000
 ../CIA/shiftregister/,cia-sdr-delay.prg,exitcode,7000000
-../CIA/shiftregister/,cia-sdr-icr-old.prg,exitcode,16000000,cia-old
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-50.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only 
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-51.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-64.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-7.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-8.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-50.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-51.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-5.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-64.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-6.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-7.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-8.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-50.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-51.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-64.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-7.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-8.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-50.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-51.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-5.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-64.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-6.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-7.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-8.prg,exitcode,16000000
 ../CIA/shiftregister/,cia-sp-test-continues-old.prg,exitcode,50000000,cia-old
 ../CIA/shiftregister/,cia-sp-test-oneshot-old.prg,exitcode,50000000,cia-old
 ../CIA/timerbasics/,test.prg,exitcode,100000000,cia-old
