@@ -21,7 +21,15 @@ link:   !word 0
         sta $d0fa       ; enable config registers
 
         lda #$00
+        sta $d0f8       ; stop drive cpu, this stops the drive from updating the
+                        ; modify bits
+        sta $d0f9
+        
         sta $d0f6       ; clear "image modified" bits
+        
+        lda #$22
+        sta $d0f7       ; to trigger re-reading the track data, select different image
+        lda #$00
         sta $d0f7       ; select 1 disk per drive, select image slot 1
         lda #$40
         sta $d0f8       ; enable disk drive 1 at id 8
@@ -136,6 +144,8 @@ oldcia:
 
         lda #0      ; return code = 0
         sta $d7ff
+        
+        sta $d0ff   ; leave config mode
         
         dec $d020
         cli

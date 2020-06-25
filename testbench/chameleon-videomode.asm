@@ -37,6 +37,8 @@ link:   !word 0
         lda #0          ; return code = 0
         sta $d7ff
 
+        sta $d0ff       ; leave config mode
+        
         dec $d020
         cli
         rts

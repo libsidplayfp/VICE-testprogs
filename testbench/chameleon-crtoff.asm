@@ -70,6 +70,8 @@ payload:
     lda $dd0d
     lda $df00 ; REU
 
+    sta $d0ff       ; leave config mode
+    
     jmp $fce2
 
     * = $9000

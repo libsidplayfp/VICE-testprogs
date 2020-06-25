@@ -405,6 +405,16 @@ function chameleon_prepare
     chameleon_remove_cartridge
     echo -ne "."
     chameleon_setup_videomode
+    echo -ne "."
+#    dd bs=256 count=768 if=/dev/zero of=$RDUMMY > /dev/null 2> /dev/null 
+#    chmount -d64 $RDUMMY > /dev/null
+    chcodenet -x chameleon-driveinit.prg > /dev/null
+#    echo -ne "."
+#    # run helper program
+#    chameleon_clear_returncode
+#    chcodenet -x chameleon-helper.prg > /dev/null
+#    if [ "$?" != "0" ]; then exit -1; fi
+#    chameleon_poll_returncode 5
     echo "ok"
 }
 

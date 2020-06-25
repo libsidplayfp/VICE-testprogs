@@ -398,7 +398,8 @@ testemu64:
 	
 ##############################################################################
 
-prereq-chameleon: chameleon-helper.prg chameleon-crtoff.prg chameleon-videomode.prg
+prereq-chameleon: chameleon-helper.prg chameleon-crtoff.prg chameleon-videomode.prg \
+			chameleon-driveinit.prg
 
 chameleon-helper.prg: chameleon-helper.asm
 	acme -f cbm -o chameleon-helper.prg chameleon-helper.asm
@@ -409,6 +410,9 @@ chameleon-videomode.prg: chameleon-videomode.asm
 chameleon-crtoff.prg: chameleon-crtoff.asm
 	acme -f plain -o chameleon-crtoff.prg chameleon-crtoff.asm
 
+chameleon-driveinit.prg: chameleon-driveinit.bas
+	petcat -w2 -o chameleon-driveinit.prg -- chameleon-driveinit.bas
+	
 testchameleon: chameleon-helper.prg prereq
 	./testbench.sh chameleon --8565early
 # for testing in cartridge mode on "new" c64 / PAL
