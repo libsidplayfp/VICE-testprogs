@@ -1202,6 +1202,26 @@
 ################################################################################
 ../C64/autostart/cartio/,test.prg,analyzer,0
 ../C64/autostart/defaults/,,exitcode,4000000,mountcrt:test.crt,comment:repeatedly press reset to check i/o register reset behaviour
+../C64/carts/aracidtest/,test-ramdetect-ar.prg,exitcode,10000000,mountcrt:ardummy.crt
+../C64/carts/aracidtest/,test-ramsizedetect-ar.prg,exitcode,11000000,mountcrt:ardummy.crt
+../C64/carts/aracidtest/,test-ariotest1-ar.prg,exitcode,10000000,mountcrt:ardummy.crt
+../C64/carts/aracidtest/,test-ariotest2-ar.prg,exitcode,10000000,mountcrt:ardummy.crt
+../C64/carts/aracidtest/,test-arramtest2-ar.prg,exitcode,11000000,mountcrt:ardummy.crt
+../C64/carts/aracidtest/,test-ramdetect-ar.prg,exitcode,10000000,mountcrt:npdummy.crt
+../C64/carts/aracidtest/,test-ramsizedetect-ar.prg,exitcode,11000000,mountcrt:npdummy.crt
+../C64/carts/aracidtest/,test-ariotest1-ar.prg,exitcode,10000000,mountcrt:npdummy.crt
+../C64/carts/aracidtest/,test-ariotest2-ar.prg,exitcode,10000000,mountcrt:npdummy.crt
+../C64/carts/aracidtest/,test-arramtest2-ar.prg,exitcode,11000000,mountcrt:npdummy.crt
+../C64/carts/aracidtest/,test-ramdetect.prg,exitcode,10000000,mountcrt:rrdummy.crt
+../C64/carts/aracidtest/,test-ramsizedetect.prg,exitcode,11000000,mountcrt:rrdummy.crt
+../C64/carts/aracidtest/,test-ariotest1.prg,exitcode,10000000,mountcrt:rrdummy.crt
+../C64/carts/aracidtest/,test-ariotest2.prg,exitcode,10000000,mountcrt:rrdummy.crt
+../C64/carts/aracidtest/,test-arramtest2.prg,exitcode,11000000,mountcrt:rrdummy.crt
+../C64/carts/aracidtest/,test-ramdetect.prg,exitcode,10000000,mountcrt:nrdummy.crt
+../C64/carts/aracidtest/,test-ramsizedetect.prg,exitcode,11000000,mountcrt:nrdummy.crt
+../C64/carts/aracidtest/,test-ariotest1.prg,exitcode,10000000,mountcrt:nrdummy.crt
+../C64/carts/aracidtest/,test-ariotest2.prg,exitcode,10000000,mountcrt:nrdummy.crt
+../C64/carts/aracidtest/,test-arramtest2-nr.prg,exitcode,11000000,mountcrt:nrdummy.crt
 #TODO:
 #../C64/carts/,exos.prg
 ../C64/carts/,mmcrplugin.prg,analyzer,0
