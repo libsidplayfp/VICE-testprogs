@@ -167,9 +167,17 @@ function chameleon_make_crtid
                 fi
         
             ;;
+        "01")
+                # ar -> retro replay
+                crtid="\x01"
+            ;;
         "08")
                 # supergames
                 crtid="\x08"
+            ;;
+        "09")
+                # nordic power -> retro replay
+                crtid="\x01"
             ;;
         "20")
                 # easyflash
@@ -184,7 +192,7 @@ function chameleon_make_crtid
                 crtid="\x35"
             ;;
         *)
-                echo " unsupported crt id: 0x"$crtlit
+                echo -ne " *** unsupported crt id: 0x"$crtlit" *** "
                 crtid="\x00"
             ;;
     esac
@@ -562,8 +570,9 @@ function chameleon_run_screenshot
 
     if [ X"$screenshottest"X == X"$mounted_crt"X ]
     then
-# a cartridge was mounted before
-#       also resets c64
+        # no test program, the test must be in a cartridge
+
+        # also resets c64
         chameleon_remove_cartridge
         
         chameleon_mount_diskimage "$1"
@@ -595,9 +604,15 @@ function chameleon_run_screenshot
         chameleon_mount_diskimage "$1"
         
         chameleon_setup_videomode
-        
-        chameleon_make_helper_options 0 "$1"
-        if [ "$?" != "0" ]; then exit -1; fi
+
+        if [ X"$mounted_crt"X == X""X ]
+        then
+            chameleon_make_helper_options 0 "$1"
+            if [ "$?" != "0" ]; then exit -1; fi
+        else
+            chameleon_make_helper_options 1 "$1"
+            if [ "$?" != "0" ]; then exit -1; fi
+        fi
 
         # run the helper program (enable I/O RAM at $d7xx)
         chameleon_clear_returncode
@@ -605,9 +620,17 @@ function chameleon_run_screenshot
         if [ "$?" != "0" ]; then exit -1; fi
         chameleon_poll_returncode 5
 
-        chameleon_clear_returncode
+        # if there is a cartridge image, then mount it        
+        if [ X"$mounted_crt"X != X""X ]
+        then
+#echo call chameleon_mount_cartridge "$1" "$mounted_crt"
+            chameleon_mount_cartridge "$1" "$mounted_crt"
+            # trigger reset  (run cartridge)
+            chcodenet --resetwait
+        fi
     
         # run program
+        chameleon_clear_returncode
         chcodenet -x "$1"/"$screenshottest" > /dev/null
         if [ "$?" != "0" ]; then exit -1; fi
         chameleon_poll_returncode $(($3 + 1))
@@ -685,12 +708,13 @@ function chameleon_run_screenshot
 # $5- extra options for the emulator
 function chameleon_run_exitcode
 {
-#    echo chameleon X"$1"X / X"$2"X
+#    echo chameleon_run_exitcode X"$1"X / X"$2"X
 
     if [ X"$2"X == X""X ]
     then
-# a cartridge was mounted before
-#       also resets c64
+        # no test program, the test must be in a cartridge
+   
+        # also resets c64
         chameleon_remove_cartridge
         
         chameleon_mount_diskimage "$1"
@@ -706,11 +730,11 @@ function chameleon_run_exitcode
         if [ "$?" != "0" ]; then exit -1; fi
         chameleon_poll_returncode 5
 
+#echo call chameleon_mount_cartridge "$1" "$mounted_crt"
         chameleon_mount_cartridge "$1" "$mounted_crt"
 
-        chameleon_clear_returncode
-
         # trigger reset  (run cartridge)
+        chameleon_clear_returncode
         chcodenet --reset
         if [ "$?" != "0" ]; then exit -1; fi
         chameleon_poll_returncode $(($3 + 1))
@@ -724,9 +748,15 @@ function chameleon_run_exitcode
         chameleon_mount_diskimage "$1"
         
         chameleon_setup_videomode
-        
-        chameleon_make_helper_options 0 "$1"
-        if [ "$?" != "0" ]; then exit -1; fi
+
+        if [ X"$mounted_crt"X == X""X ]
+        then
+            chameleon_make_helper_options 0 "$1"
+            if [ "$?" != "0" ]; then exit -1; fi
+        else
+            chameleon_make_helper_options 1 "$1"
+            if [ "$?" != "0" ]; then exit -1; fi
+        fi
 
         # run the helper program (enable I/O RAM at $d7xx)
         chameleon_clear_returncode
@@ -734,12 +764,24 @@ function chameleon_run_exitcode
         if [ "$?" != "0" ]; then exit -1; fi
         chameleon_poll_returncode 5
 
+# if there is a cartridge image, then mount it        
+        if [ X"$mounted_crt"X != X""X ]
+        then
+#echo call chameleon_mount_cartridge "$1" "$mounted_crt"
+            chameleon_mount_cartridge "$1" "$mounted_crt"
+            # trigger reset  (run cartridge)
+            chcodenet --resetwait > /dev/null
+        fi
+        
         # run program
         chameleon_clear_returncode
         chcodenet -x "$1"/"$2" > /dev/null
         if [ "$?" != "0" ]; then exit -1; fi
         chameleon_poll_returncode $(($3 + 1))
         exitcode=$?
+        
+        chameleon_remove_cartridge
+        
     fi
     
     # if test used a diskimage, remove it
