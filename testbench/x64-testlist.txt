@@ -1260,6 +1260,9 @@
 ../C64/carts/nordicpower/,rr2ramwrite.prg,exitcode,10000000,mountcrt:rrdummy.crt
 ../C64/carts/nordicpower/,nrramwrite.prg,exitcode,10000000,mountcrt:nrdummy.crt
 ../C64/carts/nordicpower/,nr2ramwrite.prg,exitcode,10000000,mountcrt:nrdummy.crt
+../C64/carts/retroreplay/,allowbank0.prg,exitcode,10000000,mountcrt:rrdummy.crt
+../C64/carts/retroreplay/,allowbank1.prg,exitcode,10000000,mountcrt:rrdummy.crt
+../C64/carts/retroreplay/,writeonce.prg,exitcode,10000000,mountcrt:rrdummy.crt
 ../C64/carts/supergames/,,exitcode,100000,mountcrt:supergames.crt
 ../C64/carts/tamtest/,,exitcode,35000000,mountcrt:tamtest.crt
 #TODO: make this automatic
