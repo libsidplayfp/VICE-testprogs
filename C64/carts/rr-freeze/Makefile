@@ -9,7 +9,7 @@
 #
 ######
 
-all::	rr-freeze.bin rr-freeze.crt analyze
+all::	rr-freeze.bin rr-freeze.crt nr-freeze.crt analyze
 
 rr-freeze.prg:	rr-freeze.asm
 	dasm $< -o$@
@@ -17,6 +17,8 @@ rr-freeze.crt:	rr-freeze.prg
 	cartconv -i $< -o $@ -t rr
 rr-freeze.bin:	rr-freeze.crt
 	cartconv -i $< -o $@ -t bin
+nr-freeze.crt:	rr-freeze.prg
+	cartconv -i $< -o $@ -t rr -s 1
 
 analyze:	analyze.c
 	gcc -Wall -o$@ $^
@@ -26,7 +28,7 @@ clean::
 	rm -f *~ \#*\#
 	rm -f a.out
 	rm -f rr-freeze.prg
-	rm -f rr-freeze.bin rr-freeze.crt
+	rm -f rr-freeze.bin rr-freeze.crt nr-freeze.crt
 	rm -f analyze
 
 # eof
