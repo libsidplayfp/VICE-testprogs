@@ -367,14 +367,18 @@ function chameleon_setup_videomode
 function chameleon_remove_cartridge
 {
     # overwrite the CBM80 signature with generic "cartridge off" program
+    chacocmd --addr 0x00120000 --writemem chameleon-crtoff.prg > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
+#    echo -ne "."    
+    chacocmd --addr 0x00110000 --writemem chameleon-crtoff.prg > /dev/null
+    if [ "$?" != "0" ]; then exit -1; fi
+#    echo -ne "."    
     chacocmd --addr 0x00a00000 --writemem chameleon-crtoff.prg > /dev/null
     if [ "$?" != "0" ]; then exit -1; fi
+#    echo -ne "."    
     chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
     if [ "$?" != "0" ]; then exit -1; fi
-    chacocmd --addr 0x01100000 --writemem chameleon-crtoff.prg > /dev/null
-    if [ "$?" != "0" ]; then exit -1; fi
-    chacocmd --addr 0x01200000 --writemem chameleon-crtoff.prg > /dev/null
-    if [ "$?" != "0" ]; then exit -1; fi
+#    echo -ne "."    
     # reset
     chameleon_reset
 }
