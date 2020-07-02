@@ -10,7 +10,6 @@
 link:   !word 0
 
         sei
-        inc $d020
         lda #42
         sta $d0fe       ; enable config mode
         lda #$22        ; MMU and I/O RAM
@@ -34,11 +33,9 @@ link:   !word 0
         stx $d0a2
         sta $d0a3
 
-        lda #0          ; return code = 0
-        sta $d7ff
-
         sta $d0ff       ; leave config mode
         
-        dec $d020
+        lda #0          ; return code = 0
         cli
+        sta $d7ff
         rts

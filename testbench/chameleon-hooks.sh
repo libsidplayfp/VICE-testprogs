@@ -210,7 +210,7 @@ function chameleon_mount_cartridge
     if [ "$?" != "0" ]; then exit -1; fi
 # send cartridge image
     echo -ne "(cartridge:$2) "
-    chmount -crt "$1/$2" > /dev/null
+    chmount --silent --embedded-progress -crt "$1/$2"
     if [ "$?" != "0" ]; then exit -1; fi
 # remove message from C64 screen
     echo -ne "                                        " > $RDUMMY
@@ -232,7 +232,7 @@ function chameleon_mount_d64
     if [ $verbose == "1" ]; then
         echo "[chmount -d64 ""$1/$2""]"
     fi
-    chmount -d64 "$1/$2" > /dev/null
+    chmount --silent --embedded-progress -d64 "$1/$2"
     if [ "$?" != "0" ]; then exit -1; fi
 # remove message from C64 screen
     echo -ne "                                        " > $RDUMMY
@@ -251,7 +251,7 @@ function chameleon_mount_g64
     if [ "$?" != "0" ]; then exit -1; fi
 # send cartridge image
     echo -ne "(disk:$2) "
-    chmount -g64 "$1/$2" > /dev/null
+    chmount --silent --embedded-progress -g64 "$1/$2"
     if [ "$?" != "0" ]; then exit -1; fi
 # remove message from C64 screen
     echo -ne "                                        " > $RDUMMY

@@ -38,9 +38,6 @@ payload:
     sta $d0a1
     stx $d0a2
     sta $d0a3
-    dec $d020
-    lda #0
-    sta $d7ff
     ; try to somewhat reset the TOD
     ldx #0
     ; cia 1 tod
@@ -71,6 +68,9 @@ payload:
     lda $df00 ; REU
 
     sta $d0ff       ; leave config mode
+
+    lda #0
+    sta $d7ff
     
     jmp $fce2
 

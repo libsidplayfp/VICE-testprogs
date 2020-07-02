@@ -682,6 +682,10 @@ do
         --verbose)
                 verbose=1
             ;;
+        --debug)
+                set -v # echo commands
+#                set -x # expand vars
+            ;;
         --resume)
                 resume=1
             ;;
