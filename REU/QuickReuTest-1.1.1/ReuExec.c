@@ -61,6 +61,7 @@ signed char monitorRegisterDump( unsigned char errorOnly, const struct expectSet
     unsigned char statusSnapshot;
     unsigned char error;
     signed long recentTimerValue;
+    unsigned char terror, rerror;
 
     statusSnapshot = *((unsigned char  *)0xDF00);
     recentTimerValue = readRecentTimer();
@@ -83,6 +84,10 @@ signed char monitorRegisterDump( unsigned char errorOnly, const struct expectSet
 
     regserrors += error;
     timererrors += (recentTimerValue != expResult->cycles);
+    
+    rerror = error; 
+    terror = (recentTimerValue != expResult->cycles);
+
     error |= (recentTimerValue != expResult->cycles);
 
     if( error != 0 ) {
@@ -109,6 +114,8 @@ signed char monitorRegisterDump( unsigned char errorOnly, const struct expectSet
             lstatus, statusMask, (lstatus & statusMask),
             recentTimerValue
             );
+        lprintf( "Test Status: Timing: %s Register: %s\n",
+                (terror == 0) ? "ok" : "error", (rerror == 0) ? "ok" : "error");
         return 1;
     }
     else if( errorOnly == 0 ) {
@@ -125,6 +132,8 @@ signed char monitorRegisterDump( unsigned char errorOnly, const struct expectSet
             recentTimerValue
             );
     }
+    lprintf( "Test Status: Timing: %s Register: %s\n",
+             (terror == 0) ? "ok" : "error", (rerror == 0) ? "ok" : "error");
     return 0;
 }
 
