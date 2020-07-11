@@ -50,5 +50,7 @@ cia1- tests check the first CIA, cia2- tests check the second CIA
 -4485 tests are assumed to pass only on 6526 with the timestamp 4485. these will
 then NOT pass the equivalent tests without -4485.
 
+-generic tests will pass on all CIAs, as they skip the differences.
+
 To confirm the above, please make sure to really run ALL programs and tell which 
 fail and which do not.

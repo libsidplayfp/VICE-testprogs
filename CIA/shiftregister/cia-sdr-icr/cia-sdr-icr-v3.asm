@@ -72,11 +72,13 @@ nextloop
     dex
     stx delay+1
     cpx #$ff
-    bne loop  
-    inc delay256+1
-    lda #>samples
-    cmp delay256+1
-    bcs loop
+	bne +
+	inc delay256+1
++	dec samplecount
+	bne loop
+	dec samplecount+1
+	bpl loop
+	
 	jsr checkresult2
 	jsr checkresult1
 	
@@ -188,8 +190,11 @@ check
     stx col+1
     lda #$d8
     sta col+2
+	ldy #>samples 
     ldx #<samples
-    ldy #>samples 
+	bne checklp
+	dey
+	
 checklp
     jsr check1
 	jsr storeref
@@ -266,13 +271,21 @@ check2
 	bne +
 sdrfinal = * + 1	
 	lda #$14
-	sta sdrpipe  ;bit 1 will always be false here so will branch to clearsdr here
+	sta sdrpipe  ;bit 1 will always be false here so not will branch to clearsdr here
 +	and #1
 	bne clearsdr
+!if CIATYPE = 2 {
+	lda ignore
+} else {
 	lda clearsdrdelay
+}
 bouncesdr = * + 1	
 	ora #$08
+!if CIATYPE = 2 {	
+	sta ignore
+} else {
 	sta clearsdrdelay
+}
 	lda delaysetsdr
 sdrpipe = * + 1
 	ora #$14
@@ -311,7 +324,19 @@ delaysetsdr = * + 1
 	lda expected2
 	ora #$08
 	sta expected2
-
+ignore	= * + 1
++	lda #$00
+	asl
+	sta ignore
+	bcc +
+	lda source+1
+	sta returnsource
+	lda source+2
+	sta returnsource+1
+returnsource = * + 1	
+	lda $ffff
+	rts
+	
 expected2 = * +1
 +	lda #$00
 	rts
@@ -367,6 +392,10 @@ reset
     sta storeresult2+1
     lda #>results2
     sta storeresult2+2
+	lda #<(samples+1)
+	sta samplecount
+	lda #>(samples+1)
+	sta samplecount+1
 	rts
 	
 reset1
@@ -466,5 +495,6 @@ l4
 count1 !byte 0
 count2 !byte 0
 bits   !byte 0
+samplecount !word 0
 
 clockslide=(*+$ff)&$ff00        ; jsr clockslide+(255-x) = 14+x cycles  257 bytes total
