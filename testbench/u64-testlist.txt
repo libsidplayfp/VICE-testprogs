@@ -550,6 +550,13 @@
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-3.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-4_7f.prg,exitcode,120000000,cia-old,comment:CIA timestamp 4485 only
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-0.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-0_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-19.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-1_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-3.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-39.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-4_7f.prg,exitcode,120000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-0_7f.prg,exitcode,120000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-0.prg,exitcode,16000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-1_7f.prg,exitcode,120000000
@@ -564,6 +571,13 @@
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-3.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-4_7f.prg,exitcode,120000000,cia-old,comment:CIA timestamp 4485 only
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-0.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-0_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-19.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-1_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-3.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-39.prg,exitcode,16000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-4_7f.prg,exitcode,120000000
 ../CIA/shiftregister/,cia-sp-test-continues-old.prg,exitcode,50000000,cia-old
 ../CIA/shiftregister/,cia-sp-test-oneshot-old.prg,exitcode,50000000,cia-old
 ../CIA/timerbasics/,test.prg,exitcode,100000000,cia-old
@@ -1160,6 +1174,7 @@
 #TODO:
 #../vdrive
 ../vdrive/sa-check/,sacheck.prg,exitcode,14000000,mountd64:sacheck.d64
+../vdrive/,reltest.bas,interactive,0
 ################################################################################
 # Printer
 ################################################################################
