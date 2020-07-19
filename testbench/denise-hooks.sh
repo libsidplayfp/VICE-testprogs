@@ -3,6 +3,8 @@
 DENISEOPTS+=" -no-driver"
 DENISEOPTS+=" -debugcart"
 DENISEOPTS+=" -ane-magic 0xef"
+DENISEOPTS+=" -lax-magic 0xee"
+DENISEOPTS+=" -autostart-prg 2"
 
 # extra options for the different ways tests can be run
 DENISEOPTSEXITCODE+=" -no-gui"
@@ -43,13 +45,13 @@ function denise_get_options
                 testprogvideotype="PAL"
             ;;
         "vicii-ntsc")
-                exitoptions="-vic-8562"
+                exitoptions="-vic-6567R8"
                 testprogvideotype="NTSC"
             ;;
-#        "vicii-ntscold")
-#                exitoptions=""
-#                testprogvideotype="NTSCOLD"
-#            ;;
+        "vicii-ntscold")
+                exitoptions="-vic-6567R56A"
+                testprogvideotype="NTSCOLD"
+            ;;
         "vicii-old") 
                 if [ x"$testprogvideotype"x == x"PAL"x ]; then
                     # "old" PAL
@@ -129,18 +131,24 @@ function denise_get_cmdline_options
         "PAL")
                 exitoptions=""
             ;;
-#        "NTSC")
-#                exitoptions=""
-#            ;;
-#        "NTSCOLD")
-#                exitoptions=""
-#            ;;
-        "8565") # "new" PAL
-                exitoptions="-VIC8565"
+        "NTSC")
+                exitoptions=""
             ;;
-#        "8562") # "new" NTSC
-#                exitoptions=""
-#            ;;
+        "NTSCOLD")
+                exitoptions=""
+            ;;
+        "6569") # "old" PAL
+                exitoptions="-vic-6569R3"
+            ;;
+        "6567") # "old" NTSC
+                exitoptions="-vic-6567R8"
+            ;;
+        "8565") # "new" PAL
+                exitoptions="-vic-8565"
+            ;;
+        "8562") # "new" NTSC
+                exitoptions="-vic-8562"
+            ;;
         "6526") # "old" CIA
                 exitoptions="-CIA6526"
             ;;

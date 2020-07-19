@@ -694,6 +694,8 @@
 ../VICII/border/,vborder2-64.prg,screenshot,12000000,vicii-pal
 ../VICII/border/,vborder_ntsc.prg,interactive,0,vicii-ntsc
 ../VICII/border/,vborder2_ntsc.prg,interactive,0,vicii-ntsc
+../VICII/border/,vborder_ntscold.prg,interactive,0,vicii-ntscold
+../VICII/border/,vborder2_ntscold.prg,interactive,0,vicii-ntscold
 ../VICII/colorram/,test.prg,exitcode,100000000
 ../VICII/colorsplit,colorsplit.prg,screenshot,14000000,vicii-pal
 #FIXME: various interactive tests that need better documentation
@@ -713,6 +715,7 @@
 ../VICII/D011Test/,disable-bad.prg,screenshot,100000000,vicii-pal
 ../VICII/D011Test/,disable-bad_ntsc.prg,screenshot,100000000,vicii-ntsc
 #FIXME: fix and check on NTSCOLD
+../VICII/D011Test/,disable-bad_ntscold.prg,screenshot,100000000,vicii-ntscold
 ../VICII/dentest/,den01-48-0.prg,screenshot,10000000,vicii-pal
 ../VICII/dentest/,den01-48-1.prg,screenshot,10000000,vicii-pal
 ../VICII/dentest/,den01-48-2.prg,screenshot,10000000,vicii-pal
@@ -761,6 +764,27 @@
 ../VICII/dentest/,denrsel-s2_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/dentest/,denrsel55_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: check tests on NTSCOLD
+../VICII/dentest/,den01-48-0_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,den01-48-1_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,den01-48-2_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,den01-49-0_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,den01-49-1_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,den01-49-2_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,den10-48-0_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,den10-48-1_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,den10-48-2_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,den10-51-0_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,den10-51-1_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,den10-51-2_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,den10-51-3_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,denrsel-0_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,denrsel-1_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,denrsel-2_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,denrsel-63_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,denrsel-s0_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,denrsel-s1_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,denrsel-s2_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/dentest/,denrsel55_ntscold.prg,screenshot,10000000,vicii-ntscold
 ../VICII/dmadelay/,test1.prg,interactive,0,vicii-pal,warn:vicfetch,comment:see automatic variants
 ../VICII/dmadelay/,test1-2a-03.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/dmadelay/,test1-2a-04.prg,screenshot,10000000,vicii-pal,warn:vicfetch
@@ -808,6 +832,7 @@
 ../VICII/gfxfetch/,gfxfetch.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/gfxfetch/,gfxfetch_ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
 #FIXME: check on NTSCOLD
+../VICII/gfxfetch/,gfxfetch_ntscold.prg,screenshot,10000000,vicii-ntscold
 ../VICII/greydot/,greydot.prg,screenshot,20000000,vicii-pal
 ../VICII/lpcoordinates/,lpcoords.prg,interactive,0
 ../VICII/lplatency/,lplatency.prg,exitcode,10000000,vicii-pal
@@ -817,14 +842,17 @@
 ../VICII/lp-trigger/,test2new.prg,exitcode,20000000,vicii-pal,vicii-new
 ../VICII/movesplit/,movesplit.prg,analyzer,0,vicii-pal
 ../VICII/movesplit/,movesplit_ntsc.prg,analyzer,0,vicii-ntsc
+../VICII/movesplit/,movesplit_ntscold.prg,analyzer,0,vicii-ntscold
 ../VICII/phi1timing/,phi1timing.prg,exitcode,10000000,vicii-pal,warn:vicfetch
 ../VICII/phi1timing/,phi1timing_ntsc.prg,exitcode,10000000,vicii-ntsc,warn:vicfetch
+../VICII/phi1timing/,phi1timing_ntscold.prg,exitcode,10000000,vicii-ntscold,warn:vicfetch
 ../VICII/rasterirq/,rasterirq_hold.prg,screenshot,10000000,vicii-pal
 ../VICII/screenpos/,screenpos.prg,screenshot,10000000,vicii-pal
 ../VICII/sb_sprite_fetch/,sbsprf24-163.prg,screenshot,11000000,vicii-pal
 ../VICII/sb_sprite_fetch/,sbsprf24-164.prg,screenshot,11000000,vicii-pal
 ../VICII/screenpos/,screenpos_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: check tests on NTSCOLD
+../VICII/screenpos/,screenpos_ntscold.prg,screenshot,10000000,vicii-ntscold
 #FIXME: fix test for NTSC, dump reference data
 ../VICII/split-tests/bascan/,bascan.prg,exitcode,100000000,vicii-pal
 ../VICII/split-tests/fetchsplit/,fetchsplit.prg,screenshot,20000000,vicii-pal,warn:vicfetch
@@ -835,11 +863,13 @@
 #FIXME: port to NTSC/dump reference data
 ../VICII/split-tests/spritescan/,spritescan.prg,exitcode,1000000000,vicii-pal
 #TODO: add "drean" support to testbench
+#../VICII/split-tests/spritescan/,spritescan_drean.prg,exitcode,1000000000,vicii-drean
 ../VICII/vicii_timing/,vicii_reg_timing.prg,screenshot,35000000,vicii-pal,warn:vicfetch
 ../VICII/vicii_timing/,vicii_reg_timing-a5.prg,screenshot,35000000,vicii-pal,warn:vicfetch
 ../VICII/vicii_timing/,vicii_reg_timing-ff.prg,screenshot,35000000,vicii-pal,warn:vicfetch
 ../VICII/videomode/,rmwtest.prg,screenshot,10000000,vicii-pal
 ../VICII/videomode/,rmwtest_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/videomode/,rmwtest_ntscold.prg,screenshot,10000000,vicii-ntscold
 ../VICII/videomode/,videomode1.prg,screenshot,10000000,vicii-pal
 ../VICII/videomode/,videomode2.prg,screenshot,10000000,vicii-pal
 ../VICII/videomode/,videomode-v.prg,screenshot,10000000,vicii-pal
@@ -856,6 +886,13 @@
 ../VICII/videomode/,videomode2_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/videomode/,videomode1_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: check on NTSCOLD (better captures needed)
+../VICII/videomode/,videomode1_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/videomode/,videomode2_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/videomode/,videomode-v_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/videomode/,videomode-w_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/videomode/,videomode-x_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/videomode/,videomode-y_ntscold.prg,screenshot,10000000,vicii-ntscold
+../VICII/videomode/,videomode-z_ntscold.prg,screenshot,10000000,vicii-ntscold
 ../VICII/vspbug/,lft-safe-vsp.prg,interactive,0,vicii-pal
 ../VICII/vspbug/,vsp_bug.prg,exitcode,13000000
 ../VICII/sequencer-bug/,bug.prg,screenshot,7000000,vicii-pal
@@ -866,6 +903,7 @@
 ../VICII/sprite0move/,sprite0move.prg,analyzer,0,vicii-pal
 #FIXME: tests are broken on NTSC
 #../VICII/sprite0move/,sprite0move.prg_ntsc,analyzer,0,vicii-ntsc
+#../VICII/sprite0move/,sprite0move.prg_ntscold,analyzer,0,vicii-ntscold
 ../VICII/spritebug/,spritebug.prg,interactive,0,vicii-pal,comment:see automatic variants
 ../VICII/spritebug/,spritebug-104.prg,screenshot,10000000,vicii-pal
 ../VICII/spritebug/,spritebug-105.prg,screenshot,10000000,vicii-pal
@@ -877,6 +915,9 @@
 #../VICII/spritecollisions/,sprite-gfx-collision-cycle_ntsc.prg,exitcode,10000000,vicii-ntsc
 #../VICII/spritecollisions/,sprite-sprite-collision-cycle_ntsc.prg,exitcode,10000000,vicii-ntsc
 #../VICII/spritecollisions/,sprite-sprite_ntsc.prg,exitcode,10000000,vicii-ntsc
+#../VICII/spritecollisions/,sprite-gfx-collision-cycle_ntscold.prg,exitcode,10000000,vicii-ntscold
+#../VICII/spritecollisions/,sprite-sprite-collision-cycle_ntscold.prg,exitcode,10000000,vicii-ntscold
+#../VICII/spritecollisions/,sprite-sprite_ntscold.prg,exitcode,10000000,vicii-ntscold
 ../VICII/spritecrunch/,spritecrunch.prg,interactive,0,vicii-pal,warn:vicfetch,comment:see automatic variants
 ../VICII/spritecrunch/,spritecrunch-3b-00.prg,screenshot,21000000,vicii-pal,warn:vicfetch
 ../VICII/spritecrunch/,spritecrunch-3c-00.prg,screenshot,21000000,vicii-pal,warn:vicfetch
@@ -895,6 +936,8 @@
 ../VICII/spritedma/,d017-57.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/spritedma/,d017-54_ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
 ../VICII/spritedma/,d017-57_ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/spritedma/,d017-54_ntscold.prg,screenshot,10000000,vicii-ntscold,warn:vicfetch
+../VICII/spritedma/,d017-57_ntscold.prg,screenshot,10000000,vicii-ntscold,warn:vicfetch
 ../VICII/spriteenable/,spriteenable1.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/spriteenable/,spriteenable2.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/spriteenable/,spriteenable3.prg,screenshot,10000000,vicii-pal,warn:vicfetch
@@ -905,6 +948,11 @@
 ../VICII/spriteenable/,spriteenable3_ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
 ../VICII/spriteenable/,spriteenable4_ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
 ../VICII/spriteenable/,spriteenable5_ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/spriteenable/,spriteenable1_ntscold.prg,screenshot,10000000,vicii-ntscold,warn:vicfetch
+../VICII/spriteenable/,spriteenable2_ntscold.prg,screenshot,10000000,vicii-ntscold,warn:vicfetch
+../VICII/spriteenable/,spriteenable3_ntscold.prg,screenshot,10000000,vicii-ntscold,warn:vicfetch
+../VICII/spriteenable/,spriteenable4_ntscold.prg,screenshot,10000000,vicii-ntscold,warn:vicfetch
+../VICII/spriteenable/,spriteenable5_ntscold.prg,screenshot,10000000,vicii-ntscold,warn:vicfetch
 ../VICII/spritefetchbug/,test.prg,interactive,0,vicii-pal,comment:see automatic variants
 ../VICII/spritefetchbug/,test-136-2a.prg,screenshot,10000000,vicii-pal
 #FIXME: seems to fail randomly, hard to reproduce
@@ -933,11 +981,13 @@
 ../VICII/spritesplit/,ss-xpos.prg,screenshot,10000000,vicii-pal
 ../VICII/spritesteal/,spritesteal.prg,exitcode,100000000,vicii-pal
 ../VICII/spritesteal/,spritesteal_ntsc.prg,exitcode,100000000,vicii-ntsc
+../VICII/spritesteal/,spritesteal_ntscold.prg,exitcode,100000000,vicii-ntscold
 ../VICII/spritevssprite/,spritevssprite.prg,exitcode,32000000,vicii-pal
 ../VICII/spritex/,demusinterruptus.prg,exitcode,6500000,vicii-pal
 #FIXME: check on NTSCOLD
 ../VICII/spritex/,testsuite.prg,exitcode,10000000,vicii-pal
 ../VICII/spritex/,testsuite_ntsc.prg,exitcode,10000000,vicii-ntsc
+../VICII/spritex/,testsuite_ntscold.prg,exitcode,10000000,vicii-ntscold
 #FIXME: port test to NTSC
 ../VICII/spritey/,spritey.prg,exitcode,100000000,vicii-pal
 ################################################################################

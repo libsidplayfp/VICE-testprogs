@@ -201,8 +201,6 @@ denise-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  denise-testlist.txt
 	cat  c64-testlist.in \
 		| grep -v ",mountp64" \
-		| grep -v ",vicii-ntscold" \
-		| grep -v ",vicii-drean" \
 		| grep -v ",geo256k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
