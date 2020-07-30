@@ -236,7 +236,7 @@ function x128c64_run_screenshot
         fi
     fi
 
-    if [ $exitcode -eq 0 ]
+    if [ $exitcode -eq 0 ] || [ $exitcode -eq 255 ]
     then
         if [ -f "$refscreenshotname" ]
         then

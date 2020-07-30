@@ -142,10 +142,13 @@ function xvic_run_screenshot
     rm -f "$1"/.testbench/"$screenshottest"-xvic.png
     if [ $verbose == "1" ]; then
         echo $XVIC $XVICOPTS $XVICOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xvic.png "$4"
+        $XVIC $XVICOPTS $XVICOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xvic.png "$4" 2> /dev/null | grep "cycles elapsed" | tr '\n' ' '
+        exitcode=${PIPESTATUS[0]}
+    else
+        $XVIC $XVICOPTS $XVICOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xvic.png "$4" 1> /dev/null 2> /dev/null
+        exitcode=$?
     fi
-    $XVIC $XVICOPTS $XVICOPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xvic.png "$4" 1> /dev/null 2> /dev/null
-    exitcode=$?
-    
+
     if [ $verbose == "1" ]; then
         echo $XVIC "exited with: " $exitcode
     fi
@@ -162,7 +165,8 @@ function xvic_run_screenshot
         fi
     fi
 
-    if [ $exitcode -eq 0 ]
+ 
+    if [ $exitcode -eq 0 ] || [ $exitcode -eq 255 ]
     then
         if [ -f "$refscreenshotname" ]
         then
@@ -212,7 +216,7 @@ function xvic_run_exitcode
 {
     if [ $verbose == "1" ]; then
         echo $XVIC $XVICOPTS $XVICOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" "1> /dev/null 2> /dev/null"
-        $XVIC $XVICOPTS $XVICOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 2> /dev/null | grep "cycles elapsed" | tr '\n' '-'
+        $XVIC $XVICOPTS $XVICOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 2> /dev/null | grep "cycles elapsed" | tr '\n' ' '
         exitcode=${PIPESTATUS[0]}
     else
         $XVIC $XVICOPTS $XVICOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
