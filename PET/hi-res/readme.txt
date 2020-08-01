@@ -22,8 +22,12 @@ this is also true.
             0x10, /* R12 DISPSTARTH */
             0x00, /* R13 DISPSTARTL */
 
-It may be that moving the moment that the IRQ is triggered a bit earlier
-or later would work even better.
+By hacking on VICE, I found that you get a stable image if the moment that the
+IRQ is triggered is delayed by about 16-24 cycles.
+
+The Python script hi-res.py extracts the constants from hi-res.asm and prints
+a representation of the bitmap you should get on the screen.
+Sample output is provided in hi-res.bitmap.
 
 e67b  6C 19 02    JMP ($0219)        - A:00 X:e8 Y:ff SP:e8   -  IZ  218208287
 0f2a  08          PHP                - A:00 X:e8 Y:ff SP:e8   -  IZ  218208291
