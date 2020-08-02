@@ -3,7 +3,7 @@ all: rpm1.prg rpm.d64 rpm.g64 rpm.p64
 imggen:
 	make -C ./../util/ imggen
 
-rpm1.prg: rpm1.asm
+rpm1.prg: rpm1.asm mflpt.inc
 	acme rpm1.asm
 
 rpm.d64: rpm1.prg

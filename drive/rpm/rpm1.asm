@@ -2,12 +2,19 @@
         !cpu 6510
         !to "rpm1.prg", cbm
 
+        !src "mflpt.inc"
+
+TESTTRACK = 30
+TRACKSECTORS = 18
+
 ;-------------------------------------------------------------------------------
 
-rpmline = $0400 + (20 * 40)
+rpmline = $0400 + (0 * 40)
 
 drivecode_start = $0300
 drivecode_exec = drvstart ; skip $10 bytes table
+
+factmp = $340
 
         !src "../framework.asm"
 
@@ -51,7 +58,7 @@ lp:
         sta $0400+(24*40),y
 
         iny
-        cpy #19+1
+        cpy #TRACKSECTORS+1
         bne -
 
         ; calculate delta times
@@ -66,11 +73,25 @@ lp:
         sbc $c028+1,y
         sta $c128,y
 
+        ; the timer is stopped for (4+4+4+1) cycles when reading it
+        lda $c100,y
+        clc
+        adc #4+4+4+1
+        sta $c100,y
+
+        lda $c128,y
+        adc #0
+        sta $c128,y
+
         iny
-        cpy #19
+        cpy #TRACKSECTORS
         bne -
 
         lda #19
+        jsr $ffd2
+        lda #$0d
+        jsr $ffd2
+        lda #$0d
         jsr $ffd2
 
         ; print delta times
@@ -91,11 +112,8 @@ lp:
         pla
         tay
         iny
-        cpy #19
+        cpy #TRACKSECTORS
         bne -
-
-        lda #$0d
-        jsr $ffd2
 
         ; calculate total time for one revolution
         lda $c128       ; hi
@@ -126,19 +144,67 @@ lp:
         lda $61
         jsr $b86a       ; FAC = FAC + ARG
         jsr $bc0c       ; ARG = FAC
-        
+
         pla
         tay
         iny
-        cpy #19
+        cpy #TRACKSECTORS
         bne -
 
-nonzero: lda #0
+nonzero: 
+        lda #0
         bne +
         jmp lp
 +
+        ; HACK: add some more cycles to compensate for BVC jitter
+;         lda #0
+;         ldy #4
+;         jsr $b395       ; to FAC
+;         lda $61
+;         jsr $b86a       ; FAC = FAC + ARG
+;         jsr $bc0c       ; ARG = FAC
+
+        ; print total numbers of cycles
+        clc
+        ldx #0
+        ldy #20
+        jsr $fff0
+
+        ; need to preserve FAC
+        ldx #5
+-
+        lda $61,x
+        sta factmp,x
+        dex
+        bpl -
+
+        jsr $aabc       ; print FAC
+
+        ; restore FAC
+        ldx #5
+-
+        lda factmp,x
+        sta $61,x
+        dex
+        bpl -
+
+        lda #$20
+        ldx #10
+-       sta rpmline+4,x
+        dex
+        bpl -
+
         ; calculate RPM
-        jsr $bc0c       ; ARG = FAC
+
+        ; expected ideal:
+        ; 300 rounds per minute 
+        ; = 5 rounds per second
+        ; = 200 milliseconds per round
+        ; at 1MHz (0,001 milliseconds per clock)
+        ; = 200000 cycles per round
+
+        ; to calculate RPM from cycles per round:
+        ; RPM = (200000 * 300) / cycles
 
         lda #<c6000000
         ldy #>c6000000
@@ -146,9 +212,12 @@ nonzero: lda #0
 
         lda $61
         jsr $bb12       ; FAC = ARG / FAC
+ 
+        lda #19
+        jsr $ffd2
 
         jsr $aabc       ; print FAC
-        
+
         ; give the test two loops to settle
 framecount = * + 1
         lda #2
@@ -213,7 +282,7 @@ cmpfail:
         jmp lp
 
 c6000000:
-        !byte $9a,$64,$e1,$c0,$00
+        +mflpt (200000 * 300)
 
 wait2frame:
         jsr waitframe
@@ -251,13 +320,6 @@ drvlp:
         tax
         lda ltime,y
 
-        ; the timer is stopped for (4+4+4) cycles when reading it,
-        ; so advance it by that amount here before sending the value
-        sec
-        sbc #4+4+4
-        bcs skp
-        dex
-skp:
         jsr snd_1byte
         txa
         jsr snd_1byte
@@ -266,23 +328,22 @@ skp:
         jsr snd_1byte
 
         iny
-        cpy #19+1
+        cpy #TRACKSECTORS+1
         bne -
 
         jmp drvlp
 
 measure:
 
-        lda #18         ; track nr
-        sta $08  
+        lda #TESTTRACK  ; track nr
+        sta $08
         ldx #$00        ; sector nr
-        stx $09  
+        stx $09
         lda #$e0        ; seek and start program at $0400
         sta $01
         cli
-        lda $01  
+        lda $01
         bmi *-2
-        sei
         rts
 
 htime:  !byte 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
@@ -293,18 +354,19 @@ ltime:  !byte 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
 
 measureirq:
 
+        sei
 -
         jsr dretry
 
-        lda #0
-        cmp $19
+        lda $19
         bne -
-
+ 
         ldy $180b
         tya
         ora #$20        ; stop timer B
         sta $180b
 
+        ; load timer with $ffff
         lda #$ff
         sta $1808
         sta $1809
@@ -319,8 +381,10 @@ measureirq:
         sta ltime,y
 
         iny
-        cpy #19+1
+        cpy #TRACKSECTORS+1
         bne -
+ 
+        cli
 
         jmp $F99C       ; to job loop
 
@@ -339,35 +403,52 @@ nextsec:
 
 .ytmp1  ldy #0
         rts
-        
+
 dretry:
-        LDX #$00    
+        LDX #$00
 
-        LDA #$52
-        STA $24
+;        JSR $F556       ; wait for sync
+; F556: A9 D0     LDA #$D0        ; 208
+; F558: 8D 05 18  STA $1805       ; start timer
+; F55B: A9 03     LDA #$03        ; error code
+; F55D: 2C 05 18  BIT $1805
+; F560: 10 F1     BPL $F553       ; timer run down, then 'read error'
+; F562: 2C 00 1C  BIT $1C00       ; SYNC signal
+; F565: 30 F6     BMI $F55D       ; not yet found?
+; F567: AD 01 1C  LDA $1C01       ; read byte
+; F56A: B8        CLV
+; F56B: A0 00     LDY #$00
+; F56D: 60        RTS        
+-       bit $1c00
+        bmi -
+        lda $1c01
+        clv
 
-        JSR $F556       ; wait for sync
-
+        ; read byte after sync
         BVC *           ; wait byte ready
         CLV             ; clear byte ready flag
+
+        ; check if it's a header
         LDA $1C01
-        CMP $24
-        BNE dretry      ; not a header
-dlp:
+        cmp #$52
+        bne -
+
+        ; read rest of header
+-
         BVC *           ; wait byte ready
         CLV             ; clear byte ready flag
+
         LDA $1C01
         STA $25,x
 
         INX
         CPX #$07
-        BNE dlp
-
-        lda #0
-        sta $01
+        BNE -
 
         JSR $F497       ; decode GCR $24- to $16-
 
+        lda #0
+        sta $01
         rts
 
 ;
