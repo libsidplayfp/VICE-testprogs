@@ -1,6 +1,5 @@
         !convtab pet
         !cpu 6510
-        !to "rpm1.prg", cbm
 
         !src "mflpt.inc"
 
@@ -367,6 +366,7 @@ measureirq:
         sta $180b
 
         ; load timer with $ffff
+        ; lo first, writing hi reloads latch when timer is running
         lda #$ff
         sta $1808
         sta $1809

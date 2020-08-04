@@ -3,7 +3,8 @@
 
         !src "mflpt.inc"
 
-TESTTRACK = 30
+DEBUG = 0
+TESTTRACK = 36
 
 ;-------------------------------------------------------------------------------
 
@@ -57,25 +58,26 @@ lp:
         lda #$0d
         jsr $ffd2
 
-        ; print delta times
-;         ldy $c000     ; lo
-;         lda #0
-;         jsr $b395     ; to FAC
-; 
-;         jsr $aabc     ; print FAC
-; 
-;         lda #$0d
-;         jsr $ffd2
-;         
-;         ldy $c028     ; lo
-;         lda #0
-;         jsr $b395     ; to FAC
-; 
-;         jsr $aabc     ; print FAC
-; 
-;         lda #$0d
-;         jsr $ffd2
+!if DEBUG = 1 {
+        ; print timer lo/hi
+        ldy $c000     ; lo
+        lda #0
+        jsr $b395     ; to FAC
 
+        jsr $aabc     ; print FAC
+
+        lda #$0d
+        jsr $ffd2
+
+        ldy $c028     ; hi
+        lda #0
+        jsr $b395     ; to FAC
+
+        jsr $aabc     ; print FAC
+
+        lda #$0d
+        jsr $ffd2
+}
         ; calculate total time for one revolution
 
         lda $c028     ; lo
@@ -162,7 +164,7 @@ framecount = * + 1
         bne cmp300
         ; is 299
         ldy #5
-cmp300:        
+cmp300:
         lda rpmline+1
         cmp #$33    ; 3
         bne cmp301
@@ -174,7 +176,7 @@ cmp300:
         bne cmp301
         ; is 301
         ldy #5
-cmp301:        
+cmp301:
         lda rpmline+1
         cmp #$33    ; 3
         bne cmpfail
@@ -186,28 +188,28 @@ cmp301:
         bne cmpfail
         ; is 301
         ldy #5
-cmpfail:       
-        
+cmpfail:
+
         sty rpmline+$d401
         sty rpmline+$d402 
         sty rpmline+$d403 
         sty $d020
-        
+
         lda #$ff
         cpy #5
         bne +
         lda #0
-+        
++
         sta $d7ff
 
         jsr wait2frame
-      
+
         jmp lp
 
 c6000000:
         +mflpt (-200000 * 300)
 c2000000:
-        +mflpt (200000 - 3361)
+        +mflpt ((65536 * 3) - 4)
 
 wait2frame:
         jsr waitframe
@@ -217,7 +219,7 @@ waitframe:
 -       lda $d011
         bmi -
         rts
-        
+
 ;-------------------------------------------------------------------------------
 
 drivecode:
@@ -236,12 +238,13 @@ drvstart
 drvlp:
         jsr measure
 
+sendresult:
         sei
         jsr snd_start
 
-        lda ltime+0
+        lda ltime
         jsr snd_1byte
-        lda htime+0
+        lda htime
         jsr snd_1byte
 
         jmp drvlp
@@ -259,8 +262,8 @@ measure:
         bmi *-2
         rts
 
-htime:  !byte 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
-ltime:  !byte 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
+htime:  !byte 0
+ltime:  !byte 0
 
         ;* = $0400
         !align $ff, 0, 0
@@ -269,96 +272,112 @@ measureirq:
 
         sei
 
-        ; wait for sektor 0 header
+trackwritten = * + 1
+        lda #0
+        bne +
+        jsr write_reference_track
++
+        lda #1
+        sta trackwritten
+
+        jsr test_rpm
+        sta ltime
+        stx htime
+
+        jmp sendresult
+
+;         cli
+; 
+;         lda #0
+;         sta $01
+; 
+;         jmp $F99C       ; to job loop
+
+
+write_reference_track:
+        ; set head to write mode
+        lda     #$ce
+        sta     $1c0c           ; peripheral control register
+
+        ; write a full track $ff
+        lda     #$ff
+        sta     $1c03           ; data direction register a
+        sta     $1c01           ; data port a (data to/from head)
+
+        ldy     #$30
+        ldx     #$28
 -
-        jsr dretry
-
-        lda $19
-        bne -
- 
-        ldy $180b
-        tya
-        ora #$20        ; stop timer B
-        sta $180b
-
-        ; load timer with $ffff
-        ; lo first, writing hi reloads latch when timer is running
-        lda #$ff
-        sta $1808
-        sta $1809
-
-        sty $180b       ; start it again
-
-        ; wait for sektor 0 header
--
-        jsr dretry
-
-        lda $19
-        bne -
-
-        ldy $180b
-        tya
-        ora #$20        ; stop timer B
-        sta $180b
-
-        lda $1809       ; 4 hi
-        ldx $1808       ; 4 lo
-
-        sty $180b       ; start it again
-
-        sta htime + 0
-        stx ltime + 0
- 
-        cli
-
-        jmp $F99C       ; to job loop
-
-dretry:
-        LDX #$00
-
-;        JSR $F556       ; wait for sync
-; F556: A9 D0     LDA #$D0        ; 208
-; F558: 8D 05 18  STA $1805       ; start timer
-; F55B: A9 03     LDA #$03        ; error code
-; F55D: 2C 05 18  BIT $1805
-; F560: 10 F1     BPL $F553       ; timer run down, then 'read error'
-; F562: 2C 00 1C  BIT $1C00       ; SYNC signal
-; F565: 30 F6     BMI $F55D       ; not yet found?
-; F567: AD 01 1C  LDA $1C01       ; read byte
-; F56A: B8        CLV
-; F56B: A0 00     LDY #$00
-; F56D: 60        RTS        
--       bit $1c00
-        bmi -
-        lda $1c01
+        ; wait for byte ready
+        bvc     *
         clv
 
-        ; read byte after sync
-        BVC *           ; wait byte ready
-        CLV             ; clear byte ready flag
+        dey
+        bne     -
+        dex
+        bne     -
 
-        ; check if it's a header
-        LDA $1C01
-        cmp #$52
-        bne -
+        ; write $5a5a5a5a5a
+        lda     #$5a
+        sta     $1c01           ; data port a (data to/from head)
 
-        ; read rest of header
+        ldy     #5
 -
-        BVC *           ; wait byte ready
-        CLV             ; clear byte ready flag
+        ; wait for byte ready
+        bvc     *
+        clv
 
-        LDA $1C01
-        STA $25,x
-
-        INX
-        CPX #$07
-        BNE -
-
-        JSR $F497       ; decode GCR $24- to $16-
-
-        lda #0
-        sta $01
+        dey
+        bne     -
+        ; head to read mode
+        lda     #$ee
+        sta     $1c0c           ; peripheral control register
         rts
 
+test_rpm:
+        ; head to read mode
+        lda     #$ee
+        sta     $1c0c           ; peripheral control register
+
+        ; port to input
+        ldy     #0
+        sty     $1c03           ; data direction register a
+
+        ; init timer lowbyte latch
+        ldy     #$ff
+        sty     $1808
+
+        ldx     #5
+        ; wait for sync
+-
+        bit     $1c00
+        bmi     -
+
+        ; read one byte
+        clv
+        ; wait for byte ready
+        bvc     *
+
+        ; init timer hibyte, also inits lobyte from latch
+;         ldy     #$ff
+;         sty     $1808
+        sty     $1809
+
+        ; read 5 more bytes
+-
+        clv
+        ; wait for byte ready
+        bvc     *
+
+        dex
+        bne     -
+
+        ; get timer value
+        lda $1808       ; 4 lo
+        ldx $1809       ; 4 hi
+        cmp #4
+        bcs +
+        inx             ; compensate hi-byte decrease
++
+        rts
 } 
 drivecode_end:
