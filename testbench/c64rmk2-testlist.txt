@@ -1040,6 +1040,7 @@
 ../drive/pwm/,pwm.prg,interactive,0,comment:drive led should be fading dark-light-dark etc
 ../drive/rpm/,rpm1.prg,exitcode,10500000,mountp64:rpm.p64,vicii-pal
 ../drive/rpm/,rpm2.prg,exitcode,10500000,mountp64:rpm.p64,vicii-pal
+../drive/rpm/,rpm3.prg,exitcode,10500000,mountp64:rpm.p64,vicii-pal
 ../drive/selftest/,selftest.prg,exitcode,8000000
 ../drive/viavarious/,via1.prg,exitcode,88000000
 ../drive/viavarious/,via2.prg,exitcode,130000000
