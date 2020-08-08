@@ -4,13 +4,14 @@
         !src "mflpt.inc"
 
 TESTTRACK = 30
+TRACKSECTORS = 18
 
 ;-------------------------------------------------------------------------------
 
 rpmline = $0400 + (0 * 40)
 
 drivecode_start = $0300
-drivecode_exec = drvstart ; skip $10 bytes table
+drivecode_exec = drvstart
 
 factmp = $340
 
@@ -44,7 +45,6 @@ lp:
         jsr rcv_wait
 
         ; get time stamp
-
         jsr rcv_1byte
         sta $c000     ; lo
         jsr rcv_1byte
@@ -57,29 +57,30 @@ lp:
         lda #$0d
         jsr $ffd2
 
-        ; print delta times
-;         ldy $c000     ; lo
-;         lda #0
-;         jsr $b395     ; to FAC
-; 
-;         jsr $aabc     ; print FAC
-; 
-;         lda #$0d
-;         jsr $ffd2
-;         
-;         ldy $c028     ; lo
-;         lda #0
-;         jsr $b395     ; to FAC
-; 
-;         jsr $aabc     ; print FAC
-; 
-;         lda #$0d
-;         jsr $ffd2
+        ; print number of clocks per revolution
+        lda $c028       ; lo
+        ldy $c000       ; hi
+        jsr $b395       ; to FAC
+        lda $90
+        eor #$ff
+        sta $90
+        jsr $bc0c       ; ARG = FAC
 
-        ; calculate total time for one revolution
+        lda #<c2000000
+        ldy #>c2000000
+        jsr $bba2       ; in FAC
+
+        lda $61
+        jsr $b853       ; FAC = FAC - ARG
+        lda $90
+        eor #$ff
+        sta $90
+        jsr $aabc       ; print FAC
+
+        ; calculate total time for one revolution (no rounding)
 
         lda $c028     ; lo
-        ldy $c000
+        ldy $c000     ; hi
         jsr $b395     ; to FAC
         lda $90
         eor #$ff
@@ -92,30 +93,6 @@ lp:
 
         lda $61
         jsr $b853       ; FAC = FAC - ARG
-
-        ; need to preserve FAC
-        ldx #5
--
-        lda $61,x
-        sta factmp,x
-        dex
-        bpl -
-
-        jsr $aabc       ; print FAC
-
-        ; restore FAC
-        ldx #5
--
-        lda factmp,x
-        sta $61,x
-        dex
-        bpl -
-
-        lda #$20
-        ldx #10
--       sta rpmline+4,x
-        dex
-        bpl -
 
         ; calculate RPM
 
@@ -135,11 +112,77 @@ lp:
 
         lda $61
         jsr $bb12       ; FAC = ARG / FAC
+
+        lda #'0'
+        ldx #6
+-
+        sta rpmline+5,x
+;        sta rpmline+45,x
+        dex
+        bpl -
+        lda #'.'
+        sta rpmline+4
  
         lda #19
         jsr $ffd2
 
         jsr $aabc       ; print FAC
+        
+        ; calculate RPM again, this time rounding to two decimals
+
+        lda $c028     ; lo
+        ldy $c000     ; hi
+        jsr $b395     ; to FAC
+        lda $90
+        eor #$ff
+        sta $90
+        jsr $bc0c       ; ARG = FAC
+
+        lda #<c2000000
+        ldy #>c2000000
+        jsr $bba2       ; in FAC
+
+        lda $61
+        jsr $b853       ; FAC = FAC - ARG
+
+        lda #<c600000000
+        ldy #>c600000000
+        jsr $ba8c       ; in ARG
+
+        lda $61
+        jsr $bb12       ; FAC = ARG / FAC
+
+        jsr $B849       ; Add 0.5 to FAC
+        jsr $BDDD       ; Convert FAC#1 to ASCII String at $100
+ 
+        lda $101+0
+        sta rpmline+25
+        lda $101+1
+        sta rpmline+26
+        lda $101+2
+        sta rpmline+27
+        lda #'.'
+        sta rpmline+28
+        lda $101+3
+        sta rpmline+29
+        lda $101+4
+        sta rpmline+30
+
+;         lda #'0'
+;         ldx #6
+; -
+;         sta rpmline+25,x
+;         dex
+;         bpl -
+;         
+;         clc
+;         ldx #0
+;         ldy #20
+;         jsr $fff0
+; 
+;         jsr $aabc       ; print FAC
+
+;-------------------------------------------------------------
 
         ; give the test two loops to settle
 framecount = * + 1
@@ -206,8 +249,10 @@ cmpfail:
 
 c6000000:
         +mflpt (-200000 * 300)
+c600000000:
+        +mflpt (-20000000 * 300)
 c2000000:
-        +mflpt (200000 - 3361)
+        +mflpt ((65536 * 3) + 20 + 6)
 
 wait2frame:
         jsr waitframe
@@ -217,12 +262,11 @@ waitframe:
 -       lda $d011
         bmi -
         rts
-        
+
 ;-------------------------------------------------------------------------------
 
 drivecode:
 !pseudopc drivecode_start {
-.data1 = $0016
 
         !src "../framework-drive.asm"
 
@@ -259,8 +303,8 @@ measure:
         bmi *-2
         rts
 
-htime:  !byte 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
-ltime:  !byte 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
+htime:  !byte 0
+ltime:  !byte 0
 
         ;* = $0400
         !align $ff, 0, 0
@@ -273,41 +317,35 @@ measureirq:
 -
         jsr dretry
 
-        lda $19
-        bne -
+        lda $19         ; 2
+        bne -           ; 2
  
-        ldy $180b
-        tya
-        ora #$20        ; stop timer B
-        sta $180b
-
         ; load timer with $ffff
         ; lo first, writing hi reloads latch when timer is running
-        lda #$ff
-        sta $1808
-        sta $1809
+        lda #$ff        ; 2
+        sta $1808       ; 4
+        sta $1809       ; 4
+        
+        ; timer was started 14 cycles after sector 0 detect
 
-        sty $180b       ; start it again
-
-        ; wait for sektor 0 header
+        ; wait for sector 0 header
 -
         jsr dretry
 
-        lda $19
-        bne -
+        lda $19         ; 2
+        bne -           ; 2
 
-        ldy $180b
-        tya
-        ora #$20        ; stop timer B
-        sta $180b
-
-        lda $1809       ; 4 hi
-        ldx $1808       ; 4 lo
-
-        sty $180b       ; start it again
-
-        sta htime + 0
-        stx ltime + 0
+        ; get timer value
+        lda $1808       ; 4 lo
+        ldx $1809       ; 4 hi
+        cmp #4
+        bcs +
+        inx             ; compensate hi-byte decrease
++
+        stx htime + 0
+        sta ltime + 0
+        
+        ; we got the timer 8 cycles after sector 0 detect
  
         cli
 
@@ -316,21 +354,10 @@ measureirq:
 dretry:
         LDX #$00
 
-;        JSR $F556       ; wait for sync
-; F556: A9 D0     LDA #$D0        ; 208
-; F558: 8D 05 18  STA $1805       ; start timer
-; F55B: A9 03     LDA #$03        ; error code
-; F55D: 2C 05 18  BIT $1805
-; F560: 10 F1     BPL $F553       ; timer run down, then 'read error'
-; F562: 2C 00 1C  BIT $1C00       ; SYNC signal
-; F565: 30 F6     BMI $F55D       ; not yet found?
-; F567: AD 01 1C  LDA $1C01       ; read byte
-; F56A: B8        CLV
-; F56B: A0 00     LDY #$00
-; F56D: 60        RTS        
+        ; wait for sync
 -       bit $1c00
         bmi -
-        lda $1c01
+;        lda $1c01
         clv
 
         ; read byte after sync

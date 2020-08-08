@@ -72,16 +72,6 @@ lp:
         sbc $c028+1,y
         sta $c128,y
 
-        ; the timer is stopped for (4+4+4+1) cycles when reading it
-        lda $c100,y
-        clc
-        adc #4+4+4+1
-        sta $c100,y
-
-        lda $c128,y
-        adc #0
-        sta $c128,y
-
         iny
         cpy #TRACKSECTORS
         bne -
@@ -155,18 +145,18 @@ nonzero:
         bne +
         jmp lp
 +
-        ; HACK: add some more cycles to compensate for BVC jitter
-;         lda #0
-;         ldy #4
-;         jsr $b395       ; to FAC
-;         lda $61
-;         jsr $b86a       ; FAC = FAC + ARG
-;         jsr $bc0c       ; ARG = FAC
+        ; compensate cycle difference between timer start and read
+        lda #0
+        ldy #< (10 + 8)
+        jsr $b395       ; to FAC
+        lda $61
+        jsr $b86a       ; FAC = FAC + ARG
+        jsr $bc0c       ; ARG = FAC
 
         ; print total numbers of cycles
         clc
         ldx #0
-        ldy #20
+        ldy #15
         jsr $fff0
 
         ; need to preserve FAC
@@ -187,11 +177,6 @@ nonzero:
         dex
         bpl -
 
-        lda #$20
-        ldx #10
--       sta rpmline+4,x
-        dex
-        bpl -
 
         ; calculate RPM
 
@@ -215,8 +200,51 @@ nonzero:
         lda #19
         jsr $ffd2
 
+        lda #'0'
+        ldx #6
+-
+        sta rpmline+5,x
+;        sta rpmline+45,x
+        dex
+        bpl -
+        lda #'.'
+        sta rpmline+4
+
         jsr $aabc       ; print FAC
 
+        ; calculate RPM again, this time rounding to two decimals
+
+        ; restore FAC
+        ldx #5
+-
+        lda factmp,x
+        sta $61,x
+        dex
+        bpl -
+
+        lda #<c600000000
+        ldy #>c600000000
+        jsr $ba8c       ; in ARG
+
+        lda $61
+        jsr $bb12       ; FAC = ARG / FAC
+
+        jsr $B849       ; Add 0.5 to FAC
+        jsr $BDDD       ; Convert FAC#1 to ASCII String at $100
+ 
+        lda $101+0
+        sta rpmline+25
+        lda $101+1
+        sta rpmline+26
+        lda $101+2
+        sta rpmline+27
+        lda #'.'
+        sta rpmline+28
+        lda $101+3
+        sta rpmline+29
+        lda $101+4
+        sta rpmline+30
+        
         ; give the test two loops to settle
 framecount = * + 1
         lda #2
@@ -282,6 +310,8 @@ cmpfail:
 
 c6000000:
         +mflpt (200000 * 300)
+c600000000:
+        +mflpt (20000000 * 300)
 
 wait2frame:
         jsr waitframe
@@ -357,28 +387,35 @@ measureirq:
 -
         jsr dretry
 
-        lda $19
-        bne -
+        lda $19         ; 2
+        bne -           ; 2
  
-        ldy $180b
-        tya
-        ora #$20        ; stop timer B
-        sta $180b
-
         ; load timer with $ffff
         ; lo first, writing hi reloads latch when timer is running
-        lda #$ff
-        sta $1808
-        sta $1809
-
-        sty $180b       ; start it again
+        lda #$ff        ; 2
+        sta $1808       ; 4
+        sta $1809       ; 4
+        
+        ; timer starts 14 cycles after sector 0 was detected
 
         ldy #0
 -
-        jsr nextsec
-        sta htime,y
-        txa
+        sty .ytmp1+1
+        jsr dretry
+
+        ; get timer value
+        lda $1808       ; 4 lo
+        ldx $1809       ; 4 hi
+        cmp #4
+        bcs +
+        inx             ; compensate hi-byte decrease
++
+        ; timer was read 4 cycles after sector header was detected
+
+.ytmp1: ldy #0
         sta ltime,y
+        txa
+        sta htime,y
 
         iny
         cpy #TRACKSECTORS+1
@@ -388,40 +425,13 @@ measureirq:
 
         jmp $F99C       ; to job loop
 
-nextsec:
-        sty .ytmp1+1
-
-        jsr dretry
-
-        ldy $180b
-        tya
-        ora #$20        ; stop timer B
-        sta $180b
-        ldx $1808       ; 4 lo
-        lda $1809       ; 4 hi
-        sty $180b       ; 4 start it again
-
-.ytmp1  ldy #0
-        rts
-
 dretry:
         LDX #$00
 
-;        JSR $F556       ; wait for sync
-; F556: A9 D0     LDA #$D0        ; 208
-; F558: 8D 05 18  STA $1805       ; start timer
-; F55B: A9 03     LDA #$03        ; error code
-; F55D: 2C 05 18  BIT $1805
-; F560: 10 F1     BPL $F553       ; timer run down, then 'read error'
-; F562: 2C 00 1C  BIT $1C00       ; SYNC signal
-; F565: 30 F6     BMI $F55D       ; not yet found?
-; F567: AD 01 1C  LDA $1C01       ; read byte
-; F56A: B8        CLV
-; F56B: A0 00     LDY #$00
-; F56D: 60        RTS        
+        ; wait for sync
 -       bit $1c00
         bmi -
-        lda $1c01
+;        lda $1c01
         clv
 
         ; read byte after sync

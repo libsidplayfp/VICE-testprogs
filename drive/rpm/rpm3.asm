@@ -113,12 +113,6 @@ lp:
         dex
         bpl -
 
-        lda #$20
-        ldx #10
--       sta rpmline+4,x
-        dex
-        bpl -
-
         ; calculate RPM
 
         ; expected ideal:
@@ -141,8 +135,58 @@ lp:
         lda #19
         jsr $ffd2
 
+        lda #'0'
+        ldx #6
+-
+        sta rpmline+5,x
+;        sta rpmline+45,x
+        dex
+        bpl -
+        lda #'.'
+        sta rpmline+4
+
         jsr $aabc       ; print FAC
 
+        ; calculate RPM again, this time rounding to two decimals
+
+        lda $c028     ; lo
+        ldy $c000     ; hi
+        jsr $b395     ; to FAC
+        lda $90
+        eor #$ff
+        sta $90
+        jsr $bc0c       ; ARG = FAC
+
+        lda #<c2000000
+        ldy #>c2000000
+        jsr $bba2       ; in FAC
+
+        lda $61
+        jsr $b853       ; FAC = FAC - ARG
+
+        lda #<c600000000
+        ldy #>c600000000
+        jsr $ba8c       ; in ARG
+
+        lda $61
+        jsr $bb12       ; FAC = ARG / FAC
+
+        jsr $B849       ; Add 0.5 to FAC
+        jsr $BDDD       ; Convert FAC#1 to ASCII String at $100
+ 
+        lda $101+0
+        sta rpmline+25
+        lda $101+1
+        sta rpmline+26
+        lda $101+2
+        sta rpmline+27
+        lda #'.'
+        sta rpmline+28
+        lda $101+3
+        sta rpmline+29
+        lda $101+4
+        sta rpmline+30
+        
         ; give the test two loops to settle
 framecount = * + 1
         lda #2
@@ -208,8 +252,10 @@ cmpfail:
 
 c6000000:
         +mflpt (-200000 * 300)
+c600000000:
+        +mflpt (-20000000 * 300)
 c2000000:
-        +mflpt ((65536 * 3) - 4)
+        +mflpt ((65536 * 3) - 4)        ; compensate 4 extra cycles (see below)
 
 wait2frame:
         jsr waitframe
@@ -360,7 +406,9 @@ test_rpm:
         ; init timer hibyte, also inits lobyte from latch
 ;         ldy     #$ff
 ;         sty     $1808
-        sty     $1809
+        sty     $1809       ; 4
+
+        ; timer was started 4 cycles "late"
 
         ; read 5 more bytes
 -
@@ -368,8 +416,8 @@ test_rpm:
         ; wait for byte ready
         bvc     *
 
-        dex
-        bne     -
+        dex                 ; 2
+        bne     -           ; 2
 
         ; get timer value
         lda $1808       ; 4 lo
@@ -378,6 +426,8 @@ test_rpm:
         bcs +
         inx             ; compensate hi-byte decrease
 +
+        ; timer was read 8 cycles "late"
+
         rts
 } 
 drivecode_end:
