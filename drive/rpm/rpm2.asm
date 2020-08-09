@@ -14,6 +14,8 @@ drivecode_start = $0300
 drivecode_exec = drvstart
 
 factmp = $340
+timerlo = $c000
+timerhi = $c001
 
         !src "../framework.asm"
 
@@ -46,9 +48,18 @@ lp:
 
         ; get time stamp
         jsr rcv_1byte
-        sta $c000     ; lo
+        sta timerlo     ; lo
         jsr rcv_1byte
-        sta $c028     ; hi
+        sta timerhi     ; hi
+
+        lda timerhi
+        jsr mkhex
+        sta $0400+(2*40)+15
+        sty $0400+(2*40)+16
+        lda timerlo
+        jsr mkhex
+        sta $0400+(2*40)+17
+        sty $0400+(2*40)+18
 
         lda #19
         jsr $ffd2
@@ -58,12 +69,9 @@ lp:
         jsr $ffd2
 
         ; print number of clocks per revolution
-        lda $c028       ; lo
+        lda timerhi       ; lo
         ldy $c000       ; hi
         jsr $b395       ; to FAC
-        lda $90
-        eor #$ff
-        sta $90
         jsr $bc0c       ; ARG = FAC
 
         lda #<c2000000
@@ -72,19 +80,16 @@ lp:
 
         lda $61
         jsr $b853       ; FAC = FAC - ARG
-        lda $90
+        lda $66
         eor #$ff
-        sta $90
+        sta $66
         jsr $aabc       ; print FAC
 
         ; calculate total time for one revolution (no rounding)
 
-        lda $c028     ; lo
+        lda timerhi     ; lo
         ldy $c000     ; hi
         jsr $b395     ; to FAC
-        lda $90
-        eor #$ff
-        sta $90
         jsr $bc0c       ; ARG = FAC
 
         lda #<c2000000
@@ -130,12 +135,9 @@ lp:
         
         ; calculate RPM again, this time rounding to two decimals
 
-        lda $c028     ; lo
+        lda timerhi     ; lo
         ldy $c000     ; hi
         jsr $b395     ; to FAC
-        lda $90
-        eor #$ff
-        sta $90
         jsr $bc0c       ; ARG = FAC
 
         lda #<c2000000
@@ -261,6 +263,21 @@ waitframe:
         bpl -
 -       lda $d011
         bmi -
+        rts
+
+mkhex:
+        pha
+        and #$0f
+        tax
+        lda hextab,x
+        tay             ; lo in Y
+        pla
+        lsr
+        lsr
+        lsr
+        lsr
+        tax
+        lda hextab,x    ; hi in A
         rts
 
 ;-------------------------------------------------------------------------------
