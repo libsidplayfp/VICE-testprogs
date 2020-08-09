@@ -12,8 +12,9 @@ rpm2.prg: rpm2.asm mflpt.inc
 rpm3.prg: rpm3.asm mflpt.inc
 	acme -f cbm -o rpm3.prg rpm3.asm
 
-rpm.d64: rpm1.prg
-	c1541 -format "rpm,00" d64 rpm.d64 -write "rpm1.prg" "rpm1" \
+rpm.d64: rpm1.prg rpm2.prg rpm3.prg
+	c1541 -format "rpm,00" d64 rpm.d64 \
+		-write "rpm1.prg" "rpm1" \
 		-write "rpm2.prg" "rpm2" \
 		-write "rpm3.prg" "rpm3"
 
