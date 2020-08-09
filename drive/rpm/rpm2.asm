@@ -70,7 +70,7 @@ lp:
 
         ; print number of clocks per revolution
         lda timerhi       ; lo
-        ldy $c000       ; hi
+        ldy timerlo       ; hi
         jsr $b395       ; to FAC
         jsr $bc0c       ; ARG = FAC
 
@@ -88,7 +88,7 @@ lp:
         ; calculate total time for one revolution (no rounding)
 
         lda timerhi     ; lo
-        ldy $c000     ; hi
+        ldy timerlo     ; hi
         jsr $b395     ; to FAC
         jsr $bc0c       ; ARG = FAC
 
@@ -136,7 +136,7 @@ lp:
         ; calculate RPM again, this time rounding to two decimals
 
         lda timerhi     ; lo
-        ldy $c000     ; hi
+        ldy timerlo     ; hi
         jsr $b395     ; to FAC
         jsr $bc0c       ; ARG = FAC
 
