@@ -160,5 +160,5 @@ cycles, ie ~0,02RPM.
 1541FreqDeviation.png is a diagram showing the oscillator clock over time 
 (deviation from 16Mhz on Y, seconds on X) after powerup of a cold drive.
 
-The measurement was made using a Hameg 8122 Frequency counter after around an
-hour of warmup before the measurement.
+The measurement was made using a Hameg 8122 Frequency counter (without Option 
+HO85)after around an hour of warmup before the measurement.
