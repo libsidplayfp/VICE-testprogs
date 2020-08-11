@@ -141,18 +141,24 @@ We could, in theory, increase the accuracy/remove the jitter further by reading
 more bytes and adding a BVS *+2 half-variance cascade.
 
 Now, until now we completely ignored another source of error - the oscillator
-frequency (CPU clock). An oscillator of that era typically would have something 
-like +/- a 100-300 ppm unless very expensive.
+frequency (CPU clock). Unfortunately it is not easy to dig up actual data on 
+the oscillators used in the 1541 drives, what is known until now is:
 
-So with 16MHz Crystal and assuming 100ppm, we get a deviation of 6,25 cycles on 
-top. Assuming 300ppm its even 18,75 cycles, which is ~6 times as much as the 
-anticipated 3 cycles deviation of the program.
+TOYOCOM TCO-745A 16.000Mhz  (+/- 50ppm according to the Datasheet)
+
+(get in touch if you can add more info/datasheets)
+
+Assuming 50ppm, the oscillator deviation can be taken as +/- 10 cycles per 
+revolution, or ~ +/- 0.015 RPM, ie ~6 times as much as the supposed 3 cycles 
+jitter of the measurement on the drive.
+
+That means that - unless we provide a way to let the user enter the oscillator
+frequency (which he would have to measure with a frequency counter) - the
+actual deviation of the measurement would be somewhere in between 10 and 15
+cycles, ie ~0,02RPM.
 
 1541FreqDeviation.png is a diagram showing the oscillator clock over time 
 (deviation from 16Mhz on Y, seconds on X) after powerup of a cold drive.
 
-That means that - unless we provide a way to let the user enter the oscillator
-frequency (which he would have to measure with a frequency counter) - the
-actual deviation of the measurement would be somewhere in between 10 and 20
-cycles, ie ~0,03RPM.
-
+The measurement was made using a Hameg 8122 Frequency counter after around an
+hour of warmup before the measurement.
