@@ -738,6 +738,62 @@ void registers_get_works(CuTest *tc) {
     CuAssertIntEquals(tc, 0x31, response[RESPONSE_TYPE]);
 }
 
+void dump_works(CuTest *tc) {
+    int length;
+    int strpos = COMMAND_HEADER_LENGTH + 3;
+
+    unsigned char command[] =
+        "\x02\x01"
+        "\xff\xff\xff\xff"
+        "\xaf\xe9\x23\x3d"
+
+        "\x41"
+
+        "\x01"
+        "\x01"
+        "\x09"
+        "/dev/null"
+    ;
+
+    setup(tc);
+
+    send_command(command);
+
+    length = wait_for_response_id(tc, command);
+
+    CuAssertIntEquals(tc, 0x41, response[RESPONSE_TYPE]);
+}
+
+void undump_works(CuTest *tc) {
+    int length;
+    int strpos = COMMAND_HEADER_LENGTH + 1;
+
+    unsigned char command[] =
+        "\x02\x01"
+        "\xff\xff\xff\xff"
+        "\xaf\xe9\x23\x3d"
+
+        "\x42"
+
+        "\xd2"
+        "                                                                      "
+        "                                                                      "
+        "                                                                      "
+    ;
+
+    getcwd(&command[strpos], 0xd2);
+
+    strcpy(&command[strpos + strlen(&command[strpos])], "/undump.bin");
+
+    setup(tc);
+
+    send_command(command);
+
+    length = wait_for_response_id(tc, command);
+
+    CuAssertIntEquals(tc, 0x42, response[RESPONSE_TYPE]);
+}
+
 void mem_set_works(CuTest *tc) {
     unsigned char real_command[10000];
     int length;
@@ -1196,6 +1252,9 @@ CuSuite* get_suite(void)
 
     SUITE_ADD_TEST(suite, registers_set_works);
     SUITE_ADD_TEST(suite, registers_get_works);
+
+    SUITE_ADD_TEST(suite, dump_works);
+    SUITE_ADD_TEST(suite, undump_works);
 
     SUITE_ADD_TEST(suite, mem_set_works);
     SUITE_ADD_TEST(suite, mem_get_works);
