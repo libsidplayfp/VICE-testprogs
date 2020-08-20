@@ -12,6 +12,15 @@ All programs show on screen:
 
 --------------------------------------------------------------------------------
 
+The RPM can be adjusted with a potentiometer in the drive. In the 1541 (old)
+this can be reached on the bottom side of the drive mech. In the 1541-II it can
+be found on the motor control board on the top/left of the drive mech. it's a
+small quadratic, usually blue, potentiometer. turn carefully and without force.
+
+On a 1541 the limits that can be reached are ~266 and ~336 RPM.
+
+--------------------------------------------------------------------------------
+
 rpm1.prg:
 - Measures directly on the drive using VIA timers. each value represents the
   number of cycles between a sector header and the next sector header, which
