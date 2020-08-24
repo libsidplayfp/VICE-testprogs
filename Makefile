@@ -14,7 +14,7 @@ help:
 	@echo "testbench   run the emulation testbench"
 	@echo "runtests    do all of the above"
 
-.PHONY: buildtests	
+.PHONY: buildtests
 	
 # TODO
 buildtests:
@@ -34,6 +34,7 @@ cartconv:
 
 vice:
 	cd ./testbench && ./checkautostart.sh
+	cd ./remotemonitor/binmontest && make test
 
 testbench:
 	@$(MAKE) -C testbench testall
