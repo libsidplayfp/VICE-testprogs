@@ -475,6 +475,8 @@
 .errorloop
     lda #$ff
     sta $d7ff
+    lda #10
+    sta $d020
 	jmp .errorloop
 .normalboot
 	ldx #<(.defcodeende-.defcode-1)
