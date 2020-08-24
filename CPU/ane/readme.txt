@@ -71,8 +71,10 @@ the RDY cycle.
 analysis of some real world programs
 --------------------------------------------------------------------------------
 
-spectipede - original tape ("burner" loader)
---------------------------------------------
+bmx racer - original tape (mastertronic "burner" loader)
+
+spectipede - original tape (mastertronic "burner" loader)
+---------------------------------------------------------
 
 02a7  64 AE       NOOP $AE
 02a9  4E BF 02    LSR $02BF
