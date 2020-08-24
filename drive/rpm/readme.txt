@@ -166,8 +166,53 @@ frequency (which he would have to measure with a frequency counter) - the
 actual deviation of the measurement would be somewhere in between 10 and 15
 cycles, ie ~0,02RPM.
 
-1541FreqDeviation.png is a diagram showing the oscillator clock over time 
-(deviation from 16Mhz on Y, seconds on X) after powerup of a cold drive.
+--------------------------------------------------------------------------------
 
-The measurement was made using a Hameg 8122 Frequency counter (without Option 
-HO85)after around an hour of warmup before the measurement.
+Measurements:
+-------------
+
+(get in touch if you can provide more measurements)
+
+by Unseen:
+
+ 1541FreqDeviation.png is a diagram showing the oscillator clock over time 
+ (deviation from 16Mhz on Y, seconds on X) after powerup of a cold drive.
+
+ The measurement was made using a Hameg 8122 Frequency counter (without Option 
+ HO85)after around an hour of warmup before the measurement.
+
+by Ready.:
+
+ Measured Crystal reads: "DOC-20NA / 16000.00KHZ / KDS-4K"
+
+ The test lasted about 2h and 30 mins, during which the electronics were covered 
+ to simulate the presence of the top of the chassis. The maximum temperature 
+ reached by the quartz was about 45c if covered and about 39 if uncovered.
+
+ The hardware frequency counter feature of a Rigol DS1054Z oscilloscope was used 
+ to measure the frequency. Accuracy for this measurement should be less than 
+ 10ppm.
+
+ For the whole duration of the test a frequency value oscillating between 16.000 
+ and 16.0001 mhz was detected. No values higher or lower than these.
+
+
+Deviation in practice:
+----------------------
+
+In practise the deviation of the crystal will most likely be (much) less than
+what the manufacturer guarantees in the specification (datasheet). We have to
+be careful though with interpreting too much into a small number of 
+measurements, the statistical relevance is almost non existant right now :)
+
+However, if we'd assume our measurements are actually a good representation of
+the reality, we could assume the following:
+
+In the worst case we observe a drift of 100hz, therefore 1/8 of the theoretical
+one found in the datasheet, ie 50/8 = 6.25ppm.
+
+Making a few calculations, just to relate ppm to rpm, we get:
+
+6.25 / 5 = 1.25 (ppm / (1mhz / hz per revolution)) = deviation per revolution
+1.25 / 200,000 = 0.00000625
+300 * 0.00000625 = 0.001875 RPM max deviation due to the quartz drift
