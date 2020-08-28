@@ -11,7 +11,8 @@ BASFILES=\
         headerchange.prg \
         performancetest.prg \
         relfiledemo.prg \
-        seqfiledemo.prg
+        seqfiledemo.prg \
+        memread0.prg
 
 %.prg:%.bas
 	petcat -w2 -o $*.prg -- $*.bas
@@ -29,6 +30,7 @@ disk: $(BASFILES) filelen.prg files
                 -write checkdisk.prg checkdisk \
 		-write diskaddrchange.prg diskaddrchange \
 		-write headerchange.prg headerchange \
+		-write memread0.prg memread0 \
 		-write SOMEFILE somefile
 
 clean:
