@@ -36,6 +36,19 @@ rpm3.prg:
   Writes a test track on track 36, which contains one long SYNC and then 5
   regular bytes. Time for one revolution is measured by reading 6 bytes.
 
+rpm1plot.prg:
+rpm2plot.prg:
+rpm3plot.prg:
+- These use the same drivecode for measuring the RPM, but instead of showing the
+  raw values they will display a long term plot that shows how the speed changes
+  over time (the so called "wobble").
+  At startup, the program(s) will measure a couple revolutions and compute the
+  average, so it can center the plot on screen. Then it will start to plot one
+  dot per revolution, number of revolutions on the Y axis of the screen. The X 
+  axis shows the time for each revolution. When the program(s) start, the timer
+  value will be divided by 8. You can change the divisor by using the function-
+  keys (F7: 8, F5: 4, F3: 2, F1: 0).
+
 --------------------------------------------------------------------------------
 How does it work?
 --------------------------------------------------------------------------------

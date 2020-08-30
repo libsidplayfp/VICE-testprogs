@@ -3,6 +3,9 @@
 
         !src "mflpt.inc"
 
+;TESTTRACK = 1
+;TRACKSECTORS = 21
+        
 TESTTRACK = 30
 TRACKSECTORS = 18
 
@@ -20,8 +23,11 @@ timerhi = $c001
         !src "../framework.asm"
 
 start:
+!if DOPLOT = 0 {
         jsr clrscr
-
+} else {
+        jsr initplot
+}
         inc $d021
 
         lda #<drivecode
@@ -35,15 +41,18 @@ start:
 
         dec $d021
 
+!if DOPLOT = 0 {
         lda #$01
         sta $286
         lda #$93
         jsr $ffd2
-
+}
         sei
+        jsr waitframe
         jsr rcv_init
 lp:
         sei
+        jsr waitframe
         jsr rcv_wait
 
         ; get time stamp
@@ -52,6 +61,7 @@ lp:
         jsr rcv_1byte
         sta timerhi     ; hi
 
+!if DOPLOT = 0 {
         lda timerhi
         jsr mkhex
         sta $0400+(2*40)+15
@@ -137,7 +147,7 @@ lp:
 
         lda timerhi     ; lo
         ldy timerlo     ; hi
-        jsr $b395     ; to FAC
+        jsr $b395       ; to FAC
         jsr $bc0c       ; ARG = FAC
 
         lda #<c2000000
@@ -245,24 +255,35 @@ cmpfail:
 +        
         sta $d7ff
 
-        jsr wait2frame
-      
+        lda $0400+(24*40)+39
+        eor #$80
+        sta $0400+(24*40)+39
+} else {
+        jsr doplot
+        lda $d020
+        eor #$0f
+        sta $d020
+}
+
         jmp lp
 
+;------------------------------------------------------------------------------
+        
 c6000000:
         +mflpt (-200000 * 300)
 c600000000:
         +mflpt (-20000000 * 300)
 c2000000:
+;        +mflpt ((65536 * 3) + 7 + 6)
         +mflpt ((65536 * 3) + 20 + 6)
 
 wait2frame:
         jsr waitframe
 waitframe:
 -       lda $d011
-        bpl -
--       lda $d011
         bmi -
+-       lda $d011
+        bpl -
         rts
 
 mkhex:
@@ -294,21 +315,6 @@ drvstart
         sta $180b
         jsr snd_init
 
-drvlp:
-        jsr measure
-
-        sei
-        jsr snd_start
-
-        lda ltime+0
-        jsr snd_1byte
-        lda htime+0
-        jsr snd_1byte
-
-        jmp drvlp
-
-measure:
-
         lda #TESTTRACK  ; track nr
         sta $08
         ldx #$00        ; sector nr
@@ -316,9 +322,8 @@ measure:
         lda #$e0        ; seek and start program at $0400
         sta $01
         cli
-        lda $01
-        bmi *-2
-        rts
+
+        jmp *
 
 htime:  !byte 0
 ltime:  !byte 0
@@ -328,8 +333,21 @@ ltime:  !byte 0
 
 measureirq:
 
+-
         sei
+        jsr domeasure
+        
+        sei
+        jsr snd_start
 
+        lda ltime+0
+        jsr snd_1byte
+        lda htime+0
+        jsr snd_1byte
+
+        jmp -
+        
+domeasure:
         ; wait for sektor 0 header
 -
         jsr dretry
@@ -342,7 +360,7 @@ measureirq:
         lda #$ff        ; 2
         sta $1808       ; 4
         sta $1809       ; 4
-        
+
         ; timer was started 14 cycles after sector 0 detect
 
         ; wait for sector 0 header
@@ -359,14 +377,11 @@ measureirq:
         bcs +
         inx             ; compensate hi-byte decrease
 +
+        ; we got the timer 8 cycles after sector 0 detect
         stx htime + 0
         sta ltime + 0
-        
-        ; we got the timer 8 cycles after sector 0 detect
- 
-        cli
 
-        jmp $F99C       ; to job loop
+        rts
 
 dretry:
         LDX #$00
@@ -374,7 +389,7 @@ dretry:
         ; wait for sync
 -       bit $1c00
         bmi -
-;        lda $1c01
+        lda $1c01       ; this is needed on real drive, works in VICE without!
         clv
 
         ; read byte after sync
@@ -398,11 +413,11 @@ dretry:
         CPX #$07
         BNE -
 
-        JSR $F497       ; decode GCR $24- to $16-
-
-        lda #0
-        sta $01
-        rts
+        jmp $F497       ; decode GCR $24- to $16-
 
 } 
 drivecode_end:
+
+!if DOPLOT=1 {
+    !src "plotter.asm"
+}

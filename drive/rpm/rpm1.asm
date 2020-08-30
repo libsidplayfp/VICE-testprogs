@@ -14,12 +14,21 @@ drivecode_start = $0300
 drivecode_exec = drvstart ; skip $10 bytes table
 
 factmp = $340
+timerlotab = $c000
+timerhitab = $c028
+deltalotab = $c100
+deltahitab = $c128
+timerlo=$c200
+timerhi=$c201
 
         !src "../framework.asm"
 
 start:
+!if DOPLOT = 0 {
         jsr clrscr
-
+} else {
+        jsr initplot
+}
         inc $d021
 
         lda #<drivecode
@@ -33,29 +42,34 @@ start:
 
         dec $d021
 
+!if DOPLOT = 0 {
         lda #$01
         sta $286
         lda #$93
         jsr $ffd2
-
+}
         sei
+        jsr waitframe
         jsr rcv_init
 lp:
         sei
+        jsr waitframe
         jsr rcv_wait
 
         ; get time stamps
         ldy #0
 -
         jsr rcv_1byte
-        sta $c000,y     ; lo
+        sta timerlotab,y     ; lo
         jsr rcv_1byte
-        sta $c028,y     ; hi
+        sta timerhitab,y     ; hi
 
-        jsr rcv_1byte
+        jsr rcv_1byte        ; sector
+        
         sta $c050,y     ; cnt
+!if DOPLOT = 0 {
         sta $0400+(24*40),y
-
+}
         iny
         cpy #TRACKSECTORS+1
         bne -
@@ -64,18 +78,19 @@ lp:
         ldy #0
 -
         sec
-        lda $c000,y
-        sbc $c000+1,y
-        sta $c100,y
+        lda timerlotab,y
+        sbc timerlotab+1,y
+        sta deltalotab,y
 
-        lda $c028,y
-        sbc $c028+1,y
-        sta $c128,y
+        lda timerhitab,y
+        sbc timerhitab+1,y
+        sta deltahitab,y
 
         iny
         cpy #TRACKSECTORS
         bne -
 
+!if DOPLOT = 0 {
         lda #19
         jsr $ffd2
         lda #$0d
@@ -89,9 +104,9 @@ lp:
         tya
         pha
 
-        lda $c128,y     ; hi
+        lda deltahitab,y     ; hi
         tax
-        lda $c100,y     ; lo
+        lda deltalotab,y     ; lo
         tay
         txa
         jsr $b395       ; to FAC
@@ -103,10 +118,10 @@ lp:
         iny
         cpy #TRACKSECTORS
         bne -
-
+}
         ; calculate total time for one revolution
-        lda $c128       ; hi
-        ldy $c100       ; lo
+        lda deltahitab       ; hi
+        ldy deltalotab       ; lo
         jsr $b395       ; to FAC
         jsr $bc0c       ; ARG = FAC
 
@@ -118,14 +133,14 @@ lp:
         tya
         pha
 
-        lda $c128,y     ; hi
-        ora $c100,y     ; lo
+        lda deltahitab,y     ; hi
+        ora deltalotab,y     ; lo
         beq +
         inc nonzero+1
 +
-        lda $c128,y     ; hi
+        lda deltahitab,y     ; hi
         tax
-        lda $c100,y     ; lo
+        lda deltalotab,y     ; lo
         tay
         txa
         jsr $b395       ; to FAC
@@ -147,12 +162,47 @@ nonzero:
 +
         ; compensate cycle difference between timer start and read
         lda #0
-        ldy #< (10 + 8)
+        ldy #< (11 + 8)
         jsr $b395       ; to FAC
         lda $61
         jsr $b86a       ; FAC = FAC + ARG
         jsr $bc0c       ; ARG = FAC
 
+        ; need to preserve FAC
+        ldx #5
+-
+        lda $61,x
+        sta factmp,x
+        dex
+        bpl -
+
+        jsr $bc9b       ; $64/$65 = FAC
+        lda $65
+        eor #$ff
+        sta timerlo
+        lda $64
+        eor #$ff
+        sta timerhi
+
+!if DOPLOT = 0 {
+        lda timerhi
+        jsr mkhex
+        sta $0400+(2*40)+16
+        sty $0400+(2*40)+17
+        lda timerlo
+        jsr mkhex
+        sta $0400+(2*40)+18
+        sty $0400+(2*40)+19
+}
+        ; restore FAC
+        ldx #5
+-
+        lda factmp,x
+        sta $61,x
+        dex
+        bpl -
+
+!if DOPLOT = 0 {
         ; print total numbers of cycles
         clc
         ldx #0
@@ -176,7 +226,6 @@ nonzero:
         sta $61,x
         dex
         bpl -
-
 
         ; calculate RPM
 
@@ -304,9 +353,19 @@ cmpfail:
 +        
         sta $d7ff
 
-        jsr wait2frame
+        lda $0400+(24*40)+39
+        eor #$80
+        sta $0400+(24*40)+39
+} else {
+        jsr doplot
+        lda $d020
+        eor #$0f
+        sta $d020
+}
       
         jmp lp
+        
+;-------------------------------------------------------------------------------
 
 c6000000:
         +mflpt (200000 * 300)
@@ -317,16 +376,29 @@ wait2frame:
         jsr waitframe
 waitframe:
 -       lda $d011
-        bpl -
--       lda $d011
         bmi -
+-       lda $d011
+        bpl -
         rts
-        
+
+mkhex:
+        pha
+        and #$0f
+        tax
+        lda hextab,x
+        tay             ; lo in Y
+        pla
+        lsr
+        lsr
+        lsr
+        lsr
+        tax
+        lda hextab,x    ; hi in A
+        rts
 ;-------------------------------------------------------------------------------
 
 drivecode:
 !pseudopc drivecode_start {
-.data1 = $0016
 
         !src "../framework-drive.asm"
 
@@ -337,8 +409,25 @@ drvstart
         sta $180b
         jsr snd_init
 
-drvlp:
-        jsr measure
+        lda #TESTTRACK  ; track nr
+        sta $08
+        ldx #$00        ; sector nr
+        stx $09
+        lda #$e0        ; seek and start program at $0400
+        sta $01
+        cli
+
+        jmp *
+
+htime:  !byte 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
+ltime:  !byte 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
+
+        ;* = $0400
+        !align $ff, 0, 0
+
+measurelp:
+        sei
+        jsr domeasure
 
         sei
         jsr snd_start
@@ -360,29 +449,9 @@ drvlp:
         cpy #TRACKSECTORS+1
         bne -
 
-        jmp drvlp
+        jmp measurelp
 
-measure:
-
-        lda #TESTTRACK  ; track nr
-        sta $08
-        ldx #$00        ; sector nr
-        stx $09
-        lda #$e0        ; seek and start program at $0400
-        sta $01
-        cli
-        lda $01
-        bmi *-2
-        rts
-
-htime:  !byte 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
-ltime:  !byte 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
-
-        ;* = $0400
-        !align $ff, 0, 0
-
-measureirq:
-
+domeasure:
         sei
 -
         jsr dretry
@@ -395,7 +464,7 @@ measureirq:
         lda #$ff        ; 2
         sta $1808       ; 4
         sta $1809       ; 4
-        
+
         ; timer starts 14 cycles after sector 0 was detected
 
         ldy #0
@@ -421,17 +490,15 @@ measureirq:
         cpy #TRACKSECTORS+1
         bne -
  
-        cli
-
-        jmp $F99C       ; to job loop
-
+        rts
+ 
 dretry:
         LDX #$00
 
         ; wait for sync
 -       bit $1c00
         bmi -
-;        lda $1c01
+        lda $1c01       ; this is needed on real drive, works in VICE without!
         clv
 
         ; read byte after sync
@@ -455,11 +522,7 @@ dretry:
         CPX #$07
         BNE -
 
-        JSR $F497       ; decode GCR $24- to $16-
-
-        lda #0
-        sta $01
-        rts
+        jmp $F497       ; decode GCR $24- to $16-
 
 ;
 ; code from data beckers "anti cracker book" (page 235/236):
@@ -509,3 +572,7 @@ dretry:
 
 } 
 drivecode_end:
+
+!if DOPLOT=1 {
+    !src "plotter.asm"
+}

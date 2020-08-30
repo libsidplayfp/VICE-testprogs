@@ -20,8 +20,11 @@ timerhi = $c001
         !src "../framework.asm"
 
 start:
+!if DOPLOT = 0 {
         jsr clrscr
-
+} else {
+        jsr initplot
+}
         inc $d021
 
         lda #<drivecode
@@ -35,15 +38,18 @@ start:
 
         dec $d021
 
+!if DOPLOT = 0 {
         lda #$01
         sta $286
         lda #$93
         jsr $ffd2
-
+}
         sei
+        jsr waitframe
         jsr rcv_init
 lp:
         sei
+        jsr waitframe
         jsr rcv_wait
 
         ; get time stamp
@@ -52,6 +58,8 @@ lp:
         sta timerlo     ; lo
         jsr rcv_1byte
         sta timerhi     ; hi
+
+!if DOPLOT = 0 {
 
         lda timerhi
         jsr mkhex
@@ -254,7 +262,20 @@ cmpfail:
 +
         sta $d7ff
 
-        jsr wait2frame
+        lda $0400+(24*40)+39
+        eor #$80
+        sta $0400+(24*40)+39
+
+} else {
+
+        inc $d020
+        jsr doplot
+        dec $d020
+
+        lda $d020
+        eor #$0f
+        sta $d020
+}
 
         jmp lp
 
@@ -269,9 +290,9 @@ wait2frame:
         jsr waitframe
 waitframe:
 -       lda $d011
-        bpl -
--       lda $d011
         bmi -
+-       lda $d011
+        bpl -
         rts
 
 mkhex:
@@ -293,7 +314,7 @@ mkhex:
 
 drivecode:
 !pseudopc drivecode_start {
-.data1 = $0016
+;.data1 = $0016
 
         !src "../framework-drive.asm"
 
@@ -304,22 +325,6 @@ drvstart
         sta $180b
         jsr snd_init
 
-drvlp:
-        jsr measure
-
-sendresult:
-        sei
-        jsr snd_start
-
-        lda ltime
-        jsr snd_1byte
-        lda htime
-        jsr snd_1byte
-
-        jmp drvlp
-
-measure:
-
         lda #TESTTRACK  ; track nr
         sta $08
         ldx #$00        ; sector nr
@@ -327,9 +332,8 @@ measure:
         lda #$e0        ; seek and start program at $0400
         sta $01
         cli
-        lda $01
-        bmi *-2
-        rts
+
+        jmp *
 
 htime:  !byte 0
 ltime:  !byte 0
@@ -337,30 +341,27 @@ ltime:  !byte 0
         ;* = $0400
         !align $ff, 0, 0
 
-measureirq:
-
         sei
+        ; init timer lowbyte latch
+        ldy     #$ff
+        sty     $1808
+        sty     $1809
 
-trackwritten = * + 1
-        lda #0
-        bne +
         jsr write_reference_track
-+
-        lda #1
-        sta trackwritten
 
+-
         jsr test_rpm
         sta ltime
         stx htime
 
-        jmp sendresult
+        jsr snd_start
 
-;         cli
-; 
-;         lda #0
-;         sta $01
-; 
-;         jmp $F99C       ; to job loop
+        lda ltime
+        jsr snd_1byte
+        lda htime
+        jsr snd_1byte
+
+        jmp -
 
 
 write_reference_track:
@@ -373,7 +374,7 @@ write_reference_track:
         sta     $1c03           ; data direction register a
         sta     $1c01           ; data port a (data to/from head)
 
-        ldy     #$30
+        ldy     #$00
         ldx     #$28
 -
         ; wait for byte ready
@@ -398,9 +399,9 @@ write_reference_track:
         dey
         bne     -
         ; head to read mode
-        lda     #$ee
-        sta     $1c0c           ; peripheral control register
-        rts
+;        lda     #$ee
+;        sta     $1c0c           ; peripheral control register
+;        rts
 
 test_rpm:
         ; head to read mode
@@ -412,8 +413,9 @@ test_rpm:
         sty     $1c03           ; data direction register a
 
         ; init timer lowbyte latch
-        ldy     #$ff
-        sty     $1808
+;        ldy     #$ff
+;        sty     $1808
+        dey
 
         ldx     #5
         ; wait for sync
@@ -425,6 +427,7 @@ test_rpm:
         clv
         ; wait for byte ready
         bvc     *
+        clv
 
         ; init timer hibyte, also inits lobyte from latch
 ;         ldy     #$ff
@@ -435,9 +438,9 @@ test_rpm:
 
         ; read 5 more bytes
 -
-        clv
         ; wait for byte ready
         bvc     *
+        clv
 
         dex                 ; 2
         bne     -           ; 2
@@ -454,3 +457,7 @@ test_rpm:
         rts
 } 
 drivecode_end:
+
+!if DOPLOT=1 {
+    !src "plotter.asm"
+}
