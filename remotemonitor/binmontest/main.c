@@ -115,7 +115,7 @@ void really_send_command(unsigned char* command, size_t length) {
 
 #define send_command(command) really_send_command(command, sizeof(command))
 
-unsigned char response[1<<14];
+unsigned char response[1<<24];
 
 int readloop(CuTest *tc, unsigned char *ptr, int length) {
     int n = 0;
@@ -1235,6 +1235,33 @@ void registers_available_works(CuTest *tc) {
     CuAssertIntEquals(tc, 4, assert_count);
 }
 
+void display_get_works(CuTest *tc) {
+    int length, i, count;
+    unsigned char *cursor;
+
+    unsigned char command[] = {
+        0x02, 0x01, 
+        0xff, 0xff, 0xff, 0xff, 
+        0xaf, 0xe9, 0x23, 0x3d, 
+
+        0x84,
+
+        0x01,
+    };
+
+    setup(tc);
+
+    send_command(command);
+
+    length = wait_for_response_id(tc, command);
+
+    CuAssertIntEquals(tc, 0x84, response[RESPONSE_TYPE]);
+
+    FILE *fil = fopen("./shot.bmp", "wb");
+    fwrite(&response[HEADER_LENGTH], length - HEADER_LENGTH, 1, fil);
+    fclose(fil);
+}
+
 CuSuite* get_suite(void)
 {
     CuSuite* suite = CuSuiteNew();
@@ -1267,6 +1294,7 @@ CuSuite* get_suite(void)
 
     SUITE_ADD_TEST(suite, banks_available_works);
     SUITE_ADD_TEST(suite, registers_available_works);
+    SUITE_ADD_TEST(suite, display_get_works);
 
     SUITE_ADD_TEST(suite, autostart_works);
 
