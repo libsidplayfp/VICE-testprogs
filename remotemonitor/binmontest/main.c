@@ -1257,7 +1257,7 @@ void display_get_works(CuTest *tc) {
 
     CuAssertIntEquals(tc, 0x84, response[RESPONSE_TYPE]);
 
-    FILE *fil = fopen("./shot.bmp", "wb");
+    FILE *fil = fopen("./shot.tga", "wb");
     fwrite(&response[HEADER_LENGTH], length - HEADER_LENGTH, 1, fil);
     fclose(fil);
 }
