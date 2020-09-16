@@ -1236,7 +1236,7 @@ void registers_available_works(CuTest *tc) {
 }
 
 void display_get_works(CuTest *tc) {
-    int length, i, count;
+    int length, not_targa_length;
     unsigned char *cursor;
 
     unsigned char command[] = {
@@ -1257,8 +1257,10 @@ void display_get_works(CuTest *tc) {
 
     CuAssertIntEquals(tc, 0x84, response[RESPONSE_TYPE]);
 
+    not_targa_length = little_endian_to_uint32(&response[HEADER_LENGTH]);
+
     FILE *fil = fopen("./shot.tga", "wb");
-    fwrite(&response[HEADER_LENGTH], length - HEADER_LENGTH, 1, fil);
+    fwrite(&response[HEADER_LENGTH + 4], not_targa_length, 1, fil);
     fclose(fil);
 }
 
@@ -1336,21 +1338,30 @@ int main(int argc, unsigned char** argv)
 {
     unsigned char* single_test_name = NULL;
     int ret;
-    if (argc < 2) {
-        printf("Syntax: %s <port of x64sc binary monitor> [name of test to run]", argv[0]);
+    int i;
+    CuSuite* suite = get_suite();
+
+    if (argc < 2 || strcmp(argv[1], "--help") == 0) {
+        printf("Syntax: %s <port of x64sc binary monitor> [name of test to run]\n", argv[0]);
+        printf("\nTests available: \n\n", argv[0]);
+
+        for (i = 0 ; i < suite->count ; i++) {
+            CuTest* test = suite->list[i];
+
+            printf("%s\n", test->name);
+        }
+
         return EXIT_FAILURE;
     } else if (argc >= 3) {
         single_test_name = argv[2];
     }
 
     if (!sscanf(argv[1], "%d", &port)) {
-        printf("You need to enter a port number only: %s", argv[1]);
+        printf("You need to enter a port number only: %s\n", argv[1]);
         return EXIT_FAILURE;
     }
 
     if (single_test_name) {
-        int i;
-        CuSuite* suite = get_suite();
         for (i = 0 ; i < suite->count ; i++) {
             CuTest* test = suite->list[i];
 
@@ -1363,7 +1374,7 @@ int main(int argc, unsigned char** argv)
             }
         }
     } else {
-        ret = run_tests(get_suite());
+        ret = run_tests(suite);
     }
 
     if (getenv("MON_QUIT") && getenv("MON_QUIT")[0] == '1') {
