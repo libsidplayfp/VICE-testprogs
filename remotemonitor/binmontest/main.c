@@ -1341,7 +1341,7 @@ int main(int argc, unsigned char** argv)
     int i;
     CuSuite* suite = get_suite();
 
-    if (argc < 2 || strcmp(argv[1], "--help") == 0) {
+    if (argc < 2 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-help") == 0) {
         printf("Syntax: %s <port of x64sc binary monitor> [name of test to run]\n", argv[0]);
         printf("\nTests available: \n\n", argv[0]);
 
