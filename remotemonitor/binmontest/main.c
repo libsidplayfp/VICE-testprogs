@@ -1236,7 +1236,7 @@ void registers_available_works(CuTest *tc) {
 }
 
 void display_get_works(CuTest *tc) {
-    int length, not_targa_length;
+    int length, misc_fields_length;
     unsigned char *cursor;
 
     unsigned char command[] = {
@@ -1247,6 +1247,7 @@ void display_get_works(CuTest *tc) {
         0x84,
 
         0x01,
+        0x03,
     };
 
     setup(tc);
@@ -1257,11 +1258,13 @@ void display_get_works(CuTest *tc) {
 
     CuAssertIntEquals(tc, 0x84, response[RESPONSE_TYPE]);
 
-    not_targa_length = little_endian_to_uint32(&response[HEADER_LENGTH]);
+    CuAssertIntEquals(tc, 43, little_endian_to_uint32(&response[HEADER_LENGTH]));
 
-    FILE *fil = fopen("./shot.tga", "wb");
-    fwrite(&response[HEADER_LENGTH + 4], not_targa_length, 1, fil);
-    fclose(fil);
+    CuAssertIntEquals(tc, 17, little_endian_to_uint32(&response[HEADER_LENGTH + 4]));
+
+    CuAssertIntEquals(tc, 18, little_endian_to_uint32(&response[HEADER_LENGTH + 8 + 17]));
+
+    CuAssertIntEquals(tc, 628992, little_endian_to_uint32(&response[HEADER_LENGTH + 8]));
 }
 
 CuSuite* get_suite(void)
