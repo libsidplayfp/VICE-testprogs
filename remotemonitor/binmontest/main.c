@@ -1247,7 +1247,7 @@ void display_get_works(CuTest *tc) {
         0x84,
 
         0x01,
-        0x03,
+        0x04,
     };
 
     setup(tc);
@@ -1255,6 +1255,11 @@ void display_get_works(CuTest *tc) {
     send_command(command);
 
     length = wait_for_response_id(tc, command);
+
+    FILE *fil = fopen("./shot.tga", "wb");
+    fwrite(&response[HEADER_LENGTH + 47 - 18], length - 47 + 18, 1, fil);
+    //fwrite(response, length, 1, fil);
+    fclose(fil);
 
     CuAssertIntEquals(tc, 0x84, response[RESPONSE_TYPE]);
 
