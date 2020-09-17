@@ -1235,6 +1235,61 @@ void registers_available_works(CuTest *tc) {
     CuAssertIntEquals(tc, 4, assert_count);
 }
 
+void resource_set_works(CuTest *tc) {
+    int length;
+
+    unsigned char command[] =
+        "\x02\x01"
+        "\xff\xff\xff\xff"
+        "\xad\xf9\x23\x3d"
+
+        "\x52"
+
+        "\x01"
+        "\x0f"
+        "VICIIBorderMode"
+        "\x02"
+        "\x02\x00"
+    ;
+
+    setup(tc);
+
+    send_command(command);
+
+    length = wait_for_response_id(tc, command);
+
+    CuAssertIntEquals(tc, 0x52, response[RESPONSE_TYPE]);
+}
+
+void resource_get_works(CuTest *tc) {
+    int length;
+
+    unsigned char command[] =
+        "\x02\x01"
+        "\xff\xff\xff\xff"
+        "\xad\xf9\x23\x3d"
+
+        "\x51"
+
+        "\x0f"
+        "VICIIBorderMode"
+    ;
+
+    setup(tc);
+
+    send_command(command);
+
+    length = wait_for_response_id(tc, command);
+
+    CuAssertIntEquals(tc, 0x51, response[RESPONSE_TYPE]);
+
+    /* Type */
+    CuAssertIntEquals(tc, 0x01, response[HEADER_LENGTH]);
+
+    /* Length */
+    CuAssertIntEquals(tc, 0x04, response[HEADER_LENGTH + 1]);
+}
+
 void display_get_works(CuTest *tc) {
     int length, misc_fields_length;
     unsigned char *cursor;
@@ -1300,6 +1355,9 @@ CuSuite* get_suite(void)
     SUITE_ADD_TEST(suite, banks_available_works);
     SUITE_ADD_TEST(suite, registers_available_works);
     SUITE_ADD_TEST(suite, display_get_works);
+
+    SUITE_ADD_TEST(suite, resource_get_works);
+    SUITE_ADD_TEST(suite, resource_set_works);
 
     SUITE_ADD_TEST(suite, autostart_works);
 
