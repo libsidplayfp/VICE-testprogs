@@ -1256,11 +1256,6 @@ void display_get_works(CuTest *tc) {
 
     length = wait_for_response_id(tc, command);
 
-    FILE *fil = fopen("./shot.tga", "wb");
-    fwrite(&response[HEADER_LENGTH + 47 - 18], length - 47 + 18, 1, fil);
-    //fwrite(response, length, 1, fil);
-    fclose(fil);
-
     CuAssertIntEquals(tc, 0x84, response[RESPONSE_TYPE]);
 
     CuAssertIntEquals(tc, 43, little_endian_to_uint32(&response[HEADER_LENGTH]));
