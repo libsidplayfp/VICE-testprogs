@@ -766,9 +766,26 @@ void dump_works(CuTest *tc) {
 
 void undump_works(CuTest *tc) {
     int length;
-    int strpos = COMMAND_HEADER_LENGTH + 1;
+    int undump_strpos = COMMAND_HEADER_LENGTH + 1;
 
-    unsigned char command[] =
+    int dump_strpos = COMMAND_HEADER_LENGTH + 3;
+
+    unsigned char dump_command[] =
+        "\x02\x01"
+        "\xff\xff\xff\xff"
+        "\xaf\xe9\x23\x3d"
+
+        "\x41"
+
+        "\x01"
+        "\x01"
+        "\xd2"
+        "                                                                      "
+        "                                                                      "
+        "                                                                      "
+    ;
+
+    unsigned char undump_command[] =
         "\x02\x01"
         "\xff\xff\xff\xff"
         "\xaf\xe9\x23\x3d"
@@ -781,15 +798,25 @@ void undump_works(CuTest *tc) {
         "                                                                      "
     ;
 
-    getcwd(&command[strpos], 0xd2);
-
-    strcpy(&command[strpos + strlen(&command[strpos])], "/undump.bin");
-
     setup(tc);
 
-    send_command(command);
+    getcwd(&dump_command[dump_strpos], 0xd2);
 
-    length = wait_for_response_id(tc, command);
+    strcpy(&dump_command[dump_strpos + strlen(&dump_command[dump_strpos])], "/undump.bin");
+
+    send_command(dump_command);
+
+    length = wait_for_response_id(tc, dump_command);
+
+    CuAssertIntEquals(tc, 0x41, response[RESPONSE_TYPE]);
+
+    getcwd(&undump_command[undump_strpos], 0xd2);
+
+    strcpy(&undump_command[undump_strpos + strlen(&undump_command[undump_strpos])], "/undump.bin");
+
+    send_command(undump_command);
+
+    length = wait_for_response_id(tc, undump_command);
 
     CuAssertIntEquals(tc, 0x42, response[RESPONSE_TYPE]);
 }
