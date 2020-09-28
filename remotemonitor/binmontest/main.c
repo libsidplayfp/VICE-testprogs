@@ -765,7 +765,7 @@ void dump_works(CuTest *tc) {
 }
 
 void undump_works(CuTest *tc) {
-    int length;
+    int length, pc;
     int undump_strpos = COMMAND_HEADER_LENGTH + 1;
 
     int dump_strpos = COMMAND_HEADER_LENGTH + 3;
@@ -819,6 +819,13 @@ void undump_works(CuTest *tc) {
     length = wait_for_response_id(tc, undump_command);
 
     CuAssertIntEquals(tc, 0x42, response[RESPONSE_TYPE]);
+
+    pc = little_endian_to_uint16(&response[HEADER_LENGTH]);
+
+    printf("PC: %04x", pc);
+
+    CuAssertTrue(tc, 0xe500 < pc);
+    CuAssertTrue(tc, pc < 0xe600);
 }
 
 void mem_set_works(CuTest *tc) {
