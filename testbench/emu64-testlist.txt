@@ -951,6 +951,7 @@
 ../SID/wb_testsuite/,noise_writeback_check_F_to_D_old.prg,exitcode,100000000,sid-old
 ../SID/wb_testsuite/,noise_writeback_check_F_to_E_old.prg,exitcode,100000000,sid-old
 ../SID/wb_testsuite/,noise_writeback_check_F_to_F_old.prg,exitcode,100000000,sid-old
+../SID/osc3-wave0/,osc3-wave0.prg,exitcode,15000000,sid-old
 ../SID/osc_topbit/,osc_topbit_test_noise_old.prg,exitcode,15000000,sid-old
 ../SID/osc_topbit/,osc_topbit_test_pulse_old.prg,exitcode,15000000,sid-old
 ../SID/osc_topbit/,osc_topbit_test_triangle_old.prg,exitcode,15000000,sid-old
