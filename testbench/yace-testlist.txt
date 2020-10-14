@@ -1226,6 +1226,7 @@
 ################################################################################
 #TODO:
 #../vdrive
+../vdrive/bustakeover/,bustakeover.prg,exitcode,95000000,mountd64:bustakeover.d64
 ../vdrive/sa-check/,sacheck.prg,exitcode,14000000,mountd64:sacheck.d64
 ../vdrive/,reltest.bas,interactive,0
 ################################################################################
