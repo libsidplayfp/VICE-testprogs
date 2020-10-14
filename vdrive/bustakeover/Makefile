@@ -7,7 +7,7 @@ bustakeover.prg: bustakeover.asm
 	
 bustakeover.d64: bustakeover.prg
 	c1541 -format "test,00" d64 bustakeover.d64 \
-		-write bustakeover.prg "test" \
+		-write bustakeover.prg "bustakeover" \
 		-write bustakeover.prg "testseq,s,w"
 	
 clean:
