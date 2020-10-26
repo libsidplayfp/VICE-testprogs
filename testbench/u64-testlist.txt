@@ -1087,6 +1087,9 @@
 ################################################################################
 # REU
 ################################################################################
+../REU/bonzai/,spritetiming.prg,exitcode,49000000,reu512k
+../REU/bonzai/,checkchar.prg,exitcode,9900000,reu512k
+../REU/bonzai/,reudetect.prg,exitcode,15000000,reu512k
 ../REU/colorram/,colorram.prg,exitcode,1000000000,reu512k
 ../REU/colorram/,dmacolortest.prg,interactive,0
 ../REU/detectsize/,detectreu.prg,exitcode,10000000,reu512k
