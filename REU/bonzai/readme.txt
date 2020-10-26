@@ -5,11 +5,14 @@ original release here: https://csdb.dk/release/?id=196880
 CheckChar
 =========
 
-Tests if streaming to char works as expected. Uses char to sprite collision check with a predefined test pattern.
+Tests if streaming to char works as expected. Uses char to sprite collision 
+check with a predefined test pattern.
 
-Will fail on VICE x64 but not on VICE x64sc. Also fails on The C64 (See https://www.youtube.com/watch?v=UInN-ta9CkA for how-to)
+Will fail on VICE x64 but not on VICE x64sc. Also fails on The C64 
+(See https://www.youtube.com/watch?v=UInN-ta9CkA for how-to)
 
-The check is running every 8th frame so you can see what happens. If used in your own work, this should be changed.
+The check is running every 8th frame so you can see what happens. If used in 
+your own work, this should be changed.
 
 
 REUDetect
