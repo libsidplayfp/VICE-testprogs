@@ -5,9 +5,18 @@ upper 8 bits (of 9) of the X position and LPY the lower 8 bits (likewise of
 9) of the Y position. So the horizontal resolution of the light pen is
 limited to 2 pixels.
 
-Only one negative edge on LP is recognized per frame. If multiple edges
-occur on LP, all following ones are ignored. The trigger is not released
-until the next vertical blanking interval.
+--------------------------------------------------------------------------------
+
+The test program shows the LPX and LPY latches in the upper left on the screen,
+and also the other joystick port bits, and POTX/POTY, to allow checking for the
+"trigger" button as well.
+
+Pressing CBM cycles through some different types of compensating the values,
+as described below.
+
+"ideal" - no compensation
+"lightpen" - 28 pixels (x)
+"magnum light phaser" - 72 pixels (x)
 
 --------------------------------------------------------------------------------
 
