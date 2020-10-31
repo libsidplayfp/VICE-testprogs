@@ -18,6 +18,11 @@ as described below.
 "lightpen" - 28 pixels (x)
 "magnum light phaser" - 72 pixels (x)
 
+To determine the approximate delay/offset of a device, point it at the marker
+at the top right of the screen. With an ideal device the resulting values in
+the LP latches are $7c (x) and $5a (y). Substract those from the actually
+latched values and you get the offset.
+
 --------------------------------------------------------------------------------
 
 Theoretical exact values:
