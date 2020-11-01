@@ -21,7 +21,13 @@ as described below.
 To determine the approximate delay/offset of a device, point it at the marker
 at the top right of the screen. With an ideal device the resulting values in
 the LP latches are $7c (x) and $5a (y). Substract those from the actually
-latched values and you get the offset.
+latched values and you get the offset. 
+
+Point at the marker and hold "run/stop" to calculate the offset values and 
+switch to custom calibrated mode
+
+Pressing "arrow up" turns the border on/off. Switch it to black (off) to
+determine the lowest/highest values.
 
 --------------------------------------------------------------------------------
 

@@ -197,8 +197,10 @@ loop:
     
 keydelay=*+1
     lda #1
-    bne ++
-    
+    beq +
+    jmp nokey
++
+
     lda #20
     sta keydelay
     
@@ -207,19 +209,41 @@ keydelay=*+1
     sta $dc02 ; port a ddr (all output)
     lda #%00000000
     sta $dc03 ; port b ddr (all input)
-    lda #%01111110
+    lda #%01111111
     sta $dc00 ; port a data
 
+    
     lda $dc01 ; port b data
     cmp #%11011111  ; C=
     bne +
     inc lptypeidx
     ldx lptypeidx
     cpx #lptypes
-    bne +
+    bcc +
     ldx #0
     stx lptypeidx
 +
+
+    lda #%01111111
+    sta $dc00 ; port a data
+
+    lda $dc01 ; port b data
+    cmp #%01111111  ; run/stop
+    bne +
+
+    ldx #lptypes
+    stx lptypeidx
+    
+    lda adc1val
+    sec
+    sbc #$7c
+    sta compensationx,x
+    lda adc2val
+    sec
+    sbc #$5a
+    sta compensationy,x
++
+
     lda lptypeidx
     ldx #<($0400+(40*20)+13)
     ldy #>($0400+(40*20)+13)
@@ -265,8 +289,29 @@ keydelay=*+1
     iny
     cpy #32
     bne -
+
+    lda #%10111111
+    sta $dc00 ; port a data
+
+    lda $dc01 ; port b data
+    cmp #%10111111  ; arrow up
+    bne +
+    inc bordermode
++
+    ldx #%11111111
+    ldy #0
+bordermode=*+1
+    lda #0
+    and #1
+    bne +
+    ldx #%10000001
+    ldy #7
++
+    stx $3fff
+    sty $d020
     
-++
+    
+nokey:
 
     lda #1
     sta $d015
@@ -327,6 +372,7 @@ typestr:
     !scr "ideal                           "
     !scr "lightpen (gpz)                  "
     !scr "magnum light phaser             "
+    !scr "custom calibrated               "
 
 compensationx:
     !byte 0
