@@ -237,6 +237,7 @@ keydelay=*+1
     lda adc1val
     sec
     sbc #$7c
+    asl
     sta compensationx,x
     lda adc2val
     sec
@@ -378,7 +379,9 @@ compensationx:
     !byte 0
     !byte 28
     !byte 72
+    !byte 0
 compensationy:
+    !byte 0
     !byte 0
     !byte 0
     !byte 0
