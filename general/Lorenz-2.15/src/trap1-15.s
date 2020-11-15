@@ -1,17 +1,35 @@
+; this file is part of the C64 Emulator Test Suite. public domain, no copyright
 
 ; original file was: trap1-15.asm
 ;-------------------------------------------------------------------------------
 
-           *= $0801
-           .byte $4c,$14,$08,$00,$97
-turboass   = 780
-           .text "780"
-           .byte $2c,$30,$3a,$9e,$32,$30
-           .byte $37,$33,$00,$00,$00
-           lda #1
-           sta turboass
-           jmp main
-
+            .include "common.asm"
+            .include "printhb.asm"
+            ;.include "waitborder.asm"
+            ;.include "waitkey.asm"
+            ;.include "showregs.asm"
+           
+;------------------------------------------------------------------------------           
+thisname   ; name of this test
+           .text "trap"
+           .ifmi TRAP - 10
+           .byte $30 + TRAP
+           .else
+           .byte $31
+           .byte $30 + (TRAP - 10)
+           .endif
+           .byte 0
+nextname   ; name of next test, "-" means no more tests
+           .text "trap"
+           .ifmi TRAP - 9
+           .byte $31 + TRAP
+           .else
+           .byte $31
+           .byte $30 + (TRAP - 9)
+           .endif
+;------------------------------------------------------------------------------           
+           
+           
 ; #  code  data  zd  zptr   aspect tested
 ;-----------------------------------------------------------------------------
 ; 1  2800  29C0  F7  F7/F8  basic functionality
@@ -136,17 +154,7 @@ xa         .byte 0
 ya         .byte 0
 pa         .byte 0
 
-main
-           jsr print
-           .byte 13
-           .text "{up}trap"
-           .ifmi TRAP - 10
-           .byte $30 + TRAP
-           .else
-           .byte $31
-           .byte $30 + (TRAP - 10)
-           .endif
-           .byte 0
+main:
            
            ; read ANE "magic constant"
            lda #0
@@ -337,8 +345,7 @@ error
            lda #13
            jsr $ffd2
 
-         lda #$ff       ; failure
-         sta $d7ff
+            #SET_EXIT_CODE_FAILURE
 
 wait     jsr $ffe4
          beq wait
@@ -352,79 +359,7 @@ return
            rts
 
 ok
-           jsr print
-           .text " - ok"
-           .byte 13,0
-
-        lda #0         ; success
-        sta $d7ff
-
-load
-           lda #47
-           sta 0
-           jsr print
-name       .text "trap"
-           .ifmi TRAP - 9
-           .byte $31 + TRAP
-           .else
-           .byte $31
-           .byte $30 + (TRAP - 9)
-           .endif
-namelen    = *-name
-           .byte 0
-           lda #0
-           sta $0a
-           sta $b9
-           lda #namelen
-           sta $b7
-           lda #<name
-           sta $bb
-           lda #>name
-           sta $bc
-           pla
-           pla
-           jmp $e16f
-
-print      pla
-           .block
-           sta print0+1
-           pla
-           sta print0+2
-           ldx #1
-print0     lda 1234,x
-           beq print1
-           jsr $ffd2
-           inx
-           bne print0
-print1     sec
-           txa
-           adc print0+1
-           sta print2+1
-           lda #0
-           adc print0+2
-           sta print2+2
-print2     jmp 1234
-           .bend
-
-printhb
-           .block
-           pha
-           lsr a
-           lsr a
-           lsr a
-           lsr a
-           jsr printhn
-           pla
-           and #$0f
-printhn
-           ora #$30
-           cmp #$3a
-           bcc printhn0
-           adc #6
-printhn0
-           jsr $ffd2
-           rts
-           .bend
+            rts ; SUCCESS
 
 
 savesp     .byte 0

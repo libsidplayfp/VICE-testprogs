@@ -1,3 +1,4 @@
+# this file is part of the C64 Emulator Test Suite. public domain, no copyright
 
 #.SILENT:
 

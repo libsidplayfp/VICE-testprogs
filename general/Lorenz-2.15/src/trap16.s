@@ -1,16 +1,20 @@
+; this file is part of the C64 Emulator Test Suite. public domain, no copyright
 
 ; original file was: trap16.asm
 ;-------------------------------------------------------------------------------
 
-           *= $0801
-           .byte $4c,$14,$08,$00,$97
-turboass   = 780
-           .text "780"
-           .byte $2c,$30,$3a,$9e,$32,$30
-           .byte $37,$33,$00,$00,$00
-           lda #1
-           sta turboass
-           
+            .include "common.asm"
+            .include "printhb.asm"
+            ;.include "waitborder.asm"
+            ;.include "waitkey.asm"
+            ;.include "showregs.asm"
+
+;-------------------------------------------------------------------------------
+thisname:   .null "trap16"      ; name of this test
+nextname:   .null "trap17"      ; name of next test, "-" means no more tests
+;-------------------------------------------------------------------------------
+            
+main:           
            ; read ANE "magic constant"
            lda #0
            ldx #$ff
@@ -57,7 +61,7 @@ laxmagic = * + 1
            sta laxresultstatus
 sk2:          
            
-           jmp main
+           jmp main2
 
 code       = $fffe
 data       = $03c0
@@ -98,11 +102,7 @@ rom
            rts
 
 
-main
-           jsr print
-           .byte 13
-           .text "{up}trap16"
-           .byte 0
+main2
            lda #<code
            sta pcode+0
            lda #>code
@@ -251,11 +251,10 @@ error
            lda #13
            jsr $ffd2
 
-         lda #$ff       ; failure
-         sta $d7ff
+            #SET_EXIT_CODE_FAILURE
 
-wait     jsr $ffe4
-         beq wait
+wait        jsr $ffe4
+            beq wait
            jmp nostop
 return
            lda #47
@@ -263,74 +262,9 @@ return
            rts
 
 ok
-           jsr print
-           .text " - ok"
-           .byte 13,0
+            rts ; SUCCESS
 
-        lda #0         ; success
-        sta $d7ff
-
-load
-           lda #47
-           sta 0
-           jsr print
-name       .text "trap17"
-namelen    = *-name
-           .byte 0
-           lda #0
-           sta $0a
-           sta $b9
-           lda #namelen
-           sta $b7
-           lda #<name
-           sta $bb
-           lda #>name
-           sta $bc
-           pla
-           pla
-           jmp $e16f
-
-print      pla
-           .block
-           sta print0+1
-           pla
-           sta print0+2
-           ldx #1
-print0     lda 1234,x
-           beq print1
-           jsr $ffd2
-           inx
-           bne print0
-print1     sec
-           txa
-           adc print0+1
-           sta print2+1
-           lda #0
-           adc print0+2
-           sta print2+2
-print2     jmp 1234
-           .bend
-
-printhb
-           .block
-           pha
-           lsr a
-           lsr a
-           lsr a
-           lsr a
-           jsr printhn
-           pla
-           and #$0f
-printhn
-           ora #$30
-           cmp #$3a
-           bcc printhn0
-           adc #6
-printhn0
-           jsr $ffd2
-           rts
-           .bend
-
+;-------------------------------------------------------------------------------
 
 savesp     .byte 0
 savedstack = $2a00;2aff

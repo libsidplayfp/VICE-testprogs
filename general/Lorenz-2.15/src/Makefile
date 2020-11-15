@@ -1,5 +1,16 @@
+# this file is part of the C64 Emulator Test Suite. public domain, no copyright
 
 #.SILENT:
+
+COMMONSRC = \
+	common/common.asm \
+	common/print.asm \
+	common/printhb.asm \
+	common/showregs.asm \
+	common/startup.asm \
+	common/target.inc \
+	common/waitborder.asm \
+	common/waitkey.asm
 
 DISK1PROGS = \
 	start.prg \
@@ -421,89 +432,89 @@ ALLPROGSNEW128 = $(DISK1PROGS) $(DISK2PROGS128) $(DISK3PROGSNEW)
 ALLPROGS128 = $(DISK1PROGS) $(DISK2PROGS128) $(DISK3PROGSOLD) $(DISK3PROGSNEW)
 ALLDISKS128 = Disk1.d64 Disk2c128.d64 Disk3.d64 Disk3new.d64
 
-ASFLAGS=-C -T -a -q
+ASFLAGS=-C -T -a -q -I ./common -D TARGET=0
 
 all: $(ALLPROGS) $(ALLDISKS) $(ALLPROGS128) $(ALLDISKS128)
 
-cpuport.prg: cpuport.s
+cpuport.prg: cpuport.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D ISC128C64=0 -i cpuport.s -o cpuport.prg
-cpuport128.prg: cpuport.s
+cpuport128.prg: cpuport.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D ISC128C64=1 -i cpuport.s -o cpuport128.prg
 
-trap1.prg: trap1-15.s
+trap1.prg: trap1-15.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D TRAP=1 -i trap1-15.s -o trap1.prg
-trap2.prg: trap1-15.s
+trap2.prg: trap1-15.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D TRAP=2 -i trap1-15.s -o trap2.prg
-trap3.prg: trap1-15.s
+trap3.prg: trap1-15.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D TRAP=3 -i trap1-15.s -o trap3.prg
-trap4.prg: trap1-15.s
+trap4.prg: trap1-15.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D TRAP=4 -i trap1-15.s -o trap4.prg
-trap5.prg: trap1-15.s
+trap5.prg: trap1-15.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D TRAP=5 -i trap1-15.s -o trap5.prg
-trap6.prg: trap1-15.s
+trap6.prg: trap1-15.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D TRAP=6 -i trap1-15.s -o trap6.prg
-trap7.prg: trap1-15.s
+trap7.prg: trap1-15.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D TRAP=7 -i trap1-15.s -o trap7.prg
-trap8.prg: trap1-15.s
+trap8.prg: trap1-15.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D TRAP=8 -i trap1-15.s -o trap8.prg
-trap9.prg: trap1-15.s
+trap9.prg: trap1-15.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D TRAP=9 -i trap1-15.s -o trap9.prg
-trap10.prg: trap1-15.s
+trap10.prg: trap1-15.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D TRAP=10 -i trap1-15.s -o trap10.prg
-trap11.prg: trap1-15.s
+trap11.prg: trap1-15.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D TRAP=11 -i trap1-15.s -o trap11.prg
-trap12.prg: trap1-15.s
+trap12.prg: trap1-15.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D TRAP=12 -i trap1-15.s -o trap12.prg
-trap13.prg: trap1-15.s
+trap13.prg: trap1-15.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D TRAP=13 -i trap1-15.s -o trap13.prg
-trap14.prg: trap1-15.s
+trap14.prg: trap1-15.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D TRAP=14 -i trap1-15.s -o trap14.prg
-trap15.prg: trap1-15.s
+trap15.prg: trap1-15.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D TRAP=15 -i trap1-15.s -o trap15.prg
 
-irq.prg: irq.s
+irq.prg: irq.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i irq.s -o irq.prg
-irqnew.prg: irq.s
+irqnew.prg: irq.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=1 -i irq.s -o irqnew.prg
-nmi.prg: nmi.s
+nmi.prg: nmi.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i nmi.s -o nmi.prg
-nminew.prg: nmi.s
+nminew.prg: nmi.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=1 -i nmi.s -o nminew.prg
-icr01.prg: icr01.s
+icr01.prg: icr01.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i icr01.s -o icr01.prg
-icr01new.prg: icr01.s
+icr01new.prg: icr01.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=1 -i icr01.s -o icr01new.prg
-imr.prg: imr.s
+imr.prg: imr.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i imr.s -o imr.prg
-imrnew.prg: imr.s
+imrnew.prg: imr.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=1 -i imr.s -o imrnew.prg
-cia1tab.prg: cia1tab.s
+cia1tab.prg: cia1tab.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i cia1tab.s -o cia1tab.prg
-cia1tabnew.prg: cia1tab.s
+cia1tabnew.prg: cia1tab.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=1 -i cia1tab.s -o cia1tabnew.prg
-cia1ta.prg: cia1ta.s
+cia1ta.prg: cia1ta.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i cia1ta.s -o cia1ta.prg
-cia1tanew.prg: cia1ta.s
+cia1tanew.prg: cia1ta.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=1 -i cia1ta.s -o cia1tanew.prg
-cia1tb.prg: cia1tb.s
+cia1tb.prg: cia1tb.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i cia1tb.s -o cia1tb.prg
-cia1tbnew.prg: cia1tb.s
+cia1tbnew.prg: cia1tb.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=1 -i cia1tb.s -o cia1tbnew.prg
-cia2ta.prg: cia2ta.s
+cia2ta.prg: cia2ta.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i cia2ta.s -o cia2ta.prg
-cia2tanew.prg: cia2ta.s
+cia2tanew.prg: cia2ta.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=1 -i cia2ta.s -o cia2tanew.prg
-cia2tb.prg: cia2tb.s
+cia2tb.prg: cia2tb.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i cia2tb.s -o cia2tb.prg
-cia2tbnew.prg: cia2tb.s
+cia2tbnew.prg: cia2tb.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=1 -i cia2tb.s -o cia2tbnew.prg
 	
-nextdisk1.prg: nextdisk.s
+nextdisk1.prg: nextdisk.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEXT=1 -i nextdisk.s -o nextdisk1.prg
-nextdisk2.prg: nextdisk.s
+nextdisk2.prg: nextdisk.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEXT=2 -i nextdisk.s -o nextdisk2.prg
 
-%.prg : %.s
+%.prg : %.s $(COMMONSRC)
 	64tass $(ASFLAGS) -i "$*.s" -o "$*.prg"
 
 Disk1.d64: $(DISK1PROGS) nextdisk1.prg

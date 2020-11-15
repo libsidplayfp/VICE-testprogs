@@ -1,14 +1,17 @@
-         *= $0801
+; this file is part of the C64 Emulator Test Suite. public domain, no copyright
 
-         .byte $4c,$16,$08,$00,$97,$32
-         .byte $2c,$30,$3a,$9e,$32,$30
-         .byte $37,$30,$00,$00,$00,$a9
-         .byte $01,$85,$02
+; original file was: adca.asm
+;-------------------------------------------------------------------------------
 
-         jsr print
-         .byte 13
-         .text "{up}adcax"
-         .byte 0
+            .include "common.asm"
+            .include "printhb.asm"
+            .include "showregs.asm"
+           
+;------------------------------------------------------------------------------           
+thisname   .null "adcax"      ; name of this test
+nextname   .null "adcay"      ; name of next test, "-" means no more tests
+;------------------------------------------------------------------------------           
+main:
 
          lda #%00011011
          sta db
@@ -204,30 +207,7 @@ nodec    dec xb
          beq nonext
 jmpnext  jmp next
 nonext
-
-         jsr print
-         .text " - ok"
-         .byte 13,0
-
-         lda #0         ; success
-         sta $d7ff
-
-load     jsr print
-name     .text "adcay"
-namelen  = *-name
-         .byte 0
-         lda #0
-         sta $0a
-         sta $b9
-         lda #namelen
-         sta $b7
-         lda #<name
-         sta $bb
-         lda #>name
-         sta $bc
-         pla
-         pla
-         jmp $e16f
+        rts ; SUCCESS
 
 db       .byte 0
 ab       .byte 0
@@ -249,7 +229,6 @@ pr       .byte 0
 sr       .byte 0
 
 check
-         .block
          lda da
          cmp dr
          bne error
@@ -291,139 +270,9 @@ error    jsr print
          lda #13
          jsr $ffd2
 
-         lda #$ff       ; failure
-         sta $d7ff
+         #SET_EXIT_CODE_FAILURE
 
 wait     jsr $ffe4
          beq wait
          rts
-
-showregs stx 172
-         sty 173
-         ldy #0
-         lda (172),y
-         jsr hexb
-         lda #32
-         jsr $ffd2
-         lda #32
-         jsr $ffd2
-         iny
-         lda (172),y
-         jsr hexb
-         lda #32
-         jsr $ffd2
-         iny
-         lda (172),y
-         jsr hexb
-         lda #32
-         jsr $ffd2
-         iny
-         lda (172),y
-         jsr hexb
-         lda #32
-         jsr $ffd2
-         iny
-         lda (172),y
-         ldx #"n"
-         asl a
-         bcc ok7
-         ldx #"N"
-ok7      pha
-         txa
-         jsr $ffd2
-         pla
-         ldx #"v"
-         asl a
-         bcc ok6
-         ldx #"V"
-ok6      pha
-         txa
-         jsr $ffd2
-         pla
-         ldx #"0"
-         asl a
-         bcc ok5
-         ldx #"1"
-ok5      pha
-         txa
-         jsr $ffd2
-         pla
-         ldx #"b"
-         asl a
-         bcc ok4
-         ldx #"B"
-ok4      pha
-         txa
-         jsr $ffd2
-         pla
-         ldx #"d"
-         asl a
-         bcc ok3
-         ldx #"D"
-ok3      pha
-         txa
-         jsr $ffd2
-         pla
-         ldx #"i"
-         asl a
-         bcc ok2
-         ldx #"I"
-ok2      pha
-         txa
-         jsr $ffd2
-         pla
-         ldx #"z"
-         asl a
-         bcc ok1
-         ldx #"Z"
-ok1      pha
-         txa
-         jsr $ffd2
-         pla
-         ldx #"c"
-         asl a
-         bcc ok0
-         ldx #"C"
-ok0      pha
-         txa
-         jsr $ffd2
-         pla
-         lda #32
-         jsr $ffd2
-         iny
-         lda (172),y
-         .bend
-hexb     pha
-         lsr a
-         lsr a
-         lsr a
-         lsr a
-         jsr hexn
-         pla
-         and #$0f
-hexn     ora #$30
-         cmp #$3a
-         bcc hexn0
-         adc #6
-hexn0    jmp $ffd2
-
-print    pla
-         .block
-         sta print0+1
-         pla
-         sta print0+2
-         ldx #1
-print0   lda !*,x
-         beq print1
-         jsr $ffd2
-         inx
-         bne print0
-print1   sec
-         txa
-         adc print0+1
-         sta print2+1
-         lda #0
-         adc print0+2
-         sta print2+2
-print2   jmp !*
-         .bend
+            

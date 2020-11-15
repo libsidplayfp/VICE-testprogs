@@ -1,3 +1,4 @@
+; this file is part of the C64 Emulator Test Suite. public domain, no copyright
 
 ; original file was: cpuport.asm
 ;-------------------------------------------------------------------------------
@@ -5,18 +6,13 @@
 ;ISC128 = 0
 ;ISC128C64 = 0
 
-            *= $0801
+            .include "common.asm"
+            .include "printhb.asm"
            
-            .word baslink
-            .word 0
-            .byte $9e ; SYS
-            .byte $32, $30, $36, $31
-baslink:
-            .byte 0,0,0
-
-            jmp main
-           
-;-------------------------------------------------------------------------------           
+;------------------------------------------------------------------------------           
+thisname   .null "cpuport"      ; name of this test
+nextname   .null "cputiming"    ; name of next test, "-" means no more tests
+;------------------------------------------------------------------------------           
            
 config      .byte 0
 abackup     .byte 0,0    ; copy of written values for error checking
@@ -36,12 +32,8 @@ rom:
             rts
 
 
-main
-            jsr print
-            .byte 13
-            .text "{up}cpuport"
-            .byte 0
-
+;-------------------------------------------------------------------------------           
+main:
             lda #0
             sta config
 nextconfig
@@ -236,8 +228,7 @@ oldx
             lda #13
             jsr $ffd2  
 
-            lda #$ff       ; failure
-            sta $d7ff
+            #SET_EXIT_CODE_FAILURE
 
 wait     
             jsr $ffe4
@@ -248,79 +239,13 @@ wait
             ; success, load the next test
 
 ok
-            jsr print
-            .text " - ok"
-            .byte 13,0
-
-            lda #0         ; success
-            sta $d7ff
-
 load
             lda #47
             sta 0
+
+            rts ; SUCCESS
+
+;-------------------------------------------------------------------------------           
             
-            jsr print
-name        .text "cputiming"
-namelen    = *-name
-            .byte 0
-            
-            lda #0
-            sta $0a
-            sta $b9
-            lda #namelen
-            sta $b7
-            lda #<name
-            sta $bb
-            lda #>name
-            sta $bc
-            pla
-            pla
-            jmp $e16f
-
-            ; return addr on stack == ptr to string
-print      
-            .block
-            pla
-            sta print0+1
-            pla
-            sta print0+2
-
-            ldx #1
-print0      lda $dead,x
-            beq print1
-            jsr $ffd2
-            inx
-            bne print0
-print1     
-            sec
-            txa
-            adc print0+1
-            sta print2+1
-            lda #0
-            adc print0+2
-            sta print2+2
-print2      jmp $dead
-            .bend
-
-            ; print hex byte in Akku
-printhb
-            .block
-            pha
-            lsr a
-            lsr a
-            lsr a
-            lsr a
-            jsr printhn
-            pla
-            and #$0f
-printhn
-            ora #$30
-            cmp #$3a
-            bcc printhn0
-            adc #6
-printhn0
-            jsr $ffd2
-            rts
-            .bend
 
 

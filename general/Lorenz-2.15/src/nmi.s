@@ -1,64 +1,17 @@
+; this file is part of the C64 Emulator Test Suite. public domain, no copyright
+
 ; original file was: nmi.asm
 ;-------------------------------------------------------------------------------
 
 DEBUG = 0
 
-         *= $0801
-         .byte $4c,$14,$08,$00,$97
-turboass = 780
-         .text "780"
-         .byte $2c,$30,$3a,$9e,$32,$30
-         .byte $37,$33,$00,$00,$00
-         lda #1
-         sta turboass
-         jmp main
-
-
-print
-         .block
-         pla
-         sta print0+1
-         pla
-         sta print0+2
-         ldx #1
-print0
-         lda !*,x
-         beq print1
-         jsr $ffd2
-         inx
-         bne print0
-print1
-         sec
-         txa
-         adc print0+1
-         sta print2+1
-         lda #0
-         adc print0+2
-         sta print2+2
-print2
-         jmp !*
-         .bend
-
-
-printhb
-         .block
-         pha
-         lsr a
-         lsr a
-         lsr a
-         lsr a
-         jsr printhn
-         pla
-         and #$0f
-printhn
-         ora #$30
-         cmp #$3a
-         bcc printhn0
-         adc #6
-printhn0
-         jsr $ffd2
-         rts
-         .bend
+            .include "common.asm"
+            .include "printhb.asm"
+           
+;------------------------------------------------------------------------------           
+thisname   .null "nmi"          ; name of this test
+nextname   .null "cia1tb123"    ; name of next test, "-" means no more tests
+;-------------------------------------------------------------------------------           
 
 starttimer brk
 stoptimer brk
@@ -463,8 +416,10 @@ wexp       lda #0
            .byte 0
 wgot       lda #0
            jsr printhb
-        lda #$ff      ; failure
-        sta $d7ff
+
+            #SET_EXIT_CODE_FAILURE
+            
+        
 .ifeq DEBUG - 0
            jmp waitk
 wok
@@ -474,7 +429,8 @@ wok
 wrong
            jmp pwrong
 
-main
+;-----------------------------------------------------------------------------           
+main:
          jsr print
          .byte 13
 .ifeq NEWCIA - 1
@@ -660,8 +616,7 @@ error
          lda #$14
          jsr printhb
 
-        lda #$ff      ; failure
-        sta $d7ff
+            #SET_EXIT_CODE_FAILURE
 
 waitk
          jsr $ffe4
@@ -670,42 +625,19 @@ waitk
          beq stop
          jmp noerror
 stop
-         lda turboass
-         beq basic
-         jmp $8000
-basic
+        ; jump to basic
          jmp $a474
 
 
 ok
-         jsr print
-         .text " - ok"
-         .byte 13,0
-
-        lda #$00      ; success
-        sta $d7ff
-
 load
          lda #47
          sta 0
-         jsr print
-name     .text "cia1tb123"
-namelen  = *-name
-         .byte 0
-         lda #0
-         sta $0a
-         sta $b9
-         lda #namelen
-         sta $b7
-         lda #<name
-         sta $bb
-         lda #>name
-         sta $bc
-         pla
-         pla
-         jmp $e16f
+         
+         rts    ; SUCCESS
 
-
+;-------------------------------------------------------------------------------        
+        
 n
          .block
          jsr savestack
