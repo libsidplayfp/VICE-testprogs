@@ -222,7 +222,6 @@ pr       .byte 0
 sr       .byte 0
 
 check
-         .block
          lda da
          cmp dr
          bne error

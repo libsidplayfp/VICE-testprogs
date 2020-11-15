@@ -1,16 +1,18 @@
 
-CPU6510     = 0 
-CPU6502     = 1 
-CPU65C02    = 2 
+CPU6510     = 0
+CPU6502     = 1
+CPU65C02    = 2
+CPU6502DTV  = 3
 
 TARGETC64       = 0
 TARGETC128      = 1
 TARGETC128C64   = 2
 TARGETVIC20     = 3
 TARGETPLUS4     = 4
+TARGETDTV       = 5
 
-TARGET1541      = 5
-TARGET1571      = 6
+TARGET1541      = 6
+TARGET1571      = 7
 
 ;------------------------------------------------------------------------------
 .ifeq (TARGET - TARGETC64)
@@ -78,4 +80,9 @@ TARGETCPU = CPU6510
 ;------------------------------------------------------------------------------
 .ifeq (TARGET - TARGETVIC20)
 TARGETCPU = CPU6502
+.endif
+
+;------------------------------------------------------------------------------
+.ifeq (TARGET - TARGETDTV)
+TARGETCPU = CPU6502DTV
 .endif
