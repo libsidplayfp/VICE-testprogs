@@ -20,12 +20,39 @@ at bottom:
 remove from "print ok" to "jmp $e16f" by 
         rts ; SUCCESS
 
+                    jsr print
+                    .text " - ok"
+                    .byte 13,0
+
+                    lda #0         ; success
+                    sta $d7ff
+
+            load     jsr print
+            name     .text "adcix"
+            namelen  = *-name
+                    .byte 0
+                    lda #0
+                    sta $0a
+                    sta $b9
+                    lda #namelen
+                    sta $b7
+                    lda #<name
+                    sta $bb
+                    lda #>name
+                    sta $bc
+                    pla
+                    pla
+                    jmp $e16f
+
+
 replace $d7ff stores by
 #SET_EXIT_CODE_FAILURE
 
 remove showregs
 remove print
 
+CAUTION: there is a .bend in the middle of the showregs function in some files,
+the opening .block is above at the beginning of "check"
 
 --------------------------------------------------------------------------------
 

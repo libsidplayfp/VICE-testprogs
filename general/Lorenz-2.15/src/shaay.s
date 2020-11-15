@@ -1,22 +1,17 @@
+; this file is part of the C64 Emulator Test Suite. public domain, no copyright
+
 ; original file was: shaay.asm
 ;-------------------------------------------------------------------------------
 
-           *= $0801
-           .byte $4c,$14,$08,$00,$97
-turboass   = 780
-           .text "780"
-           .byte $2c,$30,$3a,$9e,$32,$30
-           .byte $37,$33,$00,$00,$00
-           lda #1
-           sta turboass
-           jmp main
+            .include "common.asm"
+            .include "printhb.asm"
+            .include "showregs.asm"
 
-main
-         jsr print
-         .byte 13
-         .text "{up}shaay"
-         .byte 0
-
+;------------------------------------------------------------------------------           
+thisname   .null "shaay"      ; name of this test
+nextname   .null "shaiy"      ; name of next test, "-" means no more tests
+;------------------------------------------------------------------------------ 
+main:
          lda #%00011011
          sta db
          lda #%11000110
@@ -64,6 +59,9 @@ next
 
         lda pb
         ora #%00110000
+.ifeq (TARGET - TARGETDTV)
+        and #$cf
+.endif
         sta pr
 
         lda sb
@@ -198,6 +196,9 @@ check
          cmp yr
          bne error
          lda pa
+.ifeq (TARGET - TARGETDTV)
+         and #$cf
+.endif
          cmp pr
          bne error
          lda sa
@@ -341,26 +342,3 @@ hexn     ora #$30
          bcc hexn0
          adc #6
 hexn0    jmp $ffd2
-
-print    pla
-         .block
-         sta print0+1
-         pla
-         sta print0+2
-         ldx #1
-print0   lda 1234,x
-         beq print1
-         jsr $ffd2
-         inx
-         bne print0
-print1   sec
-         txa
-         adc print0+1
-         sta print2+1
-         lda #0
-         adc print0+2
-         sta print2+2
-print2   jmp 1234
-         .bend
-
-

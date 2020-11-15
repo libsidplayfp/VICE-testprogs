@@ -1,15 +1,17 @@
-         *= $0801
+; this file is part of the C64 Emulator Test Suite. public domain, no copyright
 
-         .byte $4c,$16,$08,$00,$97,$32
-         .byte $2c,$30,$3a,$9e,$32,$30
-         .byte $37,$30,$00,$00,$00,$a9
-         .byte $01,$85,$02
+; original file was: inczx.asm
+;-------------------------------------------------------------------------------
 
-         jsr print
-         .byte 13
-         .text "{up}inczx"
-         .byte 0
+            .include "common.asm"
+            .include "printhb.asm"
+            .include "showregs.asm"
 
+;------------------------------------------------------------------------------           
+thisname   .null "inczx"      ; name of this test
+nextname   .null "inca"      ; name of next test, "-" means no more tests
+;------------------------------------------------------------------------------ 
+main:
          lda #%00011011
          sta db
          lda #%11000110
@@ -57,8 +59,14 @@ nozero   asl a
          txa
          ora #%10000000
          tax
+.ifne (TARGET - TARGETDTV)
 noneg    stx pr
 
+.else
+noneg    txa
+         and #$cf
+         sta pr
+.endif
          lda sb
          sta sr
 
@@ -91,9 +99,18 @@ cmd      inc 172,x
          inc db
          bne next
          inc pb
+.ifne (TARGET - TARGETDTV)
          bne next
+.else
+         beq dum1
+         jmp next
+.endif
 
+.ifne (TARGET - TARGETDTV)
          jsr print
+.else
+dum1     jsr print
+.endif
          .text " - ok"
          .byte 13,0
 
@@ -151,6 +168,9 @@ check
          cmp yr
          bne error
          lda pa
+.ifeq (TARGET - TARGETDTV)
+         and #$cf
+.endif
          cmp pr
          bne error
          lda sa
@@ -294,24 +314,3 @@ hexn     ora #$30
          bcc hexn0
          adc #6
 hexn0    jmp $ffd2
-
-print    pla
-         .block
-         sta print0+1
-         pla
-         sta print0+2
-         ldx #1
-print0   lda !*,x
-         beq print1
-         jsr $ffd2
-         inx
-         bne print0
-print1   sec
-         txa
-         adc print0+1
-         sta print2+1
-         lda #0
-         adc print0+2
-         sta print2+2
-print2   jmp !*
-         .bend

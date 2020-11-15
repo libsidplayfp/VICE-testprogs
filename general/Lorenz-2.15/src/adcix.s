@@ -84,7 +84,13 @@ nozero   lda ar
          txa
          ora #%10000000
          tax
+.ifne (TARGET - TARGETDTV)
 noneg    stx pr
+.else
+noneg    txa
+         and #$cf
+         sta pr
+.endif
          jmp deccont
 
 decmode
@@ -150,7 +156,13 @@ non      lda pb
          txa
          ora #%00000010
          tax
+.ifne (TARGET - TARGETDTV)
 noz      stx pr
+.else
+noz      txa
+         and #$cf
+         sta pr
+.endif
          .bend
 
 deccont  lda xb
@@ -241,6 +253,9 @@ check
          cmp yr
          bne error
          lda pa
+.ifeq (TARGET - TARGETDTV)
+         and #$cf
+.endif
          cmp pr
          bne error
          lda sa
