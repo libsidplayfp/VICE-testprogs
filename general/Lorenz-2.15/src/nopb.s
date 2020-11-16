@@ -89,33 +89,10 @@ data     .byte 0
 jmpnext  jmp next
 nonext
 
-         jsr print
-         .text " - ok"
-         .byte 13,0
-
-        lda #0         ; success
-        sta $d7ff
-        jmp load
+        rts       ; success
 
 count    .byte 0
 opcodes  .byte $80,$82,$89,$c2,$e2,0
-
-load     jsr print
-name     .text "nopz"
-namelen  = *-name
-         .byte 0
-         lda #0
-         sta $0a
-         sta $b9
-         lda #namelen
-         sta $b7
-         lda #<name
-         sta $bb
-         lda #>name
-         sta $bc
-         pla
-         pla
-         jmp $e16f
 
 db       .byte 0
 ab       .byte 0
@@ -182,8 +159,7 @@ error    jsr print
          lda #13
          jsr $ffd2
 
-         lda #$ff       ; failure
-         sta $d7ff
+         #SET_EXIT_CODE_FAILURE
 
 wait     jsr $ffe4
          beq wait

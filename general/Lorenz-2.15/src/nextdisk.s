@@ -4,7 +4,7 @@
 ;-------------------------------------------------------------------------------
 
             .include "common.asm"
-           
+
 ;------------------------------------------------------------------------------           
 thisname   .null "nextdisk"     ; name of this test
 nextname   ; name of next test, "-" means no more tests

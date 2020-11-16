@@ -6,7 +6,7 @@
             .include "common.asm"
             .include "printhb.asm"
             .include "showregs.asm"
-           
+
 ;------------------------------------------------------------------------------           
 thisname   .null "adca"      ; name of this test
 nextname   .null "adcax"     ; name of next test, "-" means no more tests
@@ -282,4 +282,3 @@ wait     jsr $ffe4
          beq wait
          rts
 
-            

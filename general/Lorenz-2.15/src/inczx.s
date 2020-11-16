@@ -101,38 +101,38 @@ cmd      inc 172,x
          inc pb
 .ifne (TARGET - TARGETDTV)
          bne next
+;         jsr print
 .else
          beq dum1
          jmp next
+dum1
+;        jsr print
 .endif
 
-.ifne (TARGET - TARGETDTV)
-         jsr print
-.else
-dum1     jsr print
-.endif
-         .text " - ok"
-         .byte 13,0
+        rts ; success
 
-        lda #0         ; success
-        sta $d7ff
-
-load     jsr print
-name     .text "inca"
-namelen  = *-name
-         .byte 0
-         lda #0
-         sta $0a
-         sta $b9
-         lda #namelen
-         sta $b7
-         lda #<name
-         sta $bb
-         lda #>name
-         sta $bc
-         pla
-         pla
-         jmp $e16f
+;         .text " - ok"
+;         .byte 13,0
+;
+;        lda #0         ; success
+;        sta $d7ff
+;
+;load     jsr print
+;name     .text "inca"
+;namelen  = *-name
+;         .byte 0
+;         lda #0
+;         sta $0a
+;         sta $b9
+;         lda #namelen
+;         sta $b7
+;         lda #<name
+;         sta $bb
+;         lda #>name
+;         sta $bc
+;         pla
+;         pla
+;         jmp $e16f
 
 db       .byte 0
 ab       .byte 0
@@ -199,8 +199,7 @@ error    jsr print
          lda #13
          jsr $ffd2
 
-         lda #$ff       ; failure
-         sta $d7ff
+         #SET_EXIT_CODE_FAILURE
 
 wait     jsr $ffe4
          beq wait

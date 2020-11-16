@@ -94,29 +94,7 @@ jmpnext  bne next
          inc pb
          bne jmpnext
 
-         jsr print
-         .text " - ok"
-         .byte 13,0
-
-        lda #0         ; success
-        sta $d7ff
-
-load     jsr print
-name     .text "ldaz"
-namelen  = *-name
-         .byte 0
-         lda #0
-         sta $0a
-         sta $b9
-         lda #namelen
-         sta $b7
-         lda #<name
-         sta $bb
-         lda #>name
-         sta $bc
-         pla
-         pla
-         jmp $e16f
+        rts ; SUCCESS
 
 db       .byte 0
 ab       .byte 0
@@ -138,7 +116,6 @@ pr       .byte 0
 sr       .byte 0
 
 check
-         .block
          lda da
          cmp dr
          bne error
@@ -183,118 +160,8 @@ error    jsr print
          lda #13
          jsr $ffd2
 
-         lda #$ff       ; failure
-         sta $d7ff
+        #SET_EXIT_CODE_FAILURE
 
 wait     jsr $ffe4
          beq wait
          rts
-
-showregs stx 172
-         sty 173
-         ldy #0
-         lda (172),y
-         jsr hexb
-         lda #32
-         jsr $ffd2
-         lda #32
-         jsr $ffd2
-         iny
-         lda (172),y
-         jsr hexb
-         lda #32
-         jsr $ffd2
-         iny
-         lda (172),y
-         jsr hexb
-         lda #32
-         jsr $ffd2
-         iny
-         lda (172),y
-         jsr hexb
-         lda #32
-         jsr $ffd2
-         iny
-         lda (172),y
-         ldx #"n"
-         asl a
-         bcc ok7
-         ldx #"N"
-ok7      pha
-         txa
-         jsr $ffd2
-         pla
-         ldx #"v"
-         asl a
-         bcc ok6
-         ldx #"V"
-ok6      pha
-         txa
-         jsr $ffd2
-         pla
-         ldx #"0"
-         asl a
-         bcc ok5
-         ldx #"1"
-ok5      pha
-         txa
-         jsr $ffd2
-         pla
-         ldx #"b"
-         asl a
-         bcc ok4
-         ldx #"B"
-ok4      pha
-         txa
-         jsr $ffd2
-         pla
-         ldx #"d"
-         asl a
-         bcc ok3
-         ldx #"D"
-ok3      pha
-         txa
-         jsr $ffd2
-         pla
-         ldx #"i"
-         asl a
-         bcc ok2
-         ldx #"I"
-ok2      pha
-         txa
-         jsr $ffd2
-         pla
-         ldx #"z"
-         asl a
-         bcc ok1
-         ldx #"Z"
-ok1      pha
-         txa
-         jsr $ffd2
-         pla
-         ldx #"c"
-         asl a
-         bcc ok0
-         ldx #"C"
-ok0      pha
-         txa
-         jsr $ffd2
-         pla
-         lda #32
-         jsr $ffd2
-         iny
-         lda (172),y
-         .bend
-hexb     pha
-         lsr a
-         lsr a
-         lsr a
-         lsr a
-         jsr hexn
-         pla
-         and #$0f
-hexn     ora #$30
-         cmp #$3a
-         bcc hexn0
-         adc #6
-hexn0    jmp $ffd2

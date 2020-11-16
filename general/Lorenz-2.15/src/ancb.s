@@ -124,29 +124,7 @@ nonext
          jmp next
 end
 
-         jsr print
-         .text " - ok"
-         .byte 13,0
-
-         lda #0         ; success
-         sta $d7ff
-
-load     jsr print
-name     .text "lasay"
-namelen  = *-name
-         .byte 0
-         lda #0
-         sta $0a
-         sta $b9
-         lda #namelen
-         sta $b7
-         lda #<name
-         sta $bb
-         lda #>name
-         sta $bc
-         pla
-         pla
-         jmp $e16f
+         rts ; success
 
 db       .byte 0
 ab       .byte 0
@@ -213,8 +191,7 @@ error    jsr print
          lda #13
          jsr $ffd2
 
-         lda #$ff       ; failure
-         sta $d7ff
+         #SET_EXIT_CODE_FAILURE
 
 wait     jsr $ffe4
          beq wait

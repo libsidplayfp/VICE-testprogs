@@ -46,7 +46,7 @@ remove from "print ok" to "jmp $e16f" by
 
 
 replace $d7ff stores by
-#SET_EXIT_CODE_FAILURE
+        #SET_EXIT_CODE_FAILURE
 
 remove showregs
 remove print
@@ -171,7 +171,6 @@ laxzy.s
 ldaa.s
 ldaax.s
 ldaay.s
-ldab.s
 ldaix.s
 ldaiy.s
 ldaz.s
