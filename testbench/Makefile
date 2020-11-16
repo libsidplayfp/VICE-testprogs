@@ -469,7 +469,7 @@ results0: maketable
 		--results results/xpet-r37109-result.txt "xpet r37109"
 
 	./maketable --list dtv-testlist.in \
-		--results results/x64dtv-r37109-result.txt "x64dtv r37109"
+		--results results/x64dtv-r38998-result.txt "x64dtv r38998"
 
 	./maketable --list scpu-testlist.in \
 		--results results/xscpu64-r37109-result.txt "xscpu64 r37109"
@@ -529,7 +529,7 @@ results: maketable
 
 	./maketable  --html --list dtv-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64dtv-r37109-result.txt "x64dtv r37109" \
+		--results results/x64dtv-r38998-result.txt "x64dtv r38998" \
 		\
 		> results/dtv.html
 
@@ -599,7 +599,7 @@ resultswiki: maketable
 	@echo "=== DTV ==="
 	./maketable  --wiki --list dtv-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/x64dtv-r37109-result.txt "x64dtv r37109"
+		--results results/x64dtv-r38998-result.txt "x64dtv r38998"
 	@echo "=== SCPU ==="
 	./maketable  --wiki --list scpu-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
@@ -696,6 +696,7 @@ resultsx64dtv: maketable
 		--results results/x64dtv-r35990-result.txt "x64dtv r35990" \
 		--results results/x64dtv-r36700-result.txt "x64dtv r36700" \
 		--results results/x64dtv-r37109-result.txt "x64dtv r37109" \
+		--results results/x64dtv-r38998-result.txt "x64dtv r38998" \
 		\
 		> results/x64dtv.html
 

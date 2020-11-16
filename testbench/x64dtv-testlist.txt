@@ -22,8 +22,278 @@
 #../DTV/gfxmodes/,gfxmodes.prg,screenshot
 #../DTV/overscan/,overscan.prg,screenshot
 ../DTV/steal/,steal.prg,interactive,0
-#TODO: rework ../general/Lorenz-21.15 to also generate the DTV version
-#../DTV/tsuitDTV
+################################################################################
+# Lorenz Suite
+#
+# ../general/ runtime: 8 minutes and 21 seconds (x64dtv)
+################################################################################
+# Lorenz-Suite Disk1:
+../general/Lorenz-2.15/src/,start-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldab-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldaz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldazx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldaa-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldaax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldaay-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldaix-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldaiy-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,staz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,stazx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,staa-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,staax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,staay-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,staix-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,staiy-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldxb-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldxz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldxzy-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldxa-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldxay-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,stxz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,stxzy-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,stxa-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldyb-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldyz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldyzx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldya-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,ldyax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,styz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,styzx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,stya-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,taxn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,tayn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,txan-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,tyan-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,tsxn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,txsn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,phan-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,plan-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,phpn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,plpn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,inxn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,inyn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,dexn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,deyn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,incz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,inczx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,inca-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,incax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,decz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,deczx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,deca-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,decax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,asln-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,aslz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,aslzx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,asla-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,aslax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,lsrn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,lsrz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,lsrzx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,lsra-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,lsrax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,roln-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rolz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rolzx-dtv.prg,exitcode,31000000
+../general/Lorenz-2.15/src/,rola-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rolax-dtv.prg,exitcode,31000000
+../general/Lorenz-2.15/src/,rorn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rorz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rorzx-dtv.prg,exitcode,31000000
+../general/Lorenz-2.15/src/,rora-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rorax-dtv.prg,exitcode,31000000
+../general/Lorenz-2.15/src/,andb-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,andz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,andzx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,anda-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,andax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,anday-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,andix-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,andiy-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,orab-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,oraz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,orazx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,oraa-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,oraax-dtv.prg,exitcode,31000000
+../general/Lorenz-2.15/src/,oraay-dtv.prg,exitcode,31000000
+../general/Lorenz-2.15/src/,oraix-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,oraiy-dtv.prg,exitcode,31000000
+../general/Lorenz-2.15/src/,eorb-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,eorz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,eorzx-dtv.prg,exitcode,31000000
+../general/Lorenz-2.15/src/,eora-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,eorax-dtv.prg,exitcode,31000000
+../general/Lorenz-2.15/src/,eoray-dtv.prg,exitcode,31000000
+../general/Lorenz-2.15/src/,eorix-dtv.prg,exitcode,31000000
+../general/Lorenz-2.15/src/,eoriy-dtv.prg,exitcode,31000000
+../general/Lorenz-2.15/src/,clcn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,secn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,cldn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,sedn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,clin-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,sein-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,clvn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,adcb-dtv.prg,exitcode,34000000
+../general/Lorenz-2.15/src/,adcz-dtv.prg,exitcode,35000000
+../general/Lorenz-2.15/src/,adczx-dtv.prg,exitcode,40000000
+../general/Lorenz-2.15/src/,adca-dtv.prg,exitcode,40000000
+../general/Lorenz-2.15/src/,adcax-dtv.prg,exitcode,40000000
+../general/Lorenz-2.15/src/,adcay-dtv.prg,exitcode,40000000
+../general/Lorenz-2.15/src/,adcix-dtv.prg,exitcode,40000000
+../general/Lorenz-2.15/src/,adciy-dtv.prg,exitcode,40000000
+../general/Lorenz-2.15/src/,sbcb-dtv.prg,exitcode,34000000
+../general/Lorenz-2.15/src/,sbcz-dtv.prg,exitcode,34000000
+../general/Lorenz-2.15/src/,sbczx-dtv.prg,exitcode,35500000
+../general/Lorenz-2.15/src/,sbca-dtv.prg,exitcode,34000000
+../general/Lorenz-2.15/src/,sbcax-dtv.prg,exitcode,40000000
+../general/Lorenz-2.15/src/,sbcay-dtv.prg,exitcode,40000000
+../general/Lorenz-2.15/src/,sbcix-dtv.prg,exitcode,40000000
+../general/Lorenz-2.15/src/,sbciy-dtv.prg,exitcode,40000000
+../general/Lorenz-2.15/src/,cmpb-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,cmpz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,cmpzx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,cmpa-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,cmpax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,cmpay-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,cmpix-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,cmpiy-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,cpxb-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,cpxz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,cpxa-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,cpyb-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,cpyz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,cpya-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,bitz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,bita-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,brkn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rtin-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,jsrw-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rtsn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,jmpw-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,jmpi-dtv.prg,exitcode,30000000
+# Lorenz-Suite Disk2:
+../general/Lorenz-2.15/src/,beqr-dtv.prg,exitcode,34000000
+../general/Lorenz-2.15/src/,bner-dtv.prg,exitcode,34000000
+../general/Lorenz-2.15/src/,bmir-dtv.prg,exitcode,34000000
+../general/Lorenz-2.15/src/,bplr-dtv.prg,exitcode,34000000
+../general/Lorenz-2.15/src/,bcsr-dtv.prg,exitcode,34000000
+../general/Lorenz-2.15/src/,bccr-dtv.prg,exitcode,34000000
+../general/Lorenz-2.15/src/,bvsr-dtv.prg,exitcode,34000000
+../general/Lorenz-2.15/src/,bvcr-dtv.prg,exitcode,34000000
+../general/Lorenz-2.15/src/,nopn-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,nopb-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,nopz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,nopzx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,nopa-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,nopax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,asoz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,asozx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,asoa-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,asoax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,asoay-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,asoix-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,asoiy-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rlaz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rlazx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rlaa-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rlaax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rlaay-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rlaix-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rlaiy-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,lsez-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,lsezx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,lsea-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,lseax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,lseay-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,lseix-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,lseiy-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rraz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rrazx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rraa-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rraax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rraay-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rraix-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,rraiy-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,dcmz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,dcmzx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,dcma-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,dcmax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,dcmay-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,dcmix-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,dcmiy-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,insz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,inszx-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,insa-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,insax-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,insay-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,insix-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,insiy-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,laxz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,laxzy-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,laxa-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,laxay-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,laxix-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,laxiy-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,axsz-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,axszy-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,axsa-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,axsix-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,alrb-dtv.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,arrb-dtv.prg,exitcode,32000000
+../general/Lorenz-2.15/src/,aneb-dtv.prg,exitcode,102000000
+../general/Lorenz-2.15/src/,lxab-dtv.prg,exitcode,101000000
+../general/Lorenz-2.15/src/,sbxb-dtv.prg,exitcode,80000000
+../general/Lorenz-2.15/src/,shaay-dtv.prg,exitcode,133000000
+../general/Lorenz-2.15/src/,shaiy-dtv.prg,exitcode,133000000
+../general/Lorenz-2.15/src/,shxay-dtv.prg,exitcode,125000000
+../general/Lorenz-2.15/src/,shyax-dtv.prg,exitcode,125000000
+../general/Lorenz-2.15/src/,shsay-dtv.prg,exitcode,133000000,comment:broken test
+../general/Lorenz-2.15/src/,ancb-dtv.prg,exitcode,80000000
+../general/Lorenz-2.15/src/,lasay-dtv.prg,exitcode,125000000
+../general/Lorenz-2.15/src/,sbcb-eb-dtv.prg,exitcode,34000000
+../general/Lorenz-2.15/src/,trap1-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap2-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap3-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap4-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap5-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap6-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap7-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap8-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,trap9-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap10-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap11-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap12-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap13-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,trap14-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap15-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap16-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap17-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,branchwrap-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,mmufetch-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,mmu-dtv.prg,exitcode,36000000
+../general/Lorenz-2.15/src/,cpuport-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,cputiming-dtv.prg,exitcode,20000000,comment:broken test
+# Lorenz-Suite Disk3
+../general/Lorenz-2.15/src/,irq-dtv.prg,exitcode,26000000,comment:broken test
+../general/Lorenz-2.15/src/,nmi-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,cia1tb123-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,cia2tb123-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,cia1pb6-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,cia1pb7-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,cia2pb6-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,cia2pb7-dtv.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,cia1tab-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,loadth-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,cnto2-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,icr01-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,imr-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,flipos-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,oneshot-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,cntdef-dtv.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,cia1ta-dtv.prg,exitcode,190000000
+../general/Lorenz-2.15/src/,cia1tb-dtv.prg,exitcode,80000000
+../general/Lorenz-2.15/src/,cia2ta-dtv.prg,exitcode,75000000
+../general/Lorenz-2.15/src/,cia2tb-dtv.prg,exitcode,75000000
 ################################################################################
 # SID
 ################################################################################

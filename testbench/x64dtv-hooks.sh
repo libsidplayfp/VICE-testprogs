@@ -180,9 +180,14 @@ function x64dtv_run_screenshot
 function x64dtv_run_exitcode
 {
     if [ $verbose == "1" ]; then
-        echo $X64DTV $X64DTVOPTS ${@:5} "-limitcycles" "$3" "$4"
+        echo $X64DTV $X64DTVOPTS $X64DTVOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4"
+        $X64DTV $X64DTVOPTS $X64DTVOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 2> /dev/null | grep "cycles elapsed" | tr '\n' ' '
+        exitcode=${PIPESTATUS[0]}
+    else
+        $X64DTV $X64DTVOPTS $X64DTVOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
+        exitcode=$?
     fi
-    $X64DTV $X64DTVOPTS $X64DTVOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
-    exitcode=$?
-#    echo "exited with: " $exitcode
+    if [ $verbose == "1" ]; then
+        echo $X64DTV "exited with: " $exitcode
+    fi
 }
