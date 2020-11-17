@@ -22,6 +22,7 @@
 int verbose = 0;
 int format = 0;
 int errormode = 0;
+int diffmode = 0;
 int filterntscold = 0;
 int firstcolisref = 0;
 char *referrorstring = NULL;
@@ -877,7 +878,7 @@ void printrow(int row, int *res)
 
 void printtable(void)
 {
-    int i, ii, iserror;
+    int i, ii, iserror, isdiff;
     int res[MAXLISTS];
 
     
@@ -888,14 +889,18 @@ void printtable(void)
     // loop over all tests
     for (i = 0; i < refnum; i++) {
         iserror = 0;
+        isdiff = 0;
         
         // loop over all result files
         for (ii = 0; ii < numfiles; ii++) {
             res[ii] = findresult(testlist[ii], &reflist[i]);
             if (res[ii] == RESULT_ERROR) iserror = 1;
+            if (res[ii] != res[0]) isdiff = 1;
         }
         // skip this line if we only want to see errors
         if (errormode && !iserror) continue;
+        // skip this line if we only want to see diffs
+        if (diffmode && !isdiff) continue;
         // skip this line if we dont want to see results for ntscold
         if (filterntscold && (reflist[i].videotype == VIDEOTYPE_NTSCOLD)) continue;
 
@@ -923,6 +928,7 @@ void usage(char *name)
     "  --warnvicefail <string>      warn if test is marked as failing in VICE\n"
     "  --warnvicfetch <string>      warn if test is marked as being critical for VIC fetches\n"
     "  --percentages <format>       print percentages in first row\n"
+    "  --diff                       omit rows in which all columns are the same\n"
     "  --errors                     output only rows that contain errors\n"
     "  --verbose                    be more verbose\n", name, name
     );
@@ -936,6 +942,8 @@ int main(int argc, char *argv[])
             verbose = 1;
         } else if(!strcmp(argv[i], "--errors")) {
             errormode = 1;
+        } else if(!strcmp(argv[i], "--diff")) {
+            diffmode = 1;
         } else if(!strcmp(argv[i], "--filter-ntscold")) {
             filterntscold = 1;
         } else if(!strcmp(argv[i], "--html")) {
@@ -974,6 +982,10 @@ int main(int argc, char *argv[])
             i++;
             headline[numfiles] = argv[i];
             numfiles++;
+        } else  {
+            fprintf(stderr, "error: unknown option '%s'\n", argv[i]);
+            usage(argv[0]);
+            exit(EXIT_FAILURE);
         }
     }
 
