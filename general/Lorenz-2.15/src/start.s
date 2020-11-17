@@ -16,7 +16,7 @@ main:
             .byte 13
             .text "Public Domain, no Copyright"
             .byte 13,13
-            
+
             .null "basic commands"
 
 e           .macro
@@ -29,7 +29,7 @@ e           .macro
             #SET_EXIT_CODE_FAILURE
             rts
             .endm
-               
+
             ; init selfmod stuff
             ldx #0
             stx l00+1

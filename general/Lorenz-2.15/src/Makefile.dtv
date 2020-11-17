@@ -3,6 +3,7 @@
 #.SILENT:
 
 COMMONSRC = \
+	common/target.inc \
 	common/common.asm \
 	common/print.asm \
 	common/printhb.asm \
@@ -286,32 +287,6 @@ DISK3PROGSOLD = \
 	  cia1tb-dtv.prg \
 	  cia2ta-dtv.prg \
 	  cia2tb-dtv.prg \
-	\
-	finish-dtv.prg \
-	\
-	template-dtv.prg
-
-DISK3PROGSNEW = \
-	  irqnew-dtv.prg \
-	  nminew-dtv.prg \
-	cia1tb123-dtv.prg \
-	cia2tb123-dtv.prg \
-	cia1pb6-dtv.prg \
-	cia1pb7-dtv.prg \
-	cia2pb6-dtv.prg \
-	cia2pb7-dtv.prg \
-	  cia1tabnew-dtv.prg \
-	loadth-dtv.prg \
-	cnto2-dtv.prg \
-	  icr01new-dtv.prg \
-	  imrnew-dtv.prg \
-	flipos-dtv.prg \
-	oneshot-dtv.prg \
-	cntdef-dtv.prg \
-	  cia1tanew-dtv.prg \
-	  cia1tbnew-dtv.prg \
-	  cia2tanew-dtv.prg \
-	  cia2tbnew-dtv.prg \
 	\
 	finish-dtv.prg \
 	\

@@ -6,6 +6,7 @@
             .include "common.asm"
             .include "printhb.asm"
             .include "showregs.asm"
+            .include "waitborder.asm"
 
 ;------------------------------------------------------------------------------           
 thisname   .null "shyax"      ; name of this test
@@ -59,13 +60,14 @@ next
          lda sb
          sta sr
 
-waitborder
-         lda $d011
-         bmi isborder
-         lda $d012
-         cmp #30
-         bcs waitborder
-isborder
+         jsr waitborder
+;waitborder
+;         lda $d011
+;         bmi isborder
+;         lda $d012
+;         cmp #30
+;         bcs waitborder
+;isborder
 
          ldx sb
          txs

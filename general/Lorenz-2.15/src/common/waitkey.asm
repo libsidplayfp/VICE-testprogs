@@ -5,11 +5,10 @@ waitkey:
             #SET_EXIT_CODE_FAILURE
 
             .block
-            jsr $fd15
-            jsr $fda3
+            #RESET_KERNAL_IO
             cli
 
-wait        jsr $ffe4
+wait        jsr cbmk_getin
             beq wait
             cmp #3
             beq stop

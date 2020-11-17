@@ -17,7 +17,7 @@ printhn
             bcc printhn0
             adc #6
 printhn0
-            jsr $ffd2
+            jsr cbmk_bsout
             rts
             .bend
  

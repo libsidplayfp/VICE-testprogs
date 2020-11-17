@@ -32,7 +32,7 @@ s2       dex
          stx saves+1
          ldx #0
 s0       lda $0100,x
-         sta $1000,x
+         sta MEMPAGE1000,x
          inx
          bne s0
 
@@ -97,7 +97,7 @@ cmd      php
 saves    ldx #0
          txs
          ldx #0
-s1       lda $1000,x
+s1       lda MEMPAGE1000,x
          sta $0100,x
          inx
          bne s1

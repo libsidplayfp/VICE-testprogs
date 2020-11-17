@@ -50,11 +50,11 @@ next     lda db
 
          ldx cmd+1
          lda #$4c
-         sta $1100,x
+         sta MEMPAGE1100,x
          lda #<cont
-         sta $1101,x
+         sta MEMPAGE1100+$01,x
          lda #>cont
-         sta $1102,x
+         sta MEMPAGE1100+$02,x
 
          ldx sb
          txs
@@ -65,7 +65,7 @@ next     lda db
          ldy yb
          plp
 
-cmd      jmp $1100
+cmd      jmp MEMPAGE1100
 
 cont     php
          cld

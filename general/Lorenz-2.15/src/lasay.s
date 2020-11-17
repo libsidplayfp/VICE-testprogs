@@ -6,6 +6,7 @@
             .include "common.asm"
             .include "printhb.asm"
             .include "showregs.asm"
+            .include "waitborder.asm"
 
 ;------------------------------------------------------------------------------           
 thisname   .null "lasay"      ; name of this test
@@ -28,7 +29,7 @@ main:
          stx saves+1
          ldx #0
 s0       lda $0100,x
-         sta $1000,x
+         sta MEMPAGE1000,x
          inx
          bne s0
 
@@ -71,13 +72,14 @@ noneg    txa
          sta pr
 .endif
 
-waitborder
-         lda $d011
-         bmi isborder
-         lda $d012
-         cmp #30
-         bcs waitborder
-isborder
+        jsr waitborder
+;waitborder
+;         lda $d011
+;         bmi isborder
+;         lda $d012
+;         cmp #30
+;         bcs waitborder
+;isborder
 
          ldx sb
          txs
@@ -132,7 +134,7 @@ nonext
 saves    ldx #$11
          txs
          ldx #0
-s1       lda $1000,x
+s1       lda MEMPAGE1000,x
          sta $0100,x
          inx
          bne s1

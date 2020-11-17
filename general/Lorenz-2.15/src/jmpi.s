@@ -26,14 +26,14 @@ main:
          stx sb
 
          lda #$13
-         sta $1200
+         sta MEMPAGE1200
          ldx #<cont
          lda #$4c
-         sta $1300,x
+         sta MEMPAGE1300,x
          lda #<perr
-         sta $1301,x
+         sta MEMPAGE1300+$01,x
          lda #>perr
-         sta $1302,x
+         sta MEMPAGE1300+$02,x
          jmp next
 
 perr     cld
@@ -69,10 +69,10 @@ next     lda db
 
          ldx cmd+1
          lda #<cont
-         sta $1100,x
+         sta MEMPAGE1100,x
          lda #>cont
          inx
-         sta $1100,x
+         sta MEMPAGE1100,x
 
          ldx sb
          txs
@@ -83,7 +83,7 @@ next     lda db
          ldy yb
          plp
 
-cmd      jmp ($1100)
+cmd      jmp (MEMPAGE1100)
 
 cont     php
          cld

@@ -33,12 +33,12 @@ s2       dex
          stx saves+1
          ldx #0
 save     lda $0100,x
-         sta $1000,x
+         sta MEMPAGE1000,x
          inx
          bne save
 
          lda #0
-fill     sta $1100,x
+fill     sta MEMPAGE1100,x
          inx
          bne fill
 
@@ -87,7 +87,7 @@ next     lda db
          ldy yb
          plp
 
-cmd      jmp $1100
+cmd      jmp MEMPAGE1100
 
 break    php
          cld
@@ -142,7 +142,7 @@ nonext
 saves    ldx #0
          txs
          ldx #0
-restore  lda $1000,x
+restore  lda MEMPAGE1000,x
          sta $0100,x
          inx
          bne restore

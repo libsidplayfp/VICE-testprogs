@@ -1,6 +1,6 @@
 ; this file is part of the C64 Emulator Test Suite. public domain, no copyright
 
-; original file was: ldaai.asm
+; original file was: ldaix.asm
 ;-------------------------------------------------------------------------------
 
             .include "common.asm"
@@ -8,7 +8,7 @@
             .include "showregs.asm"
            
 ;------------------------------------------------------------------------------           
-thisname   .null "ldaai"      ; name of this test
+thisname   .null "ldaix"      ; name of this test
 nextname   .null "ldaiy"      ; name of next test, "-" means no more tests
 ;------------------------------------------------------------------------------ 
 main:

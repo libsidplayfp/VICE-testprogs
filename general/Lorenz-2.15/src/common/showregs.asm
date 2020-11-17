@@ -9,24 +9,24 @@ showregs
          lda (172),y
          jsr printhb
          lda #32
-         jsr $ffd2
+         jsr cbmk_bsout
          lda #32
-         jsr $ffd2
+         jsr cbmk_bsout
          iny
          lda (172),y
          jsr printhb
          lda #32
-         jsr $ffd2
+         jsr cbmk_bsout
          iny
          lda (172),y
          jsr printhb
          lda #32
-         jsr $ffd2
+         jsr cbmk_bsout
          iny
          lda (172),y
          jsr printhb
          lda #32
-         jsr $ffd2
+         jsr cbmk_bsout
          iny
          lda (172),y
          ldx #"n"
@@ -35,7 +35,7 @@ showregs
          ldx #"N"
 ok7      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          ldx #"v"
          asl a
@@ -43,7 +43,7 @@ ok7      pha
          ldx #"V"
 ok6      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          ldx #"0"
          asl a
@@ -51,7 +51,7 @@ ok6      pha
          ldx #"1"
 ok5      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          ldx #"b"
          asl a
@@ -59,7 +59,7 @@ ok5      pha
          ldx #"B"
 ok4      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          ldx #"d"
          asl a
@@ -67,7 +67,7 @@ ok4      pha
          ldx #"D"
 ok3      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          ldx #"i"
          asl a
@@ -75,7 +75,7 @@ ok3      pha
          ldx #"I"
 ok2      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          ldx #"z"
          asl a
@@ -83,7 +83,7 @@ ok2      pha
          ldx #"Z"
 ok1      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          ldx #"c"
          asl a
@@ -91,10 +91,10 @@ ok1      pha
          ldx #"C"
 ok0      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          lda #32
-         jsr $ffd2
+         jsr cbmk_bsout
          iny
          lda (172),y
         jmp printhb

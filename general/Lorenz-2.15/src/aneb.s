@@ -6,6 +6,7 @@
             .include "common.asm"
             .include "printhb.asm"
             .include "showregs.asm"
+            .include "waitborder.asm"
 
 ;------------------------------------------------------------------------------           
 thisname   .null "aneb"      ; name of this test
@@ -18,7 +19,7 @@ main:
         sta magicvalue+1
 
          lda #32
-         jsr $ffd2
+         jsr cbmk_bsout
          lda magicvalue+1
          jsr hexb
         
@@ -76,14 +77,15 @@ nominus
          lda sb
          sta sr
 
-waitborder
-         lda $d011
-         bmi border
-         lda $d012
-         cmp #40
-         bcs waitborder
-border
-        inc $d020
+         jsr waitborder
+;waitborder
+;         lda $d011
+;         bmi border
+;         lda $d012
+;         cmp #40
+;         bcs waitborder
+;border
+;        inc $d020
 
          ldx sb
          txs
@@ -108,7 +110,7 @@ cmd      .byte $8b
          stx sa
          jsr check
 
-        dec $d020
+;        dec $d020
 
          inc ab
          clc

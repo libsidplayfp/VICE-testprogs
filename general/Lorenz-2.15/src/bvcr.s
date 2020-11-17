@@ -35,8 +35,8 @@ main:
 
          ldx #0
          txa
-fill     sta $1082,x
-         sta $1182,x
+fill     sta MEMPAGE1000+$82,x
+         sta MEMPAGE1100+$82,x
          inx
          bne fill
 
@@ -62,9 +62,9 @@ next     lda db
 
          ldx cmd+1
          lda branch
-         sta $1100,x
+         sta MEMPAGE1100,x
          lda db
-         sta $1101,x
+         sta MEMPAGE1100+$01,x
 
          ldx sb
          stx sr
@@ -76,7 +76,7 @@ next     lda db
          ldy yb
          plp
 
-cmd      jmp $1100
+cmd      jmp MEMPAGE1100
 
 break    pla
          sta ya
@@ -124,7 +124,7 @@ noerr    jsr check
          lda #0
          sta db
          ldx cmd+1
-         sta $1100,x
+         sta MEMPAGE1100,x
          inc cmd+1
          beq nonext
 jmpnext  jmp next

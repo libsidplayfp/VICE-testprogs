@@ -6,6 +6,7 @@
             .include "common.asm"
             .include "printhb.asm"
             .include "showregs.asm"
+            .include "waitborder.asm"
 
 ;------------------------------------------------------------------------------           
 thisname   .null "lxab"      ; name of this test
@@ -71,14 +72,15 @@ nominus
          lda sb
          sta sr
 
-waitborder
-         lda $d011
-         bmi border
-         lda $d012
-         cmp #40
-         bcs waitborder
+         jsr waitborder
+;waitborder
+;         lda $d011
+;         bmi border
+;         lda $d012
+;         cmp #40
+;         bcs waitborder
 border
-        inc $d020
+;        inc $d020
 
          ldx sb
          txs
@@ -103,7 +105,7 @@ cmd      .byte $ab
          stx sa
          jsr check
 
-        dec $d020
+;        dec $d020
          
          inc ab
          clc

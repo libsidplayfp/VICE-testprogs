@@ -3,6 +3,7 @@
 #.SILENT:
 
 COMMONSRC = \
+	common/target.inc \
 	common/common.asm \
 	common/print.asm \
 	common/printhb.asm \

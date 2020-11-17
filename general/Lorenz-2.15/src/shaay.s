@@ -6,6 +6,7 @@
             .include "common.asm"
             .include "printhb.asm"
             .include "showregs.asm"
+            .include "waitborder.asm"
 
 ;------------------------------------------------------------------------------           
 thisname   .null "shaay"      ; name of this test
@@ -67,15 +68,16 @@ next
         lda sb
         sta sr
 
-waitborder
-        lda $d011
-        bmi isborder
-        lda $d012
-        cmp #30
-        bcs waitborder
-isborder
+        jsr waitborder
+;waitborder
+;        lda $d011
+;        bmi isborder
+;        lda $d012
+;        cmp #30
+;        bcs waitborder
+;isborder
 
-        inc $d020
+;        inc $d020
 
         ldx sb ; stackpointer
         txs
@@ -101,7 +103,7 @@ cmd      .byte $9f      ; sha abs,y
         lda mem
         sta da
 
-        dec $d020
+;        dec $d020
 
         jsr check
 

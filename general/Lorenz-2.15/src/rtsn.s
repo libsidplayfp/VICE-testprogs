@@ -33,7 +33,7 @@ s2       dex
          stx saves+1
          ldx #0
 save     lda $0100,x
-         sta $1000,x
+         sta MEMPAGE1000,x
          inx
          bne save
 
@@ -99,7 +99,7 @@ nonext
 saves    ldx #0
          txs
          ldx #0
-restore  lda $1000,x
+restore  lda MEMPAGE1000,x
          sta $0100,x
          inx
          bne restore

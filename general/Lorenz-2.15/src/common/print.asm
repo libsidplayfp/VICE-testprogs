@@ -13,7 +13,7 @@ print
             ldx #1
 print0      lda $dead,x
             beq print1
-            jsr $ffd2
+            jsr cbmk_bsout
             inx
             bne print0
 print1     
