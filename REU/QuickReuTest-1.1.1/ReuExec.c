@@ -131,9 +131,9 @@ signed char monitorRegisterDump( unsigned char errorOnly, const struct expectSet
             lstatus, statusMask, (lstatus & statusMask),
             recentTimerValue
             );
+        lprintf( "Test Status: Timing: %s Register: %s\n",
+                (terror == 0) ? "ok" : "error", (rerror == 0) ? "ok" : "error");
     }
-    lprintf( "Test Status: Timing: %s Register: %s\n",
-             (terror == 0) ? "ok" : "error", (rerror == 0) ? "ok" : "error");
     return 0;
 }
 
@@ -143,4 +143,12 @@ signed char monitorRegisterDump( unsigned char errorOnly, const struct expectSet
  */
 signed char assertRegisterDump( const struct expectSet *expResult ) {
     return monitorRegisterDump( 0, expResult );
+}
+
+/**
+ * @return 0, if the (masked) register dumps are equal
+ *         1, if the register dumps are not equal
+ */
+signed char assertRegisterDumpErrorOnly( const struct expectSet *expResult ) {
+    return monitorRegisterDump( 1, expResult );
 }

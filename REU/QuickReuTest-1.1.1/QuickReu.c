@@ -136,9 +136,25 @@ static unsigned char checkRegisterStuckBits( void ) {
 unsigned char timererrors = 0;
 unsigned char regserrors = 0;
 
+
+#ifdef DOALL
+#define SHOWINFO
+#define DOTEST1
+#define DOTEST2
+#define DOTEST3
+#define DOTEST4
+#define DOTEST5
+#define DOTEST6
+#define DOTEST7
+#define DOTEST8
+#define DOSELFTEST
+#endif
+
 int main(void) {
     unsigned char type17xx;
     unsigned char failedTestclasses = 0;
+
+    putchar(0x93);
 
 #ifndef DISABLELOGFILE
     logfile = fopen( "quickreutest.log", "w" );
@@ -146,58 +162,87 @@ int main(void) {
         fprintf(stderr, "Logfile open/write error" );
     }
 #endif
+#ifdef SHOWINFO
     lprintf( _TITLE_STRING_ _COPYRIGHT_, _VERSION_STRING_ );
-
+#endif
     type17xx = checkBasicDecoding();
     if( type17xx <= 0 ) {
         lprintf( "REU controller (REC) register set not detected\n" );
         return 1;
     }
+#ifdef SHOWINFO
     lprintf( "Testing REU with %s.\n",
         ( type17xx == 2 ) ? "256Kix1 memory chips (1764/1750)" : "64Kix1 memory chips (1700)" );
-
+#endif
     failedTestclasses += checkRegisterStuckBits();
-
-    {        
+    {
         // write Kernal contents into REU
         // 0xe2f7..0xfffa (0x1d04) -> 0x01e378..0x01ffff
-        failedTestclasses += doReuOperation( DoExec | DisFF00 | C64toREU,    // no autoload
-            _VRFBUFSTART_, _VBREUSTART_, _VRFBUFLENGTH_, DisBoth, Normal );
+#ifdef DOTEST1
+        failedTestclasses +=
+#endif
+            doReuOperation( DoExec | DisFF00 | C64toREU,    // no autoload
+                _VRFBUFSTART_, _VBREUSTART_, _VRFBUFLENGTH_, DisBoth, Normal );
+#ifdef DOTEST1
         failedTestclasses += assertRegisterDump( &expStdTransfer );
+#else
+        assertRegisterDumpErrorOnly( &expStdTransfer );
+#endif
+
     }
-    {        
+    {
         // checkHalfAutoloadBug();
         *((unsigned char *)0xDF08) = 0x00; // write to length high byte only
         *((unsigned char *)0xDF06) = 0x01; // write to bank register
         *((unsigned char *)0xDF02) = _VRFFAILSTLOW_ & 0xFF; // write to low C64 address
+#ifdef DOTEST2
         failedTestclasses += assertRegisterDump( &expHalBug );
+#else
+        assertRegisterDumpErrorOnly( &expHalBug );
+#endif
     }
-    {        
+    {
         // checkHALbugExtended();
         *((unsigned char *)0xDF09) = EnBoth; // Enable both interrupts
         // write four more bytes into REU behind the last buffer
         // 0xe266..0xe269 (0x0004) -> 0x020000..0x020003
         if( reuexec( DoExec | EnAutoL | SWAP ) != 0 ) {
+#ifdef DOTEST3
             failedTestclasses++;
+#endif
             lprintf( "Warning: Real REU timer measurement routine timeout, no measurement done.\n" );
         }
+#ifdef DOTEST3
         failedTestclasses += assertRegisterDump( &expDblHalBug );
+#else
+        assertRegisterDumpErrorOnly( &expDblHalBug );
+#endif
     }
-    {        
+    {
         // check 1700 special wrap around from 0xf9ffff to 0xf80000
         // check verify error on last byte
-        failedTestclasses += doReuOperation( DoExec | DisFF00 | VERIFY,    // no autoload
-            _VRFBUFSTART_ + 2, _VBREUSTART_ + 2, _VRFBUFLENGTH_ - 1, EnVrfy, Normal );
+#ifdef DOTEST4
+        failedTestclasses +=
+#endif
+            doReuOperation( DoExec | DisFF00 | VERIFY,    // no autoload
+                _VRFBUFSTART_ + 2, _VBREUSTART_ + 2, _VRFBUFLENGTH_ - 1, EnVrfy, Normal );
         if( type17xx == 1 ) {
             // prepare 1700 expected value
             expVrfErrLast.REUadr = (_VBUFREUEND_ + 1) & 0x01ffffL;
         }
+#ifdef DOTEST4
         failedTestclasses += assertRegisterDump( &expVrfErrLast );
+#else
+        assertRegisterDumpErrorOnly( &expVrfErrLast );
+#endif
     }
-    {        
+    {
         // check verify error on second to last byte with last byte identical
-        failedTestclasses += doReuOperation( DoExec | VERIFY,    // no autoload
-            _VRFBUFSTART_ + 2, _VBREUSTART_ + 2, _VRFBUFLENGTH_, DisBoth, Normal );
+#ifdef DOTEST5
+        failedTestclasses +=
+#endif
+            doReuOperation( DoExec | VERIFY,    // no autoload
+                _VRFBUFSTART_ + 2, _VBREUSTART_ + 2, _VRFBUFLENGTH_, DisBoth, Normal );
         if( type17xx == 1 ) {
             // prepare 1700 expected value
             expVrfErr2ndLst1.REUadr = (_VBUFREUEND_ + 1) & 0x01ffffL;
@@ -211,47 +256,85 @@ int main(void) {
         *((unsigned char *)0xDF09) = EnEot; // enable EOT IRQ only
         disableReuIrq();
 
+#ifdef DOTEST5
         failedTestclasses += assertRegisterDump( &expVrfErr2ndLst1 );
+#else
+        assertRegisterDumpErrorOnly( &expVrfErr2ndLst1 );
+#endif
     }
     {        
         // write Kernal contents into REU, so following 2 bytes both differ
         // 0xe2f7..0xfffc (0x1d06) -> 0x01e378..0x020001
-        failedTestclasses += doReuOperation( DoExec | EnAutoL | DisFF00 | SWAP,
-            _VRFBUFSTART_, _VBREUSTART_, _VRFBUFLENGTH_ + 2, EnVrfy, Normal );
+#ifdef DOTEST6
+        failedTestclasses +=
+#endif
+            doReuOperation( DoExec | EnAutoL | DisFF00 | SWAP,
+                _VRFBUFSTART_, _VBREUSTART_, _VRFBUFLENGTH_ + 2, EnVrfy, Normal );
+#ifdef DOTEST6
         failedTestclasses += assertRegisterDump( &expSwapTransfer );
+#else
+        assertRegisterDumpErrorOnly( &expSwapTransfer );
+#endif
+
     }
-    {        
+    {
         // check verify error on second to last byte with last byte differing also
         // values are autoloaded, so change length only
         *((unsigned char *)0xDF07) = (_VRFBUFLENGTH_ + 4) & 0xFF; // write to length low byte only
         *((unsigned char *)0xDF09) = EnEot; // enable EOT IRQ only
         if( reuexec( DoExec | VERIFY ) != 0 ) {
+#ifdef DOTEST7
             failedTestclasses++;
+#endif
             lprintf( "Warning: Real REU timer measurement routine timeout, no measurement done.\n" );
         }
         if( type17xx == 1 ) {
             // prepare 1700 expected value
             expVrfErr2ndLst2.REUadr = (_VBUFREUEND_ + 3) & 0x01ffffL;
         }
+#ifdef DOTEST7
         failedTestclasses += assertRegisterDump( &expVrfErr2ndLst2 );
+#else
+        assertRegisterDumpErrorOnly( &expVrfErr2ndLst2 );
+#endif
     }
     {
         // check no automatic flag clearing
         // one vrfy error trigger, one EOT trigger
-        failedTestclasses += doReuOperation( DoExec | DisFF00 | VERIFY,
-            _VRFBUFSTART_, _VBUFREUEND_ + 1, _ADDBUFLENGTH_, DisBoth, FixREU );
+#ifdef DOTEST8
+        failedTestclasses += 
+#endif
+            doReuOperation( DoExec | DisFF00 | VERIFY,
+                _VRFBUFSTART_, _VBUFREUEND_ + 1, _ADDBUFLENGTH_, DisBoth, FixREU );
         // check some more REU wrap around things
-        failedTestclasses += doReuOperation( DoExec | DisFF00 | REUtoC64,
-            _VRFBUFSTART_, 0x07ffffL, _ADDBUFLENGTH_, DisBoth, FixC64 );
+#ifdef DOTEST8
+        failedTestclasses +=
+#endif
+            doReuOperation( DoExec | DisFF00 | REUtoC64,
+                _VRFBUFSTART_, 0x07ffffL, _ADDBUFLENGTH_, DisBoth, FixC64 );
+#ifdef DOTEST8
         failedTestclasses += assertRegisterDump( &expStatusFlagOr );
+#else
+        assertRegisterDumpErrorOnly( &expStatusFlagOr );
+#endif
     }
+#ifdef DOSELFTEST
     {
         lprintf( "\nDoing self test, check test operation:\n" );
         failedTestclasses += ( 1 - assertRegisterDump( &expSelfTest ) );
     }
+#else
+    timererrors += 1;
+    regserrors += 1;
+#endif
              //1234567890123456789012345678901234567890
     lprintf("\nTest classes with failures: %u\n", failedTestclasses);
-    lprintf("(Timing: %u, Registers: %u)\n", timererrors - 1, regserrors - 1);
+#ifdef DOALL
+    if (failedTestclasses) {
+        lprintf("(Timing: %u, Registers: %u)\n", timererrors - 1, regserrors - 1);
+    }
+#endif
+
     if (logfile != NULL) {
         fclose(logfile);
     }
@@ -263,4 +346,6 @@ int main(void) {
         *((unsigned char *)0xd020) = 5;
         *((unsigned char *)0xd7ff) = 0x00; /* ok */
     }
+
+    while(1) {}
 }

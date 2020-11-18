@@ -73,5 +73,6 @@ extern signed char doReuOperation( unsigned char command,
     enum irqMode iMode, enum fixedType adrMode );
 extern signed char monitorRegisterDump( unsigned char errorOnly, const struct expectSet *expResult );
 extern signed char assertRegisterDump( const struct expectSet *expResult );
+extern signed char assertRegisterDumpErrorOnly( const struct expectSet *expResult );
 
 #endif

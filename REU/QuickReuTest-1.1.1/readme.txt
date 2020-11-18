@@ -69,3 +69,36 @@ release version, be it either version 1.5 or 2.0.
 
 
 2008-12-16, Wolfgang Moser, http://d81.de
+
+
+quickreu-test1.prg:
+- write Kernal contents into REU
+  0xe2f7..0xfffa (0x1d04) -> 0x01e378..0x01ffff
+
+quickreu-test2.prg:
+- check half autoload bug
+
+quickreu-test3.prg:
+- check half autoload bug
+  write four more bytes into REU behind the last buffer
+  0xe266..0xe269 (0x0004) -> 0x020000..0x020003
+
+quickreu-test4.prg:
+- check 1700 special wrap around from 0xf9ffff to 0xf80000
+  check verify error on last byte
+
+quickreu-test5.prg:
+- check verify error on second to last byte with last byte identical
+
+quickreu-test6.prg:
+- write Kernal contents into REU, so following 2 bytes both differ
+  0xe2f7..0xfffc (0x1d06) -> 0x01e378..0x020001
+
+quickreu-test7.prg:
+- check verify error on second to last byte with last byte differing also
+  values are autoloaded, so change length only
+
+quickreu-test8.prg:
+- check no automatic flag clearing
+  one vrfy error trigger, one EOT trigger
+- check some more REU wrap around things
