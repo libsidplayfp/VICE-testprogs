@@ -545,6 +545,7 @@
 ../CIA/ciavarious/,cia3anew.prg,exitcode,10000000,cia-new
 ../CIA/ciavarious/,cia4new.prg,exitcode,20000000,cia-new
 ../CIA/ciavarious/,cia8new.prg,exitcode,10000000,cia-new
+../CIA/dd0drw/,dd0drw.prg,exitcode,6000000
 ../CIA/dd0dtest/,dd0dtest.prg,exitcode,100000000
 ../CIA/mirrors/,ciamirrors.prg,exitcode,9000000
 ../CIA/irqdelay/,irqdelay.prg,exitcode,7000000,cia-old
