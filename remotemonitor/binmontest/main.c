@@ -1249,6 +1249,12 @@ void registers_available_works(CuTest *tc) {
         uint8_t name_length = cursor[3];
         unsigned char* name = &cursor[4];
 
+        printf("REGISTER %.*s\n", name_length, name);
+
+        /* These shouldn't be included */
+        CuAssertTrue(tc, strncmp(name, "00", 2) != 0);
+        CuAssertTrue(tc, strncmp(name, "01", 2) != 0);
+
         if (id == 0x03) {
             CuAssertTrue(tc, strncmp(name, "PC", 2) == 0);
             CuAssertIntEquals(tc, 16, size);
