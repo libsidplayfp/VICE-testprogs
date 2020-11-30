@@ -450,7 +450,7 @@ results0: maketable
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
-		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
+		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
 		--results results/u64-133-result.txt "U64 1.33 (PAL)"
 
 	./maketable --list vic20-testlist.in \
@@ -872,12 +872,7 @@ resultscham: maketable chameleon-testlist.txt
 		--results results/chameleon-9h-result.txt "TC64 9h (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
-		--results results/chameleon-head-standalone-result.txt "TC64 head (standalone)" \
-		--results results/chameleon-head-20190802.txt "TC64 head (20190802)" \
-		--results results/chameleon-head-20190805.txt "TC64 head (20190805)" \
-		--results results/chameleon-head-20191026-result.txt "TC64 head (20191026)" \
-		--results results/chameleon-20200429.txt "TC64 head (20200429)" \
-		--results results/chameleon-head-20200511-result.txt "TC64 head (20200511)" \
+		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
 		\
 		> results/chameleon.html
 
@@ -895,7 +890,7 @@ resultschamwiki: maketable chameleon-testlist.txt
 		--results results/chameleon-9h-result.txt "TC64 9h (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
-		--results results/chameleon-head-20191026-result.txt "TC64 head (standalone)"
+		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)"
 
 .PHONY: resultscham20
 resultscham20: maketable cham20-testlist.txt 
