@@ -9,6 +9,11 @@
 
 #include "ReuExec.h"
 
+#ifdef DOALL
+#define CHECKTIMING
+#define CHECKREGS
+#endif
+
 const unsigned char timeCompensationOffset = 25;
 unsigned char statusMask = 0xef;    // mask out the DRAM configuration bit
 unsigned char bankMask = 0xf8;
@@ -80,16 +85,17 @@ signed char monitorRegisterDump( unsigned char errorOnly, const struct expectSet
 
     // do not check for adresses 0xdf0a...0xdf1f == 0xff
 
-    error |= ( ( lstatus ^ expResult->irqStatus ) & statusMask ) != 0;
-
-    regserrors += error;
-    timererrors += (recentTimerValue != expResult->cycles);
-    
-    rerror = error; 
+    error = 0;
+#ifdef CHECKREGS
+    rerror |= ( ( lstatus ^ expResult->irqStatus ) & statusMask ) != 0;
+    regserrors += rerror;
+    error |= rerror; 
+#endif
+#ifdef CHECKTIMING
     terror = (recentTimerValue != expResult->cycles);
-
-    error |= (recentTimerValue != expResult->cycles);
-
+    timererrors += terror;
+    error |= terror;
+#endif
     if( error != 0 ) {
         lprintf( "REU register assertion failed for test=%s\n", expResult->description );
         lprintf( dumpString, "expected:", 

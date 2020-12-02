@@ -11,14 +11,23 @@
 
 FILE *logfile = NULL;
 
+int printenabled = 1;
+
 int lprintf(const char* format, ...) {
     va_list ap;
     va_start(ap, format);
 
-    vprintf(format, ap);
+    if (printenabled) {
+        vprintf(format, ap);
+    }
     if (logfile != NULL) {
         vfprintf(logfile, format, ap);
     }
 
     va_end(ap);
+}
+
+void printenable(int n)
+{
+    printenabled = n;
 }

@@ -179,6 +179,11 @@ int main(void) {
         // write Kernal contents into REU
         // 0xe2f7..0xfffa (0x1d04) -> 0x01e378..0x01ffff
 #ifdef DOTEST1
+        printenable(1);
+#else
+        printenable(0);
+#endif
+#ifdef DOTEST1
         failedTestclasses +=
 #endif
             doReuOperation( DoExec | DisFF00 | C64toREU,    // no autoload
@@ -191,6 +196,11 @@ int main(void) {
 
     }
     {
+#ifdef DOTEST2
+        printenable(1);
+#else
+        printenable(0);
+#endif
         // checkHalfAutoloadBug();
         *((unsigned char *)0xDF08) = 0x00; // write to length high byte only
         *((unsigned char *)0xDF06) = 0x01; // write to bank register
@@ -202,6 +212,11 @@ int main(void) {
 #endif
     }
     {
+#ifdef DOTEST3
+        printenable(1);
+#else
+        printenable(0);
+#endif
         // checkHALbugExtended();
         *((unsigned char *)0xDF09) = EnBoth; // Enable both interrupts
         // write four more bytes into REU behind the last buffer
@@ -219,6 +234,11 @@ int main(void) {
 #endif
     }
     {
+#ifdef DOTEST4
+        printenable(1);
+#else
+        printenable(0);
+#endif
         // check 1700 special wrap around from 0xf9ffff to 0xf80000
         // check verify error on last byte
 #ifdef DOTEST4
@@ -237,6 +257,11 @@ int main(void) {
 #endif
     }
     {
+#ifdef DOTEST5
+        printenable(1);
+#else
+        printenable(0);
+#endif
         // check verify error on second to last byte with last byte identical
 #ifdef DOTEST5
         failedTestclasses +=
@@ -263,6 +288,11 @@ int main(void) {
 #endif
     }
     {        
+#ifdef DOTEST6
+        printenable(1);
+#else
+        printenable(0);
+#endif
         // write Kernal contents into REU, so following 2 bytes both differ
         // 0xe2f7..0xfffc (0x1d06) -> 0x01e378..0x020001
 #ifdef DOTEST6
@@ -278,6 +308,11 @@ int main(void) {
 
     }
     {
+#ifdef DOTEST7
+        printenable(1);
+#else
+        printenable(0);
+#endif
         // check verify error on second to last byte with last byte differing also
         // values are autoloaded, so change length only
         *((unsigned char *)0xDF07) = (_VRFBUFLENGTH_ + 4) & 0xFF; // write to length low byte only
@@ -299,6 +334,11 @@ int main(void) {
 #endif
     }
     {
+#ifdef DOTEST8
+        printenable(1);
+#else
+        printenable(0);
+#endif
         // check no automatic flag clearing
         // one vrfy error trigger, one EOT trigger
 #ifdef DOTEST8
@@ -319,6 +359,11 @@ int main(void) {
 #endif
     }
 #ifdef DOSELFTEST
+        printenable(1);
+#else
+        printenable(0);
+#endif
+#ifdef DOSELFTEST
     {
         lprintf( "\nDoing self test, check test operation:\n" );
         failedTestclasses += ( 1 - assertRegisterDump( &expSelfTest ) );
@@ -327,6 +372,7 @@ int main(void) {
     timererrors += 1;
     regserrors += 1;
 #endif
+    printenable(1);
              //1234567890123456789012345678901234567890
     lprintf("\nTest classes with failures: %u\n", failedTestclasses);
 #ifdef DOALL

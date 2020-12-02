@@ -17,5 +17,6 @@
 extern FILE *logfile; 
 
 extern int lprintf(const char* format, ...);
+extern void printenable(int n);
 
 #endif /*LOGPRINT_H_*/
