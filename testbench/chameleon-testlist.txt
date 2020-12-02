@@ -165,7 +165,7 @@
 ../general/Lorenz-2.15/src/,adciy.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,sbcb.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,sbcz.prg,exitcode,30000000
-../general/Lorenz-2.15/src/,sbczx.prg,exitcode,30500000
+../general/Lorenz-2.15/src/,sbczx.prg,exitcode,31000000
 ../general/Lorenz-2.15/src/,sbca.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,sbcax.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,sbcay.prg,exitcode,40000000
@@ -592,13 +592,6 @@
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-19.prg,exitcode,16000000
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-39.prg,exitcode,16000000
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-3.prg,exitcode,16000000
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-0_7f.prg,exitcode,120000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-0.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-1_7f.prg,exitcode,120000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-19.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-39.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-3.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-4_7f.prg,exitcode,120000000,cia-old,comment:CIA timestamp 4485 only
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4_7f.prg,exitcode,120000000
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-0.prg,exitcode,16000000
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-0_7f.prg,exitcode,120000000
@@ -613,13 +606,6 @@
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-19.prg,exitcode,16000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-39.prg,exitcode,16000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-3.prg,exitcode,16000000
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-0_7f.prg,exitcode,120000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-0.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-1_7f.prg,exitcode,120000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-19.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-39.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-3.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-4_7f.prg,exitcode,120000000,cia-old,comment:CIA timestamp 4485 only
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4_7f.prg,exitcode,120000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-0.prg,exitcode,16000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-0_7f.prg,exitcode,120000000
@@ -968,7 +954,7 @@
 ../SID/envelope/,testFlip00toFF.prg,exitcode,5500000
 ../SID/envelope/,testFlipFFto00.prg,exitcode,5500000
 ../SID/envelope/,lft-adsr-test.prg,exitcode,5500000
-../SID/exp_counter_reset/,env_test_exr.prg,exitcode,5500000
+../SID/exp_counter_reset/,env_test_exr.prg,exitcode,6000000
 ../SID/mapping/,sid-detect2.prg,interactive,0
 #TODO (fix noisemapper program)
 #../SID/noise
@@ -1172,21 +1158,6 @@
 ################################################################################
 ../C64/autostart/cartio/,test.prg,analyzer,0
 ../C64/autostart/defaults/,,exitcode,4000000,mountcrt:test.crt,comment:repeatedly press reset to check i/o register reset behaviour
-../C64/carts/aracidtest/,test-ramdetect-ar.prg,exitcode,10000000,mountcrt:ardummy.crt
-../C64/carts/aracidtest/,test-ramsizedetect-ar.prg,exitcode,11000000,mountcrt:ardummy.crt
-../C64/carts/aracidtest/,test-ariotest1-ar.prg,exitcode,10000000,mountcrt:ardummy.crt
-../C64/carts/aracidtest/,test-ariotest2-ar.prg,exitcode,10000000,mountcrt:ardummy.crt
-../C64/carts/aracidtest/,test-arramtest2-ar.prg,exitcode,11000000,mountcrt:ardummy.crt
-../C64/carts/aracidtest/,test-ramdetect-ar.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-ramsizedetect-ar.prg,exitcode,11000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-ariotest1-ar.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-ariotest2-ar.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-arramtest2-ar.prg,exitcode,11000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-ramdetect.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/aracidtest/,test-ramsizedetect.prg,exitcode,11000000,mountcrt:rrdummy.crt
-../C64/carts/aracidtest/,test-ariotest1.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/aracidtest/,test-ariotest2.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/aracidtest/,test-arramtest2.prg,exitcode,11000000,mountcrt:rrdummy.crt
 ../C64/carts/aracidtest/,test-ramdetect.prg,exitcode,10000000,mountcrt:nrdummy.crt
 ../C64/carts/aracidtest/,test-ramsizedetect.prg,exitcode,11000000,mountcrt:nrdummy.crt
 ../C64/carts/aracidtest/,test-ariotest1.prg,exitcode,10000000,mountcrt:nrdummy.crt
@@ -1208,23 +1179,10 @@
 ../C64/carts/pagefox,,exitcode,500000,mountcrt:godot.crt
 ../C64/carts/ef-test/,,exitcode,500000,mountcrt:ef_test.crt
 ../C64/carts/rr-freeze/,,analyzer,0,mountcrt:rr-freeze.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:artest.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:nptest.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:rrtest.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:rr2test.crt
 ../C64/carts/nordicpower/,,exitcode,100000,mountcrt:nrtest.crt
 ../C64/carts/nordicpower/,,exitcode,100000,mountcrt:nr2test.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:arramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:npramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:rrramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:rr2ramwrite.crt
 ../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:nrramwrite.crt
 ../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:nr2ramwrite.crt
-../C64/carts/nordicpower/,arramwrite.prg,exitcode,10000000,mountcrt:ardummy.crt
-../C64/carts/nordicpower/,safearramwrite.prg,exitcode,10000000,mountcrt:ardummy.crt
-../C64/carts/nordicpower/,npramwrite.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/nordicpower/,rrramwrite.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/nordicpower/,rr2ramwrite.prg,exitcode,10000000,mountcrt:rrdummy.crt
 ../C64/carts/nordicpower/,nrramwrite.prg,exitcode,10000000,mountcrt:nrdummy.crt
 ../C64/carts/nordicpower/,nr2ramwrite.prg,exitcode,10000000,mountcrt:nrdummy.crt
 ../C64/carts/retroreplay/,allowbank0.prg,exitcode,10000000,mountcrt:rrdummy.crt
@@ -1322,12 +1280,12 @@
 ../drive/interrupts/,timera.prg,exitcode,20000000,comment:results depend on the physical properties of the drive and vary between real drives/mechs too.
 ../drive/interrupts/,watchdog,interactive,0,comment:this is a freezer test - run/freeze/restart. it should not hang
 ../drive/pwm/,pwm.prg,interactive,0,comment:drive led should be fading dark-light-dark etc
-../drive/rpm/,rpm1.prg,exitcode,10500000,mountd64:rpm.d64,vicii-pal
-../drive/rpm/,rpm1.prg,exitcode,10500000,mountg64:rpm.g64,vicii-pal
+../drive/rpm/,rpm1.prg,exitcode,12000000,mountd64:rpm.d64,vicii-pal
+../drive/rpm/,rpm1.prg,exitcode,12000000,mountg64:rpm.g64,vicii-pal
 ../drive/rpm/,rpm2.prg,exitcode,10500000,mountd64:rpm.d64,vicii-pal
 ../drive/rpm/,rpm2.prg,exitcode,10500000,mountg64:rpm.g64,vicii-pal
-../drive/rpm/,rpm3.prg,exitcode,10500000,mountd64:rpm.d64,vicii-pal
-../drive/rpm/,rpm3.prg,exitcode,10500000,mountg64:rpm.g64,vicii-pal
+../drive/rpm/,rpm3.prg,exitcode,12000000,mountd64:rpm.d64,vicii-pal
+../drive/rpm/,rpm3.prg,exitcode,12000000,mountg64:rpm.g64,vicii-pal
 ../drive/scanner/,scanner35.prg,exitcode,26000000,mountd64:scan35.d64
 ../drive/scanner/,scanner35e.prg,exitcode,26000000,mountd64:scan35err.d64
 ../drive/scanner/,scanner40.prg,exitcode,27000000,mountd64:scan40.d64

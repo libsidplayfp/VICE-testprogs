@@ -1,4 +1,6 @@
 
+X64SCHEAD=r39176
+
 include Makefile.config
 
 .SILENT:
@@ -89,6 +91,13 @@ x128c64-testlist.txt: c64-testlist.in Makefile
 chameleon-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  chameleon-testlist.txt
 	cat  c64-testlist.in \
+		| grep -v "4485 only" \
+		| grep -v 'nordicpower.*mountcrt:ar.*crt' \
+		| grep -v 'nordicpower.*mountcrt:rr.*crt' \
+		| grep -v 'nordicpower.*mountcrt:np.*crt' \
+		| grep -v 'aracidtest.*mountcrt:ar.*crt' \
+		| grep -v 'aracidtest.*mountcrt:rr.*crt' \
+		| grep -v 'aracidtest.*mountcrt:np.*crt' \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
 		| grep -v ",mountp64" \
@@ -441,7 +450,7 @@ testu64: prereq
 
 results0: maketable
 	./maketable --list c64-testlist.in \
-		--results results/x64sc-r37145-result.txt "x64sc r37145" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--results results/x64-r37109-result.txt "x64 r37109" \
 		--results results/x128c64-r37109-result.txt "x128 (c64) r37109" \
 		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.3" \
@@ -449,7 +458,7 @@ results0: maketable
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
-		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
+		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
 		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
 		--results results/u64-133-result.txt "U64 1.33 (PAL)"
 
@@ -484,7 +493,7 @@ results0: maketable
 results: maketable
 	./maketable --html --list c64-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r37145-result.txt "x64sc r37145" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--results results/x64-r37109-result.txt "x64 r37109" \
 		--results results/x128c64-r37109-result.txt "x128 (c64) r37109" \
 		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.3" \
@@ -494,8 +503,8 @@ results: maketable
 		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
 		--results results/emu64-20191025-result.txt "emu64 20191025" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
-		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
-		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
+		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
+		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
 		--results results/u64-133-result.txt "U64 1.33 (PAL)" \
 		\
 		> results/c64.html
@@ -564,7 +573,7 @@ resultswiki: maketable
 	@echo "=== C64 ==="
 	./maketable  --wiki --list c64-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/x64sc-r37145-result.txt "x64sc r37145" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--results results/x64-r37109-result.txt "x64 r37109" \
 		--results results/x128c64-r37109-result.txt "x128 (c64) r37109" \
 		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.3" \
@@ -574,8 +583,8 @@ resultswiki: maketable
 		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
 		--results results/emu64-20191025-result.txt "emu64 20191025" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
-		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
-		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
+		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
+		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
 		--results results/u64-133-result.txt "U64 1.33 (PAL)"
 	@echo "=== VIC20 ==="
 	./maketable  --wiki --list vic20-testlist.in \
@@ -639,6 +648,7 @@ resultsx64sc: maketable
 		--results results/x64sc-r36700-result.txt "x64sc r36700" \
 		--results results/x64sc-r37109-result.txt "x64sc r37109" \
 		--results results/x64sc-r37145-result.txt "x64sc r37145" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		\
 		> results/x64sc.html
 
@@ -865,14 +875,15 @@ resultsemu64: maketable emu64-testlist.txt
 resultscham: maketable chameleon-testlist.txt 
 	./maketable --filter-ntscold --html --list chameleon-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--warnvicefail "<small><b>fails on VICE</b></small>" \
 		--warnvicfetch "<small><b>VIC may be wrong!</b></small>" \
 		--results results/chameleon-9h-result.txt "TC64 9h (standalone)" \
-		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
+		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
+		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
 		\
 		> results/chameleon.html
 
@@ -883,14 +894,15 @@ resultschamwiki: maketable chameleon-testlist.txt
 	@echo "=== Results ==="
 	./maketable --filter-ntscold --wiki --list chameleon-testlist.txt \
 		--percentages "{{Progress|%d|%d|%d|}}" \
-		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "{{BREAKSEMU}}" \
 		--warnvicefail "{{BREAKSEMU}}" \
 		--warnvicfetch "{{BREAKSVIC}}" \
 		--results results/chameleon-9h-result.txt "TC64 9h (standalone)" \
-		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
-		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)"
+		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
+		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
+		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)"
 
 .PHONY: resultscham20
 resultscham20: maketable cham20-testlist.txt 

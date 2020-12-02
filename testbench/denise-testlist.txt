@@ -165,7 +165,7 @@
 ../general/Lorenz-2.15/src/,adciy.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,sbcb.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,sbcz.prg,exitcode,30000000
-../general/Lorenz-2.15/src/,sbczx.prg,exitcode,30500000
+../general/Lorenz-2.15/src/,sbczx.prg,exitcode,31000000
 ../general/Lorenz-2.15/src/,sbca.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,sbcax.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,sbcay.prg,exitcode,40000000
@@ -1018,7 +1018,7 @@
 ../SID/envelope/,testFlip00toFF.prg,exitcode,5500000
 ../SID/envelope/,testFlipFFto00.prg,exitcode,5500000
 ../SID/envelope/,lft-adsr-test.prg,exitcode,5500000
-../SID/exp_counter_reset/,env_test_exr.prg,exitcode,5500000
+../SID/exp_counter_reset/,env_test_exr.prg,exitcode,6000000
 ../SID/mapping/,sid-detect2.prg,interactive,0
 #TODO (fix noisemapper program)
 #../SID/noise
@@ -1367,12 +1367,12 @@
 ../drive/interrupts/,timera.prg,exitcode,20000000,comment:results depend on the physical properties of the drive and vary between real drives/mechs too.
 ../drive/interrupts/,watchdog,interactive,0,comment:this is a freezer test - run/freeze/restart. it should not hang
 ../drive/pwm/,pwm.prg,interactive,0,comment:drive led should be fading dark-light-dark etc
-../drive/rpm/,rpm1.prg,exitcode,10500000,mountd64:rpm.d64,vicii-pal
-../drive/rpm/,rpm1.prg,exitcode,10500000,mountg64:rpm.g64,vicii-pal
+../drive/rpm/,rpm1.prg,exitcode,12000000,mountd64:rpm.d64,vicii-pal
+../drive/rpm/,rpm1.prg,exitcode,12000000,mountg64:rpm.g64,vicii-pal
 ../drive/rpm/,rpm2.prg,exitcode,10500000,mountd64:rpm.d64,vicii-pal
 ../drive/rpm/,rpm2.prg,exitcode,10500000,mountg64:rpm.g64,vicii-pal
-../drive/rpm/,rpm3.prg,exitcode,10500000,mountd64:rpm.d64,vicii-pal
-../drive/rpm/,rpm3.prg,exitcode,10500000,mountg64:rpm.g64,vicii-pal
+../drive/rpm/,rpm3.prg,exitcode,12000000,mountd64:rpm.d64,vicii-pal
+../drive/rpm/,rpm3.prg,exitcode,12000000,mountg64:rpm.g64,vicii-pal
 ../drive/scanner/,scanner35.prg,exitcode,26000000,mountd64:scan35.d64
 ../drive/scanner/,scanner35e.prg,exitcode,26000000,mountd64:scan35err.d64
 ../drive/scanner/,scanner40.prg,exitcode,27000000,mountd64:scan40.d64
