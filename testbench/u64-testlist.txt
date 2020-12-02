@@ -1102,13 +1102,21 @@
 #TODO: split into behaviour- and timing- test
 ../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test1.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test1-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test2.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test2-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test3.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test3-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test4.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test4-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test5.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test5-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test6.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test6-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test7.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test7-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test8.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test8-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/reudetect/,reudetect.prg,exitcode,100000000,reu512k,comment:load the "blu.reu" file first
 ../REU/reutiming/,reutiming.prg,exitcode,100000000,reu512k
 #FIXME: NTSC fix
