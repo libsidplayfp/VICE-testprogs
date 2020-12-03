@@ -1066,7 +1066,7 @@
 ../REU/misc/,twoblocks-auto.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/misc/,twoblocks-ff00-auto.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/misc/,wheels.prg,ok,exitcode,,,,-1,-1,-1
-../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,timeout,exitcode,,,,-1,-1,-1
+../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/QuickReuTest-1.1.1/,quickreu-test1.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/QuickReuTest-1.1.1/,quickreu-test1-timing.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/QuickReuTest-1.1.1/,quickreu-test2.prg,ok,exitcode,,,,-1,-1,-1

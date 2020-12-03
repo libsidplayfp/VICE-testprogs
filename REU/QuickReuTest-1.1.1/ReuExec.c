@@ -87,7 +87,7 @@ signed char monitorRegisterDump( unsigned char errorOnly, const struct expectSet
 
     error = 0;
 #ifdef CHECKREGS
-    rerror |= ( ( lstatus ^ expResult->irqStatus ) & statusMask ) != 0;
+    rerror = ( ( lstatus ^ expResult->irqStatus ) & statusMask ) != 0;
     regserrors += rerror;
     error |= rerror; 
 #endif
