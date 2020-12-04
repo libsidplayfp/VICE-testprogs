@@ -777,6 +777,16 @@ void registers_get_works(CuTest *tc) {
     int assert_count = 0;
     unsigned char* cursor;
 
+    unsigned char reset_command[] = {
+        0x02, 0x01, 
+        0xff, 0xff, 0xff, 0xff, 
+        0xaf, 0xe9, 0x23, 0x3d, 
+
+        0xcc,
+
+        0x00,
+    };
+
     // Get
     unsigned char get_command[] = { 
         0x02, 0x01, 
@@ -789,6 +799,12 @@ void registers_get_works(CuTest *tc) {
     };
 
     setup(tc);
+
+    send_command(reset_command);
+
+    length = wait_for_response_id(tc, reset_command);
+
+    CuAssertIntEquals(tc, 0xcc, response[RESPONSE_TYPE]);
 
     send_command(get_command);
 
@@ -815,8 +831,10 @@ void registers_get_works(CuTest *tc) {
                 || id == 0x35
                 || id == 0x36
                 || id == 0x37
-                || id == 0x38
                 ) {
+            ++assert_count;
+        } else if(id == 0x38) {
+            CuAssertIntEquals(tc, 0x17, val);
             ++assert_count;
         }
 
@@ -914,7 +932,7 @@ void undump_works(CuTest *tc) {
 
     fprintf(stderr, "PC: %04x", pc);
 
-    CuAssertTrue(tc, 0xe500 < pc);
+    CuAssertTrue(tc, 0xe400 < pc);
     CuAssertTrue(tc, pc < 0xe600);
 }
 
@@ -1315,9 +1333,11 @@ void registers_available_works(CuTest *tc) {
     unsigned char command[] = {
         0x02, 0x01, 
         0xff, 0xff, 0xff, 0xff, 
-        0xaf, 0xe9, 0x23, 0x3d, 
+        0xb5, 0xe9, 0x23, 0x3d, 
 
         0x83,
+
+        0x00,
     };
 
     setup(tc);
@@ -1449,7 +1469,7 @@ void display_get_works(CuTest *tc) {
 
     CuAssertIntEquals(tc, 18, little_endian_to_uint32(&response[HEADER_LENGTH + 8 + 17]));
 
-    CuAssertIntEquals(tc, 628992, little_endian_to_uint32(&response[HEADER_LENGTH + 8]));
+    CuAssertIntEquals(tc, 547040, little_endian_to_uint32(&response[HEADER_LENGTH + 8]));
 }
 
 CuSuite* get_suite(void)
