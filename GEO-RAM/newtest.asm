@@ -136,6 +136,12 @@ nogr:
                  inx
                  cpx #$28
                  bne -
+
+!if TESTBENCH = 1 {
+                  lda #$ff  ; failure
+                  sta $d7ff
+}
+
                  jmp end
 +
 -                lda check_buf,x            ; restore georam
