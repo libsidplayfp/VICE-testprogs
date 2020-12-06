@@ -909,6 +909,7 @@
 ../SID/detect/,detect.prg,interactive,0,comment:see automatic variants
 ../SID/detect/,detect-1-old.prg,exitcode,6200000,sid-old
 ../SID/detect/,detect-2-old.prg,exitcode,5500000,sid-old
+../SID/detectmirrors/,main.prg,interactive,0
 ../SID/env_test/,env_test_ra_0000.prg,exitcode,9000000
 ../SID/env_test/,env_test_ra_0100.prg,exitcode,9000000
 ../SID/env_test/,env_test_adra_1.prg,exitcode,9000000
@@ -1145,7 +1146,7 @@
 ../REU/misc/,twoblocks-ff00-auto.prg,exitcode,100000000,reu512k
 ../REU/misc/,wheels.prg,exitcode,100000000,reu512k
 #TODO: split into behaviour- and timing- test
-../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,exitcode,420000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test1.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test1-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test2.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test

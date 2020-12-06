@@ -1,6 +1,9 @@
 
 X64SCHEAD=r39194
 
+U64LAST=137
+U64LASTSTRING="1.37"
+
 include Makefile.config
 
 .SILENT:
@@ -122,6 +125,7 @@ u64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
 		| grep -v ",mountcrt" \
+		| grep -v ",mountp64" \
 		>> u64-testlist.txt
 
 #		| grep -v ",mountd64" \
@@ -460,7 +464,7 @@ results0: maketable
 		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
 		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
-		--results results/u64-133-result.txt "U64 1.33 (PAL)"
+		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)"
 
 	./maketable --list vic20-testlist.in \
 		--results results/xvic-r37109-result.txt "xvic r37109" \
@@ -505,7 +509,7 @@ results: maketable
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
 		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
-		--results results/u64-133-result.txt "U64 1.33 (PAL)" \
+		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)" \
 		\
 		> results/c64.html
 		
@@ -585,7 +589,7 @@ resultswiki: maketable
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
 		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
-		--results results/u64-133-result.txt "U64 1.33 (PAL)"
+		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)"
 	@echo "=== VIC20 ==="
 	./maketable  --wiki --list vic20-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
@@ -927,13 +931,14 @@ resultsu64: maketable u64-testlist.txt
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--warnvicefail "<small><b>fails on VICE</b></small>" \
 		--results results/u64-10c-result.txt "U64 (1.0c)" \
-		--results results/u64-118-ntsc-result.txt "U64 PAL (1.18)" \
-		--results results/u64-118-pal-result.txt "U64 NTSC (1.18)" \
+		--results results/u64-118-pal-result.txt "U64 PAL (1.18)" \
+		--results results/u64-118-ntsc-result.txt "U64 NTSC (1.18)" \
 		--results results/u64-118-result.txt "U64 (1.18)" \
 		--results results/u64-121-pal-result.txt "U64 PAL (1.21)" \
 		--results results/u64-124-pal-result.txt "U64 PAL (1.24)" \
 		--results results/u64-128-result.txt "U64 PAL (1.28)" \
 		--results results/u64-133-result.txt "U64 PAL (1.33)" \
+		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)" \
 		\
 		> results/u64.html
 		

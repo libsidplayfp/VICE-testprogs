@@ -852,6 +852,7 @@
 ../SID/detect/,detect-1-new.prg,exitcode,5500000,sid-new
 ../SID/detect/,detect-2-old.prg,exitcode,5500000,sid-old
 ../SID/detect/,detect-2-new.prg,exitcode,5500000,sid-new
+../SID/detectmirrors/,main.prg,interactive,0
 ../SID/env_test/,env_test_ra_0000.prg,exitcode,9000000
 ../SID/env_test/,env_test_ra_0100.prg,exitcode,9000000
 ../SID/env_test/,env_test_adra_1.prg,exitcode,9000000
@@ -1100,7 +1101,7 @@
 ../REU/misc/,twoblocks-ff00-auto.prg,exitcode,100000000,reu512k
 ../REU/misc/,wheels.prg,exitcode,100000000,reu512k
 #TODO: split into behaviour- and timing- test
-../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,exitcode,420000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test1.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test1-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test2.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
@@ -1165,13 +1166,10 @@
 ../drive/pwm/,pwm.prg,interactive,0,comment:drive led should be fading dark-light-dark etc
 ../drive/rpm/,rpm1.prg,exitcode,12000000,mountd64:rpm.d64,vicii-pal
 ../drive/rpm/,rpm1.prg,exitcode,12000000,mountg64:rpm.g64,vicii-pal
-../drive/rpm/,rpm1.prg,exitcode,12000000,mountp64:rpm.p64,vicii-pal
 ../drive/rpm/,rpm2.prg,exitcode,10500000,mountd64:rpm.d64,vicii-pal
 ../drive/rpm/,rpm2.prg,exitcode,10500000,mountg64:rpm.g64,vicii-pal
-../drive/rpm/,rpm2.prg,exitcode,10500000,mountp64:rpm.p64,vicii-pal
 ../drive/rpm/,rpm3.prg,exitcode,12000000,mountd64:rpm.d64,vicii-pal
 ../drive/rpm/,rpm3.prg,exitcode,12000000,mountg64:rpm.g64,vicii-pal
-../drive/rpm/,rpm3.prg,exitcode,12000000,mountp64:rpm.p64,vicii-pal
 ../drive/scanner/,scanner35.prg,exitcode,26000000,mountd64:scan35.d64
 ../drive/scanner/,scanner35e.prg,exitcode,26000000,mountd64:scan35err.d64
 ../drive/scanner/,scanner40.prg,exitcode,27000000,mountd64:scan40.d64

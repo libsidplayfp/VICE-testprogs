@@ -855,6 +855,7 @@
 ../SID/detect/,detect.prg,interactive,0,comment:see automatic variants
 ../SID/detect/,detect-1-old.prg,exitcode,6200000,sid-old
 ../SID/detect/,detect-2-old.prg,exitcode,5500000,sid-old
+../SID/detectmirrors/,main.prg,interactive,0
 ../SID/env_test/,env_test_ra_0000.prg,exitcode,9000000
 ../SID/env_test/,env_test_ra_0100.prg,exitcode,9000000
 ../SID/env_test/,env_test_adra_1.prg,exitcode,9000000
