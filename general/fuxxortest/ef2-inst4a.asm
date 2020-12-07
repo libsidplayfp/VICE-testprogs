@@ -62,15 +62,12 @@ instanc4:
         lda #%10000000
         sta $0100
 
-        lda #$ff
+        ; prepare the sprite pointers that are fetched later and that will
+        ; end up in RAM at $00,$01
+        lda #$00        ; goes to $01
         sta $3bff
-        sta $3fff   ; -> $ff
-
-        lda $3bff   ; $ff
-        pha
-        txa         ; a = x = $ff
-        eor $3fff
-        sta $3bff   ; -> 0
+        lda #$ff        ; goes to $00
+        sta $37fa
 
         lda #$08
         sta $d016
@@ -78,7 +75,7 @@ instanc4:
         lda $d018
         and #%00001111
         ora #%00010000
-        sta $d018
+        sta $d018       ; vram at $0400
 
         lda #%00000011  ; enable sprite 0, sprite 1
         sta $d015
@@ -263,10 +260,16 @@ busirq1:
         lda $d018
         pha
 
+        ; when writing to $00 or $01, the value fetched by the VIC in the
+        ; previous "p cycle" will get written to the actual RAM
+        ;
+        ; here this will be 1) the sprite pointer for sprite 3 ($37fa) and
+        ; 2) the sprite pointer for sprite 8 ($3bff).
+
         lda #$d0
         ldy #$e0
 
-        sta $d018   ; 1101  vram at $3400, $3fff contains $ff
+        sta $d018   ; 1101  vram at $3400, $37fa contains $ff
         lda $00     ; loads $2f
         ; we are at line 311, cycle 62
         sta $00     ; writes $ff to RAM at $00
