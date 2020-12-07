@@ -106,8 +106,16 @@ emudrvi1:
 
         lda #%00111111
         sta $dd02
-        bne passed
+        beq failed
 
+        lda #%01001001
+        eor $dd00
+        ldx #%00000011
+        stx $dd00
+        cmp #%01101110
+        beq passed
+
+failed:
         ; test failed
         lda #$02
         sta $d020
