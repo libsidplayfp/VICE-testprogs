@@ -268,10 +268,12 @@ busirq1:
 
         sta $d018   ; 1101  vram at $3400, $3fff contains $ff
         lda $00     ; loads $2f
+        ; we are at line 311, cycle 62
         sta $00     ; writes $ff to RAM at $00
 
         sty $d018   ; 1110  vram at $3800, $3bff contains $00
         ldy $01     ; loads $35
+        ; we are at line 0, cycle 6
         sty $01     ; writes $00 to RAM at $01
 
         ; lets display what values we wrote :)
