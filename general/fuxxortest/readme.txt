@@ -45,7 +45,7 @@ fails in x64, works in x64sc
 
 ef2-inst4a.prg:
 
-test: sprite vs sprite collision
+test: writes to RAM at $00 and $01, checks via sprite vs sprite collision
 - green border shows success
 
 fails in x64, works in x64sc
