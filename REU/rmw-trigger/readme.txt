@@ -53,3 +53,5 @@ attempt to place an address and data value on the buses, and set the read/write
 line to write. But the CPU is disconnected from the buses because /DMA is held 
 low, and therefore /AEC. The bits never reach the actual bus lines; they 
 dissipate into a small amount of heat.
+
+- does not work in x64sc 39179
