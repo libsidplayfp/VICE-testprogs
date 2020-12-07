@@ -874,7 +874,7 @@
 ../drive/viavarious/,via12.prg,ok,exitcode,,,,-1,-1,-1
 ../drive/viavarious/,via13.prg,ok,exitcode,,,,-1,-1,-1
 ../vdrive/bustakeover/,bustakeover.prg,error,exitcode,bustakeover.d64,,,-1,-1,-1
-../vdrive/sa-check/,sacheck.prg,error,exitcode,sacheck.d64,,,-1,-1,-1
+../vdrive/sa-check/,sacheck.prg,ok,exitcode,sacheck.d64,,,-1,-1,-1
 ../memory-expansions/,c64-georam-emd.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c64-reu-emd.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c64-ram-emd.prg,ok,exitcode,,,,-1,-1,-1

@@ -941,7 +941,7 @@
 ../SID/writedelay/,writedelay.prg,ok,exitcode,,,,-1,-1,-1
 ../SID/wf12nsr/,wf12nsr.prg,error,exitcode,,,,-1,0,-1
 ../SID/wf12nsr/,wf12nsr-8580.prg,error,exitcode,,,,-1,1,-1
-../C64/autostart/defaults/,,error,exitcode,,,test.crt,-1,-1,-1
+../C64/autostart/defaults/,,ok,exitcode,,,test.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-ramdetect.prg,ok,exitcode,,,nrdummy.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-ramsizedetect.prg,ok,exitcode,,,nrdummy.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-ariotest1.prg,ok,exitcode,,,nrdummy.crt,-1,-1,-1
@@ -1042,7 +1042,7 @@
 ../drive/viavarious/,via12.prg,ok,exitcode,,,,-1,-1,-1
 ../drive/viavarious/,via13.prg,ok,exitcode,,,,-1,-1,-1
 ../vdrive/bustakeover/,bustakeover.prg,error,exitcode,bustakeover.d64,,,-1,-1,-1
-../vdrive/sa-check/,sacheck.prg,error,exitcode,sacheck.d64,,,-1,-1,-1
+../vdrive/sa-check/,sacheck.prg,ok,exitcode,sacheck.d64,,,-1,-1,-1
 ../memory-expansions/,c64-georam-emd.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c64-reu-emd.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c64-ram-emd.prg,ok,exitcode,,,,-1,-1,-1
