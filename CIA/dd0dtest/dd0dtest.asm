@@ -14,7 +14,7 @@
 
               *=$0801
               .word (+), 1234
-              .null SYS, ^start
+              .null SYS, format("%d", start)
 +             .word ENDBASIC
 ;---------------------------------------
 
@@ -152,15 +152,11 @@ stoptests     lda oldstatus
               ldx oldstack
               txs             ; restore SR
 
-endCalc       lda #$1b        ; enable video
+              lda #$1b        ; enable video
               sta $d011
 
-              lda #$5
-              sta $d020
-              lda #0            ; success
-              sta $d7ff
-
               jsr restoreSettings
+
               rts
 
 screenOff     lda $d011
@@ -217,8 +213,14 @@ restoreSettings
               lda #$ff       ; failure
               sta $d7ff
 
-              jsr generateSound
-exit          rts
+              jmp generateSound
+exit
+              lda #$5
+              sta $d020
+              lda #0            ; success
+              sta $d7ff
+
+              rts
 
 disableInterrupts
               sei
