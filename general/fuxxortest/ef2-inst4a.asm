@@ -62,12 +62,29 @@ instanc4:
         lda #%10000000
         sta $0100
 
+        ; write defined pattern to the sprite pointers so we can see if their
+        ; timing is broken (fetches in the wrong cycles within the line)
+        ldx #7
+-
+        txa
+        sta $37f8,x
+        asl
+        asl
+        asl
+        asl
+        sta $3bf8,x
+        dex
+        bpl -
+
         ; prepare the sprite pointers that are fetched later and that will
         ; end up in RAM at $00,$01
-        lda #$00        ; goes to $01
+        lda #$42        ; goes to $01
         sta $3bff
-        lda #$ff        ; goes to $00
+        lda #$a5        ; goes to $00
         sta $37fa
+
+        lda #$95        ; idle byte, we should not see this
+        sta $3fff
 
         lda #$08
         sta $d016
@@ -147,11 +164,27 @@ busloop:
         sta resline+3
         sty resline+4
 
+        lda decodbuf+2
+        jsr mkhex
+        sta resline+6
+        sty resline+7
+
+        lda decodbuf+3
+        jsr mkhex
+        sta resline+9
+        sty resline+10
+
         lda decodbuf+0
-        cmp #$ff
+        cmp #$a5
         bne failed
         lda decodbuf+1
-        cmp #$00
+        cmp #$42
+        bne failed
+        lda decodbuf+2
+        cmp #$2f
+        bne failed
+        lda decodbuf+3
+        cmp #$35
         bne failed
 
         ; test passed
@@ -269,15 +302,15 @@ busirq1:
         lda #$d0
         ldy #$e0
 
-        sta $d018   ; 1101  vram at $3400, $37fa contains $ff
+        sta $d018   ; 1101  vram at $3400, $37fa contains $a5
         lda $00     ; loads $2f
         ; we are at line 311, cycle 62
-        sta $00     ; writes $ff to RAM at $00
+        sta $00     ; writes $a5 to RAM at $00
 
-        sty $d018   ; 1110  vram at $3800, $3bff contains $00
+        sty $d018   ; 1110  vram at $3800, $3bff contains $42
         ldy $01     ; loads $35
         ; we are at line 0, cycle 6
-        sty $01     ; writes $00 to RAM at $01
+        sty $01     ; writes $42 to RAM at $01
 
         ; lets display what values we wrote :)
         sta dbgbuf+0
