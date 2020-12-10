@@ -18,9 +18,11 @@
 -
         lda screen,x
         sta $0400,x
-        lda #$20
+        lda screen+$100,x
         sta $0500,x
+        lda screen+$200,x
         sta $0600,x
+        lda #$20
         sta $0700,x
         lda #1
         sta $d800,x
@@ -29,6 +31,13 @@
         sta $db00,x
         inx
         bne -
+ 
+        lda #$64
+        ldx #39-20
+-
+        sta $0400+(24*40)+10,x
+        dex
+        bpl -
         
         ; init ghostbyte with some pattern to make border more visible
         ; and so we can see character boundaries in the border
@@ -292,21 +301,51 @@ lp2:     dey
 framecount: !byte 5
 
 screen:
-    !scr "                                        "
 !if MODE=0 {
-    !scr "open vertical border first, then open   "
-    !scr "sideborder.                             "
+    !byte $20,$20,$20,$20,$20,$20,$20,$20,$20,$20
+    !byte $63,$63,$63,$63,$63,$63,$63,$63,$63,$63
+    !byte $63,$63,$63,$63,$63,$63,$63,$63,$63,$63
+    !byte $20,$20,$20,$20,$20,$20,$20,$20,$20,$20
     !scr "                                        "
-    !scr "idle byte behind area with open         "
-    !scr "sideborder.                             "
+    !scr " open vertical border first, then open  "
+    !scr " sideborder.                            "
+    !scr "                                        "
+    !scr " idle byte behind area with open        "
+    !scr " sideborder.                            "
+    !scr "                                        "
+    !scr " no gap between top white line and idle "
+    !scr " gfx.                                   "
+    !scr "                                        "
+    !scr " no gap between bottom white line and   "
+    !scr " idle gfx.                              "
+    !scr "                                        "
+    !scr " both white lines are one pixel high.   "
+    !scr "                                        "
 }
 !if MODE=1 {
-    !scr "open sideborder, keep opening it in     "
-    !scr "lower border.                           "
+    !byte $20,$20,$20,$20,$20,$20,$20,$20,$20,$20
+    !byte $46,$46,$46,$46,$46,$46,$46,$46,$46,$46
+    !byte $46,$46,$46,$46,$46,$46,$46,$46,$46,$46
+    !byte $20,$20,$20,$20,$20,$20,$20,$20,$20,$20
     !scr "                                        "
-    !scr "no idle byte behind area with open      "
-    !scr "sideborder.                             "
+    !scr " open sideborder, keep opening it in    "
+    !scr " lower border.                          "
+    !scr "                                        "
+    !scr " no idle byte behind area with open     "
+    !scr " sideborder.                            "
+    !scr "                                        "
+    !scr " one line gap (background) between top  "
+    !scr " white line and top border.             "
+    !scr "                                        "
+    !scr " no gap between bottom white line and   "
+    !scr " idle gfx.                              "
+    !scr "                                        "
+    !scr " top white line is two pixel high.      "
+    !scr " bottom white line is one pixel high.   "
 }
+    !scr "                                        "
+    !scr "                                        "
+    !scr "                                        "
     !scr "                                        "
          
 spritedata=$0fc0        
