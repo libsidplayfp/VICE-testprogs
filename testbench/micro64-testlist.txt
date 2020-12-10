@@ -674,8 +674,8 @@
 ../VICII/border/,border-bm-ysh2.prg,screenshot,10000000,vicii-pal
 ../VICII/border/,border-bm-ysh.prg,screenshot,10000000,vicii-pal
 ../VICII/border/,border-mcbm.prg,screenshot,10000000,vicii-pal
-../VICII/border/,hvborder1.prg,screenshot,10000000,vicii-pal
-../VICII/border/,hvborder2.prg,screenshot,10000000,vicii-pal
+../VICII/border/,hvborder1.prg,screenshot,11000000,vicii-pal
+../VICII/border/,hvborder2.prg,screenshot,11000000,vicii-pal
 ../VICII/border/,vborder.prg,interactive,0,vicii-pal,comment:see automatic variants
 ../VICII/border/,vborder-32-08.prg,screenshot,12000000,vicii-pal
 ../VICII/border/,vborder-32-09.prg,screenshot,12000000,vicii-pal
