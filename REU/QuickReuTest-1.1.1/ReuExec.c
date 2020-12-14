@@ -7,6 +7,7 @@
 // Description : 
 //============================================================================
 
+#include <conio.h>
 #include "ReuExec.h"
 
 #ifdef DOALL
@@ -20,6 +21,48 @@ unsigned char bankMask = 0xf8;
 
 static const char *dumpString =
     "   %s 0x%02x/%02x:%02x,0x%02x,0x%04x,0x%06lx/%02xffff:0x%06lx,0x%04x,0x%02x,0x%02x,0x%02x/%02x:%02x,%ld\n";
+
+void printRegisterDump(char *text,
+                       const struct expectSet *expResult,
+                       signed long recentTimerValue,
+                       unsigned char statusSnapshot)
+{
+#if 0
+    lprintf( dumpString, text,
+        statusSnapshot, statusMask, (statusSnapshot & statusMask),
+        *((unsigned char  *)0xDF01),
+        *((unsigned short *)0xDF02),
+        *((unsigned long *)0xDF04) & 0xffffffL, bankMask, (*((unsigned long *)0xDF04) & 0xffffffL & ((bankMask << 16) + 0xffff)),
+        *((unsigned short *)0xDF07),
+        *((unsigned char  *)0xDF09),
+        *((unsigned char  *)0xDF0A),
+        lstatus, statusMask, (lstatus & statusMask),
+        recentTimerValue
+        );
+#endif
+    textcolor(COLOR_WHITE);
+    lprintf("   %s ", text);
+    textcolor((((statusSnapshot ^ expResult->status ) & statusMask ) == 0) ? COLOR_LIGHTGREEN : COLOR_LIGHTRED);
+    lprintf("0x%02x/%02x:%02x ", statusSnapshot, statusMask, (statusSnapshot & statusMask));
+    textcolor((*((unsigned char  *)0xDF01) == expResult->command) ? COLOR_LIGHTGREEN : COLOR_LIGHTRED);
+    lprintf("0x%02x ", *((unsigned char  *)0xDF01));
+    textcolor((*((unsigned short *)0xDF02) == expResult->C64adr) ? COLOR_LIGHTGREEN : COLOR_LIGHTRED);
+    lprintf("0x%04x ", *((unsigned short *)0xDF02));
+    textcolor((*((unsigned short *)0xDF04) == ( expResult->REUadr & 0xffff )) ? COLOR_LIGHTGREEN : COLOR_LIGHTRED);
+    lprintf("0x%06lx/%02xffff:", *((unsigned long *)0xDF04) & 0xffffffL, bankMask);
+    textcolor((((*((unsigned char  *)0xDF06) ^ (expResult->REUadr >> 16) ) & bankMask ) == 0) ? COLOR_LIGHTGREEN : COLOR_LIGHTRED);
+    lprintf("0x%06lx ", (*((unsigned long *)0xDF04) & 0xffffffL & ((bankMask << 16) + 0xffff)));
+    textcolor((*((unsigned short *)0xDF07) == expResult->length) ? COLOR_LIGHTGREEN : COLOR_LIGHTRED);
+    lprintf("0x%04x ", *((unsigned short *)0xDF07));
+    textcolor((*((unsigned char  *)0xDF09) == expResult->iMode) ? COLOR_LIGHTGREEN : COLOR_LIGHTRED);
+    lprintf("0x%02x ", *((unsigned char  *)0xDF09));
+    textcolor((*((unsigned char  *)0xDF0A) == expResult->adrMode) ? COLOR_LIGHTGREEN : COLOR_LIGHTRED);
+    lprintf("0x%02x ", *((unsigned char  *)0xDF0A));
+    lprintf("0x%02x/%02x:%02x ", lstatus, statusMask, (lstatus & statusMask));
+    textcolor((recentTimerValue == expResult->cycles) ? COLOR_LIGHTGREEN : COLOR_LIGHTRED);
+    lprintf("%ld\n", recentTimerValue);
+    textcolor(COLOR_WHITE);
+}
 
 static signed long readRecentTimer( void ) {
     signed long timer;
@@ -86,13 +129,13 @@ signed char monitorRegisterDump( unsigned char errorOnly, const struct expectSet
     // do not check for adresses 0xdf0a...0xdf1f == 0xff
 
     error = 0;
-#ifdef CHECKREGS
     rerror = ( ( lstatus ^ expResult->irqStatus ) & statusMask ) != 0;
+#ifdef CHECKREGS
     regserrors += rerror;
     error |= rerror; 
 #endif
-#ifdef CHECKTIMING
     terror = (recentTimerValue != expResult->cycles);
+#ifdef CHECKTIMING
     timererrors += terror;
     error |= terror;
 #endif
@@ -109,6 +152,7 @@ signed char monitorRegisterDump( unsigned char errorOnly, const struct expectSet
             expResult->irqStatus, statusMask, (expResult->irqStatus & statusMask),
             expResult->cycles
             );
+#if 0
         lprintf( dumpString, "but got: ", 
             statusSnapshot, statusMask, (statusSnapshot & statusMask),
             *((unsigned char  *)0xDF01),
@@ -120,12 +164,15 @@ signed char monitorRegisterDump( unsigned char errorOnly, const struct expectSet
             lstatus, statusMask, (lstatus & statusMask),
             recentTimerValue
             );
+#endif
+        printRegisterDump("but got: ", expResult, recentTimerValue, statusSnapshot);
         lprintf( "Test Status: Timing: %s Register: %s\n",
                 (terror == 0) ? "ok" : "error", (rerror == 0) ? "ok" : "error");
         return 1;
     }
     else if( errorOnly == 0 ) {
         lprintf( "REU register monitoring for test=%s\n", expResult->description );
+#if 0
         lprintf( dumpString, "dump:", 
             statusSnapshot, statusMask, (statusSnapshot & statusMask),
             *((unsigned char  *)0xDF01),
@@ -137,6 +184,8 @@ signed char monitorRegisterDump( unsigned char errorOnly, const struct expectSet
             lstatus, statusMask, (lstatus & statusMask),
             recentTimerValue
             );
+#endif
+        printRegisterDump("dump: ", expResult, recentTimerValue, statusSnapshot);
         lprintf( "Test Status: Timing: %s Register: %s\n",
                 (terror == 0) ? "ok" : "error", (rerror == 0) ? "ok" : "error");
     }

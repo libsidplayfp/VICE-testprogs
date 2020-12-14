@@ -51,41 +51,41 @@ $(TARGET).d64 : $(TARGET).exo.prg
 $(TARGET).exo.prg : $(TARGET)
 	$(EXOMIZER) sfx basic -o$(TARGET).exo.prg $(TARGET)
 
-$(TARGET) : $(OBJS)
+$(TARGET) : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDOALL -o $(TARGET) -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
 
-quickreu-test1.prg : $(OBJS)
+quickreu-test1.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST1 -DCHECKREGS -o quickreu-test1.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
-quickreu-test2.prg : $(OBJS)
+quickreu-test2.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST2 -DCHECKREGS -o quickreu-test2.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
-quickreu-test3.prg : $(OBJS)
+quickreu-test3.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST3 -DCHECKREGS -o quickreu-test3.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
-quickreu-test4.prg : $(OBJS)
+quickreu-test4.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST4 -DCHECKREGS -o quickreu-test4.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
-quickreu-test5.prg : $(OBJS)
+quickreu-test5.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST5 -DCHECKREGS -o quickreu-test5.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
-quickreu-test6.prg : $(OBJS)
+quickreu-test6.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST6 -DCHECKREGS -o quickreu-test6.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
-quickreu-test7.prg : $(OBJS)
+quickreu-test7.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST7 -DCHECKREGS -o quickreu-test7.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
-quickreu-test8.prg : $(OBJS)
+quickreu-test8.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST8 -DCHECKREGS -o quickreu-test8.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
 
-quickreu-test1-timing.prg : $(OBJS)
+quickreu-test1-timing.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST1 -DCHECKTIMING -o quickreu-test1-timing.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
-quickreu-test2-timing.prg : $(OBJS)
+quickreu-test2-timing.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST2 -DCHECKTIMING -o quickreu-test2-timing.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
-quickreu-test3-timing.prg : $(OBJS)
+quickreu-test3-timing.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST3 -DCHECKTIMING -o quickreu-test3-timing.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
-quickreu-test4-timing.prg : $(OBJS)
+quickreu-test4-timing.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST4 -DCHECKTIMING -o quickreu-test4-timing.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
-quickreu-test5-timing.prg : $(OBJS)
+quickreu-test5-timing.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST5 -DCHECKTIMING -o quickreu-test5-timing.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
-quickreu-test6-timing.prg : $(OBJS)
+quickreu-test6-timing.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST6 -DCHECKTIMING -o quickreu-test6-timing.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
-quickreu-test7-timing.prg : $(OBJS)
+quickreu-test7-timing.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST7 -DCHECKTIMING -o quickreu-test7-timing.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
-quickreu-test8-timing.prg : $(OBJS)
+quickreu-test8-timing.prg : $(OBJS) QuickReu.c ReuExec.c
 	$(CC) -DDISABLELOGFILE -DDOTEST8 -DCHECKTIMING -o quickreu-test8-timing.prg -I$(INCLUDES) QuickReu.c ReuExec.c $(OBJS) $(LIBS)
 
 

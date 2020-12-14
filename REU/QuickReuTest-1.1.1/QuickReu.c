@@ -8,6 +8,7 @@
 //               (REC, 8726R1) behavior compatibility test
 //============================================================================
 
+#include <conio.h>
 #include <stdlib.h>
 #include "version.h"
 #include "LogPrint.h"
@@ -154,6 +155,7 @@ int main(void) {
     unsigned char type17xx;
     unsigned char failedTestclasses = 0;
 
+    textcolor(COLOR_WHITE);
     putchar(0x93);
 
 #ifndef DISABLELOGFILE
