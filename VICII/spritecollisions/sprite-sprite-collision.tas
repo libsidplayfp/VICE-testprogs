@@ -1,0 +1,273 @@
+  processor 6502
+
+; Select the video timing (processor clock cycles per raster line)
+;CYCLES = 65     ; 6567R8 and above, NTSC-M
+;CYCLES = 64    ; 6567R5 6A, NTSC-M
+;CYCLES = 63    ; 6569 (all revisions), PAL-B
+testnum = $8000
+
+sprite0 = $3f80
+sprite1 = $3fc0
+
+  .org $801
+basic:
+  .word 0$      ; link to next line
+  .word 1995    ; line number
+  .byte $9E     ; SYS token
+
+; SYS digits
+
+  .if (* + 8) / 10000
+  .byte $30 + (* + 8) / 10000
+  .endif
+  .if (* + 7) / 1000
+  .byte $30 + (* + 7) % 10000 / 1000
+  .endif
+  .if (* + 6) / 100
+  .byte $30 + (* + 6) % 1000 / 100
+  .endif
+  .if (* + 5) / 10
+  .byte $30 + (* + 5) % 100 / 10
+  .endif
+  .byte $30 + (* + 4) % 10
+
+0$:
+  .byte 0,0,0   ; end of BASIC program
+
+start:
+
+  lda #$00
+  sta testnum
+  sta fails
+
+  lda #$20
+  ldy #$00
+loop2:
+  sta $0400,y
+  sta $0500,y
+  sta $0600,y
+  sta $0700,y
+  iny
+  bne loop2
+  
+  lda #$00
+  ldy #$3f
+loop1:
+  sta sprite0,y
+  sta sprite1,y
+  dey
+  bpl loop1
+
+; setup sprites
+  lda #sprite0 / 64
+  sta $07f8
+  lda #sprite1 / 64
+  sta $07f9
+
+#if SPRMUCO=3
+
+  lda #%00011011
+  sta sprite0
+  lda #%00000000
+  sta sprite1
+  lda #%01000000
+  sta sprite1+3
+  lda #%10000000
+  sta sprite1+6
+  lda #%11000000
+  sta sprite1+9
+
+#endif  
+
+#if SPRMUCO=2
+
+  lda #%00111111
+  sta sprite0
+  lda #%00000000
+  sta sprite1
+  lda #%01000000
+  sta sprite1+3
+  lda #%10000000
+  sta sprite1+6
+  lda #%11000000
+  sta sprite1+9
+
+#endif  
+
+
+#if SPRMUCO=1
+
+  lda #%00011011
+  sta sprite0
+  lda #%00000000
+  sta sprite1
+  lda #%11000000
+  sta sprite1+3
+  lda #%11000000
+  sta sprite1+6
+  lda #%11000000
+  sta sprite1+9
+
+#endif  
+
+#if SPRMUCO=0
+
+  lda #%00111111
+  sta sprite0
+  lda #%00000000
+  sta sprite1
+  lda #%11000000
+  sta sprite1+3
+  lda #%11000000
+  sta sprite1+6
+  lda #%11000000
+  sta sprite1+9
+
+#endif  
+
+  lda #$03
+  sta $d015 ; enable
+  lda #SPRMUCO
+  sta $d01c ; muco
+  
+  lda #102+16
+  sta $d000
+  lda #100+8
+  sta $d001
+  lda #100+16
+  sta $d002
+  lda #101+8
+  sta $d003
+  
+  lda #0
+  sta $d010
+
+  lda #3
+  sta $d025
+  lda #4
+  sta $d026
+  lda #0
+  sta $d027
+  lda #1
+  sta $d028
+
+  ;jmp *
+  
+  lda $d01e
+
+testloop:
+
+  ldy #4+2
+lp2:
+  ldx #0
+lp1:
+  jsr waitframe
+
+  lda $d01e
+scr:
+  sta $0400,x
+  
+  dec $d000
+  
+  inx
+  cpx #8+3
+  bne lp1
+  
+  lda $d000
+  clc
+  adc #8+3
+  sta $d000
+  
+  inc $d001
+  
+  lda scr+1
+  clc
+  adc #40
+  sta scr+1
+  
+  dey
+  bne lp2
+  
+; checkloop
+
+  ldy #4+2
+lp4:
+  ldx #0  
+lp3:
+
+scr2:
+  lda $0400,x
+scr2a:
+  cmp reference,x
+  beq skp
+  
+  inc fails
+  
+  lda #10
+scr2b:
+  sta $d800,x
+
+skp:
+  
+  inx
+  cpx #8+3
+  bne lp3
+  
+  lda scr2+1
+  clc
+  adc #40
+  sta scr2+1
+
+  lda scr2b+1
+  clc
+  adc #40
+  sta scr2b+1
+  
+  lda scr2a+1
+  clc
+  adc #11
+  sta scr2a+1
+  
+  dey
+  bne lp4
+
+endoftest:
+  ldy #5
+  lda fails
+  beq allok
+  ldy #10
+allok:
+  sty $d020
+
+    lda $d020
+    and #$0f
+
+    ldx #$ff    ; failure
+    cmp #5      ; green
+    bne fail2
+    ldx #0      ; success
+fail2:
+    stx $d7ff
+
+  jmp *
+
+fails:
+    .byte 0
+    
+waitframe:
+l1: bit $d011
+    bpl l1
+l2: bit $d011
+    bmi l2
+    rts
+
+    
+    .align 256
+reference:
+    .byte 0,0,0,0,0,0,0,0,0,0,0
+    .byte 0,0,0,0,0,0,0,0,0,0,0
+    .byte 0,0,0,3,3,3,3,3,3,3,0
+    .byte 0,0,0,3,3,3,3,3,3,3,0
+    .byte 0,0,0,3,3,3,3,3,3,3,0
+    .byte 0,0,0,0,0,0,0,0,0,0,0
+
