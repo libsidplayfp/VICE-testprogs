@@ -1,10 +1,6 @@
   processor 6502
 
-; Select the video timing (processor clock cycles per raster line)
-;CYCLES = 65     ; 6567R8 and above, NTSC-M
-;CYCLES = 64    ; 6567R5 6A, NTSC-M
-;CYCLES = 63    ; 6569 (all revisions), PAL-B
-testnum = $8000
+TESTING = 0
 
 sprite0 = $3f80
 char1 = $3800
@@ -38,7 +34,6 @@ basic:
 start:
 
   lda #$00
-  sta testnum
   sta fails
 
   ldy #$00
@@ -57,9 +52,9 @@ loop2:
   bne loop2
 
   lda #$01+8
-  sta $d800+7*40+12
+  sta $d800+11*40+12
   lda #$00
-  sta $0400+7*40+12
+  sta $0400+11*40+12
   
   lda #$00
   ldy #$3f
@@ -74,10 +69,28 @@ loop1:
   lda #sprite0 / 64
   sta $07f8
 
-#if CHRMUCO=0
-  lda #%00000000
-;  lda #%11000000
-  sta char1
+  ; we always use the same pixel pattern:
+  ;
+  ; sprite0 (horizontal): %00 01 00 10 00 11 00
+  ; 
+  ; char1 (vertical):
+  ;
+  ; 00
+  ; 01
+  ; 10
+  ; 11
+  ;
+  ; this lets us test all combinations of bit patterns that may collide
+
+#if TESTING=1
+  ; pattern with all bits set for testing the code
+  lda #%11111111
+  sta sprite0+0
+  lda #%11111100
+  sta sprite0+1
+  
+  lda #%11000000
+  sta char1+0
   lda #%11000000
   sta char1+1
   lda #%11000000
@@ -85,39 +98,38 @@ loop1:
   lda #%11000000
   sta char1+3
   
-  lda #$c8
-  sta $d016
-#endif
+#else
+  lda #%00010010
+  sta sprite0+0
+  lda #%00110000
+  sta sprite0+1
 
-#if CHRMUCO=1
   lda #%00000000
-  sta char1
+  sta char1+0
   lda #%01000000
   sta char1+1
   lda #%10000000
   sta char1+2
   lda #%11000000
   sta char1+3
-  
+#endif
+
+#if CHRMUCO=0
+  lda #$c8
+  sta $d016
+#endif
+
+#if CHRMUCO=1
   lda #$d8
   sta $d016
 #endif
 
 #if SPRMUCO=0
-
-  lda #%00111111
-;  lda #%11111111
-  sta sprite0
-
   lda #0
   sta $d01c ; muco
 #endif  
 
 #if SPRMUCO=1
-
-  lda #%00011011
-  sta sprite0
-
   lda #1
   sta $d01c ; muco
 #endif  
@@ -127,7 +139,7 @@ loop1:
   
   lda #102+4+16
   sta $d000
-  lda #100-3+8
+  lda #100-3+8+32
   sta $d001
   
   lda #0
@@ -149,9 +161,12 @@ loop1:
   
 ;  jmp *
 
+TESTROWS = 4+2
+TESTCOLS = 15+2
+
 testloop:
 
-  ldy #4+2
+  ldy #TESTROWS
 lp2:
   ldx #0
 lp1:
@@ -164,12 +179,12 @@ scr:
   dec $d000
   
   inx
-  cpx #8+3
+  cpx #TESTCOLS
   bne lp1
   
   lda $d000
   clc
-  adc #8+3
+  adc #TESTCOLS
   sta $d000
   
   inc $d001
@@ -178,6 +193,9 @@ scr:
   clc
   adc #40
   sta scr+1
+  lda scr+2
+  adc #0
+  sta scr+2
   
   dey
   bne lp2
@@ -189,7 +207,7 @@ scr:
   
 ; checkloop
 
-  ldy #4+2
+  ldy #TESTROWS
 lp4:
   ldx #0  
 lp3:
@@ -209,22 +227,28 @@ scr2b:
 skp:
   
   inx
-  cpx #8+3
+  cpx #TESTCOLS
   bne lp3
   
   lda scr2+1
   clc
   adc #40
   sta scr2+1
+  lda scr2+2
+  adc #0
+  sta scr2+2
 
   lda scr2b+1
   clc
   adc #40
   sta scr2b+1
+  lda scr2b+2
+  adc #0
+  sta scr2b+2
   
   lda scr2a+1
   clc
-  adc #11
+  adc #TESTCOLS
   sta scr2a+1
   
   dey
@@ -263,19 +287,53 @@ l2: bit $d011
     
     .align 256
 reference:
+#if TESTING=1
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    .byte 0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0
+    .byte 0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0
+    .byte 0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0
+    .byte 0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+#else
+
 #if CHRMUCO=0
-    .byte 0,0,0,0,0,0,0,0,0,0,0
-    .byte 0,0,0,0,0,0,0,0,0,0,0
-    .byte 0,0,0,1,1,1,1,1,1,1,0
-    .byte 0,0,0,1,1,1,1,1,1,1,0
-    .byte 0,0,0,1,1,1,1,1,1,1,0
-    .byte 0,0,0,0,0,0,0,0,0,0,0
+#if SPRMUCO=0
+    ; hires sprite vs hires charset
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    .byte 0,0,0,0,1,0,0,1,0,0,0,1,1,0,0,0,0
+    .byte 0,0,0,0,0,1,0,0,1,0,0,0,1,1,0,0,0
+    .byte 0,0,0,0,1,1,0,1,1,0,0,1,1,1,0,0,0
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+#else
+    ; multicolor sprite vs hires charset
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    .byte 0,0,0,1,1,0,0,1,1,0,0,1,1,0,0,0,0
+    .byte 0,0,0,0,1,1,0,0,1,1,0,0,1,1,0,0,0
+    .byte 0,0,0,1,1,1,0,1,1,1,0,1,1,1,0,0,0
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 #endif
+#endif
+
 #if CHRMUCO=1
-    .byte 0,0,0,0,0,0,0,0,0,0,0
-    .byte 0,0,0,0,0,0,0,0,0,0,0
-    .byte 0,0,0,0,0,0,0,0,0,0,0
-    .byte 0,0,0,1,1,1,1,1,1,1,0
-    .byte 0,0,0,1,1,1,1,1,1,1,0
-    .byte 0,0,0,0,0,0,0,0,0,0,0
+#if SPRMUCO=0
+    ; hires sprite vs multicolor charset
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0  ; this row differs from sprite vs sprite
+    .byte 0,0,0,0,1,1,0,1,1,0,0,1,1,1,0,0,0
+    .byte 0,0,0,0,1,1,0,1,1,0,0,1,1,1,0,0,0
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+#else
+    ; multicolor sprite vs multicolor charset
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0  ; this row differs from sprite vs sprite
+    .byte 0,0,0,1,1,1,0,1,1,1,0,1,1,1,0,0,0
+    .byte 0,0,0,1,1,1,0,1,1,1,0,1,1,1,0,0,0
+    .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+#endif
+#endif
+
 #endif
