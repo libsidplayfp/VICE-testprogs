@@ -131,9 +131,10 @@ viernsechzig:   lda #64		; 64kb
 		cmp #$08
 		bne setio1
 		ldx #$df
-		.byte $2c
+		bne setio2    ; we cant use BIT here, it would do a dummy load from $dea2 and crash AR
 setio1:
 		ldx #$de
+setio2:
 		stx baseio
 		stx $f9
 		ldx #$20
