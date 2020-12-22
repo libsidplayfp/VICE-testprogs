@@ -767,7 +767,7 @@
 ../VICII/spritebug/,spritebug-105.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/spritebug/,spritebug-106.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/spritecollisions/,sprite-gfx-collision-cycle.prg,ok,exitcode,,,,-1,-1,PAL
-../VICII/spritecollisions/,sprite-sprite-collision-cycle.prg,error,exitcode,,,,-1,-1,PAL
+../VICII/spritecollisions/,sprite-sprite-collision-cycle.prg,ok,exitcode,,,,-1,-1,PAL
 ../VICII/spritecollisions/,sprite-sprite.prg,ok,exitcode,,,,-1,-1,PAL
 ../VICII/spritecollisions/,sprite-sprite-hi-hi.prg,ok,exitcode,,,,-1,-1,-1
 ../VICII/spritecollisions/,sprite-sprite-mc-hi.prg,ok,exitcode,,,,-1,-1,-1
@@ -1012,7 +1012,7 @@
 ../C64/carts/aracidtest/,test-ariotest2-ar.prg,ok,exitcode,,,ardummy.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-arramtest2-ar.prg,ok,exitcode,,,ardummy.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-ramdetect-ar.prg,ok,exitcode,,,npdummy.crt,-1,-1,-1
-../C64/carts/aracidtest/,test-ramsizedetect-ar.prg,timeout,exitcode,,,npdummy.crt,-1,-1,-1
+../C64/carts/aracidtest/,test-ramsizedetect-ar.prg,ok,exitcode,,,npdummy.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-ariotest1-ar.prg,ok,exitcode,,,npdummy.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-ariotest2-ar.prg,ok,exitcode,,,npdummy.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-arramtest2-ar.prg,ok,exitcode,,,npdummy.crt,-1,-1,-1
@@ -1074,7 +1074,7 @@
 ../REU/misc/,twoblocks-auto.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/misc/,twoblocks-ff00-auto.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/misc/,wheels.prg,ok,exitcode,,,,-1,-1,-1
-../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,timeout,exitcode,,,,-1,-1,-1
+../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/QuickReuTest-1.1.1/,quickreu-test1.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/QuickReuTest-1.1.1/,quickreu-test1-timing.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/QuickReuTest-1.1.1/,quickreu-test2.prg,ok,exitcode,,,,-1,-1,-1
@@ -1125,7 +1125,7 @@
 ../drive/rpm/,rpm3.prg,ok,exitcode,,rpm.g64,,-1,-1,PAL
 ../drive/rpm/,rpm3.prg,ok,exitcode,,,,-1,-1,PAL
 ../drive/scanner/,scanner35.prg,ok,exitcode,scan35.d64,,,-1,-1,-1
-../drive/scanner/,scanner35e.prg,error,exitcode,scan35err.d64,,,-1,-1,-1
+../drive/scanner/,scanner35e.prg,ok,exitcode,scan35err.d64,,,-1,-1,-1
 ../drive/scanner/,scanner40.prg,ok,exitcode,scan40.d64,,,-1,-1,-1
 ../drive/scanner/,scanner40e.prg,ok,exitcode,scan40err.d64,,,-1,-1,-1
 ../drive/scanner/,scanner42.prg,ok,exitcode,scan42.d64,,,-1,-1,-1

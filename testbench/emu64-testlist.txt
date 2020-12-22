@@ -156,7 +156,7 @@
 ../general/Lorenz-2.15/src/,sein.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,clvn.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,adcb.prg,exitcode,30000000
-../general/Lorenz-2.15/src/,adcz.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,adcz.prg,exitcode,30100000
 ../general/Lorenz-2.15/src/,adczx.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,adca.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,adcax.prg,exitcode,40000000

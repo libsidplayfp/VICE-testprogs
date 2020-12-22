@@ -124,7 +124,7 @@
 ../general/Lorenz-2.15/src/,sein.prg,ok,exitcode,,,,-1,-1,-1
 ../general/Lorenz-2.15/src/,clvn.prg,ok,exitcode,,,,-1,-1,-1
 ../general/Lorenz-2.15/src/,adcb.prg,ok,exitcode,,,,-1,-1,-1
-../general/Lorenz-2.15/src/,adcz.prg,timeout,exitcode,,,,-1,-1,-1
+../general/Lorenz-2.15/src/,adcz.prg,ok,exitcode,,,,-1,-1,-1
 ../general/Lorenz-2.15/src/,adczx.prg,ok,exitcode,,,,-1,-1,-1
 ../general/Lorenz-2.15/src/,adca.prg,ok,exitcode,,,,-1,-1,-1
 ../general/Lorenz-2.15/src/,adcax.prg,ok,exitcode,,,,-1,-1,-1
@@ -1007,7 +1007,7 @@
 ../SID/wf12nsr/,wf12nsr-8580.prg,error,exitcode,,,,-1,1,-1
 ../C64/autostart/defaults/,,ok,exitcode,,,test.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-ramdetect-ar.prg,ok,exitcode,,,ardummy.crt,-1,-1,-1
-../C64/carts/aracidtest/,test-ramsizedetect-ar.prg,timeout,exitcode,,,ardummy.crt,-1,-1,-1
+../C64/carts/aracidtest/,test-ramsizedetect-ar.prg,ok,exitcode,,,ardummy.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-ariotest1-ar.prg,ok,exitcode,,,ardummy.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-ariotest2-ar.prg,ok,exitcode,,,ardummy.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-arramtest2-ar.prg,ok,exitcode,,,ardummy.crt,-1,-1,-1
@@ -1074,7 +1074,7 @@
 ../REU/misc/,twoblocks-auto.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/misc/,twoblocks-ff00-auto.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/misc/,wheels.prg,ok,exitcode,,,,-1,-1,-1
-../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,timeout,exitcode,,,,-1,-1,-1
+../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/QuickReuTest-1.1.1/,quickreu-test1.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/QuickReuTest-1.1.1/,quickreu-test1-timing.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/QuickReuTest-1.1.1/,quickreu-test2.prg,ok,exitcode,,,,-1,-1,-1
