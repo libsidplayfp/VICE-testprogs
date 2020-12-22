@@ -1,5 +1,17 @@
 
-X64SCHEAD=r39194
+X64SCHEAD=r39405
+X64HEAD=r39405
+X64DTVHEAD=r39405
+VSIDHEAD=r39405
+X128HEAD=r39405
+X128C64HEAD=r39405
+XPETHEAD=r39405
+XSCPU64HEAD=r39405
+XVICHEAD=r39405
+
+XPLUS4HEAD=r37109
+XCBM2HEAD=r37109
+XCBM5X0HEAD=r37109
 
 U64LAST=137
 U64LASTSTRING="1.37"
@@ -455,8 +467,8 @@ testu64: prereq
 results0: maketable
 	./maketable --list c64-testlist.in \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
-		--results results/x64-r37109-result.txt "x64 r37109" \
-		--results results/x128c64-r37109-result.txt "x128 (c64) r37109" \
+		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
+		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
 		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.3" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
@@ -467,39 +479,39 @@ results0: maketable
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)"
 
 	./maketable --list vic20-testlist.in \
-		--results results/xvic-r37109-result.txt "xvic r37109" \
+		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		--results results/z64kvic20-1_2-result.txt "z64k (vic20) 1.2" \
 		--results results/cham20-20150818-result.txt "cham20 20150818"
 
 	./maketable --list c128-testlist.in \
-		--results results/x128-r37166-result.txt "x128 r37166" \
+		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
 		--results results/z64kc128-1_2-result.txt "z64k (c128) 1.2"
 
 	./maketable --list plus4-testlist.in \
-		--results results/xplus4-r37109-result.txt "xplus4 r37109"
+		--results results/xplus4-$(XPLUS4HEAD)-result.txt "xplus4 "$(XPLUS4HEAD)""
 
 	./maketable --list pet-testlist.in \
-		--results results/xpet-r37109-result.txt "xpet r37109"
+		--results results/xpet-$(XPETHEAD)-result.txt "xpet "$(XPETHEAD)""
 
 	./maketable --list dtv-testlist.in \
-		--results results/x64dtv-r38998-result.txt "x64dtv r38998"
+		--results results/x64dtv-$(X64DTVHEAD)-result.txt "x64dtv "$(X64DTVHEAD)""
 
 	./maketable --list scpu-testlist.in \
-		--results results/xscpu64-r37109-result.txt "xscpu64 r37109"
+		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)""
 		
 	./maketable --list cbm510-testlist.in \
-		--results results/xcbm5x0-r37109-result.txt "xcbm5x0 r37109"
+		--results results/xcbm5x0-$(XCBM5X0HEAD)-result.txt "xcbm5x0 "$(XCBM5X0HEAD)""
 		
 	./maketable --list cbm610-testlist.in \
-		--results results/xcbm2-r37109-result.txt "xcbm2 r37109"
+		--results results/xcbm2-$(XCBM2HEAD)-result.txt "xcbm2 "$(XCBM2HEAD)""
 		
 		
 results: maketable
 	./maketable --html --list c64-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
-		--results results/x64-r37109-result.txt "x64 r37109" \
-		--results results/x128c64-r37109-result.txt "x128 (c64) r37109" \
+		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
+		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
 		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.3" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
@@ -515,7 +527,7 @@ results: maketable
 		
 	./maketable  --html --list vic20-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xvic-r37109-result.txt "xvic r37109" \
+		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		--results results/z64kvic20-1_2-result.txt "z64k (vic20) 1.2" \
 		--results results/cham20-20150818-result.txt "cham20 20150818" \
 		\
@@ -523,50 +535,50 @@ results: maketable
 		
 	./maketable  --html --list c128-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x128-r37166-result.txt "x128 r37166" \
+		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
 		--results results/z64kc128-1_2-result.txt "z64k (c128) 1.2" \
 		\
 		> results/c128.html
 
 	./maketable  --html --list plus4-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xplus4-r37109-result.txt "xplus4 r37109" \
+		--results results/xplus4-$(XPLUS4HEAD)-result.txt "xplus4 "$(XPLUS4HEAD)"" \
 		\
 		> results/plus4.html
 
 	./maketable  --html --list pet-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xpet-r37109-result.txt "xpet r37109" \
+		--results results/xpet-$(XPETHEAD)-result.txt "xpet "$(XPETHEAD)"" \
 		\
 		> results/pet.html
 
 	./maketable  --html --list dtv-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64dtv-r38998-result.txt "x64dtv r38998" \
+		--results results/x64dtv-$(X64DTVHEAD)-result.txt "x64dtv "$(X64DTVHEAD)"" \
 		\
 		> results/dtv.html
 
 	./maketable  --html --list scpu-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xscpu64-r37109-result.txt "xscpu64 r37109" \
+		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)"" \
 		\
 		> results/scpu.html
 		
 	./maketable  --html --list cbm510-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xcbm5x0-r37109-result.txt "xcbm5x0 r37109" \
+		--results results/xcbm5x0-$(XCBM5X0HEAD)-result.txt "xcbm5x0 "$(XCBM5X0HEAD)"" \
 		\
 		> results/cbm5x0.html
 		
 	./maketable  --html --list cbm610-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xcbm2-r37109-result.txt "xcbm2 r37109" \
+		--results results/xcbm2-$(XCBM2HEAD)-result.txt "xcbm2 "$(XCBM2HEAD)"" \
 		\
 		> results/cbm2.html
 		
 	./maketable  --html --list vsid-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/vsid-r37109-result.txt "vsid r37109" \
+		--results results/vsid-$(VSIDHEAD)-result.txt "vsid "$(VSIDHEAD)"" \
 		\
 		> results/sid.html
 		
@@ -578,8 +590,8 @@ resultswiki: maketable
 	./maketable  --wiki --list c64-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
-		--results results/x64-r37109-result.txt "x64 r37109" \
-		--results results/x128c64-r37109-result.txt "x128 (c64) r37109" \
+		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
+		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
 		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.3" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
 		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
@@ -593,42 +605,42 @@ resultswiki: maketable
 	@echo "=== VIC20 ==="
 	./maketable  --wiki --list vic20-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/xvic-r37109-result.txt "xvic r37109" \
+		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		--results results/z64kvic20-1_2-result.txt "z64k (vic20) 1.2" \
 		--results results/cham20-20150818-result.txt "cham20 20150818"
 	@echo "=== C128 ==="
 	./maketable  --wiki --list c128-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/x128-r37166-result.txt "x128 r37166" \
+		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
 		--results results/z64kc128-1_2-result.txt "z64k (c128) 1.2"
 	@echo "=== PLUS4 ==="
 	./maketable  --wiki --list plus4-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/xplus4-r37109-result.txt "xplus4 r37109"
+		--results results/xplus4-$(XPLUS4HEAD)-result.txt "xplus4 "$(XPLUS4HEAD)""
 	@echo "=== PET ==="
 	./maketable  --wiki --list pet-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/xpet-r37109-result.txt "xpet r37109"
+		--results results/xpet-$(XPETHEAD)-result.txt "xpet "$(XPETHEAD)""
 	@echo "=== DTV ==="
 	./maketable  --wiki --list dtv-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/x64dtv-r38998-result.txt "x64dtv r38998"
+		--results results/x64dtv-$(X64DTVHEAD)-result.txt "x64dtv "$(X64DTVHEAD)""
 	@echo "=== SCPU ==="
 	./maketable  --wiki --list scpu-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/xscpu64-r37109-result.txt "xscpu64 r37109"
+		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)""
 	@echo "=== CBM5x0 ==="
 	./maketable  --wiki --list cbm510-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/xcbm5x0-r37109-result.txt "xcbm5x0 r37109"
+		--results results/xcbm5x0-$(XCBM5X0HEAD)-result.txt "xcbm5x0 "$(XCBM5X0HEAD)""
 	@echo "=== CBM2 ==="
 	./maketable  --wiki --list cbm610-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/xcbm2-r37109-result.txt "xcbm2 r37109"
+		--results results/xcbm2-$(XCBM2HEAD)-result.txt "xcbm2 "$(XCBM2HEAD)""
 	@echo "=== SID ==="
 	./maketable  --wiki --list vsid-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/vsid-r37109-result.txt "vsid r37109"
+		--results results/vsid-$(VSIDHEAD)-result.txt "vsid "$(VSIDHEAD)""
 
 ################################################################################
 
@@ -638,6 +650,7 @@ resultsx64: maketable
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64-r35872-result.txt "x64 r35872" \
 		--results results/x64-r37109-result.txt "x64 r37109" \
+		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
 		\
 		> results/x64.html
 
@@ -666,6 +679,7 @@ resultsx128: maketable
 		--results results/x128-r36700-result.txt "x128 r36700" \
 		--results results/x128-r37109-result.txt "x128 r37109" \
 		--results results/x128-r37166-result.txt "x128 r37166" \
+		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
 		\
 		> results/x128.html
 
@@ -677,6 +691,7 @@ resultsx128c64: maketable
 		--results results/x128c64-r35968-result.txt "x128c64 r35968" \
 		--results results/x128c64-r36700-result.txt "x128c64 r36700" \
 		--results results/x128c64-r37109-result.txt "x128c64 r37109" \
+		--results results/x128c64-$(X128C64HEAD)-result.txt "x128c64 "$(X128C64HEAD)"" \
 		\
 		> results/x128c64.html
 
@@ -687,7 +702,7 @@ resultsxcbm2: maketable
 		--results results/xcbm2-r35872-result.txt "xcbm2 r35872" \
 		--results results/xcbm2-r35990-result.txt "xcbm2 r35990" \
 		--results results/xcbm2-r36700-result.txt "xcbm2 r36700" \
-		--results results/xcbm2-r37109-result.txt "xcbm2 r37109" \
+		--results results/xcbm2-$(XCBM2HEAD)-result.txt "xcbm2 "$(XCBM2HEAD)"" \
 		\
 		> results/xcbm2.html
 
@@ -698,7 +713,7 @@ resultsxcbm5x0: maketable
 		--results results/xcbm5x0-r35872-result.txt "xcbm5x0 r35872" \
 		--results results/xcbm5x0-r35990-result.txt "xcbm5x0 r35990" \
 		--results results/xcbm5x0-r36700-result.txt "xcbm5x0 r36700" \
-		--results results/xcbm5x0-r37109-result.txt "xcbm5x0 r37109" \
+		--results results/xcbm5x0-$(XCBM5X0HEAD)-result.txt "xcbm5x0 "$(XCBM5X0HEAD)"" \
 		\
 		> results/xcbm5x0.html
 
@@ -711,6 +726,7 @@ resultsx64dtv: maketable
 		--results results/x64dtv-r36700-result.txt "x64dtv r36700" \
 		--results results/x64dtv-r37109-result.txt "x64dtv r37109" \
 		--results results/x64dtv-r38998-result.txt "x64dtv r38998" \
+		--results results/x64dtv-$(X64DTVHEAD)-result.txt "x64dtv "$(X64DTVHEAD)"" \
 		\
 		> results/x64dtv.html
 
@@ -722,6 +738,7 @@ resultsxpet: maketable
 		--results results/xpet-r35990-result.txt "xpet r35990" \
 		--results results/xpet-r36700-result.txt "xpet r36700" \
 		--results results/xpet-r37109-result.txt "xpet r37109" \
+		--results results/xpet-$(XPETHEAD)-result.txt "xpet "$(XPETHEAD)"" \
 		\
 		> results/xpet.html
 
@@ -732,7 +749,7 @@ resultsxplus4: maketable
 		--results results/xplus4-r35872-result.txt "xplus4 r35872" \
 		--results results/xplus4-r35990-result.txt "xplus4 r35990" \
 		--results results/xplus4-r36700-result.txt "xplus4 r36700" \
-		--results results/xplus4-r37109-result.txt "xplus4 r37109" \
+		--results results/xplus4-$(XPLUS4HEAD)-result.txt "xplus4 "$(XPLUS4HEAD)"" \
 		\
 		> results/xplus4.html
 
@@ -744,6 +761,7 @@ resultsxscpu64: maketable
 		--results results/xscpu64-r35990-result.txt "xscpu64 r35990" \
 		--results results/xscpu64-r36700-result.txt "xscpu64 r36700" \
 		--results results/xscpu64-r37109-result.txt "xscpu64 r37109" \
+		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)"" \
 		\
 		> results/xscpu64.html
 
@@ -755,6 +773,7 @@ resultsxvic: maketable
 		--results results/xvic-r35990-result.txt "xvic r35990" \
 		--results results/xvic-r36700-result.txt "xvic r36700" \
 		--results results/xvic-r37109-result.txt "xvic r37109" \
+		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		\
 		> results/xvic.html
 
@@ -765,6 +784,7 @@ resultsvsid: maketable
 		--results results/vsid-r35990-result.txt "vsid r35990" \
 		--results results/vsid-r36700-result.txt "vsid r36700" \
 		--results results/vsid-r37109-result.txt "vsid r37109" \
+		--results results/vsid-$(VSIDHEAD)-result.txt "vsid "$(VSIDHEAD)"" \
 		\
 		> results/vsid.html
 
@@ -776,7 +796,7 @@ resultsvsid: maketable
 resultsz64kc64: maketable z64kc64-testlist.txt
 	./maketable --html --list z64kc64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kc64-20181202-result.txt "z64kc64 20181202" \
 		--results results/z64kc64-1_2-result.txt "z64kc64 1.2" \
@@ -787,7 +807,7 @@ resultsz64kc64: maketable z64kc64-testlist.txt
 resultsz64kc128: maketable z64kc128-testlist.txt
 	./maketable --html --list z64kc128-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kc128-20181202-result.txt "z64kc128 20181202" \
 		--results results/z64kc128-1_2-result.txt "z64kc128 1.2" \
@@ -798,7 +818,7 @@ resultsz64kc128: maketable z64kc128-testlist.txt
 resultsz64kc128c64: maketable z64kc128c64-testlist.txt
 	./maketable --html --list z64kc128c64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kc128c64-20181202-result.txt "z64kc128c64 20181202" \
 		--results results/z64kc128c64-1_2-result.txt "z64kc128c64 1.2" \
@@ -809,7 +829,7 @@ resultsz64kc128c64: maketable z64kc128c64-testlist.txt
 resultsz64kvic20: maketable z64kvic20-testlist.txt
 	./maketable --html --list z64kvic20-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xvic-r36700-result.txt "xvic r36700" \
+		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kvic20-20181202-result.txt "z64kvic20 20181202" \
 		--results results/z64kvic20-1_2-result.txt "z64kvic20 1.2" \
@@ -821,7 +841,7 @@ resultsz64kvic20: maketable z64kvic20-testlist.txt
 resultshoxs64: maketable hoxs64-testlist.txt
 	./maketable --html --list hoxs64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/hoxs64-1-0-16-0-result.txt "hoxs64 1.0.16.0" \
 		--results results/hoxs64-1-0-21-0-result.txt "hoxs64 1.0.21.0" \
@@ -834,7 +854,7 @@ resultshoxs64: maketable hoxs64-testlist.txt
 resultsdenise: maketable denise-testlist.txt
 	./maketable --html --list denise-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/denise-1-0-5-result.txt "denise 1.0.5" \
 		--results results/denise-20191012-result.txt "denise 20191012" \
@@ -847,7 +867,7 @@ resultsdenise: maketable denise-testlist.txt
 resultsmicro64: maketable micro64-testlist.txt
 	./maketable --html --list micro64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		\
@@ -857,7 +877,7 @@ resultsmicro64: maketable micro64-testlist.txt
 resultsyace: maketable yace-testlist.txt
 	./maketable --html --list yace-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		\
@@ -867,7 +887,7 @@ resultsyace: maketable yace-testlist.txt
 resultsemu64: maketable emu64-testlist.txt
 	./maketable --html --list emu64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/emu64-20191025-result.txt "emu64 20191025" \
 		\
@@ -914,7 +934,7 @@ resultschamwiki: maketable chameleon-testlist.txt
 resultscham20: maketable cham20-testlist.txt 
 	./maketable --filter-ntscold --html --list cham20-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xvic-r36700-result.txt "xvic r36700" \
+		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--warnvicefail "<small><b>fails on VICE</b></small>" \
 		--warnvicfetch "<small><b>VIC may be wrong!</b></small>" \
@@ -929,7 +949,7 @@ resultscham20: maketable cham20-testlist.txt
 resultsu64: maketable u64-testlist.txt 
 	./maketable --filter-ntscold --html --list u64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r36700-result.txt "x64sc r36700" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--warnvicefail "<small><b>fails on VICE</b></small>" \
 		--results results/u64-10c-result.txt "U64 (1.0c)" \
