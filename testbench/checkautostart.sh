@@ -105,7 +105,7 @@ echo "---"
 # x64
 function testx64 
 {
-LIMITCYCLES=10000000
+LIMITCYCLES=12000000
 EMU=x64
 OPTS=
 echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
@@ -119,7 +119,7 @@ alltests
 # x64sc
 function testx64sc 
 {
-LIMITCYCLES=10000000
+LIMITCYCLES=12000000
 EMU=x64sc
 OPTS=
 echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
@@ -167,7 +167,7 @@ alltests
 # vic20
 function testxvic
 {
-LIMITCYCLES=10000000
+LIMITCYCLES=12000000
 EMU=xvic
 OPTS="-memory 8k"
 echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
@@ -195,7 +195,7 @@ alltests
 # xplus4
 function testxplus4
 {
-LIMITCYCLES=15000000
+LIMITCYCLES=20000000
 EMU=xplus4
 OPTS=
 echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
@@ -224,7 +224,7 @@ alltests
 # xscpu64
 function testxscpu64
 {
-LIMITCYCLES=10000000
+LIMITCYCLES=12000000
 EMU=xscpu64
 OPTS=
 echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
