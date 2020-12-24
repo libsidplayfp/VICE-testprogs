@@ -2,21 +2,21 @@
 
 source Makefile.config
 
-if [ "$VICEDIR" == "" ] ; then
-    VICEDIR="../../trunk/vice/src/"
-fi
-echo "using VICE dir:" $VICEDIR
+VERBOSE=0
 
 function dotest
 {
 
 checkopts="$3 $4 $5 $6 $7 $8 $9 ${10} ${11} ${12} ${13}"
 
-#echo $VICEDIR/$1 $checkopts -debugcart -console -warp -limitcycles $LIMITCYCLES $2
+if [ "$VERBOSE" == "1" ] ; then
+    echo "-_"
+    echo $VICEDIR/$1 -default $checkopts -debugcart -limitcycles $LIMITCYCLES $2
+fi
 
 echo -ne $1" "$checkopts" # "
 
-$VICEDIR/$1 $checkopts -debugcart -console -warp -limitcycles $LIMITCYCLES $2 1> /dev/null 2> /dev/null
+$VICEDIR/$1 -default $checkopts -debugcart -console -warp -limitcycles $LIMITCYCLES $2 1> /dev/null 2> /dev/null
 exitcode=$?
 
 #echo $exitcode
@@ -265,14 +265,93 @@ PROG=./selftest/cbm510-pass.d82
 alltests
 }
 
+function dohelp
+{
+    echo "checkautostart.sh <options> <emulator(s)>"
+    echo "options:"
+    echo " -v --verbose     verbose mode"
+    echo "emulators:"
+    echo " x64"
+    echo " x64sc"
+    echo " x64dtv"
+    echo " xscpu64"
+    echo " x128"
+    echo " xvic"
+    echo " xplus4"
+    echo " xpet"
+    echo " xcbm2"
+    echo " xcbm5x0"
+}
 
-testxpet
-testxcbm2
-testxcbm5x0
-testxplus4
-testxscpu64
-testxvic
-testx128
-testx64sc
-testx64
-testx64dtv
+if [ -z "${@:1:1}" ] ; then
+    dohelp
+    exit
+else
+
+if [ "$VICEDIR" == "" ] ; then
+    VICEDIR="../../trunk/vice/src/"
+fi
+echo "using VICE dir:" $VICEDIR
+
+for thisarg in "$@"
+do
+#    echo "arg:" "$thisarg"
+    case "$thisarg" in
+        --verbose)
+                VERBOSE=1
+            ;;
+        -v)
+                VERBOSE=1
+            ;;
+        xpet)
+                testxpet
+            ;;
+        xcbm2)
+                testxcbm2
+            ;;
+        xcbm5x0)
+                testxcbm5x0
+            ;;
+        xplus4)
+                testxplus4
+            ;;
+        xscpu64)
+                testxscpu64
+            ;;
+        xvic)
+                testxvic
+            ;;
+        x128)
+                testx128
+            ;;
+        x64sc)
+                testx64sc
+            ;;
+        x64)
+                testx64
+            ;;
+        x64dtv)
+                testx64dtv
+            ;;
+        all) # do all
+                testx64sc
+                testx64
+                testx64dtv
+                testxscpu64
+                testx128
+                testxvic
+                testxplus4
+                testxpet
+                testxcbm2
+                testxcbm5x0
+            ;;
+        *)
+                echo "unknown option:" "$thisarg"
+                dohelp
+                exit
+            ;;
+    esac
+
+done
+
+fi
