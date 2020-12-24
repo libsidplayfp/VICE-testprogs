@@ -1,0 +1,17 @@
+./selftest/,c128-pass.prg,ok,exitcode,,,,-1,-1,-1
+./selftest/,c128-fail.prg,error,exitcode,,,,-1,-1,-1
+../c128/mmu/,mmutest.prg,ok,exitcode,,,,-1,-1,-1
+../c128/mmu/,mmutest2.prg,ok,exitcode,,,,-1,-1,-1
+../c128/mmu/,mmuregister-should-not-mirror.prg,ok,exitcode,,,,-1,-1,-1
+../c128/mmu/,mmuversion.prg,ok,exitcode,,,,-1,-1,-1
+../c128/mmu/,p0h-is-set-after-p0l.prg,ok,exitcode,,,,-1,-1,-1
+../c128/mmu/,p0h-rw-test.prg,ok,exitcode,,,,-1,-1,-1
+../c128/mmu/,p1h-is-set-after-p1l.prg,ok,exitcode,,,,-1,-1,-1
+../c128/mmu/,p1h-rw-test.prg,ok,exitcode,,,,-1,-1,-1
+../c128/vdccrash/,crash.prg,ok,exitcode,,,,-1,-1,-1
+../c128/vdccrash/,nocrash.prg,ok,exitcode,,,,-1,-1,-1
+../memory-expansions/,c128-ram-emd.prg,ok,exitcode,,,,-1,-1,-1
+../memory-expansions/,c128-ram2-emd.prg,ok,exitcode,,,,-1,-1,-1
+../memory-expansions/,c128-reu-emd.prg,ok,exitcode,,,,-1,-1,-1
+../memory-expansions/,c128-vdc-emd.prg,ok,exitcode,,,,-1,-1,-1
+# 3 minutes and 58 seconds elapsed.
