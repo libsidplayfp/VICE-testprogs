@@ -19,6 +19,8 @@ DENISELASTSTRING="git 23.12.2020"
 HOXS64LAST=1-1-0-5
 HOXS64LASTSTRING=1.1.0.5
 
+Z64KC64LAST=20201224
+Z64KC64LASTSTRING="24 December 2020"
 Z64KC128C64LAST=20201217
 Z64KC128C64LASTSTRING="17 December 2020"
 Z64KVIC20LAST=20201217
@@ -485,7 +487,7 @@ results0: maketable
 		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
 		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
 		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
-		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
+		--results results/z64kc64-$(Z64KC64LAST)-result.txt "z64k (c64) "$(Z64KC64LASTSTRING)"" \
 		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
@@ -528,7 +530,7 @@ results: maketable
 		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
 		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
 		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
-		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
+		--results results/z64kc64-$(Z64KC64LAST)-result.txt "z64k (c64) "$(Z64KC64LASTSTRING)"" \
 		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
@@ -608,7 +610,7 @@ resultswiki: maketable
 		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
 		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
 		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
-		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
+		--results results/z64kc64-$(Z64KC64LAST)-result.txt "z64k (c64) "$(Z64KC64LASTSTRING)"" \
 		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
@@ -815,6 +817,7 @@ resultsz64kc64: maketable z64kc64-testlist.txt
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kc64-20181202-result.txt "z64kc64 20181202" \
 		--results results/z64kc64-1_2-result.txt "z64kc64 1.2" \
+		--results results/z64kc64-$(Z64KC64LAST)-result.txt "z64kc64 "$(Z64KC64LASTSTRING)"" \
 		\
 		> results/z64kc64.html
 
