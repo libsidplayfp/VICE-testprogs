@@ -53,7 +53,7 @@ function cham20_reset
         e=`chacocmd --noprogress --len 6 --addr 4184 --dumpmem`
         if [ "$?" != "0" ]; then exit -1; fi
         RET=${e:10:17}
- #      echo "poll:" "$RET"
+#      echo "poll:" "$RET" "$SECONDS" "-gt" "$SECONDSEND"
         if [ $SECONDS -gt $SECONDSEND ]
         then
             echo "timeout when waiting for reset"
@@ -84,7 +84,8 @@ function cham20_poll_returncode
     RET="58"
 #    RET="58"
 #    echo "poll1:" "$RET"
-    SECONDSEND=$((SECONDS + 1 + ($1 / 10000000)))
+    SECONDSSTART=$((SECONDS + 1 + ((0 + 999999) / 1000000)))
+    SECONDSEND=$((SECONDS + 1 + (($1 + 999999) / 1000000)))
     while [ "$RET" = "58" ]
     do
 #        chacocmd --len 1 --addr 0x910f --dumpmem
@@ -95,7 +96,9 @@ function cham20_poll_returncode
 #        echo "poll:" "$RET"
         if [ $SECONDS -gt $SECONDSEND ]
         then
-            echo "timeout when waiting for return code"
+            if [ $verbose == "1" ]; then
+                echo -ne "[timeout when waiting for return code, start:"$SECONDSSTART" end:"$SECONDSEND"] "
+            fi
             RET=1
             return $RET
         fi
@@ -103,6 +106,9 @@ function cham20_poll_returncode
 
     if [ "$RET" = "ff" ]; then
         RET=255
+    fi
+    if [ $verbose == "1" ]; then
+        echo -ne "[start:"$SECONDSSTART" end:"$SECONDSEND"] "
     fi
 
 #    echo "cham20_poll_returncode done"
@@ -199,6 +205,7 @@ function cham20_get_cmdline_options
 # called once before any tests run
 function cham20_prepare
 {
+    echo "remember to use +3k +32k config"
     true
 }
 
