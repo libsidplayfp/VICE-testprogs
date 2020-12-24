@@ -13,8 +13,23 @@ XPLUS4HEAD=r37109
 XCBM2HEAD=r37109
 XCBM5X0HEAD=r37109
 
+DENISELAST=20201223
+DENISELASTSTRING="git 23.12.2020"
+
+HOXS64LAST=1-1-0-5
+HOXS64LASTSTRING=1.1.0.5
+
+Z64KC128C64LAST=20201217
+Z64KC128C64LASTSTRING="17 December 2020"
+Z64KVIC20LAST=20201217
+Z64KVIC20LASTSTRING="17 December 2020"
+Z64KC128LAST=20201217
+Z64KC128LASTSTRING="17 December 2020"
+
 U64LAST=137
 U64LASTSTRING="1.37"
+
+CHAM20LAST=20201130
 
 include Makefile.config
 
@@ -469,23 +484,23 @@ results0: maketable
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
 		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
-		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.3" \
+		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
-		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
+		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
+		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
 		--results results/chameleon-9k-standalone-result.txt "TC64 9k (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)"
 
 	./maketable --list vic20-testlist.in \
 		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
-		--results results/z64kvic20-1_2-result.txt "z64k (vic20) 1.2" \
-		--results results/cham20-20150818-result.txt "cham20 20150818"
+		--results results/z64kvic20-$(Z64KVIC20LAST)-result.txt "z64k (vic20) "$(Z64KVIC20LASTSTRING)"" \
+		--results results/cham20-$(CHAM20LAST)-result.txt "cham20 "$(CHAM20LAST)""
 
 	./maketable --list c128-testlist.in \
 		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
-		--results results/z64kc128-1_2-result.txt "z64k (c128) 1.2"
+		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64k (c128) "$(Z64KC128LASTSTRING)""
 
 	./maketable --list plus4-testlist.in \
 		--results results/xplus4-$(XPLUS4HEAD)-result.txt "xplus4 "$(XPLUS4HEAD)""
@@ -512,11 +527,11 @@ results: maketable
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
 		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
-		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.3" \
+		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
-		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
+		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
+		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
 		--results results/emu64-20191025-result.txt "emu64 20191025" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
@@ -528,15 +543,15 @@ results: maketable
 	./maketable  --html --list vic20-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
-		--results results/z64kvic20-1_2-result.txt "z64k (vic20) 1.2" \
-		--results results/cham20-20150818-result.txt "cham20 20150818" \
+		--results results/z64kvic20-$(Z64KVIC20LAST)-result.txt "z64k (vic20) "$(Z64KVIC20LASTSTRING)"" \
+		--results results/cham20-$(CHAM20LAST)-result.txt "cham20 "$(CHAM20LAST)"" \
 		\
 		> results/vic20.html
 		
 	./maketable  --html --list c128-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
-		--results results/z64kc128-1_2-result.txt "z64k (c128) 1.2" \
+		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64k (c128) "$(Z64KC128LASTSTRING)"" \
 		\
 		> results/c128.html
 
@@ -592,11 +607,11 @@ resultswiki: maketable
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
 		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
-		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.3" \
+		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
 		--results results/z64kc64-1_2-result.txt "z64k (c64) 1.2" \
-		--results results/z64kc128c64-1_2-result.txt "z64k (c128/c64) 1.2" \
+		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
-		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
+		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
 		--results results/emu64-20191025-result.txt "emu64 20191025" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
@@ -606,13 +621,13 @@ resultswiki: maketable
 	./maketable  --wiki --list vic20-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
 		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
-		--results results/z64kvic20-1_2-result.txt "z64k (vic20) 1.2" \
-		--results results/cham20-20150818-result.txt "cham20 20150818"
+		--results results/z64kvic20-$(Z64KVIC20LAST)-result.txt "z64k (vic20) "$(Z64KVIC20LASTSTRING)"" \
+		--results results/cham20-$(CHAM20LAST)-result.txt "cham20 "$(CHAM20LAST)""
 	@echo "=== C128 ==="
 	./maketable  --wiki --list c128-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
 		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
-		--results results/z64kc128-1_2-result.txt "z64k (c128) 1.2"
+		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64k (c128) "$(Z64KC128LASTSTRING)""
 	@echo "=== PLUS4 ==="
 	./maketable  --wiki --list plus4-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
@@ -811,6 +826,7 @@ resultsz64kc128: maketable z64kc128-testlist.txt
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kc128-20181202-result.txt "z64kc128 20181202" \
 		--results results/z64kc128-1_2-result.txt "z64kc128 1.2" \
+		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64kc128 "$(Z64KC128LASTSTRING)"" \
 		\
 		> results/z64kc128.html
 
@@ -822,6 +838,7 @@ resultsz64kc128c64: maketable z64kc128c64-testlist.txt
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kc128c64-20181202-result.txt "z64kc128c64 20181202" \
 		--results results/z64kc128c64-1_2-result.txt "z64kc128c64 1.2" \
+		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64kc128c64 "$(Z64KC128C64LASTSTRING)"" \
 		\
 		> results/z64kc128c64.html
 
@@ -833,6 +850,7 @@ resultsz64kvic20: maketable z64kvic20-testlist.txt
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kvic20-20181202-result.txt "z64kvic20 20181202" \
 		--results results/z64kvic20-1_2-result.txt "z64kvic20 1.2" \
+		--results results/z64kvic20-$(Z64KVIC20LAST)-result.txt "z64kvic20 "$(Z64KVIC20LASTSTRING)"" \
 		\
 		> results/z64kvic20.html
 
@@ -847,6 +865,7 @@ resultshoxs64: maketable hoxs64-testlist.txt
 		--results results/hoxs64-1-0-21-0-result.txt "hoxs64 1.0.21.0" \
 		--results results/hoxs64-1-0-21-2-result.txt "hoxs64 1.0.21.2" \
 		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.32" \
+		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
 		\
 		> results/hoxs64.html
 
@@ -860,6 +879,7 @@ resultsdenise: maketable denise-testlist.txt
 		--results results/denise-20191012-result.txt "denise 20191012" \
 		--results results/denise-20200110-result.txt "denise 20200110" \
 		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
+		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
 		\
 		> results/denise.html
 		
@@ -939,9 +959,22 @@ resultscham20: maketable cham20-testlist.txt
 		--warnvicefail "<small><b>fails on VICE</b></small>" \
 		--warnvicfetch "<small><b>VIC may be wrong!</b></small>" \
 		--results results/cham20-20150818-result.txt "cham20 20150818" \
+		--results results/cham20-$(CHAM20LAST)-result.txt "cham20 "$(CHAM20LAST)"" \
 		\
 		> results/cham20.html
 
+# use with something like "make resultscham20wiki | xclip -selection clipboard"
+		
+.PHONY: resultscham20wiki
+resultscham20wiki: maketable cham20-testlist.txt 
+	./maketable --filter-ntscold --wiki --list cham20-testlist.txt \
+		--percentages "{{Progress|%d|%d|%d|}}" \
+		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
+		--firstcolisref "{{BREAKSEMU}}" \
+		--warnvicefail "{{BREAKSEMU}}" \
+		--warnvicfetch "{{BREAKSVIC}}" \
+		--results results/cham20-20150818-result.txt "cham20 20150818" \
+		--results results/cham20-$(CHAM20LAST)-result.txt "cham20 "$(CHAM20LAST)"" \
 		
 ################################################################################
 		

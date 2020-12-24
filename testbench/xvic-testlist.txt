@@ -97,10 +97,10 @@
 #TODO:
 #../interrupts/irq-ackn-bug/,via1-free.prg
 #../interrupts/irq-ackn-bug/,via1.prg
-../interrupts/irqnmi/,irqnmi-vic20irq.prg,exitcode,100000000,vic20-unexp
-../interrupts/irqnmi/,irqnmi-vic20nmi.prg,exitcode,100000000,vic20-unexp
-../interrupts/irqnmi/,irqnmi-vic20irq-8k.prg,exitcode,100000000,vic20-8k
-../interrupts/irqnmi/,irqnmi-vic20nmi-8k.prg,exitcode,100000000,vic20-8k
+../interrupts/irqnmi/,irqnmi-vic20irq.prg,exitcode,30000000,vic20-unexp
+../interrupts/irqnmi/,irqnmi-vic20nmi.prg,exitcode,30000000,vic20-unexp
+../interrupts/irqnmi/,irqnmi-vic20irq-8k.prg,exitcode,30000000,vic20-8k
+../interrupts/irqnmi/,irqnmi-vic20nmi-8k.prg,exitcode,30000000,vic20-8k
 ################################################################################
 # GEO-RAM
 ################################################################################
