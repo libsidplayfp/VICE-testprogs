@@ -8,10 +8,9 @@ X128C64HEAD=r39405
 XPETHEAD=r39405
 XSCPU64HEAD=r39405
 XVICHEAD=r39405
-
-XPLUS4HEAD=r37109
-XCBM2HEAD=r37109
-XCBM5X0HEAD=r37109
+XPLUS4HEAD=r39433
+XCBM2HEAD=r39433
+XCBM5X0HEAD=r39433
 
 DENISELAST=20201223
 DENISELASTSTRING="git 23.12.2020"
@@ -719,6 +718,7 @@ resultsxcbm2: maketable
 		--results results/xcbm2-r35872-result.txt "xcbm2 r35872" \
 		--results results/xcbm2-r35990-result.txt "xcbm2 r35990" \
 		--results results/xcbm2-r36700-result.txt "xcbm2 r36700" \
+		--results results/xcbm2-r37109-result.txt "xcbm2 r37109" \
 		--results results/xcbm2-$(XCBM2HEAD)-result.txt "xcbm2 "$(XCBM2HEAD)"" \
 		\
 		> results/xcbm2.html
@@ -730,6 +730,7 @@ resultsxcbm5x0: maketable
 		--results results/xcbm5x0-r35872-result.txt "xcbm5x0 r35872" \
 		--results results/xcbm5x0-r35990-result.txt "xcbm5x0 r35990" \
 		--results results/xcbm5x0-r36700-result.txt "xcbm5x0 r36700" \
+		--results results/xcbm5x0-r37109-result.txt "xcbm5x0 r37109" \
 		--results results/xcbm5x0-$(XCBM5X0HEAD)-result.txt "xcbm5x0 "$(XCBM5X0HEAD)"" \
 		\
 		> results/xcbm5x0.html
@@ -766,6 +767,7 @@ resultsxplus4: maketable
 		--results results/xplus4-r35872-result.txt "xplus4 r35872" \
 		--results results/xplus4-r35990-result.txt "xplus4 r35990" \
 		--results results/xplus4-r36700-result.txt "xplus4 r36700" \
+		--results results/xplus4-r37109-result.txt "xplus4 r37109" \
 		--results results/xplus4-$(XPLUS4HEAD)-result.txt "xplus4 "$(XPLUS4HEAD)"" \
 		\
 		> results/xplus4.html
