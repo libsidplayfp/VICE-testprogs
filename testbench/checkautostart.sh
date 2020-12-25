@@ -184,7 +184,7 @@ function testx64dtv
 LIMITCYCLES=50000000
 EMU=x64dtv
 OPTS=
-echo "all tests pass"
+echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
 PROG=./selftest/dtv-pass.prg
 alltests
 echo "all tests pass"
@@ -201,7 +201,7 @@ OPTS=
 echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
 PROG=./selftest/plus4-pass.prg
 alltests
-echo "FIXME: all tests pass, except sometimes some fail randomly."
+echo "all tests pass"
 PROG=./selftest/plus4-pass.d64
 alltests
 }
@@ -213,7 +213,7 @@ LIMITCYCLES=20000000
 EMU=xpet
 OPTS="-drive8type 8250"
 echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
-echo "FIXME: there is too much failing here"
+echo "FIXME: the same four tests fail with handle TDE enabled - this should not happen"
 PROG=./selftest/pet-pass.prg
 alltests
 echo "all tests pass"
@@ -242,7 +242,7 @@ LIMITCYCLES=80000000
 EMU=xcbm2
 OPTS="-drive8type 8250"
 echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
-echo "FIXME: there is too much failing here"
+echo "FIXME: the same four tests fail with handle TDE enabled - this should not happen"
 PROG=./selftest/cbm610-pass.prg
 alltests
 echo "all tests pass"
@@ -257,7 +257,7 @@ LIMITCYCLES=80000000
 EMU=xcbm5x0
 OPTS="-drive8type 8250"
 echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
-echo "FIXME: there is too much failing here"
+echo "FIXME: the same four tests fail with handle TDE enabled - this should not happen"
 PROG=./selftest/cbm510-pass.prg
 alltests
 echo "all tests pass"
