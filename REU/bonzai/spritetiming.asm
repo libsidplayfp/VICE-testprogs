@@ -1,5 +1,7 @@
-; SpriteTiming.asm by Walt of Bonzai - Version 1.1
+; SpriteTiming.asm by Walt of Bonzai - Version 1.2
 ; adapted for VICE testbench by gpz
+
+SLOW = 1 ; Remove this to have it run at normal speed. This is only for slowing it down to show it more clearly...
 
 !src "io.inc"
 !src "reu.inc"
@@ -7,6 +9,7 @@
 Ptr     = $f8
 Scr     = $fa
 temp    = $fc
+SlowCounter = $fd
 
 CR  = $5e
 
@@ -32,6 +35,8 @@ Result:         !byte 0,0
 
 Main:           jsr $ff81                   ; Init screen
 
+                jsr REUDetect
+
                 lda $dd00                   ; Ensure VIC at $0000-$3fff
                 ora #3
                 sta $dd00
@@ -46,6 +51,13 @@ Main:           jsr $ff81                   ; Init screen
                 lda #1
                 sta VIC_Sprite_Priority     ; Put sprites behind test char, for show only, not needed for testing...
 
+                jsr DetectMachine
+                ldx MachineType
+                lda TimingOpTable1,x
+                sta _timing                 ; Replace timing opcodes to match machine type
+                lda TimingOpTable2,x
+                sta _timing2
+
                 jsr SetupIRQ                ; Setup a normal raster IRQ that does nothing
 
                 jsr TestREU                 ; Do the test
@@ -53,9 +65,10 @@ Main:           jsr $ff81                   ; Init screen
                 lda VIC_BorderColor
                 sta VIC_ScreenColor
 
-                lda #<Table                 ; Init table pointer
-                sta Ptr
-                lda #>Table
+                ldx MachineType
+                lda TablesLow,x
+                sta Ptr                     ; Init table pointer
+                lda TablesHigh,x
                 sta Ptr+1
 
                 ldy #0
@@ -101,6 +114,19 @@ CopyText:       lda #15
                 cpx #40
                 bne CopyText
 
+                lda MachineType
+                asl
+                asl
+                asl
+                tay
+                ldx #0
+MachineText:    lda MachineTypes,y
+                sta $0400,x
+                inx
+                iny
+                cpx #8
+                bne MachineText
+
                 lda Result
                 ldx #19
                 jsr DisplayHex              ; Print result 1
@@ -129,9 +155,10 @@ CopyText:       lda #15
                 sta Ptr+1
                 ldy #0
 CopyText2:      lda (Ptr),y                 ; Get text byte
+                bne NotEoT
                 beq textend                 ; End reached when text byte is 0
 
-                cmp #CR                     ; Is it CR
+NotEoT:         cmp #CR                     ; Is it CR
                 beq NewLine                 ; if so, advance to next line
 
                 sta (Scr),y                 ; Store to screen
@@ -197,36 +224,106 @@ DisplayHex:     sta temp                    ; Store value
                 rts
 
 Hex:            !scr "0123456789abcdef"
-Text:           !scr "REU detected: 1st $__, 2nd $__, diff $__"
+Text:           !scr "________ Res: 1st $__, 2nd $__, diff $__"
 
-Table:          !byte $59, $85              ; Table format is result 1 (byte), result 2 (byte), Text entry (word)
-                !word Text5985
+                                        ; $24 = BIT zp, $ea = NOP
+TimingOpTable1: !byte $24,$ea,$24,$ea   ; BIT $ea, BIT $ea      21 cycles timing code
+TimingOpTable2: !byte $ea,$ea,$24,$ea   ; BIT $ea, NOP, NOP     22 cycles timing code
+                                        ; NOP, NOP, NOP, NOP    23 cycles timing code
+
+; NTSC and Drean should be the same but I have separate tables in case any differences should be found...
+TablesLow:      !byte <OldNTSCTable, <NTSCTable, <PALTable, <DreanTable
+TablesHigh:     !byte >OldNTSCTable, >NTSCTable, >PALTable, >DreanTable
+
+PALTable:       !byte $59, $85          ; Table format is result 1 (byte), result 2 (byte), Text entry (word)
+                !word PALText5985
 
                 !byte $5a, $86
-                !word Text5a86
+                !word PALText5a86
 
                 !byte $5b, $88
-                !word Text5b88
+                !word PALText5b88
 
-                !byte 0,0                   ; 0,0 end of table
+                !byte 0,0               ; 0,0 end of table
+                !word TextUnknown
+
+
+OldNTSCTable:   !byte $5b, $88
+                !word oNTSCText5b88
+
+                !byte $5c, $8a
+                !word oNTSCText5c8a
+
+                !byte 0,0
+                !word TextUnknown
+
+
+NTSCTable:      !byte $5d, $8b
+                !word NaDText5d8b
+
+                !byte $5e, $8d
+                !word NaDText5e8d
+
+                !byte $5f, $8e
+                !word NaDText5f8e
+
+                !byte 0,0
+                !word TextUnknown
+
+
+DreanTable:     !byte $5d, $8b
+                !word NaDText5d8b
+
+                !byte $5e, $8d
+                !word NaDText5e8d
+
+                !byte 0,0
                 !word TextUnknown
 
 TextUnknown:    !scr "Unknown! Please send info to Walt/Bonzai", CR
                 !scr "See Readme.txt for contact info.", CR
                 !byte 0
 
-Text5985:       !scr "C64 Ultimate fw. 1.24, 1.34", CR
+                ; PAL Texts
+
+PALText5985:    !scr "C64 Ultimate fw. 1.24, 1.34", CR
                 !scr "Chameleon Beta-9j", CR
                 !scr "The C64 1.3.2-amora", CR
-                !scr "VICE x64 and x128 v. 2.4, 3.1, 3.4", CR
+                !scr "VICE x64 and x128 v. 2.4, 3.1, 3.4, 3.5", CR
                 !scr "VICE x64sc v. 2.4", CR
+                !scr "Z64K 1.2.4", CR
                 !byte 0
 
-Text5a86:       !scr "1541 Ultimate-II Plus 3.6 (115)", CR
+PALText5a86:    !scr "1541 Ultimate-II Plus 3.6 (115)", CR
                 !byte 0
 
-Text5b88:       !scr "Commodore RAM Expansion Unit", CR
-                !scr "VICE x64sc v. 3.1, 3.4", CR
+PALText5b88:    !scr "Commodore RAM Expansion Unit", CR
+                !scr "VICE x64sc v. 3.1, 3.4, 3.5", CR
+                !byte 0
+
+                ; Old NTSC texts
+
+oNTSCText5b88:  !scr "VICE x64 and x128 v. 2.4, 3.1, 3.4, 3.5", CR
+                !scr "VICE x64sc v. 2.4", CR
+                !scr "Z64K 1.2.4", CR
+                !byte 0
+
+oNTSCText5c8a:  ;!scr "Commodore RAM Expansion Unit", CR
+                !scr "VICE x64sc v. 3.1, 3.4, 3.5", CR
+                !byte 0
+
+                ; NTSC and Drean texts
+
+NaDText5d8b:    !scr "VICE x64 and x128 v. 2.4, 3.1, 3.4, 3.5", CR
+                !scr "VICE x64sc v. 2.4", CR
+                !scr "Z64K 1.2.4", CR
+                !byte 0
+
+NaDText5e8d:    ;!scr "Commodore RAM Expansion Unit", CR
+                !scr "VICE x64sc v. 3.1, 3.4, 3.5", CR
+                !byte 0
+
+NaDText5f8e:    !scr "Commodore RAM Expansion Unit", CR
                 !byte 0
 
 ;----------------------------------------------------------------------------------------------------
@@ -235,20 +332,22 @@ TestPos:        !byte 70                        ; Byte in data stream to test
 TestByte:       !byte 60                        ; Byte to use for testing
 TestIndex:      !byte 0                         ; Result index
 
-TestREU:        lda #255                        ; Enable all sprites
-                sta VIC_Sprite_Enable
-                sta TestSprite                  ; First byte in sprite
-
-                lda #70                         ; Init vars
+TestREU:        lda #70                         ; Init vars
                 sta TestPos
                 lda #0
-                sta TestIndex
-                sta TestSprite+3                ; Redundant, unless you want to test again
+                ldx #62
+ClearSprite:    sta TestSprite,x
+                dex
+                bpl ClearSprite
+
+                lda #255                        ; Enable all sprites
+                sta VIC_Sprite_Enable
+                sta TestSprite                  ; First byte in sprite
 
                 lda #24                         ; Place sprite 0 at position 24 (first char row)
                 sta VIC_Sprite0_X
                 lda #50-21
-                sta VIC_Sprite0_Y               ; Place all sprites just below screen area
+                sta VIC_Sprite0_Y               ; Place all sprites just aboce screen area
                 sta VIC_Sprite1_Y
                 sta VIC_Sprite2_Y
                 sta VIC_Sprite3_Y
@@ -299,24 +398,32 @@ WaitTest:       lda TestIndex
 TIRQ1:          +BeginIRQ                       ; IRQ for preparing stable raster
                 +SetIRQ_NoSEI TIRQ2, 27
                 lda VIC_Sprite_Back_Coll
+                lda #0                          ; Set REU address to $000000
+                sta REUREU
+                sta REUREU+1
+                sta REUREU+2
                 cli
                 !fill 80,234
                 jmp StackRTI
 
 TIRQ2:          +BeginIRQ
-                lda #0                          ; Set REU address to $000000
-                sta REUREU
-                sta REUREU+1
-                sta REUREU+2
                 lda #REUAddrFixedC64            ; Set REU to fixed C64 address (We want to write REU values just to magic byte)
                 sta REUAddrMode
+_timing:        nop                             ; _timing and _timing+2 will be changed according to machine type
+                nop                             ; _timing code should use between 21 and 23 cycles. See TimingOpTable1+2.
+_timing2:       nop
+                nop
+                nop
+                nop
+                nop
+                nop
                 nop
                 nop
                 bit 0
                 lda VIC_Raster_Position         ; Stable raster
                 cmp VIC_Raster_Position
                 beq	+
-+                 lda #0
++               lda #0
                 sta REUTransLen
                 lda #1                          ; REU transfer length is $100 bytes
                 sta REUTransLen+1
@@ -328,10 +435,11 @@ TIRQ2:          +BeginIRQ
                 sta REUCommand
 
                 ; Remove these blocks to have it run at normal speed. This block is only for slowing it down to show it more clearly...
-
+                !if (SLOW = 1) {
                 lda 2
                 and #7
                 bne NoColl
+                }
 
                 ; ...end of block 1/2
 
@@ -372,11 +480,12 @@ NoColl:         lda #0
                 sta REUCommand
 
                 ; Remove these blocks to have it run at normal speed. This block is only for slowing it down to show it more clearly...
-
+                !if (SLOW = 1) {
                 inc 2
                 lda 2
                 and #7
                 bne +
+                }
 
                 ; ...end of block 2/2
 

@@ -1,9 +1,10 @@
 
-these programs have been derived from "REUTools 1.0" and "REUTools 1.1" by 
+these programs have been derived from "REUTools" by 
 Walt of Bonzai, get the original releases here: 
 
 https://csdb.dk/release/?id=196880
 https://csdb.dk/release/?id=198061
+https://csdb.dk/release/index.php?id=198460
 
 -------------------------------------------------------------------------------
 
@@ -73,6 +74,9 @@ the problem with (and the many versions of) the demo Treu Love by Booze Design.
 
 As of now I have found these values:
 
+PAL:
+====
+
 $59,$85 (=$2c)
 --------------
 
@@ -81,6 +85,7 @@ Chameleon Beta-9j
 The C64 1.3.2-amora
 VICE x64 and x128 2.4, 3.1, 3.4 
 VICE x64sc 2.4
+Z64K 1.2.4
 
 
 $5a,$86 (=$2c)
@@ -89,9 +94,64 @@ $5a,$86 (=$2c)
 1541 Ultimate-II Plus 3.6 (115)
 
 
-$5b,$88 (=$2d)
+$5b,$88 (=$2d)  <- this is correct
 --------------
 
 Commodore RAM Expansion Unit
 VICE x64sc 3.1, 3.4
+
+
+NTSC:
+=====
+
+$5d,$8b (=$2e)
+--------------
+
+VICE x64 and x128 v. 2.4, 3.1, 3.4, 3.5
+VICE x64sc v. 2.4
+Z64K 1.2.4
+
+$5e,$8d (=$30)
+--------------
+
+VICE x64sc v. 3.1, 3.4, 3.5
+
+$5f,$8e (=$2f)  <- this is correct
+--------------
+
+Commodore RAM Expansion Unit
+
+
+NTSC (old):
+===========
+
+$5b,$88 (=$2d)
+--------------
+
+VICE x64 and x128 v. 2.4, 3.1, 3.4, 3.5
+VICE x64sc v. 2.4
+Z64K 1.2.4
+
+$5c,$8a (=$2e)
+--------------
+
+VICE x64sc v. 3.1, 3.4, 3.5
+
+
+Drean:
+======
+
+$5d,$8b (=$2e)
+--------------
+
+VICE x64 and x128 v. 2.4, 3.1, 3.4, 3.5
+VICE x64sc v. 2.4
+Z64K 1.2.4
+
+$5e,$8d (=$30)
+--------------
+
+VICE x64sc v. 3.1, 3.4, 3.5
+
+
 

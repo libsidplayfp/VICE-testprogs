@@ -1,5 +1,7 @@
-; CheckChar.asm by Walt of Bonzai - Version 1.0
+; CheckChar.asm by Walt of Bonzai - Version 1.2
 ; adapted for VICE testbench by gpz
+
+SLOW = 1    ; Remove this to have it run at normal speed. This is only for slowing it down to show it more clearly...
 
 !src "io.inc"
 !src "reu.inc"
@@ -14,10 +16,11 @@
 ; 
 ; When using this in a demo use the same color for screen, chars and sprite :)
 
-Sprite=$40 		; The sprite, blank except for a single byte
-Char=Sprite+64		; The char used to stream data into
-TestRes=Char+8      		; The results, bit 1 of sprite to char collision detect VIC register
-								; 8 of the chars should give a hit so doing a sum of the 16 values should equal 16 if it works!
+Sprite=$40          ; The sprite, blank except for a single byte
+Char=Sprite+64      ; The char used to stream data into
+TestRes=Char+8      ; The results, bit 1 of sprite to char collision detect VIC register
+                    ; 8 of the chars should give a hit so doing a sum of the 16 values should equal 16 if it works!
+SlowCounter=TestRes+16
 
 ;----------------------------------------------------------------------------------------------------
 
@@ -41,21 +44,47 @@ Result:			!byte 0			; 0 = Char streaming OK, 1 = Char streaming failed
 
 Main:			jsr $ff81		; Restore VIC etc.
 
+				jsr REUDetect
+
+				jsr DetectMachine
+				ldx MachineType
+				lda TimingOpTable1,x
+				sta _timing1_1				; Replace timing opcodes to match machine type
+				sta _timing2_1
+				lda TimingOpTable2,x
+				sta _timing1_2
+				sta _timing2_2
+
 				jsr SetupIRQ	; Setup a default raster IRQ
 				
 				jsr CheckVICE	; Call the check
 
+				lda MachineType
+				asl
+				asl
+				asl
+				tay
+				ldx #0
+MachineText:	lda MachineTypes,y
+				sta $0400,x
+				lda #1
+				sta ColorRAM,x
+				inx
+				iny
+				cpx #8
+				bne MachineText
+				
 				lda #$16				; Normal screen
 				sta VIC_ScreenMemory
 				
 				lda VIC_ScreenColor
 				sta VIC_BorderColor
 
-				ldx #39
+				ldx #27
 CopyText:		lda Text,x				; Copy text
-				sta $0400+12*40,x
+				sta $0400+8,x
 				lda #15
-				sta ColorRAM+12*40,x
+				sta ColorRAM+8,x
 				dex
 				bpl CopyText
 
@@ -65,9 +94,9 @@ CopyText:		lda Text,x				; Copy text
 				tay						; Use for lookup
 				ldx #0
 CopyResText:	lda ResText,y			; and copy result text
-				sta $0400+12*40+31,x
+				sta $0400+36,x
 				lda #1
-				sta ColorRAM+12*40+31,x
+				sta ColorRAM+36,x
 				iny
 				inx
 				cpx #4
@@ -89,14 +118,16 @@ ResText:		!scr "OK  Fail"
 
 ;-------------------------------------------------------------------------------------------------------
 
-CheckVICE:		lda #Char/8
-				ldx #15
-ClrScr:			sta $0400,x		; Fill the first 16 chars of the screen with the test char
+CheckVICE:		ldx #15
+ClrScr:			lda #Char/8
+				sta $0400,x		; Fill the first 16 chars of the screen with the test char
+				lda #1
+				sta ColorRAM,x
 				dex
 				bpl ClrScr
-
+				
 				lda #0
-				ldx #64+8
+				ldx #63+8
 ClearGfx:		sta Sprite,x	; Clear the sprite and char
 				dex
 				bpl ClearGfx
@@ -106,7 +137,10 @@ ClearGfx:		sta Sprite,x	; Clear the sprite and char
 
 				lda #2
 				sta VIC_Sprite_Enable		; enable the sprite
-				
+
+				lda #7
+				sta VIC_Sprite1_Color
+
 				lda #53
 				sta VIC_Sprite1_Y			; and place it on the correct y pos to hit the char.
 
@@ -141,7 +175,7 @@ ClearGfx:		sta Sprite,x	; Clear the sprite and char
 
 				lda #253					; Init our test counter. Start at 253 to have 3 frames to move the sprites on screen
 				sta Pos						; and skip the first 3 detection result (a combo of laziness and uncertainty ;) )
-				+SetIRQ_SEI IRQ1, 50		; Setup the test IRQ at rasterline 50
+				+SetIRQ_SEI IRQ1, 49		; Setup the test IRQ at rasterline 50
 
 				jsr WaitOrgIRQ				; Wait for the original IRQ pointer to be restored to default (see Common.asm)
 
@@ -169,11 +203,6 @@ Pos:			!byte 0						; Testing position (0-15 is used)
 
 IRQ1:			+BeginIRQ					; Macro, see Common.asm
 				+SetIRQ_NoSEI IRQ2, 52
-				cli							; Nested interrupt, preparing stable raster
-				!fill 50,234				; Ensure that we interrupt on a 2 cycle opcode
-				jmp StackRTI
-
-IRQ2:			+BeginIRQ
 				lda #0						; Set REU address to $00000
 				sta REUREU
 				sta REUREU+1
@@ -181,6 +210,24 @@ IRQ2:			+BeginIRQ
 				sta REUC64+1
 				lda #<(Char+3)				; Point C64 address to Char+3.
 				sta REUC64
+				cli							; Nested interrupt, preparing stable raster
+				!fill 80,234				; Ensure that we interrupt on a 2 cycle opcode
+				jmp StackRTI
+
+IRQ2:			+BeginIRQ
+_timing1_1:		nop
+				nop
+_timing1_2:		nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
 				bit 0
 				lda VIC_Raster_Position
 				cmp VIC_Raster_Position		; Stable raster check
@@ -193,8 +240,26 @@ IRQ2:			+BeginIRQ
 				sta REUTransLen+1
 				lda #REUAddrFixedC64		; Set REU to not increment (fix) the C64 address when transfering
 				sta REUAddrMode				; (So that we always write to the char address)
-				!fill 18,234
-				bit 0
+_timing2_1:		nop
+				nop
+_timing2_2:		nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				bit $ea
 				lda #REUCMDTransToC64+REUCMDExecute
 				sta REUCommand				; Start transfer exactly at char position 0, line 3 (raster line 53)
 
@@ -213,12 +278,12 @@ IRQ2:			+BeginIRQ
 
 + 				
 			; Remove this block to have it run at normal speed. This block is only for slowing it down to show it more clearly...
-			
+                !if (SLOW = 1) {
 					inc 2
 					lda 2
 					and #7
 					bne +
-					
+                }
 			; ...end of block
 
 				inc Pos						; Increase test pos
@@ -232,9 +297,14 @@ IRQ2:			+BeginIRQ
 				cmp #16
 				beq IRQDone					; Are we done testing?
 
-+				+NextIRQ IRQ1, 50			; If not, issue our original test IRQ at raster line 50
++				+NextIRQ IRQ1, 49			; If not, issue our original test IRQ at raster line 50
 
 IRQDone:		+RestoreIRQ_NoSEI 		; Done, restore our IRQ to default
 				jmp StackRTI				; And exit IRQ
 
 TestData:		!byte 60,0,60,0,0,60,60,0,0,0,60,60,0,60,60,0	; Test data, 8 filled and 8 blanks
+
+										; $24 = BIT zp, $ea = NOP
+TimingOpTable1:	!byte $24,$ea,$24,$ea	; BIT $ea, BIT $ea			21 cycles timing code
+TimingOpTable2:	!byte $ea,$ea,$24,$ea	; BIT $ea, NOP, NOP		22 cycles timing code
+										; NOP, NOP, NOP, NOP		23 cycles timing code
