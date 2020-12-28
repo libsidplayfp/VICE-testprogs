@@ -7,7 +7,7 @@
 #include "stb_image.h"
 
 #define MAXCOLORS 0x100
-#define MAXPALETTES 5
+#define MAXPALETTES 6
 
 #define max(x, y) (((x) > (y)) ? (x) : (y))
 #define min(x, y) (((x) < (y)) ? (x) : (y))
@@ -127,12 +127,35 @@ unsigned char cols_pet_green_old[16 * 3] = {
     0x00, 0x00, 0x00, 
 };
 
+unsigned char cols_emu64_pepto[16 * 3] = {
+    0x00, 0x00, 0x00, // black
+    0xff, 0xff, 0xff, // white
+     104,   55,   43, // red
+     112,  164,  178, // cyan
+    
+     111,   61,  134, // pur
+      88,  141,   67, // green
+      53,   40,  121, // blue
+     184,  199,  111, // yellow
+
+     111,   79,   37, // orange
+      67,   57,    0, // brown
+     154,  103,   89, // l.red
+      68,   68,   68, // grey 1
+
+     108,  108,  108, // grey 2
+     154,  210,  132, // l.green
+     108,   94,  181, // l.blue
+     149,  149,  149, // grey 3
+};
+
 unsigned char *colors[MAXPALETTES] = {
     &cols_pepto_pal[0],
     &cols_pepto_ntsc_sony[0],
     &cols_mike_pal[0],
     &cols_pet_green[0],
     &cols_pet_green_old[0],
+    &cols_emu64_pepto[0],
 };
 
 char *palettenames[MAXPALETTES] = {
@@ -141,6 +164,7 @@ char *palettenames[MAXPALETTES] = {
     "Mike (VIC20, PAL)",
     "PET green",
     "PET green (old)",
+    "Emu64 Pepto (PAL)",
 };
 
 int findcolorinpalette(unsigned char *p, int palette)

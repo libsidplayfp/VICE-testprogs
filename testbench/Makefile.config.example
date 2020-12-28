@@ -29,5 +29,8 @@ EMU64DIR="~/c64stuff/emu64/"
 # should point to directoy containing denise
 DENISEDIR="~/c64stuff/denise/"
 
+# should point to the directory containing kernal64
+KERNAL64DIR="~/c64stuff/kernal64/"
+
 # the IP used for the U64 remote interface
 U64IP="192.168.100.210"

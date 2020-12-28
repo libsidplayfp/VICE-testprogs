@@ -1,0 +1,81 @@
+# this is a generated file, do not edit.
+################################################################################
+# C128 related tests
+#                           (z64kc128)  3 minutes and 18 seconds
+#                           (x128)      1 minutes and 36 seconds
+################################################################################
+################################################################################
+# selftest
+################################################################################
+./selftest/,c128-pass.prg,exitcode,10000000
+./selftest/,c128-fail.prg,exitcode,10000000,expect:error
+# FIXME: once these work, we can use screenshots
+../c128/2mhztest,2mhztest.prg,interactive,0
+../c128/2mhzVIC,2mhz-vic-hires.prg,interactive,0
+../c128/2mhzVIC,2mhz-vic-multicolor.prg,interactive,0
+../c128/2mhzVIC,2mhz-vic-extended.prg,interactive,0
+../c128/2mhzVIC,timing-change0.prg,interactive,0
+../c128/2mhzVIC,timing-change1.prg,interactive,0
+../c128/d030tester/,d030tester2.0.prg,interactive,0
+../c128/mmu/,mmutest.prg,exitcode,6000000
+../c128/mmu/,mmutest2.prg,exitcode,6000000
+../c128/mmu/,mmuregister-should-not-mirror.prg,exitcode,6000000
+../c128/mmu/,mmuversion.prg,exitcode,6000000
+../c128/mmu/,p0h-is-set-after-p0l.prg,exitcode,7000000
+../c128/mmu/,p0h-rw-test.prg,exitcode,7000000
+../c128/mmu/,p1h-is-set-after-p1l.prg,exitcode,7000000
+../c128/mmu/,p1h-rw-test.prg,exitcode,7000000
+../c128/vdc4/,vdc4.prg,interactive,0
+../c128/vdccrash/,crash.prg,exitcode,7000000
+../c128/vdccrash/,nocrash.prg,exitcode,7000000
+# TODO: make automatic
+../c128/z80/cycletimer/,z80-cycletimer-ldir.prg,interactive,0
+################################################################################
+# VDC
+################################################################################
+# TODO: make all these automatic
+../VDC/40columns/,40COLVDC.PRG,interactive,0
+../VDC/soci/,test01.prg,interactive,0
+../VDC/soci/,test02.prg,interactive,0
+../VDC/soci/,test03.prg,interactive,0
+../VDC/soci/,test04.prg,interactive,0
+../VDC/soci/,test05.prg,interactive,0
+../VDC/soci/,test06.prg,interactive,0
+../VDC/soci/,test07.prg,interactive,0
+../VDC/soci/,test08.prg,interactive,0
+../VDC/soci/,test09.prg,interactive,0
+../VDC/soci/,test10.prg,interactive,0
+../VDC/soci/,test11.prg,interactive,0
+../VDC/soci/,test12.prg,interactive,0
+../VDC/vdcattr/,vdcattr.prg,interactive,0
+../VDC/vdcdump/,vdcdump.prg,interactive,0
+../VDC/vdctiming/,tt.prg,interactive,0
+../VDC/vdctiming/,vdc-explorer.prg,interactive,0
+../VDC/vdclptest/,vdclptest.prg,interactive,0
+################################################################################
+# REU
+################################################################################
+################################################################################
+# GEO-RAM
+################################################################################
+../GEO-RAM/,georam128.prg,exitcode,10000000,geo256k
+################################################################################
+# Joystick/Mouse
+################################################################################
+../mouse/,mouse-c128-1351.prg,interactive,0
+../mouse/,mouse-c128-pot.prg,interactive,0
+../userportjoy/,testjoy_c128.prg,interactive,0
+################################################################################
+# various expansions
+################################################################################
+../audio-io/,audio-io-c128.prg,interactive,0
+../c128-cpm/,cpm3.d81,interactive,0
+../digimax/,modplay128.d81,interactive,0
+../sfx_soundsampler/,c128-test.prg,interactive,0
+../ramcart/,rc128um.d64,interactive,0
+../userportrtc/,testrtc-c128.prg,interactive,0
+../memory-expansions/,c128-georam-emd.prg,exitcode,300000000,geo256k
+../memory-expansions/,c128-ram-emd.prg,exitcode,200000000
+../memory-expansions/,c128-ram2-emd.prg,exitcode,280000000,c128fullbanks
+../memory-expansions/,c128-reu-emd.prg,exitcode,1500000000,reu512k
+../memory-expansions/,c128-vdc-emd.prg,exitcode,200000000

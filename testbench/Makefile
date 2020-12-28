@@ -27,6 +27,15 @@ Z64KVIC20LASTSTRING="17 December 2020"
 Z64KC128LAST=20201217
 Z64KC128LASTSTRING="17 December 2020"
 
+KERNAL64C64LAST=1-6-2_b8
+KERNAL64C64LASTSTRING=1.6.2_b8
+KERNAL64C128C64LAST=1-6-2_b8
+KERNAL64C128C64LASTSTRING=1.6.2_b8
+KERNAL64C128C128LAST=1-6-2_b8
+KERNAL64C128C128LASTSTRING=1.6.2_b8
+KERNAL64SCPU64LAST=1-6-2_b8
+KERNAL64SCPU64LASTSTRING=1.6.2_b8
+
 U64LAST=137
 U64LASTSTRING="1.37"
 
@@ -58,13 +67,16 @@ all: prereq
 #	echo "testemu64"
 #	echo "testyace"
 
+	echo "-"
+	echo "for wiki table use something like: make resultswiki | xclip -selection clipboard"
+
 ################################################################################
 prereq: selftest testlist cmpscreens maketable prereq-chameleon
 
 .PHONY: testlist selftest
 
 selftest:
-	make -C selftest
+	make -s -C selftest
 
 cmpscreens: cmpscreens.c
 	$(CC) -W -Wall -O3 -o cmpscreens cmpscreens.c -lm
@@ -99,7 +111,11 @@ testlist: \
 	z64kc128-testlist.txt \
 	z64kc128c64-testlist.txt \
 	z64kvic20-testlist.txt \
-	denise-testlist.txt
+	denise-testlist.txt \
+	kernal64c64-testlist.txt \
+	kernal64c128c64-testlist.txt \
+	kernal64c128c128-testlist.txt \
+	kernal64scpu64-testlist.txt
 
 x64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  x64-testlist.txt
@@ -311,7 +327,61 @@ z64kc128-testlist.txt: c128-testlist.in Makefile
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
 		>> z64kc128-testlist.txt
-	
+
+kernal64c64-testlist.txt: c64-testlist.in Makefile
+	echo "# this is a generated file, do not edit." >  kernal64c64-testlist.txt
+	cat  c64-testlist.in \
+		| grep -v ",vicii-ntsc" \
+		| grep -v ",vicii-ntscold" \
+		| grep -v ",vicii-drean" \
+		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
+		>> kernal64c64-testlist.txt
+
+kernal64c128c64-testlist.txt: c64-testlist.in Makefile
+	echo "# this is a generated file, do not edit." >  kernal64c128c64-testlist.txt
+	cat  c64-testlist.in \
+		| grep -v ",vicii-ntsc" \
+		| grep -v ",vicii-ntscold" \
+		| grep -v ",vicii-drean" \
+		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
+		>> kernal64c128c64-testlist.txt
+
+kernal64c128c128-testlist.txt: c128-testlist.in Makefile
+	echo "# this is a generated file, do not edit." >  kernal64c128c128-testlist.txt
+	cat  c128-testlist.in \
+		| grep -v ",vicii-ntsc" \
+		| grep -v ",vicii-ntscold" \
+		| grep -v ",vicii-drean" \
+		| grep -v ",efnram" \
+		| grep -v ",ifnram" \
+		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
+		>> kernal64c128c128-testlist.txt
+
+kernal64scpu64-testlist.txt: scpu-testlist.in Makefile
+	echo "# this is a generated file, do not edit." >  kernal64scpu64-testlist.txt
+	cat  scpu-testlist.in \
+		| grep -v ",vicii-ntsc" \
+		| grep -v ",vicii-ntscold" \
+		| grep -v ",vicii-drean" \
+		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
+		>> kernal64scpu64-testlist.txt
+
 xscpu64-testlist.txt: scpu-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  xscpu64-testlist.txt
 	cat  scpu-testlist.in >> xscpu64-testlist.txt
@@ -434,6 +504,20 @@ testdenise:
 testemu64:
 #	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --verbose
 	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --resume
+
+testkernal64: testkernal64c64 testkernal64c128c64 testkernal64c128c128 testkernal64scpu64
+testkernal64c64:
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --pal --verbose
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --pal --resume
+testkernal64c128c64:
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c64 --pal --verbose
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c64 --pal --resume
+testkernal64c128c128:
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c128 --pal --verbose
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c128 --pal --resume
+testkernal64scpu64:
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64scpu64 --pal --verbose
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64scpu64 --pal --resume
 	
 ##############################################################################
 
@@ -490,6 +574,8 @@ results0: maketable
 		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
+		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
+		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
 		--results results/chameleon-9k-standalone-result.txt "TC64 9k (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)"
@@ -501,7 +587,8 @@ results0: maketable
 
 	./maketable --list c128-testlist.in \
 		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
-		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64k (c128) "$(Z64KC128LASTSTRING)""
+		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64k (c128) "$(Z64KC128LASTSTRING)"" \
+		--results results/kernal64c128c128-$(KERNAL64C128C128LAST)-result.txt "kernal64 (c128) "$(KERNAL64C128C128LASTSTRING)""
 
 	./maketable --list plus4-testlist.in \
 		--results results/xplus4-$(XPLUS4HEAD)-result.txt "xplus4 "$(XPLUS4HEAD)""
@@ -513,7 +600,8 @@ results0: maketable
 		--results results/x64dtv-$(X64DTVHEAD)-result.txt "x64dtv "$(X64DTVHEAD)""
 
 	./maketable --list scpu-testlist.in \
-		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)""
+		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)"" \
+		--results results/kernal64scpu64-$(KERNAL64SCPU64LAST)-result.txt "kernal64 (scpu64) "$(KERNAL64SCPU64LASTSTRING)""
 		
 	./maketable --list cbm510-testlist.in \
 		--results results/xcbm5x0-$(XCBM5X0HEAD)-result.txt "xcbm5x0 "$(XCBM5X0HEAD)""
@@ -533,6 +621,8 @@ results: maketable
 		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
+		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
+		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
 		--results results/emu64-20191025-result.txt "emu64 20191025" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
@@ -553,6 +643,7 @@ results: maketable
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
 		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64k (c128) "$(Z64KC128LASTSTRING)"" \
+		--results results/kernal64c128c128-$(KERNAL64C128C128LAST)-result.txt "kernal64 (c128) "$(KERNAL64C128C128LASTSTRING)"" \
 		\
 		> results/c128.html
 
@@ -577,6 +668,7 @@ results: maketable
 	./maketable  --html --list scpu-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)"" \
+		--results results/kernal64scpu64-$(KERNAL64SCPU64LAST)-result.txt "kernal64 (scpu64) "$(KERNAL64SCPU64LASTSTRING)"" \
 		\
 		> results/scpu.html
 		
@@ -613,6 +705,8 @@ resultswiki: maketable
 		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
 		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
+		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
+		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
 		--results results/emu64-20191025-result.txt "emu64 20191025" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
@@ -628,7 +722,8 @@ resultswiki: maketable
 	./maketable  --wiki --list c128-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
 		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
-		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64k (c128) "$(Z64KC128LASTSTRING)""
+		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64k (c128) "$(Z64KC128LASTSTRING)"" \
+		--results results/kernal64c128c128-$(KERNAL64C128C128LAST)-result.txt "kernal64 (c128) "$(KERNAL64C128C128LASTSTRING)""
 	@echo "=== PLUS4 ==="
 	./maketable  --wiki --list plus4-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
@@ -644,7 +739,8 @@ resultswiki: maketable
 	@echo "=== SCPU ==="
 	./maketable  --wiki --list scpu-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)""
+		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)"" \
+		--results results/kernal64scpu64-$(KERNAL64SCPU64LAST)-result.txt "kernal64 (scpu64) "$(KERNAL64SCPU64LASTSTRING)""
 	@echo "=== CBM5x0 ==="
 	./maketable  --wiki --list cbm510-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
@@ -918,6 +1014,42 @@ resultsemu64: maketable emu64-testlist.txt
 		\
 		> results/emu64.html
 		
+.PHONY: resultskernal64c64
+resultskernal64c64: maketable kernal64c64-testlist.txt
+	./maketable --html --list kernal64c64-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
+		--firstcolisref "<small><b>fails on VICE</b></small>" \
+		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
+		\
+		> results/kernal64c64.html
+		
+.PHONY: resultskernal64c128c64
+resultskernal64c128c64: maketable kernal64c128c64-testlist.txt
+	./maketable --html --list kernal64c128c64-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
+		--firstcolisref "<small><b>fails on VICE</b></small>" \
+		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "Kernal64 (c128/64) "$(KERNAL64C128C64LASTSTRING)"" \
+		\
+		> results/kernal64c128c64.html
+
+.PHONY: resultskernal64c128c128
+resultskernal64c128c128: maketable kernal64c128c128-testlist.txt
+	./maketable --html --list kernal64c128c128-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/kernal64c128c128-$(KERNAL64C128C128LAST)-result.txt "Kernal64 (c128) "$(KERNAL64C128C128LASTSTRING)"" \
+		\
+		> results/kernal64c128c128.html
+
+.PHONY: resultskernal64scpu64
+resultskernal64scpu64: maketable kernal64scpu64-testlist.txt
+	./maketable --html --list kernal64scpu64-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/kernal64scpu64-$(KERNAL64SCPU64LAST)-result.txt "kernal64 (scpu) "$(KERNAL64SCPU64LASTSTRING)"" \
+		\
+		> results/kernal64scpu64.html
+		
 ################################################################################
 		
 .PHONY: resultscham
@@ -1008,5 +1140,6 @@ allresults: results resultsx64 resultsx64sc resultsx128 resultsx128c64 resultsxc
 		resultsxpet resultsxplus4 resultsxscpu64 resultsxvic resultsvsid \
 		resultsz64kc64 resultsz64kc128 resultsz64kc128c64 resultsz64kvic20 \
 		resultshoxs64 resultsdenise resultsmicro64 resultsyace resultsemu64 \
+		resultskernal64c64 resultskernal64c128c64 resultskernal64c128c128 resultskernal64scpu64 \
 		resultscham resultscham20 resultsu64 
 

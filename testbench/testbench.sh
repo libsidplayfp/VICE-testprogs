@@ -45,6 +45,10 @@ source "./z64kc128-hooks.sh"
 source "./z64kc128c64-hooks.sh"
 source "./z64kvic20-hooks.sh"
 source "./denise-hooks.sh"
+source "./kernal64c64-hooks.sh"
+source "./kernal64c128c64-hooks.sh"
+source "./kernal64c128c128-hooks.sh"
+source "./kernal64scpu64-hooks.sh"
 
 ###############################################################################
 
@@ -91,6 +95,15 @@ function checktarget
         denise)
                 target="$1"
             ;;
+        kernal64c64)
+                target="$1"
+            ;;
+        kernal64c128c64)
+                target="$1"
+            ;;
+        kernal64c128c128)
+                target="$1"
+            ;;
     # C128 targets
         x128)
                 target="$1"
@@ -100,6 +113,9 @@ function checktarget
             ;;
     # SCPU targets
         xscpu64)
+                target="$1"
+            ;;
+        kernal64scpu64)
                 target="$1"
             ;;
     # PET targets
@@ -639,7 +655,8 @@ function showhelp
     echo $NAME" - run test programs."
     echo "usage: "$NAME" [target] <filter> <options>"
     echo "  targets: x64, x64sc, x128c64, x128, xscpu64, x64dtv, xpet, xcbm2, xcbm5x0, xvic, xplus4, vsid,"
-    echo "           chameleon, u64, cham20, c64rmk2, hoxs64, micro64, emu64, yace, z64kc64, z64kc128, z64kc128c64, z64kvic20, denise"
+    echo "           hoxs64, micro64, emu64, yace, z64kc64, z64kc128, z64kc128c64, z64kvic20, denise, kernal64c64, kernal64c64c128, kernal64c128c128, kernal64scpu64,"
+    echo "           chameleon, u64, cham20, c64rmk2"
     echo "  <filter> is a substring of the path of tests to restrict to"
     echo "  --help       show this help"
     echo "  --verbose    be more verbose"
