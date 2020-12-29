@@ -84,6 +84,8 @@ start
          asl $d019   ;Ack RASTER IRQ
 
          jsr initstableraster
+         
+         dec framecount
  
 reseta1  lda #$00    ;Reload A,X,and Y
 resetx1  ldx #$00
@@ -661,9 +663,8 @@ printscreentext
      
          lda palflag
          bne paldetected
-defaultntscdelay=$244
-         lda #<defaultntscdelay
-         ldx #>defaultntscdelay
+         lda #<NTSCDELAY
+         ldx #>NTSCDELAY
          sta testbitdelay
          stx delay256+1
          lda #65
@@ -671,9 +672,8 @@ defaultntscdelay=$244
          ldy #>ntsctext
          jmp printpalntsc
 paldetected
-defaultpaldelay=$230
-         lda #<defaultpaldelay
-         ldx #>defaultpaldelay
+         lda #<PALDELAY
+         ldx #>PALDELAY
          sta testbitdelay
          stx delay256+1
 
@@ -687,6 +687,10 @@ printpalntsc
 palntsccyclepos=$400+(14*40)+8
          jsr printtext
          jsr printdelay
+         jsr printsetd030
+	 jsr printcleard030
+	 jsr ghostbyte
+	 jsr displayhb
          rts
 printtext
          sta endprint+1
@@ -1010,12 +1014,15 @@ keyh
          jsr displayhb
          jmp delaynextkey
 keyi     inc $3fff
+	 jsr ghostbyte
+	 jmp delaynextkey
+ghostbyte
          lda #testbittestline+3
          ldx #37
          jsr setscreenpos
          lda $3fff
-         jsr printhex
-         jmp delaynextkey
+         jmp printhex
+         
 keyk
          lda #$24
          ldy #$30
@@ -1208,30 +1215,51 @@ printdelay
          lda testbitdelay
          jsr printhex
          rts
+printsetd030
+	 lda #15
+         ldx #31
+         jsr setscreenpos
+	 lda enabletestbit
+	 jmp printhex
+printcleard030
+ 	 lda #15
+         ldx #36
+         jsr setscreenpos
+         lda disabletestbit
+         jmp printhex
+
 reset
          ldx #$ff
          txs
          lda #$35    ;switch in IO
          sta $01
          jsr initstableraster
-         lda #$00
+         lda #DISPLAYMODE
          sta displaymode
+	 lda #D030OFF
          sta disabletestbit
+	 lda #D030ON
          sta enabletestbit
+         lda #$00
          sta spriteon
+         lda #VADJUST
          sta vadjust
          lda #200
          sta $d000
-         lda #$01
+         lda #(FASTHB&0xfc)|1
          sta d030set
          lda #$05
          sta testbitcolor
-         lda #$8e
+!if METHOD = 1 {
+ 	 lda #$ce
+} else {
+ 	 lda #$8e
+}
          sta disablemethod
          lda #$24
          sta delayfast
          sta delayslow
-         lda #$00
+         lda #$55
          sta $3fff
          jsr init
          jsr initclockslide
@@ -1328,6 +1356,12 @@ sprdata
          dex
          bpl sprdata
          cli         ;Allow IRQ's
+         
+framecount=*+1
+-        lda #3
+         bpl -
+         lda #0
+         sta $d7ff
          jmp *       ;Endless Loop
 spritepos
          !byte 96,228,120,228,144,228,168,228,192,228,216,228,240,228,8,228,128
@@ -1387,7 +1421,7 @@ demotext  !text "0-BLACK 2-RED   9-BROWN "
 democolor !byte 0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,9,9,9,9,9,9,9,9,0,0,0,0,0,2,2,2,2,2,9,9,9,9,9,0
 cyclesperline !byte 0
 
-title        !scr 26,"VICIIe D030 TEST (V2.0) - "
+title        !scr 26,"VICIIe D030 TEST (V2.1) - "
 paltext      !scr 3,"PAL"
 ntsctext     !scr 4,"NTSC"
 standardtext !scr 9,"Standard "

@@ -108,6 +108,13 @@ basicHeader=1
     sta $d01a	; irq-mask
 	       
 	cli
+	; trigger the debug cart exit after 2 frames
+framecount=*+1
+-   lda #2
+    bpl -
+    
+    lda #0
+    sta $d7ff
 
 	jmp *
 ;--------------------------------------------------
@@ -232,4 +239,5 @@ DoubleIRQ:
     sta $d012
 	+loadReg
 
+	dec framecount
 	rti

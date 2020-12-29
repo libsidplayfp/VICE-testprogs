@@ -1,10 +1,121 @@
 
+TESTS=\
+	d030test.d64 \
+	d030-2mhzdec.prg \
+	d030-2mhz_hb_80.prg \
+	d030-2mhzmode0.prg \
+	d030-2mhzmode1.prg \
+	d030-2mhzmode2.prg \
+	d030-2mhzmode3.prg \
+	d030-2mhzmode4.prg \
+	d030-2mhzmode5.prg \
+	d030-2mhzmode6.prg \
+	d030-2mhzmode7.prg \
+	\
+	d030-173_02_00.prg \
+	d030-1b2_02_00.prg \
+	d030-1f1_02_00.prg \
+	d030-230_02_00.prg \
+	d030-26f_02_00.prg \
+	d030-26f_02_88.prg \
+	d030-2ae_02_00.prg \
+	d030-2ed_02_00.prg \
+	d030-32c_02_00.prg \
+	\
+	d030-173_03_00.prg \
+	d030-1b2_03_00.prg \
+	d030-1f1_03_00.prg \
+	d030-230_03_00.prg \
+	d030-26f_03_00.prg \
+	d030-26f_03_88.prg \
+	d030-2ae_03_00.prg \
+	d030-2ed_03_00.prg \
+	d030-32c_03_00.prg \
+	\
+	d030-vadjust1.prg \
+	d030-vadjust10.prg \
+	d030-vadjust20.prg \
+        d030-vadjust25.prg \
+        d030-vadjust30.prg \
+	
 
-all: d030test.d64
+all: $(TESTS)
 
-d030test.d64: d030tester2.0.prg
+d030test.d64: d030tester2.1.prg
 	c1541 -format "d030tester,00" d64 d030test.d64 \
-		-write d030tester2.0.prg d030tester2.0
+		-write d030tester2.1.prg d030tester2.1
+d030tester2.1.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030tester2.1.prg d030tester2.1.asm
 
-d030tester2.0.prg: d030tester2.0.asm
-	acme -f cbm -o d030tester2.0.prg d030tester2.0.asm
+d030-2mhzdec.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=1 -DFASTHB=0 -o d030-2mhzdec.prg d030tester2.1.asm
+d030-2mhz_hb_80.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0x80 -o d030-2mhz_hb_80.prg d030tester2.1.asm
+d030-2mhzmode0.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-2mhzmode0.prg d030tester2.1.asm
+d030-2mhzmode1.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x10 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-2mhzmode1.prg d030tester2.1.asm
+d030-2mhzmode2.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x20 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-2mhzmode2.prg d030tester2.1.asm
+d030-2mhzmode3.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x30 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-2mhzmode3.prg d030tester2.1.asm
+d030-2mhzmode4.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x40 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-2mhzmode4.prg d030tester2.1.asm
+d030-2mhzmode5.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x50 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-2mhzmode5.prg d030tester2.1.asm
+d030-2mhzmode6.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x60 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-2mhzmode6.prg d030tester2.1.asm
+d030-2mhzmode7.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x70 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-2mhzmode7.prg d030tester2.1.asm
+
+d030-173_02_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=2 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-173_02_00.prg d030tester2.1.asm
+d030-1b2_02_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x1b2 -DNTSCDELAY=0x181 -DD030ON=2 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-1b2_02_00.prg d030tester2.1.asm
+d030-1f1_02_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x1f1 -DNTSCDELAY=0x181 -DD030ON=2 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-1f1_02_00.prg d030tester2.1.asm
+d030-230_02_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x230 -DNTSCDELAY=0x181 -DD030ON=2 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-230_02_00.prg d030tester2.1.asm
+d030-26f_02_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x26f -DNTSCDELAY=0x181 -DD030ON=2 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-26f_02_00.prg d030tester2.1.asm
+d030-26f_02_88.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x26f -DNTSCDELAY=0x181 -DD030ON=2 -DD030OFF=0x88 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-26f_02_88.prg d030tester2.1.asm
+d030-2ae_02_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x2ae -DNTSCDELAY=0x181 -DD030ON=2 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-2ae_02_00.prg d030tester2.1.asm
+d030-2ed_02_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x2ed -DNTSCDELAY=0x181 -DD030ON=2 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-2ed_02_00.prg d030tester2.1.asm
+d030-32c_02_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x32c -DNTSCDELAY=0x181 -DD030ON=2 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-32c_02_00.prg d030tester2.1.asm
+
+d030-173_03_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=3 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-173_03_00.prg d030tester2.1.asm
+d030-1b2_03_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x1b2 -DNTSCDELAY=0x181 -DD030ON=3 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-1b2_03_00.prg d030tester2.1.asm
+d030-1f1_03_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x1f1 -DNTSCDELAY=0x181 -DD030ON=3 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-1f1_03_00.prg d030tester2.1.asm
+d030-230_03_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x230 -DNTSCDELAY=0x181 -DD030ON=3 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-230_03_00.prg d030tester2.1.asm
+d030-26f_03_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x26f -DNTSCDELAY=0x181 -DD030ON=3 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-26f_03_00.prg d030tester2.1.asm
+d030-26f_03_88.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x26f -DNTSCDELAY=0x181 -DD030ON=3 -DD030OFF=0x88 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-26f_03_88.prg d030tester2.1.asm
+d030-2ae_03_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x2ae -DNTSCDELAY=0x181 -DD030ON=3 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-2ae_03_00.prg d030tester2.1.asm
+d030-2ed_03_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x2ed -DNTSCDELAY=0x181 -DD030ON=3 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-2ed_03_00.prg d030tester2.1.asm
+d030-32c_03_00.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x32c -DNTSCDELAY=0x181 -DD030ON=3 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=0 -DMETHOD=0 -DFASTHB=0 -o d030-32c_03_00.prg d030tester2.1.asm
+
+d030-vadjust1.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=1 -DMETHOD=0 -DFASTHB=0 -o d030-vadjust1.prg d030tester2.1.asm
+d030-vadjust10.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=10 -DMETHOD=0 -DFASTHB=0 -o d030-vadjust10.prg d030tester2.1.asm
+d030-vadjust20.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=20 -DMETHOD=0 -DFASTHB=0 -o d030-vadjust20.prg d030tester2.1.asm
+d030-vadjust25.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=25 -DMETHOD=0 -DFASTHB=0 -o d030-vadjust25.prg d030tester2.1.asm
+d030-vadjust30.prg: d030tester2.1.asm
+	acme -f cbm -DPALDELAY=0x173 -DNTSCDELAY=0x181 -DD030ON=0 -DD030OFF=0 -DDISPLAYMODE=0x00 -DVADJUST=30 -DMETHOD=0 -DFASTHB=0 -o d030-vadjust30.prg d030tester2.1.asm
+clean:
+	rm -f *.prg
+
