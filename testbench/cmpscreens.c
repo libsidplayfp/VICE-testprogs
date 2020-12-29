@@ -7,16 +7,24 @@
 #include "stb_image.h"
 
 #define MAXCOLORS 0x100
-#define MAXPALETTES 5
+#define MAXPALETTES 6
 
 #define max(x, y) (((x) > (y)) ? (x) : (y))
 #define min(x, y) (((x) < (y)) ? (x) : (y))
 
 int verbose = 0;
 int numpalettes = MAXPALETTES;
-int numcolors = 16;
 
 int palette1 = 0, palette2 = 0;
+
+int numcolors[MAXPALETTES] = {
+    16, // &cols_pepto_pal[0],
+    16, // &cols_pepto_ntsc_sony[0],
+    16, // &cols_mike_pal[0],
+    16, // &cols_pet_green[0],
+    16, // &cols_pet_green_old[0],
+    25, // &cols_z64_pal_viciie[0],
+};
 
 unsigned char cols_pepto_pal[3*16] = {
     0x00, 0x00, 0x00,
@@ -127,12 +135,45 @@ unsigned char cols_pet_green_old[16 * 3] = {
     0x00, 0x00, 0x00, 
 };
 
+unsigned char cols_z64_pal_viciie[3*25] = {
+    0x00, 0x00, 0x00,
+    0xff, 0xff, 0xff,
+    0x68, 0x37, 0x2b,
+    0x70, 0xa4, 0xb2,
+
+    0x6f, 0x3d, 0x86,
+    0x58, 0x8d, 0x43,
+    0x35, 0x28, 0x79,
+    0xb8, 0xc7, 0x6f,
+
+    0x6f, 0x4f, 0x25,
+    0x43, 0x39, 0x00,
+    0x9a, 0x67, 0x59,
+    0x44, 0x44, 0x44,
+
+    0x6c, 0x6c, 0x6c,
+    0x9a, 0xd2, 0x84,
+    0x6c, 0x5e, 0xb5,
+    0x95, 0x95, 0x95,
+    // 9 extra colors that may show up when doing 2mhz/testbit fuckery
+    33, 91, 43,
+    188, 125, 178,
+    58, 88, 134,
+    145,112,67,
+    185, 199, 111,
+    57, 107, 37,
+    40, 71, 0,
+    79, 141, 89,
+    215, 179, 132
+};
+
 unsigned char *colors[MAXPALETTES] = {
     &cols_pepto_pal[0],
     &cols_pepto_ntsc_sony[0],
     &cols_mike_pal[0],
     &cols_pet_green[0],
     &cols_pet_green_old[0],
+    &cols_z64_pal_viciie[0],
 };
 
 char *palettenames[MAXPALETTES] = {
@@ -141,6 +182,7 @@ char *palettenames[MAXPALETTES] = {
     "Mike (VIC20, PAL)",
     "PET green",
     "PET green (old)",
+    "Z64K (PAL VICIIe)",
 };
 
 int findcolorinpalette(unsigned char *p, int palette)
@@ -148,8 +190,9 @@ int findcolorinpalette(unsigned char *p, int palette)
     int i;
     unsigned char *c;
     c = colors[palette];
-    for (i = 0; i < numcolors; i++) {
-//        printf("check %02x %02x %02x vs  %02x %02x %02x\n", c[0], c[1], c[2], p[0], p[1], p[2]);
+    //printf("check palette %d:%s\n", palette, palettenames[palette]);
+    for (i = 0; i < numcolors[palette]; i++) {
+        //printf("check %02x %02x %02x vs  %02x %02x %02x\n", c[0], c[1], c[2], p[0], p[1], p[2]);
         if ((p[0] == c[0]) && (p[1] == c[1]) && (p[2] == c[2])) {
             return i;
         }

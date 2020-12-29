@@ -150,11 +150,14 @@ options:
     sid-new
     vicii-old
     vicii-new
-    
+
     vicii-pal
     vicii-ntsc
     vicii-ntscold
     vicii-drean
+
+    vicii-screenshot
+    vdc-screenshot
 
     dqbb
     ramcart128k

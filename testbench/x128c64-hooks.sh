@@ -47,6 +47,9 @@ function x128c64_get_options
         "default")
                 exitoptions=""
             ;;
+        "vdc-screenshot")
+                vdcscreenshot=1
+            ;;
         "vicii-pal")
                 exitoptions="-pal"
                 testprogvideotype="PAL"

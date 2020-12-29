@@ -46,6 +46,9 @@ function z64kc128_get_options
         "default")
                 exitoptions=""
             ;;
+        "vicii-screenshot")
+                viciiscreenshot=1
+            ;;
         "vicii-pal")
                 exitoptions="-pal"
                 testprogvideotype="PAL"

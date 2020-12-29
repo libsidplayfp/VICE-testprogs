@@ -1,3 +1,4 @@
+#KERNAL64SCPU64OPTS+=" --ignore-config-file"  # upcoming in 1.7.0
 KERNAL64SCPU64OPTS+=" --testcart"
 KERNAL64SCPU64OPTS+=" --headless"
 KERNAL64SCPU64OPTS+=" --warp"
@@ -15,6 +16,8 @@ function kernal64scpu64_check_environment
         exit 1
     fi
     
+# The current VIC implementations are: 6569 & 6567R8 for C64.
+    emu_default_videosubtype="6569"
 }
 
 # $1  option
@@ -30,6 +33,11 @@ function kernal64scpu64_get_options
                 exitoptions=""
                 testprogvideotype="PAL"
             ;;
+# upcoming in 1.7.0
+#        "vicii-ntsc")
+#                exitoptions="-ntsc"
+#                testprogvideotype="NTSC"
+#            ;;
         "sid-old")
                 new_sid_enabled=0
             ;;

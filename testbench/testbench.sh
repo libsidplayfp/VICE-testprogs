@@ -300,6 +300,9 @@ function resetflags
     intfuncram_enabled=0
     memory_expansion_enabled=0
 
+    viciiscreenshot=0
+    vdcscreenshot=0
+
     testprogvideotype=-1
     testprogvideosubtype=-1
     new_sid_enabled=-1

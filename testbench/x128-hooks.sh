@@ -41,6 +41,9 @@ function x128_get_options
         "default")
                 exitoptions=""
             ;;
+        "vicii-screenshot")
+                viciiscreenshot=1
+            ;;
         "vicii-pal")
                 exitoptions="-pal"
                 testprogvideotype="PAL"
@@ -201,9 +204,17 @@ function x128_run_screenshot
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$screenshottest"-x128.png
     if [ $verbose == "1" ]; then
-        echo $X128 $X128OPTS $X128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x128.png "$4"
+        if [ $viciiscreenshot == "1" ]; then
+            echo $X128 $X128OPTS $X128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$screenshottest"-x128.png "$4"
+        else
+            echo $X128 $X128OPTS $X128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x128.png "$4"
+        fi
     fi
-    $X128 $X128OPTS $X128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x128.png "$4" 1> /dev/null 2> /dev/null
+    if [ $viciiscreenshot == "1" ]; then
+        $X128 $X128OPTS $X128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$screenshottest"-x128.png "$4" 1> /dev/null 2> /dev/null
+    else
+        $X128 $X128OPTS $X128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x128.png "$4" 1> /dev/null 2> /dev/null
+    fi
     exitcode=$?
     
     if [ $verbose == "1" ]; then
@@ -251,6 +262,9 @@ function x128_run_screenshot
 
             ./cmpscreens "$refscreenshotname" "$X128REFSXO" "$X128REFSYO" "$1"/.testbench/"$screenshottest"-x128.png "$X128SXO" "$X128SYO"
             exitcode=$?
+            if [ $verbose == "1" ]; then
+                echo ./cmpscreens "$refscreenshotname" "$X128REFSXO" "$X128REFSYO" "$1"/.testbench/"$screenshottest"-x128.png "$X128SXO" "$X128SYO"
+            fi
         else
             echo -ne "reference screenshot missing - "
             exitcode=255

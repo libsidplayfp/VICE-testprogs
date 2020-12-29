@@ -1,9 +1,11 @@
+#KERNAL64C128C128OPTS+=" --ignore-config-file"  # upcoming in 1.7.0
 KERNAL64C128C128OPTS+=" --testcart"
 KERNAL64C128C128OPTS+=" --headless"
 KERNAL64C128C128OPTS+=" --warp"
 KERNAL64C128C128OPTS+=" --vic-palette pepto"
 KERNAL64C128C128OPTS+=" --screen-dim 1"
 KERNAL64C128C128OPTS+=" --cpujam-continue true"
+KERNAL64C128C128OPTS+=" --sid-cycle-exact"
 
 function kernal64c128c128_check_environment
 {
@@ -14,6 +16,8 @@ function kernal64c128c128_check_environment
         exit 1
     fi
     
+# The current VIC implementations are: 6569 & 6567R8 for C64.
+    emu_default_videosubtype="6569"
 }
 
 # $1  option
@@ -25,10 +29,18 @@ function kernal64c128c128_get_options
         "default")
                 exitoptions=""
             ;;
+        "vicii-screenshot")
+                viciiscreenshot=1
+            ;;
         "vicii-pal")
                 exitoptions=""
                 testprogvideotype="PAL"
             ;;
+# upcoming in 1.7.0
+#        "vicii-ntsc")
+#                exitoptions="-ntsc"
+#                testprogvideotype="NTSC"
+#            ;;
         "sid-old")
                 new_sid_enabled=0
             ;;
