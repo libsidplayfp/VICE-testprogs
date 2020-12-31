@@ -215,9 +215,17 @@ function z64kc128c64_run_screenshot
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$screenshottest"-x64.png
     if [ $verbose == "1" ]; then
-        echo $Z64KC128C64 $Z64KC128C64OPTS $Z64KC128C64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$screenshottest"-z64kc128c64.png "$4"
+        if [ $vdcscreenshot == "1" ]; then
+            echo $Z64KC128C64 $Z64KC128C64OPTS $Z64KC128C64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-z64kc128c64.png "$4"
+        else
+            echo $Z64KC128C64 $Z64KC128C64OPTS $Z64KC128C64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$screenshottest"-z64kc128c64.png "$4"
+        fi
     fi
-    $Z64KC128C64 $Z64KC128C64OPTS $Z64KC128C64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$screenshottest"-z64kc128c64.png "$4" 1> /dev/null 2> /dev/null
+    if [ $vdcscreenshot == "1" ]; then
+        $Z64KC128C64 $Z64KC128C64OPTS $Z64KC128C64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-z64kc128c64.png "$4" 1> /dev/null 2> /dev/null
+    else
+        $Z64KC128C64 $Z64KC128C64OPTS $Z64KC128C64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$screenshottest"-z64kc128c64.png "$4" 1> /dev/null 2> /dev/null
+    fi
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then

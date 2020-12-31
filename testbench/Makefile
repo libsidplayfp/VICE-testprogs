@@ -18,14 +18,14 @@ DENISELASTSTRING="git 23.12.2020"
 HOXS64LAST=1-1-0-5
 HOXS64LASTSTRING=1.1.0.5
 
-Z64KC64LAST=20201224
-Z64KC64LASTSTRING="24 December 2020"
-Z64KC128C64LAST=20201217
-Z64KC128C64LASTSTRING="17 December 2020"
+Z64KC64LAST=20201230
+Z64KC64LASTSTRING="30 December 2020"
+Z64KC128C64LAST=20201230
+Z64KC128C64LASTSTRING="30 December 2020"
+Z64KC128LAST=20201230
+Z64KC128LASTSTRING="30 December 2020"
 Z64KVIC20LAST=20201217
 Z64KVIC20LASTSTRING="17 December 2020"
-Z64KC128LAST=20201217
-Z64KC128LASTSTRING="17 December 2020"
 
 KERNAL64C64LAST=1-6-2_b8
 KERNAL64C64LASTSTRING=1.6.2_b8
@@ -915,6 +915,7 @@ resultsz64kc64: maketable z64kc64-testlist.txt
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kc64-20181202-result.txt "z64kc64 20181202" \
 		--results results/z64kc64-1_2-result.txt "z64kc64 1.2" \
+		--results results/z64kc64-20201224-result.txt "z64kc64 24 December 2020" \
 		--results results/z64kc64-$(Z64KC64LAST)-result.txt "z64kc64 "$(Z64KC64LASTSTRING)"" \
 		\
 		> results/z64kc64.html
@@ -927,6 +928,7 @@ resultsz64kc128: maketable z64kc128-testlist.txt
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kc128-20181202-result.txt "z64kc128 20181202" \
 		--results results/z64kc128-1_2-result.txt "z64kc128 1.2" \
+		--results results/z64kc128-20201217-result.txt "z64kc128 17 December 2020" \
 		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64kc128 "$(Z64KC128LASTSTRING)"" \
 		\
 		> results/z64kc128.html
@@ -939,6 +941,7 @@ resultsz64kc128c64: maketable z64kc128c64-testlist.txt
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kc128c64-20181202-result.txt "z64kc128c64 20181202" \
 		--results results/z64kc128c64-1_2-result.txt "z64kc128c64 1.2" \
+		--results results/z64kc128c64-20201217-result.txt "z64kc128c64 17 December 2020" \
 		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64kc128c64 "$(Z64KC128C64LASTSTRING)"" \
 		\
 		> results/z64kc128c64.html

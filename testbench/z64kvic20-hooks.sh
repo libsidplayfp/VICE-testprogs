@@ -6,11 +6,11 @@ Z64KVIC20OPTS+=" -VICpalette mike-pal.vpl"
 Z64KVIC20OPTS+=" -warp"
 Z64KVIC20OPTS+=" -debugcart"
 Z64KVIC20OPTS+=" -basicload"
-#Z64KVIC20OPTS+=" -console"
+Z64KVIC20OPTS+=" -console"
 
 # extra options for the different ways tests can be run
-Z64KVIC20OPTSEXITCODE+=" -console"
-Z64KVIC20OPTSSCREENSHOT+=""
+#Z64KVIC20OPTSEXITCODE+=" -console"
+#Z64KVIC20OPTSSCREENSHOT+=""
 
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the

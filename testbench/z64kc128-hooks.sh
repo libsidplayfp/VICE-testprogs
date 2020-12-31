@@ -4,12 +4,12 @@ Z64KC128OPTS+=" -VICIIfilter 0"
 Z64KC128OPTS+=" -VICIIextpal"
 Z64KC128OPTS+=" -VICIIpalette pepto-pal.vpl"
 Z64KC128OPTS+=" -warp"
-#Z64KC128OPTS+=" -console"
+Z64KC128OPTS+=" -console"
 Z64KC128OPTS+=" -debugcart"
 
 # extra options for the different ways tests can be run
-Z64KC128OPTSEXITCODE+=" -console"
-Z64KC128OPTSSCREENSHOT+=""
+#Z64KC128OPTSEXITCODE+=" -console"
+#Z64KC128OPTSSCREENSHOT+=""
 
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
@@ -194,9 +194,17 @@ function z64kc128_run_screenshot
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$screenshottest"-z64kc128.png
     if [ $verbose == "1" ]; then
-        echo "RUN: "$Z64KC128 $Z64KC128OPTS $Z64KC128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-z64kc128.png "$4" "1> /dev/null"
+        if [ $viciiscreenshot == "1" ]; then
+            echo "RUN: "$Z64KC128 $Z64KC128OPTS $Z64KC128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$screenshottest"-z64kc128.png "$4" "1> /dev/null"
+        else
+            echo "RUN: "$Z64KC128 $Z64KC128OPTS $Z64KC128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-z64kc128.png "$4" "1> /dev/null"
+        fi
     fi
-    $Z64KC128 $Z64KC128OPTS $Z64KC128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-z64kc128.png "$4" 1> /dev/null
+    if [ $viciiscreenshot == "1" ]; then
+        $Z64KC128 $Z64KC128OPTS $Z64KC128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshotvicii" "$1"/.testbench/"$screenshottest"-z64kc128.png "$4" 1> /dev/null
+    else
+        $Z64KC128 $Z64KC128OPTS $Z64KC128OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-z64kc128.png "$4" 1> /dev/null
+    fi
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then

@@ -123,9 +123,17 @@ function kernal64c128c64_run_screenshot
     mkdir -p "$1"/".testbench"
     rm -f "$1"/.testbench/"$screenshottest"-kernal64c128c64.png
     if [ $verbose == "1" ]; then
-        echo "RUN: "$KERNAL64C128C64 $KERNAL64C128C64OPTS $KERNAL64C128C64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64c128c64.png "$4"
+        if [ $vdcscreenshot == "1" ]; then
+            echo "RUN: "$KERNAL64C128C64 $KERNAL64C128C64OPTS $KERNAL64C128C64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--vdcscreenshot" "$1"/.testbench/"$screenshottest"-kernal64c128c64.png "$4"
+        else
+            echo "RUN: "$KERNAL64C128C64 $KERNAL64C128C64OPTS $KERNAL64C128C64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64c128c64.png "$4"
+        fi
     fi
-    $KERNAL64C128C64 $KERNAL64C128C64OPTS $KERNAL64C128C64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64c128c64.png "$4" 1> /dev/null 2> /dev/null
+    if [ $vdcscreenshot == "1" ]; then
+        $KERNAL64C128C64 $KERNAL64C128C64OPTS $KERNAL64C128C64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--vdcscreenshot" "$1"/.testbench/"$screenshottest"-kernal64c128c64.png "$4" 1> /dev/null 2> /dev/null
+    else
+        $KERNAL64C128C64 $KERNAL64C128C64OPTS $KERNAL64C128C64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64c128c64.png "$4" 1> /dev/null 2> /dev/null
+    fi
     exitcode=$?
 #    echo exitcode:$exitcode
     if [ $exitcode -ne 0 ]
