@@ -1175,7 +1175,9 @@
 ../REU/reutiming/,reutiming.prg,exitcode,100000000,reu512k
 #FIXME: NTSC fix
 ../REU/reutiming2/,a.prg,screenshot,40000000,reu512k,vicii-pal
+../REU/reutiming2/,a2.prg,screenshot,40000000,reu512k,vicii-pal
 ../REU/reutiming2/,b.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,b2.prg,screenshot,20000000,reu512k,vicii-pal
 ../REU/rmw-trigger/,rmwtrigger-rom.prg,exitcode,1000000000,reu512k
 ../REU/rmw-trigger/,rmwtrigger-ram.prg,exitcode,1000000000,reu512k
 ../REU/spriteba/,spriteba.prg,analyzer,0
