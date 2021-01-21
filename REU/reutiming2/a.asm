@@ -1,4 +1,6 @@
 
+SHOWSPRITES = 0     ; set to 1 to show the sprites and move sprite 0
+
         *= $0801
         .dsection code
         .section code
@@ -49,10 +51,19 @@ lp      ldx #10
 
         ; setup vram
         ldx #0
-        lda #$f0
--       sta $400+range(4)*256,x
+-       lda #$f0
+        sta $400+range(4)*256,x
         inx
         bne -
+
+        .if SHOWSPRITES == 1
+-       lda #$ff
+        sta $0300,x
+        lda #$0300 / 64
+        sta $07f8
+        inx
+        bne -
+        .endif
 
         lda #3
         sta $dd00
@@ -68,16 +79,24 @@ lp      ldx #10
         lda #255
         sta $d015   ; enable
         sta $d017   ; y-expand
-        sta $d01b   ; prio
         sta $d01d   ; x-expand
+        .if SHOWSPRITES == 1
+        lda #$fe
+        .endif
+        sta $d01b   ; prio
         lda #0
         sta $d010   ; x-msb
         sta $d01c   ; muco
 
-        ldx #8
--       dex
+        ldx #7
+-
+        .if SHOWSPRITES == 1
+        txa
+        ora #$08
+        .endif
         sta $d027,x ; color
-        bne -
+        dex
+        bpl -
 
         ldx #16
 -       dex
@@ -132,6 +151,18 @@ reu2    .byte %10010001
         sta $df00,x
         dex
         bne -
+
+        .if SHOWSPRITES == 1
+        lda $d000
+        clc
+        adc #1
+        sta $d000
+        bcc +
+        lda $d010
+        eor #$01
+        sta $d010
++
+        .endif
 
         dec framecount
         bne +

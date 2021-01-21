@@ -66,6 +66,9 @@ lp      ldx #10
         ldx #16
 -       dex
         txa
+        .if REVERSEORDER == 1
+        eor #$0e
+        .endif
         asl a
         asl a
         ora #128
