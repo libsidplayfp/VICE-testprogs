@@ -17,7 +17,12 @@ b2.prg:
 
 like b.prg, but the sprites are NOT active
 
-b3:prg:
+b3.prg:
 
 like b.prg, but the sprites are in revers vertical order (y-pos = 188, 180, 172,
 164, 156, 148, 140, 132)
+
+c.prg:
+
+one short REU transfer per 8 rasterlines, offset by one cycle so one will end
+on the start of a badline.
