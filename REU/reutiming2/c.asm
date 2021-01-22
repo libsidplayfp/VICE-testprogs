@@ -110,7 +110,7 @@ lp2
 reu2    .byte %10010001
         .word $d020
         .long 0
-        .word 10+9
+        .word TRANSFERBYTES
         .byte 0
         .byte 128
         .send data

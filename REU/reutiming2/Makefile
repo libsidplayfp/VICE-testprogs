@@ -1,5 +1,5 @@
 
-all: a.prg a2.prg b.prg b2.prg b3.prg c.prg
+all: a.prg a2.prg b.prg b2.prg b3.prg c.prg c2.prg
 
 a.prg: a.asm a.hpi
 	64tass -DSPRITES=1 -a -B $< -o $@
@@ -12,7 +12,9 @@ b2.prg: b.asm
 b3.prg: b.asm
 	64tass -DSPRITES=1 -DREVERSEORDER=1 -a -B $< -o $@
 c.prg: c.asm
-	64tass -a -B $< -o $@
+	64tass -DTRANSFERBYTES=19 -a -B $< -o $@
+c2.prg: c.asm
+	64tass -DTRANSFERBYTES=18 -a -B $< -o $@
 
 
 testa:	a.prg
@@ -27,6 +29,8 @@ testb3:	b3.prg
 	x64sc -default -reu -reusize 512 b3.prg
 testc:	c.prg
 	x64sc -default -reu -reusize 512 c.prg
+testc2:	c2.prg
+	x64sc -default -reu -reusize 512 c2.prg
 
 clean:
 	$(RM) a.prg
@@ -35,4 +39,5 @@ clean:
 	$(RM) b2.prg
 	$(RM) b3.prg
 	$(RM) c.prg
+	$(RM) c2.prg
 	

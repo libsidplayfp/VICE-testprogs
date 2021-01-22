@@ -26,3 +26,12 @@ c.prg:
 
 one short REU transfer per 8 rasterlines, offset by one cycle so one will end
 on the start of a badline.
+
+- does NOT work in x64sc 3.5 r39581
+
+c2.prg:
+
+like c.prg, but the transfer is one cycle shorter, resulting in a different 
+pattern.
+
+- does NOT work in x64sc 3.5 r39581
