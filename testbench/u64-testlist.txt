@@ -1136,6 +1136,8 @@
 ../REU/reutiming2/,b3.prg,screenshot,20000000,reu512k,vicii-pal
 ../REU/reutiming2/,c.prg,screenshot,20000000,reu512k,vicii-pal
 ../REU/reutiming2/,c2.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,d.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,d2.prg,screenshot,20000000,reu512k,vicii-pal
 ../REU/rmw-trigger/,rmwtrigger-rom.prg,exitcode,1000000000,reu512k
 ../REU/rmw-trigger/,rmwtrigger-ram.prg,exitcode,1000000000,reu512k
 ../REU/spriteba/,spriteba.prg,analyzer,0
