@@ -35,3 +35,16 @@ like c.prg, but the transfer is one cycle shorter, resulting in a different
 pattern.
 
 - does NOT work in x64sc 3.5 r39581
+
+d.prg:
+
+like c.prg, but with sprite 7 active in the lines where the dma happens
+
+- does NOT work in x64sc 3.5 r39581
+
+d2.prg:
+
+like d.prg, but the transfer is one cycle shorter, resulting in a different 
+pattern.
+
+- does NOT work in x64sc 3.5 r39581
