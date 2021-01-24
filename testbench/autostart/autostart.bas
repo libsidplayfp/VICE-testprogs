@@ -43,6 +43,7 @@ gosub 1000
 print "msg:";pu$
 gosub 2000
 print "dir:";di$
+print "diskid:";id$
 
 90 print "no drive:";e
 gosub 3000
@@ -62,11 +63,13 @@ close 15
 return
 
 2000 rem * get header from directory
-open 1,8,0,"$":di$="": if st <> 0 then return
+open 1,8,0,"$":di$="": id$="": if st <> 0 then return
 for i = 0 to 7: get#1, a$:
 if st <> 0 then return
 next
 for i = 0 to 15: get#1, a$: di$=di$+a$: next
+get #1,a$:get #1,a$
+for i = 0 to 5: get#1, a$: id$=id$+a$: next
 close 1
 return
 
@@ -75,7 +78,7 @@ if left$(pu$, 7)  = "cbm dos" then td = 1 : rem tde enabled
 if left$(pu$, 13) = "virtual drive" then vd = 1 : rem virtual drive
 if left$(pu$, 7)  = "vice fs" then fs = 1 : rem filesystem
 
-if left$(di$, 9)  = "autostart" then ad = 1 : rem using autostart disk image
+if left$(di$, 9)  = "autostart" and id$ <> " #8:0" then ad = 1 : rem using autostart disk image
 if left$(di$, 8)  = "testdisk" then d = 1 : rem using regular disk image
 
 print
@@ -83,7 +86,7 @@ print "tde:"; td ;
 print "vdrive:"; vd ;
 print "vfs:"; fs
 print "autostart disk:"; ad
-print "disk image:"; ad
+print "disk image:"; d
 
 return
 

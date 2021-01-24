@@ -183,7 +183,7 @@ function testx64
 {
 LIMITCYCLES=30000000
 EMU=x64
-OPTS=-fslongnames
+OPTS=
 echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
 PROGPRE=./autostart-c64
 PROGEXT=prg
@@ -191,7 +191,7 @@ alltests_prg
 echo "when handling TDE at autostart, all tests pass:"
 PROGPRE=./autostart-c64
 PROGEXT=d64
-#alltests_disk
+alltests_disk
 }
 
 # x64sc
