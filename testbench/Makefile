@@ -580,7 +580,7 @@ results0: maketable
 		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
-		--results results/chameleon-9k-standalone-result.txt "TC64 9k (standalone)" \
+		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)"
 
 	./maketable --list vic20-testlist.in \
@@ -629,7 +629,7 @@ results: maketable
 		--results results/emu64-20191025-result.txt "emu64 20191025" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
-		--results results/chameleon-9k-standalone-result.txt "TC64 9k (standalone)" \
+		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)" \
 		\
 		> results/c64.html
@@ -713,7 +713,7 @@ resultswiki: maketable
 		--results results/emu64-20191025-result.txt "emu64 20191025" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
-		--results results/chameleon-9k-standalone-result.txt "TC64 9k (standalone)" \
+		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)"
 	@echo "=== VIC20 ==="
 	./maketable  --wiki --list vic20-testlist.in \
@@ -1071,6 +1071,7 @@ resultscham: maketable chameleon-testlist.txt
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
 		--results results/chameleon-9k-standalone-result.txt "TC64 9k (standalone)" \
+		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
 		\
@@ -1091,6 +1092,7 @@ resultschamwiki: maketable chameleon-testlist.txt
 		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
 		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
 		--results results/chameleon-9k-standalone-result.txt "TC64 9k (standalone)" \
+		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)"
 
