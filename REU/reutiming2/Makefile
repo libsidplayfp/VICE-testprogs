@@ -1,5 +1,5 @@
 
-all: a.prg a2.prg b.prg b2.prg b3.prg c.prg c2.prg d.prg
+all: a.prg a2.prg b.prg b2.prg b3.prg c.prg c2.prg d.prg d2.prg
 
 a.prg: a.asm a.hpi
 	64tass -DSPRITES=1 -a -B $< -o $@
