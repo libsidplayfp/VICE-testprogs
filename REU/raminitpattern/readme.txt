@@ -12,13 +12,24 @@ The result should be like this:
 (NOTE: this is all unconfirmed right now, tests pending, mark confirmed tests
  with a (*))
 
-    128k REU        256k 1764       512k 1764
+    128k REU        256k 1764          512k 1764
 
-1)  page 0/bank 0   page 0/bank 0   page 0/bank 0
-2)  page 0/bank 0   page 0/bank 2   page 0/bank 2
-3)  page 0/bank 0   floating bus    page 0/bank 4
-4)  page 0/bank 0   page 0/bank 0   page 0/bank 0
+1)  page 0/bank 0   (*)page 0/bank 0   page 0/bank 0
+2)  page 0/bank 0   (*)page 0/bank 2   page 0/bank 2
+3)  page 0/bank 0   (*)floating bus    page 0/bank 4
+4)  page 0/bank 0   (*)page 0/bank 0   page 0/bank 0
 
-When the REU is used in a RAMlink, it appears to look different:
+When the REU is used in a RAMlink, it appears to look like this
 
-<TODO>
+    128k REU        256k 1764          512k 1764
+
+1)  page 0/bank 0   (*)page 0/bank 0   page 0/bank 0
+2)  page 0/bank 0   (*)page 0/bank 2   page 0/bank 2
+3)  page 0/bank 0   (*)floating bus    page 0/bank 4
+4)  page 0/bank 0   (*)page 0/bank 0   page 0/bank 0
+
+- floating bus seems to always read as $ff (there might be pullups in the REC)
+- non initialized RAM seems to read as the following pattern:
+  $ff, $00, $00, $ff, $ff, $00, $00, $ff, $ff, $00, $00, $ff, $ff, $00, $00, $ff
+  [...] and then the same inverted after (at least) 128k
+  $00, $ff, $ff, $00, $00, $ff, $ff, $00, $00, $ff, $ff, $00, $00, $ff, $ff, $00
