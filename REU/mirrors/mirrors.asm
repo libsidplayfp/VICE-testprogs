@@ -82,6 +82,10 @@ result = $10
 
     ; write a value to first byte of each byte and read it back to check if
     ; there is ram present (repeat with 2 different values to be sure)
+    LDA #<$0002
+    STA $07
+    LDA #>$0002
+    STA $08
     
     LDA #>srcbuffer
     STA $03
@@ -107,7 +111,9 @@ result = $10
     STA $02
 
     lda #$5a
-    sta srcbuffer  ; value
+    sta srcbuffer    ; value
+    lda #$42
+    sta srcbuffer+1  ; dummy to load the floating bus
 
     JSR copyC64toREU
 
@@ -133,6 +139,8 @@ result = $10
 
     lda #$a5
     sta srcbuffer  ; value
+    lda #$23
+    sta srcbuffer+1  ; dummy to load the floating bus
 
     JSR copyC64toREU
 

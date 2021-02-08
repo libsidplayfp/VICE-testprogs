@@ -16,15 +16,19 @@ expected results:
 
 - 2 banks, mirrored every two banks across all banks
 
-256k REU:
+256k REU: (*)
 
 - 4 banks, mirrored every 8 banks. banks 4-7 are not connected and read as
   floating bus (mostly $ff)
 
-512 REU:
+512 REU:  (*)
 
 - 8 banks, mirrored every 8 banks across all banks
 
-> 512 REU:
+1MB CMD REU:
+
+- unknown. probably should mirror present banks without "holes"
+
+2MB CMD REU:  (*)
 
 - unknown. probably should mirror present banks without "holes"
