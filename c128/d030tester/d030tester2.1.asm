@@ -1358,7 +1358,7 @@ sprdata
          cli         ;Allow IRQ's
          
 framecount=*+1
--        lda #3
+-        lda #12
          bpl -
          lda #0
          sta $d7ff
