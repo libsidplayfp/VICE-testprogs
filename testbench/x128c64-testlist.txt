@@ -1271,6 +1271,7 @@
 ../REU/colorram/,dmacolortest.prg,interactive,0
 ../REU/detectsize/,detectreu.prg,exitcode,10000000,reu512k
 ../REU/ioglitch/,ioglitch.prg,exitcode,1000000000,reu512k
+../REU/mirrors/,mirrors.prg,exitcode,20000000,reu512k
 ../REU/misc/,bitfill-auto.prg,exitcode,100000000,reu512k
 ../REU/misc/,twoblocks-auto.prg,exitcode,100000000,reu512k
 ../REU/misc/,twoblocks-ff00-auto.prg,exitcode,100000000,reu512k
@@ -1293,6 +1294,8 @@
 ../REU/QuickReuTest-1.1.1/,quickreu-test7-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test8.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test8-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/ramlink/,reuverify.prg,analyzer,0
+../REU/raminitpattern/,powerup.prg,analyzer,0
 ../REU/reudetect/,reudetect.prg,exitcode,100000000,reu512k,comment:load the "blu.reu" file first
 ../REU/reutiming/,reutiming.prg,exitcode,100000000,reu512k
 #FIXME: NTSC fix

@@ -1,4 +1,4 @@
-#KERNAL64C64OPTS+=" --ignore-config-file"  # upcoming in 1.7.0
+KERNAL64C64OPTS+=" --ignore-config-file"
 KERNAL64C64OPTS+=" --testcart"
 KERNAL64C64OPTS+=" --headless"
 KERNAL64C64OPTS+=" --warp"
@@ -33,11 +33,10 @@ function kernal64c64_get_options
                 exitoptions=""
                 testprogvideotype="PAL"
             ;;
-# upcoming in 1.7.0
-#        "vicii-ntsc")
-#                exitoptions="-ntsc"
-#                testprogvideotype="NTSC"
-#            ;;
+        "vicii-ntsc")
+                exitoptions="--ntsc true --screen-dim 1"
+                testprogvideotype="NTSC"
+            ;;
         "sid-old")
                 new_sid_enabled=0
             ;;
@@ -139,13 +138,28 @@ function kernal64c64_run_screenshot
     then
         if [ -f "$refscreenshotname" ]
         then
-        
             # defaults for PAL
             KERNAL64C64REFSXO=32
             KERNAL64C64REFSYO=35
             KERNAL64C64SXO=32
             KERNAL64C64SYO=35
-        
+
+            if [ "${refscreenshotvideotype}" == "NTSC" ]; then
+                KERNAL64C64REFSXO=32
+                KERNAL64C64REFSYO=23
+                KERNAL64C64SXO=32
+                KERNAL64C64SYO=23
+            fi
+
+            # when either the testbench was run with --ntsc, or the test is ntsc-specific,
+            # then we need the offsets on the NTSC screenshot
+            if [ "${videotype}" == "NTSC" ] || [ "${testprogvideotype}" == "NTSC" ]; then
+                KERNAL64C64REFSXO=32
+                KERNAL64C64REFSYO=23
+                KERNAL64C64SXO=32
+                KERNAL64C64SYO=23
+            fi
+
             if [ $verbose == "1" ]; then
                 echo ./cmpscreens "$refscreenshotname" "$KERNAL64C64REFSXO" "$KERNAL64C64REFSYO" "$1"/.testbench/"$screenshottest"-kernal64c64.png "$KERNAL64C64SXO" "$KERNAL64C64SYO"
             fi

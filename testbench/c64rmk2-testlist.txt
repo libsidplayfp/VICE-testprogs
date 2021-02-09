@@ -1026,6 +1026,8 @@
 ################################################################################
 ../REU/colorram/,dmacolortest.prg,interactive,0
 #TODO: split into behaviour- and timing- test
+../REU/ramlink/,reuverify.prg,analyzer,0
+../REU/raminitpattern/,powerup.prg,analyzer,0
 #FIXME: NTSC fix
 ../REU/spriteba/,spriteba.prg,analyzer,0
 #FIXME: NTSC fix

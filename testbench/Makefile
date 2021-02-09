@@ -27,14 +27,14 @@ Z64KC128LASTSTRING="30 December 2020"
 Z64KVIC20LAST=20201217
 Z64KVIC20LASTSTRING="17 December 2020"
 
-KERNAL64C64LAST=1-6-2_b8
-KERNAL64C64LASTSTRING=1.6.2_b8
-KERNAL64C128C64LAST=1-6-2_b8
-KERNAL64C128C64LASTSTRING=1.6.2_b8
-KERNAL64C128C128LAST=1-6-2_b8
-KERNAL64C128C128LASTSTRING=1.6.2_b8
-KERNAL64SCPU64LAST=1-6-2_b8
-KERNAL64SCPU64LASTSTRING=1.6.2_b8
+KERNAL64C64LAST=1-7-0_b15
+KERNAL64C64LASTSTRING=1.7.0_b15
+KERNAL64C128C64LAST=1-7-0_b15
+KERNAL64C128C64LASTSTRING=1.7.0_b15
+KERNAL64C128C128LAST=1-7-0_b15
+KERNAL64C128C128LASTSTRING=1.7.0_b15
+KERNAL64SCPU64LAST=1-7-0_b15
+KERNAL64SCPU64LASTSTRING=1.7.0_b15
 
 U64LAST=137
 U64LASTSTRING="1.37"
@@ -331,10 +331,35 @@ z64kc128-testlist.txt: c128-testlist.in Makefile
 		| grep -v ",ramcart128k" \
 		>> z64kc128-testlist.txt
 
+# official list of supported cartridges for kernal64 is this:
+# ActionReplay
+# Final Cartridge III
+# Simon's Basic
+# Comal 80
+# Magic Desk
+# Dynamic
+# Game System
+# Warp Speed
+# Easy Flash
+# Ocean Type 1
+# Fun Play
+# Super Games
+# Epyx Fastload
+# Final Cartridge I
+# Super Snapshot V5
+# GMOD 2
+# Zaxxon
+# Mach 5
+# Page Fox
+# CP/M
+# BeamRacer
+# DigiMax
+# SwiftLink
+# REU
+# GeoRAM
 kernal64c64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  kernal64c64-testlist.txt
 	cat  c64-testlist.in \
-		| grep -v ",vicii-ntsc" \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
 		| grep -v ",plus60k" \
@@ -342,12 +367,21 @@ kernal64c64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",isepic" \
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
+		| grep -v "cia1-sdr-icr-4485" \
+		| grep -v "nordicpower" \
+		| grep -v "mountcrt:npdummy.crt" \
+		| grep -v "mountcrt:nrdummy.crt" \
+		| grep -v "mountcrt:rrdummy.crt" \
+		| grep -v "mountcrt:rr-reu.crt" \
+		| grep -v "mountcrt:rr-freeze.crt" \
+		| grep -v "mountcrt:8k-vic-rr.crt" \
+		| grep -v "mountcrt:16k-vic-rr.crt" \
+		| grep -v "mountcrt:ultimax-vic-rr.crt" \
 		>> kernal64c64-testlist.txt
 
 kernal64c128c64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  kernal64c128c64-testlist.txt
 	cat  c64-testlist.in \
-		| grep -v ",vicii-ntsc" \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
 		| grep -v ",plus60k" \
@@ -355,12 +389,21 @@ kernal64c128c64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",isepic" \
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
+		| grep -v "cia1-sdr-icr-4485" \
+		| grep -v "nordicpower" \
+		| grep -v "mountcrt:npdummy.crt" \
+		| grep -v "mountcrt:nrdummy.crt" \
+		| grep -v "mountcrt:rrdummy.crt" \
+		| grep -v "mountcrt:rr-reu.crt" \
+		| grep -v "mountcrt:rr-freeze.crt" \
+		| grep -v "mountcrt:8k-vic-rr.crt" \
+		| grep -v "mountcrt:16k-vic-rr.crt" \
+		| grep -v "mountcrt:ultimax-vic-rr.crt" \
 		>> kernal64c128c64-testlist.txt
 
 kernal64c128c128-testlist.txt: c128-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  kernal64c128c128-testlist.txt
 	cat  c128-testlist.in \
-		| grep -v ",vicii-ntsc" \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
 		| grep -v ",efnram" \
@@ -375,7 +418,6 @@ kernal64c128c128-testlist.txt: c128-testlist.in Makefile
 kernal64scpu64-testlist.txt: scpu-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  kernal64scpu64-testlist.txt
 	cat  scpu-testlist.in \
-		| grep -v ",vicii-ntsc" \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
 		| grep -v ",plus60k" \
@@ -383,6 +425,16 @@ kernal64scpu64-testlist.txt: scpu-testlist.in Makefile
 		| grep -v ",isepic" \
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
+		| grep -v "cia1-sdr-icr-4485" \
+		| grep -v "nordicpower" \
+		| grep -v "mountcrt:npdummy.crt" \
+		| grep -v "mountcrt:nrdummy.crt" \
+		| grep -v "mountcrt:rrdummy.crt" \
+		| grep -v "mountcrt:rr-reu.crt" \
+		| grep -v "mountcrt:rr-freeze.crt" \
+		| grep -v "mountcrt:8k-vic-rr.crt" \
+		| grep -v "mountcrt:16k-vic-rr.crt" \
+		| grep -v "mountcrt:ultimax-vic-rr.crt" \
 		>> kernal64scpu64-testlist.txt
 
 xscpu64-testlist.txt: scpu-testlist.in Makefile
@@ -510,17 +562,17 @@ testemu64:
 
 testkernal64: testkernal64c64 testkernal64c128c64 testkernal64c128c128 testkernal64scpu64
 testkernal64c64:
-#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --pal --verbose
-	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --pal --resume
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --verbose
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --resume
 testkernal64c128c64:
-#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c64 --pal --verbose
-	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c64 --pal --resume
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c64 --verbose
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c64 --resume
 testkernal64c128c128:
-#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c128 --pal --verbose
-	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c128 --pal --resume
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c128 --verbose
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c128 --resume
 testkernal64scpu64:
-#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64scpu64 --pal --verbose
-	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64scpu64 --pal --resume
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64scpu64 --verbose
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64scpu64 --resume
 	
 ##############################################################################
 
@@ -1027,6 +1079,7 @@ resultskernal64c64: maketable kernal64c64-testlist.txt
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
+		--results results/kernal64c64-1-6-2_b8-result.txt "kernal64 (c64) 1.6.2_b8" \
 		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
 		\
 		> results/kernal64c64.html
@@ -1037,6 +1090,7 @@ resultskernal64c128c64: maketable kernal64c128c64-testlist.txt
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
+		--results results/kernal64c128c64-1-6-2_b8-result.txt "Kernal64 (c128/64) 1.6.2_b8" \
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "Kernal64 (c128/64) "$(KERNAL64C128C64LASTSTRING)"" \
 		\
 		> results/kernal64c128c64.html
@@ -1045,6 +1099,7 @@ resultskernal64c128c64: maketable kernal64c128c64-testlist.txt
 resultskernal64c128c128: maketable kernal64c128c128-testlist.txt
 	./maketable --html --list kernal64c128c128-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/kernal64c128c128-1-6-2_b8-result.txt "Kernal64 (c128) 1.6.2_b8" \
 		--results results/kernal64c128c128-$(KERNAL64C128C128LAST)-result.txt "Kernal64 (c128) "$(KERNAL64C128C128LASTSTRING)"" \
 		\
 		> results/kernal64c128c128.html
@@ -1053,6 +1108,7 @@ resultskernal64c128c128: maketable kernal64c128c128-testlist.txt
 resultskernal64scpu64: maketable kernal64scpu64-testlist.txt
 	./maketable --html --list kernal64scpu64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/kernal64scpu64-1-6-2_b8-result.txt "kernal64 (scpu) 1.6.2_b8" \
 		--results results/kernal64scpu64-$(KERNAL64SCPU64LAST)-result.txt "kernal64 (scpu) "$(KERNAL64SCPU64LASTSTRING)"" \
 		\
 		> results/kernal64scpu64.html
