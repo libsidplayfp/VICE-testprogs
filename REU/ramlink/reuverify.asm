@@ -40,8 +40,40 @@ result = $04ec
 
         jsr i85AC
 
-        lda #5
-        sta $d020
+        ldx #5
+        ldy #0
+        
+        lda i0BEB
+        !if TESTSIZE = 128 {
+        cmp #2
+        }
+        !if TESTSIZE = 256 {
+        cmp #4
+        }
+        !if TESTSIZE = 512 {
+        cmp #8
+        }
+        !if TESTSIZE = 1024 {
+        cmp #16
+        }
+        !if TESTSIZE = 2048 {
+        cmp #32
+        }
+        !if TESTSIZE = 4096 {
+        cmp #64
+        }
+        !if TESTSIZE = 8192 {
+        cmp #128
+        }
+        !if TESTSIZE = 16384 {
+        cmp #0
+        }
+        beq +
+        ldx #10
+        ldy #$ff
++
+        stx $d020
+        sty $d7ff
         
         lda i0BEB
         sta result+1
