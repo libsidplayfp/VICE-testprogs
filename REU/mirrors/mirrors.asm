@@ -212,34 +212,38 @@ result = $10
     !if TESTSIZE = 16384 {
     lda srcbuffer+1
     cmp #1
+    beq +
+    ldy #10 ; red
++
+    }
+
+    lda srcbuffer+0
+    !if TESTSIZE = 16384 {
+    cmp #0
     }
     !if TESTSIZE = 8192 {
-    lda srcbuffer+0
     cmp #128
     }
     !if TESTSIZE = 4096 {
-    lda srcbuffer+0
     cmp #64
     }
     !if TESTSIZE = 2048 {
-    lda srcbuffer+0
     cmp #32
     }
     !if TESTSIZE = 1024 {
-    lda srcbuffer+0
     cmp #16
     }
     !if TESTSIZE = 512 {
-    lda srcbuffer+0
     cmp #8
     }
     !if TESTSIZE = 256 {
-    lda srcbuffer+0
     cmp #4
     }
     !if TESTSIZE = 128 {
-    lda srcbuffer+0
     cmp #2
+    }
+    !if TESTSIZE = 0 {
+    lda #0
     }
     beq +
     ldy #10 ; red
