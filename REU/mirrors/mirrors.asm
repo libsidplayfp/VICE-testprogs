@@ -206,6 +206,45 @@ result = $10
     ldx srcbuffer+2
     lda srcbuffer+3
     jsr $bdcd
+
+    ldy #13 ; green
+    
+    !if TESTSIZE = 16384 {
+    lda srcbuffer+1
+    cmp #1
+    }
+    !if TESTSIZE = 8192 {
+    lda srcbuffer+0
+    cmp #128
+    }
+    !if TESTSIZE = 4096 {
+    lda srcbuffer+0
+    cmp #64
+    }
+    !if TESTSIZE = 2048 {
+    lda srcbuffer+0
+    cmp #32
+    }
+    !if TESTSIZE = 1024 {
+    lda srcbuffer+0
+    cmp #16
+    }
+    !if TESTSIZE = 512 {
+    lda srcbuffer+0
+    cmp #8
+    }
+    !if TESTSIZE = 256 {
+    lda srcbuffer+0
+    cmp #4
+    }
+    !if TESTSIZE = 128 {
+    lda srcbuffer+0
+    cmp #2
+    }
+    beq +
+    ldy #10 ; red
++
+    sty fail
     
     lda srcbuffer+1
     beq +
@@ -242,7 +281,7 @@ result = $10
     jmp is4m
 +
     lda srcbuffer+0
-    cmp #64
+    cmp #128
     bne +
     jmp is8m
 +
@@ -338,8 +377,6 @@ is16m:
     sta mirrorstest+0
 
 testit:
-    ldy #13 ; green
-    sty fail
 
     ldx #0
 -

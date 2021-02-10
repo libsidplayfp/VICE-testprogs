@@ -31,4 +31,4 @@ expected results:
 
 2MB CMD REU:  (*)
 
-- unknown. probably should mirror present banks without "holes"
+- 32 banks, no mirrors
