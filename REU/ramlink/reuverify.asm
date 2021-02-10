@@ -68,6 +68,9 @@ result = $04ec
         !if TESTSIZE = 16384 {
         cmp #0
         }
+        !if TESTSIZE = 0 {
+        lda #0
+        }
         beq +
         ldx #10
         ldy #$ff

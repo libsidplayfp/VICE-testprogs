@@ -29,6 +29,10 @@ test256: reuverify.prg
 	x64sc -reu -reusize 256 reuverify.prg
 test512: reuverify.prg
 	x64sc -reu -reusize 512 reuverify.prg
+test8192: reuverify.prg
+	x64sc -reu -reusize 8192 reuverify.prg
+test16384: reuverify.prg
+	x64sc -reu -reusize 16384 reuverify.prg
 	
 clean:
 	$(RM) reuverify.prg
