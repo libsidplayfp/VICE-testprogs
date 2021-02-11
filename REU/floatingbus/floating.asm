@@ -31,6 +31,28 @@ result = $10
     inx
     bne -
 
+    ; write a 55 to the first byte in bank 0
+
+    LDA #<$0001
+    STA $07
+    LDA #>$0001
+    STA $08
+
+    LDA #>srcbuffer
+    STA $03
+    LDA #<srcbuffer
+    STA $02
+
+    LDA #$00
+    STA $04
+    STA $05
+    STA $06        ; bank
+
+    lda #$55
+    sta srcbuffer  ; value
+
+    JSR copyC64toREU
+
     ; write a 0 to the first byte in bank 7
 
     LDA #<$0001
@@ -54,6 +76,59 @@ result = $10
     sta srcbuffer  ; value
 
     JSR copyC64toREU
+
+!if FIRSTWRITEVALID = 1 {
+    ; write a aa to the first byte in bank 1
+
+    LDA #<$0001
+    STA $07
+    LDA #>$0001
+    STA $08
+
+    LDA #>srcbuffer
+    STA $03
+    LDA #<srcbuffer
+    STA $02
+
+    LDA #$00
+    STA $04
+    STA $05
+    lda #1
+    STA $06        ; bank
+
+    lda #$aa
+    sta srcbuffer  ; value
+
+    JSR copyC64toREU
+
+    lda #7
+    STA $06        ; bank
+}
+
+!if FIRSTREADVALID = 1 {
+    ; read one non floating value
+
+    LDA #<$0001
+    STA $07
+    LDA #>$0001
+    STA $08
+
+    ; REU -> screen
+    LDA #>checkbuffer
+    STA $03
+    LDA #<checkbuffer
+    STA $02
+
+    LDA #$00
+    STA $04
+    STA $05
+    STA $06        ; bank
+
+    JSR copyREUtoC64
+
+    lda #7
+    STA $06        ; bank
+}
 
     ; repeatedly read back the floating value
 
@@ -82,38 +157,56 @@ result = $10
     dex
     bne -
 
-    ; check some values. we have to skip the values in the middle because
-    ; decay time varies
-
-    ; first few should be 0s
+    ; check the result
     
     ldy #13 ; green
     sty fail
     ldx #0
 -
     lda checkbuffer,x
+!if FIRSTWRITEVALID = 1 {
+    cmp #$aa
+}
     beq +
     ldy #10 ; red
     sty fail
 +
     tya
     sta $d800,x
-    inx
-    cpx #$80
-    bne -
 
-    ; values at the end should be $ff
-    ldy #13 ; green
-    ldx #0
--
-    lda checkbuffer+$200,x
-    cmp #$ff
+    lda checkbuffer+$100,x
+!if FIRSTWRITEVALID = 1 {
+    cmp #$aa
+}
     beq +
     ldy #10 ; red
     sty fail
 +
     tya
-    sta $d800+$200,x
+    sta $d900,x
+
+    lda checkbuffer+$200,x
+!if FIRSTWRITEVALID = 1 {
+    cmp #$aa
+}
+    beq +
+    ldy #10 ; red
+    sty fail
++
+    tya
+    sta $da00,x
+
+    lda checkbuffer+$300,x
+!if FIRSTWRITEVALID = 1 {
+    cmp #$aa
+}
+    beq +
+    ldy #10 ; red
+    sty fail
++
+    tya
+    sta $db00,x
+
     inx
     bne -
 

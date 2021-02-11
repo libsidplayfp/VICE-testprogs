@@ -33,6 +33,14 @@ result = $10
     bne -
 
 testloop:
+
+    lda #$20
+    ldx #0
+-
+    sta $0500,x
+    inx
+    bne -
+
     ; reset and cascade timers
     lda #$ff
     sta $dc04
@@ -86,9 +94,7 @@ testloop:
     ldx #$00
 -
     lda srcbuffer
-    cmp #$ff
-    beq endtest
-    sta $0500,x
+    bne endtest
 
     STY $DF01   ; Command
 
@@ -96,6 +102,17 @@ testloop:
     jmp -
 
 endtest:
+
+    ; read another 256 bytes so we can see the decay (hopefully)
+    ldx #$00
+-
+    lda srcbuffer
+    sta $0500,x
+
+    STY $DF01   ; Command
+
+    inx
+    bne -
 
     ; stop timers
     lda #0

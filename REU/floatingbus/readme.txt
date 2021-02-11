@@ -5,10 +5,32 @@ missing)
 
 floating.prg:
 
-expected result is a bunch of 0s at the top, then values fading to $ff and the
-rest all $ff
+writes 0 to invalid RAM location, and then reads back that location
+
+-> reads 0s on real REU
+
+floating-a.prg:
+
+before reading from floating bus, read from valid RAM once
+
+-> reads 0s on real REU
+
+floating-b.prg:
+
+before reading from floating bus, write to valid RAM once
+
+-> reads the value written to valid RAM before
 
 floating2.prg:
 
 measures the time until the value decays to $ff with CIA timers, value to the
 top left is the first timer, the value next to it the cascaded second timer.
+
+floating3a.prg:
+
+writes a 0 to floating bus, then waits a while and then reads the value back and
+checks if its still 0. uses binsearching to figure out the actual delay
+
+floating3b.prg:
+
+like floating3a.prg but uses two cascaded timers and a much longer initial delay
