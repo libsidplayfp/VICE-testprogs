@@ -35,6 +35,9 @@ result = $10
     ; first write the bank number into the first byte of each bank, in
     ; descending order.
 
+    ; the first byte written here will be $ff, to address $ff0000 (invalid on 256k)
+    ; the last byte written here will be 0, to address $000000 (valid on 256k)
+
     LDA #<$0001
     STA $07
     LDA #>$0001
@@ -64,6 +67,9 @@ result = $10
 
     ; read back the first byte of each bank
 
+    ; first byte read from address $000000 (0 on 256k)
+    ; last byte read from address $ff0000 ($ff on 256k)
+
     ; REU -> screen
     LDA #>checkbuffer
     STA $03
@@ -86,7 +92,7 @@ result = $10
     STA $07
     LDA #>$0002
     STA $08
-    
+
     LDA #>srcbuffer
     STA $03
     LDA #<srcbuffer
