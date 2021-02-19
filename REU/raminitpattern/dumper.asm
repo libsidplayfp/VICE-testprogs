@@ -84,9 +84,9 @@ copyREUtoC64:                  ; REU -> C64
 
     ; REU addr
     LDA #$00
-    STA $DF05
-    LDA pageaddr
     STA $DF04
+    LDA pageaddr
+    STA $DF05
     LDA bankaddr
     STA $DF06
 
@@ -153,7 +153,7 @@ skip2:
         LDA $AF
         SBC #>file_end
         BCC loop      ; next byte
-        
+
         rts
 
 closefile:
@@ -177,6 +177,6 @@ werror:
         ;... error handling for write errors ...
         JMP close
 
-fname:  
+fname:
         !pet "dumpfile,p,w"  ; ,P,W is required to make this an output file!
 fname_end:
