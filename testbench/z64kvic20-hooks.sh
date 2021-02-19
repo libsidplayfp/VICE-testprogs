@@ -72,8 +72,8 @@ function z64kvic20_get_options
                 exitoptions="-memory all"
                 memory_expansion_enabled="32K"
             ;;
-        "geo256k")
-                exitoptions="-georam -georamsize 256"
+        "geo512k")
+                exitoptions="-georam -georamsize 512"
                 georam_enabled=1
             ;;
         *)

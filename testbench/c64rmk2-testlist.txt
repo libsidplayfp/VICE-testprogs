@@ -1025,8 +1025,30 @@
 # REU
 ################################################################################
 ../REU/colorram/,dmacolortest.prg,interactive,0
-#TODO: split into behaviour- and timing- test
+../REU/floatingbus/,floating.prg,exitcode,14000000,reu256k
+../REU/floatingbus/,floating-a.prg,exitcode,14000000,reu256k
+../REU/floatingbus/,floating-b.prg,exitcode,14000000,reu256k
+../REU/floatingbus/,floating2.prg,exitcode,20000000,reu256k,expect:timeout
+../REU/floatingbus/,floating3a.prg,exitcode,15000000,reu256k
+../REU/floatingbus/,floating3b.prg,exitcode,1500000000,reu256k
+../REU/floatingbus/,floating4a.prg,exitcode,65000000,reu256k
+../REU/floatingbus/,floating4b.prg,exitcode,65000000,reu256k
+../REU/floatingbus/,floating4c.prg,exitcode,95000000,reu256k
+../REU/floatingbus/,floating4d.prg,exitcode,95000000,reu256k
+../REU/mirrors/,mirrors128k.prg,exitcode,20000000,reu128k
+../REU/mirrors/,mirrors256k.prg,exitcode,20000000,reu256k
+../REU/mirrors/,mirrors1m.prg,exitcode,20000000,reu1m
+../REU/mirrors/,mirrors2m.prg,exitcode,20000000,reu2m
+../REU/mirrors/,mirrors4m.prg,exitcode,20000000,reu4m
+../REU/mirrors/,mirrors8m.prg,exitcode,20000000,reu8m
+../REU/mirrors/,mirrors16m.prg,exitcode,20000000,reu16m
 ../REU/ramlink/,reuverify.prg,analyzer,0
+../REU/ramlink/,reuverify128k.prg,exitcode,7000000,reu128k
+../REU/ramlink/,reuverify256k.prg,exitcode,7000000,reu256k
+../REU/ramlink/,reuverify1m.prg,exitcode,7000000,reu1m
+../REU/ramlink/,reuverify2m.prg,exitcode,7000000,reu2m
+../REU/ramlink/,reuverify4m.prg,exitcode,7000000,reu4m
+../REU/ramlink/,reuverify8m.prg,exitcode,8000000,reu8m
 ../REU/raminitpattern/,powerup.prg,analyzer,0
 #FIXME: NTSC fix
 ../REU/spriteba/,spriteba.prg,analyzer,0

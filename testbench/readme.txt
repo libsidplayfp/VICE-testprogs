@@ -163,8 +163,16 @@ options:
     ramcart128k
     isepic
     
-    geo256k
+    geo512k
+
+    reu128k
+    reu256k
     reu512k
+    reu1m
+    reu2m
+    reu4m
+    reu8m
+    reu16m
     
     plus60k
     plus256k

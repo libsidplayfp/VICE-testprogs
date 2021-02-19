@@ -98,12 +98,40 @@ function x128c64_get_options
                 exitoptions="-sidenginemodel 257"
                 new_sid_enabled=1
             ;;
+        "reu128k")
+                exitoptions="-reu -reusize 128"
+                reu_enabled=1
+            ;;
+        "reu256k")
+                exitoptions="-reu -reusize 256"
+                reu_enabled=1
+            ;;
         "reu512k")
                 exitoptions="-reu -reusize 512"
                 reu_enabled=1
             ;;
-        "geo256k")
-                exitoptions="-georam -georamsize 256"
+        "reu1m")
+                exitoptions="-reu -reusize 1024"
+                reu_enabled=1
+            ;;
+        "reu2m")
+                exitoptions="-reu -reusize 2048"
+                reu_enabled=1
+            ;;
+        "reu4m")
+                exitoptions="-reu -reusize 4096"
+                reu_enabled=1
+            ;;
+        "reu8m")
+                exitoptions="-reu -reusize 8192"
+                reu_enabled=1
+            ;;
+        "reu16m")
+                exitoptions="-reu -reusize 16384"
+                reu_enabled=1
+            ;;
+        "geo512k")
+                exitoptions="-georam -georamsize 512"
                 georam_enabled=1
             ;;
 #        "plus60k")

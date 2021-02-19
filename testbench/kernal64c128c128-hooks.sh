@@ -51,8 +51,8 @@ function kernal64c128c128_get_options
                 exitoptions="--reu-type 512"
                 reu_enabled=1
             ;;
-        "geo256k")
-                exitoptions="--geo-ram 256"
+        "geo512k")
+                exitoptions="--geo-ram 512"
                 georam_enabled=1
             ;;
         "cia-old")

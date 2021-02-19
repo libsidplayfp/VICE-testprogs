@@ -163,7 +163,7 @@ function u64_get_options
         "reu512k")
                 reu_enabled=1
             ;;
-        "geo256k")
+        "geo512k")
                 georam_enabled=1
             ;;
         *)

@@ -90,8 +90,8 @@ function yace_get_options
                 exitoptions="-reu 512"
                 reu_enabled=1
             ;;
-#        "geo256k")
-#                exitoptions="-georam -georamsize 256" # not supported by yace
+#        "geo512k")
+#                exitoptions="-georam -georamsize 512" # not supported by yace
 #                georam_enabled=1
 #            ;;
         *)

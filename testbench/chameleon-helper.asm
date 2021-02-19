@@ -1,6 +1,21 @@
 ; $0400 if != $20 then configure a cartridge
 ; $0401 CRT ID
-; $0402 if = 0 no ram expansion, = 1 REU (512k), = 2 GEORAM (256k)
+; $0402 if = 0 no ram expansion,
+;       $40 64  64k     georam
+;       $48 72  128k    georam
+;       $50 80  256k    georam
+;       $58 88  512k    georam
+;       $60 96  1M      georam
+;       $68 104 2M      georam
+;       $70 112 4M      georam
+;       $80 128 128k    REU
+;       $81 129 256k    REU
+;       $82 130 512k    REU
+;       $83 131 1M      REU
+;       $84 132 2M      REU
+;       $85 133 4M      REU
+;       $86 134 8M      REU
+;       $87 135 16M     REU
 ; $0403 0=6581 1=8580 SID
 ; $0404 0=6526 2=8521 CIA
 
@@ -76,17 +91,20 @@ noef:
         stx $d0a2
         sta $d0a3
 
-        ldx #0
+;         ldx #0
+;         lda $0402
+;         beq noramexp
+;         ldx #$82        ; reu on, 512k
+;         lda $0402
+;         cmp #$01
+;         beq isreu
+;         ldx #$50        ; georam on, 256k
+; isreu:
+; noramexp:
+;         stx $d0f5       ; dis/enable REU
+
         lda $0402
-        beq noramexp
-        ldx #$82        ; reu on, 512k
-        lda $0402
-        cmp #$01
-        beq isreu
-        ldx #$50        ; georam on, 512k
-isreu:
-noramexp:
-        stx $d0f5       ; dis/enable REU
+        sta $d0f5
 
         lda #$00
         ldx $0403

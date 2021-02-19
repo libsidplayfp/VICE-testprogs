@@ -96,8 +96,8 @@ function micro64_get_options
                 exitoptions="+REUMODE=3"
                 reu_enabled=1
             ;;
-        "geo256k")
-                exitoptions="+NEORAMMODE=2"
+        "geo512k")
+                exitoptions="+NEORAMMODE=3"
                 georam_enabled=1
             ;;
         *)

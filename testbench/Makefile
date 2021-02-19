@@ -183,7 +183,7 @@ c64rmk2-testlist.txt: c64-testlist.in Makefile
 	cat  c64-testlist.in \
 		| grep -v ",screenshot" \
 		| grep -v ",vicii-drean" \
-		| grep -v ",geo256k" \
+		| grep -v ",geo512k" \
 		| grep -v ",reu512k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
@@ -231,7 +231,7 @@ hoxs64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",vicii-drean" \
 		| grep -v ",sid-old" \
 		| grep -v ",reu512k" \
-		| grep -v ",geo256k" \
+		| grep -v ",geo512k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \
@@ -248,7 +248,7 @@ emu64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",cia-new" \
 		| grep -v ",sid-new" \
 		| grep -v ",reu512k" \
-		| grep -v ",geo256k" \
+		| grep -v ",geo512k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \
@@ -261,7 +261,7 @@ denise-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  denise-testlist.txt
 	cat  c64-testlist.in \
 		| grep -v ",mountp64" \
-		| grep -v ",geo256k" \
+		| grep -v ",geo512k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \
@@ -290,7 +290,7 @@ z64kc64-testlist.txt: c64-testlist.in Makefile
 	cat  c64-testlist.in \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
-		| grep -v ",geo256k" \
+		| grep -v ",geo512k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \
@@ -304,7 +304,7 @@ z64kc128c64-testlist.txt: c64-testlist.in Makefile
 		| sed -e 's/cpuport.prg/cpuport128.prg/g' \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
-		| grep -v ",geo256k" \
+		| grep -v ",geo512k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \
@@ -323,7 +323,7 @@ z64kc128-testlist.txt: c128-testlist.in Makefile
 		| grep -v ",vicii-drean" \
 		| grep -v ",efnram" \
 		| grep -v ",ifnram" \
-		| grep -v ",geo256k" \
+		| grep -v ",geo512k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \
@@ -464,13 +464,13 @@ xvic-testlist.txt: vic20-testlist.in Makefile
 z64kvic20-testlist.txt: vic20-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  z64kvic20-testlist.txt
 	cat  vic20-testlist.in \
-		| grep -v ",geo256k" \
+		| grep -v ",geo512k" \
 		>> z64kvic20-testlist.txt
 
 cham20-testlist.txt: vic20-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  cham20-testlist.txt
 	cat  vic20-testlist.in \
-		| grep -v ",geo256k" \
+		| grep -v ",geo512k" \
 		>> cham20-testlist.txt
 
 xplus4-testlist.txt: plus4-testlist.in Makefile

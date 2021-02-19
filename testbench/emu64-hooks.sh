@@ -99,8 +99,8 @@ function emu64_get_options
 #                exitoptions="-reu -reusize 512"
                 reu_enabled=1
             ;;
-        "geo256k")
-#                exitoptions="-georam -georamsize 256"
+        "geo512k")
+#                exitoptions="-georam -georamsize 512"
                 georam_enabled=1
             ;;
         *)

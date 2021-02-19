@@ -1210,18 +1210,34 @@
 # REU
 ################################################################################
 ../REU/bonzai/,spritetiming.prg,exitcode,49000000,reu512k
-../REU/bonzai/,checkchar.prg,exitcode,9900000,reu512k
+../REU/bonzai/,checkchar.prg,exitcode,12000000,reu512k
 ../REU/bonzai/,reudetect.prg,exitcode,15000000,reu512k
 ../REU/colorram/,colorram.prg,exitcode,1000000000,reu512k
 ../REU/colorram/,dmacolortest.prg,interactive,0
 ../REU/detectsize/,detectreu.prg,exitcode,10000000,reu512k
+../REU/floatingbus/,floating.prg,exitcode,14000000,reu256k
+../REU/floatingbus/,floating-a.prg,exitcode,14000000,reu256k
+../REU/floatingbus/,floating-b.prg,exitcode,14000000,reu256k
+../REU/floatingbus/,floating2.prg,exitcode,20000000,reu256k,expect:timeout
+../REU/floatingbus/,floating3a.prg,exitcode,15000000,reu256k
+../REU/floatingbus/,floating3b.prg,exitcode,1500000000,reu256k
+../REU/floatingbus/,floating4a.prg,exitcode,65000000,reu256k
+../REU/floatingbus/,floating4b.prg,exitcode,65000000,reu256k
+../REU/floatingbus/,floating4c.prg,exitcode,95000000,reu256k
+../REU/floatingbus/,floating4d.prg,exitcode,95000000,reu256k
 ../REU/ioglitch/,ioglitch.prg,exitcode,1000000000,reu512k
-../REU/mirrors/,mirrors.prg,exitcode,20000000,reu512k
+../REU/mirrors/,mirrors128k.prg,exitcode,20000000,reu128k
+../REU/mirrors/,mirrors256k.prg,exitcode,20000000,reu256k
+../REU/mirrors/,mirrors512k.prg,exitcode,20000000,reu512k
+../REU/mirrors/,mirrors1m.prg,exitcode,20000000,reu1m
+../REU/mirrors/,mirrors2m.prg,exitcode,20000000,reu2m
+../REU/mirrors/,mirrors4m.prg,exitcode,20000000,reu4m
+../REU/mirrors/,mirrors8m.prg,exitcode,20000000,reu8m
+../REU/mirrors/,mirrors16m.prg,exitcode,20000000,reu16m
 ../REU/misc/,bitfill-auto.prg,exitcode,100000000,reu512k
 ../REU/misc/,twoblocks-auto.prg,exitcode,100000000,reu512k
 ../REU/misc/,twoblocks-ff00-auto.prg,exitcode,100000000,reu512k
 ../REU/misc/,wheels.prg,exitcode,100000000,reu512k
-#TODO: split into behaviour- and timing- test
 ../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,exitcode,42500000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test1.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test1-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
@@ -1240,6 +1256,13 @@
 ../REU/QuickReuTest-1.1.1/,quickreu-test8.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test8-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/ramlink/,reuverify.prg,analyzer,0
+../REU/ramlink/,reuverify128k.prg,exitcode,7000000,reu128k
+../REU/ramlink/,reuverify256k.prg,exitcode,7000000,reu256k
+../REU/ramlink/,reuverify512k.prg,exitcode,7000000,reu512k
+../REU/ramlink/,reuverify1m.prg,exitcode,7000000,reu1m
+../REU/ramlink/,reuverify2m.prg,exitcode,7000000,reu2m
+../REU/ramlink/,reuverify4m.prg,exitcode,7000000,reu4m
+../REU/ramlink/,reuverify8m.prg,exitcode,8000000,reu8m
 ../REU/raminitpattern/,powerup.prg,analyzer,0
 ../REU/reudetect/,reudetect.prg,exitcode,100000000,reu512k,comment:load the "blu.reu" file first
 ../REU/reutiming/,reutiming.prg,exitcode,100000000,reu512k
@@ -1249,12 +1272,12 @@
 ../REU/reutiming2/,b.prg,screenshot,20000000,reu512k,vicii-pal
 ../REU/reutiming2/,b2.prg,screenshot,20000000,reu512k,vicii-pal
 ../REU/reutiming2/,b3.prg,screenshot,20000000,reu512k,vicii-pal
-../REU/reutiming2/,c.prg,screenshot,20000000,reu512k,vicii-pal
-../REU/reutiming2/,c2.prg,screenshot,20000000,reu512k,vicii-pal
-../REU/reutiming2/,d.prg,screenshot,20000000,reu512k,vicii-pal
-../REU/reutiming2/,d2.prg,screenshot,20000000,reu512k,vicii-pal
-../REU/rmw-trigger/,rmwtrigger-rom.prg,exitcode,1000000000,reu512k
-../REU/rmw-trigger/,rmwtrigger-ram.prg,exitcode,1000000000,reu512k
+../REU/reutiming2/,c.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
+../REU/reutiming2/,c2.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
+../REU/reutiming2/,d.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
+../REU/reutiming2/,d2.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
+../REU/rmw-trigger/,rmwtrigger-rom.prg,exitcode,1000000000,reu512k,warn:vicefail
+../REU/rmw-trigger/,rmwtrigger-ram.prg,exitcode,1000000000,reu512k,warn:vicefail
 ../REU/spriteba/,spriteba.prg,analyzer,0
 #FIXME: NTSC fix
 ../REU/xfertiming/,xfertiming-cmp.prg,screenshot,20000000,reu512k,vicii-pal
@@ -1266,11 +1289,11 @@
 ################################################################################
 # GEO-RAM
 ################################################################################
-../GEO-RAM/,georam64.prg,exitcode,80000000,geo256k
-../GEO-RAM/,georamtest.prg,interactive,0,geo256k,comment:see automatic variants
-../GEO-RAM/,georamtest-auto.prg,exitcode,80000000,geo256k
-../GEO-RAM/,newtest.prg,interactive,0,geo256k,comment:see automatic variants
-../GEO-RAM/,newtest-auto.prg,exitcode,80000000,geo256k
+../GEO-RAM/,georam64.prg,exitcode,80000000,geo512k
+../GEO-RAM/,georamtest.prg,interactive,0,geo512k,comment:see automatic variants
+../GEO-RAM/,georamtest-auto.prg,exitcode,80000000,geo512k
+../GEO-RAM/,newtest.prg,interactive,0,geo512k,comment:see automatic variants
+../GEO-RAM/,newtest-auto.prg,exitcode,80000000,geo512k
 ################################################################################
 # plus60k
 ################################################################################
@@ -1371,7 +1394,7 @@
 #../RS232/,test1.prg
 #../RTC/,ds12c887.prg
 #../MIDI/,midi-out-irq-test.prg
-../memory-expansions/,c64-georam-emd.prg,exitcode,290000000,geo256k
+../memory-expansions/,c64-georam-emd.prg,exitcode,570000000,geo512k
 ../memory-expansions/,c64-reu-emd.prg,exitcode,535000000,reu512k
 ../memory-expansions/,c64-ram-emd.prg,exitcode,29000000
 #../cp-clockf83/cp-clockf83.d64

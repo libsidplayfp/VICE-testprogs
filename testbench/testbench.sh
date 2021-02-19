@@ -292,7 +292,9 @@ function resetflags
     fullbanks_enabled=0
     ramcart_enabled=0
     reu_enabled=0
+    reu_size=0
     georam_enabled=0
+    georam_size=0
     dqbb_enabled=0
     plus60k_enabled=0
     plus256k_enabled=0

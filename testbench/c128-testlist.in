@@ -90,7 +90,7 @@
 ################################################################################
 # GEO-RAM
 ################################################################################
-../GEO-RAM/,georam128.prg,exitcode,10000000,geo256k
+../GEO-RAM/,georam128.prg,exitcode,10000000,geo512k
 ################################################################################
 # Joystick/Mouse
 ################################################################################
@@ -108,7 +108,7 @@
 ../userportrtc/,testrtc-c128.prg,interactive,0
 ../memory-expansions/,c128-efnram-emd.prg,exitcode,48000000,efnram
 ../memory-expansions/,c128-ifnram-emd.prg,exitcode,48000000,ifnram
-../memory-expansions/,c128-georam-emd.prg,exitcode,300000000,geo256k
+../memory-expansions/,c128-georam-emd.prg,exitcode,300000000,geo512k
 ../memory-expansions/,c128-ram-emd.prg,exitcode,200000000
 ../memory-expansions/,c128-ram2-emd.prg,exitcode,280000000,c128fullbanks
 ../memory-expansions/,c128-ramcart-emd.prg,exitcode,160000000,ramcart128k

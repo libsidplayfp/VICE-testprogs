@@ -290,12 +290,56 @@ function chameleon_make_helper_options
     # set REU type
     if [ $reu_enabled = 1 ]
     then
-        echo -ne "\x01" >> $RDUMMY
+        case "$reu_size" in
+            128)
+                    echo -ne "\x80" >> $RDUMMY
+                ;;
+            256)
+                    echo -ne "\x81" >> $RDUMMY
+                ;;
+            512)
+                    echo -ne "\x82" >> $RDUMMY
+                ;;
+            1024)
+                    echo -ne "\x83" >> $RDUMMY
+                ;;
+            2048)
+                    echo -ne "\x84" >> $RDUMMY
+                ;;
+            4096)
+                    echo -ne "\x85" >> $RDUMMY
+                ;;
+            8192)
+                    echo -ne "\x86" >> $RDUMMY
+                ;;
+            16384)
+                    echo -ne "\x87" >> $RDUMMY
+                ;;
+            *)
+                    echo -ne "\x00" >> $RDUMMY
+                ;;
+        esac
     else
         # set GEORAM type
         if [ $georam_enabled = 1 ]
         then
-            echo -ne "\x02" >> $RDUMMY
+            case "$georam_size" in
+                512)
+                        echo -ne "\x58" >> $RDUMMY
+                    ;;
+                1024)
+                        echo -ne "\x60" >> $RDUMMY
+                    ;;
+                2048)
+                        echo -ne "\x68" >> $RDUMMY
+                    ;;
+                4096)
+                        echo -ne "\x70" >> $RDUMMY
+                    ;;
+                *)
+                        echo -ne "\x00" >> $RDUMMY
+                    ;;
+            esac
         else
             echo -ne "\x00" >> $RDUMMY
         fi
@@ -492,10 +536,52 @@ function chameleon_get_options
 #                exitoptions="-sidenginemodel 257"
                 new_sid_enabled=1
             ;;
-        "reu512k")
+        "reu128k")
+                reu_size=128
                 reu_enabled=1
             ;;
-        "geo256k")
+        "reu256k")
+                reu_size=256
+                reu_enabled=1
+            ;;
+        "reu512k")
+                reu_size=512
+                reu_enabled=1
+            ;;
+        "reu1m")
+                reu_size=1024
+                reu_enabled=1
+            ;;
+        "reu2m")
+                reu_size=2048
+                reu_enabled=1
+            ;;
+        "reu4m")
+                reu_size=4096
+                reu_enabled=1
+            ;;
+        "reu8m")
+                reu_size=8192
+                reu_enabled=1
+            ;;
+        "reu16m")
+                reu_size=16384
+                reu_enabled=1
+            ;;
+        "geo512k")
+                georam_size=512
+                georam_enabled=1
+            ;;
+        "geo1m")
+                georam_size=1024
+                georam_enabled=1
+            ;;
+        "geo2m")
+                georam_size=2048
+                georam_enabled=1
+            ;;
+        "geo4m")
+                georam_size=4096
                 georam_enabled=1
             ;;
         *)

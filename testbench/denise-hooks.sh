@@ -96,8 +96,8 @@ function denise_get_options
                 exitoptions="-reu 512"
                 reu_enabled=1
             ;;
-#        "geo256k")
-#                exitoptions="+NEORAMMODE=2"
+#        "geo512k")
+#                exitoptions="+NEORAMMODE=3"
 #                georam_enabled=1
 #            ;;
         *)

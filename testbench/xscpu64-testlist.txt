@@ -23,5 +23,5 @@
 ################################################################################
 ../memory-expansions/,c64-ram-emd.prg,exitcode,29000000
 ../memory-expansions/,c64-dqbb-emd.prg,exitcode,37000000,dqbb
-../memory-expansions/,c64-georam-emd.prg,exitcode,290000000,geo256k
+../memory-expansions/,c64-georam-emd.prg,exitcode,290000000,geo512k
 ../memory-expansions/,c64-reu-emd.prg,exitcode,530000000,reu512k
