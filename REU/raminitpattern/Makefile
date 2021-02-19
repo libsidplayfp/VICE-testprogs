@@ -15,7 +15,7 @@ test512: powerup.prg
 
 testdump: dumper.prg
 	$(RM) dumpfile
-	x64sc -default +truedrive -virtualdev -autostartprgmode 0 -reu -reusize 256 dumper.prg
+	x64sc -default -warp +truedrive -virtualdev -autostartprgmode 0 -reu -reusize 256 dumper.prg
 
 clean:
 	$(RM) powerup.prg
