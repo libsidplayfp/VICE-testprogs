@@ -75,6 +75,13 @@ srcbuffer:
 
 testloop:
 
+-   bit $d011
+    bmi -
+-   bit $d011
+    bpl -
+
+    inc $d020
+
     lda #%00010000  ; timer A counts clock, stop
     sta $dc0e
     lda #%01010000  ; timer B counts timer A, stop
@@ -119,6 +126,8 @@ testloop:
 
     ; read back the floating value
     JSR copyREUtoC64
+
+    dec $d020
 
     jsr showtimes
 
@@ -190,6 +199,22 @@ nexttest:
 
     ; TODO: if we know what to expect, check it here
 testend:
+
+    ldx #0
+-
+    ldy #13 ; green
+    lda $0400,x
+    cmp #0
+    beq +
+    ldy #10 ; red
+    sty fail
++
+    tya
+    sta $d800,x
+    inx
+    cpx#40+6
+    bne -
+
 fail=*+1
     lda #13
     sta $d020

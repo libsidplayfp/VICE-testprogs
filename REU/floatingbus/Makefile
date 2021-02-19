@@ -1,5 +1,6 @@
 
-all: floating.prg floating-a.prg floating-b.prg floating2.prg floating3a.prg floating3b.prg
+all: floating.prg floating-a.prg floating-b.prg floating2.prg floating3a.prg floating3b.prg \
+	floating4a.prg floating4b.prg floating4c.prg floating4d.prg
 
 floating.prg: floating.asm
 	acme -f cbm -DFIRSTREADVALID=0 -DFIRSTWRITEVALID=0 -o floating.prg floating.asm
@@ -18,6 +19,15 @@ floating3a.prg: floating3.asm
 floating3b.prg: floating3.asm
 	acme -f cbm -DTWOTIMERS=1 -o floating3b.prg floating3.asm
 
+floating4a.prg: floating4.asm
+	acme -f cbm  -DINCBANK=0 -DINITRAM=0 -o floating4a.prg floating4.asm
+floating4b.prg: floating4.asm
+	acme -f cbm  -DINCBANK=1 -DINITRAM=0 -o floating4b.prg floating4.asm
+floating4c.prg: floating4.asm
+	acme -f cbm  -DINCBANK=0 -DINITRAM=1 -o floating4c.prg floating4.asm
+floating4d.prg: floating4.asm
+	acme -f cbm  -DINCBANK=1 -DINITRAM=1 -o floating4d.prg floating4.asm
+
 test: floating.prg
 	x64sc -reu -reusize 256 floating.prg
 testa: floating-a.prg
@@ -33,6 +43,15 @@ test3a: floating3a.prg
 test3b: floating3b.prg
 	x64sc -reu -reusize 256 floating3b.prg
 	
+test4a: floating4a.prg
+	x64sc -reu -reusize 256 floating4a.prg
+test4b: floating4b.prg
+	x64sc -reu -reusize 256 floating4b.prg
+test4c: floating4c.prg
+	x64sc -reu -reusize 256 floating4c.prg
+test4d: floating4d.prg
+	x64sc -reu -reusize 256 floating4d.prg
+	
 clean:
 	$(RM) floating.prg
 	$(RM) floating-a.prg
@@ -40,3 +59,7 @@ clean:
 	$(RM) floating2.prg
 	$(RM) floating3a.prg
 	$(RM) floating3b.prg
+	$(RM) floating4a.prg
+	$(RM) floating4b.prg
+	$(RM) floating4c.prg
+	$(RM) floating4d.prg

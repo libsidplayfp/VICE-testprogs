@@ -106,7 +106,7 @@ result = $10
 }
 
 !if FIRSTREADVALID = 1 {
-    ; read one non floating value
+    ; read one non floating value (reads $55 from $000000)
 
     LDA #<$0001
     STA $07
