@@ -1472,6 +1472,36 @@ void display_get_works(CuTest *tc) {
     CuAssertIntEquals(tc, 547040, little_endian_to_uint32(&response[HEADER_LENGTH + 8]));
 }
 
+void vice_info_works(CuTest *tc) {
+    int length, misc_fields_length;
+    unsigned char *cursor;
+
+    unsigned char command[] = {
+        0x02, 0x01, 
+        0xff, 0xff, 0xff, 0xff, 
+        0xaf, 0xe9, 0x23, 0x3d, 
+
+        0x85,
+    };
+
+    setup(tc);
+
+    send_command(command);
+
+    length = wait_for_response_id(tc, command);
+
+    CuAssertIntEquals(tc, 0x85, response[RESPONSE_TYPE]);
+
+    CuAssertIntEquals(tc, 4, response[HEADER_LENGTH]);
+    CuAssertTrue(tc, response[HEADER_LENGTH + 1] >= 3);
+
+    CuAssertIntEquals(tc, 4, response[HEADER_LENGTH + 5]);
+
+    printf("SVN Version: %d\n", little_endian_to_uint32(&response[HEADER_LENGTH + 6]));
+
+    CuAssertTrue(tc, little_endian_to_uint32(&response[HEADER_LENGTH + 6]) > 38911);
+}
+
 CuSuite* get_suite(void)
 {
     CuSuite* suite = CuSuiteNew();
@@ -1506,6 +1536,7 @@ CuSuite* get_suite(void)
     SUITE_ADD_TEST(suite, banks_available_works);
     SUITE_ADD_TEST(suite, registers_available_works);
     SUITE_ADD_TEST(suite, display_get_works);
+    SUITE_ADD_TEST(suite, vice_info_works);
 
     SUITE_ADD_TEST(suite, resource_get_works);
     SUITE_ADD_TEST(suite, resource_set_works);
@@ -1555,7 +1586,7 @@ int main(int argc, unsigned char** argv)
 
     if (argc < 2 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-help") == 0) {
         printf("Syntax: %s <port of x64sc binary monitor> [name of test to run]\n", argv[0]);
-        printf("\nTests available: \n\n", argv[0]);
+        printf("\nTests available: \n\n");
 
         for (i = 0 ; i < suite->count ; i++) {
             CuTest* test = suite->list[i];
