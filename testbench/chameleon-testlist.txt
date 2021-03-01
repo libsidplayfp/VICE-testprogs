@@ -1327,6 +1327,7 @@
 #FIXME: use an empty g64 too
 ../drive/format/,format.prg,exitcode,80000000,mountd64:format.d64,comment: make sure format.d64
 ../drive/iecdelay/,iec-bus-delay-auto.prg,exitcode,80000000
+../drive/inertia/,drive-emu-check.prg,exitcode,8000000,mountd64:drive-emu-check.d64
 ../drive/interrupts/,timera.prg,exitcode,20000000,comment:results depend on the physical properties of the drive and vary between real drives/mechs too.
 ../drive/interrupts/,watchdog,interactive,0,comment:this is a freezer test - run/freeze/restart. it should not hang
 ../drive/pwm/,pwm.prg,interactive,0,comment:drive led should be fading dark-light-dark etc
