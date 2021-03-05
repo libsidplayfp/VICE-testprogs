@@ -168,6 +168,8 @@ function getscreenshotname
     refscreenshotname=""
     screenshot_videosubtype=""
     
+#    echo "getscreenshotname - videosubtype: "$videosubtype" - testprogvideotype: "$testprogvideotype
+    
     if [ "$2" == "" ] ; then
         refscreenshottest="$3"
     else
@@ -575,15 +577,17 @@ function runprogsfortarget
                     if [ "${testtype}" == "screenshot" ]
                     then
                         getscreenshotname "$testpath" "$testprog" "$mounted_crt"
+#                        echo " [ got: refscreenshotname: "$refscreenshotname" ] "
+# FIXME: this fails when the name of a test doesnt end in *ntsc
                         refscreenshotvideotype="PAL"
-                        if [ "${refscreenshotname#*_ntsc.prg}" != "$refscreenshotname" ] || 
-                           [ "${refscreenshotname#*_ntsc-8562.prg}" != "$refscreenshotname" ] ||
-                           [ "${refscreenshotname#*_ntsc-8562early.png}" != "$refscreenshotname" ]
+                        if [ "${refscreenshotname#*ntsc.prg}" != "$refscreenshotname" ] || 
+                           [ "${refscreenshotname#*ntsc-8562.prg}" != "$refscreenshotname" ] ||
+                           [ "${refscreenshotname#*ntsc-8562early.png}" != "$refscreenshotname" ]
                         then
                             refscreenshotvideotype="NTSC"
                         fi
-                        if [ "${refscreenshotname#*_ntscold.prg}" != "$refscreenshotname" ] || 
-                           [ "${refscreenshotname#*-ntscold.png}" != "$refscreenshotname" ]
+                        if [ "${refscreenshotname#*ntscold.prg}" != "$refscreenshotname" ] || 
+                           [ "${refscreenshotname#*ntscold.png}" != "$refscreenshotname" ]
                         then
                             refscreenshotvideotype="NTSCOLD"
                         fi

@@ -289,7 +289,7 @@ function x64sc_run_screenshot
             X64SCSXO=32
             X64SCSYO=35
             
-    #        echo [ refscreenshotvideotype:"${refscreenshotvideotype}" videotype:"${videotype}" testprogvideomode:"${testprogvideomode}"]
+#            echo [ refscreenshotvideotype:"${refscreenshotvideotype}" videotype:"${videotype}" testprogvideomode:"${testprogvideomode}"]
         
             if [ "${refscreenshotvideotype}" == "NTSC" ]; then
                 X64SCREFSXO=32
