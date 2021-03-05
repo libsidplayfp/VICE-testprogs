@@ -691,6 +691,9 @@
 ../VICII/dmadelay/,test1.prg,interactive,0,vicii-pal,warn:vicfetch,comment:see automatic variants
 ../VICII/dmadelay/,test2.prg,interactive,0,vicii-pal,warn:vicfetch,comment:see automatic variants
 ../VICII/dmadelay/,test3.prg,interactive,0,vicii-pal,warn:vicfetch,comment:see automatic variants
+../VICII/dmadelay/,test1-ntsc.prg,interactive,0,vicii-ntsc,warn:vicfetch,comment:see automatic variants
+../VICII/dmadelay/,test2-ntsc.prg,interactive,0,vicii-ntsc,warn:vicfetch,comment:see automatic variants
+../VICII/dmadelay/,test3-ntsc.prg,interactive,0,vicii-ntsc,warn:vicfetch,comment:see automatic variants
 #FIXME: doesnt work in emu, possibly unstable on real hw
 ../VICII/dmadelay/,test4.prg,interactive,0,vicii-pal,warn:vicfetch,warn:vicefail
 ../VICII/fldscroll/,fldscroll.prg,interactive,0,vicii-pal,warn:vicfetch,comment:see automatic variants

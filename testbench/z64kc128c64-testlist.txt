@@ -786,6 +786,30 @@
 ../VICII/dmadelay/,test3-28-18.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/dmadelay/,test3-28-19.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/dmadelay/,test3-28-1a.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test1-ntsc.prg,interactive,0,vicii-ntsc,warn:vicfetch,comment:see automatic variants
+../VICII/dmadelay/,test1-2e-03-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test1-2e-04-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test1-2e-10-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test1-2e-11-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test1-2e-16-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test1-2e-17-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test1-2e-18-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test2-ntsc.prg,interactive,0,vicii-ntsc,warn:vicfetch,comment:see automatic variants
+../VICII/dmadelay/,test2-2c-05-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test2-2c-06-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test2-2c-11-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test2-2c-12-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test2-2c-16-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test2-2c-17-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test2-2c-18-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test3-ntsc.prg,interactive,0,vicii-ntsc,warn:vicfetch,comment:see automatic variants
+../VICII/dmadelay/,test3-2c-07-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test3-2c-08-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test3-2c-13-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test3-2c-14-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test3-2c-18-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test3-2c-19-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test3-2c-1a-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
 #FIXME: doesnt work in emu, possibly unstable on real hw
 ../VICII/dmadelay/,test4.prg,interactive,0,vicii-pal,warn:vicfetch,warn:vicefail
 ../VICII/fldscroll/,fldscroll.prg,interactive,0,vicii-pal,warn:vicfetch,comment:see automatic variants
