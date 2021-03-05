@@ -1,4 +1,6 @@
 
+;NTSC=1
+
 !if (DEBUG = 0) {
 DEBUGCOLOR0=$d020
 DEBUGCOLOR1=$d021
@@ -308,6 +310,9 @@ IrqTopOfScreen
         bne .l1
         bit $ea
         nop
+        !if NTSC=1 {
+        nop
+        }
 
         ; Final cycle wobble check.
         lda #.theLine+1
@@ -408,6 +413,9 @@ IrqTopOfScreen
         nop
         nop
         bit $ea
+        !if NTSC=1 {
+        nop
+        }
         }
 
         ; Restart the IRQ chain
