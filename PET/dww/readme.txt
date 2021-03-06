@@ -27,6 +27,8 @@ grafic-demo-1		demo program for grafic-toolkit
 
 cs-toolkit.prg 		a different toolkit for the same board.
 
+*-frame.png		screenshots of some frame of an animation
+*.png			screenshots of a static screen
 
 
 Obtained from disks PBE-110A.D64 and PBE-110B.D64
