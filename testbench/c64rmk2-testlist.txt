@@ -1092,6 +1092,7 @@
 ../drive/viavarious/,via11.prg,exitcode,87000000
 ../drive/viavarious/,via12.prg,exitcode,87000000
 ../drive/viavarious/,via13.prg,exitcode,87000000
+../drive/viavarious/,via14.prg,exitcode,87000000
 ################################################################################
 # virtual Drive
 ################################################################################

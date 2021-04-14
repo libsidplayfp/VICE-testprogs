@@ -1430,6 +1430,7 @@
 ../drive/viavarious/,via11.prg,exitcode,87000000
 ../drive/viavarious/,via12.prg,exitcode,87000000
 ../drive/viavarious/,via13.prg,exitcode,87000000
+../drive/viavarious/,via14.prg,exitcode,87000000
 ../drive/writeprotect/,write.d64,interactive,0,comment:mount image write protected - the test should not be able to write to the disk (and kill the dir track)
 ################################################################################
 # virtual Drive
