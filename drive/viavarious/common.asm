@@ -97,14 +97,14 @@ loop
         ; wait for keypress
 wkey
         jsr $ffe4
-        cmp #"a"
+        cmp #'a'
         bcc wkey
-        cmp #"a"+NUMTESTS
+        cmp #'a'+NUMTESTS
         bcs wkey
 
         tax
         sec
-        sbc #"a"
+        sbc #'a'
         sta tmp
         txa
         and #$3f
@@ -266,7 +266,7 @@ displayprepare:
         ldx tmp
         txa
         clc
-        adc #"a"
+        adc #'a'
         and #$3f
         sta $0400+(24*40)+39
         rts
@@ -278,7 +278,7 @@ displayprepare:
 clp1a
         tya
         clc
-        adc #"a"
+        adc #'a'
         and #$3f
         sta $0400+(24*40),y
         lda ERRBUF,y
