@@ -37,6 +37,8 @@ VIA10:  fail (abcdefgh)   Port B (output timer at PB7 and read back PB)
 VIA11:  fail (abcdefgh)   Port B (output timer at PB7 and read back PB)
 VIA12:  fail (abcdefgh)   Port B (output timer at PB7 and read back PB)
 VIA13:  fail (abcdefgh)   Port B (output timer at PB7 and read back PB)
+VIA14:  fail (abcdefgh)   Similar to via13, but sets the control register 
+                          *before* starting the timer rather than after.
 
 reference data comes from my 1541C and is also checked against my 1541-II, 
 more testing on other drives is needed (gpz)

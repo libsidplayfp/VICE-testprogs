@@ -12,7 +12,8 @@ PROGS = \
 	via10.prg \
 	via11.prg \
 	via12.prg \
-	via13.prg
+	via13.prg \
+	via14.prg
 
 all: $(PROGS) disk
 
@@ -34,7 +35,8 @@ disk: $(PROGS)
 		-write via10.prg via10 \
 		-write via11.prg via11 \
 		-write via12.prg via12 \
-		-write via13.prg via13
+		-write via13.prg via13 \
+		-write via14.prg via14
 clean:
 	rm -f *~
 	rm -f $(PROGS)
