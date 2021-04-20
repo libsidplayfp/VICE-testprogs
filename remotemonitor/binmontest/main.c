@@ -1492,13 +1492,19 @@ void vice_info_works(CuTest *tc) {
 
     CuAssertIntEquals(tc, 0x85, response[RESPONSE_TYPE]);
 
+    /* VICE Version */
     CuAssertIntEquals(tc, 4, response[HEADER_LENGTH]);
     CuAssertTrue(tc, response[HEADER_LENGTH + 1] >= 3);
+    printf("VICE Version: %d.%d.%d.%d\n",
+        response[HEADER_LENGTH + 1],
+        response[HEADER_LENGTH + 2],
+        response[HEADER_LENGTH + 3],
+        response[HEADER_LENGTH + 4]
+    );
 
+    /* SVN Version */
     CuAssertIntEquals(tc, 4, response[HEADER_LENGTH + 5]);
-
     printf("SVN Version: %d\n", little_endian_to_uint32(&response[HEADER_LENGTH + 6]));
-
     CuAssertTrue(tc, little_endian_to_uint32(&response[HEADER_LENGTH + 6]) > 38911);
 }
 
