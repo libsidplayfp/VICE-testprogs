@@ -1456,13 +1456,13 @@ void display_get_works(CuTest *tc) {
     unsigned char *cursor;
 
     unsigned char command[] = {
-        0x02, 0x01, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xaf, 0xe9, 0x23, 0x3d, 
+        0x02, 0x01,             /* STX, Api v1 */
+        0xff, 0xff, 0xff, 0xff, /* length of command body */
+        0xaf, 0xe9, 0x23, 0x3d, /* request ID */
 
-        0x84,
+        0x84,   /* command type = get display */
 
-        0x01,
+        0x01,   /* VIC-II */
         0x04,
     };
 
@@ -1474,13 +1474,26 @@ void display_get_works(CuTest *tc) {
 
     CuAssertIntEquals(tc, 0x84, response[RESPONSE_TYPE]);
 
+    printf("Length of the fields before the display buffer: %d\n", little_endian_to_uint32(&response[HEADER_LENGTH]));
+    printf("Length of fields before reserved area: %d\n", little_endian_to_uint32(&response[HEADER_LENGTH + 4]));
+    printf("Length of display buffer: %d\n", little_endian_to_uint32(&response[HEADER_LENGTH + 8]));
+    printf("Debug width of display buffer (uncropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 4]));
+    printf("Debug height of display buffer (uncropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 6]));
+    printf("X offset to the inner part of the screen: %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 8]));
+    printf("Y offset to the inner part of the screen: %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 10]));
+    printf("width of display buffer (cropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 12]));
+    printf("height of display buffer (cropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 14]));
+    printf("Bits per pixel of display buffer: %d\n", response[HEADER_LENGTH + 8 + 16]);
+
+    printf("Length of the reserved area: %d\n", little_endian_to_uint32(&response[HEADER_LENGTH + 8 + 17]));
+
     CuAssertIntEquals(tc, 43, little_endian_to_uint32(&response[HEADER_LENGTH]));
-
     CuAssertIntEquals(tc, 17, little_endian_to_uint32(&response[HEADER_LENGTH + 4]));
-
+    CuAssertIntEquals(tc, little_endian_to_uint32(&response[HEADER_LENGTH + 8]),
+            little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 4]) *
+            little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 6]) * 4);
+/*    CuAssertIntEquals(tc, 628992, little_endian_to_uint32(&response[HEADER_LENGTH + 8])); */
     CuAssertIntEquals(tc, 18, little_endian_to_uint32(&response[HEADER_LENGTH + 8 + 17]));
-
-    CuAssertIntEquals(tc, 547040, little_endian_to_uint32(&response[HEADER_LENGTH + 8]));
 }
 
 void vice_info_works(CuTest *tc) {
