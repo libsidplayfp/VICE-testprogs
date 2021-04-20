@@ -878,6 +878,16 @@ void undump_works(CuTest *tc) {
 
     int dump_strpos = COMMAND_HEADER_LENGTH + 3;
 
+    unsigned char reset_command[] = {
+        0x02, 0x01, 
+        0xff, 0xff, 0xff, 0xff, 
+        0xaf, 0xe9, 0x23, 0x3d, 
+
+        0xcc,
+
+        0x00,
+    };
+
     unsigned char dump_command[] =
         "\x02\x01"
         "\xff\xff\xff\xff"
@@ -908,32 +918,33 @@ void undump_works(CuTest *tc) {
 
     setup(tc);
 
+    /* reset */
+    send_command(reset_command);
+    length = wait_for_response_id(tc, reset_command);
+    CuAssertIntEquals(tc, 0xcc, response[RESPONSE_TYPE]);
+
+    /* dump */
     getcwd(&dump_command[dump_strpos], 0xd2);
-
     strcpy(&dump_command[dump_strpos + strlen(&dump_command[dump_strpos])], "/undump.bin");
-
     send_command(dump_command);
 
     length = wait_for_response_id(tc, dump_command);
-
     CuAssertIntEquals(tc, 0x41, response[RESPONSE_TYPE]);
 
+    /* undump */
     getcwd(&undump_command[undump_strpos], 0xd2);
-
     strcpy(&undump_command[undump_strpos + strlen(&undump_command[undump_strpos])], "/undump.bin");
-
     send_command(undump_command);
 
     length = wait_for_response_id(tc, undump_command);
-
     CuAssertIntEquals(tc, 0x42, response[RESPONSE_TYPE]);
 
     pc = little_endian_to_uint16(&response[HEADER_LENGTH]);
+    printf("PC: %04x\n", pc);
 
-    fprintf(stderr, "PC: %04x", pc);
-
-    CuAssertTrue(tc, 0xe400 < pc);
-    CuAssertTrue(tc, pc < 0xe600);
+    /* this relies on that the "dump" command happens right after reset */
+    CuAssertTrue(tc, pc >= 0xfce2);
+    CuAssertTrue(tc, pc <= 0xff7d);
 }
 
 void mem_set_works(CuTest *tc) {
@@ -1527,9 +1538,6 @@ CuSuite* get_suite(void)
     SUITE_ADD_TEST(suite, registers_get_works);
     SUITE_ADD_TEST(suite, registers_get_drive_works);
 
-    SUITE_ADD_TEST(suite, dump_works);
-    SUITE_ADD_TEST(suite, undump_works);
-
     SUITE_ADD_TEST(suite, mem_set_works);
     SUITE_ADD_TEST(suite, mem_get_works);
 
@@ -1538,6 +1546,9 @@ CuSuite* get_suite(void)
 
     SUITE_ADD_TEST(suite, exit_works);
     SUITE_ADD_TEST(suite, reset_works);
+
+    SUITE_ADD_TEST(suite, dump_works);
+    SUITE_ADD_TEST(suite, undump_works);
 
     SUITE_ADD_TEST(suite, banks_available_works);
     SUITE_ADD_TEST(suite, registers_available_works);
