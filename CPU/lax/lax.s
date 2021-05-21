@@ -559,17 +559,22 @@ tf2:
         sta failedtests
 +
 }
-        ; check if the constant is $EE, as required by wizball
+        ; check if the constant works with wizball
+        ; NOT valid are $63, $64, $67, $68, $69, $6A, $D1, $D2, $EF
         ldy #13 ; green
-        lda lax_constant
-        cmp #$ee
-        beq +
-        lda #1
-        sta failedtests
+        ldx lax_constant
+        lda wizballconsts,x
+        bne +
         ldy #10 ; red
 +
         sty $d800+(24*40)+17
         sty $d800+(24*40)+16
+
+        cpy #10
+        bne +
+        lda #1
+        sta failedtests
++
         
         inc testframes
         lda testframes
@@ -704,8 +709,8 @@ timeout:
 
 testframes: !byte 0
 
-!if (0 = 1) {
         !align 255, 0
+!if (0 = 1) {
 constbits:
     !for n, 0, 255 {
         !if ((n & 7) = 7) {
@@ -715,3 +720,13 @@ constbits:
         }
     }
 }
+
+; NOT valid are $63, $64, $67, $68, $69, $6A, $D1, $D2, $EF
+wizballconsts:
+    !for n, 0, 255 {
+        !if ((n = $63) | (n = $64) | (n = $67) | (n = $68) | (n = $69) | (n = $6a) | (n = $d1) | (n = $d2) | (n = $ef)) {
+            !byte 0
+        } else {
+            !byte 1
+        }
+    }

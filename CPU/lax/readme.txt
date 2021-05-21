@@ -95,5 +95,6 @@ b58b  AB FF       LXA #$FF      ; A = X = (($00 | CONST) & $ff) = $EE
 b58d  DF 97 FF    DCP $FF97,X   ; decrement mem (=$85), compare with akku (=$EE)
 b590  60          RTS
 
-$85 is used as a delay(?) counter at various places in the game, so $EE really
-seems to be the one and only value to make it work correctly.
+Some different Wizball binaries have been tested (in Emulation) with all 
+possible “magic constants”, and the following values result in misbehaviour 
+(crash) of the game: $63, $64, $67, $68, $69, $6A, $D1, $D2, $EF
