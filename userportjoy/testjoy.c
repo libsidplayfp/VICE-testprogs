@@ -497,13 +497,13 @@ int main(void)
         draw_joy(read_native_c64_joy1(), 2, 0, 0, 0, "native1");
         draw_joy(read_native_c64_joy2(), 10, 0, 8, 0, "native2");
         draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer");
-        draw_joy(read_cga_joy1(), 2, 5, 1, 5, "cga-1");
-        draw_joy(read_cga_joy2(), 10, 5, 9, 5, "cga-2");
-        draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem");
-        draw_joy(read_pet_joy1(), 2, 10, 1, 10, "pet-1");
-        draw_joy(read_pet_joy2(), 10, 10, 9, 10, "pet-2");
         if (isc64dtv == 0)
         {
+            draw_joy(read_cga_joy1(), 2, 5, 1, 5, "cga-1");
+            draw_joy(read_cga_joy2(), 10, 5, 9, 5, "cga-2");
+            draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem");
+            draw_joy(read_pet_joy1(), 2, 10, 1, 10, "pet-1");
+            draw_joy(read_pet_joy2(), 10, 10, 9, 10, "pet-2");
             draw_joy(read_c64_hit_joy1(), 2, 15, 1, 15, "hit-1");
             draw_joy(read_c64_hit_joy2(), 10, 15, 9, 15, "hit-2");
             draw_joy(read_c64_kingsoft_joy1(), 18, 15, 17, 15, "king1");
