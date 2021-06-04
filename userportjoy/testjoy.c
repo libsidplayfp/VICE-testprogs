@@ -25,6 +25,8 @@
 #if defined(__C128__) || defined(__C64__)
 #define USERPORT_DATA 0xDD01
 #define USERPORT_DDR  0xDD03
+#define POTX_DATA     0xD419
+#define POTY_DATA     0xD41A
 #endif
 
 /* vic20 userport addresses */
@@ -43,6 +45,8 @@
 #if defined(__PLUS4__) || defined(__C16__)
 #define USERPORT_DATA 0xfd10
 #define USERPORT_DDR  0xfdf0  /* free space, no ddr on plus4 */
+#define POTX_DATA     0xFD59
+#define POTY_DATA     0xFD5A
 #endif
 
 /* cbm6x0/7x0 userport addresses,
@@ -91,7 +95,8 @@
 /* draw a joystick at a certain position on the screen */
 static void draw_joy(unsigned char status, unsigned char x,
                      unsigned char y, unsigned char textx,
-                     unsigned char texty, char *text)
+                     unsigned char texty, char *text,
+                     unsigned char extra_buttons)
 {
   if ((status & 1) && (status & 4))
       revers(1);
@@ -117,6 +122,20 @@ static void draw_joy(unsigned char status, unsigned char x,
       revers(1);
   cputcxy(1 + x, 1 + y, center);
   revers(0);
+
+#if defined(__C128__) || defined(__C64__) || defined(__PLUS4__) || defined(__C16__)
+  if (extra_buttons) {
+      if (status & 32)
+          revers(1);
+      cputcxy(-1 + x, 1 + y, center);
+      revers(0);
+
+      if (status & 64)
+          revers(1);
+      cputcxy(3 + x, 1 + y, center);
+      revers(0);
+  }
+#endif
 
   if ((status & 8) && !(status & 1) && !(status & 2))
       revers(1);
@@ -148,10 +167,17 @@ static unsigned char read_native_c64_joy1(void)
 {
     unsigned char retval;
 
-    POKE(C64_CIA1_PRA, 0x7F);
     retval = PEEK(C64_CIA1_PRB);
+    POKE(C64_CIA1_DDRA, 0xff);
+    POKE(C64_CIA1_PRA, 0x40);
     retval &= 0x1F;
-    retval ^= 0x1F;
+    if (PEEK(POTX_DATA)) {
+        retval |= 0x20;
+    }
+    if (PEEK(POTY_DATA)) {
+        retval |= 0x40;
+    }
+    retval ^= 0x7F;
     return retval;
 }
 
@@ -160,12 +186,19 @@ static unsigned char read_native_c64_joy2(void)
     unsigned char retval;
     unsigned char temp;
 
-    temp = PEEK(C64_CIA1_DDRA);
-    POKE(C64_CIA1_DDRA, 0xFF);
+    POKE(C64_CIA1_DDRA, 0);
     retval = PEEK(C64_CIA1_PRA);
-    POKE(C64_CIA1_DDRA, temp);
     retval &= 0x1F;
-    retval ^= 0x1F;
+    POKE(C64_CIA1_DDRA, 0xFF);
+    POKE(C64_CIA1_PRA, 0x80);
+    if (PEEK(POTX_DATA)) {
+        retval |= 0x20;
+    }
+    if (PEEK(POTY_DATA)) {
+        retval |= 0x40;
+    }
+    POKE(C64_CIA1_DDRA, temp);
+    retval ^= 0x7F;
     return retval;
 }
 #endif
@@ -220,7 +253,13 @@ static unsigned char read_plus4_sidcart_joy(void)
     unsigned char retval;
 
     retval = PEEK(PLUS4_SIDCART_JOY) & 0x1F;
-    retval ^= 0x1F;
+    if (PEEK(POTX_DATA)) {
+        retval |= 0x20;
+    }
+    if (PEEK(POTY_DATA)) {
+        retval |= 0x40;
+    }
+    retval ^= 0x7F;
     return retval;
 }
 #endif
@@ -494,22 +533,22 @@ int main(void)
     SEI();
     while (1)
     {
-        draw_joy(read_native_c64_joy1(), 2, 0, 0, 0, "native1");
-        draw_joy(read_native_c64_joy2(), 10, 0, 8, 0, "native2");
-        draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer");
+        draw_joy(read_native_c64_joy1(), 2, 0, 0, 0, "native1", !isc64dtv);
+        draw_joy(read_native_c64_joy2(), 10, 0, 8, 0, "native2", !isc64dtv);
+        draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer", 0);
         if (isc64dtv == 0)
         {
-            draw_joy(read_cga_joy1(), 2, 5, 1, 5, "cga-1");
-            draw_joy(read_cga_joy2(), 10, 5, 9, 5, "cga-2");
-            draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem");
-            draw_joy(read_pet_joy1(), 2, 10, 1, 10, "pet-1");
-            draw_joy(read_pet_joy2(), 10, 10, 9, 10, "pet-2");
-            draw_joy(read_c64_hit_joy1(), 2, 15, 1, 15, "hit-1");
-            draw_joy(read_c64_hit_joy2(), 10, 15, 9, 15, "hit-2");
-            draw_joy(read_c64_kingsoft_joy1(), 18, 15, 17, 15, "king1");
-            draw_joy(read_c64_kingsoft_joy2(), 26, 15, 25, 15, "king2");
-            draw_joy(read_c64_starbyte_joy1(), 18, 10, 17, 10, "star1");
-            draw_joy(read_c64_starbyte_joy2(), 26, 10, 25, 10, "star2");
+            draw_joy(read_cga_joy1(), 2, 5, 1, 5, "cga-1", 0);
+            draw_joy(read_cga_joy2(), 10, 5, 9, 5, "cga-2", 0);
+            draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
+            draw_joy(read_pet_joy1(), 2, 10, 1, 10, "pet-1", 0);
+            draw_joy(read_pet_joy2(), 10, 10, 9, 10, "pet-2", 0);
+            draw_joy(read_c64_hit_joy1(), 2, 15, 1, 15, "hit-1", 0);
+            draw_joy(read_c64_hit_joy2(), 10, 15, 9, 15, "hit-2", 0);
+            draw_joy(read_c64_kingsoft_joy1(), 18, 15, 17, 15, "king1", 0);
+            draw_joy(read_c64_kingsoft_joy2(), 26, 15, 25, 15, "king2", 0);
+            draw_joy(read_c64_starbyte_joy1(), 18, 10, 17, 10, "star1", 0);
+            draw_joy(read_c64_starbyte_joy2(), 26, 10, 25, 10, "star2", 0);
         }
     }
 }
@@ -527,8 +566,8 @@ int main(void)
     SEI();
     while (1)
     {
-        draw_joy(read_native_cbm510_joy1(), 2, 0, 0, 0, "native1");
-        draw_joy(read_native_cbm510_joy2(), 10, 0, 8, 0, "native2");
+        draw_joy(read_native_cbm510_joy1(), 2, 0, 0, 0, "native1", 0);
+        draw_joy(read_native_cbm510_joy2(), 10, 0, 8, 0, "native2", 0);
     }
 }
 #endif
@@ -542,12 +581,12 @@ int main(void)
     SEI();
     while (1)
     {
-        draw_joy(read_cga_joy1(), 2, 0, 1, 0, "cga-1");
-        draw_joy(read_cga_joy2(), 10, 0, 9, 0, "cga-2");
-        draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer");
-        draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1");
-        draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2");
-        draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem");
+        draw_joy(read_cga_joy1(), 2, 0, 1, 0, "cga-1", 0);
+        draw_joy(read_cga_joy2(), 10, 0, 9, 0, "cga-2", 0);
+        draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer", 0);
+        draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
+        draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
+        draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
     }
 }
 #endif
@@ -561,12 +600,12 @@ int main(void)
     SEI();
     while (1)
     {
-        draw_joy(read_cga_joy1(), 2, 0, 1, 0, "cga-1");
-        draw_joy(read_cga_joy2(), 10, 0, 9, 0, "cga-2");
-        draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer");
-        draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1");
-        draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2");
-        draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem");
+        draw_joy(read_cga_joy1(), 2, 0, 1, 0, "cga-1", 0);
+        draw_joy(read_cga_joy2(), 10, 0, 9, 0, "cga-2", 0);
+        draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer", 0);
+        draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
+        draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
+        draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
     }
 }
 #endif
@@ -583,13 +622,13 @@ int main(void)
     SEI();
     while (1)
     {
-        draw_joy(read_native_plus4_joy1(), 2, 0, 0, 0, "native1");
-        draw_joy(read_native_plus4_joy2(), 10, 0, 8, 0, "native2");
-        draw_joy(read_plus4_sidcart_joy(), 18, 0, 16, 0, "sidcart");
-        draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1");
-        draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2");
-        draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem");
-        draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer");
+        draw_joy(read_native_plus4_joy1(), 2, 0, 0, 0, "native1", 0);
+        draw_joy(read_native_plus4_joy2(), 10, 0, 8, 0, "native2", 0);
+        draw_joy(read_plus4_sidcart_joy(), 18, 0, 16, 0, "sidcart", 1);
+        draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
+        draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
+        draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
+        draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer", 0);
     }
 }
 #endif
@@ -606,13 +645,13 @@ int main(void)
     SEI();
     while (1)
     {
-        draw_joy(read_native_vic20_joy(), 2, 0, 0, 0, "native");
-        draw_joy(read_cga_joy1(), 10, 0, 9, 0, "cga-1");
-        draw_joy(read_cga_joy2(), 18, 0, 17, 0, "cga-2");
-        draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1");
-        draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2");
-        draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem");
-        draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer");
+        draw_joy(read_native_vic20_joy(), 2, 0, 0, 0, "native", 0);
+        draw_joy(read_cga_joy1(), 10, 0, 9, 0, "cga-1", 0);
+        draw_joy(read_cga_joy2(), 18, 0, 17, 0, "cga-2", 0);
+        draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
+        draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
+        draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
+        draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer", 0);
     }
 }
 #endif
