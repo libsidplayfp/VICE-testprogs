@@ -1,5 +1,4 @@
-
-all: snestest-c64.prg snestest-c128.prg snestest-vic20.prg snestest-pet40.prg snestest-pet80.prg snestest-plus4.prg
+all: snestest-c64.prg snestest-c128.prg snestest-vic20.prg snestest-pet40.prg snestest-pet80.prg
 
 snestest-c64.prg: snestest-c64.asm
 	acme snestest-c64.asm
@@ -15,7 +14,3 @@ snestest-pet40.prg: snestest-pet40.asm
 
 snestest-pet80.prg: snestest-pet80.asm
 	acme snestest-pet80.asm
-
-snestest-plus4.prg: snestest-plus4.asm
-	acme snestest-plus4.asm
-
