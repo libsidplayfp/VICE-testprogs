@@ -96,6 +96,10 @@
 #define CBM510_JOY_FIRE       0xDC00
 #define CBM510_JOY_DIRECTIONS 0xDC01
 
+/* pet keyboard scan addresses */
+#define PET_KEY_INDEX_SEL     0xE810
+#define PET_KEY_ROW           0xE812
+
 /* display page numbers */
 #define PAGE_JOYSTICKS   0
 #define PAGE_SNESPADS    1
@@ -282,6 +286,38 @@ static void check_keys(void)
 
         /* '1' was pressed */
         if (val == 0xFE && row == 0x7F) {
+            if (current_page != PAGE_JOYSTICKS) {
+                current_page = PAGE_JOYSTICKS;
+                clrscr();
+            }
+        }
+    }
+}
+#endif
+
+/* check keys to see if we need to switch pages (pet) */
+#if defined(__PET__)
+static void check_keys(void)
+{
+    unsigned char row = 0;
+    unsigned char val = 0xFF;
+    unsigned char tmp = PEEK(PET_KEY_INDEX_SEL) & 0xf0;
+
+    for (row = 0; row < 16 && val == 0xFF; row++) {
+        POKE(PET_KEY_INDEX_SEL, tmp | row);
+        val = PEEK(PET_KEY_ROW);
+    }
+    if (val != 0xFF) {
+        /* 'S' was pressed */
+        if (row == 3 && val == 0xFD) {
+            if (current_page != PAGE_SNESPADS) {
+                current_page = PAGE_SNESPADS;
+                clrscr();
+            }
+        }
+
+        /* '1' was pressed */
+        if (row == 2 && val == 0xFE) {
             if (current_page != PAGE_JOYSTICKS) {
                 current_page = PAGE_JOYSTICKS;
                 clrscr();
@@ -735,12 +771,15 @@ int main(void)
     SEI();
     while (1)
     {
-        draw_joy(read_cga_joy1(), 2, 0, 1, 0, "cga-1", 0);
-        draw_joy(read_cga_joy2(), 10, 0, 9, 0, "cga-2", 0);
-        draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer", 0);
-        draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
-        draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
-        draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
+        if (current_page == PAGE_JOYSTICKS) {
+            draw_joy(read_cga_joy1(), 2, 0, 1, 0, "cga-1", 0);
+            draw_joy(read_cga_joy2(), 10, 0, 9, 0, "cga-2", 0);
+            draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer", 0);
+            draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
+            draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
+            draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
+        }
+        check_keys();
     }
 }
 #endif
