@@ -90,6 +90,7 @@
    joystick addresses */
 #define PLUS4_TED_KBD         0xFF08
 #define PLUS4_SIDCART_JOY     0xFD80
+#define PLUS4_KEY_SELECT      0xFD30
 
 /* cbm5x0 native joystick addresses */
 #define CBM510_JOY_FIRE       0xDC00
@@ -212,7 +213,7 @@ static void check_keys(void)
 }
 #endif
 
-/* check keys to see if we need to switch pages (c64/c64dtv/c128) */
+/* check keys to see if we need to switch pages (vic20) */
 #if defined(__VIC20__)
 unsigned char row_scan[8] = { 0x7F, 0xBF, 0xDF, 0xEF, 0xF7, 0xFB, 0xFD, 0xFE };
 
@@ -245,6 +246,42 @@ static void check_keys(void)
 
         /* '1' was pressed */
         if (col == 0xFE && row == 0xFE) {
+            if (current_page != PAGE_JOYSTICKS) {
+                current_page = PAGE_JOYSTICKS;
+                clrscr();
+            }
+        }
+    }
+}
+#endif
+
+/* check keys to see if we need to switch pages (c16/plus4) */
+#if defined(__PLUS4__) || defined(__C16__)
+unsigned char row_scan[8] = { 0x7F, 0xBF, 0xDF, 0xEF, 0xF7, 0xFB, 0xFD, 0xFE };
+
+static void check_keys(void)
+{
+    unsigned char row = 0;
+    unsigned char val = 0xFF;
+    unsigned char i;
+
+    for (i = 0; i < 8 && val == 0xFF; i++) {
+        row = row_scan[i];
+        POKE(PLUS4_KEY_SELECT, row);
+        POKE(PLUS4_TED_KBD, 0xFF);
+        val = PEEK(PLUS4_TED_KBD);
+    }
+    if (val != 0xFF) {
+        /* 'S' was pressed */
+        if (val == 0xDF && row == 0xFD) {
+            if (current_page != PAGE_SNESPADS) {
+                current_page = PAGE_SNESPADS;
+                clrscr();
+            }
+        }
+
+        /* '1' was pressed */
+        if (val == 0xFE && row == 0x7F) {
             if (current_page != PAGE_JOYSTICKS) {
                 current_page = PAGE_JOYSTICKS;
                 clrscr();
@@ -320,6 +357,7 @@ static unsigned char read_native_plus4_joy1(void)
     unsigned char retval;
     unsigned char temp;
 
+    POKE(PLUS4_KEY_SELECT, 0xFF);
     POKE(PLUS4_TED_KBD, 0xFA);
     temp = PEEK(PLUS4_TED_KBD);
     retval = temp & 0x0F;
@@ -333,6 +371,7 @@ static unsigned char read_native_plus4_joy2(void)
     unsigned char retval;
     unsigned char temp;
 
+    POKE(PLUS4_KEY_SELECT, 0xFF);
     POKE(PLUS4_TED_KBD, 0xFD);
     temp = PEEK(PLUS4_TED_KBD);
     retval = temp & 0x0F;
@@ -718,13 +757,16 @@ int main(void)
     SEI();
     while (1)
     {
-        draw_joy(read_native_plus4_joy1(), 2, 0, 0, 0, "native1", 0);
-        draw_joy(read_native_plus4_joy2(), 10, 0, 8, 0, "native2", 0);
-        draw_joy(read_plus4_sidcart_joy(), 18, 0, 16, 0, "sidcart", 1);
-        draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
-        draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
-        draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
-        draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer", 0);
+        if (current_page == PAGE_JOYSTICKS) {
+            draw_joy(read_native_plus4_joy1(), 2, 0, 0, 0, "native1", 0);
+            draw_joy(read_native_plus4_joy2(), 10, 0, 8, 0, "native2", 0);
+            draw_joy(read_plus4_sidcart_joy(), 18, 0, 16, 0, "sidcart", 1);
+            draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
+            draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
+            draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
+            draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer", 0);
+        }
+        check_keys();
     }
 }
 #endif
