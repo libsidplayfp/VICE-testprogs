@@ -65,6 +65,7 @@
 #define C64_CIA1_PRA          0xDC00
 #define C64_CIA1_PRB          0xDC01
 #define C64_CIA1_DDRA         0xDC02
+#define C64_CIA1_DDRB         0xDC03
 #define C64_CIA1_TIMER_A_LOW  0xDC04
 #define C64_CIA1_TIMER_A_HIGH 0xDC05
 #define C64_CIA1_SR           0xDC0C
@@ -91,6 +92,12 @@
 /* cbm5x0 native joystick addresses */
 #define CBM510_JOY_FIRE       0xDC00
 #define CBM510_JOY_DIRECTIONS 0xDC01
+
+/* display page numbers */
+#define PAGE_JOYSTICKS   0
+#define PAGE_SNESPADS    1
+
+static unsigned char current_page = PAGE_JOYSTICKS;
 
 /* draw a joystick at a certain position on the screen */
 static void draw_joy(unsigned char status, unsigned char x,
@@ -160,6 +167,48 @@ static void draw_joy(unsigned char status, unsigned char x,
   gotoxy(0 + textx, 3 + texty);
   cprintf(text);
 }
+
+/* check keys to see if we need to switch pages (c64/c64dtv/c128) */
+#if defined(__C64__) || defined(__C128__)
+unsigned char row_scan[8] = { 0x7F, 0xBF, 0xDF, 0xEF, 0xF7, 0xFB, 0xFD, 0xFE };
+
+static void check_keys(void)
+{
+    unsigned char val = 0xFF;
+    unsigned char col = 0;
+    unsigned char row = 0;
+    unsigned char i;
+
+    POKE(C64_CIA1_DDRB, 0x00);
+    POKE(C64_CIA1_DDRA, 0xFF);
+    POKE(C64_CIA1_PRA, 0x00);
+    col = PEEK(C64_CIA1_PRB);
+    if (col != 0xFF) {
+        for (i = 0; i < 8 && val == 0xFF; i++) {
+            row = row_scan[i];
+            POKE(C64_CIA1_PRA, row);
+            val = PEEK(C64_CIA1_PRB);
+        }
+    }
+    if (val != 0xFF) {
+        /* 'S' was pressed */
+        if (col == 0xDF && row == 0xFD) {
+            if (current_page != PAGE_SNESPADS) {
+                current_page = PAGE_SNESPADS;
+                clrscr();
+            }
+        }
+
+        /* '1' was pressed */
+        if (col == 0xFE && row == 0x7F) {
+            if (current_page != PAGE_JOYSTICKS) {
+                current_page = PAGE_JOYSTICKS;
+                clrscr();
+            }
+        }
+    }
+}
+#endif
 
 /* c64/c64dtv/c128 native joystick handling */
 #if defined(__C64__) || defined(__C128__)
@@ -533,23 +582,26 @@ int main(void)
     SEI();
     while (1)
     {
-        draw_joy(read_native_c64_joy1(), 2, 0, 0, 0, "native1", !isc64dtv);
-        draw_joy(read_native_c64_joy2(), 10, 0, 8, 0, "native2", !isc64dtv);
-        draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer", 0);
-        if (isc64dtv == 0)
-        {
-            draw_joy(read_cga_joy1(), 2, 5, 1, 5, "cga-1", 0);
-            draw_joy(read_cga_joy2(), 10, 5, 9, 5, "cga-2", 0);
-            draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
-            draw_joy(read_pet_joy1(), 2, 10, 1, 10, "pet-1", 0);
-            draw_joy(read_pet_joy2(), 10, 10, 9, 10, "pet-2", 0);
-            draw_joy(read_c64_hit_joy1(), 2, 15, 1, 15, "hit-1", 0);
-            draw_joy(read_c64_hit_joy2(), 10, 15, 9, 15, "hit-2", 0);
-            draw_joy(read_c64_kingsoft_joy1(), 18, 15, 17, 15, "king1", 0);
-            draw_joy(read_c64_kingsoft_joy2(), 26, 15, 25, 15, "king2", 0);
-            draw_joy(read_c64_starbyte_joy1(), 18, 10, 17, 10, "star1", 0);
-            draw_joy(read_c64_starbyte_joy2(), 26, 10, 25, 10, "star2", 0);
+        if (current_page == PAGE_JOYSTICKS) {
+            draw_joy(read_native_c64_joy1(), 2, 0, 0, 0, "native1", !isc64dtv);
+            draw_joy(read_native_c64_joy2(), 10, 0, 8, 0, "native2", !isc64dtv);
+            draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer", 0);
+            if (isc64dtv == 0)
+            {
+                draw_joy(read_cga_joy1(), 2, 5, 1, 5, "cga-1", 0);
+                draw_joy(read_cga_joy2(), 10, 5, 9, 5, "cga-2", 0);
+                draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
+                draw_joy(read_pet_joy1(), 2, 10, 1, 10, "pet-1", 0);
+                draw_joy(read_pet_joy2(), 10, 10, 9, 10, "pet-2", 0);
+                draw_joy(read_c64_hit_joy1(), 2, 15, 1, 15, "hit-1", 0);
+                draw_joy(read_c64_hit_joy2(), 10, 15, 9, 15, "hit-2", 0);
+                draw_joy(read_c64_kingsoft_joy1(), 18, 15, 17, 15, "king1", 0);
+                draw_joy(read_c64_kingsoft_joy2(), 26, 15, 25, 15, "king2", 0);
+                draw_joy(read_c64_starbyte_joy1(), 18, 10, 17, 10, "star1", 0);
+                draw_joy(read_c64_starbyte_joy2(), 26, 10, 25, 10, "star2", 0);
+            }
         }
+        check_keys();
     }
 }
 #endif
