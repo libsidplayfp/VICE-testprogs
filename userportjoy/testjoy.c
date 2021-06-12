@@ -82,7 +82,9 @@
 /* vic20 VIA1/VIA2 addresses */
 #define VIC20_VIA1_PRA        0x9111
 #define VIC20_VIA2_PRB        0x9120
+#define VIC20_VIA2_PRA        0x9121
 #define VIC20_VIA2_DDRB       0x9122
+#define VIC20_VIA2_DDRA       0x9123
 
 /* plus4 native and sidcart
    joystick addresses */
@@ -201,6 +203,48 @@ static void check_keys(void)
 
         /* '1' was pressed */
         if (col == 0xFE && row == 0x7F) {
+            if (current_page != PAGE_JOYSTICKS) {
+                current_page = PAGE_JOYSTICKS;
+                clrscr();
+            }
+        }
+    }
+}
+#endif
+
+/* check keys to see if we need to switch pages (c64/c64dtv/c128) */
+#if defined(__VIC20__)
+unsigned char row_scan[8] = { 0x7F, 0xBF, 0xDF, 0xEF, 0xF7, 0xFB, 0xFD, 0xFE };
+
+static void check_keys(void)
+{
+    unsigned char val = 0xFF;
+    unsigned char col = 0;
+    unsigned char row = 0;
+    unsigned char i;
+
+    POKE(VIC20_VIA2_DDRA, 0x00);
+    POKE(VIC20_VIA2_DDRB, 0xFF);
+    POKE(VIC20_VIA2_PRB, 0x00);
+    col = PEEK(VIC20_VIA2_PRA);
+    if (col != 0xFF) {
+        for (i = 0; i < 8 && val == 0xFF; i++) {
+            row = row_scan[i];
+            POKE(VIC20_VIA2_PRB, row);
+            val = PEEK(VIC20_VIA2_PRA);
+        }
+    }
+    if (val != 0xFF) {
+        /* 'S' was pressed */
+        if (col == 0xFD && row == 0xDF) {
+            if (current_page != PAGE_SNESPADS) {
+                current_page = PAGE_SNESPADS;
+                clrscr();
+            }
+        }
+
+        /* '1' was pressed */
+        if (col == 0xFE && row == 0xFE) {
             if (current_page != PAGE_JOYSTICKS) {
                 current_page = PAGE_JOYSTICKS;
                 clrscr();
@@ -697,13 +741,16 @@ int main(void)
     SEI();
     while (1)
     {
-        draw_joy(read_native_vic20_joy(), 2, 0, 0, 0, "native", 0);
-        draw_joy(read_cga_joy1(), 10, 0, 9, 0, "cga-1", 0);
-        draw_joy(read_cga_joy2(), 18, 0, 17, 0, "cga-2", 0);
-        draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
-        draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
-        draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
-        draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer", 0);
+        if (current_page == PAGE_JOYSTICKS) {
+            draw_joy(read_native_vic20_joy(), 2, 0, 0, 0, "native", 0);
+            draw_joy(read_cga_joy1(), 10, 0, 9, 0, "cga-1", 0);
+            draw_joy(read_cga_joy2(), 18, 0, 17, 0, "cga-2", 0);
+            draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
+            draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
+            draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
+            draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer", 0);
+        }
+        check_keys();
     }
 }
 #endif
