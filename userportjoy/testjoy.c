@@ -129,6 +129,7 @@
 #define PAGE_SNESPADS    1
 
 static char *snes_pad_msg = "press 2 for snes pad screen";
+static char *main_joy_msg = "press q for main joy screen";
 
 static unsigned short snes1_status;
 static unsigned short snes2_status;
@@ -957,6 +958,9 @@ int main(void)
             chlinexy(0,5,40);
             chlinexy(0,11,40);
             chlinexy(0,17,40);
+            chlinexy(0,23,40);
+            gotoxy(0, 24);
+            cprintf(main_joy_msg);
         }
         check_keys();
     }
