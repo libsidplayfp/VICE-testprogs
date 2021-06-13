@@ -281,6 +281,8 @@ static void draw_snes(unsigned short status, unsigned char x,
 #if defined(__C64__) || defined(__C128__)
 unsigned char row_scan[8] = { 0x7F, 0xBF, 0xDF, 0xEF, 0xF7, 0xFB, 0xFD, 0xFE };
 
+static unsigned char isc64dtv = 0;
+
 static void check_keys(void)
 {
     unsigned char val = 0xFF;
@@ -300,11 +302,13 @@ static void check_keys(void)
         }
     }
     if (val != 0xFF) {
-        /* '2' was pressed */
-        if ((col == 0xF6 || col == 0xF7) && row == 0x7F) {
-            if (current_page != PAGE_SNESPADS) {
-                current_page = PAGE_SNESPADS;
-                clrscr();
+        if (isc64dtv == 0) {
+            /* '2' was pressed */
+            if ((col == 0xF6 || col == 0xF7) && row == 0x7F) {
+                if (current_page != PAGE_SNESPADS) {
+                    current_page = PAGE_SNESPADS;
+                    clrscr();
+                }
             }
         }
 
@@ -801,8 +805,6 @@ static unsigned char read_c64_starbyte_joy2(void)
 
 /* detection of c64dtv */
 #if defined(__C64__) || defined(__C128__)
-static unsigned char isc64dtv = 0;
-
 static void test_c64dtv(void)
 {
     unsigned char temp1, temp2;
@@ -938,9 +940,6 @@ int main(void)
                 draw_joy(read_c64_starbyte_joy1(), 18, 10, 17, 10, "star1", 0);
                 draw_joy(read_c64_starbyte_joy2(), 26, 10, 25, 10, "star2", 0);
                 gotoxy(0, 20);
-                cprintf(snes_pad_msg);
-            } else {
-                gotoxy(0, 5);
                 cprintf(snes_pad_msg);
             }
         }
