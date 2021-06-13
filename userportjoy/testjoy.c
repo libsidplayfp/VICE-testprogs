@@ -49,6 +49,12 @@
 #define POTY_DATA     0xFD5A
 #endif
 
+/* cbm5x0 sid addresses */
+#ifdef __CBM510__
+#define POTX_DATA     0xDA19
+#define POTY_DATA     0xDA1A
+#endif
+
 /* cbm6x0/7x0 userport addresses,
    and way of poking/peeking */
 #ifdef __CBM610__
@@ -142,7 +148,7 @@ static void draw_joy(unsigned char status, unsigned char x,
   cputcxy(1 + x, 1 + y, center);
   revers(0);
 
-#if defined(__C128__) || defined(__C64__) || defined(__PLUS4__) || defined(__C16__)
+#if defined(__C128__) || defined(__C64__) || defined(__PLUS4__) || defined(__C16__) || defined(__CBM510__)
   if (extra_buttons) {
       if (status & 32)
           revers(1);
@@ -489,7 +495,14 @@ static unsigned char read_native_cbm510_joy1(void)
 
     retval = peekbsys(CBM510_JOY_DIRECTIONS) & 0x0F;
     retval |= ((peekbsys(CBM510_JOY_FIRE) & 0x40) >> 2);
-    retval ^= 0x1F;
+    retval &= 0x1F;
+    if (peekbsys(POTX_DATA)) {
+        retval |= 0x20;
+    }
+    if (peekbsys(POTY_DATA)) {
+        retval |= 0x40;
+    }
+    retval ^= 0x7F;
     return retval;
 }
 
@@ -787,8 +800,8 @@ int main(void)
     while (1)
     {
         if (current_page == PAGE_JOYSTICKS) {
-            draw_joy(read_native_cbm510_joy1(), 2, 0, 0, 0, "native1", 0);
-            draw_joy(read_native_cbm510_joy2(), 10, 0, 8, 0, "native2", 0);
+            draw_joy(read_native_cbm510_joy1(), 2, 0, 0, 0, "native1", 1);
+            draw_joy(read_native_cbm510_joy2(), 10, 0, 8, 0, "native2", 1);
         }
         check_keys();
     }
