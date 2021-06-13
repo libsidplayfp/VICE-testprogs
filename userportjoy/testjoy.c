@@ -100,6 +100,11 @@
 #define PET_KEY_INDEX_SEL     0xE810
 #define PET_KEY_ROW           0xE812
 
+/* cbm5x0/6x0/7x0 keyboard scan addresses */
+#define CBM2_KEY_ROW_SEL1     0xDF00
+#define CBM2_KEY_ROW_SEL2     0xDF01
+#define CBM2_KEY_ROW_READ     0xDF02
+
 /* display page numbers */
 #define PAGE_JOYSTICKS   0
 #define PAGE_SNESPADS    1
@@ -318,6 +323,50 @@ static void check_keys(void)
 
         /* '1' was pressed */
         if (row == 2 && val == 0xFE) {
+            if (current_page != PAGE_JOYSTICKS) {
+                current_page = PAGE_JOYSTICKS;
+                clrscr();
+            }
+        }
+    }
+}
+#endif
+
+/* check keys to see if we need to switch pages (pet) */
+#if defined(__CBM510__) || defined(__CBM610__)
+unsigned char row_scan[8] = { 0x7F, 0xBF, 0xDF, 0xEF, 0xF7, 0xFB, 0xFD, 0xFE };
+
+static void check_keys(void)
+{
+    unsigned char row = 0;
+    unsigned char val = 0x3F;
+    unsigned char i;
+
+    pokebsys(CBM2_KEY_ROW_SEL2, 0xFF);
+    for (i = 0; i < 8 && val == 0x3F; i++) {
+        row++;
+        pokebsys(CBM2_KEY_ROW_SEL1, row_scan[i]);
+        val = peekbsys(CBM2_KEY_ROW_READ) & 0x3F;
+    }
+    if (val == 0x3F) {
+        pokebsys(CBM2_KEY_ROW_SEL1, 0xFF);
+        for (i = 0; i < 8 && val == 0x3F; i++) {
+            row++;
+            pokebsys(CBM2_KEY_ROW_SEL2, row_scan[i]);
+            val = peekbsys(CBM2_KEY_ROW_READ) & 0x3F;
+        }
+    }
+    if (val != 0x3F) {
+        /* 'S' was pressed */
+        if (row == 14 && val == 0x37) {
+            if (current_page != PAGE_SNESPADS) {
+                current_page = PAGE_SNESPADS;
+                clrscr();
+            }
+        }
+
+        /* '1' was pressed */
+        if (row == 15 && val == 0x3D) {
             if (current_page != PAGE_JOYSTICKS) {
                 current_page = PAGE_JOYSTICKS;
                 clrscr();
@@ -737,8 +786,11 @@ int main(void)
     SEI();
     while (1)
     {
-        draw_joy(read_native_cbm510_joy1(), 2, 0, 0, 0, "native1", 0);
-        draw_joy(read_native_cbm510_joy2(), 10, 0, 8, 0, "native2", 0);
+        if (current_page == PAGE_JOYSTICKS) {
+            draw_joy(read_native_cbm510_joy1(), 2, 0, 0, 0, "native1", 0);
+            draw_joy(read_native_cbm510_joy2(), 10, 0, 8, 0, "native2", 0);
+        }
+        check_keys();
     }
 }
 #endif
@@ -752,12 +804,15 @@ int main(void)
     SEI();
     while (1)
     {
-        draw_joy(read_cga_joy1(), 2, 0, 1, 0, "cga-1", 0);
-        draw_joy(read_cga_joy2(), 10, 0, 9, 0, "cga-2", 0);
-        draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer", 0);
-        draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
-        draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
-        draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
+        if (current_page == PAGE_JOYSTICKS) {
+            draw_joy(read_cga_joy1(), 2, 0, 1, 0, "cga-1", 0);
+            draw_joy(read_cga_joy2(), 10, 0, 9, 0, "cga-2", 0);
+            draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer", 0);
+            draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
+            draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
+            draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
+        }
+        check_keys();
     }
 }
 #endif
