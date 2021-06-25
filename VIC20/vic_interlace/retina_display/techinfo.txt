@@ -1,0 +1,95 @@
+ |-----------------------------------------------------------------------|
+ :                            Retina Display                             :
+ |-----------------------------------------------------------------------|
+ :                      Technical documentation                          :
+ |-----------------------------------------------------------------------|
+ :                                                                       :
+ 
+ Yet another new graphics-mode (192x416 interlace) for the NTSC VIC-20:
+ 
+ - 192x416 hires or 96x416 multicolor pixels (true resolution)
+ - 8x16 blocks for foreground color (4x16 for multicolor)
+ - 32K RAM expansion required
+ 
+
+ Short reference:
+ ----------------
+ 
+ GRAPHIC ON:                  SYS 8263 (SPACE to return to BASIC prompt)
+
+ SET BACKGROUND/BORDER COLOR: POKE 8536,x (value is used for $900f/#36879)
+
+ SET AUXILIARY COLOR:         POKE 8531,x (value is used for $900f/#36879)
+
+ COLOR-RAM FOREGROUND:        $7e00-$7f38 (#32256-#32567)
+                              Low nibbles for first 312 chars
+                              High nibbles for last 312 chars
+                              (copied to $9400-$966f/#37888-#38511)
+
+ See pgm-import on how to set single pixels or clear the screen. Feel free
+ to convert these to assembler-routines. I was too lazy (again...)
+                              
+ 
+ Technical background of the graphics-mode:
+ ------------------------------------------
+
+ After finishing the MIFLI-mode which combined high resolution with
+ maximum color-flexibility, I was looking for a new frontier: the maximum
+ possible hires-resolution on an NTSC-VIC-20.
+
+ It was clear interlace would have to be used again. Finding the correct
+ setup for this mode proved very difficult and only when I gave up after
+ about a month and settled for a lower resolution I finally had a
+ breakthrough idea how to implement 192x416 after all.
+
+ You can read more about the genesis of this mode in the VIC-20 Denial
+ forum at
+
+ http://www.sleepingelephant.com/denial/
+
+ Look for the thread
+
+ ** New Frontiers in VIC-Hires-Graphics, Part 13
+
+ in the Programming-subforum.
+
+ This mode uses the VIC-20 CPU to the max - more than any other mode I did
+ before. Less than 1% of processor-cycles remain unused per frame. Most of
+ these are needed to keep the mode relatively easily adressable later on
+ when setting pixels. Also a 32K expansion is required, since the display
+ routine alone takes up nearly the full lower RAM expansion of 24K,
+ leaving only 7K in BLK5 for BASIC-programs.
+
+ You will find a picture converter for converting 192x416 monochrome
+ .pgm-files in this package as well. This relatively short program also
+ shows how to set pixels. The PGM-converter expects a file with 192x416
+ pixels. Simply convert any picture with a 4:3 aspect ratio without ratio
+ correction to 192x416 on your PC and then have the PGM-converter run
+ through it. This will create two executable files and a ".hi"-file which
+ will be loaded automatically when RUNning either of the other two. The
+ file without extension is for the real NTSC-VIC20, and the one with the
+ -emu extension will give a  glimpse on VICE of what the result will look
+ like, but the picture will just have 208 flickering lines instead of the
+ full 416. Having the conversion itself run in VICE on warp-mode is
+ recommended.
+
+ Also included is a text2pgm-converter by Mike, adapted for a 48x52 text
+ screen. You can see a result of this processed with the PGM-converter on
+ the "192i416 tools.d64" - just LOAD and RUN the "DOCS"-file.
+
+ Furthermore I added two Mandelbrot-programs. One for hires, one for
+ multicolor. These use the format as laid out in the german 64er magazine
+ November, 1985. The original Mandelbrot is at (-0.7;2.1;-1;1).
+ Again use the VICE-emulator with active Warp-mode. Also, make sure to
+ SAVE the picture. This will produce three files, e.g. fract, fract-emu
+ and fract.hi - you will need fract and fract.hi for display on the real
+ machine. fract-emu is the VICE-friendly version, again.
+
+ With this mode the NTSC VIC-20 can now display nearly 25% more pixels
+ than the C64 in hires-mode! If you have questions, problems or
+ suggestions or just want to comment, feel free to do so in the forum or
+ just email me.
+
+ tokra, signing off, July 20th 2012
+
+ Contact: tokra@tokra.de

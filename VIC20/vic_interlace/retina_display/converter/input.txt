@@ -1,0 +1,52 @@
+Presenting 192i416 mode for VIC-20 NTSC only
+--------------------------------------------
+
+Another true interlace mode for the VIC-20
+Nearly 25% more resolution than the C64 in
+hires-mode
+
+192x416 pixels hires = 79872 pixels!
+ 96x416 pixels multicolor
+   8x16 color blocks
+
+After finishing the MIFLI-mode which combined
+high resolution with maximum color-flexibility,
+I was looking for a new frontier: the maximum
+possible hires-resolution on an NTSC-VIC-20.
+
+It was clear interlace would have to be used
+again. Finding the correct setup for this mode
+proved very difficult and only when I gave up
+after about a month and settled for a lower
+resolution I finally had a breakthrough idea how
+to implement 192x416 after all.
+
+You can read more about the genesis of this mode
+in the VIC-20 Denial forum at
+
+http://www.sleepingelephant.com/denial/
+
+Look for the thread
+
+** New Frontiers in VIC-Hires-Graphics, Part 13
+
+in the Programming-subforum.
+
+This mode uses the VIC-20 CPU to the max - more
+than any other mode I did before. Less than 1%
+of processor-cycles remain unused per frame.
+Most of these are needed to keep the mode
+relatively easily adressable later on when
+setting pixels. Also a 32K expansion is
+required, since the display routine alone takes
+up nearly the full lower RAM expansion of 24K,
+leaving only 7K in BLK5 for BASIC-programs.
+
+You will find a picture converter for converting
+192x416 monochrome .pgm-files in this package as
+well. This relatively short program also shows
+how to set pixels. Also included is a text2pgm-
+converter by Mike, adapted for a 48x52 text
+screen like this one.
+
+tokra signing off, July 20th 2012

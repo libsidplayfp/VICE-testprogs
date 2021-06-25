@@ -1,0 +1,83 @@
+ |-----------------------------------------------------------------------|
+ :                                FLINALE                                :
+ |-----------------------------------------------------------------------|
+ :                        Technical documentation                        :
+ |-----------------------------------------------------------------------|
+ :                                                                       :
+ 
+ Technical background:
+ ---------------------
+
+ The VIC-chip on the VIC-20 can only display graphics by redefining
+ characters. With 256 different characters of 8x8 dimensions this would
+ only allow for pictures of up to 16384 pixels, which is probably why the
+ engineers provided the VIC with a so-called "double height character
+ mode" which offers characters of 8x16 pixels and as such theoretically
+ 32768 separate pixels.
+ 
+ As graphics are just redefined characters each 8x8 or 8x16 block can only
+ have one foreground-color which is stored in the separate color-RAM. The
+ background color is the same for the whole picture and as such called a
+ global color. The VIC-20 offers a multicolor-mode with pixels twice
+ as wide as well. This adds two more global colors, defined by the
+ border-color and an auxiliary color.
+ 
+ The FLI-modes of this little demo are lifting these restrictions of the
+ VIC-chip by having the CPU aid in the display of the picture. In each
+ rasterline the three global colors as well as the color-RAM can now be
+ set freely, meaning you now have a forground color with an 8x1 resolution
+ compared to 8x8 or 8x16 and can set the three other colors per rasterline
+ instead of per picture. The size of the area that can be displayed this
+ way is only restricted by the combined memory bandwith of the CPU
+ and VIC-chip.
+ 
+ For PAL I already demonstrated a FLI-mode of 96x256 with last year's
+ release of "Uberflieger". Soon after I had an idea to increase the
+ horizontal resolution of that graphics-mode by another 8 pixels, leading
+ to a 104x256 FLI-mode. How this was accomplished is explained in:
+ 
+ ** New Frontiers in VIC-Hires-Graphics, Part 15
+
+ in the "Programming"-section of the VIC-20 forums at:
+ 
+ http://www.sleepingelephant.com/denial/
+  
+ I postponed the release of that mode however since I was planning to use
+ the knowledge I gained for a NTSC-Interlace-FLI-mode, that has been
+ lingering in the back of my head for some time. Earlier this year and
+ with the help of SvOlli's "Fridgegrid"-program I managed to lay out how
+ this mode would fit in the available raster-time and after that the
+ question remained whether it would fit into the available memory of an
+ expanded VIC. Luckily in the end everything fit within a 32K expansion
+ nicely and the mode of 88x400 interlace was born. Part 16 of the thread
+ mentioned above will go into a little more detail about this.
+ 
+ To be able to really enjoy this mode I strongly suggest an S-Video
+ modification on your VIC:
+ 
+ http://sleepingelephant.com/denial/wiki/index.php?title=S-Video_output
+ 
+ The NTSC-mode will not work in the VICE-emulator, since it does not
+ emulate the interlace-feature of the VIC.
+ 
+ Mike provided converters for both the PAL- and NTSC-modes again. Both
+ modes have an aspect ratio of 2:3. You will need to convert your pictures
+ without aspect ratio correction to 104x256 for PAL or 88x400 for NTSC,
+ respectively and save them as input.ppm. The converter will create files
+ which will need to be post-processed on the VIC-emulation in VICE. Just
+ drop the "boot"-file from the appropriate "converters"-directory into
+ VICE. The resulting file will be the executable image. For NTSC the file
+ with the -emu extension will give a glimpse on VICE of what the result
+ will look like, but the picture will just have 200 flickering lines
+ instead of the full 400.
+
+ If you have questions, problems or suggestions or just want to comment,
+ feel free to do so in the in the VIC-20 Denial forum at
+
+ http://www.sleepingelephant.com/denial/
+ 
+ or just email me.
+
+ tokra, signing off, April 17th 2014
+
+ Contact: tokra@tokra.de

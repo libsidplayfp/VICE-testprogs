@@ -1,0 +1,1 @@
+.\nifli_quant.exe input result bitmap.bin colour.bin 900e.bin 900f.bin
