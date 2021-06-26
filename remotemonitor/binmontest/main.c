@@ -947,6 +947,33 @@ void undump_works(CuTest *tc) {
     CuAssertTrue(tc, pc <= 0xff7d);
 }
 
+void keyboard_feed_works(CuTest *tc) {
+    int length;
+
+    unsigned char keyboard_command[] = { 
+        "\x02\x01"
+        "\xff\xff\xff\xff"
+        "\xad\xe5\x30\x45"
+
+        "\x72"
+
+        "\x08"
+        "\x53\x59\x53\x20\x32\x30\x36\x31"
+    };
+
+    // set mem
+
+    setup(tc);
+
+    // keyboard
+
+    send_command(keyboard_command);
+
+    length = wait_for_response_id(tc, keyboard_command);
+
+    CuAssertIntEquals(tc, 0x72, response[RESPONSE_TYPE]);
+}
+
 void mem_set_works(CuTest *tc) {
     unsigned char real_command[10000];
     int length;
@@ -974,8 +1001,8 @@ void mem_set_works(CuTest *tc) {
 
         "\x72"
 
-        "\x0a"
-        "sys 2061\\n"
+        "\x09"
+        "\x53\x59\x53\x20\x32\x30\x36\x31\x0d"
     };
 
     // set mem
@@ -1555,6 +1582,7 @@ CuSuite* get_suite(void)
     SUITE_ADD_TEST(suite, mem_get_works);
 
     SUITE_ADD_TEST(suite, advance_instructions_works);
+    SUITE_ADD_TEST(suite, keyboard_feed_works);
     SUITE_ADD_TEST(suite, execute_until_return_works);
 
     SUITE_ADD_TEST(suite, exit_works);
