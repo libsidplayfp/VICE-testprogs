@@ -1502,25 +1502,21 @@ void display_get_works(CuTest *tc) {
     CuAssertIntEquals(tc, 0x84, response[RESPONSE_TYPE]);
 
     printf("Length of the fields before the display buffer: %d\n", little_endian_to_uint32(&response[HEADER_LENGTH]));
-    printf("Length of fields before reserved area: %d\n", little_endian_to_uint32(&response[HEADER_LENGTH + 4]));
-    printf("Length of display buffer: %d\n", little_endian_to_uint32(&response[HEADER_LENGTH + 8]));
-    printf("Debug width of display buffer (uncropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 4]));
-    printf("Debug height of display buffer (uncropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 6]));
-    printf("X offset to the inner part of the screen: %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 8]));
-    printf("Y offset to the inner part of the screen: %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 10]));
-    printf("width of display buffer (cropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 12]));
-    printf("height of display buffer (cropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 14]));
-    printf("Bits per pixel of display buffer: %d\n", response[HEADER_LENGTH + 8 + 16]);
 
-    printf("Length of the reserved area: %d\n", little_endian_to_uint32(&response[HEADER_LENGTH + 8 + 17]));
+    printf("Debug width of display buffer (uncropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 4]));
+    printf("Debug height of display buffer (uncropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 4 + 2]));
+    printf("X offset to the inner part of the screen: %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 4 + 4]));
+    printf("Y offset to the inner part of the screen: %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 4 + 6]));
+    printf("width of display buffer (cropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 4 + 8]));
+    printf("height of display buffer (cropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 4 + 10]));
+    printf("Bits per pixel of display buffer: %d\n", response[HEADER_LENGTH + 4 + 12]);
 
-    CuAssertIntEquals(tc, 43, little_endian_to_uint32(&response[HEADER_LENGTH]));
-    CuAssertIntEquals(tc, 17, little_endian_to_uint32(&response[HEADER_LENGTH + 4]));
-    CuAssertIntEquals(tc, little_endian_to_uint32(&response[HEADER_LENGTH + 8]),
-            little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 4]) *
-            little_endian_to_uint16(&response[HEADER_LENGTH + 8 + 6]) * 4);
-/*    CuAssertIntEquals(tc, 628992, little_endian_to_uint32(&response[HEADER_LENGTH + 8])); */
-    CuAssertIntEquals(tc, 18, little_endian_to_uint32(&response[HEADER_LENGTH + 8 + 17]));
+    printf("Length of display buffer: %d\n", little_endian_to_uint32(&response[HEADER_LENGTH + 4 + 13]));
+
+    CuAssertIntEquals(tc, 13, little_endian_to_uint32(&response[HEADER_LENGTH]));
+    CuAssertIntEquals(tc, little_endian_to_uint32(&response[HEADER_LENGTH + 4 + 13]),
+            little_endian_to_uint16(&response[HEADER_LENGTH + 4]) *
+            little_endian_to_uint16(&response[HEADER_LENGTH + 4 + 2]) * 4);
 }
 
 void vice_info_works(CuTest *tc) {
