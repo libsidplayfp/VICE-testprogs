@@ -44,6 +44,7 @@
 #define COMMAND_ID 6
 #define COMMAND_HEADER_LENGTH 11
 #define COMMAND_LENGTH 2
+#define API_VERSION 0x02
 
 int response_count = 0;
 int sock = 0;
@@ -177,7 +178,7 @@ void request_id_is_set(CuTest* tc) {
     int length;
 
     unsigned char command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xa6, 0xea, 0x28, 0x1d, 
 
@@ -199,7 +200,7 @@ void checkpoint_set_works(CuTest *tc) {
     int length;
 
     unsigned char set_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xb4, 0xd8, 0x44, 0x19, 
 
@@ -255,7 +256,7 @@ void checkpoint_get_works(CuTest *tc) {
     // set
 
     unsigned char set_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xb7, 0xde, 0x2d, 0x1d, 
 
@@ -270,7 +271,7 @@ void checkpoint_get_works(CuTest *tc) {
     };
 
     unsigned char get_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xe1, 0xc7, 0x52, 0x2f, 
 
@@ -331,7 +332,7 @@ void checkpoint_delete_works(CuTest *tc) {
     // set
 
     unsigned char set_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xc3, 0xc7, 0x4e, 0x53, 
 
@@ -346,7 +347,7 @@ void checkpoint_delete_works(CuTest *tc) {
     };
 
     unsigned char delete_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xcc, 0xd2, 0x16, 0x2b, 
 
@@ -380,7 +381,7 @@ void checkpoint_list_works(CuTest *tc) {
     int length;
 
     unsigned char set_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xb2, 0xcf, 0x49, 0x16, 
 
@@ -395,7 +396,7 @@ void checkpoint_list_works(CuTest *tc) {
     };
 
     unsigned char list_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xe3, 0xb5, 0xa4, 0xe4, 
 
@@ -432,7 +433,7 @@ void checkpoint_enable_works(CuTest *tc) {
     // set
 
     unsigned char set_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xad, 0xde, 0x34, 0x12, 
 
@@ -447,7 +448,7 @@ void checkpoint_enable_works(CuTest *tc) {
     };
 
     unsigned char toggle_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xad, 0xde, 0xad, 0xde, 
 
@@ -458,7 +459,7 @@ void checkpoint_enable_works(CuTest *tc) {
     };
 
     unsigned char get_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xef, 0xbe, 0x34, 0x12, 
 
@@ -508,7 +509,7 @@ void checkpoint_disable_works(CuTest *tc) {
     // set
 
     unsigned char set_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xad, 0xdf, 0x35, 0x11, 
 
@@ -523,7 +524,7 @@ void checkpoint_disable_works(CuTest *tc) {
     };
 
     unsigned char toggle_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xa6, 0xe0, 0xab, 0xdf, 
 
@@ -534,7 +535,7 @@ void checkpoint_disable_works(CuTest *tc) {
     };
 
     unsigned char get_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xf2, 0xba, 0x39, 0x10, 
 
@@ -584,7 +585,7 @@ void condition_set_works(CuTest *tc) {
     // set
 
     unsigned char set_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xad, 0xdf, 0x35, 0x11, 
 
@@ -611,7 +612,7 @@ void condition_set_works(CuTest *tc) {
     ;
 
     unsigned char get_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xf2, 0xba, 0x39, 0x10, 
 
@@ -661,7 +662,7 @@ void registers_set_works(CuTest *tc) {
 
     // Set A and X
     unsigned char set_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xa9, 0xe3, 0x28, 0x37, 
 
@@ -726,7 +727,7 @@ void registers_get_drive_works(CuTest *tc) {
 
     // Get
     unsigned char get_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xa9, 0xe3, 0x28, 0x37, 
 
@@ -778,7 +779,7 @@ void registers_get_works(CuTest *tc) {
     unsigned char* cursor;
 
     unsigned char reset_command[] = {
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xaf, 0xe9, 0x23, 0x3d, 
 
@@ -789,7 +790,7 @@ void registers_get_works(CuTest *tc) {
 
     // Get
     unsigned char get_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xa9, 0xe3, 0x28, 0x37, 
 
@@ -879,7 +880,7 @@ void undump_works(CuTest *tc) {
     int dump_strpos = COMMAND_HEADER_LENGTH + 3;
 
     unsigned char reset_command[] = {
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xaf, 0xe9, 0x23, 0x3d, 
 
@@ -981,7 +982,7 @@ void mem_set_works(CuTest *tc) {
     FILE* fil = fopen("./cc65-test.prg", "rb");
 
     unsigned char command[] = {
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xa9, 0xe3, 0x28, 0x37, 
 
@@ -1039,7 +1040,7 @@ void mem_get_works(CuTest *tc) {
     uint16_t mem_size;
 
     unsigned char command[] = {
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xa9, 0xe3, 0x28, 0x37, 
 
@@ -1071,7 +1072,7 @@ void exit_works(CuTest *tc) {
     int length;
 
     unsigned char command[] = {
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xaf, 0xe9, 0x23, 0x3d, 
 
@@ -1095,7 +1096,7 @@ void advance_instructions_works(CuTest *tc) {
     int length;
 
     unsigned char command[] = {
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xb3, 0xe4, 0x2d, 0x30, 
 
@@ -1129,7 +1130,7 @@ void execute_until_return_works(CuTest *tc) {
     FILE* fil = fopen("./cc65-test.prg", "rb");
 
     unsigned char mem_command[] = {
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xa9, 0xe3, 0x28, 0x37, 
 
@@ -1154,7 +1155,7 @@ void execute_until_return_works(CuTest *tc) {
     };
 
     unsigned char exec_command[] = {
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xb3, 0xe4, 0x2d, 0x30, 
 
@@ -1165,7 +1166,7 @@ void execute_until_return_works(CuTest *tc) {
     };
 
     unsigned char brk_command[] = { 
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xb4, 0xd8, 0x44, 0x19, 
 
@@ -1180,7 +1181,7 @@ void execute_until_return_works(CuTest *tc) {
     };
 
     unsigned char exit_command[] = {
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xaf, 0xe9, 0x23, 0x3d, 
 
@@ -1260,7 +1261,7 @@ void reset_works(CuTest *tc) {
     int length;
 
     unsigned char command[] = {
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xaf, 0xe9, 0x23, 0x3d, 
 
@@ -1324,7 +1325,7 @@ void banks_available_works(CuTest *tc) {
     unsigned char *cursor;
 
     unsigned char command[] = {
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xaf, 0xe9, 0x23, 0x3d, 
 
@@ -1369,7 +1370,7 @@ void registers_available_works(CuTest *tc) {
     unsigned char *cursor;
 
     unsigned char command[] = {
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xb5, 0xe9, 0x23, 0x3d, 
 
@@ -1478,19 +1479,74 @@ void resource_get_works(CuTest *tc) {
     CuAssertIntEquals(tc, 0x04, response[HEADER_LENGTH + 1]);
 }
 
-void display_get_works(CuTest *tc) {
-    int length, misc_fields_length;
+void palette_get_works(CuTest *tc) {
+    int length, i, assert_count;
     unsigned char *cursor;
 
     unsigned char command[] = {
-        0x02, 0x01,             /* STX, Api v1 */
+        0x02, API_VERSION,
+        0xff, 0xff, 0xff, 0xff,
+        0xa3, 0x52, 0x09, 0x9f,
+
+        0x91,   /* command type = get palette */
+
+        0x01   /* VIC-II */
+    };
+
+    setup(tc);
+
+    send_command(command);
+
+    length = wait_for_response_id(tc, command);
+
+    CuAssertIntEquals(tc, 0x91, response[RESPONSE_TYPE]);
+
+    CuAssertIntEquals(tc, 16, little_endian_to_uint16(&response[HEADER_LENGTH]));
+
+    cursor = &response[HEADER_LENGTH + 2];
+
+    for (i = 0 ; i < 16 ; i++) {
+        uint8_t item_size = cursor[0];
+        uint8_t r = cursor[1];
+        uint8_t g = cursor[2];
+        uint8_t b = cursor[3];
+        uint8_t d = cursor[4];
+
+        CuAssertIntEquals(tc, 4, item_size);
+
+        /* black */
+        if (i == 0) {
+            CuAssertTrue(tc, r < 0x10);
+            CuAssertTrue(tc, g < 0x10);
+            CuAssertTrue(tc, b < 0x10);
+            ++assert_count;
+        /* white */
+        } else if (i == 1) {
+            CuAssertTrue(tc, r > 0xff - 0x10);
+            CuAssertTrue(tc, g > 0xff - 0x10);
+            CuAssertTrue(tc, b > 0xff - 0x10);
+            ++assert_count;
+        }
+
+        cursor += item_size + 1;
+    }
+
+    CuAssertIntEquals(tc, 2, assert_count);
+}
+
+void display_get_works(CuTest *tc) {
+    int length;
+    unsigned char *cursor;
+
+    unsigned char command[] = {
+        0x02, API_VERSION,             /* STX, Api v1 */
         0xff, 0xff, 0xff, 0xff, /* length of command body */
         0xaf, 0xe9, 0x23, 0x3d, /* request ID */
 
         0x84,   /* command type = get display */
 
         0x01,   /* VIC-II */
-        0x04,
+        0x00,
     };
 
     setup(tc);
@@ -1516,7 +1572,7 @@ void display_get_works(CuTest *tc) {
     CuAssertIntEquals(tc, 13, little_endian_to_uint32(&response[HEADER_LENGTH]));
     CuAssertIntEquals(tc, little_endian_to_uint32(&response[HEADER_LENGTH + 4 + 13]),
             little_endian_to_uint16(&response[HEADER_LENGTH + 4]) *
-            little_endian_to_uint16(&response[HEADER_LENGTH + 4 + 2]) * 4);
+            little_endian_to_uint16(&response[HEADER_LENGTH + 4 + 2]));
 }
 
 void vice_info_works(CuTest *tc) {
@@ -1524,7 +1580,7 @@ void vice_info_works(CuTest *tc) {
     unsigned char *cursor;
 
     unsigned char command[] = {
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xaf, 0xe9, 0x23, 0x3d, 
 
@@ -1592,6 +1648,8 @@ CuSuite* get_suite(void)
     SUITE_ADD_TEST(suite, display_get_works);
     SUITE_ADD_TEST(suite, vice_info_works);
 
+    SUITE_ADD_TEST(suite, palette_get_works);
+
     SUITE_ADD_TEST(suite, resource_get_works);
     SUITE_ADD_TEST(suite, resource_set_works);
 
@@ -1619,7 +1677,7 @@ void mon_quit() {
     int length;
 
     unsigned char command[] = {
-        0x02, 0x01, 
+        0x02, API_VERSION, 
         0xff, 0xff, 0xff, 0xff, 
         0xaf, 0xe9, 0x23, 0x3d, 
 
