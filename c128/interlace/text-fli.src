@@ -1,0 +1,582 @@
+/*
+	Text Mode FLI Routines for VIC-IIe Interlace Demo
+	Copyright (C) 2004,2007 Robert Willie <hydradix@yahoo.com>
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License version 2 as
+	published by the Free Software Foundation.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to
+
+	Free Software Foundation, Inc.
+	59 Temple Place
+	Suite 330
+	Boston, MA  02111-1307
+	USA
+*/
+;----- VIC-IIe Text Mode RIFLI Routines -----
+
+.text	;segment
+
+FLItxtPhase	.dsb 1	;byte variable for char row / phase
+	;not to be confused with interlace phase
+pRaster	.dsb 2	;word variable for interlace raster
+riVec	.dsb 2	;vector for interlace routine
+
+;for BASIC demo use ROM
+;otherwise you can un-comment the following
+;#define FLI_WITHOUT_ROM
+
+;Real Interlace Flexible Line Interpretation
+;40x50 Text Demo (with FLI bug in odd rows)
+;Method is swap text (and color) screen every 4 rasters.
+;This makes 50 text rows of 4 rasters each in a single field.
+;with Real Interlace, the same 50 rows are read again
+;but in the second field, the charset is swapped.
+;Since the two fields are REALLY interlaced,
+;each char is 8x8 in the complete frame (2 fields)
+
+;	text matrix
+;$2000~$2027 row 0
+;$2400~$2027 row 1
+;$2028~$204f row 2
+;$2428~$244f row 3
+;etc.
+;$23c0~$23e7 row 48
+;$27c0~$27e7 row 49
+
+;	color matrix (bank means color RAM set in CPU I/O Port $01)
+;$d800~$d827 bank 0, row 0
+;$d800~$d827 bank 1, row 1
+;$d828~$d84f bank 0, row 2
+;$d828~$d84f bank 1, row 3
+;etc.
+;$dbc0~$dbe7 bank 0, row 48
+;$dbc0~$dbe7 bank 1, row 49
+
+;	character set (font) data, all rows
+;$3000~$37ff	even field (rasters 0,2,4,...398)
+;$3800~$3fff	odd field (rasters 1,3,5,...399)
+
+;due to the way FLI works, 
+;the last 4 bytes of a char definition
+;must be the same as the first 4 bytes
+
+;since the screen is interlaced, two fonts (char defs) are needed
+;one for the even field and another for the odd
+;lets consider R as an example
+;	*****	= $7c (0, even)
+;	**  **	= $66 (1, odd)
+;	**  **	= $66 (2, even)
+;	*****	= $7c (3, odd)
+;	** **	= $6c (4, even)
+;	**  **	= $66 (5, odd)
+;	**   **	= $63 (6, even)
+;		= $00 (7, odd)
+
+;for the even field set, use
+;$7c, $66, $6c, $63, $7c, $66, $6c, $63
+;and the odd field set would be
+;$66, $7c, $66, $00, $66, $7c, $66, $00
+;note in both cases, the last 4 bytes are the same as the first 4 bytes
+
+;See makeFont for code to make a pair of font sets
+
+;Note without FLI, text mode is 40x25
+;having each char 8x16 pixels
+
+;----------------------------------------
+;initialize RIFLI IRQ
+;* this is an IRQ routine *
+;uses double raster technique to initialize CIA#1 timer B
+;should only be called once
+;assumes CIA#1 Timer B is programmed for continous operation
+;	counting CPU cycles and not generate IRQ (default C128 behavior)
+;assumes stack only contains return adrs and CPU flags
+;assumes mem. config. RAM + I/O
+;assumes VIC only IRQ source (and only rasters)
+;assumes current raster in top border a few rasters before text start
+;assumes 1MHz CPU speed
+;assumes iFLI2 in same page as this routine
+
+iFLI
+	pha
+	cld
+	inc raster	;interrupt on next raster
+	lda #1
+	sta v2irq	;clear pending current irq
+	lda #<iFLI2	;stear CPU to part2
+	sta cIRQ
+	cli
+	jmp waiter	;execute NOPs until IRQ
+
+iFLI2
+	pla		;[9,10]clean stack
+	pla		;[13,14]
+	pla		;[17,18]
+	lda #64	;[21,22]NTSC cycles/raster-1 (silly timer!); PAL use 62
+cyTime	= *-1
+	sta $dc06	;[23,24]timer B lo
+	lda #$00	;[27,28]
+	sta $dc07	;[29,30]timer B hi
+	lda raster	;[33,34]current raster value
+	jsr waiterx-6	;[37,38] waste 12+2*6=24 cycles; PAL use waiterx-5
+FLIwait	= *-2
+	cmp raster	;[61,62] test if new raster
+.(
+	beq xact	;[0,1] waste 1 cycle if we were early
+xact	;[3]must not cross page boundry!
+.)
+	lda $dc0f	;timer B control
+	ora #$11	;force reload, run timer
+	sta $dc0f
+
+;un-comment next line if not using Real Interlace
+;	jsr iFLI3	;set-up VIC for 1st char row
+;if you do, then erase or comment-out these next lines
+		sta v2irq	;acknowledge VIC IRQ
+		lda #<kIBtest	;restore CPU_IRQ vector
+		sta cIRQ
+		lda #>kIBtest
+		sta cIRQ+1
+		jsr setRI	;set pre-raster for Real Interlace IRQ
+		
+	pla
+	rti
+
+;----------------------------------------
+;initialize RIFLI IRQ for 1st char row
+;should be called before start of every field
+;assumes I/O in mem.config.
+;assumes IRQs are disabled or won't happen
+;.X and .Y unchanged
+
+iFLI3
+	;first set VIC for even char rows (0,2,4,...48)
+	lda vmcsb
+	and #255-VIC2_MATRIX_MASK
+	ora #8*VIC2_MATRIX_MULT	;screen 8 for even rows
+	sta vmcsb
+
+	lda $01
+	and #255-VIC2E_COLOR_DMA	;VIC sees bank 0 color RAM
+	ora #VIC2E_ROM_OFF	;VIC will not see char ROM
+	sta $01
+
+	lda scroly
+	and #255-VIC2_RASTER_HI-VIC2_SCROLL_MASK
+	ora #VIC2_Y_SCROLL	;normal scroll value for even rows
+	sta scroly
+
+	;next set VIC to trigger IRQ before odd row
+#ifdef FLI_WITHOUT_ROM
+	lda #51+4-1	;first raster + raster/RIFLI_char/field - setup raster
+#else
+	lda #51+4-2	;first raster + raster/RIFLI_char/field - 2 setup rasters
+#endif
+	sta raster
+	lda #1
+	sta v2irq	;clear any pending IRQ
+
+#ifdef FLI_WITHOUT_ROM
+	lda #0	;note even row phase
+#else	;with ROM
+	lda #25	;count FLI badlines to generate
+#endif
+	sta FLItxtPhase
+
+	;last set vector for IRQ
+
+#ifdef FLI_WITHOUT_ROM
+
+	lda #<irqFLIn	;NTSC; PAL use irqFLIp
+stdFLI	= *-1
+	sta cIRQ
+	lda #>irqFLIn
+	sta cIRQ+1
+
+#else ;with KERNAL ROM
+
+	lda #<irqFLIn
+	sta vIRQ
+	lda #>irqFLIn
+	sta vIRQ+1
+
+#endif
+
+	rts
+
+
+;----------------------------------------
+;main FLI IRQ routine for Interlaced Text
+;called before every bad line (except 1st) = 49 calls / field
+;assumes stack only has adrs and CPU flags
+;assumes mem.config. I/O + RAM
+;assumes Timer B has been set-up
+;assumes 1MHz clock (duh, this is visible screen)
+;should execute on raster before BadLine
+
+#ifdef FLI_WITHOUT_ROM	;the simple version, uses about 2*49=98 rasters
+
+irqFLIn	;entry for NTSC [0...64]
+	nop		;waste 2 cycles to align w/PAL timing
+		;following [cycle times] are based on PAL [0...62]
+
+irqFLIp	.(	;entry for PAL
+	pha		;[9+]
+	cld		;[12+]
+
+	;first, swap video matrix and color for next char row
+	lda $01		;[14+]
+	eor #VIC2E_COLOR_DMA	;[17+]swap color
+	sta $01		;[19+]
+	lda vmcsb	;[22+]
+	eor #VIC2_MATRIX_MULT	;[26+]swap text
+	sta vmcsb	;[28+]
+	nop		;[32+]
+	;add another NOP if FLItxtPhase is in zero page
+
+	;next, test FLI row phase
+	lda #1	;[34+] assume change to odd rows
+	dec FLItxtPhase	;[36+] test new phase
+	beq norm	;[42+] new phase even, don't force badline
+
+	sta FLItxtPhase	;[44+] new phase odd row (1,3,5,...49)
+
+	;need to force a badline, but timing must be EXACT
+	;** the following branches must NOT cross a page boundry **
+	;** code may fail if IRQ occurred during a 7 or 8 cycle instruction **
+
+	lda $dc06	;[48+]timer B sync'd with raster (it counts down)
+	lsr		;[52+]test even/odd CPU/VIC cycle
+	bcs dly1	;[54+] waste 1 cycle if needed
+dly1	;vari_waste 7,9,or 11 cycles
+	eor #$0b	;[56,58,60] waste 2 cycles and test cycle
+	beq dly2	;[58,60,62] vari_waste 7
+	eor #$07	;[60 or 62] waste 2 cycles and test cycle
+	beq norm	;[62 or 1] vari_waste 9
+dly2
+	bne norm	;[1 or 2] vari_waste 11
+norm
+	;now update VIC Y-Scroll
+	;this will permit a badline on next raster (even rows)
+	;or force a badline on this raster (odd rows)
+	;forcing a badline causes FLI bug (first 3 chars of row are bad)
+		;cycle 4 if odd row, force badline (this raster)
+		;cycle 45+ if even row, allow VIC do normal badline (next raster)
+	lda scroly	;[4,45+]
+	eor #$04	;[8,49+] change Y scroll by 4 (rasters/char/field)
+	sta scroly	;[10,51+] for odd rows we loose 40 cycles
+	sta v2irq	;[54,55+] acknowledge IRQ (requires Y-Scroll bit 0 set)
+	lda raster	;[58,59+] get raster of badline (next if even row)
+	clc		;[62,0+]
+	adc #4-1	;[1,2+]next badline 4 rasters away, but need 1 for setup
+	sta raster	;[3,4+]set next IRQ
+	pla		;[7,8+] for even rows we now loose 40 cycles
+	rti		;[11,54+]
+.)
+
+#else	;with ROM enabled, uses about 3 * 24 = 72 rasters
+
+irqFLIn
+irqFLIp
+
+.(
+	lda raster
+	cld
+w1	cmp raster
+	bcs w1		;[1+]wait next raster
+		;at this point we have 7-cycle jitter
+	adc #4*2	;[3+]
+	sta raster	;[5+]set raster IRQ for 2 char rows ahead
+	lda #1		;[9+]
+	sta v2irq	;[11+] acknowledge VIC IRQ
+
+	bit $a03	;[15+]test video standard
+	bmi	pal		;[19+]PAL
+	bit $00		;NTSC, effectly waste 2 cycles
+pal		;timing is now in reference to PAL
+
+	ldx $01		;[22+]
+	txa		;[25+]
+	eor #VIC2E_COLOR_DMA	;[27+]swap color for this (odd) row
+	sta $01		;[29+]
+	ldy vmcsb	;[32+]
+	tya		;[36+]
+	eor #VIC2_MATRIX_MULT	;[38+]swap text for this (odd) row
+	sta vmcsb	;[40+]
+
+	;need to force a badline, but timing must be EXACT
+	;** the following branches must NOT cross a page boundry **
+
+	lda $dc06	;[44+]timer B, max $1E (counts down)
+	lsr		;[48+]test even/odd CPU/VIC cycle
+	bcs dly1	;[50+] waste 1 cycle if needed
+dly1	;vari_waste 7,9,11,13 or 15 cycles; i.e., 7+{0,2,4,6,8}
+	cmp #$c		;[52+]
+	bcc dly2	;[54+] vari_waste 7
+	beq dly2	;[56+] vari_waste 9
+	cmp #$e		;[58+]
+	bcc norm	;[60+] vari_waste 11
+	beq norm	;[62,1] vari_waste 13
+	bcs norm	;[1] vari_waste 15
+dly2
+	nop 	;[2]
+
+norm
+	;update VIC Y-Scroll
+	;this will force a badline on this raster (odd rows)
+	;forcing a badline causes FLI bug (first 3 chars of row are bad)
+	lda scroly	;[4]
+	eor #$04	;[8] change Y scroll by 4 (rasters/char/field)
+	sta scroly	;[10] we loose 40 cycles due to VIC DMA
+	eor #4		;[54] change Y scroll to normal for next (even) row
+	sta scroly	;[56]
+	stx $01		;[60] set color bank for next (even) row
+	sty vmcsb	;set text matrix for next row
+	dec FLItxtPhase
+	bne xit		;not done with text, keep this IRQ routine
+
+	ldx riVec	;set new interrupt routine
+	ldy riVec+1	;for even or odd interlace field, as appropriate
+	stx vIRQ
+	sty vIRQ+1
+	jsr setRI	;setup raster for Real Interlace IRQ
+xit
+	jmp kIxit	;ROM restore MMU, CPU regs, and RTI
+.)
+
+#endif
+
+;----------------------------------------
+;silly routine to reduce IRQ routine(s) size by 6 bytes (each)
+setRI
+	ldy pRaster	;pre-raster for Real Interlace IRQ
+	ldx pRaster+1	;raster hi bit
+	jmp iField	;setup IRQ
+
+
+;----------------------------------------
+;activate FLI + Real Interlace
+
+RIFLIon	.(
+	lda mmucr
+	pha
+
+	lda vIRQ+1	;test IRQ vector
+	cmp #$40	;ROM space ?
+	bcc rion	;no, assume Real Interlace IRQ is active
+	jsr ivirq	;set-up interlace IRQ
+rion
+	lda #$3e	;RAM 0 + I/O
+	sta mmucr
+
+	lda vIRQ	;get current IRQ vector low
+wi	cmp vIRQ
+	beq wi		;wait until interlace field change
+	
+	sei
+	lda #$fc	;in the border area
+	sta raster
+	lda scroly
+	and #255-VIC2_RASTER_HI
+	sta scroly
+	lda #$01
+	sta v2irq	;clear any pending vic irq
+	
+	lda #>iFLI
+	sta cIRQ+1
+	lda #<iFLI	;point CPU_IRQ to FLI init code
+	sta cIRQ
+
+	cli
+/*
+	lda FLItxtPhase
+w1	cmp FLItxtPhase
+	beq w1	;wait for FLI IRQ to init
+*/
+w1	cmp cIRQ
+	beq w1	;wait for FLI IRQ to init
+
+	lda #6*VIC2_CHARSET_MULT	;assume charset 6 ($3000~$37ff) for even field
+	ldx ecBank	;check if Real Interlace is field-reversed
+	beq nc		;normal
+	eor #VIC2_CHARSET_MULT	;field *is* reversed so use charset 7 ($3800~$3fff)
+nc	sta eChar
+
+	lda #VIC2_CHARSET_MULT	;swap to charsets every field
+	sta swpChar
+	lda #1
+	sta onFLI	;tell Real Interlace IRQ to call FLI IRQ
+
+	lda #0
+	sta swpVic	;do not swap VIC banks
+
+	pla
+	sta mmucr
+	rts
+.)
+
+
+;----------------------------------------
+;de-activate FLI + Real Interlace
+
+RIFLIoff .(
+
+	lda #0
+	sta mmucr
+	sta onFLI	;tell Real Interlace no FLI
+	lda #3*VIC2_CHARSET_MULT	;charset 3 (ROM $1800~$1fff) for even field
+	sta eChar
+	lda #0	;no swap, same charset for odd field
+	sta swpChar
+	lda #2
+	sta swpVic	;swap VIC banks (for bitmaps) between even/odd fields
+
+	lda #<eField	;wait for even field IRQ to be set
+wx1	cmp vIRQ	;get current IRQ vector low
+	bne wx1
+wx2	cmp vIRQ
+	beq wx2		;wait until settings applied
+
+	sei
+	lda $01
+	and #255-VIC2E_ROM_OFF	;char ROM on
+	sta $01
+	lda vmcsb
+	and #255-VIC2_MATRIX_MASK
+	ora #1*VIC2_MATRIX_MULT	;use screen 1 for BASIC text ($0400~$07e7)
+	sta vmcsb
+	cli
+
+	rts
+.)
+
+
+;-------------------------------------
+;Make a pair of characters sets (fonts)
+;for use in 40x50 FLI text mode
+;this code converts the CBM font in ROM
+;and stores even-raster bytes in $3000~$37ff
+;and the odd-raster bytes in $3800~$3fff
+;the lower half of each char duplicates top half
+;due to the fact FLI does not reset char-raster-index
+;assumes code below $C000
+
+makeFont .(
+	lda mmucr	;get mem.config.
+	pha
+	and #255-MMU128_RAM_C000	;activate KERNAL ROM
+	ora #MMU128_CHAR_ROM	;ROM instead of I/O
+	sta mmucr
+
+src		= $fe
+cntC	= $fd
+deven	= $64
+dodd	= $66
+	ldy #0
+	lda #>$d800
+	sty src
+	sta src+1
+	lda #>$3000
+	sty deven
+	sta deven+1
+	lda #>$3800
+	sty dodd
+	sta dodd+1
+
+	sty cntC	;256 chars
+copy
+	lda (src),y	;even field
+	sta (deven),y
+	lda deven
+	eor #4		;toggle upper/lower char half
+	sta deven
+	tax
+	lda (src),y
+	sta (deven),y
+
+	inc src
+	lda (src),y	;odd field
+	sta (dodd),y
+	stx dodd	;toggle upper/lower char half
+	sta (dodd),y
+
+	iny
+	cpy #4	;rasters/char/field
+	bne copy
+
+	tya
+	clc
+	adc src		;src already inc'd by 4, another 4 makes +8 (next char)
+	sta src
+	bcc ids
+	inc src+1
+	clc
+ids
+	lda deven
+	adc #8		;next char
+	sta deven
+	sta dodd
+	bcc nc
+	inc deven+1
+	inc dodd+1
+nc
+	ldy #0
+	dec cntC
+	bne copy
+
+	pla
+	sta mmucr	;restore memory config
+	rts
+.)
+
+
+;-------------------------------------
+;routine to copy color data color RAM
+;$2800~2be7 for even rows
+;$2c00~2fe7 for odd rows
+
+colrCopy .(
+	ldy #0
+	sty mmucr	;BANK 15
+	lda 1
+	and #$fe	;CPU access color bank 0 (even rows)
+	sta 1
+ceven
+	lda $2800,y
+	sta $d800,y
+	lda $2900,y
+	sta $d900,y
+	lda $2a00,y
+	sta $da00,y
+	lda $2b00,y
+	sta $db00,y
+	iny
+	bne ceven
+	
+	lda 1
+	ora #1  	;CPU access color bank 1 (odd rows)
+	sta 1
+codd
+	lda $2c00,y
+	sta $d800,y
+	lda $2d00,y
+	sta $d900,y
+	lda $2e00,y
+	sta $da00,y
+	lda $2f00,y
+	sta $db00,y
+	iny
+	bne codd
+
+	rts
+.)
+
+.end

@@ -1,0 +1,207 @@
+/*
+	Bitmap Loader for VIC-IIe Interlace Demo
+	Copyright (C) 2004,2007 Robert Willie <hydradix@yahoo.com>
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License version 2 as
+	published by the Free Software Foundation.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to
+
+	Free Software Foundation, Inc.
+	59 Temple Place
+	Suite 330
+	Boston, MA  02111-1307
+	USA
+*/
+
+#include "mmu.src"
+
+.text	;segment
+
+src = $fc
+dst = $fe
+cnt = $fb
+typ = $fa
+
+bmldr	= $b00
+
+* = bmldr - 2
+	.byte <bmldr		;cbm load address
+	.byte >bmldr
+
+	jmp iColr
+
+;-------------------------------------
+;setup bitmap in bank 1 RAM
+;file loaded to $2000
+;.A=0 even field, .A=$80 odd field
+
+setBmap	.(
+	ldx $af		;file end adrs hi
+	cpx #$47
+	bcc styp
+	ora #$40	;note multi-color
+styp
+	sta typ
+	jsr b1io	;overlay BANK 1 + I/O
+	
+	lda #$1c	;color 1/2 start (even)
+	bit typ
+	bpl sc12dst
+	ora #$80	;$9c00 color 1/2 (odd)
+sc12dst
+	sty dst
+	sta dst+1
+	lda #$3f	;assume multi-color file
+	ldx #$40
+	bit typ
+	bvs sc12src
+	lda #$20	;hi-res color start
+	ldx #$0
+sc12src
+	stx src
+	sta src+1
+	
+	lda #4
+	jsr mmov
+
+	lda #$18	;color 3 start (even)
+	bit typ
+	bvc ibm		;hi-res no color 3
+	bpl sc3dst
+	ora #$80	;$9800 color 3 (odd)
+sc3dst
+;	sty dst
+	sta dst+1
+	lda #$43
+	ldx #$28
+	stx src
+	sta src+1
+
+	lda #4
+	jsr mmov
+ibm
+	lda #$a0	;bitmap start (odd)
+	bit typ
+	bmi sbdst
+	bvs xit		;multi-color bitmap (even) no need move
+	and #$7f	;$2000 bitmap (even)
+sbdst
+;	sty dst
+	sta dst+1
+	lda #$24	;hi-res bitmap
+	ldx #0
+	bit typ
+	bvc sbsrc
+	lda #$20	;multi-color bitmap
+sbsrc
+	stx src
+	sta src+1
+
+	lda #$20
+	jsr mmov
+xit
+	;fall into next routine
+.)
+
+;-------------------------------------
+;set BANK 15 and normal common RAM
+;.Y = 0
+
+b15
+	sty mmucr	;BANK 15
+	lda mmurcr
+	and #255-MMU128_SIZE_MASK	;1ki common RAM ($0000~03FF)
+	sta mmurcr
+	rts
+
+;-------------------------------------
+;set bank 1 RAM + I/O with xtra RAM 0
+;$0000~$0fff = RAM 0
+;$1000~$cfff,$e000~$ffff = RAM 1
+;$d000~$dfff = I/O
+
+b1io
+	ldy #0
+	sty mmucr	;BANK 15
+	lda mmurcr	;RAM config register
+	ora #MMU128_COMMON_4K		;4ki common RAM ($0000~$0fff)
+	sta mmurcr
+	lda #$7e
+	sta mmucr	;BANK 1 + I/O
+	rts
+
+;-------------------------------------
+;copy memory from src to dst
+;.A = #pages
+
+mmov	.(
+	sta cnt
+ml
+	lda (src),y
+	sta (dst),y
+	iny
+	bne ml
+	inc src+1
+	inc dst+1
+	dec cnt
+	bne ml
+	rts
+.)
+
+;-------------------------------------
+;copy color 3 to color RAM
+;even field at $1800 to color bank 0
+;odd field at $9800 to color bank 1
+
+iColr	.(
+	jsr b1io	;overlay BANK 1 + I/O, returns .Y=0
+	lda #$18	;even field
+	sty src
+	sta src+1
+	lda #$d8	;color RAM
+	sty dst
+	sta dst+1
+	lda #4		;4 pages / field
+	sta $6		;page counter
+clp
+	jsr rwait	;avoid IRQs, returns .C=0
+	lda $1
+	and #$fe
+	sta $1		;color bank 0
+	lda #1		;1 page of memory
+	jsr mmov
+	dec dst+1	;repeat same color RAM page
+	lda src+1	;for example $1900
+	adc #$80-1	;for example $9800
+	sta src+1
+	lda $1
+	ora #1
+	sta $1		;color bank 1
+	lda #1		;1 page of memory
+	jsr mmov
+	lda src+1	;for example $9900
+	and #$7f	;for example $1900
+	sta src+1
+
+	dec $6
+	bne clp
+	beq b15		;normal BANK 15 and exit
+
+rwait
+	lda $d012
+	cmp #$38
+	bcc rwait	;avoid low raster IRQs
+	cmp #$60
+	bcs rwait	;avoid hi raster IRQs for both page copies
+	rts
+.)
+
+.end

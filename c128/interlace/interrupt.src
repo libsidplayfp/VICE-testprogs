@@ -1,0 +1,369 @@
+/*
+	VIC-IIe Interlace Interrupt
+	Copyright (C) 2004,2007 Robert Willie <hydradix@yahoo.com>
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License version 2 as
+	published by the Free Software Foundation.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to
+
+	Free Software Foundation, Inc.
+	59 Temple Place
+	Suite 330
+	Boston, MA  02111-1307
+	USA
+*/
+
+;CPU vectors in RAM/ROM to interrupt routines
+cIRQ	= $fffe		;IRQ/BRK
+cRES	= $fffc		;Reset
+cNMI	= $fffa		;NMI
+
+;vectors in RAM to KERNAL interrupt routines
+vIRQ	= $314
+vBRK	= $316
+vNMI	= $318
+
+;vectors in ROM to KERNAL interrupt routines
+kIRQ	= $e073	;$fa65
+kBRK	= kIRQ+2	;$b003
+kNMI	= kBRK+2	;$fa40
+
+kIBtest	= $ff17	;Routine in RAM and ROM to test IRQ or BRK
+kIxit	= $ff33	;Routine in RAM and ROM to exit IRQ/BRK/NMI
+
+.text	;segment
+
+v2il	= $1300
+
+* = v2il - 2
+	.byte <v2il		;cbm load address
+	.byte >v2il
+
+;----------------------------------------
+;initialize interlace IRQ
+;start with even field
+ivirq
+	sei
+	lda #$00
+	sta mmucr
+	ldx #<eField
+	ldy #>eField
+	stx vIRQ	;vector used by KERNAL
+	sty vIRQ+1
+	ldy #$0a
+evenPreRasterLo = *-1	;R(0) in BASIC demo
+	ldx #$00
+evenPreRasterHi = *-1	;R(0)+2 in BASIC demo
+	jsr iField
+	cli
+	rts
+
+
+;--------------------------------------
+;disable interlace irq
+ikirq
+	sei
+	ldx #$00
+	stx mmucr
+	lda kIRQ	;KERNAL default vector, $fa65
+	ldy kIRQ+1
+	sta vIRQ	;set vector
+	sty vIRQ+1
+	lda $d011
+	and #$7f
+	sta $d011	;raster bit 8 = 0
+	dex		;255
+	stx $d012	;raster bits 0~7
+	lda $dd00
+	ora #$03	;VIC bank 0 ($0000~$3fff)
+	sta $dd00
+	lda #$01
+	sta $d019	;clear pending IRQ
+	cli
+	rts
+
+
+;--------------------------------------
+;.Y = preRaster lo bits
+;.X = preRaster hi bit (0 or $80)
+;preRaster is where we gain control
+;in theory with 7 cycle jitter
+;due to KERNAL/BASIC disable of IRQs, much larger
+;so the 2nd interrupt is +2 rasters ahead
+;and it waits a full raster to be cycle-exact
+;so real raster is +3 the value you give this routine
+;not very efficient, I know
+
+iField
+.(
+
+;tell VIC the pre-raster
+	sty $d012	;VIC raster low
+	lda $d011
+	and #$7f
+	cpx #$0
+	beq nothi
+	ora #$80	;VIC raster hi bit set
+nothi
+	sta $d011	;VIC raster hi bit
+	lda #$01
+	sta $d019	;clear pending IRQ
+
+;calc. 2nd raster line for later interrupt
+	tya
+	clc
+	adc #2	;2 rasters ahead for 2nd IRQ
+	bcc samhi
+	dex		;should be $ff (or $7f if invalid preRaster)
+	bne setdbl	;always
+samhi
+	cpx #0
+	beq setdbl	;don't check, all low raster #s ok
+	bit $a03	;PAL flag
+	bmi chkPAL
+	cmp #263 & 255
+	bcc setdbl	;still hi raster
+	eor #1		;flip lo bit (263->0, 264->1)
+	bcs set0	;always
+chkPAL
+	cmp #312 & 255
+	bcc setdbl	;still hi raster
+set0
+	dex		;$7f
+	and #1	;must be raster 0 or 1
+
+setdbl
+;save 2nd raster line for later interrupt
+	sta dblRasLo
+	txa
+	and #$80
+	sta dblRasHi
+	rts
+.)
+
+
+;--------------------------------------
+;double interrupt to get cycle-exact interrupt
+;we set 2nd interrupt to 2 rasters ahead
+;because the kernal rom has wasted quite a bit
+;of time pushing stuff on the stack
+;and KERNAL / BASIC may delay this further
+;by disabling IRQs for their convienence
+; (and sometimes for your jittery pleasure!)
+
+dblirq
+	cld
+	lda #12
+dblRasLo = *-1
+	sta $d012
+	lda $d011
+	and #$7f
+	ora #0
+dblRasHi = *-1
+	sta $d011
+.(
+	lda #$01
+	sta $d019
+	lda #$3e
+	sta mmucr	;RAM 0 + I/O
+	ldx #<dblTest
+	ldy #>dblTest
+	stx cIRQ	;CPU int vector
+	sty cIRQ+1
+paldly
+	cli
+	;execute 2-cycle instructions until IRQ hits
+	ldx #0	;value for test bit off
+	jmp waiter	;execute NOPs
+
+dblTest	;now we're exact or off by 1 cycle
+	;+9 or +10
+	pla ;+13 fix stack
+	pla	;+17
+	pla	;+21
+	ldy $d012	;+25current raster value
+	bit $a03	;+29
+	bmi	dblpal	;+32 PAL
+	bit $00		;+34 NTSC
+dblpal
+	jsr waiterx-6	;delay 12+12 = 24 -> +56 PAL / +58 NTSC
+	bit $00		;+59 PAL / +61 NTSC
+	cpy $d012	;+63 PAL / +65 NTSC; test raster change 1 cycle prior
+	beq dblx	;1 cycle early, delay 1 cycle
+dblx	; +3
+	rts ; +9
+.)
+
+
+;--------------------------------------
+;irq to set VIC even field
+
+eField
+	jsr dblirq	;[9]
+	lda #2	;test bit on [11]
+eSpd = *-1	;RT(0) in BASIC demo
+	jsr waiterx	;[23+custom delay]
+eDly = *-2	;RD(0) in BASIC demo
+	sta $d030	;cut rasters [27+custom delay]
+	stx $d030	;norm raster [30/31+custom delay]
+	ldy $d012	;for info/testing [34/35]
+	sty eResume
+
+	lda $dd00
+	and #$fc	;clear VIC bank bits
+	ora #$3		;set VIC bank [0 if not reversed]
+evBank = *-1	;PV in BASIC demo
+	sta $dd00
+
+	lda $1
+	and #$fd
+	ora #0		;set color bank 0 [if not reversed] for VIC access
+ecBank = *-1	;PC in BASIC demo
+	sta $1
+
+	lda vmcsb
+	and #255-VIC2_CHARSET_MASK
+	ora #3*VIC2_CHARSET_MULT	;charset 3, ROM upper/lower-case
+eChar	= *-1	;PG in BASIC demo
+	sta vmcsb
+
+	;prep for odd field
+	lda #<oField
+	ldx #>oField
+	sta vIRQ
+	stx vIRQ+1
+#ifdef FLI_OPTION
+	sta riVec	;save for FLI use
+	stx riVec+1
+#endif
+	ldy #10
+oddPreRasterLo = *-1	;R(1) in BASIC demo
+	ldx #0
+oddPreRasterHi = *-1	;R(1)+2 in BASIC demo
+	jmp ixit
+
+
+;--------------------------------------
+;irq to set VIC odd field
+
+oField
+	jsr dblirq	;[9]
+	lda #3	;test bit on and FAST [11]
+oSpd = *-1	;RT(1) in BASIC demo
+	jsr waiterx	;[23+custom delay]
+oDly = *-2	;RD(1) in BASIC demo
+	sta $d030	;cut rasters [27+custom delay]
+	stx $d030	;norm raster [30/31+custom delay]
+	ldy $d012	;for info/testing [34/35]
+	sty oResume
+
+	lda $dd00
+/*	and #$fc	;clear VIC bank bits
+	ora #$1		;set VIC bank [2] for odd field
+ocBank = *-1 */
+	eor #2		;toggle VIC bank [2 if not reversed]
+swpVic	= *-1	;in FLI text mode, do not toggle
+	sta $dd00
+
+	lda $1
+/*	and #$fd
+	ora #2		;set color bank 1 [if not reversed] for VIC access
+ovBank = *-1 */
+	eor #2		;toggle color bank accessed by VIC
+	sta $1
+
+	lda vmcsb
+/*	and #255-VIC2_CHARSET_MASK
+	ora #2*VIC2_CHARSET_MULT	;charset 2, ROM upper/graphic
+oChar	= *-1 */
+	eor #0  	;swap charset only for FLI text
+swpChar	= *-1	;XG in BASIC demo
+	sta vmcsb
+
+	;prep for even field
+	lda #<eField
+	ldx #>eField
+	sta vIRQ
+	stx vIRQ+1
+#ifdef FLI_OPTION
+	sta riVec	;save for FLI use
+	stx riVec+1
+#endif
+	ldy evenPreRasterLo
+	ldx evenPreRasterHi
+;	jmp ixit
+
+
+;--------------------------------------
+;common irq exit
+;.Y = pre-raster, bits 0~7
+;.X = pre-raster, bit 8 (0 or $80)
+
+ixit
+	lda #<kIBtest	;KERNAL ROM intercept IRQ
+	sta cIRQ	;fix CPU int vector in RAM
+	lda #>kIBtest
+	sta cIRQ+1	;(was changed by double interrupt)
+
+	lda #0
+	sta mmucr	;BANK 15
+
+#ifdef FLI_OPTION
+	sty pRaster
+	stx pRaster+1
+	lda #0		;check if FLI mode
+onFLI	= *-1
+.(
+	beq norm	;don't do FLI
+	jsr iFLI3	;set up VIC and IRQ for FLI
+	cli		;permit FLI IRQs
+	jmp xit2	;do KERNAL stuff
+norm
+	jsr iField	;set VIC raster for IRQ
+xit2
+.)
+#else
+	jsr iField	;set VIC raster for IRQ
+#endif
+	inc vspeed	;2MHz for KERNAL routines
+	inc extcol	;border color for test purposes
+	sec
+	jsr $c22c	;editor keyboard, VIC cursor
+	jsr $e5f8	;kernal time
+	jsr $eed0	;cassette ?
+.(
+	lda $a04
+	lsr
+	bcc xit
+	jsr $4006	;BASIC sound and sprites
+xit
+.)
+	dec extcol	;border color for testing
+	dec vspeed	;1MHz operation so we can see the screen!
+	jmp kIxit	;restore MMU, CPU regs, and RTI
+
+
+;--------------------------------------
+;these bytes tell us the raster VIC resumes on
+;note they will be off by 1 if VIC resumes
+;in the last 3 cycles of a raster
+
+eResume	.byte 0 ;starting even field
+oResume	.byte 0 ;starting odd field
+
+;--------------------------------------
+;a whole bunch of NOPs for delay customizing
+waiter	;low byte of address is DA in BASIC demo
+	.dsb 33*2, $ea	;66 cycles X 2 (about 2 rasters)
+waiterx	;low byte of address is DZ in BASIC demo
+	rts
+
+.end

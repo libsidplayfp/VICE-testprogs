@@ -1,0 +1,71 @@
+/*
+	MMU Register declarations
+	Copyright (C) 2004,2007 Robert Willie <hydradix@yahoo.com>
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License version 2 as
+	published by the Free Software Foundation.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to
+
+	Free Software Foundation, Inc.
+	59 Temple Place
+	Suite 330
+	Boston, MA  02111-1307
+	USA
+*/
+
+mmu	= $d500	;chip base address in I/O region
+;bits of this register and $ff00 and LCR/PCR's
+#define MMU128_RAM_2	$80
+#define MMU128_RAM_1	$40
+#define MMU128_RAM_C000	$30
+#define MMU128_RAM_8000 $0C
+#define MMU128_RAM_4000 $02
+#define MMU128_CHAR_ROM $01
+
+	;Pre-Configuration Registers (PCRs)
+mmupcra	= $d501	;store to define configuration A
+mmupcrb	= $d502	;dito preconfigure B
+mmupcrc	= $d503	;dito preconfigure C
+mmupcrd	= $d504	;dito preconfigure D
+
+	;Special configuration registers
+mmumcr	= $d505	;C128 mode configuration
+mmurcr	= $d506 ;RAM configuration register
+#define MMU128_DMA_RAM_2	$80
+#define MMU128_DMA_RAM_1	$40
+#define MMU128_COMMON_MASK	$0F
+#define MMU128_REGION_MASK	$0C
+#define MMU128_COMMON_HI	$08
+#define MMU128_COMMON_LO	$04
+#define MMU128_SIZE_MASK	$03
+#define MMU128_COMMON_16K	$03
+#define MMU128_COMMON_8K	$02
+#define MMU128_COMMON_4K	$01
+#define MMU128_COMMON_1K	$00
+	
+	;Page swapping registers
+	;a write to high reg. is cached until write to low reg.
+mmup0l	= $d507	;page zero (direct) swap page
+mmup0h	= $d508	;page zero swap RAM bank
+mmup1l	= $d509	;page one (stack) swap page
+mmup1h	= $d50a	;page one swap RAM bank
+
+mmuver	= $d50b	;version and RAM amount, read-only
+
+	;always available registers
+mmucr	= $ff00 ;configuration register
+	;Load Configuration Registers (LCRs)
+mmulcra	= $ff01	;store anything to load configuration A
+mmulcrb	= $ff02	;dito config B
+mmulcrc	= $ff03	;dito config C
+mmulcrd	= $ff04	;dito config D
+
+.end

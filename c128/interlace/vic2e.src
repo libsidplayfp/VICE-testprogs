@@ -1,0 +1,127 @@
+/*
+	VIC-IIe Register declarations
+	Copyright (C) 2007 Robert Willie <hydradix@yahoo.com>
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License version 2 as
+	published by the Free Software Foundation.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to
+
+	Free Software Foundation, Inc.
+	59 Temple Place
+	Suite 330
+	Boston, MA  02111-1307
+	USA
+*/
+
+;the first 3 defines are for the C128 CPU I/O port ($00,$01)
+#define VIC2E_ROM_OFF	4
+;color RAM bank bits
+#define VIC2E_COLOR_DMA	2
+#define VIC2E_COLOR_CPU	1
+
+vic2 	= $d000	;chip base adrs
+
+	;sprite position
+sp0x	= $d000	;sprite zero x pos, lo
+sp0y	= $d001	;sprite zero y pos
+sp1x	= $d002	;dito sprite one
+sp1y	= $d003
+sp2x	= $d004 ;dito sprite two
+sp2y	= $d005
+sp3x	= $d006
+sp3y	= $d007
+sp4x	= $d008
+sp4y	= $d009
+sp5x	= $d00a
+sp5y	= $d00b
+sp6x	= $d00c
+sp6y	= $d00d
+sp7x	= $d00e	;sprite seven x pos, lo
+sp7y	= $d00f ;sprite seven y pos
+msigx	= $d010	;hi x bit of sprites
+
+	;raster, scroll, mode
+scroly	= $d011
+#define VIC2_RASTER_HI		$80
+#define VIC2_ECM	$40
+#define VIC2_BITMAP	$20
+#define VIC2_DISPEN	$10
+#define VIC2_ROWS	$08
+#define VIC2_SCROLL_MASK	7
+#define VIC2_Y_SCROLL	3
+raster	= $d012
+
+	;light pen
+lpenx	= $d013
+lpeny	= $d014
+
+spena	= $d015	;sprite enable bits
+
+	;scroll, mode
+scrolx	= $d016
+#define VIC2_RESET	$20
+#define VIC2_MULTICOLOR	$10
+#define VIC2_COLUMNS	$08
+#define VIC2_X_SCROLL	0
+
+yxpand	= $d017	;sprite y expand bits
+
+vmcsb	= $d018	;video matrix and charset/bitmap address start (ki byte)
+#define	VIC2_MATRIX_MASK	$F0
+#define VIC2_MATRIX_MULT	$10
+#define VIC2_CHARSET_MASK	$0E
+#define VIC2_CHARSET_MULT	$02
+#define VIC2_BITMAP_MASK	$08
+
+	;irq control
+v2irq	= $d019
+v2enabl	= $d01a
+#define	VIC2_IRQ_FLAG	$80
+#define VIC2_FLAG_LP	8
+#define VIC2_FLAG_SPSP	4
+#define VIC2_FLAG_SPFG	2
+#define VIC2_FLAG_RASTER	1
+
+	;more sprite stuff
+spfgpr	= $d01b	;sprite-foreground priority bits
+spmc	= $d01c	;sprite multi-color bits
+xxpand	= $d01d	;sprite x expand bits
+spspcl	= $d01e	;sprite-sprite collision bits
+spfgcl	= $d01f	;sprite-foreground collision bits
+
+	;color regs
+extcol	= $d020	;border
+bgcol0	= $d021	;background, 0 or 00 bits; ECM 0 chars $00~$3f
+bgcol1	= $d022	;multi-color 01; ECM 0 chars $40~$7f
+bgcol2	= $d023	;multi-color 10; ECM 0 chars $80~$bf
+bgcol3	= $D024	;ECM 0 chars $c0~$ff
+
+	;sprite colors
+spmc0	= $d025	;multi-color 01
+spmc1	= $d026	;multi-color 10
+sp0col	= $d027	;sprite zero color; multi-color 11
+sp1col	= $d028 ;dito sprite 1
+sp2col	= $d029
+sp3col	= $d02a
+sp4col	= $d02b
+sp5col	= $d02c
+sp6col	= $d02d
+sp7col	= $d02e	;sprite seven color; multi-color 11
+
+	;vic2 Enhanced registers
+vkeys	= $d02f	;i/o port, C128 KERNAL writes to it for keyboard scan
+vspeed	= $d030	;1 or 2 MHz speed, and raster skip bits
+#define	VIC2E_SPEED	1
+#define VIC2E_SKIP	2
+
+
+
+.end

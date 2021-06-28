@@ -1,0 +1,98 @@
+/*
+	VIC-IIe Interlace (Demo 2)
+	Copyright (C) 2007 Robert Willie <hydradix@yahoo.com>
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License version 2 as
+	published by the Free Software Foundation.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to
+
+	Free Software Foundation, Inc.
+	59 Temple Place
+	Suite 330
+	Boston, MA  02111-1307
+	USA
+*/
+
+#include "mmu.src"
+#include "vic2e.src"
+#define FLI_OPTION 1
+#include "interrupt.src"
+
+.text	;segment
+
+;-------------------------------------
+;test the VIC-IIe test bit
+;return 0 on failure
+
+testVic	.(
+	ldy #0
+	sty mmucr	;BANK 15
+	sei
+no	cpy $d012
+	beq no	;bad luck, wait for next raster
+	lda #2	;value for fast bit on
+no2	cpy $d012
+	bne no2	;wait for raster 0
+	sta $d030	;start skipping rasters
+	sty $d030	;test bit off
+	lda $d012	;.A should = 4, zero if VIC broken
+	cli
+	rts
+.)
+
+
+;-------------------------------------
+;copy BASIC text and color screens
+;to alternate bank
+
+copyText .(
+	ldy #$00
+ctxt
+	lda $0400,y
+	sta $8400,y
+	lda $0500,y
+	sta $8500,y
+	lda $0600,y
+	sta $8600,y
+	lda $0700,y
+	sta $8700,y
+	iny
+	bne ctxt
+
+	sty mmucr	;BANK 15
+	sty $fe
+	lda #$d8	;start page of color RAM
+	sta $ff
+	lda #4		;# color pages
+	sta $fd
+rwait
+	lda $d012
+	cmp #$38
+	bcc rwait	;avoid low raster IRQs
+	cmp #$70
+	bcs rwait	;avoid hi raster IRQs for entire page copy
+	nop		;for debug break point
+colr
+	lda ($fe),y
+	dec $1		;color bank 0 (normal BASIC bitmap color)
+	sta ($fe),y
+	inc $1		;color bank 1 (normal BASIC text color)
+	iny
+	bne colr
+	inc $ff		;next page
+	dec $fd		;count pages
+	bne rwait
+	rts
+.)
+
+#include "text-fli.src"
+
+.end
