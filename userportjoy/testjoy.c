@@ -130,9 +130,13 @@
 #define PAGE_SNESPADS          1
 #define PAGE_USERPORT_SNESPADS 2
 
+#if !defined(__PLUS4__) && !defined(__C16__)
 static unsigned short snes1_status;
+#if !defined(__PET__) && !defined(__CBM610__)
 static unsigned short snes2_status;
 static unsigned short snes3_status;
+#endif
+#endif
 
 static unsigned char current_page = PAGE_JOYSTICKS;
 
@@ -1068,7 +1072,13 @@ int main(void)
             draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
             draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
             gotoxy(0, 10);
-            cprintf("2> snes pad screen");
+            cprintf("s> userport snes pad screen");
+        }
+        if (current_page == PAGE_SNESPADS) {
+            read_snes_userport();
+            draw_snes(snes1_status, 0, 0, "userport snes");
+            gotoxy(0, 6);
+            cprintf("1> main joy screen");
         }
         check_keys();
     }
