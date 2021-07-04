@@ -113,8 +113,10 @@
 #define PLUS4_KEY_SELECT      0xFD30
 
 /* cbm5x0 native joystick addresses */
-#define CBM510_JOY_FIRE       0xDC00
-#define CBM510_JOY_DIRECTIONS 0xDC01
+#define CBM510_CIA2_PRA       0xDC00
+#define CBM510_CIA2_PRB       0xDC01
+#define CBM510_CIA2_DDRA      0xDC02
+#define CBM510_CIA2_DDRB      0xDC03
 
 /* pet keyboard scan addresses */
 #define PET_KEY_INDEX_SEL     0xE810
@@ -674,12 +676,68 @@ static unsigned char read_plus4_sidcart_joy(void)
 
 /* cbm5x0 native joystick handling */
 #ifdef __CBM510__
+static void read_snes_cbm510_joy1(void)
+{
+    unsigned char i;
+    unsigned char data;
+    unsigned char ddra = peekbsys(CBM510_CIA2_DDRA);
+    unsigned char ddrb = peekbsys(CBM510_CIA2_DDRB);
+
+    pokebsys(CBM510_CIA2_DDRB, 0x08);
+    pokebsys(CBM510_CIA2_DDRA, 0x40);
+    pokebsys(CBM510_CIA2_PRA, 0x40);
+    pokebsys(CBM510_CIA2_PRA, 0x00);
+
+    snes1_status = 0;
+    snes2_status = 0;
+    snes3_status = 0;
+
+    for (i = 0; i < 12; i++) {
+        data = ~peekbsys(CBM510_CIA2_PRB);
+        snes1_status |= ((data & 0x01) << i);
+        snes2_status |= (((data & 0x02) >> 1) << i);
+        snes3_status |= (((data & 0x04) >> 2) << i);
+        pokebsys(CBM510_CIA2_PRB, 0x08);
+        pokebsys(CBM510_CIA2_PRB, 0x00);
+    }
+    pokebsys(CBM510_CIA2_DDRA, ddra);
+    pokebsys(CBM510_CIA2_DDRB, ddrb);
+}
+
+static void read_snes_cbm510_joy2(void)
+{
+    unsigned char i;
+    unsigned char data;
+    unsigned char ddra = peekbsys(CBM510_CIA2_DDRA);
+    unsigned char ddrb = peekbsys(CBM510_CIA2_DDRB);
+
+    pokebsys(CBM510_CIA2_DDRA, 0x80);
+    pokebsys(CBM510_CIA2_DDRB, 0x80);
+    pokebsys(CBM510_CIA2_PRA, 0x80);
+    pokebsys(CBM510_CIA2_PRA, 0x00);
+
+    snes1_status = 0;
+    snes2_status = 0;
+    snes3_status = 0;
+
+    for (i = 0; i < 12; i++) {
+        data = ~peekbsys(CBM510_CIA2_PRB);
+        snes1_status |= (((data & 0x10) >> 4) << i);
+        snes2_status |= (((data & 0x20) >> 5) << i);
+        snes3_status |= (((data & 0x40) >> 6) << i);
+        pokebsys(CBM510_CIA2_PRB, 0x80);
+        pokebsys(CBM510_CIA2_PRB, 0x00);
+    }
+    pokebsys(CBM510_CIA2_DDRA, ddra);
+    pokebsys(CBM510_CIA2_DDRB, ddrb);
+}
+
 static unsigned char read_native_cbm510_joy1(void)
 {
     unsigned char retval;
 
-    retval = peekbsys(CBM510_JOY_DIRECTIONS) & 0x0F;
-    retval |= ((peekbsys(CBM510_JOY_FIRE) & 0x40) >> 2);
+    retval = peekbsys(CBM510_CIA2_PRB) & 0x0F;
+    retval |= ((peekbsys(CBM510_CIA2_PRA) & 0x40) >> 2);
     retval &= 0x1F;
     if (peekbsys(POTX_DATA)) {
         retval |= 0x20;
@@ -695,8 +753,8 @@ static unsigned char read_native_cbm510_joy2(void)
 {
     unsigned char retval;
 
-    retval = peekbsys(CBM510_JOY_DIRECTIONS) >> 4;
-    retval |= ((peekbsys(CBM510_JOY_FIRE) & 0x80) >> 3);
+    retval = peekbsys(CBM510_CIA2_PRB) >> 4;
+    retval |= ((peekbsys(CBM510_CIA2_PRA) & 0x80) >> 3);
     retval ^= 0x1F;
     return retval;
 }
@@ -1001,7 +1059,7 @@ int main(void)
             chlinexy(0,17,40);
             chlinexy(0,23,40);
             gotoxy(0, 24);
-            cprintf("q> main joy screen");
+            cprintf("q> main joy");
         }
         check_keys();
     }
@@ -1024,7 +1082,22 @@ int main(void)
             draw_joy(read_native_cbm510_joy1(), 2, 0, 0, 0, "native1", 1);
             draw_joy(read_native_cbm510_joy2(), 10, 0, 8, 0, "native2", 1);
             gotoxy(0, 5);
-            cprintf("2> snes pad screen");
+            cprintf("s> joyport snes pad");
+        }
+        if (current_page == PAGE_SNESPADS) {
+            read_snes_cbm510_joy1();
+            draw_snes(snes1_status, 0, 0, "joy-1 snes-1");
+            draw_snes(snes2_status, 0, 6, "joy-1 snes-2");
+            draw_snes(snes3_status, 0, 12, "joy-1 snes-3");
+            read_snes_cbm510_joy2();
+            draw_snes(snes1_status, 21, 0, "joy-2 snes-1");
+            draw_snes(snes2_status, 21, 6, "joy-2 snes-2");
+            draw_snes(snes3_status, 21, 12, "joy-2 snes-3");
+            chlinexy(0,5,40);
+            chlinexy(0,11,40);
+            chlinexy(0,17,40);
+            gotoxy(0, 18);
+            cprintf("1> main joy");
         }
         check_keys();
     }
@@ -1054,7 +1127,7 @@ int main(void)
             read_snes_userport();
             draw_snes(snes1_status, 0, 0, "userport snes");
             gotoxy(0, 6);
-            cprintf("1> main joy screen");
+            cprintf("1> main joy");
         }
         check_keys();
     }
@@ -1084,7 +1157,7 @@ int main(void)
             read_snes_userport();
             draw_snes(snes1_status, 0, 0, "userport snes");
             gotoxy(0, 6);
-            cprintf("1> main joy screen");
+            cprintf("1> main joy");
         }
         check_keys();
     }
