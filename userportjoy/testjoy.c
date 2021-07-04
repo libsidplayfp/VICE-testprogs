@@ -211,6 +211,7 @@ static void draw_joy(unsigned char status, unsigned char x,
   cprintf(text);
 }
 
+#if !defined(__PLUS4__) && !defined(__C16__)
 /* draw a snes pad at a certain position on the screen */
 static void draw_snes(unsigned short status, unsigned char x,
                       unsigned char y, char *text)
@@ -282,6 +283,7 @@ static void draw_snes(unsigned short status, unsigned char x,
   cputcxy(x + 18, y + 3, 'a');
   revers(0);
 }
+#endif
 
 /* check keys to see if we need to switch pages (c64/c64dtv/c128) */
 #if defined(__C64__) || defined(__C128__)
@@ -308,13 +310,11 @@ static void check_keys(void)
         }
     }
     if (val != 0xFF) {
-        if (isc64dtv == 0) {
-            /* '2' was pressed */
-            if ((col == 0xF6 || col == 0xF7) && row == 0x7F) {
-                if (current_page != PAGE_SNESPADS) {
-                    current_page = PAGE_SNESPADS;
-                    clrscr();
-                }
+        /* '2' was pressed */
+        if ((col == 0xF6 || col == 0xF7) && row == 0x7F) {
+            if (current_page != PAGE_SNESPADS) {
+                current_page = PAGE_SNESPADS;
+                clrscr();
             }
         }
 
@@ -1039,9 +1039,9 @@ int main(void)
                 draw_joy(read_c64_kingsoft_joy2(), 26, 15, 25, 15, "king2", 0);
                 draw_joy(read_c64_starbyte_joy1(), 18, 10, 17, 10, "star1", 0);
                 draw_joy(read_c64_starbyte_joy2(), 26, 10, 25, 10, "star2", 0);
-                gotoxy(0, 20);
-                cprintf("2> snes pad screen");
             }
+            gotoxy(0, 20);
+            cprintf("2> snes pad");
         }
         if (current_page == PAGE_SNESPADS) {
             read_snes_c64_joy1();
@@ -1052,8 +1052,10 @@ int main(void)
             draw_snes(snes1_status, 21, 0, "joy-2 snes-1");
             draw_snes(snes2_status, 21, 6, "joy-2 snes-2");
             draw_snes(snes3_status, 21, 12, "joy-2 snes-3");
-            read_snes_userport();
-            draw_snes(snes1_status, 0, 18, "userport snes");
+            if (isc64dtv == 0) {
+                read_snes_userport();
+                draw_snes(snes1_status, 0, 18, "userport snes");
+            }
             chlinexy(0,5,40);
             chlinexy(0,11,40);
             chlinexy(0,17,40);
