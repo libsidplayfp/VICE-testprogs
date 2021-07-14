@@ -127,10 +127,31 @@
 #define CBM2_KEY_ROW_SEL2     0xDF01
 #define CBM2_KEY_ROW_READ     0xDF02
 
-/* display page numbers */
-#define PAGE_JOYSTICKS         0
-#define PAGE_SNESPADS          1
-#define PAGE_USERPORT_SNESPADS 2
+/* C64/C128/C64DTV display page numbers */
+#define PAGE_C64_JOYSTICKS    0
+#define PAGE_C64_SNESPADS     1
+#define PAGE_C64_MAX          2
+
+/* CBM5x0 display page numbers */
+#define PAGE_CBM5x0_JOYSTICKS    0
+#define PAGE_CBM5x0_SNESPADS     1
+#define PAGE_CBM5x0_MAX          2
+
+/* CBM6x0 display page numbers */
+#define PAGE_CBM6x0_JOYSTICKS    0
+#define PAGE_CBM6x0_SNESPADS     1
+#define PAGE_CBM6x0_MAX          2
+
+/* PET display page numbers */
+#define PAGE_PET_JOYSTICKS    0
+#define PAGE_PET_SNESPADS     1
+#define PAGE_PET_MAX          2
+
+/* PET display page numbers */
+#define PAGE_VIC20_JOYSTICKS          0
+#define PAGE_VIC20_SNESPADS           1
+#define PAGE_VIC20_USERPORT_SNESPADS  2
+#define PAGE_VIC20_MAX                3
 
 #if !defined(__PLUS4__) && !defined(__C16__)
 static unsigned short snes1_status;
@@ -140,7 +161,15 @@ static unsigned short snes3_status;
 #endif
 #endif
 
-static unsigned char current_page = PAGE_JOYSTICKS;
+#if !defined(__PLUS4__) && !defined(__C16__)
+static unsigned char current_page = 0;
+
+#ifdef __PET__
+static char *page_message = "1> next  3> previous";
+#else
+static char *page_message = "f1> next  f3> previous";
+#endif
+#endif
 
 /* draw a joystick at a certain position on the screen */
 static void draw_joy(unsigned char status, unsigned char x,
@@ -291,7 +320,12 @@ unsigned char row_scan[8] = { 0x7F, 0xBF, 0xDF, 0xEF, 0xF7, 0xFB, 0xFD, 0xFE };
 
 static unsigned char isc64dtv = 0;
 
-static void check_keys(void)
+/* returns which key is pressed:
+   0 = no key
+   1 = F1
+   2 = F3
+ */
+static unsigned char check_keys(void)
 {
     unsigned char val = 0xFF;
     unsigned char col = 0;
@@ -309,23 +343,19 @@ static void check_keys(void)
             val = PEEK(C64_CIA1_PRB);
         }
     }
+
     if (val != 0xFF) {
-        /* '2' was pressed */
-        if ((col == 0xF6 || col == 0xF7) && row == 0x7F) {
-            if (current_page != PAGE_SNESPADS) {
-                current_page = PAGE_SNESPADS;
-                clrscr();
-            }
+        /* 'F1' was pressed */
+        if (col == 0xEF && row == 0xFE) {
+            return 1;
         }
 
-        /* 'Q' was pressed */
-        if ((col == 0xBE || col == 0xBF) && row == 0x7F) {
-            if (current_page != PAGE_JOYSTICKS) {
-                current_page = PAGE_JOYSTICKS;
-                clrscr();
-            }
+        /* 'F3' was pressed */
+        if ((col == 0xDF || col == 0xBF) && row == 0xFE) {
+            return 2;
         }
     }
+    return 0;
 }
 #endif
 
@@ -333,7 +363,12 @@ static void check_keys(void)
 #if defined(__VIC20__)
 unsigned char row_scan[8] = { 0x7F, 0xBF, 0xDF, 0xEF, 0xF7, 0xFB, 0xFD, 0xFE };
 
-static void check_keys(void)
+/* returns which key is pressed:
+   0 = no key
+   1 = F1
+   2 = F3
+ */
+static unsigned char check_keys(void)
 {
     unsigned char val = 0xFF;
     unsigned char col = 0;
@@ -351,40 +386,35 @@ static void check_keys(void)
             val = PEEK(VIC20_VIA2_PRA);
         }
     }
+
     if (val != 0xFF) {
 
-        /* '2' was pressed */
-        if (col == 0xFE && row == 0x7F) {
-            if (current_page != PAGE_SNESPADS) {
-                current_page = PAGE_SNESPADS;
-                clrscr();
-            }
+        /* 'F1' was pressed */
+        if (col == 0x7F && row == 0xEF) {
+            return 1;
         }
 
-        /* 'Q' was pressed */
-        if (col == 0xFE && row == 0xBF) {
-            if (current_page != PAGE_JOYSTICKS) {
-                current_page = PAGE_JOYSTICKS;
-                clrscr();
-            }
-        }
-
-        /* 'X' was pressed */
-        if (col == 0xFB && row == 0xF7) {
-            if (current_page != PAGE_USERPORT_SNESPADS) {
-                current_page = PAGE_USERPORT_SNESPADS;
-                clrscr();
-            }
+        /* 'F3' was pressed */
+        if (col == 0x7F && row == 0xDF) {
+            return 2;
         }
     }
+    return 0;
 }
 #endif
 
+/* currently not used */
+#if 0
 /* check keys to see if we need to switch pages (c16/plus4) */
 #if defined(__PLUS4__) || defined(__C16__)
 unsigned char row_scan[8] = { 0x7F, 0xBF, 0xDF, 0xEF, 0xF7, 0xFB, 0xFD, 0xFE };
 
-static void check_keys(void)
+/* returns which key is pressed:
+   0 = no key
+   1 = F1
+   2 = F3
+ */
+static unsigned char check_keys(void)
 {
     unsigned char row = 0;
     unsigned char val = 0xFF;
@@ -396,29 +426,31 @@ static void check_keys(void)
         POKE(PLUS4_TED_KBD, 0xFF);
         val = PEEK(PLUS4_TED_KBD);
     }
+
     if (val != 0xFF) {
-        /* 'S' was pressed */
-        if (val == 0xDF && row == 0xFD) {
-            if (current_page != PAGE_SNESPADS) {
-                current_page = PAGE_SNESPADS;
-                clrscr();
-            }
+        /* 'F1' was pressed */
+        if (val == 0xEF && row == 0xFE) {
+            return 1;
         }
 
-        /* '1' was pressed */
-        if (val == 0xFE && row == 0x7F) {
-            if (current_page != PAGE_JOYSTICKS) {
-                current_page = PAGE_JOYSTICKS;
-                clrscr();
-            }
+        /* 'F3' was pressed */
+        if (val == 0xBF && row == 0xFE) {
+            return 2;
         }
     }
+    return 0;
 }
+#endif
 #endif
 
 /* check keys to see if we need to switch pages (pet) */
 #if defined(__PET__)
-static void check_keys(void)
+/* returns which key is pressed:
+   0 = no key
+   1 = 1
+   2 = 3
+ */
+static unsigned char check_keys(void)
 {
     unsigned char row = 0;
     unsigned char val = 0xFF;
@@ -428,23 +460,19 @@ static void check_keys(void)
         POKE(PET_KEY_INDEX_SEL, tmp | row);
         val = PEEK(PET_KEY_ROW);
     }
-    if (val != 0xFF) {
-        /* 'S' was pressed */
-        if (row == 3 && val == 0xFD) {
-            if (current_page != PAGE_SNESPADS) {
-                current_page = PAGE_SNESPADS;
-                clrscr();
-            }
-        }
 
+    if (val != 0xFF) {
         /* '1' was pressed */
         if (row == 2 && val == 0xFE) {
-            if (current_page != PAGE_JOYSTICKS) {
-                current_page = PAGE_JOYSTICKS;
-                clrscr();
-            }
+            return 1;
+        }
+
+        /* '3' was pressed */
+        if (row == 10 && val == 0xFD) {
+            return 2;
         }
     }
+    return 0;
 }
 #endif
 
@@ -452,7 +480,12 @@ static void check_keys(void)
 #if defined(__CBM510__) || defined(__CBM610__)
 unsigned char row_scan[8] = { 0x7F, 0xBF, 0xDF, 0xEF, 0xF7, 0xFB, 0xFD, 0xFE };
 
-static void check_keys(void)
+/* returns which key is pressed:
+   0 = no key
+   1 = F1
+   2 = F3
+ */
+unsigned char check_keys(void)
 {
     unsigned char row = 0;
     unsigned char val = 0x3F;
@@ -472,23 +505,19 @@ static void check_keys(void)
             val = peekbsys(CBM2_KEY_ROW_READ) & 0x3F;
         }
     }
+
     if (val != 0x3F) {
-        /* 'S' was pressed */
-        if (row == 14 && val == 0x37) {
-            if (current_page != PAGE_SNESPADS) {
-                current_page = PAGE_SNESPADS;
-                clrscr();
-            }
+        /* 'F1' was pressed */
+        if (row == 0x10 && val == 0x3E) {
+            return 1;
         }
 
-        /* '1' was pressed */
-        if (row == 15 && val == 0x3D) {
-            if (current_page != PAGE_JOYSTICKS) {
-                current_page = PAGE_JOYSTICKS;
-                clrscr();
-            }
+        /* 'F3' was pressed */
+        if (row == 0x0E && val == 0x3E) {
+            return 2;
         }
     }
+    return 0;
 }
 #endif
 
@@ -1013,6 +1042,8 @@ static unsigned char read_oem_joy(void)
 #if defined(__C64__) || defined(__C128__)
 int main(void)
 {
+    unsigned char key;
+
     printf("%c",uppercase);
     test_c64dtv();
     bgcolor(COLOR_BLACK);
@@ -1022,7 +1053,7 @@ int main(void)
     SEI();
     while (1)
     {
-        if (current_page == PAGE_JOYSTICKS) {
+        if (current_page == PAGE_C64_JOYSTICKS) {
             draw_joy(read_native_c64_joy1(), 2, 0, 0, 0, "native1", !isc64dtv);
             draw_joy(read_native_c64_joy2(), 10, 0, 8, 0, "native2", !isc64dtv);
             draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer", 0);
@@ -1041,9 +1072,9 @@ int main(void)
                 draw_joy(read_c64_starbyte_joy2(), 26, 10, 25, 10, "star2", 0);
             }
             gotoxy(0, 20);
-            cprintf("2> snes pad");
+            cprintf(page_message);
         }
-        if (current_page == PAGE_SNESPADS) {
+        if (current_page == PAGE_C64_SNESPADS) {
             read_snes_c64_joy1();
             draw_snes(snes1_status, 0, 0, "joy-1 snes-1");
             draw_snes(snes2_status, 0, 6, "joy-1 snes-2");
@@ -1061,9 +1092,24 @@ int main(void)
             chlinexy(0,17,40);
             chlinexy(0,23,40);
             gotoxy(0, 24);
-            cprintf("q> main joy");
+            cprintf(page_message);
         }
-        check_keys();
+        if (key = check_keys()) {
+            while (check_keys()) {
+            }
+            if (key == 1) {
+                current_page++;
+                if (current_page >= PAGE_C64_MAX) {
+                    current_page = PAGE_C64_JOYSTICKS;
+                }
+            } else {
+                if (!current_page) {
+                    current_page = PAGE_C64_MAX;
+                }
+                current_page--;
+            }
+            clrscr();
+        }
     }
 }
 #endif
@@ -1072,6 +1118,8 @@ int main(void)
 #ifdef __CBM510__
 int main(void)
 {
+    unsigned char key;
+
     printf("%c",uppercase);
     bgcolor(COLOR_BLACK);
     bordercolor(COLOR_BLACK);
@@ -1080,13 +1128,13 @@ int main(void)
     SEI();
     while (1)
     {
-        if (current_page == PAGE_JOYSTICKS) {
+        if (current_page == PAGE_CBM5x0_JOYSTICKS) {
             draw_joy(read_native_cbm510_joy1(), 2, 0, 0, 0, "native1", 1);
             draw_joy(read_native_cbm510_joy2(), 10, 0, 8, 0, "native2", 1);
             gotoxy(0, 5);
-            cprintf("s> joyport snes pad");
+            cprintf(page_message);
         }
-        if (current_page == PAGE_SNESPADS) {
+        if (current_page == PAGE_CBM5x0_SNESPADS) {
             read_snes_cbm510_joy1();
             draw_snes(snes1_status, 0, 0, "joy-1 snes-1");
             draw_snes(snes2_status, 0, 6, "joy-1 snes-2");
@@ -1099,9 +1147,24 @@ int main(void)
             chlinexy(0,11,40);
             chlinexy(0,17,40);
             gotoxy(0, 18);
-            cprintf("1> main joy");
+            cprintf(page_message);
         }
-        check_keys();
+        if (key = check_keys()) {
+            while (check_keys()) {
+            }
+            if (key == 1) {
+                current_page++;
+                if (current_page >= PAGE_CBM5x0_MAX) {
+                    current_page = PAGE_CBM5x0_JOYSTICKS;
+                }
+            } else {
+                if (!current_page) {
+                    current_page = PAGE_CBM5x0_MAX;
+                }
+                current_page--;
+            }
+            clrscr();
+        }
     }
 }
 #endif
@@ -1110,12 +1173,14 @@ int main(void)
 #ifdef __CBM610__
 int main(void)
 {
+    unsigned char key;
+
     printf("%c",uppercase);
     clrscr();
     SEI();
     while (1)
     {
-        if (current_page == PAGE_JOYSTICKS) {
+        if (current_page == PAGE_CBM6x0_JOYSTICKS) {
             draw_joy(read_cga_joy1(), 2, 0, 1, 0, "cga-1", 0);
             draw_joy(read_cga_joy2(), 10, 0, 9, 0, "cga-2", 0);
             draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer", 0);
@@ -1123,15 +1188,30 @@ int main(void)
             draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
             draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
             gotoxy(0, 10);
-            cprintf("s> userport snes pad");
+            cprintf(page_message);
         }
-        if (current_page == PAGE_SNESPADS) {
+        if (current_page == PAGE_CBM6x0_SNESPADS) {
             read_snes_userport();
             draw_snes(snes1_status, 0, 0, "userport snes");
             gotoxy(0, 6);
-            cprintf("1> main joy");
+            cprintf(page_message);
         }
-        check_keys();
+        if (key = check_keys()) {
+            while (check_keys()) {
+            }
+            if (key == 1) {
+                current_page++;
+                if (current_page >= PAGE_CBM6x0_MAX) {
+                    current_page = PAGE_CBM6x0_JOYSTICKS;
+                }
+            } else {
+                if (!current_page) {
+                    current_page = PAGE_CBM6x0_MAX;
+                }
+                current_page--;
+            }
+            clrscr();
+        }
     }
 }
 #endif
@@ -1140,12 +1220,14 @@ int main(void)
 #ifdef __PET__
 int main(void)
 {
+    unsigned char key;
+
     printf("%c",uppercase);
     clrscr();
     SEI();
     while (1)
     {
-        if (current_page == PAGE_JOYSTICKS) {
+        if (current_page == PAGE_PET_JOYSTICKS) {
             draw_joy(read_cga_joy1(), 2, 0, 1, 0, "cga-1", 0);
             draw_joy(read_cga_joy2(), 10, 0, 9, 0, "cga-2", 0);
             draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer", 0);
@@ -1153,15 +1235,30 @@ int main(void)
             draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
             draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
             gotoxy(0, 10);
-            cprintf("s> userport snes pad screen");
+            cprintf(page_message);
         }
-        if (current_page == PAGE_SNESPADS) {
+        if (current_page == PAGE_PET_SNESPADS) {
             read_snes_userport();
             draw_snes(snes1_status, 0, 0, "userport snes");
             gotoxy(0, 6);
-            cprintf("1> main joy");
+            cprintf(page_message);
         }
-        check_keys();
+        if (key = check_keys()) {
+            while (check_keys()) {
+            }
+            if (key == 1) {
+                current_page++;
+                if (current_page >= PAGE_PET_MAX) {
+                    current_page = PAGE_PET_JOYSTICKS;
+                }
+            } else {
+                if (!current_page) {
+                    current_page = PAGE_PET_MAX;
+                }
+                current_page--;
+            }
+            clrscr();
+        }
     }
 }
 #endif
@@ -1178,16 +1275,13 @@ int main(void)
     SEI();
     while (1)
     {
-        if (current_page == PAGE_JOYSTICKS) {
-            draw_joy(read_native_plus4_joy1(), 2, 0, 0, 0, "native1", 0);
-            draw_joy(read_native_plus4_joy2(), 10, 0, 8, 0, "native2", 0);
-            draw_joy(read_plus4_sidcart_joy(), 18, 0, 16, 0, "sidcart", 1);
-            draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
-            draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
-            draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
-            draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer", 0);
-        }
-        check_keys();
+        draw_joy(read_native_plus4_joy1(), 2, 0, 0, 0, "native1", 0);
+        draw_joy(read_native_plus4_joy2(), 10, 0, 8, 0, "native2", 0);
+        draw_joy(read_plus4_sidcart_joy(), 18, 0, 16, 0, "sidcart", 1);
+        draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
+        draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
+        draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
+        draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer", 0);
     }
 }
 #endif
@@ -1196,6 +1290,8 @@ int main(void)
 #ifdef __VIC20__
 int main(void)
 {
+    unsigned char key;
+
     printf("%c",uppercase);
     bgcolor(COLOR_BLACK);
     bordercolor(COLOR_BLACK);
@@ -1204,7 +1300,7 @@ int main(void)
     SEI();
     while (1)
     {
-        if (current_page == PAGE_JOYSTICKS) {
+        if (current_page == PAGE_VIC20_JOYSTICKS) {
             draw_joy(read_native_vic20_joy(), 2, 0, 0, 0, "native", 0);
             draw_joy(read_cga_joy1(), 10, 0, 9, 0, "cga-1", 0);
             draw_joy(read_cga_joy2(), 18, 0, 17, 0, "cga-2", 0);
@@ -1213,11 +1309,9 @@ int main(void)
             draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
             draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer", 0);
             gotoxy(0, 15);
-            cprintf("2> joyport snes pad");
-            gotoxy(0, 16);
-            cprintf("x> userport snes pad");
+            cprintf(page_message);
         }
-        if (current_page == PAGE_SNESPADS) {
+        if (current_page == PAGE_VIC20_SNESPADS) {
             read_snes_vic20_joy();
             draw_snes(snes1_status, 0, 0, "joy snes-1");
             draw_snes(snes2_status, 0, 6, "joy snes-2");
@@ -1226,19 +1320,30 @@ int main(void)
             chlinexy(0,11,22);
             chlinexy(0,17,22);
             gotoxy(0, 18);
-            cprintf("q> main joy");
-            gotoxy(0, 19);
-            cprintf("x> userport snes pad");
+            cprintf(page_message);
         }
-        if (current_page == PAGE_USERPORT_SNESPADS) {
+        if (current_page == PAGE_VIC20_USERPORT_SNESPADS) {
             read_snes_userport();
             draw_snes(snes1_status, 0, 0, "userport snes");
             gotoxy(0, 6);
-            cprintf("q> main joy");
-            gotoxy(0, 7);
-            cprintf("2> joyport snes pad");
+            cprintf(page_message);
         }
-        check_keys();
+        if (key = check_keys()) {
+            while (check_keys()) {
+            }
+            if (key == 1) {
+                current_page++;
+                if (current_page >= PAGE_VIC20_MAX) {
+                    current_page = PAGE_VIC20_JOYSTICKS;
+                }
+            } else {
+                if (!current_page) {
+                    current_page = PAGE_VIC20_MAX;
+                }
+                current_page--;
+            }
+            clrscr();
+        }
     }
 }
 #endif
