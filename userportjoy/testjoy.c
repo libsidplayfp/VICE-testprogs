@@ -149,11 +149,12 @@
 #define PAGE_PET_SNESPADS     1
 #define PAGE_PET_MAX          2
 
-/* PET display page numbers */
+/* VIC20 display page numbers */
 #define PAGE_VIC20_JOYSTICKS          0
 #define PAGE_VIC20_SNESPADS           1
 #define PAGE_VIC20_USERPORT_SNESPADS  2
-#define PAGE_VIC20_MAX                3
+#define PAGE_VIC20_8JOY               3
+#define PAGE_VIC20_MAX                4
 
 #if !defined(__PLUS4__) && !defined(__C16__)
 static unsigned short snes1_status;
@@ -164,7 +165,7 @@ static unsigned short snes3_status;
 #endif
 
 #if !defined(__PLUS4__) && !defined(__C16__) && !defined(__PET__) && !defined(__CBM610__)
-static unsigned char multijoy_status[8];
+static unsigned char joy8_status[8];
 #endif
 
 #if !defined(__PLUS4__) && !defined(__C16__)
@@ -529,6 +530,29 @@ unsigned char check_keys(void)
 
 /* c64/c64dtv/c128 native joystick handling */
 #if defined(__C64__) || defined(__C128__)
+static void read_spaceballs_c64_joy1(void)
+{
+    unsigned char i;
+
+    POKE(C64_CIA1_DDRB, 0);
+    POKE(USERPORT_DDR, 0xFF);
+
+    for (i = 0; i < 8; ++i) {
+        POKE(USERPORT_DATA, row_scan[7 - i]);
+        joy8_status[i] = (PEEK(C64_CIA1_PRB) & 0x1F) ^ 0x1F;
+    }
+}
+
+static void read_spaceballs_c64_joy2(void)
+{
+    unsigned char i;
+
+    for (i = 0; i < 8; ++i) {
+        POKE(USERPORT_DATA, row_scan[7 - i]);
+        joy8_status[i] = (PEEK(C64_CIA1_PRA) & 0x1F) ^ 0x1F;
+    }
+}
+
 static void read_multijoy_c64_joy1(void)
 {
     unsigned char i;
@@ -537,7 +561,7 @@ static void read_multijoy_c64_joy1(void)
     POKE(C64_CIA1_DDRB, 0);
     for (i = 0; i < 8; ++i) {
         POKE(C64_CIA1_PRA, i);
-        multijoy_status[i] = (PEEK(C64_CIA1_PRB) & 0x1F) ^ 0x1F;
+        joy8_status[i] = (PEEK(C64_CIA1_PRB) & 0x1F) ^ 0x1F;
     }
 }
 
@@ -549,7 +573,7 @@ static void read_multijoy_c64_joy2(void)
     POKE(C64_CIA1_DDRA, 0);
     for (i = 0; i < 8; ++i) {
         POKE(C64_CIA1_PRB, i);
-        multijoy_status[i] = (PEEK(C64_CIA1_PRA) & 0x1F) ^ 0x1F;
+        joy8_status[i] = (PEEK(C64_CIA1_PRA) & 0x1F) ^ 0x1F;
     }
 }
 
@@ -643,6 +667,24 @@ static unsigned char read_native_c64_joy2(void)
 
 /* vic20 native joystick handling */
 #ifdef __VIC20__
+static void read_spaceballs_vic20_joy(void)
+{
+    unsigned char i;
+    unsigned char tmp;
+
+    POKE(USERPORT_DDR, 0xFF);
+
+    for (i = 0; i < 8; ++i) {
+        POKE(USERPORT_DATA, row_scan[7 - i]);
+        tmp = PEEK(VIC20_VIA1_PRA);
+        joy8_status[i] = ((tmp & 0x1C) >> 2);
+        joy8_status[i] |= ((tmp & 0x20) >> 1);
+        POKE(VIC20_VIA2_DDRB, (PEEK(VIC20_VIA2_DDRB) & 0x7F));
+        joy8_status[i] |= ((PEEK(VIC20_VIA2_PRB) & 0x80) >> 4);
+        joy8_status[i] ^= 0x1F;
+    }
+}
+
 static void read_snes_vic20_joy(void)
 {
     unsigned char i;
@@ -744,9 +786,9 @@ static void read_multijoy_cbm510_joy1(void)
 
     for (i = 0; i < 8; ++i) {
         pokebsys(CBM510_CIA2_PRB, i << 4);
-        multijoy_status[i] = peekbsys(CBM510_CIA2_PRB) & 0xF;
-        multijoy_status[i] |= ((peekbsys(CBM510_CIA2_PRA) & 0x40) >> 2);
-        multijoy_status[i] ^= 0x1F;
+        joy8_status[i] = peekbsys(CBM510_CIA2_PRB) & 0xF;
+        joy8_status[i] |= ((peekbsys(CBM510_CIA2_PRA) & 0x40) >> 2);
+        joy8_status[i] ^= 0x1F;
     }
     pokebsys(CBM510_CIA2_DDRB, ddrb);
 }
@@ -760,9 +802,9 @@ static void read_multijoy_cbm510_joy2(void)
 
     for (i = 0; i < 8; ++i) {
         pokebsys(CBM510_CIA2_PRB, i);
-        multijoy_status[i] = peekbsys(CBM510_CIA2_PRB) >> 4;
-        multijoy_status[i] |= ((peekbsys(CBM510_CIA2_PRA) & 0x80) >> 3);
-        multijoy_status[i] ^= 0x1F;
+        joy8_status[i] = peekbsys(CBM510_CIA2_PRB) >> 4;
+        joy8_status[i] |= ((peekbsys(CBM510_CIA2_PRA) & 0x80) >> 3);
+        joy8_status[i] ^= 0x1F;
     }
     pokebsys(CBM510_CIA2_DDRB, ddrb);
 }
@@ -1160,25 +1202,49 @@ int main(void)
             read_multijoy_c64_joy1();
             gotoxy(0, 0);
             cprintf("multijoy joystick adapter in joyport 1");
-            draw_joy(multijoy_status[0], 0, 1, 0, 1, "mj1", 0);
-            draw_joy(multijoy_status[1], 5, 1, 5, 1, "mj2", 0);
-            draw_joy(multijoy_status[2], 10, 1, 10, 1, "mj3", 0);
-            draw_joy(multijoy_status[3], 15, 1, 15, 1, "mj4", 0);
-            draw_joy(multijoy_status[4], 20, 1, 20, 1, "mj5", 0);
-            draw_joy(multijoy_status[5], 25, 1, 25, 1, "mj6", 0);
-            draw_joy(multijoy_status[6], 30, 1, 30, 1, "mj7", 0);
-            draw_joy(multijoy_status[7], 35, 1, 35, 1, "mj8", 0);
+            draw_joy(joy8_status[0], 0, 1, 0, 1, "mj1", 0);
+            draw_joy(joy8_status[1], 5, 1, 5, 1, "mj2", 0);
+            draw_joy(joy8_status[2], 10, 1, 10, 1, "mj3", 0);
+            draw_joy(joy8_status[3], 15, 1, 15, 1, "mj4", 0);
+            draw_joy(joy8_status[4], 20, 1, 20, 1, "mj5", 0);
+            draw_joy(joy8_status[5], 25, 1, 25, 1, "mj6", 0);
+            draw_joy(joy8_status[6], 30, 1, 30, 1, "mj7", 0);
+            draw_joy(joy8_status[7], 35, 1, 35, 1, "mj8", 0);
             read_multijoy_c64_joy2();
             gotoxy(0, 6);
             cprintf("multijoy joystick adapter in joyport 2");
-            draw_joy(multijoy_status[0], 0, 7, 0, 7, "mj1", 0);
-            draw_joy(multijoy_status[1], 5, 7, 5, 7, "mj2", 0);
-            draw_joy(multijoy_status[2], 10, 7, 10, 7, "mj3", 0);
-            draw_joy(multijoy_status[3], 15, 7, 15, 7, "mj4", 0);
-            draw_joy(multijoy_status[4], 20, 7, 20, 7, "mj5", 0);
-            draw_joy(multijoy_status[5], 25, 7, 25, 7, "mj6", 0);
-            draw_joy(multijoy_status[6], 30, 7, 30, 7, "mj7", 0);
-            draw_joy(multijoy_status[7], 35, 7, 35, 7, "mj8", 0);
+            draw_joy(joy8_status[0], 0, 7, 0, 7, "mj1", 0);
+            draw_joy(joy8_status[1], 5, 7, 5, 7, "mj2", 0);
+            draw_joy(joy8_status[2], 10, 7, 10, 7, "mj3", 0);
+            draw_joy(joy8_status[3], 15, 7, 15, 7, "mj4", 0);
+            draw_joy(joy8_status[4], 20, 7, 20, 7, "mj5", 0);
+            draw_joy(joy8_status[5], 25, 7, 25, 7, "mj6", 0);
+            draw_joy(joy8_status[6], 30, 7, 30, 7, "mj7", 0);
+            draw_joy(joy8_status[7], 35, 7, 35, 7, "mj8", 0);
+            if (isc64dtv == 0) {
+                read_spaceballs_c64_joy1();
+                gotoxy(0, 12);
+                cprintf("spaceballs joystick adapter in joyport 1");
+                draw_joy(joy8_status[0], 0, 13, 0, 13, "sb1", 0);
+                draw_joy(joy8_status[1], 5, 13, 5, 13, "sb2", 0);
+                draw_joy(joy8_status[2], 10, 13, 10, 13, "sb3", 0);
+                draw_joy(joy8_status[3], 15, 13, 15, 13, "sb4", 0);
+                draw_joy(joy8_status[4], 20, 13, 20, 13, "sb5", 0);
+                draw_joy(joy8_status[5], 25, 13, 25, 13, "sb6", 0);
+                draw_joy(joy8_status[6], 30, 13, 30, 13, "sb7", 0);
+                draw_joy(joy8_status[7], 35, 13, 35, 13, "sb8", 0);
+                read_spaceballs_c64_joy2();
+                gotoxy(0, 18);
+                cprintf("spaceballs joystick adapter in joyport 2");
+                draw_joy(joy8_status[0], 0, 19, 0, 19, "mj1", 0);
+                draw_joy(joy8_status[1], 5, 19, 5, 19, "mj2", 0);
+                draw_joy(joy8_status[2], 10, 19, 10, 19, "mj3", 0);
+                draw_joy(joy8_status[3], 15, 19, 15, 19, "mj4", 0);
+                draw_joy(joy8_status[4], 20, 19, 20, 19, "mj5", 0);
+                draw_joy(joy8_status[5], 25, 19, 25, 19, "mj6", 0);
+                draw_joy(joy8_status[6], 30, 19, 30, 19, "mj7", 0);
+                draw_joy(joy8_status[7], 35, 19, 35, 19, "mj8", 0);
+            }
         }
         if (key = check_keys()) {
             while (check_keys()) {
@@ -1235,29 +1301,29 @@ int main(void)
             gotoxy(0, 18);
             cprintf(page_message);
         }
-        if (current_page == PAGE_C64_8JOY) {
+        if (current_page == PAGE_CBM5x0_8JOY) {
             read_multijoy_cbm510_joy1();
             gotoxy(0, 0);
             cprintf("multijoy joystick adapter in joyport 1");
-            draw_joy(multijoy_status[0], 0, 1, 0, 1, "mj1", 0);
-            draw_joy(multijoy_status[1], 5, 1, 5, 1, "mj2", 0);
-            draw_joy(multijoy_status[2], 10, 1, 10, 1, "mj3", 0);
-            draw_joy(multijoy_status[3], 15, 1, 15, 1, "mj4", 0);
-            draw_joy(multijoy_status[4], 20, 1, 20, 1, "mj5", 0);
-            draw_joy(multijoy_status[5], 25, 1, 25, 1, "mj6", 0);
-            draw_joy(multijoy_status[6], 30, 1, 30, 1, "mj7", 0);
-            draw_joy(multijoy_status[7], 35, 1, 35, 1, "mj8", 0);
+            draw_joy(joy8_status[0], 0, 1, 0, 1, "mj1", 0);
+            draw_joy(joy8_status[1], 5, 1, 5, 1, "mj2", 0);
+            draw_joy(joy8_status[2], 10, 1, 10, 1, "mj3", 0);
+            draw_joy(joy8_status[3], 15, 1, 15, 1, "mj4", 0);
+            draw_joy(joy8_status[4], 20, 1, 20, 1, "mj5", 0);
+            draw_joy(joy8_status[5], 25, 1, 25, 1, "mj6", 0);
+            draw_joy(joy8_status[6], 30, 1, 30, 1, "mj7", 0);
+            draw_joy(joy8_status[7], 35, 1, 35, 1, "mj8", 0);
             read_multijoy_cbm510_joy2();
             gotoxy(0, 6);
             cprintf("multijoy joystick adapter in joyport 2");
-            draw_joy(multijoy_status[0], 0, 7, 0, 7, "mj1", 0);
-            draw_joy(multijoy_status[1], 5, 7, 5, 7, "mj2", 0);
-            draw_joy(multijoy_status[2], 10, 7, 10, 7, "mj3", 0);
-            draw_joy(multijoy_status[3], 15, 7, 15, 7, "mj4", 0);
-            draw_joy(multijoy_status[4], 20, 7, 20, 7, "mj5", 0);
-            draw_joy(multijoy_status[5], 25, 7, 25, 7, "mj6", 0);
-            draw_joy(multijoy_status[6], 30, 7, 30, 7, "mj7", 0);
-            draw_joy(multijoy_status[7], 35, 7, 35, 7, "mj8", 0);
+            draw_joy(joy8_status[0], 0, 7, 0, 7, "mj1", 0);
+            draw_joy(joy8_status[1], 5, 7, 5, 7, "mj2", 0);
+            draw_joy(joy8_status[2], 10, 7, 10, 7, "mj3", 0);
+            draw_joy(joy8_status[3], 15, 7, 15, 7, "mj4", 0);
+            draw_joy(joy8_status[4], 20, 7, 20, 7, "mj5", 0);
+            draw_joy(joy8_status[5], 25, 7, 25, 7, "mj6", 0);
+            draw_joy(joy8_status[6], 30, 7, 30, 7, "mj7", 0);
+            draw_joy(joy8_status[7], 35, 7, 35, 7, "mj8", 0);
         }
         if (key = check_keys()) {
             while (check_keys()) {
@@ -1437,6 +1503,19 @@ int main(void)
             draw_snes(snes1_status, 0, 0, "userport snes");
             gotoxy(0, 6);
             cprintf(page_message);
+        }
+        if (current_page == PAGE_VIC20_8JOY) {
+            read_spaceballs_vic20_joy();
+            gotoxy(0, 0);
+            cprintf("spaceballs adapter");
+            draw_joy(joy8_status[0], 0, 1, 0, 1, "sb1", 0);
+            draw_joy(joy8_status[1], 5, 1, 5, 1, "sb2", 0);
+            draw_joy(joy8_status[2], 10, 1, 10, 1, "sb3", 0);
+            draw_joy(joy8_status[3], 15, 1, 15, 1, "sb4", 0);
+            draw_joy(joy8_status[4], 0, 7, 0, 7, "sb5", 0);
+            draw_joy(joy8_status[5], 5, 7, 5, 7, "sb6", 0);
+            draw_joy(joy8_status[6], 10, 7, 10, 7, "sb7", 0);
+            draw_joy(joy8_status[7], 15, 7, 15, 7, "sb8", 0);
         }
         if (key = check_keys()) {
             while (check_keys()) {
