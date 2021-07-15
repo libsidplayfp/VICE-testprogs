@@ -157,11 +157,7 @@
 #define PAGE_VIC20_MAX                4
 
 #if !defined(__PLUS4__) && !defined(__C16__)
-static unsigned short snes1_status;
-#if !defined(__PET__) && !defined(__CBM610__)
-static unsigned short snes2_status;
-static unsigned short snes3_status;
-#endif
+static unsigned short snes_status[8];
 #endif
 
 #if !defined(__PLUS4__) && !defined(__C16__) && !defined(__PET__) && !defined(__CBM610__)
@@ -587,15 +583,15 @@ static void read_snes_c64_joy1(void)
     POKE(C64_CIA1_PRB, 0x10);
     POKE(C64_CIA1_PRB, 0x00);
 
-    snes1_status = 0;
-    snes2_status = 0;
-    snes3_status = 0;
+    snes_status[0] = 0;
+    snes_status[1] = 0;
+    snes_status[2] = 0;
 
     for (i = 0; i < 12; i++) {
         data = ~PEEK(C64_CIA1_PRB);
-        snes1_status |= ((data & 0x01) << i);
-        snes2_status |= (((data & 0x02) >> 1) << i);
-        snes3_status |= (((data & 0x04) >> 2) << i);
+        snes_status[0] |= ((data & 0x01) << i);
+        snes_status[1] |= (((data & 0x02) >> 1) << i);
+        snes_status[2] |= (((data & 0x04) >> 2) << i);
         POKE(C64_CIA1_PRB, 0x08);
         POKE(C64_CIA1_PRB, 0x00);
     }
@@ -611,15 +607,15 @@ static void read_snes_c64_joy2(void)
     POKE(C64_CIA1_PRA, 0x10);
     POKE(C64_CIA1_PRA, 0x00);
 
-    snes1_status = 0;
-    snes2_status = 0;
-    snes3_status = 0;
+    snes_status[0] = 0;
+    snes_status[1] = 0;
+    snes_status[2] = 0;
 
     for (i = 0; i < 12; i++) {
         data = ~PEEK(C64_CIA1_PRA);
-        snes1_status |= ((data & 0x01) << i);
-        snes2_status |= (((data & 0x02) >> 1) << i);
-        snes3_status |= (((data & 0x04) >> 2) << i);
+        snes_status[0] |= ((data & 0x01) << i);
+        snes_status[1] |= (((data & 0x02) >> 1) << i);
+        snes_status[2] |= (((data & 0x04) >> 2) << i);
         POKE(C64_CIA1_PRA, 0x08);
         POKE(C64_CIA1_PRA, 0x00);
     }
@@ -698,15 +694,15 @@ static void read_snes_vic20_joy(void)
     POKE(VIC20_VIA1_PRA, 0x20);
     POKE(VIC20_VIA1_PRA, 0x00);
 
-    snes1_status = 0;
-    snes2_status = 0;
-    snes3_status = 0;
+    snes_status[0] = 0;
+    snes_status[1] = 0;
+    snes_status[2] = 0;
 
     for (i = 0; i < 12; i++) {
         data = ~PEEK(VIC20_VIA1_PRA);
-        snes1_status |= (((data & 0x04) >> 2) << i);
-        snes2_status |= (((data & 0x08) >> 3) << i);
-        snes3_status |= (((data & 0x10) >> 4) << i);
+        snes_status[0] |= (((data & 0x04) >> 2) << i);
+        snes_status[1] |= (((data & 0x08) >> 3) << i);
+        snes_status[2] |= (((data & 0x10) >> 4) << i);
         POKE(VIC20_VIA2_PRB, 0x80);
         POKE(VIC20_VIA2_PRB, 0x00);
     }
@@ -821,15 +817,15 @@ static void read_snes_cbm510_joy1(void)
     pokebsys(CBM510_CIA2_PRA, 0x40);
     pokebsys(CBM510_CIA2_PRA, 0x00);
 
-    snes1_status = 0;
-    snes2_status = 0;
-    snes3_status = 0;
+    snes_status[0] = 0;
+    snes_status[1] = 0;
+    snes_status[2] = 0;
 
     for (i = 0; i < 12; i++) {
         data = ~peekbsys(CBM510_CIA2_PRB);
-        snes1_status |= ((data & 0x01) << i);
-        snes2_status |= (((data & 0x02) >> 1) << i);
-        snes3_status |= (((data & 0x04) >> 2) << i);
+        snes_status[0] |= ((data & 0x01) << i);
+        snes_status[1] |= (((data & 0x02) >> 1) << i);
+        snes_status[2] |= (((data & 0x04) >> 2) << i);
         pokebsys(CBM510_CIA2_PRB, 0x08);
         pokebsys(CBM510_CIA2_PRB, 0x00);
     }
@@ -849,15 +845,15 @@ static void read_snes_cbm510_joy2(void)
     pokebsys(CBM510_CIA2_PRA, 0x80);
     pokebsys(CBM510_CIA2_PRA, 0x00);
 
-    snes1_status = 0;
-    snes2_status = 0;
-    snes3_status = 0;
+    snes_status[0] = 0;
+    snes_status[1] = 0;
+    snes_status[2] = 0;
 
     for (i = 0; i < 12; i++) {
         data = ~peekbsys(CBM510_CIA2_PRB);
-        snes1_status |= (((data & 0x10) >> 4) << i);
-        snes2_status |= (((data & 0x20) >> 5) << i);
-        snes3_status |= (((data & 0x40) >> 6) << i);
+        snes_status[0] |= (((data & 0x10) >> 4) << i);
+        snes_status[1] |= (((data & 0x20) >> 5) << i);
+        snes_status[2] |= (((data & 0x40) >> 6) << i);
         pokebsys(CBM510_CIA2_PRB, 0x80);
         pokebsys(CBM510_CIA2_PRB, 0x00);
     }
@@ -1074,10 +1070,10 @@ static void read_snes_userport(void)
     USERPORTPOKE(USERPORT_DATA, 0x20);
     USERPORTPOKE(USERPORT_DATA, 0x00);
 
-    snes1_status = 0;
+    snes_status[0] = 0;
     for (i = 0; i < 12; i++) {
         data = ~USERPORTPEEK(USERPORT_DATA);
-        snes1_status |= (((data & 0x40) >> 6) << i);
+        snes_status[0] |= (((data & 0x40) >> 6) << i);
         USERPORTPOKE(USERPORT_DATA, 0x08);
         USERPORTPOKE(USERPORT_DATA, 0x00);
     }
@@ -1180,16 +1176,16 @@ int main(void)
         }
         if (current_page == PAGE_C64_SNESPADS) {
             read_snes_c64_joy1();
-            draw_snes(snes1_status, 0, 0, "joy-1 snes-1");
-            draw_snes(snes2_status, 0, 6, "joy-1 snes-2");
-            draw_snes(snes3_status, 0, 12, "joy-1 snes-3");
+            draw_snes(snes_status[0], 0, 0, "joy-1 snes-1");
+            draw_snes(snes_status[1], 0, 6, "joy-1 snes-2");
+            draw_snes(snes_status[2], 0, 12, "joy-1 snes-3");
             read_snes_c64_joy2();
-            draw_snes(snes1_status, 21, 0, "joy-2 snes-1");
-            draw_snes(snes2_status, 21, 6, "joy-2 snes-2");
-            draw_snes(snes3_status, 21, 12, "joy-2 snes-3");
+            draw_snes(snes_status[0], 21, 0, "joy-2 snes-1");
+            draw_snes(snes_status[1], 21, 6, "joy-2 snes-2");
+            draw_snes(snes_status[2], 21, 12, "joy-2 snes-3");
             if (isc64dtv == 0) {
                 read_snes_userport();
-                draw_snes(snes1_status, 0, 18, "userport snes");
+                draw_snes(snes_status[0], 0, 18, "userport snes");
             }
             chlinexy(0,5,40);
             chlinexy(0,11,40);
@@ -1288,13 +1284,13 @@ int main(void)
         }
         if (current_page == PAGE_CBM5x0_SNESPADS) {
             read_snes_cbm510_joy1();
-            draw_snes(snes1_status, 0, 0, "joy-1 snes-1");
-            draw_snes(snes2_status, 0, 6, "joy-1 snes-2");
-            draw_snes(snes3_status, 0, 12, "joy-1 snes-3");
+            draw_snes(snes_status[0], 0, 0, "joy-1 snes-1");
+            draw_snes(snes_status[1], 0, 6, "joy-1 snes-2");
+            draw_snes(snes_status[2], 0, 12, "joy-1 snes-3");
             read_snes_cbm510_joy2();
-            draw_snes(snes1_status, 21, 0, "joy-2 snes-1");
-            draw_snes(snes2_status, 21, 6, "joy-2 snes-2");
-            draw_snes(snes3_status, 21, 12, "joy-2 snes-3");
+            draw_snes(snes_status[0], 21, 0, "joy-2 snes-1");
+            draw_snes(snes_status[1], 21, 6, "joy-2 snes-2");
+            draw_snes(snes_status[2], 21, 12, "joy-2 snes-3");
             chlinexy(0,5,40);
             chlinexy(0,11,40);
             chlinexy(0,17,40);
@@ -1368,7 +1364,7 @@ int main(void)
         }
         if (current_page == PAGE_CBM6x0_SNESPADS) {
             read_snes_userport();
-            draw_snes(snes1_status, 0, 0, "userport snes");
+            draw_snes(snes_status[0], 0, 0, "userport snes");
             gotoxy(0, 6);
             cprintf(page_message);
         }
@@ -1415,7 +1411,7 @@ int main(void)
         }
         if (current_page == PAGE_PET_SNESPADS) {
             read_snes_userport();
-            draw_snes(snes1_status, 0, 0, "userport snes");
+            draw_snes(snes_status[0], 0, 0, "userport snes");
             gotoxy(0, 6);
             cprintf(page_message);
         }
@@ -1489,9 +1485,9 @@ int main(void)
         }
         if (current_page == PAGE_VIC20_SNESPADS) {
             read_snes_vic20_joy();
-            draw_snes(snes1_status, 0, 0, "joy snes-1");
-            draw_snes(snes2_status, 0, 6, "joy snes-2");
-            draw_snes(snes3_status, 0, 12, "joy snes-3");
+            draw_snes(snes_status[0], 0, 0, "joy snes-1");
+            draw_snes(snes_status[1], 0, 6, "joy snes-2");
+            draw_snes(snes_status[2], 0, 12, "joy snes-3");
             chlinexy(0,5,22);
             chlinexy(0,11,22);
             chlinexy(0,17,22);
@@ -1500,7 +1496,7 @@ int main(void)
         }
         if (current_page == PAGE_VIC20_USERPORT_SNESPADS) {
             read_snes_userport();
-            draw_snes(snes1_status, 0, 0, "userport snes");
+            draw_snes(snes_status[0], 0, 0, "userport snes");
             gotoxy(0, 6);
             cprintf(page_message);
         }
