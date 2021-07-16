@@ -118,6 +118,10 @@
 #define CBM510_CIA2_DDRA      0xDC02
 #define CBM510_CIA2_DDRB      0xDC03
 
+/* cbm6x0 cia addresses */
+#define CBM6x0_CIA2_PRA       0xDC00
+#define CBM6x0_CIA2_DDRA      0xDC02
+
 /* pet keyboard scan addresses */
 #define PET_KEY_INDEX_SEL     0xE810
 #define PET_KEY_ROW           0xE812
@@ -128,10 +132,12 @@
 #define CBM2_KEY_ROW_READ     0xDF02
 
 /* C64/C128/C64DTV display page numbers */
-#define PAGE_C64_JOYSTICKS    0
-#define PAGE_C64_SNESPADS     1
-#define PAGE_C64_8JOY         2
-#define PAGE_C64_MAX          3
+#define PAGE_C64_JOYSTICKS          0
+#define PAGE_C64_JOYPORT_SNESPADS   1
+#define PAGE_C64_PETSCII_SNESPAD    2
+#define PAGE_C64_USERPORT_SNESPADS  3
+#define PAGE_C64_8JOY               4
+#define PAGE_C64_MAX                5
 
 /* CBM5x0 display page numbers */
 #define PAGE_CBM5x0_JOYSTICKS    0
@@ -140,9 +146,10 @@
 #define PAGE_CBM5x0_MAX          3
 
 /* CBM6x0 display page numbers */
-#define PAGE_CBM6x0_JOYSTICKS    0
-#define PAGE_CBM6x0_SNESPADS     1
-#define PAGE_CBM6x0_MAX          2
+#define PAGE_CBM6x0_JOYSTICKS           0
+#define PAGE_CBM6x0_PETSCII_SNESPAD     1
+#define PAGE_CBM6x0_USERPORT_SNESPADS   2
+#define PAGE_CBM6x0_MAX                 3
 
 /* PET display page numbers */
 #define PAGE_PET_JOYSTICKS    0
@@ -771,6 +778,41 @@ static unsigned char read_plus4_sidcart_joy(void)
 }
 #endif
 
+/* cbm6x0 joystick handling */
+#ifdef __CBM610__
+static void read_superpad(void)
+{
+    unsigned char ddra = peekbsys(CBM6x0_CIA2_DDRA);
+    unsigned char pra;
+    unsigned char i;
+    unsigned char data;
+
+    pokebsys(CBM6x0_CIA2_DDRA, (ddra & 0xFB) | 4);
+    pra = peekbsys(CBM6x0_CIA2_PRA);
+    pokebsys(CBM6x0_CIA2_PRA, (pra & 0xFB) | 4);
+    pokebsys(CBM6x0_CIA2_PRA, pra & 0xFB);
+    pokebsys(USERPORT_DDR, 0);
+
+    for (i = 0; i < 8; i++) {
+        snes_status[i] = 0;
+    }
+
+    for (i = 0; i < 12; i++) {
+        data = ~peekbsys(USERPORT_DATA);
+        snes_status[0] |= ((data & 0x01) << i);
+        snes_status[1] |= (((data & 0x02) >> 1) << i);
+        snes_status[2] |= (((data & 0x04) >> 2) << i);
+        snes_status[3] |= (((data & 0x08) >> 3) << i);
+        snes_status[4] |= (((data & 0x10) >> 4) << i);
+        snes_status[5] |= (((data & 0x20) >> 5) << i);
+        snes_status[6] |= (((data & 0x40) >> 6) << i);
+        snes_status[7] |= (((data & 0x80) >> 7) << i);
+    }
+    pokebsys(CBM6x0_CIA2_PRA, pra);
+    pokebsys(CBM6x0_CIA2_DDRA, ddra);
+}
+#endif
+
 /* cbm5x0 native joystick handling */
 #ifdef __CBM510__
 static void read_multijoy_cbm510_joy1(void)
@@ -900,6 +942,38 @@ static void setup_cnt12sp(void)
     POKE(C64_CIA1_TIMER_A_LOW, 1);
     POKE(C64_CIA1_TIMER_A_HIGH, 0);
     POKE(C64_CIA1_CRA, 0x51);
+}
+
+static void read_superpad(void)
+{
+    unsigned char ddra = PEEK(C64_CIA2_DDRA);
+    unsigned char pra;
+    unsigned char i;
+    unsigned char data;
+
+    POKE(C64_CIA2_DDRA, (ddra & 0xFB) | 4);
+    pra = PEEK(C64_CIA2_PRA);
+    POKE(C64_CIA2_PRA, (pra & 0xFB) | 4);
+    POKE(C64_CIA2_PRA, pra & 0xFB);
+    POKE(USERPORT_DDR, 0);
+
+    for (i = 0; i < 8; i++) {
+        snes_status[i] = 0;
+    }
+
+    for (i = 0; i < 12; i++) {
+        data = ~PEEK(USERPORT_DATA);
+        snes_status[0] |= ((data & 0x01) << i);
+        snes_status[1] |= (((data & 0x02) >> 1) << i);
+        snes_status[2] |= (((data & 0x04) >> 2) << i);
+        snes_status[3] |= (((data & 0x08) >> 3) << i);
+        snes_status[4] |= (((data & 0x10) >> 4) << i);
+        snes_status[5] |= (((data & 0x20) >> 5) << i);
+        snes_status[6] |= (((data & 0x40) >> 6) << i);
+        snes_status[7] |= (((data & 0x80) >> 7) << i);
+    }
+    POKE(C64_CIA2_PRA, pra);
+    POKE(C64_CIA2_DDRA, ddra);
 }
 
 static unsigned char read_c64_hit_joy1(void)
@@ -1061,7 +1135,7 @@ static unsigned char read_cga_joy2(void)
     return retval;
 }
 
-static void read_snes_userport(void)
+static void read_petscii(void)
 {
     unsigned char i;
     unsigned char data;
@@ -1174,7 +1248,7 @@ int main(void)
             gotoxy(0, 20);
             cprintf(page_message);
         }
-        if (current_page == PAGE_C64_SNESPADS) {
+        if (current_page == PAGE_C64_JOYPORT_SNESPADS) {
             read_snes_c64_joy1();
             draw_snes(snes_status[0], 0, 0, "joy-1 snes-1");
             draw_snes(snes_status[1], 0, 6, "joy-1 snes-2");
@@ -1183,16 +1257,36 @@ int main(void)
             draw_snes(snes_status[0], 21, 0, "joy-2 snes-1");
             draw_snes(snes_status[1], 21, 6, "joy-2 snes-2");
             draw_snes(snes_status[2], 21, 12, "joy-2 snes-3");
-            if (isc64dtv == 0) {
-                read_snes_userport();
-                draw_snes(snes_status[0], 0, 18, "userport snes");
-            }
             chlinexy(0,5,40);
             chlinexy(0,11,40);
             chlinexy(0,17,40);
-            chlinexy(0,23,40);
             gotoxy(0, 24);
             cprintf(page_message);
+        }
+        if (isc64dtv == 0) {
+            if (current_page == PAGE_C64_USERPORT_SNESPADS) {
+                read_superpad();
+                draw_snes(snes_status[0], 0, 0, "superpad snes-1");
+                draw_snes(snes_status[1], 21, 0, "superpad snes-2");
+                draw_snes(snes_status[2], 0, 6, "superpad snes-3");
+                draw_snes(snes_status[3], 21, 6, "superpad snes-4");
+                draw_snes(snes_status[4], 0, 12, "superpad snes-5");
+                draw_snes(snes_status[5], 21, 12, "superpad snes-6");
+                draw_snes(snes_status[6], 0, 18, "superpad snes-7");
+                draw_snes(snes_status[7], 21, 18, "superpad snes-8");
+                chlinexy(0,5,40);
+                chlinexy(0,11,40);
+                chlinexy(0,17,40);
+                chlinexy(0,23,40);
+                gotoxy(0, 24);
+                cprintf(page_message);
+            }
+            if (current_page == PAGE_C64_PETSCII_SNESPAD) {
+                read_petscii();
+                draw_snes(snes_status[0], 0, 0, "petscii snes");
+                gotoxy(0, 24);
+                cprintf(page_message);
+            }
         }
         if (current_page == PAGE_C64_8JOY) {
             read_multijoy_c64_joy1();
@@ -1241,6 +1335,8 @@ int main(void)
                 draw_joy(joy8_status[6], 30, 19, 30, 19, "mj7", 0);
                 draw_joy(joy8_status[7], 35, 19, 35, 19, "mj8", 0);
             }
+            gotoxy(0, 24);
+            cprintf(page_message);
         }
         if (key = check_keys()) {
             while (check_keys()) {
@@ -1250,11 +1346,21 @@ int main(void)
                 if (current_page >= PAGE_C64_MAX) {
                     current_page = PAGE_C64_JOYSTICKS;
                 }
+                if (isc64dtv) {
+                    if (current_page == PAGE_C64_PETSCII_SNESPAD) {
+                        current_page += 2;
+                    }
+                }
             } else {
                 if (!current_page) {
                     current_page = PAGE_C64_MAX;
                 }
                 current_page--;
+                if (isc64dtv) {
+                    if (current_page == PAGE_C64_USERPORT_SNESPADS) {
+                        current_page -= 2;
+                    }
+                }
             }
             clrscr();
         }
@@ -1362,10 +1468,27 @@ int main(void)
             gotoxy(0, 10);
             cprintf(page_message);
         }
-        if (current_page == PAGE_CBM6x0_SNESPADS) {
-            read_snes_userport();
-            draw_snes(snes_status[0], 0, 0, "userport snes");
+        if (current_page == PAGE_CBM6x0_PETSCII_SNESPAD) {
+            read_petscii();
+            draw_snes(snes_status[0], 0, 0, "petscii snes");
             gotoxy(0, 6);
+            cprintf(page_message);
+        }
+        if (current_page == PAGE_CBM6x0_USERPORT_SNESPADS) {
+            read_superpad();
+            draw_snes(snes_status[0], 0, 0, "superpad snes-1");
+            draw_snes(snes_status[1], 21, 0, "superpad snes-2");
+            draw_snes(snes_status[2], 0, 6, "superpad snes-3");
+            draw_snes(snes_status[3], 21, 6, "superpad snes-4");
+            draw_snes(snes_status[4], 0, 12, "superpad snes-5");
+            draw_snes(snes_status[5], 21, 12, "superpad snes-6");
+            draw_snes(snes_status[6], 0, 18, "superpad snes-7");
+            draw_snes(snes_status[7], 21, 18, "superpad snes-8");
+            chlinexy(0,5,40);
+            chlinexy(0,11,40);
+            chlinexy(0,17,40);
+            chlinexy(0,23,40);
+            gotoxy(0, 24);
             cprintf(page_message);
         }
         if (key = check_keys()) {
@@ -1410,7 +1533,7 @@ int main(void)
             cprintf(page_message);
         }
         if (current_page == PAGE_PET_SNESPADS) {
-            read_snes_userport();
+            read_petscii();
             draw_snes(snes_status[0], 0, 0, "userport snes");
             gotoxy(0, 6);
             cprintf(page_message);
@@ -1495,7 +1618,7 @@ int main(void)
             cprintf(page_message);
         }
         if (current_page == PAGE_VIC20_USERPORT_SNESPADS) {
-            read_snes_userport();
+            read_petscii();
             draw_snes(snes_status[0], 0, 0, "userport snes");
             gotoxy(0, 6);
             cprintf(page_message);
