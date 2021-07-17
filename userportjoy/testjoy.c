@@ -137,13 +137,15 @@
 #define PAGE_C64_PETSCII_SNESPAD    2
 #define PAGE_C64_USERPORT_SNESPADS  3
 #define PAGE_C64_8JOY               4
-#define PAGE_C64_MAX                5
+#define PAGE_C64_INCEPTION          5
+#define PAGE_C64_MAX                6
 
 /* CBM5x0 display page numbers */
 #define PAGE_CBM5x0_JOYSTICKS    0
 #define PAGE_CBM5x0_SNESPADS     1
 #define PAGE_CBM5x0_8JOY         2
-#define PAGE_CBM5x0_MAX          3
+#define PAGE_CBM5x0_INCEPTION    3
+#define PAGE_CBM5x0_MAX          4
 
 /* CBM6x0 display page numbers */
 #define PAGE_CBM6x0_JOYSTICKS           0
@@ -161,7 +163,8 @@
 #define PAGE_VIC20_SNESPADS           1
 #define PAGE_VIC20_USERPORT_SNESPADS  2
 #define PAGE_VIC20_8JOY               3
-#define PAGE_VIC20_MAX                4
+#define PAGE_VIC20_INCEPTION          4
+#define PAGE_VIC20_MAX                5
 
 #if !defined(__PLUS4__) && !defined(__C16__)
 static unsigned short snes_status[8];
@@ -533,6 +536,44 @@ unsigned char check_keys(void)
 
 /* c64/c64dtv/c128 native joystick handling */
 #if defined(__C64__) || defined(__C128__)
+static void read_inception_c64_joy1(void)
+{
+    unsigned char i;
+
+    POKE(C64_CIA1_DDRB, 0x1F);
+    POKE(C64_CIA1_PRB, 0x00);
+    POKE(C64_CIA1_DDRB, 0x10);
+    for (i = 0; i < 8; i++) {
+        POKE(C64_CIA1_PRB, 0x10);
+        joy8_status[i] = PEEK(C64_CIA1_PRB) << 4;
+        POKE(C64_CIA1_PRB, 0);
+        joy8_status[i] |= PEEK(C64_CIA1_PRB);
+    }
+    for (i = 0; i < 8; i++) {
+        POKE(C64_CIA1_PRB, 0x10);
+        POKE(C64_CIA1_PRB, 0);
+    }
+}
+
+static void read_inception_c64_joy2(void)
+{
+    unsigned char i;
+
+    POKE(C64_CIA1_DDRA, 0x1F);
+    POKE(C64_CIA1_PRA, 0x00);
+    POKE(C64_CIA1_DDRA, 0x10);
+    for (i = 0; i < 8; i++) {
+        POKE(C64_CIA1_PRA, 0x10);
+        joy8_status[i] = PEEK(C64_CIA1_PRA) << 4;
+        POKE(C64_CIA1_PRA, 0);
+        joy8_status[i] |= PEEK(C64_CIA1_PRA);
+    }
+    for (i = 0; i < 8; i++) {
+        POKE(C64_CIA1_PRB, 0x10);
+        POKE(C64_CIA1_PRB, 0);
+    }
+}
+
 static void read_spaceballs_c64_joy1(void)
 {
     unsigned char i;
@@ -670,6 +711,34 @@ static unsigned char read_native_c64_joy2(void)
 
 /* vic20 native joystick handling */
 #ifdef __VIC20__
+static void read_inception_vic20_joy(void)
+{
+    unsigned char i;
+    unsigned char ddra = PEEK(VIC20_VIA1_DDRA);
+    unsigned char ddrb = PEEK(VIC20_VIA2_DDRB);
+
+    POKE(VIC20_VIA2_DDRB, 0x80);
+    POKE(VIC20_VIA1_DDRA, 0x3C);
+    POKE(VIC20_VIA2_PRB, 0);
+    POKE(VIC20_VIA1_PRA, 0);
+    POKE(VIC20_VIA2_DDRB, 0);
+    POKE(VIC20_VIA1_DDRA, 0x20);
+    for (i = 0; i < 8; i++) {
+        POKE(VIC20_VIA1_PRA, 0x20);
+        joy8_status[i] = PEEK(VIC20_VIA2_PRB) & 0x80;
+        joy8_status[i] |= (PEEK(VIC20_VIA1_PRA) & 0x1C) << 3;
+        POKE(VIC20_VIA1_PRA, 0);
+        joy8_status[i] |= (PEEK(VIC20_VIA2_PRB) & 0x80) >> 4;
+        joy8_status[i] |= (PEEK(VIC20_VIA1_PRA) & 0x1C) >> 2;
+    }
+    for (i = 0; i < 8; i++) {
+        POKE(VIC20_VIA1_PRA, 0x20);
+        POKE(VIC20_VIA1_PRA, 0);
+    }
+    POKE(VIC20_VIA2_DDRB, ddrb);
+    POKE(VIC20_VIA1_DDRA, ddra);
+}
+
 static void read_spaceballs_vic20_joy(void)
 {
     unsigned char i;
@@ -815,6 +884,60 @@ static void read_superpad(void)
 
 /* cbm5x0 native joystick handling */
 #ifdef __CBM510__
+static void read_inception_cbm5x0_joy1(void)
+{
+    unsigned char i;
+    unsigned char ddra = peekbsys(CBM510_CIA2_DDRA);
+    unsigned char ddrb = peekbsys(CBM510_CIA2_DDRB);
+
+    pokebsys(CBM510_CIA2_PRA, 0);
+    pokebsys(CBM510_CIA2_PRB, 0);
+    pokebsys(CBM510_CIA2_DDRA, 0x40);
+    pokebsys(CBM510_CIA2_DDRB, 0x0F);
+    pokebsys(CBM510_CIA2_PRA, 0);
+    pokebsys(CBM510_CIA2_PRB, 0);
+    pokebsys(CBM510_CIA2_DDRB, 0);
+
+    for (i = 0; i < 8; i++) {
+        pokebsys(CBM510_CIA2_PRA, 0x40);
+        joy8_status[i] = peekbsys(CBM510_CIA2_PRB) << 4;
+        pokebsys(CBM510_CIA2_PRA, 0);
+        joy8_status[i] |= peekbsys(CBM510_CIA2_PRB) & 0xF;
+    }
+    for (i = 0; i < 8; i++) {
+        pokebsys(CBM510_CIA2_PRA, 0x40);
+        pokebsys(CBM510_CIA2_PRA, 0);
+    }
+    pokebsys(CBM510_CIA2_DDRA, ddra);
+    pokebsys(CBM510_CIA2_DDRB, ddrb);
+}
+
+static void read_inception_cbm5x0_joy2(void)
+{
+    unsigned char i;
+    unsigned char ddra = peekbsys(CBM510_CIA2_DDRA);
+    unsigned char ddrb = peekbsys(CBM510_CIA2_DDRB);
+
+    pokebsys(CBM510_CIA2_DDRB, 0xF0);
+    pokebsys(CBM510_CIA2_DDRA, 0x80);
+    pokebsys(CBM510_CIA2_PRA, 0);
+    pokebsys(CBM510_CIA2_PRB, 0);
+    pokebsys(CBM510_CIA2_DDRB, 0);
+
+    for (i = 0; i < 8; i++) {
+        pokebsys(CBM510_CIA2_PRA, 0x80);
+        joy8_status[i] = peekbsys(CBM510_CIA2_PRB) & 0xF0;
+        pokebsys(CBM510_CIA2_PRA, 0);
+        joy8_status[i] |= peekbsys(CBM510_CIA2_PRB) >> 4;
+    }
+    for (i = 0; i < 8; i++) {
+        pokebsys(CBM510_CIA2_PRA, 0x80);
+        pokebsys(CBM510_CIA2_PRA, 0);
+    }
+    pokebsys(CBM510_CIA2_DDRB, ddrb);
+    pokebsys(CBM510_CIA2_DDRA, ddra);
+}
+
 static void read_multijoy_cbm510_joy1(void)
 {
     unsigned char i;
@@ -1338,6 +1461,32 @@ int main(void)
             gotoxy(0, 24);
             cprintf(page_message);
         }
+        if (current_page == PAGE_C64_INCEPTION) {
+            read_inception_c64_joy1();
+            gotoxy(0, 0);
+            cprintf("inception joystick adapter in joyport 1");
+            draw_joy(joy8_status[0], 0, 1, 0, 1, "in1", 0);
+            draw_joy(joy8_status[1], 5, 1, 5, 1, "in2", 0);
+            draw_joy(joy8_status[2], 10, 1, 10, 1, "in3", 0);
+            draw_joy(joy8_status[3], 15, 1, 15, 1, "in4", 0);
+            draw_joy(joy8_status[4], 20, 1, 20, 1, "in5", 0);
+            draw_joy(joy8_status[5], 25, 1, 25, 1, "in6", 0);
+            draw_joy(joy8_status[6], 30, 1, 30, 1, "in7", 0);
+            draw_joy(joy8_status[7], 35, 1, 35, 1, "in8", 0);
+            read_inception_c64_joy2();
+            gotoxy(0, 6);
+            cprintf("inception joystick adapter in joyport 2");
+            draw_joy(joy8_status[0], 0, 7, 0, 7, "in1", 0);
+            draw_joy(joy8_status[1], 5, 7, 5, 7, "in2", 0);
+            draw_joy(joy8_status[2], 10, 7, 10, 7, "in3", 0);
+            draw_joy(joy8_status[3], 15, 7, 15, 7, "in4", 0);
+            draw_joy(joy8_status[4], 20, 7, 20, 7, "in5", 0);
+            draw_joy(joy8_status[5], 25, 7, 25, 7, "in6", 0);
+            draw_joy(joy8_status[6], 30, 7, 30, 7, "in7", 0);
+            draw_joy(joy8_status[7], 35, 7, 35, 7, "in8", 0);
+            gotoxy(0, 24);
+            cprintf(page_message);
+        }
         if (key = check_keys()) {
             while (check_keys()) {
             }
@@ -1426,6 +1575,32 @@ int main(void)
             draw_joy(joy8_status[5], 25, 7, 25, 7, "mj6", 0);
             draw_joy(joy8_status[6], 30, 7, 30, 7, "mj7", 0);
             draw_joy(joy8_status[7], 35, 7, 35, 7, "mj8", 0);
+        }
+        if (current_page == PAGE_CBM5x0_INCEPTION) {
+            read_inception_cbm5x0_joy1();
+            gotoxy(0, 0);
+            cprintf("inception joystick adapter in joyport 1");
+            draw_joy(joy8_status[0], 0, 1, 0, 1, "in1", 0);
+            draw_joy(joy8_status[1], 5, 1, 5, 1, "in2", 0);
+            draw_joy(joy8_status[2], 10, 1, 10, 1, "in3", 0);
+            draw_joy(joy8_status[3], 15, 1, 15, 1, "in4", 0);
+            draw_joy(joy8_status[4], 20, 1, 20, 1, "in5", 0);
+            draw_joy(joy8_status[5], 25, 1, 25, 1, "in6", 0);
+            draw_joy(joy8_status[6], 30, 1, 30, 1, "in7", 0);
+            draw_joy(joy8_status[7], 35, 1, 35, 1, "in8", 0);
+            read_inception_cbm5x0_joy2();
+            gotoxy(0, 6);
+            cprintf("inception joystick adapter in joyport 2");
+            draw_joy(joy8_status[0], 0, 7, 0, 7, "in1", 0);
+            draw_joy(joy8_status[1], 5, 7, 5, 7, "in2", 0);
+            draw_joy(joy8_status[2], 10, 7, 10, 7, "in3", 0);
+            draw_joy(joy8_status[3], 15, 7, 15, 7, "in4", 0);
+            draw_joy(joy8_status[4], 20, 7, 20, 7, "in5", 0);
+            draw_joy(joy8_status[5], 25, 7, 25, 7, "in6", 0);
+            draw_joy(joy8_status[6], 30, 7, 30, 7, "in7", 0);
+            draw_joy(joy8_status[7], 35, 7, 35, 7, "in8", 0);
+            gotoxy(0, 24);
+            cprintf(page_message);
         }
         if (key = check_keys()) {
             while (check_keys()) {
@@ -1635,6 +1810,23 @@ int main(void)
             draw_joy(joy8_status[5], 5, 7, 5, 7, "sb6", 0);
             draw_joy(joy8_status[6], 10, 7, 10, 7, "sb7", 0);
             draw_joy(joy8_status[7], 15, 7, 15, 7, "sb8", 0);
+            gotoxy(0, 15);
+            cprintf(page_message);
+        }
+        if (current_page == PAGE_VIC20_INCEPTION) {
+            read_inception_vic20_joy();
+            gotoxy(0, 0);
+            cprintf("inception joy adapter");
+            draw_joy(joy8_status[0], 0, 1, 0, 1, "in1", 0);
+            draw_joy(joy8_status[1], 5, 1, 5, 1, "in2", 0);
+            draw_joy(joy8_status[2], 10, 1, 10, 1, "in3", 0);
+            draw_joy(joy8_status[3], 15, 1, 15, 1, "in4", 0);
+            draw_joy(joy8_status[4], 0, 7, 0, 7, "in5", 0);
+            draw_joy(joy8_status[5], 5, 7, 5, 7, "in6", 0);
+            draw_joy(joy8_status[6], 10, 7, 10, 7, "in7", 0);
+            draw_joy(joy8_status[7], 15, 7, 15, 7, "in8", 0);
+            gotoxy(0, 15);
+            cprintf(page_message);
         }
         if (key = check_keys()) {
             while (check_keys()) {
