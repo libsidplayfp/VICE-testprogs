@@ -1500,7 +1500,7 @@
 ################################################################################
 # Joystick/Mouse
 ################################################################################
-../userportjoy/,testjoy_c64.prg,interactive,0
+../testjoy/,testjoy_c64.prg,interactive,0
 ../mouse/1351/,mmtest-port1.prg,interactive,0
 ../mouse/1351/,mmtest-port2.prg,interactive,0
 ../mouse/1351/,mssiah.prg,interactive,0
