@@ -952,7 +952,7 @@ void keyboard_feed_works(CuTest *tc) {
     int length;
 
     unsigned char keyboard_command[] = { 
-        "\x02\x01"
+        "\x02\x02"
         "\xff\xff\xff\xff"
         "\xad\xe5\x30\x45"
 
@@ -996,7 +996,7 @@ void mem_set_works(CuTest *tc) {
     };
 
     unsigned char keyboard_command[] = { 
-        "\x02\x01"
+        "\x02\x02"
         "\xff\xff\xff\xff"
         "\xad\xe5\x30\x45"
 
@@ -1144,7 +1144,7 @@ void execute_until_return_works(CuTest *tc) {
     };
 
     unsigned char keyboard_command[] = { 
-        "\x02\x01"
+        "\x02\x02"
         "\xff\xff\xff\xff"
         "\xad\xe5\x30\x45"
 
@@ -1350,9 +1350,12 @@ void banks_available_works(CuTest *tc) {
         uint8_t name_length = cursor[3];
         unsigned char* name = &cursor[4];
 
+        fprintf(stderr, "NAME %.*s\n", name_length, name);
+
         if (id == 0) {
-            CuAssertTrue(tc, strncmp(name, "cpu", 3) == 0);
-            ++assert_count;
+            if(strncmp(name, "cpu", 3) == 0) {
+                ++assert_count;
+            }
         } else if (id == 2) {
             CuAssertTrue(tc, strncmp(name, "rom", 3) == 0);
             ++assert_count;
@@ -1480,8 +1483,9 @@ void resource_get_works(CuTest *tc) {
 }
 
 void palette_get_works(CuTest *tc) {
-    int length, i, assert_count;
+    int length, i;
     unsigned char *cursor;
+    int assert_count = 0;
 
     unsigned char command[] = {
         0x02, API_VERSION,
