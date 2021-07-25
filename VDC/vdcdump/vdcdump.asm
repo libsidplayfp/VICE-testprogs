@@ -13,6 +13,8 @@
 
         jmp     main
 
+fail    !byte   $00     ; 0 if tests pass, non zero if fail
+
 msgc    !byte    $3a
 
         ;       <cr>/<cr>
@@ -114,6 +116,8 @@ main    php
 
         lda     #<msgem
         sta     emu+1
+        
+        inc fail    ; Emulator layout so fail
 
         ;       printing results (summary)
 
@@ -175,6 +179,20 @@ xesp    ldx     #<msgr
 
         plp
 
+        ; Handle VICE debug cart
+        lda fail
+        bne +
+        ; Pass
+        sta $d7ff   ; Debug cart=0 for success
+        lda #5
+        sta $d020   ; Set border green for pass
+        jmp ++
++       ; Fail
+        lda #$ff
+        sta $d7ff   ; Ddebug cart=$ff for fail
+        lda #2
+        sta $d020   ; Set border red for fail
+++
         lda     $fffe
         cmp     #$17
         bne     pret
