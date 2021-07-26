@@ -49,28 +49,27 @@ include Makefile.config
 .SILENT:
 
 all: prereq
+#	12345678901234567890123456789012345678901234567890123456789012345678901234567890
 	echo "to run the tests use the following targets:"
 	echo "testall           - run all VICE tests"
-	echo "testx64"
-	echo "testx64sc"
-	echo "testx128c64"
-	echo "testx128"
-	echo "testxscpu64"
-	echo "testx64dtv"
-	echo "testxpet"
-	echo "testxcbm2"
-	echo "testxcbm5x0"
-	echo "testxvic"
-	echo "testxplus4"
-	echo "testvsid"
-	echo "testchameleon"
-	echo "testcham20"
+	echo ""
+	echo "to run individual tests:"
+	echo "testx64, testx64sc, testx128c64, testx128, testxscpu64, testx64dtv,"
+	echo "testxpet, testxcbm2, testxcbm5x0, testxvic, testxplus4, testvsid"
+	echo ""
+	echo "to run chameleon tests:"
+	echo "testchameleon, testcham20"
+	echo ""
+	echo "to check for differences in last results against latest results in the"
+	echo "repository, use:"
+	echo "checkx64, checkx64sc, checkx128c64, checkx128, checkxscpu64, checkx64dtv,"
+	echo "checkxpet, checkxcbm2, checkxcbm5x0, checkxvic, checkxplus4, checkvsid"
 #	echo "testhoxs64"
 #	echo "testmicro64"
 #	echo "testemu64"
 #	echo "testyace"
 
-	echo "-"
+	echo ""
 	echo "for wiki table use something like: make resultswiki | xclip -selection clipboard"
 
 ################################################################################
@@ -609,6 +608,70 @@ testu64: prereq
 ################################################################################
 # the following must be manually updated to use the right files
 ################################################################################
+
+.PHONY: checkx64 checkx64sc checkx128c64 checkx128 checkxscpu64 checkx64dtv \
+	checkxpet checkxcbm2 checkxcbm5x0 checkxvic checkxplus4 checkvsid
+
+checkx64: maketable
+	./maketable --list c64-testlist.in \
+		--results x64-result.txt "new" \
+		--results results/x64-$(X64HEAD)-result.txt "$(X64HEAD)" \
+		--diff
+checkx64sc: maketable
+	./maketable --list c64-testlist.in \
+		--results x64sc-result.txt "new" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "$(X64SCHEAD)" \
+		--diff
+checkx128c64: maketable
+	./maketable --list c64-testlist.in \
+		--results x128c64-result.txt "new" \
+		--results results/x128c64-$(X128C64HEAD)-result.txt "$(X128C64HEAD)" \
+		--diff
+checkx128: maketable
+	./maketable --list c128-testlist.in \
+		--results x128-result.txt "new" \
+		--results results/x128-$(X128HEAD)-result.txt "$(X128HEAD)" \
+		--diff
+checkxscpu64: maketable
+	./maketable --list scpu-testlist.in \
+		--results xscpu64-result.txt "new" \
+		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "$(XSCPU64HEAD)" \
+		--diff
+checkx64dtv: maketable
+	./maketable --list dtv-testlist.in \
+		--results xdtv64-result.txt "new" \
+		--results results/xdtv64-$(X64DTVHEAD)-result.txt "$(X64DTVHEAD)" \
+		--diff
+checkxpet: maketable
+	./maketable --list pet-testlist.in \
+		--results xpet-result.txt "new" \
+		--results results/xpet-$(XPETHEAD)-result.txt "$(XPETHEAD)" \
+		--diff
+checkxcbm2: maketable
+	./maketable --list cbm610-testlist.in \
+		--results xcbm2-result.txt "new" \
+		--results results/xcbm2-$(XCBM2HEAD)-result.txt "$(XCBM2HEAD)" \
+		--diff
+checkxcbm5x0: maketable
+	./maketable --list cbm510-testlist.in \
+		--results xcbm5x0-result.txt "new" \
+		--results results/xcbm5x0-$(XCBM5X0HEAD)-result.txt "$(XCBM5X0HEAD)" \
+		--diff
+checkxvic: maketable
+	./maketable --list vic20-testlist.in \
+		--results xvic-result.txt "new" \
+		--results results/xvic-$(XVICHEAD)-result.txt "$(XVICHEAD)" \
+		--diff
+checkxplus4: maketable
+	./maketable --list plus4-testlist.in \
+		--results xplus4-result.txt "new" \
+		--results results/xplus4-$(XPLUS4HEAD)-result.txt "$(XPLUS4HEAD)" \
+		--diff
+checkvsid: maketable
+	./maketable --list vsid-testlist.in \
+		--results vsid-result.txt "new" \
+		--results results/vsid-$(VSIDHEAD)-result.txt "$(VSIDHEAD)" \
+		--diff
 
 # VICE 3.3 -> r35872
 
