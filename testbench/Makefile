@@ -36,8 +36,8 @@ KERNAL64C128C128LASTSTRING=1.7.0_b15
 KERNAL64SCPU64LAST=1-7-0_b15
 KERNAL64SCPU64LASTSTRING=1.7.0_b15
 
-U64LAST=137
-U64LASTSTRING="1.37"
+U64LAST=141
+U64LASTSTRING="1.41"
 
 MICRO64LAST=20180316
 MICRO64LASTSTRING="1.00.2018.03.16 (build 719)"
@@ -171,7 +171,6 @@ u64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",isepic" \
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
-		| grep -v ",mountcrt" \
 		| grep -v ",mountp64" \
 		>> u64-testlist.txt
 
@@ -1195,6 +1194,7 @@ resultsu64: maketable u64-testlist.txt
 		--results results/u64-124-pal-result.txt "U64 PAL (1.24)" \
 		--results results/u64-128-result.txt "U64 PAL (1.28)" \
 		--results results/u64-133-result.txt "U64 PAL (1.33)" \
+		--results results/u64-137-result.txt "U64 PAL (1.37)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)" \
 		\
 		> results/u64.html

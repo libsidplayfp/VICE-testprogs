@@ -160,7 +160,12 @@ function u64_get_options
 #                exitoptions="-sidenginemodel 257"
                 new_sid_enabled=1
             ;;
+        "reu256k")
+# fixme: set size
+                reu_enabled=1
+            ;;
         "reu512k")
+# fixme: set size
                 reu_enabled=1
             ;;
         "geo512k")
@@ -187,7 +192,7 @@ function u64_get_options
                 fi
                 if [ "${1:0:9}" == "mountcrt:" ]; then
                     echo -ne "(cartridge:${1:9}) "
-                    echo TODO: mount crt "$2/${1:9}" > /dev/null
+                    u64_ucodenet --runcrt "$2/${1:9}"
                     if [ "$?" != "0" ]; then exit -1; fi
                     dd if="$2/${1:9}" bs=1 skip=23 count=1 of=$CDUMMY 2> /dev/null > /dev/null
                     mounted_crt="${1:9}"
@@ -230,6 +235,16 @@ function u64_get_cmdline_options
                 new_cia_enabled=1
             ;;
     esac
+}
+
+function u64_remove_cartridge
+{
+    u64_ucodenet --runcrt ./nocartridge.crt
+    if [ "$?" != "0" ]; then exit -1; fi
+#    sleep 1
+    u64_ucodenet --reset
+    if [ "$?" != "0" ]; then exit -1; fi
+#    sleep 1
 }
 
 ################################################################################
@@ -327,6 +342,7 @@ function u64_run_screenshot
         exitcode=255
     fi
 #    echo -ne "exitcode:" $exitcode
+    u64_remove_cartridge
 }
 
 ################################################################################
@@ -406,5 +422,6 @@ function u64_run_exitcode
         exitcode=$?
     fi
 #    echo "exited with: " $exitcode
+    u64_remove_cartridge
 }
 
