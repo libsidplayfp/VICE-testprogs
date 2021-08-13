@@ -27,6 +27,7 @@
 /* These tests are meant to be run against x64sc */
 
 #include <sys/socket.h>
+#include <netinet/tcp.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <arpa/inet.h>
@@ -66,6 +67,10 @@ void setup(CuTest *tc) {
     }
 
     sock = socket(AF_INET, SOCK_STREAM, 0);
+
+    /* Disable nagle algorithm to ensure we split commands over multiple packets */
+    int flag = 1;
+    int result = setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (char *)&flag, sizeof(int));
 
     fds[0].fd = sock;
     fds[0].events = POLLIN;
@@ -111,7 +116,10 @@ static unsigned char *write_uint32(uint32_t input, unsigned char *output) {
 
 void really_send_command(unsigned char* command, size_t length) {
     write_uint32(length - COMMAND_HEADER_LENGTH, &command[COMMAND_LENGTH]);
-    send(sock, command, length, 0);
+    for (int i = 0; i < length; i++) {
+        /* Send each byte to trigger incomplete reads on the other side */
+        send(sock, command + i, 1, 0);
+    }
 }
 
 #define send_command(command) really_send_command(command, sizeof(command))
@@ -925,16 +933,16 @@ void undump_works(CuTest *tc) {
     CuAssertIntEquals(tc, 0xcc, response[RESPONSE_TYPE]);
 
     /* dump */
-    getcwd(&dump_command[dump_strpos], 0xd2);
-    strcpy(&dump_command[dump_strpos + strlen(&dump_command[dump_strpos])], "/undump.bin");
+    getcwd((char *)&dump_command[dump_strpos], 0xd2);
+    strcpy((char *)&dump_command[dump_strpos + strlen((char *)&dump_command[dump_strpos])], "/undump.bin");
     send_command(dump_command);
 
     length = wait_for_response_id(tc, dump_command);
     CuAssertIntEquals(tc, 0x41, response[RESPONSE_TYPE]);
 
     /* undump */
-    getcwd(&undump_command[undump_strpos], 0xd2);
-    strcpy(&undump_command[undump_strpos + strlen(&undump_command[undump_strpos])], "/undump.bin");
+    getcwd((char *)&undump_command[undump_strpos], 0xd2);
+    strcpy((char *)&undump_command[undump_strpos + strlen((char *)&undump_command[undump_strpos])], "/undump.bin");
     send_command(undump_command);
 
     length = wait_for_response_id(tc, undump_command);
@@ -1298,9 +1306,9 @@ void autostart_works(CuTest *tc) {
         "                                                                      "
     ;
 
-    getcwd(&command[strpos], 0xd2);
+    getcwd((char *)&command[strpos], 0xd2);
 
-    strcpy(&command[strpos + strlen(&command[strpos])], "/cc65-test.prg");
+    strcpy((char *)&command[strpos + strlen((char *)&command[strpos])], "/cc65-test.prg");
 
     setup(tc);
 
@@ -1348,7 +1356,7 @@ void banks_available_works(CuTest *tc) {
         uint8_t item_size = cursor[0];
         uint16_t id = little_endian_to_uint16(&cursor[1]);
         uint8_t name_length = cursor[3];
-        unsigned char* name = &cursor[4];
+        char* name = (char *)&cursor[4];
 
         fprintf(stderr, "NAME %.*s\n", name_length, name);
 
@@ -1399,7 +1407,7 @@ void registers_available_works(CuTest *tc) {
         uint16_t id = cursor[1];
         uint16_t size = cursor[2];
         uint8_t name_length = cursor[3];
-        unsigned char* name = &cursor[4];
+        char* name = (char *)&cursor[4];
 
         fprintf(stderr, "REGISTER %.*s\n", name_length, name);
 
@@ -1693,9 +1701,9 @@ void mon_quit() {
     sleep(1);
 }
 
-int main(int argc, unsigned char** argv)
+int main(int argc, char** argv)
 {
-    unsigned char* single_test_name = NULL;
+    char* single_test_name = NULL;
     int ret;
     int i;
     CuSuite* suite = get_suite();
