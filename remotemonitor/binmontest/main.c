@@ -220,6 +220,7 @@ void checkpoint_set_works(CuTest *tc) {
         0x00,
         0x04,
         0x00,
+        0x01,
     };
 
     setup(tc);
@@ -230,7 +231,7 @@ void checkpoint_set_works(CuTest *tc) {
 
     CuAssertTrue(tc, response[RESPONSE_TYPE] == 0x11);
 
-    CuAssertTrue(tc, length - HEADER_LENGTH >= 21);
+    CuAssertTrue(tc, length - HEADER_LENGTH >= 22);
 
     // start
     CuAssertIntEquals(tc, little_endian_to_uint16(&set_command[COMMAND_HEADER_LENGTH + 0]), little_endian_to_uint16(&response[HEADER_LENGTH + 5]));
@@ -255,6 +256,12 @@ void checkpoint_set_works(CuTest *tc) {
 
     // ignore count
     CuAssertIntEquals(tc, 0, little_endian_to_uint32(&response[HEADER_LENGTH + 17]));
+
+    // condition
+    CuAssertIntEquals(tc, 0, response[HEADER_LENGTH + 17]);
+
+    // memspace
+    CuAssertIntEquals(tc, 1, response[HEADER_LENGTH + 22]);
 }
 
 void checkpoint_get_works(CuTest *tc) {
@@ -306,6 +313,8 @@ void checkpoint_get_works(CuTest *tc) {
 
     length = wait_for_response_id(tc, get_command);
 
+    CuAssertTrue(tc, length - HEADER_LENGTH >= 22);
+
     CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
 
     // start
@@ -331,6 +340,12 @@ void checkpoint_get_works(CuTest *tc) {
 
     // ignore count
     CuAssertIntEquals(tc, 0, little_endian_to_uint32(&response[HEADER_LENGTH + 17]));
+
+    // condition
+    CuAssertIntEquals(tc, 0, response[HEADER_LENGTH + 17]);
+
+    // memspace
+    CuAssertIntEquals(tc, 0, response[HEADER_LENGTH + 22]);
 }
 
 void checkpoint_delete_works(CuTest *tc) {
