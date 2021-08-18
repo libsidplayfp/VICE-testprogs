@@ -11,7 +11,7 @@ checkopts="$3 $4 $5 $6 $7 $8 $9 ${10} ${11} ${12} ${13}"
 
 if [ "$VERBOSE" == "1" ] ; then
     echo "-_"
-    echo $VICEDIR/$1 -default $checkopts -debugcart -limitcycles $LIMITCYCLES $2
+    echo ../$VICEDIR/$1 -default $checkopts $2 "# -debugcart -limitcycles $LIMITCYCLES"
 fi
 
 echo -ne $1" "$checkopts" # "
@@ -55,59 +55,59 @@ function alltests_prg
 echo $EMU":"$PROGPRE-X.$PROGEXT
 dotest $EMU $PROGPRE-tde-disk.$PROGEXT -default $OPTS
 
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-disk.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-disk.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-vdrive-disk.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-vdrive-disk.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-disk.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-disk.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-vdrive-disk.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-vdrive-disk.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
 echo "---"
 }
 
@@ -118,62 +118,62 @@ dotest $EMU $PROGPRE-tde-image.$PROGEXT -default $OPTS
 
 # the prg mode should make no difference when we are starting a disk image
 # -> the following block repeats 3 times
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
 
 # "handle tde at autostart" will let autostart disable TDE in favour if virtual devices
 # however, this does not change anything in the final state, so again all of the above repeats
 
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
 
 echo "---"
 }

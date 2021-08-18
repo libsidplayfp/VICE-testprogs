@@ -67,6 +67,9 @@ autostart-c64-vdrive-image.d64: autostart-c64-vdrive-image.prg
 test: $(TARGETS)
 	./autostart.sh x64
 	./autostart.sh x64sc
+testverbose: $(TARGETS)
+	./autostart.sh --verbose x64
+	./autostart.sh --verbose x64sc
 
 clean:
 	$(RM) *.prg
