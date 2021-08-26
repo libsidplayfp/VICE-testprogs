@@ -7,6 +7,9 @@ SYSLine:
       !byte $0B, $1C, $CE, $07, $9E, $37, $31, $38
       !byte $31, $00, $00, $00
 MainStart:
+      lda #$03
+      sta $3fff
+
       ldx  #$FF
       lda  #$0E
       sta  $FF00                        ; MMU CR
@@ -21,7 +24,7 @@ MainStart:
 
 
 HartDetect:
-      lda  #$03                         
+      lda  #$03
       sta  $D71B
       lda  $D71B
       cmp  #$03

@@ -29,6 +29,9 @@
     inx
     bne -
 
+    lda #$03
+    sta $3fff
+
     lda  #$0E
     sta  $FF00                        ; MMU CR
 
