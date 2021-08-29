@@ -7,16 +7,20 @@ VERBOSE=0
 function dotest
 {
 
-checkopts="$3 $4 $5 $6 $7 $8 $9 ${10} ${11} ${12} ${13}"
+checkopts="$5 $6 $7 $8 $9 ${10} ${11} ${12} ${13} ${14} ${15} ${16} ${17} ${18}"
+
+if [ "$3" == "0" ] ; then
+    return
+fi
 
 if [ "$VERBOSE" == "1" ] ; then
     echo "-_"
-    echo ../$VICEDIR/$1 -default $checkopts $2 "# -debugcart -limitcycles $LIMITCYCLES"
+    echo ../$VICEDIR/$1 -default $checkopts $PROGPRE-$2.$PROGEXT "# -debugcart -limitcycles $LIMITCYCLES"
 fi
 
-echo -ne $1" "$checkopts" # "
+echo -ne $1" "$checkopts" # ["$2"] "
 
-../$VICEDIR/$1 -default $checkopts -debugcart -console -warp -limitcycles $LIMITCYCLES $2 1> /dev/null 2> /dev/null
+../$VICEDIR/$1 -default $checkopts -debugcart -console -warp -limitcycles $LIMITCYCLES $PROGPRE-$2.$PROGEXT 1> /dev/null 2> /dev/null
 exitcode=$?
 
 #echo $exitcode
@@ -41,154 +45,625 @@ case "$exitcode" in
             exitstatus="error"
         ;;
 esac
-echo -e "$exitstatus" $NC
+echo -ne "$exitstatus" $NC
+
+if [ "$4" == "$exitcode" ] ; then
+    echo -ne $GREEN " [expected]" $NC
+else
+    echo -ne $RED " [error]" $NC
+fi
+
+echo -ne "\n"
 
 }
 
-# prg autostart modes are:
+# -autostartprgmode modes are:
 # 0 : virtual filesystem
 # 1 : inject to ram (there might be no drive)
 # 2 : copy to d64
 
+# -deviceX modes are:
+# 0: None           ATTACH_DEVICE_NONE
+# 1: Filesystem     ATTACH_DEVICE_FS
+# 2: OpenCBM        ATTACH_DEVICE_REAL
+# 4: virtual        ATTACH_DEVICE_VIRT  <- this seems to be unused/only used internally?
+
 function alltests_prg
 {
 echo $EMU":"$PROGPRE-X.$PROGEXT
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT -default $OPTS
+dotest $EMU tde-disk 1 0 -default $OPTS
 
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+echo "autostart mode 0 (virtual filesystem) - do not handle TDE"
+## fsdevice = none
+# TDEonly
+dotest $EMU none        1   1 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU none        1   1 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none        0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU none        0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+## fsdevice = filesystem
+# TDEonly
+dotest $EMU tde         1   1 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU tde         1   1 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none        0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU none        0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-disk.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-disk.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+echo "autostart mode 1 (inject to RAM) - do not handle TDE"
+## fsdevice = none
+# TDEonly
+dotest $EMU tde         1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde         1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+## fsdevice = filesystem
+# TDEonly
+dotest $EMU tde         1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde         1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none        1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU none        1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde.$PROGEXT         $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vfs.$PROGEXT         $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+echo "autostart mode 2 (copy to disk image) - do not handle TDE"
+## fsdevice = none
+# TDEonly
+dotest $EMU tde-disk    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none        0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU none        0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-disk 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-disk 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-disk.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none.$PROGEXT        $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-disk.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-disk.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+## fsdevice = filesystem
+# TDEonly
+dotest $EMU tde-disk    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none        0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU none        0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-disk 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-disk 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+
+echo "autostart mode 0 (virtual filesystem) - handle TDE"
+## fsdevice = none
+# TDEonly
+dotest $EMU tde         1   1 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         1   1 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none        0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU none        0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+
+## fsdevice = filesystem
+# TDEonly
+dotest $EMU tde         1   1 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         1   1 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none        0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU none        0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+
+echo "autostart mode 1 (inject to RAM) - handle TDE"
+## fsdevice = none
+# TDEonly
+dotest $EMU tde         1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none        0   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU none        0   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU none        1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+
+## fsdevice = filesystem
+# TDEonly
+dotest $EMU tde         1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none        0   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU none        0   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde         0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU vfs         1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU vfs         0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+
+echo "autostart mode 2 (copy to disk image) - handle TDE"
+## fsdevice = none
+# TDEonly
+dotest $EMU tde-disk    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none        0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU none        0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-disk 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-disk 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+
+## fsdevice = filesystem
+# TDEonly
+dotest $EMU tde-disk    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none        0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU none        0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-disk    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-disk 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-disk 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-disk 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
 echo "---"
 }
 
 function alltests_disk
 {
 echo $EMU":"$PROGPRE-X.$PROGEXT
-dotest $EMU $PROGPRE-tde-image.$PROGEXT -default $OPTS
+dotest $EMU tde-image 1 0 -default $OPTS
 
 # the prg mode should make no difference when we are starting a disk image
 # -> the following block repeats 3 times
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+echo "autostart mode 0 (virtual filesystem) - do not handle TDE"
+## fsdevice = none
+# TDEonly
+dotest $EMU tde-image    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none-image   0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU none-image   0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+## fsdevice = filesystem
+# TDEonly
+dotest $EMU tde-image    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none-image   0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU none-image   0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde +autostart-warp
+
+echo "autostart mode 1 (inject to RAM) - do not handle TDE"
+
+## fsdevice = none
+# TDEonly
+dotest $EMU tde-image    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none-image   0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU none-image   0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+
+## fsdevice = filesystem
+# TDEonly
+dotest $EMU tde-image    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none-image   0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU none-image   0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 +autostart-handle-tde +autostart-warp
+
+echo "autostart mode 2 (copy to disk image) - do not handle TDE"
+
+## fsdevice = none
+# TDEonly
+dotest $EMU tde-image    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none-image   0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU none-image   0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+
+## fsdevice = filesystem
+# TDEonly
+dotest $EMU tde-image    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none-image   0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU none-image   0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 +autostart-handle-tde +autostart-warp
 
 # "handle tde at autostart" will let autostart disable TDE in favour if virtual devices
 # however, this does not change anything in the final state, so again all of the above repeats
 
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+echo "autostart mode 0 (virtual filesystem) - handle TDE"
 
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+## fsdevice = none
+# TDEonly
+dotest $EMU tde-image    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none-image   0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU none-image   0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
 
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-tde-image.$PROGEXT    $OPTS -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-none-image.$PROGEXT   $OPTS +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
-dotest $EMU $PROGPRE-vdrive-image.$PROGEXT $OPTS +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+## fsdevice = filesystem
+# TDEonly
+dotest $EMU tde-image    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none-image   0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU none-image   0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 0 -autostart-handle-tde +autostart-warp
 
+echo "autostart mode 1 (inject to RAM) - handle TDE"
+
+## fsdevice = none
+# TDEonly
+dotest $EMU tde-image    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none-image   0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU none-image   0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+
+## fsdevice = filesystem
+# TDEonly
+dotest $EMU tde-image    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none-image   0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU none-image   0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 1 -autostart-handle-tde +autostart-warp
+
+echo "autostart mode 2 (copy to disk image) - handle TDE"
+
+## fsdevice = none
+# TDEonly
+dotest $EMU tde-image    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    1   0 $OPTS -device8 0 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none-image   0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU none-image   0 255 $OPTS -device8 0 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 0 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 0 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 0 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+
+## fsdevice = filesystem
+# TDEonly
+dotest $EMU tde-image    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    1   0 $OPTS -device8 1 $IECDEVOFF -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVOFF -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+# none
+dotest $EMU none-image   0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU none-image   0 255 $OPTS -device8 1 $IECDEVOFF +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+# vfs only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU tde-image    0 255 $OPTS -device8 1 $IECDEVON  -drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+# iecdev only
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 1   0 $OPTS -device8 1 $IECDEVON  +drive8truedrive +virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde -autostart-warp
+dotest $EMU vdrive-image 0 255 $OPTS -device8 1 $IECDEVON  +drive8truedrive -virtualdev -autostartprgmode 2 -autostart-handle-tde +autostart-warp
+
+echo "---"
+}
+
+
+function testc64_longnames
+{
+echo "long names with virtual fs:"
+PROGEXT=prg
+PROGPRE=./autostart-c64-567
+dotest $EMU vfs         1   0 $OPTS -fslongnames -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+PROGPRE=./autostart-c64-5678
+dotest $EMU vfs         1   0 $OPTS -fslongnames -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+PROGPRE=./autostart-c64-5678901
+dotest $EMU vfs         1   0 $OPTS -fslongnames -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+PROGPRE=./autostart-c64-56789012
+dotest $EMU vfs         1   0 $OPTS -fslongnames -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
+PROGPRE=./autostart-c64-56789012345678901234567890123456789012345678901
+dotest $EMU vfs         1   0 $OPTS -fslongnames -device8 1 $IECDEVOFF +drive8truedrive -virtualdev -autostartprgmode 0 +autostart-handle-tde -autostart-warp
 echo "---"
 }
 
 # x64
 function testx64
 {
+IECDEVON=-iecdevice8
+IECDEVOFF=+iecdevice8
 LIMITCYCLES=30000000
 EMU=x64
 OPTS=
-echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
+testc64_longnames
 PROGPRE=./autostart-c64
 PROGEXT=prg
 alltests_prg
-echo "when handling TDE at autostart, all tests pass:"
 PROGPRE=./autostart-c64
 PROGEXT=d64
 alltests_disk
@@ -197,14 +672,15 @@ alltests_disk
 # x64sc
 function testx64sc
 {
+IECDEVON=-iecdevice8
+IECDEVOFF=+iecdevice8
 LIMITCYCLES=30000000
 EMU=x64sc
 OPTS=
-echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
+testc64_longnames
 PROGPRE=./autostart-c64
 PROGEXT=prg
 alltests_prg
-echo "when handling TDE at autostart, all tests pass:"
 PROGPRE=./autostart-c64
 PROGEXT=d64
 alltests_disk
@@ -213,136 +689,155 @@ alltests_disk
 # x128 (c64 mode)
 function testx128
 {
-LIMITCYCLES=10000000
+IECDEVON=-iecdevice8
+IECDEVOFF=+iecdevice8
+LIMITCYCLES=40000000
 EMU=x128
-OPTS=-go64
-echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
-PROG=./selftest/c64-pass.prg
-alltests
-echo "all tests pass"
-PROG=./selftest/c64-pass.d64
-alltests
 
 # x128 (VIC)
 EMU=x128
 OPTS=-40col
-echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
-PROG=./selftest/c128-pass.prg
-alltests
-echo "all tests pass"
-PROG=./selftest/c128-pass.d64
-alltests
+#testc64_longnames
+PROGPRE=./autostart-c128
+PROGEXT=prg
+alltests_prg
+PROGPRE=./autostart-c128
+PROGEXT=d64
+alltests_disk
 
 # x128 (VDC)
 EMU=x128
 OPTS=-80col
-echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
-PROG=./selftest/c128-pass.prg
-alltests
-echo "all tests pass"
-PROG=./selftest/c128-pass.d64
-alltests
+#testc64_longnames
+PROGPRE=./autostart-c128
+PROGEXT=prg
+alltests_prg
+PROGPRE=./autostart-c128
+PROGEXT=d64
+alltests_disk
+
+# c128 (c64 mode)
+OPTS=-go64
+#testc64_longnames
+PROGPRE=./autostart-c64
+PROGEXT=prg
+alltests_prg
+PROGPRE=./autostart-c64
+PROGEXT=d64
+alltests_disk
 }
 
 # vic20
 function testxvic
 {
-LIMITCYCLES=12000000
+IECDEVON=-iecdevice8
+IECDEVOFF=+iecdevice8
+LIMITCYCLES=30000000
 EMU=xvic
 OPTS="-memory 8k"
-echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
-PROG=./selftest/vic20-pass.prg
-alltests
-echo "all tests pass"
-PROG=./selftest/vic20-pass.d64
-alltests
+#testc64_longnames
+PROGPRE=./autostart-vic20
+PROGEXT=prg
+alltests_prg
+PROGPRE=./autostart-vic20
+PROGEXT=d64
+alltests_disk
 }
 
 # x64dtv
 function testx64dtv
 {
+IECDEVON=-iecdevice8
+IECDEVOFF=+iecdevice8
 LIMITCYCLES=50000000
 EMU=x64dtv
 OPTS=
-echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
-PROG=./selftest/dtv-pass.prg
-alltests
-echo "all tests pass"
-PROG=./selftest/dtv-pass.d64
-alltests
+PROGPRE=./autostart-c64
+PROGEXT=prg
+alltests_prg
+PROGPRE=./autostart-c64
+PROGEXT=d64
+alltests_disk
 }
 
 # xplus4
 function testxplus4
 {
-LIMITCYCLES=20000000
+IECDEVON=-iecdevice8
+IECDEVOFF=+iecdevice8
+LIMITCYCLES=30000000
 EMU=xplus4
 OPTS=
-echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
-PROG=./selftest/plus4-pass.prg
-alltests
-echo "all tests pass"
-PROG=./selftest/plus4-pass.d64
-alltests
+PROGPRE=./autostart-plus4
+PROGEXT=prg
+alltests_prg
+PROGPRE=./autostart-plus4
+PROGEXT=d64
+alltests_disk
 }
 
 # xpet
 function testxpet
 {
+IECDEVON=
+IECDEVOFF=
 LIMITCYCLES=20000000
 EMU=xpet
 OPTS="-drive8type 8250"
-echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
-echo "FIXME: the same four tests fail with handle TDE enabled - this should not happen"
-PROG=./selftest/pet-pass.prg
-alltests
-echo "all tests pass"
-PROG=./selftest/pet-pass.d82
-alltests
+PROGPRE=./autostart-pet
+PROGEXT=prg
+alltests_prg
+PROGPRE=./autostart-pet
+PROGEXT=d82
+alltests_disk
 }
 
 # xscpu64
 function testxscpu64
 {
+IECDEVON=-iecdevice8
+IECDEVOFF=+iecdevice8
 LIMITCYCLES=12000000
 EMU=xscpu64
 OPTS=
-echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
-PROG=./selftest/scpu-pass.prg
-alltests
-echo "all tests pass"
-PROG=./selftest/scpu-pass.d64
-alltests
+PROGPRE=./autostart-c64
+PROGEXT=prg
+alltests_prg
+PROGPRE=./autostart-c64
+PROGEXT=d64
+alltests_disk
 }
 
 # xcbm2
 function testxcbm2
 {
+IECDEVON=
+IECDEVOFF=
 LIMITCYCLES=80000000
 EMU=xcbm2
 OPTS="-drive8type 8250"
-echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
-echo "FIXME: the same four tests fail with handle TDE enabled - this should not happen"
-PROG=./selftest/cbm610-pass.prg
-alltests
-echo "all tests pass"
-PROG=./selftest/cbm610-pass.d82
-alltests
+PROGPRE=./autostart-cbm610
+PROGEXT=prg
+alltests_prg
+PROGPRE=./autostart-cbm610
+PROGEXT=d82
+alltests_disk
 }
 
 # xcbm5x0
 function testxcbm5x0
 {
+IECDEVON=
+IECDEVOFF=
 LIMITCYCLES=80000000
 EMU=xcbm5x0
 OPTS="-drive8type 8250"
-echo "the first four tests fail as expected. TDE enabled, handle TDE disabled and autostartmode 0 can not work."
-echo "FIXME: the same four tests fail with handle TDE enabled - this should not happen"
-PROG=./selftest/cbm510-pass.prg
-alltests
-echo "all tests pass"
-PROG=./selftest/cbm510-pass.d82
-alltests
+PROGPRE=./autostart-cbm510
+PROGEXT=prg
+alltests_prg
+PROGPRE=./autostart-cbm510
+PROGEXT=d82
+alltests_disk
 }
 
 function dohelp

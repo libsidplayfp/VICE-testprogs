@@ -4,7 +4,7 @@
 #if 0
 
 print "{clr}"
-poke 646,peek(53281)
+poke 646,peek(BGCOLOR)
 rem * goto50 into keyboard buffer, so we start from 50 on error
 poke 631,64+7
 poke 632,64+15
@@ -27,7 +27,7 @@ open 1,8,0:close 1: if (st and 128) = 128 then e = 1
 #endif
 
 
-print "{white}{clr}vice autostart test":print
+print "{clr}vice autostart test":print
 
 print "expecting:"
 print "tde:"; EXPECT_TDE ;
@@ -51,8 +51,8 @@ gosub 3000
 print
 gosub 4000
 
-if f = 0 then poke DEBUGREG , 0: poke 53280, 5: print "all ok"
-if f <> 0 then poke DEBUGREG , 255: poke 53280, 2: print "failed"
+if f = 0 then poke DEBUGREG , 0: poke BORDERCOLOR, 5: print "all ok"
+if f <> 0 then poke DEBUGREG , 255: poke BORDERCOLOR, 2: print "failed"
 
 end
 
@@ -107,18 +107,18 @@ rem 1 : inject to ram (there might be no drive)
 rem 2 : copy to d64
 
 
-rem $90/144:   Kernal I/O Status Word ST
+rem $90/144:   kernal i/o status word st
 rem
 rem   +-------+---------------------------------+
-rem   | Bit 7 |   1 = Device not present (S)    |
-rem   |       |   1 = End of Tape (T)           |
-rem   | Bit 6 |   1 = End of File (S+T)         |
-rem   | Bit 5 |   1 = Checksum error (T)        |
-rem   | Bit 4 |   1 = Different error (T)       |
-rem   | Bit 3 |   1 = Too many bytes (T)        |
-rem   | Bit 2 |   1 = Too few bytes (T)         |
-rem   | Bit 1 |   1 = Timeout Read (S)          |
-rem   | Bit 0 |   1 = Timeout Write (S)         |
+rem   | bit 7 |   1 = device not present (s)    |
+rem   |       |   1 = end of tape (t)           |
+rem   | bit 6 |   1 = end of file (s+t)         |
+rem   | bit 5 |   1 = checksum error (t)        |
+rem   | bit 4 |   1 = different error (t)       |
+rem   | bit 3 |   1 = too many bytes (t)        |
+rem   | bit 2 |   1 = too few bytes (t)         |
+rem   | bit 1 |   1 = timeout read (s)          |
+rem   | bit 0 |   1 = timeout write (s)         |
 rem   +-------+---------------------------------+
 rem
-rem   (S) = Serial bus, (T) = Tape
+rem   (s) = serial bus, (t) = tape
