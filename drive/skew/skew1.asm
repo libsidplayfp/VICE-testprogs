@@ -515,10 +515,13 @@ finished:
         bpl -
 
 waitrestart:
+        ldx #5
         lda #$00        ; success
-        bcs +
+        bcc +
+        ldx #10
         lda #$ff        ; failure
 +       sta $d7ff
+        stx $d020
 
         cli
 
