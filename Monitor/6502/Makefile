@@ -1,23 +1,34 @@
 
-all: testlegal
+EMU=x64sc -default -minimize
+
+all: testlegal testundocs
 
 ################################################################################
 
-# remove the address/hexdump from monitor disassembly
-disasm0.txt: disasm.txt
-	cat disasm.txt | sed 's:^.....................::g' > disasm0.txt
+allundocs.bin: allundocs.txt
+	acme --setpc 4096 -f plain -o allundocs.bin allundocs.txt
 
-# make a file with monitor commands to reassemble the file
-asmcmds.txt: disasm0.txt
-	echo -ne "a 1000 " > asmcmds.txt
-	cat disasm0.txt >> asmcmds.txt
-	echo -n "\n" >> asmcmds.txt
-	echo "s \"assembled.prg\" 0 1000 15ff" >> asmcmds.txt
-	echo "quit" >> asmcmds.txt
+undocsdisasm.txt: allundocs.bin
+	echo "logname \"undocsdisasm.txt\"" > disasmcmds.txt
+	echo "bl \"allundocs.bin\" 0 1000" >> disasmcmds.txt
+	echo "log on" >> disasmcmds.txt
+	echo "d 1000 10e2" >> disasmcmds.txt
+	echo "log off" >> disasmcmds.txt
+	echo "quit" >> disasmcmds.txt
+	$(RM) undocsdisasm.txt
+	$(EMU) -moncommands disasmcmds.txt > vicelog
 
-assembled.prg: asmcmds.txt
-	x64sc -moncommands asmcmds.txt
-	
+allundocs0.txt: allundocs.txt
+	cat allundocs.txt | sed 's:^.*;::g' > allundocs0.txt
+
+allundocs1.txt: undocsdisasm.txt
+	cat undocsdisasm.txt | sed 's:^...................::g' > allundocs1.txt
+
+testundocs0: allundocs0.txt allundocs1.txt
+	diff --suppress-common-lines --side-by-side allundocs0.txt allundocs1.txt
+
+testundocs: testundocs0
+
 ################################################################################
 	
 legalopcodes.bin: legalopcodes.txt
@@ -31,7 +42,7 @@ legaldisasm.txt: legalopcodes.bin
 	echo "log off" >> disasmcmds.txt
 	echo "quit" >> disasmcmds.txt
 	$(RM) legaldisasm.txt
-	x64sc -moncommands disasmcmds.txt
+	$(EMU) -moncommands disasmcmds.txt > vicelog
 	
 legalopcodes0.txt: legalopcodes.txt
 	cat legalopcodes.txt | sed 's:^.*;::g' > legalopcodes0.txt
@@ -61,3 +72,9 @@ clean:
 	$(RM)	legaldisasm.bin
 	$(RM)	legalopcodes.bin legalopcodes2.bin
 	$(RM)	legalopcodes0.txt legalopcodes1.txt legalopcodes2.txt
+
+	$(RM)	allundocs.bin
+	$(RM)	undocsdisasm.txt
+	$(RM)	allundocs0.txt allundocs1.txt
+	
+	$(RM)	vicelog
