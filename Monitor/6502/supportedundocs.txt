@@ -5,7 +5,6 @@
 !byte $0B,$12       ;  ANC #$12
 !byte $0C,$12,$34   ;  NOOP $3412
 !byte $0F,$12,$34   ;  SLO $3412
-!byte $12           ;  JAM
 !byte $13,$12       ;  SLO ($12),Y
 !byte $14,$12       ;  NOOP $12,X
 !byte $17,$12       ;  SLO $12,X
@@ -13,56 +12,35 @@
 !byte $1B,$12,$34   ;  SLO $3412,Y
 !byte $1C,$12,$34   ;  NOOP $3412,X
 !byte $1F,$12,$34   ;  SLO $3412,X
-!byte $22           ;  JAM
 !byte $23,$12       ;  RLA ($12,X)
 !byte $27,$12       ;  RLA $12
-!byte $2B,$12       ;  ANC #$12
 !byte $2F,$12,$34   ;  RLA $3412
-!byte $32           ;  JAM
 !byte $33,$12       ;  RLA ($12),Y
-!byte $34,$12       ;  NOOP $12,X
 !byte $37,$12       ;  RLA $12,X
-!byte $3A           ;  NOOP
 !byte $3B,$12,$34   ;  RLA $3412,Y
-!byte $3C,$12,$34   ;  NOOP $3412,X
 !byte $3F,$12,$34   ;  RLA $3412,X
-!byte $42           ;  JAM
 !byte $43,$12       ;  SRE ($12,X)
-!byte $44,$12       ;  NOOP $12
 !byte $47,$12       ;  SRE $12
 !byte $4B,$12       ;  ASR #$12
 !byte $4F,$12,$34   ;  SRE $3412
-!byte $52           ;  JAM
 !byte $53,$12       ;  SRE ($12),Y
-!byte $54,$12       ;  NOOP $12,X
 !byte $57,$12       ;  SRE $12,X
-!byte $5A           ;  NOOP
 !byte $5B,$12,$34   ;  SRE $3412,Y
-!byte $5C,$12,$34   ;  NOOP $3412,X
 !byte $5F,$12,$34   ;  SRE $3412,X
 !byte $61,$12       ;  ADC ($12,X)
-!byte $62           ;  JAM
 !byte $63,$12       ;  RRA ($12,X)
-!byte $64,$12       ;  NOOP $12
 !byte $67,$12       ;  RRA $12
 !byte $6B,$12       ;  ARR #$12
 !byte $6F,$12,$34   ;  RRA $3412
-!byte $72           ;  JAM
 !byte $73,$12       ;  RRA ($12),Y
-!byte $74,$12       ;  NOOP $12,X
 !byte $77,$12       ;  RRA $12,X
-!byte $7A           ;  NOOP
 !byte $7B,$12,$34   ;  RRA $3412,Y
-!byte $7C,$12,$34   ;  NOOP $3412,X
 !byte $7F,$12,$34   ;  RRA $3412,X
 !byte $80,$12       ;  NOOP #$12
-!byte $82,$12       ;  NOOP #$12
 !byte $83,$12       ;  SAX ($12,X)
 !byte $87,$12       ;  SAX $12
-!byte $89,$12       ;  NOOP #$12
 !byte $8B,$12       ;  ANE #$12
 !byte $8F,$12,$34   ;  SAX $3412
-!byte $92           ;  JAM
 !byte $93,$12       ;  SHA ($12),Y
 !byte $97,$12       ;  SAX $12,Y
 !byte $9B,$12,$34   ;  SHS $3412,Y
@@ -73,34 +51,23 @@
 !byte $A7,$12       ;  LAX $12
 !byte $AB,$12       ;  LXA #$12
 !byte $AF,$12,$34   ;  LAX $3412
-!byte $B2           ;  JAM
 !byte $B3,$12       ;  LAX ($12),Y
 !byte $B7,$12       ;  LAX $12,Y
 !byte $BB,$12,$34   ;  LAS $3412,Y
 !byte $BF,$12,$34   ;  LAX $3412,Y
-!byte $C2,$12       ;  NOOP #$12
 !byte $C3,$12       ;  DCP ($12,X)
 !byte $C7,$12       ;  DCP $12
 !byte $CB,$12       ;  SBX #$12
 !byte $CF,$12,$34   ;  DCP $3412
-!byte $D2           ;  JAM
 !byte $D3,$12       ;  DCP ($12),Y
-!byte $D4,$12       ;  NOOP $12,X
 !byte $D7,$12       ;  DCP $12,X
-!byte $DA           ;  NOOP
 !byte $DB,$12,$34   ;  DCP $3412,Y
-!byte $DC,$12,$34   ;  NOOP $3412,X
 !byte $DF,$12,$34   ;  DCP $3412,X
-!byte $E2,$12       ;  NOOP #$12
 !byte $E3,$12       ;  ISB ($12,X)
 !byte $E7,$12       ;  ISB $12
 !byte $EB,$12       ;  USBC #$12
 !byte $EF,$12,$34   ;  ISB $3412
-!byte $F2           ;  JAM
 !byte $F3,$12       ;  ISB ($12),Y
-!byte $F4,$12       ;  NOOP $12,X
 !byte $F7,$12       ;  ISB $12,X
-!byte $FA           ;  NOOP
 !byte $FB,$12,$34   ;  ISB $3412,Y
-!byte $FC,$12,$34   ;  NOOP $3412,X
 !byte $FF,$12,$34   ;  ISB $3412,X
