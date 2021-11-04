@@ -1,22 +1,7 @@
 
+EMU=xpet -default -model SuperPET -minimize
+
 all: testlegal
-
-################################################################################
-
-# remove the address/hexdump from monitor disassembly
-disasm0.txt: disasm.txt
-	cat disasm.txt | sed 's:^.....................::g' > disasm0.txt
-
-# make a file with monitor commands to reassemble the file
-asmcmds.txt: disasm0.txt
-	echo -ne "a 1000 " > asmcmds.txt
-	cat disasm0.txt >> asmcmds.txt
-	echo -n "\n" >> asmcmds.txt
-	echo "s \"assembled.prg\" 0 1000 15ff" >> asmcmds.txt
-	echo "quit" >> asmcmds.txt
-
-assembled.prg: asmcmds.txt
-	xpet -moncommands asmcmds.txt
 
 ################################################################################
 	
@@ -28,31 +13,49 @@ legaldisasm.txt: legalopcodes.bin
 	echo "bl \"legalopcodes.bin\" 0 1000" >> disasmcmds.txt
 	echo "log on" >> disasmcmds.txt
 	echo "cpu 6809" >> disasmcmds.txt
+	echo "bank 6809" >> disasmcmds.txt
 	echo "d 1000 563c" >> disasmcmds.txt
+#	echo "d 1000 1017" >> disasmcmds.txt
 	echo "log off" >> disasmcmds.txt
 	echo "quit" >> disasmcmds.txt
 	$(RM) legaldisasm.txt
-	xpet -moncommands disasmcmds.txt
+	$(EMU) -moncommands disasmcmds.txt > vicelog
 	
 legalopcodes0.txt: legalopcodes.txt
 	cat legalopcodes.txt | sed 's:^.*;::g' > legalopcodes0.txt
 
 legalopcodes1.txt: legaldisasm.txt
-	cat legaldisasm.txt | sed 's:^...................::g' > legalopcodes1.txt
+	cat legaldisasm.txt | sed 's:^....................::g' | sed 's: /\*.*\*/::g' > legalopcodes1.txt
 	
 testlegal0: legalopcodes0.txt legalopcodes1.txt
 	diff --suppress-common-lines --side-by-side legalopcodes0.txt legalopcodes1.txt
 
-legalopcodes2.txt: legalopcodes1.txt
-	cat legalopcodes1.txt | sed 's: A$$::g' > legalopcodes2.txt	
+#legalopcodes2.txt: legalopcodes1.txt
+#	cat legalopcodes1.txt | sed 's: A$$::g' > legalopcodes2.txt	
 
-legalopcodes2.bin: legalopcodes2.txt
-	acme --setpc 4096 -f plain -o legalopcodes2.bin legalopcodes2.txt
-	
-testlegal1: legalopcodes.bin legalopcodes2.bin
-	diff -s legalopcodes.bin legalopcodes2.bin
-	
-testlegal: testlegal0 testlegal1
+# we dont have an external 6809 assembler atm
+#legalopcodes2.bin: legalopcodes2.txt
+#	acme --setpc 4096 -f plain -o legalopcodes2.bin legalopcodes2.txt
+#	
+#testlegal1: legalopcodes.bin legalopcodes2.bin
+#	diff -s legalopcodes.bin legalopcodes2.bin
+
+# somehow assembling 6809 doesnt work at all
+legalopcodes3.bin: legalopcodes1.txt
+	echo "cpu 6809" > disasmcmds.txt
+	echo "bank 6809" >> disasmcmds.txt
+	echo -ne "a 1000 " >> disasmcmds.txt
+	cat legalopcodes1.txt >> disasmcmds.txt
+	echo -ne "\n" >> disasmcmds.txt
+	echo "bs \"legalopcodes3.bin\" 0 1000 563c" >> disasmcmds.txt
+#	echo "bs \"legalopcodes3.bin\" 0 1000 1017" >> disasmcmds.txt
+	echo "quit" >> disasmcmds.txt
+	$(EMU) -moncommands disasmcmds.txt > vicelog
+
+testlegal2: legalopcodes.bin legalopcodes3.bin
+	diff -q legalopcodes.bin legalopcodes3.bin
+
+testlegal: testlegal0 testlegal2
 
 ################################################################################
 
@@ -60,5 +63,7 @@ clean:
 	$(RM)	disasmcmds.txt
 	$(RM)	legaldisasm.txt
 	$(RM)	legaldisasm.bin
-	$(RM)	legalopcodes.bin legalopcodes2.bin
+	$(RM)	legalopcodes.bin legalopcodes2.bin legalopcodes3.bin
 	$(RM)	legalopcodes0.txt legalopcodes1.txt legalopcodes2.txt
+
+	$(RM)	vicelog
