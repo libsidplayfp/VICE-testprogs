@@ -1537,9 +1537,8 @@ void palette_get_works(CuTest *tc) {
         uint8_t r = cursor[1];
         uint8_t g = cursor[2];
         uint8_t b = cursor[3];
-        uint8_t d = cursor[4];
 
-        CuAssertIntEquals(tc, 4, item_size);
+        CuAssertIntEquals(tc, 3, item_size);
 
         /* black */
         if (i == 0) {
