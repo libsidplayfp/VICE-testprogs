@@ -6,7 +6,7 @@ all: testlegal
 ################################################################################
 	
 legalopcodes.bin: legalopcodes.txt
-	acme --setpc 4096 -f plain -o legalopcodes.bin legalopcodes.txt
+	acme9 --setpc 4096 -f plain -o legalopcodes.bin legalopcodes.txt
 	
 legaldisasm.txt: legalopcodes.bin
 	echo "logname \"legaldisasm.txt\"" > disasmcmds.txt
@@ -14,7 +14,7 @@ legaldisasm.txt: legalopcodes.bin
 	echo "log on" >> disasmcmds.txt
 	echo "cpu 6809" >> disasmcmds.txt
 	echo "bank 6809" >> disasmcmds.txt
-	echo "d 1000 563c" >> disasmcmds.txt
+	echo "d 1000 6fbc" >> disasmcmds.txt
 #	echo "d 1000 1017" >> disasmcmds.txt
 	echo "log off" >> disasmcmds.txt
 	echo "quit" >> disasmcmds.txt
