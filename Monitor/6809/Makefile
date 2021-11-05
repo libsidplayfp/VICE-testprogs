@@ -6,7 +6,7 @@ all: testlegal
 ################################################################################
 	
 legalopcodes.bin: legalopcodes.txt
-	acme9 --setpc 4096 -f plain -o legalopcodes.bin legalopcodes.txt
+	acme --setpc 4096 -f plain -o legalopcodes.bin legalopcodes.txt
 	
 legaldisasm.txt: legalopcodes.bin
 	echo "logname \"legaldisasm.txt\"" > disasmcmds.txt
