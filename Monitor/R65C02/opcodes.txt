@@ -14,7 +14,7 @@
 !byte $0D,$12,$34   ;  ORA $3412
 !byte $0E,$12,$34   ;  ASL $3412
 !byte $0F,$12,$34   ;  BBR0 $12,$1053
-!byte $10,$12       ;  BPL $1025
+!byte $10,$12       ;  BPL $1033
 !byte $11,$12       ;  ORA ($12),Y
 !byte $12,$34       ;  ORA ($34)
 !byte $13           ;  NOOP
@@ -46,7 +46,7 @@
 !byte $2D,$12,$34   ;  AND $3412
 !byte $2E,$12,$34   ;  ROL $3412
 !byte $2F,$12,$34   ;  BBR2 $12,$1095
-!byte $30,$12       ;  BMI $104F
+!byte $30,$12       ;  BMI $1075
 !byte $31,$12       ;  AND ($12),Y
 !byte $32,$12       ;  AND ($12)
 !byte $33           ;  NOOP
@@ -78,7 +78,7 @@
 !byte $4D,$12,$34   ;  EOR $3412
 !byte $4E,$12,$34   ;  LSR $3412
 !byte $4F,$12,$34   ;  BBR4 $12,$10D5
-!byte $50,$12       ;  BVC $1075
+!byte $50,$12       ;  BVC $10B5
 !byte $51,$12       ;  EOR ($12),Y
 !byte $52,$12       ;  EOR ($12)
 !byte $53           ;  NOOP
@@ -110,7 +110,7 @@
 !byte $6D,$12,$34   ;  ADC $3412
 !byte $6E,$12,$34   ;  ROR $3412
 !byte $6F,$12,$34   ;  BBR6 $12,$1115
-!byte $70,$12       ;  BVS $109B
+!byte $70,$12       ;  BVS $10F5
 !byte $71,$12       ;  ADC ($12),Y
 !byte $72,$12       ;  ADC ($12)
 !byte $73           ;  NOOP
@@ -142,7 +142,7 @@
 !byte $8D,$12,$34   ;  STA $3412
 !byte $8E,$12,$34   ;  STX $3412
 !byte $8F,$12,$34   ;  BBS0 $12,$1156
-!byte $90,$12       ;  BCC $10C0
+!byte $90,$12       ;  BCC $1136
 !byte $91,$12       ;  STA ($12),Y
 !byte $92,$12       ;  STA ($12)
 !byte $93           ;  NOOP
@@ -174,7 +174,7 @@
 !byte $AD,$12,$34   ;  LDA $3412
 !byte $AE,$12,$34   ;  LDX $3412
 !byte $AF,$12,$34   ;  BBS2 $12,$1197
-!byte $B0,$12       ;  BCS $10EB
+!byte $B0,$12       ;  BCS $1177
 !byte $B1,$12       ;  LDA ($12),Y
 !byte $B2,$12       ;  LDA ($12)
 !byte $B3           ;  NOOP
@@ -206,7 +206,7 @@
 !byte $CD,$12,$34   ;  CMP $3412
 !byte $CE,$12,$34   ;  DEC $3412
 !byte $CF,$12,$34   ;  BBS4 $12,$11D8
-!byte $D0,$12       ;  BNE $111A
+!byte $D0,$12       ;  BNE $11B8
 !byte $D1,$12       ;  CMP ($12),Y
 !byte $D2,$12       ;  CMP ($12)
 !byte $D3           ;  NOOP
@@ -238,7 +238,7 @@
 !byte $ED,$12,$34   ;  SBC $3412
 !byte $EE,$12,$34   ;  INC $3412
 !byte $EF,$12,$34   ;  BBS6 $12,$1219
-!byte $F0,$12       ;  BEQ $1143
+!byte $F0,$12       ;  BEQ $11F9
 !byte $F1,$12       ;  SBC ($12),Y
 !byte $F2,$12       ;  SBC ($12)
 !byte $F3           ;  NOOP
