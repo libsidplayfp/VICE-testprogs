@@ -1,0 +1,256 @@
+!byte $00               ;  BRK
+!byte $01,$12           ;  ORA ($12,X)
+!byte $02               ;  COP
+!byte $03,$12           ;  ORA $12,S
+!byte $04,$12           ;  TSB $12
+!byte $05,$12           ;  ORA $12
+!byte $06,$12           ;  ASL $12
+!byte $07,$12           ;  ORA [$12]
+!byte $08               ;  PHP
+!byte $09,$12,$34       ;  ORA #$3412
+!byte $0A               ;  ASL A
+!byte $0B               ;  PHD
+!byte $0C,$12,$34       ;  TSB $3412
+!byte $0D,$12,$34       ;  ORA $3412
+!byte $0E,$12,$34       ;  ASL $3412
+!byte $0F,$12,$34,$56   ;  ORA $563412
+!byte $10,$12           ;  BPL $1035
+!byte $11,$12           ;  ORA ($12),Y
+!byte $12,$34           ;  ORA ($34)
+!byte $13,$12           ;  ORA ($12,S),Y
+!byte $14,$12           ;  TRB $12
+!byte $15,$12           ;  ORA $12,X
+!byte $16,$12           ;  ASL $12,X
+!byte $17,$12           ;  ORA [$12],Y
+!byte $18               ;  CLC
+!byte $19,$12,$34       ;  ORA $3412,Y
+!byte $1A               ;  INC A
+!byte $1B               ;  TCS
+!byte $1C,$12,$34       ;  TRB $3412
+!byte $1D,$12,$34       ;  ORA $3412,X
+!byte $1E,$12,$34       ;  ASL $3412,X
+!byte $1F,$12,$34,$56   ;  ORA $563412,X
+!byte $20,$12,$34       ;  JSR $3412
+!byte $21,$12           ;  AND ($12,X)
+!byte $22,$12,$34,$56   ;  JSL $563412
+!byte $23,$12           ;  AND $12,S
+!byte $24,$12           ;  BIT $12
+!byte $25,$12           ;  AND $12
+!byte $26,$12           ;  ROL $12
+!byte $27,$12           ;  AND [$12]
+!byte $28               ;  PLP
+!byte $29,$12,$34       ;  AND #$3412
+!byte $2A               ;  ROL A
+!byte $2B               ;  PLD
+!byte $2C,$12,$34       ;  BIT $3412
+!byte $2D,$12,$34       ;  AND $3412
+!byte $2E,$12,$34       ;  ROL $3412
+!byte $2F,$12,$34,$56   ;  AND $563412
+!byte $30,$12           ;  BMI $107E
+!byte $31,$12           ;  AND ($12),Y
+!byte $32,$12           ;  AND ($12)
+!byte $33,$12           ;  AND ($12,S),Y
+!byte $34,$12           ;  BIT $12,X
+!byte $35,$12           ;  AND $12,X
+!byte $36,$12           ;  ROL $12,X
+!byte $37,$12           ;  AND [$12],Y
+!byte $38               ;  SEC
+!byte $39,$12,$34       ;  AND $3412,Y
+!byte $3A               ;  DEC A
+!byte $3B               ;  TSC
+!byte $3C,$12,$34       ;  BIT $3412,X
+!byte $3D,$12,$34       ;  AND $3412,X
+!byte $3E,$12,$34       ;  ROL $3412,X
+!byte $3F,$12,$34,$56   ;  AND $563412,X
+!byte $40               ;  RTI
+!byte $41,$12           ;  EOR ($12,X)
+!byte $42,$12           ;  WDM $12
+!byte $43,$12           ;  EOR $12,S
+!byte $44,$12,$34       ;  MVP $34,$12
+!byte $45,$12           ;  EOR $12
+!byte $46,$12           ;  LSR $12
+!byte $47,$12           ;  EOR [$12]
+!byte $48               ;  PHA
+!byte $49,$12,$34       ;  EOR #$3412
+!byte $4A               ;  LSR A
+!byte $4B               ;  PHK
+!byte $4C,$12,$34       ;  JMP $3412
+!byte $4D,$12,$34       ;  EOR $3412
+!byte $4E,$12,$34       ;  LSR $3412
+!byte $4F,$12,$34,$56   ;  EOR $563412
+!byte $50,$12           ;  BVC $10C4
+!byte $51,$12           ;  EOR ($12),Y
+!byte $52,$12           ;  EOR ($12)
+!byte $53,$12           ;  EOR ($12,S),Y
+!byte $54,$12,$34       ;  MVN $34,$12
+!byte $55,$12           ;  EOR $12,X
+!byte $56,$12           ;  LSR $12,X
+!byte $57,$12           ;  EOR [$12],Y
+!byte $58               ;  CLI
+!byte $59,$12,$34       ;  EOR $3412,Y
+!byte $5A               ;  PHY
+!byte $5B               ;  TCD
+!byte $5C,$12,$34,$56   ;  JMP $563412
+!byte $5D,$12,$34       ;  EOR $3412,X
+!byte $5E,$12,$34       ;  LSR $3412,X
+!byte $5F,$12,$34,$56   ;  EOR $563412,X
+!byte $60               ;  RTS
+!byte $61,$12           ;  ADC ($12,X)
+!byte $62,$12,$34       ;  PER $44ED
+!byte $63,$12           ;  ADC $12,S
+!byte $64,$12           ;  STZ $12
+!byte $65,$12           ;  ADC $12
+!byte $66,$12           ;  ROR $12
+!byte $67,$12           ;  ADC [$12]
+!byte $68               ;  PLA
+!byte $69,$12,$34       ;  ADC #$3412
+!byte $6A               ;  ROR A
+!byte $6B               ;  RTL
+!byte $6C,$12,$34       ;  JMP ($3412)
+!byte $6D,$12,$34       ;  ADC $3412
+!byte $6E,$12,$34       ;  ROR $3412
+!byte $6F,$12,$34,$56   ;  ADC $563412
+!byte $70,$12           ;  BVS $110C
+!byte $71,$12           ;  ADC ($12),Y
+!byte $72,$12           ;  ADC ($12)
+!byte $73,$12           ;  ADC ($12,S),Y
+!byte $74,$12           ;  STZ $12,X
+!byte $75,$12           ;  ADC $12,X
+!byte $76,$12           ;  ROR $12,X
+!byte $77,$12           ;  ADC [$12],Y
+!byte $78               ;  SEI
+!byte $79,$12,$34       ;  ADC $3412,Y
+!byte $7A               ;  PLY
+!byte $7B               ;  TDC
+!byte $7C,$12,$34       ;  JMP ($3412,X)
+!byte $7D,$12,$34       ;  ADC $3412,X
+!byte $7E,$12,$34       ;  ROR $3412,X
+!byte $7F,$12,$34,$56   ;  ADC $563412,X
+!byte $80,$12           ;  BRA $112F
+!byte $81,$12           ;  STA ($12,X)
+!byte $82,$12,$34       ;  BRL $4534
+!byte $83,$12           ;  STA $12,S
+!byte $84,$12           ;  STY $12
+!byte $85,$12           ;  STA $12
+!byte $86,$12           ;  STX $12
+!byte $87,$12           ;  STA [$12]
+!byte $88               ;  DEY
+!byte $89,$12,$34       ;  BIT #$3412
+!byte $8A               ;  TXA
+!byte $8B               ;  PHB
+!byte $8C,$12,$34       ;  STY $3412
+!byte $8D,$12,$34       ;  STA $3412
+!byte $8E,$12,$34       ;  STX $3412
+!byte $8F,$12,$34,$56   ;  STA $563412
+!byte $90,$12           ;  BCC $1153
+!byte $91,$12           ;  STA ($12),Y
+!byte $92,$12           ;  STA ($12)
+!byte $93,$12           ;  STA ($12,S),Y
+!byte $94,$12           ;  STY $12,X
+!byte $95,$12           ;  STA $12,X
+!byte $96,$12           ;  STX $12,Y
+!byte $97,$12           ;  STA [$12],Y
+!byte $98               ;  TYA
+!byte $99,$12,$34       ;  STA $3412,Y
+!byte $9A               ;  TXS
+!byte $9B               ;  TXY
+!byte $9C,$12,$34       ;  STZ $3412
+!byte $9D,$12,$34       ;  STA $3412,X
+!byte $9E,$12,$34       ;  STZ $3412,X
+!byte $9F,$12,$34,$56   ;  STA $563412,X
+!byte $A0,$12,$34       ;  LDY #$3412
+!byte $A1,$12           ;  LDA ($12,X)
+!byte $A2,$12,$34       ;  LDX #$3412
+!byte $A3,$12           ;  LDA $12,S
+!byte $A4,$12           ;  LDY $12
+!byte $A5,$12           ;  LDA $12
+!byte $A6,$12           ;  LDX $12
+!byte $A7,$12           ;  LDA [$12]
+!byte $A8               ;  TAY
+!byte $A9,$12,$34       ;  LDA #$3412
+!byte $AA               ;  TAX
+!byte $AB               ;  PLB
+!byte $AC,$12,$34       ;  LDY $3412
+!byte $AD,$12,$34       ;  LDA $3412
+!byte $AE,$12,$34       ;  LDX $3412
+!byte $AF,$12,$34,$56   ;  LDA $563412
+!byte $B0,$12           ;  BCS $119B
+!byte $B1,$12           ;  LDA ($12),Y
+!byte $B2,$12           ;  LDA ($12)
+!byte $B3,$12           ;  LDA ($12,S),Y
+!byte $B4,$12           ;  LDY $12,X
+!byte $B5,$12           ;  LDA $12,X
+!byte $B6,$12           ;  LDX $12,Y
+!byte $B7,$12           ;  LDA [$12],Y
+!byte $B8               ;  CLV
+!byte $B9,$12,$34       ;  LDA $3412,Y
+!byte $BA               ;  TSX
+!byte $BB               ;  TYX
+!byte $BC,$12,$34       ;  LDY $3412,X
+!byte $BD,$12,$34       ;  LDA $3412,X
+!byte $BE,$12,$34       ;  LDX $3412,Y
+!byte $BF,$12,$34,$56   ;  LDA $563412,X
+!byte $C0,$12,$34       ;  CPY #$3412
+!byte $C1,$12           ;  CMP ($12,X)
+!byte $C2,$12           ;  REP #$12
+!byte $C3,$12           ;  CMP $12,S
+!byte $C4,$12           ;  CPY $12
+!byte $C5,$12           ;  CMP $12
+!byte $C6,$12           ;  DEC $12
+!byte $C7,$12           ;  CMP [$12]
+!byte $C8               ;  INY
+!byte $C9,$12,$34       ;  CMP #$3412
+!byte $CA               ;  DEX
+!byte $CB               ;  WAI
+!byte $CC,$12,$34       ;  CPY $3412
+!byte $CD,$12,$34       ;  CMP $3412
+!byte $CE,$12,$34       ;  DEC $3412
+!byte $CF,$12,$34,$56   ;  CMP $563412
+!byte $D0,$12           ;  BNE $11E2
+!byte $D1,$12           ;  CMP ($12),Y
+!byte $D2,$12           ;  CMP ($12)
+!byte $D3,$12           ;  CMP ($12,S),Y
+!byte $D4,$12           ;  PEI ($12)
+!byte $D5,$12           ;  CMP $12,X
+!byte $D6,$12           ;  DEC $12,X
+!byte $D7,$12           ;  CMP [$12],Y
+!byte $D8               ;  CLD
+!byte $D9,$12,$34       ;  CMP $3412,Y
+!byte $DA               ;  PHX
+!byte $DB               ;  STP
+!byte $DC,$12,$34       ;  JMP ($3412)
+!byte $DD,$12,$34       ;  CMP $3412,X
+!byte $DE,$12,$34       ;  DEC $3412,X
+!byte $DF,$12,$34,$56   ;  CMP $563412,X
+!byte $E0,$12,$34       ;  CPX #$3412
+!byte $E1,$12           ;  SBC ($12,X)
+!byte $E2,$12           ;  SEP #$12
+!byte $E3,$12           ;  SBC $12,S
+!byte $E4,$12           ;  CPX $12
+!byte $E5,$12           ;  SBC $12
+!byte $E6,$12           ;  INC $12
+!byte $E7,$12           ;  SBC [$12]
+!byte $E8               ;  INX
+!byte $E9,$12,$34       ;  SBC #$3412
+!byte $EA               ;  NOP
+!byte $EB               ;  XBA
+!byte $EC,$12,$34       ;  CPX $3412
+!byte $ED,$12,$34       ;  SBC $3412
+!byte $EE,$12,$34       ;  INC $3412
+!byte $EF,$12,$34,$56   ;  SBC $563412
+!byte $F0,$12           ;  BEQ $1229
+!byte $F1,$12           ;  SBC ($12),Y
+!byte $F2,$12           ;  SBC ($12)
+!byte $F3,$12           ;  SBC ($12,S),Y
+!byte $F4,$12,$34       ;  PEA $3412
+!byte $F5,$12           ;  SBC $12,X
+!byte $F6,$12           ;  INC $12,X
+!byte $F7,$12           ;  SBC [$12],Y
+!byte $F8               ;  SED
+!byte $F9,$12,$34       ;  SBC $3412,Y
+!byte $FA               ;  PLX
+!byte $FB               ;  XCE
+!byte $FC,$12,$34       ;  JSR ($3412,X)
+!byte $FD,$12,$34       ;  SBC $3412,X
+!byte $FE,$12,$34       ;  INC $3412,X
+!byte $FF,$12,$34,$56   ;  SBC $563412,X
