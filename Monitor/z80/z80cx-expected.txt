@@ -1,0 +1,1613 @@
+NOP                     ; 00
+LD BC,$0929             ; 01 45 23
+LD (BC),A               ; 02
+INC BC                  ; 03
+INC B                   ; 04
+DEC B                   ; 05
+LD B,00                 ; 06 00
+RLCA                    ; 07
+EX AF,AF'               ; 08        ; Z80
+ADD HL,BC               ; 09
+LD A,(BC)               ; 0a
+DEC BC                  ; 0b
+INC C                   ; 0c
+DEC C                   ; 0d
+LD C,00                 ; 0e 00
+RRCA                    ; 0f
+DJNZ Q1                 ; 10 00        ; Z80
+LD DE,$0929             ; 11 45 23      Q1:
+LD (DE),A               ; 12
+INC DE                  ; 13
+INC D                   ; 14
+DEC D                   ; 15
+LD D,00                 ; 16 00
+RLA                     ; 17
+JR Q2                   ; 18 00        ; Z80
+ADD HL,DE               ; 19    Q2:
+LD A,(DE)               ; 1a
+DEC DE                  ; 1b
+INC E                   ; 1c
+DEC E                   ; 1d
+LD E,00                 ; 1e 00
+RRA                     ; 1f
+JR NZ,Q3                ; 20 00        ; Z80
+LD HL,$0929             ; 21 45 23     Q3:
+LD ($0929),HL           ; 22 45 23
+INC HL                  ; 23
+INC H                   ; 24
+DEC H                   ; 25
+LD H,00                 ; 26 00
+DAA                     ; 27        ; Z80delta
+JR Z,Q4                 ; 28 00
+ADD HL,HL               ; 29     Q4:
+LD HL,($0929)           ; 2a 45 23
+DEC HL                  ; 2b
+INC L                   ; 2c
+DEC L                   ; 2d
+LD L,00                 ; 2e 00
+CPL                     ; 2f
+JR NC,Q5                ; 30 00        ; Z80
+LD SP,$0929             ; 31 45 23      Q5:
+LD ($0929),A            ; 32 45 23
+INC SP                  ; 33
+INC (HL)                ; 34
+DEC (HL)                ; 35
+LD (HL),00              ; 36 00
+SCF                     ; 37
+JR C,Q6                 ; 38 00        ; Z80
+ADD HL,SP               ; 39         Q6:
+LD A,($0929)            ; 3a 45 23
+DEC SP                  ; 3b
+INC A                   ; 3c
+DEC A                   ; 3d
+LD A,00                 ; 3e 00
+CCF                     ; 3f
+LD B,B                  ; 40
+LD B,C                  ; 41
+LD B,D                  ; 42
+LD B,E                  ; 43
+LD B,H                  ; 44
+LD B,L                  ; 45
+LD B,(HL)               ; 46
+LD B,A                  ; 47
+LD C,B                  ; 48
+LD C,C                  ; 49
+LD C,D                  ; 4a
+LD C,E                  ; 4b
+LD C,H                  ; 4c
+LD C,L                  ; 4d
+LD C,(HL)               ; 4e
+LD C,A                  ; 4f
+LD D,B                  ; 50
+LD D,C                  ; 51
+LD D,D                  ; 52
+LD D,E                  ; 53
+LD D,H                  ; 54
+LD D,L                  ; 55
+LD D,(HL)               ; 56
+LD D,A                  ; 57
+LD E,B                  ; 58
+LD E,C                  ; 59
+LD E,D                  ; 5a
+LD E,E                  ; 5b
+LD E,H                  ; 5c
+LD E,L                  ; 5d
+LD E,(HL)               ; 5e
+LD E,A                  ; 5f
+LD H,B                  ; 60
+LD H,C                  ; 61
+LD H,D                  ; 62
+LD H,E                  ; 63
+LD H,H                  ; 64
+LD H,L                  ; 65
+LD H,(HL)               ; 66
+LD H,A                  ; 67
+LD L,B                  ; 68
+LD L,C                  ; 69
+LD L,D                  ; 6a
+LD L,E                  ; 6b
+LD L,H                  ; 6c
+LD L,L                  ; 6d
+LD L,(HL)               ; 6e
+LD L,A                  ; 6f
+LD (HL),B               ; 70
+LD (HL),C               ; 71
+LD (HL),D               ; 72
+LD (HL),E               ; 73
+LD (HL),H               ; 74
+LD (HL),L               ; 75
+HALT                    ; 76
+LD (HL),A               ; 77
+LD A,B                  ; 78
+LD A,C                  ; 79
+LD A,D                  ; 7a
+LD A,E                  ; 7b
+LD A,H                  ; 7c
+LD A,L                  ; 7d
+LD A,(HL)               ; 7e
+LD A,A                  ; 7f
+ADD A,B                 ; 80
+ADD A,C                 ; 81
+ADD A,D                 ; 82
+ADD A,E                 ; 83
+ADD A,H                 ; 84
+ADD A,L                 ; 85
+ADD A,(HL)              ; 86
+ADD A,A                 ; 87
+ADC A,B                 ; 88
+ADC A,C                 ; 89
+ADC A,D                 ; 8a
+ADC A,E                 ; 8b
+ADC A,H                 ; 8c
+ADC A,L                 ; 8d
+ADC A,(HL)              ; 8e
+ADC A,A                 ; 8f
+SUB B                   ; 90
+SUB C                   ; 91
+SUB D                   ; 92
+SUB E                   ; 93
+SUB H                   ; 94
+SUB L                   ; 95
+SUB (HL)                ; 96
+SUB A                   ; 97
+SBC A,B                 ; 98
+SBC A,C                 ; 99
+SBC A,D                 ; 9a
+SBC A,E                 ; 9b
+SBC A,H                 ; 9c
+SBC A,L                 ; 9d
+SBC A,(HL)              ; 9e
+SBC A,A                 ; 9f
+AND B                   ; a0
+AND C                   ; a1
+AND D                   ; a2
+AND E                   ; a3
+AND H                   ; a4
+AND L                   ; a5
+AND (HL)                ; a6
+AND A                   ; a7
+XOR B                   ; a8
+XOR C                   ; a9
+XOR D                   ; aa
+XOR E                   ; ab
+XOR H                   ; ac
+XOR L                   ; ad
+XOR (HL)                ; ae
+XOR A                   ; af
+OR B                    ; b0
+OR C                    ; b1
+OR D                    ; b2
+OR E                    ; b3
+OR H                    ; b4
+OR L                    ; b5
+OR (HL)                 ; b6
+OR A                    ; b7
+CP B                    ; b8
+CP C                    ; b9
+CP D                    ; ba
+CP E                    ; bb
+CP H                    ; bc
+CP L                    ; bd
+CP (HL)                 ; be
+CP A                    ; bf
+RET NZ                  ; c0
+POP BC                  ; c1
+JP NZ,$0929             ; c2 45 23
+JP $0929                ; c3 45 23
+CALL NZ,$0929           ; c4 45 23
+PUSH BC                 ; c5
+ADD A,00                ; c6 00
+RST 00                  ; c7
+RET Z                   ; c8
+RET                     ; c9
+JP Z,$0929              ; ca 45 23
+CALL Z,$0929            ; cc 45 23
+CALL $0929              ; cd 45 23
+ADC A,00                ; ce 00
+RST 08                  ; cf
+RET NC                  ; d0
+POP DE                  ; d1
+JP NC,$0929             ; d2 45 23
+OUT (00),A              ; d3 00
+CALL NC,$0929           ; d4 45 23
+PUSH DE                 ; d5
+SUB 00                  ; d6 00
+RST 10h                 ; d7
+RET C                   ; d8
+EXX                     ; d9        ; z80
+JP C,$0929              ; da 45 23
+IN A,(00)               ; db 00
+CALL C,$0929            ; dc 45 23          ; dd <prefix>
+SBC A,00                ; de 00
+RST 18h                 ; df
+RET PO                  ; e0
+POP HL                  ; e1
+JP PO,$0929             ; e2 45 23
+EX (SP),HL              ; e3
+CALL PO,$0929           ; e4 45 23
+PUSH HL                 ; e5
+AND 00                  ; e6 00
+RST 20h                 ; e7
+RET PE                  ; e8
+JP (HL)                 ; e9
+JP PE,$0929             ; ea 45 23
+EX DE,HL                ; eb
+CALL PE,$0929           ; ec 45 23         ; ed 00 <brefix>
+XOR 00                  ; ee 00
+RST 28h                 ; ef
+RET P                   ; f0
+POP AF                  ; f1
+JP P,$0929              ; f2 45 23
+DI                      ; f3
+CALL P,$0929            ; f4 45 23
+PUSH AF                 ; f5
+OR 00                   ; f6 00
+RST 30h                 ; f7
+RET M                   ; f8
+LD SP,HL                ; f9
+JP M,$0929              ; fa 45 23
+EI                      ; fb
+CALL M,$0929            ; fc 45 23          ; fd 00 <prefix>
+CP 00                   ; fe 00
+RST 38h                 ; ff
+RLC B                   ; cb 00     CB shifted opcodes (bit stuff)
+RLC C                   ; cb 01
+RLC D                   ; cb 02
+RLC E                   ; cb 03
+RLC H                   ; cb 04
+RLC L                   ; cb 05
+RLC (HL)                ; cb 06
+RLC A                   ; cb 07
+RRC B                   ; cb 08
+RRC C                   ; cb 09
+RRC D                   ; cb 0a
+RRC E                   ; cb 0b
+RRC H                   ; cb 0c
+RRC L                   ; cb 0d
+RRC (HL)                ; cb 0e
+RRC A                   ; cb 0f
+RL B                    ; cb 10
+RL C                    ; cb 11
+RL D                    ; cb 12
+RL E                    ; cb 13
+RL H                    ; cb 14
+RL L                    ; cb 15
+RL (HL)                 ; cb 16
+RL A                    ; cb 17
+RR B                    ; cb 18
+RR C                    ; cb 19
+RR D                    ; cb 1a
+RR E                    ; cb 1b
+RR H                    ; cb 1c
+RR L                    ; cb 1d
+RR (HL)                 ; cb 1e
+RR A                    ; cb 1f
+SLA B                   ; cb 20
+SLA C                   ; cb 21
+SLA D                   ; cb 22
+SLA E                   ; cb 23
+SLA H                   ; cb 24
+SLA L                   ; cb 25
+SLA (HL)                ; cb 26
+SLA A                   ; cb 27
+SRA B                   ; cb 28
+SRA C                   ; cb 29
+SRA D                   ; cb 2a
+SRA E                   ; cb 2b
+SRA H                   ; cb 2c
+SRA L                   ; cb 2d
+SRA (HL)                ; cb 2e
+SRA A                   ; cb 2f
+*SLL B                  ; cb 30 unofficial opcode
+*SLL C                  ; cb 31 unofficial opcode
+*SLL D                  ; cb 32 unofficial opcode
+*SLL E                  ; cb 33 unofficial opcode
+*SLL H                  ; cb 34 unofficial opcode
+*SLL L                  ; cb 35 unofficial opcode
+*SLL(HL)                ; cb 36 unofficial opcode
+*SLL A                  ; cb 37 unofficial opcode
+SRL B                   ; cb 38
+SRL C                   ; cb 39
+SRL D                   ; cb 3a
+SRL E                   ; cb 3b
+SRL H                   ; cb 3c
+SRL L                   ; cb 3d
+SRL (HL)                ; cb 3e
+SRL A                   ; cb 3f
+BIT 0,B                 ; cb 40
+BIT 0,C                 ; cb 41
+BIT 0,D                 ; cb 42
+BIT 0,E                 ; cb 43
+BIT 0,H                 ; cb 44
+BIT 0,L                 ; cb 45
+BIT 0,(HL)              ; cb 46
+BIT 0,A                 ; cb 47
+BIT 1,B                 ; cb 48
+BIT 1,C                 ; cb 49
+BIT 1,D                 ; cb 4a
+BIT 1,E                 ; cb 4b
+BIT 1,H                 ; cb 4c
+BIT 1,L                 ; cb 4d
+BIT 1,(HL)              ; cb 4e
+BIT 1,A                 ; cb 4f
+BIT 2,B                 ; cb 50
+BIT 2,C                 ; cb 51
+BIT 2,D                 ; cb 52
+BIT 2,E                 ; cb 53
+BIT 2,H                 ; cb 54
+BIT 2,L                 ; cb 55
+BIT 2,(HL)              ; cb 56
+BIT 2,A                 ; cb 57
+BIT 3,B                 ; cb 58
+BIT 3,C                 ; cb 59
+BIT 3,D                 ; cb 5a
+BIT 3,E                 ; cb 5b
+BIT 3,H                 ; cb 5c
+BIT 3,L                 ; cb 5d
+BIT 3,(HL)              ; cb 5e
+BIT 3,A                 ; cb 5f
+BIT 4,B                 ; cb 60
+BIT 4,C                 ; cb 61
+BIT 4,D                 ; cb 62
+BIT 4,E                 ; cb 63
+BIT 4,H                 ; cb 64
+BIT 4,L                 ; cb 65
+BIT 4,(HL)              ; cb 66
+BIT 4,A                 ; cb 67
+BIT 5,B                 ; cb 68
+BIT 5,C                 ; cb 69
+BIT 5,D                 ; cb 6a
+BIT 5,E                 ; cb 6b
+BIT 5,H                 ; cb 6c
+BIT 5,L                 ; cb 6d
+BIT 5,(HL)              ; cb 6e
+BIT 5,A                 ; cb 6f
+BIT 6,B                 ; cb 70
+BIT 6,C                 ; cb 71
+BIT 6,D                 ; cb 72
+BIT 6,E                 ; cb 73
+BIT 6,H                 ; cb 74
+BIT 6,L                 ; cb 75
+BIT 6,(HL)              ; cb 76
+BIT 6,A                 ; cb 77
+BIT 7,B                 ; cb 78
+BIT 7,C                 ; cb 79
+BIT 7,D                 ; cb 7a
+BIT 7,E                 ; cb 7b
+BIT 7,H                 ; cb 7c
+BIT 7,L                 ; cb 7d
+BIT 7,(HL)              ; cb 7e
+BIT 7,A                 ; cb 7f
+RES 0,B                 ; cb 80
+RES 0,C                 ; cb 81
+RES 0,D                 ; cb 82
+RES 0,E                 ; cb 83
+RES 0,H                 ; cb 84
+RES 0,L                 ; cb 85
+RES 0,(HL)              ; cb 86
+RES 0,A                 ; cb 87
+RES 1,B                 ; cb 88
+RES 1,C                 ; cb 89
+RES 1,D                 ; cb 8a
+RES 1,E                 ; cb 8b
+RES 1,H                 ; cb 8c
+RES 1,L                 ; cb 8d
+RES 1,(HL)              ; cb 8e
+RES 1,A                 ; cb 8f
+RES 2,B                 ; cb 90
+RES 2,C                 ; cb 91
+RES 2,D                 ; cb 92
+RES 2,E                 ; cb 93
+RES 2,H                 ; cb 94
+RES 2,L                 ; cb 95
+RES 2,(HL)              ; cb 96
+RES 2,A                 ; cb 97
+RES 3,B                 ; cb 98
+RES 3,C                 ; cb 99
+RES 3,D                 ; cb 9a
+RES 3,E                 ; cb 9b
+RES 3,H                 ; cb 9c
+RES 3,L                 ; cb 9d
+RES 3,(HL)              ; cb 9e
+RES 3,A                 ; cb 9f
+RES 4,B                 ; cb a0
+RES 4,C                 ; cb a1
+RES 4,D                 ; cb a2
+RES 4,E                 ; cb a3
+RES 4,H                 ; cb a4
+RES 4,L                 ; cb a5
+RES 4,(HL)              ; cb a6
+RES 4,A                 ; cb a7
+RES 5,B                 ; cb a8
+RES 5,C                 ; cb a9
+RES 5,D                 ; cb aa
+RES 5,E                 ; cb ab
+RES 5,H                 ; cb ac
+RES 5,L                 ; cb ad
+RES 5,(HL)              ; cb ae
+RES 5,A                 ; cb af
+RES 6,B                 ; cb b0
+RES 6,C                 ; cb b1
+RES 6,D                 ; cb b2
+RES 6,E                 ; cb b3
+RES 6,H                 ; cb b4
+RES 6,L                 ; cb b5
+RES 6,(HL)              ; cb b6
+RES 6,A                 ; cb b7
+RES 7,B                 ; cb b8
+RES 7,C                 ; cb b9
+RES 7,D                 ; cb ba
+RES 7,E                 ; cb bb
+RES 7,H                 ; cb bc
+RES 7,L                 ; cb bd
+RES 7,(HL)              ; cb be
+RES 7,A                 ; cb bf
+SET 0,B                 ; cb c0
+SET 0,C                 ; cb c1
+SET 0,D                 ; cb c2
+SET 0,E                 ; cb c3
+SET 0,H                 ; cb c4
+SET 0,L                 ; cb c5
+SET 0,(HL)              ; cb c6
+SET 0,A                 ; cb c7
+SET 1,B                 ; cb c8
+SET 1,C                 ; cb c9
+SET 1,D                 ; cb ca
+SET 1,E                 ; cb cb
+SET 1,H                 ; cb cc
+SET 1,L                 ; cb cd
+SET 1,(HL)              ; cb ce
+SET 1,A                 ; cb cf
+SET 2,B                 ; cb d0
+SET 2,C                 ; cb d1
+SET 2,D                 ; cb d2
+SET 2,E                 ; cb d3
+SET 2,H                 ; cb d4
+SET 2,L                 ; cb d5
+SET 2,(HL)              ; cb d6
+SET 2,A                 ; cb d7
+SET 3,B                 ; cb d8
+SET 3,C                 ; cb d9
+SET 3,D                 ; cb da
+SET 3,E                 ; cb db
+SET 3,H                 ; cb dc
+SET 3,L                 ; cb dd
+SET 3,(HL)              ; cb de
+SET 3,A                 ; cb df
+SET 4,B                 ; cb e0
+SET 4,C                 ; cb e1
+SET 4,D                 ; cb e2
+SET 4,E                 ; cb e3
+SET 4,H                 ; cb e4
+SET 4,L                 ; cb e5
+SET 4,(HL)              ; cb e6
+SET 4,A                 ; cb e7
+SET 5,B                 ; cb e8
+SET 5,C                 ; cb e9
+SET 5,D                 ; cb ea
+SET 5,E                 ; cb eb
+SET 5,H                 ; cb ec
+SET 5,L                 ; cb ed
+SET 5,(HL)              ; cb ee
+SET 5,A                 ; cb ef
+SET 6,B                 ; cb f0
+SET 6,C                 ; cb f1
+SET 6,D                 ; cb f2
+SET 6,E                 ; cb f3
+SET 6,H                 ; cb f4
+SET 6,L                 ; cb f5
+SET 6,(HL)              ; cb f6
+SET 6,A                 ; cb f7
+SET 7,B                 ; cb f8
+SET 7,C                 ; cb f9
+SET 7,D                 ; cb fa
+SET 7,E                 ; cb fb
+SET 7,H                 ; cb fc
+SET 7,L                 ; cb fd
+SET 7,(HL)              ; cb fe
+SET 7,A                 ; cb ff
+*NOP                    ; dd 00             DD set: these are a copy of unshifted
+*LD BC,$0000            ; dd 01 00 00               where all (HL) become IX+00
+*LD (BC),A              ; dd 02                     and all HL become IX (except for EX DE,HL and EXX)
+*INC BC                 ; dd 03                     undocumented H equals IXH (except if IX+00 also used)
+*INC B                  ; dd 04                     undocumented L equals IXL (except if IX+00 also used)
+*DEC B                  ; dd 05
+*LD B,00                ; dd 06 00                  z80a and z80b silicon will execute non LH opcodes as normal
+*RLCA                   ; dd 07                     but at extra 4T
+*EX AF,AF'              ; dd 08
+ADD IX,BC               ; dd 09
+*LD A,(BC)              ; dd 0a
+*DEC BC                 ; dd 0b
+*INC C                  ; dd 0c
+*DEC C                  ; dd 0d
+*LD C,00                ; dd 0e 00
+*RRCA                   ; dd 0f
+*DJNZ 1                 ; dd 10 00
+*LD DE,$0000            ; dd 11 00 00
+*LD (DE),A              ; dd 12
+*INC DE                 ; dd 13
+*INC D                  ; dd 14
+*DEC D                  ; dd 15
+*LD D,00                ; dd 16 00
+*RLA                    ; dd 17
+*JR 2                   ; dd 18 00
+ADD IX,DE               ; dd 19
+*LD A,(DE)              ; dd 1a
+*DEC DE                 ; dd 1b
+*INC E                  ; dd 1c
+*DEC E                  ; dd 1d
+*LD E,00                ; dd 1e 00
+*RRA                    ; dd 1f
+*JR NZ,3                ; dd 20 00
+LD IX,$0929             ; dd 21 45 23
+LD ($0929),IX           ; dd 22 45 23
+INC IX                  ; dd 23
+*INC IXH                ; dd 24
+*DEC IXH                ; dd 25
+*LD IXH,00              ; dd 26 00
+*DAA                    ; dd 27
+*JR Z,4                 ; dd 28 00
+ADD IX,IX               ; dd 29
+LD IX,($0929)           ; dd 2a 45 23
+DEC IX                  ; dd 2b
+*INC IXL                ; dd 2c
+*DEC IXL                ; dd 2d
+*LD IXL,00              ; dd 2e 00
+*CPL                    ; dd 2f
+*JR NC,5                ; dd 30 00
+*LD SP,$0000            ; dd 31 00 00
+*LD ($0000),A           ; dd 32 00 00
+*INC SP                 ; dd 33
+INC (IX+$00)            ; dd 34 00
+DEC (IX+$00)            ; dd 35 00
+LD (IX+$00),00          ; dd 36 00 00
+*SCF                    ; dd 37
+*JR C,6                 ; dd 38 00
+ADD IX,SP               ; dd 39
+*LD A,($0000)           ; dd 3a 00 00
+*DEC SP                 ; dd 3b
+*INC A                  ; dd 3c
+*DEC A                  ; dd 3d
+*LD A,00                ; dd 3e 00
+*CCF                    ; dd 3f
+*LD B,B                 ; dd 40
+*LD B,C                 ; dd 41
+*LD B,D                 ; dd 42
+*LD B,E                 ; dd 43
+*LD B,IXH               ; dd 44
+*LD B,IXL               ; dd 45
+LD B,(IX+$00)           ; dd 46 00
+*LD B,A                 ; dd 47
+*LD C,B                 ; dd 48
+*LD C,C                 ; dd 49
+*LD C,D                 ; dd 4a
+*LD C,E                 ; dd 4b
+*LD C,IXH               ; dd 4c
+*LD C,IXL               ; dd 4d
+LD C,(IX+$00)           ; dd 4e 00
+*LD C,A                 ; dd 4f
+*LD D,B                 ; dd 50
+*LD D,C                 ; dd 51
+*LD D,D                 ; dd 52
+*LD D,E                 ; dd 53
+*LD D,IXH               ; dd 54
+*LD D,IXL               ; dd 55
+LD D,(IX+$00)           ; dd 56 00
+*LD D,A                 ; dd 57
+*LD E,B                 ; dd 58
+*LD E,C                 ; dd 59
+*LD E,D                 ; dd 5a
+*LD E,E                 ; dd 5b
+*LD E,IXH               ; dd 5c
+*LD E,IXL               ; dd 5d
+LD E,(IX+$00)           ; dd 5e 00
+*LD E,A                 ; dd 5f
+*LD IXH,B               ; dd 60
+*LD IXH,C               ; dd 61
+*LD IXH,D               ; dd 62
+*LD IXH,E               ; dd 63
+*LD IXH,IXH             ; dd 64
+*LD IXH,IXL             ; dd 65
+LD H,(IX+$00)           ; dd 66 00
+*LD IXH,A               ; dd 67
+*LD IXL,B               ; dd 68
+*LD IXL,C               ; dd 69
+*LD IXL,D               ; dd 6a
+*LD IXL,E               ; dd 6b
+*LD IXL,IXH             ; dd 6c
+*LD IXL,IXL             ; dd 6d
+LD L,(IX+$00)           ; dd 6e 00
+*LD IXL,A               ; dd 6f
+LD (IX+$00),B           ; dd 70 00
+LD (IX+$00),C           ; dd 71 00
+LD (IX+$00),D           ; dd 72 00
+LD (IX+$00),E           ; dd 73 00
+LD (IX+$00),H           ; dd 74 00
+LD (IX+$00),L           ; dd 75 00
+*HALT                   ; dd 76
+LD (IX+$00),A           ; dd 77 00
+*LD A,B                 ; dd 78
+*LD A,C                 ; dd 79
+*LD A,D                 ; dd 7a
+*LD A,E                 ; dd 7b
+*LD A,IXH               ; dd 7c
+*LD A,IXL               ; dd 7d
+LD A,(IX+$00)           ; dd 7e 00
+*LD A,A                 ; dd 7f
+*ADD A,B                ; dd 80
+*ADD A,C                ; dd 81
+*ADD A,D                ; dd 82
+*ADD A,E                ; dd 83
+*ADD A,IXH              ; dd 84
+*ADD A,IXL              ; dd 85
+ADD A,(IX+$00)          ; dd 86 00
+*ADD A,A                ; dd 87
+*ADC A,B                ; dd 88
+*ADC A,C                ; dd 89
+*ADC A,D                ; dd 8a
+*ADC A,E                ; dd 8b
+*ADC A,IXH              ; dd 8c
+*ADC A,IXL              ; dd 8d
+ADC A,(IX+$00)          ; dd 8e 00
+*ADC A,A                ; dd 8f
+*SUB B                  ; dd 90
+*SUB C                  ; dd 91
+*SUB D                  ; dd 92
+*SUB E                  ; dd 93
+*SUB IXH                ; dd 94
+*SUB IXL                ; dd 95
+SUB (IX+$00)            ; dd 96 00
+*SUB A                  ; dd 97
+*SBC A,B                ; dd 98
+*SBC A,C                ; dd 99
+*SBC A,D                ; dd 9a
+*SBC A,E                ; dd 9b
+*SBC A,IXH              ; dd 9c
+*SBC A,IXL              ; dd 9d
+SBC A,(IX+$00)          ; dd 9e 00
+*SBC A,A                ; dd 9f
+*AND B                  ; dd a0
+*AND C                  ; dd a1
+*AND D                  ; dd a2
+*AND E                  ; dd a3
+*AND IXH                ; dd a4
+*AND IXL                ; dd a5
+AND (IX+$00)            ; dd a6 00
+*AND A                  ; dd a7
+*XOR B                  ; dd a8
+*XOR C                  ; dd a9
+*XOR D                  ; dd aa
+*XOR E                  ; dd ab
+*XOR IXH                ; dd ac
+*XOR IXL                ; dd ad
+XOR (IX+$00)            ; dd ae 00
+*XOR A                  ; dd af
+*OR B                   ; dd b0
+*OR C                   ; dd b1
+*OR D                   ; dd b2
+*OR E                   ; dd b3
+*OR IXH                 ; dd b4
+*OR IXL                 ; dd b5
+OR (IX+$00)             ; dd b6 00
+*OR A                   ; dd b7
+*CP B                   ; dd b8
+*CP C                   ; dd b9
+*CP D                   ; dd ba
+*CP E                   ; dd bb
+*CP IXH                 ; dd bc
+*CP IXL                 ; dd bd
+CP (IX+$00)             ; dd be 00
+*CP A                   ; dd bf
+*RET NZ                 ; dd c0
+*POP BC                 ; dd c1
+*JP NZ,$0000            ; dd c2 00 00
+*JP 0000                ; dd c3 00 00
+*CALL NZ,$0000          ; dd c4 00 00
+*PUSH BC                ; dd c5
+*ADD A,00               ; dd c6 00
+*RST 00                 ; dd c7
+*RET Z                  ; dd c8
+*RET                    ; dd c9
+*JP Z,$0000             ; dd ca 00 00
+*RLC (IX+$01),B         ; dd cb 01 00
+*CALL Z,$0000           ; dd cc 00 00
+*CALL 0000              ; dd cd 00 00
+*ADC A,00               ; dd ce 00
+*RST 08                 ; dd cf
+*RET NC                 ; dd d0
+*POP DE                 ; dd d1
+*JP NC,$0000            ; dd d2 00 00
+*OUT (00),A             ; dd d3 00
+*CALL NC,$0000          ; dd d4 00 00
+*PUSH DE                ; dd d5
+*SUB 00                 ; dd d6 00
+*RST 10h                ; dd d7
+*RET C                  ; dd d8
+*EXX                    ; dd d9        (no IX involved)
+*JP C,$0000             ; dd da 00 00
+*IN A,(00)              ; dd db 00
+*CALL C,$0000           ; dd dc 00 00
+*NOP                    ; dd dd 00
+*SBC A,00               ; dd de 00
+*RST 18h                ; dd df
+*RET PO                 ; dd e0
+POP IX                  ; dd e1
+*JP PO,$0000            ; dd e2 00 00
+EX (SP),IX              ; dd e3
+*CALL PO,$0000          ; dd e4 00 00
+PUSH IX                 ; dd e5
+*AND 00                 ; dd e6 00
+*RST 20h                ; dd e7
+*RET PE                 ; dd e8
+JP (IX)                 ; dd e9
+*JP PE,$0000            ; dd ea 00 00
+*EX DE,HL               ; dd eb (no IX here)
+*CALL PE,$0000          ; dd ec 00 00
+*UNDEFINED              ; dd ed 00
+*XOR 00                 ; dd ee 00
+*RST 28h                ; dd ef
+*RET P                  ; dd f0
+*POP AF                 ; dd f1
+*JP P,$0000             ; dd f2 00 00
+*DI                     ; dd f3
+*CALL P,$0000           ; dd f4 00 00
+*PUSH AF                ; dd f5
+*OR 00                  ; dd f6 00
+*RST 30h                ; dd f7
+*RET M                  ; dd f8
+LD SP,IX                ; dd f9
+*JP M,$0000             ; dd fa 00 00
+*EI                     ; dd fb
+*CALL M,$0000           ; dd fc 00 00
+*NOP #$00               ; dd fd 00                nop
+*CP #$00                ; dd fe 00                cp 0
+*RST 38                 ; dd ff                   rst 38h
+*RLC (IX+$01),B         ; dd cb 01 00      DD dd cb 01 shifted opcodes (IX BIT (IX+$01),stuff)
+*RLC (IX+$01),C         ; dd cb 01 01
+*RLC (IX+$01),D         ; dd cb 01 02
+*RLC (IX+$01),E         ; dd cb 01 03
+*RLC (IX+$01),H         ; dd cb 01 04
+*RLC (IX+$01),L         ; dd cb 01 05
+RLC (IX+$01)            ; dd cb 01 06
+*RLC (IX+$01),A         ; dd cb 01 07
+*RRC (IX+$01),B         ; dd cb 01 08
+*RRC (IX+$01),C         ; dd cb 01 09
+*RRC (IX+$01),D         ; dd cb 01 0a
+*RRC (IX+$01),E         ; dd cb 01 0b
+*RRC (IX+$01),H         ; dd cb 01 0c
+*RRC (IX+$01),L         ; dd cb 01 0d
+RRC (IX+$01)            ; dd cb 01 0e
+*RRC (IX+$01),A         ; dd cb 01 0f
+*RL (IX+$01),B          ; dd cb 01 10
+*RL (IX+$01),C          ; dd cb 01 11
+*RL (IX+$01),D          ; dd cb 01 12
+*RL (IX+$01),E          ; dd cb 01 13
+*RL (IX+$01),H          ; dd cb 01 14
+*RL (IX+$01),L          ; dd cb 01 15
+RL (IX+$01)             ; dd cb 01 16
+*RL (IX+$01),A          ; dd cb 01 17
+*RR (IX+$01),B          ; dd cb 01 18
+*RR (IX+$01),C          ; dd cb 01 19
+*RR (IX+$01),D          ; dd cb 01 1a
+*RR (IX+$01),E          ; dd cb 01 1b
+*RR (IX+$01),H          ; dd cb 01 1c
+*RR (IX+$01),L          ; dd cb 01 1d
+RR (IX+$01)             ; dd cb 01 1e
+*RR (IX+$01),A          ; dd cb 01 1f
+*SLA (IX+$01),B         ; dd cb 01 20
+*SLA (IX+$01),C         ; dd cb 01 21
+*SLA (IX+$01),D         ; dd cb 01 22
+*SLA (IX+$01),E         ; dd cb 01 23
+*SLA (IX+$01),H         ; dd cb 01 24
+*SLA (IX+$01),L         ; dd cb 01 25
+SLA (IX+$01)            ; dd cb 01 26
+*SLA (IX+$01),A         ; dd cb 01 27
+*SRA (IX+$01),B         ; dd cb 01 28
+*SRA (IX+$01),C         ; dd cb 01 29
+*SRA (IX+$01),D         ; dd cb 01 2a
+*SRA (IX+$01),E         ; dd cb 01 2b
+*SRA (IX+$01),H         ; dd cb 01 2c
+*SRA (IX+$01),L         ; dd cb 01 2d
+SRA (IX+$01)            ; dd cb 01 2e
+*SRA (IX+$01),A         ; dd cb 01 2f
+*SLL (IX+$01),B         ;
+*SLL (IX+$01),C         ;
+*SLL (IX+$01),D         ;
+*SLL (IX+$01),E         ;
+*SLL (IX+$01),H         ;
+*SLL (IX+$01),L         ;
+*SLL (IX+$01)           ;
+*SLL (IX+$01),A         ;
+*SRL (IX+$01),B         ; dd cb 01 38
+*SRL (IX+$01),C         ; dd cb 01 39
+*SRL (IX+$01),D         ; dd cb 01 3a
+*SRL (IX+$01),E         ; dd cb 01 3b
+*SRL (IX+$01),H         ; dd cb 01 3c
+*SRL (IX+$01),L         ; dd cb 01 3d
+SRL (IX+$01)            ; dd cb 01 3e
+*SRL (IX+$01),A         ; dd cb 01 3f
+*BIT 0,(IX+$01)         ; dd cb 01 40    BIT instructions do not store result in register
+*BIT 0,(IX+$01)         ; dd cb 01 41
+*BIT 0,(IX+$01)         ; dd cb 01 42
+*BIT 0,(IX+$01)         ; dd cb 01 43
+*BIT 0,(IX+$01)         ; dd cb 01 44
+*BIT 0,(IX+$01)         ; dd cb 01 45
+BIT 0,(IX+$01)          ; dd cb 01 46
+*BIT 0,(IX+$01)         ; dd cb 01 47
+*BIT 1,(IX+$01)         ; dd cb 01 48
+*BIT 1,(IX+$01)         ; dd cb 01 49
+*BIT 1,(IX+$01)         ; dd cb 01 4a
+*BIT 1,(IX+$01)         ; dd cb 01 4b
+*BIT 1,(IX+$01)         ; dd cb 01 4c
+*BIT 1,(IX+$01)         ; dd cb 01 4d
+BIT 1,(IX+$01)          ; dd cb 01 4e
+*BIT 1,(IX+$01)         ; dd cb 01 4f
+*BIT 2,(IX+$01)         ; dd cb 01 50
+*BIT 2,(IX+$01)         ; dd cb 01 51
+*BIT 2,(IX+$01)         ; dd cb 01 52
+*BIT 2,(IX+$01)         ; dd cb 01 53
+*BIT 2,(IX+$01)         ; dd cb 01 54
+*BIT 2,(IX+$01)         ; dd cb 01 55
+BIT 2,(IX+$01)          ; dd cb 01 56
+*BIT 2,(IX+$01)         ; dd cb 01 57
+*BIT 3,(IX+$01)         ; dd cb 01 58
+*BIT 3,(IX+$01)         ; dd cb 01 59
+*BIT 3,(IX+$01)         ; dd cb 01 5a
+*BIT 3,(IX+$01)         ; dd cb 01 5b
+*BIT 3,(IX+$01)         ; dd cb 01 5c
+*BIT 3,(IX+$01)         ; dd cb 01 5d
+BIT 3,(IX+$01)          ; dd cb 01 5e
+*BIT 3,(IX+$01)         ; dd cb 01 5f
+*BIT 4,(IX+$01)         ; dd cb 01 60
+*BIT 4,(IX+$01)         ; dd cb 01 61
+*BIT 4,(IX+$01)         ; dd cb 01 62
+*BIT 4,(IX+$01)         ; dd cb 01 63
+*BIT 4,(IX+$01)         ; dd cb 01 64
+*BIT 4,(IX+$01)         ; dd cb 01 65
+BIT 4,(IX+$01)          ; dd cb 01 66
+*BIT 4,(IX+$01)         ; dd cb 01 67
+*BIT 5,(IX+$01)         ; dd cb 01 68
+*BIT 5,(IX+$01)         ; dd cb 01 69
+*BIT 5,(IX+$01)         ; dd cb 01 6a
+*BIT 5,(IX+$01)         ; dd cb 01 6b
+*BIT 5,(IX+$01)         ; dd cb 01 6c
+*BIT 5,(IX+$01)         ; dd cb 01 6d
+BIT 5,(IX+$01)          ; dd cb 01 6e
+*BIT 5,(IX+$01)         ; dd cb 01 6f
+*BIT 6,(IX+$01)         ; dd cb 01 70
+*BIT 6,(IX+$01)         ; dd cb 01 71
+*BIT 6,(IX+$01)         ; dd cb 01 72
+*BIT 6,(IX+$01)         ; dd cb 01 73
+*BIT 6,(IX+$01)         ; dd cb 01 74
+*BIT 6,(IX+$01)         ; dd cb 01 75
+BIT 6,(IX+$01)          ; dd cb 01 76
+*BIT 6,(IX+$01)         ; dd cb 01 77
+*BIT 7,(IX+$01)         ; dd cb 01 78
+*BIT 7,(IX+$01)         ; dd cb 01 79
+*BIT 7,(IX+$01)         ; dd cb 01 7a
+*BIT 7,(IX+$01)         ; dd cb 01 7b
+*BIT 7,(IX+$01)         ; dd cb 01 7c
+*BIT 7,(IX+$01)         ; dd cb 01 7d
+BIT 7,(IX+$01)          ; dd cb 01 7e
+*BIT 7,(IX+$01)         ; dd cb 01 7f
+*RES 0,(IX+$01),B       ; dd cb 01 80
+*RES 0,(IX+$01),C       ; dd cb 01 81
+*RES 0,(IX+$01),D       ; dd cb 01 82
+*RES 0,(IX+$01),E       ; dd cb 01 83
+*RES 0,(IX+$01),H       ; dd cb 01 84
+*RES 0,(IX+$01),L       ; dd cb 01 85
+RES 0,(IX+$01)          ; dd cb 01 86
+*RES 0,(IX+$01),A       ; dd cb 01 87
+*RES 1,(IX+$01),B       ; dd cb 01 88
+*RES 1,(IX+$01),C       ; dd cb 01 89
+*RES 1,(IX+$01),D       ; dd cb 01 8a
+*RES 1,(IX+$01),E       ; dd cb 01 8b
+*RES 1,(IX+$01),H       ; dd cb 01 8c
+*RES 1,(IX+$01),L       ; dd cb 01 8d
+RES 1,(IX+$01)          ; dd cb 01 8e
+*RES 1,(IX+$01),A       ; dd cb 01 8f
+*RES 2,(IX+$01),B       ; dd cb 01 90
+*RES 2,(IX+$01),C       ; dd cb 01 91
+*RES 2,(IX+$01),D       ; dd cb 01 92
+*RES 2,(IX+$01),E       ; dd cb 01 93
+*RES 2,(IX+$01),H       ; dd cb 01 94
+*RES 2,(IX+$01),L       ; dd cb 01 95
+RES 2,(IX+$01)          ; dd cb 01 96
+*RES 2,(IX+$01),A       ; dd cb 01 97
+*RES 3,(IX+$01),B       ; dd cb 01 98
+*RES 3,(IX+$01),C       ; dd cb 01 99
+*RES 3,(IX+$01),D       ; dd cb 01 9a
+*RES 3,(IX+$01),E       ; dd cb 01 9b
+*RES 3,(IX+$01),H       ; dd cb 01 9c
+*RES 3,(IX+$01),L       ; dd cb 01 9d
+RES 3,(IX+$01)          ; dd cb 01 9e
+*RES 3,(IX+$01),A       ; dd cb 01 9f
+*RES 4,(IX+$01),B       ; dd cb 01 a0
+*RES 4,(IX+$01),C       ; dd cb 01 a1
+*RES 4,(IX+$01),D       ; dd cb 01 a2
+*RES 4,(IX+$01),E       ; dd cb 01 a3
+*RES 4,(IX+$01),H       ; dd cb 01 a4
+*RES 4,(IX+$01),L       ; dd cb 01 a5
+RES 4,(IX+$01)          ; dd cb 01 a6
+*RES 4,(IX+$01),A       ; dd cb 01 a7
+*RES 5,(IX+$01),B       ; dd cb 01 a8
+*RES 5,(IX+$01),C       ; dd cb 01 a9
+*RES 5,(IX+$01),D       ; dd cb 01 aa
+*RES 5,(IX+$01),E       ; dd cb 01 ab
+*RES 5,(IX+$01),H       ; dd cb 01 ac
+*RES 5,(IX+$01),L       ; dd cb 01 ad
+RES 5,(IX+$01)          ; dd cb 01 ae
+*RES 5,(IX+$01),A       ; dd cb 01 af
+*RES 6,(IX+$01),B       ; dd cb 01 b0
+*RES 6,(IX+$01),C       ; dd cb 01 b1
+*RES 6,(IX+$01),D       ; dd cb 01 b2
+*RES 6,(IX+$01),E       ; dd cb 01 b3
+*RES 6,(IX+$01),H       ; dd cb 01 b4
+*RES 6,(IX+$01),L       ; dd cb 01 b5
+RES 6,(IX+$01)          ; dd cb 01 b6
+*RES 6,(IX+$01),A       ; dd cb 01 b7
+*RES 7,(IX+$01),B       ; dd cb 01 b8
+*RES 7,(IX+$01),C       ; dd cb 01 b9
+*RES 7,(IX+$01),D       ; dd cb 01 ba
+*RES 7,(IX+$01),E       ; dd cb 01 bb
+*RES 7,(IX+$01),H       ; dd cb 01 bc
+*RES 7,(IX+$01),L       ; dd cb 01 bd
+RES 7,(IX+$01)          ; dd cb 01 be
+*RES 7,(IX+$01),A       ; dd cb 01 bf
+*SET 0,(IX+$01),B       ; dd cb 01 c0
+*SET 0,(IX+$01),C       ; dd cb 01 c1
+*SET 0,(IX+$01),D       ; dd cb 01 c2
+*SET 0,(IX+$01),E       ; dd cb 01 c3
+*SET 0,(IX+$01),H       ; dd cb 01 c4
+*SET 0,(IX+$01),L       ; dd cb 01 c5
+SET 0,(IX+$01)          ; dd cb 01 c6
+*SET 0,(IX+$01),A       ; dd cb 01 c7
+*SET 1,(IX+$01),B       ; dd cb 01 c8
+*SET 1,(IX+$01),C       ; dd cb 01 c9
+*SET 1,(IX+$01),D       ; dd cb 01 ca
+*SET 1,(IX+$01),E       ; dd cb 01 cb
+*SET 1,(IX+$01),H       ; dd cb 01 cc
+*SET 1,(IX+$01),L       ; dd cb 01 cd
+SET 1,(IX+$01)          ; dd cb 01 ce
+*SET 1,(IX+$01),A       ; dd cb 01 cf
+*SET 2,(IX+$01),B       ; dd cb 01 d0
+*SET 2,(IX+$01),C       ; dd cb 01 d1
+*SET 2,(IX+$01),D       ; dd cb 01 d2
+*SET 2,(IX+$01),E       ; dd cb 01 d3
+*SET 2,(IX+$01),H       ; dd cb 01 d4
+*SET 2,(IX+$01),L       ; dd cb 01 d5
+SET 2,(IX+$01)          ; dd cb 01 d6
+*SET 2,(IX+$01),A       ; dd cb 01 d7
+*SET 3,(IX+$01),B       ; dd cb 01 d8
+*SET 3,(IX+$01),C       ; dd cb 01 d9
+*SET 3,(IX+$01),D       ; dd cb 01 da
+*SET 3,(IX+$01),E       ; dd cb 01 db
+*SET 3,(IX+$01),H       ; dd cb 01 dc
+*SET 3,(IX+$01),L       ; dd cb 01 dd
+*SET 3,(IX+$01)         ; dd cb 01 de
+*SET 3,(IX+$01),A       ; dd cb 01 df
+*SET 4,(IX+$01),B       ; dd cb 01 e0
+*SET 4,(IX+$01),C       ; dd cb 01 e1
+*SET 4,(IX+$01),D       ; dd cb 01 e2
+*SET 4,(IX+$01),E       ; dd cb 01 e3
+*SET 4,(IX+$01),H       ; dd cb 01 e4
+*SET 4,(IX+$01),L       ; dd cb 01 e5
+SET 4,(IX+$01)          ; dd cb 01 e6
+*SET 4,(IX+$01),A       ; dd cb 01 e7
+*SET 5,(IX+$01),B       ; dd cb 01 e8
+*SET 5,(IX+$01),C       ; dd cb 01 e9
+*SET 5,(IX+$01),D       ; dd cb 01 ea
+*SET 5,(IX+$01),E       ; dd cb 01 eb
+*SET 5,(IX+$01),H       ; dd cb 01 ec
+*SET 5,(IX+$01),L       ; dd cb 01 ed
+SET 5,(IX+$01)          ; dd cb 01 ee
+*SET 5,(IX+$01),A       ; dd cb 01 ef
+*SET 6,(IX+$01),B       ; dd cb 01 f0
+*SET 6,(IX+$01),C       ; dd cb 01 f1
+*SET 6,(IX+$01),D       ; dd cb 01 f2
+*SET 6,(IX+$01),E       ; dd cb 01 f3
+*SET 6,(IX+$01),H       ; dd cb 01 f4
+*SET 6,(IX+$01),L       ; dd cb 01 f5
+SET 6,(IX+$01)          ; dd cb 01 f6
+*SET 6,(IX+$01),A       ; dd cb 01 f7
+*SET 7,(IX+$01),B       ; dd cb 01 f8
+*SET 7,(IX+$01),C       ; dd cb 01 f9
+*SET 7,(IX+$01),D       ; dd cb 01 fa
+*SET 7,(IX+$01),E       ; dd cb 01 fb
+*SET 7,(IX+$01),H       ; dd cb 01 fc
+*SET 7,(IX+$01),L       ; dd cb 01 fd
+SET 7,(IX+$01)          ; dd cb 01 fe
+*SET 7,(IX+$01),A       ; dd cb 01 ff
+*NOP                    ; fd 00               FD set: these are a copy of unshifted
+*LD BC,$0000            ; fd 01 00 00                 where all (HL) become IY+00
+*LD (BC),A              ; fd 02                       and all HL become IY (except for EX DE,HL and EXX)
+*INC BC                 ; fd 03                       undocumented H equals IYH (except if IY+00 also used)
+*INC B                  ; fd 04                       undocumented L equals IYL (except if IY+00 also used)
+*DEC B                  ; fd 05
+*LD B,00                ; fd 06 00                    z80a and z80b silicon will execute non LH opcodes as normal
+*RLCA                   ; fd 07                       but at extra 4T
+*EX AF,AF'              ; fd 08
+ADD IY,BC               ; fd 09
+*LD A,(BC)              ; fd 0a
+*DEC BC                 ; fd 0b
+*INC C                  ; fd 0c
+*DEC C                  ; fd 0d
+*LD C,00                ; fd 0e 00
+*RRCA                   ; fd 0f
+*DJNZ 1                 ; fd 10 00
+*LD DE,$0000            ; fd 11 00 00
+*LD (DE),A              ; fd 12
+*INC DE                 ; fd 13
+*INC D                  ; fd 14
+*DEC D                  ; fd 15
+*LD D,00                ; fd 16 00
+*RLA                    ; fd 17
+*JR 2                   ; fd 18 00
+ADD IY,DE               ; fd 19
+*LD A,(DE)              ; fd 1a
+*DEC DE                 ; fd 1b
+*INC E                  ; fd 1c
+*DEC E                  ; fd 1d
+*LD E,00                ; fd 1e 00
+*RRA                    ; fd 1f
+*JR NZ,3                ; fd 20 00
+LD IY,$0929             ; fd 21 45 23
+LD ($0929),IY           ; fd 22 45 23
+INC IY                  ; fd 23
+*INC IYH                ; fd 24
+*DEC IYH                ; fd 25
+*LD IYH,00              ; fd 26 00
+*DAA                    ; fd 27
+*JR Z,4                 ; fd 28 00
+ADD IY,IY               ; fd 29
+LD IY,($0929)           ; fd 2a 45 23
+DEC IY                  ; fd 2b
+*INC IYL                ; fd 2c
+*DEC IYL                ; fd 2d
+*LD IYL,00              ; fd 2e 00
+*CPL                    ; fd 2f
+*JR NC,5                ; fd 30 00
+*LD SP,$0000            ; fd 31 00 00
+*LD ($0000),A           ; fd 32 00 00
+*INC SP                 ; fd 33
+INC (IY+$00)            ; fd 34 00
+DEC (IY+$00)            ; fd 35 00
+LD (IY+$00),00          ; fd 36 00 00
+*SCF                    ; fd 37
+*JR C,6                 ; fd 38 00
+ADD IY,SP               ; fd 39
+*LD A,($0000)           ; fd 3a 00 00
+*DEC SP                 ; fd 3b
+*INC A                  ; fd 3c
+*DEC A                  ; fd 3d
+*LD A,00                ; fd 3e 00
+*CCF                    ; fd 3f
+*LD B,B                 ; fd 40
+*LD B,C                 ; fd 41
+*LD B,D                 ; fd 42
+*LD B,E                 ; fd 43
+*LD B,IYH               ; fd 44
+*LD B,IYL               ; fd 45
+LD B,(IY+$00)           ; fd 46 00
+*LD B,A                 ; fd 47
+*LD C,B                 ; fd 48
+*LD C,C                 ; fd 49
+*LD C,D                 ; fd 4a
+*LD C,E                 ; fd 4b
+*LD C,IYH               ; fd 4c
+*LD C,IYL               ; fd 4d
+LD C,(IY+$00)           ; fd 4e 00
+*LD C,A                 ; fd 4f
+*LD D,B                 ; fd 50
+*LD D,C                 ; fd 51
+*LD D,D                 ; fd 52
+*LD D,E                 ; fd 53
+*LD D,IYH               ; fd 54
+*LD D,IYL               ; fd 55
+LD D,(IY+$00)           ; fd 56 00
+*LD D,A                 ; fd 57
+*LD E,B                 ; fd 58
+*LD E,C                 ; fd 59
+*LD E,D                 ; fd 5a
+*LD E,E                 ; fd 5b
+*LD E,IYH               ; fd 5c
+*LD E,IYL               ; fd 5d
+LD E,(IY+$00)           ; fd 5e 00
+*LD E,A                 ; fd 5f
+*LD IYH,B               ; fd 60
+*LD IYH,C               ; fd 61
+*LD IYH,D               ; fd 62
+*LD IYH,E               ; fd 63
+*LD IYH,IYH             ; fd 64
+*LD IYH,IYL             ; fd 65
+LD H,(IY+$00)           ; fd 66 00
+*LD IYH,A               ; fd 67
+*LD IYL,B               ; fd 68
+*LD IYL,C               ; fd 69
+*LD IYL,D               ; fd 6a
+*LD IYL,E               ; fd 6b
+*LD IYL,IYH             ; fd 6c
+*LD IYL,IYL             ; fd 6d
+LD L,(IY+$00)           ; fd 6e 00
+*LD IYL,A               ; fd 6f
+LD (IY+$00),B           ; fd 70 00
+LD (IY+$00),C           ; fd 71 00
+LD (IY+$00),D           ; fd 72 00
+LD (IY+$00),E           ; fd 73 00
+LD (IY+$00),H           ; fd 74 00
+LD (IY+$00),L           ; fd 75 00
+*HALT                   ; fd 76
+LD (IY+$00),A           ; fd 77 00
+*LD A,B                 ; fd 78
+*LD A,C                 ; fd 79
+*LD A,D                 ; fd 7a
+*LD A,E                 ; fd 7b
+*LD A,IYH               ; fd 7c
+*LD A,IYL               ; fd 7d
+LD A,(IY+$00)           ; fd 7e 00
+*LD A,A                 ; fd 7f
+*ADD A,B                ; fd 80
+*ADD A,C                ; fd 81
+*ADD A,D                ; fd 82
+*ADD A,E                ; fd 83
+*ADD A,IYH              ; fd 84
+*ADD A,IYL              ; fd 85
+ADD A,(IY+$00)          ; fd 86 00
+*ADD A,A                ; fd 87
+*ADC A,B                ; fd 88
+*ADC A,C                ; fd 89
+*ADC A,D                ; fd 8a
+*ADC A,E                ; fd 8b
+*ADC A,IYH              ; fd 8c
+*ADC A,IYL              ; fd 8d
+ADC A,(IY+$00)          ; fd 8e 00
+*ADC A,A                ; fd 8f
+*SUB B                  ; fd 90
+*SUB C                  ; fd 91
+*SUB D                  ; fd 92
+*SUB E                  ; fd 93
+*SUB IYH                ; fd 94
+*SUB IYL                ; fd 95
+SUB (IY+$00)            ; fd 96 00
+*SUB A                  ; fd 97
+*SBC A,B                ; fd 98
+*SBC A,C                ; fd 99
+*SBC A,D                ; fd 9a
+*SBC A,E                ; fd 9b
+*SBC A,IYH              ; fd 9c
+*SBC A,IYL              ; fd 9d
+SBC A,(IY+$00)         ; fd 9e 00
+*SBC A,A                ; fd 9f
+*AND B                  ; fd a0
+*AND C                  ; fd a1
+*AND D                  ; fd a2
+*AND E                  ; fd a3
+*AND IYH                ; fd a4
+*AND IYL                ; fd a5
+AND (IY+$00)            ; fd a6 00
+*AND A                  ; fd a7
+*XOR B                  ; fd a8
+*XOR C                  ; fd a9
+*XOR D                  ; fd aa
+*XOR E                  ; fd ab
+*XOR IYH                ; fd ac
+*XOR IYL                ; fd ad
+XOR (IY+$00)            ; fd ae 00
+*XOR A                  ; fd af
+*OR B                   ; fd b0
+*OR C                   ; fd b1
+*OR D                   ; fd b2
+*OR E                   ; fd b3
+*OR IYH                 ; fd b4
+*OR IYL                 ; fd b5
+OR (IY+$00)             ; fd b6 00
+*OR A                   ; fd b7
+*CP B                   ; fd b8
+*CP C                   ; fd b9
+*CP D                   ; fd ba
+*CP E                   ; fd bb
+*CP IYH                 ; fd bc
+*CP IYL                 ; fd bd
+CP (IY+$00)             ; fd be 00
+*CP A                   ; fd bf
+*RET NZ                 ; fd c0
+*POP BC                 ; fd c1
+*JP NZ,$0000            ; fd c2 00 00
+*JP 0000                ; fd c3 00 00
+*CALL NZ,$0000          ; fd c4 00 00
+*PUSH BC                ; fd c5
+*ADD A,00               ; fd c6 00
+*RST 00                 ; fd c7
+*RET Z                  ; fd c8
+*RET                    ; fd c9
+*JP Z,$0000             ; fd ca 00 00
+*RLC (IY+$01),B         ; fd cb 01 00
+*CALL Z,$0000           ; fd cc 00 00
+*CALL 0000              ; fd cd 00 00
+*ADC A,00               ; fd ce 00
+*RST 08                 ; fd cf
+*RET NC                 ; fd d0
+*POP DE                 ; fd d1
+*JP NC,$0000            ; fd d2 00 00
+*OUT (00),A             ; fd d3 00
+*CALL NC,$0000          ; fd d4 00 00
+*PUSH DE                ; fd d5
+*SUB 00                 ; fd d6 00
+*RST 10h                ; fd d7
+*RET C                  ; fd d8
+*EXX                    ; fd d9        (no IY involved)
+*JP C,$0000             ; fd da 00 00
+*IN A,(00)              ; fd db 00
+*CALL C,$0000           ; fd dc 00 00
+*NOP                    ; fd dd 00
+*SBC A,00               ; fd de 00
+*RST 18h                ; fd df
+*RET PO                 ; fd e0
+POP IY                  ; fd e1
+*JP PO,$0000            ; fd e2 00 00
+EX (SP),IY              ; fd e3
+*CALL PO,$0000          ; fd e4 00 00
+PUSH IY                 ; fd e5
+*AND 00                 ; fd e6 00
+*RST 20h                ; fd e7
+*RET PE                 ; fd e8
+JP (IY)                 ; fd e9
+*JP PE,$0000            ; fd ea 00 00
+*EX DE,HL               ; fd eb                     (no IY here)
+*CALL PE,$0000          ; fd ec 00 00
+*UNDEFINED              ; fd ed 00
+*XOR 00                 ; fd ee 00
+*RST 28h                ; fd ef
+*RET P                  ; fd f0
+*POP AF                 ; fd f1
+*JP P,$0000             ; fd f2 00 00
+*DI                     ; fd f3
+*CALL P,$0000           ; fd f4 00 00
+*PUSH AF                ; fd f5
+*OR 00                  ; fd f6 00
+*RST 30h                ; fd f7
+*RET M                  ; fd f8
+LD SP,IY                ; fd f9
+*JP M,$0000             ; fd fa 00 00
+*EI                     ; fd fb
+*CALL M,$0000           ; fd fc 00 00
+*NOP                    ; fd fd 00
+*CP 00                  ; fd fe 00
+*RST 38h                ; fd ff
+*RLC (IY+$01),B         ; fd cb 01 00      fd cb shifted opcodes (IY BIT (IX+$01),stuff)
+*RLC (IY+$01),C         ; fd cb 01 01
+*RLC (IY+$01),D         ; fd cb 01 02
+*RLC (IY+$01),E         ; fd cb 01 03
+*RLC (IY+$01),H         ; fd cb 01 04
+*RLC (IY+$01),L         ; fd cb 01 05
+RLC (IY+$01)            ; fd cb 01 06
+*RLC (IY+$01),A         ; fd cb 01 07
+*RRC (IY+$01),B         ; fd cb 01 08
+*RRC (IY+$01),C         ; fd cb 01 09
+*RRC (IY+$01),D         ; fd cb 01 0a
+*RRC (IY+$01),E         ; fd cb 01 0b
+*RRC (IY+$01),H         ; fd cb 01 0c
+*RRC (IY+$01),L         ; fd cb 01 0d
+RRC (IY+$01)            ; fd cb 01 0e
+*RRC (IY+$01),A         ; fd cb 01 0f
+*RL (IY+$01),B          ; fd cb 01 10
+*RL (IY+$01),C          ; fd cb 01 11
+*RL (IY+$01),D          ; fd cb 01 12
+*RL (IY+$01),E          ; fd cb 01 13
+*RL (IY+$01),H          ; fd cb 01 14
+*RL (IY+$01),L          ; fd cb 01 15
+RL (IY+$01)             ; fd cb 01 16
+*RL (IY+$01),A          ; fd cb 01 17
+*RR (IY+$01),B          ; fd cb 01 18
+*RR (IY+$01),C          ; fd cb 01 19
+*RR (IY+$01),D          ; fd cb 01 1a
+*RR (IY+$01),E          ; fd cb 01 1b
+*RR (IY+$01),H          ; fd cb 01 1c
+*RR (IY+$01),L          ; fd cb 01 1d
+RR (IY+$01)             ; fd cb 01 1e
+*RR (IY+$01),A          ; fd cb 01 1f
+*SLA (IY+$01),B         ; fd cb 01 20
+*SLA (IY+$01),C         ; fd cb 01 21
+*SLA (IY+$01),D         ; fd cb 01 22
+*SLA (IY+$01),E         ; fd cb 01 23
+*SLA (IY+$01),H         ; fd cb 01 24
+*SLA (IY+$01),L         ; fd cb 01 25
+SLA (IY+$01)            ; fd cb 01 26
+*SLA (IY+$01),A         ; fd cb 01 27
+*SRA (IY+$01),B         ; fd cb 01 28
+*SRA (IY+$01),C         ; fd cb 01 29
+*SRA (IY+$01),D         ; fd cb 01 2a
+*SRA (IY+$01),E         ; fd cb 01 2b
+*SRA (IY+$01),H         ; fd cb 01 2c
+*SRA (IY+$01),L         ; fd cb 01 2d
+SRA (IY+$01)            ; fd cb 01 2e
+*SRA (IY+$01),A         ; fd cb 01 2f
+*SLL (IY+$01),B         ;
+*SLL (IY+$01),C         ;
+*SLL (IY+$01),D         ;
+*SLL (IY+$01),E         ;
+*SLL (IY+$01),H         ;
+*SLL (IY+$01),L         ;
+SLL (IY+$01)            ;
+*SLL (IY+$01),A         ;
+*SRL (IY+$01),B         ; fd cb 01 38
+*SRL (IY+$01),C         ; fd cb 01 39
+*SRL (IY+$01),D         ; fd cb 01 3a
+*SRL (IY+$01),E         ; fd cb 01 3b
+*SRL (IY+$01),H         ; fd cb 01 3c
+*SRL (IY+$01),L         ; fd cb 01 3d
+SRL (IY+$01)            ; fd cb 01 3e
+*SRL (IY+$01),A         ; fd cb 01 3f
+*BIT 0,(IY+$01)         ; fd cb 01 40          BIT instructions do not store result in register
+*BIT 0,(IY+$01)         ; fd cb 01 41
+*BIT 0,(IY+$01)         ; fd cb 01 42
+*BIT 0,(IY+$01)         ; fd cb 01 43
+*BIT 0,(IY+$01)         ; fd cb 01 44
+*BIT 0,(IY+$01)         ; fd cb 01 45
+BIT 0,(IY+$01)          ; fd cb 01 46
+*BIT 0,(IY+$01)         ; fd cb 01 47
+*BIT 1,(IY+$01)         ; fd cb 01 48
+*BIT 1,(IY+$01)         ; fd cb 01 49
+*BIT 1,(IY+$01)         ; fd cb 01 4a
+*BIT 1,(IY+$01)         ; fd cb 01 4b
+*BIT 1,(IY+$01)         ; fd cb 01 4c
+*BIT 1,(IY+$01)         ; fd cb 01 4d
+BIT 1,(IY+$01)          ; fd cb 01 4e
+*BIT 1,(IY+$01)         ; fd cb 01 4f
+*BIT 2,(IY+$01)         ; fd cb 01 50
+*BIT 2,(IY+$01)         ; fd cb 01 51
+*BIT 2,(IY+$01)         ; fd cb 01 52
+*BIT 2,(IY+$01)         ; fd cb 01 53
+*BIT 2,(IY+$01)         ; fd cb 01 54
+*BIT 2,(IY+$01)         ; fd cb 01 55
+BIT 2,(IY+$01)          ; fd cb 01 56
+*BIT 2,(IY+$01)         ; fd cb 01 57
+*BIT 3,(IY+$01)         ; fd cb 01 58
+*BIT 3,(IY+$01)         ; fd cb 01 59
+*BIT 3,(IY+$01)         ; fd cb 01 5a
+*BIT 3,(IY+$01)         ; fd cb 01 5b
+*BIT 3,(IY+$01)         ; fd cb 01 5c
+*BIT 3,(IY+$01)         ; fd cb 01 5d
+BIT 3,(IY+$01)          ; fd cb 01 5e
+*BIT 3,(IY+$01)         ; fd cb 01 5f
+*BIT 4,(IY+$01)         ; fd cb 01 60
+*BIT 4,(IY+$01)         ; fd cb 01 61
+*BIT 4,(IY+$01)         ; fd cb 01 62
+*BIT 4,(IY+$01)         ; fd cb 01 63
+*BIT 4,(IY+$01)         ; fd cb 01 64
+*BIT 4,(IY+$01)         ; fd cb 01 65
+BIT 4,(IY+$01)          ; fd cb 01 66
+*BIT 4,(IY+$01)         ; fd cb 01 67
+*BIT 5,(IY+$01)         ; fd cb 01 68
+*BIT 5,(IY+$01)         ; fd cb 01 69
+*BIT 5,(IY+$01)         ; fd cb 01 6a
+*BIT 5,(IY+$01)         ; fd cb 01 6b
+*BIT 5,(IY+$01)         ; fd cb 01 6c
+*BIT 5,(IY+$01)         ; fd cb 01 6d
+BIT 5,(IY+$01)          ; fd cb 01 6e
+*BIT 5,(IY+$01)         ; fd cb 01 6f
+*BIT 6,(IY+$01)         ; fd cb 01 70
+*BIT 6,(IY+$01)         ; fd cb 01 71
+*BIT 6,(IY+$01)         ; fd cb 01 72
+*BIT 6,(IY+$01)         ; fd cb 01 73
+*BIT 6,(IY+$01)         ; fd cb 01 74
+*BIT 6,(IY+$01)         ; fd cb 01 75
+BIT 6,(IY+$01)          ; fd cb 01 76
+*BIT 6,(IY+$01)         ; fd cb 01 77
+*BIT 7,(IY+$01)         ; fd cb 01 78
+*BIT 7,(IY+$01)         ; fd cb 01 79
+*BIT 7,(IY+$01)         ; fd cb 01 7a
+*BIT 7,(IY+$01)         ; fd cb 01 7b
+*BIT 7,(IY+$01)         ; fd cb 01 7c
+*BIT 7,(IY+$01)         ; fd cb 01 7d
+BIT 7,(IY+$01)          ; fd cb 01 7e
+*BIT 7,(IY+$01)         ; fd cb 01 7f
+*RES 0,(IY+$01),B       ; fd cb 01 80
+*RES 0,(IY+$01),C       ; fd cb 01 81
+*RES 0,(IY+$01),D       ; fd cb 01 82
+*RES 0,(IY+$01),E       ; fd cb 01 83
+*RES 0,(IY+$01),H       ; fd cb 01 84
+*RES 0,(IY+$01),L       ; fd cb 01 85
+RES 0,(IY+$01)          ; fd cb 01 86
+*RES 0,(IY+$01),A       ; fd cb 01 87
+*RES 1,(IY+$01),B       ; fd cb 01 88
+*RES 1,(IY+$01),C       ; fd cb 01 89
+*RES 1,(IY+$01),D       ; fd cb 01 8a
+*RES 1,(IY+$01),E       ; fd cb 01 8b
+*RES 1,(IY+$01),H       ; fd cb 01 8c
+*RES 1,(IY+$01),L       ; fd cb 01 8d
+RES 1,(IY+$01)          ; fd cb 01 8e
+*RES 1,(IY+$01),A       ; fd cb 01 8f
+*RES 2,(IY+$01),B       ; fd cb 01 90
+*RES 2,(IY+$01),C       ; fd cb 01 91
+*RES 2,(IY+$01),D       ; fd cb 01 92
+*RES 2,(IY+$01),E       ; fd cb 01 93
+*RES 2,(IY+$01),H       ; fd cb 01 94
+*RES 2,(IY+$01),L       ; fd cb 01 95
+RES 2,(IY+$01)          ; fd cb 01 96
+*RES 2,(IY+$01),A       ; fd cb 01 97
+*RES 3,(IY+$01),B       ; fd cb 01 98
+*RES 3,(IY+$01),C       ; fd cb 01 99
+*RES 3,(IY+$01),D       ; fd cb 01 9a
+*RES 3,(IY+$01),E       ; fd cb 01 9b
+*RES 3,(IY+$01),H       ; fd cb 01 9c
+*RES 3,(IY+$01),L       ; fd cb 01 9d
+RES 3,(IY+$01)          ; fd cb 01 9e
+*RES 3,(IY+$01),A       ; fd cb 01 9f
+*RES 4,(IY+$01),B       ; fd cb 01 a0
+*RES 4,(IY+$01),C       ; fd cb 01 a1
+*RES 4,(IY+$01),D       ; fd cb 01 a2
+*RES 4,(IY+$01),E       ; fd cb 01 a3
+*RES 4,(IY+$01),H       ; fd cb 01 a4
+*RES 4,(IY+$01),L       ; fd cb 01 a5
+RES 4,(IY+$01)          ; fd cb 01 a6
+*RES 4,(IY+$01),A       ; fd cb 01 a7
+*RES 5,(IY+$01),B       ; fd cb 01 a8
+*RES 5,(IY+$01),C       ; fd cb 01 a9
+*RES 5,(IY+$01),D       ; fd cb 01 aa
+*RES 5,(IY+$01),E       ; fd cb 01 ab
+*RES 5,(IY+$01),H       ; fd cb 01 ac
+*RES 5,(IY+$01),L       ; fd cb 01 ad
+RES 5,(IY+$01)          ; fd cb 01 ae
+*RES 5,(IY+$01),A       ; fd cb 01 af
+*RES 6,(IY+$01),B       ; fd cb 01 b0
+*RES 6,(IY+$01),C       ; fd cb 01 b1
+*RES 6,(IY+$01),D       ; fd cb 01 b2
+*RES 6,(IY+$01),E       ; fd cb 01 b3
+*RES 6,(IY+$01),H       ; fd cb 01 b4
+*RES 6,(IY+$01),L       ; fd cb 01 b5
+RES 6,(IY+$01)          ; fd cb 01 b6
+*RES 6,(IY+$01),A       ; fd cb 01 b7
+*RES 7,(IY+$01),B       ; fd cb 01 b8
+*RES 7,(IY+$01),C       ; fd cb 01 b9
+*RES 7,(IY+$01),D       ; fd cb 01 ba
+*RES 7,(IY+$01),E       ; fd cb 01 bb
+*RES 7,(IY+$01),H       ; fd cb 01 bc
+*RES 7,(IY+$01),L       ; fd cb 01 bd
+RES 7,(IY+$01)          ; fd cb 01 be
+*RES 7,(IY+$01),A       ; fd cb 01 bf
+*SET 0,(IY+$01),B       ; fd cb 01 c0
+*SET 0,(IY+$01),C       ; fd cb 01 c1
+*SET 0,(IY+$01),D       ; fd cb 01 c2
+*SET 0,(IY+$01),E       ; fd cb 01 c3
+*SET 0,(IY+$01),H       ; fd cb 01 c4
+*SET 0,(IY+$01),L       ; fd cb 01 c5
+SET 0,(IY+$01)          ; fd cb 01 c6
+*SET 0,(IY+$01),A       ; fd cb 01 c7
+*SET 1,(IY+$01),B       ; fd cb 01 c8
+*SET 1,(IY+$01),C       ; fd cb 01 c9
+*SET 1,(IY+$01),D       ; fd cb 01 ca
+*SET 1,(IY+$01),E       ; fd cb 01 cb
+*SET 1,(IY+$01),H       ; fd cb 01 cc
+*SET 1,(IY+$01),L       ; fd cb 01 cd
+SET 1,(IY+$01)          ; fd cb 01 ce
+*SET 1,(IY+$01),A       ; fd cb 01 cf
+*SET 2,(IY+$01),B       ; fd cb 01 d0
+*SET 2,(IY+$01),C       ; fd cb 01 d1
+*SET 2,(IY+$01),D       ; fd cb 01 d2
+*SET 2,(IY+$01),E       ; fd cb 01 d3
+*SET 2,(IY+$01),H       ; fd cb 01 d4
+*SET 2,(IY+$01),L       ; fd cb 01 d5
+SET 2,(IY+$01)          ; fd cb 01 d6
+*SET 2,(IY+$01),A       ; fd cb 01 d7
+*SET 3,(IY+$01),B       ; fd cb 01 d8
+*SET 3,(IY+$01),C       ; fd cb 01 d9
+*SET 3,(IY+$01),D       ; fd cb 01 da
+*SET 3,(IY+$01),E       ; fd cb 01 db
+*SET 3,(IY+$01),H       ; fd cb 01 dc
+*SET 3,(IY+$01),L       ; fd cb 01 dd
+SET 3,(IY+$01)          ; fd cb 01 de
+*SET 3,(IY+$01),A       ; fd cb 01 df
+*SET 4,(IY+$01),B       ; fd cb 01 e0
+*SET 4,(IY+$01),C       ; fd cb 01 e1
+*SET 4,(IY+$01),D       ; fd cb 01 e2
+*SET 4,(IY+$01),E       ; fd cb 01 e3
+*SET 4,(IY+$01),H       ; fd cb 01 e4
+*SET 4,(IY+$01),L       ; fd cb 01 e5
+SET 4,(IY+$01)          ; fd cb 01 e6
+*SET 4,(IY+$01),A       ; fd cb 01 e7
+*SET 5,(IY+$01),B       ; fd cb 01 e8
+*SET 5,(IY+$01),C       ; fd cb 01 e9
+*SET 5,(IY+$01),D       ; fd cb 01 ea
+*SET 5,(IY+$01),E       ; fd cb 01 eb
+*SET 5,(IY+$01),H       ; fd cb 01 ec
+*SET 5,(IY+$01),L       ; fd cb 01 ed
+SET 5,(IY+$01)          ; fd cb 01 ee
+*SET 5,(IY+$01),A       ; fd cb 01 ef
+*SET 6,(IY+$01),B       ; fd cb 01 f0
+*SET 6,(IY+$01),C       ; fd cb 01 f1
+*SET 6,(IY+$01),D       ; fd cb 01 f2
+*SET 6,(IY+$01),E       ; fd cb 01 f3
+*SET 6,(IY+$01),H       ; fd cb 01 f4
+*SET 6,(IY+$01),L       ; fd cb 01 f5
+SET 6,(IY+$01)          ; fd cb 01 f6
+*SET 6,(IY+$01),A       ; fd cb 01 f7
+*SET 7,(IY+$01),B       ; fd cb 01 f8
+*SET 7,(IY+$01),C       ; fd cb 01 f9
+*SET 7,(IY+$01),D       ; fd cb 01 fa
+*SET 7,(IY+$01),E       ; fd cb 01 fb
+*SET 7,(IY+$01),H       ; fd cb 01 fc
+*SET 7,(IY+$01),L       ; fd cb 01 fd
+SET 7,(IY+$01)          ; fd cb 01 fe
+*SET 7,(IY+$01),A       ; fd cb 01 ff
+*NOP                    ; ed 00
+IN B,(C)                ; ed 40                          ; The ED specials for Z80
+OUT (C),B               ; ed 41                          ; -----------------------------------------------------------
+SBC HL,BC               ; ed 42                          ; all codes ED 00 through ED 3F are undefined (does NOP NOP in practice)
+LD ($0929),BC           ; ed 43 45 23
+NEG                     ; ed 44
+RETN                    ; ed 45
+IM 0                    ; ed 46                tricky on c128, no default hw support
+LD I,A                  ; ed 47
+IN C,(C)                ; ed 48
+OUT (C),C               ; ed 49
+ADC HL,BC               ; ed 4a
+LD BC,($0929)           ; ed 4b 45 23
+*NEG                    ; ed 4c
+RETI                    ; ed 4d
+*IM 0                   ;
+LD R,A                  ; ed 4f
+IN D,(C)                ; ed 50
+OUT (C),D               ; ed 51
+SBC HL,DE               ; ed 52
+LD ($0929),DE           ; ed 53 45 23
+*NEG                    ; ed 54
+RETN                    ; ed 55
+IM 1                    ; ed 56
+LD A,I                  ; ed 57
+IN E,(C)                ; ed 58
+OUT (C),E               ; ed 59
+ADC HL,DE               ; ed 5a
+LD DE,($0929)           ; ed 5b 45 23
+*NEG                    ; ed 5c
+RETN                    ; ed 5d
+IM 2                    ; ed 5e
+LD A,R                  ; ed 5f
+IN H,(C)                ; ed 60
+OUT (C),H               ; ed 61
+SBC HL,HL               ; ed 62
+*LD ($0929),HL          ; ed 63 45 23
+*NEG                    ; ed 64
+RETN                    ; ed 65
+IM 0                    ; ed 66
+RRD                     ; ed 67
+IN L,(C)                ; ed 68
+OUT (C),L               ; ed 69
+ADC HL,HL               ; ed 6a
+*LD HL,($0929)          ; ed 6b 45 23
+*NEG                    ; ed 6c
+RETN                    ; ed 6d
+*IM 0/1                 ; ed 6e
+RLD                     ; ed 6f
+*IN (C)                 ; or IN F,(C)  ed 70
+*OUT (C),0              ;
+SBC HL,SP               ; ed 72
+LD ($0929),SP           ; ed 73
+*NEG                    ; ed 74
+RETN                    ; ed 75
+IM 1                    ; ed 76
+*NOP                    ; ed 77
+IN A,(C)                ; ed 78
+OUT (C),A               ; ed 79
+ADC HL,SP               ; ed 7a
+LD SP,($0929)           ; ed 7b 45 23
+*NEG                    ; ed 7c
+RETN                    ; ed 7d
+IM 2                    ; ed 7e
+*NOP                    ; ed 7f
+LDI                     ; ed a0
+CPI                     ; ed a1
+INI                     ; ed a2
+OUTI                    ; ed a3                Broken in C128 (out sync with bus)    Simulated effect should be output byte lost
+LDD                     ; ed a8
+CPD                     ; ed a9
+IND                     ; ed aa
+OUTD                    ; ed ab                Broken in C128 (out sync with bus)     Simulated effect should be output byte lost
+LDIR                    ; ed a0
+CPIR                    ; ed a1
+INIR                    ; ed a2                decr B: useless due to BC need for IO in c128
+OTIR                    ; ed a3                Cannot work in C128 (out sync with bus)
+LDDR                    ; ed a8
+CPDR                    ; ed a9
+INDR                    ; ed aa                decr B: useless due to BC need for IO in c128
+OTDR                    ; ed ab                Cannot work in C128 (out sync with bus)
