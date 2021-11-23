@@ -181,17 +181,21 @@ keywordsv2simon.prg: keywordsv2simon.s
 keywordsv2handy.prg: keywordsv2handy.s
 	acme -Wno-old-for keywordsv2handy.s
 
+# all basic v65.0 keywords in a "basic program"
+keywordsv65.prg: keywordsv65.s
+	acme -Wno-old-for keywordsv65.s
+
 .PHONY: test test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
 	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30 \
 	test31 test32 test33 test34 test35 test36 test37 test38 test39 test40 \
-	test41 test41a test42 test43 test44 test45 test46
+	test41 test41a test42 test43 test44 test45 test46 test47
 
 test:	test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
 	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30 \
 	test31 test32 test33 test34 test35 test36 test37 test38 test39 test40 \
-	test41 test41a test42 test43 test44 test45 test46
+	test41 test41a test42 test43 test44 test45 test46 test47
 
 #verify that petscii -> ascii -> petscii produces consistant and reversible results
 test1: petscii.bin
@@ -544,6 +548,13 @@ test46: keywordsv2handy.prg
 	$(PETCAT) -nh -handy -o toasc.out keywordsv2handy.prg
 	$(PETCAT) -whandy -c -o tobas.prg toasc.out
 	diff  -q -s keywordsv2handy.prg tobas.prg
+
+test47: keywordsv65.prg
+	@echo -----
+	@echo test44 - basic v65.0 keywords test program
+	$(PETCAT) -nh -65 -o toasc.out keywordsv65.prg
+	$(PETCAT) -w65 -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv65.prg tobas.prg
 
 clean:
 	rm -f *~
