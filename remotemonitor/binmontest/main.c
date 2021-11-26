@@ -1560,6 +1560,51 @@ void palette_get_works(CuTest *tc) {
     CuAssertIntEquals(tc, 2, assert_count);
 }
 
+void joyport_set_works(CuTest *tc) {
+    int length;
+
+    unsigned char command[] = {
+        0x02, API_VERSION,
+        0xff, 0xff, 0xff, 0xff,
+        0x23, 0x09, 0x24, 0xba,
+
+        0xa2,   /* command type */
+
+        0x00, 0x00,   /* Joyport 1 */
+        0xff, 0x00,
+    };
+
+    setup(tc);
+
+    send_command(command);
+
+    length = wait_for_response_id(tc, command);
+
+    CuAssertIntEquals(tc, 0xa2, response[RESPONSE_TYPE]);
+}
+
+void userport_set_works(CuTest *tc) {
+    int length;
+
+    unsigned char command[] = {
+        0x02, API_VERSION,
+        0xff, 0xff, 0xff, 0xff,
+        0xa5, 0x5f, 0x2a, 0x33,
+
+        0xb2,   /* command type */
+
+        0xff, 0x00,
+    };
+
+    setup(tc);
+
+    send_command(command);
+
+    length = wait_for_response_id(tc, command);
+
+    CuAssertIntEquals(tc, 0xb2, response[RESPONSE_TYPE]);
+}
+
 void display_get_works(CuTest *tc) {
     int length;
     unsigned char *cursor;
@@ -1659,15 +1704,15 @@ CuSuite* get_suite(void)
     SUITE_ADD_TEST(suite, mem_set_works);
     SUITE_ADD_TEST(suite, mem_get_works);
 
+    SUITE_ADD_TEST(suite, dump_works);
+    SUITE_ADD_TEST(suite, undump_works);
+
+    SUITE_ADD_TEST(suite, resource_get_works);
+    SUITE_ADD_TEST(suite, resource_set_works);
+
     SUITE_ADD_TEST(suite, advance_instructions_works);
     SUITE_ADD_TEST(suite, keyboard_feed_works);
     SUITE_ADD_TEST(suite, execute_until_return_works);
-
-    SUITE_ADD_TEST(suite, exit_works);
-    SUITE_ADD_TEST(suite, reset_works);
-
-    SUITE_ADD_TEST(suite, dump_works);
-    SUITE_ADD_TEST(suite, undump_works);
 
     SUITE_ADD_TEST(suite, banks_available_works);
     SUITE_ADD_TEST(suite, registers_available_works);
@@ -1676,8 +1721,12 @@ CuSuite* get_suite(void)
 
     SUITE_ADD_TEST(suite, palette_get_works);
 
-    SUITE_ADD_TEST(suite, resource_get_works);
-    SUITE_ADD_TEST(suite, resource_set_works);
+    SUITE_ADD_TEST(suite, joyport_set_works);
+
+    SUITE_ADD_TEST(suite, userport_set_works);
+
+    SUITE_ADD_TEST(suite, exit_works);
+    SUITE_ADD_TEST(suite, reset_works);
 
     SUITE_ADD_TEST(suite, autostart_works);
 
