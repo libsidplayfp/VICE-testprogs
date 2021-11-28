@@ -14,10 +14,19 @@ init:
 lp:
                 lda #1
                 sta $d800,x
+                sta $d900,x
+                sta $da00,x
+                sta $db00,x
                 lda #$20
                 sta $0400,x
+                sta $0500,x
+                sta $0600,x
+                sta $0700,x
                 inx
                 bne lp
+                
+                lda #$80
+                sta $3fff
 
                 LDX     #$2E
 loc_1FE3:
