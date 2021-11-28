@@ -46,6 +46,14 @@ and colors are used depends on individual VIC, sometimes they even flicker.
 
 Neither x64 nor x64sc gets this right.
 
+test4-c64c-m7.jpg shows output from C64C with 8565R2
+
+test4-c64-m2.jpg shows output from C64 with 6569 R5 (matches C64RMK2 with 8565R2,
+matches C64RMK1 with 6569R5)
+
+test4-c64c-m1.jpg shows output from another C64C with 8565R2. Notable observation
+is that the $<8 chars start flickering after a while (different chars)
+
 --------------------------------------------------------------------------------
 
 Technical background:
