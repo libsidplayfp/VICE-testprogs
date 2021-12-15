@@ -1,6 +1,7 @@
 
 all: \
 	mmuversion.prg \
+	mmuswaptest.prg \
 	mmutest.prg \
 	mmutest2.prg \
 	mmuregister-should-not-mirror.prg \
@@ -12,6 +13,9 @@ all: \
 
 mmuversion.prg: mmuversion.asm
 	acme -f cbm -o mmuversion.prg mmuversion.asm
+
+mmuswaptest.prg: mmuswaptest.asm
+	acme -f cbm -o mmuswaptest.prg mmuswaptest.asm
 
 mmutest.prg: mmutest.asm
 	acme -f cbm -o mmutest.prg mmutest.asm

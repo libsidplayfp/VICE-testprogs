@@ -50,6 +50,7 @@
 ../c128/d030tester/,d030-vadjust20.prg,screenshot,6200000,vicii-pal,vicii-screenshot
 ../c128/d030tester/,d030-vadjust25.prg,screenshot,6200000,vicii-pal,vicii-screenshot
 ../c128/d030tester/,d030-vadjust30.prg,screenshot,6200000,vicii-pal,vicii-screenshot
+../c128/mmu/,mmuswaptest.prg,exitcode,6000000
 ../c128/mmu/,mmutest.prg,exitcode,6000000
 ../c128/mmu/,mmutest2.prg,exitcode,6000000
 ../c128/mmu/,mmuregister-should-not-mirror.prg,exitcode,6000000
