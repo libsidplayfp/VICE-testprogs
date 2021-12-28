@@ -31,22 +31,6 @@ basicHeader=1
 	cmp #$aa  ; expecting $aa
 	bne failed
 
-failed:
-	ldx #0	
--	
-	lda error_msg,x
-	beq +
-	sta $402,x
-	inx
-	jmp -
-+
-	lda #10
-	sta $d020
-	lda #$ff
-	sta $d7ff
-	sty $d507
-	jmp *	
-
 passed:
 	ldx #0	
 -	
@@ -62,6 +46,22 @@ passed:
 	sta $d7ff
 	sty $d507
 	jmp *
+
+failed:
+	ldx #0	
+-	
+	lda error_msg,x
+	beq +
+	sta $402,x
+	inx
+	jmp -
++
+	lda #10
+	sta $d020
+	lda #$ff
+	sta $d7ff
+	sty $d507
+	jmp *	
 
 error_msg:
 	!scr "test failed" 
