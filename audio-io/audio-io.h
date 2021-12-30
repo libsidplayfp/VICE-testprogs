@@ -117,3 +117,6 @@ void __fastcall__ daisy_input_init(void);
 unsigned char __fastcall__ sampler_8bss_left_input(void);
 unsigned char __fastcall__ sampler_8bss_right_input(void);
 unsigned char __fastcall__ daisy_input(void);
+
+/* all */
+void __fastcall__ show_sample(unsigned char sample);

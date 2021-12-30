@@ -12,6 +12,8 @@
         .export		_set_input_jsr, _set_output_jsr, _stream
         .export      _software_input
 
+        .import      _show_sample
+
 
 software_byte:
 	   .byte   $00
@@ -37,6 +39,7 @@ _set_output_jsr:
 _stream:
 inputjsr:
         jsr     $ffff
+        jsr     _show_sample
 outputjsr:
         jsr     $ffff
         jmp     inputjsr

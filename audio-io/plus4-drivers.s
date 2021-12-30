@@ -26,6 +26,8 @@
 ; void __fastcall__ userport_dac_output(unsigned char sample);
 ; void __fastcall__ ted_output(void);
 ;
+; void __fastcall__ show_sample(unsigned char sample);
+;
 
         .export  _digiblaster_fd5x_input
         .export  _digiblaster_fe9x_input
@@ -50,6 +52,8 @@
         .export  _ted_output
 
         .export  _set_sid_addr
+
+        .export  _show_sample
 
         .importzp   tmp1, tmp2
 
@@ -222,6 +226,10 @@ _ted_output:
         tax
         lda     ted_table,x
         sta     $ff11
+        rts
+
+_show_sample:
+        sta     $ff19
         rts
 
 ted_table:

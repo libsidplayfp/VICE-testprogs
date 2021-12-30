@@ -33,6 +33,8 @@
 ; void __fastcall__ userport_dac_output_init(void);
 ; void __fastcall__ userport_dac_output(unsigned char sample);
 ;
+; void __fastcall__ show_sample(unsigned char sample);
+;
 
         .export  _sampler_2bit_hummer_input_init, _sampler_2bit_hummer_input
         .export  _sampler_4bit_hummer_input_init, _sampler_4bit_hummer_input
@@ -51,6 +53,8 @@
         .export  _userport_dac_output_init, _userport_dac_output
 
         .export  _set_sid_addr
+
+        .export  _show_sample
 
         .importzp   tmp1, tmp2
 
@@ -199,4 +203,8 @@ _userport_dac_output_init:
 
 _userport_dac_output:
         sta     $e841
+        rts
+
+_show_sample:
+        sta     $8000
         rts

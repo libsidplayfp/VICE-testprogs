@@ -57,6 +57,8 @@
 ; void __fastcall__ userport_digimax_output_init(void);
 ; void __fastcall__ userport_digimax_output(unsigned char sample);
 ;
+; void __fastcall__ _show_sample(unsigned char sample);
+;
 
         .export  _sampler_2bit_hummer_input_init, _sampler_2bit_hummer_input
         .export  _sampler_4bit_hummer_input_init, _sampler_4bit_hummer_input
@@ -86,6 +88,8 @@
 
         .export  _userport_dac_output_init, _userport_dac_output
         .export  _userport_digimax_output_init, _userport_digimax_output
+
+        .export  _show_sample
 
         .importzp   sreg, tmp1, tmp2
 
@@ -501,4 +505,13 @@ _userport_dac_output:
         dey
         sta     (sreg),y
         stx     $01
+        rts
+
+_show_sample:
+        jsr     setup_banking
+        ldy     #$d8
+        sty     sreg + 1
+        ldy     #$00
+        sty     sreg
+        sta     (sreg),y
         rts

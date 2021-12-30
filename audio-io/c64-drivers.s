@@ -1,5 +1,5 @@
 ;
-; Marco van den Heuvel, 28.01.2016
+; Marco van den Heuvel, 30.12.2021
 ;
 ; void __fastcall__ set_sid_addr(unsigned addr);
 ; void __fastcall__ set_digimax_addr(unsigned addr);
@@ -74,6 +74,8 @@
 ; void __fastcall__ sfx_sound_expander_output_init(void);
 ; void __fastcall__ sfx_sound_expander_output(unsigned char sample);
 ;
+; void __fastcall__ show_sample(unsigned char sample);
+;
 
         .export  _sfx_input
         .export  _sampler_2bit_joy1_input
@@ -117,6 +119,8 @@
 
         .export  _set_sid_addr
         .export  _set_digimax_addr
+
+        .export  _show_sample
 
         .importzp   tmp1, tmp2
 
@@ -611,3 +615,13 @@ _sfx_sound_expander_output:
         lsr
         ldx     #$40
         jmp     sfx_se_write
+
+_show_sample:
+        tax
+        lsr
+        lsr
+        lsr
+        lsr
+        sta     $d020
+        txa
+        rts

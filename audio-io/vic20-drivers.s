@@ -45,6 +45,8 @@
 ; void __fastcall__ sfx_sound_expander_output(unsigned char sample);
 ; void __fastcall__ sfx_sound_expander_io_swapped_output_init(void);
 ;
+; void __fastcall__ show_sample(unsigned char sample);
+;
 
         .export  _sampler_2bit_joy1_input
         .export  _sampler_4bit_joy1_input
@@ -74,6 +76,8 @@
 
         .export  _set_sid_addr
         .export  _set_digimax_addr
+
+        .export  _show_sample
 
         .importzp       tmp1, tmp2
 
@@ -365,3 +369,20 @@ _sfx_sound_expander_output:
         lsr
         ldx     #$40
         jmp     sfx_se_write
+
+_show_sample:
+        tax
+        lsr
+        lsr
+        lsr
+        lsr
+        lsr
+        tay
+        lda     $900f
+        and     #$f8
+        sta     $900f
+        tya
+        ora     $900f
+        sta     $900f
+        txa
+        rts
