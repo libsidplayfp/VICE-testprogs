@@ -1,7 +1,11 @@
 
 all: \
 	mmuversion.prg \
-	mmuswaptest.prg \
+	mmuswap-io-page.prg \
+	mmuswap-normal-page.prg \
+	mmuswap-page0-and-page1.prg \
+	mmuswap-page0-only-page1.prg \
+	mmuswap-page1-only-page0.prg \
 	mmutest.prg \
 	mmutest2.prg \
 	mmuregister-should-not-mirror.prg \
@@ -14,8 +18,20 @@ all: \
 mmuversion.prg: mmuversion.asm
 	acme -f cbm -o mmuversion.prg mmuversion.asm
 
-mmuswaptest.prg: mmuswaptest.asm
-	acme -f cbm -o mmuswaptest.prg mmuswaptest.asm
+mmuswap-io-page.prg: mmuswap-io-page.asm
+	acme -f cbm -o mmuswap-io-page.prg mmuswap-io-page.asm
+
+mmuswap-normal-page.prg: mmuswap-normal-page.asm
+	acme -f cbm -o mmuswap-normal-page.prg mmuswap-normal-page.asm
+
+mmuswap-page0-and-page1.prg: mmuswap-page0-and-page1.asm
+	acme -f cbm -o mmuswap-page0-and-page1.prg mmuswap-page0-and-page1.asm
+
+mmuswap-page0-only-page1.prg: mmuswap-page0-only-page1.asm
+	acme -f cbm -o mmuswap-page0-only-page1.prg mmuswap-page0-only-page1.asm
+
+mmuswap-page1-only-page0.prg: mmuswap-page1-only-page0.asm
+	acme -f cbm -o mmuswap-page1-only-page0.prg mmuswap-page1-only-page0.asm
 
 mmutest.prg: mmutest.asm
 	acme -f cbm -o mmutest.prg mmutest.asm

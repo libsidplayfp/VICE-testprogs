@@ -1,4 +1,8 @@
-; When the zero page is relocated using the MMU, the areas swap
+; When the zero page is swapped with the stack page using the MMU,
+; but the stack page is told to stay in place using the MMU, do they swap ?
+;
+; this test has not been done on real hardware yet,
+; result on real hardware might change expected outcome.
 ;
 ; Test made by Marco van den Heuvel
 
@@ -18,35 +22,23 @@ basicHeader=1
 
 	sei
 	ldy $d507
-	ldx $d509
 	lda #$aa
-	sta $80   ; store in real zero page
+	sta $20   ; store in real zero page
 	lda #$55
-	sta $3080 ; store in 'soon to become' zero page
-	lda #$30
-	sta $d507 ; relocate zero page to $30xx
-	lda $80
+	sta $0120 ; store in 'soon to become' zero page (or still stack page)
+	lda #$01
+	sta $d507 ; relocate zero page to stack page
+	lda $20
+	ldx #10
 	cmp #$55  ; expecting $55
 	bne failed
-	lda $3080
-	cmp #$aa  ; expecting $aa
-	sty $d507
-	lda #$aa
-	sta $0120 ; store in the real stack page
-	lda #$55
-	sta $3120 ; store in 'soon to become' stack page
-	lda #$31
-	sta $d509 ; relocate stack page to $31xx
+	ldx #04
 	lda $0120
-	cmp #$55  ; expecting $55
-	bne failed
-	lda $3120
 	cmp #$aa  ; expecting $aa
 	bne failed
 
 passed:
 	sty $d507
-	stx $d509
 	ldx #0	
 -	
 	lda ok_msg,x
@@ -63,17 +55,15 @@ passed:
 
 failed:
 	sty $d507
-	stx $d509
-	ldx #0	
+	ldy #0	
 -	
-	lda error_msg,x
+	lda error_msg,y
 	beq +
-	sta $402,x
-	inx
+	sta $402,y
+	iny
 	jmp -
 +
-	lda #10
-	sta $d020
+	stx $d020
 	lda #$ff
 	sta $d7ff
 	jmp *	
