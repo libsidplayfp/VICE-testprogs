@@ -1,6 +1,8 @@
 
 all: \
 	mmuversion.prg \
+	mmuswap-bank-page.prg \
+	mmuswap-bank-shared-page.prg \
 	mmuswap-io-page.prg \
 	mmuswap-normal-page.prg \
 	mmuswap-page0-and-page1.prg \
@@ -17,6 +19,12 @@ all: \
 
 mmuversion.prg: mmuversion.asm
 	acme -f cbm -o mmuversion.prg mmuversion.asm
+
+mmuswap-bank-page.prg: mmuswap-bank-page.asm
+	acme -f cbm -o mmuswap-bank-page.prg mmuswap-bank-page.asm
+
+mmuswap-bank-shared-page.prg: mmuswap-bank-shared-page.asm
+	acme -f cbm -o mmuswap-bank-shared-page.prg mmuswap-bank-shared-page.asm
 
 mmuswap-io-page.prg: mmuswap-io-page.asm
 	acme -f cbm -o mmuswap-io-page.prg mmuswap-io-page.asm
