@@ -1,8 +1,8 @@
 ; When the zero page is swapped with the stack page using the MMU,
-; and the stack page is swapped with the zero page using the MMU, do they un-swap ?
+; and the stack page is swapped with the zero page using the MMU,
+; they are swapped.
 ;
-; this test has not been done on real hardware yet,
-; result on real hardware might change expected outcome.
+; test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
 
@@ -32,10 +32,10 @@ basicHeader=1
 	lda #$00
 	sta $d509 ; relocate stack page to zero page
 	lda $20
-	cmp #$aa  ; expecting $aa
+	cmp #$55  ; expecting $55
 	bne failed
 	lda $0120
-	cmp #$55  ; expecting $55
+	cmp #$aa  ; expecting $aa
 	bne failed
 
 passed:

@@ -1,8 +1,9 @@
 ; When the zero page is swapped with the stack page using the MMU,
-; but the stack page is told to stay in place using the MMU, do they swap ?
+; accesses to the zero page wind up at the stack page.
+; and if the stack page is told to stay in place using the MMU,
+; it stays in place, so page 0 become unaccessable
 ;
-; this test has not been done on real hardware yet,
-; result on real hardware might change expected outcome.
+; test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
 
@@ -34,7 +35,7 @@ basicHeader=1
 	bne failed
 	ldx #04
 	lda $0120
-	cmp #$aa  ; expecting $aa
+	cmp #$55  ; expecting $55
 	bne failed
 
 passed:

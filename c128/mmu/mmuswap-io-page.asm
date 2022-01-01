@@ -1,4 +1,10 @@
-; When the zero page is relocated to I/O space using the MMU, do the areas swap ?
+; When the zero page is relocated to I/O or ROM space using the MMU,
+; only the RAM under I/O or ROM space is remapped.
+;
+; The ROM or I/O still overlays in memory and does not cause back-translation.
+;
+;
+; test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
 
