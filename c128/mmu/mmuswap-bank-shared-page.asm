@@ -23,7 +23,6 @@ basicHeader=1
 *=start
 	sei
 	ldy $d507
-	ldx $d508
 	lda $d506
 	pha
 	and #$f0
@@ -49,6 +48,7 @@ basicHeader=1
 	sta $d507 ; relocate zero page to $e0xx
 	lda #$00  ; bank 0 I/O mapped in
 	sta $ff00
+	ldx #0
 	lda $80
 	cmp #$33  ; expecting $33
 	bne failed
@@ -56,6 +56,7 @@ basicHeader=1
 	sta $d506
 	lda #$3f  ; bank 0 all ram
 	sta $ff00
+	ldx #1
 	lda $e080
 	cmp #$55  ; expecting $aa
 	bne failed
@@ -65,6 +66,7 @@ basicHeader=1
 	sta $d506
 	lda #$7f  ; bank 1 all ram
 	sta $ff00
+	ldx #10
 	lda $e080
 	cmp #$aa  ; expecting $aa
 	bne failed
@@ -74,7 +76,8 @@ passed:
 	sta $ff00
 	pla
 	sta $d506
-	stx $d508
+	lda #$00
+	sta $d508
 	sty $d507
 	ldx #0	
 -	
@@ -95,7 +98,8 @@ failed:
 	sta $ff00
 	pla
 	sta $d506
-	stx $d508
+	lda #$00
+	sta $d508
 	sty $d507
 	ldy #0	
 -	
@@ -105,8 +109,7 @@ failed:
 	iny
 	jmp -
 +
-	lda #10
-	sta $d020
+	stx $d020
 	lda #$ff
 	sta $d7ff
 	jmp *	

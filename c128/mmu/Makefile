@@ -3,6 +3,7 @@ all: \
 	mmuversion.prg \
 	mmuswap-bank-page.prg \
 	mmuswap-bank-shared-page.prg \
+	mmuswap-bank1-peek.prg \
 	mmuswap-io-page.prg \
 	mmuswap-normal-page.prg \
 	mmuswap-page0-and-page1.prg \
@@ -25,6 +26,9 @@ mmuswap-bank-page.prg: mmuswap-bank-page.asm
 
 mmuswap-bank-shared-page.prg: mmuswap-bank-shared-page.asm
 	acme -f cbm -o mmuswap-bank-shared-page.prg mmuswap-bank-shared-page.asm
+
+mmuswap-bank1-peek.prg: mmuswap-bank1-peek.asm
+	acme -f cbm -o mmuswap-bank1-peek.prg mmuswap-bank1-peek.asm
 
 mmuswap-io-page.prg: mmuswap-io-page.asm
 	acme -f cbm -o mmuswap-io-page.prg mmuswap-io-page.asm

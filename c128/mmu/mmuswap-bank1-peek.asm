@@ -1,6 +1,6 @@
-; When the zero page is relocated to a regular page in bank 1,
-; the page in bank 0 is not swapped, and only the page in bank 1
-; is swapped.
+; When the zero page is relocated to bank 1,
+; and we try to read the zero page in bank 0,
+; we get the zero page of bank 0, and not bank 1.
 ;
 ; test not yet confirmed on real hardware
 ;
@@ -20,11 +20,11 @@ basicHeader=1
 }
 *=start
 	sei
-	ldy $d507
+	ldx $d508
 	lda $d506
 	pha
 	and #$f0
-	ora #$07  ; bottom 16k shared
+	ora #$0b  ; top 16k shared
 	sta $d506
 	lda $ff00
 	pha
@@ -32,43 +32,37 @@ basicHeader=1
 	sta $ff00
 	lda #$aa
 	sta $80   ; store in real zero page
-	lda #$55
-	sta $5080 ; store in 'soon to become zero page' in bank 0
-	lda #$7f  ; bank 1 all ram
-	sta $ff00
-	lda #$33
-	sta $5080 ; store in 'soon to become zero page' in bank 1
+	ldy #$00
+loop:
+	lda poke_zp_bank_1,y
+	sta $e000,y
+	iny
+	bne loop
+	jsr $e000
 	lda #$00  ; bank 0 I/O mapped in
 	sta $ff00
 	lda #$01
 	sta $d508 ; relocate zero page bank to bank 1
-	lda #$50
-	sta $d507 ; relocate zero page to $50xx
-	lda #$3f  ; bank 0 all ram
-	sta $ff00
-	ldx #00
+	lda #$00
+	sta $d507 ; activate relocation
 	lda $80
-	cmp #$33  ; expecting $33
-	bne failed
-	ldx #01
-	lda $5080
+	ldy #00
 	cmp #$55  ; expecting $55
 	bne failed
-	lda #$7f  ; bank 1 all ram
-	sta $ff00
-	ldx #10
-	lda $5080
+	lda #$07  ; bottom 16k shared
+	sta $d506
+	ldy #10
+	lda $80
 	cmp #$aa  ; expecting $aa
 	bne failed
+
 
 passed:
 	pla
 	sta $ff00
 	pla
 	sta $d506
-	lda #$00
-	sta $d508
-	sty $d507
+	stx $d508
 	ldx #0	
 -	
 	lda ok_msg,x
@@ -88,18 +82,16 @@ failed:
 	sta $ff00
 	pla
 	sta $d506
-	lda #$00
-	sta $d508
-	sty $d507
-	ldy #0	
+	stx $d508
+	ldx #0	
 -	
-	lda error_msg,y
+	lda error_msg,x
 	beq +
-	sta $402,y
-	iny
+	sta $402,x
+	inx
 	jmp -
 +
-	stx $d020
+	sty $d020
 	lda #$ff
 	sta $d7ff
 	jmp *	
@@ -110,3 +102,12 @@ error_msg:
 ok_msg:	
 	!scr "test passed" 
 	!byte 0
+
+poke_zp_bank_1:
+	lda #$7f ; bank 1 all ram
+	sta $ff00
+	lda #$55
+	sta $80
+	lda #$3f ; bank 0 all ram
+	sta $ff00
+	rts
