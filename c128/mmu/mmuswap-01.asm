@@ -1,4 +1,4 @@
-; When the zero page is not relocated, is bank 1 page 0 mapped to bank 0 ?
+; When the stack page is not relocated, is bank 1 page 0 mapped to bank 0 ?
 ;
 ; test will not reach passed till it has been confirmed on real hardware
 ;
@@ -29,7 +29,7 @@ basicHeader=1
 	lda #$3f  ; bank 0 all ram
 	sta $ff00
 	lda #$aa
-	sta $80   ; store in real zero page
+	sta $0120   ; store in real stack page
 	ldx #$00
 loop0:
 	lda set_bytes_in_bank1,x
@@ -43,8 +43,8 @@ loop:
 	sta $e000,x
 	inx
 	bne loop
-	jsr $e000 ; $80 read bank 1 in Y
-	lda $80   ; $80 read bank 0 in A
+	jsr $e000   ; $0120 read bank 1 in Y
+	lda $0120   ; $0120 read bank 0 in A
 	cmp #$55
 	beq bank_0_is_55
 	cmp #$aa
@@ -125,7 +125,7 @@ ok_msg:
 get_byte_from_bank1:
 	ldx #$7f ; bank 1 all ram
 	stx $ff00
-	ldy $80
+	ldy $0120
 	ldx #$3f ; bank 0 all ram
 	stx $ff00
 	rts
@@ -134,7 +134,7 @@ set_bytes_in_bank1:
 	ldx #$7f ; bank 1 all ram
 	stx $ff00
 	ldx #$55
-	stx $80
+	stx $0120
 	ldx #$3f ; bank 0 all ram
 	stx $ff00
 	rts
