@@ -73,6 +73,40 @@ Red:    something unexpected got read from $0120 in either bank 0 or bank 1.
 
 Results:
 --------
+Dr Blutig: Black
+
+Conclusion:
+-----------
+None yet, waiting on test results.
+
+-------------------------------------------------------------------------------
+
+mmuswap-02:
+===========
+
+Goal:
+-----
+This test is designed to see if accesses to page 2 in not shared low
+memory always go to bank 0.
+
+Procedure:
+----------
+- Set up shared top memory space of 16KB.
+- Put the value #$aa in bank 0 address $0220.
+- Put the value #$55 in bank 1 address $0220.
+- Read back the value from bank 0 address $0220.
+- Read back the value from bank 1 address $0220.
+
+Border Colors:
+--------------
+Black:  #$55 got read from $0220 in bank 0, #$55 got read from $0220 in bank 1.
+White:  #$55 got read from $0220 in bank 0, #$aa got read from $0220 in bank 1.
+Purple: #$aa got read from $0220 in bank 0, #$55 got read from $0220 in bank 1.
+Cyan:   #$aa got read from $0220 in bank 0, #$aa got read from $0220 in bank 1.
+Red:    something unexpected got read from $0220 in either bank 0 or bank 1.
+
+Results:
+--------
 None yet.
 
 Conclusion:
