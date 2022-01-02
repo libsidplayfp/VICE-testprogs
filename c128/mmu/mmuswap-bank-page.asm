@@ -58,12 +58,18 @@ basicHeader=1
 	bne failed
 	lda #$00  ; bank 0 I/O mapped in
 	sta $ff00
-	lda #$07  ; bottom 16k shared
+	lda #$0b  ; top 16k shared
 	sta $d506
-	lda #$7f  ; bank 1 all ram
+	lda #$3f  ; bank 0 all ram
 	sta $ff00
+	ldx #$00
+loop:
+	lda get_byte_from_bank1,x
+	sta $e000,x
+	inx
+	bne loop
+	jsr $e000
 	ldx #10
-	lda $5080
 	cmp #$aa  ; expecting $aa
 	bne failed
 
@@ -116,3 +122,12 @@ error_msg:
 ok_msg:	
 	!scr "test passed" 
 	!byte 0
+
+
+get_byte_from_bank1:
+	ldx #$7f ; bank 1 all ram
+	stx $ff00
+	lda $5080
+	ldx #$3f ; bank 0 all ram
+	stx $ff00
+	rts
