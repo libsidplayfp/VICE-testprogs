@@ -44,6 +44,8 @@ basicHeader=1
 	sta $d508 ; relocate zero page bank to bank 1
 	lda #$50
 	sta $d507 ; relocate zero page to $50xx
+	lda #$00  ; no shared ram
+	sta $d506
 	lda #$3f  ; bank 0 all ram
 	sta $ff00
 	ldx #00
@@ -54,6 +56,10 @@ basicHeader=1
 	lda $5080
 	cmp #$55  ; expecting $55
 	bne failed
+	lda #$00  ; bank 0 I/O mapped in
+	sta $ff00
+	lda #$07  ; bottom 16k shared
+	sta $d506
 	lda #$7f  ; bank 1 all ram
 	sta $ff00
 	ldx #10
