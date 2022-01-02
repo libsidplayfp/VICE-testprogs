@@ -37,6 +37,10 @@ Purple: #$aa got read from $80 in bank 0, #$55 got read from $80 in bank 1.
 Cyan:   #$aa got read from $80 in bank 0, #$aa got read from $80 in bank 1.
 Red:    something unexpected got read from $80 in either bank 0 or bank 1.
 
+Results:
+--------
+Dr Blutig: Black
+
 Conclusion:
 -----------
 None yet, waiting on test results.
