@@ -23,29 +23,29 @@ basicHeader=1
 	ldy $d507
 	lda $d506
 	pha
-	and #$f0
-	ora #$07  ; bottom 16k shared
-	sta $d506
 	lda $ff00
 	pha
+	lda #$0b  ; top 16k shared
+	sta $d506
 	lda #$3f  ; bank 0 all ram
 	sta $ff00
 	lda #$aa
 	sta $80   ; store in real zero page
 	lda #$55
 	sta $5080 ; store in 'soon to become zero page' in bank 0
-	lda #$7f  ; bank 1 all ram
-	sta $ff00
-	lda #$33
-	sta $5080 ; store in 'soon to become zero page' in bank 1
+	ldx #$00
+loop0:
+	lda set_bytes_in_bank1,x
+	sta $e000,x
+	inx
+	bne loop0
+	jsr $e000
 	lda #$00  ; bank 0 I/O mapped in
 	sta $ff00
 	lda #$01
 	sta $d508 ; relocate zero page bank to bank 1
 	lda #$50
 	sta $d507 ; relocate zero page to $50xx
-	lda #$00  ; no shared ram
-	sta $d506
 	lda #$3f  ; bank 0 all ram
 	sta $ff00
 	ldx #00
@@ -56,12 +56,6 @@ basicHeader=1
 	lda $5080
 	cmp #$55  ; expecting $55
 	bne failed
-	lda #$00  ; bank 0 I/O mapped in
-	sta $ff00
-	lda #$0b  ; top 16k shared
-	sta $d506
-	lda #$3f  ; bank 0 all ram
-	sta $ff00
 	ldx #$00
 loop:
 	lda get_byte_from_bank1,x
@@ -70,6 +64,7 @@ loop:
 	bne loop
 	jsr $e000
 	ldx #10
+	sta $0400
 	cmp #$aa  ; expecting $aa
 	bne failed
 
@@ -123,11 +118,21 @@ ok_msg:
 	!scr "test passed" 
 	!byte 0
 
-
 get_byte_from_bank1:
 	ldx #$7f ; bank 1 all ram
 	stx $ff00
 	lda $5080
 	ldx #$3f ; bank 0 all ram
+	stx $ff00
+	rts
+
+set_bytes_in_bank1:
+	ldx #$7f ; bank 1 all ram
+	stx $ff00
+	ldx #$33
+	stx $5080
+	ldx #$11
+	stx $80
+	ldx #$3f ; bank 1 all ram
 	stx $ff00
 	rts
