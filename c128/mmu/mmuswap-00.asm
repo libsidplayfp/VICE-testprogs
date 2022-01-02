@@ -24,6 +24,8 @@ basicHeader=1
 	pha
 	lda $ff00
 	pha
+	lda #$00
+	sta $ff00 ; make sure i/o is mapped in
 	lda #$0b  ; top 16k shared
 	sta $d506
 	lda #$3f  ; bank 0 all ram
