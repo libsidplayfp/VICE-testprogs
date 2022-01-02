@@ -62,7 +62,7 @@ bank_0_is_55:
 	bne failed
 bank_0_is_aa:
 	cpy #$55
-	beq bank_0_is_aa_bank_1_is_55
+	beq passed
 	cpy #$aa
 	beq bank_0_is_aa_bank_1_is_aa
 	ldx #2
@@ -72,9 +72,6 @@ bank_0_is_55_bank_1_is_55:
 	beq failed
 bank_0_is_55_bank_1_is_aa:
 	ldx #1
-	bne failed
-bank_0_is_aa_bank_1_is_55:
-	ldx #4
 	bne failed
 bank_0_is_aa_bank_1_is_aa:
 	ldx #3

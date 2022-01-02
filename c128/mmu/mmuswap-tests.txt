@@ -19,7 +19,7 @@ mmuswap-00:
 Goal:
 -----
 This test is designed to see if accesses to the zero page in not shared low
-memory always go to bank 0.
+memory always go to bank 0 when the zero page is mapped to page 0 and bank 0.
 
 Procedure:
 ----------
@@ -31,7 +31,7 @@ Procedure:
 
 Border Colors:
 --------------
-Black:  #$55 got read from $80 in bank 0, #$55 got read from $80 in bank 1.
+Green:  #$55 got read from $80 in bank 0, #$55 got read from $80 in bank 1.
 White:  #$55 got read from $80 in bank 0, #$aa got read from $80 in bank 1.
 Purple: #$aa got read from $80 in bank 0, #$55 got read from $80 in bank 1.
 Cyan:   #$aa got read from $80 in bank 0, #$aa got read from $80 in bank 1.
@@ -39,11 +39,13 @@ Red:    something unexpected got read from $80 in either bank 0 or bank 1.
 
 Results:
 --------
-Dr Blutig: Black
+Dr Blutig:      Green
+William McCabe: Green
 
 Conclusion:
 -----------
-None yet, waiting on test results.
+Accesses to the zero page when the zero page is mapped to page 0 and bank 0
+always go to bank 0, even if the current bank is a different bank.
 
 -------------------------------------------------------------------------------
 
@@ -53,7 +55,7 @@ mmuswap-01:
 Goal:
 -----
 This test is designed to see if accesses to the stack page in not shared low
-memory always go to bank 0.
+memory always go to bank 0 when the stack page is mapped to page 1 and bank 0.
 
 Procedure:
 ----------
@@ -65,7 +67,7 @@ Procedure:
 
 Border Colors:
 --------------
-Black:  #$55 got read from $0120 in bank 0, #$55 got read from $0120 in bank 1.
+Green:  #$55 got read from $0120 in bank 0, #$55 got read from $0120 in bank 1.
 White:  #$55 got read from $0120 in bank 0, #$aa got read from $0120 in bank 1.
 Purple: #$aa got read from $0120 in bank 0, #$55 got read from $0120 in bank 1.
 Cyan:   #$aa got read from $0120 in bank 0, #$aa got read from $0120 in bank 1.
@@ -73,11 +75,13 @@ Red:    something unexpected got read from $0120 in either bank 0 or bank 1.
 
 Results:
 --------
-Dr Blutig: Black
+Dr Blutig:      Green
+William McCabe: Green
 
 Conclusion:
 -----------
-None yet, waiting on test results.
+Accesses to the stack page when the stack page is mapped to page 1 and bank 0
+always go to bank 0, even if the current bank is a different bank.
 
 -------------------------------------------------------------------------------
 
@@ -101,14 +105,16 @@ Border Colors:
 --------------
 Black:  #$55 got read from $0220 in bank 0, #$55 got read from $0220 in bank 1.
 White:  #$55 got read from $0220 in bank 0, #$aa got read from $0220 in bank 1.
-Purple: #$aa got read from $0220 in bank 0, #$55 got read from $0220 in bank 1.
+Green: #$aa got read from $0220 in bank 0, #$55 got read from $0220 in bank 1.
 Cyan:   #$aa got read from $0220 in bank 0, #$aa got read from $0220 in bank 1.
 Red:    something unexpected got read from $0220 in either bank 0 or bank 1.
 
 Results:
 --------
-None yet.
+Dr Blutig:      Green
+William McCabe: Green
 
 Conclusion:
 -----------
-None yet, waiting on test results.
+Accesses to page 2 (and other non zero and stack pages) when page 2 is not in
+shared memory go to the current bank.

@@ -1,8 +1,6 @@
 ; When the zero page is not relocated, is bank 1 page 0 mapped to bank 0 ?
 ;
-; test will not reach passed till it has been confirmed on real hardware
-;
-; test not yet confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
 
@@ -55,7 +53,7 @@ loop:
 	bne failed
 bank_0_is_55:
 	cpy #$55
-	beq bank_0_is_55_bank_1_is_55
+	beq passed
 	cpy #$aa
 	beq bank_0_is_55_bank_1_is_aa
 	ldx #2
@@ -67,9 +65,6 @@ bank_0_is_aa:
 	beq bank_0_is_aa_bank_1_is_aa
 	ldx #2
 	bne failed
-bank_0_is_55_bank_1_is_55:
-	ldx #0
-	beq failed
 bank_0_is_55_bank_1_is_aa:
 	ldx #1
 	bne failed
