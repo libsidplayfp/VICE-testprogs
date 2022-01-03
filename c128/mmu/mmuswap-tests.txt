@@ -272,6 +272,7 @@ Green:      #$33 got read from $80 after after zero page and stack page
 Results:
 --------
 Dr Blutig:      Green
+William McCabe: Green
 
 Conclusion:
 -----------
@@ -301,6 +302,47 @@ Border Colors:
 --------------
 Red:   #$aa got read from $80 and #$55 got read from $3080.
 Green: #$55 got read from $80 and #$aa got read from $3080.
+
+Results:
+--------
+William McCabe: Green
+
+Conclusion:
+-----------
+Waiting on results.
+
+-------------------------------------------------------------------------------
+
+mmuswap-08:
+===========
+
+Goal:
+-----
+This test is designed to see what happens when the zero page is mapped to a
+non-shared RAM page in bank 1, what value do we get back from that non-shared
+RAM page in bank 0 and bank 1.
+
+Procedure:
+----------
+- Put the value #$aa in $80.
+- Put the value #$55 in $3080 bank 0.
+- Put the value #$33 in #3080 bank 1.
+- Relocate the zero page to page 30 bank 1.
+- Read back the value from address $3080 bank 0.
+- Read back the value from address $3080 bank 1.
+
+Border Colors:
+--------------
+Black:      #$33 got read from $3080 bank 0 and #$33 got read from $3080 bank 1.
+White:      #$33 got read from $3080 bank 0 and #$55 got read from $3080 bank 1.
+Cyan:       #$33 got read from $3080 bank 0 and #$aa got read from $3080 bank 1.
+Purple:     #$55 got read from $3080 bank 0 and #$33 got read from $3080 bank 1.
+Blue:       #$55 got read from $3080 bank 0 and #$55 got read from $3080 bank 1.
+Yellow:     #$55 got read from $3080 bank 0 and #$aa got read from $3080 bank 1.
+Light Blue: #$aa got read from $3080 bank 0 and #$33 got read from $3080 bank 1.
+Light Grey: #$aa got read from $3080 bank 0 and #$55 got read from $3080 bank 1.
+Orange:     #$aa got read from $3080 bank 0 and #$aa got read from $3080 bank 1.
+Red:        Something unexpected got read from $3080 in either bank 0 or bank 1.
 
 Results:
 --------
