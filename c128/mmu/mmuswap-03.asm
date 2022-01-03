@@ -24,18 +24,41 @@ basicHeader=1
 	sei
 	ldy $d507
 	lda #$aa
-	sta $20   ; store in real zero page
+	sta $20   ; store in zero page
 	lda #$55
-	sta $0120 ; store in 'soon to become' zero page (or still stack page)
+	sta $0120 ; store in stack page
 	lda #$01
 	sta $d507 ; relocate zero page to stack page
+	ldx $0120
 	lda $20
-	ldx #10
-	cmp #$55  ; expecting $55
+	cmp #$55
+	beq page0_55
+	cmp #$aa
+	beq page0_aa
+	ldx #2
 	bne failed
-	ldx #04
-	lda $0120
-	cmp #$55  ; expecting $55
+page0_55:
+	cpx #$55
+	beq passed
+	cpx #$aa
+	beq page0_55_page1_aa
+	ldx #2
+	bne failed
+page0_aa:
+	cpx #$55
+	beq page0_aa_page1_55
+	cpx #$aa
+	beq page0_aa_page1_aa
+	ldx #2
+	bne failed
+page0_55_page1_aa:
+	ldx #0
+	beq failed
+page0_aa_page1_55:
+	ldx #1
+	bne failed
+page0_aa_page1_aa:
+	ldx #3
 	bne failed
 
 passed:

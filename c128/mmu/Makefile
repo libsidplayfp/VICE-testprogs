@@ -4,14 +4,15 @@ all: \
 	mmuswap-00.prg \
 	mmuswap-01.prg \
 	mmuswap-02.prg \
+	mmuswap-03.prg \
+	mmuswap-04.prg \
+	mmuswap-05.prg \
+	mmuswap-06.prg \
 	mmuswap-bank-page.prg \
 	mmuswap-bank-shared-page.prg \
 	mmuswap-bank1-peek.prg \
 	mmuswap-io-page.prg \
 	mmuswap-normal-page.prg \
-	mmuswap-page0-and-page1.prg \
-	mmuswap-page0-only-page1.prg \
-	mmuswap-page1-only-page0.prg \
 	mmutest.prg \
 	mmutest2.prg \
 	mmuregister-should-not-mirror.prg \
@@ -32,6 +33,18 @@ mmuswap-01.prg: mmuswap-01.asm
 mmuswap-02.prg: mmuswap-02.asm
 	acme -f cbm -o mmuswap-02.prg mmuswap-02.asm
 
+mmuswap-03.prg: mmuswap-03.asm
+	acme -f cbm -o mmuswap-03.prg mmuswap-03.asm
+
+mmuswap-04.prg: mmuswap-04.asm
+	acme -f cbm -o mmuswap-04.prg mmuswap-04.asm
+
+mmuswap-05.prg: mmuswap-05.asm
+	acme -f cbm -o mmuswap-05.prg mmuswap-05.asm
+
+mmuswap-06.prg: mmuswap-06.asm
+	acme -f cbm -o mmuswap-06.prg mmuswap-06.asm
+
 mmuswap-bank-page.prg: mmuswap-bank-page.asm
 	acme -f cbm -o mmuswap-bank-page.prg mmuswap-bank-page.asm
 
@@ -49,9 +62,6 @@ mmuswap-normal-page.prg: mmuswap-normal-page.asm
 
 mmuswap-page0-and-page1.prg: mmuswap-page0-and-page1.asm
 	acme -f cbm -o mmuswap-page0-and-page1.prg mmuswap-page0-and-page1.asm
-
-mmuswap-page0-only-page1.prg: mmuswap-page0-only-page1.asm
-	acme -f cbm -o mmuswap-page0-only-page1.prg mmuswap-page0-only-page1.asm
 
 mmuswap-page1-only-page0.prg: mmuswap-page1-only-page0.asm
 	acme -f cbm -o mmuswap-page1-only-page0.prg mmuswap-page1-only-page0.asm

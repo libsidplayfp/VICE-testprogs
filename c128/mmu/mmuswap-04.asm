@@ -24,18 +24,41 @@ basicHeader=1
 	sei
 	ldy $d509
 	lda #$aa
-	sta $20   ; store in 'soon to become' stack page (or still zero page)
+	sta $20   ; store in zero page
 	lda #$55
-	sta $0120 ; store in real stack page
+	sta $0120 ; store in stack page
 	lda #$00
 	sta $d509 ; relocate stack page to zero page
+	ldx $0120
 	lda $20
-	ldx #10
-	cmp #$aa  ; expecting $aa
+	cmp #$55
+	beq page0_55
+	cmp #$aa
+	beq page0_aa
+	ldx #2
 	bne failed
-	ldx #04
-	lda $0120
-	cmp #$aa  ; expecting $aa
+page0_55:
+	cpx #$55
+	beq page0_55_page1_55
+	cpx #$aa
+	beq page0_55_page1_aa
+	ldx #2
+	bne failed
+page0_aa:
+	cpx #$55
+	beq page0_aa_page1_55
+	cpx #$aa
+	beq passed
+	ldx #2
+	bne failed
+page0_55_page1_aa:
+	ldx #0
+	beq failed
+page0_aa_page1_55:
+	ldx #1
+	bne failed
+page0_55_page1_55:
+	ldx #3
 	bne failed
 
 passed:
@@ -75,4 +98,3 @@ error_msg:
 ok_msg:	
 	!scr "test passed" 
 	!byte 0
-

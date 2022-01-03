@@ -1,8 +1,6 @@
 ; Is page 2 in bank 0 the same as page 2 in bank 1 when not in shared memory ?
 ;
-; test will not reach passed till it has been confirmed on real hardware
-;
-; test not yet confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
 

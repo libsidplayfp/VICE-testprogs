@@ -118,3 +118,167 @@ Conclusion:
 -----------
 Accesses to page 2 (and other non zero and stack pages) when page 2 is not in
 shared memory go to the current bank.
+
+-------------------------------------------------------------------------------
+
+mmuswap-03:
+===========
+
+Goal:
+-----
+This test is designed to see what happens when the zero page is mapped to the
+stack page and the stack page remains at its own location.
+
+Procedure:
+----------
+- Put the value #$aa in $20.
+- Put the value #$55 in $0120.
+- Relocate the zero page to the stack page.
+- Read back the value from address $20.
+- Read back the value from address $0120.
+
+Border Colors:
+--------------
+Red:   Something unexpected was read from $20 or $0120.
+Green: #$55 got read from $20 and #$55 got read from $0120.
+Black: #$55 got read from $20 and #$aa got read from $0120.
+White: #$aa got read from $20 and #$55 got read from $0120.
+Cyan:  #$aa got read from $20 and #$aa got read from $0120.
+
+Results:
+--------
+Dr Blutig:      Green
+William McCabe: Green
+
+Conclusion:
+-----------
+When the zero page is mapped to the stack page and the stack page remains
+mapped to itself, any access to the zero page winds up at the stack page, and
+any access to the stack page stays at the stack page, the zero page itself
+becomes inaccessable.
+
+-------------------------------------------------------------------------------
+
+mmuswap-04:
+===========
+
+Goal:
+-----
+This test is designed to see what happens when the stack page is mapped to the
+zero page and the zero page remains at its own location.
+
+Procedure:
+----------
+- Put the value #$aa in $20.
+- Put the value #$55 in $0120.
+- Relocate the stack page to the zero page.
+- Read back the value from address $20.
+- Read back the value from address $0120.
+
+Border Colors:
+--------------
+Red:   Something unexpected was read from $20 or $0120.
+Green: #$aa got read from $20 and #$aa got read from $0120.
+Black: #$55 got read from $20 and #$aa got read from $0120.
+White: #$aa got read from $20 and #$55 got read from $0120.
+Cyan:  #$55 got read from $20 and #$55 got read from $0120.
+
+Results:
+--------
+Dr Blutig:      Green
+William McCabe: Green
+
+Conclusion:
+-----------
+When the stack page is mapped to the zero page and the zero page remains
+mapped to itself, any access to the stack page winds up at the zero page, and
+any access to the zero page stays at the zero page, the stack page itself
+becomes inaccessable.
+
+-------------------------------------------------------------------------------
+
+mmuswap-05:
+===========
+
+Goal:
+-----
+This test is designed to see what happens when the zero page is mapped to the
+stack page and the stack page is mapped to the zero page.
+
+Procedure:
+----------
+- Put the value #$aa in $20.
+- Put the value #$55 in $0120.
+- Relocate the stack page to the zero page.
+- Read back the value from address $20.
+- Read back the value from address $0120.
+
+Border Colors:
+--------------
+Red:   #$aa got read from $20 and #$55 got read from $0120.
+Green: #$55 got read from $20 and #$aa got read from $0120.
+
+Results:
+--------
+Dr Blutig:      Green
+William McCabe: Green
+
+Conclusion:
+-----------
+When the stack page is mapped to the zero page and the zero page is mapped to
+the stack page, they swap.
+
+-------------------------------------------------------------------------------
+
+mmuswap-06:
+===========
+
+Goal:
+-----
+This test is designed to see when both page pointers point to the same page,
+where does the reverse pointer mechanism point to, and where do we find page 2
+
+Procedure:
+----------
+- Put the value #$55 in address $80.
+- Put the value #$aa in address $0180.
+- Put the value #$33 in address $0280.
+- Relocate page 0 to page 2.
+- Read back the value from address $80.
+- Read back the value from address $0180.
+- Read back the value from address $0280.
+- Relocate page 1 to page 2 as well.
+- Read back the value from address $80.
+- Read back the value from address $0180.
+- Read back the value from address $0280.
+- Relocate page 0 to page 2 again.
+- Read back the value from address $80.
+- Read back the value from address $0180.
+- Read back the value from address $0280.
+
+Border Colors:
+--------------
+Black:      #$33 did not get read from $80 after zero page mapping.
+White:      #$aa did not get read from $0180 after zero page mapping.
+Cyan:       #$55 did not get read from $0280 after zero page mapping.
+Light blue: #$33 did not get read from $80 after zero and stack page mapping.
+Purple:     #$33 did not get read from $0180 after zero and stack page mapping.
+Blue:       #$aa did not get read from $0280 after zero and stack page mapping.
+Yellow:     #$33 did not get read from $80 after zero and stack page mapping.
+Orange:     #$33 did not get read from $0180 after zero and stack page mapping.
+Brown:      #$aa did not get read from $0280 after zero and stack page mapping.
+
+Green:      #$33 got read from $80 after after zero page and stack page
+            mapping AND #$33 got read from $0180 after zero and stack page
+            mapping AND #$aa got read from $0280 after zero and stack page
+            mapping.
+
+Results:
+--------
+Dr Blutig:      Green
+
+Conclusion:
+-----------
+When swaping both the zero page and stack page with page 2, the stack page
+accesses wind up in page 2 and page 2 accesses wind up in both the zero page
+and the stack page, zero page accesses wind up going nowhere.
