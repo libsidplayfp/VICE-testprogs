@@ -185,15 +185,11 @@ Cyan:  #$55 got read from $20 and #$55 got read from $0120.
 
 Results:
 --------
-Dr Blutig:      Green
-William McCabe: Green
+William McCabe: Black
 
 Conclusion:
 -----------
-When the stack page is mapped to the zero page and the zero page remains
-mapped to itself, any access to the stack page winds up at the zero page, and
-any access to the zero page stays at the zero page, the stack page itself
-becomes inaccessable.
+None yet, waiting on other results to confirm William McCable result.
 
 -------------------------------------------------------------------------------
 
