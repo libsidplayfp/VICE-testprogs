@@ -282,3 +282,34 @@ Conclusion:
 When swaping both the zero page and stack page with page 2, the stack page
 accesses wind up in page 2 and page 2 accesses wind up in both the zero page
 and the stack page, zero page accesses wind up going nowhere.
+
+-------------------------------------------------------------------------------
+
+mmuswap-07:
+===========
+
+Goal:
+-----
+This test is designed to see what happens when the zero page is mapped to a
+non-shared RAM page in bank 0.
+
+Procedure:
+----------
+- Put the value #$aa in $80.
+- Put the value #$55 in $3080.
+- Relocate the zero page to page 30 bank 0.
+- Read back the value from address $80.
+- Read back the value from address $3080.
+
+Border Colors:
+--------------
+Red:   #$aa got read from $80 and #$55 got read from $3080.
+Green: #$55 got read from $80 and #$aa got read from $3080.
+
+Results:
+--------
+None yet
+
+Conclusion:
+-----------
+Waiting on results.

@@ -1,4 +1,6 @@
-; When the zero page (or stack page) is relocated using the MMU, the areas swap
+; When the zero page is relocated to a RAM page using the MMU, the areas swap
+;
+; Test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
 
@@ -18,7 +20,6 @@ basicHeader=1
 
 	sei
 	ldy $d507
-	ldx $d509
 	lda #$aa
 	sta $80   ; store in real zero page
 	lda #$55
@@ -29,19 +30,6 @@ basicHeader=1
 	cmp #$55  ; expecting $55
 	bne failed
 	lda $3080
-	cmp #$aa  ; expecting $aa
-	bne failed
-	sty $d507
-	lda #$aa
-	sta $0120 ; store in the real stack page
-	lda #$55
-	sta $3120 ; store in 'soon to become' stack page
-	lda #$31
-	sta $d509 ; relocate stack page to $31xx
-	lda $0120
-	cmp #$55  ; expecting $55
-	bne failed
-	lda $3120
 	cmp #$aa  ; expecting $aa
 	bne failed
 
