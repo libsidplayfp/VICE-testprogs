@@ -346,7 +346,7 @@ Red:        Something unexpected got read from $3080 in either bank 0 or bank 1.
 
 Results:
 --------
-William McCabe: Green
+William McCabe: Red
 
 Conclusion:
 -----------
