@@ -3,7 +3,6 @@
 ;
 ; The ROM or I/O still overlays in memory and does not cause back-translation.
 ;
-;
 ; test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
@@ -23,7 +22,6 @@ basicHeader=1
 *=start
 
 	sei
-	ldy $d507
 	lda #$aa
 	sta $10   ; store in real zero page
 	lda #$55
@@ -35,7 +33,7 @@ basicHeader=1
 	sta $d010 ; store in RAM under 'soon to become zero page'
 	stx $ff00 ; restore mmu config
 	lda #$d0
-	sta $d507 ; relocate zero page to $d8xx
+	sta $d507 ; relocate zero page to $d0xx
 	lda $10
 	cmp #$33  ; expecting $33
 	beq seems_ok
@@ -61,6 +59,7 @@ seems_ok:
 	jmp failed
 
 passed:
+	ldy #0
 	sty $d507
 	ldx #0	
 -	
@@ -77,6 +76,7 @@ passed:
 	jmp *
 
 failed:
+	ldy #0
 	sty $d507
 	ldy #0	
 -	

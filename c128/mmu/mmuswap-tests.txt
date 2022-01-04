@@ -351,3 +351,41 @@ None yet
 Conclusion:
 -----------
 Waiting on results.
+
+-------------------------------------------------------------------------------
+
+mmuswap-09:
+===========
+
+Goal:
+-----
+This test is designed to see what happens when the zero page is mapped to an
+I/O page, does the I/O page back translate or is it I/O.
+
+Procedure:
+----------
+- Put the value #$aa in $10.
+- Put the value #$55 in $d010 when it is I/O.
+- Put the value #$33 in #d010 when it is RAM.
+- Relocate the zero page to page d0.
+- Read back the value from address $10.
+- Read back the value from address $d010 when it is I/O.
+
+Border Colors:
+--------------
+Green:  #$33 got read from $10 and #$55 got read from $d010.
+Yellow: #$33 got read from $10 and #$33 got read from $d010.
+Black:  #$33 got read from $10 and #$aa got read from $d010.
+White:  #$33 got read from $10 and an unexpected value got read from $d010.
+Cyan:   #$55 got read from $10.
+Purple: #$aa got read from $10.
+Blue:   an unexpected value got read from $10.
+
+Results:
+--------
+None yet
+
+Conclusion:
+-----------
+Waiting on results.
+
