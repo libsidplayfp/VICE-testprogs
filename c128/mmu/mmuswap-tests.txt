@@ -346,7 +346,7 @@ Red:        Something unexpected got read from $3080 in either bank 0 or bank 1.
 
 Results:
 --------
-None yet
+William McCabe: Green
 
 Conclusion:
 -----------
@@ -383,9 +383,8 @@ Blue:   an unexpected value got read from $10.
 
 Results:
 --------
-None yet
+William McCabe: Green
 
 Conclusion:
 -----------
 Waiting on results.
-

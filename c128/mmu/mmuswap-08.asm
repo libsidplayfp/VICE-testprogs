@@ -2,7 +2,7 @@
 ;
 ; Test will not reach passed, it will produce different border colors for different situations
 ;
-; Test not yet confirmed on real hardware
+; Test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
 
