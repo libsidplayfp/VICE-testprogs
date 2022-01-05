@@ -508,6 +508,7 @@ Purple: #$aa got read back from $80 bank 0 and #$aa from $80 bank 1.
 
 Results:
 --------
+William McCabe: Black
 x128-r41504:	Black
 
 Conclusion:
@@ -543,6 +544,7 @@ Purple: an unexpected value got read from $80.
 
 Results:
 --------
+William McCabe: Cyan
 x128-r41504:	Cyan
 
 Conclusion:
