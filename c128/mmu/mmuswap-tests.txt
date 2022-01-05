@@ -41,6 +41,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green
+x128-r41504:	Green
 
 Conclusion:
 -----------
@@ -77,6 +78,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green
+x128-r41504:	Green
 
 Conclusion:
 -----------
@@ -113,6 +115,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green
+x128-r41504:	Green
 
 Conclusion:
 -----------
@@ -149,6 +152,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green
+x128-r41504:	Green
 
 Conclusion:
 -----------
@@ -186,6 +190,7 @@ Cyan:  #$55 got read from $20 and #$55 got read from $0120.
 Results:
 --------
 William McCabe: Green
+x128-r41504:	Green
 
 Conclusion:
 -----------
@@ -218,6 +223,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green
+x128-r41504:	Green
 
 Conclusion:
 -----------
@@ -273,6 +279,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green
+x128-r41504:	Green
 
 Conclusion:
 -----------
@@ -306,6 +313,7 @@ Green: #$55 got read from $80 and #$aa got read from $3080.
 Results:
 --------
 William McCabe: Green
+x128-r41504:	Green
 
 Conclusion:
 -----------
@@ -347,6 +355,7 @@ Red:        Something unexpected got read from $3080 in either bank 0 or bank 1.
 Results:
 --------
 William McCabe: Red
+x128-r41504:	Purple
 
 Conclusion:
 -----------
@@ -384,6 +393,7 @@ Blue:   an unexpected value got read from $10.
 Results:
 --------
 William McCabe: Green
+x128-r41504:	Green
 
 Conclusion:
 -----------
@@ -420,7 +430,8 @@ Purple: #$aa got read back from $80 bank 0 and #$aa from $80 bank 1.
 
 Results:
 --------
-None yet.
+No real hardware results yet.
+x128-r41504:	Cyan
 
 Conclusion:
 -----------
@@ -457,7 +468,10 @@ Purple: #$aa got read back from $80 bank 0 and #$aa from $80 bank 1.
 
 Results:
 --------
-None yet.
+Results:
+--------
+No real hardware results yet.
+x128-r41504:	Black
 
 Conclusion:
 -----------
