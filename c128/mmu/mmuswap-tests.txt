@@ -178,14 +178,14 @@ Procedure:
 Border Colors:
 --------------
 Red:   Something unexpected was read from $20 or $0120.
-Green: #$aa got read from $20 and #$aa got read from $0120.
-Black: #$55 got read from $20 and #$aa got read from $0120.
+Black: #$aa got read from $20 and #$aa got read from $0120.
+Green: #$55 got read from $20 and #$aa got read from $0120.
 White: #$aa got read from $20 and #$55 got read from $0120.
 Cyan:  #$55 got read from $20 and #$55 got read from $0120.
 
 Results:
 --------
-William McCabe: Black
+William McCabe: Green
 
 Conclusion:
 -----------

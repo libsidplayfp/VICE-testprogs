@@ -41,17 +41,17 @@ page0_55:
 	cpx #$55
 	beq page0_55_page1_55
 	cpx #$aa
-	beq page0_55_page1_aa
+	beq passed
 	ldx #2
 	bne failed
 page0_aa:
 	cpx #$55
 	beq page0_aa_page1_55
 	cpx #$aa
-	beq passed
+	beq page0_aa_page1_aa
 	ldx #2
 	bne failed
-page0_55_page1_aa:
+page0_aa_page1_aa:
 	ldx #0
 	beq failed
 page0_aa_page1_55:
