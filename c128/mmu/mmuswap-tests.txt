@@ -430,7 +430,7 @@ Purple: #$aa got read back from $80 bank 0 and #$aa from $80 bank 1.
 
 Results:
 --------
-No real hardware results yet.
+William McCabe: Cyan
 x128-r41504:	Cyan
 
 Conclusion:
@@ -470,7 +470,7 @@ Results:
 --------
 Results:
 --------
-No real hardware results yet.
+William McCabe: Black
 x128-r41504:	Black
 
 Conclusion:
