@@ -38,11 +38,11 @@ basicHeader=1
 	sta $d508 ; get zero page back to bank 0
 	lda #$00
 	sta $d507 ; activate zero page mapping to zero page in bank 0
-	ldx $80   ; zero page bank 0 in X
 	lda #$01
 	sta $d508 ; relocate zero page to bank 1
 	lda #$00
 	sta $d507 ; activate zero page mapping to zero page in bank 1
+	ldx $80   ; zero page bank 0 in X
 	lda #$3f
 	sta $ff00 ; bank 0 all ram
 	ldy #$00

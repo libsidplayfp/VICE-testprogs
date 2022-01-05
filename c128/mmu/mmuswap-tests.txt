@@ -494,8 +494,7 @@ Procedure:
 - Put the value #$aa in $80 in bank 0.
 - Relocate the zero page to the zero page of bank 1.
 - Put the value #$55 in $80 in bank 1.
-- Put the zero page back to the zero page of bank 0.
-- Read back the value from address $80 in bank 0.
+- Read back the value from address $80 in bank 1.
 - Switch on shared memory, top only, 16KB
 - Use code in upper shared memory to read zero page in bank 1.
 
@@ -509,7 +508,7 @@ Purple: #$aa got read back from $80 bank 0 and #$aa from $80 bank 1.
 
 Results:
 --------
-x128-r41504:	Cyan
+x128-r41504:	Black
 
 Conclusion:
 -----------
