@@ -537,13 +537,13 @@ Border Colors:
 --------------
 Black:  #$aa got read back from $80.
 White:  #$55 got read back from $80.
-Cyan:   #$33 got read back from $80.
+Green:  #$33 got read back from $80.
 Purple: an unexpected value got read from $80.
 
 Results:
 --------
-William McCabe: Cyan
-x128-r41504:	Cyan
+William McCabe: Green
+x128-r41504:	Green
 
 Conclusion:
 -----------

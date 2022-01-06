@@ -56,9 +56,8 @@ loop:
 	ldx #1
 	cmp #$55
 	beq failed
-	ldx #3
 	cmp #$33
-	beq failed
+	beq passed
 	ldx #4
 	beq failed
 
