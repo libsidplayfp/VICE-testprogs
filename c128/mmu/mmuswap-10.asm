@@ -1,9 +1,7 @@
 ; When the zero page in non-shared memory is relocated to the zero page in
 ; bank 1, do they swap ?
 ;
-; test will not reach passed till results come in
-;
-; test not yet confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
 
@@ -63,7 +61,7 @@ zp_bank0_55:
 	bne failed
 zp_bank0_aa:
 	cpy #$55
-	beq zp_bank0_aa_bank1_55
+	beq passed
 	cpy #$aa
 	beq zp_bank0_aa_bank1_aa
 	ldx #10
@@ -73,9 +71,6 @@ zp_bank0_55_bank1_55:
 	beq failed
 zp_bank0_55_bank1_aa:
 	ldx #1
-	bne failed
-zp_bank0_aa_bank1_55:
-	ldx #3
 	bne failed
 zp_bank0_aa_bank1_aa:
 	ldx #4
