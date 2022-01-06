@@ -673,3 +673,40 @@ x128-r41504:	Light Blue
 Conclusion:
 -----------
 Waiting on results.
+
+-------------------------------------------------------------------------------
+
+mmuswap-17:
+===========
+
+Goal:
+-----
+This test is designed to see what happens when the zero page in non-shared
+memory is mapped to page $e0 in bank 1 and the zero page is read from
+bank 0 while page $e0 is in shared memory, do we get page $e0 from bank 0
+or bank 1.
+
+Procedure:
+----------
+- Switch on shared memory, bottom only, 16KB
+- Put the value #$aa in $80 in bank 0.
+- Put the value #$55 in $e080 in bank 0.
+- Put the value #$33 in $e080 in bank 1.
+- Switch on shared memory, top only, 8KB
+- Relocate the zero page to page $e0 in bank 1.
+- Read back the value from address $80 in bank 0.
+
+Border Colors:
+--------------
+Black:  #$aa got read back from $80.
+White:  #$55 got read back from $80.
+Cyan:   #$33 got read back from $80.
+Purple: an unexpected value got read from $80.
+
+Results:
+--------
+x128-r41504:	White
+
+Conclusion:
+-----------
+Waiting on results.
