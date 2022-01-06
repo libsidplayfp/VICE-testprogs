@@ -56,7 +56,7 @@ basicHeader=1
 	bne failed
 zp_bank0_55:
 	cpy #$55
-	beq zp_bank0_55_bank1_55
+	beq passed
 	cpy #$aa
 	beq zp_bank0_55_bank1_aa
 	ldx #10
@@ -68,9 +68,6 @@ zp_bank0_aa:
 	beq zp_bank0_aa_bank1_aa
 	ldx #10
 	bne failed
-zp_bank0_55_bank1_55:
-	ldx #0
-	beq failed
 zp_bank0_55_bank1_aa:
 	ldx #1
 	bne failed

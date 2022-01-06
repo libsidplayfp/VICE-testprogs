@@ -468,10 +468,8 @@ Purple: #$aa got read back from $80 bank 0 and #$aa from $80 bank 1.
 
 Results:
 --------
-Results:
---------
-William McCabe: Black
-x128-r41504:	Black
+William McCabe: Green
+x128-r41504:	Green
 
 Conclusion:
 -----------
