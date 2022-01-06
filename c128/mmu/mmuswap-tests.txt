@@ -461,7 +461,7 @@ Procedure:
 Border Colors:
 --------------
 Red:    an unexpected value got read from $80 in either bank 0 or bank 1.
-Black:  #$55 got read back from $80 bank 0 and #$55 from $80 bank 1.
+Green:  #$55 got read back from $80 bank 0 and #$55 from $80 bank 1.
 White:  #$55 got read back from $80 bank 0 and #$aa from $80 bank 1.
 Cyan:   #$aa got read back from $80 bank 0 and #$55 from $80 bank 1.
 Purple: #$aa got read back from $80 bank 0 and #$aa from $80 bank 1.
@@ -499,15 +499,15 @@ Procedure:
 Border Colors:
 --------------
 Red:    an unexpected value got read from $80 in either bank 0 or bank 1.
-Black:  #$55 got read back from $80 bank 0 and #$55 from $80 bank 1.
+Green:  #$55 got read back from $80 bank 0 and #$55 from $80 bank 1.
 White:  #$55 got read back from $80 bank 0 and #$aa from $80 bank 1.
 Cyan:   #$aa got read back from $80 bank 0 and #$55 from $80 bank 1.
 Purple: #$aa got read back from $80 bank 0 and #$aa from $80 bank 1.
 
 Results:
 --------
-William McCabe: Black
-x128-r41504:	Black
+William McCabe: Green
+x128-r41504:	Green
 
 Conclusion:
 -----------
