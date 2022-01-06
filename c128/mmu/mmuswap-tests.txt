@@ -42,6 +42,7 @@ Results:
 Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
+Tokra:          Green
 x128-r41504:	Green
 
 Conclusion:
@@ -80,6 +81,7 @@ Results:
 Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
+Tokra:          Green
 x128-r41504:	Green
 
 Conclusion:
@@ -118,6 +120,7 @@ Results:
 Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
+Tokra:          Green
 x128-r41504:	Green
 
 Conclusion:
@@ -156,6 +159,7 @@ Results:
 Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
+Tokra:          Green
 x128-r41504:	Green
 
 Conclusion:
@@ -195,6 +199,7 @@ Results:
 --------
 William McCabe: Green
 Hypnosis:       Black
+Tokra:          Black
 x128-r41504:	Green
 
 Conclusion:
@@ -229,6 +234,7 @@ Results:
 Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
+Tokra:          Green
 x128-r41504:	Green
 
 Conclusion:
@@ -286,6 +292,7 @@ Results:
 Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Blue
+Tokra:          Blue
 x128-r41504:	Green
 
 Conclusion:
@@ -321,6 +328,7 @@ Results:
 --------
 William McCabe: Green
 Hypnosis:       Green
+Tokra:          Green
 x128-r41504:	Green
 
 Conclusion:
@@ -364,6 +372,7 @@ Results:
 --------
 William McCabe: Red
 Hypnosis:       Red
+Tokra:          Red
 x128-r41504:	Purple
 
 Conclusion:
@@ -403,6 +412,7 @@ Results:
 --------
 William McCabe: Green
 Hypnosis:       Green
+Tokra:          Green
 x128-r41504:	Green
 
 Conclusion:
@@ -442,6 +452,7 @@ Results:
 --------
 William McCabe: Green
 Hypnosis:       Green
+Tokra:          Green
 x128-r41504:	Green
 
 Conclusion:
@@ -481,6 +492,7 @@ Results:
 --------
 William McCabe: Green
 Hypnosis:       Green
+Tokra:          Green
 x128-r41504:	Green
 
 Conclusion:
@@ -520,6 +532,7 @@ Results:
 --------
 William McCabe: Green
 Hypnosis:       Green
+Tokra:          Green
 x128-r41504:	Green
 
 Conclusion:
@@ -557,6 +570,7 @@ Results:
 --------
 William McCabe: Green
 Hypnosis:       Green
+Tokra:          Green
 x128-r41504:	Green
 
 Conclusion:
@@ -604,6 +618,7 @@ Results:
 --------
 William McCabe: Red
 Hypnosis:       Red
+Tokra:          Red
 x128-r41504:	White
 
 Conclusion:
@@ -641,6 +656,7 @@ Results:
 --------
 William McCabe: White
 Hypnosis:       White
+Tokra:          White
 x128-r41504:	White
 
 Conclusion:
@@ -688,6 +704,7 @@ Results:
 --------
 William McCabe: Red
 Hypnosis:       Red
+Tokra:          Red
 x128-r41504:	Light Blue
 
 Conclusion:
@@ -727,6 +744,7 @@ Results:
 --------
 William McCabe: Cyan
 Hypnosis:       Cyan
+Tokra:          Cyan
 x128-r41504:	White
 
 Conclusion:
