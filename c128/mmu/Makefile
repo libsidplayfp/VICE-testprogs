@@ -15,6 +15,7 @@ all: \
 	mmuswap-11.prg \
 	mmuswap-12.prg \
 	mmuswap-13.prg \
+	mmuswap-14.prg \
 	mmutest.prg \
 	mmutest2.prg \
 	mmuregister-should-not-mirror.prg \
@@ -67,6 +68,9 @@ mmuswap-12.prg: mmuswap-12.asm
 
 mmuswap-13.prg: mmuswap-13.asm
 	acme -f cbm -o mmuswap-13.prg mmuswap-13.asm
+
+mmuswap-14.prg: mmuswap-14.asm
+	acme -f cbm -o mmuswap-14.prg mmuswap-14.asm
 
 mmutest.prg: mmutest.asm
 	acme -f cbm -o mmutest.prg mmutest.asm
