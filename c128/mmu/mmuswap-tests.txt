@@ -41,6 +41,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green
+Hypnosis:       Green
 x128-r41504:	Green
 
 Conclusion:
@@ -78,6 +79,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green
+Hypnosis:       Green
 x128-r41504:	Green
 
 Conclusion:
@@ -115,6 +117,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green
+Hypnosis:       Green
 x128-r41504:	Green
 
 Conclusion:
@@ -152,6 +155,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green
+Hypnosis:       Green
 x128-r41504:	Green
 
 Conclusion:
@@ -190,6 +194,7 @@ Cyan:  #$55 got read from $20 and #$55 got read from $0120.
 Results:
 --------
 William McCabe: Green
+Hypnosis:       Black
 x128-r41504:	Green
 
 Conclusion:
@@ -223,6 +228,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green
+Hypnosis:       Green
 x128-r41504:	Green
 
 Conclusion:
@@ -279,6 +285,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green
+Hypnosis:       Blue
 x128-r41504:	Green
 
 Conclusion:
@@ -313,6 +320,7 @@ Green: #$55 got read from $80 and #$aa got read from $3080.
 Results:
 --------
 William McCabe: Green
+Hypnosis:       Green
 x128-r41504:	Green
 
 Conclusion:
@@ -355,6 +363,7 @@ Red:        Something unexpected got read from $3080 in either bank 0 or bank 1.
 Results:
 --------
 William McCabe: Red
+Hypnosis:       Red
 x128-r41504:	Purple
 
 Conclusion:
@@ -393,6 +402,7 @@ Blue:   an unexpected value got read from $10.
 Results:
 --------
 William McCabe: Green
+Hypnosis:       Green
 x128-r41504:	Green
 
 Conclusion:
@@ -431,6 +441,7 @@ Purple: #$aa got read back from $80 bank 0 and #$aa from $80 bank 1.
 Results:
 --------
 William McCabe: Green
+Hypnosis:       Green
 x128-r41504:	Green
 
 Conclusion:
@@ -469,6 +480,7 @@ Purple: #$aa got read back from $80 bank 0 and #$aa from $80 bank 1.
 Results:
 --------
 William McCabe: Green
+Hypnosis:       Green
 x128-r41504:	Green
 
 Conclusion:
@@ -507,6 +519,7 @@ Purple: #$aa got read back from $80 bank 0 and #$aa from $80 bank 1.
 Results:
 --------
 William McCabe: Green
+Hypnosis:       Green
 x128-r41504:	Green
 
 Conclusion:
@@ -543,6 +556,7 @@ Purple: an unexpected value got read from $80.
 Results:
 --------
 William McCabe: Green
+Hypnosis:       Green
 x128-r41504:	Green
 
 Conclusion:
@@ -589,6 +603,7 @@ Light Green: #$11 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 Results:
 --------
 William McCabe: Red
+Hypnosis:       Red
 x128-r41504:	White
 
 Conclusion:
@@ -625,6 +640,7 @@ Purple: an unexpected value got read from $80.
 Results:
 --------
 William McCabe: White
+Hypnosis:       White
 x128-r41504:	White
 
 Conclusion:
@@ -671,6 +687,7 @@ Light Green: #$11 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 Results:
 --------
 William McCabe: Red
+Hypnosis:       Red
 x128-r41504:	Light Blue
 
 Conclusion:
@@ -709,6 +726,7 @@ Purple: an unexpected value got read from $80.
 Results:
 --------
 William McCabe: Cyan
+Hypnosis:       Cyan
 x128-r41504:	White
 
 Conclusion:
