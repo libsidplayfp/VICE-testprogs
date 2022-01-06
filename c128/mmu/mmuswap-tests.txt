@@ -588,6 +588,7 @@ Light Green: #$11 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 
 Results:
 --------
+William McCabe: Red
 x128-r41504:	White
 
 Conclusion:
@@ -623,6 +624,7 @@ Purple: an unexpected value got read from $80.
 
 Results:
 --------
+William McCabe: White
 x128-r41504:	White
 
 Conclusion:
@@ -668,6 +670,7 @@ Light Green: #$11 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 
 Results:
 --------
+William McCabe: Red
 x128-r41504:	Light Blue
 
 Conclusion:
@@ -705,6 +708,7 @@ Purple: an unexpected value got read from $80.
 
 Results:
 --------
+William McCabe: Cyan
 x128-r41504:	White
 
 Conclusion:
