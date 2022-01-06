@@ -348,9 +348,10 @@ RAM page in bank 0 and bank 1.
 
 Procedure:
 ----------
-- Put the value #$aa in $80.
+- Put the value #$aa in $80 bank 0.
 - Put the value #$55 in $3080 bank 0.
-- Put the value #$33 in #3080 bank 1.
+- Put the value #$33 in $3080 bank 1.
+- Put the value #$11 in $80 bank 1.
 - Relocate the zero page to page 30 bank 1.
 - Read back the value from address $3080 bank 0.
 - Read back the value from address $3080 bank 1.
@@ -366,13 +367,14 @@ Yellow:     #$55 got read from $3080 bank 0 and #$aa got read from $3080 bank 1.
 Light Blue: #$aa got read from $3080 bank 0 and #$33 got read from $3080 bank 1.
 Light Grey: #$aa got read from $3080 bank 0 and #$55 got read from $3080 bank 1.
 Orange:     #$aa got read from $3080 bank 0 and #$aa got read from $3080 bank 1.
+Brown:      #$55 got read from $3080 bank 0 and #$11 got read from $3080 bank 1.
 Red:        Something unexpected got read from $3080 in either bank 0 or bank 1.
 
 Results:
 --------
-William McCabe: Red
-Hypnosis:       Red
-Tokra:          Red
+William McCabe: --
+Hypnosis:       --
+Tokra:          --
 x128-r41504:	Purple
 
 Conclusion:
@@ -607,18 +609,18 @@ Red:         Something unexpected got read from $3080 in either bank 0 or bank 1
 Black:       #$aa got read back from $3080 bank 1 and #$aa from $3080 in bank 0.
 White:       #$aa got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
 Cyan:        #$aa got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
-Purple:      #$55 got read back from $3080 bank 1 and #$aa from $3080 in bank 0.
-Blue:        #$55 got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
-Yellow:      #$55 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
+Purple:      #$33 got read back from $3080 bank 1 and #$aa from $3080 in bank 0.
+Blue:        #$33 got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
+Yellow:      #$33 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 Brown:       #$11 got read back from $3080 bank 1 and #$aa from $3080 in bank 0.
 Light Blue:  #$11 got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
 Light Green: #$11 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 
 Results:
 --------
-William McCabe: Red
-Hypnosis:       Red
-Tokra:          Red
+William McCabe: --
+Hypnosis:       --
+Tokra:          --
 x128-r41504:	White
 
 Conclusion:
@@ -693,18 +695,18 @@ Red:         Something unexpected got read from $3080 in either bank 0 or bank 1
 Black:       #$aa got read back from $3080 bank 1 and #$aa from $3080 in bank 0.
 White:       #$aa got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
 Cyan:        #$aa got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
-Purple:      #$55 got read back from $3080 bank 1 and #$aa from $3080 in bank 0.
-Blue:        #$55 got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
-Yellow:      #$55 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
+Purple:      #$33 got read back from $3080 bank 1 and #$aa from $3080 in bank 0.
+Blue:        #$33 got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
+Yellow:      #$33 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 Brown:       #$11 got read back from $3080 bank 1 and #$aa from $3080 in bank 0.
 Light Blue:  #$11 got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
 Light Green: #$11 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 
 Results:
 --------
-William McCabe: Red
-Hypnosis:       Red
-Tokra:          Red
+William McCabe: --
+Hypnosis:       --
+Tokra:          --
 x128-r41504:	Light Blue
 
 Conclusion:

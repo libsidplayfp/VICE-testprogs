@@ -73,8 +73,8 @@ loop2:
 	sta $d507 ; put zero page back to $00xx in bank 0
 	cpx #$aa
 	beq bank1_aa
-	cpx #$55
-	beq bank1_55
+	cpx #$33
+	beq bank1_33
 	cpx #$11
 	beq bank1_11
 	ldx #10
@@ -88,13 +88,13 @@ bank1_aa:
 	beq bank1_aa_bank0_33
 	ldx #10
 	bne failed
-bank1_55:
+bank1_33:
 	cpy #$aa
-	beq bank1_55_bank0_aa
+	beq bank1_33_bank0_aa
 	cpy #$55
-	beq bank1_55_bank0_55
+	beq bank1_33_bank0_55
 	cpy #$33
-	beq bank1_55_bank0_33
+	beq bank1_33_bank0_33
 	ldx #10
 	bne failed
 bank1_11:
@@ -115,13 +115,13 @@ bank1_aa_bank0_55:
 bank1_aa_bank0_33:
 	ldx #3
 	bne failed
-bank1_55_bank0_aa:
+bank1_33_bank0_aa:
 	ldx #4
 	bne failed
-bank1_55_bank0_55:
+bank1_33_bank0_55:
 	ldx #6
 	bne failed
-bank1_55_bank0_33
+bank1_33_bank0_33
 	ldx #7
 	bne failed
 bank1_11_bank0_aa:

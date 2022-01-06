@@ -42,6 +42,16 @@ loop1:
 	jsr $e000
 	lda #$00
 	sta $ff00 ; bank 0, I/O mapped in
+	lda #$00
+	sta $d506 ; no shared
+	lda #$01
+	sta $d508 ; relocate zero page bank to bank 1
+	lda #$00
+	sta $d507 ; relocate zero page to page 0 (bank 1)
+	lda #$11
+	sta $80   ; store in zero page bank 1
+	lda #$0e
+	sta $d506 ; shared hi/low, 8kb
 	lda #$01
 	sta $d508 ; relocate zero page bank to bank 1
 	lda #$30
@@ -87,6 +97,9 @@ bank_0_55:
 	beq failed
 	ldx #7
 	cpy #$aa
+	beq failed
+	ldx #9
+	cpy #$11
 	beq failed
 	ldx #10
 	bne failed
