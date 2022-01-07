@@ -42,10 +42,11 @@ Results:
 Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
-Tokra:          Green
+Tokra:          Green (german PAL C128 flat)
 Strobe:         Green
-jcompton:		Green
-mutetus:		Green
+jcompton:		Green (NTSC 128D)
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
 x128-r41504:	Green
 
 Conclusion:
@@ -84,10 +85,11 @@ Results:
 Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
-Tokra:          Green
+Tokra:          Green (german PAL C128 flat)
 Strobe:         Green
-jcompton:		Green
-mutetus:		Green
+jcompton:		Green (NTSC 128D)
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
 x128-r41504:	Green
 
 Conclusion:
@@ -126,10 +128,11 @@ Results:
 Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
-Tokra:          Green
+Tokra:          Green (german PAL C128 flat)
 Strobe:         Green
-jcompton:		Green
-mutetus:		Green
+jcompton:		Green (NTSC 128D)
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
 x128-r41504:	Green
 
 Conclusion:
@@ -168,10 +171,11 @@ Results:
 Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
-Tokra:          Green
+Tokra:          Green (german PAL C128 flat)
 Strobe:         Green
-jcompton:		Green
-mutetus:		Green
+jcompton:		Green (NTSC 128D)
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
 x128-r41504:	Green
 
 Conclusion:
@@ -211,10 +215,11 @@ Results:
 --------
 William McCabe: Green
 Hypnosis:       Black
-Tokra:          Black
+Tokra:          Black (german PAL C128 flat)
 Strobe:         Black
-jcompton:		Black
-mutetus:		Black
+jcompton:		Black (NTSC 128D)
+jcompton:       Black (NTSC C128 flat)
+mutetus:		Black (128 PAL flat)
 x128-r41504:	Green
 
 Conclusion:
@@ -249,10 +254,11 @@ Results:
 Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
-Tokra:          Green
+Tokra:          Green (german PAL C128 flat)
 Strobe:         Green
-jcompton:		Green
-mutetus:		Green
+jcompton:		Green (NTSC 128D)
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
 x128-r41504:	Green
 
 Conclusion:
@@ -310,10 +316,11 @@ Results:
 Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Blue
-Tokra:          Blue
+Tokra:          Blue (german PAL C128 flat)
 Strobe:         Blue
-jcompton:		Green
-mutetus:		Green
+jcompton:		Green (NTSC 128D)
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
 x128-r41504:	Green
 
 Conclusion:
@@ -349,10 +356,11 @@ Results:
 --------
 William McCabe: Green
 Hypnosis:       Green
-Tokra:          Green
+Tokra:          Green (german PAL C128 flat)
 Strobe:         Green
-jcompton:		Green
-mutetus:		Green
+jcompton:		Green (NTSC 128D)
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
 x128-r41504:	Green
 
 Conclusion:
@@ -398,10 +406,11 @@ Results:
 --------
 William McCabe: Brown
 Hypnosis:       Brown
-Tokra:          Brown
+Tokra:          Brown (german PAL C128 flat)
 Strobe:         Brown
-jcompton:		Brown
-mutetus:		Brown
+jcompton:		Brown (NTSC 128D)
+jcompton:       Brown (NTSC C128 flat)
+mutetus:		Brown (128 PAL flat)
 x128-r41504:	Purple
 
 Conclusion:
@@ -441,10 +450,11 @@ Results:
 --------
 William McCabe: Green
 Hypnosis:       Green
-Tokra:          Green
+Tokra:          Green (german PAL C128 flat)
 Strobe:         Green
-jcompton:		Green
-mutetus:		Green
+jcompton:		Green (NTSC 128D)
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
 x128-r41504:	Green
 
 Conclusion:
@@ -484,10 +494,11 @@ Results:
 --------
 William McCabe: Green
 Hypnosis:       Green
-Tokra:          Green
+Tokra:          Green (german PAL C128 flat)
 Strobe:         Green
-jcompton:		Green
-mutetus:		Green
+jcompton:		Green (NTSC 128D)
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
 x128-r41504:	Green
 
 Conclusion:
@@ -527,10 +538,11 @@ Results:
 --------
 William McCabe: Green
 Hypnosis:       Green
-Tokra:          Green
+Tokra:          Green (german PAL C128 flat)
 Strobe:         Green
-jcompton:		Green
-mutetus:		Green
+jcompton:		Green (NTSC 128D)
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
 x128-r41504:	Green
 
 Conclusion:
@@ -570,10 +582,11 @@ Results:
 --------
 William McCabe: Green
 Hypnosis:       Green
-Tokra:          Green
+Tokra:          Green (german PAL C128 flat)
 Strobe:         Green
-jcompton:		Green
-mutetus:		Green
+jcompton:		Green (NTSC 128D)
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
 x128-r41504:	Green
 
 Conclusion:
@@ -611,10 +624,11 @@ Results:
 --------
 William McCabe: Green
 Hypnosis:       Green
-Tokra:          Green
+Tokra:          Green (german PAL C128 flat)
 Strobe:         Green
-jcompton:		Green
-mutetus:		Green
+jcompton:		Green (NTSC 128D)
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
 x128-r41504:	Green
 
 Conclusion:
@@ -662,10 +676,11 @@ Results:
 --------
 William McCabe: Blue
 Hypnosis:       Blue
-Tokra:          Blue
+Tokra:          Blue (german PAL C128 flat)
 Strobe:         Blue
-jcompton:		Blue
-mutetus:		Blue
+jcompton:		Blue (NTSC 128D)
+jcompton:       Blue (NTSC C128 flat)
+mutetus:		Blue (128 PAL flat)
 x128-r41504:	White
 
 Conclusion:
@@ -703,10 +718,11 @@ Results:
 --------
 William McCabe: White
 Hypnosis:       White
-Tokra:          White
+Tokra:          White (german PAL C128 flat)
 Strobe:         White
-jcompton:		White
-mutetus:		White
+jcompton:		White (NTSC 128D)
+jcompton:       White (NTSC C128 flat)
+mutetus:		White (128 PAL flat)
 x128-r41504:	White
 
 Conclusion:
@@ -754,10 +770,11 @@ Results:
 --------
 William McCabe: Blue
 Hypnosis:       Blue
-Tokra:          Blue
+Tokra:          Blue (german PAL C128 flat)
 Strobe:         Red
-jcompton:		Red
-mutetus:		Blue
+jcompton:		Red  (NTSC 128D)
+jcompton:       Blue (NTSC C128 flat)
+mutetus:		Blue (128 PAL flat)
 x128-r41504:	Light Blue
 
 Conclusion:
@@ -797,10 +814,11 @@ Results:
 --------
 William McCabe: Cyan
 Hypnosis:       Cyan
-Tokra:          Cyan
+Tokra:          Cyan (german PAL C128 flat)
 Strobe:         Cyan
-jcompton:		Cyan
-mutetus:		Cyan
+jcompton:		Cyan (NTSC 128D)
+jcompton:       Cyan (NTSC C128 flat)
+mutetus:		Cyan (128 PAL flat)
 x128-r41504:	White
 
 Conclusion:
