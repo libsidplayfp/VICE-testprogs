@@ -47,6 +47,7 @@ Strobe:         Green
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR)
 x128-r41504:	Green
 
 Conclusion:
@@ -90,6 +91,7 @@ Strobe:         Green
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR)
 x128-r41504:	Green
 
 Conclusion:
@@ -133,6 +135,7 @@ Strobe:         Green
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR)
 x128-r41504:	Green
 
 Conclusion:
@@ -176,6 +179,7 @@ Strobe:         Green
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR)
 x128-r41504:	Green
 
 Conclusion:
@@ -220,6 +224,7 @@ Strobe:         Black
 jcompton:		Black (NTSC 128D)
 jcompton:       Black (NTSC C128 flat)
 mutetus:		Black (128 PAL flat)
+hedning:        Black (PAL C128DCR)
 x128-r41504:	Green
 
 Conclusion:
@@ -259,6 +264,7 @@ Strobe:         Green
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR)
 x128-r41504:	Green
 
 Conclusion:
@@ -321,6 +327,7 @@ Strobe:         Blue
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR)
 x128-r41504:	Green
 
 Conclusion:
@@ -361,6 +368,7 @@ Strobe:         Green
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR)
 x128-r41504:	Green
 
 Conclusion:
@@ -411,6 +419,7 @@ Strobe:         Brown
 jcompton:		Brown (NTSC 128D)
 jcompton:       Brown (NTSC C128 flat)
 mutetus:		Brown (128 PAL flat)
+hedning:        Brown (PAL C128DCR)
 x128-r41504:	Purple
 
 Conclusion:
@@ -455,6 +464,7 @@ Strobe:         Green
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR)
 x128-r41504:	Green
 
 Conclusion:
@@ -499,6 +509,7 @@ Strobe:         Green
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR)
 x128-r41504:	Green
 
 Conclusion:
@@ -543,6 +554,7 @@ Strobe:         Green
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR)
 x128-r41504:	Green
 
 Conclusion:
@@ -587,6 +599,7 @@ Strobe:         Green
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR)
 x128-r41504:	Green
 
 Conclusion:
@@ -629,6 +642,7 @@ Strobe:         Green
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR)
 x128-r41504:	Green
 
 Conclusion:
@@ -681,6 +695,7 @@ Strobe:         Blue
 jcompton:		Blue (NTSC 128D)
 jcompton:       Blue (NTSC C128 flat)
 mutetus:		Blue (128 PAL flat)
+hedning:        Blue (PAL C128DCR)
 x128-r41504:	White
 
 Conclusion:
@@ -723,6 +738,7 @@ Strobe:         White
 jcompton:		White (NTSC 128D)
 jcompton:       White (NTSC C128 flat)
 mutetus:		White (128 PAL flat)
+hedning:        White (PAL C128DCR)
 x128-r41504:	White
 
 Conclusion:
@@ -775,6 +791,7 @@ Strobe:         Red
 jcompton:		Red  (NTSC 128D)
 jcompton:       Blue (NTSC C128 flat)
 mutetus:		Blue (128 PAL flat)
+hedning:        Red (PAL C128DCR)
 x128-r41504:	Light Blue
 
 Conclusion:
@@ -819,6 +836,7 @@ Strobe:         Cyan
 jcompton:		Cyan (NTSC 128D)
 jcompton:       Cyan (NTSC C128 flat)
 mutetus:		Cyan (128 PAL flat)
+hedning:        Cyan (PAL C128DCR)
 x128-r41504:	White
 
 Conclusion:
