@@ -372,7 +372,7 @@ Red:        Something unexpected got read from $3080 in either bank 0 or bank 1.
 
 Results:
 --------
-William McCabe: --
+William McCabe: Brown
 Hypnosis:       --
 Tokra:          --
 x128-r41504:	Purple
@@ -618,7 +618,7 @@ Light Green: #$11 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 
 Results:
 --------
-William McCabe: --
+William McCabe: Blue
 Hypnosis:       --
 Tokra:          --
 x128-r41504:	White
@@ -704,7 +704,7 @@ Light Green: #$11 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 
 Results:
 --------
-William McCabe: --
+William McCabe: Blue
 Hypnosis:       --
 Tokra:          --
 x128-r41504:	Light Blue
