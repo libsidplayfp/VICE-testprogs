@@ -44,6 +44,8 @@ William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green
 Strobe:         Green
+jcompton:		Green
+mutetus:		Green
 x128-r41504:	Green
 
 Conclusion:
@@ -84,6 +86,8 @@ William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green
 Strobe:         Green
+jcompton:		Green
+mutetus:		Green
 x128-r41504:	Green
 
 Conclusion:
@@ -124,6 +128,8 @@ William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green
 Strobe:         Green
+jcompton:		Green
+mutetus:		Green
 x128-r41504:	Green
 
 Conclusion:
@@ -164,6 +170,8 @@ William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green
 Strobe:         Green
+jcompton:		Green
+mutetus:		Green
 x128-r41504:	Green
 
 Conclusion:
@@ -205,6 +213,8 @@ William McCabe: Green
 Hypnosis:       Black
 Tokra:          Black
 Strobe:         Black
+jcompton:		Black
+mutetus:		Black
 x128-r41504:	Green
 
 Conclusion:
@@ -241,6 +251,8 @@ William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green
 Strobe:         Green
+jcompton:		Green
+mutetus:		Green
 x128-r41504:	Green
 
 Conclusion:
@@ -300,6 +312,8 @@ William McCabe: Green
 Hypnosis:       Blue
 Tokra:          Blue
 Strobe:         Blue
+jcompton:		Green
+mutetus:		Green
 x128-r41504:	Green
 
 Conclusion:
@@ -337,6 +351,8 @@ William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green
 Strobe:         Green
+jcompton:		Green
+mutetus:		Green
 x128-r41504:	Green
 
 Conclusion:
@@ -381,9 +397,11 @@ Red:        Something unexpected got read from $3080 in either bank 0 or bank 1.
 Results:
 --------
 William McCabe: Brown
-Hypnosis:       --
-Tokra:          --
+Hypnosis:       Brown
+Tokra:          Brown
 Strobe:         Brown
+jcompton:		Brown
+mutetus:		Brown
 x128-r41504:	Purple
 
 Conclusion:
@@ -425,6 +443,8 @@ William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green
 Strobe:         Green
+jcompton:		Green
+mutetus:		Green
 x128-r41504:	Green
 
 Conclusion:
@@ -466,6 +486,8 @@ William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green
 Strobe:         Green
+jcompton:		Green
+mutetus:		Green
 x128-r41504:	Green
 
 Conclusion:
@@ -507,6 +529,8 @@ William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green
 Strobe:         Green
+jcompton:		Green
+mutetus:		Green
 x128-r41504:	Green
 
 Conclusion:
@@ -548,6 +572,8 @@ William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green
 Strobe:         Green
+jcompton:		Green
+mutetus:		Green
 x128-r41504:	Green
 
 Conclusion:
@@ -587,6 +613,8 @@ William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green
 Strobe:         Green
+jcompton:		Green
+mutetus:		Green
 x128-r41504:	Green
 
 Conclusion:
@@ -633,9 +661,11 @@ Light Green: #$11 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 Results:
 --------
 William McCabe: Blue
-Hypnosis:       --
-Tokra:          --
+Hypnosis:       Blue
+Tokra:          Blue
 Strobe:         Blue
+jcompton:		Blue
+mutetus:		Blue
 x128-r41504:	White
 
 Conclusion:
@@ -675,6 +705,8 @@ William McCabe: White
 Hypnosis:       White
 Tokra:          White
 Strobe:         White
+jcompton:		White
+mutetus:		White
 x128-r41504:	White
 
 Conclusion:
@@ -721,9 +753,11 @@ Light Green: #$11 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 Results:
 --------
 William McCabe: Blue
-Hypnosis:       --
-Tokra:          --
+Hypnosis:       Blue
+Tokra:          Blue
 Strobe:         Red
+jcompton:		Red
+mutetus:		Blue
 x128-r41504:	Light Blue
 
 Conclusion:
@@ -765,6 +799,8 @@ William McCabe: Cyan
 Hypnosis:       Cyan
 Tokra:          Cyan
 Strobe:         Cyan
+jcompton:		Cyan
+mutetus:		Cyan
 x128-r41504:	White
 
 Conclusion:
