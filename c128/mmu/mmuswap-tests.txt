@@ -43,7 +43,7 @@ Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
-Strobe:         Green
+Strobe:         Green (PAL flat 128)
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
@@ -87,7 +87,7 @@ Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
-Strobe:         Green
+Strobe:         Green (PAL flat 128)
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
@@ -131,7 +131,7 @@ Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
-Strobe:         Green
+Strobe:         Green (PAL flat 128)
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
@@ -175,7 +175,7 @@ Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
-Strobe:         Green
+Strobe:         Green (PAL flat 128)
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
@@ -220,7 +220,7 @@ Results:
 William McCabe: Green
 Hypnosis:       Black
 Tokra:          Black (german PAL C128 flat)
-Strobe:         Black
+Strobe:         Black (PAL flat 128)
 jcompton:		Black (NTSC 128D)
 jcompton:       Black (NTSC C128 flat)
 mutetus:		Black (128 PAL flat)
@@ -260,7 +260,7 @@ Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
-Strobe:         Green
+Strobe:         Green (PAL flat 128)
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
@@ -322,8 +322,8 @@ Results:
 Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Blue
-Tokra:          Blue (german PAL C128 flat)
-Strobe:         Blue
+Tokra:          Blue  (german PAL C128 flat)
+Strobe:         Blue  (PAL flat 128)
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
@@ -364,7 +364,7 @@ Results:
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
-Strobe:         Green
+Strobe:         Green (PAL flat 128)
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
@@ -415,7 +415,7 @@ Results:
 William McCabe: Brown
 Hypnosis:       Brown
 Tokra:          Brown (german PAL C128 flat)
-Strobe:         Brown
+Strobe:         Brown (PAL flat 128)
 jcompton:		Brown (NTSC 128D)
 jcompton:       Brown (NTSC C128 flat)
 mutetus:		Brown (128 PAL flat)
@@ -460,7 +460,7 @@ Results:
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
-Strobe:         Green
+Strobe:         Green (PAL flat 128)
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
@@ -505,7 +505,7 @@ Results:
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
-Strobe:         Green
+Strobe:         Green (PAL flat 128)
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
@@ -550,7 +550,7 @@ Results:
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
-Strobe:         Green
+Strobe:         Green (PAL flat 128)
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
@@ -595,7 +595,7 @@ Results:
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
-Strobe:         Green
+Strobe:         Green (PAL flat 128)
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
@@ -638,7 +638,7 @@ Results:
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
-Strobe:         Green
+Strobe:         Green (PAL flat 128)
 jcompton:		Green (NTSC 128D)
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
@@ -691,7 +691,7 @@ Results:
 William McCabe: Blue
 Hypnosis:       Blue
 Tokra:          Blue (german PAL C128 flat)
-Strobe:         Blue
+Strobe:         Blue (PAL flat 128)
 jcompton:		Blue (NTSC 128D)
 jcompton:       Blue (NTSC C128 flat)
 mutetus:		Blue (128 PAL flat)
@@ -734,7 +734,7 @@ Results:
 William McCabe: White
 Hypnosis:       White
 Tokra:          White (german PAL C128 flat)
-Strobe:         White
+Strobe:         White (PAL flat 128)
 jcompton:		White (NTSC 128D)
 jcompton:       White (NTSC C128 flat)
 mutetus:		White (128 PAL flat)
@@ -787,11 +787,11 @@ Results:
 William McCabe: Blue
 Hypnosis:       Blue
 Tokra:          Blue (german PAL C128 flat)
-Strobe:         Red
+Strobe:         Red  (PAL flat 128)
 jcompton:		Red  (NTSC 128D)
 jcompton:       Blue (NTSC C128 flat)
 mutetus:		Blue (128 PAL flat)
-hedning:        Red (PAL C128DCR)
+hedning:        Red  (PAL C128DCR)
 x128-r41504:	Light Blue
 
 Conclusion:
@@ -832,7 +832,7 @@ Results:
 William McCabe: Cyan
 Hypnosis:       Cyan
 Tokra:          Cyan (german PAL C128 flat)
-Strobe:         Cyan
+Strobe:         Cyan (PAL flat 128)
 jcompton:		Cyan (NTSC 128D)
 jcompton:       Cyan (NTSC C128 flat)
 mutetus:		Cyan (128 PAL flat)
