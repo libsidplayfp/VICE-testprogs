@@ -887,3 +887,54 @@ x128-r41548:	White
 Conclusion:
 -----------
 Waiting on results.
+
+-------------------------------------------------------------------------------
+
+mmuswap-19:
+===========
+
+Goal:
+-----
+This test is designed to see what happens when the zero page is mapped to page
+$30 AND the stack page is mapped to page $30, what do we get in the zero page
+and what do we get in the stack page.
+
+Procedure:
+----------
+- Switch off shared memory
+- Put the value #$aa in $20 in bank 0.
+- Put the value #$55 in $0120 in bank 0.
+- Put the value #$33 in $3020 in bank 0.
+- Relocate the zero page to page $30 in bank 0.
+- Relocate the stack page to page $30 in bank 0.
+- Read back the value from address $20 in bank 0.
+- Read back the value from address $0120 in bank 0.
+
+Border Colors:
+--------------
+Red:         an unexpected value got read from $20 or $0120.
+Black:       #$aa got read back from $20 and #$aa from $0120.
+White:       #$aa got read back from $20 and #$55 from $0120.
+Cyan:        #$aa got read back from $20 and #$33 from $0120.
+Purple:      #$55 got read back from $20 and #$aa from $0120.
+Blue:        #$55 got read back from $20 and #$55 from $0120.
+Yellow:      #$55 got read back from $20 and #$33 from $0120.
+Orange:      #$33 got read back from $20 and #$aa from $0120.
+Brown:       #$33 got read back from $20 and #$55 from $0120.
+Light Green: #$33 got read back from $20 and #$33 from $0120.
+
+Results:
+--------
+William McCabe: --
+Hypnosis:       --
+Tokra:          -- (german PAL C128 flat)
+Strobe:         -- (PAL flat 128)
+jcompton:		-- (NTSC 128D)
+jcompton:       -- (NTSC C128 flat)
+mutetus:		-- (128 PAL flat)
+hedning:        -- (PAL C128DCR)
+x128-r41548:	Light Green
+
+Conclusion:
+-----------
+Waiting on results.
