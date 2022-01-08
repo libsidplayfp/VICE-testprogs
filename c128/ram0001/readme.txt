@@ -28,3 +28,9 @@ current bank, which is fetched by the VICII in the border) and then to 0/1 in
 the border area. it then reads the respective ram locations using sprite
 collisions and compares to the original value(s). the border will turn red when
 an error occurs.
+
+test2.prg
+
+Writes to 0/1 by using the mmu zero page relocation back translation method, and
+verifies if the cpu port and ram of the target of the zero page relocation remain
+unchanged. The border will turn red when an error occurs.
