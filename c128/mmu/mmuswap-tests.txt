@@ -217,6 +217,7 @@ Cyan:  #$55 got read from $20 and #$55 got read from $0120.
 
 Results:
 --------
+Dr Blutig:      Black
 William McCabe: Green
 Hypnosis:       Black
 Tokra:          Black (german PAL C128 flat)
@@ -361,6 +362,7 @@ Green: #$55 got read from $80 and #$aa got read from $3080.
 
 Results:
 --------
+Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
@@ -412,6 +414,7 @@ Red:        Something unexpected got read from $3080 in either bank 0 or bank 1.
 
 Results:
 --------
+Dr Blutig:      Brown
 William McCabe: Brown
 Hypnosis:       Brown
 Tokra:          Brown (german PAL C128 flat)
@@ -457,6 +460,7 @@ Blue:   an unexpected value got read from $10.
 
 Results:
 --------
+Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
@@ -502,6 +506,7 @@ Purple: #$aa got read back from $80 bank 0 and #$aa from $80 bank 1.
 
 Results:
 --------
+Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
@@ -547,6 +552,7 @@ Purple: #$aa got read back from $80 bank 0 and #$aa from $80 bank 1.
 
 Results:
 --------
+Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
@@ -592,6 +598,7 @@ Purple: #$aa got read back from $80 bank 0 and #$aa from $80 bank 1.
 
 Results:
 --------
+Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
@@ -635,6 +642,7 @@ Purple: an unexpected value got read from $80.
 
 Results:
 --------
+Dr Blutig:      Green
 William McCabe: Green
 Hypnosis:       Green
 Tokra:          Green (german PAL C128 flat)
@@ -688,6 +696,7 @@ Light Green: #$11 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 
 Results:
 --------
+Dr Blutig:      Blue
 William McCabe: Blue
 Hypnosis:       Blue
 Tokra:          Blue (german PAL C128 flat)
@@ -731,6 +740,7 @@ Purple: an unexpected value got read from $80.
 
 Results:
 --------
+Dr Blutig:      White
 William McCabe: White
 Hypnosis:       White
 Tokra:          White (german PAL C128 flat)
@@ -784,6 +794,7 @@ Light Green: #$11 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 
 Results:
 --------
+Dr Blutig:      Blue
 William McCabe: --
 Hypnosis:       --
 Tokra:          -- (german PAL C128 flat)
@@ -829,6 +840,7 @@ Purple: an unexpected value got read from $80.
 
 Results:
 --------
+Dr Blutig:      Cyan
 William McCabe: Cyan
 Hypnosis:       Cyan
 Tokra:          Cyan (german PAL C128 flat)
@@ -874,6 +886,7 @@ Purple: an unexpected value got read from $80.
 
 Results:
 --------
+Dr Blutig:      White
 William McCabe: --
 Hypnosis:       --
 Tokra:          -- (german PAL C128 flat)
@@ -925,6 +938,7 @@ Light Green: #$33 got read back from $20 and #$33 from $0120.
 
 Results:
 --------
+Dr Blutig:      Light Green
 William McCabe: --
 Hypnosis:       --
 Tokra:          -- (german PAL C128 flat)
@@ -969,6 +983,7 @@ Cyan:  #$33 got read back from $3020.
 
 Results:
 --------
+Dr Blutig:      White
 William McCabe: --
 Hypnosis:       --
 Tokra:          -- (german PAL C128 flat)
@@ -1013,6 +1028,7 @@ Cyan:  #$33 got read back from $3020.
 
 Results:
 --------
+Dr Blutig:      White
 William McCabe: --
 Hypnosis:       --
 Tokra:          -- (german PAL C128 flat)
