@@ -796,7 +796,7 @@ Results:
 --------
 Dr Blutig:      Blue
 William McCabe: --
-Hypnosis:       --
+Hypnosis:       Blue
 Tokra:          -- (german PAL C128 flat)
 Strobe:         -- (PAL flat 128)
 jcompton:		-- (NTSC 128D)
@@ -888,7 +888,7 @@ Results:
 --------
 Dr Blutig:      White
 William McCabe: --
-Hypnosis:       --
+Hypnosis:       White
 Tokra:          -- (german PAL C128 flat)
 Strobe:         -- (PAL flat 128)
 jcompton:		-- (NTSC 128D)
@@ -940,7 +940,7 @@ Results:
 --------
 Dr Blutig:      Light Green
 William McCabe: --
-Hypnosis:       --
+Hypnosis:       Light Green
 Tokra:          -- (german PAL C128 flat)
 Strobe:         -- (PAL flat 128)
 jcompton:		-- (NTSC 128D)
@@ -985,7 +985,7 @@ Results:
 --------
 Dr Blutig:      White
 William McCabe: --
-Hypnosis:       --
+Hypnosis:       Black
 Tokra:          -- (german PAL C128 flat)
 Strobe:         -- (PAL flat 128)
 jcompton:		-- (NTSC 128D)
@@ -1030,7 +1030,7 @@ Results:
 --------
 Dr Blutig:      White
 William McCabe: --
-Hypnosis:       --
+Hypnosis:       Black
 Tokra:          -- (german PAL C128 flat)
 Strobe:         -- (PAL flat 128)
 jcompton:		-- (NTSC 128D)
