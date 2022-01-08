@@ -15,7 +15,7 @@ basicHeader=1
 
 !ifdef basicHeader {
 ; 10 SYS7181
-*=$1c01  
+*=$1c01
 	!byte  $0c,$08,$0a,$00,$9e,$37,$31,$38,$31,$00,$00,$00
 *=$1c0d 
 	jmp start
@@ -25,8 +25,8 @@ basicHeader=1
 	sei
 	lda #$00
 	sta $ff00 ; map in I/O, bank 0
-	lda #$0e
-	sta $d506 ; bottom and top mem shared 8kb
+	lda #$0a
+	sta $d506 ; top mem shared 8kb
 	lda #$aa
 	sta $80   ; store #$aa in zero page in bank 0
 	lda #$55
@@ -40,6 +40,8 @@ basicHeader=1
 	lda #$00
 	sta $d508 ; map zero page to bank 0
 	sta $d507 ; activate zero page mapping to bank 0
+	lda #$0e
+	sta $d506 ; bottom and top mem shared 8kb
 	lda #$3f
 	sta $ff00 ; bank 0 all ram
 	ldx #$00
@@ -64,9 +66,9 @@ loop2:
 	inx
 	bne loop2
 	jsr $e000 ; $3080 in bank 1 in X
+	ldy $3080 ; $3080 in bank 0 in Y
 	lda #$00
 	sta $ff00 ; map in I/O, bank 0
-	ldy $3080 ; $3080 in bank 0 in Y
 	lda #$00
 	sta $d508
 	lda #$00

@@ -784,15 +784,15 @@ Light Green: #$11 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 
 Results:
 --------
-William McCabe: Blue
-Hypnosis:       Blue
-Tokra:          Blue (german PAL C128 flat)
-Strobe:         Red  (PAL flat 128)
-jcompton:		Red  (NTSC 128D)
-jcompton:       Blue (NTSC C128 flat)
-mutetus:		Blue (128 PAL flat)
-hedning:        Red  (PAL C128DCR)
-x128-r41548:	Red
+William McCabe: --
+Hypnosis:       --
+Tokra:          -- (german PAL C128 flat)
+Strobe:         -- (PAL flat 128)
+jcompton:		-- (NTSC 128D)
+jcompton:       -- (NTSC C128 flat)
+mutetus:		-- (128 PAL flat)
+hedning:        -- (PAL C128DCR)
+x128-r41548:	Blue
 
 Conclusion:
 -----------
