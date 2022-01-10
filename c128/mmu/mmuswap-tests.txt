@@ -797,7 +797,7 @@ Results:
 Dr Blutig:      Blue
 William McCabe: Blue (PAL 128D)
 Hypnosis:       Blue
-Tokra:          --   (german PAL C128 flat)
+Tokra:          Blue (german PAL C128 flat)
 Strobe:         Blue (PAL flat 128)
 jcompton:		Blue (NTSC 128D)
 jcompton:       Blue (NTSC C128 flat)
@@ -889,7 +889,7 @@ Results:
 Dr Blutig:      White
 William McCabe: White (PAL 128D)
 Hypnosis:       White
-Tokra:          --    (german PAL C128 flat)
+Tokra:          White (german PAL C128 flat)
 Strobe:         White (PAL flat 128)
 jcompton:		White (NTSC 128D)
 jcompton:       White (NTSC C128 flat)
@@ -941,7 +941,7 @@ Results:
 Dr Blutig:      Light Green
 William McCabe: Light Green (PAL 128D)
 Hypnosis:       Light Green
-Tokra:          --          (german PAL C128 flat)
+Tokra:          Light Green (german PAL C128 flat)
 Strobe:         Light Green (PAL flat 128)
 jcompton:		Light Green (NTSC 128D)
 jcompton:       Light Green (NTSC C128 flat)
@@ -986,7 +986,7 @@ Results:
 Dr Blutig:      White
 William McCabe: White (PAL 128D)
 Hypnosis:       Black
-Tokra:          --    (german PAL C128 flat)
+Tokra:          Black (german PAL C128 flat)
 Strobe:         Black (PAL flat 128)
 jcompton:		White (NTSC 128D)
 jcompton:       White (NTSC C128 flat)
@@ -1031,7 +1031,7 @@ Results:
 Dr Blutig:      White
 William McCabe: White (PAL 128D)
 Hypnosis:       Black
-Tokra:          --    (german PAL C128 flat)
+Tokra:          Black (german PAL C128 flat)
 Strobe:         Black (PAL flat 128)
 jcompton:		White (NTSC 128D)
 jcompton:       White (NTSC C128 flat)
