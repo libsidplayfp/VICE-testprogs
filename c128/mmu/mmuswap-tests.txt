@@ -799,8 +799,8 @@ William McCabe: Blue (PAL 128D)
 Hypnosis:       Blue
 Tokra:          --   (german PAL C128 flat)
 Strobe:         --   (PAL flat 128)
-jcompton:		--   (NTSC 128D)
-jcompton:       --   (NTSC C128 flat)
+jcompton:		Blue (NTSC 128D)
+jcompton:       Blue (NTSC C128 flat)
 mutetus:		--   (128 PAL flat)
 hedning:        Blue (PAL C128DCR)
 x128-r41548:	Blue
@@ -889,11 +889,11 @@ Results:
 Dr Blutig:      White
 William McCabe: White (PAL 128D)
 Hypnosis:       White
-Tokra:          -- (german PAL C128 flat)
-Strobe:         -- (PAL flat 128)
-jcompton:		-- (NTSC 128D)
-jcompton:       -- (NTSC C128 flat)
-mutetus:		-- (128 PAL flat)
+Tokra:          --    (german PAL C128 flat)
+Strobe:         --    (PAL flat 128)
+jcompton:		White (NTSC 128D)
+jcompton:       White (NTSC C128 flat)
+mutetus:		--    (128 PAL flat)
 hedning:        White (PAL C128DCR)
 x128-r41548:	White
 
@@ -943,8 +943,8 @@ William McCabe: Light Green (PAL 128D)
 Hypnosis:       Light Green
 Tokra:          --          (german PAL C128 flat)
 Strobe:         --          (PAL flat 128)
-jcompton:		--          (NTSC 128D)
-jcompton:       --          (NTSC C128 flat)
+jcompton:		Light Green (NTSC 128D)
+jcompton:       Light Green (NTSC C128 flat)
 mutetus:		--          (128 PAL flat)
 hedning:        Light Green (PAL C128DCR)
 x128-r41548:	Light Green
@@ -988,8 +988,8 @@ William McCabe: White (PAL 128D)
 Hypnosis:       Black
 Tokra:          --    (german PAL C128 flat)
 Strobe:         --    (PAL flat 128)
-jcompton:		--    (NTSC 128D)
-jcompton:       --    (NTSC C128 flat)
+jcompton:		White (NTSC 128D)
+jcompton:       White (NTSC C128 flat)
 mutetus:		--    (128 PAL flat)
 hedning:        White (PAL C128DCR)
 x128-r41548:	White
@@ -1033,8 +1033,8 @@ William McCabe: White (PAL 128D)
 Hypnosis:       Black
 Tokra:          --    (german PAL C128 flat)
 Strobe:         --    (PAL flat 128)
-jcompton:		--    (NTSC 128D)
-jcompton:       --    (NTSC C128 flat)
+jcompton:		White (NTSC 128D)
+jcompton:       White (NTSC C128 flat)
 mutetus:		--    (128 PAL flat)
 hedning:        White (PAL C128DCR)
 x128-r41548:	White
