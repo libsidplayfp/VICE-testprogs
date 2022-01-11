@@ -86,7 +86,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -131,7 +131,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -176,7 +176,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -223,7 +223,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Black (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -267,7 +267,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -331,7 +331,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Blue [8722R2]
+Hypnosis:       Blue [8722R2 4487]
 Tokra:          Blue  (german PAL C128 flat)
 Strobe:         Blue  (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -374,7 +374,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -427,7 +427,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -476,7 +476,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -524,7 +524,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -575,7 +575,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -624,7 +624,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -671,7 +671,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -727,7 +727,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -774,7 +774,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -831,7 +831,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -881,7 +881,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -931,7 +931,7 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
@@ -987,12 +987,12 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green [8722R2]
+Hypnosis:       Green [8722R2 4487]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		Green (NTSC 128D) [8722R2 1788]
 jcompton:       Green (NTSC C128 flat)
-mutetus:		--          (128 PAL flat)
+mutetus:		--     (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
 x128-r41548:	Green
@@ -1035,7 +1035,7 @@ Results:
 --------
 Dr Blutig:      White
 William McCabe: White (PAL 128D)
-Hypnosis:       Black [8722R2]
+Hypnosis:       Black [8722R2 4487]
 Tokra:          Black (german PAL C128 flat)
 Strobe:         Black (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		White (NTSC 128D) [8722R2 1788]
@@ -1081,7 +1081,7 @@ Results:
 --------
 Dr Blutig:      White
 William McCabe: White (PAL 128D)
-Hypnosis:       Black [8722R2]
+Hypnosis:       Black [8722R2 4487]
 Tokra:          Black (german PAL C128 flat)
 Strobe:         Black (PAL flat 128) [MOS 8722R2 4485]
 jcompton:		White (NTSC 128D) [8722R2 1788]
