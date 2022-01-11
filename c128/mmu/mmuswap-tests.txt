@@ -41,13 +41,14 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green
+Hypnosis:       Green [8722R2]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128)
-jcompton:		Green (NTSC 128D)
+jcompton:		Green (NTSC 128D) [8722R2]
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
-hedning:        Green (PAL C128DCR)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
 x128-r41548:	Green
 
 Conclusion:
@@ -85,13 +86,14 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green
+Hypnosis:       Green [8722R2]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128)
-jcompton:		Green (NTSC 128D)
+jcompton:		Green (NTSC 128D) [8722R2]
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
-hedning:        Green (PAL C128DCR)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
 x128-r41548:	Green
 
 Conclusion:
@@ -119,23 +121,24 @@ Procedure:
 
 Border Colors:
 --------------
-Black:  #$55 got read from $0220 in bank 0, #$55 got read from $0220 in bank 1.
-White:  #$55 got read from $0220 in bank 0, #$aa got read from $0220 in bank 1.
+Black: #$55 got read from $0220 in bank 0, #$55 got read from $0220 in bank 1.
+White: #$55 got read from $0220 in bank 0, #$aa got read from $0220 in bank 1.
 Green: #$aa got read from $0220 in bank 0, #$55 got read from $0220 in bank 1.
-Cyan:   #$aa got read from $0220 in bank 0, #$aa got read from $0220 in bank 1.
-Red:    something unexpected got read from $0220 in either bank 0 or bank 1.
+Cyan:  #$aa got read from $0220 in bank 0, #$aa got read from $0220 in bank 1.
+Red:   something unexpected got read from $0220 in either bank 0 or bank 1.
 
 Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green
+Hypnosis:       Green [8722R2]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128)
-jcompton:		Green (NTSC 128D)
+jcompton:		Green (NTSC 128D) [8722R2]
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
-hedning:        Green (PAL C128DCR)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
 x128-r41548:	Green
 
 Conclusion:
@@ -173,13 +176,14 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green
+Hypnosis:       Green [8722R2]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128)
-jcompton:		Green (NTSC 128D)
+jcompton:		Green (NTSC 128D) [8722R2]
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
-hedning:        Green (PAL C128DCR)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
 x128-r41548:	Green
 
 Conclusion:
@@ -210,27 +214,31 @@ Procedure:
 Border Colors:
 --------------
 Red:   Something unexpected was read from $20 or $0120.
-Black: #$aa got read from $20 and #$aa got read from $0120.
-Green: #$55 got read from $20 and #$aa got read from $0120.
+Green: #$aa got read from $20 and #$aa got read from $0120.
+Black: #$55 got read from $20 and #$aa got read from $0120.
 White: #$aa got read from $20 and #$55 got read from $0120.
 Cyan:  #$55 got read from $20 and #$55 got read from $0120.
 
 Results:
 --------
-Dr Blutig:      Black
-William McCabe: Green (PAL 128D)
-Hypnosis:       Black
-Tokra:          Black (german PAL C128 flat)
-Strobe:         Black (PAL flat 128)
-jcompton:		Black (NTSC 128D)
-jcompton:       Black (NTSC C128 flat)
-mutetus:		Black (128 PAL flat)
-hedning:        Black (PAL C128DCR)
-x128-r41548:	Black
+Dr Blutig:      Green
+William McCabe: Black (PAL 128D)
+Hypnosis:       Green [8722R2]
+Tokra:          Green (german PAL C128 flat)
+Strobe:         Green (PAL flat 128)
+jcompton:		Green (NTSC 128D) [8722R2]
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Black (PAL C128 flat) [8722R2]
+x128-r41548:	Green
 
 Conclusion:
 -----------
-None yet, waiting on other results to confirm William McCable result.
+When the stack page is mapped to the zero page and the zero page remains
+mapped to itself, any access to the stack page winds up at the zero page, and
+any access to the zero page stays at the zero page, the stack page itself
+becomes inaccessable.
 
 -------------------------------------------------------------------------------
 
@@ -259,13 +267,14 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green
+Hypnosis:       Green [8722R2]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128)
-jcompton:		Green (NTSC 128D)
+jcompton:		Green (NTSC 128D) [8722R2]
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
-hedning:        Green (PAL C128DCR)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
 x128-r41548:	Green
 
 Conclusion:
@@ -322,13 +331,14 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Blue
+Hypnosis:       Blue [8722R2]
 Tokra:          Blue  (german PAL C128 flat)
 Strobe:         Blue  (PAL flat 128)
-jcompton:		Green (NTSC 128D)
+jcompton:		Green (NTSC 128D) [8722R2]
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
-hedning:        Green (PAL C128DCR)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Blue  (PAL C128 flat) [8722R2]
 x128-r41548:	Green
 
 Conclusion:
@@ -364,13 +374,14 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green
+Hypnosis:       Green [8722R2]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128)
-jcompton:		Green (NTSC 128D)
+jcompton:		Green (NTSC 128D) [8722R2]
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
-hedning:        Green (PAL C128DCR)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
 x128-r41548:	Green
 
 Conclusion:
@@ -409,25 +420,28 @@ Yellow:     #$55 got read from $3080 bank 0 and #$aa got read from $3080 bank 1.
 Light Blue: #$aa got read from $3080 bank 0 and #$33 got read from $3080 bank 1.
 Light Grey: #$aa got read from $3080 bank 0 and #$55 got read from $3080 bank 1.
 Orange:     #$aa got read from $3080 bank 0 and #$aa got read from $3080 bank 1.
-Brown:      #$55 got read from $3080 bank 0 and #$11 got read from $3080 bank 1.
+Green:      #$55 got read from $3080 bank 0 and #$11 got read from $3080 bank 1.
 Red:        Something unexpected got read from $3080 in either bank 0 or bank 1.
 
 Results:
 --------
-Dr Blutig:      Brown
-William McCabe: Brown (PAL 128D)
-Hypnosis:       Brown
-Tokra:          Brown (german PAL C128 flat)
-Strobe:         Brown (PAL flat 128)
-jcompton:		Brown (NTSC 128D)
-jcompton:       Brown (NTSC C128 flat)
-mutetus:		Brown (128 PAL flat)
-hedning:        Brown (PAL C128DCR)
-x128-r41548:	Brown
+Dr Blutig:      Green
+William McCabe: Green (PAL 128D)
+Hypnosis:       Green [8722R2]
+Tokra:          Green (german PAL C128 flat)
+Strobe:         Green (PAL flat 128)
+jcompton:		Green (NTSC 128D) [8722R2]
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
+x128-r41548:	Green
 
 Conclusion:
 -----------
-Waiting on results.
+When the zero page is mapped to a non-shared RAM page in bank 1, any accees to
+that non-shared RAM page in bank 0 stays at that page, and any access to that
+non-shared RAM page in bank 1 is mapped to the zero page in bank 1.
 
 -------------------------------------------------------------------------------
 
@@ -462,18 +476,20 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green
+Hypnosis:       Green [8722R2]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128)
-jcompton:		Green (NTSC 128D)
+jcompton:		Green (NTSC 128D) [8722R2]
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
-hedning:        Green (PAL C128DCR)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
 x128-r41548:	Green
 
 Conclusion:
 -----------
-Waiting on results.
+When the zero page is mapped to an I/O page, any access to that I/O page will
+stay at that I/O page, no back translation is done.
 
 -------------------------------------------------------------------------------
 
@@ -508,18 +524,23 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green
+Hypnosis:       Green [8722R2]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128)
-jcompton:		Green (NTSC 128D)
+jcompton:		Green (NTSC 128D) [8722R2]
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
-hedning:        Green (PAL C128DCR)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
 x128-r41548:	Green
 
 Conclusion:
 -----------
-Waiting on results.
+When the zero page in non-shared memory is mapped to the zero page in bank 1,
+any access to the zero page in bank 0 goes to the zero page in bank 1, and when
+the zero page is not mapped any access to the zero page in bank 0 stays at the
+zero page in bank 0. Mapping the zero page in bank 0 in non-shared memory
+to the zero page of bank 1 swaps the pages.
 
 -------------------------------------------------------------------------------
 
@@ -554,18 +575,21 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green
+Hypnosis:       Green [8722R2]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128)
-jcompton:		Green (NTSC 128D)
+jcompton:		Green (NTSC 128D) [8722R2]
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
-hedning:        Green (PAL C128DCR)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
 x128-r41548:	Green
 
 Conclusion:
 -----------
-Waiting on results.
+When the zero page in shared memory is mapped to the zero page in bank 1, no
+swapping is done, shared memory takes priority and any access to the zero page
+remains in bank 0.
 
 -------------------------------------------------------------------------------
 
@@ -600,18 +624,21 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green
+Hypnosis:       Green [8722R2]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128)
-jcompton:		Green (NTSC 128D)
+jcompton:		Green (NTSC 128D) [8722R2]
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
-hedning:        Green (PAL C128DCR)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
 x128-r41548:	Green
 
 Conclusion:
 -----------
-Waiting on results.
+When the zero page in non-shared memory is mapped to the zero page in bank 1
+and the zero page is read from bank 1 there is no back translation to bank 0,
+the access stays in bank 1.
 
 -------------------------------------------------------------------------------
 
@@ -644,18 +671,20 @@ Results:
 --------
 Dr Blutig:      Green
 William McCabe: Green (PAL 128D)
-Hypnosis:       Green
+Hypnosis:       Green [8722R2]
 Tokra:          Green (german PAL C128 flat)
 Strobe:         Green (PAL flat 128)
-jcompton:		Green (NTSC 128D)
+jcompton:		Green (NTSC 128D) [8722R2]
 jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
-hedning:        Green (PAL C128DCR)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
 x128-r41548:	Green
 
 Conclusion:
 -----------
-Waiting on results.
+When the zero page in non-shared memory is mapped to page $30 in bank 1 and the
+zero page is read from bank 0, we get page $30 from bank 1. 
 
 -------------------------------------------------------------------------------
 
@@ -688,7 +717,7 @@ Black:       #$aa got read back from $3080 bank 1 and #$aa from $3080 in bank 0.
 White:       #$aa got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
 Cyan:        #$aa got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 Purple:      #$33 got read back from $3080 bank 1 and #$aa from $3080 in bank 0.
-Blue:        #$33 got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
+Green:       #$33 got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
 Yellow:      #$33 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 Brown:       #$11 got read back from $3080 bank 1 and #$aa from $3080 in bank 0.
 Light Blue:  #$11 got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
@@ -696,20 +725,23 @@ Light Green: #$11 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 
 Results:
 --------
-Dr Blutig:      Blue
-William McCabe: Blue (PAL 128D)
-Hypnosis:       Blue
-Tokra:          Blue (german PAL C128 flat)
-Strobe:         Blue (PAL flat 128)
-jcompton:		Blue (NTSC 128D)
-jcompton:       Blue (NTSC C128 flat)
-mutetus:		Blue (128 PAL flat)
-hedning:        Blue (PAL C128DCR)
-x128-r41548:	Blue
+Dr Blutig:      Green
+William McCabe: Green (PAL 128D)
+Hypnosis:       Green [8722R2]
+Tokra:          Green (german PAL C128 flat)
+Strobe:         Green (PAL flat 128)
+jcompton:		Green (NTSC 128D) [8722R2]
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
+x128-r41548:	Green
 
 Conclusion:
 -----------
-Waiting on results.
+When the zero page in non-shared memory is mapped to page $30 in bank 1 and
+page $30 is read in bank 1 we get the zero page of bank 1, and when we read
+page $30 in bank 0, we get page $30 in bank 0.
 
 -------------------------------------------------------------------------------
 
@@ -734,26 +766,29 @@ Procedure:
 Border Colors:
 --------------
 Black:  #$aa got read back from $80.
-White:  #$55 got read back from $80.
+Green:  #$55 got read back from $80.
 Cyan:   #$33 got read back from $80.
 Purple: an unexpected value got read from $80.
 
 Results:
 --------
-Dr Blutig:      White
-William McCabe: White (PAL 128D)
-Hypnosis:       White
-Tokra:          White (german PAL C128 flat)
-Strobe:         White (PAL flat 128)
-jcompton:		White (NTSC 128D)
-jcompton:       White (NTSC C128 flat)
-mutetus:		White (128 PAL flat)
-hedning:        White (PAL C128DCR)
-x128-r41548:	White
+Dr Blutig:      Green
+William McCabe: Green (PAL 128D)
+Hypnosis:       Green [8722R2]
+Tokra:          Green (german PAL C128 flat)
+Strobe:         Green (PAL flat 128)
+jcompton:		Green (NTSC 128D) [8722R2]
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
+x128-r41548:	Green
 
 Conclusion:
 -----------
-Waiting on results.
+When the zero page in shared memory is mapped to page $30 in bank 1 and we
+read the zero page, we get page $30 from bank 0. Shared memory takes priority
+and so the zero page is mapped to bank 0 instead.
 
 -------------------------------------------------------------------------------
 
@@ -786,7 +821,7 @@ Black:       #$aa got read back from $3080 bank 1 and #$aa from $3080 in bank 0.
 White:       #$aa got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
 Cyan:        #$aa got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 Purple:      #$33 got read back from $3080 bank 1 and #$aa from $3080 in bank 0.
-Blue:        #$33 got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
+Green:       #$33 got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
 Yellow:      #$33 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 Brown:       #$11 got read back from $3080 bank 1 and #$aa from $3080 in bank 0.
 Light Blue:  #$11 got read back from $3080 bank 1 and #$55 from $3080 in bank 0.
@@ -794,20 +829,24 @@ Light Green: #$11 got read back from $3080 bank 1 and #$33 from $3080 in bank 0.
 
 Results:
 --------
-Dr Blutig:      Blue
-William McCabe: Blue (PAL 128D)
-Hypnosis:       Blue
-Tokra:          Blue (german PAL C128 flat)
-Strobe:         Blue (PAL flat 128)
-jcompton:		Blue (NTSC 128D)
-jcompton:       Blue (NTSC C128 flat)
-mutetus:		--   (128 PAL flat)
-hedning:        Blue (PAL C128DCR)
-x128-r41548:	Blue
+Dr Blutig:      Green
+William McCabe: Green (PAL 128D)
+Hypnosis:       Green [8722R2]
+Tokra:          Green (german PAL C128 flat)
+Strobe:         Green (PAL flat 128)
+jcompton:		Green (NTSC 128D) [8722R2]
+jcompton:       Green (NTSC C128 flat)
+mutetus:		--    (128 PAL flat)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
+x128-r41548:	Green
 
 Conclusion:
 -----------
-Waiting on results.
+When the zero page in shared memory is mapped to page $30 in bank 1 and we read
+from page $30 in bank 1 we get the zero page of bank 1, and when we read from
+page $30 in bank 0 we get page $30 from bank 0. The back translation only
+happens in the target bank.
 
 -------------------------------------------------------------------------------
 
@@ -835,25 +874,29 @@ Border Colors:
 --------------
 Black:  #$aa got read back from $80.
 White:  #$55 got read back from $80.
-Cyan:   #$33 got read back from $80.
+Green:  #$33 got read back from $80.
 Purple: an unexpected value got read from $80.
 
 Results:
 --------
-Dr Blutig:      Cyan
-William McCabe: Cyan (PAL 128D)
-Hypnosis:       Cyan
-Tokra:          Cyan (german PAL C128 flat)
-Strobe:         Cyan (PAL flat 128)
-jcompton:		Cyan (NTSC 128D)
-jcompton:       Cyan (NTSC C128 flat)
-mutetus:		Cyan (128 PAL flat)
-hedning:        Cyan (PAL C128DCR)
-x128-r41548:	Cyan
+Dr Blutig:      Green
+William McCabe: Green (PAL 128D)
+Hypnosis:       Green [8722R2]
+Tokra:          Green (german PAL C128 flat)
+Strobe:         Green (PAL flat 128)
+jcompton:		Green (NTSC 128D) [8722R2]
+jcompton:       Green (NTSC C128 flat)
+mutetus:		Green (128 PAL flat)
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
+x128-r41548:	Green
 
 Conclusion:
 -----------
-Waiting on results.
+When the zero page in non-shared memory is mapped to page $e0 in bank 1 and
+the zero page is read from bank 0 while page $e0 is in shared memory, we get
+page $e0 from bank 1. The fact that the target page is in shared memory does
+not matter for the bank.
 
 -------------------------------------------------------------------------------
 
@@ -880,26 +923,30 @@ Procedure:
 Border Colors:
 --------------
 Black:  #$aa got read back from $80.
-White:  #$55 got read back from $80.
+Green:  #$55 got read back from $80.
 Cyan:   #$33 got read back from $80.
 Purple: an unexpected value got read from $80.
 
 Results:
 --------
-Dr Blutig:      White
-William McCabe: White (PAL 128D)
-Hypnosis:       White
-Tokra:          White (german PAL C128 flat)
-Strobe:         White (PAL flat 128)
-jcompton:		White (NTSC 128D)
-jcompton:       White (NTSC C128 flat)
+Dr Blutig:      Green
+William McCabe: Green (PAL 128D)
+Hypnosis:       Green [8722R2]
+Tokra:          Green (german PAL C128 flat)
+Strobe:         Green (PAL flat 128)
+jcompton:		Green (NTSC 128D) [8722R2]
+jcompton:       Green (NTSC C128 flat)
 mutetus:		--    (128 PAL flat)
-hedning:        White (PAL C128DCR)
-x128-r41548:	White
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
+x128-r41548:	Green
 
 Conclusion:
 -----------
-Waiting on results.
+When the zero page in shared memory is mapped to page $e0 in bank 1 and
+we read the zero page while page $e0 is in shared memory, we get page $e0 in
+bank 0. The fact that the zero page is in shared memory makes the access only
+happen to the target in bank 0.
 
 -------------------------------------------------------------------------------
 
@@ -925,33 +972,36 @@ Procedure:
 
 Border Colors:
 --------------
-Red:         an unexpected value got read from $20 or $0120.
-Black:       #$aa got read back from $20 and #$aa from $0120.
-White:       #$aa got read back from $20 and #$55 from $0120.
-Cyan:        #$aa got read back from $20 and #$33 from $0120.
-Purple:      #$55 got read back from $20 and #$aa from $0120.
-Blue:        #$55 got read back from $20 and #$55 from $0120.
-Yellow:      #$55 got read back from $20 and #$33 from $0120.
-Orange:      #$33 got read back from $20 and #$aa from $0120.
-Brown:       #$33 got read back from $20 and #$55 from $0120.
-Light Green: #$33 got read back from $20 and #$33 from $0120.
+Red:    an unexpected value got read from $20 or $0120.
+Black:  #$aa got read back from $20 and #$aa from $0120.
+White:  #$aa got read back from $20 and #$55 from $0120.
+Cyan:   #$aa got read back from $20 and #$33 from $0120.
+Purple: #$55 got read back from $20 and #$aa from $0120.
+Blue:   #$55 got read back from $20 and #$55 from $0120.
+Yellow: #$55 got read back from $20 and #$33 from $0120.
+Orange: #$33 got read back from $20 and #$aa from $0120.
+Brown:  #$33 got read back from $20 and #$55 from $0120.
+Green:  #$33 got read back from $20 and #$33 from $0120.
 
 Results:
 --------
-Dr Blutig:      Light Green
-William McCabe: Light Green (PAL 128D)
-Hypnosis:       Light Green
-Tokra:          Light Green (german PAL C128 flat)
-Strobe:         Light Green (PAL flat 128)
-jcompton:		Light Green (NTSC 128D)
-jcompton:       Light Green (NTSC C128 flat)
+Dr Blutig:      Green
+William McCabe: Green (PAL 128D)
+Hypnosis:       Green [8722R2]
+Tokra:          Green (german PAL C128 flat)
+Strobe:         Green (PAL flat 128)
+jcompton:		Green (NTSC 128D) [8722R2]
+jcompton:       Green (NTSC C128 flat)
 mutetus:		--          (128 PAL flat)
-hedning:        Light Green (PAL C128DCR)
-x128-r41548:	Light Green
+hedning:        Green (PAL C128DCR) [8722R2]
+Zenda:          Green (PAL C128 flat) [8722R2]
+x128-r41548:	Green
 
 Conclusion:
 -----------
-Waiting on results.
+When the zero page is mapped to page $30 AND the stack page is mapped to page
+$30, we get page $30 when accesseing the zero page AND we get page $30 when
+accessing the stack page.
 
 -------------------------------------------------------------------------------
 
@@ -985,13 +1035,14 @@ Results:
 --------
 Dr Blutig:      White
 William McCabe: White (PAL 128D)
-Hypnosis:       Black
+Hypnosis:       Black [8722R2]
 Tokra:          Black (german PAL C128 flat)
 Strobe:         Black (PAL flat 128)
-jcompton:		White (NTSC 128D)
+jcompton:		White (NTSC 128D) [8722R2]
 jcompton:       White (NTSC C128 flat)
 mutetus:		--    (128 PAL flat)
-hedning:        White (PAL C128DCR)
+hedning:        White (PAL C128DCR) [8722R2]
+Zenda:          White (PAL C128 flat) [8722R2]
 x128-r41548:	White
 
 Conclusion:
@@ -1030,13 +1081,14 @@ Results:
 --------
 Dr Blutig:      White
 William McCabe: White (PAL 128D)
-Hypnosis:       Black
+Hypnosis:       Black [8722R2]
 Tokra:          Black (german PAL C128 flat)
 Strobe:         Black (PAL flat 128)
-jcompton:		White (NTSC 128D)
+jcompton:		White (NTSC 128D) [8722R2]
 jcompton:       White (NTSC C128 flat)
 mutetus:		--    (128 PAL flat)
-hedning:        White (PAL C128DCR)
+hedning:        White (PAL C128DCR) [8722R2]
+Zenda:          White (PAL C128 flat) [8722R2]
 x128-r41548:	White
 
 Conclusion:

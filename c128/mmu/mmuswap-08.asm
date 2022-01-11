@@ -1,7 +1,5 @@
 ; When the zero page is relocated to a RAM page using the MMU, does it swap to bank 1 as well
 ;
-; Test will not reach passed, it will produce different border colors for different situations
-;
 ; Test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
@@ -98,9 +96,8 @@ bank_0_55:
 	ldx #7
 	cpy #$aa
 	beq failed
-	ldx #9
 	cpy #$11
-	beq failed
+	beq passed
 	ldx #10
 	bne failed
 bank_0_aa:

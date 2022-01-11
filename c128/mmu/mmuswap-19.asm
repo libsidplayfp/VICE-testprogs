@@ -2,9 +2,7 @@
 ; bank 0, do we get page $30 in both the zero page and the stack
 ; page ?
 ;
-; test will not reach passed till results come in
-;
-; test not yet confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
 
@@ -70,7 +68,7 @@ zp_33:
 	cpy #$55
 	beq zp_33_sp_55
 	cpy #$33
-	beq zp_33_sp_33
+	beq passed
 	ldx #10
 	bne failed
 zp_aa_sp_aa:
@@ -96,9 +94,6 @@ zp_33_sp_aa:
 	bne failed
 zp_33_sp_55:
 	ldx #9
-	bne failed
-zp_33_sp_33:
-	ldx #13
 	bne failed
 
 passed:

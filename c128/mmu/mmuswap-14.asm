@@ -2,9 +2,7 @@
 ; bank 1, and you read page $30 in bank 0, do you get the zero page,
 ; and if you read page $30 in bank 1, do you get the zero page ?
 ;
-; test will not reach passed till results come in
-;
-; test not yet confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
 
@@ -92,7 +90,7 @@ bank1_33:
 	cpy #$aa
 	beq bank1_33_bank0_aa
 	cpy #$55
-	beq bank1_33_bank0_55
+	beq passed
 	cpy #$33
 	beq bank1_33_bank0_33
 	ldx #10
@@ -117,9 +115,6 @@ bank1_aa_bank0_33:
 	bne failed
 bank1_33_bank0_aa:
 	ldx #4
-	bne failed
-bank1_33_bank0_55:
-	ldx #6
 	bne failed
 bank1_33_bank0_33:
 	ldx #7

@@ -1,9 +1,7 @@
 ; When the zero page in shared memory is relocated to the zero page in
 ; bank 1, do they swap ?
 ;
-; test will not reach passed till results come in
-;
-; test not yet confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
 

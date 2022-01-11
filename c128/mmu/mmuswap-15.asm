@@ -1,9 +1,7 @@
 ; When the zero page in shared memory is relocated to page $30 in
 ; bank 1, and you read the zp in bank 0, do you read page $30 in bank 1 ?
 ;
-; test will not reach passed till results come in
-;
-; test not yet confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
 
@@ -53,9 +51,8 @@ loop:
 	ldx #0
 	cmp #$aa
 	beq failed
-	ldx #1
 	cmp #$55
-	beq failed
+	beq passed
 	ldx #3
 	cmp #$33
 	beq failed
