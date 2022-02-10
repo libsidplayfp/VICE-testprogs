@@ -5,6 +5,7 @@ DENISEOPTS+=" -debugcart"
 DENISEOPTS+=" -ane-magic 0xef"
 DENISEOPTS+=" -lax-magic 0xee"
 DENISEOPTS+=" -autostart-prg 2"
+#DENISEOPTS+=" -fast-testbench"
 
 # extra options for the different ways tests can be run
 DENISEOPTSEXITCODE+=" -no-gui"
@@ -21,7 +22,7 @@ DENISEREFSYO=35
 
 function denise_check_environment
 {
-    DENISE="$EMUDIR"Denise
+    DENISE="$EMUDIR"denise
     if ! [ -x "$(command -v $DENISE)" ]; then
         echo 'Error: '$DENISE' not found.' >&2
         exit 1
@@ -92,14 +93,43 @@ function denise_get_options
                 exitoptions="-sid-8580"
                 new_sid_enabled=1
             ;;
+        "reu128k")
+                exitoptions="-reu 128"
+                reu_enabled=1
+            ;;
+        "reu256k")
+                exitoptions="-reu 256"
+                reu_enabled=1
+            ;;
         "reu512k")
                 exitoptions="-reu 512"
                 reu_enabled=1
             ;;
-#        "geo512k")
-#                exitoptions="+NEORAMMODE=3"
-#                georam_enabled=1
-#            ;;
+        "reu1m")
+                exitoptions="-reu 1024"
+                reu_enabled=1
+            ;;
+        "reu2m")
+                exitoptions="-reu 2048"
+                reu_enabled=1
+            ;;
+        "reu4m")
+                exitoptions="-reu 4096"
+                reu_enabled=1
+            ;;
+        "reu8m")
+                exitoptions="-reu 8192"
+                reu_enabled=1
+            ;;
+        "reu16m")
+                exitoptions="-reu 16384"
+                reu_enabled=1
+            ;;
+        "geo512k")
+                exitoptions="-georam 512"
+                georam_enabled=1
+            ;;
+            
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then
@@ -110,6 +140,11 @@ function denise_get_options
                 if [ "${1:0:9}" == "mountg64:" ]; then
                     exitoptions=" $2/${1:9}"
                     mounted_g64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
+                if [ "${1:0:9}" == "mountp64:" ]; then
+                    exitoptions=" $2/${1:9}"
+                    mounted_p64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
                 if [ "${1:0:9}" == "mountcrt:" ]; then
