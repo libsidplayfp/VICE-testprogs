@@ -1047,7 +1047,7 @@ x128-r41548:	White
 
 Conclusion:
 -----------
-Waiting on results.
+Depending on the hardware either zero page or stack page takes priority.
 
 -------------------------------------------------------------------------------
 
@@ -1093,4 +1093,4 @@ x128-r41548:	White
 
 Conclusion:
 -----------
-Waiting on results.
+Depending on the hardware either zero page or stack page takes priority.

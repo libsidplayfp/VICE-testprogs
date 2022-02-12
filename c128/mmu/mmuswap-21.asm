@@ -37,29 +37,39 @@ basicHeader=1
 	sta $d509 ; relocate stack page to $30xx in bank 0
 	sta $d507 ; relocate zero page to $30xx in bank 0
 	ldy $3020 ; page $30 in Y
-	ldx #0
 	cpy #$aa
-	beq failed
+	beq passed_zp
 	ldx #1
 	cpy #$55
-	beq failed
+	beq passed_sp
 	ldx #3
 	cpy #$33
 	beq failed
 	ldx #10
 	bne failed
 
-passed:
+passed_zp:
 	lda #$04
 	sta $d506
 	ldx #0	
--	
-	lda ok_msg,x
-	beq +
+loop_zp:
+	lda ok_zp_msg,x
+	beq passed
 	sta $402,x
 	inx
-	jmp -
-+
+	jmp loop_zp
+
+passed_sp:
+	lda #$04
+	sta $d506
+	ldx #0	
+loop_sp:
+	lda ok_sp_msg,x
+	beq passed
+	sta $402,x
+	inx
+	jmp loop_sp
+passed:
 	lda #5
 	sta $d020
 	lda #$00
@@ -85,6 +95,9 @@ failed:
 error_msg:
 	!scr "test failed" 
 	!byte 0
-ok_msg:	
-	!scr "test passed" 
+ok_zp_msg:
+	!scr "test passed, zero page takes priority" 
+	!byte 0
+ok_sp_msg:
+	!scr "test passed, stack page takes priority" 
 	!byte 0
