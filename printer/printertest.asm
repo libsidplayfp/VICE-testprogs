@@ -7,10 +7,10 @@
 
 ; see https://sourceforge.net/p/vice-emu/bugs/597/
 
-; x64 -default +virtualdev -pr4drv mps803 -device4 1 -pr4txtdev 0 -iecdevice4 -pr4output graphics  printertest.prg
+; x64 -default +virtualdev4 -pr4drv mps803 -device4 1 -pr4txtdev 0 -iecdevice4 -pr4output graphics  printertest.prg
 
 ; with device traps enabled:
-; x64 -default -virtualdev -pr4drv mps803 -device4 1 -pr4txtdev 0 -iecdevice4 -pr4output graphics  printertest.prg
+; x64 -default -virtualdev4 -pr4drv mps803 -device4 1 -pr4txtdev 0 -iecdevice4 -pr4output graphics  printertest.prg
 
 
             *=$0801
