@@ -317,6 +317,7 @@ function x128_run_exitcode
         echo $X128 $X128OPTS ${@:5} "-limitcycles" "$3" "$4"
     fi
     $X128 $X128OPTS $X128OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
+#    $X128 $X128OPTS $X128OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4"
     exitcode=$?
 #    echo "exited with: " $exitcode
 }
