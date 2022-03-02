@@ -90,6 +90,8 @@
 #../VIC20/vic6561/test36865-2.prg
 #../VIC20/vic_line0/raster-ntsc.prg
 #../VIC20/vic_vert0/vert0test.prg
+#../VIC20/vic_interlace/interlace_2021-07-18/test7a.prg
+#../VIC20/vic_interlace/interlace_2021-07-18/test8a.prg
 ################################################################################
 # Interrupts
 ################################################################################
