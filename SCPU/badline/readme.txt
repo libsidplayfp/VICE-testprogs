@@ -8,3 +8,5 @@ memory no matter if the VIC screen is disabled (no badlines) or enabled. Since
 it takes a little more than three frames to transfer those bytes, I would
 expect it to take some 3 * 40 * 25=3000 cycles longer with badlines. If I write
 to IO instead, I get $20002 without badlines and $21b5a with badlines. 
+
+tested on C64C/NTSC it shows 00010FA2 (Cenbe) (4002 cycles more)
