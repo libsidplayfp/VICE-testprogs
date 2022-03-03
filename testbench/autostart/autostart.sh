@@ -1,6 +1,8 @@
 #! /bin/bash
 
-source ../Makefile.config
+SCRIPT_DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+
+source $SCRIPT_DIR/../Makefile.config
 
 VERBOSE=0
 
@@ -15,12 +17,12 @@ fi
 
 if [ "$VERBOSE" == "1" ] ; then
     echo "-_"
-    echo ../$VICEDIR/$1 -default $checkopts $PROGPRE-$2.$PROGEXT "# -debugcart -limitcycles $LIMITCYCLES"
+    echo $VICEDIR/$1 -default $checkopts $PROGPRE-$2.$PROGEXT "# -debugcart -limitcycles $LIMITCYCLES"
 fi
 
 echo -ne $1" "$checkopts" # ["$2"] "
 
-../$VICEDIR/$1 -default $checkopts -debugcart -console -warp -limitcycles $LIMITCYCLES $PROGPRE-$2.$PROGEXT 1> /dev/null 2> /dev/null
+$VICEDIR/$1 -default $checkopts -debugcart -console -warp -limitcycles $LIMITCYCLES $SCRIPT_DIR/$PROGPRE-$2.$PROGEXT 1> /dev/null 2> /dev/null
 exitcode=$?
 
 #echo $exitcode
@@ -1894,9 +1896,21 @@ if [ -z "${@:1:1}" ] ; then
 else
 
 if [ "$VICEDIR" == "" ] ; then
-    VICEDIR="../../trunk/vice/src/"
+    VICEDIR=$SCRIPT_DIR/../../../trunk/vice/src/
+    if [ -d "$VICEDIR" ] ; then
+        echo "warning: VICEDIR not defined, using "$VICEDIR
+    else
+        echo "error: VICEDIR not defined and trunk not found."
+        exit -1
+    fi
+else
+    if [ -d "$VICEDIR" ] ; then
+        echo "using VICE dir:" $VICEDIR
+    else
+        echo "error: "$VICEDIR" does not exist."
+        exit -1
+    fi
 fi
-echo "using VICE dir:" $VICEDIR
 
 for thisarg in "$@"
 do
