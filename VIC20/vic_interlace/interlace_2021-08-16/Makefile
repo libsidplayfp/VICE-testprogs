@@ -38,18 +38,18 @@ test.d64: test9003nolace.prg test9004nolace.prg test9003top.prg	test9004top.prg 
 testnolace: test9003nolace.prg test9004nolace.prg
 	@$(RM) "9003-nolace"
 	@$(RM) "9004-nolace"
-	-$(XVIC) -minimized -ntsc -memory all -autostartprgmode 0 -warp +drive8truedrive -virtualdev -debugcart -limitcycles 400000000 test9003nolace.prg
-	-$(XVIC) -minimized -ntsc -memory all -autostartprgmode 0 -warp +drive8truedrive -virtualdev -debugcart -limitcycles 400000000 test9004nolace.prg
+	-$(XVIC) -minimized -ntsc -memory all -autostartprgmode 0 -warp +drive8truedrive -virtualdev8 -debugcart -limitcycles 400000000 test9003nolace.prg
+	-$(XVIC) -minimized -ntsc -memory all -autostartprgmode 0 -warp +drive8truedrive -virtualdev8 -debugcart -limitcycles 400000000 test9004nolace.prg
 testbot: test9003bot.prg test9004bot.prg
 	@$(RM) "9003lacebot"
 	@$(RM) "9004lacebot"
-	-$(XVIC) -minimized -ntsc -memory all -autostartprgmode 0 -warp +drive8truedrive -virtualdev -debugcart -limitcycles 750000000 test9003bot.prg
-	-$(XVIC) -minimized -ntsc -memory all -autostartprgmode 0 -warp +drive8truedrive -virtualdev -debugcart -limitcycles 750000000 test9004bot.prg
+	-$(XVIC) -minimized -ntsc -memory all -autostartprgmode 0 -warp +drive8truedrive -virtualdev8 -debugcart -limitcycles 750000000 test9003bot.prg
+	-$(XVIC) -minimized -ntsc -memory all -autostartprgmode 0 -warp +drive8truedrive -virtualdev8 -debugcart -limitcycles 750000000 test9004bot.prg
 testtop: test9003top.prg test9004top.prg
 	@$(RM) "9003lacetop"
 	@$(RM) "9004lacetop"
-	-$(XVIC) -minimized -ntsc -memory all -autostartprgmode 0 -warp +drive8truedrive -virtualdev -debugcart -limitcycles 700000000 test9003top.prg
-	-$(XVIC) -minimized -ntsc -memory all -autostartprgmode 0 -warp +drive8truedrive -virtualdev -debugcart -limitcycles 700000000 test9004top.prg
+	-$(XVIC) -minimized -ntsc -memory all -autostartprgmode 0 -warp +drive8truedrive -virtualdev8 -debugcart -limitcycles 700000000 test9003top.prg
+	-$(XVIC) -minimized -ntsc -memory all -autostartprgmode 0 -warp +drive8truedrive -virtualdev8 -debugcart -limitcycles 700000000 test9004top.prg
 	
 test: analyze testnolace testbot testtop
 	@$(RM) nolace.txt
