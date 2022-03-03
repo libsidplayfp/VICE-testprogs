@@ -83,6 +83,11 @@ function xvic_get_options
                     mounted_g64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
+                if [ "${1:0:9}" == "mountp64:" ]; then
+                    exitoptions="-8 $2/${1:9}"
+                    mounted_p64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
             ;;
     esac
 }

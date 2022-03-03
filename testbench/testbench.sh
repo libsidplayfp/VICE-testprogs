@@ -311,8 +311,9 @@ function resetflags
     testprogvideosubtype=-1
     new_sid_enabled=-1
     new_cia_enabled=-1
-    
+
     mounted_d64=""
+    mounted_d71=""
     mounted_g64=""
     mounted_p64=""
     mounted_crt=""
@@ -347,6 +348,7 @@ function resultstartlog
 # $4 - test type
 
 #FIXME: p64 is not included
+#FIXME: d71 is not included
 function resultprintline
 {
     echo "$1","$2","$3","$4","$mounted_d64","$mounted_g64","$mounted_crt","${new_cia_enabled}","${new_sid_enabled}","${testprogvideotype}" >> "$RESULT_LOG_NAME"
@@ -364,6 +366,7 @@ function resultstoplog
 # $4 - test type
 
 #FIXME: p64 is not included
+#FIXME: d71 is not included
 function resultfind
 {
 #    echo "find:""$1","$2","$3","$4","$mounted_d64","$mounted_g64","$mounted_crt","${new_cia_enabled}","${new_sid_enabled}","${testprogvideotype}"
