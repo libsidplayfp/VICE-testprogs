@@ -1,5 +1,8 @@
   processor 6502
 
+SPRITE0IDX = 0
+SPRITE1IDX = 1
+
 ; Select the video timing (processor clock cycles per raster line)
 ;CYCLES = 65     ; 6567R8 and above, NTSC-M
 ;CYCLES = 64    ; 6567R5 6A, NTSC-M
@@ -64,15 +67,16 @@ skipinit:
   lda #$7f
   sta $dc0d     ; disable timer interrupts
   sta $dd0d
+
+  jsr setupsprites
+
   ldx #1
   stx $d01a     ; enable raster interrupt
   lda $dc0d     ; acknowledge CIA interrupts
   lsr $d019     ; and video interrupts
   cli
 
-  jsr setupsprites
-
-  rts
+  jmp *
 
 deinstall:
   sei           ; disable interrupts
@@ -175,54 +179,68 @@ irq2:
   stx $d019     ; acknowledge the raster interrupt
 
 
+numtests = 39
+  
 ; start action here
 
-  lda $d01f
-  ldx #$0f
-startloop:
-  dex
-  bne startloop
-  
-  lda $d01f
-  inc $d021
-  dec $d021
-result:
-  sta $0400
-  lda result+1
-  cmp #$06
-  beq endirq
+    lda $d01f     ; clear sprite vs background
 
-  inc $d000
-  inc result+1
-  
-  jmp endirq
+    ; wait a bit
+    ldx #$0f
+startloop:
+    dex
+    bne startloop
+    nop
+
+    lda $d01f     ; read sprite vs background collision
+
+    ; show raster to see its stable
+    inc $d021
+    dec $d021
+
+result:
+    sta $0450
+
+    lda result+1
+    cmp #numtests+$50
+    beq endirq
+
+    inc $d000 + SPRITE0IDX * 2
+    inc result+1
+
+    jmp endirq
 
 endirq:
-  tax
-  lda refpal,x
-  sta $0428,x
+    sec
+    sbc #$50
+    tax
+    lda refpal,x
+    sta $0428,x
 
-  lda #5
-  sta $d800,x
-  sta $d828,x
+    lda #5
+    sta $d850,x
+    sta $d828,x
 
-  lda $0400,x
-  cmp $0428,x
-  beq nofail
-  lda #10
-  sta $d800,x
-  sta $d828,x
-  inc fails
+    lda $0450,x
+    cmp $0428,x
+    beq nofail
+    lda #10
+    sta $d850,x
+    sta $d828,x
+    inc fails
 nofail:
 
-  cpx #6
-  bne notlast
-  ldy #5
-  lda fails
-  beq allok
-  ldy #10
+    cpx #numtests
+    bne notlast
+
+;    jsr deinstall
+
+    ldy #5
+    lda fails
+    beq allok
+    ldy #10
 allok:
-  sty $d020
+    sty $d020
 
     lda $d020
     and #$0f
@@ -235,69 +253,109 @@ fail2:
     stx $d7ff
 
 notlast:
-  jmp $ea81     ; return to the auxiliary raster interrupt
+    jmp $ea81     ; return to the auxiliary raster interrupt
 
 restore:        ; disable the Restore key
-  lda cnmi
-  ldy cnmi+1
-  pha
-  lda #<nmi     ; Set the NMI vector
-  sta cnmi
-  lda #>nmi
-  sta cnmi+1
-  ldx #$81
-  stx $dd0d     ; Enable CIA 2 Timer A interrupt
-  ldx #0
-  stx $dd05
-  inx
-  stx $dd04     ; Prepare Timer A to count from 1 to 0.
-  ldx #$dd
-  stx $dd0e     ; Cause an interrupt.
+    lda cnmi
+    ldy cnmi+1
+    pha
+    lda #<nmi     ; Set the NMI vector
+    sta cnmi
+    lda #>nmi
+    sta cnmi+1
+    ldx #$81
+    stx $dd0d     ; Enable CIA 2 Timer A interrupt
+    ldx #0
+    stx $dd05
+    inx
+    stx $dd04     ; Prepare Timer A to count from 1 to 0.
+    ldx #$dd
+    stx $dd0e     ; Cause an interrupt.
 nmi = * + 1
-  lda #$40      ; RTI placeholder
-  pla
-  sta cnmi
-  sty cnmi+1    ; restore original NMI vector (although it won't be used)
-  rts
+    lda #$40      ; RTI placeholder
+    pla
+    sta cnmi
+    sty cnmi+1    ; restore original NMI vector (although it won't be used)
+    rts
 
 setupsprites:
-  lda #$34
-  sta $d001
-  sta $d003
+    ; y = $34
+    lda #$34
+    sta $d001 + SPRITE0IDX * 2
+;    sta $d001 + SPRITE1IDX * 2
+    ; x = $56
+    lda #$56
+    sta $d000 + SPRITE0IDX * 2
+;    sta $d000 + SPRITE1IDX * 2
+    ; enable 2 sprites
+;    lda #(1 << SPRITE0IDX) + (1 << SPRITE1IDX)
+    lda #(1 << SPRITE0IDX)
+    sta $d015
 
-  lda #$56
-  sta $d000
-  sta $d002
+    ldx #$00
+loopscr:
+    lda #$20
+    sta $0400,x
+    sta $0500,x
+    sta $0600,x
+    sta $0700,x
+    lda #$01
+    sta $d800,x
+    sta $d900,x
+    sta $da00,x
+    sta $db00,x
+    dex
+    bne loopscr
 
-  lda #$03
-  sta $d015
+    lda #0
+    sta $d020
+    sta $d021
+    
+    lda #1
+    sta $d027+SPRITE0IDX
+    lda #3
+    sta $d027+SPRITE1IDX
 
-  lda #$3f
-  sta $07f8
-  sta $07f9
+    lda #$3f
+    sta $07f8 + SPRITE0IDX
+;    sta $07f8 + SPRITE1IDX
 
-  lda #$00
-  ldx #$3f
+    lda #$00
+    ldx #$3f
 loopspritepattern:
-  sta $0fc0,x
-  dex
-  bne loopspritepattern
-  lda #$80
-  sta $0fc0
+    sta $0fc0,x
+    dex
+    bne loopspritepattern
+    lda #$80
+    sta $0fc0
 
-  ldx #$08
+    ldx #79
+loopgfx2:
+    lda #"-"
+    sta $0428,x
+    dex
+    bpl loopgfx2
+
+    ldx #6
 loopgfx:
-  lda #$a0
-  sta $0406,x
-  dex
-  bne loopgfx 
+    lda #$a0
+    sta $0406,x
+    dex
+    bpl loopgfx 
 
-  lda #0
-  sta fails
-  rts
+    lda #0
+    sta fails
+    rts
 
 fails:
-  .byte 0
+    .byte 0
 
 refpal:
-  .byte 3,3,2,2,2,2,2
+#repeat 2
+    .byte (1 << SPRITE0IDX)
+#repend
+#repeat 40-2
+    .byte 0
+#repend
+
+
