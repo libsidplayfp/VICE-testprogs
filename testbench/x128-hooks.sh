@@ -151,7 +151,7 @@ function x128_get_options
         *)
                 exitoptions=""
                 if [ "${1:0:9}" == "mountd64:" ]; then
-                    exitoptions="-8 $2/${1:9}"
+                    exitoptions="-drive8type 1541 -8 $2/${1:9}"
                     mounted_d64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
