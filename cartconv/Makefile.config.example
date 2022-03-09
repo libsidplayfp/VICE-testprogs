@@ -1,0 +1,15 @@
+
+# edit the pathes accordingly and copy this file to Makefile.config
+
+# path to the cartconv binary, leave empty to use the binary from trunk IF you
+# checked out the test repo and trunk into the same parent dir AND build in tree.
+#CARTCONV=cartconv
+
+# path to C64 .crt files that can be used for testing
+C64CARTS=
+# path to VIC20 .crt files that can be used for testing
+VIC20CARTS=
+# path to PLUS4 .crt files that can be used for testing
+PLUS4CARTS=
+# path to C128 .crt files that can be used for testing
+C128CARTS=

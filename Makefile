@@ -9,7 +9,7 @@ help:
 #	@echo "buildtests  build test programs"
 	@echo "petcat      test 'petcat'"
 #	@echo "c1541       test 'c1541'"
-#	@echo "cartconv    test 'cartconv'"
+	@echo "cartconv    test 'cartconv'"
 	@echo "vice        test the emulators (not the emulation)"
 	@echo "testbench   run the emulation testbench"
 	@echo "runtests    do all of the above"
@@ -28,7 +28,6 @@ petcat:
 c1541:
 	@$(MAKE) -C c1541
 
-# TODO
 cartconv:
 	@$(MAKE) -C cartconv
 
@@ -41,4 +40,4 @@ testbench:
 	
 .PHONY: runtests
 
-runtests: petcat vice testbench
+runtests: petcat cartconv vice testbench
