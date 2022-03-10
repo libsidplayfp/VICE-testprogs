@@ -13,43 +13,49 @@
 start   .section code
         sei
 
+        ; setup userport
+        lda #$ff
+        sta $dd01   ; all pins inactive
+        sta $dd03   ; all output
+
         ; create pattern
+        ldy #201
+lp
         ldx #63
 -       dex
         txa
-        sta tmp,x
+off     sta tmp,x
         bne -
         stx $3fff
+
+        lda off+1
+        clc
+        adc #63
+        sta off+1
+        bcc +
+        inc off+2
++       dey
+        bne lp
 
         ; transfer pattern to REU
         .section data
 reu1    .byte %10010000
         .word tmp
-off     .long 0
-        .word 63
+        .long 0
+        .word 63*201
         .byte 0
         .byte 0
         .send data
 
-        ldy #201
-lp      ldx #10
--       lda reu1-1,x
-        sta $df00,x
+        ldx #9
+-       lda reu1,x
+        sta $df01,x
         dex
-        bne -
-
-        lda off
-        clc
-        adc #63
-        sta off
-        bcc +
-        inc off+1
-+       dey
-        bne lp
+        bpl -
 
         ; setup vram
         ldx #0
-        lda #$f0
+        lda #$20
 -       sta $400+range(4)*256,x
         inx
         bne -
@@ -79,15 +85,25 @@ lp      ldx #10
         bne -
         .endif
 
-        ; main loop
+;------------------------------------------------------------------------------
+; main loop
+;------------------------------------------------------------------------------
 
 loop    lda #$13
         sta $d011
+
         ; wait for start of frame
         lda $d011
         bpl *-3
         lda $d011
         bmi *-3
+
+        ; pulse userport pins
+        ldx #$00
+        lda #$ff
+        stx $dc01   ; lo
+        sta $dc01   ; hi
+
         ; stabilize
         .page
         ldy #48
@@ -123,32 +139,59 @@ s       dex
         sta $d011
 
         ; transfer the pattern from REU to $d020
+.if SWAP == 0
         .section data
 reu2    .byte %10010001
         .word $d020
         .long 0
         .word 63*176+1
         .byte 0
-        .byte 128
+        .byte $80
         .send data
-
-        ldx #10
--       lda reu2-1,x
-        sta $df00,x
+.else
+        .section data
+reu2    .byte %10010010
+        .word $d020
+        .long 0
+        .word 63*88+1
+        .byte 0
+        .byte $80
+        .send data
+.endif
+        ldx #9
+-       lda reu2,x
+        sta $df01,x
         dex
-        bne -
+        bpl -
 
         dec framecount
         bne +
+-       lda $d011
+        bpl -
+-       lda $d011
+        bmi -
         lda #0
         sta $d7ff
 +
+.if SWAP == 1
+        lda #0
+        sta $d020
+        sta $d021
+        ; transfer pattern to REU
+        ldx #9
+-       lda reu1,x
+        sta $df01,x
+        dex
+        bpl -
+.endif
         jmp loop
 
 framecount: .byte 5
 
+        .align 256  ; to make sure data section start at next page
+
         .section bss
-tmp     .fill 63
+tmp     .fill 63*201
         .send bss
 
         .send code

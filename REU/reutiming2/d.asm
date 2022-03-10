@@ -13,43 +13,49 @@
 start   .section code
         sei
 
+        ; setup userport
+        lda #$ff
+        sta $dd01   ; all pins inactive
+        sta $dd03   ; all output
+
         ; create pattern
+        ldy #201
+lp
         ldx #63
 -       dex
         txa
-        sta tmp,x
+off     sta tmp,x
         bne -
         stx $3fff
+
+        lda off+1
+        clc
+        adc #63
+        sta off+1
+        bcc +
+        inc off+2
++       dey
+        bne lp
 
         ; transfer pattern to REU
         .section data
 reu1    .byte %10010000
         .word tmp
-off     .long 0
-        .word 63
+        .long 0
+        .word 63*201
         .byte 0
         .byte 0
         .send data
 
-        ldy #201
-lp      ldx #10
--       lda reu1-1,x
-        sta $df00,x
+        ldx #9
+-       lda reu1,x
+        sta $df01,x
         dex
-        bne -
-
-        lda off
-        clc
-        adc #63
-        sta off
-        bcc +
-        inc off+1
-+       dey
-        bne lp
+        bpl -
 
         ; setup vram
         ldx #0
-        lda #$f0
+        lda #$20
 -       sta $400+range(4)*256,x
         inx
         bne -
@@ -67,15 +73,25 @@ lp      ldx #10
         lda #$38
         sta $d001+(7*2) ; y-pos
 
-        ; main loop
+;------------------------------------------------------------------------------
+; main loop
+;------------------------------------------------------------------------------
 
 loop    lda #$13
         sta $d011
+
         ; wait for start of frame
         lda $d011
         bpl *-3
         lda $d011
         bmi *-3
+
+        ; pulse userport pins
+        ldx #$00
+        lda #$ff
+        stx $dc01   ; lo
+        sta $dc01   ; hi
+
         ; stabilize
         .page
         ldy #48
@@ -119,7 +135,11 @@ s       dex
 lp2
         ; transfer the pattern from REU to $d020
         .section data
+.if SWAP == 0
 reu2    .byte %10010001
+.else
+reu2    .byte %10010010
+.endif
         .word $d020
         .long 0
         .word TRANSFERBYTES
@@ -127,36 +147,56 @@ reu2    .byte %10010001
         .byte 128
         .send data
 
-        ldx #10
--       lda reu2-1,x
-        sta $df00,x
+        ldx #9
+-       lda reu2,x
+        sta $df01,x
         dex
-        bne -
+        bpl -
 
+.if SWAP == 0
         ldx #52
 -       dex
         bne -
 
         bit $ea
-        
-;        lda #5
-;        jsr docycles
-        
+.else
+        ldx #51
+-       dex
+        bne -
+.if TRANSFERBYTES == 6
+        bit $ea
+        nop
+.else
+        nop
+        nop
+        nop
+.endif
+.endif
         dey
         bne lp2
-        
+
         dec framecount
         bne +
         lda #0
         sta $d7ff
 +
+
+.if SWAP == 1
+        ldx #9
+-       lda reu1,x
+        sta $df01,x
+        dex
+        bpl -
+.endif
         jmp loop
 
 
 framecount: .byte 5
 
+        .align 256  ; to make sure data section start at next page
+
         .section bss
-tmp     .fill 63
+tmp     .fill 63*201
         .send bss
 
         .send code
