@@ -16,6 +16,8 @@
 ../c128/2mhzVIC,2mhz-vic-extended.prg,screenshot,11300000,vicii-pal,vicii-screenshot
 ../c128/2mhzVIC,timing-change0.prg,screenshot,11300000,vicii-pal,vicii-screenshot
 ../c128/2mhzVIC,timing-change1.prg,interactive,0
+../c128/burstmode/,burstcheck0.prg,exitcode,8000000,mountd64:burstcheck.d64
+../c128/burstmode/,burstcheck1.prg,exitcode,8000000,mountd71:burstcheck.d71
 ../c128/d030tester/,d030tester2.1.prg,interactive,0
 ../c128/d030tester/,d030-2mhzdec.prg,screenshot,6200000,vicii-pal,vicii-screenshot
 ../c128/d030tester/,d030-2mhz_hb_80.prg,screenshot,6200000,vicii-pal,vicii-screenshot
