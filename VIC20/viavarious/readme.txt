@@ -32,7 +32,7 @@ VIA4a:  works      Timer A (toggle timer A timed/continous irq)
 VIA5:   works      Timer A / B IRQ Flags
 VIA5a:  works      Timer A / B IRQ Flags
 
-VIA9:   fail (abdefghjkl)  Timer B (toggle timer B counts PB6/Clock)
+VIA9:   works      Timer B (toggle timer B counts PB6/Clock)
 
 VIA10:  fail (dh)  Port B (output timer at PB7 and read back PB)
 VIA11:  fail (dh)  Port B (output timer at PB7 and read back PB)
