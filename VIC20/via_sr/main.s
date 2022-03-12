@@ -158,13 +158,17 @@ dotest:
 
             rts
 resetvia:
-            lda #0
             ldx #$0f
 .lp1
+            lda resetvalues,x
             sta viabase,x
             dex
             bpl .lp1
             rts
+
+resetvalues:
+            !byte 0,0,0,0,  0,0,0,0
+            !byte 0,0,0,0,$ee,0,0,0
 
 initscreen:
                 ldx #0
