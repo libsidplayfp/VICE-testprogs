@@ -111,6 +111,17 @@
 ../VDC/vdctiming/,vdc-explorer.prg,interactive,0
 ../VDC/vdclptest/,vdclptest.prg,interactive,0
 ################################################################################
+# Drive
+################################################################################
+../drive/scanner/,scanner1571-35.prg,exitcode,30000000,mountd71:scan35.d71
+../drive/scanner/,scanner1571-35e.prg,exitcode,30000000,mountd71:scan35err.d71
+../drive/scanner/,scanner1571-35.prg,exitcode,30000000,mountg71:scan35.g71
+#../drive/scanner/,scanner1571-35e.prg,exitcode,30000000,mountg71:scan35err.g71
+#../drive/scanner/,scanner1571-40.prg,exitcode,30000000,mountd71:scan40.d71
+#../drive/scanner/,scanner1571-40e.prg,exitcode,30000000,mountd71:scan40err.d71
+#../drive/scanner/,scanner1571-42.prg,exitcode,30000000,mountd71:scan42.d71
+#../drive/scanner/,scanner1571-42e.prg,exitcode,30000000,mountd71:scan42err.d71
+################################################################################
 # REU
 ################################################################################
 ################################################################################
@@ -134,7 +145,7 @@
 ../userportrtc/,testrtc-c128.prg,interactive,0
 ../memory-expansions/,c128-efnram-emd.prg,exitcode,48000000,efnram
 ../memory-expansions/,c128-ifnram-emd.prg,exitcode,48000000,ifnram
-../memory-expansions/,c128-georam-emd.prg,exitcode,300000000,geo512k
+../memory-expansions/,c128-georam-emd.prg,exitcode,600000000,geo512k
 ../memory-expansions/,c128-ram-emd.prg,exitcode,200000000
 ../memory-expansions/,c128-ram2-emd.prg,exitcode,280000000,c128fullbanks
 ../memory-expansions/,c128-ramcart-emd.prg,exitcode,160000000,ramcart128k
