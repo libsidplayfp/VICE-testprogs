@@ -10,6 +10,7 @@ XCBM5X0OPTS+=" -warp"
 XCBM5X0OPTS+=" -debugcart"
 XCBM5X0OPTS+=" -jamaction 1"
 #XCBM5X0OPTS+=" -console"
+XCBM5X0OPTS+=" -drive8extend 0"
 
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started

@@ -10,6 +10,7 @@ XCBM2OPTS+=" -warp"
 XCBM2OPTS+=" -debugcart"
 XCBM2OPTS+=" -jamaction 1"
 #XCBM2OPTS+=" -console"
+XCBM2OPTS+=" -drive8extend 0"
 
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started

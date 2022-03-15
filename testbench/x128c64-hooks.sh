@@ -9,6 +9,7 @@ X128C64OPTS+=" -warp"
 X128C64OPTS+=" -debugcart"
 X128C64OPTS+=" -jamaction 1"
 #X128C64OPTS+=" -console"
+X128C64OPTS+=" -drive8extend 0"
 
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started

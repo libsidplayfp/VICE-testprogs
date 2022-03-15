@@ -7,6 +7,7 @@ XSCPU64OPTS+=" -warp"
 #XSCPU64OPTS+=" -console"
 XSCPU64OPTS+=" -debugcart"
 XSCPU64OPTS+=" -jamaction 1"
+XSCPU64OPTS+=" -drive8extend 0"
 
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started
