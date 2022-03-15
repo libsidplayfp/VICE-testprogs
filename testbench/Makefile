@@ -2,15 +2,15 @@
 X64SCHEAD=r41951
 X64HEAD=r39405
 X64DTVHEAD=r39405
-VSIDHEAD=r39405
+VSIDHEAD=r41951
 X128HEAD=r41951
 X128C64HEAD=r39405
-XPETHEAD=r39405
-XSCPU64HEAD=r39405
+XPETHEAD=r41951
+XSCPU64HEAD=r41951
 XVICHEAD=r41951
-XPLUS4HEAD=r39433
+XPLUS4HEAD=r41951
 XCBM2HEAD=r39433
-XCBM5X0HEAD=r39433
+XCBM5X0HEAD=r41951
 
 DENISELAST=20201223
 DENISELASTSTRING="git 23.12.2020"
@@ -88,7 +88,7 @@ revertfiles:
 	-make -C ../drive/rpm/ clean all --no-print-dir --silent > /dev/null
 
 selftest:
-	make -s -C selftest
+	make -s -C selftest --no-print-dir --silent
 
 cmpscreens: cmpscreens.c
 	$(CC) -W -Wall -O3 -o cmpscreens cmpscreens.c -lm
@@ -956,6 +956,7 @@ resultsxcbm5x0: maketable
 		--results results/xcbm5x0-r35990-result.txt "xcbm5x0 r35990" \
 		--results results/xcbm5x0-r36700-result.txt "xcbm5x0 r36700" \
 		--results results/xcbm5x0-r37109-result.txt "xcbm5x0 r37109" \
+		--results results/xcbm5x0-r39433-result.txt "xcbm5x0 r39433" \
 		--results results/xcbm5x0-$(XCBM5X0HEAD)-result.txt "xcbm5x0 "$(XCBM5X0HEAD)"" \
 		\
 		> results/xcbm5x0.html
@@ -969,6 +970,7 @@ resultsx64dtv: maketable
 		--results results/x64dtv-r36700-result.txt "x64dtv r36700" \
 		--results results/x64dtv-r37109-result.txt "x64dtv r37109" \
 		--results results/x64dtv-r38998-result.txt "x64dtv r38998" \
+		--results results/x64dtv-r39433-result.txt "x64dtv r39433" \
 		--results results/x64dtv-$(X64DTVHEAD)-result.txt "x64dtv "$(X64DTVHEAD)"" \
 		\
 		> results/x64dtv.html
@@ -981,6 +983,7 @@ resultsxpet: maketable
 		--results results/xpet-r35990-result.txt "xpet r35990" \
 		--results results/xpet-r36700-result.txt "xpet r36700" \
 		--results results/xpet-r37109-result.txt "xpet r37109" \
+		--results results/xpet-r39405-result.txt "xpet r39405" \
 		--results results/xpet-$(XPETHEAD)-result.txt "xpet "$(XPETHEAD)"" \
 		\
 		> results/xpet.html
@@ -993,6 +996,7 @@ resultsxplus4: maketable
 		--results results/xplus4-r35990-result.txt "xplus4 r35990" \
 		--results results/xplus4-r36700-result.txt "xplus4 r36700" \
 		--results results/xplus4-r37109-result.txt "xplus4 r37109" \
+		--results results/xplus4-r39433-result.txt "xplus4 r39433" \
 		--results results/xplus4-$(XPLUS4HEAD)-result.txt "xplus4 "$(XPLUS4HEAD)"" \
 		\
 		> results/xplus4.html
@@ -1005,6 +1009,7 @@ resultsxscpu64: maketable
 		--results results/xscpu64-r35990-result.txt "xscpu64 r35990" \
 		--results results/xscpu64-r36700-result.txt "xscpu64 r36700" \
 		--results results/xscpu64-r37109-result.txt "xscpu64 r37109" \
+		--results results/xscpu64-r39405-result.txt "xscpu64 r39405" \
 		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)"" \
 		\
 		> results/xscpu64.html
@@ -1029,6 +1034,7 @@ resultsvsid: maketable
 		--results results/vsid-r35990-result.txt "vsid r35990" \
 		--results results/vsid-r36700-result.txt "vsid r36700" \
 		--results results/vsid-r37109-result.txt "vsid r37109" \
+		--results results/vsid-r39405-result.txt "vsid r39405" \
 		--results results/vsid-$(VSIDHEAD)-result.txt "vsid "$(VSIDHEAD)"" \
 		\
 		> results/vsid.html
