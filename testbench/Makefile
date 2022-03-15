@@ -7,7 +7,7 @@ X128HEAD=r41951
 X128C64HEAD=r39405
 XPETHEAD=r39405
 XSCPU64HEAD=r39405
-XVICHEAD=r39405
+XVICHEAD=r41951
 XPLUS4HEAD=r39433
 XCBM2HEAD=r39433
 XCBM5X0HEAD=r39433
@@ -1017,6 +1017,7 @@ resultsxvic: maketable
 		--results results/xvic-r35990-result.txt "xvic r35990" \
 		--results results/xvic-r36700-result.txt "xvic r36700" \
 		--results results/xvic-r37109-result.txt "xvic r37109" \
+		--results results/xvic-r39405-result.txt "xvic r39405" \
 		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		\
 		> results/xvic.html
