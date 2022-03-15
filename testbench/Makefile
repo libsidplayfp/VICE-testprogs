@@ -9,7 +9,7 @@ XPETHEAD=r41951
 XSCPU64HEAD=r41951
 XVICHEAD=r41951
 XPLUS4HEAD=r41951
-XCBM2HEAD=r39433
+XCBM2HEAD=r41951
 XCBM5X0HEAD=r41951
 
 DENISELAST=20201223
@@ -944,6 +944,7 @@ resultsxcbm2: maketable
 		--results results/xcbm2-r35990-result.txt "xcbm2 r35990" \
 		--results results/xcbm2-r36700-result.txt "xcbm2 r36700" \
 		--results results/xcbm2-r37109-result.txt "xcbm2 r37109" \
+		--results results/xcbm2-r39433-result.txt "xcbm2 r39433" \
 		--results results/xcbm2-$(XCBM2HEAD)-result.txt "xcbm2 "$(XCBM2HEAD)"" \
 		\
 		> results/xcbm2.html
