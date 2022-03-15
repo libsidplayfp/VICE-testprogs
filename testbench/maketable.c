@@ -51,8 +51,8 @@ char *headline[MAXLISTS];
 #define TYPE_NA             -1
 
 #define MEDIA_NONE  -1
-#define MEDIA_D64   0
-#define MEDIA_G64   1
+#define MEDIA_D64   0   /* also d71/d81 */
+#define MEDIA_G64   1   /* also g71 */
 #define MEDIA_CRT   2
 
 #define CIATYPE_UNSET   -1
@@ -278,10 +278,10 @@ int readlist(TEST *list, char *name, int isresultfile)
                     list->videotype = VIDEOTYPE_DREAN;
                 }
 
-                if (!strncmp(opt[i], "mountd64:", 9)) {
+                if (!strncmp(opt[i], "mountd64:", 9) || !strncmp(opt[i], "mountd71:", 9)) {
                     strcpy(list->media, &opt[i][9]);
                     list->mediatype = MEDIA_D64;
-                } else if (!strncmp(opt[i], "mountg64:", 9)) {
+                } else if (!strncmp(opt[i], "mountg64:", 9) || !strncmp(opt[i], "mountg71:", 9)) {
                     strcpy(list->media, &opt[i][9]);
                     list->mediatype = MEDIA_G64;
                 } else if (!strncmp(opt[i], "mountcrt:", 9)) {
@@ -934,6 +934,15 @@ void usage(char *name)
     );
 }
 
+void checkarg(int i, int argc, char *arg0, char *arg)
+{
+    if ((i+1) == argc) {
+        fprintf(stderr, "error: argument missing after '%s'\n\n", arg);
+        usage(arg0);
+        exit(EXIT_FAILURE);
+    }
+}
+
 int main(int argc, char *argv[])
 {
     int i, ii;
@@ -952,33 +961,41 @@ int main(int argc, char *argv[])
             format = FORMAT_WIKI;
         } else if(!strcmp(argv[i], "--ranking")) {
             ranking = 1;
+            checkarg(i, argc, argv[0], argv[i]);
             i++;
             rankingpercentagestring = argv[i];
         } else if(!strcmp(argv[i], "--help")) {
             usage(argv[0]);
             exit(EXIT_SUCCESS);
         } else if(!strcmp(argv[i], "--firstcolisref")) {
+            checkarg(i, argc, argv[0], argv[i]);
             i++;
             firstcolisref = 1;
             referrorstring = argv[i];
         } else if(!strcmp(argv[i], "--percentages")) {
+            checkarg(i, argc, argv[0], argv[i]);
             i++;
             firstrowispercent = 1;
             percentagestring = argv[i];
         } else if(!strcmp(argv[i], "--warnvicfetch")) {
+            checkarg(i, argc, argv[0], argv[i]);
             i++;
             warnvicfetch = 1;
             vicfetchstring = argv[i];
         } else if(!strcmp(argv[i], "--warnvicefail")) {
+            checkarg(i, argc, argv[0], argv[i]);
             i++;
             warnvicefail = 1;
             vicefailstring = argv[i];
         } else if(!strcmp(argv[i], "--list")) {
+            checkarg(i, argc, argv[0], argv[i]);
             i++;
             refname = argv[i];
         } else if(!strcmp(argv[i], "--results")) {
+            checkarg(i, argc, argv[0], argv[i]);
             i++;
             infilename[numfiles] = argv[i];
+            checkarg(i, argc, argv[0], argv[i]);
             i++;
             headline[numfiles] = argv[i];
             numfiles++;

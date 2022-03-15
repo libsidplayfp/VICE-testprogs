@@ -313,7 +313,6 @@ function resetflags
     new_cia_enabled=-1
 
     mounted_d64=""
-    mounted_d71=""
     mounted_g64=""
     mounted_p64=""
     mounted_crt=""
@@ -327,8 +326,8 @@ function resetflags
 # 2) executable name of the test
 # 3) exit status (0:ok, $ff:error, 1:timeout, noref)
 # 4) type of the test (exitstatus,screenshot,interactive,analyzer)
-# 5) mounted d64 (if any)
-# 6) mounted g64 (if any)
+# 5) mounted d64/d71/d81 etc (if any)
+# 6) mounted g64/g71 etc (if any)
 # 7) mounted crt (if any)
 # 8) CIA type flag
 # 9) SID type flag
@@ -348,7 +347,6 @@ function resultstartlog
 # $4 - test type
 
 #FIXME: p64 is not included
-#FIXME: d71 is not included
 function resultprintline
 {
     echo "$1","$2","$3","$4","$mounted_d64","$mounted_g64","$mounted_crt","${new_cia_enabled}","${new_sid_enabled}","${testprogvideotype}" >> "$RESULT_LOG_NAME"
@@ -366,7 +364,6 @@ function resultstoplog
 # $4 - test type
 
 #FIXME: p64 is not included
-#FIXME: d71 is not included
 function resultfind
 {
 #    echo "find:""$1","$2","$3","$4","$mounted_d64","$mounted_g64","$mounted_crt","${new_cia_enabled}","${new_sid_enabled}","${testprogvideotype}"

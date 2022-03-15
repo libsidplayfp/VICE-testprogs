@@ -157,11 +157,16 @@ function x128_get_options
                 fi
                 if [ "${1:0:9}" == "mountd71:" ]; then
                     exitoptions="-drive8type 1571 -8 $2/${1:9}"
-                    mounted_d71="${1:9}"
+                    mounted_d64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
                 if [ "${1:0:9}" == "mountg64:" ]; then
-                    exitoptions="-8 $2/${1:9}"
+                    exitoptions="-drive8type 1541 -8 $2/${1:9}"
+                    mounted_g64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
+                if [ "${1:0:9}" == "mountg71:" ]; then
+                    exitoptions="-drive8type 1571 -8 $2/${1:9}"
                     mounted_g64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
