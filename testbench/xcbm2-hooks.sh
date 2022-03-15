@@ -1,8 +1,8 @@
 
 XCBM2OPTS+=" -default"
 XCBM2OPTS+=" -model 610"
-XCBM2OPTS+=" -virtualdev"
-XCBM2OPTS+=" +truedrive"
+XCBM2OPTS+=" -virtualdev8"
+XCBM2OPTS+=" +drive8truedrive"
 #XCBM2OPTS+=" -VICIIfilter 0"
 #XCBM2OPTS+=" -VICIIextpal"
 #XCBM2OPTS+=" -VICIIpalette pepto-pal.vpl"

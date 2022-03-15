@@ -1,8 +1,8 @@
 
 XCBM5X0OPTS+=" -default"
 XCBM5X0OPTS+=" -model 510"
-XCBM2OPTS+=" -virtualdev"
-XCBM2OPTS+=" +truedrive"
+XCBM5X0OPTS+=" -virtualdev8"
+XCBM5X0OPTS+=" +drive8truedrive"
 #XCBM5X0OPTS+=" -VICIIfilter 0"
 #XCBM5X0OPTS+=" -VICIIextpal"
 #XCBM5X0OPTS+=" -VICIIpalette pepto-pal.vpl"
