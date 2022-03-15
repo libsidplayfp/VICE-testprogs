@@ -3,7 +3,7 @@ X64SCHEAD=r39405
 X64HEAD=r39405
 X64DTVHEAD=r39405
 VSIDHEAD=r39405
-X128HEAD=r39405
+X128HEAD=r41951
 X128C64HEAD=r39405
 XPETHEAD=r39405
 XSCPU64HEAD=r39405
@@ -908,6 +908,7 @@ resultsx128: maketable
 		--results results/x128-r36700-result.txt "x128 r36700" \
 		--results results/x128-r37109-result.txt "x128 r37109" \
 		--results results/x128-r37166-result.txt "x128 r37166" \
+		--results results/x128-r39405-result.txt "x128 r39405" \
 		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
 		\
 		> results/x128.html
