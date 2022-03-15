@@ -1,8 +1,19 @@
+
+!ifdef C128 {
+    videoram = $0400
+    colorram = $d800
+        *= $1c01
+        !byte $0c,$1c,$0b,$00,$9e
+        !byte $37,$31,$38,$34
+        *= $1c10
+} else {
+    videoram = $0400
+    colorram = $d800
         *= $0801
         !byte $0c,$08,$0b,$00,$9e
         !byte $32,$30,$36,$34
         *= $0810
-
+}
         ldx #1
 l1:     lda $d012
 l2:     cmp $d012
@@ -236,15 +247,15 @@ clrscr:
         stx $d021
 clp:
         lda #$20
-        sta $0400,x
-        sta $0500,x
-        sta $0600,x
-        sta $0700,x
+        sta videoram+$0000,x
+        sta videoram+$0100,x
+        sta videoram+$0200,x
+        sta videoram+$0300,x
         lda #1
-        sta $d800,x
-        sta $d900,x
-        sta $da00,x
-        sta $db00,x
+        sta colorram+$0000,x
+        sta colorram+$0100,x
+        sta colorram+$0200,x
+        sta colorram+$0300,x
         inx
         bne clp
         rts

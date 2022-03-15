@@ -103,6 +103,8 @@ static const unsigned int trkoffs[1+40] =
 
 unsigned char d64buffer[D64MAXSIZE];
 unsigned char d64errors[D64MAXSECTORS];
+unsigned char d71buffer[D64MAXSIZE];
+unsigned char d71errors[D64MAXSECTORS];
 
 #define GCRMAXTRACKLEN 0x2000
 
@@ -111,9 +113,9 @@ unsigned char d64errors[D64MAXSECTORS];
  * GCR buffer contain all physical half tracks, including 0.0 / 0.5 which might
  * not be accessable.
  */
-unsigned char gcrbuffer[GCRMAXHALFTRACKS][GCRMAXTRACKLEN];
-unsigned char gcrspdbuffer[GCRMAXHALFTRACKS][4];
-unsigned int gcrlenbuffer[GCRMAXHALFTRACKS];
+unsigned char gcrbuffer[2][GCRMAXHALFTRACKS][GCRMAXTRACKLEN];
+unsigned char gcrspdbuffer[2][GCRMAXHALFTRACKS][4];
+unsigned int gcrlenbuffer[2][GCRMAXHALFTRACKS];
 
 /******************************************************************************/
 
@@ -273,8 +275,13 @@ static unsigned char hdr[8] = {
     8, 0, 0, 0, 0, 0, 15, 15
 };
 
-static void encodeheader(int trk, int sec, int diskid0, int diskid1)
+static void encodeheader(int trk, int sec, int diskid0, int diskid1, int head)
 {
+    if (head == 1) {
+        // second side of 1571
+        trk += 35;
+    }
+    
     memset (gcrout, 0xff, 5); gcrout += 5; /* sync */
     hdr[5] = diskid1;
     hdr[4] = diskid0;
@@ -289,7 +296,7 @@ static void encodeheader(int trk, int sec, int diskid0, int diskid1)
 }
 
 /* encode one track to GCR */
-void encodetrack(unsigned char *in, int trk, int diskid0, int diskid1)
+void encodetrack(unsigned char *in, int trk, int diskid0, int diskid1, int head)
 {
 int thissec;
 int zone, nsec;
@@ -304,7 +311,7 @@ unsigned int rest;
     gap2val = gap2[zone];
 
     encroffs = in;
-    gcrout = &gcrbuffer[trk * 2][0];
+    gcrout = &gcrbuffer[head][trk * 2][0];
 
     for (thissec = 0; thissec < nsec; ++thissec) {
 
@@ -319,7 +326,7 @@ unsigned int rest;
             6 : 15
             7 : 15
         */
-        encodeheader(trk, thissec, diskid0, diskid1);
+        encodeheader(trk, thissec, diskid0, diskid1, head);
         /* sector data
             0       7 (data address mark)
             1-256   data
@@ -331,16 +338,16 @@ unsigned int rest;
     }
 
     /*gcrlenbuffer[trk * 2] = (gcrout - &gcrbuffer[trk * 2][0]);*/
-    gcrlenbuffer[trk * 2] = gcrtrklen[zone];
+    gcrlenbuffer[head][trk * 2] = gcrtrklen[zone];
 
     /* fill up rest of the track */
-    rest = (unsigned int)((&gcrbuffer[trk * 2][0] + GCRMAXTRACKLEN) - gcrout);
+    rest = (unsigned int)((&gcrbuffer[head][trk * 2][0] + GCRMAXTRACKLEN) - gcrout);
     if (rest) {
         memset(gcrout, 0x55, rest);
     }
 }
 
-void encoded64image(int tracks, int diskid0, int diskid1)
+void encoded64image(int tracks, int diskid0, int diskid1, int sides)
 {
     int t, s, i, ts;
     unsigned char *buf = &d64buffer[0];
@@ -348,13 +355,28 @@ void encoded64image(int tracks, int diskid0, int diskid1)
     for (t = 1; t <= tracks; t++) {
 //        if (t == 18) 
         {
-        gcrspdbuffer[t * 2][0] = (trkzone[t] == 4) ? 0 : trkzone[t] ^ 3;
-        gcrspdbuffer[t * 2][1] = 0;
-        gcrspdbuffer[t * 2][2] = 0;
-        gcrspdbuffer[t * 2][3] = 0;
-        encodetrack(buf, t, diskid0, diskid1);
+        gcrspdbuffer[0][t * 2][0] = (trkzone[t] == 4) ? 0 : trkzone[t] ^ 3;
+        gcrspdbuffer[0][t * 2][1] = 0;
+        gcrspdbuffer[0][t * 2][2] = 0;
+        gcrspdbuffer[0][t * 2][3] = 0;
+        encodetrack(buf, t, diskid0, diskid1, 0);
         }
         buf += 0x100 * sectors[trkzone[t]];
+    }
+
+    if (sides == 2) {
+        buf = &d71buffer[0];
+        for (t = 1; t <= tracks; t++) {
+    //        if (t == 18) 
+            {
+            gcrspdbuffer[1][t * 2][0] = (trkzone[t] == 4) ? 0 : trkzone[t] ^ 3;
+            gcrspdbuffer[1][t * 2][1] = 0;
+            gcrspdbuffer[1][t * 2][2] = 0;
+            gcrspdbuffer[1][t * 2][3] = 0;
+            encodetrack(buf, t, diskid0, diskid1, 1);
+            }
+            buf += 0x100 * sectors[trkzone[t]];
+        }
     }
 }
 
@@ -366,69 +388,137 @@ $0000-0007: File signature "GCR-1541"
       0008: G64 version (presently only $00 defined)
       0009: Number of tracks in image (usually $54, decimal 84)
  000A-000B: Maximum track size in bytes in LO/HI format
+ 
+ 000C-      84 * 32 bit offset to track data
+ 0152-      84 * 32 bit speed zone data
 */
-/* 84 * 32 bit offset to track data */
-/* 84 * 32 bit speed zone data */
+/*  */
+/*  */
 /* 84 * track gcr data */
 
-void saveg64(char *name, int halftracks)
+void saveg64(char *name, int halftracks, int sides)
 {
     FILE *out;
-    int t, s, i, ts, off;
-    unsigned char hdr[0x0c] = {
-        0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31, 0x00, 0x54, 0xF8, 0x1E
+    int t, s, i, ts, off, len, head;
+    unsigned char g64hdr[0x0c] = {
+        0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31,
+        0x00, /* version */
+        0x54, /* tracks */
+        0xF8, 0x1E  /* max. track size */
     };
+    unsigned char g71hdr[0x0c] = {
+        0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x37, 0x31,
+        0x00,
+        0x54 * 2,
+        0xF8, 0x1E
+    };
+    int gcrmaxlen = 0x1ef8;
 
     out = fopen(name, "wb");
-    /* 0x0c bytes g64 header */
-    fwrite(hdr, 1, 0x0c, out);
-    /* seek to end of file, clears it */
-    fseek(out, 0x0c + (84 * 8) + (halftracks * GCRMAXTRACKLEN), SEEK_SET);
+    if (sides == 1) {
+        /* 0x0c bytes g64 header */
+        fwrite(g64hdr, 1, 0x0c, out);
+        /* seek to end of file, clears it */
+        fseek(out, 0x0c + (84 * 8) + (halftracks * GCRMAXTRACKLEN), SEEK_SET);
 
-    /* 84 * 32 bit offset to track data */
-    fseek(out, 0x0c, SEEK_SET);
-    off = 0x2ac;
-    for (t = 0; t < halftracks; t++) {
-        if (gcrlenbuffer[t + 2]) {
-            fputc((off >>  0) & 0xff, out);
-            fputc((off >>  8) & 0xff, out);
-            fputc((off >> 16) & 0xff, out);
-            fputc((off >> 24) & 0xff, out);
-            off += gcrlenbuffer[t + 2] + 2;
-        } else {
-            fputc(0, out);
-            fputc(0, out);
-            fputc(0, out);
-            fputc(0, out);
+        /* 84 * 32 bit offset to track data */
+        fseek(out, 0x0c, SEEK_SET);
+        off = 0x2ac;
+        for (t = 0; t < halftracks; t++) {
+            if (gcrlenbuffer[0][t + 2]) {
+                fputc((off >>  0) & 0xff, out);
+                fputc((off >>  8) & 0xff, out);
+                fputc((off >> 16) & 0xff, out);
+                fputc((off >> 24) & 0xff, out);
+                off += gcrlenbuffer[0][t + 2] + 2;
+            } else {
+                fputc(0, out);
+                fputc(0, out);
+                fputc(0, out);
+                fputc(0, out);
+            }
         }
-    }
-    /* 84 * 32 bit speed zone data */
-    fseek(out, 0x15c, SEEK_SET);
-    for (t = 0; t < halftracks; t++) {
-        fwrite(gcrspdbuffer[t + 2], 1, 4, out);
-    }
-    /* 84 * track gcr data */
-    fseek(out, 0x2ac, SEEK_SET);
-    for (t = 0; t < halftracks; t++) {
-        off = gcrlenbuffer[t + 2];
-        if (off > 0) {
-            fputc((off >>  0) & 0xff, out);
-            fputc((off >>  8) & 0xff, out);
-            fwrite(gcrbuffer[t + 2], 1, off, out);
+        /* 84 * 32 bit speed zone data */
+        fseek(out, 0x0c + (84 * 4), SEEK_SET);
+        for (t = 0; t < halftracks; t++) {
+            fwrite(gcrspdbuffer[0][t + 2], 1, 4, out);
+        }
+        /* 84 * track gcr data */
+        fseek(out, 0x2ac, SEEK_SET);
+        for (t = 0; t < halftracks; t++) {
+            off = gcrlenbuffer[0][t + 2];
+            if (off > 0) {
+                fputc((off >>  0) & 0xff, out);
+                fputc((off >>  8) & 0xff, out);
+                fwrite(gcrbuffer[0][t + 2], 1, off, out);
+            }
+        }
+    } else {
+        fwrite(g71hdr, 1, 0x0c, out);
+        /* seek to end of file, clears it */
+        fseek(out, 0x0c + (2 * 84 * 8) + (2 * halftracks * GCRMAXTRACKLEN), SEEK_SET);
+
+        /* 84 * 32 bit offset to track data */
+        fseek(out, 0x0c, SEEK_SET);
+        off = 0x2ac + (2 * 84 * 4);
+        halftracks = 84;
+        for (head = 0; head < 2; head++) {
+            for (t = 0; t < halftracks; t++) {
+                if (gcrlenbuffer[head][t + 2]) {
+                    printf("offset head %d track %d offset %x\n", head, t, off);
+                    fputc((off >>  0) & 0xff, out);
+                    fputc((off >>  8) & 0xff, out);
+                    fputc((off >> 16) & 0xff, out);
+                    fputc((off >> 24) & 0xff, out);
+//                    off += gcrlenbuffer[head][t + 2] + 2;
+                    off += gcrmaxlen;
+                } else {
+                    fputc(0, out);
+                    fputc(0, out);
+                    fputc(0, out);
+                    fputc(0, out);
+                }
+            }
+        }
+        /* 84 * 32 bit speed zone data */
+        fseek(out, 0x0c + (2 * 84 * 4), SEEK_SET);
+        for (head = 0; head < 2; head++) {
+            for (t = 0; t < halftracks; t++) {
+                fwrite(gcrspdbuffer[head][t + 2], 1, 4, out);
+            }
+        }
+        /* 84 * track gcr data */
+        off = 0x2ac + (2 * 84 * 4);
+        for (head = 0; head < 2; head++) {
+            for (t = 0; t < halftracks; t++) {
+                len = gcrlenbuffer[head][t + 2];
+                if (len > 0) {
+                    printf("trackdata head %d track %d offset %x\n", head, t, off);
+                    fseek(out, off, SEEK_SET);
+                    fputc((len >>  0) & 0xff, out);
+                    fputc((len >>  8) & 0xff, out);
+                    fwrite(gcrbuffer[head][t + 2], 1, len, out);
+                    off += gcrmaxlen;
+                }
+            }
         }
     }
 
     fclose(out);
 }
 
-void loadd64(char *name)
+void loadd64(char *name, int tracks, int sides)
 {
     FILE *out;
     int t, s, i, ts;
     unsigned char *buf = &d64buffer[0];
     out = fopen(name, "rb");
+    if (out == NULL) {
+        fprintf(stderr, "error: could not open '%s'\n", name);
+        exit(-1);
+    }
 
-    for (t = 1; t <= 42; t++) {
+    for (t = 1; t <= tracks; t++) {
         ts = sectors[trkzone[t]];
         for (s = 0; s < ts; s++) {
             fread(buf, 1, 256, out);
@@ -436,9 +526,20 @@ void loadd64(char *name)
         }
     }
 
+    if (sides == 2) {
+        buf = &d71buffer[0];
+        for (t = 1; t <= tracks; t++) {
+            ts = sectors[trkzone[t]];
+            for (s = 0; s < ts; s++) {
+                fread(buf, 1, 256, out);
+                buf += 0x100;
+            }
+        }
+    }
+
     fclose(out);
 }
-void saved64(char *name, int tracks, int errors)
+void saved64(char *name, int tracks, int errors, int sides)
 {
     FILE *out;
     int t, s, i, ts;
@@ -446,6 +547,7 @@ void saved64(char *name, int tracks, int errors)
 
     out = fopen(name, "wb");
 
+    /* output track data */
     for (t = 1; t <= tracks; t++) {
         ts = sectors[trkzone[t]];
         for (s = 0; s < ts; s++) {
@@ -454,13 +556,37 @@ void saved64(char *name, int tracks, int errors)
         }
     }
 
+    /* output track data for side 2*/
+    if (sides == 2) {
+        buf = &d71buffer[0];
+        for (t = 1; t <= tracks; t++) {
+            ts = sectors[trkzone[t]];
+            for (s = 0; s < ts; s++) {
+                fwrite(buf, 1, 256, out);
+                buf += 0x100;
+            }
+        }
+    }
+
     if (errors) {
+        /* output error info */
         buf = &d64errors[0];
         for (t = 1; t <= tracks; t++) {
             ts = sectors[trkzone[t]];
             for (s = 0; s < ts; s++) {
                 fwrite(buf, 1, 1, out);
                 buf++;
+            }
+        }
+        /* output error info for side 2*/
+        if (sides == 2) {
+            buf = &d71errors[0];
+            for (t = 1; t <= tracks; t++) {
+                ts = sectors[trkzone[t]];
+                for (s = 0; s < ts; s++) {
+                    fwrite(buf, 1, 1, out);
+                    buf++;
+                }
             }
         }
     }
@@ -470,15 +596,22 @@ void saved64(char *name, int tracks, int errors)
 
 /******************************************************************************/
 
-void gentestimg(int tracks, int errors)
+void gentestimg(int tracks, int errors, int sides)
 {
     int t, s, i, ts;
-    unsigned char *buf = &d64buffer[0];
+    unsigned char *buf;
 
+    memset(d64buffer, 0, D64MAXSIZE);
+    memset(d71buffer, 0, D64MAXSIZE);
+
+    /* sector data (side 1) */
+    buf = &d64buffer[0];
     for (t = 1; t <= tracks; t++) {
         ts = sectors[trkzone[t]];
         for (s = 0; s < ts; s++) {
-            for (i = 0; i < 256; i++) {
+            buf[0] = t;
+            buf[1] = s;
+            for (i = 2; i < 256; i++) {
                 buf[i] = t ^ i;
                 i++;
                 buf[i] = s ^ i;
@@ -487,7 +620,26 @@ void gentestimg(int tracks, int errors)
         }
     }
 
+    /* sector data (side 2) */
+    if (sides == 2) {
+        buf = &d71buffer[0];
+        for (t = 1; t <= tracks; t++) {
+            ts = sectors[trkzone[t]];
+            for (s = 0; s < ts; s++) {
+                buf[0] = (t + tracks) | 0x80;
+                buf[1] = s | 0x80;
+                for (i = 2; i < 256; i++) {
+                    buf[i] = ((t + tracks) | 0x80) ^ i;
+                    i++;
+                    buf[i] = (s | 0x80) ^ i;
+                }
+                buf += 0x100;
+            }
+        }
+    }
+
     memset(d64errors, 1, D64MAXSECTORS);
+    memset(d71errors, 1, D64MAXSECTORS);
     if (errors) {
         buf = &d64errors[0];
         for (t = 1; t < 0x10; t++) {
@@ -497,10 +649,32 @@ void gentestimg(int tracks, int errors)
                 buf++;
             }
         }
+        if (sides == 2) {
+            buf = &d71errors[0];
+            for (t = 1; t < 0x10; t++) {
+                ts = sectors[trkzone[t]];
+                for (s = 0; s < ts; s++) {
+                    *buf = t;
+                    buf++;
+                }
+            }
+        }
     }
 }
 
 /******************************************************************************/
+
+void usage(void)
+{
+    printf( "tagd64      -\n"
+            "tagd71      -\n"
+            "tagd64err   -\n"
+            "tagd71err   -\n"
+            "d64tog64    -\n"
+            "d71tog71    -\n"
+    );
+    exit(-1);
+}
 
 int main(int argc, char *argv[])
 {
@@ -508,25 +682,46 @@ int main(int argc, char *argv[])
     char *inname;
     int tracks;
 
+    if (argc < 4) {
+        usage();
+    }
+
     if (!strcmp(argv[1], "tagd64")) {
         outname = argv[2];
         tracks = atoi(argv[3]);
-        memset(d64buffer, 0, D64MAXSIZE);
-        gentestimg(tracks, 0);
-        saved64(outname, tracks, 0);
+        gentestimg(tracks, 0, 1);
+        saved64(outname, tracks, 0,1);
+    } else if (!strcmp(argv[1], "tagd71")) {
+        outname = argv[2];
+        tracks = atoi(argv[3]);
+        gentestimg(tracks, 0, 2);
+        saved64(outname, tracks, 0, 2);
     } else if (!strcmp(argv[1], "tagd64err")) {
         outname = argv[2];
         tracks = atoi(argv[3]);
-        memset(d64buffer, 0, D64MAXSIZE);
-        gentestimg(tracks, 1);
-        saved64(outname, tracks, 1);
+        gentestimg(tracks, 1, 1);
+        saved64(outname, tracks, 1, 1);
+    } else if (!strcmp(argv[1], "tagd71err")) {
+        outname = argv[2];
+        tracks = atoi(argv[3]);
+        gentestimg(tracks, 1, 2);
+        saved64(outname, tracks, 1, 2);
     } else if (!strcmp(argv[1], "d64tog64")) {
         inname = argv[2];
         outname = argv[3];
         tracks = atoi(argv[4]);
-        loadd64(inname);
-        encoded64image(tracks, 0x13, 0x37);
-        saveg64(outname, tracks * 2);
+        loadd64(inname, tracks, 1);
+        encoded64image(tracks, 0x13, 0x37, 1);
+        saveg64(outname, tracks * 2, 1);
+    } else if (!strcmp(argv[1], "d71tog71")) {
+        inname = argv[2];
+        outname = argv[3];
+        tracks = atoi(argv[4]);
+        loadd64(inname, tracks, 2);
+        encoded64image(tracks, 0x13, 0x37, 2);
+        saveg64(outname, tracks * 2, 2);
+    } else {
+        usage();
     }
 
     return 0;

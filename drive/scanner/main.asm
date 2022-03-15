@@ -14,7 +14,7 @@ start:
         ldx #1
 .lp:
         lda hextab,x
-        sta $0400+(40*10)-1,x
+        sta videoram+(40*10)-1,x
         inx
         cpx #$10
         bne .lp
@@ -23,7 +23,7 @@ start:
 -
         lda info,x
         beq +
-        sta $0400+(40*20),x
+        sta videoram+(40*20),x
         inx
         bne -
 +
@@ -50,27 +50,77 @@ lp:
         jsr rcv_wait
 
         jsr rcv_1byte           ; get track nr
-        cmp #$ff
-        beq recend
-        sta rtrk
-        tax
-        lda #'*'
-        sta $0400+(40*13)-1,x
+        sta videoram+(40*24)+39
+        
+        ; convert to decimal and write to screen
+        ldy #$2f
+        ldx #$3a
+        sec
+-       iny
+        sbc #100
+        bcs -
+-       dex
+        adc #10
+        bmi -
+        adc #$2f
+;        sty videoram+(40*24)+30
+        stx videoram+(40*24)+31
+        sta videoram+(40*24)+32
 
+        lda videoram+(40*24)+39
+        cmp #$ff
+        bne +
+        jmp recend
++
+        sta rtrk
+
+        ldx rtrk
+        lda #'*'
+!ifdef VC1571 {
+        sta videoram+(40*15)-1,x
+} else {
+        sta videoram+(40*13)-1,x
+}
         jsr rcv_1byte           ; get sector nr
         sta rsec
+        sta videoram+(40*24)+38
+
         jsr rcv_1byte           ; get result code
-        ;clc
-        ;adc #$30 ; '0'
+        sta videoram+(40*24)+37
         tay
         lda hextab,y
-        sta $0400+(40*11)-1,x
+        sta videoram+(40*11)-1,x
 
         ; get block
-        ldx #$00
+
+        ; extract side from track number, clear msb from track number
+        jsr rcv_1byte
+        eor rtrk
+        pha
+        and #$7f
+        sta videoram
+        pla
+        and #$80
+        sta rside
+        sta videoram+(40*24)+36
+
+        jsr rcv_1byte
+        eor rsec
+        eor rside
+        sta videoram+1
+
+        ; get rest of the block
+        ldx #$02
 -
         jsr rcv_1byte
-        sta $0400,x
+        eor rtrk
+        eor rside
+        sta videoram,x
+        inx
+        jsr rcv_1byte
+        eor rsec
+        eor rside
+        sta videoram,x
         inx
         bne -
 
@@ -87,38 +137,61 @@ lp:
         ; compare block
         ldx rtrk
         lda #10
-        sta $d800+(40*13)-1,x
+!ifdef VC1571 {
+        sta colorram+(40*15)-1,x
+} else {
+        sta colorram+(40*13)-1,x
+}
+        ; first byte is the track#, it was eored with track# so value=0
+        ldy #10
+        lda videoram+0
+        bne +
+        ldy #5
++
+        sty colorram+0
 
-        ldx #$00
+        ; second byte is the sector#, it was eored with sector# so value=0
+        ldy #10
+        lda videoram+1
+        bne +
+        ldy #5
++
+        sty colorram+1
+
+        ; rest are values 2-255
+        ldx #$02
 -
         lda #10
-        sta $d800,x
+        sta colorram,x
 ;        inx
-;        sta $d800,x
+;        sta colorram,x
 ;        dex
 
         txa
-        eor rtrk
-        cmp $0400,x
+        ;eor rtrk
+        cmp videoram,x
         bne recerr
         lda #5
-        sta $d800,x
+        sta colorram,x
 
         inx
         txa
-        eor rsec
-        cmp $0400,x
+        ;eor rsec
+        cmp videoram,x
         bne recerr
         lda #5
-        sta $d800,x
+        sta colorram,x
 
         inx
         bne -
 
         ldx rtrk
         lda #5
-        sta $d800+(40*13)-1,x
-
+!ifdef VC1571 {
+        sta colorram+(40*15)-1,x
+} else {
+        sta colorram+(40*13)-1,x
+}
         jmp lp
 
 recerr:
@@ -158,6 +231,7 @@ fail:
 
 rtrk: !byte 0
 rsec: !byte 0
+rside: !byte 0
 
 rescol: !byte 5
 
@@ -192,7 +266,10 @@ drvstart
         sta $1802
         ldy #$00
         sty $1800
-
+!ifdef VC1571 {
+;        lda #%00100110
+;        sta $1801
+}
 drvlp:
 
         ; clear the buffer
@@ -228,7 +305,12 @@ sect    ldx #16
 
         inc trk+1
         lda trk+1
+!ifdef VC1571 {
+;        cmp #36
+        cmp #71
+} else {
         cmp #43
+}
 ;        cmp #5
         beq drvend
         jmp drvlp
@@ -243,8 +325,10 @@ drvend:
         rts
 
 read:
+!ifdef VC1541 {
         cmp #36
         bcs read36
+}
 
 ;sect    ldx #0
         stx $0f         ; sector
@@ -259,6 +343,8 @@ read:
         bmi *-2
         sei
         rts
+
+!ifdef VC1541 {
 read36:
 ;        lda #36         ; track nr
         sta $08  
@@ -286,6 +372,7 @@ read36:
         lda #>.data1     ; highbyte of target buffer
         sta $31
         jmp $F4d1        ; load sector
+}
 ;
 ; code from data beckers "anti cracker book" (page 248):
 ;
