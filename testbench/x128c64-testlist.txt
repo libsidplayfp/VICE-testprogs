@@ -156,7 +156,7 @@
 ../general/Lorenz-2.15/src/,sein.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,clvn.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,adcb.prg,exitcode,30000000
-../general/Lorenz-2.15/src/,adcz.prg,exitcode,30100000
+../general/Lorenz-2.15/src/,adcz.prg,exitcode,30300000
 ../general/Lorenz-2.15/src/,adczx.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,adca.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,adcax.prg,exitcode,40000000
@@ -367,7 +367,7 @@
 ../CPU/Acid800/,cpu_illegal.prg,exitcode,41000000
 ../CPU/Acid800/,cpu_insn.prg,exitcode,35000000
 ../CPU/Acid800/,cpu_timing.prg,exitcode,22000000,vicii-pal
-../CPU/Acid800/,cpu_timing_ntsc.prg,exitcode,22000000,vicii-ntsc
+../CPU/Acid800/,cpu_timing_ntsc.prg,exitcode,23000000,vicii-ntsc
 ../CPU/Acid800/,cpu_bugs.prg,exitcode,25000000
 ../CPU/Acid800/,cpu_clisei.prg,exitcode,23000000
 ../CPU/ane/,ane.prg,exitcode,70000000,vicii-pal
@@ -460,7 +460,7 @@
 ../CPU/shs/,shsabsy2.prg,exitcode,7000000,vicii-pal
 ../CPU/shs/,shsabsy3.prg,exitcode,20000000,vicii-pal
 ../CPU/shs/,shsabsy4.prg,exitcode,7100000,vicii-pal
-../CPU/shs/,shsabsy5.prg,exitcode,7100000,vicii-pal
+../CPU/shs/,shsabsy5.prg,exitcode,7200000,vicii-pal
 #FIXME: make NTSC fixes
 ../CPU/shxy/,shx-t2.prg,interactive,0,vicii-pal
 ../CPU/shxy/,shx-test.prg,exitcode,170000000,vicii-pal
@@ -586,48 +586,48 @@
 ../CIA/shiftregister/,cia-sdr-load.prg,exitcode,7000000
 ../CIA/shiftregister/,cia-sdr-init.prg,exitcode,7000000
 ../CIA/shiftregister/,cia-sdr-delay.prg,exitcode,7000000
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-0_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-0_7f.prg,exitcode,121000000
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-0.prg,exitcode,16000000
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-1_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-1_7f.prg,exitcode,121000000
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-19.prg,exitcode,16000000
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-39.prg,exitcode,16000000
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-3.prg,exitcode,16000000
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-0_7f.prg,exitcode,120000000,cia-old,comment:CIA timestamp 4485 only
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-0_7f.prg,exitcode,121000000,cia-old,comment:CIA timestamp 4485 only
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-0.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-1_7f.prg,exitcode,120000000,cia-old,comment:CIA timestamp 4485 only
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-1_7f.prg,exitcode,121000000,cia-old,comment:CIA timestamp 4485 only
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-19.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-39.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-3.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-4_7f.prg,exitcode,120000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4485-4_7f.prg,exitcode,121000000,cia-old,comment:CIA timestamp 4485 only
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-4_7f.prg,exitcode,121000000
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-0.prg,exitcode,16000000
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-0_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-0_7f.prg,exitcode,121000000
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-19.prg,exitcode,16000000
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-1_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-1_7f.prg,exitcode,121000000
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-3.prg,exitcode,16000000
 ../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-39.prg,exitcode,16000000
-../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-4_7f.prg,exitcode,120000000
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-0_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-generic-4_7f.prg,exitcode,121000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-0_7f.prg,exitcode,121000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-0.prg,exitcode,16000000
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-1_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-1_7f.prg,exitcode,121000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-19.prg,exitcode,16000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-39.prg,exitcode,16000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-3.prg,exitcode,16000000
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-0_7f.prg,exitcode,120000000,cia-old,comment:CIA timestamp 4485 only
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-0_7f.prg,exitcode,121000000,cia-old,comment:CIA timestamp 4485 only
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-0.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-1_7f.prg,exitcode,120000000,cia-old,comment:CIA timestamp 4485 only
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-1_7f.prg,exitcode,121000000,cia-old,comment:CIA timestamp 4485 only
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-19.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-39.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-3.prg,exitcode,16000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-4_7f.prg,exitcode,120000000,cia-old,comment:CIA timestamp 4485 only
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4485-4_7f.prg,exitcode,121000000,cia-old,comment:CIA timestamp 4485 only
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-4_7f.prg,exitcode,121000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-0.prg,exitcode,16000000
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-0_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-0_7f.prg,exitcode,121000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-19.prg,exitcode,16000000
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-1_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-1_7f.prg,exitcode,121000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-3.prg,exitcode,16000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-39.prg,exitcode,16000000
-../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-4_7f.prg,exitcode,120000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-4_7f.prg,exitcode,121000000
 ../CIA/shiftregister/,cia-sp-test-continues-new.prg,exitcode,50000000,cia-new
 ../CIA/shiftregister/,cia-sp-test-continues-old.prg,exitcode,50000000,cia-old
 ../CIA/shiftregister/,cia-sp-test-oneshot-new.prg,exitcode,50000000,cia-new
@@ -988,7 +988,7 @@
 ../SID/detect/,detect-1-old.prg,exitcode,6200000,sid-old
 ../SID/detect/,detect-1-new.prg,exitcode,5500000,sid-new
 ../SID/detect/,detect-2-old.prg,exitcode,5500000,sid-old
-../SID/detect/,detect-2-new.prg,exitcode,5500000,sid-new
+../SID/detect/,detect-2-new.prg,exitcode,5600000,sid-new
 ../SID/detectmirrors/,main.prg,interactive,0
 ../SID/env_test/,env_test_ra_0000.prg,exitcode,9000000
 ../SID/env_test/,env_test_ra_0100.prg,exitcode,9000000
@@ -1180,7 +1180,7 @@
 ../SID/resid-test/,sweep-orig.prg,analyzer,0
 ../SID/resid-test/,sweep.prg,analyzer,0
 ../SID/resid-test/,voice.prg,analyzer,0
-../SID/ringmod/,ringmodtest.prg,exitcode,5200000
+../SID/ringmod/,ringmodtest.prg,exitcode,5300000
 ../SID/stereo/,stereo.prg,interactive,0
 ../SID/sidcheck/,sidcheck.prg,analyzer,0
 ../SID/testwave00/,testWave00.prg,analyzer,0
@@ -1288,6 +1288,7 @@
 ################################################################################
 # REU
 ################################################################################
+../REU/badoublewrite/,badoublewrite.prg,screenshot,6800000,reu512k
 ../REU/bonzai/,spritetiming.prg,exitcode,49000000,reu512k
 ../REU/bonzai/,checkchar.prg,exitcode,12000000,reu512k
 ../REU/bonzai/,reudetect.prg,exitcode,15000000,reu512k
@@ -1346,15 +1347,52 @@
 ../REU/reudetect/,reudetect.prg,exitcode,100000000,reu512k,comment:load the "blu.reu" file first
 ../REU/reutiming/,reutiming.prg,exitcode,100000000,reu512k
 #FIXME: NTSC fix
-../REU/reutiming2/,a.prg,screenshot,40000000,reu512k,vicii-pal
-../REU/reutiming2/,a2.prg,screenshot,40000000,reu512k,vicii-pal
+../REU/reutiming2/,a.prg,screenshot,40500000,reu512k,vicii-pal
+../REU/reutiming2/,a2.prg,screenshot,40500000,reu512k,vicii-pal
+../REU/reutiming2/,a3.prg,screenshot,40500000,reu512k,vicii-pal
+../REU/reutiming2/,a4.prg,screenshot,40500000,reu512k,vicii-pal
 ../REU/reutiming2/,b.prg,screenshot,20000000,reu512k,vicii-pal
 ../REU/reutiming2/,b2.prg,screenshot,20000000,reu512k,vicii-pal
 ../REU/reutiming2/,b3.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,b4.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,b5.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,b6.prg,screenshot,20000000,reu512k,vicii-pal
 ../REU/reutiming2/,c.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
 ../REU/reutiming2/,c2.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
+../REU/reutiming2/,c3.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,c4.prg,screenshot,20000000,reu512k,vicii-pal
 ../REU/reutiming2/,d.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
 ../REU/reutiming2/,d2.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
+../REU/reutiming2/,d3.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,d4.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,e.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e3.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e4.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e5.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e6.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f3.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f4.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g3.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g4.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e2-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e3-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e4-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e5-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e6-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f2-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f3-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f4-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g2-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g3-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g4-m2.prg,exitcode,200000000,reu512k,vicii-pal
 ../REU/rmw-trigger/,rmwtrigger-rom.prg,exitcode,1000000000,reu512k,warn:vicefail
 ../REU/rmw-trigger/,rmwtrigger-ram.prg,exitcode,1000000000,reu512k,warn:vicefail
 ../REU/spriteba/,spriteba.prg,analyzer,0
@@ -1394,16 +1432,16 @@
 ../drive/format/,format.prg,exitcode,80000000,mountd64:format.d64,comment: make sure format.d64
 ../drive/hls-protection/,hlstest.prg,exitcode,9000000,mountg64:hlstest.g64
 ../drive/iecdelay/,iec-bus-delay-auto.prg,exitcode,80000000
-../drive/inertia/,drive-emu-check.prg,exitcode,8000000,mountd64:drive-emu-check.d64
+../drive/inertia/,drive-emu-check.prg,exitcode,8100000,mountd64:drive-emu-check.d64
 ../drive/interrupts/,timera.prg,exitcode,20000000,comment:results depend on the physical properties of the drive and vary between real drives/mechs too.
 ../drive/interrupts/,watchdog,interactive,0,comment:this is a freezer test - run/freeze/restart. it should not hang
 ../drive/pwm/,pwm.prg,interactive,0,comment:drive led should be fading dark-light-dark etc
 ../drive/rpm/,rpm1.prg,exitcode,12000000,mountd64:rpm.d64,vicii-pal
 ../drive/rpm/,rpm1.prg,exitcode,12000000,mountg64:rpm.g64,vicii-pal
 ../drive/rpm/,rpm1.prg,exitcode,12000000,mountp64:rpm.p64,vicii-pal
-../drive/rpm/,rpm2.prg,exitcode,10500000,mountd64:rpm.d64,vicii-pal
-../drive/rpm/,rpm2.prg,exitcode,10500000,mountg64:rpm.g64,vicii-pal
-../drive/rpm/,rpm2.prg,exitcode,10500000,mountp64:rpm.p64,vicii-pal
+../drive/rpm/,rpm2.prg,exitcode,11000000,mountd64:rpm.d64,vicii-pal
+../drive/rpm/,rpm2.prg,exitcode,11000000,mountg64:rpm.g64,vicii-pal
+../drive/rpm/,rpm2.prg,exitcode,11000000,mountp64:rpm.p64,vicii-pal
 ../drive/rpm/,rpm3.prg,exitcode,12000000,mountd64:rpm.d64,vicii-pal
 ../drive/rpm/,rpm3.prg,exitcode,12000000,mountg64:rpm.g64,vicii-pal
 ../drive/rpm/,rpm3.prg,exitcode,12000000,mountp64:rpm.p64,vicii-pal
@@ -1437,7 +1475,7 @@
 ################################################################################
 #TODO:
 #../vdrive
-../vdrive/bustakeover/,bustakeover.prg,exitcode,95000000,mountd64:bustakeover.d64
+../vdrive/bustakeover/,bustakeover.prg,exitcode,95500000,mountd64:bustakeover.d64
 ../vdrive/sa-check/,sacheck.prg,exitcode,14000000,mountd64:sacheck.d64
 ../vdrive/,reltest.bas,interactive,0
 ################################################################################
