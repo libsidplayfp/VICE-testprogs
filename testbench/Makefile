@@ -1,5 +1,5 @@
 
-X64SCHEAD=r39405
+X64SCHEAD=r41951
 X64HEAD=r39405
 X64DTVHEAD=r39405
 VSIDHEAD=r39405
@@ -73,9 +73,19 @@ all: prereq
 	echo "for wiki table use something like: make resultswiki | xclip -selection clipboard"
 
 ################################################################################
-prereq: selftest testlist cmpscreens maketable prereq-chameleon
+prereq: revertfiles selftest testlist cmpscreens maketable prereq-chameleon
 
-.PHONY: testlist selftest
+.PHONY: testlist selftest prereq revertfiles
+
+revertfiles:
+	-svn revert ../drive/format/format.d64
+	-make -C ../drive/format/ clean all --no-print-dir --silent > /dev/null
+	-svn revert ../C64/carts/tamtest/tamtest.crt
+	-make -C ../C64/carts/tamtest/ clean all --no-print-dir --silent > /dev/null
+	-svn revert ../drive/rpm/rpm.g64
+	-svn revert ../drive/rpm/rpm.p64
+	-svn revert ../drive/rpm/rpm.d64
+	-make -C ../drive/rpm/ clean all --no-print-dir --silent > /dev/null
 
 selftest:
 	make -s -C selftest
@@ -533,42 +543,42 @@ testvsid: prereq
 
 ##############################################################################
 	
-testhoxs64:	
+testhoxs64: prereq	
 	EMUDIR="$(HOXS64DIR)" ./testbench.sh hoxs64 --pal --cianew --8580 --8565early
-testmicro64:
+testmicro64: prereq
 	EMUDIR="$(MICRO64DIR)" ./testbench.sh micro64
 
 testz64k: testz64kc64 testz64kc128c64 testz64kc128 testz64kvic20
-testz64kc64:	
+testz64kc64: prereq
 	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc64
-testz64kc128c64:	
+testz64kc128c64: prereq	
 	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc128c64
-testz64kc128:	
+testz64kc128: prereq
 	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc128
-testz64kvic20:
+testz64kvic20: prereq
 	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kvic20
 
-testyace:
+testyace: prereq
 #	EMUDIR="$(YACEDIR)" ./testbench.sh yace --verbose
 	EMUDIR="$(YACEDIR)" ./testbench.sh yace
-testdenise:
+testdenise: prereq
 #	EMUDIR="$(DENISEDIR)" ./testbench.sh denise --resume
 	EMUDIR="$(DENISEDIR)" ./testbench.sh denise
-testemu64:
+testemu64: prereq
 #	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --verbose
 	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --resume
 
 testkernal64: testkernal64c64 testkernal64c128c64 testkernal64c128c128 testkernal64scpu64
-testkernal64c64:
+testkernal64c64: prereq
 #	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --verbose
 	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --resume
-testkernal64c128c64:
+testkernal64c128c64: prereq
 #	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c64 --verbose
 	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c64 --resume
-testkernal64c128c128:
+testkernal64c128c128: prereq
 #	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c128 --verbose
 	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c128 --resume
-testkernal64scpu64:
+testkernal64scpu64: prereq
 #	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64scpu64 --verbose
 	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64scpu64 --resume
 	
@@ -894,6 +904,7 @@ resultsx64sc: maketable
 		--results results/x64sc-r36700-result.txt "x64sc r36700" \
 		--results results/x64sc-r37109-result.txt "x64sc r37109" \
 		--results results/x64sc-r37145-result.txt "x64sc r37145" \
+		--results results/x64sc-r39405-result.txt "x64sc r39405" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		\
 		> results/x64sc.html
