@@ -222,7 +222,12 @@ There are a couple interesting edge cases:
   "nowhere", so it will not end up in the computers RAM.
   (emulated in VICE 3.6.1, -> see rmwtrigger test)
 
-- When a REU DMA is interrupted by a VIC DMA it will take one extra cycle
+- When a REU DMA ends in the same cycle when a VIC DMA starts, it will take one
+  extra cycle
+  (emulated in VICE 3.6.1)
+
+- When a REU DMA starts in the same cycle when Sprite0 is turned on (first line
+  of Sprite 0 DMA), it will take one extra cycle
   (emulated in VICE 3.6.1)
 
 - When reading from I/O, the first byte of a transfer that is started in the
