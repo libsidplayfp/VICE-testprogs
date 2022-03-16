@@ -5,7 +5,7 @@
 ../c128/2mhzVIC,2mhz-vic-extended.prg,error,screenshot,,,,-1,-1,PAL
 ../c128/2mhzVIC,timing-change0.prg,error,screenshot,,,,-1,-1,PAL
 ../c128/burstmode/,burstcheck0.prg,ok,exitcode,burstcheck.d64,,,-1,-1,-1
-../c128/burstmode/,burstcheck1.prg,ok,exitcode,,,,-1,-1,-1
+../c128/burstmode/,burstcheck1.prg,ok,exitcode,burstcheck.d71,,,-1,-1,-1
 ../c128/d030tester/,d030-2mhzdec.prg,error,screenshot,,,,-1,-1,PAL
 ../c128/d030tester/,d030-2mhz_hb_80.prg,error,screenshot,,,,-1,-1,PAL
 ../c128/d030tester/,d030-2mhzmode0.prg,error,screenshot,,,,-1,-1,PAL

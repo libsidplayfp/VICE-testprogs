@@ -22,10 +22,10 @@ Z64KC64LAST=20201230
 Z64KC64LASTSTRING="30 December 2020"
 Z64KC128C64LAST=20201230
 Z64KC128C64LASTSTRING="30 December 2020"
-Z64KC128LAST=20201230
-Z64KC128LASTSTRING="30 December 2020"
-Z64KVIC20LAST=20201217
-Z64KVIC20LASTSTRING="17 December 2020"
+Z64KC128LAST=20220130
+Z64KC128LASTSTRING="30 January 2022"
+Z64KVIC20LAST=20220130
+Z64KVIC20LASTSTRING="30 January 2022"
 
 KERNAL64C64LAST=1-7-0_b15
 KERNAL64C64LASTSTRING=1.7.0_b15
@@ -329,6 +329,7 @@ z64kc128-testlist.txt: c128-testlist.in Makefile
 	cat  c128-testlist.in \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
+		| grep -v ",mountg71" \
 		| grep -v ",efnram" \
 		| grep -v ",ifnram" \
 		| grep -v ",geo512k" \
@@ -1068,6 +1069,7 @@ resultsz64kc128: maketable z64kc128-testlist.txt
 		--results results/z64kc128-20181202-result.txt "z64kc128 20181202" \
 		--results results/z64kc128-1_2-result.txt "z64kc128 1.2" \
 		--results results/z64kc128-20201217-result.txt "z64kc128 17 December 2020" \
+		--results results/z64kc128-20201230-result.txt "z64kc128 30 December 2020" \
 		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64kc128 "$(Z64KC128LASTSTRING)"" \
 		\
 		> results/z64kc128.html
@@ -1093,10 +1095,10 @@ resultsz64kvic20: maketable z64kvic20-testlist.txt
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kvic20-20181202-result.txt "z64kvic20 20181202" \
 		--results results/z64kvic20-1_2-result.txt "z64kvic20 1.2" \
+		--results results/z64kvic20-20201217-result.txt "z64kvic20 17 December 2020" \
 		--results results/z64kvic20-$(Z64KVIC20LAST)-result.txt "z64kvic20 "$(Z64KVIC20LASTSTRING)"" \
 		\
 		> results/z64kvic20.html
-
 		
 .PHONY: resultshoxs64
 resultshoxs64: maketable hoxs64-testlist.txt

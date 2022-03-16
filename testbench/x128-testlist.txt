@@ -107,7 +107,7 @@
 ../VDC/soci/,test11.prg,interactive,0
 ../VDC/soci/,test12.prg,interactive,0
 ../VDC/vdcattr/,vdcattr.prg,interactive,0
-../VDC/vdcdump/,vdcdump.prg,exitcode,0
+../VDC/vdcdump/,vdcdump.prg,exitcode,1750000000
 ../VDC/vdctiming/,tt.prg,interactive,0
 ../VDC/vdctiming/,vdc-explorer.prg,interactive,0
 ../VDC/vdclptest/,vdclptest.prg,interactive,0
