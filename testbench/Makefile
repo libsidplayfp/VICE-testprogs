@@ -12,8 +12,8 @@ XPLUS4HEAD=r41951
 XCBM2HEAD=r41951
 XCBM5X0HEAD=r41951
 
-DENISELAST=20201223
-DENISELASTSTRING="git 23.12.2020"
+DENISELAST=20220316
+DENISELASTSTRING="git 16.03.2022"
 
 HOXS64LAST=1-1-0-5
 HOXS64LASTSTRING=1.1.0.5
@@ -1122,10 +1122,11 @@ resultsdenise: maketable denise-testlist.txt
 		--results results/denise-20191012-result.txt "denise 20191012" \
 		--results results/denise-20200110-result.txt "denise 20200110" \
 		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
+		--results results/denise-20201223-result.txt "git 23.12.2020" \
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
 		\
 		> results/denise.html
-		
+
 .PHONY: resultsmicro64
 resultsmicro64: maketable micro64-testlist.txt
 	./maketable --html --list micro64-testlist.txt \
