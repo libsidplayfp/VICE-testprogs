@@ -451,14 +451,14 @@
 ../CPU/sha/,shaabsy4.prg,exitcode,7000000,vicii-pal
 ../CPU/sha/,shaabsy5.prg,exitcode,7000000,vicii-pal
 ../CPU/sha/,shazpy1.prg,exitcode,5500000
-../CPU/sha/,shazpy2.prg,exitcode,6500000,vicii-pal
+../CPU/sha/,shazpy2.prg,exitcode,6600000,vicii-pal
 ../CPU/sha/,shazpy3.prg,exitcode,20000000,vicii-pal
 ../CPU/sha/,shazpy4.prg,exitcode,7000000,vicii-pal
 ../CPU/sha/,shazpy5.prg,exitcode,7000000,vicii-pal
 ../CPU/shs/,shsabsy1.prg,exitcode,5500000
 ../CPU/shs/,shsabsy2.prg,exitcode,7000000,vicii-pal
 ../CPU/shs/,shsabsy3.prg,exitcode,20000000,vicii-pal
-../CPU/shs/,shsabsy4.prg,exitcode,7100000,vicii-pal
+../CPU/shs/,shsabsy4.prg,exitcode,7200000,vicii-pal
 ../CPU/shs/,shsabsy5.prg,exitcode,7200000,vicii-pal
 #FIXME: make NTSC fixes
 ../CPU/shxy/,shx-t2.prg,interactive,0,vicii-pal
@@ -657,7 +657,7 @@
 ../CIA/tod/,hzsync0.prg,exitcode,100000000,vicii-pal
 ../CIA/tod/,hzsync1.prg,exitcode,100000000,vicii-pal
 ../CIA/tod/,hzsync2.prg,exitcode,100000000,vicii-pal
-../CIA/tod/,hzsync3.prg,exitcode,100000000,vicii-pal
+../CIA/tod/,hzsync3.prg,exitcode,100000000,vicii-pal,comment:not 100% stable - rerun on failure
 ../CIA/tod/,hzsync4.prg,exitcode,100000000,vicii-pal
 ../CIA/tod/,hzsync5.prg,exitcode,100000000,vicii-pal
 ../CIA/tod/,powerup.prg,exitcode,100000000
@@ -1034,7 +1034,7 @@
 ../SID/bitfade/,test1osc3.prg,analyzer,0
 ../SID/busvalue/,busvalue.prg,exitcode,5500000
 ../SID/detect/,detect.prg,interactive,0,comment:see automatic variants
-../SID/detect/,detect-1-old.prg,exitcode,6200000,sid-old
+../SID/detect/,detect-1-old.prg,exitcode,6400000,sid-old
 ../SID/detect/,detect-1-new.prg,exitcode,5500000,sid-new
 ../SID/detect/,detect-2-old.prg,exitcode,5500000,sid-old
 ../SID/detect/,detect-2-new.prg,exitcode,5600000,sid-new
@@ -1481,7 +1481,7 @@
 ../drive/diskchange/,pollwp.prg,interactive,0,comment:change the disk using the fliplist and/or the menu
 ../drive/diskid/,diskid1.prg,exitcode,8500000,mountd64:diskid.d64
 #FIXME: use an empty g64 too
-../drive/format/,format.prg,exitcode,80000000,mountd64:format.d64,comment: make sure format.d64
+../drive/format/,format.prg,exitcode,88000000,mountd64:format.d64,comment: make sure format.d64 was freshly created - the test will format it
 ../drive/hls-protection/,hlstest.prg,exitcode,9000000,mountg64:hlstest.g64
 ../drive/iecdelay/,iec-bus-delay-auto.prg,exitcode,80000000
 ../drive/inertia/,drive-emu-check.prg,exitcode,8100000,mountd64:drive-emu-check.d64

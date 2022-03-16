@@ -1,10 +1,10 @@
 
 X64SCHEAD=r41951
-X64HEAD=r39405
-X64DTVHEAD=r39405
+X64HEAD=r41951
+X64DTVHEAD=r41951
 VSIDHEAD=r41951
 X128HEAD=r41951
-X128C64HEAD=r39405
+X128C64HEAD=r41951
 XPETHEAD=r41951
 XSCPU64HEAD=r41951
 XVICHEAD=r41951
@@ -889,6 +889,7 @@ resultsx64: maketable
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64-r35872-result.txt "x64 r35872" \
 		--results results/x64-r37109-result.txt "x64 r37109" \
+		--results results/x64-r39405-result.txt "x64 r39405" \
 		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
 		\
 		> results/x64.html
@@ -932,6 +933,7 @@ resultsx128c64: maketable
 		--results results/x128c64-r35968-result.txt "x128c64 r35968" \
 		--results results/x128c64-r36700-result.txt "x128c64 r36700" \
 		--results results/x128c64-r37109-result.txt "x128c64 r37109" \
+		--results results/x128c64-r39405-result.txt "x128c64 r39405" \
 		--results results/x128c64-$(X128C64HEAD)-result.txt "x128c64 "$(X128C64HEAD)"" \
 		\
 		> results/x128c64.html
@@ -971,7 +973,7 @@ resultsx64dtv: maketable
 		--results results/x64dtv-r36700-result.txt "x64dtv r36700" \
 		--results results/x64dtv-r37109-result.txt "x64dtv r37109" \
 		--results results/x64dtv-r38998-result.txt "x64dtv r38998" \
-		--results results/x64dtv-r39433-result.txt "x64dtv r39433" \
+		--results results/x64dtv-r39405-result.txt "x64dtv r39405" \
 		--results results/x64dtv-$(X64DTVHEAD)-result.txt "x64dtv "$(X64DTVHEAD)"" \
 		\
 		> results/x64dtv.html
