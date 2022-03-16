@@ -70,7 +70,17 @@ function kernal64c128c128_get_options
                     mounted_d64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
+                if [ "${1:0:9}" == "mountd71:" ]; then
+                    exitoptions="--drive8-file $2/${1:9}"
+                    mounted_d64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
                 if [ "${1:0:9}" == "mountg64:" ]; then
+                    exitoptions="--drive8-file $2/${1:9}"
+                    mounted_g64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
+                if [ "${1:0:9}" == "mountg71:" ]; then
                     exitoptions="--drive8-file $2/${1:9}"
                     mounted_g64="${1:9}"
                     echo -ne "(disk:${1:9}) "

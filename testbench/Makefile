@@ -31,10 +31,10 @@ KERNAL64C64LAST=1-7-0_b15
 KERNAL64C64LASTSTRING=1.7.0_b15
 KERNAL64C128C64LAST=1-7-0_b15
 KERNAL64C128C64LASTSTRING=1.7.0_b15
-KERNAL64C128C128LAST=1-7-0_b15
-KERNAL64C128C128LASTSTRING=1.7.0_b15
-KERNAL64SCPU64LAST=1-7-0_b15
-KERNAL64SCPU64LASTSTRING=1.7.0_b15
+KERNAL64C128C128LAST=1-7-3_b13
+KERNAL64C128C128LASTSTRING=1.7.3_b13
+KERNAL64SCPU64LAST=1-7-3_b13
+KERNAL64SCPU64LASTSTRING=1.7.3_b13
 
 U64LAST=141
 U64LASTSTRING="1.41"
@@ -422,6 +422,7 @@ kernal64c128c128-testlist.txt: c128-testlist.in Makefile
 		| grep -v ",isepic" \
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
+		| grep -v ",mountg71:" \
 		>> kernal64c128c128-testlist.txt
 
 kernal64scpu64-testlist.txt: scpu-testlist.in Makefile
@@ -1187,6 +1188,7 @@ resultskernal64c128c128: maketable kernal64c128c128-testlist.txt
 	./maketable --html --list kernal64c128c128-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/kernal64c128c128-1-6-2_b8-result.txt "Kernal64 (c128) 1.6.2_b8" \
+		--results results/kernal64c128c128-1-7-0_b15-result.txt "Kernal64 (c128) 1.7.0_b15" \
 		--results results/kernal64c128c128-$(KERNAL64C128C128LAST)-result.txt "Kernal64 (c128) "$(KERNAL64C128C128LASTSTRING)"" \
 		\
 		> results/kernal64c128c128.html
@@ -1196,10 +1198,11 @@ resultskernal64scpu64: maketable kernal64scpu64-testlist.txt
 	./maketable --html --list kernal64scpu64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/kernal64scpu64-1-6-2_b8-result.txt "kernal64 (scpu) 1.6.2_b8" \
+		--results results/kernal64scpu64-1-7-0_b15-result.txt "kernal64 (scpu) 1.7.0_b15" \
 		--results results/kernal64scpu64-$(KERNAL64SCPU64LAST)-result.txt "kernal64 (scpu) "$(KERNAL64SCPU64LASTSTRING)"" \
 		\
 		> results/kernal64scpu64.html
-		
+
 ################################################################################
 		
 .PHONY: resultscham
