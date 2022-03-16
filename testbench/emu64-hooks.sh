@@ -1,6 +1,7 @@
 
 
 EMU64OPTS+=" --reset-ini"
+
 #EMU64OPTS+=" -VICIIfilter 0"
 #EMU64OPTS+=" -VICIIextpal"
 #EMU64OPTS+=" -VICIIpalette pepto-pal.vpl"
@@ -9,8 +10,8 @@ EMU64OPTS+=" --debugcart"
 #EMU64OPTS+="  --nosplash"
 
 # extra options for the different ways tests can be run
-EMU64OPTSEXITCODE+=" --nosplash"
-EMU64OPTSSCREENSHOT+=" --nosplash"
+EMU64OPTSEXITCODE+=" --nosplash --minimized"
+EMU64OPTSSCREENSHOT+=" --nosplash --minimized"
 
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
@@ -28,7 +29,24 @@ EMU64REFSYO=35
 
 function emu64_check_environment
 {
-    EMU64="$EMUDIR"emu64
+
+    if [ `uname` == "Linux" ]
+    then
+        if [ -f "$EMUDIR"emu64.exe ]; then
+            echo "found .exe file, using wine"
+            if ! [ -x "$(command -v wine)" ]; then
+                echo 'Error: wine not installed.' >&2
+                exit 1
+            fi
+            export WINEDEBUG=-all
+            EMU64="wine"
+            EMU64+=" $EMUDIR"emu64.exe
+        else
+            EMU64="$EMUDIR"emu64
+        fi
+    else
+        EMU64="$EMUDIR"emu64.exe
+    fi
     # is this correct?
     emu_default_videosubtype="6569"
 }
