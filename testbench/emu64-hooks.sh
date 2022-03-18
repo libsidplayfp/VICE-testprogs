@@ -2,9 +2,9 @@
 
 EMU64OPTS+=" --reset-ini"
 
-#EMU64OPTS+=" -VICIIfilter 0"
+EMU64OPTS+=" --video-filter-off"
 #EMU64OPTS+=" -VICIIextpal"
-#EMU64OPTS+=" -VICIIpalette pepto-pal.vpl"
+EMU64OPTS+=" --set-palette 7"
 EMU64OPTS+=" --warp"
 EMU64OPTS+=" --debugcart"
 #EMU64OPTS+="  --nosplash"
