@@ -10,7 +10,12 @@ KERNAL64C128C128OPTS+=" --sid-cycle-exact"
 function kernal64c128c128_check_environment
 {
     KERNAL64C128C128=$EMUDIR/k128.sh
-    
+
+    if ! [ -f "$KERNAL64C128C128" ]; then
+        echo "Error: "$KERNAL64C128C128" not found." >&2
+        exit 1
+    fi
+
     if ! [ -x "$(command -v $JAVA_HOME/bin/java)" ]; then
         echo 'Error: java not installed.' >&2
         exit 1

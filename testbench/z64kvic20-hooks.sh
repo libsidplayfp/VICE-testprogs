@@ -23,11 +23,15 @@ Z64KVIC20REFSYO=48
 
 function z64kvic20_check_environment
 {
+    JARNAME="$EMUDIR"Z64K.jar
     Z64KVIC20="java -jar"
-    Z64KVIC20+=" $EMUDIR"Z64K.jar" vic20 "
-#    Z64KVIC20+=" $EMUDIR"Z64KNewUI.jar" vic20 "
-#    Z64KVIC20+=" $EMUDIR"VIC20_Beta_2017_02_09.jar
-    
+    Z64KVIC20+=" $JARNAME"" vic20 "
+
+    if ! [ -f "$JARNAME" ]; then
+        echo "Error: "$JARNAME" not found." >&2
+        exit 1
+    fi
+
     if ! [ -x "$(command -v java)" ]; then
         echo 'Error: java not installed.' >&2
         exit 1

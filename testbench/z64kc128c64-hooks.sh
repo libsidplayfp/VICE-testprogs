@@ -29,9 +29,15 @@ Z64KC128C64REFSYO=35
 
 function z64kc128c64_check_environment
 {
+    JARNAME="$EMUDIR"Z64K.jar
     Z64KC128C64="java -jar"
-    Z64KC128C64+=" $EMUDIR"Z64K.jar" c128 "
-    
+    Z64KC128C64+=" $JARNAME"" c128 "
+
+    if ! [ -f "$JARNAME" ]; then
+        echo "Error: "$JARNAME" not found." >&2
+        exit 1
+    fi
+
     if ! [ -x "$(command -v java)" ]; then
         echo 'Error: java not installed.' >&2
         exit 1

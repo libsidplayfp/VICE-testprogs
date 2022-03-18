@@ -26,11 +26,15 @@ Z64KC64REFSYO=35
 
 function z64kc64_check_environment
 {
+    JARNAME="$EMUDIR"Z64K.jar
     Z64KC64="java -jar"
-    Z64KC64+=" $EMUDIR"Z64K.jar" c64 "
-#    Z64KC64+=" $EMUDIR"Z64KNewUI.jar" c64 "
-#    Z64KC64+=" $EMUDIR"C64_Beta_2017_03_08b.jar
-    
+    Z64KC64+=" $JARNAME"" c64 "
+
+    if ! [ -f "$JARNAME" ]; then
+        echo "Error: "$JARNAME" not found." >&2
+        exit 1
+    fi
+
     if ! [ -x "$(command -v java)" ]; then
         echo 'Error: java not installed.' >&2
         exit 1
@@ -106,10 +110,10 @@ function z64kc64_get_options
                 exitoptions="-reu -reusize 512"
                 reu_enabled=1
             ;;
-#        "geo512k")
-#                exitoptions="-georam -georamsize 512"
-#                georam_enabled=1
-#            ;;
+        "geo512k")
+                exitoptions="-georam -georamsize 512"
+                georam_enabled=1
+            ;;
 #        "plus60k")
 #                exitoptions="-memoryexphack 2"
 #                plus60k_enabled=1

@@ -22,11 +22,15 @@ Z64KC128REFSYO=35
 
 function z64kc128_check_environment
 {
+    JARNAME="$EMUDIR"Z64K.jar
     Z64KC128="java -jar"
-    Z64KC128+=" $EMUDIR"Z64K.jar" c128 "
-#    Z64KC128+=" $EMUDIR"Z64KNewUI.jar" c128 "
-#    Z64KC128+=" $EMUDIR"C128_Beta_2017_03_13.jar
-    
+    Z64KC128+=" $JARNAME"" c128 "
+
+    if ! [ -f "$JARNAME" ]; then
+        echo "Error: "$JARNAME" not found." >&2
+        exit 1
+    fi
+
     if ! [ -x "$(command -v java)" ]; then
         echo 'Error: java not installed.' >&2
         exit 1
@@ -142,11 +146,11 @@ function z64kc128_get_options
                     mounted_g64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
-#               if [ "${1:0:9}" == "mountg71:" ]; then
-#                   exitoptions="-8 $2/${1:9}"
-#                   mounted_g64="${1:9}"
-#                   echo -ne "(disk:${1:9}) "
-#               fi
+                if [ "${1:0:9}" == "mountg71:" ]; then
+                    exitoptions="-8 $2/${1:9}"
+                    mounted_g64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
                 if [ "${1:0:9}" == "mountcrt:" ]; then
                     exitoptions="-cartcrt $2/${1:9}"
                     mounted_crt="${1:9}"

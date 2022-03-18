@@ -10,7 +10,12 @@ KERNAL64SCPU64OPTS+=" --sid-cycle-exact"
 function kernal64scpu64_check_environment
 {
     KERNAL64SCPU64=$EMUDIR/kscpu64.sh
-    
+
+    if ! [ -f "$KERNAL64SCPU64" ]; then
+        echo "Error: "$KERNAL64SCPU64" not found." >&2
+        exit 1
+    fi
+
     if ! [ -x "$(command -v $JAVA_HOME/bin/java)" ]; then
         echo 'Error: java not installed.' >&2
         exit 1
