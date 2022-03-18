@@ -18,19 +18,19 @@ DENISELASTSTRING="git 16.03.2022"
 HOXS64LAST=1-1-0-5
 HOXS64LASTSTRING=1.1.0.5
 
-Z64KC64LAST=20201230
-Z64KC64LASTSTRING="30 December 2020"
-Z64KC128C64LAST=20201230
-Z64KC128C64LASTSTRING="30 December 2020"
+Z64KC64LAST=20220130
+Z64KC64LASTSTRING="30 January 2022"
+Z64KC128C64LAST=20220130
+Z64KC128C64LASTSTRING="30 January 2022"
 Z64KC128LAST=20220130
 Z64KC128LASTSTRING="30 January 2022"
 Z64KVIC20LAST=20220130
 Z64KVIC20LASTSTRING="30 January 2022"
 
-KERNAL64C64LAST=1-7-0_b15
-KERNAL64C64LASTSTRING=1.7.0_b15
-KERNAL64C128C64LAST=1-7-0_b15
-KERNAL64C128C64LASTSTRING=1.7.0_b15
+KERNAL64C64LAST=1-7-3_b13
+KERNAL64C64LASTSTRING=1.7.3_b13
+KERNAL64C128C64LAST=1-7-3_b13
+KERNAL64C128C64LASTSTRING=1.7.3_b13
 KERNAL64C128C128LAST=1-7-3_b13
 KERNAL64C128C128LASTSTRING=1.7.3_b13
 KERNAL64SCPU64LAST=1-7-3_b13
@@ -1057,6 +1057,7 @@ resultsz64kc64: maketable z64kc64-testlist.txt
 		--results results/z64kc64-20181202-result.txt "z64kc64 20181202" \
 		--results results/z64kc64-1_2-result.txt "z64kc64 1.2" \
 		--results results/z64kc64-20201224-result.txt "z64kc64 24 December 2020" \
+		--results results/z64kc64-20201230-result.txt "z64kc64 30 December 2020" \
 		--results results/z64kc64-$(Z64KC64LAST)-result.txt "z64kc64 "$(Z64KC64LASTSTRING)"" \
 		\
 		> results/z64kc64.html
@@ -1084,6 +1085,7 @@ resultsz64kc128c64: maketable z64kc128c64-testlist.txt
 		--results results/z64kc128c64-20181202-result.txt "z64kc128c64 20181202" \
 		--results results/z64kc128c64-1_2-result.txt "z64kc128c64 1.2" \
 		--results results/z64kc128c64-20201217-result.txt "z64kc128c64 17 December 2020" \
+		--results results/z64kc128c64-20201230-result.txt "z64kc128c64 30 December 2020" \
 		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64kc128c64 "$(Z64KC128C64LASTSTRING)"" \
 		\
 		> results/z64kc128c64.html
@@ -1168,6 +1170,7 @@ resultskernal64c64: maketable kernal64c64-testlist.txt
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/kernal64c64-1-6-2_b8-result.txt "kernal64 (c64) 1.6.2_b8" \
+		--results results/kernal64c64-1-7-0_b15-result.txt "kernal64 (c64) 1.7.0_b15" \
 		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
 		\
 		> results/kernal64c64.html
@@ -1179,6 +1182,7 @@ resultskernal64c128c64: maketable kernal64c128c64-testlist.txt
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/kernal64c128c64-1-6-2_b8-result.txt "Kernal64 (c128/64) 1.6.2_b8" \
+		--results results/kernal64c128c64-1-7-0_b15-result.txt "Kernal64 (c128/64) 1.7.0_b15" \
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "Kernal64 (c128/64) "$(KERNAL64C128C64LASTSTRING)"" \
 		\
 		> results/kernal64c128c64.html
