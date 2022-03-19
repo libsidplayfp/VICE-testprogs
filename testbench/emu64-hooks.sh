@@ -3,7 +3,7 @@
 EMU64OPTS+=" --reset-ini"
 
 EMU64OPTS+=" --video-filter-off"
-#EMU64OPTS+=" -VICIIextpal"
+EMU64OPTS+=" --double-texture-off"
 EMU64OPTS+=" --set-palette 7"
 EMU64OPTS+=" --warp"
 EMU64OPTS+=" --debugcart"
@@ -20,7 +20,7 @@ EMU64OPTSSCREENSHOT+=" --nosplash --minimized"
 # for PAL use  32x35
 # for NTSC use 32x23
 EMU64SXO=32
-EMU64SYO=25
+EMU64SYO=35
 
 # the same for the reference screenshots
 EMU64REFSXO=32
@@ -224,7 +224,7 @@ function emu64_run_screenshot
         EMU64REFSXO=32
         EMU64REFSYO=35
         EMU64SXO=32
-        EMU64SYO=25
+        EMU64SYO=35
     
         if [ "${refscreenshotvideotype}" == "NTSC" ]; then
             EMU64REFSXO=32

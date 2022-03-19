@@ -98,7 +98,7 @@ maketable: maketable.c
 
 ################################################################################
 
-testlist: \
+TESTLISTS=\
 	x64-testlist.txt \
 	x64sc-testlist.txt \
 	x128c64-testlist.txt \
@@ -128,6 +128,8 @@ testlist: \
 	kernal64c128c64-testlist.txt \
 	kernal64c128c128-testlist.txt \
 	kernal64scpu64-testlist.txt
+
+testlist: $(TESTLISTS)
 
 x64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  x64-testlist.txt
@@ -1302,4 +1304,13 @@ allresults: results resultsx64 resultsx64sc resultsx128 resultsx128c64 resultsxc
 		resultshoxs64 resultsdenise resultsmicro64 resultsyace resultsemu64 \
 		resultskernal64c64 resultskernal64c128c64 resultskernal64c128c128 resultskernal64scpu64 \
 		resultscham resultscham20 resultsu64 
+
+.PHONY: clean zap
+clean:
+	$(RM) maketable
+	$(RM) cmpscreens
+
+zap: clean
+	$(RM) *-result.txt
+	$(RM) $(TESTLISTS)
 
