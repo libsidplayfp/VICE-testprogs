@@ -13,8 +13,14 @@ xvic -default -memory 8k via<N>.prg
 when run, each program will cycle through all sub tests once and then display
 the results. red/green characters at bottom left indicate success/failure of
 the sub tests. red/green border indicates success/failure of the complete test
-(shows red if one of the sub tests failed). at the top of the screen you can
-see the measured data, at the bottom the reference data.
+(shows red if one of the sub tests failed). 
+
+at the top of the screen you can see the measured data, at the bottom the
+reference data.
+
+to save the measured data from $2000 to $2fff, you can use this basic line:
+
+poke43,0:poke44,32:poke45,0:poke46,48:poke55,255:poke56,255:save"mem",8,1
 
 --------------------------------------------------------------------------------
 

@@ -14,11 +14,13 @@ PROGS = \
 	via10.prg \
 	via11.prg \
 	via12.prg \
-	via13.prg
+	via13.prg \
+	via20.prg \
+	via21.prg
 
 all: $(PROGS) disk
 
-%.prg:%.asm $(COMMON)
+%.prg:%.asm $(COMMON) %ref.bin
 	acme $*.asm
 
 disk: $(PROGS)
@@ -35,11 +37,13 @@ disk: $(PROGS)
 		-write via10.prg via10 \
 		-write via11.prg via11 \
 		-write via12.prg via12 \
-		-write via13.prg via13
+		-write via13.prg via13 \
+		-write via20.prg via20 \
+		-write via21.prg via21
 
 
 test: all
-	xvic -default -memory 8k via3.prg
+	xvic -default -memory 8k via21.prg
  
 clean:
 	rm -f *~

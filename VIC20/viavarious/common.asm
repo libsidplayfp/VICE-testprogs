@@ -110,7 +110,7 @@ wkey
 +
         cmp #"a"
         bcc wkey
-        cmp #"a"+NUMTESTS
+        cmp #'a'+NUMTESTS
         bcs wkey
 
         sei
