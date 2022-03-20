@@ -42,6 +42,8 @@ U64LASTSTRING="1.41"
 MICRO64LAST=20180316
 MICRO64LASTSTRING="1.00.2018.03.16 (build 719)"
 
+EMU64HEAD=20220320
+
 CHAM20LAST=20201130
 
 include Makefile.config
@@ -261,6 +263,7 @@ emu64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",isepic" \
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
+		| grep -v ",mountp64:" \
 		>> emu64-testlist.txt
 
 		
@@ -704,6 +707,8 @@ results0: maketable
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
 		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
+		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
+		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
 		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)"
@@ -751,7 +756,7 @@ results: maketable
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
 		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
-		--results results/emu64-20191025-result.txt "emu64 20191025" \
+		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
 		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
@@ -835,7 +840,7 @@ resultswiki: maketable
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
 		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
-		--results results/emu64-20191025-result.txt "emu64 20191025" \
+		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
 		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
@@ -1159,6 +1164,7 @@ resultsemu64: maketable emu64-testlist.txt
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/emu64-20191025-result.txt "emu64 20191025" \
+		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
 		\
 		> results/emu64.html
 		
