@@ -148,6 +148,14 @@ endscrn:
         bpl *-3
         lda #$1f
         sta $d011
+        
+        dec delay+1
+delay:  lda #2
+        bne skp
+        lda #0
+        sta $d7ff
+skp:
+
         lda #IrqLijn0  
         sta $d012
         inc $d019

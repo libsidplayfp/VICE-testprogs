@@ -61,7 +61,7 @@ l1:     lda #123
         bpl l1
 ; chars and colors in $07e8 ... $07ff and $dbe8 ... $dbff
         ldx #$fe 
- l2:    txa       
+l2:     txa       
         sta $0701,x 
         sta $db01,x 
         dex
@@ -150,6 +150,14 @@ endscrn:
         bpl *-3
         lda #$3f
         sta $d011
+
+        dec delay+1
+delay:  lda #2
+        bne skp
+        lda #0
+        sta $d7ff
+skp:
+
         lda #IrqLijn0   
         sta $d012
         inc $d019

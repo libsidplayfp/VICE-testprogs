@@ -149,6 +149,14 @@ endscrn:
        
         bit $d011
         bpl *-3
+        
+        dec delay+1
+delay:  lda #2
+        bne skp
+        lda #0
+        sta $d7ff
+skp:
+
         lda #$1f
         sta $d011
         lda #IrqLijn0  

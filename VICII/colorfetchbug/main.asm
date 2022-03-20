@@ -15,7 +15,7 @@ IrqLijn1 = 255
 *=$0810
 ;set up stable raster interrupt and put something on screen
         sei
-		lda #%100000
+		lda #%00100000
 		sta $01
 		ldx #0
 .clm1	stx ClearMemStart
@@ -25,7 +25,7 @@ IrqLijn1 = 255
 	inc .clm1+2
 	bne .clm1
 	
-	lda #%110111
+	lda #%00110111
 	sta $01
 
 	; Clear everything else :)
@@ -178,6 +178,14 @@ endscrn:
 
         lda #$1f		;$3f
         sta $d011
+        
+        dec delay+1
+delay:  lda #2
+        bne skp
+        lda #0
+        sta $d7ff
+skp:
+
         lda #IrqLijn0   ;IrqLijn1
         sta $d012
         inc $d019
