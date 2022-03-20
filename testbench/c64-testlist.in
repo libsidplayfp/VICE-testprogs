@@ -1035,8 +1035,8 @@
 ../SID/busvalue/,busvalue.prg,exitcode,5500000
 ../SID/detect/,detect.prg,interactive,0,comment:see automatic variants
 ../SID/detect/,detect-1-old.prg,exitcode,6400000,sid-old
-../SID/detect/,detect-1-new.prg,exitcode,5500000,sid-new
-../SID/detect/,detect-2-old.prg,exitcode,5500000,sid-old
+../SID/detect/,detect-1-new.prg,exitcode,6400000,sid-new
+../SID/detect/,detect-2-old.prg,exitcode,5600000,sid-old
 ../SID/detect/,detect-2-new.prg,exitcode,5600000,sid-new
 ../SID/detectmirrors/,main.prg,interactive,0
 ../SID/env_test/,env_test_ra_0000.prg,exitcode,9000000
@@ -1484,7 +1484,7 @@
 ../drive/format/,format.prg,exitcode,88000000,mountd64:format.d64,comment: make sure format.d64 was freshly created - the test will format it
 ../drive/hls-protection/,hlstest.prg,exitcode,9000000,mountg64:hlstest.g64
 ../drive/iecdelay/,iec-bus-delay-auto.prg,exitcode,80000000
-../drive/inertia/,drive-emu-check.prg,exitcode,8100000,mountd64:drive-emu-check.d64
+../drive/inertia/,drive-emu-check.prg,exitcode,8200000,mountd64:drive-emu-check.d64
 ../drive/interrupts/,timera.prg,exitcode,20000000,comment:results depend on the physical properties of the drive and vary between real drives/mechs too.
 ../drive/interrupts/,watchdog,interactive,0,comment:this is a freezer test - run/freeze/restart. it should not hang
 ../drive/pwm/,pwm.prg,interactive,0,comment:drive led should be fading dark-light-dark etc
