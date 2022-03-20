@@ -862,7 +862,9 @@
 ../SID/busvalue/,busvalue.prg,exitcode,5500000
 ../SID/detect/,detect.prg,interactive,0,comment:see automatic variants
 ../SID/detect/,detect-1-old.prg,exitcode,6400000,sid-old
+../SID/detect/,detect-1-new.prg,exitcode,6400000,sid-new
 ../SID/detect/,detect-2-old.prg,exitcode,5600000,sid-old
+../SID/detect/,detect-2-new.prg,exitcode,5600000,sid-new
 ../SID/detectmirrors/,main.prg,interactive,0
 ../SID/env_test/,env_test_ra_0000.prg,exitcode,9000000
 ../SID/env_test/,env_test_ra_0100.prg,exitcode,9000000
@@ -884,21 +886,36 @@
 #../SID/noisewriteback/,noise_writeback_with_test_bit1.prg,exitcode,100000000
 #../SID/noisewriteback/,noise_writeback_with_test_bit2.prg,exitcode,100000000
 #../SID/noisewriteback/,noise_writeback_with_test_bit.prg,exitcode,100000000
+#../SID/noisewriteback/,noise_writeback_check_8_to_8_new.prg,exitcode,100000000,sid-new
 #../SID/noisewriteback/,noise_writeback_check_8_to_8_old.prg,exitcode,100000000,sid-old
+#../SID/noisewriteback/,noise_writeback_check_8_to_9_new.prg,exitcode,100000000,sid-new
 #../SID/noisewriteback/,noise_writeback_check_8_to_9_old.prg,exitcode,100000000,sid-old
+#../SID/noisewriteback/,noise_writeback_check_8_to_C_new.prg,exitcode,100000000,sid-new
 #../SID/noisewriteback/,noise_writeback_check_8_to_C_old.prg,exitcode,100000000,sid-old
+#../SID/noisewriteback/,noise_writeback_check_9_to_8_new.prg,exitcode,100000000,sid-new
 #../SID/noisewriteback/,noise_writeback_check_9_to_8_old.prg,exitcode,100000000,sid-old
+#../SID/noisewriteback/,noise_writeback_check_9_to_9_new.prg,exitcode,100000000,sid-new
 #../SID/noisewriteback/,noise_writeback_check_9_to_9_old.prg,exitcode,100000000,sid-old
+#../SID/noisewriteback/,noise_writeback_check_9_to_A_new.prg,exitcode,100000000,sid-new
 #../SID/noisewriteback/,noise_writeback_check_9_to_A_old.prg,exitcode,100000000,sid-old
+#../SID/noisewriteback/,noise_writeback_check_A_to_8_new.prg,exitcode,100000000,sid-new
 #../SID/noisewriteback/,noise_writeback_check_A_to_8_old.prg,exitcode,100000000,sid-old
+#../SID/noisewriteback/,noise_writeback_check_A_to_9_new.prg,exitcode,100000000,sid-new
 #../SID/noisewriteback/,noise_writeback_check_A_to_9_old.prg,exitcode,100000000,sid-old
+#../SID/noisewriteback/,noise_writeback_check_A_to_A_new.prg,exitcode,100000000,sid-new
 #../SID/noisewriteback/,noise_writeback_check_A_to_A_old.prg,exitcode,100000000,sid-old
+#../SID/noisewriteback/,noise_writeback_check_C_to_C_new.prg,exitcode,100000000,sid-new
 #../SID/noisewriteback/,noise_writeback_check_C_to_C_old.prg,exitcode,100000000,sid-old
+#../SID/noisewriteback/,noise_writeback_check_D_to_E_new.prg,exitcode,100000000,sid-new
 #../SID/noisewriteback/,noise_writeback_check_D_to_E_old.prg,exitcode,100000000,sid-old
+#../SID/noisewriteback/,noise_writeback_check_E_to_B_new.prg,exitcode,100000000,sid-new
 #../SID/noisewriteback/,noise_writeback_check_E_to_B_old.prg,exitcode,100000000,sid-old
+#../SID/noisewriteback/,noise_writeback_check_E_to_D_new.prg,exitcode,100000000,sid-new
 #../SID/noisewriteback/,noise_writeback_check_E_to_D_old.prg,exitcode,100000000,sid-old
 ../SID/noisewriteback/,noise_writeback_test1-old.prg,exitcode,25000000,sid-old
+../SID/noisewriteback/,noise_writeback_test1-new.prg,exitcode,25000000,sid-new
 ../SID/noisewriteback/,noise_writeback_test2-old.prg,exitcode,25000000,sid-old
+../SID/noisewriteback/,noise_writeback_test2-new.prg,exitcode,25000000,sid-new
 ../SID/wb_testsuite/,noise_writeback_check_8_to_8_old.prg,exitcode,100000000,sid-old
 ../SID/wb_testsuite/,noise_writeback_check_8_to_9_old.prg,exitcode,100000000,sid-old
 ../SID/wb_testsuite/,noise_writeback_check_8_to_A_old.prg,exitcode,100000000,sid-old
@@ -961,9 +978,61 @@
 ../SID/wb_testsuite/,noise_writeback_check_F_to_D_old.prg,exitcode,100000000,sid-old
 ../SID/wb_testsuite/,noise_writeback_check_F_to_E_old.prg,exitcode,100000000,sid-old
 ../SID/wb_testsuite/,noise_writeback_check_F_to_F_old.prg,exitcode,100000000,sid-old
+../SID/wb_testsuite/,noise_writeback_check_8_to_8_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_8_to_9_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_8_to_A_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_8_to_B_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_8_to_D_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_8_to_E_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_8_to_F_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_9_to_8_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_9_to_9_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_9_to_B_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_9_to_D_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_9_to_F_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_A_to_8_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_A_to_9_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_A_to_A_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_A_to_B_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_A_to_D_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_A_to_E_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_A_to_F_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_B_to_9_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_B_to_A_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_B_to_B_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_B_to_D_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_B_to_E_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_B_to_F_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_C_to_8_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_C_to_9_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_C_to_A_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_C_to_E_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_C_to_F_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_D_to_8_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_D_to_9_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_D_to_B_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_D_to_D_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_D_to_F_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_E_to_8_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_E_to_9_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_E_to_A_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_E_to_B_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_E_to_D_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_E_to_E_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_E_to_F_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_F_to_9_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_F_to_A_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_F_to_B_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_F_to_D_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_F_to_E_new.prg,exitcode,100000000,sid-new
+../SID/wb_testsuite/,noise_writeback_check_F_to_F_new.prg,exitcode,100000000,sid-new
 ../SID/osc3-wave0/,osc3-wave0.prg,exitcode,15000000,sid-old
+../SID/osc3-wave0/,osc3-wave0-new.prg,exitcode,15000000,sid-new
+../SID/osc_topbit/,osc_topbit_test_noise_new.prg,exitcode,15000000,sid-new
 ../SID/osc_topbit/,osc_topbit_test_noise_old.prg,exitcode,15000000,sid-old
+../SID/osc_topbit/,osc_topbit_test_pulse_new.prg,exitcode,15000000,sid-new
 ../SID/osc_topbit/,osc_topbit_test_pulse_old.prg,exitcode,15000000,sid-old
+../SID/osc_topbit/,osc_topbit_test_triangle_new.prg,exitcode,15000000,sid-new
 ../SID/osc_topbit/,osc_topbit_test_triangle_old.prg,exitcode,15000000,sid-old
 ../SID/oscinit/,oscinit.prg,exitcode,5200000
 ../SID/oscinit/,noiseinit.prg,exitcode,5200000
@@ -980,7 +1049,9 @@
 ../SID/resid-test/,extfilt.prg,analyzer,0
 ../SID/resid-test/,noisetest.prg,exitcode,46000000
 ../SID/resid-test/,oscsample0-6581.prg,exitcode,130000000,sid-old
+../SID/resid-test/,oscsample0-8580.prg,exitcode,130000000,sid-new
 ../SID/resid-test/,oscsample1-6581.prg,exitcode,130000000,sid-old
+../SID/resid-test/,oscsample1-8580.prg,exitcode,130000000,sid-new
 ../SID/resid-test/,sweep-kern.prg,analyzer,0
 ../SID/resid-test/,sweep-orig.prg,analyzer,0
 ../SID/resid-test/,sweep.prg,analyzer,0
@@ -996,8 +1067,13 @@
 ../SID/waveforms/,waveforms-20-6581.prg,exitcode,53000000,sid-old
 ../SID/waveforms/,waveforms-40-6581.prg,exitcode,53000000,sid-old
 ../SID/waveforms/,waveforms-80-6581.prg,exitcode,200000000,sid-old
+../SID/waveforms/,waveforms-10-8580.prg,exitcode,53000000,sid-new
+../SID/waveforms/,waveforms-20-8580.prg,exitcode,53000000,sid-new
+../SID/waveforms/,waveforms-40-8580.prg,exitcode,53000000,sid-new
+../SID/waveforms/,waveforms-80-8580.prg,exitcode,200000000,sid-new
 ../SID/writedelay/,writedelay.prg,exitcode,5500000
 ../SID/wf12nsr/,wf12nsr.prg,exitcode,150000000,sid-old
+../SID/wf12nsr/,wf12nsr-8580.prg,exitcode,150000000,sid-new
 ################################################################################
 # Cartridges
 #
@@ -1033,6 +1109,7 @@
 #TODO: do more research and make a proper automatic test
 ../C64/carts/,,analyzer,0,mountcrt:mmcr-64krom.crt
 ../C64/carts/,,exitcode,100000,mountcrt:romram.crt
+../C64/carts/,,exitcode,100000,reu512k,mountcrt:rr-reu.crt
 #TODO: make this automatic
 ../C64/carts/ocean,,interactive,0,mountcrt:ocean.crt
 ../C64/carts/pagefox,,exitcode,100000,mountcrt:writeram-8000.crt
@@ -1087,7 +1164,13 @@
 ################################################################################
 # REU
 ################################################################################
+../REU/badoublewrite/,badoublewrite.prg,screenshot,6800000,reu512k
+../REU/bonzai/,spritetiming.prg,exitcode,49000000,reu512k
+../REU/bonzai/,checkchar.prg,exitcode,12000000,reu512k
+../REU/bonzai/,reudetect.prg,exitcode,15000000,reu512k
+../REU/colorram/,colorram.prg,exitcode,1000000000,reu512k
 ../REU/colorram/,dmacolortest.prg,interactive,0
+../REU/detectsize/,detectreu.prg,exitcode,10000000,reu512k
 ../REU/floatingbus/,floating.prg,exitcode,14000000,reu256k
 ../REU/floatingbus/,floating-a.prg,exitcode,14000000,reu256k
 ../REU/floatingbus/,floating-b.prg,exitcode,14000000,reu256k
@@ -1098,28 +1181,112 @@
 ../REU/floatingbus/,floating4b.prg,exitcode,65000000,reu256k
 ../REU/floatingbus/,floating4c.prg,exitcode,95000000,reu256k
 ../REU/floatingbus/,floating4d.prg,exitcode,95000000,reu256k
+../REU/ioglitch/,ioglitch.prg,exitcode,1000000000,reu512k
 ../REU/mirrors/,mirrors128k.prg,exitcode,20000000,reu128k
 ../REU/mirrors/,mirrors256k.prg,exitcode,20000000,reu256k
+../REU/mirrors/,mirrors512k.prg,exitcode,20000000,reu512k
 ../REU/mirrors/,mirrors1m.prg,exitcode,20000000,reu1m
 ../REU/mirrors/,mirrors2m.prg,exitcode,20000000,reu2m
 ../REU/mirrors/,mirrors4m.prg,exitcode,20000000,reu4m
 ../REU/mirrors/,mirrors8m.prg,exitcode,20000000,reu8m
 ../REU/mirrors/,mirrors16m.prg,exitcode,20000000,reu16m
+../REU/misc/,bitfill-auto.prg,exitcode,100000000,reu512k
+../REU/misc/,twoblocks-auto.prg,exitcode,100000000,reu512k
+../REU/misc/,twoblocks-ff00-auto.prg,exitcode,100000000,reu512k
+../REU/misc/,wheels.prg,exitcode,100000000,reu512k
+../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,exitcode,42500000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test1.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test1-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test2.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test2-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test3.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test3-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test4.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test4-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test5.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test5-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test6.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test6-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test7.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test7-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test8.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test8-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/ramlink/,reuverify.prg,analyzer,0
 ../REU/ramlink/,reuverify128k.prg,exitcode,7000000,reu128k
 ../REU/ramlink/,reuverify256k.prg,exitcode,7000000,reu256k
+../REU/ramlink/,reuverify512k.prg,exitcode,7000000,reu512k
 ../REU/ramlink/,reuverify1m.prg,exitcode,7000000,reu1m
 ../REU/ramlink/,reuverify2m.prg,exitcode,7000000,reu2m
 ../REU/ramlink/,reuverify4m.prg,exitcode,7000000,reu4m
 ../REU/ramlink/,reuverify8m.prg,exitcode,8000000,reu8m
 ../REU/raminitpattern/,powerup.prg,analyzer,0
+../REU/reudetect/,reudetect.prg,exitcode,100000000,reu512k,comment:load the "blu.reu" file first
+../REU/reutiming/,reutiming.prg,exitcode,100000000,reu512k
 #FIXME: NTSC fix
+../REU/reutiming2/,a.prg,screenshot,40500000,reu512k,vicii-pal
+../REU/reutiming2/,a2.prg,screenshot,40500000,reu512k,vicii-pal
+../REU/reutiming2/,a3.prg,screenshot,40500000,reu512k,vicii-pal
+../REU/reutiming2/,a4.prg,screenshot,40500000,reu512k,vicii-pal
+../REU/reutiming2/,b.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,b2.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,b3.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,b4.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,b5.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,b6.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,c.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
+../REU/reutiming2/,c2.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
+../REU/reutiming2/,c3.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,c4.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,d.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
+../REU/reutiming2/,d2.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
+../REU/reutiming2/,d3.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,d4.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,e.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e3.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e4.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e5.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e6.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f3.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f4.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g3.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g4.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e2-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e3-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e4-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e5-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e6-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f2-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f3-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f4-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g2-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g3-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g4-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/rmw-trigger/,rmwtrigger-rom.prg,exitcode,1000000000,reu512k,warn:vicefail
+../REU/rmw-trigger/,rmwtrigger-ram.prg,exitcode,1000000000,reu512k,warn:vicefail
 ../REU/spriteba/,spriteba.prg,analyzer,0
 #FIXME: NTSC fix
+../REU/xfertiming/,xfertiming-cmp.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/xfertiming/,xfertiming-swap.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/xfertiming/,xfertiming-swap2.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/xfertiming/,xfertiming-toreu.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/xfertiming/,xfertiming-toc64.prg,screenshot,20000000,reu512k,vicii-pal
 #TODO: clean up and add all the other reu timing tests....
 ################################################################################
 # GEO-RAM
 ################################################################################
+../GEO-RAM/,georam64.prg,exitcode,80000000,geo512k
+../GEO-RAM/,georamtest.prg,interactive,0,geo512k,comment:see automatic variants
+../GEO-RAM/,georamtest-auto.prg,exitcode,80000000,geo512k
+../GEO-RAM/,newtest.prg,interactive,0,geo512k,comment:see automatic variants
+../GEO-RAM/,newtest-auto.prg,exitcode,80000000,geo512k
 ################################################################################
 # plus60k
 ################################################################################
@@ -1223,5 +1390,7 @@
 #../RS232/,test1.prg
 #../RTC/,ds12c887.prg
 #../MIDI/,midi-out-irq-test.prg
+../memory-expansions/,c64-georam-emd.prg,exitcode,570000000,geo512k
+../memory-expansions/,c64-reu-emd.prg,exitcode,535000000,reu512k
 ../memory-expansions/,c64-ram-emd.prg,exitcode,29000000
 #../cp-clockf83/cp-clockf83.d64

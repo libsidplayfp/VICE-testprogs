@@ -256,9 +256,6 @@ emu64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
 		| grep -v ",cia-new" \
-		| grep -v ",sid-new" \
-		| grep -v ",reu512k" \
-		| grep -v ",geo512k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \

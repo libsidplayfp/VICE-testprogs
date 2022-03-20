@@ -10,8 +10,10 @@ EMU64OPTS+=" --debugcart"
 #EMU64OPTS+="  --nosplash"
 
 # extra options for the different ways tests can be run
-EMU64OPTSEXITCODE+=" --nosplash --minimized"
-EMU64OPTSSCREENSHOT+=" --nosplash --minimized"
+#EMU64OPTSEXITCODE+=" --nosplash --minimized"
+#EMU64OPTSSCREENSHOT+=" --nosplash --minimized"
+EMU64OPTSEXITCODE+=" --nogui"
+EMU64OPTSSCREENSHOT+=" --nogui"
 
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
@@ -98,27 +100,31 @@ function emu64_get_options
                 fi
             ;;
         "cia-old")
+#FIXME: unclear what the CIA type is
 #                exitoptions="-ciamodel 0"
                 new_cia_enabled=0
             ;;
         "cia-new")
+#FIXME: unclear what the CIA type is
 #                exitoptions="-ciamodel 1"
                 new_cia_enabled=1
             ;;
         "sid-old")
-#                exitoptions="-sidenginemodel 256"
+                exitoptions="--set-sidtype 0"
                 new_sid_enabled=0
             ;;
         "sid-new")
-#                exitoptions="-sidenginemodel 257"
+                exitoptions="--set-sidtype 1"
                 new_sid_enabled=1
             ;;
         "reu512k")
-#                exitoptions="-reu -reusize 512"
+#FIXME: REU is always 16MB
+                exitoptions="--enable-reu"
                 reu_enabled=1
             ;;
         "geo512k")
-#                exitoptions="-georam -georamsize 512"
+#FIXME: GEORAM is always 2MB
+                exitoptions="--enable-georam"
                 georam_enabled=1
             ;;
         *)
