@@ -38,6 +38,8 @@
 ../VIC20/viavarious/,via11.prg,exitcode,100000000,vic20-8k
 ../VIC20/viavarious/,via12.prg,exitcode,100000000,vic20-8k
 ../VIC20/viavarious/,via13.prg,exitcode,100000000,vic20-8k
+../VIC20/viavarious/,via20.prg,exitcode,35000000,vic20-8k
+../VIC20/viavarious/,via21.prg,exitcode,35000000,vic20-8k
 ../VIC20/via_sr/,viasr00.prg,exitcode,10000000,vic20-unexp
 ../VIC20/via_sr/,viasr00ifr.prg,exitcode,10000000,vic20-unexp
 ../VIC20/via_sr/,viasr04.prg,exitcode,10000000,vic20-unexp

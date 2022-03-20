@@ -688,6 +688,11 @@
 ../VICII/border/,vborder2-36.prg,screenshot,12000000,vicii-pal
 ../VICII/border/,vborder2-63.prg,screenshot,12000000,vicii-pal
 ../VICII/border/,vborder2-64.prg,screenshot,12000000,vicii-pal
+../VICII/colorfetchbug,bitmap.prg,screenshot,7100000,vicii-pal
+../VICII/colorfetchbug,main.prg,screenshot,7100000,vicii-pal
+../VICII/colorfetchbug,main2.prg,screenshot,7100000,vicii-pal
+../VICII/colorfetchbug,main3.prg,screenshot,7100000,vicii-pal
+../VICII/colorfetchbug,main4.prg,screenshot,7100000,vicii-pal
 ../VICII/colorram/,test.prg,exitcode,100000000
 ../VICII/colorsplit,colorsplit.prg,screenshot,14000000,vicii-pal
 #FIXME: various interactive tests that need better documentation
@@ -1209,6 +1214,8 @@
 ../drive/viavarious/,via12.prg,exitcode,87000000
 ../drive/viavarious/,via13.prg,exitcode,87000000
 ../drive/viavarious/,via14.prg,exitcode,87000000
+../drive/viavarious/,via20.prg,exitcode,130000000
+../drive/viavarious/,via21.prg,exitcode,130000000
 ../drive/writeprotect/,write.d64,interactive,0,comment:mount image write protected - the test should not be able to write to the disk (and kill the dir track)
 ################################################################################
 # virtual Drive
