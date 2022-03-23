@@ -343,7 +343,10 @@ z64kc128-testlist.txt: c128-testlist.in Makefile
 		>> z64kc128-testlist.txt
 
 # official list of supported cartridges for kernal64 is this:
+# see https://github.com/abbruzze/kernal64/tree/master/Kernal64/src/ucesoft/cbm/formats/cart
+#
 # ActionReplay
+# KCS Power Cartridge
 # Final Cartridge III
 # Simon's Basic
 # Comal 80
@@ -359,6 +362,7 @@ z64kc128-testlist.txt: c128-testlist.in Makefile
 # Final Cartridge I
 # Super Snapshot V5
 # GMOD 2
+# GMOD 3
 # Zaxxon
 # Mach 5
 # Page Fox
