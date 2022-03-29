@@ -20,6 +20,8 @@
 ../VIC20/viavarious/,via11.prg,ok,exitcode,,,,-1,-1,-1
 ../VIC20/viavarious/,via12.prg,ok,exitcode,,,,-1,-1,-1
 ../VIC20/viavarious/,via13.prg,ok,exitcode,,,,-1,-1,-1
+../VIC20/viavarious/,via20.prg,error,exitcode,,,,-1,-1,-1
+../VIC20/viavarious/,via21.prg,error,exitcode,,,,-1,-1,-1
 ../VIC20/via_sr/,viasr00exp.prg,ok,exitcode,,,,-1,-1,-1
 ../VIC20/via_sr/,viasr04exp.prg,error,exitcode,,,,-1,-1,-1
 ../VIC20/via_sr/,viasr08exp.prg,error,exitcode,,,,-1,-1,-1
@@ -40,4 +42,4 @@
 ../VIC20/via_mapping/,bugvicevia2.prg,ok,exitcode,,,,-1,-1,-1
 ../interrupts/irqnmi/,irqnmi-vic20irq-8k.prg,error,exitcode,,,,-1,-1,-1
 ../interrupts/irqnmi/,irqnmi-vic20nmi-8k.prg,error,exitcode,,,,-1,-1,-1
-# 3 minutes and 29 seconds elapsed.
+# 3 minutes and 39 seconds elapsed.
