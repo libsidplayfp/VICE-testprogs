@@ -44,6 +44,8 @@ MICRO64LASTSTRING="1.00.2018.03.16 (build 719)"
 
 EMU64HEAD=20220320
 
+CHAMSTANDALONELAST=9q
+
 CHAM20LAST=20201130
 
 include Makefile.config
@@ -71,6 +73,8 @@ all: prereq
 #	echo "testemu64"
 #	echo "testyace"
 
+	echo ""
+	echo "allresults - update all result tables (html)"
 	echo ""
 	echo "for wiki table use something like: make resultswiki | xclip -selection clipboard"
 
@@ -714,7 +718,7 @@ results0: maketable
 		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
-		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
+		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)"
 
 	./maketable --list vic20-testlist.in \
@@ -763,7 +767,7 @@ results: maketable
 		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
-		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
+		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)" \
 		\
 		> results/c64.html
@@ -847,7 +851,7 @@ resultswiki: maketable
 		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
-		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
+		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)"
 	@echo "=== VIC20 ==="
 	./maketable  --wiki --list vic20-testlist.in \
@@ -1231,6 +1235,7 @@ resultscham: maketable chameleon-testlist.txt
 		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
 		--results results/chameleon-9k-standalone-result.txt "TC64 9k (standalone)" \
 		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
+		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
 		\
@@ -1252,6 +1257,7 @@ resultschamwiki: maketable chameleon-testlist.txt
 		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
 		--results results/chameleon-9k-standalone-result.txt "TC64 9k (standalone)" \
 		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
+		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)"
 
