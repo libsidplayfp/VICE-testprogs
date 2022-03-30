@@ -97,5 +97,14 @@ printnext
             pha
 
             lda #0 ; load flag
-            jmp cbmk_load
+            jsr cbmk_load
+            bcs loaderror
+            rts
+loaderror
+            jsr print
+            .text " - load error!"
+            .byte 13,0
+            #RESET_KERNAL_IO
+            cli
+            jmp *
            .bend

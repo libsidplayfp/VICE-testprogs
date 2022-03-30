@@ -4,7 +4,7 @@
 ;-------------------------------------------------------------------------------
 
             .include "common.asm"
-              
+
 ;------------------------------------------------------------------------------              
 thisname   .null "start"    ; name of this test
 nextname   .null "ldab"     ; name of next test, "-" means no more tests
@@ -22,7 +22,7 @@ main:
 e           .macro
             jsr print
             .text " - block "
-            .text "@1"
+            .text @1
             .text " failed"
             .byte 13,0
 
