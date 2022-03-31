@@ -45,6 +45,7 @@ MICRO64LASTSTRING="1.00.2018.03.16 (build 719)"
 EMU64HEAD=20220320
 
 CHAMSTANDALONELAST=9q
+CHAMCARTRIDGELAST=9q
 
 CHAM20LAST=20201130
 
@@ -717,7 +718,7 @@ results0: maketable
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
 		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
-		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
+		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST)" (cartridge)" \
 		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)"
 
@@ -766,7 +767,7 @@ results: maketable
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
 		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
-		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
+		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST)" (cartridge)" \
 		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)" \
 		\
@@ -850,7 +851,7 @@ resultswiki: maketable
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
 		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
 		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
-		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
+		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST)" (cartridge)" \
 		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)"
 	@echo "=== VIC20 ==="
@@ -1238,6 +1239,7 @@ resultscham: maketable chameleon-testlist.txt
 		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
+		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST)" (cartridge)" \
 		\
 		> results/chameleon.html
 
@@ -1259,7 +1261,8 @@ resultschamwiki: maketable chameleon-testlist.txt
 		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
 		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
-		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)"
+		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
+		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST)" (cartridge)" \
 
 .PHONY: resultscham20
 resultscham20: maketable cham20-testlist.txt 
