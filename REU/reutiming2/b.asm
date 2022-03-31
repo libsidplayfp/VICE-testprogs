@@ -172,6 +172,18 @@ reu2    .byte %10010010
         bmi -
         lda #0
         sta $d7ff
+        ;------------ chameleon hack start
+        ; disable VICII framebuffer writes, so we have time to download the
+        ; framebuffer over USB before it changes again
+        lda #42
+        sta $d0fe       ; enable config mode
+
+        lda $d0f2       ; get vic-ii config
+        and #%10111111  ; disable framebuffer writes
+        sta $d0f2       ; set vic-ii config
+
+        sta $d0ff       ; leave config mode
+        ;------------ chameleon hack end
 +
 .if SWAP == 1
         lda #0
