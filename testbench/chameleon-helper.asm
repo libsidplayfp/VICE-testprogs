@@ -35,6 +35,11 @@ link:   !word 0
         lda #$22        ; MMU and I/O RAM
         sta $d0fa       ; enable config registers
 
+        ; enable VICII framebuffer writes
+        lda $d0f2
+        ora #%11000000
+        sta $d0f2
+
         lda #$00
         sta $d0f8       ; stop drive cpu, this stops the drive from updating the
                         ; modify bits
