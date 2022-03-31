@@ -90,7 +90,7 @@ screen:
         !scr "25 - last normal textline           - 25"
         
 textline:
-        !scr "26 - extre line of text             - 26"
+        !scr "26 - extra line of text             - 26"
         
 irq:
         LDA $D019
