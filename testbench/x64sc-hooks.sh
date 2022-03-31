@@ -27,7 +27,8 @@ X64SCOPTS+=" -drive8extend 0"
 # FIXME: the emulators may crash when making screenshots when emu was started
 #        with -console
 X64SCOPTSEXITCODE+=" -console"
-X64SCOPTSSCREENSHOT+=" -minimized"
+#X64SCOPTSSCREENSHOT+=" -minimized"
+X64SCOPTSSCREENSHOT+=" -console"
 
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
