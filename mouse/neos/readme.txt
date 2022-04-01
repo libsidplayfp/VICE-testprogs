@@ -9,3 +9,7 @@ arkanoid.prg:
 - code extracted from arkanoid - this code is kindof broken and only works by
   chance. its a good test for emulation attempts, since it relies on correct
   timeout handling.
+
+krakout.prg:
+- code extracted from a krakout crack. the original code is broken, it did not
+  initialize DDR.

@@ -37,22 +37,23 @@ lineptr = $fa
 bend:       !word 0
 ;-------------------------------------------------------------------------------
 
-    ldx #0
+        ; clear screen
+        ldx #0
 -
-    lda #$20
-    sta $0400,x
-    sta $0500,x
-    sta $0600,x
-    sta $0700,x
-    lda #$01
-    sta $d800,x
-    sta $d900,x
-    sta $da00,x
-    sta $db00,x
-    dex
-    bne -
-        
+        lda #$20
+        sta $0400,x
+        sta $0500,x
+        sta $0600,x
+        sta $0700,x
+        lda #$01
+        sta $d800,x
+        sta $d900,x
+        sta $da00,x
+        sta $db00,x
+        dex
+        bne -
 
+        ; setup sprite
         ldy     #$3F
 -       lda     sprite,y
         sta     $0340,y
@@ -66,26 +67,29 @@ bend:       !word 0
         lda     #$07
         sta     $D027
 
+        ; disable irq sources
         lda     #$7f
         sta     $dc0d
         lda     $dc0d
-        
+
         sei
 mainlp:
         lda     #$7F
         sta     $DC00
 
--       lda $d011
+        ; wait frame
+-       lda     $d011
         bmi -
--       lda $d011
+-       lda     $d011
         bpl -
 
-        inc $d020
+        inc     $0400+39    ; indicate we are running
+
+        inc     $d020
 
         jsr     readmouse
 
 !if TEST = 0 {
-        
         ; if carry set then RMB pressed
         lda     #$07
         bcc     +
@@ -102,10 +106,22 @@ mainlp:
 +       sty     $D027
 
         stx     mousex
-        
+
         lda     #3
         sta     $dd00
 }
+
+!if TEST = 2 {
+        ; check RMB in POTX
+        lda     $D419
+        cmp     #$FF
+        ; if carry set then RMB pressed
+        lda     #$07
+        bcc     +
+        lda     #$0A    ; not RMB
++       sta     $D027
+}
+
         jsr     LC190
         jsr     LC1D0
 
@@ -114,7 +130,11 @@ mainlp:
 !if TEST = 0 {
         lda $DC00
         sta mousebtn
-}        
+}
+!if TEST = 2 {
+        lda $DC00
+        sta mousebtn
+}
         lda mousex
         cmp mousexold
         bne +
@@ -173,6 +193,9 @@ noprint:
 }
 !if TEST = 1 {
     !src "arkanoid.s"
+}
+!if TEST = 2 {
+    !src "krakout.s"
 }
 ;-------------------------------------------------------------------------------
 ; add mouse movement to sprite positions
