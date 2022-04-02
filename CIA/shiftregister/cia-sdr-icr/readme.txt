@@ -29,6 +29,45 @@ again  in the following cycles. Look at the dumps for more detail.
 
 --------------------------------------------------------------------------------
 
+https://sourceforge.net/p/vice-emu/bugs/1219/?page=2#62bc:
+
+Attached are a suite of tests that generates the reference data for normal
+CIA's and CIA's with timestamp of 4485. The functionality is the same as the
+previous test but the reference data is different because I modified some of
+the timing of the main test loop including starting clockslide with offset of
+255.
+
+The storing of results, the reference data locations and number of samples can
+be fully adjusted assuming memory allocated doesn't overlap. There is no need
+to start at the beginning of a page now. See source for details.
+
+All attached tests pass on real hardware with the correct CIA type for the
+test. i.e. If you have CIA with timestamp 4485 you should use the 4485 version
+of the tests.
+
+All tests have been confirmed to pass on real hardware.
+
+Single run tests will only test one baud rate. Pressing space once results are
+shown will toggle the result screens.
+icr-0
+icr-3
+icr-19
+icr-39
+
+Automatic tests will test all possible baud rates between a range of baud
+rates. It will stop at the first failed test. Holding down space will stop the
+program once the current test has completed. Pressing space once results are
+shown will toggle the result screens. RUN STOP/RESTORE and peek(2098) is a
+quick way to see what the TImerA latch value was for the last test.
+icr-0 7f
+icr-1 7f
+icr-4 7f
+
+EDIT: Included test for 39. Similar to test 19, the second set of results for
+that test are nicely aligned for a 40 column screen .
+
+--------------------------------------------------------------------------------
+
 If you run the tests on your own gear, please consider the following:
 
 Please first note down:
