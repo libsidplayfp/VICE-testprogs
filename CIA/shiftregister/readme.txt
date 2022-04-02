@@ -94,3 +94,24 @@ Pattern on VICE:           FCED, FCEE, FCE8, FCE9, FCEA, FCEB, FCEC
 Based on these results it looks like there is a 4 cycle delay on real hardware 
 compared to VICE for when the SDR flag is set. More tests should probably be 
 done with different baud rates to see if the delay is consistent."
+
+A little script to run all tests:
+
+#!/bin/sh
+
+x64=${1:-x64sc}
+oldcias="-cia1model 0 -cia2model 0"
+
+$x64 -default          cia-icr-test-continues-new.prg
+$x64 -default $oldcias cia-icr-test-continues-old.prg
+$x64 -default          cia-icr-test-oneshot-new.prg
+$x64 -default $oldcias cia-icr-test-oneshot-old.prg
+$x64 -default          cia-icr-test2-continues.prg
+$x64 -default          cia-icr-test2-oneshot.prg
+$x64 -default          cia-sdr-delay.prg
+$x64 -default          cia-sdr-init.prg
+$x64 -default          cia-sdr-load.prg
+$x64 -default          cia-sp-test-continues-new.prg
+$x64 -default $oldcias cia-sp-test-continues-old.prg
+$x64 -default          cia-sp-test-oneshot-new.prg
+$x64 -default $oldcias cia-sp-test-oneshot-old.prg
