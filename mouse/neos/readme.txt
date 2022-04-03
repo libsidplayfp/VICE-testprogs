@@ -13,3 +13,7 @@ arkanoid.prg:
 krakout.prg:
 - code extracted from a krakout crack. the original code is broken, it did not
   initialize DDR.
+
+krakoutbug.prg
+- test to expose an actual VICE bug triggered by that krakout crack. The mouse
+  was not polled when POTs were never read, so the mouse could not move.
