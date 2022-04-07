@@ -19,6 +19,31 @@ colormem = $9600
 charsperline = 22
 screenlines = 23
 
+; FIXME: apparently swapping the timers does not work :(
+SWAP=0
+
+.if (SWAP=0)
+VIA1 = $9110
+VIA2 = $9120
+.else
+VIA1 = $9120
+VIA2 = $9110
+.endif
+
+VIA1TALO        = VIA1+4
+VIA1TAHI        = VIA1+5
+VIA1TALOLATCH   = VIA1+6
+VIA1TAHILATCH   = VIA1+7
+VIA1TBLO        = VIA1+8
+VIA1TBHI        = VIA1+9
+
+VIA2TALO        = VIA2+4
+VIA2TAHI        = VIA2+5
+VIA2TALOLATCH   = VIA2+6
+VIA2TAHILATCH   = VIA2+7
+VIA2TBLO        = VIA2+8
+VIA2TBHI        = VIA2+9
+
                 .org basicstart - 2
                 .word basicstart
 
@@ -115,8 +140,8 @@ dotest:
                 ; stop timers
 
                 ; clear pending irqs
-                bit $9114
-                bit $9124
+                bit VIA1TALO
+                bit VIA2TALO
                 ;lda $dd0d
 
                 lda $9004
@@ -139,13 +164,13 @@ dotest:
                 lda #1
                 clc
 timenmi:        adc #0
-                sta $9116 ; VIA1 TA lo
+                sta VIA1TALOLATCH ; VIA1 TA lo
                 
                 ; setup timer for IRQ
                 lda #1+4
                 clc
 timeirq:        adc #0
-                sta $9126 ; VIA2 TA lo
+                sta VIA2TALOLATCH ; VIA2 TA lo
                 
                 ; setup reference timer
 .if SHOW = 0
@@ -153,10 +178,14 @@ timeirq:        adc #0
 .else
                 lda #8+128+54
 .endif
-                sta $9128       ; VIA2 TB lo
+                sta VIA2TBLO       ; VIA2 TB lo
 
                 ; enable timer irqs
+.if SWAP = 0
                 lda #$c0
+.else
+                lda #$a0
+.endif
                 sta $912e     ;VIA2 IF enable Timer A interrupts
                 sta $911e     ;VIA1 IF enable Timer A interrupts
                 
@@ -164,9 +193,9 @@ timeirq:        adc #0
                 ; Fire 1-shot timers
 
                 lda #0
-                sta $9129 ; 4 VIA2 TB hi
-                sta $9125 ; 4 VIA2 TA hi+count
-                sta $9115 ; 4 VIA1 TA hi+count
+                sta VIA2TBHI ; 4 VIA2 TB hi
+                sta VIA2TAHI ; 4 VIA2 TA hi+count
+                sta VIA1TAHI ; 4 VIA1 TA hi+count
                 
                 nop
                 nop
@@ -182,27 +211,27 @@ timeirq:        adc #0
 ;-------------------------------------------------------------------------------
 nmihandler:
                 pha
-                lda $9128       ; VIA2 TB lo
+                lda VIA2TBLO       ; VIA2 TB lo
 nmiout:
 .if SHOW = 1
                 sta screenmem
 .else
                 bit screenmem
 .endif
-                bit $9114       ; VIA1 TA lo latch
+                bit VIA1TALO       ; VIA1 TA lo latch
 
                 pla
                 rti
 ;-------------------------------------------------------------------------------
 irqhandler:
-                lda $9128       ; VIA2 TB lo
+                lda VIA2TBLO       ; VIA2 TB lo
 irqout:
 .if SHOW = 0
                 sta screenmem
 .else
                 bit screenmem
 .endif
-                bit $9124       ; VIA2 TA lo latch
+                bit VIA2TALO       ; VIA2 TA lo latch
 
                 pla
                 tay
