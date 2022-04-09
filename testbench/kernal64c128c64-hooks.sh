@@ -53,8 +53,36 @@ function kernal64c128c64_get_options
                 exitoptions="--sid-8580 true"
                 new_sid_enabled=1
             ;;
+        "reu128k")
+                exitoptions="--reu-type 128"
+                reu_enabled=1
+            ;;
+        "reu256k")
+                exitoptions="--reu-type 256"
+                reu_enabled=1
+            ;;
         "reu512k")
                 exitoptions="--reu-type 512"
+                reu_enabled=1
+            ;;
+        "reu1m")
+                exitoptions="--reu-type 1024"
+                reu_enabled=1
+            ;;
+        "reu2m")
+                exitoptions="--reu-type 2048"
+                reu_enabled=1
+            ;;
+        "reu4m")
+                exitoptions="--reu-type 4096"
+                reu_enabled=1
+            ;;
+        "reu8m")
+                exitoptions="--reu-type 8192"
+                reu_enabled=1
+            ;;
+        "reu16m")
+                exitoptions="--reu-type 16384"
                 reu_enabled=1
             ;;
         "geo512k")
