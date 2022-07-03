@@ -9,7 +9,7 @@
 
 ;------------------------------------------------------------------------------           
 thisname   .null "mmu"      ; name of this test
-nextname   .null "cpuport"      ; name of next test, "-" means no more tests
+nextname   .null "cpuport"  ; name of next test, "-" means no more tests
 ;------------------------------------------------------------------------------ 
 
 

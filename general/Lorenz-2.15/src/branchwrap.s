@@ -1,21 +1,21 @@
+; this file is part of the C64 Emulator Test Suite. public domain, no copyright
+
 ; original source file: n/a (broken), this was recreated from a disassembly
 ; slightly updated so the test does actually fail when it behaves wrong
 ;-------------------------------------------------------------------------------
-        * = $0801
 
-        .byte $12, $08, $08, $00
-        .byte $97, $37, $38, $30
-        .byte $2c, $30, $3a, $9e
-        .byte $32, $30, $37, $33
-        .byte 0,0,0
+            .include "common.asm"
 
-        lda #$01
-        sta $030c
-        jmp main
+;------------------------------------------------------------------------------           
+thisname    .null "branchwrap" ; name of this test
+nextname    .null "mmufetch"   ; name of next test, "-" means no more tests
+;-------------------------------------------------------------------------------           
 
 irqdisable
+        ; disable timer irq
         lda #$7f
         sta $dc0d
+        ; disable ROMs
         lda #$e3
         sta $00
         lda #$34
@@ -23,21 +23,19 @@ irqdisable
         rts
 
 irqenable
+        ; enable ROMs
         lda #$2f
         sta $00
         lda #$37
         sta $01
+        ; enable timer irq
         lda #$81
         sta $dc0d
         rts
 
 main
-        jsr print
-        .byte $0d
-        .text "{up}branchwrap"
-        .byte 0
-
         jsr irqdisable
+
         lda #$10  ; bpl
         sta $ffbe
         lda #$42  ; $0002
@@ -48,18 +46,20 @@ main
         sta $ffc1
         lda #$60  ; rts
         sta $ffc2
+
         lda #$a9  ; lda #
         sta $02
         lda #$01  ; $01
         sta $03
         lda #$60  ; rts
         sta $04
+
         lda #$4c  ; jmp
         sta $ff02
         lda #<failed
-        sta $ff02
+        sta $ff03
         lda #>failed
-        sta $ff02
+        sta $ff04
 lp1
         ; flag cleared, branch taken
         ;
@@ -142,11 +142,12 @@ ok4:
         adc #$40
         sta $ffbe
         bcc lp2
-        
+
         jsr irqenable
-        jmp passed
-        
-failed:        
+
+        rts ; SUCCESS
+
+failed:
         jsr print
         .text " - error"
         .byte $0d, 0
@@ -156,52 +157,3 @@ failed:
         lda #10
         sta $d020
         jmp *
-        
-passed:
-        jsr print
-        .text " - ok"
-        .byte $0d, 0
-
-        lda #0         ; success
-        sta $d7ff
-load
-        lda #$2f
-        sta $00
-        jsr print
-
-name     .text "mmufetch"
-namelen  = *-name
-         .byte 0
-         lda #0
-         sta $0a
-         sta $b9
-         lda #namelen
-         sta $b7
-         lda #<name
-         sta $bb
-         lda #>name
-         sta $bc
-         pla
-         pla
-         jmp $e16f
-
-print    pla
-         .block
-         sta print0+1
-         pla
-         sta print0+2
-         ldx #1
-print0   lda !*,x
-         beq print1
-         jsr $ffd2
-         inx
-         bne print0
-print1   sec
-         txa
-         adc print0+1
-         sta print2+1
-         lda #0
-         adc print0+2
-         sta print2+2
-print2   jmp !*
-         .bend
