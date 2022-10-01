@@ -20,8 +20,17 @@ CHECKFILE=`basename "$1"`
 CHECKDIR="$2"
 TESTDIR="test/prg/$3/$CHECKFILE"
 
-# extract the .crt file into .prg file(s)
 mkdir -p "$TESTDIR" 2> /dev/null > /dev/null
+
+# check the original .crt file
+$CARTCONV -c "$CHECKDIR/$CHECKFILE" 2> /dev/null > /dev/null
+if [ "$?" = "255" ]; then
+    echo -ne "$CHECKDIR/$CHECKFILE: "
+    $CARTCONV -c "$CHECKDIR/$CHECKFILE"
+    return
+fi
+
+# extract the .crt file into .prg file(s)
 if [ "$VERBOSE" = "1" ]; then
     echo $CARTCONV -i "$CHECKDIR/$CHECKFILE" -o "$TESTDIR/$CHECKFILE.prg" --options-file "$TESTDIR/$CHECKFILE.txt"
 fi
@@ -33,7 +42,7 @@ if [ -f "$TESTDIR/$CHECKFILE.prg" ]; then
 #    echo $CARTCONV "$n1" "$n2" "$n3" "$n4" "$n5" "$n6" "$n7" "$n8" "$n9" "$n10" -o $TESTDIR/$CHECKFILE
     $CARTCONV "$n1" "$n2" "$n3" "$n4" "$n5" "$n6" "$n7" "$n8" "$n9" "$n10" -o $TESTDIR/$CHECKFILE 2>&1 > /dev/null
 else
-    echo "error: could not extract" "$TESTDIR/$CHECKFILE.prg"
+    echo "Error: could not extract" "$TESTDIR/$CHECKFILE.prg"
     echo "------------------------------------"
     return
 fi
@@ -47,7 +56,7 @@ if [ -f "$CHECKDIR/$CHECKFILE" ] && [ -f "$TESTDIR/$CHECKFILE" ] ; then
         rm -f "$TESTDIR/$CHECKFILE.prg"
         rmdir "$TESTDIR"
     else
-        echo "failed:" $CHECKFILE "prg -> crt"
+        echo "Failed:" $CHECKFILE "prg -> crt"
 #        if [ -f "$CHECKDIR/$CHECKFILE" ] && [ -f "$TESTDIR/$CHECKFILE" ] ; then
             $HEX "$CHECKDIR/$CHECKFILE" > left
             $HEX "$TESTDIR/$CHECKFILE" > right
@@ -59,7 +68,7 @@ if [ -f "$CHECKDIR/$CHECKFILE" ] && [ -f "$TESTDIR/$CHECKFILE" ] ; then
     fi
 
 else
-    echo "error: could not rebuild" "$TESTDIR/$CHECKFILE"
+    echo "Error: could not rebuild" "$TESTDIR/$CHECKFILE"
     echo "------------------------------------"
 fi
 
@@ -72,6 +81,16 @@ CHECKDIR="$2"
 TESTDIR="test/bin/$3/$CHECKFILE"
 
 mkdir -p "$TESTDIR" 2> /dev/null > /dev/null
+
+# check the original .crt file
+$CARTCONV -c "$CHECKDIR/$CHECKFILE" 2> /dev/null > /dev/null
+if [ "$?" = "255" ]; then
+    echo -ne "$CHECKDIR/$CHECKFILE: "
+    $CARTCONV -c "$CHECKDIR/$CHECKFILE"
+    return
+fi
+
+
 $CARTCONV -t bin -i "$CHECKDIR/$CHECKFILE" -o "$TESTDIR/$CHECKFILE.bin" --options-file "$TESTDIR/$CHECKFILE.txt"  2>&1 > /dev/null
 
 if [ -f "$TESTDIR/$CHECKFILE.bin" ]; then
@@ -82,7 +101,7 @@ if [ -f "$TESTDIR/$CHECKFILE.bin" ]; then
     fi
     $CARTCONV "$n1" "$n2" "$n3" "$n4" "$n5" "$n6" "$n7" "$n8" "$n9" "$n10" -o $TESTDIR/$CHECKFILE 2>&1 > /dev/null
 else
-    echo "error: could not extract" "$TESTDIR/$CHECKFILE.bin"
+    echo "Error: could not extract" "$TESTDIR/$CHECKFILE.bin"
     echo "------------------------------------"
     return
 fi
@@ -96,7 +115,7 @@ if [ -f "$CHECKDIR/$CHECKFILE" ] && [ -f "$TESTDIR/$CHECKFILE" ] ; then
         rm -f "$TESTDIR/$CHECKFILE.bin"
         rmdir "$TESTDIR"
     else
-        echo "failed:" $CHECKFILE "bin -> crt"
+        echo "Failed:" $CHECKFILE "bin -> crt"
 #        if [ -f "$CHECKDIR/$CHECKFILE" ] && [ -f "$TESTDIR/$CHECKFILE" ] ; then
             $HEX "$CHECKDIR/$CHECKFILE" > left
             $HEX "$TESTDIR/$CHECKFILE" > right
@@ -108,7 +127,7 @@ if [ -f "$CHECKDIR/$CHECKFILE" ] && [ -f "$TESTDIR/$CHECKFILE" ] ; then
     fi
 
 else
-    echo "error: could not rebuild" "$TESTDIR/$CHECKFILE"
+    echo "Error: could not rebuild" "$TESTDIR/$CHECKFILE"
     echo "------------------------------------"
 fi
 
@@ -142,16 +161,16 @@ else
 if [ "$CARTCONV" == "" ] ; then
     CARTCONV=$SCRIPT_DIR/../../trunk/vice/src/tools/cartconv/cartconv
     if [ -x "$CARTCONV" ] ; then
-        echo "warning: CARTCONV not defined, using "$CARTCONV
+        echo "Warning: CARTCONV not defined, using "$CARTCONV
     else
-        echo "error: CARTCONV not defined and trunk not found."
+        echo "Error: CARTCONV not defined and trunk not found."
         exit -1
     fi
 else
     if [ -x "$CARTCONV" ] ; then
-        echo "using VICE dir:" $CARTCONV
+        echo "Using VICE dir:" $CARTCONV
     else
-        echo "error: "$CARTCONV" does not exist."
+        echo "Error: "$CARTCONV" does not exist."
         exit -1
     fi
 fi
@@ -159,7 +178,7 @@ fi
 
 if [ -d "$1" ] ; then
     TESTDIR=$1
-    echo "directory with testfiles:" $TESTDIR
+    echo "Directory with testfiles:" $TESTDIR
 else
     dohelp
     exit -1
@@ -179,7 +198,7 @@ case "$2" in
             SYSTEM=c128
         ;;
     *)
-            echo "unknown option:" "$2"
+            echo "Unknown option:" "$2"
             dohelp
             exit
         ;;
@@ -196,7 +215,7 @@ do
                 VERBOSE=1
             ;;
         *)
-                echo "unknown option:" "$thisarg"
+                echo "Unknown option:" "$thisarg"
                 dohelp
                 exit
             ;;
