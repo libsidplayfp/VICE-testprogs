@@ -533,6 +533,7 @@
 ../CIA/irqdelay/,irqdelay-cia2-oneshot-4.prg,exitcode,10000000
 ../CIA/irqdelay/,irqdelay-cia2-oneshot.prg,exitcode,10000000
 ../CIA/irqdelay/,irqdelay-cia2.prg,exitcode,10000000
+../CIA/pb6pb7/,main.prg,exitcode,7000000
 ../CIA/reload0/,reload0a.prg,exitcode,20000000
 ../CIA/reload0/,reload0b.prg,exitcode,20000000
 ../CIA/shiftregister/,cia-icr-test2-continues.prg,exitcode,10000000
