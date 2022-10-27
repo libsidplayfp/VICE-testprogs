@@ -30,5 +30,24 @@ l:  !word 0
     lda $dc01
     sta $0401
 
-    cli
-    rts
+    lda $0400
+    cmp #$3f
+    bne fail
+    lda $0401
+    cmp #$ff
+    bne fail
+
+    ; success
+    lda #0
+    sta $d7ff
+    lda #13
+    sta $d020
+    jmp *
+
+fail:
+    ; failure
+    lda #$ff
+    sta $d7ff
+    lda #10
+    sta $d020
+    jmp *
