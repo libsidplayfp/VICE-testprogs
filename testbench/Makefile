@@ -275,8 +275,6 @@ emu64-testlist.txt: c64-testlist.in Makefile
 denise-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  denise-testlist.txt
 	cat  c64-testlist.in \
-		| grep -v ",mountp64" \
-		| grep -v ",geo512k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \
