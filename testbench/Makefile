@@ -134,7 +134,9 @@ TESTLISTS=\
 	kernal64c64-testlist.txt \
 	kernal64c128c64-testlist.txt \
 	kernal64c128c128-testlist.txt \
-	kernal64scpu64-testlist.txt
+	kernal64scpu64-testlist.txt \
+	kernal64cbm2-testlist.txt \
+	kernal64vic20-testlist.txt
 
 testlist: $(TESTLISTS)
 
@@ -455,6 +457,14 @@ kernal64scpu64-testlist.txt: scpu-testlist.in Makefile
 		| grep -v "mountcrt:16k-vic-rr.crt" \
 		| grep -v "mountcrt:ultimax-vic-rr.crt" \
 		>> kernal64scpu64-testlist.txt
+
+kernal64cbm2-testlist.txt: cbm610-testlist.in Makefile
+	echo "# this is a generated file, do not edit." >  kernal64cbm2-testlist.txt
+	cat  cbm610-testlist.in >> kernal64cbm2-testlist.txt
+
+kernal64vic20-testlist.txt: vic20-testlist.in Makefile
+	echo "# this is a generated file, do not edit." >  kernal64vic20-testlist.txt
+	cat  vic20-testlist.in >> kernal64vic20-testlist.txt
 
 xscpu64-testlist.txt: scpu-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  xscpu64-testlist.txt

@@ -1462,6 +1462,11 @@
 ################################################################################
 # GEO-RAM
 ################################################################################
+../GEO-RAM/,georam64.prg,exitcode,80000000,geo512k
+../GEO-RAM/,georamtest.prg,interactive,0,geo512k,comment:see automatic variants
+../GEO-RAM/,georamtest-auto.prg,exitcode,80000000,geo512k
+../GEO-RAM/,newtest.prg,interactive,0,geo512k,comment:see automatic variants
+../GEO-RAM/,newtest-auto.prg,exitcode,80000000,geo512k
 ################################################################################
 # plus60k
 ################################################################################
@@ -1489,10 +1494,13 @@
 ../drive/pwm/,pwm.prg,interactive,0,comment:drive led should be fading dark-light-dark etc
 ../drive/rpm/,rpm1.prg,exitcode,12000000,mountd64:rpm.d64,vicii-pal
 ../drive/rpm/,rpm1.prg,exitcode,12000000,mountg64:rpm.g64,vicii-pal
+../drive/rpm/,rpm1.prg,exitcode,12000000,mountp64:rpm.p64,vicii-pal
 ../drive/rpm/,rpm2.prg,exitcode,11000000,mountd64:rpm.d64,vicii-pal
 ../drive/rpm/,rpm2.prg,exitcode,11000000,mountg64:rpm.g64,vicii-pal
+../drive/rpm/,rpm2.prg,exitcode,11000000,mountp64:rpm.p64,vicii-pal
 ../drive/rpm/,rpm3.prg,exitcode,12000000,mountd64:rpm.d64,vicii-pal
 ../drive/rpm/,rpm3.prg,exitcode,12000000,mountg64:rpm.g64,vicii-pal
+../drive/rpm/,rpm3.prg,exitcode,12000000,mountp64:rpm.p64,vicii-pal
 ../drive/scanner/,scanner35.prg,exitcode,26000000,mountd64:scan35.d64
 ../drive/scanner/,scanner35e.prg,exitcode,26000000,mountd64:scan35err.d64
 ../drive/scanner/,scanner40.prg,exitcode,27000000,mountd64:scan40.d64
@@ -1564,6 +1572,7 @@
 #../RS232/,test1.prg
 #../RTC/,ds12c887.prg
 #../MIDI/,midi-out-irq-test.prg
+../memory-expansions/,c64-georam-emd.prg,exitcode,570000000,geo512k
 ../memory-expansions/,c64-reu-emd.prg,exitcode,535000000,reu512k
 ../memory-expansions/,c64-ram-emd.prg,exitcode,29000000
 #../cp-clockf83/cp-clockf83.d64
