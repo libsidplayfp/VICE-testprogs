@@ -670,8 +670,8 @@ checkxscpu64: maketable
 		--diff
 checkx64dtv: maketable
 	./maketable --list dtv-testlist.in \
-		--results xdtv64-result.txt "new" \
-		--results results/xdtv64-$(X64DTVHEAD)-result.txt "$(X64DTVHEAD)" \
+		--results x64dtv-result.txt "new" \
+		--results results/x64dtv-$(X64DTVHEAD)-result.txt "$(X64DTVHEAD)" \
 		--diff
 checkxpet: maketable
 	./maketable --list pet-testlist.in \

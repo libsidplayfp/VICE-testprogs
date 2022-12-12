@@ -446,7 +446,7 @@
 ../CPU/lax/,lax-border.prg,exitcode,70000000,vicii-pal
 #FIXME: make NTSC fixes
 ../CPU/sha/,shaabsy1.prg,exitcode,6000000
-../CPU/sha/,shaabsy2.prg,exitcode,6500000,vicii-pal
+../CPU/sha/,shaabsy2.prg,exitcode,7000000,vicii-pal
 ../CPU/sha/,shaabsy3.prg,exitcode,18000000,vicii-pal
 ../CPU/sha/,shaabsy4.prg,exitcode,7000000,vicii-pal
 ../CPU/sha/,shaabsy5.prg,exitcode,7000000,vicii-pal
