@@ -156,7 +156,7 @@
 ../general/Lorenz-2.15/src/,sein.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,clvn.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,adcb.prg,exitcode,30000000
-../general/Lorenz-2.15/src/,adcz.prg,exitcode,30300000
+../general/Lorenz-2.15/src/,adcz.prg,exitcode,30500000
 ../general/Lorenz-2.15/src/,adczx.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,adca.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,adcax.prg,exitcode,40000000
@@ -164,7 +164,7 @@
 ../general/Lorenz-2.15/src/,adcix.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,adciy.prg,exitcode,40000000
 ../general/Lorenz-2.15/src/,sbcb.prg,exitcode,30000000
-../general/Lorenz-2.15/src/,sbcz.prg,exitcode,30000000
+../general/Lorenz-2.15/src/,sbcz.prg,exitcode,31000000
 ../general/Lorenz-2.15/src/,sbczx.prg,exitcode,31000000
 ../general/Lorenz-2.15/src/,sbca.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,sbcax.prg,exitcode,40000000
@@ -343,7 +343,7 @@
 ../general/ram0001/,test1.prg,exitcode,10000000
 ../general/fuxxortest,test-fuxxored.prg,exitcode,14000000
 ../general/fuxxortest,ef1-nmi.prg,exitcode,7000000
-../general/fuxxortest,ef2-inst1.prg,exitcode,7000000
+../general/fuxxortest,ef2-inst1.prg,exitcode,8000000
 ../general/fuxxortest,ef2-inst2.prg,exitcode,9000000
 ../general/fuxxortest,ef2-inst3.prg,exitcode,8000000
 ../general/fuxxortest,ef2-inst4a.prg,exitcode,8300000
@@ -459,7 +459,7 @@
 ../CPU/shs/,shsabsy1.prg,exitcode,5500000
 ../CPU/shs/,shsabsy2.prg,exitcode,7000000,vicii-pal
 ../CPU/shs/,shsabsy3.prg,exitcode,20000000,vicii-pal
-../CPU/shs/,shsabsy4.prg,exitcode,7200000,vicii-pal
+../CPU/shs/,shsabsy4.prg,exitcode,7300000,vicii-pal
 ../CPU/shs/,shsabsy5.prg,exitcode,7200000,vicii-pal
 #FIXME: make NTSC fixes
 ../CPU/shxy/,shx-t2.prg,interactive,0,vicii-pal
@@ -985,7 +985,7 @@
 ../SID/env_test/,env_test_ra_0000.prg,exitcode,9000000
 ../SID/env_test/,env_test_ra_0100.prg,exitcode,9000000
 ../SID/env_test/,env_test_adra_1.prg,exitcode,9000000
-../SID/env_test/,env_test_adra_2.prg,exitcode,9000000
+../SID/env_test/,env_test_adra_2.prg,exitcode,9500000
 ../SID/env_test/,env_test_ar_1.prg,exitcode,9000000
 ../SID/env_test/,env_test_ar_2.prg,exitcode,9000000
 ../SID/env_test/,env_test_ar_3.prg,exitcode,9000000
@@ -993,7 +993,7 @@
 ../SID/envelope/,testFlip00toFF.prg,exitcode,5500000
 ../SID/envelope/,testFlipFFto00.prg,exitcode,5500000
 ../SID/envelope/,lft-adsr-test.prg,exitcode,5500000
-../SID/exp_counter_reset/,env_test_exr.prg,exitcode,6000000
+../SID/exp_counter_reset/,env_test_exr.prg,exitcode,6500000
 ../SID/mapping/,sid-detect2.prg,interactive,0
 #TODO (fix noisemapper program)
 #../SID/noise
@@ -1180,7 +1180,7 @@
 #../SID/waveforms/,waveforms-6581.prg
 #../SID/waveforms/,waveforms-8580.prg
 ../SID/waveforms/,waveforms-10-6581.prg,exitcode,53000000,sid-old
-../SID/waveforms/,waveforms-20-6581.prg,exitcode,53000000,sid-old
+../SID/waveforms/,waveforms-20-6581.prg,exitcode,54000000,sid-old
 ../SID/waveforms/,waveforms-40-6581.prg,exitcode,53000000,sid-old
 ../SID/waveforms/,waveforms-80-6581.prg,exitcode,200000000,sid-old
 ../SID/waveforms/,waveforms-10-8580.prg,exitcode,53000000,sid-new
@@ -1282,7 +1282,7 @@
 ../REU/misc/,twoblocks-auto.prg,exitcode,100000000,reu512k
 ../REU/misc/,twoblocks-ff00-auto.prg,exitcode,100000000,reu512k
 ../REU/misc/,wheels.prg,exitcode,100000000,reu512k
-../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,exitcode,42500000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,exitcode,43000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test1.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test1-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test2.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
@@ -1311,10 +1311,10 @@
 ../REU/reudetect/,reudetect.prg,exitcode,100000000,reu512k,comment:load the "blu.reu" file first
 ../REU/reutiming/,reutiming.prg,exitcode,100000000,reu512k
 #FIXME: NTSC fix
-../REU/reutiming2/,a.prg,screenshot,40500000,reu512k,vicii-pal
-../REU/reutiming2/,a2.prg,screenshot,40500000,reu512k,vicii-pal
-../REU/reutiming2/,a3.prg,screenshot,40500000,reu512k,vicii-pal
-../REU/reutiming2/,a4.prg,screenshot,40500000,reu512k,vicii-pal
+../REU/reutiming2/,a.prg,screenshot,40800000,reu512k,vicii-pal
+../REU/reutiming2/,a2.prg,screenshot,40800000,reu512k,vicii-pal
+../REU/reutiming2/,a3.prg,screenshot,40800000,reu512k,vicii-pal
+../REU/reutiming2/,a4.prg,screenshot,40800000,reu512k,vicii-pal
 ../REU/reutiming2/,b.prg,screenshot,20000000,reu512k,vicii-pal
 ../REU/reutiming2/,b2.prg,screenshot,20000000,reu512k,vicii-pal
 ../REU/reutiming2/,b3.prg,screenshot,20000000,reu512k,vicii-pal
