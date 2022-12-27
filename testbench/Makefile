@@ -1,16 +1,29 @@
 
-X64SCHEAD=r41951
-X64HEAD=r41951
-X64DTVHEAD=r41951
-VSIDHEAD=r41951
-X128HEAD=r41951
-X128C64HEAD=r41951
-XPETHEAD=r41951
-XSCPU64HEAD=r41951
-XVICHEAD=r41951
-XPLUS4HEAD=r41951
-XCBM2HEAD=r41951
-XCBM5X0HEAD=r41951
+#X64SCHEAD=r42725
+#X64HEAD=r42725
+#X64DTVHEAD=r42725
+#VSIDHEAD=r42725
+#X128HEAD=r42725
+#X128C64HEAD=r42725
+#XPETHEAD=r42725
+#XSCPU64HEAD=r42725
+#XVICHEAD=r42725
+#XPLUS4HEAD=r42725
+#XCBM2HEAD=r42725
+#XCBM5X0HEAD=r42725
+
+X64SCHEAD := $(shell ls results/x64sc-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
+X64HEAD := $(shell ls results/x64-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
+X64DTVHEAD := $(shell ls results/x64dtv-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
+VSIDHEAD := $(shell ls results/vsid-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
+X128HEAD := $(shell ls results/x128-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
+X128C64HEAD := $(shell ls results/x128c64-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
+XPETHEAD := $(shell ls results/xpet-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
+XSCPU64HEAD := $(shell ls results/xscpu64-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
+XVICHEAD := $(shell ls results/xvic-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
+XPLUS4HEAD := $(shell ls results/xplus4-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
+XCBM2HEAD := $(shell ls results/xcbm2-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
+XCBM5X0HEAD := $(shell ls results/xcbm5x0-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
 
 DENISELAST=20220316
 DENISELASTSTRING="git 16.03.2022"
@@ -44,6 +57,8 @@ MICRO64LASTSTRING="1.00.2018.03.16 (build 719)"
 
 EMU64HEAD=20220320
 
+YACEHEAD=2-2-0-47
+
 CHAMSTANDALONELAST=9q
 CHAMCARTRIDGELAST=9q
 
@@ -56,28 +71,32 @@ include Makefile.config
 all: prereq
 #	12345678901234567890123456789012345678901234567890123456789012345678901234567890
 	echo "to run the tests use the following targets:"
+	echo ""
 	echo "testall           - run all VICE tests"
 	echo ""
 	echo "to run individual tests:"
+	echo ""
 	echo "testx64, testx64sc, testx128c64, testx128, testxscpu64, testx64dtv,"
 	echo "testxpet, testxcbm2, testxcbm5x0, testxvic, testxplus4, testvsid"
 	echo ""
-	echo "to run chameleon tests:"
-	echo "testchameleon, testcham20"
-	echo ""
 	echo "to check for differences in last results against latest results in the"
 	echo "repository, use:"
+	echo ""
 	echo "checkx64, checkx64sc, checkx128c64, checkx128, checkxscpu64, checkx64dtv,"
 	echo "checkxpet, checkxcbm2, checkxcbm5x0, checkxvic, checkxplus4, checkvsid"
-#	echo "testhoxs64"
-#	echo "testmicro64"
-#	echo "testemu64"
-#	echo "testyace"
-
+	echo "or checkall"
 	echo ""
 	echo "allresults - update all result tables (html)"
 	echo ""
 	echo "for wiki table use something like: make resultswiki | xclip -selection clipboard"
+	echo ""
+	echo "to run chameleon tests:"
+	echo "testchameleon, testcham20"
+	echo ""
+#	echo "testhoxs64"
+#	echo "testmicro64"
+#	echo "testemu64"
+#	echo "testyace"
 
 ################################################################################
 prereq: revertfiles selftest testlist cmpscreens maketable prereq-chameleon
@@ -525,6 +544,8 @@ testall: \
 	testxcbm2 \
 	testxcbm5x0 \
 	testvsid
+	
+	make checkall
 
 testx64: prereq
 	EMUDIR="$(VICEDIR)" ./testbench.sh x64
@@ -643,74 +664,83 @@ testu64: prereq
 .PHONY: checkx64 checkx64sc checkx128c64 checkx128 checkxscpu64 checkx64dtv \
 	checkxpet checkxcbm2 checkxcbm5x0 checkxvic checkxplus4 checkvsid
 
+checkall: checkx64 checkx64sc checkx128c64 checkx128 checkxscpu64 checkx64dtv \
+	checkxpet checkxcbm2 checkxcbm5x0 checkxvic checkxplus4 checkvsid
+	
 checkx64: maketable
+	echo "checking x64:"
 	./maketable --list c64-testlist.in \
 		--results x64-result.txt "new" \
 		--results results/x64-$(X64HEAD)-result.txt "$(X64HEAD)" \
 		--diff
 checkx64sc: maketable
+	echo "checking x64sc:"
 	./maketable --list c64-testlist.in \
 		--results x64sc-result.txt "new" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "$(X64SCHEAD)" \
 		--diff
 checkx128c64: maketable
+	echo "checking x128(c64):"
 	./maketable --list c64-testlist.in \
 		--results x128c64-result.txt "new" \
 		--results results/x128c64-$(X128C64HEAD)-result.txt "$(X128C64HEAD)" \
 		--diff
 checkx128: maketable
+	echo "checking x128:"
 	./maketable --list c128-testlist.in \
 		--results x128-result.txt "new" \
 		--results results/x128-$(X128HEAD)-result.txt "$(X128HEAD)" \
 		--diff
 checkxscpu64: maketable
+	echo "checking xscpu64:"
 	./maketable --list scpu-testlist.in \
 		--results xscpu64-result.txt "new" \
 		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "$(XSCPU64HEAD)" \
 		--diff
 checkx64dtv: maketable
+	echo "checking x64dtv:"
 	./maketable --list dtv-testlist.in \
 		--results x64dtv-result.txt "new" \
 		--results results/x64dtv-$(X64DTVHEAD)-result.txt "$(X64DTVHEAD)" \
 		--diff
 checkxpet: maketable
+	echo "checking xpet:"
 	./maketable --list pet-testlist.in \
 		--results xpet-result.txt "new" \
 		--results results/xpet-$(XPETHEAD)-result.txt "$(XPETHEAD)" \
 		--diff
 checkxcbm2: maketable
+	echo "checking xcbm2:"
 	./maketable --list cbm610-testlist.in \
 		--results xcbm2-result.txt "new" \
 		--results results/xcbm2-$(XCBM2HEAD)-result.txt "$(XCBM2HEAD)" \
 		--diff
 checkxcbm5x0: maketable
+	echo "checking xcbm5x0:"
 	./maketable --list cbm510-testlist.in \
 		--results xcbm5x0-result.txt "new" \
 		--results results/xcbm5x0-$(XCBM5X0HEAD)-result.txt "$(XCBM5X0HEAD)" \
 		--diff
 checkxvic: maketable
+	echo "checking xvic:"
 	./maketable --list vic20-testlist.in \
 		--results xvic-result.txt "new" \
 		--results results/xvic-$(XVICHEAD)-result.txt "$(XVICHEAD)" \
 		--diff
 checkxplus4: maketable
+	echo "checking xplus4:"
 	./maketable --list plus4-testlist.in \
 		--results xplus4-result.txt "new" \
 		--results results/xplus4-$(XPLUS4HEAD)-result.txt "$(XPLUS4HEAD)" \
 		--diff
 checkvsid: maketable
+	echo "checking vsid:"
 	./maketable --list vsid-testlist.in \
 		--results vsid-result.txt "new" \
 		--results results/vsid-$(VSIDHEAD)-result.txt "$(VSIDHEAD)" \
 		--diff
 
-# VICE 3.3 -> r35872
-
 .PHONY: results0 results resultswiki
-
-# missing:
-#          vsid
-#	   yace, emu64
 
 results0: maketable
 	./maketable --list c64-testlist.in \
@@ -725,7 +755,7 @@ results0: maketable
 		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
 		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
-		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
+		--results results/yace-$(YACEHEAD)-result.txt "yace "$(YACEHEAD)"" \
 		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST)" (cartridge)" \
 		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)"
@@ -758,8 +788,10 @@ results0: maketable
 		
 	./maketable --list cbm610-testlist.in \
 		--results results/xcbm2-$(XCBM2HEAD)-result.txt "xcbm2 "$(XCBM2HEAD)""
-		
-		
+
+	./maketable  --list vsid-testlist.in \
+		--results results/vsid-$(VSIDHEAD)-result.txt "vsid "$(VSIDHEAD)""
+
 results: maketable
 	./maketable --html --list c64-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
@@ -774,7 +806,7 @@ results: maketable
 		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
 		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
-		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
+		--results results/yace-$(YACEHEAD)-result.txt "yace "$(YACEHEAD)"" \
 		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST)" (cartridge)" \
 		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)" \
@@ -858,7 +890,7 @@ resultswiki: maketable
 		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
 		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
-		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
+		--results results/yace-$(YACEHEAD)-result.txt "yace "$(YACEHEAD)"" \
 		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST)" (cartridge)" \
 		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)"
@@ -908,161 +940,98 @@ resultswiki: maketable
 
 .PHONY: resultsx64
 resultsx64: maketable
+	OPTS=`ls results/x64-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt x64-\2/g'` ; \
 	./maketable --html --list c64-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64-r35872-result.txt "x64 r35872" \
-		--results results/x64-r37109-result.txt "x64 r37109" \
-		--results results/x64-r39405-result.txt "x64 r39405" \
-		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
-		\
+		$$OPTS \
 		> results/x64.html
 
 .PHONY: resultsx64sc
 resultsx64sc: maketable
+	OPTS=`ls results/x64sc-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt x64sc-\2/g'` ; \
 	./maketable --html --list c64-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-r35872-result.txt "x64sc r35872" \
-		--results results/x64sc-r36320-pal-result.txt "x64sc r36320 PAL" \
-		--results results/x64sc-r36320-ntsc-result.txt "x64sc r36320 NTSC" \
-		--results results/x64sc-r36351-result.txt "x64sc r36351" \
-		--results results/x64sc-r36700-result.txt "x64sc r36700" \
-		--results results/x64sc-r37109-result.txt "x64sc r37109" \
-		--results results/x64sc-r37145-result.txt "x64sc r37145" \
-		--results results/x64sc-r39405-result.txt "x64sc r39405" \
-		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
-		\
+		$$OPTS \
 		> results/x64sc.html
 
 .PHONY: resultsx128
 resultsx128: maketable
+	OPTS=`ls results/x128-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt x128-\2/g'` ; \
 	./maketable --html --list c128-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x128-r35872-result.txt "x128 r35872" \
-		--results results/x128-r35990-result.txt "x128 r35990" \
-		--results results/x128-r36014-result.txt "x128 r36014" \
-		--results results/x128-r36700-result.txt "x128 r36700" \
-		--results results/x128-r37109-result.txt "x128 r37109" \
-		--results results/x128-r37166-result.txt "x128 r37166" \
-		--results results/x128-r39405-result.txt "x128 r39405" \
-		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
-		\
+		$$OPTS \
 		> results/x128.html
 
 .PHONY: resultsx128c64
 resultsx128c64: maketable
+	OPTS=`ls results/x128c64-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt x128c64-\2/g'` ; \
 	./maketable --html --list c64-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x128c64-r35872-result.txt "x128c64 r35872" \
-		--results results/x128c64-r35968-result.txt "x128c64 r35968" \
-		--results results/x128c64-r36700-result.txt "x128c64 r36700" \
-		--results results/x128c64-r37109-result.txt "x128c64 r37109" \
-		--results results/x128c64-r39405-result.txt "x128c64 r39405" \
-		--results results/x128c64-$(X128C64HEAD)-result.txt "x128c64 "$(X128C64HEAD)"" \
-		\
+		$$OPTS \
 		> results/x128c64.html
 
 .PHONY: resultsxcbm2
 resultsxcbm2: maketable
+	OPTS=`ls results/xcbm2-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xcbm2-\2/g'` ; \
 	./maketable --html --list cbm610-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xcbm2-r35872-result.txt "xcbm2 r35872" \
-		--results results/xcbm2-r35990-result.txt "xcbm2 r35990" \
-		--results results/xcbm2-r36700-result.txt "xcbm2 r36700" \
-		--results results/xcbm2-r37109-result.txt "xcbm2 r37109" \
-		--results results/xcbm2-r39433-result.txt "xcbm2 r39433" \
-		--results results/xcbm2-$(XCBM2HEAD)-result.txt "xcbm2 "$(XCBM2HEAD)"" \
-		\
+		$$OPTS \
 		> results/xcbm2.html
 
 .PHONY: resultsxcbm5x0
 resultsxcbm5x0: maketable
+	OPTS=`ls results/xcbm5x0-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xcbm5x0-\2/g'` ; \
 	./maketable --html --list cbm510-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xcbm5x0-r35872-result.txt "xcbm5x0 r35872" \
-		--results results/xcbm5x0-r35990-result.txt "xcbm5x0 r35990" \
-		--results results/xcbm5x0-r36700-result.txt "xcbm5x0 r36700" \
-		--results results/xcbm5x0-r37109-result.txt "xcbm5x0 r37109" \
-		--results results/xcbm5x0-r39433-result.txt "xcbm5x0 r39433" \
-		--results results/xcbm5x0-$(XCBM5X0HEAD)-result.txt "xcbm5x0 "$(XCBM5X0HEAD)"" \
-		\
+		$$OPTS \
 		> results/xcbm5x0.html
 
 .PHONY: resultsx64dtv
 resultsx64dtv: maketable
+	OPTS=`ls results/x64dtv-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt x64dtv-\2/g'` ; \
 	./maketable --html --list dtv-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64dtv-r35872-result.txt "x64dtv r35872" \
-		--results results/x64dtv-r35990-result.txt "x64dtv r35990" \
-		--results results/x64dtv-r36700-result.txt "x64dtv r36700" \
-		--results results/x64dtv-r37109-result.txt "x64dtv r37109" \
-		--results results/x64dtv-r38998-result.txt "x64dtv r38998" \
-		--results results/x64dtv-r39405-result.txt "x64dtv r39405" \
-		--results results/x64dtv-$(X64DTVHEAD)-result.txt "x64dtv "$(X64DTVHEAD)"" \
-		\
+		$$OPTS \
 		> results/x64dtv.html
 
 .PHONY: resultsxpet
 resultsxpet: maketable
+	OPTS=`ls results/xpet-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xpet-\2/g'` ; \
 	./maketable --html --list pet-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xpet-r35872-result.txt "xpet r35872" \
-		--results results/xpet-r35990-result.txt "xpet r35990" \
-		--results results/xpet-r36700-result.txt "xpet r36700" \
-		--results results/xpet-r37109-result.txt "xpet r37109" \
-		--results results/xpet-r39405-result.txt "xpet r39405" \
-		--results results/xpet-$(XPETHEAD)-result.txt "xpet "$(XPETHEAD)"" \
-		\
+		$$OPTS \
 		> results/xpet.html
 
 .PHONY: resultsxplus4
 resultsxplus4: maketable
+	OPTS=`ls results/xplus4-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xplus4-\2/g'` ; \
 	./maketable --html --list plus4-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xplus4-r35872-result.txt "xplus4 r35872" \
-		--results results/xplus4-r35990-result.txt "xplus4 r35990" \
-		--results results/xplus4-r36700-result.txt "xplus4 r36700" \
-		--results results/xplus4-r37109-result.txt "xplus4 r37109" \
-		--results results/xplus4-r39433-result.txt "xplus4 r39433" \
-		--results results/xplus4-$(XPLUS4HEAD)-result.txt "xplus4 "$(XPLUS4HEAD)"" \
-		\
+		$$OPTS \
 		> results/xplus4.html
 
 .PHONY: resultsxscpu64
 resultsxscpu64: maketable
+	OPTS=`ls results/xscpu64-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xscpu64-\2/g'` ; \
 	./maketable --html --list scpu-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xscpu64-r35872-result.txt "xscpu64 r35872" \
-		--results results/xscpu64-r35990-result.txt "xscpu64 r35990" \
-		--results results/xscpu64-r36700-result.txt "xscpu64 r36700" \
-		--results results/xscpu64-r37109-result.txt "xscpu64 r37109" \
-		--results results/xscpu64-r39405-result.txt "xscpu64 r39405" \
-		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)"" \
-		\
+		$$OPTS \
 		> results/xscpu64.html
 
 .PHONY: resultsxvic
 resultsxvic: maketable
+	OPTS=`ls results/xvic-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xvic-\2/g'` ; \
 	./maketable --html --list vic20-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xvic-r35872-result.txt "xvic r35872" \
-		--results results/xvic-r35990-result.txt "xvic r35990" \
-		--results results/xvic-r36700-result.txt "xvic r36700" \
-		--results results/xvic-r37109-result.txt "xvic r37109" \
-		--results results/xvic-r39405-result.txt "xvic r39405" \
-		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
-		\
+		$$OPTS \
 		> results/xvic.html
 
 .PHONY: resultsvsid
 resultsvsid: maketable
+	OPTS=`ls results/vsid-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt vsid-\2/g'` ; \
 	./maketable --html --list vsid-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/vsid-r35990-result.txt "vsid r35990" \
-		--results results/vsid-r36700-result.txt "vsid r36700" \
-		--results results/vsid-r37109-result.txt "vsid r37109" \
-		--results results/vsid-r39405-result.txt "vsid r39405" \
-		--results results/vsid-$(VSIDHEAD)-result.txt "vsid "$(VSIDHEAD)"" \
-		\
+		$$OPTS \
 		> results/vsid.html
 
 ################################################################################
@@ -1170,7 +1139,7 @@ resultsyace: maketable yace-testlist.txt
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
-		--results results/yace-2-2-0-47-result.txt "yace 2.2.0.47" \
+		--results results/yace-$(YACEHEAD)-result.txt "yace "$(YACEHEAD)"" \
 		\
 		> results/yace.html
 		

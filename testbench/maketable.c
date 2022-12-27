@@ -848,6 +848,18 @@ void printrowtestresult(int row, int res)
     }
 }
 
+void printrowtestcomment(int row)
+{
+    switch (format) {
+        case FORMAT_TEXT:
+            if (reflist[row].comment) {
+                printf(BLUE " %s" NC, reflist[row].comment);
+            }
+        break;
+        case FORMAT_WIKI:
+        break;
+    }
+}
 void printrow(int row, int *res)
 {
     int ii;
@@ -869,6 +881,7 @@ void printrow(int row, int *res)
     if (format == FORMAT_TEXT) {
         printrowtesttype(row);
         printrowtestpath(row, res[0]);
+        printrowtestcomment(row);
         printf("\n");
     } else if (format == FORMAT_HTML) {
         printf("</tr>\n");
