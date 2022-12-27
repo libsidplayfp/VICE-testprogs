@@ -1,0 +1,17 @@
+./selftest/,pet-pass.prg,ok,exitcode,,,,-1,-1,-1
+./selftest/,pet-fail.prg,error,exitcode,,,,-1,-1,-1
+./selftest/,pet-pass.prg,ok,screenshot,,,,-1,-1,-1
+./selftest/,pet-fail.prg,error,screenshot,,,,-1,-1,-1
+../CRTC/,crtc0.prg,error,screenshot,,,,-1,-1,-1
+../CRTC/,crtc3.prg,error,screenshot,,,,-1,-1,-1
+../CRTC/,crtc4.prg,ok,screenshot,,,,-1,-1,-1
+../CRTC/,crtc5.prg,ok,screenshot,,,,-1,-1,-1
+../CRTC/,crtc6.prg,ok,screenshot,,,,-1,-1,-1
+../CRTC/,crtc7.prg,ok,screenshot,,,,-1,-1,-1
+../CRTC/,crtc8.prg,ok,screenshot,,,,-1,-1,-1
+../CRTC/,crtc9.prg,ok,screenshot,,,,-1,-1,-1
+../CRTC/,crtc10.prg,error,screenshot,,,,-1,-1,-1
+../CRTC/,crtc11.prg,ok,screenshot,,,,-1,-1,-1
+../CRTC/,crtc12.prg,ok,screenshot,,,,-1,-1,-1
+../CRTC/,crtc13.prg,error,screenshot,,,,-1,-1,-1
+# 0 minutes and 10 seconds elapsed.
