@@ -25,9 +25,24 @@ b-- happens at the start the output to the bus does work as intended.
 
 The Zilog documentation states OUTI,OUTD do 'b--' at the start.
 
+------------------------------------------------------------------------------
 
 tstouti.prg:
 
 basic loader starts Z80 and tests the above.
 
 Black border means success, grey border means failure.
+
+------------------------------------------------------------------------------
+
+tstouti2.prg:
+
+Executes OTIR and OTDR by misusing the that 'OUT to $0xxx' ends up in RAM at
+$Dxxx while the z80 rom is present.
+
+Method:
+list of 16 values 00-0F being output (increasing) to 0F1F .. 001F,
+verify these appear in ram Df1f .. D01f
+redo now read list in reverse (decreasing) to 0F1F..001F verify.
+
+As before suite OK if zero ouput to d7ff
