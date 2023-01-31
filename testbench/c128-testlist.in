@@ -89,6 +89,7 @@
 # TODO: make automatic
 ../c128/z80/cycletimer/,z80-cycletimer-ldir.prg,interactive,0
 ../c128/z80/outi/,tstouti.prg,exitcode,7000000
+../c128/z80/outi/,tstouti2.prg,exitcode,7000000
 ################################################################################
 # VDC
 ################################################################################
