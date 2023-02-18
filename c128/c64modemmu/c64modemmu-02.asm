@@ -1,11 +1,11 @@
-; This is a c64 mode mmu test to see if p0 backward translation is used in c64 mode.
+; This is a c64 mode mmu test to see if same bank p0 backward translation is used in c64 mode.
 ;
 ; test to be confirmed on real hardware
 ;
 ; colors:
-;   green = backward p0 translation used in c64 mode
-;   red   = backward p0 translation not used in c64 mode
-;   black = something is wrong with backward p0 translation in c128 mode
+;   green = same bank backward p0 translation used in c64 mode
+;   red   = same bank backward p0 translation not used in c64 mode
+;   black = something is wrong with same bank backward p0 translation in c128 mode
 ;
 ; Test made by Marco van den Heuvel
 
