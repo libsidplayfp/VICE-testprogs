@@ -4,6 +4,10 @@
 ;
 ; test confirmed on real hardware
 ;
+; colors:
+;   green           = bank 1 mapping in c64 mode
+;   any other color = no bank 1 mapping in c64 mode
+;
 ; Test made by Marco van den Heuvel
 
 

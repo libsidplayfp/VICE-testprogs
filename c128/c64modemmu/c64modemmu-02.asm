@@ -2,6 +2,11 @@
 ;
 ; test to be confirmed on real hardware
 ;
+; colors:
+;   green = backward p0 translation used in c64 mode
+;   red   = backward p0 translation not used in c64 mode
+;   black = something is wrong with backward p0 translation in c128 mode
+;
 ; Test made by Marco van den Heuvel
 
 

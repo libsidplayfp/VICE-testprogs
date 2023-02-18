@@ -2,6 +2,10 @@
 ;
 ; test confirmed on real hardware
 ;
+; colors:
+;   green = shared memory used in c64 mode
+;   red   = shared memory not used in c64 mode
+;
 ; Test made by Marco van den Heuvel
 
 
