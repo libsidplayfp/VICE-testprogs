@@ -25,7 +25,7 @@ basicHeader=1
 	lda #$06
 	sta $d506
 
-	; bank in bank 0 and make everything ram
+; bank in bank 0 and make everything ram
 	lda #$3e
 	sta $ff00
 
