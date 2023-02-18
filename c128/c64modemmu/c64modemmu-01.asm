@@ -1,6 +1,6 @@
 ; This is a c64 mode mmu test to see if shared memory is used in c64 mode.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
 

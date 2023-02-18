@@ -2,7 +2,7 @@
 ;
 ; If this test fails on a c128 emulator don't bother trying any other c64 mode mmu test.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; Test made by Marco van den Heuvel
 
