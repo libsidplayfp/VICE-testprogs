@@ -46,7 +46,7 @@ basicHeader=1
 	lda #$30
 	sta $d507
 
-; read value from $80 (should be #$55)
+; read value from $3080 (should be #$55)
 	lda $3080
 	cmp #$55
 	beq testc64mode
