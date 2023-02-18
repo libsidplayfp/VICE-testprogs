@@ -47,7 +47,7 @@ basicHeader=1
 	beq testc64mode
 
 ; for some reason the read was not #$aa
-	lda #$02
+	lda #$00
 	sta $d020
 	lda #$ff
 	sta $d7ff
