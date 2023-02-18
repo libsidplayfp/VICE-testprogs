@@ -1,4 +1,4 @@
-; This is a c64 mode mmu test to see if p0/p1 relocation is used in c64 mode.
+; This is a c64 mode mmu test to see if p0 backward translation is used in c64 mode.
 ;
 ; test to be confirmed on real hardware
 ;
@@ -108,15 +108,15 @@ test:
 	cmp #$aa
 	beq nop0mapping
 
-	lda #$02
+	lda #$05
 	sta $d020
-	lda #$ff
+	lda #$00
 	sta $d7ff
 	jmp *
 
 nop0mapping:
-	lda #$05
+	lda #$02
 	sta $d020
-	lda #$00
+	lda #$ff
 	sta $d7ff
 	jmp *
