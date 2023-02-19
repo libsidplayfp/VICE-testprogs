@@ -3,7 +3,7 @@
 ; test to be confirmed on real hardware
 ;
 ; colors:
-;   white = same bank forward p0 translation used in c64 mode
+;   green = same bank forward p0 translation used in c64 mode
 ;   cyan  = same bank forward p0 translation not used in c64 mode
 ;   black = something is wrong with same bank forward p0 translation in c128 mode
 ;
@@ -16,7 +16,7 @@ basicHeader=1
 
 !ifdef basicHeader {
 ; 10 SYS7181
-*=$1c01  
+*=$1c01
 	!byte  $0c,$08,$0a,$00,$9e,$37,$31,$38,$31,$00,$00,$00
 *=$1c0d 
 	jmp start
@@ -123,7 +123,7 @@ test:
 	jmp *
 
 nop0mapping:
-	lda #$01
+	lda #$05
 	sta $d020
 	lda #$ff
 	sta $d7ff
