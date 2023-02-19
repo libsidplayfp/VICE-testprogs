@@ -1,6 +1,6 @@
 
 	fillvalue=$00
-	
+
 	!initmem 	fillvalue
 	!cpu 6502
 	!to "keywordsv65.prg", cbm
@@ -297,5 +297,41 @@ line28:
         !byte $a9 ; step
         !pet "$def"
         !byte 0 ; end of line
+
 line29:
+        !word line30 ; ptr to next line
+        !word 30 ; line nr
+        !byte $58, $b2 ; x=
+        !byte $ce
+        !byte $10 ; wpeek()
+        !pet "($d020)"
+        !byte 0 ; end of line
+
+line30:
+        !word line31 ; ptr to next line
+        !word 31 ; line nr
+        !byte $fe
+        !byte $1d ; wpoke
+        !pet " $d020,$1234"
+        !byte 0 ; end of line
+
+line31:
+        !word line32 ; ptr to next line
+        !word 32 ; line nr
+        !byte $fe
+        !byte $49 ; mount
+        !pet " ",$22,"filename.d81",$22
+        !byte 0 ; end of line
+
+line32:
+        !word line33 ; ptr to next line
+        !word 33 ; line nr
+        !byte $58, $b2 ; x=
+        !pet "1"
+        !byte $fe
+        !byte $52 ; <<
+        !pet "7"
+        !byte 0 ; end of line
+
+line33:
         !word 0 ; basic end
