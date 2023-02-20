@@ -1,11 +1,12 @@
-; This is a c64 mode mmu test to see if same bank p0 backward translation is used in c64 mode.
+; This is a c64 mode mmu test to see if same bank p0 forward translation is used in c64 mode.
 ;
 ; test to be confirmed on real hardware
 ;
 ; colors:
-;   green = same bank backward p0 translation used in c64 mode
-;   red   = same bank backward p0 translation not used in c64 mode
+;   cyan  = same bank forward p0 translation used in c64 mode
+;   white = same bank forward p0 translation not used in c64 mode
 ;   black = something is wrong with same bank backward p0 translation in c128 mode
+;   violet = something is wrong with p0 translation in c64 mode
 ;
 ; Test made by Marco van den Heuvel
 
@@ -22,6 +23,10 @@ basicHeader=1
 	jmp start
 }
 *=start
+; clear the screen
+	lda #$93
+	jsr $ffd2
+
 	sei
 
 ; make $0000-$1fff  shared memory
@@ -96,32 +101,37 @@ c64switch:
 
 ; test in bank 0
 test:
-	!byte  $09,$80,$25,$80,$c3,$c2,$cD,$38,$30
+	!byte  $09,$80,$09,$80,$c3,$c2,$cD,$38,$30
 
 	stx $d016
-	jsr $fda3
-	jsr $fd50
-	jsr $fd15
-	jsr $ff5b
-	cli
-	jsr $e453
-	jsr $e3bf
-	jsr $e422
-	ldx #$fb
-	txs
-	lda $3080
-	cmp #$aa
-	beq nop0mapping
 
-	lda #$05
+	sei
+	lda $80
+	cmp #$aa
+	beq p0forwardmapping
+	cmp #$55
+	beq nop0forwardmapping
+
+	lda #$04
 	sta $d020
 	lda #$00
 	sta $d7ff
-	jmp *
+	clc
+l0:
+	bcc l0
 
-nop0mapping:
-	lda #$02
+p0forwardmapping:
+	lda #$03
 	sta $d020
 	lda #$ff
 	sta $d7ff
-	jmp *
+	clc
+	bcc l0
+
+nop0forwardmapping:
+	lda #$01
+	sta $d020
+	lda #$ff
+	sta $d7ff
+	clc
+	bcc l0

@@ -23,6 +23,11 @@ basicHeader=1
 	jmp start
 }
 *=start
+
+; clear the screen
+	lda #$93
+	jsr $ffd2
+
 	sei
 
 ; make $0000-$1fff  shared memory
@@ -92,31 +97,27 @@ c64switch:
 bank0prg:
 	!byte  $09,$80,$09,$80,$c3,$c2,$cD,$38,$30
 
+	stx $d016
+
 	lda #$02
 	sta $d020
 	lda #$ff
 	sta $d7ff
-	jmp *
+	clc
+l0:
+	bcc l0
 
 ; test in bank 1
 bank1prg:
-	!byte  $09,$80,$25,$80,$c3,$c2,$cD,$38,$30
+	!byte  $09,$80,$09,$80,$c3,$c2,$cD,$38,$30
 
 	stx $d016
-	jsr $fda3
-	jsr $fd50
-	jsr $fd15
-	jsr $ff5b
-	cli
-	jsr $e453
-	jsr $e3bf
-	jsr $e422
-	ldx #$fb
-	txs
 
 ; actual test
 	lda #$05
 	sta $d020
 	lda #$00
 	sta $d7ff
-	jmp *
+	clc
+l1:
+	bcc l1

@@ -21,6 +21,10 @@ basicHeader=1
 	jmp start
 }
 *=start
+; clear the screen
+	lda #$93
+	jsr $ffd2
+
 	sei
 
 ; make $0000-$1fff  shared memory
@@ -124,4 +128,6 @@ test:
 	sta $d020
 	lda $3001
 	sta $d7ff
-	jmp *
+	clc
+l0:
+	bcc l0
