@@ -1,13 +1,15 @@
-; This is a c64 mode mmu test to see if p0 translation from bank 0 to bank 1 is used in c64 mode.
+; This is a c64 mode mmu test to see if p0 translation is changable at the target page in c64 mode.
 ;
 ; test to be confirmed on real hardware
 ;
 ; colors:
-;   black  = something is wrong with p0 translation in c128 mode
-;   white  = something is wrong in c64 mode
-;   cyan   = bank 0 p0 translation to bank 1 used in c64 mode
-;   violet = bank 0 p0 translation to bank 0 used in c64 mode
-;   blue   = somehow no translation is done at all in c64 mode
+;   white  = page $30 is a copy of page 0, any write to page 0 changes page $30, any write to page $30 is ignored
+;   cyan   = same bank backward p0 translation not used in c64 mode
+;   black  = something is wrong with same bank forward p0 translation in c128 mode
+;   violet = something is wrong with backward p0 translation in c64 mode
+;   blue   = page $30 and page 0 are NOT the same
+;   yellow = when page 0 is changed, page $30 does NOT change   
+;   brown  = when page $30 is changed, page 0 also changes
 ;
 ; Test made by Marco van den Heuvel
 
@@ -18,12 +20,16 @@ basicHeader=1
 
 !ifdef basicHeader {
 ; 10 SYS7181
-*=$1c01  
+*=$1c01
 	!byte  $0c,$08,$0a,$00,$9e,$37,$31,$38,$31,$00,$00,$00
 *=$1c0d 
 	jmp start
 }
 *=start
+; clear the screen
+	lda #$93
+	jsr $ffd2
+
 	sei
 
 ; make $0000-$1fff  shared memory
@@ -41,32 +47,16 @@ basicHeader=1
 ; put #$aa in $3080 in bank 0
 	lda #$aa
 	sta $3080
-
-; bank in bank 1 and make everything ram
-	lda #$7e
-	sta $ff00
-
-; put #$33 in $3080 in bank 1
-	lda #$33
-	sta $3080
-
-; bank in bank 0 and make everything ram
-	lda #$3e
-	sta $ff00
 	
-; remap zero page to $3000 in bank 1
-	lda #$01
+; remap zero page to $3000 in bank 0
+	lda #$00
 	sta $d508
 	lda #$30
 	sta $d507
 
-; no shared memory
-	lda #$00
-	sta $d506
-
-; read value from $80 (should be #$33)
-	lda $80
-	cmp #$33
+; read value from $3080 (should be #$55)
+	lda $3080
+	cmp #$55
 	beq testc64mode
 
 ; for some reason the read was not #$aa
@@ -114,50 +104,86 @@ c64switch:
 
 ; test in bank 0
 test:
-	!byte  $09,$80,$09,$80,$c3,$c2,$cD,$38,$30
+	!byte  $09,$80,$25,$80,$c3,$c2,$cD,$38,$30
+
+	stx $d016
 
 	sei
-
-; read from $80, which is mapped to $3080 in bank 1, which means we should get back #$33
-	lda $80
-	cmp #$33
-	beq bank1
-
-; is it bank 0 $3080 ?
-	cmp #$aa
-	beq bank0
-
-; no mapping at all ?
+	lda $3080
 	cmp #$55
-	beq zp
+	beq p0backwardmapping
+	cmp #$aa
+	beq nop0backwardmapping
 
-; something else is wrong
-	lda #$01
-	sta $d020
-	lda #$ff
-	sta $d7ff
-	jmp *
-
-; we got bank 1 $3080 value
-bank1:
-	lda #$03
-	sta $d020
-	lda #$00
-	sta $d7ff
-	jmp *
-
-; we got bank 0 $3080 value
-bank0:
 	lda #$04
 	sta $d020
 	lda #$00
 	sta $d7ff
-	jmp *
+	clc
+l0:
+	bcc l0
 
-; we got bank 0 $80 value
-zp:
+p0backwardmapping:
+
+; read what is in $3080
+	lda $3080
+
+; check if $80 is the same
+	cmp $80
+	bne page0notpage30
+
+; change the value in $80
+	inc $80
+
+; check if $3080 is now different
+	cmp $3080
+	beq nochangepage30
+
+; read what is in $80
+	lda $80
+
+; change $3080
+	inc $3080
+
+; check if $80 has changed
+	cmp $80
+	bne changepage0
+
+	lda #$01
+	sta $d020
+	lda #$ff
+	sta $d7ff
+	clc
+	bcc l0
+
+nop0backwardmapping:
+	lda #$03
+	sta $d020
+	lda #$ff
+	sta $d7ff
+	clc
+	bcc l0
+
+page0notpage30:
 	lda #$06
 	sta $d020
-	lda #$00
+	lda #$ff
 	sta $d7ff
-	jmp *
+	clc
+	bcc l0
+
+nochangepage30:
+	lda #$07
+	sta $d020
+	lda #$ff
+	sta $d7ff
+	clc
+	bcc l0
+
+changepage0:
+	lda #$09
+	sta $d020
+	lda #$ff
+	sta $d7ff
+	clc
+	bcc l0
