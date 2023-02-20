@@ -9,7 +9,7 @@
 ;   violet = something is wrong with backward p0 translation in c64 mode
 ;   blue   = page $30 and page 0 are NOT the same
 ;   yellow = when page 0 is changed, page $30 does NOT change   
-;   brown  = when page $30 is changed, page 0 also changes
+;   green  = when page $30 is changed, page 0 also changes
 ;
 ; Test made by Marco van den Heuvel
 
@@ -181,7 +181,7 @@ nochangepage30:
 	bcc l0
 
 changepage0:
-	lda #$09
+	lda #$05
 	sta $d020
 	lda #$ff
 	sta $d7ff

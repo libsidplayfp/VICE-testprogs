@@ -4,7 +4,7 @@
 ;
 ; colors:
 ;   cyan  = same bank forward p1 translation used in c64 mode
-;   white = same bank forward p1 translation not used in c64 mode
+;   green = same bank forward p1 translation not used in c64 mode
 ;   black = something is wrong with same bank backward p1 translation in c128 mode
 ;   violet = something is wrong with p1 translation in c64 mode
 ;
@@ -129,7 +129,7 @@ p1forwardmapping:
 	bcc l0
 
 nop1forwardmapping:
-	lda #$01
+	lda #$05
 	sta $d020
 	lda #$ff
 	sta $d7ff

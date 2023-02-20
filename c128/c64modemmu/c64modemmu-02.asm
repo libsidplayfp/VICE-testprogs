@@ -5,7 +5,7 @@
 ; colors:
 ;   cyan  = same bank forward p0 translation used in c64 mode
 ;   green = same bank forward p0 translation not used in c64 mode
-;   black = something is wrong with same bank backward p0 translation in c128 mode
+;   black = something is wrong with same bank forward p0 translation in c128 mode
 ;   violet = something is wrong with p0 translation in c64 mode
 ;
 ; Test made by Marco van den Heuvel
