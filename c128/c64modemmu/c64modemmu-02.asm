@@ -1,10 +1,10 @@
 ; This is a c64 mode mmu test to see if same bank p0 forward translation is used in c64 mode.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   cyan  = same bank forward p0 translation used in c64 mode
-;   white = same bank forward p0 translation not used in c64 mode
+;   green = same bank forward p0 translation not used in c64 mode
 ;   black = something is wrong with same bank backward p0 translation in c128 mode
 ;   violet = something is wrong with p0 translation in c64 mode
 ;
@@ -129,7 +129,7 @@ p0forwardmapping:
 	bcc l0
 
 nop0forwardmapping:
-	lda #$01
+	lda #$05
 	sta $d020
 	lda #$ff
 	sta $d7ff
