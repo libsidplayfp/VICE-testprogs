@@ -1,12 +1,15 @@
-; This is a c64 mode mmu test to see if same bank p1 forward translation is used in c64 mode.
+; This is a c64 mode mmu test to see if p1 translation is changable at the target page in c64 mode.
 ;
 ; test to be confirmed on real hardware
 ;
 ; colors:
-;   cyan  = same bank forward p1 translation used in c64 mode
-;   white = same bank forward p1 translation not used in c64 mode
-;   black = something is wrong with same bank backward p1 translation in c128 mode
-;   violet = something is wrong with p1 translation in c64 mode
+;   white  = page $30 is a copy of page 1, any write to page 1 changes page $30, any write to page $30 is ignored
+;   cyan   = same bank backward p1 translation not used in c64 mode
+;   black  = something is wrong with same bank forward p1 translation in c128 mode
+;   violet = something is wrong with backward p1 translation in c64 mode
+;   blue   = page $30 and page 1 are NOT the same
+;   yellow = when page 1 is changed, page $30 does NOT change   
+;   brown  = when page $30 is changed, page 1 also changes
 ;
 ; Test made by Marco van den Heuvel
 
@@ -17,7 +20,7 @@ basicHeader=1
 
 !ifdef basicHeader {
 ; 10 SYS7181
-*=$1c01  
+*=$1c01
 	!byte  $0c,$08,$0a,$00,$9e,$37,$31,$38,$31,$00,$00,$00
 *=$1c0d 
 	jmp start
@@ -51,9 +54,9 @@ basicHeader=1
 	lda #$30
 	sta $d509
 
-; read value from $120 (should be #$aa)
-	lda $120
-	cmp #$aa
+; read value from $3020 (should be #$55)
+	lda $3020
+	cmp #$55
 	beq testc64mode
 
 ; for some reason the read was not #$aa
@@ -101,16 +104,16 @@ c64switch:
 
 ; test in bank 0
 test:
-	!byte  $09,$80,$09,$80,$c3,$c2,$cD,$38,$30
+	!byte  $09,$80,$25,$80,$c3,$c2,$cD,$38,$30
 
 	stx $d016
 
 	sei
-	lda $120
-	cmp #$aa
-	beq p1forwardmapping
+	lda $3020
 	cmp #$55
-	beq nop1forwardmapping
+	beq p1backwardmapping
+	cmp #$aa
+	beq nop1backwardmapping
 
 	lda #$04
 	sta $d020
@@ -120,7 +123,40 @@ test:
 l0:
 	bcc l0
 
-p1forwardmapping:
+p1backwardmapping:
+
+; read what is in $3020
+	lda $3020
+
+; check if $120 is the same
+	cmp $120
+	bne page1notpage30
+
+; change the value in $120
+	inc $120
+
+; check if $3020 is now different
+	cmp $3020
+	beq nochangepage30
+
+; read what is in $120
+	lda $120
+
+; change $3020
+	inc $3020
+
+; check if $120 has changed
+	cmp $120
+	bne changepage1
+
+	lda #$01
+	sta $d020
+	lda #$ff
+	sta $d7ff
+	clc
+	bcc l0
+
+nop1backwardmapping:
 	lda #$03
 	sta $d020
 	lda #$ff
@@ -128,8 +164,24 @@ p1forwardmapping:
 	clc
 	bcc l0
 
-nop1forwardmapping:
-	lda #$01
+page1notpage30:
+	lda #$06
+	sta $d020
+	lda #$ff
+	sta $d7ff
+	clc
+	bcc l0
+
+nochangepage30:
+	lda #$07
+	sta $d020
+	lda #$ff
+	sta $d7ff
+	clc
+	bcc l0
+
+changepage1:
+	lda #$09
 	sta $d020
 	lda #$ff
 	sta $d7ff
