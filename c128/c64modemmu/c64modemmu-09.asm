@@ -11,7 +11,7 @@
 ; drk blue = #$55 in p0, #$55 in p1
 ;   yellow = #$55 in p0, #$aa in p1
 ;   brown  = #$aa in p0, #$33 in p1
-;   pink   = #$aa in p0, #$55 in p1
+;   green  = #$aa in p0, #$55 in p1
 ;   grey   = #$aa in p0, #$aa in p1
 ; lte blue = something unexpected in p0 or p1
 ;
@@ -111,6 +111,7 @@ test:
 	stx $d016
 
 	sei
+	ldy #$ff
 	lda $20
 	cmp #$aa
 	beq got_p0_aa
@@ -154,6 +155,7 @@ wtf:
 
 setborder:
 	stx $d020
+	sty $d7ff
 	clc
 l0:
 	bcc l0
@@ -163,7 +165,8 @@ got_p0_aa_p1_aa:
 	bne setborder
 
 got_p0_aa_p1_55:
-	ldx #10
+	ldy #0
+	ldx #5
 	bne setborder
 
 got_p0_aa_p1_33:
