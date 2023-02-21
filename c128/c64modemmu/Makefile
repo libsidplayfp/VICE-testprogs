@@ -11,7 +11,8 @@ all: \
 	c64modemmu-08.prg \
 	c64modemmu-09.prg \
 	c64modemmu-10.prg \
-	c64modemmu-11.prg
+	c64modemmu-11.prg \
+	c64modemmu-12.prg
 
 c64modemmu-00.prg: c64modemmu-00.asm
 	acme -f cbm -o c64modemmu-00.prg c64modemmu-00.asm
@@ -48,6 +49,9 @@ c64modemmu-10.prg: c64modemmu-10.asm
 
 c64modemmu-11.prg: c64modemmu-11.asm
 	acme -f cbm -o c64modemmu-11.prg c64modemmu-11.asm
+
+c64modemmu-12.prg: c64modemmu-12.asm
+	acme -f cbm -o c64modemmu-12.prg c64modemmu-12.asm
 
 clean:
 	rm -f c64modemmu-*.prg
