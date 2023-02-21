@@ -29,8 +29,8 @@ basicHeader=1
 
 	sei
 
-; make $0000-$1fff  shared memory
-	lda #$06
+; no shared memory
+	lda #$00
 	sta $d506
 
 ; bank in bank 0 and make everything ram
@@ -56,7 +56,7 @@ basicHeader=1
 	cmp #$55
 	beq testc64mode
 
-; for some reason the read was not #$aa
+; for some reason the read was not #$55
 	lda #$00
 	sta $d020
 	lda #$ff
@@ -112,26 +112,22 @@ test:
 	cmp #$aa
 	beq nop0backwardmapping
 
-	lda #$04
-	sta $d020
-	lda #$00
-	sta $d7ff
+	ldx #$04
+	ldy #$ff
+
+setborderdebug:
+	stx $d020
+	sty $d7ff
 	clc
 l0:
 	bcc l0
 
 p0backwardmapping:
-	lda #$05
-	sta $d020
-	lda #$ff
-	sta $d7ff
-	clc
-	bcc l0
+	ldx #$05
+	ldy #$00
+	beq setborderdebug
 
 nop0backwardmapping:
-	lda #$03
-	sta $d020
-	lda #$ff
-	sta $d7ff
-	clc
-	bcc l0
+	ldx #$03
+	ldy #$ff
+	bne setborderdebug
