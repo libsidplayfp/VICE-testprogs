@@ -5,7 +5,7 @@
 
 ; colors:
 ;   black  = #$33 in target page
-;   white  = #$55 in target page
+;   green  = #$55 in target page
 ;   cyan   = #$aa in target page
 ;   violet = something unexpected in target page
 ;
@@ -105,6 +105,7 @@ test:
 	stx $d016
 
 	sei
+	ldy #$ff
 	lda $3020
 	cmp #$aa
 	beq got_aa
@@ -117,6 +118,7 @@ test:
 
 setborder:
 	stx $d020
+	sty $d7ff
 	clc
 l0:
 	bcc l0
@@ -126,7 +128,8 @@ got_aa:
 	bne setborder
 
 got_55
-	ldx #1
+	ldy #0
+	ldx #5
 	bne setborder
 
 got_33
