@@ -1,6 +1,6 @@
 ; This is a c64 mode mmu test to see if p1 translation is changable at the target page in c64 mode.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   white  = page $30 is a copy of page 1, any write to page 1 changes page $30, any write to page $30 is ignored
@@ -32,8 +32,8 @@ basicHeader=1
 
 	sei
 
-; make $0000-$1fff  shared memory
-	lda #$06
+; no shared memory
+	lda #$00
 	sta $d506
 
 ; bank in bank 0 and make everything ram
@@ -59,7 +59,7 @@ basicHeader=1
 	cmp #$55
 	beq testc64mode
 
-; for some reason the read was not #$aa
+; for some reason the read was not #$55
 	lda #$00
 	sta $d020
 	lda #$ff
@@ -115,10 +115,12 @@ test:
 	cmp #$aa
 	beq nop1backwardmapping
 
-	lda #$04
-	sta $d020
-	lda #$00
-	sta $d7ff
+	ldx #$04
+	ldy #$ff
+
+setborderdebug:
+	stx $d020
+	sty $d7ff
 	clc
 l0:
 	bcc l0
@@ -149,41 +151,26 @@ p1backwardmapping:
 	cmp $120
 	bne changepage1
 
-	lda #$01
-	sta $d020
-	lda #$ff
-	sta $d7ff
-	clc
-	bcc l0
+	ldx #$01
+	ldy #$ff
+	bne setborderdebug
 
 nop1backwardmapping:
-	lda #$03
-	sta $d020
-	lda #$ff
-	sta $d7ff
-	clc
-	bcc l0
+	ldx #$03
+	ldy #$ff
+	bne setborderdebug
 
 page1notpage30:
-	lda #$06
-	sta $d020
-	lda #$ff
-	sta $d7ff
-	clc
-	bcc l0
+	ldx #$06
+	ldy #$ff
+	bne setborderdebug
 
 nochangepage30:
-	lda #$07
-	sta $d020
-	lda #$ff
-	sta $d7ff
-	clc
-	bcc l0
+	ldx #$07
+	ldy #$ff
+	bne setborderdebug
 
 changepage1:
-	lda #$05
-	sta $d020
-	lda #$ff
-	sta $d7ff
-	clc
-	bcc l0
+	ldx #$05
+	ldy #$00
+	beq setborderdebug
