@@ -1,8 +1,7 @@
 ; This is a c64 mode mmu test to see what happens when p0 and p1 are mapped to the same target page in bank 0, what is read in p0 and p1.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
-
 ; colors:
 ;   black  = #$33 in p0, #$33 in p1
 ;   white  = #$33 in p0, #$55 in p1

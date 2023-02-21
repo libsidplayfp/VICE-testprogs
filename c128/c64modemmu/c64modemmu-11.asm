@@ -1,12 +1,13 @@
-; This is a c64 mode mmu test to see what happens when p0 and p1 are mapped to the same target page in bank 0, what is read in the target page.
+; This is a c64 mode mmu test to see what happens when p0 is mapped to p1 and p1 is mapped to itself, what is in p0 and p1.
 ;
-; test confirmed on real hardware
+; test to be confirmed on real hardware
 ;
 ; colors:
-;   black  = #$33 in target page
-;   green  = #$55 in target page
-;   cyan   = #$aa in target page
-;   violet = something unexpected in target page
+;   black  = #$55 in p0, #$55 in p1
+;   white  = #$55 in p0, #$aa in p1
+;   cyan   = #$aa in p0, #$55 in p1
+;   blue   = #$aa in p0, #$aa in p1
+;   yellow = something unexpected happened
 ;
 ; Test made by Marco van den Heuvel
 
@@ -45,20 +46,16 @@ basicHeader=1
 	lda #$55
 	sta $120
 	
-; put #$33 in $3020 in bank 0
-	lda #$33
-	sta $3020
-
-; remap zero page to $3000 in bank 0
+; remap zero page to the stack page in bank 0
 	lda #$00
 	sta $d508
-	lda #$30
+	lda #$01
 	sta $d507
 
-; remap stack page to $3000 in bank 0
+; make sure the stack page maps to itself in bank 0
 	lda #$00
 	sta $d50a
-	lda #$30
+	lda #$01
 	sta $d509
 
 testc64mode:
@@ -104,33 +101,49 @@ test:
 	stx $d016
 
 	sei
-	ldy #$ff
-	lda $3020
+	lda $20
 	cmp #$aa
 	beq got_aa
 	cmp #$55
 	beq got_55
-	cmp #$33
-	beq got_33
 
-	ldx #4
+wtf:
+	ldx #7
 
 setborder:
 	stx $d020
-	sty $d7ff
 	clc
 l0:
 	bcc l0
 
 got_aa:
+	lda $120
+	cmp #$aa
+	beq got_aa_aa
+	cmp #$55
+	beq got_aa_55
+	bne wtf
+
+got_55:
+	lda $120
+	cmp #$aa
+	beq got_55_aa
+	cmp #$55
+	beq got_55_55
+	bne wtf
+
+got_55_55:
+	ldx #0
+	beq setborder
+
+got_55_aa:
+	ldx #1
+	bne setborder
+
+got_aa_55:
 	ldx #3
 	bne setborder
 
-got_55
-	ldy #0
-	ldx #5
+got_aa_aa:
+	ldx #6
 	bne setborder
-
-got_33
-	ldx #0
-	beq setborder

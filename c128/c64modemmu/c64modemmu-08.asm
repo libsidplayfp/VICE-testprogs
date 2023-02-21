@@ -1,6 +1,6 @@
 ; This is a c64 mode mmu test to see what is at the target page in bank 0 when p0 is mapped to the target page in bank 1.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = something went wrong with p0 translation in c128 mode
