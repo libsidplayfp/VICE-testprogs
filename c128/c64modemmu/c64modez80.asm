@@ -5,11 +5,11 @@
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
-;   cyan   = z80 on, z80 bios present, but could not get into c64 mode
-;   violet = z80 on, z80 bios present, got to c64 mode, but did not have access to c64 mode basic rom, and no z80 bios present either
-;   blue   = z80 on, z80 bios present, got to c64 mode, basic rom present, no z80 bios
-;   yellow = z80 on, z80 bios present, got to c64 mode, basic rom not present, z80 bios is present
-;   pink   = z80 on, z80 bios present, got to c64 mode, basic rom and z80 bios present
+;   cyan   = z80 on, z80 bios present in c128 mode, but could not get into c64 mode
+;   violet = z80 on, z80 bios present in c128 mode, got to c64 mode, but did not have access to c64 mode basic rom, and no z80 bios present either
+;   blue   = z80 on, z80 bios present in c128 mode, got to c64 mode, basic rom present, no z80 bios
+;   yellow = z80 on, z80 bios present in c128 mode, got to c64 mode, basic rom not present, z80 bios is present
+;   pink   = z80 on, z80 bios present in c128 mode, got to c64 mode, basic rom and z80 bios present
 ;
 ; Test made by Marco van den Heuvel
 
@@ -36,11 +36,30 @@ basicHeader=1
 	lda #$00
 	sta $d506
 
-; bank in bank 0 and make everything ram
+; bank in bank 0 and make everything ram, also bank out I/O
+	lda #$3f
+	sta $ff00
+
+	lda #$00
+
+; zero out the ram locations 'behind' where the z80 bios will be scanned
+	sta $048d
+	sta $048e
+	sta $048f
+
+; zero out the ram locations 'behind' where the c64 mode basic will be scanned
+	sta $a004
+	sta $a005
+	sta $a006
+
+; zero out the ram location 'behind' where the mmu bank version register is
+	sta $d50b
+
+; bank in bank 0 and make everything ram, and bank I/O back in
 	lda #$3e
 	sta $ff00
 
-; change the border color to red
+; change the border color to black
 	lda #$00
 	sta $d020
 

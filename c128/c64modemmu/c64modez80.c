@@ -2,93 +2,144 @@
 
 void main()
 {
-    unsigned char retval;
-    unsigned char founditall = 1;
-    unsigned char foundbasic = 1;
-    unsigned char foundbios = 1;
-    unsigned int i;
 
-    /* change border color to indicate we got the z80 switched on */
-    outp(0xd020, 1);
+#asm
+	/* set the border color to indicate we made it into z80 mode */
+	ld a,1
+	ld bc,0xd020
+	out (c),a
 
-    /* check if z80 bios is present */
-    retval = bpeek(0x48d);
-    if (retval != 0x43) {
-        founditall = 0;
-    }
+	/* check if we can access the z80 bios */
+	ld bc,0x048d
+	ld a,(bc)
+	cp 0x43
+	jr nz,noz80bios
 
-    retval = bpeek(0x48e);
-    if (retval != 0x50) {
-        founditall = 0;
-    }
+	inc bc
+	ld a,(bc)
+	cp 0x50
+	jr nz,noz80bios
 
-    retval = bpeek(0x48f);
-    if (retval != 0x4d) {
-        founditall = 0;
-    }
+	inc bc
+	ld a,(bc)
+	cp 0x4d
+	jr z,z80bios_found
 
-    if (founditall == 1) {
-        /* change border color to indicate the z80 bios is present */
-        outp(0xd020, 3);
+noz80bios:
+	jr nz,noz80bios
 
-        /* try to get into c64 mode */
-        outp(0xd505, 0xf6);
+z80bios_found:
+	/* set the border color to indicate we found the z80 bios in c128 mode */
+	ld a,3
+	ld bc,0xd020
+	out (c),a
 
-        /* check if c64 mode bit is on */
-        retval = (inp(0xd505) >> 6) & 1;
+     /* get the mmu version register in z80 reg D */
+	ld bc,0xd50b
+	in d,(c)
 
-        if (retval == 1) {
+	/* switch into c64 mode */
+	ld a,0xf6
+	ld bc,0xd505
+	out (c),a
 
-            /* change border color to indicate we got to c64 mode */
-            outp(0xd020, 4);
+	/* get the mmu version register in z80 reg A */
+	ld bc,0xd50b
+	in a,(c)
+	cp a,d
+	jr nz,in_c64mode
 
-            /* check if c64 basic is present */
-            retval = bpeek(0xa004);
-            if (retval != 0x43) {
-                foundbasic = 0;
-            }
+noc64mode:
+	jr z,noc64mode
 
-            retval = bpeek(0xa005);
-            if (retval != 0x42) {
-                foundbasic = 0;
-            }
+in_c64mode:
 
-            retval = bpeek(0xa006);
-            if (retval != 0x4d) {
-                foundbasic = 0;
-            }
+	/* set the border color to indicate we are in c64 mode */
+	ld a,4
+	ld bc,0xd020
+	out (c),a
 
-            /* check if z80 bios is present */
-            retval = bpeek(0x48d);
-            if (retval != 0x43) {
-                foundbios = 0;
-            }
+	/* check if we can still access the z80 bios */
+	ld bc,0x048d
+	ld a,(bc)
+	cp 0x43
+	jr nz,noz80bios_in_c64mode
 
-            retval = bpeek(0x48e);
-            if (retval != 0x50) {
-                foundbios = 0;
-            }
+	inc bc
+	ld a,(bc)
+	cp 0x50
+	jr nz,noz80bios_in_c64mode
 
-            retval = bpeek(0x48f);
-            if (retval != 0x4d) {
-                foundbios = 0;
-            }
+	inc bc
+	ld a,(bc)
+	cp 0x4d
+	jr z,z80bios_found_in_c64mode
 
-            /* set color for basic present and bios present */
-            if (foundbasic == 1 && foundbios == 1) {
-                outp(0xd020, 10);
-            /* set color for basic present and bios not present */
-            } else if (foundbasic == 1 && foundbios == 0) {
-                outp(0xd020, 6);
-            /* set color for basic not present and bios present */
-            } else if (foundbasic == 0 && foundbios == 1) {
-                outp(0xd020, 7);
-            /* set color for basic not present and bios not present */
-            } else {
-                outp(0xd020, 4);
-            }
-        }
-    }
+noz80bios_in_c64mode:
+	ld d,0
+	jr scan_for_c64_basic
 
-    while (1) { }
+z80bios_found_in_c64mode:
+	ld d,1
+
+scan_for_c64_basic:
+	ld bc,0xa004
+	ld a,(bc)
+	cp 0x43
+	jr nz,noc64basic
+
+	inc bc
+	ld a,(bc)
+	cp 0x42
+	jr nz,noc64basic
+
+	inc bc
+	ld a,(bc)
+	cp 0x4d
+	jr z,c64basic_found
+
+noc64basic:
+	ld e,0
+	jr final_border_color
+
+c64basic_found:
+	ld e,1
+
+final_border_color:
+	ld bc,0xd020
+	ld a,1
+	cp d
+	jr nz,no_d
+	cp e
+	jr nz,got_d_no_e
+
+got_d_got_e:
+; got bios, got basic in c64 mode
+	ld a,10
+	jr setborder
+
+no_d:
+	cp e
+	jr nz,no_d_no_e
+
+no_d_got_e:
+	ld a,6
+	jr setborder
+
+got_d_no_e:
+	ld a,7
+	jr setborder
+
+no_d_no_e:
+	ld a,4
+
+setborder:
+	out (c),a
+
+	ld a,1
+	cp 1
+justloop:
+	jr z,justloop
+
+#endasm
 }
