@@ -1,12 +1,12 @@
 ; This is a c64 mode mmu test to see if any of the c128 mode roms exist in c64 mode.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
-;   black  = none of the c128 roms exist in c64 mode
-;   white  = one of the c128 roms exist in c64 mode
-;   red    = two of the c128 roms exist in c64 mode
-;   cyan   = all of the c128 roms exist in c64 mode
+;   green  = none of the c128 roms exist in c64 mode
+;   blue   = one of the c128 roms exist in c64 mode
+;   yellow = two of the c128 roms exist in c64 mode
+;   orange = all of the c128 roms exist in c64 mode
 ;
 ; Test made by Marco van den Heuvel
 
@@ -75,11 +75,13 @@ test:
 	stx $d016
 
 	sei
-	ldx #$00
+	ldx #$05
+	ldy #$ff
 	lda $4000
 	inc $4000
 	cmp $4000
 	bne no4000
+	ldy #$00
 	inx
 no4000:
 	lda $8000
@@ -87,16 +89,19 @@ no4000:
 	cmp $8000
 	bne no8000
 	inx
+	ldy #$00
 no8000:
 	lda $c000
 	inc $c000
 	cmp $c000
 	bne noc000
+	ldy #$00
 	inx
 noc000:
 
 setborder:
 	stx $d020
+	sty $d7ff
 	clc
 l0:
 	bcc l0

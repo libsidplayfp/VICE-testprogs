@@ -1,13 +1,13 @@
 ; This is a c64 mode test to see if the z80 can be used in c64 mode.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
 ;   cyan   = z80 on, z80 bios present in c128 mode, but could not get into c64 mode
 ;   violet = z80 on, z80 bios present in c128 mode, got to c64 mode, but did not have access to c64 mode basic rom, and no z80 bios present either
-;   blue   = z80 on, z80 bios present in c128 mode, got to c64 mode, basic rom present, no z80 bios
+;   green  = z80 on, z80 bios present in c128 mode, got to c64 mode, basic rom present, no z80 bios
 ;   yellow = z80 on, z80 bios present in c128 mode, got to c64 mode, basic rom not present, z80 bios is present
 ;   pink   = z80 on, z80 bios present in c128 mode, got to c64 mode, basic rom and z80 bios present
 ;

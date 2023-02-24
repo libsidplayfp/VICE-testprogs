@@ -106,7 +106,7 @@ c64basic_found:
 	ld e,1
 
 final_border_color:
-	ld bc,0xd020
+	ld b, 0xff
 	ld a,1
 	cp d
 	jr nz,no_d
@@ -123,7 +123,7 @@ no_d:
 	jr nz,no_d_no_e
 
 no_d_got_e:
-	ld a,6
+	ld a,5
 	jr setborder
 
 got_d_no_e:
@@ -134,7 +134,11 @@ no_d_no_e:
 	ld a,4
 
 setborder:
+	ld d,b
+	ld bc,0xd020
 	out (c),a
+	ld bc,0xd7ff
+	out (c),b
 
 	ld a,1
 	cp 1

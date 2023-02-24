@@ -1,9 +1,9 @@
 ; This is a c64 mode mmu test to see what happens when p1 is mapped to p0 and p0 is mapped to itself, what is in p0 and p1.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
-;   black  = #$55 in p0, #$55 in p1
+;   green  = #$55 in p0, #$55 in p1
 ;   white  = #$55 in p0, #$aa in p1
 ;   cyan   = #$aa in p0, #$55 in p1
 ;   blue   = #$aa in p0, #$aa in p1
@@ -101,6 +101,7 @@ test:
 	stx $d016
 
 	sei
+	ldy #$ff
 	lda $20
 	cmp #$aa
 	beq got_aa
@@ -112,6 +113,7 @@ wtf:
 
 setborder:
 	stx $d020
+	sty $d7ff
 	clc
 l0:
 	bcc l0
@@ -133,7 +135,8 @@ got_55:
 	bne wtf
 
 got_55_55:
-	ldx #0
+	ldx #5
+	ldy #0
 	beq setborder
 
 got_55_aa:
