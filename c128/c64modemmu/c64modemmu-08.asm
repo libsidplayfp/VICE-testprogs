@@ -5,7 +5,7 @@
 ; colors:
 ;   black  = something went wrong with p0 translation in c128 mode
 ;   white  = something went wrong with p0 translation in c64 mode
-;   cyan   = we got #$aa from target page
+;   green  = we got #$aa from target page
 ;   violet = we got #$55 from target page
 ;   blue   = we got #$33 from target page
 ;
@@ -123,6 +123,7 @@ test:
 	stx $d016
 
 	sei
+	ldy #$ff
 	lda $3080
 	cmp #$aa
 	beq got_aa_3080_bank_0
@@ -131,34 +132,25 @@ test:
 	cmp #$33
 	beq got_33_3080_bank_0
 
-	lda #$01
-	sta $d020
-	lda #$00
-	sta $d7ff
+	ldx #$01
+
+setborder:
+	stx $d020
+	sty $d7ff
 	clc
 l0:
 	bcc l0
 
 got_aa_3080_bank_0:
-	lda #$03
-	sta $d020
-	lda #$00
-	sta $d7ff
-	clc
-	bcc l0
+	ldy #0
+	ldx #5
+	bne setborder
 
 got_55_3080_bank_0:
-	lda #$04
-	sta $d020
-	lda #$00
-	sta $d7ff
-	clc
-	bcc l0
+	ldx #4
+	bne setborder
+
 
 got_33_3080_bank_0:
-	lda #$06
-	sta $d020
-	lda #$00
-	sta $d7ff
-	clc
-	bcc l0
+	ldx #6
+	bne setborder
