@@ -1,5 +1,6 @@
 
 all: \
+	c128modez80-00.prg \
 	c64modez80-00.prg \
 	c64modemmu-00.prg \
 	c64modemmu-01.prg \
@@ -62,14 +63,23 @@ c64modemmu-13.prg: c64modemmu-13.asm
 c64modemmu-14.prg: c64modemmu-14.asm
 	acme -f cbm -o c64modemmu-14.prg c64modemmu-14.asm
 
-c64modez80-00.prg: c64modez80-00.asm z80-00.bin
+c64modez80-00.prg: c64modez80-00.asm c64modez80-00.bin
 	acme -f cbm -o c64modez80-00.prg c64modez80-00.asm
 
-z80-00.bin: c64modez80-00.c
+c64modez80-00.bin: c64modez80-00.c
 	zcc +c128 -create-app -subtype=disk -zorg=8192 c64modez80-00.c
 	rm -f A
 	rm -f A.LDR
-	mv a.bin z80-00.bin
+	mv a.bin c64modez80-00.bin
+
+c128modez80-00.prg: c128modez80-00.asm c128modez80-00.bin
+	acme -f cbm -o c128modez80-00.prg c128modez80-00.asm
+
+c128modez80-00.bin: c128modez80-00.c
+	zcc +c128 -create-app -subtype=disk -zorg=8192 c128modez80-00.c
+	rm -f A
+	rm -f A.LDR
+	mv a.bin c128modez80-00.bin
 
 clean:
 	rm -f c64modemmu-*.prg

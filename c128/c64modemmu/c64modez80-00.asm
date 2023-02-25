@@ -74,4 +74,4 @@ basicHeader=1
 
 *=$2000
  
-!binary "z80-00.bin"
+!binary "c64modez80-00.bin"
