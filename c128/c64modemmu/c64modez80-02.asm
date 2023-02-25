@@ -6,8 +6,9 @@
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
 ;   cyan   = z80 on, z80 bios present in c128 mode, but could not get into c64 mode
-;   violet = z80 on, z80 bios present in c128 mode, got to c64 mode, able to change I/O regs even though c64 mode I/O is NOT mapped in
+;   green = z80 on, z80 bios present in c128 mode, got to c64 mode, able to change I/O regs even though c64 mode I/O is NOT mapped in
 ;   yellow = z80 on, z80 bios present in c128 mode, got to c64 mode, able to change I/O regs with in/out, AND (somehow) with memory access
+;   blue   = z80 on, z80 bios present in c128 mode, got to c64 mode, not able to change I/O regs at all
 ;
 ; Test made by Marco van den Heuvel
 

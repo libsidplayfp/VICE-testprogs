@@ -1,4 +1,4 @@
-; This is a c64 mode test to see if the z80 can change I/O registers using both in/out AND memory access.
+; This is a c64 mode test to see if the z80 can change I/O registers using both in/out AND memory access, when the I/O is mapped in.
 ;
 ; test confirmed on real hardware
 ;
@@ -7,7 +7,8 @@
 ;   white  = got z80 switched on, but no z80 bios present
 ;   cyan   = z80 on, z80 bios present in c128 mode, but could not get into c64 mode
 ;   violet = z80 on, z80 bios present in c128 mode, got to c64 mode, able to change I/O regs through in/out only
-;   yellow = z80 on, z80 bios present in c128 mode, got to c64 mode, able to change I/O regs through both in/out AND memory access
+;   green  = z80 on, z80 bios present in c128 mode, got to c64 mode, able to change I/O regs through both in/out AND memory access
+;   blue   = z80 on, z80 bios present in c128 mode, got to c64 mode, not able to change I/O regs at all
 ;
 ; Test made by Marco van den Heuvel
 

@@ -1,11 +1,12 @@
 ; This is a c64 mode test to see if the z80 can access the I/O by in/out AND memory access.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
-;   cyan   = z80 on, z80 bios present in c128 mode, I/O only accessable through in/out
+;   cyan   = z80 on, z80 bios present in c128 mode, I/O not accessable at all
+;   green  = z80 on, z80 bios present in c128 mode, I/O only accessable through in/out
 ;   violet = z80 on, z80 bios present in c128 mode, I/O accessable through both in/out and memory accesses
 ;
 ; Test made by Marco van den Heuvel

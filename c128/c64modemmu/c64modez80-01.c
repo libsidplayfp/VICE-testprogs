@@ -54,14 +54,44 @@ noc64mode:
 
 in_c64mode:
 
-	/* set the border color to indicate we are in c64 mode */
-	ld a,4
+	/* try to change the border color using in/out */
 	ld bc,0xd020
+	in a,(c)
+	ld d,a
+	inc a
 	out (c),a
+	in a,(c)
+	cp d
+	jr z,wtf
 
 	/* try to set the border color using memory access */
-	ld a,7
+	in a,(c)
+	inc a
+	ld d,a
 	ld (bc),a
+	in a,(c)
+	cp d
+	jr z,both
+
+only_io:
+	ld a,4
+	ld d,0xff
+	jr set_border
+
+wtf:
+	ld a,6
+	ld d,0xff
+	jr set_border
+
+both:
+	ld a,5
+	ld d,0
+
+set_border:
+	ld bc,0xd020
+	out (c),a
+	ld bc,0xd7ff
+	out (c),d
 
 	ld a,1
 	cp 1
