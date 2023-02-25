@@ -1,4 +1,4 @@
-; This is a c64 mode test to see if the z80 can change I/O registers using both in/out AND memory access.
+; This is a c64 mode test to see if the z80 can change I/O registers even when c64 mode I/O is NOT mapped in.
 ;
 ; test confirmed on real hardware
 ;
@@ -6,8 +6,8 @@
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
 ;   cyan   = z80 on, z80 bios present in c128 mode, but could not get into c64 mode
-;   violet = z80 on, z80 bios present in c128 mode, got to c64 mode, able to change I/O regs through in/out only
-;   yellow = z80 on, z80 bios present in c128 mode, got to c64 mode, able to change I/O regs through both in/out AND memory access
+;   violet = z80 on, z80 bios present in c128 mode, got to c64 mode, able to change I/O regs even though c64 mode I/O is NOT mapped in
+;   yellow = z80 on, z80 bios present in c128 mode, got to c64 mode, able to change I/O regs with in/out, AND (somehow) with memory access
 ;
 ; Test made by Marco van den Heuvel
 
@@ -34,7 +34,7 @@ basicHeader=1
 	lda #$00
 	sta $d506
 
-; bank in bank 0 and make everything ram, and bank I/O in
+; bank in bank 0 and make everything ram, bank in I/O
 	lda #$3e
 	sta $ff00
 
@@ -42,8 +42,8 @@ basicHeader=1
 	lda #$00
 	sta $d020
 
-; set $00 and $01 in preparation for switching to c64 mode
-	lda #$37
+; set $00 and $01 in preparation for switching to c64 mode, c64 mode will have no roms or i/o mapped in
+	lda #$30
 	sta $01
 	lda #$2f
 	sta $00
@@ -53,4 +53,4 @@ basicHeader=1
 
 *=$2000
  
-!binary "c64modez80-01.bin"
+!binary "c64modez80-02.bin"
