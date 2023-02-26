@@ -22,7 +22,8 @@ all: \
 	c64modemmu-11.prg \
 	c64modemmu-12.prg \
 	c64modemmu-13.prg \
-	c64modemmu-14.prg
+	c64modemmu-14.prg \
+	c64modemmu-15.prg
 
 c64modemmu-00.prg: c64modemmu-00.asm
 	acme -f cbm -o c64modemmu-00.prg c64modemmu-00.asm
@@ -68,6 +69,9 @@ c64modemmu-13.prg: c64modemmu-13.asm
 
 c64modemmu-14.prg: c64modemmu-14.asm
 	acme -f cbm -o c64modemmu-14.prg c64modemmu-14.asm
+
+c64modemmu-15.prg: c64modemmu-15.asm
+	acme -f cbm -o c64modemmu-15.prg c64modemmu-15.asm
 
 c64modez80-00.prg: c64modez80-00.asm c64modez80-00.bin
 	acme -f cbm -o c64modez80-00.prg c64modez80-00.asm
