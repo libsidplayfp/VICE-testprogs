@@ -3,7 +3,7 @@
 ; test to be confirmed on real hardware
 ;
 ; colors:
-;   black = cannot switch vicii color memory banks in c64 mode
+;   green = cannot switch vicii color memory banks in c64 mode
 ;   white = can switch vicii color memory banks in c64 mode
 ;   cyan  = something weird is going on with vicii color memory
 ;
@@ -135,20 +135,25 @@ check0_loop:
 	bne check0_loop
 
 ; vicii color memory bank did not change, set border color to indicate this
-	ldx #$00
+	ldx #$05
+	ldy #$00
 	beq set_border
 
 vicii_bank_changed:
 
 ; vicii color memory bank DID change, set border color to indicate this
 	ldx #$01
+	ldy #$ff
 	bne set_border
 
 wtf:
 	ldx #$03
+	ldy #$ff
 
 set_border:
 	stx $d020
+	sty $d7ff
+
 	clc
 l0:
 	bcc l0

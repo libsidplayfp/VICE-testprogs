@@ -4,7 +4,7 @@
 ;
 ; colors:
 ;   black = vicii color memory bank 0
-;   white = vicii color memory bank 1
+;   green = vicii color memory bank 1
 ;   cyan  = something weird is going on with vicii color memory
 ;
 ; Test made by Marco van den Heuvel
@@ -116,18 +116,22 @@ check_loop:
 
 wtf:
 	ldx #$03
+	ldy #$ff
 	bne set_border
 
 bank0:
+	ldy #$ff
 	ldx #$00
 	beq set_border
 
 bank1:
-	ldx #$01
-	beq set_border
+	ldx #$05
+	ldy #$00
 
 set_border:
 	stx $d020
+	sty $d7ff
+
 	clc
 l0:
 	bcc l0
