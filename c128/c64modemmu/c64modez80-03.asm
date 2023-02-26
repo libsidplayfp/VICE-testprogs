@@ -60,8 +60,8 @@ fill_loop:
 	inx
 	bne fill_loop
 
-; set $00 and $01 in preparation for switching to c64 mode, c64 mode will have no roms or i/o mapped in
-	lda #$30
+; set $00 and $01 in preparation for switching to c64 mode
+	lda #$37
 	sta $01
 	lda #$2f
 	sta $00
