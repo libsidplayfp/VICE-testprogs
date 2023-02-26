@@ -76,15 +76,19 @@ check_1000_loop:
 	jr nz,check_1000_loop
 
 got_1000:
-	ld a,6
+	ld a,5
+	ld d,0
 	jr set_border
 
 no_1000:
 	ld a,4
+	ld d,0xff
 
 set_border:
 	ld bc,0xd020
 	out (c),a
+	ld bc,0xd7ff
+	out (c),d
 
 	ld a,1
 	cp 1
