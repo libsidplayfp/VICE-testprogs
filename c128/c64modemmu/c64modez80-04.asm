@@ -8,7 +8,7 @@
 ;   cyan   = z80 on, z80 bios present in c128 mode, but could not get into c64 mode
 ;   violet = z80 on, z80 bios present in c128 mode, got to c64 mode, no access to vicii color map at all
 ;   blue   = z80 on, z80 bios present in c128 mode, got to c64 mode, access to vicii color map bank 0
-;   yellow = z80 on, z80 bios present in c128 mode, got to c64 mode, access to vicii color map bank 1
+;   green  = z80 on, z80 bios present in c128 mode, got to c64 mode, access to vicii color map bank 1
 ;
 ; Test made by Marco van den Heuvel
 

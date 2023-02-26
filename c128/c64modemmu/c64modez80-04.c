@@ -85,17 +85,22 @@ got_d800:
 	jr z,got_a
 wtf:
 	ld a,4
+	ld d,0xff
 	jr set_border
 
 got_5:
-	ld a,7
+	ld a,5
+	ld d,0
 	jr set_border
 
 got_a:
 	ld a,6
+	ld d,0xff
 
 set_border:
 	ld bc,0xd020
+	out (c),a
+	ld bc,0xd7ff
 	out (c),a
 
 	ld a,1
