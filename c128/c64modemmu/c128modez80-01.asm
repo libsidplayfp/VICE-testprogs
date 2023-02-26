@@ -1,4 +1,4 @@
-; This is a c64 mode test to see if the z80 can access the I/O by in/out AND memory access.
+; This is a c128 mode test to see if the z80 can access the I/O by in/out AND memory access.
 ;
 ; test confirmed on real hardware
 ;
