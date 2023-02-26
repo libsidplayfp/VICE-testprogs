@@ -39,6 +39,11 @@ basicHeader=1
 	lda #$00
 	sta $ff00
 
+; make sure bank 1 vicii color memory is mapped in
+	lda $01
+	ora #$03
+	sta $01
+
 ; fill vicii color memory with data
 	ldx #$00
 fill_loop:

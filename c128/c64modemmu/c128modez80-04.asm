@@ -1,15 +1,14 @@
-; This is a c128 mode test to see if the z80 can access the vicii color memory at both $d800 through in/out AND $1000 through memory access.
+; This is a c128 mode test to see which vicii color memory bank the z80 can access.
 ;
 ; test to be confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
-;   cyan   = z80 on, z80 bios present in c128 mode, vicii color memory not accessable at all
-;   violet = z80 on, z80 bios present in c128 mode, only $1000-$13ff can be used to access the vicii color memory using memory access
-;   blue   = z80 on, z80 bios present in c128 mode, only $d800-$dbff can be used to access the vicii color memory using in/out
-;   yellow = z80 on, z80 bios present in c128 mode, $1000-$13ff can be used through in/out AND $d800-$dbff can be used through
-;                                                   memory access to access the vicii color memory
+;   cyan   = z80 on, z80 bios present in c128 mode, $1000-$13ff AND $d800-$dbff current vicii color memory bank
+;   violet = z80 on, z80 bios present in c128 mode, $1000-$13ff vicii color memory bank 1, $d800-$dbff vicii color memory bank 0
+;   blue   = z80 on, z80 bios present in c128 mode, $1000-$13ff vicii color memory bank 0, $d800-$dbff vicii color memory bank 1
+;   yellow = z80 on, z80 bios present in c128 mode, $1000-$13ff AND $d800-$dbff vicii color memory bank 1
 ;
 ; Test made by Marco van den Heuvel
 
@@ -56,6 +55,11 @@ fill_loop:
 	inx
 	bne fill_loop
 
+; change the vicii color memory bank to bank 0
+	lda $01
+	and #$fc
+	sta $01
+
 ; change the border color to black
 	lda #$00
 	sta $d020
@@ -65,4 +69,4 @@ fill_loop:
 
 *=$2000
  
-!binary "c128modez80-03.bin"
+!binary "c128modez80-04.bin"
