@@ -1,6 +1,6 @@
 ; This is a c128 mode test to see if the z80 can access the vicii color memory at both $d800 AND $1000 through in/out.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
@@ -8,7 +8,7 @@
 ;   cyan   = z80 on, z80 bios present in c128 mode, I/O not accessable at all
 ;   violet = z80 on, z80 bios present in c128 mode, only $1000-$13ff can be used to access the vicii color memory using in/out
 ;   blue   = z80 on, z80 bios present in c128 mode, only $d800-$dbff can be used to access the vicii color memory using in/out
-;   yellow = z80 on, z80 bios present in c128 mode, both $1000-$13ff AND $d800-$dbff can be used to access the vicii color memory using in/out
+;   green  = z80 on, z80 bios present in c128 mode, both $1000-$13ff AND $d800-$dbff can be used to access the vicii color memory using in/out
 ;
 ; Test made by Marco van den Heuvel
 

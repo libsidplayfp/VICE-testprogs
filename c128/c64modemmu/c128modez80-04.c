@@ -87,6 +87,7 @@ got_1000:
 
 got_d800_got_1000:
 	ld a,7
+	ld d,0xff
 	jr set_border
 
 no_1000:
@@ -96,18 +97,23 @@ no_1000:
 
 got_d800_no_1000:
 	ld a,6
+	ld d,0xff
 	jr set_border
 
 no_d800_got_1000:
 	ld a,4
+	ld d,0xff
 	jr set_border
 
 no_d800_no_1000:
-	ld a,3
+	ld a,5
+	ld d,0
 
 set_border:
 	ld bc,0xd020
 	out (c),a
+	ld bc,0xd7ff
+	out (c),d
 
 	ld a,1
 	cp 1
