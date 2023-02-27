@@ -35,7 +35,7 @@ basicHeader=1
 	sta $d506
 
 ; bank in bank 0 and bank in I/O
-	lda #$00
+	lda #$3e
 	sta $ff00
 
 ; change the border color to black
