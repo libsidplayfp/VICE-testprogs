@@ -1,12 +1,12 @@
 ; This is a c128 mode test to see if the z80 vicii color memory memory mapping is still accessable when $0000-$1fff is shared memory.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
 ;   cyan   = z80 on, z80 bios present in c128 mode, $1000-$13ff memory mapping present in shared memory
-;   violet = z80 on, z80 bios present in c128 mode, $1000-$13ff memory mapping NOT present in shared memory
+;   green  = z80 on, z80 bios present in c128 mode, $1000-$13ff memory mapping NOT present in shared memory
 ;   blue   = z80 on, z80 bios present in c128 mode, but something very wrong
 ;
 ; Test made by Marco van den Heuvel

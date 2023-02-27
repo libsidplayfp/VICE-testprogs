@@ -1,11 +1,11 @@
 ; This is a c128 mode test to see if the z80 vicii color memory memory mapping is dependent on bit 0 of $ff00/$d500.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
-;   cyan   = z80 on, z80 bios present in c128 mode, $1000-$13ff memory mapping DEPENDS on bit 0 of $ff00/$d500
+;   green  = z80 on, z80 bios present in c128 mode, $1000-$13ff memory mapping DEPENDS on bit 0 of $ff00/$d500
 ;   violet = z80 on, z80 bios present in c128 mode, $1000-$13ff memory mapping DOES NOT DEPEND on bit 0 of $ff00/$d500
 ;   blue   = z80 on, z80 bios present in c128 mode, but something very wrong
 ;

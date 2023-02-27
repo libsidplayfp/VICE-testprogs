@@ -1,13 +1,13 @@
 ; This is a c128 mode test to see if the z80 vicii color memory memory mapping is still accessable when the zero page is relocated to $1000-$10ff and
 ; the stack page is relocated to $1200-$12ff.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
 ;   cyan   = z80 on, z80 bios present in c128 mode, entire $1000-$13ff memory mapping accessable
-;   violet = z80 on, z80 bios present in c128 mode, NOT entire $1000-$13ff memory mapping accessable
+;   green  = z80 on, z80 bios present in c128 mode, NOT entire $1000-$13ff memory mapping accessable
 ;   blue   = z80 on, z80 bios present in c128 mode, but something very wrong
 ;
 ; Test made by Marco van den Heuvel

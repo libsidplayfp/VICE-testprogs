@@ -58,20 +58,25 @@ check_1000_loop:
 
 /* looks like the vicii color memory is still accessable, so set border color to indicate it */
 still_mapped:
-	ld a,4
+	ld a,5
+	ld d,0
 	jr set_border
 
 /* looks like the vicii color memory is not longer accessable, so set border color to indicate it */
 unmapped:
 	ld a,3
+	ld d,0xff
 	jr set_border
 
 wtf:
 	ld a,6
+	ld d,0xff
 
 set_border:
 	ld bc,0xd020
 	out (c),a
+	ld bc,0xd7ff
+	out (c),d
 
 	ld a,1
 	cp 1
