@@ -1,4 +1,4 @@
-; This is a c64 mode test to see if the z80 can change access the vicii color map at $d800-$dbff AND $1000-$13ff through in/out.
+; This is a c64 mode test to see if the z80 can access the vicii color map at $d800-$dbff through in/out AND $1000-$13ff through memory access.
 ;
 ; test confirmed on real hardware
 ;

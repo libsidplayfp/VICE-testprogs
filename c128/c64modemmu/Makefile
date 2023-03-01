@@ -9,6 +9,7 @@ all: \
 	c128modez80-06.prg \
 	c128modez80-07.prg \
 	c128modez80-08.prg \
+	c128modez80-09.prg \
 	c64modez80-00.prg \
 	c64modez80-01.prg \
 	c64modez80-02.prg \
@@ -212,6 +213,14 @@ c128modez80-08.bin: c128modez80-08.c
 	zcc +c128 -create-app -subtype=disk -zorg=8192 c128modez80-08.c
 	rm -f A A.LDR
 	mv a.bin c128modez80-08.bin
+
+c128modez80-09.prg: c128modez80-09.asm c128modez80-09.bin
+	acme -f cbm -o c128modez80-09.prg c128modez80-09.asm
+
+c128modez80-09.bin: c128modez80-09.c
+	zcc +c128 -create-app -subtype=disk -zorg=8192 c128modez80-09.c
+	rm -f A A.LDR
+	mv a.bin c128modez80-09.bin
 
 clean:
 	rm -f c64modemmu-*.prg
