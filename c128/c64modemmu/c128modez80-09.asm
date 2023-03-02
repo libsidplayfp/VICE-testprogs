@@ -5,7 +5,7 @@
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
-;   cyan   = z80 on, z80 bios present in c128 mode, vicii color memory at $1000-$13ff DOES bleed through to ram
+;   green  = z80 on, z80 bios present in c128 mode, vicii color memory at $1000-$13ff DOES bleed through to ram
 ;   violet = z80 on, z80 bios present in c128 mode, vicii color memory at $1000-$13ff does NOT bleed through to ram
 ;
 ; Test made by Marco van den Heuvel
