@@ -80,10 +80,8 @@ setborder:
 	ld bc,0xd7ff
 	out (c),d
 
-	ld a,1
-	cp 1
 justloop:
-	jr z,justloop
+	jr justloop
 
 #endasm
 }

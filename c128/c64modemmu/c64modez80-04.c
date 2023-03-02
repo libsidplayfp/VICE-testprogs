@@ -103,10 +103,8 @@ set_border:
 	ld bc,0xd7ff
 	out (c),a
 
-	ld a,1
-	cp 1
 justloop:
-	jr z,justloop
+	jr justloop
 
 #endasm
 }
