@@ -6,7 +6,7 @@
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
-;   cyan   = z80 on, z80 bios present in c128 mode, mmu register 0 writable through in/out $d500 ONLY
+;   green  = z80 on, z80 bios present in c128 mode, mmu register 0 writable through in/out $d500 ONLY
 ;   violet = z80 on, z80 bios present in c128 mode, mmu register 0 writable through in/out $d500 AND memory access $ff00, $ff00 DEPENDS on the mmu io bit
 ;   blue   = z80 on, z80 bios present in c128 mode, mmu register 0 writable through in/out $d500 AND memory access $ff00, $ff00 does NOT depend on the mmu io bit
 ;   yellow = something weird going on with $ff00 writes
