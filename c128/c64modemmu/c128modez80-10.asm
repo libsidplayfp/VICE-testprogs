@@ -1,15 +1,12 @@
-; This is a c128 mode test to see if in z80 mode the mmu register 0 is readable through in/out $d500 and memory access $ff00,
-; and if $ff00 is memory access is dependent on the mmu io bit.
+; This is a c128 mode test to see if the i/o range accessed with in/out is dependent on the mmu i/o bit.
 ;
-; test confirmed on real hardware
+; test to be confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
-;   cyan   = z80 on, z80 bios present in c128 mode, mmu register 0 readable through in/out $d500 ONLY
-;   violet = z80 on, z80 bios present in c128 mode, mmu register 0 readable through in/out $d500 AND memory access $ff00, $ff00 DEPENDS on the mmu io bit
-;   green  = z80 on, z80 bios present in c128 mode, mmu register 0 readable through in/out $d500 AND memory access $ff00, $ff00 does NOT depend on the mmu io bit
-;   yellow = something weird going on with $ff00 reads
+;   cyan   = z80 on, z80 bios present in c128 mode, the i/o range is DEPENDENT on the mmu i/o bit
+;   violet = z80 on, z80 bios present in c128 mode, the i/o range is NOT dependent on the mmu i/o bit
 ;
 ; Test made by Marco van den Heuvel
 
@@ -39,6 +36,11 @@ basicHeader=1
 ; bank in bank 0 and bank in I/O
 	lda #$3e
 	sta $ff00
+
+; make sure bank 1 vicii color memory is mapped in
+	lda $01
+	ora #$03
+	sta $01
 
 ; change the border color to black
 	lda #$00

@@ -34,70 +34,63 @@ z80bios_found:
 	ld bc,0xd020
 	out (c),a
 
-/* set a new value for mmu register 0 through memory access $ff00 */
-	ld bc,0xff00
-	ld a,0x3c
-	ld (bc),a
-
 /* get the current value of mmu register 0 through i/o $d500 */
 	ld bc,0xd500
 	in d,(c)
 
+/* get the current value of mmu register 0 through memory access $ff00 */
+	ld bc,0xff00
+	ld a,(bc)
+
 /* check if they are the same */
 	cp d
-	jr nz,ff00_cannot_write
+	jr nz,ff00_cannot_read
 
-/* check if a change in $ff00 is reflected in $d500 */
+/* check if a change in $d500 is reflected in $ff00 */
 check_d500_change:
-	ld a,0x30
-	ld bc,0xff00
-	ld (bc),a
+	ld d,0x30
 	ld bc,0xd500
-	in d,(c)
-	cp d
-	jr nz,ff00_cannot_write
-
-	ld a,0x3f
+	out (c),d
 	ld bc,0xff00
-	ld (bc),a
-	ld bc,0xd500
-	in d,(c)
+	ld a,(bc)
 	cp d
-	jr nz,ff00_cannot_write
+	jr nz,ff00_cannot_read
 
-	ld a,0x3e
+	ld d,0x3f
+	ld bc,0xd500
+	out (c),d
 	ld bc,0xff00
-	ld (bc),a
-	ld bc,0xd500
-	in d,(c)
+	ld a,(bc)
 	cp d
-	jr z,ff00_can_write
+	jr z,ff00_can_read
 
-	ld a,0x3f
+check_if_ff00_depends_on_mmu_io_bit:
+	ld d,0x3e
+	ld bc,0xd500
+	out (c),d
 	ld bc,0xff00
-	ld (bc),a
-	ld bc,0xd500
-	in d,(c)
+	ld a,(bc)
 	cp d
-	jr z,wtf
+	jr nz,wtf
 
-ff00_depens_on_mmu_io_bit:
+ff00_depends_on_mmu_io_bit:
 	ld a,4
 	ld d,0xff
 	jr set_border
 
-ff00_can_write:
-	ld a,6
-	ld d,0xff
-	jr set_border
-
-ff00_cannot_write:
+ff00_can_read:
 	ld a,5
 	ld d,0
 	jr set_border
 
+ff00_cannot_read:
+	ld a,3
+	ld d,0xff
+	jr set_border
+
 wtf:
 	ld a,7
+	ld d,0xff
 
 set_border:
 	ld bc,0xd020

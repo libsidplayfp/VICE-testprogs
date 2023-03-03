@@ -53,172 +53,87 @@ z80bios_found:
 	ld a,0x3e
 	out (c),a
 
-/* zero out the '$ff00 working' 'flag' (register d) */
+/* zero out the 'working' 'flag' (register d) */
 	ld d,0
-
-/* zero out the '$ff01-$ff04 working' 'flag' (register e) */
-	ld e,0
-
-/* try to set the $d500 register through in/out to $ff00 */
-	ld a,0x30
-	ld bc,0xff00
-	out (c),a
-
-/* check if $d500 changed */
-	ld bc,0xd500
-	in a,(c)
-	cp 0x30
-	jr nz,check_read_ff00
-	ld d,2
-
-/* set the $d500 register */
-check_read_ff00:
-	ld a,0x38
-	out (c),a
-
-/* check if $ff00 can be used to read the new value */
-	ld bc,0xff00
-	in a,(c)
-	cp 0x38
-	jr nz,check_ff01
-	inc d
 
 /* trigger PCRA at $ff01 */
 check_ff01:
-	ld bc,0xd500
-	ld a,0x3e
-	out (c),a
 	ld bc,0xff01
 	ld a,0xff
-	out (c),a
+	ld (bc),a
 
 /* check if $d500 is now #$3c */
 	ld bc,0xd500
 	in a,(c)
 	cp 0x3c
 	jr nz,check_ff02
-	inc e
+	inc d
 
 /* trigger PCRB at $ff02 */
 check_ff02:
 	ld bc,0xff02
 	ld a,0xff
-	out (c),a
+	ld (bc),a
 
 /* check if $d500 is now #$38 */
 	ld bc,0xd500
 	in a,(c)
 	cp 0x38
 	jr nz,check_ff03
-	inc e
+	inc d
 
 /* trigger PCRC at $ff03 */
 check_ff03:
 	ld bc,0xff03
 	ld a,0xff
-	out (c),a
+	ld (bc),a
 
 /* check if $d500 is now #$34 */
 	ld bc,0xd500
 	in a,(c)
 	cp 0x34
 	jr nz,check_ff04
-	inc e
+	inc d
 
 /* trigger PCRC at $ff04 */
 check_ff04:
 	ld bc,0xff04
 	ld a,0xff
-	out (c),a
+	ld (bc),a
 
 /* check if $d500 is now #$30 */
 	ld bc,0xd500
 	in a,(c)
 	cp 0x30
 	jr nz,result_time
-	inc e
+	inc d
 
 result_time:
 	ld a,d
 	cp 0
-	jr z,ff00_nothing
-	cp 1
-	jr z,ff00_readable_only
-	cp 2
-	jr z,ff00_writable_only
-	cp 3
-	jr z,ff00_both
-
-wtf:
-	ld a,2
-	jr set_border
-
-ff00_nothing:
-	ld a,e
-	cp 0
-	jr z,ff00_nothing_ff0x_nothing
+	jr z,none
 	cp 4
-	jr z,ff00_nothing_ff0x_all
-	jr wtf
+	jr z,all
 
-ff00_readable_only:
-	ld a,e
-	cp 0
-	jr z,ff00_readable_only_ff0x_nothing
-	cp 4
-	jr z,ff00_readable_only_ff0x_all
-	jr wtf
-
-ff00_writable_only:
-	ld a,e
-	cp 0
-	jr z,ff00_writable_only_ff0x_nothing
-	cp 4
-	jr z,ff00_writable_only_ff0x_all
-	jr wtf
-
-ff00_both:
-	ld a,e
-	cp 0
-	jr z,ff00_both_ff0x_nothing
-	cp 4
-	jr z,ff00_both_ff0x_all
-	jr wtf
-
-ff00_nothing_ff0x_nothing:
-	ld a,3
-	jr set_border
-
-ff00_nothing_ff0x_all:
-	ld a,9
-	jr set_border
-
-ff00_readable_only_ff0x_nothing:
+some:
 	ld a,4
+	ld d,0xff
 	jr set_border
 
-ff00_readable_only_ff0x_all:
-	ld a,10
+none:
+	ld a,3
+	ld d,0xff
 	jr set_border
 
-ff00_writable_only_ff0x_nothing:
-	ld a,6
-	jr set_border
-
-ff00_writable_only_ff0x_all:
-	ld a,12
-	jr set_border
-
-ff00_both_ff0x_nothing:
-	ld a,7
-	jr set_border
-
-ff00_both_ff0x_all:
-	ld a,14
+all:
+	ld a,5
+	ld d,0
 
 set_border:
 	ld bc,0xd020
 	out (c),a
+	ld bc,0xd7ff
+	out (c),d
 
 justloop:
 	jr justloop

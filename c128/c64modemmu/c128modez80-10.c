@@ -34,69 +34,20 @@ z80bios_found:
 	ld bc,0xd020
 	out (c),a
 
-/* get the current value of mmu register 0 through i/o $d500 */
+/* clear the i/o bit of the mmu */
+	ld a,0x3f
 	ld bc,0xd500
-	in d,(c)
+	out (c),a
 
-/* get the current value of mmu register 0 through memory access $ff00 */
-	ld bc,0xff00
-	ld a,(bc)
-
-/* check if they are the same */
-	cp d
-	jr nz,ff00_cannot_read
-
-/* check if a change in $d500 is reflected in $ff00 */
-check_d500_change:
-	ld d,0x30
-	ld bc,0xd500
-	out (c),d
-	ld bc,0xff00
-	ld a,(bc)
-	cp d
-	jr nz,ff00_cannot_read
-
-	ld d,0x3f
-	ld bc,0xd500
-	out (c),d
-	ld bc,0xff00
-	ld a,(bc)
-	cp d
-	jr z,ff00_can_read
-
-check_if_ff00_depends_on_mmu_io_bit:
-	ld d,0x3e
-	ld bc,0xd500
-	out (c),d
-	ld bc,0xff00
-	ld a,(bc)
-	cp d
-	jr nz,wtf
-
-ff00_depends_on_mmu_io_bit:
+/* try to set the border color to violet */
 	ld a,4
-	ld d,0xff
-	jr set_border
-
-ff00_can_read:
-	ld a,5
-	ld d,0
-	jr set_border
-
-ff00_cannot_read:
-	ld a,3
-	ld d,0xff
-	jr set_border
-
-wtf:
-	ld a,7
-	ld d,0xff
-
-set_border:
 	ld bc,0xd020
 	out (c),a
-	ld bc,0xd7ff
-	out (c),d
+
+/* the border color itself will indicate if the i/o range has been disabled or not
+   cyan means yes, i/o range is disabled
+   violet means no, i/o range is NOT disabled
+ */
 
 justloop:
 	jr justloop
