@@ -117,18 +117,23 @@ result_time:
 
 some:
 	ld a,4
+	ld d,0xff
 	jr set_border
 
 none:
 	ld a,3
+	ld d,0xff
 	jr set_border
 
 all:
-	ld a,6
+	ld a,5
+	ld d,0
 
 set_border:
 	ld bc,0xd020
 	out (c),a
+	ld bc,0xd7ff
+	out (c),d
 
 justloop:
 	jr justloop

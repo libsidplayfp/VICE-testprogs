@@ -7,7 +7,7 @@
 ;   white  = got z80 switched on, but no z80 bios present
 ;   cyan   = z80 on, z80 bios present in c128 mode, NONE of the $ff01-$ff04 mmu registers work
 ;   violet = z80 on, z80 bios present in c128 mode, SOME of the $ff01-$ff04 mmu registers work
-;   blue   = z80 on, z80 bios present in c128 mode, ALL of the $ff01-$ff04 mmu registers work
+;   green  = z80 on, z80 bios present in c128 mode, ALL of the $ff01-$ff04 mmu registers work
 ;
 ; Test made by Marco van den Heuvel
 
