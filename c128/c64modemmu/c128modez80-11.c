@@ -49,6 +49,14 @@ z80bios_found:
 
 /* check if a change in $ff00 is reflected in $d500 */
 check_d500_change:
+	ld a,0x30
+	ld bc,0xff00
+	ld (bc),a
+	ld bc,0xd500
+	in d,(c)
+	cp d
+	jr nz,ff00_cannot_write
+
 	ld a,0x3f
 	ld bc,0xff00
 	ld (bc),a
@@ -63,30 +71,34 @@ check_d500_change:
 	ld bc,0xd500
 	in d,(c)
 	cp d
-	jr nz,ff00_cannot_write
+	jr z,ff00_can_write
 
-	ld a,0x30
+	ld a,0x3f
 	ld bc,0xff00
 	ld (bc),a
 	ld bc,0xd500
 	in d,(c)
 	cp d
-	jr nz,ff00_cannot_write
+	jr z,wtf
+
+ff00_depens_on_mmu_io_bit:
+	ld a,4
+	jr set_border
 
 ff00_can_write:
-	ld a,4
-	ld d,0xff
+	ld a,6
 	jr set_border
 
 ff00_cannot_write:
-	ld a,5
-	ld d,0
+	ld a,3
+	jr set_border
+
+wtf:
+	ld a,7
 
 set_border:
 	ld bc,0xd020
 	out (c),a
-	ld bc,0xd7ff
-	out (c),d
 
 justloop:
 	jr justloop

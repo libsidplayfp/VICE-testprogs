@@ -1,12 +1,15 @@
-; This is a c128 mode test to see if in z80 mode the mmu register 0 is writable through in/out $d500 and memory access $ff00.
+; This is a c128 mode test to see if in z80 mode the mmu register 0 is writable through in/out $d500 and memory access $ff00,
+; and if $ff00 access is dependent on the mmu io bit.
 ;
 ; test to be confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
-;   green  = z80 on, z80 bios present in c128 mode, mmu register 0 writable through in/out $d500 ONLY
-;   violet = z80 on, z80 bios present in c128 mode, mmu register 0 writable through in/out $d500 AND memory access $ff00
+;   cyan   = z80 on, z80 bios present in c128 mode, mmu register 0 writable through in/out $d500 ONLY
+;   violet = z80 on, z80 bios present in c128 mode, mmu register 0 writable through in/out $d500 AND memory access $ff00, $ff00 DEPENDS on the mmu io bit
+;   blue   = z80 on, z80 bios present in c128 mode, mmu register 0 writable through in/out $d500 AND memory access $ff00, $ff00 does NOT depend on the mmu io bit
+;   yellow = something weird going on with $ff00 writes
 ;
 ; Test made by Marco van den Heuvel
 

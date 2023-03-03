@@ -48,7 +48,7 @@ z80bios_found:
 
 /* check if a change in $d500 is reflected in $ff00 */
 check_d500_change:
-	ld d,0x3c
+	ld d,0x30
 	ld bc,0xd500
 	out (c),d
 	ld bc,0xff00
@@ -62,24 +62,35 @@ check_d500_change:
 	ld bc,0xff00
 	ld a,(bc)
 	cp d
-	jr nz,ff00_cannot_read
+	jr z,ff00_can_read
 
+check_if_ff00_depends_on_mmu_io_bit:
 	ld d,0x3e
 	ld bc,0xd500
 	out (c),d
 	ld bc,0xff00
 	ld a,(bc)
 	cp d
-	jr nz,ff00_cannot_read
+	jr nz,wtf
 
-ff00_can_read:
+ff00_depends_on_mmu_io_bit:
 	ld a,4
 	ld d,0xff
 	jr set_border
 
-ff00_cannot_read:
+ff00_can_read:
 	ld a,5
 	ld d,0
+	jr set_border
+
+ff00_cannot_read:
+	ld a,3
+	ld d,0xff
+	jr set_border
+
+wtf:
+	ld a,7
+	ld d,0xff
 
 set_border:
 	ld bc,0xd020
