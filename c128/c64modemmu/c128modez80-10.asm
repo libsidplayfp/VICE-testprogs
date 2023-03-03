@@ -1,4 +1,4 @@
-; This is a c128 mode test to see if the i/o range accessed with in/out is dependent on the mmu i/o bit.
+; This is a c128 mode test to see if the mmu i/o range is dependent on the mmu i/o bit.
 ;
 ; test to be confirmed on real hardware
 ;
@@ -7,6 +7,7 @@
 ;   white  = got z80 switched on, but no z80 bios present
 ;   cyan   = z80 on, z80 bios present in c128 mode, the i/o range is DEPENDENT on the mmu i/o bit
 ;   violet = z80 on, z80 bios present in c128 mode, the i/o range is NOT dependent on the mmu i/o bit
+;   red    = something went very wrong during the test
 ;
 ; Test made by Marco van den Heuvel
 
