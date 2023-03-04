@@ -1,8 +1,6 @@
-; This test might need to be revised, DO NOT USE THIS TEST FOR NOW!!!
-;
 ; This is a c128 mode test to see if in z80 mode the mmu registers $ff00-$ff04 are accessable through in/out.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black   = was not able to switch on the z80
@@ -14,7 +12,7 @@
 ;   brown   = z80 on, z80 bios present in c128 mode, ONLY $ff01-$ff04 registers are available through in/out
 ;   pink    = z80 on, z80 bios present in c128 mode, the $ff00 register is readable and all of the $ff01-$ff04 registers are available through in/out
 ;   grey    = z80 on, z80 bios present in c128 mode, the $ff00 register is writable and all of the $ff01-$ff04 registers are available through in/out
-;   l. blue = z80 on, z80 bios present in c128 mode, the $ff00 register is readable and writable and all of the $ff01-$ff04 registers are available through in/out
+;   green   = z80 on, z80 bios present in c128 mode, the $ff00 register is readable and writable and all of the $ff01-$ff04 registers are available through in/out
 ;   red     = something went very wrong during the test
 ;
 ; Test made by Marco van den Heuvel

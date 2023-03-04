@@ -1,10 +1,10 @@
 ; This is a c64 mode mmu test to see what is read in $a080 when c64 basic rom is mapped in and p0 is being mapped to page $a0.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   white  = p0 is read at $a080, meaning the zero page is read instead of rom, p0 translation has priority over rom
-;   cyan   = rom is read at $a080, rom has priority over p0 translation
+;   green  = rom is read at $a080, rom has priority over p0 translation
 ;   black  = something is wrong with same bank backward p0 translation in c128 mode
 ;   violet = somehow ram underneath the rom was read instead of the rom or the zero page
 ;
@@ -112,7 +112,8 @@ test:
 	cmp #$aa
 	beq we_got_ram
 
-	ldx #$03
+	ldx #$05
+	ldy #$00
 
 setborder:
 	stx $d020
@@ -122,8 +123,10 @@ l0:
 
 we_got_p0:
 	ldx #$01
+	ldy #$ff
 	bne setborder
 
 we_got_ram:
 	ldx #$04
+	ldy #$ff
 	bne setborder

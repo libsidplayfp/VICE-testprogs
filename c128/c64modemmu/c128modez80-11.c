@@ -187,38 +187,48 @@ ff00_both:
 
 ff00_nothing_ff0x_nothing:
 	ld a,3
+	ld d,0xff
 	jr set_border
 
 ff00_nothing_ff0x_all:
 	ld a,9
+	ld d,0xff
 	jr set_border
 
 ff00_readable_only_ff0x_nothing:
 	ld a,4
+	ld d,0xff
 	jr set_border
 
 ff00_readable_only_ff0x_all:
 	ld a,10
+	ld d,0xff
 	jr set_border
 
 ff00_writable_only_ff0x_nothing:
 	ld a,6
+	ld d,0xff
 	jr set_border
 
 ff00_writable_only_ff0x_all:
 	ld a,12
+	ld d,0xff
 	jr set_border
 
 ff00_both_ff0x_nothing:
 	ld a,7
+	ld d,0xff
 	jr set_border
 
 ff00_both_ff0x_all:
-	ld a,14
+	ld a,5
+	ld d,0
 
 set_border:
 	ld bc,0xd020
 	out (c),a
+	ld bc,0xd7ff
+	out (c),d
 
 justloop:
 	jr justloop
