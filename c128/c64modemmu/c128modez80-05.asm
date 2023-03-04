@@ -54,6 +54,17 @@ fill_loop:
 	inx
 	bne fill_loop
 
+; fill $1000-$13ff with other data
+	ldx #$55
+fill_loop2:
+	txa
+	sta $1000,x
+	sta $1100,x
+	sta $1200,x
+	sta $1300,x
+	inx
+	bne fill_loop2
+
 ; change the border color to black
 	lda #$00
 	sta $d020

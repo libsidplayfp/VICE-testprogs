@@ -36,8 +36,8 @@ z80bios_found:
 
 /* disable $1000-$13ff vicii color memory mapping */
 	ld a,0x3f
-	ld bc,0xd500
-	out (c),a
+	ld bc,0xff00
+	ld (bc),a
 
 /* fill ram at $1000-$13ff with #$aa */
 fill_1000:
@@ -56,8 +56,8 @@ fill_1000_loop:
 
 /* enable $1000-$13ff vicii color memory mapping */
 	ld a,0x3e
-	ld bc,0xd500
-	out (c),a
+	ld bc,0xff00
+	ld (bc),a
 
 /* fill vicii color ram at $1000-$13ff with #$55 */
 fill_vicii_color_1000:
@@ -76,8 +76,8 @@ fill_vicii_color_1000_loop:
 
 /* disable $1000-$13ff vicii color memory mapping */
 	ld a,0x3f
-	ld bc,0xd500
-	out (c),a
+	ld bc,0xff00
+	ld (bc),a
 
 
 /* check ram at $1000-$13ff, if it has #$55, there was bleed through, if it has #$aa there was none

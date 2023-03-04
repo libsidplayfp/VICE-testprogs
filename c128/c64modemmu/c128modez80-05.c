@@ -57,10 +57,10 @@ check_1000_loop:
 	jr nz,check_1000_loop
 
 /* toggle the mmu io bit */
-	ld bc,0xd500
-	in a,(c)
+	ld bc,0xff00
+	ld a,(bc)
 	or 1
-	out (c),a
+	ld (bc),a
 
 /* check if we still find the vicii color memory mapped in at $1000-$13ff */
 check_1000_again:
