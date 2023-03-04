@@ -34,6 +34,11 @@ z80bios_found:
 	ld bc,0xd020
 	out (c),a
 
+	/* to make sure, map in the c128 roms, in case the loader switched the back off */
+	ld a,0
+	ld bc,0xff00
+	ld (bc),a
+
 	/* check if we can change the byte at $4000 */
 	ld bc,0x4000
 	ld a,(bc)
@@ -65,20 +70,16 @@ z80bios_found:
 	jr z,c128romfound
 
 	/* set color for no c128 roms found */
-	ld a,5
-	ld d,0
+	ld a,4
 	jr setborder
 
 c128romfound:
 	/* set color for c128 roms found */
 	ld a,3
-	ld d,0xff
 
 setborder:
 	ld bc,0xd020
 	out (c),a
-	ld bc,0xd7ff
-	out (c),d
 
 justloop:
 	jr justloop
