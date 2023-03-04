@@ -1,12 +1,12 @@
 ; This is a c128 mode test to see what we get if in z80 mode we in/out to an address that has no device at that address in the i/o-space,
 ; do we get the ram/rom at that address, do we get what the vicii left on the bus, or do we get a static value.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black   = was not able to switch on the z80
 ;   white   = got z80 switched on, but no z80 bios present
-;   cyan    = z80 on, z80 bios present in c128 mode, we get RAM at the address from in/out
+;   green   = z80 on, z80 bios present in c128 mode, we get RAM at the address from in/out
 ;   violet  = z80 on, z80 bios present in c128 mode, we get a static value
 ;   blue    = z80 on, z80 bios present in c128 mode, we get whatever the vicii left on the bus
 ;   red     = something went very wrong during the test

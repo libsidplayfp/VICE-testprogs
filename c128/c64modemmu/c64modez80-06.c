@@ -87,10 +87,12 @@ in_c64mode:
 
 static_value:
 	ld a,7
+	ld d,0xff
 	jr set_border
 
 vicii_value:
 	ld a,9
+	ld d,0xff
 	jr set_border
 
 /* we possible got ram, make sure $a005 and $a006 return what we expect from ram */
@@ -106,6 +108,7 @@ looks_like_ram:
 
 we_got_ram:
 	ld a,4
+	ld d,0xff
 	jr set_border
 	
 /* we possible got rom, make sure $a005 and $a006 return what we expect from rom */
@@ -120,14 +123,18 @@ looks_like_rom:
 	jr nz,wtf
 
 we_got_rom:
-	ld a,6
+	ld a,5
+	ld d,0
 	jr set_border
 
 wtf:
 	ld a,2
+	ld d,0xff
 
 set_border:
 	ld bc,0xd020
+	out (c),a
+	ld bc,0xd7ff
 	out (c),a
 
 justloop:

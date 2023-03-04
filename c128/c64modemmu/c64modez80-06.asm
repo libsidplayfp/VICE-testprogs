@@ -2,14 +2,14 @@
 ; and in c64 mode that address has a rom at that location, do we get the ram at that address, do we get the rom, do we get what the vicii left on the bus,
 ; or do we get a static value.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
 ;   cyan   = z80 on, z80 bios present in c128 mode, but could not get into c64 mode
 ;   violet = z80 on, z80 bios present in c128 mode, got to c64 mode, we got the RAM
-;   blue   = z80 on, z80 bios present in c128 mode, got to c64 mode, we got the ROM
+;   green  = z80 on, z80 bios present in c128 mode, got to c64 mode, we got the ROM
 ;   yellow = z80 on, z80 bios present in c128 mode, got to c64 mode, we got a static value
 ;   brown  = z80 on, z80 bios present in c128 mode, got to c64 mode, we got whatever the vicii left on the bus
 ;   red    = something went very wrong in the test

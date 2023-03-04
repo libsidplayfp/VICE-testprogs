@@ -5,7 +5,7 @@
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
-;   cyan   = z80 on, z80 bios present in c128 mode, the i/o range is DEPENDENT on the mmu i/o bit
+;   green  = z80 on, z80 bios present in c128 mode, the i/o range is DEPENDENT on the mmu i/o bit
 ;   violet = z80 on, z80 bios present in c128 mode, the i/o range is NOT dependent on the mmu i/o bit
 ;   red    = something went very wrong during the test
 ;

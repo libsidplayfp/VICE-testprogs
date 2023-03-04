@@ -56,19 +56,24 @@ z80bios_found:
 	jr nz,wtf
 
 d5xx_depends_on_mmu_bit:
-	ld a,3
+	ld a,5
+	ld d,0
 	jr set_border
 
 d5xx_still_active:
 	ld a,4
+	ld d,0xff
 	jr set_border
 
 wtf:
 	ld a,2
+	ld d,0xff
 
 set_border:
 	ld bc,0xd020
 	out (c),a
+	ld bc,0xd7ff
+	out (c),d
 
 justloop:
 	jr justloop
