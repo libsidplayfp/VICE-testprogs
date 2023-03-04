@@ -11,7 +11,7 @@ all: \
 	c128modez80-08.prg \
 	c128modez80-09.prg \
 	c128modez80-10.prg \
-	c128modez80-14.prg \
+	c128modez80-11.prg \
 	c64modez80-00.prg \
 	c64modez80-01.prg \
 	c64modez80-02.prg \
@@ -230,30 +230,6 @@ c128modez80-11.bin: c128modez80-11.c
 	zcc +c128 -create-app -subtype=disk -zorg=8192 c128modez80-11.c
 	rm -f A A.LDR
 	mv a.bin c128modez80-11.bin
-
-c128modez80-12.prg: c128modez80-12.asm c128modez80-12.bin
-	acme -f cbm -o c128modez80-12.prg c128modez80-12.asm
-
-c128modez80-12.bin: c128modez80-12.c
-	zcc +c128 -create-app -subtype=disk -zorg=8192 c128modez80-12.c
-	rm -f A A.LDR
-	mv a.bin c128modez80-12.bin
-
-c128modez80-13.prg: c128modez80-13.asm c128modez80-13.bin
-	acme -f cbm -o c128modez80-13.prg c128modez80-13.asm
-
-c128modez80-13.bin: c128modez80-13.c
-	zcc +c128 -create-app -subtype=disk -zorg=8192 c128modez80-13.c
-	rm -f A A.LDR
-	mv a.bin c128modez80-13.bin
-
-c128modez80-14.prg: c128modez80-14.asm c128modez80-14.bin
-	acme -f cbm -o c128modez80-14.prg c128modez80-14.asm
-
-c128modez80-14.bin: c128modez80-14.c
-	zcc +c128 -create-app -subtype=disk -zorg=8192 c128modez80-14.c
-	rm -f A A.LDR
-	mv a.bin c128modez80-14.bin
 
 clean:
 	rm -f c64modemmu-*.prg
