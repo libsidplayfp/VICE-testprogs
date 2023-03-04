@@ -71,15 +71,19 @@ z80bios_found:
 
 	/* set color for no c128 roms found */
 	ld a,4
+	ld d,0xff
 	jr setborder
 
 c128romfound:
 	/* set color for c128 roms found */
-	ld a,3
+	ld a,5
+	ld d,0
 
 setborder:
 	ld bc,0xd020
 	out (c),a
+	ld bc,0xd7ff
+	out (c),d
 
 justloop:
 	jr justloop
