@@ -11,9 +11,6 @@ all: \
 	c128modez80-08.prg \
 	c128modez80-09.prg \
 	c128modez80-10.prg \
-	c128modez80-11.prg \
-	c128modez80-12.prg \
-	c128modez80-13.prg \
 	c128modez80-14.prg \
 	c64modez80-00.prg \
 	c64modez80-01.prg \
