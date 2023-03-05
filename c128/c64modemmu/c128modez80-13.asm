@@ -1,13 +1,13 @@
 ; This is a c128 mode z80 test to see what happens if we set $c000-$ffff as shared memory and we access that memory with bank 1 banked in with in/out,
 ; do we get the ram from bank 0 or bank 1.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
 ;   cyan   = z80 on, z80 bios present in c128 mode, we get RAM from bank 1
-;   violet = z80 on, z80 bios present in c128 mode, we get RAM from bank 0
+;   green  = z80 on, z80 bios present in c128 mode, we get RAM from bank 0
 ;   red    = something went very wrong during the test
 ;
 ; Test made by Marco van den Heuvel

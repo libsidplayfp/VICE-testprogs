@@ -61,18 +61,23 @@ z80bios_found:
 
 wtf:
 	ld a,2
+	ld d,0xff
 	jr set_border
 
 bank1:
 	ld a,3
+	ld d,0xff
 	jr set_border
 
 bank0:
 	ld a,4
+	ld d,0
 
 set_border:
 	ld bc,0xd020
 	out (c),a
+	ld bc,0xd7ff
+	out (c),d
 
 justloop:
 	jr justloop
