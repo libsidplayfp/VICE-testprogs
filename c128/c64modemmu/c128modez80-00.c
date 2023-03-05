@@ -34,10 +34,13 @@ z80bios_found:
 	ld bc,0xd020
 	out (c),a
 
-	/* to make sure, map in the c128 roms, in case the loader switched the back off */
+	/* to make sure, map in the c128 roms, in case the loader switched them back off */
 	ld a,0
 	ld bc,0xff00
 	ld (bc),a
+
+	/* set the 'roms found flag' to zero */
+	ld e,0
 
 	/* check if we can change the byte at $4000 */
 	ld bc,0x4000
@@ -47,8 +50,10 @@ z80bios_found:
 	ld (bc),a
 	ld a,(bc)
 	cp d
-	jr z,c128romfound
+	jr nz,check_8000
+	inc e
 
+check_8000:
 	/* check if we can change the byte at $8000 */
 	ld bc,0x8000
 	ld a,(bc)
@@ -57,8 +62,10 @@ z80bios_found:
 	ld (bc),a
 	ld a,(bc)
 	cp d
-	jr z,c128romfound
+	jr nz,check_c000
+	inc e
 
+check_c000:
 	/* check if we can change the byte at $c000 */
 	ld bc,0xc000
 	ld a,(bc)
@@ -67,15 +74,28 @@ z80bios_found:
 	ld (bc),a
 	ld a,(bc)
 	cp d
-	jr z,c128romfound
+	jr nz,final_results
+	inc e
 
-	/* set color for no c128 roms found */
+final_results:
+	/* check how many roms were found */
+	ld a,e
+	cp 0
+	jr z,no_roms
+	cp 3
+	jr z,all_roms
+
+some_roms:
+	ld a,6
+	ld d,0xff
+	jr setborder
+
+no_roms:
 	ld a,4
 	ld d,0xff
 	jr setborder
 
-c128romfound:
-	/* set color for c128 roms found */
+all_roms:
 	ld a,5
 	ld d,0
 

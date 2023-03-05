@@ -5,8 +5,9 @@
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
-;   green  = z80 on, z80 bios present in c128 mode, c128 mode roms accessable
-;   violet = z80 on, z80 bios present in c128 mode, c128 mode roms NOT accessable
+;   green  = z80 on, z80 bios present in c128 mode, ALL of the c128 mode roms are accessable
+;   violet = z80 on, z80 bios present in c128 mode, NONE of the c128 mode roms are accessable
+;   blue   = z80 on, z80 bios present in c128 mode, SOME of the c128 mode roms are accessable
 ;
 ; Test made by Marco van den Heuvel
 
