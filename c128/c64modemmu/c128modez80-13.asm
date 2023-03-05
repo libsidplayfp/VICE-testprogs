@@ -1,4 +1,4 @@
-; This is a c128 mode test to see what happens if we set $c000-$ffff as shared memory and we access that memory with bank 1 banked in with in/out,
+; This is a c128 mode z80 test to see what happens if we set $c000-$ffff as shared memory and we access that memory with bank 1 banked in with in/out,
 ; do we get the ram from bank 0 or bank 1.
 ;
 ; test to be confirmed on real hardware
