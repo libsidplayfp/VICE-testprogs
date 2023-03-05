@@ -6,7 +6,7 @@
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
-;   cyan   = z80 on, z80 bios present in c128 mode, we get the zero page
+;   green  = z80 on, z80 bios present in c128 mode, we get the zero page
 ;   violet = z80 on, z80 bios present in c128 mode, we get page $40
 ;   blue   = z80 in, z80 bios present in c128 mode, we get the z80 bios
 ;   red    = something went very wrong during the test

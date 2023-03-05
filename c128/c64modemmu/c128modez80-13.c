@@ -70,7 +70,7 @@ bank1:
 	jr set_border
 
 bank0:
-	ld a,4
+	ld a,5
 	ld d,0
 
 set_border:
