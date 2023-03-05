@@ -1,7 +1,7 @@
 ; This is a c128 mode z80 test to see what happens if we set map the zero page to page $40, and we access that memory with in/out,
 ; do we get the page $40 or the zero page, or the z80 bios.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
