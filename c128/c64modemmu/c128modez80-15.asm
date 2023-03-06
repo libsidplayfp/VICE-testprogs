@@ -1,11 +1,11 @@
 ; This is a c128 mode z80 test to see if the z80 bios depends on the mmu io bit.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
-;   cyan   = z80 on, z80 bios present in c128 mode, z80 bios does NOT depend on the mmu i/o bit
+;   green  = z80 on, z80 bios present in c128 mode, z80 bios does NOT depend on the mmu i/o bit
 ;   violet = z80 on, z80 bios present in c128 mode, z80 bios DOES depend on the mmu i/o bit
 ;   red    = something went very wrong during the test
 ;

@@ -92,18 +92,23 @@ final_results:
 
 wtf:
 	ld a,2
+	ld d,0xff
 	jr set_border
 
 got_bios:
-	ld a,3
+	ld a,5
+	ld d,0
 	jr set_border
 
 got_ram:
 	ld a,4
+	ld d,0xff
 
 set_border:
 	ld bc,0xd020
 	out (c),a
+	ld bc,0xd7ff
+	out (c),d
 
 justloop:
 	jr justloop
