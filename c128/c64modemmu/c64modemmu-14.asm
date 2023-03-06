@@ -70,7 +70,7 @@ c64switch:
 
 ; test in bank 0
 test:
-	!byte  $09,$80,$25,$80,$c3,$c2,$cD,$38,$30
+	!byte  $09,$80,$09,$80,$c3,$c2,$cD,$38,$30
 
 	stx $d016
 
