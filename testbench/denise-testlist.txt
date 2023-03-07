@@ -498,8 +498,11 @@
 #FIXME: fix tests for NTSC/NTSCOLD
 ../interrupts/irq-ackn-bug/,irq-ack-vicii.prg,exitcode,10000000,vicii-pal
 #FIXME: fix tests for NTSC/NTSCOLD
-../interrupts/irqdma/,nmitest6b.prg,exitcode,450000000,vicii-pal
-../interrupts/irqdma/,nmitest6.prg,exitcode,450000000,vicii-pal
+#FIXME: how to run all of these tests for both cia-old and cia-new?
+../interrupts/irqdma/,nmitest6b.prg,exitcode,450000000,vicii-pal,cia-old
+../interrupts/irqdma/,nmitest6b.prg,exitcode,450000000,vicii-pal,cia-new
+../interrupts/irqdma/,nmitest6.prg,exitcode,450000000,vicii-pal,cia-old
+../interrupts/irqdma/,nmitest6.prg,exitcode,450000000,vicii-pal,cia-new
 ../interrupts/irqdma/,test1b.prg,exitcode,450000000,vicii-pal
 ../interrupts/irqdma/,test1.prg,exitcode,450000000,vicii-pal
 ../interrupts/irqdma/,test2b.prg,exitcode,450000000,vicii-pal
@@ -510,7 +513,8 @@
 ../interrupts/irqdma/,test4.prg,exitcode,450000000,vicii-pal
 ../interrupts/irqdma/,test5b.prg,exitcode,450000000,vicii-pal
 ../interrupts/irqdma/,test5.prg,exitcode,450000000,vicii-pal
-../interrupts/irqdma/,test6b.prg,exitcode,450000000,vicii-pal
+../interrupts/irqdma/,test6b.prg,exitcode,450000000,vicii-pal,cia-old
+../interrupts/irqdma/,test6b.prg,exitcode,450000000,vicii-pal,cia-new
 ../interrupts/irqdma/,test6.prg,exitcode,450000000,vicii-pal
 ../interrupts/irqdma/,test7b.prg,exitcode,450000000,vicii-pal
 ../interrupts/irqdma/,test7.prg,exitcode,450000000,vicii-pal
@@ -557,7 +561,8 @@
 ../CIA/ciavarious/,cia4new.prg,exitcode,20000000,cia-new
 ../CIA/ciavarious/,cia8new.prg,exitcode,10000000,cia-new
 ../CIA/dd0drw/,dd0drw.prg,exitcode,6000000
-../CIA/dd0dtest/,dd0dtest.prg,exitcode,100000000
+../CIA/dd0dtest/,dd0dtest.prg,exitcode,100000000,cia-old
+../CIA/dd0dtest/,dd0dtest.prg,exitcode,100000000,cia-new
 ../CIA/mirrors/,ciamirrors.prg,exitcode,9000000
 ../CIA/irqdelay/,irqdelay.prg,exitcode,7000000,cia-old
 ../CIA/irqdelay/,irqdelay-new.prg,exitcode,7000000,cia-new

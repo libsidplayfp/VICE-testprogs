@@ -120,7 +120,7 @@
 ../general/Lorenz-2.15/src/,oraiy-dtv.prg,exitcode,31000000
 ../general/Lorenz-2.15/src/,eorb-dtv.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,eorz-dtv.prg,exitcode,32000000
-../general/Lorenz-2.15/src/,eorzx-dtv.prg,exitcode,31000000
+../general/Lorenz-2.15/src/,eorzx-dtv.prg,exitcode,32000000
 ../general/Lorenz-2.15/src/,eora-dtv.prg,exitcode,30000000
 ../general/Lorenz-2.15/src/,eorax-dtv.prg,exitcode,31500000
 ../general/Lorenz-2.15/src/,eoray-dtv.prg,exitcode,31500000
