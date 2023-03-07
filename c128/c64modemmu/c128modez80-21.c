@@ -36,26 +36,24 @@ z80bios_found:
 	ld bc,0xd020
 	out (c),a
 
-/* reset the z80bios (d) and $04xx ram (e) and $d4xx ram (h) 'flags' */
+/* reset the z80bios (d) and $04xx ram (e) and $d4xx ram (h) and $d4xx rom (l) 'flags' */
 	ld d,0
 	ld e,0
 	ld h,0
+	ld l,0
 
-/* switch to bank 1, since the z80 code is in both banks this is fine */
-	ld a,0x7e
+/* bank in c128 rom bank at $c000-$ffff */
+	ld a,0x0f
 	ld bc,0xff00
 	ld (bc),a
-
-/* set $c000-$ffff as shared memory */
-	ld a,0x0b
-	ld bc,0xd506
-	out (c),a
 
 /* read from $048d memory */
 	ld bc,0x048d
 	in a,(c)
 	cp 0x43
 	jr z,got_048d_bios
+	cp 0xc3
+	jr z,got_d48d_rom
 	cp 0x11
 	jr z,got_048d_ram_bank0
 	cp 0x44
@@ -68,6 +66,10 @@ z80bios_found:
 
 got_048d_bios:
 	inc d
+	jr check_048e
+
+got_d48d_rom:
+	inc l
 	jr check_048e
 
 got_048d_ram_bank0:
@@ -95,6 +97,8 @@ check_048e:
 	in a,(c)
 	cp 0x50
 	jr z,got_048e_bios
+	cp 0xf1
+	jr z,got_d48e_rom
 	cp 0x22
 	jr z,got_048e_ram_bank0
 	cp 0x55
@@ -107,6 +111,10 @@ check_048e:
 
 got_048e_bios:
 	inc d
+	jr check_048f
+
+got_d48e_rom:
+	inc l
 	jr check_048f
 
 got_048e_ram_bank0:
@@ -134,6 +142,8 @@ check_048f:
 	in a,(c)
 	cp 0x4d
 	jr z,got_048f_bios
+	cp 0xff
+	jr z,got_d48f_rom
 	cp 0x33
 	jr z,got_048f_ram_bank0
 	cp 0x66
@@ -146,6 +156,10 @@ check_048f:
 
 got_048f_bios:
 	inc d
+	jr final_results
+
+got_d48f_rom:
+	inc l
 	jr final_results
 
 got_048f_ram_bank0:
@@ -187,6 +201,9 @@ final_results:
 	and 0xf
 	cp 3
 	jr z,got_d4xx_ram_bank1
+	ld a,l
+	cp 3
+	jr z,got_d4xx_rom
 
 wtf:
 	ld a,2
@@ -194,6 +211,10 @@ wtf:
 
 got_04xx_bios:
 	ld a,3
+	jr set_border
+
+got_d4xx_rom:
+	ld a,12
 	jr set_border
 
 got_04xx_ram_bank0:

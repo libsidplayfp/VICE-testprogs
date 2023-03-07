@@ -40,7 +40,6 @@ z80bios_found:
 	ld d,0
 	ld e,0
 	ld h,0
-	ld l,0
 
 /* switch to bank 1, since the z80 code is in both banks this is fine */
 	ld a,0x7e
