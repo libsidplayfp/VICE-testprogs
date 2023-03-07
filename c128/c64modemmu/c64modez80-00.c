@@ -138,7 +138,7 @@ setborder:
 	ld bc,0xd020
 	out (c),a
 	ld bc,0xd7ff
-	out (c),b
+	out (c),d
 
 justloop:
 	jr justloop

@@ -1,6 +1,6 @@
 ; This is a c128 mode test to see if the z80 can access the c128 mode roms.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80

@@ -117,6 +117,7 @@ test:
 
 setborder:
 	stx $d020
+	sty $d7ff
 	clc
 l0:
 	bcc l0

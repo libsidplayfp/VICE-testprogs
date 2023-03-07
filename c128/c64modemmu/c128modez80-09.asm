@@ -1,6 +1,6 @@
 ; This is a c128 mode test to see if a store to the z80 vicii color memory mapping at $1000-$13ff bleeds through to the ram 'under' it.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80

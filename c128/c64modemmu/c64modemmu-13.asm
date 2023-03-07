@@ -113,7 +113,7 @@ wtf:
 
 setborder:
 	stx $d020
-	stx $d7ff
+	sty $d7ff
 	clc
 l0:
 	bcc l0
