@@ -9,7 +9,7 @@
 ;   cyan   = z80 on, z80 bios present in c128 mode, we got $04xx BIOS
 ;   violet = z80 on, z80 bios present in c128 mode, we got $04xx RAM bank 0
 ;   blue   = z80 on, z80 bios present in c128 mode, we got $d4xx RAM bank 0
-;   yellow = z80 on, z80 bios present in c128 mode, we got $04xx RAM bank 1
+;   green  = z80 on, z80 bios present in c128 mode, we got $04xx RAM bank 1
 ;   brown  = z80 on, z80 bios present in c128 mode, we got $d4xx RAM bank 1
 ;   red    = something went very wrong during the test
 ;
