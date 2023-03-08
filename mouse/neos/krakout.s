@@ -3,6 +3,8 @@
 ; https://csdb.dk/release/?id=216216
 
 BUGFIX = 1
+
+; the original core does not get/combine the mousex delta
 IGNOREDCODE = 0
 
 mouseport = 0 ; 1 for port1, 0 for port0

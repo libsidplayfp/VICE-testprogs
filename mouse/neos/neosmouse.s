@@ -90,6 +90,7 @@ mainlp:
         jsr     readmouse
 
 !if TEST = 0 {
+        ; original "mouse cheese"
         ; if carry set then RMB pressed
         lda     #$07
         bcc     +
@@ -98,6 +99,8 @@ mainlp:
 }
 
 !if TEST = 1 {
+        ; arkanoid
+        ; readmouse does NOT set mousex/mousey!
         ; if A = 1 then RMB is pressed
         ldy     #$07
         cmp     #$01
@@ -112,6 +115,8 @@ mainlp:
 }
 
 !if TEST = 2 {
+        ; krakout
+        ; readmouse does ONLY set mousey
         ; check RMB in POTX
         lda     $D419
         cmp     #$FF
@@ -122,16 +127,20 @@ mainlp:
 +       sta     $D027
 }
 
+        ; new delta is now in mousex, mousey
+
         jsr     LC190
         jsr     LC1D0
 
         inc $d020
         
 !if TEST = 0 {
+        ; original "mouse cheese"
         lda $DC00
         sta mousebtn
 }
 !if TEST = 2 {
+        ; krakout
         lda $DC00
         sta mousebtn
 }
