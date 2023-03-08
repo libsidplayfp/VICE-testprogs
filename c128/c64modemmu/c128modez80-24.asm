@@ -1,6 +1,6 @@
 ; This is a c128 mode z80 test to see what we get when we use in/out on $d7xx when the mmu i/o bit is disabled.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
@@ -8,7 +8,7 @@
 ;   cyan   = z80 on, z80 bios present in c128 mode, we got RAM at $d7xx
 ;   violet = z80 on, z80 bios present in c128 mode, we got z80 bios at $d7xx
 ;   blue   = z80 on, z80 bios present in c128 mode, we got a constant value
-;   yellow = z80 on, z80 bios present in c128 mode, we got whatever the vicii leaves on the bus
+;   green  = z80 on, z80 bios present in c128 mode, we got whatever the vicii leaves on the bus
 ;
 ; Test made by Marco van den Heuvel
 

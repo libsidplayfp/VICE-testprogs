@@ -154,23 +154,29 @@ final_results:
 	jr z,d7xx_constant
 
 d7xx_other:
-	ld a,7
+	ld a,5
+	ld d,0
 	jr set_border
 
 d7xx_ram:
 	ld a,3
+	ld d,0xff
 	jr set_border
 
 d7xx_rom:
 	ld a,4
+	ld d,0xff
 	jr set_border
 
 d7xx_constant:
 	ld a,6
+	ld d,0xff
 
 set_border:
 	ld bc,0xd020
 	out (c),a
+	ld bc,0xd7ff
+	out (c),d
 
 justloop:
 	jr justloop
