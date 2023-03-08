@@ -148,29 +148,31 @@ final_results:
 	cp 2
 	jr z,d7xx_constant
 
-
-wtf:
-	ld a,2
+d7xx_other:
+	ld a,5
+	ld d,0
 	jr set_border
 
 d7xx_ram:
 	ld a,3
+	ld d,0xff
 	jr set_border
 
 d7xx_rom:
 	ld a,4
+	ld d,0xff
 	jr set_border
 
 d7xx_constant:
 	ld a,6
+	ld d,0xff
 	jr set_border
-
-d7xx_other:
-	ld a,7
 
 set_border:
 	ld bc,0xd020
 	out (c),a
+	ld bc,0xd7ff
+	out (c),d
 
 justloop:
 	jr justloop

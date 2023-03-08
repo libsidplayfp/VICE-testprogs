@@ -8,8 +8,7 @@
 ;   cyan   = z80 on, z80 bios present in c128 mode, we got RAM at $d7xx
 ;   violet = z80 on, z80 bios present in c128 mode, we got z80 bios at $d7xx
 ;   blue   = z80 on, z80 bios present in c128 mode, we got a constant value
-;   yellow = z80 on, z80 bios present in c128 mode, we got whatever the vicii leaves on the bus
-;   red    = something went very wrong during the test
+;   green = z80 on, z80 bios present in c128 mode, we got whatever the vicii leaves on the bus
 ;
 ; Test made by Marco van den Heuvel
 
