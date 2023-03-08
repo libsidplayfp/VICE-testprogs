@@ -166,7 +166,6 @@ d7xx_rom:
 d7xx_constant:
 	ld a,6
 	ld d,0xff
-	jr set_border
 
 set_border:
 	ld bc,0xd020
