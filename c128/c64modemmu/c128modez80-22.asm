@@ -1,13 +1,13 @@
 ; This is a c128 mode z80 test to see if the $d040-$d3ff mirrors of $d000-$d03f work with the z80 in/out.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
 ;   cyan   = z80 on, z80 bios present in c128 mode, ONLY $d000-$d03f works
 ;   violet = z80 on, z80 bios present in c128 mode, ONLY $d040-$d0ff is a mirror of $d000-$d03f
-;   blue   = z80 on, z80 bios present in c128 mode, ALL of $d040-$d3ff is a mirror of $d000-$d03f
+;   green  = z80 on, z80 bios present in c128 mode, ALL of $d040-$d3ff is a mirror of $d000-$d03f
 ;   red    = something went very wrong during the test
 ;
 ; Test made by Marco van den Heuvel

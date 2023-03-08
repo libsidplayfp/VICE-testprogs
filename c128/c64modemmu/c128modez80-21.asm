@@ -1,14 +1,14 @@
 ; This is a c128 mode z80 test to see what we get if we access $04xx through i/o using in/out when c128 ROM is mapped into $c000-$ffff,
 ; do we get $04xx bios, do we get $04xx ram bank 0, do we get $04xx ram bank 1, do we get $d4xx ram bank 0, do we get $d4xx ram bank 1, or do we get $d4xx ROM.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
 ;   white  = got z80 switched on, but no z80 bios present
 ;   cyan   = z80 on, z80 bios present in c128 mode, we got $04xx BIOS
 ;   violet = z80 on, z80 bios present in c128 mode, we got $04xx RAM bank 0
-;   blue   = z80 on, z80 bios present in c128 mode, we got $d4xx RAM bank 0
+;   green  = z80 on, z80 bios present in c128 mode, we got $d4xx RAM bank 0
 ;   yellow = z80 on, z80 bios present in c128 mode, we got $04xx RAM bank 1
 ;   brown  = z80 on, z80 bios present in c128 mode, we got $d4xx RAM bank 1
 ;   grey   = z80 on, z80 bios present in c128 mode, we got $d4xx ROM

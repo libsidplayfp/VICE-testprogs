@@ -1,7 +1,7 @@
 ; This is a c128 mode z80 test to see what we get if we access $04xx through i/o using in/out when $c000-$ffff is shared memory and we are in bank 1,
 ; do we get $04xx bios, do we get $04xx ram bank 0, do we get $04xx ram bank 1, do we get $d4xx ram bank 0, or do we get $d4xx ram bank 1.
 ;
-; test to be confirmed on real hardware
+; test confirmed on real hardware
 ;
 ; colors:
 ;   black  = was not able to switch on the z80
@@ -9,7 +9,7 @@
 ;   cyan   = z80 on, z80 bios present in c128 mode, we got $04xx BIOS
 ;   violet = z80 on, z80 bios present in c128 mode, we got $04xx RAM bank 0
 ;   blue   = z80 on, z80 bios present in c128 mode, we got $d4xx RAM bank 0
-;   yellow = z80 on, z80 bios present in c128 mode, we got $04xx RAM bank 1
+;   green  = z80 on, z80 bios present in c128 mode, we got $04xx RAM bank 1
 ;   brown  = z80 on, z80 bios present in c128 mode, we got $d4xx RAM bank 1
 ;   red    = something went very wrong during the test
 ;
