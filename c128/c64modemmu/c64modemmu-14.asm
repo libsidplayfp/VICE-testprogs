@@ -76,12 +76,12 @@ test:
 
 	sei
 	ldx #$05
-	ldy #$ff
+	ldy #$00
 	lda $4000
 	inc $4000
 	cmp $4000
 	bne no4000
-	ldy #$00
+	ldy #$ff
 	inx
 no4000:
 	lda $8000
@@ -89,13 +89,13 @@ no4000:
 	cmp $8000
 	bne no8000
 	inx
-	ldy #$00
+	ldy #$ff
 no8000:
 	lda $c000
 	inc $c000
 	cmp $c000
 	bne noc000
-	ldy #$00
+	ldy #$ff
 	inx
 noc000:
 
