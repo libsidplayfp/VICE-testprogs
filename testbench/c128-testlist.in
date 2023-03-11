@@ -67,6 +67,7 @@
 ../c128/c64modemmu/,c128modez80-22.prg,exitcode,6000000
 ../c128/c64modemmu/,c128modez80-23.prg,exitcode,6000000
 ../c128/c64modemmu/,c128modez80-24.prg,exitcode,6000000
+../c128/c64modemmu/,c128modez80-25.prg,exitcode,6000000
 ../c128/d030tester/,d030tester2.1.prg,interactive,0
 ../c128/d030tester/,d030-2mhzdec.prg,screenshot,6200000,vicii-pal,vicii-screenshot
 ../c128/d030tester/,d030-2mhz_hb_80.prg,screenshot,6200000,vicii-pal,vicii-screenshot
