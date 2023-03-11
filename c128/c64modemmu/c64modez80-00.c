@@ -116,6 +116,7 @@ final_border_color:
 got_d_got_e:
 ; got bios, got basic in c64 mode
 	ld a,10
+	ld d,0xff
 	jr setborder
 
 no_d:
@@ -124,10 +125,12 @@ no_d:
 
 no_d_got_e:
 	ld a,5
+	ld d,0
 	jr setborder
 
 got_d_no_e:
 	ld a,7
+	ld d,0xff
 	jr setborder
 
 no_d_no_e:
