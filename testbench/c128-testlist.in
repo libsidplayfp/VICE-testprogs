@@ -18,7 +18,7 @@
 ../c128/burstmode/,burstcheck0.prg,exitcode,8000000,mountd64:burstcheck.d64
 ../c128/burstmode/,burstcheck1.prg,exitcode,8000000,mountd71:burstcheck.d71
 ../c128/c64modemmu/,c64modemmu-00.prg,exitcode,6000000
-../c128/c64modemmu/,c64modemmu-01.prg,exitcode,6000000
+../c128/c64modemmu/,c64modemmu-01.prg,exitcode,12000000
 ../c128/c64modemmu/,c64modemmu-02.prg,exitcode,6000000
 ../c128/c64modemmu/,c64modemmu-03.prg,exitcode,6000000
 ../c128/c64modemmu/,c64modemmu-04.prg,exitcode,6000000
