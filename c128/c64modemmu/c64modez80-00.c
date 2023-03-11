@@ -135,9 +135,9 @@ got_d_no_e:
 
 no_d_no_e:
 	ld a,4
+	ld d,0xff
 
 setborder:
-	ld d,b
 	ld bc,0xd020
 	out (c),a
 	ld bc,0xd7ff
