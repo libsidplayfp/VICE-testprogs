@@ -3,7 +3,7 @@
 30 for j = 1 to 4: readb: b$=b$+chr$(b):next
 40 for k = 1 to 6: readc: c$=chr$(c)
 50 d$=str$(1977+k)
-60 print#6,chr$(15)d$a$c$b$c$
+60 print#6,chr$(15)d$a$c$b$c
 70 next
 80 cmd6: list
 90 data 8,27,16,0,53,26

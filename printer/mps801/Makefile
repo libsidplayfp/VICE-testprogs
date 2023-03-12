@@ -11,6 +11,7 @@ FILES=\
 	linespacing.prg \
 	localgraph.prg \
 	localbusiness.prg \
+	localmode.prg \
 	modemix.prg \
 	printstart.prg \
 	repeat.prg \

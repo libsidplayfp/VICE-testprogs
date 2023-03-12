@@ -25,6 +25,14 @@ front table.
        sa = 0: graphic mode.. . (default)
        sa = 7: business mode
 
+businessmode.bas:
+
+Prints character table in business mode.
+
+graphmode.bas:
+
+Prints character table in graphics mode.
+
 ------------------------------------------------------------------------------
 5. Printing Modes and Control Codes
 
@@ -47,15 +55,25 @@ Turn Off Reverse Field ................................CHR$(146)
 5.1 Standard Character Mode
 5.2 Double Width Character Mode
 
-When the printer is turned on, it is set to start in the STANDARD CHARAC-
-TER mode. But once you select different character modes the printer will
+When the printer is turned on, it is set to start in the STANDARD CHARACTER
+mode. But once you select different character modes the printer will
 remain in that mode until a different one is chosen using the CHR$ code. 
 
 doublewidth.bas:
 
-For
-the example below, we started in double width mode "CHR$(14)" for the title
+For the example below, we started in double width mode "CHR$(14)" for the title
 and then went to the stand character mode "CHR$(15)" to list the program.
+
+After typing RUN, you get this result:
+
+MPS-801 PRINTER (<- in double width characters)
+
+10 OPEN 1,4
+20 PRINT#1,CHR$(14)"MPS-801 PRINTER"
+30 PTINT#1,CHR$(15)
+40 CMD 1: LIST
+
+READY.
 
 ------------------------------------------------------------------------------
 5.3 Bit Image Mode
@@ -105,7 +123,7 @@ printstart.bas:
 
 0123456789012345678901234567890123456789
        MPS-801                PRINTER
-       
+
 0123456789013345678901334567890123456789
         M P S - 8 0 1         P R I N T E R  (double width)
 
@@ -173,7 +191,7 @@ By using CHR$(26) you can repeat bit image data where you wish
 CHR$(8) ... CHR$(26) <NUMBER OF REPETITION> <DATA>
 
 repeat.bas:
-        
+
 What is actually repeatable is just 1 column of bit image information. The
 following example uses a CHR$(26) code to draw the histogram
 
@@ -196,17 +214,29 @@ By sending the cursor down code [CHR$(145)] to your printer, following
 characters will be printed in business mode until either a carriage return or
 cursor up code [CHR$(145)] is detected.
 
-localmode.bas:
+localgraph.bas:
 
 *       spade
 *       heart
 *       diamond
 *       club
 
+localbusiness.bas:
+
 spade     *
 heart     *
 diamond   *
 club      *
+
+localmode.bas:
+
+A combination of the above, with an additional pattern made by printing via
+alternating secondary address.
+
+FIXME: It is not clear under what conditions the local status is reset to what
+the secondary address implies, so the output of this program must be checked on
+a real printer!
+
 ------------------------------------------------------------------------------
 5.9 Reverse Field Mode
 5.10 Reset Reverse Field Mode
@@ -241,10 +271,18 @@ Linefeeds are executed in accordance with the print mode in effect just prior to
 the execution of a print command.
 
 * Character and double width character modes ...........6 LPI*
-* Bit image mode .............................. ........6 LPI*
+* Bit image mode .............................. ........9 LPI*
                                                   (*LPI = Line Per Inch)
 
 linespacing.bas:
+
+ascii
++--------------+---------------+
+!              !               !
++--------------+---------------+
+!              !               !
++--------------+---------------+
+petscii (this one should be seamless)
 +--------------+---------------+
 !              !               !
 +--------------+---------------+
@@ -255,7 +293,7 @@ linespacing.bas:
 5.13 Data Buffer Size
 
 Your printer's print-line buffer can contain up to 90 byes of data. At least
-1 byte will be used for the CHARACTER mode. But . . . since your printer
+1 byte will be used for the CHARACTER mode. But since your printer
 provides you with automatic printing, you are guaranted that no loss of data
 due to overflow will occur. This means that you really don't have to worry
 about buffer size. In addition to the print data, the following will also be
@@ -309,12 +347,6 @@ c. When both a and b occur, your printer will "dump" only the first 80
    for more information statement.
 
 ------------------------------------------------------------------------------
-
-When an odd number of CHR$(34) is detected in a line, the control
-codes $00-$1F and $80-$9F will be made visible by printing a
-reverse character for each of these controls. This will continue until
-an even number of quotes [CHR$(34)] has been received or until
-end of this line.
 
 When an odd number of CHR$(34) is detected in a line, the control
 codes $00-$1F and $80-$9F will be made visible by printing a
