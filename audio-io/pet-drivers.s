@@ -206,5 +206,5 @@ _userport_dac_output:
         rts
 
 _show_sample:
-        sta     $8000
+        sta     $8020
         rts

@@ -2,7 +2,7 @@
 #define VICE_AUDIO_IO_H
 
 /* stream.s */
-void __fastcall__ set_input_jsr(char __fastcall__ (*function)(void));
+void __fastcall__ set_input_jsr(unsigned char __fastcall__ (*function)(void));
 void __fastcall__ set_output_jsr(void __fastcall__ (*function)(unsigned char sample));
 void __fastcall__ stream(void);
 unsigned char __fastcall__ software_input(void);
@@ -19,7 +19,8 @@ void __fastcall__ sfx_sound_expander_output(unsigned char sample);
 /* plus4-drivers.s */
 unsigned char __fastcall__ digiblaster_fd5x_input(void);
 unsigned char __fastcall__ digiblaster_fe9x_input(void);
-void __fastcall__ digiblaster_output(unsigned char sample);
+void __fastcall__ digiblaster_fd5x_output(unsigned char sample);
+void __fastcall__ digiblaster_fe9x_output(unsigned char sample);
 void __fastcall__ ted_output(unsigned char sample);
 unsigned char __fastcall__ sampler_2bit_sidcart_input(void);
 unsigned char __fastcall__ sampler_4bit_sidcart_input(void);
@@ -120,3 +121,5 @@ unsigned char __fastcall__ daisy_input(void);
 
 /* all */
 void __fastcall__ show_sample(unsigned char sample);
+
+#endif

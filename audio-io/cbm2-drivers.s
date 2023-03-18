@@ -509,9 +509,10 @@ _userport_dac_output:
 
 _show_sample:
         jsr     setup_banking
-        ldy     #$d8
+        ldy     #$d0
         sty     sreg + 1
-        ldy     #$00
+        ldy     #$20
         sty     sreg
+        ldy     #$00
         sta     (sreg),y
         rts

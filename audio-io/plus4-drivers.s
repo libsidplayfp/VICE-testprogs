@@ -20,7 +20,8 @@
 ; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
 ; unsigned char __fastcall__ sampler_4bit_pet2_input(void);
 ;
-; void __fastcall__ digiblaster_output(unsigned char sample);
+; void __fastcall__ digiblaster_fd5x_output(unsigned char sample);
+; void __fastcall__ digiblaster_fe9x_output(unsigned char sample);
 ; void __fastcall__ sid_output_init(void);
 ; void __fastcall__ sid_output(unsigned char sample);
 ; void __fastcall__ userport_dac_output(unsigned char sample);
@@ -46,7 +47,8 @@
         .export  _sampler_2bit_pet2_input
         .export  _sampler_4bit_pet2_input
 
-        .export  _digiblaster_output
+        .export  _digiblaster_fd5x_output
+        .export  _digiblaster_fe9x_output
         .export  _sid_output_init, _sid_output
         .export  _userport_dac_output
         .export  _ted_output
@@ -173,8 +175,12 @@ _sampler_4bit_sidcart_input:
         lda     $fd80
         jmp     do_asl4
 
-_digiblaster_output:
+_digiblaster_fd5x_output:
         sta     $fd5e
+        rts
+
+_digiblaster_fe9x_output:
+        sta     $fe9e
         rts
 
 _set_sid_addr:

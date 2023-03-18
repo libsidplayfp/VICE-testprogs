@@ -50,7 +50,7 @@ cl65 -t c16 \
 
 mv audio-io audio-io-plus4.prg
 
-cl65 -t vic20 --config /usr/local/share/cc65/cfg/vic20-32k.cfg \
+cl65 -t vic20 -C vic20-32k.cfg \
 	audio-io.c \
 	stream.s \
 	vic20-drivers.s \

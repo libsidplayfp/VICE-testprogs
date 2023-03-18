@@ -218,25 +218,25 @@ static input_device_t sampler_4bit_starbyte2_input_device[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static input_device_t sampler_2bit_cga1_input_device[] = {
     { "2 bit sampler on port 1 of userport CGA joy adapter", sampler_2bit_cga1_input_init, sampler_2bit_cga1_input }
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static input_device_t sampler_4bit_cga1_input_device[] = {
     { "4 bit sampler on port 1 of userport CGA joy adapter", sampler_4bit_cga1_input_init, sampler_4bit_cga1_input }
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static input_device_t sampler_2bit_cga2_input_device[] = {
     { "2 bit sampler on port 2 of userport CGA joy adapter", sampler_2bit_cga2_input_init, sampler_2bit_cga2_input }
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static input_device_t sampler_4bit_cga2_input_device[] = {
     { "4 bit sampler on port 2 of userport CGA joy adapter", sampler_4bit_cga2_input_init, sampler_4bit_cga2_input }
 };
@@ -525,8 +525,14 @@ static output_device_t userport_dac_output_device[] = {
 #endif
 
 #if defined(__C16__) || defined(__PLUS4__)
-static output_device_t digiblaster_output_device[] = {
-    { "DigiBlaster", NULL, digiblaster_output }
+static output_device_t digiblaster_fd5x_output_device[] = {
+    { "DigiBlaster at $FD5x", NULL, digiblaster_fd5x_output }
+};
+#endif
+
+#if defined(__C16__) || defined(__PLUS4__)
+static output_device_t digiblaster_fe9x_output_device[] = {
+    { "DigiBlaster at $FE9x", NULL, digiblaster_fe9x_output }
 };
 #endif
 
@@ -604,7 +610,7 @@ static menu_input_t input_starbyte_menu[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_cga1_menu[] = {
     { '2', "2 bit sampler", NULL, sampler_2bit_cga1_input_device },
     { '4', "4 bit sampler", NULL, sampler_4bit_cga1_input_device },
@@ -612,7 +618,7 @@ static menu_input_t input_cga1_menu[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_cga2_menu[] = {
     { '2', "2 bit sampler", NULL, sampler_2bit_cga2_input_device },
     { '4', "4 bit sampler", NULL, sampler_4bit_cga2_input_device },
@@ -620,7 +626,7 @@ static menu_input_t input_cga2_menu[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_cga_menu[] = {
     { '1', "port 1", input_cga1_menu, NULL },
     { '2', "port 2", input_cga2_menu, NULL },
@@ -673,7 +679,7 @@ static menu_input_t input_userport_joy_menu[] = {
     { 'd', "C64DTV HUMMER joystick adapter", input_hummer_menu, NULL },
     { 'o', "OEM joystick adapter", input_oem_menu, NULL },
     { 'p', "PET joystick adapter", input_pet_menu, NULL },
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) defined(__CBM610__) || defined(__PET__)
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
     { 'c', "CGA joystick adapter", input_cga_menu, NULL },
 #endif
 #if defined(__C64__) || defined(__C128__)
@@ -875,7 +881,8 @@ static menu_output_t output_menu[] = {
     { '8', "userport dac", userport_dac_output_device },
 #endif
 #if defined(__C16__) || defined(__PLUS4__)
-    { 'b', "digiblaster", digiblaster_output_device },
+    { 'b', "digiblaster at $FD5x", digiblaster_fd5x_output_device },
+    { 'c', "digiblaster at $FE9x", digiblaster_fe9x_output_device },
 #endif
     { 0, NULL, NULL }
 };

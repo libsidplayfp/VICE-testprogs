@@ -72,5 +72,11 @@ _show_sample:
         ldy     #$20
         sty     sreg
         ldy     #$00
+        tax
+        lsr
+        lsr
+        lsr
+        lsr
         sta     (sreg),y
+        txa
         rts
