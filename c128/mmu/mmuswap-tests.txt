@@ -49,6 +49,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -94,6 +95,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -139,6 +141,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -184,6 +187,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -231,6 +235,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Black (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Black (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -275,6 +280,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -339,6 +345,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Blue  (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -382,6 +389,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -435,6 +443,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -484,6 +493,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -532,6 +542,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -583,6 +594,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -632,6 +644,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -679,6 +692,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -735,6 +749,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -782,6 +797,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -839,6 +855,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		--    (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -889,6 +906,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		Green (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -939,6 +957,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		--    (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -995,6 +1014,7 @@ jcompton:       Green (NTSC C128 flat)
 mutetus:		--     (128 PAL flat)
 hedning:        Green (PAL C128DCR) [8722R2 4487]
 Zenda:          Green (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	Green (flat PAL C128)
 x128-r41548:	Green
 
 Conclusion:
@@ -1043,6 +1063,7 @@ jcompton:       White (NTSC C128 flat)
 mutetus:		--    (128 PAL flat)
 hedning:        White (PAL C128DCR) [8722R2 4487]
 Zenda:          White (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	White (flat PAL C128)
 x128-r41548:	White
 
 Conclusion:
@@ -1089,6 +1110,7 @@ jcompton:       White (NTSC C128 flat)
 mutetus:		--    (128 PAL flat)
 hedning:        White (PAL C128DCR) [8722R2 4487]
 Zenda:          White (PAL C128 flat) [8722R2 4385]
+Jussi Ala-Könni	White (flat PAL C128)
 x128-r41548:	White
 
 Conclusion:
