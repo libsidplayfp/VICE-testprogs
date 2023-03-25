@@ -971,26 +971,26 @@ int main(void)
     }
 
 #if defined(__C64__)
-    if (output_device->function == sid_output && !isc64dtv) {
+    if (!addresses && output_device->function == sid_output && !isc64dtv) {
         addresses = sid_addresses;
         device_function = set_sid_addr;
     }
 #else
-    if (output_device->function == sid_output) {
+    if (!addresses && output_device->function == sid_output) {
         addresses = sid_addresses;
         device_function = set_sid_addr;
     }
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
-    if (output_device->function == digimax_cart_output) {
+    if (!addresses && output_device->function == digimax_cart_output) {
         addresses = digimax_addresses;
         device_function = set_digimax_addr;
     }
 #endif
 
 #if defined(__C64__) || defined(__C128__)
-    if (output_device->function == shortbus_digimax_output) {
+    if (!addresses && output_device->function == shortbus_digimax_output) {
         addresses = shortbus_digimax_addresses;
         device_function = set_digimax_addr;
     }
