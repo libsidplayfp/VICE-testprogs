@@ -1,3 +1,17 @@
+; based on code posted by mathop, see
+; https://www.lemon64.com/forum/viewtopic.php?t=81712
+
+; on 6569R1 this will display two 8-character wide bars in the top row
+; with the contents of $3fff between them
+;
+; ..********...**...******
+; 000000001111111122222222
+
+
+irqvec = $0314
+
+spriteloc=$0340
+screenloc=$0400
 
 *=$0801
 
@@ -9,98 +23,126 @@
 .z
   !word 0
 
-; on 6569R1 this will display two 8-character wide bars in the top row
-; with the contents of $3fff between them
-;
-; ..********...**...********
-
-irqvec = $0314
-
+start:
   sei
-  lda #127
-  sta 56333
-  lda 56333
+  lda #$7f
+  sta $dc0d
+  lda $dc0d
   lda #1
-  sta 53274
-  sta 53273
+  sta $d01a
+  sta $d019
   lda #24
-  sta 53266
+  sta $d012
   lda #27
-  sta 53265
+  sta $d011
+
   lda #<isr
   sta irqvec
   lda #>isr
   sta irqvec+1
   lda #0
-  sta x
+  sta tempx
+
   ldx #62
 clrsprite
-  sta $0340, x
+  sta spriteloc, x
   dex
-  bne clrsprite
-  lda #128
-  sta $0340
+  bpl clrsprite
+
+  lda #128          ; leftmost pixel set
+  sta spriteloc
+
   lda #13
-  sta 2046
-  sta 2047
+  sta screenloc+$3fe
+  sta screenloc+$3ff
+
   ldx #98
-  stx 53260
-  stx 53261
+  stx $d00c ; 6 x = 98
+  stx $d00d ; 6 y = 98
   inx
-  stx 53262
-  stx 53263
-  lda #192
-  sta 53264
-  sta 53269
-  lda #24
-  sta 16383
-  bit 53278
+  stx $d00e ; 7 x = 99
+  stx $d00f ; 7 y = 99
+
+  lda #$c0
+  sta $d010
+  sta $d015
+
+  lda #$18
+  sta $3fff ; idle byte
+
+  bit $d01e ; clear collision
   cli
   rts
 
 isr
   lda #1
-  sta 53273
-  ldx x
-  lda $0400, x
-  ldy 53278
+  sta $d019
+
+  ldx tempx
+;  lda screenloc, x
+  lda #'.'
+  ldy $d01e             ; sprite/sprite collision
   beq nocol
-  ora #128
-  bne update_screen
+;  ora #128
+  lda #'*'
+;  bne update_screen
 nocol
-  and #127
-update_screen
-  sta $0400, x
+;  and #127
+;update_screen
+  sta screenloc, x
   lda #1
   sta $d800, x
-  jsr toggle_sprite_pixel
-  ldx x
+
+  jsr toggle_sprite_pixel   ; remove leftmost set pixel
+  ldx tempx
   inx
-  cpx #24
+  cpx #8*3
   bcc updatex
+
+  ldy #$ff ; failure
+  ldx #0
+-
+  lda screenloc,x
+  cmp expected,x
+  bne +
+  inx
+  cpx #8*3
+  bne -
+  ldy #0 ; success
++
+  sty $d7ff
+  lda #10 ; red
+  cpy #0  ; success
+  bne +
+  lda #13 ; green
++
+  sta $d020
+
   ldx #0
 updatex
-  stx x
-  jsr toggle_sprite_pixel
+  stx tempx
+  jsr toggle_sprite_pixel   ; set new leftmost set pixel
   jmp $ea31
 
 toggle_sprite_pixel
-  lda x
+  lda tempx
   tax
   lsr
   lsr
   lsr
-  tay
+  tay ; y = tempx / 8
   txa
   and #7
   tax
-  lda $0340, y
+  lda spriteloc, y
   eor bits, x
-  sta $0340, y
+  sta spriteloc, y
   rts
 
-x
+tempx
   !byte 0
 
 bits
-  !byte 128, 64, 32, 16, 8, 4, 2, 1 
+  !byte 128, 64, 32, 16, 8, 4, 2, 1
+expected
+  !text "..********...**...******"

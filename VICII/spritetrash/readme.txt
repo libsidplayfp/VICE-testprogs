@@ -96,3 +96,9 @@ collision register.
 
 The color ram is set to white because otherwise it would not be visible on v2
 Kernals.
+
+on 6569R1 this will display two 8-character wide bars in the top row
+with the contents of $3fff between them
+
+..********...**...******
+000000001111111122222222
