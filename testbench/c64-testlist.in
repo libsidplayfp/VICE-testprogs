@@ -930,6 +930,8 @@
 ../VICII/videomode/,videomode-z_ntscold.prg,screenshot,10000000,vicii-ntscold
 ../VICII/vspbug/,lft-safe-vsp.prg,interactive,0,vicii-pal
 ../VICII/vspbug/,vsp_bug.prg,exitcode,13000000
+../VICII/vsp-tester/,vsp-tester.prg,exitcode,10000000,vicii-pal
+../VICII/vsp-tester/,vsp-tester-ntsc.prg,exitcode,10000000,vicii-ntsc
 ../VICII/sequencer-bug/,bug.prg,screenshot,7000000,vicii-pal
 ################################################################################
 # Sprites

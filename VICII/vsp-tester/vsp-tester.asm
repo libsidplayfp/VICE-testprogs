@@ -211,7 +211,7 @@ mod_h
 
 checkresult:
         ; 33 06 06 06   $3fff   $38ff $3807 $38c7 $38d7
-        ldx #$01    ; failure
+        ldx #$ff    ; failure
         ldy #10     ; red
 
         lda hex_out_loc
