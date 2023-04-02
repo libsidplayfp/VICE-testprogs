@@ -5,6 +5,32 @@
 #include "z80-drivers.h"
 #include "z80-defines.h"
 
+#ifdef __C64NATIVE__
+static void clrscr(void)
+{
+/* FIXME */
+#asm
+    push af
+    push bc
+    push de
+    push hl
+    ld a,0x20
+    ld hl,0xf400
+    ld bc,0x0400
+    ld (hl),a
+    ld e,l
+    ld d,h
+    inc de
+    dec bc
+    ldir
+    pop hl
+    pop de
+    pop bc
+    pop af
+#endasm
+}
+#endif
+
 #ifdef __C128NATIVE__
 static void clrscr(void)
 {
@@ -30,12 +56,294 @@ static void clrscr(void)
 }
 #endif
 
+#ifdef __C64NATIVE__
+#define z80_bpoke(a,b)  (*(unsigned char *)(a) = b)
+#define z80_bpeek(a)    (*(unsigned char *)(a))
+
+static void scankeyboard(void)
+{
+#asm
+    push af
+    push bc
+    push de
+    push hl
+scan_keyboard:
+    ld bc,0xcc00
+    ld hl,0xf807
+    ld a,0xfe
+    out (c),a
+    inc bc
+    in d,(c)
+    ld (hl),d ; $f807
+    dec hl
+    dec bc
+    scf
+    rla
+    out (c),a
+    inc bc
+    in d,(c)
+    ld (hl),d ; $f806
+    dec hl
+    dec bc
+    rla
+    out (c),a
+    inc bc
+    in d,(c)
+    ld (hl),d ; $f805
+    dec hl
+    dec bc
+    rla
+    out (c),a
+    inc bc
+    in d,(c)
+    ld (hl),d ; $f804
+    dec hl
+    dec bc
+    rla
+    out (c),a
+    inc bc
+    in d,(c)
+    ld (hl),d ; $f803
+    dec hl
+    dec bc
+    rla
+    out (c),a
+    inc bc
+    in d,(c)
+    ld (hl),d ; $f802
+    dec hl
+    dec bc
+    rla
+    out (c),a
+    inc bc
+    in d,(c)
+    ld (hl),d ; $f801
+    dec hl
+    dec bc
+    rla
+    out (c),a
+    inc bc
+    in d,(c)
+    ld (hl),d ; $f800
+    pop hl
+    pop de
+    pop bc
+    pop af
+#endasm
+}
+
+static unsigned char ascii_to_screen(unsigned char c)
+{
+    if (c == 0) {
+        return 0x80;
+    } else if (c >= 0x01 && c <= 0x1a) {
+        return c + 0xc0;
+    } else if (c >= 0x1b && c <= 0x1f) {
+        return c + 0x80;
+    } else if (c == 0x40) {
+        return 0x00;
+    } else if (c >= 0x5b && c <= 0x5f) {
+        return c - 0x40;
+    } else if (c == 0x60) {
+        return 0x40;
+    } else if (c >= 0x61 && c <= 0x7a) {
+        return c - 0x60;
+    } else if (c >= 0x7b && c <= 0x7f) {
+        return c - 0x20;
+    } else if (c == 0x80) {
+        return 0xc0;
+    } else if (c >= 0x9b && c <= 0x9f) {
+        return c + 0x40;
+    } else if (c >= 0xa0 && c <= 0xbf) {
+        return c - 0x40;
+    } else if (c == 0xc0) {
+        return 0x40;
+    } else if (c >= 0xc1 && c <= 0xda) {
+        return c - 0xc0;
+    } else if (c >= 0xdb && c <= 0xff) {
+        return c - 0x80;
+    }
+    return c;
+}
+
+static void c64_z80_print_char(char text, unsigned char line, unsigned char offset)
+{
+    z80_bpoke(0xf400 + (line * 40) + offset, (char)(ascii_to_screen((unsigned char)text)));
+}
+
+static void c64_z80_print_string(char *text, unsigned char line, unsigned char offset)
+{
+    unsigned char i = 0;
+    
+    while (text[i] != 0) {
+        z80_bpoke(0xf400 + (line * 40) + offset + i, (char)(ascii_to_screen((unsigned char)text[i])));
+	i++;
+    }
+}
+
+static void c64_z80_print_hex_digit(unsigned char digit, unsigned char line, unsigned char offset)
+{
+    if (digit < 10) {
+        c64_z80_print_char('0' + digit, line, offset);
+    } else {
+        c64_z80_print_char('A' + digit - 10, line, offset);
+    }
+}
+
+static void c64_z80_print_hex_4(unsigned short addr, unsigned char line, unsigned char offset)
+{
+    unsigned char current_offset = offset;
+    unsigned char pos1 = (unsigned char)(addr & 0x000f);
+    unsigned char pos2 = (unsigned char)((addr & 0x00f0) >> 4);
+    unsigned char pos3 = (unsigned char)((addr & 0x0f00) >> 8);
+    unsigned char pos4 = (unsigned char)((addr & 0xf000) >> 12);
+    
+    c64_z80_print_char('$', line, current_offset);
+    current_offset++;
+    c64_z80_print_hex_digit(pos4, line, current_offset);
+    current_offset++;
+    c64_z80_print_hex_digit(pos3, line, current_offset);
+    current_offset++;
+    c64_z80_print_hex_digit(pos2, line, current_offset);
+    current_offset++;
+    c64_z80_print_hex_digit(pos1, line, current_offset);
+}
+
+static void c64_z80_print_hex_2(unsigned char addr, unsigned char line, unsigned char offset)
+{
+    unsigned char current_offset = offset;
+    unsigned char pos1 = addr & 0x0f;
+    unsigned char pos2 = addr >> 4;
+    
+    c64_z80_print_char('$', line, current_offset);
+    current_offset++;
+    c64_z80_print_hex_digit(pos2, line, current_offset);
+    current_offset++;
+    c64_z80_print_hex_digit(pos1, line, current_offset);
+    current_offset++;
+    c64_z80_print_char('x', line, current_offset);
+    current_offset++;
+    c64_z80_print_char('x', line, current_offset);
+}
+
+static void c64_z80_releasekey(void)
+{
+    unsigned char released = 0;
+    unsigned char i;
+    unsigned char nr;
+
+    while (!released) {
+        scankeyboard();
+
+        released = 1;
+
+        for (i = 0; i < 8; i++) {
+            nr = z80_bpeek(0xf800 +i );
+            if (nr != 0xff) {
+                released = 0;
+            }
+        }
+    }
+}
+static char c64_z80_getkey(void)
+{
+    unsigned char i;
+    unsigned char pos;
+    unsigned char nr;
+    unsigned char retnr;
+    
+    scankeyboard();
+
+    for (i = 0; i < 8; i++) {
+        nr = z80_bpeek(0xf800 +i );
+        if (nr != 0xff) {
+            pos = i;
+            retnr = nr;
+        }
+    }
+
+    if (pos == 6 && retnr == 0xfb) {
+        return 'a';
+    } else if (pos == 4 && retnr == 0xef) {
+        return 'b';
+    } else if (pos == 5 && retnr == 0xef) {
+        return 'c';
+    } else if (pos == 5 && retnr == 0xfb) {
+        return 'd';
+    } else if (pos == 6 && retnr == 0xbf) {
+        return 'e';
+    } else if (pos == 5 && retnr == 0xdf) {
+        return 'f';
+    } else if (pos == 4 && retnr == 0xfb) {
+        return 'g';
+    } else if (pos == 4 && retnr == 0xdf) {
+        return 'h';
+    } else if (pos == 3 && retnr == 0xfd) {
+        return 'i';
+    } else if (pos == 3 && retnr == 0xfb) {
+        return 'j';
+    } else if (pos == 3 && retnr == 0xdf) {
+        return 'k';
+    } else if (pos == 2 && retnr == 0xfb) {
+        return 'l';
+    } else if (pos == 3 && retnr == 0xef) {
+        return 'm';
+    } else if (pos == 3 && retnr == 0x7f) {
+        return 'n';
+    } else if (pos == 3 && retnr == 0xbf) {
+        return 'o';
+    } else if (pos == 2 && retnr == 0xfd) {
+        return 'p';
+    } else if (pos == 0 && retnr == 0xbf) {
+        return 'q';
+    } else if (pos == 5 && retnr == 0xfd) {
+        return 'r';
+    } else if (pos == 6 && retnr == 0xdf) {
+        return 's';
+    } else if (pos == 5 && retnr == 0xbf) {
+        return 't';
+    } else if (pos == 4 && retnr == 0xbf) {
+        return 'u';
+    } else if (pos == 4 && retnr == 0x7f) {
+        return 'v';
+    } else if (pos == 6 && retnr == 0xfd) {
+        return 'w';
+    } else if (pos == 5 && retnr == 0x7f) {
+        return 'x';
+    } else if (pos == 4 && retnr == 0xfd) {
+        return 'y';
+    } else if (pos == 6 && retnr == 0xef) {
+        return 'z';
+    } else if (pos == 3 && retnr == 0xf7) {
+        return '0';
+    } else if (pos == 0 && retnr == 0xfe) {
+        return '1';
+    } else if (pos == 0 && retnr == 0xf7) {
+        return '2';
+    } else if (pos == 6 && retnr == 0xfe) {
+        return '3';
+    } else if (pos == 6 && retnr == 0xf7) {
+        return '4';
+    } else if (pos == 5 && retnr == 0xfe) {
+        return '5';
+    } else if (pos == 5 && retnr == 0xf7) {
+        return '6';
+    } else if (pos == 4 && retnr == 0xfe) {
+        return '7';
+    } else if (pos == 4 && retnr == 0xf7) {
+        return '8';
+    } else if (pos == 3 && retnr == 0xfe) {
+        return '9';
+    }
+}
+#endif
+
 static unsigned char input_type = INPUT_NONE;
 static unsigned char output_type = OUTPUT_NONE;
 
 static void set_sid_addr(unsigned short addr) __z88dk_fastcall
 {
-#ifdef __C64CPM__
+#if defined(__C64CPM__) || defined(__C64NATIVE__)
     set_sid_addr_asm(addr - 0x1000);
 #endif
 
@@ -46,7 +354,7 @@ static void set_sid_addr(unsigned short addr) __z88dk_fastcall
 
 static void set_digimax_addr(unsigned short addr) __z88dk_fastcall
 {
-#ifdef __C64CPM__
+#if defined(__C64CPM__) || defined(__C64NATIVE__)
     set_digimax_addr_asm(addr - 0x1000);
 #endif
 
@@ -97,7 +405,7 @@ static void output_init_function(unsigned char output_init_type) __z88dk_fastcal
 /* -------------------------------------------------------------------------------------------------------- */
 
 static unsigned sid_addresses_d4[] = { 0xd400, 0xd420, 0xd440, 0xd460, 0xd480, 0xd4a0, 0xd4c0, 0xd4e0, 0 };
-#ifdef __C64CPM__
+#if defined(__C64CPM__) || defined(__C64NATIVE__)
 static unsigned sid_addresses_d5[] = { 0xd500, 0xd520, 0xd540, 0xd560, 0xd580, 0xd5a0, 0xd5c0, 0xd5e0, 0 };
 static unsigned sid_addresses_d6[] = { 0xd600, 0xd620, 0xd640, 0xd660, 0xd680, 0xd6a0, 0xd6c0, 0xd6e0, 0 };
 #endif
@@ -105,7 +413,7 @@ static unsigned sid_addresses_d7[] = { 0xd700, 0xd720, 0xd740, 0xd760, 0xd780, 0
 static unsigned sid_addresses_de[] = { 0xde00, 0xde20, 0xde40, 0xde60, 0xde80, 0xdea0, 0xdec0, 0xdee0, 0 };
 static unsigned sid_addresses_df[] = { 0xdf00, 0xdf20, 0xdf40, 0xdf60, 0xdf80, 0xdfa0, 0xdfc0, 0xdfe0, 0 };
 
-#ifdef __C64CPM__
+#if defined(__C64CPM__) || defined(__C64NATIVE__)
 static unsigned *sid_addresses[] = { sid_addresses_d4, sid_addresses_d5, sid_addresses_d6, sid_addresses_d7, sid_addresses_de, sid_addresses_df, NULL };
 #endif
 
@@ -496,7 +804,6 @@ static menu_output_t output_menu[] = {
     { 0, NULL, NULL }
 };
 
-
 int main(void)
 {
     menu_input_t *current_input_menu = NULL;
@@ -519,6 +826,9 @@ int main(void)
 #ifdef __C64CPM__
         printf("this program will only run on a C64!\n");
 #endif
+#ifdef __C64NATIVE__
+        c64_z80_print_string("this program will only run on a C64!", 0, 0);
+#endif
         exit(0);
     }
 
@@ -526,13 +836,28 @@ int main(void)
 
     while (input_device == NULL) {
         clrscr();
+#ifdef __C64NATIVE__
+        c64_z80_print_string("Choose input", 0, 0);
+#else
         printf("Choose input\n\n");
-        for (index = 0; current_input_menu[index].key; ++index) {
+#endif
+        for (index = 0; current_input_menu[index].key != 0; ++index) {
+#ifdef __C64NATIVE__
+            c64_z80_print_char(current_input_menu[index].key, index + 2, 0);
+            c64_z80_print_string(": ", index + 2, 1);
+            c64_z80_print_string(current_input_menu[index].displayname, index + 2, 3);
+#else
             printf("%c: %s\n", current_input_menu[index].key, current_input_menu[index].displayname);
+#endif
         }
         valid_key = -1;
         while (valid_key < 0) {
+#ifdef __C64NATIVE__
+            key = c64_z80_getkey();
+            c64_z80_releasekey();
+#else
             key = (unsigned char)tolower(getkey());
+#endif
             for (index = 0; current_input_menu[index].key && valid_key < 0; ++index) {
                 if (key == current_input_menu[index].key) {
                     valid_key = index;
@@ -550,13 +875,28 @@ int main(void)
 
     while (output_device == NULL) {
         clrscr();
+#ifdef __C64NATIVE__
+        c64_z80_print_string("Choose output", 0, 0);
+#else
         printf("Choose output\n\n");
+#endif
         for (index = 0; current_output_menu[index].key; ++index) {
+#ifdef __C64NATIVE__
+            c64_z80_print_char(current_output_menu[index].key, index + 2, 0);
+            c64_z80_print_string(": ", index + 2, 1);
+            c64_z80_print_string(current_output_menu[index].displayname, index + 2, 3);
+#else
             printf("%c: %s\n", current_output_menu[index].key, current_output_menu[index].displayname);
+#endif
         }
         valid_key = -1;
         while (valid_key < 0) {
+#ifdef __C64NATIVE__
+            key = c64_z80_getkey();
+            c64_z80_releasekey();
+#else
             key = (unsigned char)tolower(getkey());
+#endif
             for (index = 0; current_output_menu[index].key && valid_key < 0; ++index) {
                 if (key == current_output_menu[index].key) {
                     valid_key = index;
@@ -583,29 +923,63 @@ int main(void)
 
     if (addresses) {
         clrscr();
+#ifdef __C64NATIVE__
+        c64_z80_print_string("Choose ", 0, 0);
+        c64_z80_print_string(output_device->device_name, 0, 7);
+	c64_z80_print_string("address range", 0, strlen(output_device->device_name) + 8);
+#else
         printf("Choose %s address range\n\n", output_device->device_name);
+#endif
         for (index = 0; addresses[index]; ++index) {
+#ifdef __C64NATIVE__
+            c64_z80_print_char('a' + index, index + 2, 0);
+            c64_z80_print_string(": ", index + 2, 1);
+            c64_z80_print_hex_2(addresses[index][0] >> 8, index + 2, 3);
+#else
             printf("%c: $%02Xxx\n", 'a' + index, addresses[index][0] >> 8);
+#endif
             ++max_key;
         }
         valid_key = -1;
         while (valid_key < 0) {
+#ifdef __C64NATIVE__
+            key = c64_z80_getkey();
+            c64_z80_releasekey();
+#else
             key = (unsigned char)tolower(getkey());
+#endif
             if (key >= 'a' && key < 'a' + max_key) {
                 valid_key = key - 'a';
             }
         }
         sid_index = valid_key;
         clrscr();
+#ifdef __C64NATIVE__
+        c64_z80_print_string("Choose ", 0, 0);
+        c64_z80_print_string(output_device->device_name, 0, 7);
+	c64_z80_print_string("address", 0, strlen(output_device->device_name) + 8);
+#else
         printf("Choose %s address\n\n", output_device->device_name);
+#endif
         max_key = 0;
         for (index = 0; addresses[sid_index][index]; ++index) {
+#ifdef __C64NATIVE__
+            c64_z80_print_char('a' + index, index + 2, 0);
+            c64_z80_print_string(": ", index + 2, 1);
+            c64_z80_print_hex_4(addresses[sid_index][index], index + 2, 3);
+#else
             printf("%c: $%04X\n", 'a' + index, addresses[sid_index][index]);
+#endif
             ++max_key;
         }
         valid_key = -1;
         while (valid_key < 0) {
+#ifdef __C64NATIVE__
+            key = c64_z80_getkey();
+            c64_z80_releasekey();
+#else
             key = (unsigned char)tolower(getkey());
+#endif
             if (key >= 'a' && key < 'a' + max_key) {
                 valid_key = key - 'a';
             }
@@ -619,12 +993,23 @@ int main(void)
     output_type = output_device->output_type;
 
     clrscr();
-    printf("Streaming from\n\n%s\n\nto\n\n", input_device->device_name);
+#ifdef __C64NATIVE__
+        c64_z80_print_string("Streaming from", 0, 0);
+        c64_z80_print_string(input_device->device_name, 1, 0);
+        c64_z80_print_string("to", 2, 0);
+        c64_z80_print_string(output_device->device_name, 3, 0);
+        if (addresses) {
+            c64_z80_print_string(" at " , 3, strlen(output_device->device_name));
+            c64_z80_print_hex_4(addresses[sid_index][valid_key], 3, strlen(output_device->device_name) + 4);
+        }
+#else
+        printf("Streaming from\n\n%s\n\nto\n\n", input_device->device_name);
     if (addresses) {
         printf("%s at $%04X\n", output_device->device_name, addresses[sid_index][valid_key]);
     } else {
         printf("%s\n", output_device->device_name);
     }
+#endif
 
     disable_irq();
 
