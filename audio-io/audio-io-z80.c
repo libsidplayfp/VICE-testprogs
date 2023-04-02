@@ -8,7 +8,6 @@
 #ifdef __C64NATIVE__
 static void clrscr(void)
 {
-/* FIXME */
 #asm
     push af
     push bc
