@@ -9,6 +9,7 @@ all: \
 	audio-io-vic20.prg \
 	audio-io-c128-z80.prg \
 	audio-io-c64-z80.prg \
+	audiopet.wtl \
 	audio128.com \
 	audio64.com
 
@@ -60,3 +61,6 @@ audio-io-c64-z80.bin: audio-io-z80.c z80-drivers64.asm
 	zcc +c128 -create-app -subtype=disk -zorg=256 -D__C64NATIVE__ audio-io-z80.c z80-drivers64.asm
 	rm -f A A.LDR
 	mv a.bin audio-io-c64-z80.bin
+
+audiopet.wtl: audio-io-6809.asm
+	lwasm -f raw -o audiopet.wtl audio-io-6809.asm
