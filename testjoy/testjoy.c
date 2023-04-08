@@ -1337,7 +1337,7 @@ static unsigned char read_oem_joy(void)
 
 /* c64/c64dtv/c128 joystick test */
 #if defined(__C64__) || defined(__C128__)
-int main(void)
+void main(void)
 {
     unsigned char key;
 
@@ -1449,14 +1449,14 @@ int main(void)
                 read_spaceballs_c64_joy2();
                 gotoxy(0, 18);
                 cprintf("spaceballs joystick adapter in joyport 2");
-                draw_joy(joy8_status[0], 0, 19, 0, 19, "mj1", 0);
-                draw_joy(joy8_status[1], 5, 19, 5, 19, "mj2", 0);
-                draw_joy(joy8_status[2], 10, 19, 10, 19, "mj3", 0);
-                draw_joy(joy8_status[3], 15, 19, 15, 19, "mj4", 0);
-                draw_joy(joy8_status[4], 20, 19, 20, 19, "mj5", 0);
-                draw_joy(joy8_status[5], 25, 19, 25, 19, "mj6", 0);
-                draw_joy(joy8_status[6], 30, 19, 30, 19, "mj7", 0);
-                draw_joy(joy8_status[7], 35, 19, 35, 19, "mj8", 0);
+                draw_joy(joy8_status[0], 0, 19, 0, 19, "sb1", 0);
+                draw_joy(joy8_status[1], 5, 19, 5, 19, "sb2", 0);
+                draw_joy(joy8_status[2], 10, 19, 10, 19, "sb3", 0);
+                draw_joy(joy8_status[3], 15, 19, 15, 19, "sb4", 0);
+                draw_joy(joy8_status[4], 20, 19, 20, 19, "sb5", 0);
+                draw_joy(joy8_status[5], 25, 19, 25, 19, "sb6", 0);
+                draw_joy(joy8_status[6], 30, 19, 30, 19, "sb7", 0);
+                draw_joy(joy8_status[7], 35, 19, 35, 19, "sb8", 0);
             }
             gotoxy(0, 24);
             cprintf(page_message);
@@ -1519,7 +1519,7 @@ int main(void)
 
 /* cbm5x0 joystick test */
 #ifdef __CBM510__
-int main(void)
+void main(void)
 {
     unsigned char key;
 
@@ -1624,7 +1624,7 @@ int main(void)
 
 /* cbm6x0/7x0 joystick test */
 #ifdef __CBM610__
-int main(void)
+void main(void)
 {
     unsigned char key;
 
@@ -1688,7 +1688,7 @@ int main(void)
 
 /* pet joystick test */
 #ifdef __PET__
-int main(void)
+void main(void)
 {
     unsigned char key;
 
@@ -1735,7 +1735,7 @@ int main(void)
 
 /* c16/c232/plus4 joystick test */
 #if defined(__C16__) || defined(__PLUS4__)
-int main(void)
+void main(void)
 {
     printf("%c",uppercase);
     bgcolor(COLOR_BLACK);
@@ -1758,7 +1758,7 @@ int main(void)
 
 /* vic20 joystick test */
 #ifdef __VIC20__
-int main(void)
+void main(void)
 {
     unsigned char key;
 
