@@ -474,6 +474,28 @@ typicaltest.prg - error
 .:c020 00 f0 00 f0 b0 f0 00 f0 0f ff 0f ff 0f ff 0f ff
 .:c030 ff c0 ff 0f ff ef 80 0f f0 00 f0 00 f0 00 f0 01
 
+(zibri) (ASSY: 250425, RAM: TMM4164AP-20 / JAPAN 8436HBK)
+
+Very random, with a tendency to $00 in first 16 bytes, then $ff in following 16
+bytes. Something like
+
+  -raminitstartvalue    0
+  -raminitvalueinvert   16
+  -raminitpatterninvert 0
+
+  -raminitvalueoffset         0
+  -raminitpatterninvertvalue  0
+  -raminitstartrandom         0
+  -raminitrepeatrandom        0
+
+  -raminitrandomchance        500
+
+1F 00 00 00  00 B7 00 00  00 02 00 5B  00 FF 00 FF
+FF FF AE FF  AE FF FF FF  AB FF FF FF  EA FF CB FF
+00 00 7F 00  55 00 00 08  07 00 2F 00  9C 00 F7 08
+FF EE FF FF  FF FF FF FF  FF AE FF FE  FF FF FF FF
+
+
 ================================================================================
 
 some problematic programs
