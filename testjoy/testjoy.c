@@ -136,9 +136,10 @@
 #define PAGE_C64_JOYPORT_SNESPADS   1
 #define PAGE_C64_PETSCII_SNESPAD    2
 #define PAGE_C64_USERPORT_SNESPADS  3
-#define PAGE_C64_8JOY               4
-#define PAGE_C64_INCEPTION          5
-#define PAGE_C64_MAX                6
+#define PAGE_C64_PROTOPADS          4
+#define PAGE_C64_8JOY               5
+#define PAGE_C64_INCEPTION          6
+#define PAGE_C64_MAX                7
 
 /* CBM5x0 display page numbers */
 #define PAGE_CBM5x0_JOYSTICKS    0
@@ -667,6 +668,80 @@ static void read_snes_c64_joy2(void)
         POKE(C64_CIA1_PRA, 0x08);
         POKE(C64_CIA1_PRA, 0x00);
     }
+}
+
+static void read_protopad_c64_joy1(void)
+{
+    unsigned char data;
+    unsigned char b1;
+    unsigned char b2;
+    unsigned char b3;
+    unsigned char b4;
+
+    POKE(C64_CIA1_DDRB, 0xFF);
+    POKE(C64_CIA1_PRB, 0x00);
+    POKE(C64_CIA1_DDRB, 0xF8);
+    data = PEEK(C64_CIA1_PRB);
+    if (!data) {
+        POKE(C64_CIA1_PRB, 0x08);
+        b1 = ~PEEK(C64_CIA1_PRB) & 7;
+        POKE(C64_CIA1_PRB, 0x00);
+        b2 = ~PEEK(C64_CIA1_PRB) & 7;
+        POKE(C64_CIA1_PRB, 0x08);
+        b3 = ~PEEK(C64_CIA1_PRB) & 7;
+        POKE(C64_CIA1_PRB, 0x00);
+        b4 = ~PEEK(C64_CIA1_PRB) & 7;
+    }
+    POKE(C64_CIA1_DDRB, 0x00);
+    snes_status[0] = (b1 & 0x04) ? 0x0001 : 0x0000;
+    snes_status[0] |= (b4 & 0x02) ? 0x0002 : 0x0000;
+    snes_status[0] |= (b3 & 0x02) ? 0x0004 : 0x0000;
+    snes_status[0] |= (b3 & 0x04) ? 0x0008 : 0x0000;
+    snes_status[0] |= (b2 & 0x01) ? 0x0010 : 0x0000;
+    snes_status[0] |= (b2 & 0x02) ? 0x0020 : 0x0000;
+    snes_status[0] |= (b2 & 0x04) ? 0x0040 : 0x0000;
+    snes_status[0] |= (b1 & 0x01) ? 0x0080 : 0x0000;
+    snes_status[0] |= (b1 & 0x02) ? 0x0100 : 0x0000;
+    snes_status[0] |= (b4 & 0x01) ? 0x0200 : 0x0000;
+    snes_status[0] |= (b4 & 0x04) ? 0x0400 : 0x0000;
+    snes_status[0] |= (b3 & 0x01) ? 0x0800 : 0x0000;
+}
+
+static void read_protopad_c64_joy2(void)
+{
+    unsigned char data;
+    unsigned char b1;
+    unsigned char b2;
+    unsigned char b3;
+    unsigned char b4;
+
+    POKE(C64_CIA1_DDRA, 0xFF);
+    POKE(C64_CIA1_PRA, 0x00);
+    POKE(C64_CIA1_DDRA, 0xF8);
+    data = PEEK(C64_CIA1_PRA);
+    if (!data) {
+        POKE(C64_CIA1_PRA, 0x08);
+        b1 = ~PEEK(C64_CIA1_PRA) & 7;
+        POKE(C64_CIA1_PRA, 0x00);
+        b2 = ~PEEK(C64_CIA1_PRA) & 7;
+        POKE(C64_CIA1_PRA, 0x08);
+        b3 = ~PEEK(C64_CIA1_PRA) & 7;
+        POKE(C64_CIA1_PRA, 0x00);
+        b4 = ~PEEK(C64_CIA1_PRA) & 7;
+    }
+    POKE(C64_CIA1_DDRA, 0x00);
+    snes_status[0] = (b1 & 0x04) ? 0x0001 : 0x0000;
+    snes_status[0] |= (b4 & 0x02) ? 0x0002 : 0x0000;
+    snes_status[0] |= (b3 & 0x02) ? 0x0004 : 0x0000;
+    snes_status[0] |= (b3 & 0x04) ? 0x0008 : 0x0000;
+    snes_status[0] |= (b2 & 0x01) ? 0x0010 : 0x0000;
+    snes_status[0] |= (b2 & 0x02) ? 0x0020 : 0x0000;
+    snes_status[0] |= (b2 & 0x04) ? 0x0040 : 0x0000;
+    snes_status[0] |= (b1 & 0x01) ? 0x0080 : 0x0000;
+    snes_status[0] |= (b1 & 0x02) ? 0x0100 : 0x0000;
+    snes_status[0] |= (b4 & 0x01) ? 0x0200 : 0x0000;
+    snes_status[0] |= (b4 & 0x04) ? 0x0400 : 0x0000;
+    snes_status[0] |= (b3 & 0x01) ? 0x0800 : 0x0000;
 }
 
 static unsigned char read_native_c64_joy1(void)
@@ -1410,6 +1485,14 @@ void main(void)
                 gotoxy(0, 24);
                 cprintf(page_message);
             }
+        }
+        if (current_page == PAGE_C64_PROTOPADS) {
+            read_protopad_c64_joy1();
+            draw_snes(snes_status[0], 0, 0, "protopad joy-1");
+            read_protopad_c64_joy2();
+            draw_snes(snes_status[0], 21, 0, "protopad joy-2");
+            gotoxy(0, 24);
+            cprintf(page_message);
         }
         if (current_page == PAGE_C64_8JOY) {
             read_multijoy_c64_joy1();
