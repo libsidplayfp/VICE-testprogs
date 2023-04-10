@@ -672,7 +672,6 @@ static void read_snes_c64_joy2(void)
 
 static void read_protopad_c64_joy1(void)
 {
-    unsigned char data;
     unsigned char b1;
     unsigned char b2;
     unsigned char b3;
@@ -681,17 +680,14 @@ static void read_protopad_c64_joy1(void)
     POKE(C64_CIA1_DDRB, 0xFF);
     POKE(C64_CIA1_PRB, 0x00);
     POKE(C64_CIA1_DDRB, 0xF8);
-    data = PEEK(C64_CIA1_PRB);
-    if (!data) {
-        POKE(C64_CIA1_PRB, 0x08);
-        b1 = ~PEEK(C64_CIA1_PRB) & 7;
-        POKE(C64_CIA1_PRB, 0x00);
-        b2 = ~PEEK(C64_CIA1_PRB) & 7;
-        POKE(C64_CIA1_PRB, 0x08);
-        b3 = ~PEEK(C64_CIA1_PRB) & 7;
-        POKE(C64_CIA1_PRB, 0x00);
-        b4 = ~PEEK(C64_CIA1_PRB) & 7;
-    }
+    POKE(C64_CIA1_PRB, 0x08);
+    b1 = ~PEEK(C64_CIA1_PRB) & 7;
+    POKE(C64_CIA1_PRB, 0x00);
+    b2 = ~PEEK(C64_CIA1_PRB) & 7;
+    POKE(C64_CIA1_PRB, 0x08);
+    b3 = ~PEEK(C64_CIA1_PRB) & 7;
+    POKE(C64_CIA1_PRB, 0x00);
+    b4 = ~PEEK(C64_CIA1_PRB) & 7;
     POKE(C64_CIA1_DDRB, 0x00);
     snes_status[0] = (b1 & 0x04) ? 0x0001 : 0x0000;
     snes_status[0] |= (b4 & 0x02) ? 0x0002 : 0x0000;
@@ -709,7 +705,6 @@ static void read_protopad_c64_joy1(void)
 
 static void read_protopad_c64_joy2(void)
 {
-    unsigned char data;
     unsigned char b1;
     unsigned char b2;
     unsigned char b3;
@@ -718,17 +713,14 @@ static void read_protopad_c64_joy2(void)
     POKE(C64_CIA1_DDRA, 0xFF);
     POKE(C64_CIA1_PRA, 0x00);
     POKE(C64_CIA1_DDRA, 0xF8);
-    data = PEEK(C64_CIA1_PRA);
-    if (!data) {
-        POKE(C64_CIA1_PRA, 0x08);
-        b1 = ~PEEK(C64_CIA1_PRA) & 7;
-        POKE(C64_CIA1_PRA, 0x00);
-        b2 = ~PEEK(C64_CIA1_PRA) & 7;
-        POKE(C64_CIA1_PRA, 0x08);
-        b3 = ~PEEK(C64_CIA1_PRA) & 7;
-        POKE(C64_CIA1_PRA, 0x00);
-        b4 = ~PEEK(C64_CIA1_PRA) & 7;
-    }
+    POKE(C64_CIA1_PRA, 0x08);
+    b1 = ~PEEK(C64_CIA1_PRA) & 7;
+    POKE(C64_CIA1_PRA, 0x00);
+    b2 = ~PEEK(C64_CIA1_PRA) & 7;
+    POKE(C64_CIA1_PRA, 0x08);
+    b3 = ~PEEK(C64_CIA1_PRA) & 7;
+    POKE(C64_CIA1_PRA, 0x00);
+    b4 = ~PEEK(C64_CIA1_PRA) & 7;
     POKE(C64_CIA1_DDRA, 0x00);
     snes_status[0] = (b1 & 0x04) ? 0x0001 : 0x0000;
     snes_status[0] |= (b4 & 0x02) ? 0x0002 : 0x0000;
