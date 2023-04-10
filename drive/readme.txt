@@ -19,6 +19,9 @@ iecdelay:
 interrupts:
 - interrupt related tests
 
+openbus:
+- tries to read data from open bus
+
 pwm:
 - simple drive-led pwm test
 
