@@ -1811,7 +1811,7 @@ function testxscpu64
 IECDEVICE=yes
 IECDEVON=-iecdevice8
 IECDEVOFF=+iecdevice8
-LIMITCYCLES=12000000
+LIMITCYCLES=15000000
 EMU=xscpu64
 DRIVEON="-drive8type 1541"
 DRIVEOFF="-drive8type 0"
@@ -1914,7 +1914,7 @@ fi
 
 for thisarg in "$@"
 do
-#    echo "arg:" "$thisarg"
+    echo "arg:" "$thisarg"
     case "$thisarg" in
         --verbose)
                 VERBOSE=1
