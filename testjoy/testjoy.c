@@ -162,10 +162,11 @@
 /* VIC20 display page numbers */
 #define PAGE_VIC20_JOYSTICKS          0
 #define PAGE_VIC20_SNESPADS           1
-#define PAGE_VIC20_USERPORT_SNESPADS  2
-#define PAGE_VIC20_8JOY               3
-#define PAGE_VIC20_INCEPTION          4
-#define PAGE_VIC20_MAX                5
+#define PAGE_VIC20_PROTOPADS          2
+#define PAGE_VIC20_USERPORT_SNESPADS  3
+#define PAGE_VIC20_8JOY               4
+#define PAGE_VIC20_INCEPTION          5
+#define PAGE_VIC20_MAX                6
 
 #if !defined(__PLUS4__) && !defined(__C16__)
 static unsigned short snes_status[8];
@@ -865,6 +866,63 @@ static unsigned char read_native_vic20_joy(void)
     retval |= ((PEEK(VIC20_VIA2_PRB) & 0x80) >> 4);
     retval ^= 0x1F;
     return retval;
+}
+
+static void read_protopad_vic20_joy(void)
+{
+    unsigned char b1;
+    unsigned char b2;
+    unsigned char b3;
+    unsigned char b4;
+    unsigned char ddra = PEEK(VIC20_VIA1_DDRA);
+    unsigned char ddrb = PEEK(VIC20_VIA2_DDRB);
+    unsigned char tddra, tddrb;
+    unsigned char pra, prb;
+    unsigned char tmp1, tmp2;
+
+    tddra = ddra & 0xC3;
+    tddrb = ddrb & 0x7F;
+
+    tmp1 = tddra | 0x3C;
+    tmp2 = tddrb | 0x80;
+
+    POKE(VIC20_VIA1_DDRA, tmp1);
+    POKE(VIC20_VIA2_DDRB, tmp2);
+
+    tmp1 = tddra | 0x20;
+    POKE(VIC20_VIA1_DDRA, tmp1);
+
+    pra = PEEK(VIC20_VIA1_PRA);
+    prb = PEEK(VIC20_VIA2_PRB);
+    
+    pra &= 0xC3;
+    prb &= 0x7F;
+    
+    tmp2 = prb | 0x80;
+
+    POKE(VIC20_VIA2_PRB, tmp2);
+    b1 = ~PEEK(VIC20_VIA1_PRA);
+    POKE(VIC20_VIA2_PRB, prb);
+    b2 = ~PEEK(VIC20_VIA1_PRA);
+    POKE(VIC20_VIA2_PRB, tmp2);
+    b3 = ~PEEK(VIC20_VIA1_PRA);
+    POKE(VIC20_VIA2_PRB, prb);
+    b4 = ~PEEK(VIC20_VIA1_PRA);
+    POKE(VIC20_VIA1_DDRA, tddra);
+    POKE(VIC20_VIA2_DDRB, tddrb);
+
+    snes_status[0] = (b1 & 0x10) ? 0x0001 : 0x0000;
+    snes_status[0] |= (b4 & 0x08) ? 0x0002 : 0x0000;
+    snes_status[0] |= (b3 & 0x08) ? 0x0004 : 0x0000;
+    snes_status[0] |= (b3 & 0x10) ? 0x0008 : 0x0000;
+    snes_status[0] |= (b2 & 0x04) ? 0x0010 : 0x0000;
+    snes_status[0] |= (b2 & 0x08) ? 0x0020 : 0x0000;
+    snes_status[0] |= (b2 & 0x10) ? 0x0040 : 0x0000;
+    snes_status[0] |= (b1 & 0x04) ? 0x0080 : 0x0000;
+    snes_status[0] |= (b1 & 0x08) ? 0x0100 : 0x0000;
+    snes_status[0] |= (b4 & 0x04) ? 0x0200 : 0x0000;
+    snes_status[0] |= (b4 & 0x10) ? 0x0400 : 0x0000;
+    snes_status[0] |= (b3 & 0x04) ? 0x0800 : 0x0000;
 }
 #endif
 
@@ -1865,6 +1923,12 @@ void main(void)
             chlinexy(0,11,22);
             chlinexy(0,17,22);
             gotoxy(0, 18);
+            cprintf(page_message);
+        }
+        if (current_page == PAGE_VIC20_PROTOPADS) {
+            read_protopad_vic20_joy();
+            draw_snes(snes_status[0], 0, 0, "protopad joy");
+            gotoxy(0, 24);
             cprintf(page_message);
         }
         if (current_page == PAGE_VIC20_USERPORT_SNESPADS) {
