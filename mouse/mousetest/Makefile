@@ -3,7 +3,7 @@ AS_FLAGS	= -v2 -Wtype-mismatch
 RM		= rm
 
 PROGS		= mousetest.prg
-SRCS		= 1351.asm amiga_st.asm cx22.asm joystick.asm mousetest.asm sprites.asm
+SRCS		= 1351.asm amiga_st.asm cx22.asm joystick.asm koala.asm mousetest.asm sprites.asm
 
 all: $(PROGS)
 

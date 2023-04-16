@@ -2,7 +2,7 @@
 ; 1351 driver (and compatibles, which might have a middle button)
 
 ; CIA #1, $dc01: %76543210
-;	bit7	bit6	bit5	bit4		bit3	bit2	bi1		bit0
+;	bit7	bit6	bit5	bit4		bit3	bit2	bit1		bit0
 ;	keyb,	keyb,	keyb,	LEFTBUTTON,	keyb,	keyb,	MIDDLEBUTTON,	RIGHTBUTTON
 
 	!zone 1351
@@ -22,6 +22,20 @@
 .half_width	!word 0	; (buffered for speed increase)
 
 cbm1351_poll
+!if 3=4 {	; debug
+	lda .minimum
+	ldx #80-8-10
+	jsr show_bits
+	lda .limit
+	ldx #80-8
+	jsr show_bits
+	lda .minimum+1
+	ldx #120-8-10
+	jsr show_bits
+	lda .limit+1
+	ldx #120-8
+	jsr show_bits
+}
 		; mouse x
 		ldx #.X_STUFF
 		jsr .pot_delta

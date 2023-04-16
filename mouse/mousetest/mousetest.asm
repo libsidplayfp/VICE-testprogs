@@ -11,6 +11,7 @@
 ; 16 Jun 2016	Fixed bug where each port change was reported twice (made amigatari use 2-pixel steps)
 ;		Made Amiga/ST drivers act upon _every_ port change instead of just clk bits.
 ;		Used raster irq to do sprite stuff in border, making version 2.
+; 24 Mar 2023	Version 3: Now shows min/max of pot values. Added driver for Koala pad.
 
 	!src "petscii.inc"
 	!src "vic.inc"
@@ -24,7 +25,8 @@
 	ENUM_AMIGA	= 2
 	ENUM_ATARIST	= 3
 	ENUM_CX22	= 4
-	ENUM_TOTAL	= 5
+	ENUM_KOALA	= 5
+	ENUM_TOTAL	= 6
 ; helper values
 	BITMASK_ALL	= (1 << ENUM_TOTAL) - 1
 	CR		= 13
@@ -96,21 +98,16 @@ my_primm	pla	; get low byte of return address - 1
 ; NMI, called when user presses RESTORE
 my_nmi		inc reset_pos	; set flag to let main loop know
 		; now call original nmi handler
-.ori_nmi = * + 1:jmp MODIFIED16
+		jmp MODIFIED16	: .ori_nmi = * - 2
 
-
-; reserve space for sprites
-.hole	!align 63, 0
-sprites	!warn "There are ", sprites - .hole, " unused bytes before the sprites."	; atm, 2 bytes
+; include sprite patterns
 	!src "sprites.asm"
-	* = sprites + 64 * ENUM_TOTAL - 1	; go on after sprites
-
 
 ; irq hook
 my_irq		lda vic_irq
 		bmi .raster_irq
 		; now call original irq handler
-.ori_irq = * + 1:jmp MODIFIED16
+		jmp MODIFIED16	: .ori_irq = * - 2
 
 
 ; raster interrupt
@@ -125,15 +122,20 @@ entry ; entry point for SYS
 		; output text
 		jsr my_primm
 		!pet petscii_LOWERCASE, petscii_CLEAR
-		!pet "$dc01: %        ", CR	; (spaces are for v1/v2 kernal)
-		!pet "$d419: %        ", CR
-		!pet "$d41a: %        ", CR
+		;     ########________########________########
+		!pet "$dc01: %             min:       max:", CR
+		!pet "$d419: %          %          %        ", CR	; (spaces are for v1/v2 kernal)
+		!pet "$d41a: %          %          %        ", CR
 	SCREENOFFSET_cia	= 8	; show cia bits in upper left corner
 	SCREENOFFSET_potx	= 8 + 40	; and pot values
 	SCREENOFFSET_poty	= 8 + 2 * 40	; below
-!if SCREENOFFSET_poty > 256 - 8 { !error "X index would overrun in bit display" }
+	SCREENOFFSET_min_potx	= SCREENOFFSET_potx + 11
+	SCREENOFFSET_min_poty	= SCREENOFFSET_poty + 11
+	SCREENOFFSET_max_potx	= SCREENOFFSET_min_potx + 11
+	SCREENOFFSET_max_poty	= SCREENOFFSET_min_poty + 11
+!if SCREENOFFSET_max_poty > 256 - 8 { !error "X index would overrun in bit display" }
 		!pet CR
-		!pet "This is mousetest, version 2.", CR
+		!pet "This is mousetest, version 3.", CR
 		!pet "Plug mouse in joyport #1 and use it,", CR
 		!pet "then check which sprite moves correctly."
 		!pet CR
@@ -146,7 +148,8 @@ entry ; entry point for SYS
 		!pet "way to determine the state of additional"
 		!pet "buttons on Amiga and Atari mice.", CR
 		!pet CR
-		!pet "Press RESTORE to reset sprite positions."
+		!pet "Press RESTORE to reset sprite positions", CR
+		!pet "and min/max values.", CR
 		!pet CR
 		!pet "If none of the icons move, the mouse may"
 		!pet "be a 'NEOS mouse', which is not yet", CR
@@ -166,7 +169,7 @@ entry ; entry point for SYS
 		ldx #ENUM_TOTAL - 1
 --			lda #viccolor_GRAY3	; set sprite color
 			sta vic_cs0, x
-.ptr = * + 1:		lda #MODIFIED8	; set sprite pointer
+			lda #MODIFIED8	: .ptr = * - 1	; set sprite pointer
 			sta spr_ptr, x
 			dec .ptr	; prepare for next iteration
 			dex
@@ -220,21 +223,22 @@ mainloop	; get state of joyport
 		jsr amiga_st_idle
 		jsr cx22_idle
 		; check for irq stuff
-vsync = * + 1:	lda #0	; MODIFIED!
+		lda #MODIFIED8 & 0	: vsync = * - 1	; selfmod, but init to zero
 		beq mainloop
 ; "interrupt" (ok, not really, only triggered by it)
 		lsr vsync
 ; poll joystick and 1351 (and Amiga/Atari buttons), and update sprite positions
-		lda sid_potx
-		sta potx
-		lda sid_poty
-		sta poty
+		ldx #0
+		jsr do_pot_stuff
+		inx;ldx#1
+		jsr do_pot_stuff
 		jsr joystick_poll
 		jsr cbm1351_poll
 		jsr amiga_st_poll	; shared function for buttons
 		jsr cx22_poll
+		jsr koala_poll
 		; check whether to reset positions
-reset_pos = * + 1:lda #0	; MODIFIED!
+		lda #MODIFIED8 & 0	: reset_pos = * - 1	; selfmod, but init to zero
 		beq ++
 			lsr reset_pos
 			; set x/y values to defaults
@@ -243,6 +247,13 @@ reset_pos = * + 1:lda #0	; MODIFIED!
 				sta table_x_lo, x
 				dex
 				bpl --
+			; reset min/max
+			;ldx #$ff
+			stx minpot
+			stx minpot + 1
+			inx;ldx#0
+			stx maxpot
+			stx maxpot + 1
 ++		; now update sprite positions and screen contents
 		; show current port bits in upper right corner
 		lda state_now
@@ -255,6 +266,20 @@ reset_pos = * + 1:lda #0	; MODIFIED!
 		; show poty value below
 		lda poty
 		ldx #SCREENOFFSET_poty
+		jsr show_bits
+		; show minimum values
+		lda minpot
+		ldx #SCREENOFFSET_min_potx
+		jsr show_bits
+		lda minpot + 1
+		ldx #SCREENOFFSET_min_poty
+		jsr show_bits
+		; show maximum values
+		lda maxpot
+		ldx #SCREENOFFSET_max_potx
+		jsr show_bits
+		lda maxpot + 1
+		ldx #SCREENOFFSET_max_poty
 		jsr show_bits
 		; move sprites
 		ldx #ENUM_TOTAL - 1
@@ -285,6 +310,17 @@ reset_pos = * + 1:lda #0	; MODIFIED!
 		sta vic_msb_xs
 		jmp mainloop
 
+; helper function to update pot value
+; entry: X = 0 for potx, X = 1 for poty
+do_pot_stuff	lda sid_potx, x
+		sta potx, x
+		cmp minpot, x
+		bcs +
+			sta minpot, x
++		cmp maxpot, x
+		bcc +
+			sta maxpot, x
++		rts
 
 ; helper function to display bits of port byte
 ; entry: A = value, X = offset
@@ -349,6 +385,7 @@ restrict	lda table_x_hi, x
 	!src "1351.asm"
 	!src "amiga_st.asm"
 	!src "cx22.asm"
+	!src "koala.asm"
 
 
 ; tables
@@ -363,6 +400,10 @@ max_x_lo	!fill ENUM_TOTAL, <MAX_COORD_X
 max_y_lo	!fill ENUM_TOTAL, <MAX_COORD_Y
 max_x_hi	!fill ENUM_TOTAL, >MAX_COORD_X
 max_y_hi	!fill ENUM_TOTAL, >MAX_COORD_Y
+
+; variables
+minpot	!word $ffff	; lowest pot values yet
+maxpot	!word $0000	; highest pot values yet
 
 ; external data:
 

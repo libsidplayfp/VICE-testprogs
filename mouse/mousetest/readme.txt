@@ -1,5 +1,7 @@
 
 This directory contains a combined mouse test program written by Marco Baye.
+The original is hosted at:
+https://github.com/marcobaye/cbmtestprgs/tree/master/mousetest
 
 Right now you can use it to test the following kinds of mice (and find out which
 one you have there...)
@@ -14,8 +16,7 @@ TODO:
 -----
 
 support NEOS mouse
-support paddles
-support koala pad?
+support light pen
 find out how CMD smartmouse encodes middle button (same as MicroMys?)
 
 disable CIA IRQ?
