@@ -144,9 +144,10 @@
 /* CBM5x0 display page numbers */
 #define PAGE_CBM5x0_JOYSTICKS    0
 #define PAGE_CBM5x0_SNESPADS     1
-#define PAGE_CBM5x0_8JOY         2
-#define PAGE_CBM5x0_INCEPTION    3
-#define PAGE_CBM5x0_MAX          4
+#define PAGE_CBM5x0_PROTOPADS    2
+#define PAGE_CBM5x0_8JOY         3
+#define PAGE_CBM5x0_INCEPTION    4
+#define PAGE_CBM5x0_MAX          5
 
 /* CBM6x0 display page numbers */
 #define PAGE_CBM6x0_JOYSTICKS           0
@@ -1151,6 +1152,96 @@ static void read_snes_cbm510_joy2(void)
     pokebsys(CBM510_CIA2_DDRB, ddrb);
 }
 
+static void read_protopad_cbm510_joy1(void)
+{
+    unsigned char b1;
+    unsigned char b2;
+    unsigned char b3;
+    unsigned char b4;
+    unsigned char ddra = peekbsys(CBM510_CIA2_DDRA);
+    unsigned char ddrb = peekbsys(CBM510_CIA2_DDRB);
+
+    pokebsys(CBM510_CIA2_DDRA, 0x40);
+    pokebsys(CBM510_CIA2_DDRB, 0x0F);
+
+    pokebsys(CBM510_CIA2_DDRB, 0x08);
+
+    pokebsys(CBM510_CIA2_PRB, 0x00);
+    pokebsys(CBM510_CIA2_PRA, 0x00);
+
+    pokebsys(CBM510_CIA2_PRB, 0x08);
+    b1 = ~peekbsys(CBM510_CIA2_PRB);
+    pokebsys(CBM510_CIA2_PRB, 0x00);
+    b2 = ~peekbsys(CBM510_CIA2_PRB);
+    pokebsys(CBM510_CIA2_PRB, 0x08);
+    b3 = ~peekbsys(CBM510_CIA2_PRB);
+    pokebsys(CBM510_CIA2_PRB, 0x00);
+    b4 = ~peekbsys(CBM510_CIA2_PRB);
+    pokebsys(CBM510_CIA2_DDRA, 0x00);
+    pokebsys(CBM510_CIA2_DDRB, 0x00);
+
+    pokebsys(CBM510_CIA2_DDRA, ddra);
+    pokebsys(CBM510_CIA2_DDRB, ddrb);
+
+    snes_status[0] = (b1 & 0x04) ? 0x0001 : 0x0000;
+    snes_status[0] |= (b4 & 0x02) ? 0x0002 : 0x0000;
+    snes_status[0] |= (b3 & 0x02) ? 0x0004 : 0x0000;
+    snes_status[0] |= (b3 & 0x04) ? 0x0008 : 0x0000;
+    snes_status[0] |= (b2 & 0x01) ? 0x0010 : 0x0000;
+    snes_status[0] |= (b2 & 0x02) ? 0x0020 : 0x0000;
+    snes_status[0] |= (b2 & 0x04) ? 0x0040 : 0x0000;
+    snes_status[0] |= (b1 & 0x01) ? 0x0080 : 0x0000;
+    snes_status[0] |= (b1 & 0x02) ? 0x0100 : 0x0000;
+    snes_status[0] |= (b4 & 0x01) ? 0x0200 : 0x0000;
+    snes_status[0] |= (b4 & 0x04) ? 0x0400 : 0x0000;
+    snes_status[0] |= (b3 & 0x01) ? 0x0800 : 0x0000;
+}
+
+static void read_protopad_cbm510_joy2(void)
+{
+    unsigned char b1;
+    unsigned char b2;
+    unsigned char b3;
+    unsigned char b4;
+    unsigned char ddra = peekbsys(CBM510_CIA2_DDRA);
+    unsigned char ddrb = peekbsys(CBM510_CIA2_DDRB);
+
+    pokebsys(CBM510_CIA2_DDRA, 0x80);
+    pokebsys(CBM510_CIA2_DDRB, 0x0F);
+
+    pokebsys(CBM510_CIA2_DDRB, 0x80);
+
+    pokebsys(CBM510_CIA2_PRB, 0x00);
+    pokebsys(CBM510_CIA2_PRA, 0x00);
+
+    pokebsys(CBM510_CIA2_PRB, 0x80);
+    b1 = ~peekbsys(CBM510_CIA2_PRB);
+    pokebsys(CBM510_CIA2_PRB, 0x00);
+    b2 = ~peekbsys(CBM510_CIA2_PRB);
+    pokebsys(CBM510_CIA2_PRB, 0x80);
+    b3 = ~peekbsys(CBM510_CIA2_PRB);
+    pokebsys(CBM510_CIA2_PRB, 0x00);
+    b4 = ~peekbsys(CBM510_CIA2_PRB);
+    pokebsys(CBM510_CIA2_DDRA, 0x00);
+    pokebsys(CBM510_CIA2_DDRB, 0x00);
+
+    pokebsys(CBM510_CIA2_DDRA, ddra);
+    pokebsys(CBM510_CIA2_DDRB, ddrb);
+
+    snes_status[0] = (b1 & 0x40) ? 0x0001 : 0x0000;
+    snes_status[0] |= (b4 & 0x20) ? 0x0002 : 0x0000;
+    snes_status[0] |= (b3 & 0x20) ? 0x0004 : 0x0000;
+    snes_status[0] |= (b3 & 0x40) ? 0x0008 : 0x0000;
+    snes_status[0] |= (b2 & 0x10) ? 0x0010 : 0x0000;
+    snes_status[0] |= (b2 & 0x20) ? 0x0020 : 0x0000;
+    snes_status[0] |= (b2 & 0x40) ? 0x0040 : 0x0000;
+    snes_status[0] |= (b1 & 0x10) ? 0x0080 : 0x0000;
+    snes_status[0] |= (b1 & 0x20) ? 0x0100 : 0x0000;
+    snes_status[0] |= (b4 & 0x10) ? 0x0200 : 0x0000;
+    snes_status[0] |= (b4 & 0x40) ? 0x0400 : 0x0000;
+    snes_status[0] |= (b3 & 0x10) ? 0x0800 : 0x0000;
+}
+
 static unsigned char read_native_cbm510_joy1(void)
 {
     unsigned char retval;
@@ -1683,6 +1774,14 @@ void main(void)
             chlinexy(0,11,40);
             chlinexy(0,17,40);
             gotoxy(0, 18);
+            cprintf(page_message);
+        }
+        if (current_page == PAGE_CBM5x0_PROTOPADS) {
+            read_protopad_cbm510_joy1();
+            draw_snes(snes_status[0], 0, 0, "protopad joy-1");
+            read_protopad_cbm510_joy2();
+            draw_snes(snes_status[0], 21, 0, "protopad joy-2");
+            gotoxy(0, 24);
             cprintf(page_message);
         }
         if (current_page == PAGE_CBM5x0_8JOY) {
