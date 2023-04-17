@@ -1563,6 +1563,45 @@ static unsigned char read_spt_joy(void)
     retval ^= 0x1F;
     return retval;
 }
+
+static unsigned char read_synergy_joy1(void)
+{
+    unsigned char retval;
+    unsigned char temp;
+
+    USERPORTPOKE(USERPORT_DDR, 0xE0);
+    USERPORTPOKE(USERPORT_DATA, 0xC0);
+    temp = USERPORTPEEK(USERPORT_DATA);
+    retval = temp & 0x1F;
+    retval ^= 0x1F;
+    return retval;
+}
+
+static unsigned char read_synergy_joy2(void)
+{
+    unsigned char retval;
+    unsigned char temp;
+
+    USERPORTPOKE(USERPORT_DDR, 0xE0);
+    USERPORTPOKE(USERPORT_DATA, 0xA0);
+    temp = USERPORTPEEK(USERPORT_DATA);
+    retval = temp & 0x1F;
+    retval ^= 0x1F;
+    return retval;
+}
+
+static unsigned char read_synergy_joy3(void)
+{
+    unsigned char retval;
+    unsigned char temp;
+
+    USERPORTPOKE(USERPORT_DDR, 0xE0);
+    USERPORTPOKE(USERPORT_DATA, 0x60);
+    temp = USERPORTPEEK(USERPORT_DATA);
+    retval = temp & 0x1F;
+    retval ^= 0x1F;
+    return retval;
+}
 #endif
 
 /* c64/c64dtv/c128 joystick test */
@@ -1587,11 +1626,14 @@ void main(void)
             if (isc64dtv == 0)
             {
                 draw_joy(read_spt_joy(), 26, 0, 26, 0, "spt", 0);
+                draw_joy(read_synergy_joy1(), 34, 0, 33, 0, "syn-1", 0);
                 draw_joy(read_cga_joy1(), 2, 5, 1, 5, "cga-1", 0);
                 draw_joy(read_cga_joy2(), 10, 5, 9, 5, "cga-2", 0);
                 draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
+                draw_joy(read_synergy_joy2(), 34, 5, 33, 5, "syn-2", 0);
                 draw_joy(read_pet_joy1(), 2, 10, 1, 10, "pet-1", 0);
                 draw_joy(read_pet_joy2(), 10, 10, 9, 10, "pet-2", 0);
+                draw_joy(read_synergy_joy3(), 34, 10, 33, 10, "syn-3", 0);
                 draw_joy(read_c64_hit_joy1(), 2, 15, 1, 15, "hit-1", 0);
                 draw_joy(read_c64_hit_joy2(), 10, 15, 9, 15, "hit-2", 0);
                 draw_joy(read_c64_kingsoft_joy1(), 18, 15, 17, 15, "king1", 0);
@@ -1888,6 +1930,9 @@ void main(void)
             draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
             draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
             draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
+            draw_joy(read_synergy_joy1(), 26, 5, 25, 5, "syn-1", 0);
+            draw_joy(read_synergy_joy2(), 34, 5, 33, 5, "syn-2", 0);
+            draw_joy(read_synergy_joy3(), 42, 5, 41, 5, "syn-3", 0);
             gotoxy(0, 10);
             cprintf(page_message);
         }
@@ -1953,7 +1998,10 @@ void main(void)
             draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
             draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
             draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
-            gotoxy(0, 10);
+            draw_joy(read_synergy_joy1(), 2, 10, 1, 10, "syn-1", 0);
+            draw_joy(read_synergy_joy2(), 10, 10, 9, 10, "syn-2", 0);
+            draw_joy(read_synergy_joy3(), 18, 10, 17, 10, "syn-3", 0);
+            gotoxy(0, 15);
             cprintf(page_message);
         }
         if (current_page == PAGE_PET_SNESPADS) {
@@ -1997,11 +2045,14 @@ void main(void)
         draw_joy(read_native_plus4_joy1(), 2, 0, 0, 0, "native1", 0);
         draw_joy(read_native_plus4_joy2(), 10, 0, 8, 0, "native2", 0);
         draw_joy(read_plus4_sidcart_joy(), 18, 0, 16, 0, "sidcart", 1);
+        draw_joy(read_synergy_joy1(), 26, 0, 25, 0, "syn-1", 0);
         draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
         draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
         draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
+        draw_joy(read_synergy_joy2(), 26, 5, 25, 5, "syn-2", 0);
         draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer", 0);
         draw_joy(read_spt_joy(), 10, 10, 10, 10, "spt", 0);
+        draw_joy(read_synergy_joy3(), 26, 10, 25, 10, "syn-3", 0);
     }
 }
 #endif
@@ -2029,7 +2080,10 @@ void main(void)
             draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
             draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer", 0);
             draw_joy(read_spt_joy(), 10, 10, 10, 10, "spt", 0);
-            gotoxy(0, 15);
+            draw_joy(read_synergy_joy1(), 2, 15, 1, 15, "syn-1", 0);
+            draw_joy(read_synergy_joy2(), 10, 15, 9, 15, "syn-2", 0);
+            draw_joy(read_synergy_joy3(), 18, 15, 17, 15, "syn-3", 0);
+            gotoxy(0, 20);
             cprintf(page_message);
         }
         if (current_page == PAGE_VIC20_SNESPADS) {
