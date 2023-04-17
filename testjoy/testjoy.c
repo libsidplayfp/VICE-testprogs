@@ -151,14 +151,16 @@
 
 /* CBM6x0 display page numbers */
 #define PAGE_CBM6x0_JOYSTICKS           0
-#define PAGE_CBM6x0_PETSCII_SNESPAD     1
-#define PAGE_CBM6x0_USERPORT_SNESPADS   2
-#define PAGE_CBM6x0_MAX                 3
+#define PAGE_CBM6x0_WOJ_JOYSTICKS       1
+#define PAGE_CBM6x0_PETSCII_SNESPAD     2
+#define PAGE_CBM6x0_USERPORT_SNESPADS   3
+#define PAGE_CBM6x0_MAX                 4
 
 /* PET display page numbers */
-#define PAGE_PET_JOYSTICKS    0
-#define PAGE_PET_SNESPADS     1
-#define PAGE_PET_MAX          2
+#define PAGE_PET_JOYSTICKS       0
+#define PAGE_PET_WOJ_JOYSTICKS   1
+#define PAGE_PET_SNESPADS        2
+#define PAGE_PET_MAX             3
 
 /* VIC20 display page numbers */
 #define PAGE_VIC20_JOYSTICKS          0
@@ -166,16 +168,15 @@
 #define PAGE_VIC20_PROTOPADS          2
 #define PAGE_VIC20_USERPORT_SNESPADS  3
 #define PAGE_VIC20_8JOY               4
-#define PAGE_VIC20_INCEPTION          5
-#define PAGE_VIC20_MAX                6
+#define PAGE_VIC20_WOJ_JOYSTICKS      5
+#define PAGE_VIC20_INCEPTION          6
+#define PAGE_VIC20_MAX                7
 
 #if !defined(__PLUS4__) && !defined(__C16__)
 static unsigned short snes_status[8];
 #endif
 
-#if !defined(__PLUS4__) && !defined(__C16__) && !defined(__PET__) && !defined(__CBM610__)
 static unsigned char joy8_status[8];
-#endif
 
 #if !defined(__PLUS4__) && !defined(__C16__)
 static unsigned char current_page = 0;
@@ -1602,6 +1603,18 @@ static unsigned char read_synergy_joy3(void)
     retval ^= 0x1F;
     return retval;
 }
+
+static void read_woj_joy(void)
+{
+    unsigned char i;
+
+    USERPORTPOKE(USERPORT_DDR, 0xE0);
+
+    for (i = 0; i < 8; i++) {
+        USERPORTPOKE(USERPORT_DATA, i << 5);
+        joy8_status[i] = USERPORTPEEK(USERPORT_DATA) & 0x1F;
+    }
+}
 #endif
 
 /* c64/c64dtv/c128 joystick test */
@@ -1765,6 +1778,19 @@ void main(void)
             draw_joy(joy8_status[5], 25, 7, 25, 7, "in6", 0);
             draw_joy(joy8_status[6], 30, 7, 30, 7, "in7", 0);
             draw_joy(joy8_status[7], 35, 7, 35, 7, "in8", 0);
+            if (isc64dtv == 0) {
+                read_woj_joy();
+                gotoxy(0, 12);
+                cprintf("woj userport joystick adapter");
+                draw_joy(joy8_status[0], 0, 13, 0, 13, "wj1", 0);
+                draw_joy(joy8_status[1], 5, 13, 5, 13, "wj2", 0);
+                draw_joy(joy8_status[2], 10, 13, 10, 13, "wj3", 0);
+                draw_joy(joy8_status[3], 15, 13, 15, 13, "wj4", 0);
+                draw_joy(joy8_status[4], 20, 13, 20, 13, "wj5", 0);
+                draw_joy(joy8_status[5], 25, 13, 25, 13, "wj6", 0);
+                draw_joy(joy8_status[6], 30, 13, 30, 13, "wj7", 0);
+                draw_joy(joy8_status[7], 35, 13, 35, 13, "wj8", 0);
+            }
             gotoxy(0, 24);
             cprintf(page_message);
         }
@@ -1936,6 +1962,21 @@ void main(void)
             gotoxy(0, 10);
             cprintf(page_message);
         }
+        if (current_page == PAGE_CBM6x0_WOJ_JOYSTICKS) {
+            read_woj_joy();
+            gotoxy(0, 0);
+            cprintf("woj userport joystick adapter");
+            draw_joy(joy8_status[0], 0, 1, 0, 1, "wj1", 0);
+            draw_joy(joy8_status[1], 5, 1, 5, 1, "wj2", 0);
+            draw_joy(joy8_status[2], 10, 1, 10, 1, "wj3", 0);
+            draw_joy(joy8_status[3], 15, 1, 15, 1, "wj4", 0);
+            draw_joy(joy8_status[4], 20, 1, 20, 1, "wj5", 0);
+            draw_joy(joy8_status[5], 25, 1, 25, 1, "wj6", 0);
+            draw_joy(joy8_status[6], 30, 1, 30, 1, "wj7", 0);
+            draw_joy(joy8_status[7], 35, 1, 35, 1, "wj8", 0);
+            gotoxy(0, 24);
+            cprintf(page_message);
+        }
         if (current_page == PAGE_CBM6x0_PETSCII_SNESPAD) {
             read_petscii();
             draw_snes(snes_status[0], 0, 0, "petscii snes");
@@ -2004,6 +2045,21 @@ void main(void)
             gotoxy(0, 15);
             cprintf(page_message);
         }
+        if (current_page == PAGE_PET_WOJ_JOYSTICKS) {
+            read_woj_joy();
+            gotoxy(0, 0);
+            cprintf("woj userport joystick adapter");
+            draw_joy(joy8_status[0], 0, 1, 0, 1, "wj1", 0);
+            draw_joy(joy8_status[1], 5, 1, 5, 1, "wj2", 0);
+            draw_joy(joy8_status[2], 10, 1, 10, 1, "wj3", 0);
+            draw_joy(joy8_status[3], 15, 1, 15, 1, "wj4", 0);
+            draw_joy(joy8_status[4], 20, 1, 20, 1, "wj5", 0);
+            draw_joy(joy8_status[5], 25, 1, 25, 1, "wj6", 0);
+            draw_joy(joy8_status[6], 30, 1, 30, 1, "wj7", 0);
+            draw_joy(joy8_status[7], 35, 1, 35, 1, "wj8", 0);
+            gotoxy(0, 24);
+            cprintf(page_message);
+        }
         if (current_page == PAGE_PET_SNESPADS) {
             read_petscii();
             draw_snes(snes_status[0], 0, 0, "userport snes");
@@ -2053,6 +2109,17 @@ void main(void)
         draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer", 0);
         draw_joy(read_spt_joy(), 10, 10, 10, 10, "spt", 0);
         draw_joy(read_synergy_joy3(), 26, 10, 25, 10, "syn-3", 0);
+        read_woj_joy();
+        gotoxy(0, 15);
+        cprintf("woj userport joystick adapter");
+        draw_joy(joy8_status[0], 0, 16, 0, 16, "wj1", 0);
+        draw_joy(joy8_status[1], 5, 16, 5, 16, "wj2", 0);
+        draw_joy(joy8_status[2], 10, 16, 10, 16, "wj3", 0);
+        draw_joy(joy8_status[3], 15, 16, 15, 16, "wj4", 0);
+        draw_joy(joy8_status[4], 20, 16, 20, 16, "wj5", 0);
+        draw_joy(joy8_status[5], 25, 16, 25, 16, "wj6", 0);
+        draw_joy(joy8_status[6], 30, 16, 30, 16, "wj7", 0);
+        draw_joy(joy8_status[7], 35, 16, 35, 16, "wj8", 0);
     }
 }
 #endif
@@ -2121,6 +2188,21 @@ void main(void)
             draw_joy(joy8_status[5], 5, 7, 5, 7, "sb6", 0);
             draw_joy(joy8_status[6], 10, 7, 10, 7, "sb7", 0);
             draw_joy(joy8_status[7], 15, 7, 15, 7, "sb8", 0);
+            gotoxy(0, 15);
+            cprintf(page_message);
+        }
+        if (current_page == PAGE_VIC20_WOJ_JOYSTICKS) {
+            read_woj_joy();
+            gotoxy(0, 0);
+            cprintf("woj joystick adapter");
+            draw_joy(joy8_status[0], 0, 1, 0, 1, "wj1", 0);
+            draw_joy(joy8_status[1], 5, 1, 5, 1, "wj2", 0);
+            draw_joy(joy8_status[2], 10, 1, 10, 1, "wj3", 0);
+            draw_joy(joy8_status[3], 15, 1, 15, 1, "wj4", 0);
+            draw_joy(joy8_status[4], 0, 7, 0, 7, "wj5", 0);
+            draw_joy(joy8_status[5], 5, 7, 5, 7, "wj6", 0);
+            draw_joy(joy8_status[6], 10, 7, 10, 7, "wj7", 0);
+            draw_joy(joy8_status[7], 15, 7, 15, 7, "wj8", 0);
             gotoxy(0, 15);
             cprintf(page_message);
         }
