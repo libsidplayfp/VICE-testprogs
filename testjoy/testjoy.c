@@ -1549,6 +1549,20 @@ static unsigned char read_oem_joy(void)
     retval ^= 0x1F;
     return retval;
 }
+
+static unsigned char read_spt_joy(void)
+{
+    unsigned char retval;
+    unsigned char temp;
+
+    USERPORTPOKE(USERPORT_DDR, 0);
+    temp = USERPORTPEEK(USERPORT_DATA);
+    retval = ((temp & 0x03) << 2);
+    retval |= ((temp & 0x0C) >> 2);
+    retval |= ((temp & 0x20) >> 1);
+    retval ^= 0x1F;
+    return retval;
+}
 #endif
 
 /* c64/c64dtv/c128 joystick test */
@@ -1572,6 +1586,7 @@ void main(void)
             draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer", 0);
             if (isc64dtv == 0)
             {
+                draw_joy(read_spt_joy(), 26, 0, 26, 0, "spt", 0);
                 draw_joy(read_cga_joy1(), 2, 5, 1, 5, "cga-1", 0);
                 draw_joy(read_cga_joy2(), 10, 5, 9, 5, "cga-2", 0);
                 draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
@@ -1869,6 +1884,7 @@ void main(void)
             draw_joy(read_cga_joy1(), 2, 0, 1, 0, "cga-1", 0);
             draw_joy(read_cga_joy2(), 10, 0, 9, 0, "cga-2", 0);
             draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer", 0);
+            draw_joy(read_spt_joy(), 26, 0, 26, 0, "spt", 0);
             draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
             draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
             draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
@@ -1933,6 +1949,7 @@ void main(void)
             draw_joy(read_cga_joy1(), 2, 0, 1, 0, "cga-1", 0);
             draw_joy(read_cga_joy2(), 10, 0, 9, 0, "cga-2", 0);
             draw_joy(read_hummer_joy(), 18, 0, 16, 0, "hummer", 0);
+            draw_joy(read_spt_joy(), 26, 0, 26, 0, "spt", 0);
             draw_joy(read_pet_joy1(), 2, 5, 1, 5, "pet-1", 0);
             draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
             draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
@@ -1984,6 +2001,7 @@ void main(void)
         draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
         draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
         draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer", 0);
+        draw_joy(read_spt_joy(), 10, 10, 10, 10, "spt", 0);
     }
 }
 #endif
@@ -2010,6 +2028,7 @@ void main(void)
             draw_joy(read_pet_joy2(), 10, 5, 9, 5, "pet-2", 0);
             draw_joy(read_oem_joy(), 18, 5, 18, 5, "oem", 0);
             draw_joy(read_hummer_joy(), 2, 10, 0, 10, "hummer", 0);
+            draw_joy(read_spt_joy(), 10, 10, 10, 10, "spt", 0);
             gotoxy(0, 15);
             cprintf(page_message);
         }
