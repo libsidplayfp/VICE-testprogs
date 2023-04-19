@@ -552,6 +552,14 @@ static input_device_t sampler_4bit_hummer_input_device[] = {
     { "4 bit sampler on userport HUMMER joy adapter", INPUT_INIT_USERPORT_JOY_4_2, INPUT_USERPORT_JOY_4 }
 };
 
+static input_device_t sampler_2bit_spt_input_device[] = {
+    { "2 bit sampler on userport SPT joy adapter", INPUT_INIT_USERPORT_JOY_4_2, INPUT_USERPORT_SPT_2 }
+};
+
+static input_device_t sampler_4bit_spt_input_device[] = {
+    { "4 bit sampler on userport SPT joy adapter", INPUT_INIT_USERPORT_JOY_4_2, INPUT_USERPORT_SPT_4 }
+};
+
 static input_device_t sampler_4bit_userport_input_device[] = {
     { "4 bit userport sampler", INPUT_INIT_USERPORT_4BIT, INPUT_USERPORT_4BIT }
 };
@@ -730,8 +738,15 @@ static menu_input_t input_hummer_menu[] = {
     { 0, NULL, NULL, NULL }
 };
 
+static menu_input_t input_spt_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spt_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spt_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
 static menu_input_t input_userport_joy_menu[] = {
     { 'd', "C64DTV HUMMER joystick adapter", input_hummer_menu, NULL },
+    { 't', "SPT joystick adapter", input_spt_menu, NULL },
     { 'o', "OEM joystick adapter", input_oem_menu, NULL },
     { 'p', "PET joystick adapter", input_pet_menu, NULL },
     { 'c', "CGA joystick adapter", input_cga_menu, NULL },
