@@ -12,6 +12,9 @@ PUBLIC _userport_2bit_4bit_input_init
 PUBLIC _userport_2bit_4bit_cga1_input_init
 PUBLIC _userport_2bit_4bit_cga2_input_init
 PUBLIC _userport_2bit_4bit_ks1_sb2_input_init
+PUBLIC _userport_2bit_4bit_syn1_input_init
+PUBLIC _userport_2bit_4bit_syn2_input_init
+PUBLIC _userport_2bit_4bit_syn3_input_init
 PUBLIC _sid_output_init
 PUBLIC _sfx_expander_output_init
 PUBLIC _userport_digimax_output_init
@@ -613,6 +616,33 @@ PUBLIC _disable_irq
 	ld a,0x80
 	out (c),a
 	ld a,0x00
+	jr storex_dd01
+
+._userport_2bit_4bit_syn1_input_init
+	push af
+	push bc
+	ld bc,IOBASE+0x0d03
+	ld a,0xe0
+	out (c),a
+	ld a,0xC0
+	jr storex_dd01
+
+._userport_2bit_4bit_syn2_input_init
+	push af
+	push bc
+	ld bc,IOBASE+0x0d03
+	ld a,0xe0
+	out (c),a
+	ld a,0xA0
+	jr storex_dd01
+
+._userport_2bit_4bit_syn3_input_init
+	push af
+	push bc
+	ld bc,IOBASE+0x0d03
+	ld a,0xe0
+	out (c),a
+	ld a,0x60
 	jr storex_dd01
 
 ._userport_2bit_4bit_ks1_sb2_input_init

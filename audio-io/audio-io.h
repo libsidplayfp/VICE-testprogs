@@ -59,6 +59,18 @@ void __fastcall__ sampler_2bit_pet2_input_init(void);
 unsigned char __fastcall__ sampler_2bit_pet2_input(void);
 void __fastcall__ sampler_4bit_pet2_input_init(void);
 unsigned char __fastcall__ sampler_4bit_pet2_input(void);
+void __fastcall__ sampler_2bit_syn1_input_init(void);
+unsigned char __fastcall__ sampler_2bit_syn1_input(void);
+void __fastcall__ sampler_4bit_syn1_input_init(void);
+unsigned char __fastcall__ sampler_4bit_syn1_input(void);
+void __fastcall__ sampler_2bit_syn2_input_init(void);
+unsigned char __fastcall__ sampler_2bit_syn2_input(void);
+void __fastcall__ sampler_4bit_syn2_input_init(void);
+unsigned char __fastcall__ sampler_4bit_syn2_input(void);
+void __fastcall__ sampler_2bit_syn3_input_init(void);
+unsigned char __fastcall__ sampler_2bit_syn3_input(void);
+void __fastcall__ sampler_4bit_syn3_input_init(void);
+unsigned char __fastcall__ sampler_4bit_syn3_input(void);
 
 /* c64-drivers.s / cbm2-drivers.s / pet-drivers.s / vic20-drivers.s */
 void __fastcall__ sampler_2bit_cga1_input_init(void);

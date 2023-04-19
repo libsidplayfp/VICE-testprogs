@@ -24,6 +24,18 @@
 ; unsigned char __fastcall__ sampler_2bit_pet1_input(void);
 ; void __fastcall__ sampler_4bit_pet1_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_pet1_input(void);
+; void __fastcall__ sampler_2bit_syn1_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_syn1_input(void);
+; void __fastcall__ sampler_4bit_syn1_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_syn1_input(void);
+; void __fastcall__ sampler_2bit_syn2_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_syn2_input(void);
+; void __fastcall__ sampler_4bit_syn2_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_syn2_input(void);
+; void __fastcall__ sampler_2bit_syn3_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_syn3_input(void);
+; void __fastcall__ sampler_4bit_syn3_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_syn3_input(void);
 ; void __fastcall__ sampler_2bit_pet2_input_init(void);
 ; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
 ; void __fastcall__ sampler_4bit_pet2_input_init(void);
@@ -64,6 +76,12 @@
         .export  _sampler_4bit_oem_input_init, _sampler_4bit_oem_input
         .export  _sampler_2bit_pet1_input_init, _sampler_2bit_pet1_input
         .export  _sampler_4bit_pet1_input_init, _sampler_4bit_pet1_input
+        .export  _sampler_2bit_syn1_input_init, _sampler_2bit_syn1_input
+        .export  _sampler_4bit_syn1_input_init, _sampler_4bit_syn1_input
+        .export  _sampler_2bit_syn2_input_init, _sampler_2bit_syn2_input
+        .export  _sampler_4bit_syn2_input_init, _sampler_4bit_syn2_input
+        .export  _sampler_2bit_syn3_input_init, _sampler_2bit_syn3_input
+        .export  _sampler_4bit_syn3_input_init, _sampler_4bit_syn3_input
         .export  _sampler_2bit_pet2_input_init, _sampler_2bit_pet2_input
         .export  _sampler_4bit_pet2_input_init, _sampler_4bit_pet2_input
         .export  _sampler_2bit_cga1_input_init, _sampler_2bit_cga1_input
@@ -99,6 +117,30 @@ _sampler_2bit_pet2_input_init:
 _sampler_4bit_pet2_input_init:
         ldx     #$00
         stx     $9112
+        rts
+
+_sampler_2bit_syn1_input_init:
+_sampler_4bit_syn1_input_init:
+        ldx     #$E0
+        stx     $9112
+        ldx     #$C0
+        stx     $9110
+        rts
+
+_sampler_2bit_syn2_input_init:
+_sampler_4bit_syn2_input_init:
+        ldx     #$E0
+        stx     $9112
+        ldx     #$A0
+        stx     $9110
+        rts
+
+_sampler_2bit_syn3_input_init:
+_sampler_4bit_syn3_input_init:
+        ldx     #$E0
+        stx     $9112
+        ldx     #$60
+        stx     $9110
         rts
 
 _sampler_2bit_cga1_input_init:
@@ -170,6 +212,9 @@ _sampler_2bit_hummer_input:
 _sampler_2bit_pet1_input:
 _sampler_2bit_cga1_input:
 _sampler_2bit_cga2_input:
+_sampler_2bit_syn1_input:
+_sampler_2bit_syn2_input:
+_sampler_2bit_syn3_input:
         lda     $9110
         asl
         asl
@@ -184,6 +229,9 @@ _sampler_4bit_hummer_input:
 _sampler_4bit_pet1_input:
 _sampler_4bit_cga1_input:
 _sampler_4bit_cga2_input:
+_sampler_4bit_syn1_input:
+_sampler_4bit_syn2_input:
+_sampler_4bit_syn3_input:
         lda     $9110
         jmp     do_asl4
 

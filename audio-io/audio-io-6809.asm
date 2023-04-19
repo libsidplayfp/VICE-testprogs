@@ -138,11 +138,16 @@ hardware_input_menu_choose:
 	beq userport_oem_input_menu
 	cmpb #'t'
 	beq userport_spt_input_menu
+	cmpb #'y'
+	beq userport_syn_input_menu_jmp
 	cmpb #'p'
 	beq userport_pet_input_menu
 	cmpb #'c'
 	beq userport_cga_input_menu_jmp
 	bra hardware_input_menu_choose
+
+userport_syn_input_menu_jmp:
+	jmp userport_syn_input_menu
 
 userport_cga_input_menu_jmp:
 	jmp userport_cga_input_menu
@@ -255,6 +260,78 @@ setup_userport_pet2_4bit_input_jmp:
 setup_userport_pet2_2bit_input_jmp:
 	jmp setup_userport_pet2_2bit_input
 
+userport_syn_input_menu:
+	jsr cls
+	ldx #choose_input_ports_3_menu_text
+	jsr print_string
+
+userport_syn_input_menu_choose:
+	jsr wtl_getchar
+	cmpb #'1'
+	beq userport_syn1_input_menu
+	cmpb #'2'
+	beq userport_syn2_input_menu
+	cmpb #'3'
+	beq userport_syn3_input_menu
+	bra userport_syn_input_menu_choose
+
+userport_syn1_input_menu:
+	jsr cls
+	ldx #choose_input_samplers_menu_text
+	jsr print_string
+
+userport_syn1_input_menu_choose:
+	jsr wtl_getchar
+	cmpb #'4'
+	beq setup_userport_syn1_4bit_input_jmp
+	cmpb #'2'
+	beq setup_userport_syn1_2bit_input_jmp
+	bra userport_syn1_input_menu_choose
+
+setup_userport_syn1_4bit_input_jmp:
+	jmp setup_userport_syn1_4bit_input
+
+setup_userport_syn1_2bit_input_jmp:
+	jmp setup_userport_syn1_2bit_input
+
+userport_syn2_input_menu:
+	jsr cls
+	ldx #choose_input_samplers_menu_text
+	jsr print_string
+
+userport_syn2_input_menu_choose:
+	jsr wtl_getchar
+	cmpb #'4'
+	beq setup_userport_syn2_4bit_input_jmp
+	cmpb #'2'
+	beq setup_userport_syn2_2bit_input_jmp
+	bra userport_syn2_input_menu_choose
+
+setup_userport_syn2_4bit_input_jmp:
+	jmp setup_userport_syn2_4bit_input
+
+setup_userport_syn2_2bit_input_jmp:
+	jmp setup_userport_syn2_2bit_input
+
+userport_syn3_input_menu:
+	jsr cls
+	ldx #choose_input_samplers_menu_text
+	jsr print_string
+
+userport_syn3_input_menu_choose:
+	jsr wtl_getchar
+	cmpb #'4'
+	beq setup_userport_syn3_4bit_input_jmp
+	cmpb #'2'
+	beq setup_userport_syn3_2bit_input_jmp
+	bra userport_syn2_input_menu_choose
+
+setup_userport_syn3_4bit_input_jmp:
+	jmp setup_userport_syn3_4bit_input
+
+setup_userport_syn3_2bit_input_jmp:
+	jmp setup_userport_syn3_2bit_input
+
 userport_cga_input_menu:
 	jsr cls
 	ldx #choose_input_ports_menu_text
@@ -321,6 +398,60 @@ setup_userport_hummer_4bit_input:
 	ldx #userport_h4_p14_c4_input
 	stx input_function
 	ldx #userport_hummer_4bit_text
+	stx input_text
+	rts
+
+setup_userport_syn1_2bit_input:
+	ldx #userport_syn1_input_init
+	stx input_init_function
+	ldx #userport_h2_p12_c2_input
+	stx input_function
+	ldx #userport_syn1_2bit_text
+	stx input_text
+	rts
+
+setup_userport_syn1_4bit_input:
+	ldx #userport_syn1_input_init
+	stx input_init_function
+	ldx #userport_h4_p14_c4_input
+	stx input_function
+	ldx #userport_syn1_4bit_text
+	stx input_text
+	rts
+
+setup_userport_syn2_2bit_input:
+	ldx #userport_syn2_input_init
+	stx input_init_function
+	ldx #userport_h2_p12_c2_input
+	stx input_function
+	ldx #userport_syn2_2bit_text
+	stx input_text
+	rts
+
+setup_userport_syn2_4bit_input:
+	ldx #userport_syn2_input_init
+	stx input_init_function
+	ldx #userport_h4_p14_c4_input
+	stx input_function
+	ldx #userport_syn2_4bit_text
+	stx input_text
+	rts
+
+setup_userport_syn3_2bit_input:
+	ldx #userport_syn3_input_init
+	stx input_init_function
+	ldx #userport_h2_p12_c2_input
+	stx input_function
+	ldx #userport_syn3_2bit_text
+	stx input_text
+	rts
+
+setup_userport_syn3_4bit_input:
+	ldx #userport_syn3_input_init
+	stx input_init_function
+	ldx #userport_h4_p14_c4_input
+	stx input_function
+	ldx #userport_syn3_4bit_text
 	stx input_text
 	rts
 
@@ -509,6 +640,24 @@ userport_cga2_input_init:
 	ldb #$80
 	stb $e843
 	ldb #$00
+	jmp storex_e841
+
+userport_syn1_input_init:
+	ldb #$E0
+	stb $e843
+	ldb #$C0
+	jmp storex_e841
+
+userport_syn2_input_init:
+	ldb #$E0
+	stb $e843
+	ldb #$A0
+	jmp storex_e841
+
+userport_syn3_input_init:
+	ldb #$E0
+	stb $e843
+	ldb #$60
 	jmp storex_e841
 
 ; sample return in B
@@ -765,6 +914,8 @@ choose_input_hardware_menu_text:
 	fcb $0d
 	fcc "c: CGA userport joystick adapter"
 	fcb $0d
+	fcc "y: Synergy userport joystick adapter"
+	fcb $0d
 	fcb $00
 
 choose_input_samplers_menu_text:
@@ -784,6 +935,18 @@ choose_input_ports_menu_text:
 	fcc "1: port 1"
 	fcb $0d
 	fcc "2: port 2"
+	fcb $0d
+	fcb $00
+
+choose_input_ports_3_menu_text:
+	fcc "Choose input"
+	fcb $0d
+	fcb $0d
+	fcc "1: port 1"
+	fcb $0d
+	fcc "2: port 2"
+	fcb $0d
+	fcc "3: port 3"
 	fcb $0d
 	fcb $00
 
@@ -885,6 +1048,36 @@ userport_spt_2bit_text:
 
 userport_spt_4bit_text:
 	fcc "4 bit sampler on userport SPT joy adapter"
+	fcb $0d
+	fcb $00
+
+userport_syn1_2bit_text:
+	fcc "2 bit sampler on port 1 of userport Synergy joy adapter"
+	fcb $0d
+	fcb $00
+
+userport_syn1_4bit_text:
+	fcc "4 bit sampler on port 1 of userport Synergy joy adapter"
+	fcb $0d
+	fcb $00
+
+userport_syn2_2bit_text:
+	fcc "2 bit sampler on port 2 of userport Synergy joy adapter"
+	fcb $0d
+	fcb $00
+
+userport_syn2_4bit_text:
+	fcc "4 bit sampler on port 2 of userport Synergy joy adapter"
+	fcb $0d
+	fcb $00
+
+userport_syn3_2bit_text:
+	fcc "2 bit sampler on port 3 of userport Synergy joy adapter"
+	fcb $0d
+	fcb $00
+
+userport_syn3_4bit_text:
+	fcc "4 bit sampler on port 3 of userport Synergy joy adapter"
 	fcb $0d
 	fcb $00
 

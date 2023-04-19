@@ -14,6 +14,10 @@ extern void userport_2bit_4bit_cga2_input_init(void) __z88dk_fastcall;
 
 extern void userport_2bit_4bit_ks1_sb2_input_init(void) __z88dk_fastcall;
 
+extern void userport_2bit_4bit_syn1_input_init(void) __z88dk_fastcall;
+extern void userport_2bit_4bit_syn2_input_init(void) __z88dk_fastcall;
+extern void userport_2bit_4bit_syn3_input_init(void) __z88dk_fastcall;
+
 extern void sid_output_init(void) __z88dk_fastcall;
 
 extern void sfx_expander_output_init(void) __z88dk_fastcall;

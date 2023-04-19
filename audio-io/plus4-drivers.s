@@ -3,6 +3,12 @@
 ;
 ; void __fastcall__ set_sid_addr(unsigned addr);
 ;
+; unsigned char __fastcall__ sampler_2bit_syn1_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_syn1_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_syn2_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_syn2_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_syn3_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_syn3_input_init(void);
 ; unsigned char __fastcall__ digiblaster_fd5x_input(void);
 ; unsigned char __fastcall__ digiblaster_fe9x_input(void);
 ; unsigned char __fastcall__ sampler_2bit_joy1_input(void);
@@ -19,6 +25,12 @@
 ; unsigned char __fastcall__ sampler_4bit_oem_input(void);
 ; unsigned char __fastcall__ sampler_2bit_pet1_input(void);
 ; unsigned char __fastcall__ sampler_4bit_pet1_input(void);
+; unsigned char __fastcall__ sampler_2bit_syn1_input(void);
+; unsigned char __fastcall__ sampler_4bit_syn1_input(void);
+; unsigned char __fastcall__ sampler_2bit_syn2_input(void);
+; unsigned char __fastcall__ sampler_4bit_syn2_input(void);
+; unsigned char __fastcall__ sampler_2bit_syn3_input(void);
+; unsigned char __fastcall__ sampler_4bit_syn3_input(void);
 ; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
 ; unsigned char __fastcall__ sampler_4bit_pet2_input(void);
 ;
@@ -32,6 +44,12 @@
 ; void __fastcall__ show_sample(unsigned char sample);
 ;
 
+        .export  _sampler_2bit_syn1_input_init
+        .export  _sampler_4bit_syn1_input_init
+        .export  _sampler_2bit_syn2_input_init
+        .export  _sampler_4bit_syn2_input_init
+        .export  _sampler_2bit_syn3_input_init
+        .export  _sampler_4bit_syn3_input_init
         .export  _digiblaster_fd5x_input
         .export  _digiblaster_fe9x_input
         .export  _sampler_2bit_joy1_input
@@ -48,9 +66,14 @@
         .export  _sampler_4bit_oem_input
         .export  _sampler_2bit_pet1_input
         .export  _sampler_4bit_pet1_input
+        .export  _sampler_2bit_syn1_input
+        .export  _sampler_4bit_syn1_input
+        .export  _sampler_2bit_syn2_input
+        .export  _sampler_4bit_syn2_input
+        .export  _sampler_2bit_syn3_input
+        .export  _sampler_4bit_syn3_input
         .export  _sampler_2bit_pet2_input
         .export  _sampler_4bit_pet2_input
-
         .export  _digiblaster_fd5x_output
         .export  _digiblaster_fe9x_output
         .export  _sid_output_init, _sid_output
@@ -113,8 +136,29 @@ _sampler_4bit_oem_input:
         ora     tmp1
         rts
 
+_sampler_2bit_syn1_input_init:
+_sampler_4bit_syn1_input_init:
+        ldx     #$C0
+        stx     $fd10
+        rts
+
+_sampler_2bit_syn2_input_init:
+_sampler_4bit_syn2_input_init:
+        ldx     #$A0
+        stx     $fd10
+        rts
+
+_sampler_2bit_syn3_input_init:
+_sampler_4bit_syn3_input_init:
+        ldx     #$60
+        stx     $fd10
+        rts
+
 _sampler_2bit_hummer_input:
 _sampler_2bit_pet1_input:
+_sampler_2bit_syn1_input:
+_sampler_2bit_syn2_input:
+_sampler_2bit_syn3_input:
         lda     $fd10
         asl
         asl
@@ -127,6 +171,9 @@ _sampler_2bit_spt_input:
 
 _sampler_4bit_hummer_input:
 _sampler_4bit_pet1_input:
+_sampler_4bit_syn1_input:
+_sampler_4bit_syn2_input:
+_sampler_4bit_syn3_input:
         lda     $fd10
         jmp     do_asl4
 
