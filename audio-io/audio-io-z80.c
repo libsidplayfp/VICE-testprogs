@@ -380,14 +380,29 @@ static void input_init_function(unsigned char input_init_type) __z88dk_fastcall
         case INPUT_INIT_USERPORT_KS1_SB2:
             return userport_2bit_4bit_ks1_sb2_input_init();
             break;
-        case INPUT_INIT_USERPORT_SYN_1:
-            return userport_2bit_4bit_syn1_input_init();
+        case INPUT_INIT_USERPORT_WOJ_1:
+            return userport_2bit_4bit_woj1_input_init();
             break;
-        case INPUT_INIT_USERPORT_SYN_2:
-            return userport_2bit_4bit_syn2_input_init();
+        case INPUT_INIT_USERPORT_WOJ_2:
+            return userport_2bit_4bit_woj2_input_init();
             break;
-        case INPUT_INIT_USERPORT_SYN_3:
-            return userport_2bit_4bit_syn3_input_init();
+        case INPUT_INIT_USERPORT_WOJ_3:
+            return userport_2bit_4bit_woj3_input_init();
+            break;
+        case INPUT_INIT_USERPORT_WOJ_4:
+            return userport_2bit_4bit_woj4_input_init();
+            break;
+        case INPUT_INIT_USERPORT_WOJ_5:
+            return userport_2bit_4bit_woj5_input_init();
+            break;
+        case INPUT_INIT_USERPORT_WOJ_6:
+            return userport_2bit_4bit_woj6_input_init();
+            break;
+        case INPUT_INIT_USERPORT_WOJ_7:
+            return userport_2bit_4bit_woj7_input_init();
+            break;
+        case INPUT_INIT_USERPORT_WOJ_8:
+            return userport_2bit_4bit_woj8_input_init();
             break;
     }
 }
@@ -567,6 +582,70 @@ static input_device_t sampler_2bit_syn3_input_device[] = {
 
 static input_device_t sampler_4bit_syn3_input_device[] = {
     { "4 bit sampler on port 3 of userport synergy joy adapter", INPUT_INIT_USERPORT_SYN_3, INPUT_USERPORT_JOY_4 }
+};
+
+static input_device_t sampler_2bit_woj1_input_device[] = {
+    { "2 bit sampler on port 1 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_1, INPUT_USERPORT_JOY_2 }
+};
+
+static input_device_t sampler_4bit_woj1_input_device[] = {
+    { "4 bit sampler on port 1 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_1, INPUT_USERPORT_JOY_4 }
+};
+
+static input_device_t sampler_2bit_woj2_input_device[] = {
+    { "2 bit sampler on port 2 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_2, INPUT_USERPORT_JOY_2 }
+};
+
+static input_device_t sampler_4bit_woj2_input_device[] = {
+    { "4 bit sampler on port 2 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_2, INPUT_USERPORT_JOY_4 }
+};
+
+static input_device_t sampler_2bit_woj3_input_device[] = {
+    { "2 bit sampler on port 3 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_3, INPUT_USERPORT_JOY_2 }
+};
+
+static input_device_t sampler_4bit_woj3_input_device[] = {
+    { "4 bit sampler on port 3 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_3, INPUT_USERPORT_JOY_4 }
+};
+
+static input_device_t sampler_2bit_woj4_input_device[] = {
+    { "2 bit sampler on port 4 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_4, INPUT_USERPORT_JOY_2 }
+};
+
+static input_device_t sampler_4bit_woj4_input_device[] = {
+    { "4 bit sampler on port 4 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_4, INPUT_USERPORT_JOY_4 }
+};
+
+static input_device_t sampler_2bit_woj5_input_device[] = {
+    { "2 bit sampler on port 5 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_5, INPUT_USERPORT_JOY_2 }
+};
+
+static input_device_t sampler_4bit_woj5_input_device[] = {
+    { "4 bit sampler on port 5 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_5, INPUT_USERPORT_JOY_4 }
+};
+
+static input_device_t sampler_2bit_woj6_input_device[] = {
+    { "2 bit sampler on port 6 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_6, INPUT_USERPORT_JOY_2 }
+};
+
+static input_device_t sampler_4bit_woj6_input_device[] = {
+    { "4 bit sampler on port 6 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_6, INPUT_USERPORT_JOY_4 }
+};
+
+static input_device_t sampler_2bit_woj7_input_device[] = {
+    { "2 bit sampler on port 7 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_7, INPUT_USERPORT_JOY_2 }
+};
+
+static input_device_t sampler_4bit_woj7_input_device[] = {
+    { "4 bit sampler on port 7 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_7, INPUT_USERPORT_JOY_4 }
+};
+
+static input_device_t sampler_2bit_woj8_input_device[] = {
+    { "2 bit sampler on port 8 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_8, INPUT_USERPORT_JOY_2 }
+};
+
+static input_device_t sampler_4bit_woj8_input_device[] = {
+    { "4 bit sampler on port 8 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_8, INPUT_USERPORT_JOY_4 }
 };
 
 static input_device_t sampler_2bit_oem_input_device[] = {
@@ -771,6 +850,54 @@ static menu_input_t input_syn3_menu[] = {
     { 0, NULL, NULL, NULL }
 };
 
+static menu_input_t input_woj1_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_woj1_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_woj1_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_woj2_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_woj2_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_woj2_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_woj3_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_woj3_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_woj3_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_woj4_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_woj4_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_woj4_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_woj5_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_woj5_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_woj5_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_woj6_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_woj6_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_woj6_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_woj7_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_woj7_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_woj7_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_woj8_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_woj8_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_woj8_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
 static menu_input_t input_pet_menu[] = {
     { '1', "port 1", input_pet1_menu, NULL },
     { '2', "port 2", input_pet2_menu, NULL },
@@ -781,6 +908,18 @@ static menu_input_t input_syn_menu[] = {
     { '1', "port 1", input_syn1_menu, NULL },
     { '2', "port 2", input_syn2_menu, NULL },
     { '3', "port 3", input_syn3_menu, NULL },
+    { 0, NULL, NULL, NULL },
+};
+
+static menu_input_t input_woj_menu[] = {
+    { '1', "port 1", input_woj1_menu, NULL },
+    { '2', "port 2", input_woj2_menu, NULL },
+    { '3', "port 3", input_woj3_menu, NULL },
+    { '4', "port 4", input_woj4_menu, NULL },
+    { '5', "port 5", input_woj5_menu, NULL },
+    { '6', "port 6", input_woj6_menu, NULL },
+    { '7', "port 7", input_woj7_menu, NULL },
+    { '8', "port 8", input_woj8_menu, NULL },
     { 0, NULL, NULL, NULL },
 };
 
@@ -808,6 +947,7 @@ static menu_input_t input_userport_joy_menu[] = {
     { 'o', "OEM joystick adapter", input_oem_menu, NULL },
     { 'p', "PET joystick adapter", input_pet_menu, NULL },
     { 'y', "Synergy joystick adapter", input_syn_menu, NULL },
+    { 'w', "WOJ joystick adapter", input_woj_menu, NULL },
     { 'c', "CGA joystick adapter", input_cga_menu, NULL },
     { 's', "StarByte joystick adapter", input_starbyte_menu, NULL },
     { 'k', "KingSoft joystick adapter", input_kingsoft_menu, NULL },

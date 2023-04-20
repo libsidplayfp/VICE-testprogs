@@ -9,6 +9,22 @@
 ; unsigned char __fastcall__ sampler_4bit_syn2_input_init(void);
 ; unsigned char __fastcall__ sampler_2bit_syn3_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_syn3_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_woj1_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_woj1_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_woj2_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_woj2_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_woj3_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_woj3_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_woj4_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_woj4_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_woj5_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_woj5_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_woj6_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_woj6_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_woj7_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_woj7_input_init(void);
+; unsigned char __fastcall__ sampler_2bit_woj8_input_init(void);
+; unsigned char __fastcall__ sampler_4bit_woj8_input_init(void);
 ; unsigned char __fastcall__ digiblaster_fd5x_input(void);
 ; unsigned char __fastcall__ digiblaster_fe9x_input(void);
 ; unsigned char __fastcall__ sampler_2bit_joy1_input(void);
@@ -31,6 +47,22 @@
 ; unsigned char __fastcall__ sampler_4bit_syn2_input(void);
 ; unsigned char __fastcall__ sampler_2bit_syn3_input(void);
 ; unsigned char __fastcall__ sampler_4bit_syn3_input(void);
+; unsigned char __fastcall__ sampler_2bit_woj1_input(void);
+; unsigned char __fastcall__ sampler_4bit_woj1_input(void);
+; unsigned char __fastcall__ sampler_2bit_woj2_input(void);
+; unsigned char __fastcall__ sampler_4bit_woj2_input(void);
+; unsigned char __fastcall__ sampler_2bit_woj3_input(void);
+; unsigned char __fastcall__ sampler_4bit_woj3_input(void);
+; unsigned char __fastcall__ sampler_2bit_woj4_input(void);
+; unsigned char __fastcall__ sampler_4bit_woj4_input(void);
+; unsigned char __fastcall__ sampler_2bit_woj5_input(void);
+; unsigned char __fastcall__ sampler_4bit_woj5_input(void);
+; unsigned char __fastcall__ sampler_2bit_woj6_input(void);
+; unsigned char __fastcall__ sampler_4bit_woj6_input(void);
+; unsigned char __fastcall__ sampler_2bit_woj7_input(void);
+; unsigned char __fastcall__ sampler_4bit_woj7_input(void);
+; unsigned char __fastcall__ sampler_2bit_woj8_input(void);
+; unsigned char __fastcall__ sampler_4bit_woj8_input(void);
 ; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
 ; unsigned char __fastcall__ sampler_4bit_pet2_input(void);
 ;
@@ -50,6 +82,22 @@
         .export  _sampler_4bit_syn2_input_init
         .export  _sampler_2bit_syn3_input_init
         .export  _sampler_4bit_syn3_input_init
+        .export  _sampler_2bit_woj1_input_init
+        .export  _sampler_4bit_woj1_input_init
+        .export  _sampler_2bit_woj2_input_init
+        .export  _sampler_4bit_woj2_input_init
+        .export  _sampler_2bit_woj3_input_init
+        .export  _sampler_4bit_woj3_input_init
+        .export  _sampler_2bit_woj4_input_init
+        .export  _sampler_4bit_woj4_input_init
+        .export  _sampler_2bit_woj5_input_init
+        .export  _sampler_4bit_woj5_input_init
+        .export  _sampler_2bit_woj6_input_init
+        .export  _sampler_4bit_woj6_input_init
+        .export  _sampler_2bit_woj7_input_init
+        .export  _sampler_4bit_woj7_input_init
+        .export  _sampler_2bit_woj8_input_init
+        .export  _sampler_4bit_woj8_input_init
         .export  _digiblaster_fd5x_input
         .export  _digiblaster_fe9x_input
         .export  _sampler_2bit_joy1_input
@@ -72,6 +120,22 @@
         .export  _sampler_4bit_syn2_input
         .export  _sampler_2bit_syn3_input
         .export  _sampler_4bit_syn3_input
+        .export  _sampler_2bit_woj1_input
+        .export  _sampler_4bit_woj1_input
+        .export  _sampler_2bit_woj2_input
+        .export  _sampler_4bit_woj2_input
+        .export  _sampler_2bit_woj3_input
+        .export  _sampler_4bit_woj3_input
+        .export  _sampler_2bit_woj4_input
+        .export  _sampler_4bit_woj4_input
+        .export  _sampler_2bit_woj5_input
+        .export  _sampler_4bit_woj5_input
+        .export  _sampler_2bit_woj6_input
+        .export  _sampler_4bit_woj6_input
+        .export  _sampler_2bit_woj7_input
+        .export  _sampler_4bit_woj7_input
+        .export  _sampler_2bit_woj8_input
+        .export  _sampler_4bit_woj8_input
         .export  _sampler_2bit_pet2_input
         .export  _sampler_4bit_pet2_input
         .export  _digiblaster_fd5x_output
@@ -136,21 +200,57 @@ _sampler_4bit_oem_input:
         ora     tmp1
         rts
 
-_sampler_2bit_syn1_input_init:
-_sampler_4bit_syn1_input_init:
-        ldx     #$C0
+_sampler_2bit_woj1_input_init:
+_sampler_4bit_woj1_input_init:
+        ldx     #$00
         stx     $fd10
         rts
 
-_sampler_2bit_syn2_input_init:
-_sampler_4bit_syn2_input_init:
-        ldx     #$A0
+_sampler_2bit_woj2_input_init:
+_sampler_4bit_woj2_input_init:
+        ldx     #$20
+        stx     $fd10
+        rts
+
+_sampler_2bit_woj3_input_init:
+_sampler_4bit_woj3_input_init:
+        ldx     #$40
         stx     $fd10
         rts
 
 _sampler_2bit_syn3_input_init:
 _sampler_4bit_syn3_input_init:
+_sampler_2bit_woj4_input_init:
+_sampler_4bit_woj4_input_init:
         ldx     #$60
+        stx     $fd10
+        rts
+
+_sampler_2bit_woj5_input_init:
+_sampler_4bit_woj5_input_init:
+        ldx     #$80
+        stx     $fd10
+        rts
+
+_sampler_2bit_syn2_input_init:
+_sampler_4bit_syn2_input_init:
+_sampler_2bit_woj6_input_init:
+_sampler_4bit_woj6_input_init:
+        ldx     #$A0
+        stx     $fd10
+        rts
+
+_sampler_2bit_syn1_input_init:
+_sampler_4bit_syn1_input_init:
+_sampler_2bit_woj7_input_init:
+_sampler_4bit_woj7_input_init:
+        ldx     #$C0
+        stx     $fd10
+        rts
+
+_sampler_2bit_woj8_input_init:
+_sampler_4bit_woj8_input_init:
+        ldx     #$E0
         stx     $fd10
         rts
 
@@ -159,6 +259,14 @@ _sampler_2bit_pet1_input:
 _sampler_2bit_syn1_input:
 _sampler_2bit_syn2_input:
 _sampler_2bit_syn3_input:
+_sampler_2bit_woj1_input:
+_sampler_2bit_woj2_input:
+_sampler_2bit_woj3_input:
+_sampler_2bit_woj4_input:
+_sampler_2bit_woj5_input:
+_sampler_2bit_woj6_input:
+_sampler_2bit_woj7_input:
+_sampler_2bit_woj8_input:
         lda     $fd10
         asl
         asl
@@ -174,6 +282,14 @@ _sampler_4bit_pet1_input:
 _sampler_4bit_syn1_input:
 _sampler_4bit_syn2_input:
 _sampler_4bit_syn3_input:
+_sampler_4bit_woj1_input:
+_sampler_4bit_woj2_input:
+_sampler_4bit_woj3_input:
+_sampler_4bit_woj4_input:
+_sampler_4bit_woj5_input:
+_sampler_4bit_woj6_input:
+_sampler_4bit_woj7_input:
+_sampler_4bit_woj8_input:
         lda     $fd10
         jmp     do_asl4
 
