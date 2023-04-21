@@ -446,6 +446,294 @@ static input_device_t sampler_4bit_woj8_input_device[] = {
 };
 #endif
 
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j1p1_input_device[] = {
+    { "2 bit sampler on port 1 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p1_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j1p1_input_device[] = {
+    { "4 bit sampler on port 1 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p1_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j1p2_input_device[] = {
+    { "2 bit sampler on port 2 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p2_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j1p2_input_device[] = {
+    { "4 bit sampler on port 2 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p2_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j1p3_input_device[] = {
+    { "2 bit sampler on port 3 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p3_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j1p3_input_device[] = {
+    { "4 bit sampler on port 3 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p3_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j1p4_input_device[] = {
+    { "2 bit sampler on port 4 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p4_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j1p4_input_device[] = {
+    { "4 bit sampler on port 4 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p4_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j1p5_input_device[] = {
+    { "2 bit sampler on port 5 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p5_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j1p5_input_device[] = {
+    { "4 bit sampler on port 5 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p5_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j1p6_input_device[] = {
+    { "2 bit sampler on port 6 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p6_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j1p6_input_device[] = {
+    { "4 bit sampler on port 6 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p6_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j1p7_input_device[] = {
+    { "2 bit sampler on port 7 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p7_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j1p7_input_device[] = {
+    { "4 bit sampler on port 7 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p7_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j1p8_input_device[] = {
+    { "2 bit sampler on port 8 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p8_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j1p8_input_device[] = {
+    { "4 bit sampler on port 8 of the spaceballs adapter in native port 1", sampler_spaceballs_j1p8_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_2bit_spaceballs_j1p1_input_device[] = {
+    { "2 bit sampler on port 1 of the spaceballs adapter", sampler_spaceballs_j1p1_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_4bit_spaceballs_j1p1_input_device[] = {
+    { "4 bit sampler on port 1 of the spaceballs adapter", sampler_spaceballs_j1p1_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_2bit_spaceballs_j1p2_input_device[] = {
+    { "2 bit sampler on port 2 of the spaceballs adapter", sampler_spaceballs_j1p2_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_4bit_spaceballs_j1p2_input_device[] = {
+    { "4 bit sampler on port 2 of the spaceballs adapter", sampler_spaceballs_j1p2_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_2bit_spaceballs_j1p3_input_device[] = {
+    { "2 bit sampler on port 3 of the spaceballs adapter", sampler_spaceballs_j1p3_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_4bit_spaceballs_j1p3_input_device[] = {
+    { "4 bit sampler on port 3 of the spaceballs adapter", sampler_spaceballs_j1p3_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_2bit_spaceballs_j1p4_input_device[] = {
+    { "2 bit sampler on port 4 of the spaceballs adapter", sampler_spaceballs_j1p4_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_4bit_spaceballs_j1p4_input_device[] = {
+    { "4 bit sampler on port 4 of the spaceballs adapter", sampler_spaceballs_j1p4_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_2bit_spaceballs_j1p5_input_device[] = {
+    { "2 bit sampler on port 5 of the spaceballs adapter", sampler_spaceballs_j1p5_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_4bit_spaceballs_j1p5_input_device[] = {
+    { "4 bit sampler on port 5 of the spaceballs adapter", sampler_spaceballs_j1p5_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_2bit_spaceballs_j1p6_input_device[] = {
+    { "2 bit sampler on port 6 of the spaceballs adapter", sampler_spaceballs_j1p6_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_4bit_spaceballs_j1p6_input_device[] = {
+    { "4 bit sampler on port 6 of the spaceballs adapter", sampler_spaceballs_j1p6_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_2bit_spaceballs_j1p7_input_device[] = {
+    { "2 bit sampler on port 7 of the spaceballs adapter", sampler_spaceballs_j1p7_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_4bit_spaceballs_j1p7_input_device[] = {
+    { "4 bit sampler on port 7 of the spaceballs adapter", sampler_spaceballs_j1p7_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_2bit_spaceballs_j1p8_input_device[] = {
+    { "2 bit sampler on port 8 of the spaceballs adapter", sampler_spaceballs_j1p8_input_init, sampler_2bit_spaceballs_j1_input }
+};
+#endif
+
+#ifdef __VIC20__
+static input_device_t sampler_4bit_spaceballs_j1p8_input_device[] = {
+    { "4 bit sampler on port 8 of the spaceballs adapter", sampler_spaceballs_j1p8_input_init, sampler_4bit_spaceballs_j1_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j2p1_input_device[] = {
+    { "2 bit sampler on port 1 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p1_input_init, sampler_2bit_spaceballs_j2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j2p1_input_device[] = {
+    { "4 bit sampler on port 1 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p1_input_init, sampler_4bit_spaceballs_j2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j2p2_input_device[] = {
+    { "2 bit sampler on port 2 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p2_input_init, sampler_2bit_spaceballs_j2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j2p2_input_device[] = {
+    { "4 bit sampler on port 2 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p2_input_init, sampler_4bit_spaceballs_j2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j2p3_input_device[] = {
+    { "2 bit sampler on port 3 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p3_input_init, sampler_2bit_spaceballs_j2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j2p3_input_device[] = {
+    { "4 bit sampler on port 3 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p3_input_init, sampler_4bit_spaceballs_j2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j2p4_input_device[] = {
+    { "2 bit sampler on port 4 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p4_input_init, sampler_2bit_spaceballs_j2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j2p4_input_device[] = {
+    { "4 bit sampler on port 4 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p4_input_init, sampler_4bit_spaceballs_j2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j2p5_input_device[] = {
+    { "2 bit sampler on port 5 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p5_input_init, sampler_2bit_spaceballs_j2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j2p5_input_device[] = {
+    { "4 bit sampler on port 5 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p5_input_init, sampler_4bit_spaceballs_j2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j2p6_input_device[] = {
+    { "2 bit sampler on port 6 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p6_input_init, sampler_2bit_spaceballs_j2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j2p6_input_device[] = {
+    { "4 bit sampler on port 6 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p6_input_init, sampler_4bit_spaceballs_j2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j2p7_input_device[] = {
+    { "2 bit sampler on port 7 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p7_input_init, sampler_2bit_spaceballs_j2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j2p7_input_device[] = {
+    { "4 bit sampler on port 7 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p7_input_init, sampler_4bit_spaceballs_j2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_2bit_spaceballs_j2p8_input_device[] = {
+    { "2 bit sampler on port 8 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p8_input_init, sampler_2bit_spaceballs_j2_input }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static input_device_t sampler_4bit_spaceballs_j2p8_input_device[] = {
+    { "4 bit sampler on port 8 of the spaceballs adapter in native port 2", sampler_spaceballs_j2p8_input_init, sampler_4bit_spaceballs_j2_input }
+};
+#endif
+
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
 static input_device_t sampler_2bit_hummer_input_device[] = {
     { "2 bit sampler on userport HUMMER joy adapter", sampler_2bit_hummer_input_init, sampler_2bit_hummer_input }
@@ -895,6 +1183,134 @@ static menu_input_t input_woj8_menu[] = {
 };
 #endif
 
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
+static menu_input_t input_spaceballs_j1p1_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j1p1_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j1p1_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
+static menu_input_t input_spaceballs_j1p2_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j1p2_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j1p2_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
+static menu_input_t input_spaceballs_j1p3_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j1p3_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j1p3_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
+static menu_input_t input_spaceballs_j1p4_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j1p4_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j1p4_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
+static menu_input_t input_spaceballs_j1p5_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j1p5_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j1p5_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
+static menu_input_t input_spaceballs_j1p6_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j1p6_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j1p6_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
+static menu_input_t input_spaceballs_j1p7_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j1p7_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j1p7_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
+static menu_input_t input_spaceballs_j1p8_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j1p8_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j1p8_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static menu_input_t input_spaceballs_j2p1_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j2p1_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j2p1_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static menu_input_t input_spaceballs_j2p2_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j2p2_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j2p2_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static menu_input_t input_spaceballs_j2p3_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j2p3_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j2p3_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static menu_input_t input_spaceballs_j2p4_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j2p4_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j2p4_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static menu_input_t input_spaceballs_j2p5_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j2p5_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j2p5_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static menu_input_t input_spaceballs_j2p6_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j2p6_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j2p6_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static menu_input_t input_spaceballs_j2p7_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j2p7_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j2p7_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static menu_input_t input_spaceballs_j2p8_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_spaceballs_j2p8_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_spaceballs_j2p8_input_device },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_pet_menu[] = {
     { '1', "port 1", input_pet1_menu, NULL },
@@ -922,6 +1338,42 @@ static menu_input_t input_woj_menu[] = {
     { '6', "port 6", input_woj6_menu, NULL },
     { '7', "port 7", input_woj7_menu, NULL },
     { '8', "port 8", input_woj8_menu, NULL },
+    { 0, NULL, NULL, NULL },
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
+static menu_input_t input_spaceballs_j1_menu[] = {
+    { '1', "port 1", input_spaceballs_j1p1_menu, NULL },
+    { '2', "port 2", input_spaceballs_j1p2_menu, NULL },
+    { '3', "port 3", input_spaceballs_j1p3_menu, NULL },
+    { '4', "port 4", input_spaceballs_j1p4_menu, NULL },
+    { '5', "port 5", input_spaceballs_j1p5_menu, NULL },
+    { '6', "port 6", input_spaceballs_j1p6_menu, NULL },
+    { '7', "port 7", input_spaceballs_j1p7_menu, NULL },
+    { '8', "port 8", input_spaceballs_j1p8_menu, NULL },
+    { 0, NULL, NULL, NULL },
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static menu_input_t input_spaceballs_j2_menu[] = {
+    { '1', "port 1", input_spaceballs_j2p1_menu, NULL },
+    { '2', "port 2", input_spaceballs_j2p2_menu, NULL },
+    { '3', "port 3", input_spaceballs_j2p3_menu, NULL },
+    { '4', "port 4", input_spaceballs_j2p4_menu, NULL },
+    { '5', "port 5", input_spaceballs_j2p5_menu, NULL },
+    { '6', "port 6", input_spaceballs_j2p6_menu, NULL },
+    { '7', "port 7", input_spaceballs_j2p7_menu, NULL },
+    { '8', "port 8", input_spaceballs_j2p8_menu, NULL },
+    { 0, NULL, NULL, NULL },
+};
+#endif
+
+#if defined(__C64__) || defined(__C128__)
+static menu_input_t input_spaceballs_menu[] = {
+    { '1', "native port 1", input_spaceballs_j1_menu, NULL },
+    { '2', "native port 2", input_spaceballs_j2_menu, NULL },
     { 0, NULL, NULL, NULL },
 };
 #endif
@@ -1058,6 +1510,18 @@ static menu_input_t input_cart_menu[] = {
 };
 #endif
 
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
+static menu_input_t input_joy_adapter_menu[] = {
+#if defined(__C64__) || defined(__C128__)
+    { 's', "spaceballs", input_spaceballs_menu, NULL },
+#endif
+#ifdef __VIC20__
+    { 's', "spaceballs", input_spaceballs_j1_menu, NULL },
+#endif
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
 static menu_input_t input_port_menu[] = {
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__)
     { 'c', "cartridge port", input_cart_menu, NULL },
@@ -1067,6 +1531,9 @@ static menu_input_t input_port_menu[] = {
 #endif
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
     { 'u', "userport", input_userport_menu, NULL },
+#endif
+#if defined(__C64__) || defined(__C128__) || defined(__VIC20__)
+    { 'a', "joystick port joystick adapter", input_joy_adapter_menu, NULL },
 #endif
     { 0, NULL, NULL, NULL }
 };

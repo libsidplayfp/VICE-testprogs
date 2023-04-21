@@ -20,6 +20,14 @@ PUBLIC _userport_2bit_4bit_woj5_input_init
 PUBLIC _userport_2bit_4bit_woj6_input_init
 PUBLIC _userport_2bit_4bit_woj7_input_init
 PUBLIC _userport_2bit_4bit_woj8_input_init
+PUBLIC _spaceballs1_2bit_4bit_input_init
+PUBLIC _spaceballs2_2bit_4bit_input_init
+PUBLIC _spaceballs3_2bit_4bit_input_init
+PUBLIC _spaceballs4_2bit_4bit_input_init
+PUBLIC _spaceballs5_2bit_4bit_input_init
+PUBLIC _spaceballs6_2bit_4bit_input_init
+PUBLIC _spaceballs7_2bit_4bit_input_init
+PUBLIC _spaceballs8_2bit_4bit_input_init
 PUBLIC _sid_output_init
 PUBLIC _sfx_expander_output_init
 PUBLIC _userport_digimax_output_init
@@ -694,6 +702,73 @@ PUBLIC _disable_irq
 	out (c),a
 	ld a,0xE0
 	jr storex_dd01
+
+.spaceballs_userport
+	ld bc,IOBASE+0x0d03
+	ld a,0xff
+	out (c),a
+	ld bc,IOBASE+0xd01
+	out (c),d
+	pop de
+	pop bc
+	pop af
+	ret
+
+._spaceballs1_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,0xfe
+	jr spaceballs_userport
+
+._spaceballs2_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,0xfd
+	jr spaceballs_userport
+
+._spaceballs3_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,0xfb
+	jr spaceballs_userport
+
+._spaceballs4_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,0xf7
+	jr spaceballs_userport
+
+._spaceballs5_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,0xef
+	jr spaceballs_userport
+
+._spaceballs6_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,0xdf
+	jr spaceballs_userport
+
+._spaceballs7_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,0xbf
+	jr spaceballs_userport
+
+._spaceballs8_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,0x7f
+	jr spaceballs_userport
 
 ._userport_2bit_4bit_ks1_sb2_input_init
 	push af

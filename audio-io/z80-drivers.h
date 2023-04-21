@@ -23,6 +23,15 @@ extern void userport_2bit_4bit_woj6_input_init(void) __z88dk_fastcall;
 extern void userport_2bit_4bit_woj7_input_init(void) __z88dk_fastcall;
 extern void userport_2bit_4bit_woj8_input_init(void) __z88dk_fastcall;
 
+extern void spaceballs1_2bit_4bit_input_init(void) __z88dk_fastcall;
+extern void spaceballs2_2bit_4bit_input_init(void) __z88dk_fastcall;
+extern void spaceballs3_2bit_4bit_input_init(void) __z88dk_fastcall;
+extern void spaceballs4_2bit_4bit_input_init(void) __z88dk_fastcall;
+extern void spaceballs5_2bit_4bit_input_init(void) __z88dk_fastcall;
+extern void spaceballs6_2bit_4bit_input_init(void) __z88dk_fastcall;
+extern void spaceballs7_2bit_4bit_input_init(void) __z88dk_fastcall;
+extern void spaceballs8_2bit_4bit_input_init(void) __z88dk_fastcall;
+
 extern void sid_output_init(void) __z88dk_fastcall;
 
 extern void sfx_expander_output_init(void) __z88dk_fastcall;
