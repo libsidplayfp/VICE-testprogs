@@ -428,6 +428,54 @@ static void input_init_function(unsigned char input_init_type) __z88dk_fastcall
         case INPUT_INIT_SPACEBALLS_8:
             return spaceballs8_2bit_4bit_input_init();
             break;
+        case INPUT_INIT_MULTIJOY_J1_P1:
+            return multijoy_j1_p1_2bit_4bit_input_init();
+            break;
+        case INPUT_INIT_MULTIJOY_J1_P2:
+            return multijoy_j1_p2_2bit_4bit_input_init();
+            break;
+        case INPUT_INIT_MULTIJOY_J1_P3:
+            return multijoy_j1_p3_2bit_4bit_input_init();
+            break;
+        case INPUT_INIT_MULTIJOY_J1_P4:
+            return multijoy_j1_p4_2bit_4bit_input_init();
+            break;
+        case INPUT_INIT_MULTIJOY_J1_P5:
+            return multijoy_j1_p5_2bit_4bit_input_init();
+            break;
+        case INPUT_INIT_MULTIJOY_J1_P6:
+            return multijoy_j1_p6_2bit_4bit_input_init();
+            break;
+        case INPUT_INIT_MULTIJOY_J1_P7:
+            return multijoy_j1_p7_2bit_4bit_input_init();
+            break;
+        case INPUT_INIT_MULTIJOY_J1_P8:
+            return multijoy_j1_p8_2bit_4bit_input_init();
+            break;
+        case INPUT_INIT_MULTIJOY_J2_P1:
+            return multijoy_j2_p1_2bit_4bit_input_init();
+            break;
+        case INPUT_INIT_MULTIJOY_J2_P2:
+            return multijoy_j2_p2_2bit_4bit_input_init();
+            break;
+        case INPUT_INIT_MULTIJOY_J2_P3:
+            return multijoy_j2_p3_2bit_4bit_input_init();
+            break;
+        case INPUT_INIT_MULTIJOY_J2_P4:
+            return multijoy_j2_p4_2bit_4bit_input_init();
+            break;
+        case INPUT_INIT_MULTIJOY_J2_P5:
+            return multijoy_j2_p5_2bit_4bit_input_init();
+            break;
+        case INPUT_INIT_MULTIJOY_J2_P6:
+            return multijoy_j2_p6_2bit_4bit_input_init();
+            break;
+        case INPUT_INIT_MULTIJOY_J2_P7:
+            return multijoy_j2_p7_2bit_4bit_input_init();
+            break;
+        case INPUT_INIT_MULTIJOY_J2_P8:
+            return multijoy_j2_p8_2bit_4bit_input_init();
+            break;
     }
 }
 
@@ -780,6 +828,136 @@ static input_device_t sampler_4bit_spaceballs_j1p7_input_device[] = {
 
 static input_device_t sampler_4bit_spaceballs_j1p8_input_device[] = {
     { "4 bit sampler on port 8 of spaceballs adapter on native port 1", INPUT_INIT_SPACEBALLS_8, INPUT_JOY1_4BIT }
+};
+
+------------
+
+static input_device_t sampler_2bit_multijoy_j1p1_input_device[] = {
+    { "2 bit sampler on port 1 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P1, INPUT_JOY1_2BIT }
+};
+
+static input_device_t sampler_2bit_multijoy_j1p2_input_device[] = {
+    { "2 bit sampler on port 2 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P2, INPUT_JOY1_2BIT }
+};
+
+static input_device_t sampler_2bit_multijoy_j1p3_input_device[] = {
+    { "2 bit sampler on port 3 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P3, INPUT_JOY1_2BIT }
+};
+
+static input_device_t sampler_2bit_multijoy_j1p4_input_device[] = {
+    { "2 bit sampler on port 4 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P4, INPUT_JOY1_2BIT }
+};
+
+static input_device_t sampler_2bit_multijoy_j1p5_input_device[] = {
+    { "2 bit sampler on port 5 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P5, INPUT_JOY1_2BIT }
+};
+
+static input_device_t sampler_2bit_multijoy_j1p6_input_device[] = {
+    { "2 bit sampler on port 6 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P6, INPUT_JOY1_2BIT }
+};
+
+static input_device_t sampler_2bit_multijoy_j1p7_input_device[] = {
+    { "2 bit sampler on port 7 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P7, INPUT_JOY1_2BIT }
+};
+
+static input_device_t sampler_2bit_multijoy_j1p8_input_device[] = {
+    { "2 bit sampler on port 8 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P8, INPUT_JOY1_2BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j1p1_input_device[] = {
+    { "4 bit sampler on port 1 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P1, INPUT_JOY1_4BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j1p2_input_device[] = {
+    { "4 bit sampler on port 2 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P2, INPUT_JOY1_4BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j1p3_input_device[] = {
+    { "4 bit sampler on port 3 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P3, INPUT_JOY1_4BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j1p4_input_device[] = {
+    { "4 bit sampler on port 4 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P4, INPUT_JOY1_4BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j1p5_input_device[] = {
+    { "4 bit sampler on port 5 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P5, INPUT_JOY1_4BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j1p6_input_device[] = {
+    { "4 bit sampler on port 6 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P6, INPUT_JOY1_4BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j1p7_input_device[] = {
+    { "4 bit sampler on port 7 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P7, INPUT_JOY1_4BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j1p8_input_device[] = {
+    { "4 bit sampler on port 8 of multijoy adapter on native port 1", INPUT_INIT_MULTIJOY_J1_P8, INPUT_JOY1_4BIT }
+};
+
+static input_device_t sampler_2bit_multijoy_j2p1_input_device[] = {
+    { "2 bit sampler on port 1 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J2_P1, INPUT_JOY2_2BIT }
+};
+
+static input_device_t sampler_2bit_multijoy_j2p2_input_device[] = {
+    { "2 bit sampler on port 2 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J2_P2, INPUT_JOY2_2BIT }
+};
+
+static input_device_t sampler_2bit_multijoy_j2p3_input_device[] = {
+    { "2 bit sampler on port 3 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J2_P3, INPUT_JOY2_2BIT }
+};
+
+static input_device_t sampler_2bit_multijoy_j2p4_input_device[] = {
+    { "2 bit sampler on port 4 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J2_P4, INPUT_JOY2_2BIT }
+};
+
+static input_device_t sampler_2bit_multijoy_j2p5_input_device[] = {
+    { "2 bit sampler on port 5 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J2_P5, INPUT_JOY2_2BIT }
+};
+
+static input_device_t sampler_2bit_multijoy_j2p6_input_device[] = {
+    { "2 bit sampler on port 6 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J2_P6, INPUT_JOY2_2BIT }
+};
+
+static input_device_t sampler_2bit_multijoy_j2p7_input_device[] = {
+    { "2 bit sampler on port 7 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J2_P7, INPUT_JOY2_2BIT }
+};
+
+static input_device_t sampler_2bit_multijoy_j2p8_input_device[] = {
+    { "2 bit sampler on port 8 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J2_P8, INPUT_JOY2_2BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j2p1_input_device[] = {
+    { "4 bit sampler on port 1 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J2_P1, INPUT_JOY2_4BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j2p2_input_device[] = {
+    { "4 bit sampler on port 2 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J2_P2, INPUT_JOY2_4BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j2p3_input_device[] = {
+    { "4 bit sampler on port 3 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J2_P3, INPUT_JOY2_4BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j2p4_input_device[] = {
+    { "4 bit sampler on port 4 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J2_P4, INPUT_JOY2_4BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j2p5_input_device[] = {
+    { "4 bit sampler on port 5 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J2_P5, INPUT_JOY2_4BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j2p6_input_device[] = {
+    { "4 bit sampler on port 6 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J2_P6, INPUT_JOY2_4BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j2p7_input_device[] = {
+    { "4 bit sampler on port 7 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J2_P7, INPUT_JOY2_4BIT }
+};
+
+static input_device_t sampler_4bit_multijoy_j2p8_input_device[] = {
+    { "4 bit sampler on port 8 of multijoy adapter on native port 2", INPUT_INIT_MULTIJOY_J1_P8, INPUT_JOY2_4BIT }
 };
 
 static input_device_t sampler_2bit_joy2_input_device[] = {
@@ -1146,6 +1324,102 @@ static menu_input_t input_spaceballs_j2p8_menu[] = {
     { 0, NULL, NULL, NULL }
 };
 
+static menu_input_t input_multijoy_j1p1_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p1_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p1_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_multijoy_j1p2_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p2_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p2_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_multijoy_j1p3_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p3_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p3_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_multijoy_j1p4_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p4_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p4_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_multijoy_j1p5_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p5_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p5_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_multijoy_j1p6_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p6_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p6_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_multijoy_j1p7_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p7_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p7_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_multijoy_j1p8_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p8_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p8_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_multijoy_j2p1_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p1_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p1_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_multijoy_j2p2_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p2_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p2_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_multijoy_j2p3_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p3_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p3_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_multijoy_j2p4_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p4_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p4_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_multijoy_j2p5_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p5_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p5_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_multijoy_j2p6_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p6_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p6_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_multijoy_j2p7_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p7_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p7_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
+static menu_input_t input_multijoy_j2p8_menu[] = {
+    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p8_input_device },
+    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p8_input_device },
+    { 0, NULL, NULL, NULL }
+};
+
 static menu_input_t input_pet_menu[] = {
     { '1', "port 1", input_pet1_menu, NULL },
     { '2', "port 2", input_pet2_menu, NULL },
@@ -1195,13 +1469,44 @@ static menu_input_t input_spaceballs_j2_menu[] = {
     { 0, NULL, NULL, NULL },
 };
 
+static menu_input_t input_multijoy_j1_menu[] = {
+    { '1', "port 1", input_multijoy_j1p1_menu, NULL },
+    { '2', "port 2", input_multijoy_j1p2_menu, NULL },
+    { '3', "port 3", input_multijoy_j1p3_menu, NULL },
+    { '4', "port 4", input_multijoy_j1p4_menu, NULL },
+    { '5', "port 5", input_multijoy_j1p5_menu, NULL },
+    { '6', "port 6", input_multijoy_j1p6_menu, NULL },
+    { '7', "port 7", input_multijoy_j1p7_menu, NULL },
+    { '8', "port 8", input_multijoy_j1p8_menu, NULL },
+    { 0, NULL, NULL, NULL },
+};
+
+static menu_input_t input_multijoy_j2_menu[] = {
+    { '1', "port 1", input_multijoy_j2p1_menu, NULL },
+    { '2', "port 2", input_multijoy_j2p2_menu, NULL },
+    { '3', "port 3", input_multijoy_j2p3_menu, NULL },
+    { '4', "port 4", input_multijoy_j2p4_menu, NULL },
+    { '5', "port 5", input_multijoy_j2p5_menu, NULL },
+    { '6', "port 6", input_multijoy_j2p6_menu, NULL },
+    { '7', "port 7", input_multijoy_j2p7_menu, NULL },
+    { '8', "port 8", input_multijoy_j2p8_menu, NULL },
+    { 0, NULL, NULL, NULL },
+};
+
 static menu_input_t input_spaceballs_menu[] = {
     { '1', "native port 1", input_spaceballs_j1_menu, NULL },
     { '2', "native port 2", input_spaceballs_j2_menu, NULL },
     { 0, NULL, NULL, NULL }
 };
 
+static menu_input_t input_multijoy_menu[] = {
+    { '1', "native port 1", input_multijoy_j1_menu, NULL },
+    { '2', "native port 2", input_multijoy_j2_menu, NULL },
+    { 0, NULL, NULL, NULL }
+};
+
 static menu_input_t input_joy_adapter_menu[] = {
+    { 'm', "multijoy adapter", input_multijoy_menu, NULL },
     { 's', "spaceballs adapter", input_spaceballs_menu, NULL },
     { 0, NULL, NULL, NULL }
 };

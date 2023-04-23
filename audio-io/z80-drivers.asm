@@ -28,6 +28,22 @@ PUBLIC _spaceballs5_2bit_4bit_input_init
 PUBLIC _spaceballs6_2bit_4bit_input_init
 PUBLIC _spaceballs7_2bit_4bit_input_init
 PUBLIC _spaceballs8_2bit_4bit_input_init
+PUBLIC _multijoy_j1_p1_2bit_4bit_input_init
+PUBLIC _multijoy_j1_p2_2bit_4bit_input_init
+PUBLIC _multijoy_j1_p3_2bit_4bit_input_init
+PUBLIC _multijoy_j1_p4_2bit_4bit_input_init
+PUBLIC _multijoy_j1_p5_2bit_4bit_input_init
+PUBLIC _multijoy_j1_p6_2bit_4bit_input_init
+PUBLIC _multijoy_j1_p7_2bit_4bit_input_init
+PUBLIC _multijoy_j1_p8_2bit_4bit_input_init
+PUBLIC _multijoy_j2_p1_2bit_4bit_input_init
+PUBLIC _multijoy_j2_p2_2bit_4bit_input_init
+PUBLIC _multijoy_j2_p3_2bit_4bit_input_init
+PUBLIC _multijoy_j2_p4_2bit_4bit_input_init
+PUBLIC _multijoy_j2_p5_2bit_4bit_input_init
+PUBLIC _multijoy_j2_p6_2bit_4bit_input_init
+PUBLIC _multijoy_j2_p7_2bit_4bit_input_init
+PUBLIC _multijoy_j2_p8_2bit_4bit_input_init
 PUBLIC _sid_output_init
 PUBLIC _sfx_expander_output_init
 PUBLIC _userport_digimax_output_init
@@ -769,6 +785,140 @@ PUBLIC _disable_irq
 	push de
 	ld d,0x7f
 	jr spaceballs_userport
+
+.init_multijoy_j1
+	ld a,0xff
+	ld bc,IOBASE+0x0c02
+	out (c),a
+	ld bc,IOBASE+0x0c00
+	out (c),d
+	pop de
+	pop bc
+	pop af
+	ret
+
+.init_multijoy_j2
+	ld a,0xff
+	ld bc,IOBASE+0x0c03
+	out (c),a
+	ld bc,IOBASE+0x0c01
+	out (c),d
+	pop de
+	pop bc
+	pop af
+	ret
+
+._multijoy_j1_p1_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,0
+	jr init_multijoy_j1
+
+._multijoy_j1_p2_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,1
+	jr init_multijoy_j1
+
+._multijoy_j1_p3_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,2
+	jr init_multijoy_j1
+
+._multijoy_j1_p4_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,3
+	jr init_multijoy_j1
+
+._multijoy_j1_p5_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,4
+	jr init_multijoy_j1
+
+._multijoy_j1_p6_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,5
+	jr init_multijoy_j1
+
+._multijoy_j1_p7_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,6
+	jr init_multijoy_j1
+
+._multijoy_j1_p8_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,7
+	jr init_multijoy_j1
+
+._multijoy_j2_p1_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,0
+	jr init_multijoy_j2
+
+._multijoy_j2_p2_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,1
+	jr init_multijoy_j2
+
+._multijoy_j2_p3_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,2
+	jr init_multijoy_j2
+
+._multijoy_j2_p4_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,3
+	jr init_multijoy_j2
+
+._multijoy_j2_p5_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,4
+	jr init_multijoy_j2
+
+._multijoy_j2_p6_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,5
+	jr init_multijoy_j2
+
+._multijoy_j2_p7_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,6
+	jr init_multijoy_j2
+
+._multijoy_j2_p8_2bit_4bit_input_init
+	push af
+	push bc
+	push de
+	ld d,7
+	jr init_multijoy_j2
 
 ._userport_2bit_4bit_ks1_sb2_input_init
 	push af
