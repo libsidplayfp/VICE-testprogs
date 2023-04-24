@@ -1881,6 +1881,13 @@ static menu_input_t input_joy_adapter_menu[] = {
 };
 #endif
 
+#if defined(__C64__)
+static menu_input_t c64dtv_input_joy_adapter_menu[] = {
+    { 'm', "multijoy", input_multijoy_menu, NULL },
+    { 0, NULL, NULL, NULL }
+};
+#endif
+
 static menu_input_t input_port_menu[] = {
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__)
     { 'c', "cartridge port", input_cart_menu, NULL },
@@ -1932,6 +1939,7 @@ static menu_input_t input_port_c64dtv_menu[] = {
     { '1', "native port 1", input_port1_c64dtv_menu, NULL },
     { '2', "native port 2", input_port2_c64dtv_menu, NULL },
     { 'h', "hummer joystick adapter", input_hummer_c64dtv_menu, NULL },
+    { 'a', "joystick port joystick adapter", c64dtv_input_joy_adapter_menu, NULL },
     { 0, NULL, NULL, NULL }
 };
 #endif
