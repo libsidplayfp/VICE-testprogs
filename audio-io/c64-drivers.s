@@ -17,6 +17,38 @@
 ; unsigned char __fastcall__ sampler_4bit_multijoy_j1_input(void);
 ; unsigned char __fastcall__ sampler_2bit_multijoy_j2_input(void);
 ; unsigned char __fastcall__ sampler_4bit_multijoy_j2_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j1p1_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j1p2_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j1p3_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j1p4_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j1p5_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j1p6_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j1p7_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j1p8_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j1p1_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j1p2_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j1p3_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j1p4_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j1p5_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j1p6_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j1p7_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j1p8_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j2p1_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j2p2_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j2p3_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j2p4_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j2p5_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j2p6_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j2p7_input(void);
+; unsigned char __fastcall__ sampler_2bit_inception_j2p8_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j2p1_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j2p2_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j2p3_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j2p4_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j2p5_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j2p6_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j2p7_input(void);
+; unsigned char __fastcall__ sampler_4bit_inception_j2p8_input(void);
 ; void __fastcall__ sampler_2bit_hummer_input_init(void);
 ; unsigned char __fastcall__ sampler_2bit_hummer_input(void);
 ; void __fastcall__ sampler_4bit_hummer_input_init(void);
@@ -178,6 +210,38 @@
         .export  _sampler_4bit_multijoy_j1_input
         .export  _sampler_2bit_multijoy_j2_input
         .export  _sampler_4bit_multijoy_j2_input
+        .export  _sampler_2bit_inception_j1p1_input
+        .export  _sampler_2bit_inception_j1p2_input
+        .export  _sampler_2bit_inception_j1p3_input
+        .export  _sampler_2bit_inception_j1p4_input
+        .export  _sampler_2bit_inception_j1p5_input
+        .export  _sampler_2bit_inception_j1p6_input
+        .export  _sampler_2bit_inception_j1p7_input
+        .export  _sampler_2bit_inception_j1p8_input
+        .export  _sampler_4bit_inception_j1p1_input
+        .export  _sampler_4bit_inception_j1p2_input
+        .export  _sampler_4bit_inception_j1p3_input
+        .export  _sampler_4bit_inception_j1p4_input
+        .export  _sampler_4bit_inception_j1p5_input
+        .export  _sampler_4bit_inception_j1p6_input
+        .export  _sampler_4bit_inception_j1p7_input
+        .export  _sampler_4bit_inception_j1p8_input
+        .export  _sampler_2bit_inception_j2p1_input
+        .export  _sampler_2bit_inception_j2p2_input
+        .export  _sampler_2bit_inception_j2p3_input
+        .export  _sampler_2bit_inception_j2p4_input
+        .export  _sampler_2bit_inception_j2p5_input
+        .export  _sampler_2bit_inception_j2p6_input
+        .export  _sampler_2bit_inception_j2p7_input
+        .export  _sampler_2bit_inception_j2p8_input
+        .export  _sampler_4bit_inception_j2p1_input
+        .export  _sampler_4bit_inception_j2p2_input
+        .export  _sampler_4bit_inception_j2p3_input
+        .export  _sampler_4bit_inception_j2p4_input
+        .export  _sampler_4bit_inception_j2p5_input
+        .export  _sampler_4bit_inception_j2p6_input
+        .export  _sampler_4bit_inception_j2p7_input
+        .export  _sampler_4bit_inception_j2p8_input
         .export  _sampler_2bit_hummer_input_init, _sampler_2bit_hummer_input
         .export  _sampler_4bit_hummer_input_init, _sampler_4bit_hummer_input
         .export  _sampler_2bit_spt_input_init, _sampler_2bit_spt_input
@@ -444,6 +508,256 @@ _sampler_multijoy_j2p7_input_init:
 _sampler_multijoy_j2p8_input_init:
         ldx     #$07
         jmp     init_multijoy_j2
+
+inception_byte_1:
+        .byte   0
+
+inception_byte_2:
+        .byte   0
+
+inception_byte_3:
+        .byte   0
+
+inception_byte_4:
+        .byte   0
+
+inception_byte_5:
+        .byte   0
+
+inception_byte_6:
+        .byte   0
+
+inception_byte_7:
+        .byte   0
+
+inception_byte_8:
+        .byte   0
+
+inception_j1_input_bytes:
+        lda     #$00
+        sta     $dc01
+        lda     #$1f
+        sta     $dc03
+        lda     #$10
+        sta     $dc01
+        sta     $dc03
+        ldx     #$00
+inception_j1_loop:
+        lda     $dc01
+        asl
+        asl
+        asl
+        asl
+        sta     tmp1
+        ldy     #$00
+        sty     $dc01
+        lda     $dc01
+        ldy     #$10
+        sty     $dc01
+        and     #$0f
+        ora     tmp1
+        sta     inception_byte_1,x
+        inx     
+        cpx     #$08
+        bne     inception_j1_loop
+        lda     #$7f
+        sta     $dc01
+        lda     #$ff
+        sta     $dc03
+        rts
+
+inception_j2_input_bytes:
+        lda     #$00
+        sta     $dc00
+        lda     #$1f
+        sta     $dc02
+        lda     #$10
+        sta     $dc00
+        sta     $dc02
+        ldx     #$00
+inception_j2_loop:
+        lda     $dc00
+        asl
+        asl
+        asl
+        asl
+        sta     tmp1
+        ldy     #$00
+        sty     $dc00
+        lda     $dc00
+        ldy     #$10
+        sty     $dc00
+        and     #$0f
+        ora     tmp1
+        sta     inception_byte_1,x
+        inx     
+        cpx     #$08
+        bne     inception_j2_loop
+        lda     #$7f
+        sta     $dc00
+        lda     #$ff
+        sta     $dc02
+        rts
+
+_sampler_2bit_inception_j1p1_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_1
+        jmp     do_asl6
+
+_sampler_2bit_inception_j1p2_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_2
+        jmp     do_asl6
+
+_sampler_2bit_inception_j1p3_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_3
+        jmp     do_asl6
+
+_sampler_2bit_inception_j1p4_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_4
+        jmp     do_asl6
+
+_sampler_2bit_inception_j1p5_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_5
+        jmp     do_asl6
+
+_sampler_2bit_inception_j1p6_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_6
+        jmp     do_asl6
+
+_sampler_2bit_inception_j1p7_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_7
+        jmp     do_asl6
+
+_sampler_2bit_inception_j1p8_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_8
+        jmp     do_asl6
+
+_sampler_4bit_inception_j1p1_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_1
+        jmp     do_asl4
+
+_sampler_4bit_inception_j1p2_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_2
+        jmp     do_asl4
+
+_sampler_4bit_inception_j1p3_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_3
+        jmp     do_asl4
+
+_sampler_4bit_inception_j1p4_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_4
+        jmp     do_asl4
+
+_sampler_4bit_inception_j1p5_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_5
+        jmp     do_asl4
+
+_sampler_4bit_inception_j1p6_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_6
+        jmp     do_asl4
+
+_sampler_4bit_inception_j1p7_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_7
+        jmp     do_asl4
+
+_sampler_4bit_inception_j1p8_input:
+        jsr     inception_j1_input_bytes
+        lda     inception_byte_8
+        jmp     do_asl4
+
+_sampler_2bit_inception_j2p1_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_1
+        jmp     do_asl6
+
+_sampler_2bit_inception_j2p2_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_2
+        jmp     do_asl6
+
+_sampler_2bit_inception_j2p3_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_3
+        jmp     do_asl6
+
+_sampler_2bit_inception_j2p4_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_4
+        jmp     do_asl6
+
+_sampler_2bit_inception_j2p5_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_5
+        jmp     do_asl6
+
+_sampler_2bit_inception_j2p6_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_6
+        jmp     do_asl6
+
+_sampler_2bit_inception_j2p7_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_7
+        jmp     do_asl6
+
+_sampler_2bit_inception_j2p8_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_8
+        jmp     do_asl6
+
+_sampler_4bit_inception_j2p1_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_1
+        jmp     do_asl4
+
+_sampler_4bit_inception_j2p2_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_2
+        jmp     do_asl4
+
+_sampler_4bit_inception_j2p3_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_3
+        jmp     do_asl4
+
+_sampler_4bit_inception_j2p4_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_4
+        jmp     do_asl4
+
+_sampler_4bit_inception_j2p5_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_5
+        jmp     do_asl4
+
+_sampler_4bit_inception_j2p6_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_6
+        jmp     do_asl4
+
+_sampler_4bit_inception_j2p7_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_7
+        jmp     do_asl4
+
+_sampler_4bit_inception_j2p8_input:
+        jsr     inception_j2_input_bytes
+        lda     inception_byte_8
+        jmp     do_asl4
 
 _sampler_2bit_woj1_input_init:
 _sampler_4bit_woj1_input_init:
@@ -762,6 +1076,7 @@ _sampler_2bit_woj6_input:
 _sampler_2bit_woj7_input:
 _sampler_2bit_woj8_input:
         lda     $dd01
+do_asl6:
         asl
         asl
         jmp     do_asl4

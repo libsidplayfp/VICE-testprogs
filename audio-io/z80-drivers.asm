@@ -121,6 +121,7 @@ PUBLIC _disable_irq
 .input_joy1_2bit
 	ld bc,IOBASE+0x0c01
 	in a,(c)
+.do_asl6
 	sla a
 	sla a
 	jr do_asl4
@@ -934,6 +935,306 @@ PUBLIC _disable_irq
 	pop af
 	ret
 
+.inception_byte_1
+	defb 0
+
+.inception_byte_2
+	defb 0
+
+.inception_byte_3
+	defb 0
+
+.inception_byte_4
+	defb 0
+
+.inception_byte_5
+	defb 0
+
+.inception_byte_6
+	defb 0
+
+.inception_byte_7
+	defb 0
+
+.inception_byte_8
+	defb 0
+
+.inception_j1_input_bytes
+	ld a,0x00
+	ld bc,IOBASE+0x0c01
+	out (c),a
+	ld a,0x1f
+	ld bc,IOBASE+0x0c03
+	out (c),a
+	ld a,0x10
+	ld bc,IOBASE+0x0c01
+	out (c),a
+	ld bc,IOBASE+0x0c03
+	out (c),a
+	ld de,inception_byte_1
+	ld bc,IOBASE+0x0c01
+	ld l,0
+.inception_j1_loop
+	in a,(c)
+	sla a
+	sla a
+	sla a
+	sla a
+	ld h,a
+	ld a,0x00
+	out (c),a
+	in a,(c)
+	and 0x0f
+	or h
+	ld (de),a
+	ld a,0x10
+	out (c),a
+	inc de
+	inc l
+	ld a,l
+	cp 0x08
+	jr nz,inception_j1_loop
+	ld a,0x7f
+	out (c),a
+	ld a,0xff
+	ld bc,IOBASE+0x0c03
+	out (c),a
+	ret
+
+.inception_j2_input_bytes
+	ld a,0x00
+	ld bc,IOBASE+0x0c00
+	out (c),a
+	ld a,0x1f
+	ld bc,IOBASE+0x0c02
+	out (c),a
+	ld a,0x10
+	ld bc,IOBASE+0x0c00
+	out (c),a
+	ld bc,IOBASE+0x0c02
+	out (c),a
+	ld de,inception_byte_1
+	ld bc,IOBASE+0x0c00
+	ld l,0
+.inception_j2_loop
+	in a,(c)
+	sla a
+	sla a
+	sla a
+	sla a
+	ld h,a
+	ld a,0x00
+	out (c),a
+	in a,(c)
+	and 0x0f
+	or h
+	ld (de),a
+	ld a,0x10
+	out (c),a
+	inc de
+	inc l
+	ld a,l
+	cp 0x08
+	jr nz,inception_j2_loop
+	ld a,0x7f
+	out (c),a
+	ld a,0xff
+	ld bc,IOBASE+0x0c02
+	out (c),a
+	ret
+
+.inc_2bit_j1p1_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_1
+	ld a,(de)
+	jp do_asl6
+
+.inc_2bit_j1p2_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_2
+	ld a,(de)
+	jp do_asl6
+
+.inc_2bit_j1p3_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_3
+	ld a,(de)
+	jp do_asl6
+
+.inc_2bit_j1p4_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_4
+	ld a,(de)
+	jp do_asl6
+
+.inc_2bit_j1p5_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_5
+	ld a,(de)
+	jp do_asl6
+
+.inc_2bit_j1p6_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_6
+	ld a,(de)
+	jp do_asl6
+
+.inc_2bit_j1p7_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_7
+	ld a,(de)
+	jp do_asl6
+
+.inc_2bit_j1p8_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_8
+	ld a,(de)
+	jp do_asl6
+
+.inc_4bit_j1p1_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_1
+	ld a,(de)
+	jp do_asl4
+
+.inc_4bit_j1p2_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_2
+	ld a,(de)
+	jp do_asl4
+
+.inc_4bit_j1p3_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_3
+	ld a,(de)
+	jp do_asl4
+
+.inc_4bit_j1p4_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_4
+	ld a,(de)
+	jp do_asl4
+
+.inc_4bit_j1p5_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_5
+	ld a,(de)
+	jp do_asl4
+
+.inc_4bit_j1p6_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_6
+	ld a,(de)
+	jp do_asl4
+
+.inc_4bit_j1p7_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_7
+	ld a,(de)
+	jp do_asl4
+
+.inc_4bit_j1p8_input
+	call inception_j1_input_bytes
+	ld de,inception_byte_8
+	ld a,(de)
+	jp do_asl4
+
+.inc_2bit_j2p1_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_1
+	ld a,(de)
+	jp do_asl6
+
+.inc_2bit_j2p2_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_2
+	ld a,(de)
+	jp do_asl6
+
+.inc_2bit_j2p3_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_3
+	ld a,(de)
+	jp do_asl6
+
+.inc_2bit_j2p4_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_4
+	ld a,(de)
+	jp do_asl6
+
+.inc_2bit_j2p5_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_5
+	ld a,(de)
+	jp do_asl6
+
+.inc_2bit_j2p6_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_6
+	ld a,(de)
+	jp do_asl6
+
+.inc_2bit_j2p7_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_7
+	ld a,(de)
+	jp do_asl6
+
+.inc_2bit_j2p8_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_8
+	ld a,(de)
+	jp do_asl6
+
+.inc_4bit_j2p1_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_1
+	ld a,(de)
+	jp do_asl4
+
+.inc_4bit_j2p2_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_2
+	ld a,(de)
+	jp do_asl4
+
+.inc_4bit_j2p3_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_3
+	ld a,(de)
+	jp do_asl4
+
+.inc_4bit_j2p4_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_4
+	ld a,(de)
+	jp do_asl4
+
+.inc_4bit_j2p5_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_5
+	ld a,(de)
+	jp do_asl4
+
+.inc_4bit_j2p6_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_6
+	ld a,(de)
+	jp do_asl4
+
+.inc_4bit_j2p7_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_7
+	ld a,(de)
+	jp do_asl4
+
+.inc_4bit_j2p8_input
+	call inception_j2_input_bytes
+	ld de,inception_byte_8
+	ld a,(de)
+	jp do_asl4
+
 ; output SID, sample in A
 .output_sid
 	srl a
@@ -1027,49 +1328,113 @@ PUBLIC _disable_irq
 	push de
 	ld a,l
 	cp INPUT_SOFTWARE
-	jr z,set_input_software
+	jp z,set_input_software
 	cp INPUT_SFX_SAMPLER
-	jr z,set_input_sfx_sampler
+	jp z,set_input_sfx_sampler
 	cp INPUT_USERPORT_4BIT
-	jr z,set_input_userport_4bit
+	jp z,set_input_userport_4bit
 	cp INPUT_JOY1_4BIT
-	jr z,set_input_joy1_4bit
+	jp z,set_input_joy1_4bit
 	cp INPUT_JOY1_2BIT
-	jr z,set_input_joy1_2bit
+	jp z,set_input_joy1_2bit
 	cp INPUT_JOY2_4BIT
-	jr z,set_input_joy2_4bit
+	jp z,set_input_joy2_4bit
 	cp INPUT_JOY2_2BIT
-	jr z,set_input_joy2_2bit
+	jp z,set_input_joy2_2bit
 	cp INPUT_USERPORT_JOY_4
-	jr z,set_userport_4bit_input
+	jp z,set_userport_4bit_input
 	cp INPUT_USERPORT_JOY_2
-	jr z,set_userport_2bit_input
+	jp z,set_userport_2bit_input
 	cp INPUT_USERPORT_PET2
-	jr z,set_userport_2bit_pet2_hit2_input
+	jp z,set_userport_2bit_pet2_hit2_input
 	cp INPUT_USERPORT_OEM2
-	jr z,set_userport_2bit_oem_input
+	jp z,set_userport_2bit_oem_input
 	cp INPUT_USERPORT_OEM4
-	jr z,set_userport_4bit_oem_input
+	jp z,set_userport_4bit_oem_input
 	cp INPUT_USERPORT_SPT_2
-	jr z,set_userport_2bit_spt_input
+	jp z,set_userport_2bit_spt_input
 	cp INPUT_USERPORT_SPT_4
-	jr z,set_userport_4bit_spt_input
+	jp z,set_userport_4bit_spt_input
 	cp INPUT_USERPORT_KS1_2BIT
-	jr z,set_userport_2bit_ks1_input
+	jp z,set_userport_2bit_ks1_input
 	cp INPUT_USERPORT_KS1_4BIT
-	jr z,set_userport_4bit_ks1_input
+	jp z,set_userport_4bit_ks1_input
 	cp INPUT_USERPORT_KS2_2BIT
-	jr z,set_userport_2bit_ks2_input
+	jp z,set_userport_2bit_ks2_input
 	cp INPUT_USERPORT_KS2_4BIT
-	jr z,set_userport_4bit_ks2_input
+	jp z,set_userport_4bit_ks2_input
 	cp INPUT_USERPORT_SB1_2BIT
-	jr z,set_userport_2bit_sb1_input
+	jp z,set_userport_2bit_sb1_input
 	cp INPUT_USERPORT_SB1_4BIT
-	jr z,set_userport_4bit_sb1_input
+	jp z,set_userport_4bit_sb1_input
 	cp INPUT_USERPORT_SB2_2BIT
-	jr z,set_userport_2bit_sb2_input
+	jp z,set_userport_2bit_sb2_input
 	cp INPUT_USERPORT_SB2_4BIT
-	jr z,set_userport_4bit_sb2_input
+	jp z,set_userport_4bit_sb2_input
+	cp INPUT_INCEPTION_J1P1_2BIT
+	jp z,set_2bit_inc_j1p1_input
+	cp INPUT_INCEPTION_J1P2_2BIT
+	jp z,set_2bit_inc_j1p2_input
+	cp INPUT_INCEPTION_J1P3_2BIT
+	jp z,set_2bit_inc_j1p3_input
+	cp INPUT_INCEPTION_J1P4_2BIT
+	jp z,set_2bit_inc_j1p4_input
+	cp INPUT_INCEPTION_J1P5_2BIT
+	jp z,set_2bit_inc_j1p5_input
+	cp INPUT_INCEPTION_J1P6_2BIT
+	jp z,set_2bit_inc_j1p6_input
+	cp INPUT_INCEPTION_J1P7_2BIT
+	jp z,set_2bit_inc_j1p7_input
+	cp INPUT_INCEPTION_J1P8_2BIT
+	jp z,set_2bit_inc_j1p8_input
+	cp INPUT_INCEPTION_J1P1_4BIT
+	jp z,set_4bit_inc_j1p1_input
+	cp INPUT_INCEPTION_J1P2_4BIT
+	jp z,set_4bit_inc_j1p2_input
+	cp INPUT_INCEPTION_J1P3_4BIT
+	jp z,set_4bit_inc_j1p3_input
+	cp INPUT_INCEPTION_J1P4_4BIT
+	jp z,set_4bit_inc_j1p4_input
+	cp INPUT_INCEPTION_J1P5_4BIT
+	jp z,set_4bit_inc_j1p5_input
+	cp INPUT_INCEPTION_J1P6_4BIT
+	jp z,set_4bit_inc_j1p6_input
+	cp INPUT_INCEPTION_J1P7_4BIT
+	jp z,set_4bit_inc_j1p7_input
+	cp INPUT_INCEPTION_J1P8_4BIT
+	jp z,set_4bit_inc_j1p8_input
+	cp INPUT_INCEPTION_J2P1_2BIT
+	jp z,set_2bit_inc_j2p1_input
+	cp INPUT_INCEPTION_J2P2_2BIT
+	jp z,set_2bit_inc_j2p2_input
+	cp INPUT_INCEPTION_J2P3_2BIT
+	jp z,set_2bit_inc_j2p3_input
+	cp INPUT_INCEPTION_J2P4_2BIT
+	jp z,set_2bit_inc_j2p4_input
+	cp INPUT_INCEPTION_J2P5_2BIT
+	jp z,set_2bit_inc_j2p5_input
+	cp INPUT_INCEPTION_J2P6_2BIT
+	jp z,set_2bit_inc_j2p6_input
+	cp INPUT_INCEPTION_J2P7_2BIT
+	jp z,set_2bit_inc_j2p7_input
+	cp INPUT_INCEPTION_J2P8_2BIT
+	jp z,set_2bit_inc_j2p8_input
+	cp INPUT_INCEPTION_J2P1_4BIT
+	jp z,set_4bit_inc_j2p1_input
+	cp INPUT_INCEPTION_J2P2_4BIT
+	jp z,set_4bit_inc_j2p2_input
+	cp INPUT_INCEPTION_J2P3_4BIT
+	jp z,set_4bit_inc_j2p3_input
+	cp INPUT_INCEPTION_J2P4_4BIT
+	jp z,set_4bit_inc_j2p4_input
+	cp INPUT_INCEPTION_J2P5_4BIT
+	jp z,set_4bit_inc_j2p5_input
+	cp INPUT_INCEPTION_J2P6_4BIT
+	jp z,set_4bit_inc_j2p6_input
+	cp INPUT_INCEPTION_J2P7_4BIT
+	jp z,set_4bit_inc_j2p7_input
+	cp INPUT_INCEPTION_J2P8_4BIT
+	jp z,set_4bit_inc_j2p8_input
 .end_set_input_function
 	pop de
 	pop bc
@@ -1172,6 +1537,134 @@ PUBLIC _disable_irq
 .set_userport_4bit_sb2_input
 	ld de,userport_4bit_sb2_input
 	jr set_input
+
+.set_2bit_inc_j1p1_input
+	ld de,inc_2bit_j1p1_input
+	jr set_input
+
+.set_2bit_inc_j1p2_input
+	ld de,inc_2bit_j1p2_input
+	jp set_input
+
+.set_2bit_inc_j1p3_input
+	ld de,inc_2bit_j1p3_input
+	jp set_input
+
+.set_2bit_inc_j1p4_input
+	ld de,inc_2bit_j1p4_input
+	jp set_input
+
+.set_2bit_inc_j1p5_input
+	ld de,inc_2bit_j1p5_input
+	jp set_input
+
+.set_2bit_inc_j1p6_input
+	ld de,inc_2bit_j1p6_input
+	jp set_input
+
+.set_2bit_inc_j1p7_input
+	ld de,inc_2bit_j1p7_input
+	jp set_input
+
+.set_2bit_inc_j1p8_input
+	ld de,inc_2bit_j1p8_input
+	jp set_input
+
+.set_4bit_inc_j1p1_input
+	ld de,inc_4bit_j1p1_input
+	jp set_input
+
+.set_4bit_inc_j1p2_input
+	ld de,inc_4bit_j1p2_input
+	jp set_input
+
+.set_4bit_inc_j1p3_input
+	ld de,inc_4bit_j1p3_input
+	jp set_input
+
+.set_4bit_inc_j1p4_input
+	ld de,inc_4bit_j1p4_input
+	jp set_input
+
+.set_4bit_inc_j1p5_input
+	ld de,inc_4bit_j1p5_input
+	jp set_input
+
+.set_4bit_inc_j1p6_input
+	ld de,inc_4bit_j1p6_input
+	jp set_input
+
+.set_4bit_inc_j1p7_input
+	ld de,inc_4bit_j1p7_input
+	jp set_input
+
+.set_4bit_inc_j1p8_input
+	ld de,inc_4bit_j1p8_input
+	jp set_input
+
+.set_2bit_inc_j2p1_input
+	ld de,inc_2bit_j2p1_input
+	jp set_input
+
+.set_2bit_inc_j2p2_input
+	ld de,inc_2bit_j2p2_input
+	jp set_input
+
+.set_2bit_inc_j2p3_input
+	ld de,inc_2bit_j2p3_input
+	jp set_input
+
+.set_2bit_inc_j2p4_input
+	ld de,inc_2bit_j2p4_input
+	jp set_input
+
+.set_2bit_inc_j2p5_input
+	ld de,inc_2bit_j2p5_input
+	jp set_input
+
+.set_2bit_inc_j2p6_input
+	ld de,inc_2bit_j2p6_input
+	jp set_input
+
+.set_2bit_inc_j2p7_input
+	ld de,inc_2bit_j2p7_input
+	jp set_input
+
+.set_2bit_inc_j2p8_input
+	ld de,inc_2bit_j2p8_input
+	jp set_input
+
+.set_4bit_inc_j2p1_input
+	ld de,inc_4bit_j2p1_input
+	jp set_input
+
+.set_4bit_inc_j2p2_input
+	ld de,inc_4bit_j2p2_input
+	jp set_input
+
+.set_4bit_inc_j2p3_input
+	ld de,inc_4bit_j2p3_input
+	jp set_input
+
+.set_4bit_inc_j2p4_input
+	ld de,inc_4bit_j2p4_input
+	jp set_input
+
+.set_4bit_inc_j2p5_input
+	ld de,inc_4bit_j2p5_input
+	jp set_input
+
+.set_4bit_inc_j2p6_input
+	ld de,inc_4bit_j2p6_input
+	jp set_input
+
+.set_4bit_inc_j2p7_input
+	ld de,inc_4bit_j2p7_input
+	jp set_input
+
+.set_4bit_inc_j2p8_input
+	ld de,inc_4bit_j2p8_input
+	jp set_input
 
 ; output function type in L
 ._set_output_function

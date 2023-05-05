@@ -182,6 +182,42 @@ unsigned char __fastcall__ sampler_4bit_multijoy_j1_input(void);
 unsigned char __fastcall__ sampler_2bit_multijoy_j2_input(void);
 unsigned char __fastcall__ sampler_4bit_multijoy_j2_input(void);
 
+/* c64-drivers.s / cbm5x0-drivers.s / vic20-drivers.s */
+unsigned char __fastcall__ sampler_2bit_inception_j1p1_input(void);
+unsigned char __fastcall__ sampler_2bit_inception_j1p2_input(void);
+unsigned char __fastcall__ sampler_2bit_inception_j1p3_input(void);
+unsigned char __fastcall__ sampler_2bit_inception_j1p4_input(void);
+unsigned char __fastcall__ sampler_2bit_inception_j1p5_input(void);
+unsigned char __fastcall__ sampler_2bit_inception_j1p6_input(void);
+unsigned char __fastcall__ sampler_2bit_inception_j1p7_input(void);
+unsigned char __fastcall__ sampler_2bit_inception_j1p8_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j1p1_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j1p2_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j1p3_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j1p4_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j1p5_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j1p6_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j1p7_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j1p8_input(void);
+
+/* c64-drivers.s / cbm5x0-drivers.s */
+unsigned char __fastcall__ sampler_2bit_inception_j2p1_input(void);
+unsigned char __fastcall__ sampler_2bit_inception_j2p2_input(void);
+unsigned char __fastcall__ sampler_2bit_inception_j2p3_input(void);
+unsigned char __fastcall__ sampler_2bit_inception_j2p4_input(void);
+unsigned char __fastcall__ sampler_2bit_inception_j2p5_input(void);
+unsigned char __fastcall__ sampler_2bit_inception_j2p6_input(void);
+unsigned char __fastcall__ sampler_2bit_inception_j2p7_input(void);
+unsigned char __fastcall__ sampler_2bit_inception_j2p8_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j2p1_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j2p2_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j2p3_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j2p4_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j2p5_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j2p6_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j2p7_input(void);
+unsigned char __fastcall__ sampler_4bit_inception_j2p8_input(void);
+
 /* c64-drivers.s / cbm2-drivers.s */
 void __fastcall__ userport_digimax_output_init(void);
 void __fastcall__ userport_digimax_output(unsigned char sample);
