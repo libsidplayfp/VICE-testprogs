@@ -266,102 +266,6 @@ static input_device_t sampler_4bit_pet2_input_device[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_2bit_woj1_input_device[] = {
-    { "2 bit sampler on port 1 of the userport WOJ joy adapter", sampler_2bit_woj1_input_init, sampler_2bit_woj1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_4bit_woj1_input_device[] = {
-    { "4 bit sampler on port 1 of the userport WOJ joy adapter", sampler_4bit_woj1_input_init, sampler_4bit_woj1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_2bit_woj2_input_device[] = {
-    { "2 bit sampler on port 2 of the userport WOJ joy adapter", sampler_2bit_woj2_input_init, sampler_2bit_woj2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_4bit_woj2_input_device[] = {
-    { "4 bit sampler on port 2 of the userport WOJ joy adapter", sampler_4bit_woj2_input_init, sampler_4bit_woj2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_2bit_woj3_input_device[] = {
-    { "2 bit sampler on port 3 of the userport WOJ joy adapter", sampler_2bit_woj3_input_init, sampler_2bit_woj3_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_4bit_woj3_input_device[] = {
-    { "4 bit sampler on port 3 of the userport WOJ joy adapter", sampler_4bit_woj3_input_init, sampler_4bit_woj3_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_2bit_woj4_input_device[] = {
-    { "2 bit sampler on port 4 of the userport WOJ joy adapter", sampler_2bit_woj4_input_init, sampler_2bit_woj4_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_4bit_woj4_input_device[] = {
-    { "4 bit sampler on port 4 of the userport WOJ joy adapter", sampler_4bit_woj4_input_init, sampler_4bit_woj4_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_2bit_woj5_input_device[] = {
-    { "2 bit sampler on port 5 of the userport WOJ joy adapter", sampler_2bit_woj5_input_init, sampler_2bit_woj5_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_4bit_woj5_input_device[] = {
-    { "4 bit sampler on port 5 of the userport WOJ joy adapter", sampler_4bit_woj5_input_init, sampler_4bit_woj5_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_2bit_woj6_input_device[] = {
-    { "2 bit sampler on port 6 of the userport WOJ joy adapter", sampler_2bit_woj6_input_init, sampler_2bit_woj6_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_4bit_woj6_input_device[] = {
-    { "4 bit sampler on port 6 of the userport WOJ joy adapter", sampler_4bit_woj6_input_init, sampler_4bit_woj6_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_2bit_woj7_input_device[] = {
-    { "2 bit sampler on port 7 of the userport WOJ joy adapter", sampler_2bit_woj7_input_init, sampler_2bit_woj7_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_4bit_woj7_input_device[] = {
-    { "4 bit sampler on port 7 of the userport WOJ joy adapter", sampler_4bit_woj7_input_init, sampler_4bit_woj7_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_2bit_woj8_input_device[] = {
-    { "2 bit sampler on port 8 of the userport WOJ joy adapter", sampler_2bit_woj8_input_init, sampler_2bit_woj8_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_4bit_woj8_input_device[] = {
-    { "4 bit sampler on port 8 of the userport WOJ joy adapter", sampler_4bit_woj8_input_init, sampler_4bit_woj8_input }
-};
-#endif
-
 #ifdef __VIC20__
 static input_device_t sampler_2bit_inception_j1p1_input_device[] = {
     { "2 bit sampler on port 1 of the inception adapter in native port", NULL, sampler_2bit_inception_j1p1_input }
@@ -938,70 +842,6 @@ static menu_input_t input_pet2_menu[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static menu_input_t input_woj1_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_woj1_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_woj1_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static menu_input_t input_woj2_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_woj2_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_woj2_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static menu_input_t input_woj3_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_woj3_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_woj3_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static menu_input_t input_woj4_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_woj4_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_woj4_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static menu_input_t input_woj5_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_woj5_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_woj5_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static menu_input_t input_woj6_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_woj6_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_woj6_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static menu_input_t input_woj7_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_woj7_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_woj7_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static menu_input_t input_woj8_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_woj8_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_woj8_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
 #if defined(__C64__) || defined(__C128__) || defined(__CBM510__) || defined(__VIC20__)
 static menu_input_t input_inception_j1p1_menu[] = {
     { '2', "2 bit sampler", NULL, sampler_2bit_inception_j1p1_input_device },
@@ -1138,20 +978,6 @@ static menu_input_t input_pet_menu[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static menu_input_t input_woj_menu[] = {
-    { '1', "port 1", input_woj1_menu, NULL },
-    { '2', "port 2", input_woj2_menu, NULL },
-    { '3', "port 3", input_woj3_menu, NULL },
-    { '4', "port 4", input_woj4_menu, NULL },
-    { '5', "port 5", input_woj5_menu, NULL },
-    { '6', "port 6", input_woj6_menu, NULL },
-    { '7', "port 7", input_woj7_menu, NULL },
-    { '8', "port 8", input_woj8_menu, NULL },
-    { 0, NULL, NULL, NULL },
-};
-#endif
-
 #if defined(__C64__) || defined(__C128__) || defined(__CBM510__) || defined(__VIC20__)
 static menu_input_t input_inception_j1_menu[] = {
     { '1', "port 1", input_inception_j1p1_menu, NULL },
@@ -1191,7 +1017,6 @@ static menu_input_t input_inception_menu[] = {
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_userport_joy_menu[] = {
     { 'p', "PET joystick adapter", input_pet_menu, NULL },
-    { 'w', "WOJ joystick adapter", input_woj_menu, NULL },
 #if defined(__C64__) || defined(__C128__)
     { 's', "StarByte joystick adapter", input_starbyte_menu, NULL },
     { 'k', "KingSoft joystick adapter", input_kingsoft_menu, NULL },
