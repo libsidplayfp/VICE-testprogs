@@ -49,14 +49,6 @@
 ; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
 ; void __fastcall__ sampler_4bit_pet2_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_pet2_input(void);
-; void __fastcall__ sampler_2bit_kingsoft1_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_kingsoft1_input(void);
-; void __fastcall__ sampler_4bit_kingsoft1_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_kingsoft1_input(void);
-; void __fastcall__ sampler_2bit_kingsoft2_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_kingsoft2_input(void);
-; void __fastcall__ sampler_4bit_kingsoft2_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_kingsoft2_input(void);
 ; void __fastcall__ sampler_2bit_starbyte1_input_init(void);
 ; unsigned char __fastcall__ sampler_2bit_starbyte1_input(void);
 ; void __fastcall__ sampler_4bit_starbyte1_input_init(void);
@@ -126,10 +118,6 @@
         .export  _sampler_4bit_pet1_input_init, _sampler_4bit_pet1_input
         .export  _sampler_2bit_pet2_input_init, _sampler_2bit_pet2_input
         .export  _sampler_4bit_pet2_input_init, _sampler_4bit_pet2_input
-        .export  _sampler_2bit_kingsoft1_input_init, _sampler_2bit_kingsoft1_input
-        .export  _sampler_4bit_kingsoft1_input_init, _sampler_4bit_kingsoft1_input
-        .export  _sampler_2bit_kingsoft2_input_init, _sampler_2bit_kingsoft2_input
-        .export  _sampler_4bit_kingsoft2_input_init, _sampler_4bit_kingsoft2_input
         .export  _sampler_2bit_starbyte1_input_init, _sampler_2bit_starbyte1_input
         .export  _sampler_4bit_starbyte1_input_init, _sampler_4bit_starbyte1_input
         .export  _sampler_2bit_starbyte2_input_init, _sampler_2bit_starbyte2_input
@@ -161,8 +149,6 @@ _sampler_4bit_userport_input_init:
         jmp     _sampler_2bit_userport_input_init
 
 
-_sampler_2bit_kingsoft1_input_init:
-_sampler_4bit_kingsoft1_input_init:
 _sampler_2bit_starbyte2_input_init:
 _sampler_4bit_starbyte2_input_init:
         lda     $dd02
@@ -176,8 +162,6 @@ _sampler_2bit_pet1_input_init:
 _sampler_4bit_pet1_input_init:
 _sampler_2bit_pet2_input_init:
 _sampler_4bit_pet2_input_init:
-_sampler_2bit_kingsoft2_input_init:
-_sampler_4bit_kingsoft2_input_init:
 _sampler_2bit_starbyte1_input_init:
 _sampler_4bit_starbyte1_input_init:
         ldx     #$00
@@ -521,91 +505,6 @@ _sampler_4bit_starbyte1_input:
         lda     tmp2
         and     #$08
         asl
-        ora     tmp1
-        rts
-
-_sampler_2bit_kingsoft2_input:
-        lda     $dd01
-        sta     tmp2
-        and     #$04
-        asl
-        asl
-        asl
-        asl
-        asl
-        sta     tmp1
-        lda     tmp2
-        and     #$08
-        asl
-        asl
-        asl
-        ora     tmp1
-        rts
-
-_sampler_4bit_kingsoft2_input:
-        lda     $dd01
-        sta     tmp2
-        and     #$01
-        clc
-        ror
-        ror
-        sta     tmp1
-        lda     tmp2
-        and     #$02
-        asl
-        asl
-        asl
-        asl
-        asl
-        ora    tmp1
-        sta    tmp1
-        lda    tmp2
-        and    #$04
-        asl
-        asl
-        asl
-        ora    tmp1
-        sta    tmp1
-        lda    tmp2
-        and    #$08
-        asl
-        ora    tmp1
-        rts
-
-_sampler_2bit_kingsoft1_input:
-        lda     $dd00
-        and     #$04
-        asl
-        asl
-        asl
-        asl
-        sta     tmp1
-        lda     $dd01
-        and     #$80
-        ora     tmp1
-        rts
-
-_sampler_4bit_kingsoft1_input:
-        lda     $dd00
-        and     #$04
-        asl
-        asl
-        sta     tmp1
-        lda     $dd01
-        sta     tmp2
-        and     #$20
-        asl
-        asl
-        ora     tmp1
-        sta     tmp1
-        lda     tmp2
-        and     #$40
-        ora     tmp1
-        sta     tmp1
-        lda     tmp2
-        and     #$80
-        lsr
-        lsr
         ora     tmp1
         rts
 

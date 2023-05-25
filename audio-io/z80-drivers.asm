@@ -9,7 +9,7 @@ PUBLIC _set_sid_addr_asm
 PUBLIC _set_digimax_addr_asm
 PUBLIC _userport_4bit_input_init
 PUBLIC _userport_2bit_4bit_input_init
-PUBLIC _userport_2bit_4bit_ks1_sb2_input_init
+PUBLIC _userport_2bit_4bit_sb2_input_init
 PUBLIC _sid_output_init
 PUBLIC _sfx_expander_output_init
 PUBLIC _userport_digimax_output_init
@@ -126,105 +126,6 @@ PUBLIC _disable_irq
 	in a,(c)
 	sla a
 	sla a
-	ret
-
-; input KINGSOFT1 2BIT, returns sample in A
-.userport_2bit_ks1_input
-	ld bc,IOBASE+0x0d00
-	in a,(c)
-	and 0x04
-	sla a
-	sla a
-	sla a
-	sla a
-	ld d,a
-	ld bc,IOBASE+0x0d01
-	in a,(c)
-	and 0x80
-	or d
-	ret
-
-; input KINGSOFT1 4BIT, returns sample in A
-.userport_4bit_ks1_input
-	ld bc,IOBASE+0x0d00
-	in a,(c)
-	and 0x04
-	sla a
-	sla a
-	ld d,a
-	ld bc,IOBASE+0x0d01
-	in a,(c)
-	ld e,a
-	and 0x20
-	sla a
-	sla a
-	or d
-	ld d,a
-	ld a,e
-	and 0x40
-	or d
-	ld d,a
-	ld a,e
-	and 0x80
-	sla a
-	sla a
-	or d
-	ret
-
-; input KINGSOFT2 2BIT, returns sample in A
-.userport_2bit_ks2_input
-	ld bc,IOBASE+0x0d01
-	in a,(c)
-	ld e,a
-	and 0x04
-	sla a
-	sla a
-	sla a
-	sla a
-	sla a
-	ld d,a
-	ld a,e
-	and 0x08
-	sla a
-	sla a
-	sla a
-	or d
-	ret
-
-; input KINGSOFT2 4BIT, returns sample in A
-.userport_4bit_ks2_input
-	ld bc,IOBASE+0x0d01
-	in a,(c)
-	ld e,a
-	and 0x01
-	sla a
-	sla a
-	sla a
-	sla a
-	sla a
-	sla a
-	sla a
-	ld d,a
-	ld a,e
-	and 0x02
-	sla a
-	sla a
-	sla a
-	sla a
-	sla a
-	or d
-	ld d,a
-	ld a,e
-	and 0x04
-	sla a
-	sla a
-	sla a
-	or d
-	ld d,a
-	ld a,e
-	and 0x08
-	sla a
-	or d
 	ret
 
 ; input STARBYTE1 2BIT, returns sample in A
@@ -527,7 +428,7 @@ PUBLIC _disable_irq
 	pop af
 	ret
 
-._userport_2bit_4bit_ks1_sb2_input_init
+._userport_2bit_4bit_sb2_input_init
 	push af
 	push bc
 	ld bc,IOBASE+0x0d02
@@ -953,14 +854,6 @@ PUBLIC _disable_irq
 	jp z,set_userport_2bit_input
 	cp INPUT_USERPORT_PET2
 	jp z,set_userport_2bit_pet2_input
-	cp INPUT_USERPORT_KS1_2BIT
-	jp z,set_userport_2bit_ks1_input
-	cp INPUT_USERPORT_KS1_4BIT
-	jp z,set_userport_4bit_ks1_input
-	cp INPUT_USERPORT_KS2_2BIT
-	jp z,set_userport_2bit_ks2_input
-	cp INPUT_USERPORT_KS2_4BIT
-	jp z,set_userport_4bit_ks2_input
 	cp INPUT_USERPORT_SB1_2BIT
 	jp z,set_userport_2bit_sb1_input
 	cp INPUT_USERPORT_SB1_4BIT
@@ -1086,22 +979,6 @@ PUBLIC _disable_irq
 
 .set_userport_2bit_pet2_input
 	ld de,userport_2bit_pet2_input
-	jr set_input
-
-.set_userport_2bit_ks1_input
-	ld de,userport_2bit_ks1_input
-	jr set_input
-
-.set_userport_4bit_ks1_input
-	ld de,userport_4bit_ks1_input
-	jr set_input
-
-.set_userport_2bit_ks2_input
-	ld de,userport_2bit_ks2_input
-	jr set_input
-
-.set_userport_4bit_ks2_input
-	ld de,userport_4bit_ks2_input
 	jr set_input
 
 .set_userport_2bit_sb1_input

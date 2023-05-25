@@ -49,14 +49,6 @@ void __fastcall__ sampler_4bit_pet2_input_init(void);
 unsigned char __fastcall__ sampler_4bit_pet2_input(void);
 
 /* c64-drivers.s / cbm2-drivers.s */
-void __fastcall__ sampler_2bit_kingsoft1_input_init(void);
-unsigned char __fastcall__ sampler_2bit_kingsoft1_input(void);
-void __fastcall__ sampler_4bit_kingsoft1_input_init(void);
-unsigned char __fastcall__ sampler_4bit_kingsoft1_input(void);
-void __fastcall__ sampler_2bit_kingsoft2_input_init(void);
-unsigned char __fastcall__ sampler_2bit_kingsoft2_input(void);
-void __fastcall__ sampler_4bit_kingsoft2_input_init(void);
-unsigned char __fastcall__ sampler_4bit_kingsoft2_input(void);
 void __fastcall__ sampler_2bit_starbyte1_input_init(void);
 unsigned char __fastcall__ sampler_2bit_starbyte1_input(void);
 void __fastcall__ sampler_4bit_starbyte1_input_init(void);
