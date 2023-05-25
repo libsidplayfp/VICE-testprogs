@@ -446,198 +446,6 @@ static input_device_t sampler_4bit_woj8_input_device[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j1p1_input_device[] = {
-    { "2 bit sampler on port 1 of the multijoy adapter in native port 1", sampler_multijoy_j1p1_input_init, sampler_2bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j1p1_input_device[] = {
-    { "4 bit sampler on port 1 of the multijoy adapter in native port 1", sampler_multijoy_j1p1_input_init, sampler_4bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j1p2_input_device[] = {
-    { "2 bit sampler on port 2 of the multijoy adapter in native port 1", sampler_multijoy_j1p2_input_init, sampler_2bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j1p2_input_device[] = {
-    { "4 bit sampler on port 2 of the multijoy adapter in native port 1", sampler_multijoy_j1p2_input_init, sampler_4bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j1p3_input_device[] = {
-    { "2 bit sampler on port 3 of the multijoy adapter in native port 1", sampler_multijoy_j1p3_input_init, sampler_2bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j1p3_input_device[] = {
-    { "4 bit sampler on port 3 of the multijoy adapter in native port 1", sampler_multijoy_j1p3_input_init, sampler_4bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j1p4_input_device[] = {
-    { "2 bit sampler on port 4 of the multijoy adapter in native port 1", sampler_multijoy_j1p4_input_init, sampler_2bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j1p4_input_device[] = {
-    { "4 bit sampler on port 4 of the multijoy adapter in native port 1", sampler_multijoy_j1p4_input_init, sampler_4bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j1p5_input_device[] = {
-    { "2 bit sampler on port 5 of the multijoy adapter in native port 1", sampler_multijoy_j1p5_input_init, sampler_2bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j1p5_input_device[] = {
-    { "4 bit sampler on port 5 of the multijoy adapter in native port 1", sampler_multijoy_j1p5_input_init, sampler_4bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j1p6_input_device[] = {
-    { "2 bit sampler on port 6 of the multijoy adapter in native port 1", sampler_multijoy_j1p6_input_init, sampler_2bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j1p6_input_device[] = {
-    { "4 bit sampler on port 6 of the multijoy adapter in native port 1", sampler_multijoy_j1p6_input_init, sampler_4bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j1p7_input_device[] = {
-    { "2 bit sampler on port 7 of the multijoy adapter in native port 1", sampler_multijoy_j1p7_input_init, sampler_2bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j1p7_input_device[] = {
-    { "4 bit sampler on port 7 of the multijoy adapter in native port 1", sampler_multijoy_j1p7_input_init, sampler_4bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j1p8_input_device[] = {
-    { "2 bit sampler on port 8 of the multijoy adapter in native port 1", sampler_multijoy_j1p8_input_init, sampler_2bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j1p8_input_device[] = {
-    { "4 bit sampler on port 8 of the multijoy adapter in native port 1", sampler_multijoy_j1p8_input_init, sampler_4bit_multijoy_j1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j2p1_input_device[] = {
-    { "2 bit sampler on port 1 of the multijoy adapter in native port 2", sampler_multijoy_j2p1_input_init, sampler_2bit_multijoy_j2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j2p1_input_device[] = {
-    { "4 bit sampler on port 1 of the multijoy adapter in native port 2", sampler_multijoy_j2p1_input_init, sampler_4bit_multijoy_j2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j2p2_input_device[] = {
-    { "2 bit sampler on port 2 of the multijoy adapter in native port 2", sampler_multijoy_j2p2_input_init, sampler_2bit_multijoy_j2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j2p2_input_device[] = {
-    { "4 bit sampler on port 2 of the multijoy adapter in native port 2", sampler_multijoy_j2p2_input_init, sampler_4bit_multijoy_j2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j2p3_input_device[] = {
-    { "2 bit sampler on port 3 of the multijoy adapter in native port 2", sampler_multijoy_j2p3_input_init, sampler_2bit_multijoy_j2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j2p3_input_device[] = {
-    { "4 bit sampler on port 3 of the multijoy adapter in native port 2", sampler_multijoy_j2p3_input_init, sampler_4bit_multijoy_j2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j2p4_input_device[] = {
-    { "2 bit sampler on port 4 of the multijoy adapter in native port 2", sampler_multijoy_j2p4_input_init, sampler_2bit_multijoy_j2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j2p4_input_device[] = {
-    { "4 bit sampler on port 4 of the multijoy adapter in native port 2", sampler_multijoy_j2p4_input_init, sampler_4bit_multijoy_j2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j2p5_input_device[] = {
-    { "2 bit sampler on port 5 of the multijoy adapter in native port 2", sampler_multijoy_j2p5_input_init, sampler_2bit_multijoy_j2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j2p5_input_device[] = {
-    { "4 bit sampler on port 5 of the multijoy adapter in native port 2", sampler_multijoy_j2p5_input_init, sampler_4bit_multijoy_j2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j2p6_input_device[] = {
-    { "2 bit sampler on port 6 of the multijoy adapter in native port 2", sampler_multijoy_j2p6_input_init, sampler_2bit_multijoy_j2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j2p6_input_device[] = {
-    { "4 bit sampler on port 6 of the multijoy adapter in native port 2", sampler_multijoy_j2p6_input_init, sampler_4bit_multijoy_j2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j2p7_input_device[] = {
-    { "2 bit sampler on port 7 of the multijoy adapter in native port 2", sampler_multijoy_j2p7_input_init, sampler_2bit_multijoy_j2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j2p7_input_device[] = {
-    { "4 bit sampler on port 7 of the multijoy adapter in native port 2", sampler_multijoy_j2p7_input_init, sampler_4bit_multijoy_j2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_2bit_multijoy_j2p8_input_device[] = {
-    { "2 bit sampler on port 8 of the multijoy adapter in native port 2", sampler_multijoy_j2p8_input_init, sampler_2bit_multijoy_j2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static input_device_t sampler_4bit_multijoy_j2p8_input_device[] = {
-    { "4 bit sampler on port 8 of the multijoy adapter in native port 2", sampler_multijoy_j2p8_input_init, sampler_4bit_multijoy_j2_input }
-};
-#endif
-
 #ifdef __VIC20__
 static input_device_t sampler_2bit_inception_j1p1_input_device[] = {
     { "2 bit sampler on port 1 of the inception adapter in native port", NULL, sampler_2bit_inception_j1p1_input }
@@ -1375,134 +1183,6 @@ static menu_input_t input_woj8_menu[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j1p1_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p1_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p1_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j1p2_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p2_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p2_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j1p3_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p3_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p3_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j1p4_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p4_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p4_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j1p5_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p5_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p5_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j1p6_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p6_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p6_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j1p7_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p7_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p7_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j1p8_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j1p8_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j1p8_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j2p1_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p1_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p1_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j2p2_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p2_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p2_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j2p3_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p3_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p3_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j2p4_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p4_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p4_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j2p5_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p5_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p5_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j2p6_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p6_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p6_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j2p7_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p7_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p7_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j2p8_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_multijoy_j2p8_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_multijoy_j2p8_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
 #if defined(__C64__) || defined(__C128__) || defined(__CBM510__) || defined(__VIC20__)
 static menu_input_t input_inception_j1p1_menu[] = {
     { '2', "2 bit sampler", NULL, sampler_2bit_inception_j1p1_input_device },
@@ -1662,34 +1342,6 @@ static menu_input_t input_woj_menu[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j1_menu[] = {
-    { '1', "port 1", input_multijoy_j1p1_menu, NULL },
-    { '2', "port 2", input_multijoy_j1p2_menu, NULL },
-    { '3', "port 3", input_multijoy_j1p3_menu, NULL },
-    { '4', "port 4", input_multijoy_j1p4_menu, NULL },
-    { '5', "port 5", input_multijoy_j1p5_menu, NULL },
-    { '6', "port 6", input_multijoy_j1p6_menu, NULL },
-    { '7', "port 7", input_multijoy_j1p7_menu, NULL },
-    { '8', "port 8", input_multijoy_j1p8_menu, NULL },
-    { 0, NULL, NULL, NULL },
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_j2_menu[] = {
-    { '1', "port 1", input_multijoy_j2p1_menu, NULL },
-    { '2', "port 2", input_multijoy_j2p2_menu, NULL },
-    { '3', "port 3", input_multijoy_j2p3_menu, NULL },
-    { '4', "port 4", input_multijoy_j2p4_menu, NULL },
-    { '5', "port 5", input_multijoy_j2p5_menu, NULL },
-    { '6', "port 6", input_multijoy_j2p6_menu, NULL },
-    { '7', "port 7", input_multijoy_j2p7_menu, NULL },
-    { '8', "port 8", input_multijoy_j2p8_menu, NULL },
-    { 0, NULL, NULL, NULL },
-};
-#endif
-
 #if defined(__C64__) || defined(__C128__) || defined(__CBM510__) || defined(__VIC20__)
 static menu_input_t input_inception_j1_menu[] = {
     { '1', "port 1", input_inception_j1p1_menu, NULL },
@@ -1714,14 +1366,6 @@ static menu_input_t input_inception_j2_menu[] = {
     { '6', "port 6", input_inception_j2p6_menu, NULL },
     { '7', "port 7", input_inception_j2p7_menu, NULL },
     { '8', "port 8", input_inception_j2p8_menu, NULL },
-    { 0, NULL, NULL, NULL },
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-static menu_input_t input_multijoy_menu[] = {
-    { '1', "native port 1", input_multijoy_j1_menu, NULL },
-    { '2', "native port 2", input_multijoy_j2_menu, NULL },
     { 0, NULL, NULL, NULL },
 };
 #endif
@@ -1869,9 +1513,6 @@ static menu_input_t input_cart_menu[] = {
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM510__)
 static menu_input_t input_joy_adapter_menu[] = {
 #if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
-    { 'm', "multijoy", input_multijoy_menu, NULL },
-#endif
-#if defined(__C64__) || defined(__C128__) || defined(__CBM510__)
     { 'i', "inception", input_inception_menu, NULL },
 #endif
 #ifdef __VIC20__
@@ -1883,7 +1524,6 @@ static menu_input_t input_joy_adapter_menu[] = {
 
 #if defined(__C64__)
 static menu_input_t c64dtv_input_joy_adapter_menu[] = {
-    { 'm', "multijoy", input_multijoy_menu, NULL },
     { 'i', "inception", input_inception_menu, NULL },
     { 0, NULL, NULL, NULL }
 };

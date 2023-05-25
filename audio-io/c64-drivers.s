@@ -9,10 +9,6 @@
 ; unsigned char __fastcall__ sampler_4bit_joy1_input(void);
 ; unsigned char __fastcall__ sampler_2bit_joy2_input(void);
 ; unsigned char __fastcall__ sampler_4bit_joy2_input(void);
-; unsigned char __fastcall__ sampler_2bit_multijoy_j1_input(void);
-; unsigned char __fastcall__ sampler_4bit_multijoy_j1_input(void);
-; unsigned char __fastcall__ sampler_2bit_multijoy_j2_input(void);
-; unsigned char __fastcall__ sampler_4bit_multijoy_j2_input(void);
 ; unsigned char __fastcall__ sampler_2bit_inception_j1p1_input(void);
 ; unsigned char __fastcall__ sampler_2bit_inception_j1p2_input(void);
 ; unsigned char __fastcall__ sampler_2bit_inception_j1p3_input(void);
@@ -143,22 +139,6 @@
 ; unsigned char __fastcall__ sampler_4bit_starbyte2_input(void);
 ; void __fastcall__ sampler_4bit_userport_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_userport_input(void);
-; void __fastcall__ sampler_multijoy_j1p1_input_init(void);
-; void __fastcall__ sampler_multijoy_j1p2_input_init(void);
-; void __fastcall__ sampler_multijoy_j1p3_input_init(void);
-; void __fastcall__ sampler_multijoy_j1p4_input_init(void);
-; void __fastcall__ sampler_multijoy_j1p5_input_init(void);
-; void __fastcall__ sampler_multijoy_j1p6_input_init(void);
-; void __fastcall__ sampler_multijoy_j1p7_input_init(void);
-; void __fastcall__ sampler_multijoy_j1p8_input_init(void);
-; void __fastcall__ sampler_multijoy_j2p1_input_init(void);
-; void __fastcall__ sampler_multijoy_j2p2_input_init(void);
-; void __fastcall__ sampler_multijoy_j2p3_input_init(void);
-; void __fastcall__ sampler_multijoy_j2p4_input_init(void);
-; void __fastcall__ sampler_multijoy_j2p5_input_init(void);
-; void __fastcall__ sampler_multijoy_j2p6_input_init(void);
-; void __fastcall__ sampler_multijoy_j2p7_input_init(void);
-; void __fastcall__ sampler_multijoy_j2p8_input_init(void);
 ;
 ; void __fastcall__ digimax_cart_output(unsigned char sample);
 ; void __fastcall__ shortbus_digimax_output(unsigned char sample);
@@ -182,10 +162,6 @@
         .export  _sampler_4bit_joy1_input
         .export  _sampler_2bit_joy2_input
         .export  _sampler_4bit_joy2_input
-        .export  _sampler_2bit_multijoy_j1_input
-        .export  _sampler_4bit_multijoy_j1_input
-        .export  _sampler_2bit_multijoy_j2_input
-        .export  _sampler_4bit_multijoy_j2_input
         .export  _sampler_2bit_inception_j1p1_input
         .export  _sampler_2bit_inception_j1p2_input
         .export  _sampler_2bit_inception_j1p3_input
@@ -267,22 +243,6 @@
         .export  _sampler_2bit_starbyte2_input_init, _sampler_2bit_starbyte2_input
         .export  _sampler_4bit_starbyte2_input_init, _sampler_4bit_starbyte2_input
         .export  _sampler_4bit_userport_input_init, _sampler_4bit_userport_input
-        .export  _sampler_multijoy_j1p1_input_init
-        .export  _sampler_multijoy_j1p2_input_init
-        .export  _sampler_multijoy_j1p3_input_init
-        .export  _sampler_multijoy_j1p4_input_init
-        .export  _sampler_multijoy_j1p5_input_init
-        .export  _sampler_multijoy_j1p6_input_init
-        .export  _sampler_multijoy_j1p7_input_init
-        .export  _sampler_multijoy_j1p8_input_init
-        .export  _sampler_multijoy_j2p1_input_init
-        .export  _sampler_multijoy_j2p2_input_init
-        .export  _sampler_multijoy_j2p3_input_init
-        .export  _sampler_multijoy_j2p4_input_init
-        .export  _sampler_multijoy_j2p5_input_init
-        .export  _sampler_multijoy_j2p6_input_init
-        .export  _sampler_multijoy_j2p7_input_init
-        .export  _sampler_multijoy_j2p8_input_init
         .export  _digimax_cart_output
         .export  _shortbus_digimax_output
         .export  _sfx_output
@@ -345,82 +305,6 @@ dd03_e0:
         ldx     #$E0
         stx     $dd03
         rts
-
-init_multijoy_j1:
-        ldy     #$ff
-        sty     $dc02
-        stx     $dc00
-        rts
-
-init_multijoy_j2:
-        ldy     #$ff
-        sty     $dc03
-        stx     $dc01
-        rts
-
-_sampler_multijoy_j1p1_input_init:
-        ldx     #$00
-        jmp     init_multijoy_j1
-
-_sampler_multijoy_j1p2_input_init:
-        ldx     #$01
-        jmp     init_multijoy_j1
-
-_sampler_multijoy_j1p3_input_init:
-        ldx     #$02
-        jmp     init_multijoy_j1
-
-_sampler_multijoy_j1p4_input_init:
-        ldx     #$03
-        jmp     init_multijoy_j1
-
-_sampler_multijoy_j1p5_input_init:
-        ldx     #$04
-        jmp     init_multijoy_j1
-
-_sampler_multijoy_j1p6_input_init:
-        ldx     #$05
-        jmp     init_multijoy_j1
-
-_sampler_multijoy_j1p7_input_init:
-        ldx     #$06
-        jmp     init_multijoy_j1
-
-_sampler_multijoy_j1p8_input_init:
-        ldx     #$07
-        jmp     init_multijoy_j1
-
-_sampler_multijoy_j2p1_input_init:
-        ldx     #$00
-        jmp     init_multijoy_j2
-
-_sampler_multijoy_j2p2_input_init:
-        ldx     #$01
-        jmp     init_multijoy_j2
-
-_sampler_multijoy_j2p3_input_init:
-        ldx     #$02
-        jmp     init_multijoy_j2
-
-_sampler_multijoy_j2p4_input_init:
-        ldx     #$03
-        jmp     init_multijoy_j2
-
-_sampler_multijoy_j2p5_input_init:
-        ldx     #$04
-        jmp     init_multijoy_j2
-
-_sampler_multijoy_j2p6_input_init:
-        ldx     #$05
-        jmp     init_multijoy_j2
-
-_sampler_multijoy_j2p7_input_init:
-        ldx     #$06
-        jmp     init_multijoy_j2
-
-_sampler_multijoy_j2p8_input_init:
-        ldx     #$07
-        jmp     init_multijoy_j2
 
 inception_byte_1:
         .byte   0
@@ -1038,14 +922,12 @@ _sfx_input:
         rts
 
 _sampler_2bit_joy1_input:
-_sampler_2bit_multijoy_j1_input:
         lda     $dc01
         asl
         asl
         jmp     do_asl4
 
 _sampler_4bit_joy1_input:
-_sampler_4bit_multijoy_j1_input:
         lda     $dc01
 do_asl4:
         asl
@@ -1055,14 +937,12 @@ do_asl4:
         rts
 
 _sampler_2bit_joy2_input:
-_sampler_2bit_multijoy_j2_input:
         lda     $dc00
         asl
         asl
         jmp     do_asl4
 
 _sampler_4bit_joy2_input:
-_sampler_4bit_multijoy_j2_input:
         lda     $dc00
         jmp     do_asl4
 
