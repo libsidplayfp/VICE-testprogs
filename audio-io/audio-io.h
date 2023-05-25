@@ -15,16 +15,6 @@ void __fastcall__ digimax_cart_output(unsigned char sample);
 void __fastcall__ shortbus_digimax_output(unsigned char sample);
 void __fastcall__ sfx_sound_expander_output_init(void);
 void __fastcall__ sfx_sound_expander_output(unsigned char sample);
-void __fastcall__ sampler_spaceballs_j1p1_input_init(void);
-void __fastcall__ sampler_spaceballs_j1p2_input_init(void);
-void __fastcall__ sampler_spaceballs_j1p3_input_init(void);
-void __fastcall__ sampler_spaceballs_j1p4_input_init(void);
-void __fastcall__ sampler_spaceballs_j1p5_input_init(void);
-void __fastcall__ sampler_spaceballs_j1p6_input_init(void);
-void __fastcall__ sampler_spaceballs_j1p7_input_init(void);
-void __fastcall__ sampler_spaceballs_j1p8_input_init(void);
-unsigned char __fastcall__ sampler_2bit_spaceballs_j1_input(void);
-unsigned char __fastcall__ sampler_4bit_spaceballs_j1_input(void);
 
 /* plus4-drivers.s */
 unsigned char __fastcall__ digiblaster_fd5x_input(void);
@@ -225,16 +215,6 @@ void __fastcall__ userport_digimax_output(unsigned char sample);
 /* c64-drivers.s */
 void __fastcall__ siddtv_output_init(void);
 void __fastcall__ siddtv_output(unsigned char sample);
-void __fastcall__ sampler_spaceballs_j2p1_input_init(void);
-void __fastcall__ sampler_spaceballs_j2p2_input_init(void);
-void __fastcall__ sampler_spaceballs_j2p3_input_init(void);
-void __fastcall__ sampler_spaceballs_j2p4_input_init(void);
-void __fastcall__ sampler_spaceballs_j2p5_input_init(void);
-void __fastcall__ sampler_spaceballs_j2p6_input_init(void);
-void __fastcall__ sampler_spaceballs_j2p7_input_init(void);
-void __fastcall__ sampler_spaceballs_j2p8_input_init(void);
-unsigned char __fastcall__ sampler_2bit_spaceballs_j2_input(void);
-unsigned char __fastcall__ sampler_4bit_spaceballs_j2_input(void);
 
 /* stubs.s */
 void __fastcall__ sampler_8bss_left_input_init(void);

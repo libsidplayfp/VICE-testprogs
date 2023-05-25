@@ -80,16 +80,6 @@
 ; unsigned char __fastcall__ sampler_2bit_cga2_input(void);
 ; void __fastcall__ sampler_4bit_cga2_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_cga2_input(void);
-; void __fastcall__ sampler_spaceballs_j1p1_input_init(void);
-; void __fastcall__ sampler_spaceballs_j1p2_input_init(void);
-; void __fastcall__ sampler_spaceballs_j1p3_input_init(void);
-; void __fastcall__ sampler_spaceballs_j1p4_input_init(void);
-; void __fastcall__ sampler_spaceballs_j1p5_input_init(void);
-; void __fastcall__ sampler_spaceballs_j1p6_input_init(void);
-; void __fastcall__ sampler_spaceballs_j1p7_input_init(void);
-; void __fastcall__ sampler_spaceballs_j1p8_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_spaceballs_j1_input(void);
-; unsigned char __fastcall__ sampler_4bit_spaceballs_j1_input(void);
 ; unsigned char __fastcall__ sampler_2bit_inception_j1p1_input(void);
 ; unsigned char __fastcall__ sampler_2bit_inception_j1p2_input(void);
 ; unsigned char __fastcall__ sampler_2bit_inception_j1p3_input(void);
@@ -162,16 +152,6 @@
         .export  _sampler_4bit_cga1_input_init, _sampler_4bit_cga1_input
         .export  _sampler_2bit_cga2_input_init, _sampler_2bit_cga2_input
         .export  _sampler_4bit_cga2_input_init, _sampler_4bit_cga2_input
-        .export  _sampler_spaceballs_j1p1_input_init
-        .export  _sampler_spaceballs_j1p2_input_init
-        .export  _sampler_spaceballs_j1p3_input_init
-        .export  _sampler_spaceballs_j1p4_input_init
-        .export  _sampler_spaceballs_j1p5_input_init
-        .export  _sampler_spaceballs_j1p6_input_init
-        .export  _sampler_spaceballs_j1p7_input_init
-        .export  _sampler_spaceballs_j1p8_input_init
-        .export  _sampler_2bit_spaceballs_j1_input
-        .export  _sampler_4bit_spaceballs_j1_input
         .export  _sampler_2bit_inception_j1p1_input
         .export  _sampler_2bit_inception_j1p2_input
         .export  _sampler_2bit_inception_j1p3_input
@@ -218,44 +198,6 @@ _sampler_4bit_pet2_input_init:
         ldx     #$00
         stx     $9112
         rts
-
-spaceballs_userport:
-        ldy     #$FF
-        sty     $9112
-        stx     $9110
-        rts
-
-_sampler_spaceballs_j1p1_input_init:
-        ldx     #$FE
-        jmp     spaceballs_userport
-
-_sampler_spaceballs_j1p2_input_init:
-        ldx     #$FD
-        jmp     spaceballs_userport
-
-_sampler_spaceballs_j1p3_input_init:
-        ldx     #$FB
-        jmp     spaceballs_userport
-
-_sampler_spaceballs_j1p4_input_init:
-        ldx     #$F7
-        jmp     spaceballs_userport
-
-_sampler_spaceballs_j1p5_input_init:
-        ldx     #$EF
-        jmp     spaceballs_userport
-
-_sampler_spaceballs_j1p6_input_init:
-        ldx     #$DF
-        jmp     spaceballs_userport
-
-_sampler_spaceballs_j1p7_input_init:
-        ldx     #$BF
-        jmp     spaceballs_userport
-
-_sampler_spaceballs_j1p8_input_init:
-        ldx     #$7F
-        jmp     spaceballs_userport
 
 e0_9112:
         ldx     #$E0
@@ -608,7 +550,6 @@ _sampler_4bit_spt_input:
         jmp     do_asl4
 
 _sampler_2bit_joy1_input:
-_sampler_2bit_spaceballs_j1_input:
         lda     $9111
         and     #$0c
 do_asl4:
@@ -619,7 +560,6 @@ do_asl4:
         rts
 
 _sampler_4bit_joy1_input:
-_sampler_4bit_spaceballs_j1_input:
         lda     $9111
         and     #$1c
         asl
