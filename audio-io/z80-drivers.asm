@@ -116,7 +116,7 @@ PUBLIC _disable_irq
 	in a,(c)
 	jr do_asl4
 
-; input HUMMER/PET1/CGA1/CGA2/HIT1 2BIT, returns sample in A
+; input PET1/CGA1/CGA2/HIT1 2BIT, returns sample in A
 .userport_2bit_input
 	ld bc,IOBASE+0x0d01
 	in a,(c)
@@ -124,7 +124,7 @@ PUBLIC _disable_irq
 	sla a
 	jr do_asl4
 
-; input HUMMER/PET1/CGA1/CGA2/HIT1 4BIT, returns sample in A
+; input PET1/CGA1/CGA2/HIT1 4BIT, returns sample in A
 .userport_4bit_input
 	ld bc,IOBASE+0x0d01
 	in a,(c)

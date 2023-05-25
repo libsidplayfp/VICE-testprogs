@@ -1,10 +1,6 @@
 ;
 ; Marco van den Heuvel, 28.01.2016
 ;
-; void __fastcall__ sampler_2bit_hummer_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_hummer_input(void);
-; void __fastcall__ sampler_4bit_hummer_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_hummer_input(void);
 ; void __fastcall__ sampler_2bit_spt_input_init(void);
 ; unsigned char __fastcall__ sampler_2bit_spt_input(void);
 ; void __fastcall__ sampler_4bit_spt_input_init(void);
@@ -104,8 +100,6 @@
 ; void __fastcall__ _show_sample(unsigned char sample);
 ;
 
-        .export  _sampler_2bit_hummer_input_init, _sampler_2bit_hummer_input
-        .export  _sampler_4bit_hummer_input_init, _sampler_4bit_hummer_input
         .export  _sampler_2bit_spt_input_init, _sampler_2bit_spt_input
         .export  _sampler_4bit_spt_input_init, _sampler_4bit_spt_input
         .export  _sampler_2bit_pet1_input_init, _sampler_2bit_pet1_input
@@ -248,8 +242,6 @@ _sampler_4bit_starbyte2_input_init:
         stx     $01
         rts
 
-_sampler_2bit_hummer_input_init:
-_sampler_4bit_hummer_input_init:
 _sampler_2bit_spt_input_init:
 _sampler_4bit_spt_input_init:
 _sampler_2bit_pet1_input_init:
@@ -551,7 +543,6 @@ _sampler_4bit_kingsoft2_input:
         stx    $01
         rts
 
-_sampler_2bit_hummer_input:
 _sampler_2bit_pet1_input:
 _sampler_2bit_cga1_input:
 _sampler_2bit_cga2_input:
@@ -585,7 +576,6 @@ _sampler_2bit_spt_input:
         and     #$0C
         jmp     do_asl4
 
-_sampler_4bit_hummer_input:
 _sampler_4bit_pet1_input:
 _sampler_4bit_cga1_input:
 _sampler_4bit_cga2_input:

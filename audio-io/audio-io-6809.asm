@@ -132,8 +132,6 @@ hardware_input_menu:
 
 hardware_input_menu_choose:
 	jsr wtl_getchar
-	cmpb #'d'
-	beq userport_hummer_input_menu
 	cmpb #'t'
 	beq userport_spt_input_menu
 	cmpb #'y'
@@ -154,25 +152,6 @@ userport_woj_input_menu_jmp:
 
 userport_cga_input_menu_jmp:
 	jmp userport_cga_input_menu
-
-userport_hummer_input_menu:
-	jsr cls
-	ldx #choose_input_samplers_menu_text
-	jsr print_string
-
-userport_hummer_input_menu_choose:
-	jsr wtl_getchar
-	cmpb #'4'
-	beq setup_userport_hummer_4bit_input_jmp
-	cmpb #'2'
-	beq setup_userport_hummer_2bit_input_jmp
-	bra userport_hummer_input_menu_choose
-
-setup_userport_hummer_4bit_input_jmp
-	jmp setup_userport_hummer_4bit_input
-
-setup_userport_hummer_2bit_input_jmp:
-	jmp setup_userport_hummer_2bit_input
 
 userport_spt_input_menu:
 	jsr cls
@@ -555,24 +534,6 @@ setup_userport_cga2_4bit_input_jmp:
 
 setup_userport_cga2_2bit_input_jmp:
 	jmp setup_userport_cga2_2bit_input
-
-setup_userport_hummer_2bit_input:
-	ldx #userport_h_o_p_input_init
-	stx input_init_function
-	ldx #userport_h2_p12_c2_input
-	stx input_function
-	ldx #userport_hummer_2bit_text
-	stx input_text
-	rts
-
-setup_userport_hummer_4bit_input:
-	ldx #userport_h_o_p_input_init
-	stx input_init_function
-	ldx #userport_h4_p14_c4_input
-	stx input_function
-	ldx #userport_hummer_4bit_text
-	stx input_text
-	rts
 
 setup_userport_syn1_2bit_input:
 	ldx #userport_syn1_input_init
@@ -1196,8 +1157,6 @@ choose_input_hardware_menu_text:
 	fcc "Choose input"
 	fcb $0d
 	fcb $0d
-	fcc "d: C64DTV HUMMER userport joystick adapter"
-	fcb $0d
 	fcc "t: SPT userport joystick adapter"
 	fcb $0d
 	fcc "p: PET userport joystick adapter"
@@ -1292,16 +1251,6 @@ streaming_text:
 
 from_text:
 	fcc "from"
-	fcb $0d
-	fcb $00
-
-userport_hummer_2bit_text:
-	fcc "2 bit sampler on userport HUMMER joy adapter"
-	fcb $0d
-	fcb $00
-
-userport_hummer_4bit_text:
-	fcc "4 bit sampler on userport HUMMER joy adapter"
 	fcb $0d
 	fcb $00
 
