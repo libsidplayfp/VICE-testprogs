@@ -290,30 +290,6 @@ static input_device_t sampler_4bit_pet2_input_device[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
-static input_device_t sampler_2bit_oem_input_device[] = {
-    { "2 bit sampler on userport OEM joy adapter", sampler_2bit_oem_input_init, sampler_2bit_oem_input }
-};
-#endif
-
-#if defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_2bit_oem_input_device[] = {
-    { "2 bit sampler on userport OEM joy adapter", NULL, sampler_2bit_oem_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
-static input_device_t sampler_4bit_oem_input_device[] = {
-    { "4 bit sampler on userport OEM joy adapter", sampler_4bit_oem_input_init, sampler_4bit_oem_input }
-};
-#endif
-
-#if defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_4bit_oem_input_device[] = {
-    { "4 bit sampler on userport OEM joy adapter", NULL, sampler_4bit_oem_input }
-};
-#endif
-
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__) || defined(__C16__) || defined(__PLUS4__)
 static input_device_t sampler_2bit_syn1_input_device[] = {
     { "2 bit sampler on port 1 of the userport Synergy joy adapter", sampler_2bit_syn1_input_init, sampler_2bit_syn1_input }
@@ -1379,14 +1355,6 @@ static menu_input_t input_inception_menu[] = {
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static menu_input_t input_oem_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_oem_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_oem_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_hummer_menu[] = {
     { '2', "2 bit sampler", NULL, sampler_2bit_hummer_input_device },
     { '4', "4 bit sampler", NULL, sampler_4bit_hummer_input_device },
@@ -1405,7 +1373,6 @@ static menu_input_t input_spt_menu[] = {
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_userport_joy_menu[] = {
     { 'd', "C64DTV HUMMER joystick adapter", input_hummer_menu, NULL },
-    { 'o', "OEM joystick adapter", input_oem_menu, NULL },
     { 'p', "PET joystick adapter", input_pet_menu, NULL },
     { 't', "SPT joystick adapter", input_spt_menu, NULL },
     { 'y', "Synergy joystick adapter", input_syn_menu, NULL },

@@ -11,10 +11,6 @@
 ; unsigned char __fastcall__ sampler_2bit_spt_input(void);
 ; void __fastcall__ sampler_4bit_spt_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_spt_input(void);
-; void __fastcall__ sampler_2bit_oem_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_oem_input(void);
-; void __fastcall__ sampler_4bit_oem_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_oem_input(void);
 ; void __fastcall__ sampler_2bit_pet1_input_init(void);
 ; unsigned char __fastcall__ sampler_2bit_pet1_input(void);
 ; void __fastcall__ sampler_4bit_pet1_input_init(void);
@@ -88,8 +84,6 @@
         .export  _sampler_4bit_hummer_input_init, _sampler_4bit_hummer_input
         .export  _sampler_2bit_spt_input_init, _sampler_2bit_spt_input
         .export  _sampler_4bit_spt_input_init, _sampler_4bit_spt_input
-        .export  _sampler_2bit_oem_input_init, _sampler_2bit_oem_input
-        .export  _sampler_4bit_oem_input_init, _sampler_4bit_oem_input
         .export  _sampler_2bit_pet1_input_init, _sampler_2bit_pet1_input
         .export  _sampler_4bit_pet1_input_init, _sampler_4bit_pet1_input
         .export  _sampler_2bit_syn1_input_init, _sampler_2bit_syn1_input
@@ -134,8 +128,6 @@ _sampler_2bit_hummer_input_init:
 _sampler_4bit_hummer_input_init:
 _sampler_2bit_spt_input_init:
 _sampler_4bit_spt_input_init:
-_sampler_2bit_oem_input_init:
-_sampler_4bit_oem_input_init:
 _sampler_2bit_pet1_input_init:
 _sampler_4bit_pet1_input_init:
 _sampler_2bit_pet2_input_init:
@@ -236,44 +228,6 @@ _sampler_2bit_pet2_input:
 _sampler_4bit_pet2_input:
         lda     $e841
         and     #$f0
-        rts
-
-_sampler_2bit_oem_input:
-        lda     $e841
-        sta     tmp2
-        and     #$40
-        asl
-        sta     tmp1
-        lda     tmp2
-        and     #$80
-        lsr
-        ora     tmp1
-        rts
-
-_sampler_4bit_oem_input:
-        lda     $e841
-        sta     tmp2
-        and     #$10
-        asl
-        asl
-        asl
-        sta     tmp1
-        lda     tmp2
-        and     #$20
-        asl
-        ora     tmp1
-        sta     tmp1
-        lda     tmp2
-        and     #$40
-        lsr
-        ora     tmp1
-        sta     tmp1
-        lda     tmp2
-        and     #$80
-        lsr
-        lsr
-        lsr
-        ora     tmp1
         rts
 
 _sampler_2bit_hummer_input:

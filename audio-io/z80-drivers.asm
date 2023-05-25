@@ -138,48 +138,6 @@ PUBLIC _disable_irq
 	sla a
 	ret
 
-; input OEM 2BIT, returns sample in A
-.userport_2bit_oem_input
-	ld bc,IOBASE+0x0d01
-	in a,(c)
-	ld d,a
-	and 0x40
-	sla a
-	ld e,a
-	ld a,d
-	and 0x80
-	sla a
-	or e
-	ret
-
-; input OEM 4BIT, returns sample in A
-.userport_4bit_oem_input
-	ld bc,IOBASE+0x0d01
-	in a,(c)
-	ld d,a
-	and 0x10
-	sla a
-	sla a
-	sla a
-	ld e,a
-	ld a,d
-	and 0x20
-	sla a
-	or e
-	ld e,a
-	ld a,d
-	and 0x40
-	sla a
-	or e
-	ld e,a
-	ld a,d
-	and 0x80
-	sla a
-	sla a
-	sla a
-	or e
-	ret
-
 ; input SPT 2BIT, returns sample in A
 .userport_2bit_spt_input
 	ld bc,IOBASE+0x0d01
@@ -1122,10 +1080,6 @@ PUBLIC _disable_irq
 	jp z,set_userport_2bit_input
 	cp INPUT_USERPORT_PET2
 	jp z,set_userport_2bit_pet2_hit2_input
-	cp INPUT_USERPORT_OEM2
-	jp z,set_userport_2bit_oem_input
-	cp INPUT_USERPORT_OEM4
-	jp z,set_userport_4bit_oem_input
 	cp INPUT_USERPORT_SPT_2
 	jp z,set_userport_2bit_spt_input
 	cp INPUT_USERPORT_SPT_4
@@ -1263,14 +1217,6 @@ PUBLIC _disable_irq
 
 .set_userport_2bit_pet2_hit2_input
 	ld de,userport_2bit_pet2_hit2_input
-	jr set_input
-
-.set_userport_2bit_oem_input
-	ld de,userport_2bit_oem_input
-	jr set_input
-
-.set_userport_4bit_oem_input
-	ld de,userport_4bit_oem_input
 	jr set_input
 
 .set_userport_2bit_spt_input

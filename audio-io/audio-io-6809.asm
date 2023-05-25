@@ -134,8 +134,6 @@ hardware_input_menu_choose:
 	jsr wtl_getchar
 	cmpb #'d'
 	beq userport_hummer_input_menu
-	cmpb #'o'
-	beq userport_oem_input_menu
 	cmpb #'t'
 	beq userport_spt_input_menu
 	cmpb #'y'
@@ -175,25 +173,6 @@ setup_userport_hummer_4bit_input_jmp
 
 setup_userport_hummer_2bit_input_jmp:
 	jmp setup_userport_hummer_2bit_input
-
-userport_oem_input_menu:
-	jsr cls
-	ldx #choose_input_samplers_menu_text
-	jsr print_string
-
-userport_oem_input_menu_choose:
-	jsr wtl_getchar
-	cmpb #'4'
-	beq setup_userport_oem_4bit_input_jmp
-	cmpb #'2'
-	beq setup_userport_oem_2bit_input_jmp
-	bra userport_oem_input_menu_choose
-
-setup_userport_oem_4bit_input_jmp:
-	jmp setup_userport_oem_4bit_input
-
-setup_userport_oem_2bit_input_jmp:
-	jmp setup_userport_oem_2bit_input
 
 userport_spt_input_menu:
 	jsr cls
@@ -865,24 +844,6 @@ setup_userport_cga2_4bit_input:
 	stx input_text
 	rts
 
-setup_userport_oem_2bit_input:
-	ldx #userport_h_o_p_input_init
-	stx input_init_function
-	ldx #userport_oem_2bit_input
-	stx input_function
-	ldx #userport_oem_2bit_text
-	stx input_text
-	rts
-
-setup_userport_oem_4bit_input:
-	ldx #userport_h_o_p_input_init
-	stx input_init_function
-	ldx #userport_oem_4bit_input
-	stx input_function
-	ldx #userport_oem_4bit_text
-	stx input_text
-	rts
-
 setup_userport_spt_2bit_input:
 	ldx #userport_h_o_p_input_init
 	stx input_init_function
@@ -1047,46 +1008,6 @@ do_asl4:
 userport_h4_p14_c4_input:
 	ldb $e841
 	jmp do_asl4
-
-; sample return in B
-userport_oem_2bit_input:
-	ldb $e841
-	stb $87f2
-	andb #$40
-	aslb
-	stb $87f1
-	ldb $87f2
-	andb #$80
-	lsrb
-	orb $87f1
-	rts
-
-; sample return in B
-userport_oem_4bit_input:
-	ldb $e841
-	stb $87f2
-	andb #$10
-	aslb
-	aslb
-	aslb
-	stb $87f1
-	ldb $87f2
-	andb #$20
-	aslb
-	orb $87f1
-	stb $87f1
-	ldb $87f2
-	andb #$40
-	lsrb
-	orb $87f1
-	stb $87f1
-	ldb $87f2
-	andb #$80
-	lsrb
-	lsrb
-	lsrb
-	orb $87f1
-	rts
 
 ; sample return in B
 userport_spt_2bit_input:
@@ -1277,8 +1198,6 @@ choose_input_hardware_menu_text:
 	fcb $0d
 	fcc "d: C64DTV HUMMER userport joystick adapter"
 	fcb $0d
-	fcc "o: OEM userport joystick adapter"
-	fcb $0d
 	fcc "t: SPT userport joystick adapter"
 	fcb $0d
 	fcc "p: PET userport joystick adapter"
@@ -1423,16 +1342,6 @@ userport_cga2_2bit_text:
 
 userport_cga2_4bit_text:
 	fcc "4 bit sampler on port 2 of userport CGA joy adapter"
-	fcb $0d
-	fcb $00
-
-userport_oem_2bit_text:
-	fcc "2 bit sampler on userport OEM joy adapter"
-	fcb $0d
-	fcb $00
-
-userport_oem_4bit_text:
-	fcc "4 bit sampler on userport OEM joy adapter"
 	fcb $0d
 	fcb $00
 
