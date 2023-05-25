@@ -16,18 +16,6 @@
 ; unsigned char __fastcall__ sampler_2bit_pet1_input(void);
 ; void __fastcall__ sampler_4bit_pet1_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_pet1_input(void);
-; void __fastcall__ sampler_2bit_syn1_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_syn1_input(void);
-; void __fastcall__ sampler_4bit_syn1_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_syn1_input(void);
-; void __fastcall__ sampler_2bit_syn2_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_syn2_input(void);
-; void __fastcall__ sampler_4bit_syn2_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_syn2_input(void);
-; void __fastcall__ sampler_2bit_syn3_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_syn3_input(void);
-; void __fastcall__ sampler_4bit_syn3_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_syn3_input(void);
 ; void __fastcall__ sampler_2bit_woj1_input_init(void);
 ; unsigned char __fastcall__ sampler_2bit_woj1_input(void);
 ; void __fastcall__ sampler_4bit_woj1_input_init(void);
@@ -104,12 +92,6 @@
         .export  _sampler_4bit_hummer_input_init, _sampler_4bit_hummer_input
         .export  _sampler_2bit_pet1_input_init, _sampler_2bit_pet1_input
         .export  _sampler_4bit_pet1_input_init, _sampler_4bit_pet1_input
-        .export  _sampler_2bit_syn1_input_init, _sampler_2bit_syn1_input
-        .export  _sampler_4bit_syn1_input_init, _sampler_4bit_syn1_input
-        .export  _sampler_2bit_syn2_input_init, _sampler_2bit_syn2_input
-        .export  _sampler_4bit_syn2_input_init, _sampler_4bit_syn2_input
-        .export  _sampler_2bit_syn3_input_init, _sampler_2bit_syn3_input
-        .export  _sampler_4bit_syn3_input_init, _sampler_4bit_syn3_input
         .export  _sampler_2bit_woj1_input_init, _sampler_2bit_woj1_input
         .export  _sampler_4bit_woj1_input_init, _sampler_4bit_woj1_input
         .export  _sampler_2bit_woj2_input_init, _sampler_2bit_woj2_input
@@ -197,8 +179,6 @@ _sampler_4bit_woj3_input_init:
         stx     $9110
         rts
 
-_sampler_2bit_syn3_input_init:
-_sampler_4bit_syn3_input_init:
 _sampler_2bit_woj4_input_init:
 _sampler_4bit_woj4_input_init:
         jsr     e0_9112
@@ -213,8 +193,6 @@ _sampler_4bit_woj5_input_init:
         stx     $9110
         rts
 
-_sampler_2bit_syn2_input_init:
-_sampler_4bit_syn2_input_init:
 _sampler_2bit_woj6_input_init:
 _sampler_4bit_woj6_input_init:
         jsr     e0_9112
@@ -222,8 +200,6 @@ _sampler_4bit_woj6_input_init:
         stx     $9110
         rts
 
-_sampler_2bit_syn1_input_init:
-_sampler_4bit_syn1_input_init:
 _sampler_2bit_woj7_input_init:
 _sampler_4bit_woj7_input_init:
         jsr     e0_9112
@@ -412,9 +388,6 @@ _sampler_4bit_pet2_input:
 
 _sampler_2bit_hummer_input:
 _sampler_2bit_pet1_input:
-_sampler_2bit_syn1_input:
-_sampler_2bit_syn2_input:
-_sampler_2bit_syn3_input:
 _sampler_2bit_woj1_input:
 _sampler_2bit_woj2_input:
 _sampler_2bit_woj3_input:
@@ -431,9 +404,6 @@ do_asl6:
 
 _sampler_4bit_hummer_input:
 _sampler_4bit_pet1_input:
-_sampler_4bit_syn1_input:
-_sampler_4bit_syn2_input:
-_sampler_4bit_syn3_input:
 _sampler_4bit_woj1_input:
 _sampler_4bit_woj2_input:
 _sampler_4bit_woj3_input:
