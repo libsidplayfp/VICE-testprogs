@@ -96,16 +96,6 @@ unsigned char __fastcall__ sampler_2bit_woj8_input(void);
 void __fastcall__ sampler_4bit_woj8_input_init(void);
 unsigned char __fastcall__ sampler_4bit_woj8_input(void);
 
-/* c64-drivers.s / cbm2-drivers.s / pet-drivers.s / vic20-drivers.s */
-void __fastcall__ sampler_2bit_cga1_input_init(void);
-unsigned char __fastcall__ sampler_2bit_cga1_input(void);
-void __fastcall__ sampler_4bit_cga1_input_init(void);
-unsigned char __fastcall__ sampler_4bit_cga1_input(void);
-void __fastcall__ sampler_2bit_cga2_input_init(void);
-unsigned char __fastcall__ sampler_2bit_cga2_input(void);
-void __fastcall__ sampler_4bit_cga2_input_init(void);
-unsigned char __fastcall__ sampler_4bit_cga2_input(void);
-
 /* c64-drivers.s / cbm2-drivers.s */
 void __fastcall__ sampler_2bit_hit1_input_init(void);
 unsigned char __fastcall__ sampler_2bit_hit1_input(void);

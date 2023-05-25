@@ -9,8 +9,6 @@ PUBLIC _set_sid_addr_asm
 PUBLIC _set_digimax_addr_asm
 PUBLIC _userport_4bit_input_init
 PUBLIC _userport_2bit_4bit_input_init
-PUBLIC _userport_2bit_4bit_cga1_input_init
-PUBLIC _userport_2bit_4bit_cga2_input_init
 PUBLIC _userport_2bit_4bit_ks1_sb2_input_init
 PUBLIC _userport_2bit_4bit_woj1_input_init
 PUBLIC _userport_2bit_4bit_woj2_input_init
@@ -116,7 +114,7 @@ PUBLIC _disable_irq
 	in a,(c)
 	jr do_asl4
 
-; input PET1/CGA1/CGA2/HIT1 2BIT, returns sample in A
+; input PET1/HIT1 2BIT, returns sample in A
 .userport_2bit_input
 	ld bc,IOBASE+0x0d01
 	in a,(c)
@@ -124,7 +122,7 @@ PUBLIC _disable_irq
 	sla a
 	jr do_asl4
 
-; input PET1/CGA1/CGA2/HIT1 4BIT, returns sample in A
+; input PET1/HIT1 4BIT, returns sample in A
 .userport_4bit_input
 	ld bc,IOBASE+0x0d01
 	in a,(c)
@@ -560,27 +558,12 @@ PUBLIC _disable_irq
 	pop af
 	ret
 
-._userport_2bit_4bit_cga1_input_init
-	push af
-	push bc
-	ld bc,IOBASE+0x0d03
-	ld a,0x80
-	out (c),a
-.storex_dd01
+.woj_storex_dd01
 	ld bc,IOBASE+0x0d01
 	out (c),a
 	pop bc
 	pop af
 	ret
-
-._userport_2bit_4bit_cga2_input_init
-	push af
-	push bc
-	ld bc,IOBASE+0x0d03
-	ld a,0x80
-	out (c),a
-	ld a,0x00
-	jr storex_dd01
 
 ._userport_2bit_4bit_woj1_input_init
 	push af
@@ -589,7 +572,7 @@ PUBLIC _disable_irq
 	ld a,0xe0
 	out (c),a
 	ld a,0x00
-	jr storex_dd01
+	jr woj_storex_dd01
 
 ._userport_2bit_4bit_woj2_input_init
 	push af
@@ -598,7 +581,7 @@ PUBLIC _disable_irq
 	ld a,0xe0
 	out (c),a
 	ld a,0x20
-	jr storex_dd01
+	jr woj_storex_dd01
 
 ._userport_2bit_4bit_woj3_input_init
 	push af
@@ -607,7 +590,7 @@ PUBLIC _disable_irq
 	ld a,0xe0
 	out (c),a
 	ld a,0x40
-	jr storex_dd01
+	jr woj_storex_dd01
 
 ._userport_2bit_4bit_woj4_input_init
 	push af
@@ -616,7 +599,7 @@ PUBLIC _disable_irq
 	ld a,0xe0
 	out (c),a
 	ld a,0x60
-	jr storex_dd01
+	jr woj_storex_dd01
 
 ._userport_2bit_4bit_woj5_input_init
 	push af
@@ -625,7 +608,7 @@ PUBLIC _disable_irq
 	ld a,0xe0
 	out (c),a
 	ld a,0x80
-	jr storex_dd01
+	jr woj_storex_dd01
 
 ._userport_2bit_4bit_woj6_input_init
 	push af
@@ -634,7 +617,7 @@ PUBLIC _disable_irq
 	ld a,0xe0
 	out (c),a
 	ld a,0xA0
-	jr storex_dd01
+	jr woj_storex_dd01
 
 ._userport_2bit_4bit_woj7_input_init
 	push af
@@ -643,7 +626,7 @@ PUBLIC _disable_irq
 	ld a,0xe0
 	out (c),a
 	ld a,0xC0
-	jr storex_dd01
+	jr woj_storex_dd01
 
 ._userport_2bit_4bit_woj8_input_init
 	push af
@@ -652,7 +635,7 @@ PUBLIC _disable_irq
 	ld a,0xe0
 	out (c),a
 	ld a,0xE0
-	jr storex_dd01
+	jr woj_storex_dd01
 
 ._userport_2bit_4bit_ks1_sb2_input_init
 	push af

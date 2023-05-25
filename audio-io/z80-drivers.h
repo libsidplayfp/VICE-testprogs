@@ -8,10 +8,6 @@ extern void userport_4bit_input_init(void) __z88dk_fastcall;
 
 extern void userport_2bit_4bit_input_init(void) __z88dk_fastcall;
 
-extern void userport_2bit_4bit_cga1_input_init(void) __z88dk_fastcall;
-
-extern void userport_2bit_4bit_cga2_input_init(void) __z88dk_fastcall;
-
 extern void userport_2bit_4bit_ks1_sb2_input_init(void) __z88dk_fastcall;
 
 extern void userport_2bit_4bit_woj1_input_init(void) __z88dk_fastcall;

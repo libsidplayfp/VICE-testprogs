@@ -140,8 +140,6 @@ hardware_input_menu_choose:
 	beq userport_woj_input_menu_jmp
 	cmpb #'p'
 	beq userport_pet_input_menu
-	cmpb #'c'
-	beq userport_cga_input_menu_jmp
 	bra hardware_input_menu_choose
 
 userport_syn_input_menu_jmp:
@@ -149,9 +147,6 @@ userport_syn_input_menu_jmp:
 
 userport_woj_input_menu_jmp:
 	jmp userport_woj_input_menu
-
-userport_cga_input_menu_jmp:
-	jmp userport_cga_input_menu
 
 userport_spt_input_menu:
 	jsr cls
@@ -484,57 +479,6 @@ setup_userport_woj8_4bit_input_jmp:
 setup_userport_woj8_2bit_input_jmp:
 	jmp setup_userport_woj8_2bit_input
 
-userport_cga_input_menu:
-	jsr cls
-	ldx #choose_input_ports_menu_text
-	jsr print_string
-
-userport_cga_input_menu_choose:
-	jsr wtl_getchar
-	cmpb #'1'
-	beq userport_cga1_input_menu
-	cmpb #'2'
-	beq userport_cga2_input_menu
-	bra userport_cga_input_menu_choose
-
-userport_cga1_input_menu:
-	jsr cls
-	ldx #choose_input_samplers_menu_text
-	jsr print_string
-
-userport_cga1_input_menu_choose:
-	jsr wtl_getchar
-	cmpb #'4'
-	beq setup_userport_cga1_4bit_input_jmp
-	cmpb #'2'
-	beq setup_userport_cga1_2bit_input_jmp
-	bra userport_cga1_input_menu_choose
-
-setup_userport_cga1_4bit_input_jmp:
-	jmp setup_userport_cga1_4bit_input
-
-setup_userport_cga1_2bit_input_jmp:
-	jmp setup_userport_cga1_2bit_input
-
-userport_cga2_input_menu:
-	jsr cls
-	ldx #choose_input_samplers_menu_text
-	jsr print_string
-
-userport_cga2_input_menu_choose:
-	jsr wtl_getchar
-	cmpb #'4'
-	beq setup_userport_cga2_4bit_input_jmp
-	cmpb #'2'
-	beq setup_userport_cga2_2bit_input_jmp
-	bra userport_cga2_input_menu_choose
-
-setup_userport_cga2_4bit_input_jmp:
-	jmp setup_userport_cga2_4bit_input
-
-setup_userport_cga2_2bit_input_jmp:
-	jmp setup_userport_cga2_2bit_input
-
 setup_userport_syn1_2bit_input:
 	ldx #userport_syn1_input_init
 	stx input_init_function
@@ -769,42 +713,6 @@ setup_userport_pet2_4bit_input:
 	stx input_text
 	rts
 
-setup_userport_cga1_2bit_input:
-	ldx #userport_cga1_input_init
-	stx input_init_function
-	ldx #userport_h2_p12_c2_input
-	stx input_function
-	ldx #userport_cga1_2bit_text
-	stx input_text
-	rts
-
-setup_userport_cga1_4bit_input:
-	ldx #userport_cga1_input_init
-	stx input_init_function
-	ldx #userport_h4_p14_c4_input
-	stx input_function
-	ldx #userport_cga1_4bit_text
-	stx input_text
-	rts
-
-setup_userport_cga2_2bit_input:
-	ldx #userport_cga2_input_init
-	stx input_init_function
-	ldx #userport_h2_p12_c2_input
-	stx input_function
-	ldx #userport_cga2_2bit_text
-	stx input_text
-	rts
-
-setup_userport_cga2_4bit_input:
-	ldx #userport_cga2_input_init
-	stx input_init_function
-	ldx #userport_h4_p14_c4_input
-	stx input_function
-	ldx #userport_cga2_4bit_text
-	stx input_text
-	rts
-
 setup_userport_spt_2bit_input:
 	ldx #userport_h_o_p_input_init
 	stx input_init_function
@@ -889,18 +797,9 @@ userport_h_o_p_input_init:
 	sta $e843
 	rts
 
-userport_cga1_input_init:
-	ldb #$80
-	stb $e843
 storex_e841:
 	stb $e841
 	rts
-
-userport_cga2_input_init:
-	ldb #$80
-	stb $e843
-	ldb #$00
-	jmp storex_e841
 
 userport_woj1_input_init:
 	ldb #$E0
@@ -1161,8 +1060,6 @@ choose_input_hardware_menu_text:
 	fcb $0d
 	fcc "p: PET userport joystick adapter"
 	fcb $0d
-	fcc "c: CGA userport joystick adapter"
-	fcb $0d
 	fcc "y: Synergy userport joystick adapter"
 	fcb $0d
 	fcc "w: WOJ userport joystick adapter"
@@ -1271,26 +1168,6 @@ userport_pet2_2bit_text:
 
 userport_pet2_4bit_text:
 	fcc "4 bit sampler on port 2 of userport PET joy adapter"
-	fcb $0d
-	fcb $00
-
-userport_cga1_2bit_text:
-	fcc "2 bit sampler on port 1 of userport CGA joy adapter"
-	fcb $0d
-	fcb $00
-
-userport_cga1_4bit_text:
-	fcc "4 bit sampler on port 1 of userport CGA joy adapter"
-	fcb $0d
-	fcb $00
-
-userport_cga2_2bit_text:
-	fcc "2 bit sampler on port 2 of userport CGA joy adapter"
-	fcb $0d
-	fcb $00
-
-userport_cga2_4bit_text:
-	fcc "4 bit sampler on port 2 of userport CGA joy adapter"
 	fcb $0d
 	fcb $00
 

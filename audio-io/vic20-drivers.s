@@ -72,14 +72,6 @@
 ; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
 ; void __fastcall__ sampler_4bit_pet2_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_pet2_input(void);
-; void __fastcall__ sampler_2bit_cga1_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_cga1_input(void);
-; void __fastcall__ sampler_4bit_cga1_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_cga1_input(void);
-; void __fastcall__ sampler_2bit_cga2_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_cga2_input(void);
-; void __fastcall__ sampler_4bit_cga2_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_cga2_input(void);
 ; unsigned char __fastcall__ sampler_2bit_inception_j1p1_input(void);
 ; unsigned char __fastcall__ sampler_2bit_inception_j1p2_input(void);
 ; unsigned char __fastcall__ sampler_2bit_inception_j1p3_input(void);
@@ -148,10 +140,6 @@
         .export  _sampler_4bit_woj8_input_init, _sampler_4bit_woj8_input
         .export  _sampler_2bit_pet2_input_init, _sampler_2bit_pet2_input
         .export  _sampler_4bit_pet2_input_init, _sampler_4bit_pet2_input
-        .export  _sampler_2bit_cga1_input_init, _sampler_2bit_cga1_input
-        .export  _sampler_4bit_cga1_input_init, _sampler_4bit_cga1_input
-        .export  _sampler_2bit_cga2_input_init, _sampler_2bit_cga2_input
-        .export  _sampler_4bit_cga2_input_init, _sampler_4bit_cga2_input
         .export  _sampler_2bit_inception_j1p1_input
         .export  _sampler_2bit_inception_j1p2_input
         .export  _sampler_2bit_inception_j1p3_input
@@ -426,21 +414,6 @@ _sampler_4bit_inception_j1p8_input:
         lda     inception_byte_8
         jmp     do_asl4
 
-_sampler_2bit_cga1_input_init:
-_sampler_4bit_cga1_input_init:
-        ldx     #$80
-        stx     $9112
-storex_9110:
-        stx     $9110
-        rts
-
-_sampler_2bit_cga2_input_init:
-_sampler_4bit_cga2_input_init:
-        ldx     #$80
-        stx     $9112
-        ldx     #$00
-        jmp     storex_9110
-
 _sampler_2bit_pet2_input:
         lda     $9110
         and     #$30
@@ -493,8 +466,6 @@ _sampler_4bit_oem_input:
 
 _sampler_2bit_hummer_input:
 _sampler_2bit_pet1_input:
-_sampler_2bit_cga1_input:
-_sampler_2bit_cga2_input:
 _sampler_2bit_syn1_input:
 _sampler_2bit_syn2_input:
 _sampler_2bit_syn3_input:
@@ -519,8 +490,6 @@ _sampler_2bit_spt_input:
 
 _sampler_4bit_hummer_input:
 _sampler_4bit_pet1_input:
-_sampler_4bit_cga1_input:
-_sampler_4bit_cga2_input:
 _sampler_4bit_syn1_input:
 _sampler_4bit_syn2_input:
 _sampler_4bit_syn3_input:

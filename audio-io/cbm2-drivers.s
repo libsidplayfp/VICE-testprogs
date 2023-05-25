@@ -57,14 +57,6 @@
 ; unsigned char __fastcall__ sampler_2bit_woj8_input(void);
 ; void __fastcall__ sampler_4bit_woj8_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_woj8_input(void);
-; void __fastcall__ sampler_2bit_cga1_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_cga1_input(void);
-; void __fastcall__ sampler_4bit_cga1_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_cga1_input(void);
-; void __fastcall__ sampler_2bit_cga2_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_cga2_input(void);
-; void __fastcall__ sampler_4bit_cga2_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_cga2_input(void);
 ; void __fastcall__ sampler_2bit_hit1_input_init(void);
 ; unsigned char __fastcall__ sampler_2bit_hit1_input(void);
 ; void __fastcall__ sampler_4bit_hit1_input_init(void);
@@ -128,10 +120,6 @@
         .export  _sampler_4bit_woj7_input_init, _sampler_4bit_woj7_input
         .export  _sampler_2bit_woj8_input_init, _sampler_2bit_woj8_input
         .export  _sampler_4bit_woj8_input_init, _sampler_4bit_woj8_input
-        .export  _sampler_2bit_cga1_input_init, _sampler_2bit_cga1_input
-        .export  _sampler_4bit_cga1_input_init, _sampler_4bit_cga1_input
-        .export  _sampler_2bit_cga2_input_init, _sampler_2bit_cga2_input
-        .export  _sampler_4bit_cga2_input_init, _sampler_4bit_cga2_input
         .export  _sampler_2bit_hit1_input_init, _sampler_2bit_hit1_input
         .export  _sampler_4bit_hit1_input_init, _sampler_4bit_hit1_input
         .export  _sampler_2bit_hit2_input_init, _sampler_2bit_hit2_input
@@ -188,20 +176,6 @@ setup_userport_dc01:
         dey
         dey
         rts
-
-_sampler_2bit_cga1_input_init:
-_sampler_4bit_cga1_input_init:
-        jsr     setup_userport_dc01
-storea_dc01:
-        sta     (sreg),y
-        stx     $01
-        rts
-
-_sampler_2bit_cga2_input_init:
-_sampler_4bit_cga2_input_init:
-        jsr     setup_userport_dc01
-        lda     #$00
-        jmp     storea_dc01
 
 _sampler_4bit_userport_input_init:
         jsr     setup_banking
@@ -544,8 +518,6 @@ _sampler_4bit_kingsoft2_input:
         rts
 
 _sampler_2bit_pet1_input:
-_sampler_2bit_cga1_input:
-_sampler_2bit_cga2_input:
 _sampler_2bit_hit1_input:
 _sampler_2bit_syn1_input:
 _sampler_2bit_syn2_input:
@@ -577,8 +549,6 @@ _sampler_2bit_spt_input:
         jmp     do_asl4
 
 _sampler_4bit_pet1_input:
-_sampler_4bit_cga1_input:
-_sampler_4bit_cga2_input:
 _sampler_4bit_hit1_input:
 _sampler_4bit_syn1_input:
 _sampler_4bit_syn2_input:
