@@ -3,10 +3,6 @@
 ;
 ; void __fastcall__ set_sid_addr(unsigned addr);
 ;
-; void __fastcall__ sampler_2bit_spt_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_spt_input(void);
-; void __fastcall__ sampler_4bit_spt_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_spt_input(void);
 ; void __fastcall__ sampler_2bit_pet1_input_init(void);
 ; unsigned char __fastcall__ sampler_2bit_pet1_input(void);
 ; void __fastcall__ sampler_4bit_pet1_input_init(void);
@@ -68,8 +64,6 @@
 ; void __fastcall__ show_sample(unsigned char sample);
 ;
 
-        .export  _sampler_2bit_spt_input_init, _sampler_2bit_spt_input
-        .export  _sampler_4bit_spt_input_init, _sampler_4bit_spt_input
         .export  _sampler_2bit_pet1_input_init, _sampler_2bit_pet1_input
         .export  _sampler_4bit_pet1_input_init, _sampler_4bit_pet1_input
         .export  _sampler_2bit_syn1_input_init, _sampler_2bit_syn1_input
@@ -106,8 +100,6 @@
 
         .importzp   tmp1, tmp2
 
-_sampler_2bit_spt_input_init:
-_sampler_4bit_spt_input_init:
 _sampler_2bit_pet1_input_init:
 _sampler_4bit_pet1_input_init:
 _sampler_2bit_pet2_input_init:
@@ -217,11 +209,6 @@ do_asl4:
         asl
         rts
 
-_sampler_2bit_spt_input:
-        lda     $e841
-        and     #$0C
-        jmp     do_asl4
-
 _sampler_4bit_pet1_input:
 _sampler_4bit_syn1_input:
 _sampler_4bit_syn2_input:
@@ -235,20 +222,6 @@ _sampler_4bit_woj6_input:
 _sampler_4bit_woj7_input:
 _sampler_4bit_woj8_input:
         lda     $e841
-        jmp     do_asl4
-
-_sampler_4bit_spt_input:
-        lda     $e841
-        sta     tmp1
-        and     #$0C
-        lsr
-        lsr
-        sta     tmp2
-        lda     tmp1
-        and     #$03
-        asl
-        asl
-        ora     tmp2
         jmp     do_asl4
 
 _set_sid_addr:

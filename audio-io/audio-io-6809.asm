@@ -132,8 +132,6 @@ hardware_input_menu:
 
 hardware_input_menu_choose:
 	jsr wtl_getchar
-	cmpb #'t'
-	beq userport_spt_input_menu
 	cmpb #'y'
 	beq userport_syn_input_menu_jmp
 	cmpb #'w'
@@ -147,25 +145,6 @@ userport_syn_input_menu_jmp:
 
 userport_woj_input_menu_jmp:
 	jmp userport_woj_input_menu
-
-userport_spt_input_menu:
-	jsr cls
-	ldx #choose_input_samplers_menu_text
-	jsr print_string
-
-userport_spt_input_menu_choose:
-	jsr wtl_getchar
-	cmpb #'4'
-	beq setup_userport_spt_4bit_input_jmp
-	cmpb #'2'
-	beq setup_userport_spt_2bit_input_jmp
-	bra userport_spt_input_menu_choose
-
-setup_userport_spt_4bit_input_jmp:
-	jmp setup_userport_spt_4bit_input
-
-setup_userport_spt_2bit_input_jmp:
-	jmp setup_userport_spt_2bit_input
 
 userport_pet_input_menu:
 	jsr cls
@@ -713,24 +692,6 @@ setup_userport_pet2_4bit_input:
 	stx input_text
 	rts
 
-setup_userport_spt_2bit_input:
-	ldx #userport_h_o_p_input_init
-	stx input_init_function
-	ldx #userport_spt_2bit_input
-	stx input_function
-	ldx #userport_spt_2bit_text
-	stx input_text
-	rts
-
-setup_userport_spt_4bit_input:
-	ldx #userport_h_o_p_input_init
-	stx input_init_function
-	ldx #userport_spt_4bit_input
-	stx input_function
-	ldx #userport_spt_4bit_text
-	stx input_text
-	rts
-
 main_output_menu:
 	jsr cls
 	ldx #choose_output_main_menu_text
@@ -867,27 +828,6 @@ do_asl4:
 ; sample return in B
 userport_h4_p14_c4_input:
 	ldb $e841
-	jmp do_asl4
-
-; sample return in B
-userport_spt_2bit_input:
-	ldb $e841
-	andb #$0c
-	jmp do_asl4
-
-; sample return in B
-userport_spt_4bit_input:
-	ldb $e841
-	stb $87f1
-	andb #$0c
-	lsrb
-	lsrb
-	stb $87f2
-	ldb $87f1
-	andb #$03
-	aslb
-	aslb
-	orb $87f2
 	jmp do_asl4
 
 ; sample return in B
@@ -1056,8 +996,6 @@ choose_input_hardware_menu_text:
 	fcc "Choose input"
 	fcb $0d
 	fcb $0d
-	fcc "t: SPT userport joystick adapter"
-	fcb $0d
 	fcc "p: PET userport joystick adapter"
 	fcb $0d
 	fcc "y: Synergy userport joystick adapter"
@@ -1168,16 +1106,6 @@ userport_pet2_2bit_text:
 
 userport_pet2_4bit_text:
 	fcc "4 bit sampler on port 2 of userport PET joy adapter"
-	fcb $0d
-	fcb $00
-
-userport_spt_2bit_text:
-	fcc "2 bit sampler on userport SPT joy adapter"
-	fcb $0d
-	fcb $00
-
-userport_spt_4bit_text:
-	fcc "4 bit sampler on userport SPT joy adapter"
 	fcb $0d
 	fcb $00
 

@@ -626,14 +626,6 @@ static input_device_t sampler_4bit_woj8_input_device[] = {
     { "4 bit sampler on port 8 of userport WOJ joy adapter", INPUT_INIT_USERPORT_WOJ_8, INPUT_USERPORT_JOY_4 }
 };
 
-static input_device_t sampler_2bit_spt_input_device[] = {
-    { "2 bit sampler on userport SPT joy adapter", INPUT_INIT_USERPORT_JOY_4_2, INPUT_USERPORT_SPT_2 }
-};
-
-static input_device_t sampler_4bit_spt_input_device[] = {
-    { "4 bit sampler on userport SPT joy adapter", INPUT_INIT_USERPORT_JOY_4_2, INPUT_USERPORT_SPT_4 }
-};
-
 static input_device_t sampler_4bit_userport_input_device[] = {
     { "4 bit userport sampler", INPUT_INIT_USERPORT_4BIT, INPUT_USERPORT_4BIT }
 };
@@ -1126,14 +1118,7 @@ static menu_input_t input_joy_adapter_menu[] = {
     { 0, NULL, NULL, NULL }
 };
 
-static menu_input_t input_spt_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_spt_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_spt_input_device },
-    { 0, NULL, NULL, NULL }
-};
-
 static menu_input_t input_userport_joy_menu[] = {
-    { 't', "SPT joystick adapter", input_spt_menu, NULL },
     { 'p', "PET joystick adapter", input_pet_menu, NULL },
     { 'y', "Synergy joystick adapter", input_syn_menu, NULL },
     { 'w', "WOJ joystick adapter", input_woj_menu, NULL },

@@ -41,10 +41,6 @@
 ; unsigned char __fastcall__ sampler_4bit_inception_j2p6_input(void);
 ; unsigned char __fastcall__ sampler_4bit_inception_j2p7_input(void);
 ; unsigned char __fastcall__ sampler_4bit_inception_j2p8_input(void);
-; void __fastcall__ sampler_2bit_spt_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_spt_input(void);
-; void __fastcall__ sampler_4bit_spt_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_spt_input(void);
 ; void __fastcall__ sampler_2bit_pet1_input_init(void);
 ; unsigned char __fastcall__ sampler_2bit_pet1_input(void);
 ; void __fastcall__ sampler_4bit_pet1_input_init(void);
@@ -178,8 +174,6 @@
         .export  _sampler_4bit_inception_j2p6_input
         .export  _sampler_4bit_inception_j2p7_input
         .export  _sampler_4bit_inception_j2p8_input
-        .export  _sampler_2bit_spt_input_init, _sampler_2bit_spt_input
-        .export  _sampler_4bit_spt_input_init, _sampler_4bit_spt_input
         .export  _sampler_2bit_pet1_input_init, _sampler_2bit_pet1_input
         .export  _sampler_4bit_pet1_input_init, _sampler_4bit_pet1_input
         .export  _sampler_2bit_pet2_input_init, _sampler_2bit_pet2_input
@@ -256,8 +250,6 @@ _sampler_4bit_starbyte2_input_init:
 ; run into pbx read init
 
 _sampler_2bit_userport_input_init:
-_sampler_2bit_spt_input_init:
-_sampler_4bit_spt_input_init:
 _sampler_2bit_pet1_input_init:
 _sampler_4bit_pet1_input_init:
 _sampler_2bit_pet2_input_init:
@@ -795,11 +787,6 @@ do_asl6:
         asl
         jmp     do_asl4
 
-_sampler_2bit_spt_input:
-        lda     $dd01
-        and     #$0C
-        jmp     do_asl4
-
 _sampler_4bit_pet1_input:
 _sampler_4bit_hit1_input:
 _sampler_4bit_syn1_input:
@@ -814,20 +801,6 @@ _sampler_4bit_woj6_input:
 _sampler_4bit_woj7_input:
 _sampler_4bit_woj8_input:
         lda     $dd01
-        jmp     do_asl4
-
-_sampler_4bit_spt_input:
-        lda     $dd01
-        sta     tmp1
-        and     #$0C
-        lsr
-        lsr
-        sta     tmp2
-        lda     tmp1
-        and     #$03
-        asl
-        asl
-        ora     tmp2
         jmp     do_asl4
 
 _sfx_input:

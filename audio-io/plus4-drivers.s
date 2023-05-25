@@ -33,8 +33,6 @@
 ; unsigned char __fastcall__ sampler_4bit_joy2_input(void);
 ; unsigned char __fastcall__ sampler_2bit_sidcart_input(void);
 ; unsigned char __fastcall__ sampler_4bit_sidcart_input(void);
-; unsigned char __fastcall__ sampler_2bit_spt_input(void);
-; unsigned char __fastcall__ sampler_4bit_spt_input(void);
 ; unsigned char __fastcall__ sampler_2bit_pet1_input(void);
 ; unsigned char __fastcall__ sampler_4bit_pet1_input(void);
 ; unsigned char __fastcall__ sampler_2bit_syn1_input(void);
@@ -102,8 +100,6 @@
         .export  _sampler_4bit_joy2_input
         .export  _sampler_2bit_sidcart_input
         .export  _sampler_4bit_sidcart_input
-        .export  _sampler_2bit_spt_input
-        .export  _sampler_4bit_spt_input
         .export  _sampler_2bit_pet1_input
         .export  _sampler_4bit_pet1_input
         .export  _sampler_2bit_syn1_input
@@ -225,11 +221,6 @@ _sampler_2bit_woj8_input:
         asl
         jmp     do_asl4
 
-_sampler_2bit_spt_input:
-        lda     $fd10
-        and     #$0C
-        jmp     do_asl4
-
 _sampler_4bit_pet1_input:
 _sampler_4bit_syn1_input:
 _sampler_4bit_syn2_input:
@@ -243,20 +234,6 @@ _sampler_4bit_woj6_input:
 _sampler_4bit_woj7_input:
 _sampler_4bit_woj8_input:
         lda     $fd10
-        jmp     do_asl4
-
-_sampler_4bit_spt_input:
-        lda     $fd10
-        sta     tmp1
-        and     #$0C
-        lsr
-        lsr
-        sta     tmp2
-        lda     tmp1
-        and     #$03
-        asl
-        asl
-        ora     tmp2
         jmp     do_asl4
 
 load_joy1:

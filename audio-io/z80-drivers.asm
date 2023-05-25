@@ -136,29 +136,6 @@ PUBLIC _disable_irq
 	sla a
 	ret
 
-; input SPT 2BIT, returns sample in A
-.userport_2bit_spt_input
-	ld bc,IOBASE+0x0d01
-	in a,(c)
-	and 0x0c
-	jp do_asl4
-
-; input SPT 4BIT, returns sample in A
-.userport_4bit_spt_input
-	ld bc,IOBASE+0x0d01
-	in a,(c)
-	ld d,a
-	and 0x0c
-	srl a
-	srl a
-	ld e,a
-	ld a,d
-	and 0x03
-	sla a
-	sla a
-	or e
-	jp do_asl4
-
 ; input KINGSOFT1 2BIT, returns sample in A
 .userport_2bit_ks1_input
 	ld bc,IOBASE+0x0d00
@@ -1063,10 +1040,6 @@ PUBLIC _disable_irq
 	jp z,set_userport_2bit_input
 	cp INPUT_USERPORT_PET2
 	jp z,set_userport_2bit_pet2_hit2_input
-	cp INPUT_USERPORT_SPT_2
-	jp z,set_userport_2bit_spt_input
-	cp INPUT_USERPORT_SPT_4
-	jp z,set_userport_4bit_spt_input
 	cp INPUT_USERPORT_KS1_2BIT
 	jp z,set_userport_2bit_ks1_input
 	cp INPUT_USERPORT_KS1_4BIT
@@ -1200,14 +1173,6 @@ PUBLIC _disable_irq
 
 .set_userport_2bit_pet2_hit2_input
 	ld de,userport_2bit_pet2_hit2_input
-	jr set_input
-
-.set_userport_2bit_spt_input
-	ld de,userport_2bit_spt_input
-	jr set_input
-
-.set_userport_4bit_spt_input
-	ld de,userport_4bit_spt_input
 	jr set_input
 
 .set_userport_2bit_ks1_input
