@@ -147,30 +147,6 @@ typedef struct menu_output_s {
 /* -------------------------------------------------------------------------------------------------------- */
 
 #if defined(__C64__) || defined(__C128__)
-static input_device_t sampler_2bit_hit1_input_device[] = {
-    { "2 bit sampler on port 1 of userport HIT joy adapter", sampler_2bit_hit1_input_init, sampler_2bit_hit1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static input_device_t sampler_4bit_hit1_input_device[] = {
-    { "4 bit sampler on port 1 of userport HIT joy adapter", sampler_4bit_hit1_input_init, sampler_4bit_hit1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static input_device_t sampler_2bit_hit2_input_device[] = {
-    { "2 bit sampler on port 2 of userport HIT joy adapter", sampler_2bit_hit2_input_init, sampler_2bit_hit2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static input_device_t sampler_4bit_hit2_input_device[] = {
-    { "4 bit sampler on port 2 of userport HIT joy adapter", sampler_4bit_hit2_input_init, sampler_4bit_hit2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__)
 static input_device_t sampler_2bit_kingsoft1_input_device[] = {
     { "2 bit sampler on port 1 of userport KingSoft joy adapter", sampler_2bit_kingsoft1_input_init, sampler_2bit_kingsoft1_input }
 };
@@ -755,30 +731,6 @@ static output_device_t digiblaster_fe9x_output_device[] = {
 /* -------------------------------------------------------------------------------------------------------- */
 
 #if defined(__C64__) || defined(__C128__)
-static menu_input_t input_hit1_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_hit1_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_hit1_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static menu_input_t input_hit2_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_hit2_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_hit2_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__)
-static menu_input_t input_hit_menu[] = {
-    { '1', "port 1", input_hit1_menu, NULL },
-    { '2', "port 2", input_hit2_menu, NULL },
-    { 0, NULL, NULL, NULL },
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__)
 static menu_input_t input_kingsoft1_menu[] = {
     { '2', "2 bit sampler", NULL, sampler_2bit_kingsoft1_input_device },
     { '4', "4 bit sampler", NULL, sampler_4bit_kingsoft1_input_device },
@@ -1020,7 +972,6 @@ static menu_input_t input_userport_joy_menu[] = {
 #if defined(__C64__) || defined(__C128__)
     { 's', "StarByte joystick adapter", input_starbyte_menu, NULL },
     { 'k', "KingSoft joystick adapter", input_kingsoft_menu, NULL },
-    { 'h', "HIT joystick adapter", input_hit_menu, NULL },
 #endif
     { 0, NULL, NULL, NULL }
 };

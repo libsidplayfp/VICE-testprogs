@@ -450,22 +450,6 @@ typedef struct menu_output_s {
 
 /* -------------------------------------------------------------------------------------------------------- */
 
-static input_device_t sampler_2bit_hit1_input_device[] = {
-    { "2 bit sampler on port 1 of userport HIT joy adapter", INPUT_INIT_USERPORT_JOY_4_2, INPUT_USERPORT_JOY_2 }
-};
-
-static input_device_t sampler_4bit_hit1_input_device[] = {
-    { "4 bit sampler on port 1 of userport HIT joy adapter", INPUT_INIT_USERPORT_JOY_4_2, INPUT_USERPORT_JOY_4 }
-};
-
-static input_device_t sampler_2bit_hit2_input_device[] = {
-    { "2 bit sampler on port 2 of userport HIT joy adapter", INPUT_INIT_USERPORT_JOY_4_2, INPUT_USERPORT_PET2 }
-};
-
-static input_device_t sampler_4bit_hit2_input_device[] = {
-    { "4 bit sampler on port 2 of userport HIT joy adapter", INPUT_INIT_USERPORT_JOY_4_2, INPUT_USERPORT_4BIT }
-};
-
 static input_device_t sampler_2bit_kingsoft1_input_device[] = {
     { "2 bit sampler on port 1 of userport KingSoft joy adapter", INPUT_INIT_USERPORT_KS1_SB2, INPUT_USERPORT_KS1_2BIT }
 };
@@ -718,24 +702,6 @@ static output_device_t userport_dac_output_device[] = {
 
 /* -------------------------------------------------------------------------------------------------------- */
 
-static menu_input_t input_hit1_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_hit1_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_hit1_input_device },
-    { 0, NULL, NULL, NULL }
-};
-
-static menu_input_t input_hit2_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_hit2_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_hit2_input_device },
-    { 0, NULL, NULL, NULL }
-};
-
-static menu_input_t input_hit_menu[] = {
-    { '1', "port 1", input_hit1_menu, NULL },
-    { '2', "port 2", input_hit2_menu, NULL },
-    { 0, NULL, NULL, NULL },
-};
-
 static menu_input_t input_kingsoft1_menu[] = {
     { '2', "2 bit sampler", NULL, sampler_2bit_kingsoft1_input_device },
     { '4', "4 bit sampler", NULL, sampler_4bit_kingsoft1_input_device },
@@ -925,7 +891,6 @@ static menu_input_t input_userport_joy_menu[] = {
     { 'p', "PET joystick adapter", input_pet_menu, NULL },
     { 's', "StarByte joystick adapter", input_starbyte_menu, NULL },
     { 'k', "KingSoft joystick adapter", input_kingsoft_menu, NULL },
-    { 'h', "HIT joystick adapter", input_hit_menu, NULL },
     { 0, NULL, NULL, NULL }
 };
 

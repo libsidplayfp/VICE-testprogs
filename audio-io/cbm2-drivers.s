@@ -9,14 +9,6 @@
 ; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
 ; void __fastcall__ sampler_4bit_pet2_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_pet2_input(void);
-; void __fastcall__ sampler_2bit_hit1_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_hit1_input(void);
-; void __fastcall__ sampler_4bit_hit1_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_hit1_input(void);
-; void __fastcall__ sampler_2bit_hit2_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_hit2_input(void);
-; void __fastcall__ sampler_4bit_hit2_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_hit2_input(void);
 ; void __fastcall__ sampler_2bit_kingsoft1_input_init(void);
 ; unsigned char __fastcall__ sampler_2bit_kingsoft1_input(void);
 ; void __fastcall__ sampler_4bit_kingsoft1_input_init(void);
@@ -48,10 +40,6 @@
         .export  _sampler_4bit_pet1_input_init, _sampler_4bit_pet1_input
         .export  _sampler_2bit_pet2_input_init, _sampler_2bit_pet2_input
         .export  _sampler_4bit_pet2_input_init, _sampler_4bit_pet2_input
-        .export  _sampler_2bit_hit1_input_init, _sampler_2bit_hit1_input
-        .export  _sampler_4bit_hit1_input_init, _sampler_4bit_hit1_input
-        .export  _sampler_2bit_hit2_input_init, _sampler_2bit_hit2_input
-        .export  _sampler_4bit_hit2_input_init, _sampler_4bit_hit2_input
         .export  _sampler_2bit_kingsoft1_input_init, _sampler_2bit_kingsoft1_input
         .export  _sampler_4bit_kingsoft1_input_init, _sampler_4bit_kingsoft1_input
         .export  _sampler_2bit_kingsoft2_input_init, _sampler_2bit_kingsoft2_input
@@ -148,10 +136,6 @@ _sampler_2bit_pet1_input_init:
 _sampler_4bit_pet1_input_init:
 _sampler_2bit_pet2_input_init:
 _sampler_4bit_pet2_input_init:
-_sampler_2bit_hit1_input_init:
-_sampler_4bit_hit1_input_init:
-_sampler_2bit_hit2_input_init:
-_sampler_4bit_hit2_input_init:
 _sampler_2bit_kingsoft2_input_init:
 _sampler_4bit_kingsoft2_input_init:
 _sampler_2bit_starbyte1_input_init:
@@ -185,7 +169,6 @@ sta_sreg_y:
         rts
 
 _sampler_2bit_pet2_input:
-_sampler_2bit_hit2_input:
         jsr     setup_banking
         jsr     load_userport
         and     #$30
@@ -195,7 +178,6 @@ _sampler_2bit_hit2_input:
         rts
 
 _sampler_4bit_pet2_input:
-_sampler_4bit_hit2_input:
 _sampler_4bit_userport_input:
         jsr     setup_banking
         jsr     load_userport
@@ -390,7 +372,6 @@ _sampler_4bit_kingsoft2_input:
         rts
 
 _sampler_2bit_pet1_input:
-_sampler_2bit_hit1_input:
         jsr     setup_banking
         jsr     load_userport
         asl
@@ -404,7 +385,6 @@ do_asl4:
         rts
 
 _sampler_4bit_pet1_input:
-_sampler_4bit_hit1_input:
         jsr     setup_banking
         jsr     load_userport
         jmp     do_asl4

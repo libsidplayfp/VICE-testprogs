@@ -65,7 +65,7 @@ PUBLIC _disable_irq
 	out (c),a
 	ret
 
-; input USERPORT 4BIT & PET2/HIT2 4BIT, returns sample in A
+; input USERPORT 4BIT & PET2 4BIT, returns sample in A
 .input_userport_4bit
 	ld bc,IOBASE+0x0d01
 	in a,(c)
@@ -106,7 +106,7 @@ PUBLIC _disable_irq
 	in a,(c)
 	jr do_asl4
 
-; input PET1/HIT1 2BIT, returns sample in A
+; input PET1 2BIT, returns sample in A
 .userport_2bit_input
 	ld bc,IOBASE+0x0d01
 	in a,(c)
@@ -114,14 +114,14 @@ PUBLIC _disable_irq
 	sla a
 	jr do_asl4
 
-; input PET1/HIT1 4BIT, returns sample in A
+; input PET1 4BIT, returns sample in A
 .userport_4bit_input
 	ld bc,IOBASE+0x0d01
 	in a,(c)
 	jr do_asl4
 
-; input PET2/HIT2 2BIT, returns sample in A
-.userport_2bit_pet2_hit2_input
+; input PET2 2BIT, returns sample in A
+.userport_2bit_pet2_input
 	ld bc,IOBASE+0x0d01
 	in a,(c)
 	sla a
@@ -952,7 +952,7 @@ PUBLIC _disable_irq
 	cp INPUT_USERPORT_JOY_2
 	jp z,set_userport_2bit_input
 	cp INPUT_USERPORT_PET2
-	jp z,set_userport_2bit_pet2_hit2_input
+	jp z,set_userport_2bit_pet2_input
 	cp INPUT_USERPORT_KS1_2BIT
 	jp z,set_userport_2bit_ks1_input
 	cp INPUT_USERPORT_KS1_4BIT
@@ -1084,8 +1084,8 @@ PUBLIC _disable_irq
 	ld de,userport_4bit_input
 	jr set_input
 
-.set_userport_2bit_pet2_hit2_input
-	ld de,userport_2bit_pet2_hit2_input
+.set_userport_2bit_pet2_input
+	ld de,userport_2bit_pet2_input
 	jr set_input
 
 .set_userport_2bit_ks1_input
