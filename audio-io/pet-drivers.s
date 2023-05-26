@@ -3,15 +3,6 @@
 ;
 ; void __fastcall__ set_sid_addr(unsigned addr);
 ;
-; void __fastcall__ sampler_2bit_pet1_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_pet1_input(void);
-; void __fastcall__ sampler_4bit_pet1_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_pet1_input(void);
-; void __fastcall__ sampler_2bit_pet2_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
-; void __fastcall__ sampler_4bit_pet2_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_pet2_input(void);
-;
 ; void __fastcall__ sid_output_init(void);
 ; void __fastcall__ sid_output(unsigned char sample);
 ; void __fastcall__ userport_dac_output_init(void);
@@ -19,11 +10,6 @@
 ;
 ; void __fastcall__ show_sample(unsigned char sample);
 ;
-
-        .export  _sampler_2bit_pet1_input_init, _sampler_2bit_pet1_input
-        .export  _sampler_4bit_pet1_input_init, _sampler_4bit_pet1_input
-        .export  _sampler_2bit_pet2_input_init, _sampler_2bit_pet2_input
-        .export  _sampler_4bit_pet2_input_init, _sampler_4bit_pet2_input
 
         .export  _sid_output_init, _sid_output
         .export  _userport_dac_output_init, _userport_dac_output
@@ -33,46 +19,6 @@
         .export  _show_sample
 
         .importzp   tmp1, tmp2
-
-_sampler_2bit_pet1_input_init:
-_sampler_4bit_pet1_input_init:
-_sampler_2bit_pet2_input_init:
-_sampler_4bit_pet2_input_init:
-        ldx     #$00
-        stx     $e843
-        rts
-
-e843_e0:
-        ldx     #$E0
-        stx     $e843
-        rts
-
-_sampler_2bit_pet2_input:
-        lda     $e841
-        and     #$30
-        asl
-        asl
-        rts
-
-_sampler_4bit_pet2_input:
-        lda     $e841
-        and     #$f0
-        rts
-
-_sampler_2bit_pet1_input:
-        lda     $e841
-        asl
-        asl
-do_asl4:
-        asl
-        asl
-        asl
-        asl
-        rts
-
-_sampler_4bit_pet1_input:
-        lda     $e841
-        jmp     do_asl4
 
 _set_sid_addr:
         sta     store_sid+1

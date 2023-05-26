@@ -12,14 +12,6 @@
 ; unsigned char __fastcall__ sampler_2bit_hummer_input(void);
 ; void __fastcall__ sampler_4bit_hummer_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_hummer_input(void);
-; void __fastcall__ sampler_2bit_pet1_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_pet1_input(void);
-; void __fastcall__ sampler_4bit_pet1_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_pet1_input(void);
-; void __fastcall__ sampler_2bit_pet2_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
-; void __fastcall__ sampler_4bit_pet2_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_pet2_input(void);
 ; unsigned char __fastcall__ sampler_2bit_inception_j1p1_input(void);
 ; unsigned char __fastcall__ sampler_2bit_inception_j1p2_input(void);
 ; unsigned char __fastcall__ sampler_2bit_inception_j1p3_input(void);
@@ -56,12 +48,6 @@
         .export  _sampler_4bit_joy1_input
         .export  _sfx_input
         .export  _sfx_io_swapped_input
-        .export  _sampler_2bit_hummer_input_init, _sampler_2bit_hummer_input
-        .export  _sampler_4bit_hummer_input_init, _sampler_4bit_hummer_input
-        .export  _sampler_2bit_pet1_input_init, _sampler_2bit_pet1_input
-        .export  _sampler_4bit_pet1_input_init, _sampler_4bit_pet1_input
-        .export  _sampler_2bit_pet2_input_init, _sampler_2bit_pet2_input
-        .export  _sampler_4bit_pet2_input_init, _sampler_4bit_pet2_input
         .export  _sampler_2bit_inception_j1p1_input
         .export  _sampler_2bit_inception_j1p2_input
         .export  _sampler_2bit_inception_j1p3_input
@@ -94,16 +80,6 @@
         .export  _show_sample
 
         .importzp       tmp1, tmp2
-
-_sampler_2bit_hummer_input_init:
-_sampler_4bit_hummer_input_init:
-_sampler_2bit_pet1_input_init:
-_sampler_4bit_pet1_input_init:
-_sampler_2bit_pet2_input_init:
-_sampler_4bit_pet2_input_init:
-        ldx     #$00
-        stx     $9112
-        rts
 
 inception_byte_1:
         .byte   0
@@ -265,29 +241,9 @@ _sampler_4bit_inception_j1p8_input:
         lda     inception_byte_8
         jmp     do_asl4
 
-_sampler_2bit_pet2_input:
-        lda     $9110
-        and     #$30
-        asl
-        asl
-        rts
-
-_sampler_4bit_pet2_input:
-        lda     $9110
-        and     #$f0
-        rts
-
-_sampler_2bit_hummer_input:
-_sampler_2bit_pet1_input:
-        lda     $9110
 do_asl6:
         asl
         asl
-        jmp     do_asl4
-
-_sampler_4bit_hummer_input:
-_sampler_4bit_pet1_input:
-        lda     $9110
         jmp     do_asl4
 
 _sampler_2bit_joy1_input:

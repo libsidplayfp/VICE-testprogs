@@ -41,14 +41,6 @@
 ; unsigned char __fastcall__ sampler_4bit_inception_j2p6_input(void);
 ; unsigned char __fastcall__ sampler_4bit_inception_j2p7_input(void);
 ; unsigned char __fastcall__ sampler_4bit_inception_j2p8_input(void);
-; void __fastcall__ sampler_2bit_pet1_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_pet1_input(void);
-; void __fastcall__ sampler_4bit_pet1_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_pet1_input(void);
-; void __fastcall__ sampler_2bit_pet2_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
-; void __fastcall__ sampler_4bit_pet2_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_pet2_input(void);
 ; void __fastcall__ sampler_4bit_userport_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_userport_input(void);
 ;
@@ -106,10 +98,6 @@
         .export  _sampler_4bit_inception_j2p6_input
         .export  _sampler_4bit_inception_j2p7_input
         .export  _sampler_4bit_inception_j2p8_input
-        .export  _sampler_2bit_pet1_input_init, _sampler_2bit_pet1_input
-        .export  _sampler_4bit_pet1_input_init, _sampler_4bit_pet1_input
-        .export  _sampler_2bit_pet2_input_init, _sampler_2bit_pet2_input
-        .export  _sampler_4bit_pet2_input_init, _sampler_4bit_pet2_input
         .export  _sampler_4bit_userport_input_init, _sampler_4bit_userport_input
         .export  _digimax_cart_output
         .export  _shortbus_digimax_output
@@ -140,10 +128,6 @@ _sampler_4bit_userport_input_init:
 ; run into pbx read init
 
 _sampler_2bit_userport_input_init:
-_sampler_2bit_pet1_input_init:
-_sampler_4bit_pet1_input_init:
-_sampler_2bit_pet2_input_init:
-_sampler_4bit_pet2_input_init:
         ldx     #$00
         stx     $dd03
         rts
@@ -403,28 +387,14 @@ _sampler_4bit_inception_j2p8_input:
         lda     inception_byte_8
         jmp     do_asl4
 
-_sampler_2bit_pet2_input:
-        lda     $dd01
-        and     #$30
-        asl
-        asl
-        rts
-
-_sampler_4bit_pet2_input:
 _sampler_4bit_userport_input:
         lda     $dd01
         and     #$f0
         rts
 
-_sampler_2bit_pet1_input:
-        lda     $dd01
 do_asl6:
         asl
         asl
-        jmp     do_asl4
-
-_sampler_4bit_pet1_input:
-        lda     $dd01
         jmp     do_asl4
 
 _sfx_input:

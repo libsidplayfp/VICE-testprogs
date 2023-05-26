@@ -39,14 +39,6 @@ void __fastcall__ sfx_sound_expander_io_swapped_output_init(void);
 /* c64-drivers.s / cbm2-drivers.s / pet-drivers.s / plus4-drivers.s / vic20-drivers.s */
 void __fastcall__ userport_dac_output_init(void);
 void __fastcall__ userport_dac_output(unsigned char sample);
-void __fastcall__ sampler_2bit_pet1_input_init(void);
-unsigned char __fastcall__ sampler_2bit_pet1_input(void);
-void __fastcall__ sampler_4bit_pet1_input_init(void);
-unsigned char __fastcall__ sampler_4bit_pet1_input(void);
-void __fastcall__ sampler_2bit_pet2_input_init(void);
-unsigned char __fastcall__ sampler_2bit_pet2_input(void);
-void __fastcall__ sampler_4bit_pet2_input_init(void);
-unsigned char __fastcall__ sampler_4bit_pet2_input(void);
 
 /* c64-drivers.s / cbm2-drivers.s */
 void __fastcall__ sampler_4bit_userport_input_init(void);

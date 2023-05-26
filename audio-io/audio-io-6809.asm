@@ -141,88 +141,6 @@ userport_pet_input_menu:
 	ldx #choose_input_ports_menu_text
 	jsr print_string
 
-userport_pet_input_menu_choose:
-	jsr wtl_getchar
-	cmpb #'1'
-	beq userport_pet1_input_menu
-	cmpb #'2'
-	beq userport_pet2_input_menu
-	bra userport_pet_input_menu_choose
-
-userport_pet1_input_menu:
-	jsr cls
-	ldx #choose_input_samplers_menu_text
-	jsr print_string
-
-userport_pet1_input_menu_choose:
-	jsr wtl_getchar
-	cmpb #'4'
-	beq setup_userport_pet1_4bit_input_jmp
-	cmpb #'2'
-	beq setup_userport_pet1_2bit_input_jmp
-	bra userport_pet1_input_menu_choose
-
-setup_userport_pet1_4bit_input_jmp:
-	jmp setup_userport_pet1_4bit_input
-
-setup_userport_pet1_2bit_input_jmp:
-	jmp setup_userport_pet1_2bit_input
-
-userport_pet2_input_menu:
-	jsr cls
-	ldx #choose_input_samplers_menu_text
-	jsr print_string
-
-userport_pet2_input_menu_choose:
-	jsr wtl_getchar
-	cmpb #'4'
-	beq setup_userport_pet2_4bit_input_jmp
-	cmpb #'2'
-	beq setup_userport_pet2_2bit_input_jmp
-	bra userport_pet2_input_menu_choose
-
-setup_userport_pet2_4bit_input_jmp:
-	jmp setup_userport_pet2_4bit_input
-
-setup_userport_pet2_2bit_input_jmp:
-	jmp setup_userport_pet2_2bit_input
-
-setup_userport_pet1_2bit_input:
-	ldx #userport_h_o_p_input_init
-	stx input_init_function
-	ldx #userport_h2_p12_c2_input
-	stx input_function
-	ldx #userport_pet1_2bit_text
-	stx input_text
-	rts
-
-setup_userport_pet1_4bit_input:
-	ldx #userport_h_o_p_input_init
-	stx input_init_function
-	ldx #userport_h4_p14_c4_input
-	stx input_function
-	ldx #userport_pet1_4bit_text
-	stx input_text
-	rts
-
-setup_userport_pet2_2bit_input:
-	ldx #userport_h_o_p_input_init
-	stx input_init_function
-	ldx #userport_pet2_2bit_input
-	stx input_function
-	ldx #userport_pet2_2bit_text
-	stx input_text
-	rts
-
-setup_userport_pet2_4bit_input:
-	ldx #userport_h_o_p_input_init
-	stx input_init_function
-	ldx #userport_pet2_4bit_input
-	stx input_function
-	ldx #userport_pet2_4bit_text
-	stx input_text
-	rts
-
 main_output_menu:
 	jsr cls
 	ldx #choose_output_main_menu_text
@@ -558,26 +476,6 @@ streaming_text:
 
 from_text:
 	fcc "from"
-	fcb $0d
-	fcb $00
-
-userport_pet1_2bit_text:
-	fcc "2 bit sampler on port 1 of userport PET joy adapter"
-	fcb $0d
-	fcb $00
-
-userport_pet1_4bit_text:
-	fcc "4 bit sampler on port 1 of userport PET joy adapter"
-	fcb $0d
-	fcb $00
-
-userport_pet2_2bit_text:
-	fcc "2 bit sampler on port 2 of userport PET joy adapter"
-	fcb $0d
-	fcb $00
-
-userport_pet2_4bit_text:
-	fcc "4 bit sampler on port 2 of userport PET joy adapter"
 	fcb $0d
 	fcb $00
 

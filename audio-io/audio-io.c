@@ -146,54 +146,6 @@ typedef struct menu_output_s {
 
 /* -------------------------------------------------------------------------------------------------------- */
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
-static input_device_t sampler_2bit_pet1_input_device[] = {
-    { "2 bit sampler on port 1 of userport PET joy adapter", sampler_2bit_pet1_input_init, sampler_2bit_pet1_input }
-};
-#endif
-
-#if defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_2bit_pet1_input_device[] = {
-    { "2 bit sampler on port 1 of userport PET joy adapter", NULL, sampler_2bit_pet1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
-static input_device_t sampler_4bit_pet1_input_device[] = {
-    { "4 bit sampler on port 1 of userport PET joy adapter", sampler_4bit_pet1_input_init, sampler_4bit_pet1_input }
-};
-#endif
-
-#if defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_4bit_pet1_input_device[] = {
-    { "4 bit sampler on port 1 of userport PET joy adapter", NULL, sampler_4bit_pet1_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
-static input_device_t sampler_2bit_pet2_input_device[] = {
-    { "2 bit sampler on port 2 of userport PET joy adapter", sampler_2bit_pet2_input_init, sampler_2bit_pet2_input }
-};
-#endif
-
-#if defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_2bit_pet2_input_device[] = {
-    { "2 bit sampler on port 2 of userport PET joy adapter", NULL, sampler_2bit_pet2_input }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__CBM610__) || defined(__PET__)
-static input_device_t sampler_4bit_pet2_input_device[] = {
-    { "4 bit sampler on port 2 of userport PET joy adapter", sampler_4bit_pet2_input_init, sampler_4bit_pet2_input }
-};
-#endif
-
-#if defined(__C16__) || defined(__PLUS4__)
-static input_device_t sampler_4bit_pet2_input_device[] = {
-    { "4 bit sampler on port 2 of userport PET joy adapter", NULL, sampler_4bit_pet2_input }
-};
-#endif
-
 #ifdef __VIC20__
 static input_device_t sampler_2bit_inception_j1p1_input_device[] = {
     { "2 bit sampler on port 1 of the inception adapter in native port", NULL, sampler_2bit_inception_j1p1_input }
@@ -682,22 +634,6 @@ static output_device_t digiblaster_fe9x_output_device[] = {
 
 /* -------------------------------------------------------------------------------------------------------- */
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static menu_input_t input_pet1_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_pet1_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_pet1_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static menu_input_t input_pet2_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_pet2_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_pet2_input_device },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
 #if defined(__C64__) || defined(__C128__) || defined(__CBM510__) || defined(__VIC20__)
 static menu_input_t input_inception_j1p1_menu[] = {
     { '2', "2 bit sampler", NULL, sampler_2bit_inception_j1p1_input_device },
@@ -826,14 +762,6 @@ static menu_input_t input_inception_j2p8_menu[] = {
 };
 #endif
 
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static menu_input_t input_pet_menu[] = {
-    { '1', "port 1", input_pet1_menu, NULL },
-    { '2', "port 2", input_pet2_menu, NULL },
-    { 0, NULL, NULL, NULL },
-};
-#endif
-
 #if defined(__C64__) || defined(__C128__) || defined(__CBM510__) || defined(__VIC20__)
 static menu_input_t input_inception_j1_menu[] = {
     { '1', "port 1", input_inception_j1p1_menu, NULL },
@@ -871,15 +799,7 @@ static menu_input_t input_inception_menu[] = {
 #endif
 
 #if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
-static menu_input_t input_userport_joy_menu[] = {
-    { 'p', "PET joystick adapter", input_pet_menu, NULL },
-    { 0, NULL, NULL, NULL }
-};
-#endif
-
-#if defined(__C64__) || defined(__C128__) || defined(__VIC20__) || defined(__C16__) || defined(__PLUS4__) || defined(__CBM610__) || defined(__PET__)
 static menu_input_t input_userport_menu[] = {
-    { 'j', "userport joystick adapter", input_userport_joy_menu, NULL },
 #if defined(__C64__) || defined(__C128__) || defined(__CBM610__)
     { '4', "4 bit sampler", NULL, sampler_4bit_userport_input_device },
 #endif

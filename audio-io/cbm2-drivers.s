@@ -1,14 +1,6 @@
 ;
 ; Marco van den Heuvel, 28.01.2016
 ;
-; void __fastcall__ sampler_2bit_pet1_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_pet1_input(void);
-; void __fastcall__ sampler_4bit_pet1_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_pet1_input(void);
-; void __fastcall__ sampler_2bit_pet2_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
-; void __fastcall__ sampler_4bit_pet2_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_pet2_input(void);
 ; void __fastcall__ sampler_4bit_userport_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_userport_input(void);
 ;
@@ -20,10 +12,6 @@
 ; void __fastcall__ _show_sample(unsigned char sample);
 ;
 
-        .export  _sampler_2bit_pet1_input_init, _sampler_2bit_pet1_input
-        .export  _sampler_4bit_pet1_input_init, _sampler_4bit_pet1_input
-        .export  _sampler_2bit_pet2_input_init, _sampler_2bit_pet2_input
-        .export  _sampler_4bit_pet2_input_init, _sampler_4bit_pet2_input
         .export  _sampler_4bit_userport_input_init, _sampler_4bit_userport_input
 
         .export  _userport_dac_output_init, _userport_dac_output
@@ -89,72 +77,12 @@ _sampler_4bit_userport_input_init:
         stx     $01
         rts
 
-_sampler_2bit_pet1_input_init:
-_sampler_4bit_pet1_input_init:
-_sampler_2bit_pet2_input_init:
-_sampler_4bit_pet2_input_init:
-        jsr     setup_banking
-        ldy     #$03
-        sty     sreg
-        ldy     #$dc
-        sty     sreg + 1
-        ldy     #$00
-        tya
-        sta     (sreg),y
-        stx     $01
-        rts
-
-dc03_e0:
-        jsr     setup_banking
-        ldy     #$00
-        sty     sreg
-        ldy     #$dc
-        sty     sreg + 1
-        ldy     #$03
-        lda     #$E0
-        sta     (sreg),y
-        ldy     #$01
-        rts
-
-sta_sreg_y:
-        sta     (sreg),y
-        stx     $01
-        rts
-
-_sampler_2bit_pet2_input:
-        jsr     setup_banking
-        jsr     load_userport
-        and     #$30
-        asl
-        asl
-        stx     $01
-        rts
-
-_sampler_4bit_pet2_input:
 _sampler_4bit_userport_input:
         jsr     setup_banking
         jsr     load_userport
         and     #$f0
         stx     $01
         rts
-
-_sampler_2bit_pet1_input:
-        jsr     setup_banking
-        jsr     load_userport
-        asl
-        asl
-do_asl4:
-        asl
-        asl
-        asl
-        asl
-        stx     $01
-        rts
-
-_sampler_4bit_pet1_input:
-        jsr     setup_banking
-        jsr     load_userport
-        jmp     do_asl4
 
 _userport_digimax_output_init:
 _userport_dac_output_init:

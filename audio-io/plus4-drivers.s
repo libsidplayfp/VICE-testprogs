@@ -11,10 +11,6 @@
 ; unsigned char __fastcall__ sampler_4bit_joy2_input(void);
 ; unsigned char __fastcall__ sampler_2bit_sidcart_input(void);
 ; unsigned char __fastcall__ sampler_4bit_sidcart_input(void);
-; unsigned char __fastcall__ sampler_2bit_pet1_input(void);
-; unsigned char __fastcall__ sampler_4bit_pet1_input(void);
-; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
-; unsigned char __fastcall__ sampler_4bit_pet2_input(void);
 ;
 ; void __fastcall__ digiblaster_fd5x_output(unsigned char sample);
 ; void __fastcall__ digiblaster_fe9x_output(unsigned char sample);
@@ -34,10 +30,6 @@
         .export  _sampler_4bit_joy2_input
         .export  _sampler_2bit_sidcart_input
         .export  _sampler_4bit_sidcart_input
-        .export  _sampler_2bit_pet1_input
-        .export  _sampler_4bit_pet1_input
-        .export  _sampler_2bit_pet2_input
-        .export  _sampler_4bit_pet2_input
         .export  _digiblaster_fd5x_output
         .export  _digiblaster_fe9x_output
         .export  _sid_output_init, _sid_output
@@ -49,28 +41,6 @@
         .export  _show_sample
 
         .importzp   tmp1, tmp2
-
-_sampler_2bit_pet2_input:
-        lda     $fd10
-        and     #$30
-        asl
-        asl
-        rts
-
-_sampler_4bit_pet2_input:
-        lda     $fd10
-        and     #$f0
-        rts
-
-_sampler_2bit_pet1_input:
-        lda     $fd10
-        asl
-        asl
-        jmp     do_asl4
-
-_sampler_4bit_pet1_input:
-        lda     $fd10
-        jmp     do_asl4
 
 load_joy1:
         lda     #$fa
