@@ -9,14 +9,6 @@
 ; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
 ; void __fastcall__ sampler_4bit_pet2_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_pet2_input(void);
-; void __fastcall__ sampler_2bit_starbyte1_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_starbyte1_input(void);
-; void __fastcall__ sampler_4bit_starbyte1_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_starbyte1_input(void);
-; void __fastcall__ sampler_2bit_starbyte2_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_starbyte2_input(void);
-; void __fastcall__ sampler_4bit_starbyte2_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_starbyte2_input(void);
 ; void __fastcall__ sampler_4bit_userport_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_userport_input(void);
 ;
@@ -32,10 +24,6 @@
         .export  _sampler_4bit_pet1_input_init, _sampler_4bit_pet1_input
         .export  _sampler_2bit_pet2_input_init, _sampler_2bit_pet2_input
         .export  _sampler_4bit_pet2_input_init, _sampler_4bit_pet2_input
-        .export  _sampler_2bit_starbyte1_input_init, _sampler_2bit_starbyte1_input
-        .export  _sampler_4bit_starbyte1_input_init, _sampler_4bit_starbyte1_input
-        .export  _sampler_2bit_starbyte2_input_init, _sampler_2bit_starbyte2_input
-        .export  _sampler_4bit_starbyte2_input_init, _sampler_4bit_starbyte2_input
         .export  _sampler_4bit_userport_input_init, _sampler_4bit_userport_input
 
         .export  _userport_dac_output_init, _userport_dac_output
@@ -101,29 +89,10 @@ _sampler_4bit_userport_input_init:
         stx     $01
         rts
 
-_sampler_2bit_starbyte2_input_init:
-_sampler_4bit_starbyte2_input_init:
-        jsr     setup_banking
-        ldy     #$dc
-        sty     sreg + 1
-        ldy     #$02
-        sty     sreg
-        ldy     #$00
-        lda     (sreg),y
-        and     #$fb
-        sta     (sreg),y
-        tya
-        iny
-        sta     (sreg),y
-        stx     $01
-        rts
-
 _sampler_2bit_pet1_input_init:
 _sampler_4bit_pet1_input_init:
 _sampler_2bit_pet2_input_init:
 _sampler_4bit_pet2_input_init:
-_sampler_2bit_starbyte1_input_init:
-_sampler_4bit_starbyte1_input_init:
         jsr     setup_banking
         ldy     #$03
         sty     sreg
@@ -166,99 +135,6 @@ _sampler_4bit_userport_input:
         jsr     setup_banking
         jsr     load_userport
         and     #$f0
-        stx     $01
-        rts
-
-_sampler_2bit_starbyte2_input:
-        jsr     setup_banking
-        jsr     load_pa2
-        and     #$04
-        asl
-        asl
-        asl
-        asl
-        sta     tmp1
-        jsr     load_userport
-        and     #$20
-        asl
-        asl
-        ora     tmp1
-        stx     $01
-        rts
-
-_sampler_4bit_starbyte2_input:
-        jsr     setup_banking
-        jsr     load_pa2
-        and     #$04
-        asl
-        asl
-        sta     tmp1
-        jsr     load_userport
-        sta     tmp2
-        and     #$20
-        ora     tmp1
-        sta     tmp1
-        lda     tmp2
-        and     #$40
-        asl
-        ora     tmp1
-        sta     tmp1
-        lda     tmp2
-        and     #$80
-        lsr
-        ora     tmp1
-        stx     $01
-        rts
-
-_sampler_2bit_starbyte1_input:
-        jsr     setup_banking
-        jsr     load_userport
-        sta     tmp2
-        and     #$01
-        clc
-        ror
-        ror
-        sta     tmp1
-        lda     tmp2
-        and     #$08
-        asl
-        asl
-        asl
-        ora     tmp1
-        stx     $01
-        rts
-
-_sampler_4bit_starbyte1_input:
-        jsr     setup_banking
-        jsr     load_userport
-        sta     tmp2
-        and     #$01
-        asl
-        asl
-        asl
-        asl
-        asl
-        sta     tmp1
-        lda     tmp2
-        and     #$02
-        clc
-        ror
-        ror
-        ror
-        ora     tmp1
-        sta     tmp1
-        lda     tmp2
-        and     #$04
-        asl
-        asl
-        asl
-        asl
-        ora     tmp1
-        sta     tmp1
-        lda     tmp2
-        and     #$08
-        asl
-        ora     tmp1
         stx     $01
         rts
 

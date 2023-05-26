@@ -447,22 +447,6 @@ typedef struct menu_output_s {
 
 /* -------------------------------------------------------------------------------------------------------- */
 
-static input_device_t sampler_2bit_starbyte1_input_device[] = {
-    { "2 bit sampler on port 1 of userport StarByte joy adapter", INPUT_INIT_USERPORT_JOY_4_2, INPUT_USERPORT_SB1_2BIT }
-};
-
-static input_device_t sampler_4bit_starbyte1_input_device[] = {
-    { "4 bit sampler on port 1 of userport StarByte joy adapter", INPUT_INIT_USERPORT_JOY_4_2, INPUT_USERPORT_SB1_4BIT }
-};
-
-static input_device_t sampler_2bit_starbyte2_input_device[] = {
-    { "2 bit sampler on port 2 of userport StarByte joy adapter", INPUT_INIT_USERPORT_SB2, INPUT_USERPORT_SB2_2BIT }
-};
-
-static input_device_t sampler_4bit_starbyte2_input_device[] = {
-    { "4 bit sampler on port 2 of userport StarByte joy adapter", INPUT_INIT_USERPORT_SB2, INPUT_USERPORT_SB2_4BIT }
-};
-
 static input_device_t sampler_2bit_pet1_input_device[] = {
     { "2 bit sampler on port 1 of userport PET joy adapter", INPUT_INIT_USERPORT_JOY_4_2, INPUT_USERPORT_JOY_2 }
 };
@@ -683,24 +667,6 @@ static output_device_t userport_dac_output_device[] = {
 
 /* -------------------------------------------------------------------------------------------------------- */
 
-static menu_input_t input_starbyte1_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_starbyte1_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_starbyte1_input_device },
-    { 0, NULL, NULL, NULL }
-};
-
-static menu_input_t input_starbyte2_menu[] = {
-    { '2', "2 bit sampler", NULL, sampler_2bit_starbyte2_input_device },
-    { '4', "4 bit sampler", NULL, sampler_4bit_starbyte2_input_device },
-    { 0, NULL, NULL, NULL }
-};
-
-static menu_input_t input_starbyte_menu[] = {
-    { '1', "port 1", input_starbyte1_menu, NULL },
-    { '2', "port 2", input_starbyte2_menu, NULL },
-    { 0, NULL, NULL, NULL },
-};
-
 static menu_input_t input_pet1_menu[] = {
     { '2', "2 bit sampler", NULL, sampler_2bit_pet1_input_device },
     { '4', "4 bit sampler", NULL, sampler_4bit_pet1_input_device },
@@ -852,7 +818,6 @@ static menu_input_t input_joy_adapter_menu[] = {
 
 static menu_input_t input_userport_joy_menu[] = {
     { 'p', "PET joystick adapter", input_pet_menu, NULL },
-    { 's', "StarByte joystick adapter", input_starbyte_menu, NULL },
     { 0, NULL, NULL, NULL }
 };
 

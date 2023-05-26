@@ -49,14 +49,6 @@
 ; unsigned char __fastcall__ sampler_2bit_pet2_input(void);
 ; void __fastcall__ sampler_4bit_pet2_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_pet2_input(void);
-; void __fastcall__ sampler_2bit_starbyte1_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_starbyte1_input(void);
-; void __fastcall__ sampler_4bit_starbyte1_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_starbyte1_input(void);
-; void __fastcall__ sampler_2bit_starbyte2_input_init(void);
-; unsigned char __fastcall__ sampler_2bit_starbyte2_input(void);
-; void __fastcall__ sampler_4bit_starbyte2_input_init(void);
-; unsigned char __fastcall__ sampler_4bit_starbyte2_input(void);
 ; void __fastcall__ sampler_4bit_userport_input_init(void);
 ; unsigned char __fastcall__ sampler_4bit_userport_input(void);
 ;
@@ -118,10 +110,6 @@
         .export  _sampler_4bit_pet1_input_init, _sampler_4bit_pet1_input
         .export  _sampler_2bit_pet2_input_init, _sampler_2bit_pet2_input
         .export  _sampler_4bit_pet2_input_init, _sampler_4bit_pet2_input
-        .export  _sampler_2bit_starbyte1_input_init, _sampler_2bit_starbyte1_input
-        .export  _sampler_4bit_starbyte1_input_init, _sampler_4bit_starbyte1_input
-        .export  _sampler_2bit_starbyte2_input_init, _sampler_2bit_starbyte2_input
-        .export  _sampler_4bit_starbyte2_input_init, _sampler_4bit_starbyte2_input
         .export  _sampler_4bit_userport_input_init, _sampler_4bit_userport_input
         .export  _digimax_cart_output
         .export  _shortbus_digimax_output
@@ -149,12 +137,6 @@ _sampler_4bit_userport_input_init:
         jmp     _sampler_2bit_userport_input_init
 
 
-_sampler_2bit_starbyte2_input_init:
-_sampler_4bit_starbyte2_input_init:
-        lda     $dd02
-        and     #$fb
-        sta     $dd02
-
 ; run into pbx read init
 
 _sampler_2bit_userport_input_init:
@@ -162,8 +144,6 @@ _sampler_2bit_pet1_input_init:
 _sampler_4bit_pet1_input_init:
 _sampler_2bit_pet2_input_init:
 _sampler_4bit_pet2_input_init:
-_sampler_2bit_starbyte1_input_init:
-_sampler_4bit_starbyte1_input_init:
         ldx     #$00
         stx     $dd03
         rts
@@ -422,91 +402,6 @@ _sampler_4bit_inception_j2p8_input:
         jsr     inception_j2_input_bytes
         lda     inception_byte_8
         jmp     do_asl4
-
-_sampler_2bit_starbyte2_input:
-        lda     $dd00
-        and     #$04
-        asl
-        asl
-        asl
-        asl
-        sta     tmp1
-        lda     $dd01
-        and     #$20
-        asl
-        asl
-        ora     tmp1
-        rts
-
-_sampler_4bit_starbyte2_input:
-        lda     $dd00
-        and     #$04
-        asl
-        asl
-        sta     tmp1
-        lda     $dd01
-        sta     tmp2
-        and     #$20
-        ora     tmp1
-        sta     tmp1
-        lda     tmp2
-        and     #$40
-        asl
-        ora     tmp1
-        sta     tmp1
-        lda     tmp2
-        and     #$80
-        lsr
-        ora     tmp1
-        rts
-
-_sampler_2bit_starbyte1_input:
-        lda     $dd01
-        sta     tmp2
-        and     #$01
-        clc
-        ror
-        ror
-        sta     tmp1
-        lda     tmp2
-        and     #$08
-        asl
-        asl
-        asl
-        ora     tmp1
-        rts
-
-_sampler_4bit_starbyte1_input:
-        lda     $dd01
-        sta     tmp2
-        and     #$01
-        asl
-        asl
-        asl
-        asl
-        asl
-        sta     tmp1
-        lda     tmp2
-        and     #$02
-        clc
-        ror
-        ror
-        ror
-        ora     tmp1
-        sta     tmp1
-        lda     tmp2
-        and     #$04
-        asl
-        asl
-        asl
-        asl
-        ora     tmp1
-        sta     tmp1
-        lda     tmp2
-        and     #$08
-        asl
-        ora     tmp1
-        rts
 
 _sampler_2bit_pet2_input:
         lda     $dd01
