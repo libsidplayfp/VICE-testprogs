@@ -13,39 +13,30 @@ bend:       !word 0
     sei
     lda #0
     sta $d011
-
-; set frequency
-    lda #$00
-    sta $d40E
-    sta $d40F
+    sta $d015
+raslo:
+    bit $d011
+    bpl raslo
+rashi:
+    bit $d011
+    bmi rashi
 
 ; set pulse width
     sta $d410
     sta $d411
 
-; set testbit to reset noise and oscillator
-    lda #$08
-    sta $d412
-
-; noise reg need some time to reset
-!if NEWSID = 0 {
-    ldy #1    ; wait ~1 sec for 6581
+!if NEWRESET = 1 {
+    !src "../noise-reset_new.asm"
 } else {
-    ldy #10   ; wait ~10 sec for 8580
+    !src "../noise-reset_old.asm"
 }
----
-    ldx #60   ; sixty frames = 1 sec for NTSC, 1.2 sec for PAL
---
-w1: bit $d011
-    bpl w1
-w2: bit $d011
-    bmi w2
-    dex
-    bne --
-    dey
-    bne ---
 
 ; at this point all bit should be high
+
+; set frequency
+    lda #$00
+    sta $d40E
+    sta $d40F
 
 ; set noise and testbit
     lda #$88

@@ -13,31 +13,26 @@ bend:       !word 0
     sei
     lda #0
     sta $d011
+    sta $d015
+raslo:
+    bit $d011
+    bpl raslo
+rashi:
+    bit $d011
+    bmi rashi
+
+!if NEWRESET=1 {
+    !src "../noise-reset_new.asm"
+} else {
+    !src "../noise-reset_old.asm"
+}
+
+; at this point all bit should be high
 
 ; set frequency
     lda #$00
     sta $d40E
     sta $d40F
-
-; set testbit to reset noise and oscillator
-    lda #$08
-    sta $d412
-
-; noise reg need some time to reset
-    ldy #$10
----
-    ldx #$00
---
-    lda #$f0
--
-    cmp $d012
-    bne -
-    dex
-    bne --
-    dey
-    bne ---
-
-; at this point all bit should be high
 
 ; release testbit and set noise only
     lda #$80

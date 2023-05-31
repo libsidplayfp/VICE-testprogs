@@ -13,13 +13,14 @@ bend:       !word 0
     sta finalresult+1
     lda #0
     sta $d011
+    sta $d015
     sta currenttest
-; set frequency
-    
-    lda #$ff
-    ldx #$ff
-    sta $d40E
-    stx $d40F
+raslo:
+    bit $d011
+    bpl raslo
+rashi:
+    bit $d011
+    bmi rashi
 
 start
     ldx currenttest
@@ -28,6 +29,15 @@ start
     jmp end
 next
     jsr reset
+
+; set frequency
+    lda #$ff
+    ldx #$ff
+    sta $d40E
+    stx $d40F
+
+    lda #$88
+    sta $d412
 
 ; at this point all bit should be high
     lda $d41b
@@ -156,27 +166,12 @@ reset
     sta result+2
     sta plot+2
 
-; set testbit to reset noise
-    lda #$88
-    sta $d412
-
-; noise reg need some time to reset
-!if NEWSID = 0 {
-    ldy #1    ; wait ~1 sec for 6581
+!if NEWRESET = 1 {
+    !src "../noise-reset_new.asm"
 } else {
-    ldy #10   ; wait ~10 sec for 8580
+    !src "../noise-reset_old.asm"
 }
----
-    ldx #60   ; sixty frames = 1 sec for NTSC, 1.2 sec for PAL
---
-w1: bit $d011
-    bpl w1
-w2: bit $d011
-    bmi w2
-    dex
-    bne --
-    dey
-    bne ---
+
     rts
 clrscreen
     lda #$20    ;Clear the screen
