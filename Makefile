@@ -42,10 +42,10 @@ cartconv:
 vice: vice-autostart vice-monitor vice-remotemonitor
 
 vice-autostart:
-	cd ./testbench && ./checkautostart.sh
+	@$(MAKE) -C ./testbench/autostart test
 
 vice-monitor:
-	@(MAKE) -C Monitor
+	@$(MAKE) -C Monitor
 
 vice-remotemonitor:
 	cd ./remotemonitor/binmontest && make test
