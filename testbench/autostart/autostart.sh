@@ -17,12 +17,12 @@ fi
 
 if [ "$VERBOSE" == "1" ] ; then
     echo "-_"
-    echo $VICEDIR/$1 -default $checkopts $PROGPRE-$2.$PROGEXT "# -debugcart -limitcycles $LIMITCYCLES"
+    echo $EMUDIR/$1 -default $checkopts $PROGPRE-$2.$PROGEXT "# -debugcart -limitcycles $LIMITCYCLES"
 fi
 
 echo -ne $1" "$checkopts" # ["$2"] "
 
-$VICEDIR/$1 -default $checkopts -debugcart -console -warp -limitcycles $LIMITCYCLES $SCRIPT_DIR/$PROGPRE-$2.$PROGEXT 1> /dev/null 2> /dev/null
+$EMUDIR/$1 -default $checkopts -debugcart -console -warp -limitcycles $LIMITCYCLES $SCRIPT_DIR/$PROGPRE-$2.$PROGEXT 1> /dev/null 2> /dev/null
 exitcode=$?
 
 #echo $exitcode
@@ -1895,19 +1895,19 @@ if [ -z "${@:1:1}" ] ; then
     exit
 else
 
-if [ "$VICEDIR" == "" ] ; then
+if [ "$EMUDIR" == "" ] ; then
     VICEDIR=$SCRIPT_DIR/../../../trunk/vice/src/
-    if [ -d "$VICEDIR" ] ; then
-        echo "warning: VICEDIR not defined, using "$VICEDIR
+    if [ -d "$EMUDIR" ] ; then
+        echo "warning: VICEDIR not defined, using "$EMUDIR
     else
         echo "error: VICEDIR not defined and trunk not found."
         exit -1
     fi
 else
-    if [ -d "$VICEDIR" ] ; then
-        echo "using VICE dir:" $VICEDIR
+    if [ -d "$EMUDIR" ] ; then
+        echo "using VICE dir:" $EMUDIR
     else
-        echo "error: "$VICEDIR" does not exist."
+        echo "error: "$EMUDIR" does not exist."
         exit -1
     fi
 fi
