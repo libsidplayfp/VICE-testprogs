@@ -1,12 +1,69 @@
-this is a collection of test programs, primarily used for the VICE project, but
+This is a collection of test programs, primarily used for the VICE project, but
 useful for other commodore emulators too.
 --------------------------------------------------------------------------------
+
+Note: all scripts will, by default, assume that:
+
+a) both the VICE "trunk" and "testprogs" repositories were checked out into the
+   same parent and using the names "trunk" and "testprogs", so you will have a
+   directory structure like:
+
+   foo/trunk
+   foo/testprogs
+
+b) VICE was configured to be built in-tree and was compiled already, so the
+   binaries can be found in foo/trunk/src/
+
+This allows the tests to easily operate on WIP builds without the need to set
+up anything.
+
+However, you can usually override this by setting EMUDIR to the path the
+binaries can be located in.
+
+--------------------------------------------------------------------------------
+
+In the root directory you will find the following files and directories:
+
+readme.txt      this text
+Makefile        the toplevel (simple) interface to all tests
+
+$ make
+available targets:
+petcat                   test 'petcat'
+c1541                    test 'c1541'
+cartconv                 test 'cartconv'
+vice-autostart           autostart tests
+vice-monitor             test ml-monitor
+vice-remotemonitor       test remote monitor protocol
+vice                     all vice- tests
+testbench                run the emulation testbench
+runtests                 do all of the above
+
+If you want to run individual (emulation-) tests, use the testbench.sh script
+in the testbench directory.
+
+
+* VICE tools
+
+./c1541
+./cartconv
+./petcat
+
+* VICE features
+
+testbench/autostart
+Monitor
+remotemonitor
+
+* Emulator testbench
 
 ./testbench contains the testbench scripts. see the readme.txt in this directory
 for instructions on how to do automated testing.
 
---------------------------------------------------------------------------------
-this is a (very) brief overview of the contents in this repository:
+* Target test programs
+
+All other directories contain programs that run on the target computer (or the
+emulator, obviously) and tests various aspects of the emulation:
 
 ./general         - tests that do not fit into any other categories, usually
                     combined tests
@@ -19,14 +76,24 @@ this is a (very) brief overview of the contents in this repository:
 ./VICII
 
 ./VDC             - VDC related, these run on C128
+./TED             - TED related, these run on Plus4
+./CRTC            - CRTC related, these run on PET
 
 * tests specifically related to the various commodore computers
 
 ./C64             - specific C64 related tests
 ./interrupts
+./c64-cpm
+
+./c128
+./c128-cpm
 
 ./DTV
 ./VIC20
+./CBM2
+./PET
+./Plus4
+./SCPU
 
 ./drive           - floppy drive tests
 
@@ -34,11 +101,29 @@ this is a (very) brief overview of the contents in this repository:
 
 * expansions
 
+./memory-expansions
+./plus256k
+./plus60k
+./ramcart
 ./GEO-RAM
 ./REU
+
 ./mouse
 ./propmouse
-./userportjoy
+
+./audio-io
+./digimax
+./sfx_soundexpander
+./sfx_soundsampler
+
+./RTC
+./cp-clockf83
+./userportrtc
+
+./joystick
+./keypad
+./testjoy
+./userportsnes
 
 * VICE subsystems
 
@@ -47,10 +132,6 @@ this is a (very) brief overview of the contents in this repository:
 ./vdrive
 ./RS232
 ./MIDI
-
-* VICE tools
-
-./petcat
 
 --------------------------------------------------------------------------------
 
@@ -111,31 +192,6 @@ C64, C128, VIC20, PET, PLUS4, CBM2 ...
 - make test program to check various track lengths (in a g64)
 - make test program to check various speed zones (in a g64)
 
-* expansions
-
-super snapshot v5:
-------------------
-
-- make test for using SSV5+REU
-
-* VICE subsystems
-
-* VICE tools
-
-petcat
-------
-
-- find more references for control-char notation used by magazines
-
-cartconv
---------
-
-c1541
------
-
-- a couple of vdrive related regression tests could be done using c1541
-- no tests for c1541, these should be added
-
 vdrive
 ------
 
@@ -143,3 +199,9 @@ vdrive
   aren't supported (eg "$:A*,B*") (#614)
 - add tests for various CBMDOS commands
 
+* expansions
+
+super snapshot v5:
+------------------
+
+- make test for using SSV5+REU

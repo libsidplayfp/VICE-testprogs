@@ -1,4 +1,11 @@
 
+.SILENT:
+
+# override with "make EMUDIR=foo"
+EMUDIR:=../../../trunk/vice/src
+#$(info $$EMUDIR is [${EMUDIR}])
+#$(info using EMU: [${EMU}])
+
 # set the pathes to a compiled copy of the VICE tree, one configured with and
 # the other without CPU-history logging
 
@@ -62,3 +69,12 @@ testnohist: dummytest.prg
 	sed -i -e 's:#[0-9]:--:g' x64-off-nohist.txt
 #	cat x64-off-nohist.txt
 
+clean:
+	@$(RM) x64sc-on.txt
+	@$(RM) x64sc-off.txt
+	@$(RM) x64-on.txt
+	@$(RM) x64-off.txt
+	@$(RM) x64sc-on-nohist.txt
+	@$(RM) x64sc-off-nohist.txt
+	@$(RM) x64-on-nohist.txt
+	@$(RM) x64-off-nohist.txt

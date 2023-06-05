@@ -1,5 +1,12 @@
 
-EMU=x128 -default -minimize
+.SILENT:
+
+# override with "make EMUDIR=foo"
+EMUDIR:=../../../trunk/vice/src
+#$(info $$EMUDIR is [${EMUDIR}])
+
+EMU=$(EMUDIR)/x128 -default -minimize
+$(info using EMU: [${EMU}])
 
 all: disasm
 
@@ -29,5 +36,5 @@ disasm: z80cx-displain.txt z80cx-plain.txt
 ################################################################################
 
 clean:
-	$(RM)	z80cx-displain.txt z80cx-plain.txt z80cx-disasm.txt
-	$(RM)	vicelog disasmcmds.txt
+	@$(RM)	z80cx-displain.txt z80cx-plain.txt z80cx-disasm.txt
+	@$(RM)	vicelog disasmcmds.txt

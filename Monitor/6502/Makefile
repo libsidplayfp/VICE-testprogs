@@ -1,5 +1,12 @@
 
-EMU=x64sc -default -minimize
+.SILENT:
+
+# override with "make EMUDIR=foo"
+EMUDIR:=../../../trunk/vice/src
+#$(info $$EMUDIR is [${EMUDIR}])
+
+EMU=$(EMUDIR)/x64sc -default -minimize
+$(info using EMU: [${EMU}])
 
 all: testlegal testundocs
 
@@ -118,18 +125,18 @@ testlegal: testlegal0 testlegal1 testlegal2
 ################################################################################
 
 clean:
-	$(RM)	disasmcmds.txt
-	$(RM)	legaldisasm.txt
-	$(RM)	legaldisasm.bin
-	$(RM)	legalopcodes.bin legalopcodes2.bin legalopcodes3.bin
-	$(RM)	legalopcodes0.txt legalopcodes1.txt legalopcodes2.txt
+	@$(RM)	disasmcmds.txt
+	@$(RM)	legaldisasm.txt
+	@$(RM)	legaldisasm.bin
+	@$(RM)	legalopcodes.bin legalopcodes2.bin legalopcodes3.bin
+	@$(RM)	legalopcodes0.txt legalopcodes1.txt legalopcodes2.txt
 
-	$(RM)	allundocs.bin
-	$(RM)	undocsdisasm.txt
-	$(RM)	allundocs0.txt allundocs1.txt
+	@$(RM)	allundocs.bin
+	@$(RM)	undocsdisasm.txt
+	@$(RM)	allundocs0.txt allundocs1.txt
 
-	$(RM)	supportedundocs.bin supportedundocs2.bin
-	$(RM)	supporteddisasm.txt
-	$(RM)	supportedundocs0.txt supportedundocs1.txt supportedundocs2.txt
+	@$(RM)	supportedundocs.bin supportedundocs2.bin
+	@$(RM)	supporteddisasm.txt
+	@$(RM)	supportedundocs0.txt supportedundocs1.txt supportedundocs2.txt
 
-	$(RM)	vicelog
+	@$(RM)	vicelog

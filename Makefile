@@ -11,6 +11,7 @@ help:
 	@echo "c1541                    test 'c1541'"
 	@echo "cartconv                 test 'cartconv'"
 	@echo "vice-autostart           autostart tests"
+	@echo "vice-monitor             test ml-monitor"
 	@echo "vice-remotemonitor       test remote monitor protocol"
 	@echo "vice                     all vice- tests"
 	@echo "testbench                run the emulation testbench"
@@ -23,6 +24,7 @@ help:
 	
 # TODO
 buildtests:
+	@echo "FIXME: implement build target that builds all target tests"
 	
 .PHONY: petcat c1541 cartconv
 
@@ -35,19 +37,22 @@ c1541:
 cartconv:
 	@$(MAKE) -C cartconv
 
-.PHONY: vice-autostart vice-remotemonitor
+.PHONY: vice-autostart vice-monitor vice-remotemonitor
 
-vice: vice-autostart vice-remotemonitor
+vice: vice-autostart vice-monitor vice-remotemonitor
 
 vice-autostart:
 	cd ./testbench && ./checkautostart.sh
+
+vice-monitor:
+	@(MAKE) -C Monitor
 
 vice-remotemonitor:
 	cd ./remotemonitor/binmontest && make test
 
 .PHONY: testbench
 
-testbench:
+testbench: buildtests
 	@$(MAKE) -C testbench testall
 	
 .PHONY: runtests
