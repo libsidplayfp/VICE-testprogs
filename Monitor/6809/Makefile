@@ -56,9 +56,9 @@ legalopcodes3.bin: legalopcodes1.txt
 	echo -ne "\n" >> disasmcmds.txt
 	echo "bs \"legalopcodes3.bin\" 0 1000 563c" >> disasmcmds.txt
 #	echo "bs \"legalopcodes3.bin\" 0 1000 1017" >> disasmcmds.txt
-	xpet -default -model SuperPET -moncommands disasmcmds.txt
-#	echo "quit" >> disasmcmds.txt
-#	$(EMU) -moncommands disasmcmds.txt > vicelog
+#	xpet -default -model SuperPET -moncommands disasmcmds.txt
+	echo "quit" >> disasmcmds.txt
+	$(EMU) -moncommands disasmcmds.txt > vicelog
 
 testlegal2: legalopcodes.bin legalopcodes3.bin
 	diff -q legalopcodes.bin legalopcodes3.bin

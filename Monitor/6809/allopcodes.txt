@@ -1364,7 +1364,7 @@
 !byte $36,$3D                   ; PSHU Y,X,DP,B,CC
 !byte $36,$3E                   ; PSHU Y,X,DP,D
 !byte $36,$3F                   ; PSHU Y,X,DP,D,CC
-!byte $36,$40                   ; PSHU U
+!byte $36,$40                   ; PSHU S
 !byte $36,$41                   ; PSHU S,CC
 !byte $36,$42                   ; PSHU S,A
 !byte $36,$43                   ; PSHU S,A,CC
@@ -1492,7 +1492,7 @@
 !byte $36,$BD                   ; PSHU PC,Y,X,DP,B,CC
 !byte $36,$BE                   ; PSHU PC,Y,X,DP,D
 !byte $36,$BF                   ; PSHU PC,Y,X,DP,D,CC
-!byte $36,$C0                   ; PSHU PC,U
+!byte $36,$C0                   ; PSHU PC,S
 !byte $36,$C1                   ; PSHU PC,S,CC
 !byte $36,$C2                   ; PSHU PC,S,A
 !byte $36,$C3                   ; PSHU PC,S,A,CC
@@ -1620,7 +1620,7 @@
 !byte $37,$3D                   ; PULU Y,X,DP,B,CC
 !byte $37,$3E                   ; PULU Y,X,DP,D
 !byte $37,$3F                   ; PULU Y,X,DP,D,CC
-!byte $37,$40                   ; PULU U
+!byte $37,$40                   ; PULU S
 !byte $37,$41                   ; PULU S,CC
 !byte $37,$42                   ; PULU S,A
 !byte $37,$43                   ; PULU S,A,CC
@@ -1748,7 +1748,7 @@
 !byte $37,$BD                   ; PULU PC,Y,X,DP,B,CC
 !byte $37,$BE                   ; PULU PC,Y,X,DP,D
 !byte $37,$BF                   ; PULU PC,Y,X,DP,D,CC
-!byte $37,$C0                   ; PULU PC,U
+!byte $37,$C0                   ; PULU PC,S
 !byte $37,$C1                   ; PULU PC,S,CC
 !byte $37,$C2                   ; PULU PC,S,A
 !byte $37,$C3                   ; PULU PC,S,A,CC
