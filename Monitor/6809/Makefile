@@ -21,8 +21,7 @@ legaldisasm.txt: legalopcodes.bin
 	echo "log on" >> disasmcmds.txt
 	echo "cpu 6809" >> disasmcmds.txt
 	echo "bank 6809" >> disasmcmds.txt
-	echo "d 1000 6fbc" >> disasmcmds.txt
-#	echo "d 1000 1017" >> disasmcmds.txt
+	echo "d 1000 7020" >> disasmcmds.txt
 	echo "log off" >> disasmcmds.txt
 	echo "quit" >> disasmcmds.txt
 	$(RM) legaldisasm.txt
