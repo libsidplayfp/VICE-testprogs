@@ -1896,11 +1896,11 @@ if [ -z "${@:1:1}" ] ; then
 else
 
 if [ "$EMUDIR" == "" ] ; then
-    VICEDIR=$SCRIPT_DIR/../../../trunk/vice/src/
+    EMUDIR=$SCRIPT_DIR/../../../trunk/vice/src/
     if [ -d "$EMUDIR" ] ; then
-        echo "warning: VICEDIR not defined, using "$EMUDIR
+        echo "warning: EMUDIR not defined, using "$EMUDIR
     else
-        echo "error: VICEDIR not defined and trunk not found."
+        echo "error: EMUDIR not defined and trunk not found."
         exit -1
     fi
 else
