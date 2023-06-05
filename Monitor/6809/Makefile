@@ -1,5 +1,12 @@
 
-EMU=xpet -default -model SuperPET -minimize
+.SILENT:
+
+# override with "make EMUDIR=foo"
+EMUDIR:=../../../trunk/vice/src
+#$(info $$EMUDIR is [${EMUDIR}])
+
+EMU=$(EMUDIR)/xpet -default -model SuperPET -minimize
+$(info using EMU: [${EMU}])
 
 all: testlegal
 
@@ -28,6 +35,7 @@ legalopcodes1.txt: legaldisasm.txt
 	cat legaldisasm.txt | sed 's:^....................::g' | sed 's: /\*.*\*/::g' > legalopcodes1.txt
 	
 testlegal0: legalopcodes0.txt legalopcodes1.txt
+	@echo "showing reference <-> disassembled"
 	diff --suppress-common-lines --side-by-side legalopcodes0.txt legalopcodes1.txt
 
 #legalopcodes2.txt: legalopcodes1.txt
@@ -60,10 +68,10 @@ testlegal: testlegal0 testlegal2
 ################################################################################
 
 clean:
-	$(RM)	disasmcmds.txt
-	$(RM)	legaldisasm.txt
-	$(RM)	legaldisasm.bin
-	$(RM)	legalopcodes.bin legalopcodes2.bin legalopcodes3.bin
-	$(RM)	legalopcodes0.txt legalopcodes1.txt legalopcodes2.txt
+	@$(RM)	disasmcmds.txt
+	@$(RM)	legaldisasm.txt
+	@$(RM)	legaldisasm.bin
+	@$(RM)	legalopcodes.bin legalopcodes2.bin legalopcodes3.bin
+	@$(RM)	legalopcodes0.txt legalopcodes1.txt legalopcodes2.txt
 
-	$(RM)	vicelog
+	@$(RM)	vicelog
