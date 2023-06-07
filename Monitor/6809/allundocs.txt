@@ -71,7 +71,6 @@
 !byte $11,$1C,$E0                ; ANDCC #$E0
 !byte $10,$1D                    ; SEX
 !byte $11,$1D                    ; SEX
-
 !byte $1E,$06                    ; EXG D,#$FFFF
 !byte $1E,$07                    ; EXG D,#$FFFF
 !byte $1E,$0C                    ; EXG D,#$FFFF
@@ -740,107 +739,675 @@
 !byte $11,$1E,$FD                ; EXG #$FFFF,#$FFFF
 !byte $11,$1E,$FE                ; EXG #$FFFF,#$FFFF
 !byte $11,$1E,$FF                ; EXG #$FFFF,#$FFFF
+!byte $1F,$06                    ; TFR D,#$FFFF
+!byte $1F,$07                    ; TFR D,#$FFFF
+!byte $1F,$0C                    ; TFR D,#$FFFF
+!byte $1F,$0D                    ; TFR D,#$FFFF
+!byte $1F,$0E                    ; TFR D,#$FFFF
+!byte $1F,$0F                    ; TFR D,#$FFFF
+!byte $1F,$16                    ; TFR X,#$FFFF
+!byte $1F,$17                    ; TFR X,#$FFFF
+!byte $1F,$1C                    ; TFR X,#$FFFF
+!byte $1F,$1D                    ; TFR X,#$FFFF
+!byte $1F,$1E                    ; TFR X,#$FFFF
+!byte $1F,$1F                    ; TFR X,#$FFFF
+!byte $1F,$26                    ; TFR Y,#$FFFF
+!byte $1F,$27                    ; TFR Y,#$FFFF
+!byte $1F,$2C                    ; TFR Y,#$FFFF
+!byte $1F,$2D                    ; TFR Y,#$FFFF
+!byte $1F,$2E                    ; TFR Y,#$FFFF
+!byte $1F,$2F                    ; TFR Y,#$FFFF
+!byte $1F,$36                    ; TFR U,#$FFFF
+!byte $1F,$37                    ; TFR U,#$FFFF
+!byte $1F,$3C                    ; TFR U,#$FFFF
+!byte $1F,$3D                    ; TFR U,#$FFFF
+!byte $1F,$3E                    ; TFR U,#$FFFF
+!byte $1F,$3F                    ; TFR U,#$FFFF
+!byte $1F,$46                    ; TFR S,#$FFFF
+!byte $1F,$47                    ; TFR S,#$FFFF
+!byte $1F,$4C                    ; TFR S,#$FFFF
+!byte $1F,$4D                    ; TFR S,#$FFFF
+!byte $1F,$4E                    ; TFR S,#$FFFF
+!byte $1F,$4F                    ; TFR S,#$FFFF
+!byte $1F,$56                    ; TFR PC,#$FFFF
+!byte $1F,$57                    ; TFR PC,#$FFFF
+!byte $1F,$5C                    ; TFR PC,#$FFFF
+!byte $1F,$5D                    ; TFR PC,#$FFFF
+!byte $1F,$5E                    ; TFR PC,#$FFFF
+!byte $1F,$5F                    ; TFR PC,#$FFFF
+!byte $1F,$60                    ; TFR #$FFFF,D
+!byte $1F,$61                    ; TFR #$FFFF,X
+!byte $1F,$62                    ; TFR #$FFFF,Y
+!byte $1F,$63                    ; TFR #$FFFF,U
+!byte $1F,$64                    ; TFR #$FFFF,S
+!byte $1F,$65                    ; TFR #$FFFF,PC
+!byte $1F,$66                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$67                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$68                    ; TFR #$FF,A
+!byte $1F,$69                    ; TFR #$FF,B
+!byte $1F,$6A                    ; TFR #$FF,CC
+!byte $1F,$6B                    ; TFR #$FF,DP
+!byte $1F,$6C                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$6D                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$6E                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$6F                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$70                    ; TFR #$FFFF,D
+!byte $1F,$71                    ; TFR #$FFFF,X
+!byte $1F,$72                    ; TFR #$FFFF,Y
+!byte $1F,$73                    ; TFR #$FFFF,U
+!byte $1F,$74                    ; TFR #$FFFF,S
+!byte $1F,$75                    ; TFR #$FFFF,PC
+!byte $1F,$76                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$77                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$78                    ; TFR #$FF,A
+!byte $1F,$79                    ; TFR #$FF,B
+!byte $1F,$7A                    ; TFR #$FF,CC
+!byte $1F,$7B                    ; TFR #$FF,DP
+!byte $1F,$7C                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$7D                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$7E                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$7F                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$86                    ; TFR A,#$FF
+!byte $1F,$87                    ; TFR A,#$FF
+!byte $1F,$8C                    ; TFR A,#$FF
+!byte $1F,$8D                    ; TFR A,#$FF
+!byte $1F,$8E                    ; TFR A,#$FF
+!byte $1F,$8F                    ; TFR A,#$FF
+!byte $1F,$96                    ; TFR B,#$FF
+!byte $1F,$97                    ; TFR B,#$FF
+!byte $1F,$9C                    ; TFR B,#$FF
+!byte $1F,$9D                    ; TFR B,#$FF
+!byte $1F,$9E                    ; TFR B,#$FF
+!byte $1F,$9F                    ; TFR B,#$FF
+!byte $1F,$A6                    ; TFR CC,#$FF
+!byte $1F,$A7                    ; TFR CC,#$FF
+!byte $1F,$AC                    ; TFR CC,#$FF
+!byte $1F,$AD                    ; TFR CC,#$FF
+!byte $1F,$AE                    ; TFR CC,#$FF
+!byte $1F,$AF                    ; TFR CC,#$FF
+!byte $1F,$B6                    ; TFR DP,#$FF
+!byte $1F,$B7                    ; TFR DP,#$FF
+!byte $1F,$BC                    ; TFR DP,#$FF
+!byte $1F,$BD                    ; TFR DP,#$FF
+!byte $1F,$BE                    ; TFR DP,#$FF
+!byte $1F,$BF                    ; TFR DP,#$FF
+!byte $1F,$C0                    ; TFR #$FFFF,D
+!byte $1F,$C1                    ; TFR #$FFFF,X
+!byte $1F,$C2                    ; TFR #$FFFF,Y
+!byte $1F,$C3                    ; TFR #$FFFF,U
+!byte $1F,$C4                    ; TFR #$FFFF,S
+!byte $1F,$C5                    ; TFR #$FFFF,PC
+!byte $1F,$C6                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$C7                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$C8                    ; TFR #$FF,A
+!byte $1F,$C9                    ; TFR #$FF,B
+!byte $1F,$CA                    ; TFR #$FF,CC
+!byte $1F,$CB                    ; TFR #$FF,DP
+!byte $1F,$CC                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$CD                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$CE                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$CF                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$D0                    ; TFR #$FFFF,D
+!byte $1F,$D1                    ; TFR #$FFFF,X
+!byte $1F,$D2                    ; TFR #$FFFF,Y
+!byte $1F,$D3                    ; TFR #$FFFF,U
+!byte $1F,$D4                    ; TFR #$FFFF,S
+!byte $1F,$D5                    ; TFR #$FFFF,PC
+!byte $1F,$D6                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$D7                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$D8                    ; TFR #$FF,A
+!byte $1F,$D9                    ; TFR #$FF,B
+!byte $1F,$DA                    ; TFR #$FF,CC
+!byte $1F,$DB                    ; TFR #$FF,DP
+!byte $1F,$DC                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$DD                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$DE                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$DF                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$E0                    ; TFR #$FFFF,D
+!byte $1F,$E1                    ; TFR #$FFFF,X
+!byte $1F,$E2                    ; TFR #$FFFF,Y
+!byte $1F,$E3                    ; TFR #$FFFF,U
+!byte $1F,$E4                    ; TFR #$FFFF,S
+!byte $1F,$E5                    ; TFR #$FFFF,PC
+!byte $1F,$E6                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$E7                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$E8                    ; TFR #$FF,A
+!byte $1F,$E9                    ; TFR #$FF,B
+!byte $1F,$EA                    ; TFR #$FF,CC
+!byte $1F,$EB                    ; TFR #$FF,DP
+!byte $1F,$EC                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$ED                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$EE                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$EF                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$F0                    ; TFR #$FFFF,D
+!byte $1F,$F1                    ; TFR #$FFFF,X
+!byte $1F,$F2                    ; TFR #$FFFF,Y
+!byte $1F,$F3                    ; TFR #$FFFF,U
+!byte $1F,$F4                    ; TFR #$FFFF,S
+!byte $1F,$F5                    ; TFR #$FFFF,PC
+!byte $1F,$F6                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$F7                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$F8                    ; TFR #$FF,A
+!byte $1F,$F9                    ; TFR #$FF,B
+!byte $1F,$FA                    ; TFR #$FF,CC
+!byte $1F,$FB                    ; TFR #$FF,DP
+!byte $1F,$FC                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$FD                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$FE                    ; TFR #$FFFF,#$FFFF
+!byte $1F,$FF                    ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$00                ; TFR D,D
+!byte $10,$1F,$01                ; TFR D,X
+!byte $10,$1F,$02                ; TFR D,Y
+!byte $10,$1F,$03                ; TFR D,U
+!byte $10,$1F,$04                ; TFR D,S
+!byte $10,$1F,$05                ; TFR D,PC
+!byte $10,$1F,$06                ; TFR D,#$FFFF
+!byte $10,$1F,$07                ; TFR D,#$FFFF
+!byte $10,$1F,$08                ; TFR D,A
+!byte $10,$1F,$09                ; TFR D,B
+!byte $10,$1F,$0A                ; TFR D,CC
+!byte $10,$1F,$0B                ; TFR D,DP
+!byte $10,$1F,$0C                ; TFR D,#$FFFF
+!byte $10,$1F,$0D                ; TFR D,#$FFFF
+!byte $10,$1F,$0E                ; TFR D,#$FFFF
+!byte $10,$1F,$0F                ; TFR D,#$FFFF
+!byte $10,$1F,$10                ; TFR X,D
+!byte $10,$1F,$11                ; TFR X,X
+!byte $10,$1F,$12                ; TFR X,Y
+!byte $10,$1F,$13                ; TFR X,U
+!byte $10,$1F,$14                ; TFR X,S
+!byte $10,$1F,$15                ; TFR X,PC
+!byte $10,$1F,$16                ; TFR X,#$FFFF
+!byte $10,$1F,$17                ; TFR X,#$FFFF
+!byte $10,$1F,$18                ; TFR X,A
+!byte $10,$1F,$19                ; TFR X,B
+!byte $10,$1F,$1A                ; TFR X,CC
+!byte $10,$1F,$1B                ; TFR X,DP
+!byte $10,$1F,$1C                ; TFR X,#$FFFF
+!byte $10,$1F,$1D                ; TFR X,#$FFFF
+!byte $10,$1F,$1E                ; TFR X,#$FFFF
+!byte $10,$1F,$1F                ; TFR X,#$FFFF
+!byte $10,$1F,$20                ; TFR Y,D
+!byte $10,$1F,$21                ; TFR Y,X
+!byte $10,$1F,$22                ; TFR Y,Y
+!byte $10,$1F,$23                ; TFR Y,U
+!byte $10,$1F,$24                ; TFR Y,S
+!byte $10,$1F,$25                ; TFR Y,PC
+!byte $10,$1F,$26                ; TFR Y,#$FFFF
+!byte $10,$1F,$27                ; TFR Y,#$FFFF
+!byte $10,$1F,$28                ; TFR Y,A
+!byte $10,$1F,$29                ; TFR Y,B
+!byte $10,$1F,$2A                ; TFR Y,CC
+!byte $10,$1F,$2B                ; TFR Y,DP
+!byte $10,$1F,$2C                ; TFR Y,#$FFFF
+!byte $10,$1F,$2D                ; TFR Y,#$FFFF
+!byte $10,$1F,$2E                ; TFR Y,#$FFFF
+!byte $10,$1F,$2F                ; TFR Y,#$FFFF
+!byte $10,$1F,$30                ; TFR U,D
+!byte $10,$1F,$31                ; TFR U,X
+!byte $10,$1F,$32                ; TFR U,Y
+!byte $10,$1F,$33                ; TFR U,U
+!byte $10,$1F,$34                ; TFR U,S
+!byte $10,$1F,$35                ; TFR U,PC
+!byte $10,$1F,$36                ; TFR U,#$FFFF
+!byte $10,$1F,$37                ; TFR U,#$FFFF
+!byte $10,$1F,$38                ; TFR U,A
+!byte $10,$1F,$39                ; TFR U,B
+!byte $10,$1F,$3A                ; TFR U,CC
+!byte $10,$1F,$3B                ; TFR U,DP
+!byte $10,$1F,$3C                ; TFR U,#$FFFF
+!byte $10,$1F,$3D                ; TFR U,#$FFFF
+!byte $10,$1F,$3E                ; TFR U,#$FFFF
+!byte $10,$1F,$3F                ; TFR U,#$FFFF
+!byte $10,$1F,$40                ; TFR S,D
+!byte $10,$1F,$41                ; TFR S,X
+!byte $10,$1F,$42                ; TFR S,Y
+!byte $10,$1F,$43                ; TFR S,U
+!byte $10,$1F,$44                ; TFR S,S
+!byte $10,$1F,$45                ; TFR S,PC
+!byte $10,$1F,$46                ; TFR S,#$FFFF
+!byte $10,$1F,$47                ; TFR S,#$FFFF
+!byte $10,$1F,$48                ; TFR S,A
+!byte $10,$1F,$49                ; TFR S,B
+!byte $10,$1F,$4A                ; TFR S,CC
+!byte $10,$1F,$4B                ; TFR S,DP
+!byte $10,$1F,$4C                ; TFR S,#$FFFF
+!byte $10,$1F,$4D                ; TFR S,#$FFFF
+!byte $10,$1F,$4E                ; TFR S,#$FFFF
+!byte $10,$1F,$4F                ; TFR S,#$FFFF
+!byte $10,$1F,$50                ; TFR PC,D
+!byte $10,$1F,$51                ; TFR PC,X
+!byte $10,$1F,$52                ; TFR PC,Y
+!byte $10,$1F,$53                ; TFR PC,U
+!byte $10,$1F,$54                ; TFR PC,S
+!byte $10,$1F,$55                ; TFR PC,PC
+!byte $10,$1F,$56                ; TFR PC,#$FFFF
+!byte $10,$1F,$57                ; TFR PC,#$FFFF
+!byte $10,$1F,$58                ; TFR PC,A
+!byte $10,$1F,$59                ; TFR PC,B
+!byte $10,$1F,$5A                ; TFR PC,CC
+!byte $10,$1F,$5B                ; TFR PC,DP
+!byte $10,$1F,$5C                ; TFR PC,#$FFFF
+!byte $10,$1F,$5D                ; TFR PC,#$FFFF
+!byte $10,$1F,$5E                ; TFR PC,#$FFFF
+!byte $10,$1F,$5F                ; TFR PC,#$FFFF
+!byte $10,$1F,$60                ; TFR #$FFFF,D
+!byte $10,$1F,$61                ; TFR #$FFFF,X
+!byte $10,$1F,$62                ; TFR #$FFFF,Y
+!byte $10,$1F,$63                ; TFR #$FFFF,U
+!byte $10,$1F,$64                ; TFR #$FFFF,S
+!byte $10,$1F,$65                ; TFR #$FFFF,PC
+!byte $10,$1F,$66                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$67                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$68                ; TFR #$FF,A
+!byte $10,$1F,$69                ; TFR #$FF,B
+!byte $10,$1F,$6A                ; TFR #$FF,CC
+!byte $10,$1F,$6B                ; TFR #$FF,DP
+!byte $10,$1F,$6C                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$6D                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$6E                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$6F                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$70                ; TFR #$FFFF,D
+!byte $10,$1F,$71                ; TFR #$FFFF,X
+!byte $10,$1F,$72                ; TFR #$FFFF,Y
+!byte $10,$1F,$73                ; TFR #$FFFF,U
+!byte $10,$1F,$74                ; TFR #$FFFF,S
+!byte $10,$1F,$75                ; TFR #$FFFF,PC
+!byte $10,$1F,$76                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$77                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$78                ; TFR #$FF,A
+!byte $10,$1F,$79                ; TFR #$FF,B
+!byte $10,$1F,$7A                ; TFR #$FF,CC
+!byte $10,$1F,$7B                ; TFR #$FF,DP
+!byte $10,$1F,$7C                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$7D                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$7E                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$7F                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$80                ; TFR A,D
+!byte $10,$1F,$81                ; TFR A,X
+!byte $10,$1F,$82                ; TFR A,Y
+!byte $10,$1F,$83                ; TFR A,U
+!byte $10,$1F,$84                ; TFR A,S
+!byte $10,$1F,$85                ; TFR A,PC
+!byte $10,$1F,$86                ; TFR A,#$FF
+!byte $10,$1F,$87                ; TFR A,#$FF
+!byte $10,$1F,$88                ; TFR A,A
+!byte $10,$1F,$89                ; TFR A,B
+!byte $10,$1F,$8A                ; TFR A,CC
+!byte $10,$1F,$8B                ; TFR A,DP
+!byte $10,$1F,$8C                ; TFR A,#$FF
+!byte $10,$1F,$8D                ; TFR A,#$FF
+!byte $10,$1F,$8E                ; TFR A,#$FF
+!byte $10,$1F,$8F                ; TFR A,#$FF
+!byte $10,$1F,$90                ; TFR B,D
+!byte $10,$1F,$91                ; TFR B,X
+!byte $10,$1F,$92                ; TFR B,Y
+!byte $10,$1F,$93                ; TFR B,U
+!byte $10,$1F,$94                ; TFR B,S
+!byte $10,$1F,$95                ; TFR B,PC
+!byte $10,$1F,$96                ; TFR B,#$FF
+!byte $10,$1F,$97                ; TFR B,#$FF
+!byte $10,$1F,$98                ; TFR B,A
+!byte $10,$1F,$99                ; TFR B,B
+!byte $10,$1F,$9A                ; TFR B,CC
+!byte $10,$1F,$9B                ; TFR B,DP
+!byte $10,$1F,$9C                ; TFR B,#$FF
+!byte $10,$1F,$9D                ; TFR B,#$FF
+!byte $10,$1F,$9E                ; TFR B,#$FF
+!byte $10,$1F,$9F                ; TFR B,#$FF
+!byte $10,$1F,$A0                ; TFR CC,D
+!byte $10,$1F,$A1                ; TFR CC,X
+!byte $10,$1F,$A2                ; TFR CC,Y
+!byte $10,$1F,$A3                ; TFR CC,U
+!byte $10,$1F,$A4                ; TFR CC,S
+!byte $10,$1F,$A5                ; TFR CC,PC
+!byte $10,$1F,$A6                ; TFR CC,#$FF
+!byte $10,$1F,$A7                ; TFR CC,#$FF
+!byte $10,$1F,$A8                ; TFR CC,A
+!byte $10,$1F,$A9                ; TFR CC,B
+!byte $10,$1F,$AA                ; TFR CC,CC
+!byte $10,$1F,$AB                ; TFR CC,DP
+!byte $10,$1F,$AC                ; TFR CC,#$FF
+!byte $10,$1F,$AD                ; TFR CC,#$FF
+!byte $10,$1F,$AE                ; TFR CC,#$FF
+!byte $10,$1F,$AF                ; TFR CC,#$FF
+!byte $10,$1F,$B0                ; TFR DP,D
+!byte $10,$1F,$B1                ; TFR DP,X
+!byte $10,$1F,$B2                ; TFR DP,Y
+!byte $10,$1F,$B3                ; TFR DP,U
+!byte $10,$1F,$B4                ; TFR DP,S
+!byte $10,$1F,$B5                ; TFR DP,PC
+!byte $10,$1F,$B6                ; TFR DP,#$FF
+!byte $10,$1F,$B7                ; TFR DP,#$FF
+!byte $10,$1F,$B8                ; TFR DP,A
+!byte $10,$1F,$B9                ; TFR DP,B
+!byte $10,$1F,$BA                ; TFR DP,CC
+!byte $10,$1F,$BB                ; TFR DP,DP
+!byte $10,$1F,$BC                ; TFR DP,#$FF
+!byte $10,$1F,$BD                ; TFR DP,#$FF
+!byte $10,$1F,$BE                ; TFR DP,#$FF
+!byte $10,$1F,$BF                ; TFR DP,#$FF
+!byte $10,$1F,$C0                ; TFR #$FFFF,D
+!byte $10,$1F,$C1                ; TFR #$FFFF,X
+!byte $10,$1F,$C2                ; TFR #$FFFF,Y
+!byte $10,$1F,$C3                ; TFR #$FFFF,U
+!byte $10,$1F,$C4                ; TFR #$FFFF,S
+!byte $10,$1F,$C5                ; TFR #$FFFF,PC
+!byte $10,$1F,$C6                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$C7                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$C8                ; TFR #$FF,A
+!byte $10,$1F,$C9                ; TFR #$FF,B
+!byte $10,$1F,$CA                ; TFR #$FF,CC
+!byte $10,$1F,$CB                ; TFR #$FF,DP
+!byte $10,$1F,$CC                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$CD                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$CE                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$CF                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$D0                ; TFR #$FFFF,D
+!byte $10,$1F,$D1                ; TFR #$FFFF,X
+!byte $10,$1F,$D2                ; TFR #$FFFF,Y
+!byte $10,$1F,$D3                ; TFR #$FFFF,U
+!byte $10,$1F,$D4                ; TFR #$FFFF,S
+!byte $10,$1F,$D5                ; TFR #$FFFF,PC
+!byte $10,$1F,$D6                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$D7                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$D8                ; TFR #$FF,A
+!byte $10,$1F,$D9                ; TFR #$FF,B
+!byte $10,$1F,$DA                ; TFR #$FF,CC
+!byte $10,$1F,$DB                ; TFR #$FF,DP
+!byte $10,$1F,$DC                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$DD                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$DE                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$DF                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$E0                ; TFR #$FFFF,D
+!byte $10,$1F,$E1                ; TFR #$FFFF,X
+!byte $10,$1F,$E2                ; TFR #$FFFF,Y
+!byte $10,$1F,$E3                ; TFR #$FFFF,U
+!byte $10,$1F,$E4                ; TFR #$FFFF,S
+!byte $10,$1F,$E5                ; TFR #$FFFF,PC
+!byte $10,$1F,$E6                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$E7                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$E8                ; TFR #$FF,A
+!byte $10,$1F,$E9                ; TFR #$FF,B
+!byte $10,$1F,$EA                ; TFR #$FF,CC
+!byte $10,$1F,$EB                ; TFR #$FF,DP
+!byte $10,$1F,$EC                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$ED                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$EE                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$EF                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$F0                ; TFR #$FFFF,D
+!byte $10,$1F,$F1                ; TFR #$FFFF,X
+!byte $10,$1F,$F2                ; TFR #$FFFF,Y
+!byte $10,$1F,$F3                ; TFR #$FFFF,U
+!byte $10,$1F,$F4                ; TFR #$FFFF,S
+!byte $10,$1F,$F5                ; TFR #$FFFF,PC
+!byte $10,$1F,$F6                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$F7                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$F8                ; TFR #$FF,A
+!byte $10,$1F,$F9                ; TFR #$FF,B
+!byte $10,$1F,$FA                ; TFR #$FF,CC
+!byte $10,$1F,$FB                ; TFR #$FF,DP
+!byte $10,$1F,$FC                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$FD                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$FE                ; TFR #$FFFF,#$FFFF
+!byte $10,$1F,$FF                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$00                ; TFR D,D
+!byte $11,$1F,$01                ; TFR D,X
+!byte $11,$1F,$02                ; TFR D,Y
+!byte $11,$1F,$03                ; TFR D,U
+!byte $11,$1F,$04                ; TFR D,S
+!byte $11,$1F,$05                ; TFR D,PC
+!byte $11,$1F,$06                ; TFR D,#$FFFF
+!byte $11,$1F,$07                ; TFR D,#$FFFF
+!byte $11,$1F,$08                ; TFR D,A
+!byte $11,$1F,$09                ; TFR D,B
+!byte $11,$1F,$0A                ; TFR D,CC
+!byte $11,$1F,$0B                ; TFR D,DP
+!byte $11,$1F,$0C                ; TFR D,#$FFFF
+!byte $11,$1F,$0D                ; TFR D,#$FFFF
+!byte $11,$1F,$0E                ; TFR D,#$FFFF
+!byte $11,$1F,$0F                ; TFR D,#$FFFF
+!byte $11,$1F,$10                ; TFR X,D
+!byte $11,$1F,$11                ; TFR X,X
+!byte $11,$1F,$12                ; TFR X,Y
+!byte $11,$1F,$13                ; TFR X,U
+!byte $11,$1F,$14                ; TFR X,S
+!byte $11,$1F,$15                ; TFR X,PC
+!byte $11,$1F,$16                ; TFR X,#$FFFF
+!byte $11,$1F,$17                ; TFR X,#$FFFF
+!byte $11,$1F,$18                ; TFR X,A
+!byte $11,$1F,$19                ; TFR X,B
+!byte $11,$1F,$1A                ; TFR X,CC
+!byte $11,$1F,$1B                ; TFR X,DP
+!byte $11,$1F,$1C                ; TFR X,#$FFFF
+!byte $11,$1F,$1D                ; TFR X,#$FFFF
+!byte $11,$1F,$1E                ; TFR X,#$FFFF
+!byte $11,$1F,$1F                ; TFR X,#$FFFF
+!byte $11,$1F,$20                ; TFR Y,D
+!byte $11,$1F,$21                ; TFR Y,X
+!byte $11,$1F,$22                ; TFR Y,Y
+!byte $11,$1F,$23                ; TFR Y,U
+!byte $11,$1F,$24                ; TFR Y,S
+!byte $11,$1F,$25                ; TFR Y,PC
+!byte $11,$1F,$26                ; TFR Y,#$FFFF
+!byte $11,$1F,$27                ; TFR Y,#$FFFF
+!byte $11,$1F,$28                ; TFR Y,A
+!byte $11,$1F,$29                ; TFR Y,B
+!byte $11,$1F,$2A                ; TFR Y,CC
+!byte $11,$1F,$2B                ; TFR Y,DP
+!byte $11,$1F,$2C                ; TFR Y,#$FFFF
+!byte $11,$1F,$2D                ; TFR Y,#$FFFF
+!byte $11,$1F,$2E                ; TFR Y,#$FFFF
+!byte $11,$1F,$2F                ; TFR Y,#$FFFF
+!byte $11,$1F,$30                ; TFR U,D
+!byte $11,$1F,$31                ; TFR U,X
+!byte $11,$1F,$32                ; TFR U,Y
+!byte $11,$1F,$33                ; TFR U,U
+!byte $11,$1F,$34                ; TFR U,S
+!byte $11,$1F,$35                ; TFR U,PC
+!byte $11,$1F,$36                ; TFR U,#$FFFF
+!byte $11,$1F,$37                ; TFR U,#$FFFF
+!byte $11,$1F,$38                ; TFR U,A
+!byte $11,$1F,$39                ; TFR U,B
+!byte $11,$1F,$3A                ; TFR U,CC
+!byte $11,$1F,$3B                ; TFR U,DP
+!byte $11,$1F,$3C                ; TFR U,#$FFFF
+!byte $11,$1F,$3D                ; TFR U,#$FFFF
+!byte $11,$1F,$3E                ; TFR U,#$FFFF
+!byte $11,$1F,$3F                ; TFR U,#$FFFF
+!byte $11,$1F,$40                ; TFR S,D
+!byte $11,$1F,$41                ; TFR S,X
+!byte $11,$1F,$42                ; TFR S,Y
+!byte $11,$1F,$43                ; TFR S,U
+!byte $11,$1F,$44                ; TFR S,S
+!byte $11,$1F,$45                ; TFR S,PC
+!byte $11,$1F,$46                ; TFR S,#$FFFF
+!byte $11,$1F,$47                ; TFR S,#$FFFF
+!byte $11,$1F,$48                ; TFR S,A
+!byte $11,$1F,$49                ; TFR S,B
+!byte $11,$1F,$4A                ; TFR S,CC
+!byte $11,$1F,$4B                ; TFR S,DP
+!byte $11,$1F,$4C                ; TFR S,#$FFFF
+!byte $11,$1F,$4D                ; TFR S,#$FFFF
+!byte $11,$1F,$4E                ; TFR S,#$FFFF
+!byte $11,$1F,$4F                ; TFR S,#$FFFF
+!byte $11,$1F,$50                ; TFR PC,D
+!byte $11,$1F,$51                ; TFR PC,X
+!byte $11,$1F,$52                ; TFR PC,Y
+!byte $11,$1F,$53                ; TFR PC,U
+!byte $11,$1F,$54                ; TFR PC,S
+!byte $11,$1F,$55                ; TFR PC,PC
+!byte $11,$1F,$56                ; TFR PC,#$FFFF
+!byte $11,$1F,$57                ; TFR PC,#$FFFF
+!byte $11,$1F,$58                ; TFR PC,A
+!byte $11,$1F,$59                ; TFR PC,B
+!byte $11,$1F,$5A                ; TFR PC,CC
+!byte $11,$1F,$5B                ; TFR PC,DP
+!byte $11,$1F,$5C                ; TFR PC,#$FFFF
+!byte $11,$1F,$5D                ; TFR PC,#$FFFF
+!byte $11,$1F,$5E                ; TFR PC,#$FFFF
+!byte $11,$1F,$5F                ; TFR PC,#$FFFF
+!byte $11,$1F,$60                ; TFR #$FFFF,D
+!byte $11,$1F,$61                ; TFR #$FFFF,X
+!byte $11,$1F,$62                ; TFR #$FFFF,Y
+!byte $11,$1F,$63                ; TFR #$FFFF,U
+!byte $11,$1F,$64                ; TFR #$FFFF,S
+!byte $11,$1F,$65                ; TFR #$FFFF,PC
+!byte $11,$1F,$66                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$67                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$68                ; TFR #$FF,A
+!byte $11,$1F,$69                ; TFR #$FF,B
+!byte $11,$1F,$6A                ; TFR #$FF,CC
+!byte $11,$1F,$6B                ; TFR #$FF,DP
+!byte $11,$1F,$6C                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$6D                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$6E                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$6F                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$70                ; TFR #$FFFF,D
+!byte $11,$1F,$71                ; TFR #$FFFF,X
+!byte $11,$1F,$72                ; TFR #$FFFF,Y
+!byte $11,$1F,$73                ; TFR #$FFFF,U
+!byte $11,$1F,$74                ; TFR #$FFFF,S
+!byte $11,$1F,$75                ; TFR #$FFFF,PC
+!byte $11,$1F,$76                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$77                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$78                ; TFR #$FF,A
+!byte $11,$1F,$79                ; TFR #$FF,B
+!byte $11,$1F,$7A                ; TFR #$FF,CC
+!byte $11,$1F,$7B                ; TFR #$FF,DP
+!byte $11,$1F,$7C                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$7D                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$7E                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$7F                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$80                ; TFR A,D
+!byte $11,$1F,$81                ; TFR A,X
+!byte $11,$1F,$82                ; TFR A,Y
+!byte $11,$1F,$83                ; TFR A,U
+!byte $11,$1F,$84                ; TFR A,S
+!byte $11,$1F,$85                ; TFR A,PC
+!byte $11,$1F,$86                ; TFR A,#$FF
+!byte $11,$1F,$87                ; TFR A,#$FF
+!byte $11,$1F,$88                ; TFR A,A
+!byte $11,$1F,$89                ; TFR A,B
+!byte $11,$1F,$8A                ; TFR A,CC
+!byte $11,$1F,$8B                ; TFR A,DP
+!byte $11,$1F,$8C                ; TFR A,#$FF
+!byte $11,$1F,$8D                ; TFR A,#$FF
+!byte $11,$1F,$8E                ; TFR A,#$FF
+!byte $11,$1F,$8F                ; TFR A,#$FF
+!byte $11,$1F,$90                ; TFR B,D
+!byte $11,$1F,$91                ; TFR B,X
+!byte $11,$1F,$92                ; TFR B,Y
+!byte $11,$1F,$93                ; TFR B,U
+!byte $11,$1F,$94                ; TFR B,S
+!byte $11,$1F,$95                ; TFR B,PC
+!byte $11,$1F,$96                ; TFR B,#$FF
+!byte $11,$1F,$97                ; TFR B,#$FF
+!byte $11,$1F,$98                ; TFR B,A
+!byte $11,$1F,$99                ; TFR B,B
+!byte $11,$1F,$9A                ; TFR B,CC
+!byte $11,$1F,$9B                ; TFR B,DP
+!byte $11,$1F,$9C                ; TFR B,#$FF
+!byte $11,$1F,$9D                ; TFR B,#$FF
+!byte $11,$1F,$9E                ; TFR B,#$FF
+!byte $11,$1F,$9F                ; TFR B,#$FF
+!byte $11,$1F,$A0                ; TFR CC,D
+!byte $11,$1F,$A1                ; TFR CC,X
+!byte $11,$1F,$A2                ; TFR CC,Y
+!byte $11,$1F,$A3                ; TFR CC,U
+!byte $11,$1F,$A4                ; TFR CC,S
+!byte $11,$1F,$A5                ; TFR CC,PC
+!byte $11,$1F,$A6                ; TFR CC,#$FF
+!byte $11,$1F,$A7                ; TFR CC,#$FF
+!byte $11,$1F,$A8                ; TFR CC,A
+!byte $11,$1F,$A9                ; TFR CC,B
+!byte $11,$1F,$AA                ; TFR CC,CC
+!byte $11,$1F,$AB                ; TFR CC,DP
+!byte $11,$1F,$AC                ; TFR CC,#$FF
+!byte $11,$1F,$AD                ; TFR CC,#$FF
+!byte $11,$1F,$AE                ; TFR CC,#$FF
+!byte $11,$1F,$AF                ; TFR CC,#$FF
+!byte $11,$1F,$B0                ; TFR DP,D
+!byte $11,$1F,$B1                ; TFR DP,X
+!byte $11,$1F,$B2                ; TFR DP,Y
+!byte $11,$1F,$B3                ; TFR DP,U
+!byte $11,$1F,$B4                ; TFR DP,S
+!byte $11,$1F,$B5                ; TFR DP,PC
+!byte $11,$1F,$B6                ; TFR DP,#$FF
+!byte $11,$1F,$B7                ; TFR DP,#$FF
+!byte $11,$1F,$B8                ; TFR DP,A
+!byte $11,$1F,$B9                ; TFR DP,B
+!byte $11,$1F,$BA                ; TFR DP,CC
+!byte $11,$1F,$BB                ; TFR DP,DP
+!byte $11,$1F,$BC                ; TFR DP,#$FF
+!byte $11,$1F,$BD                ; TFR DP,#$FF
+!byte $11,$1F,$BE                ; TFR DP,#$FF
+!byte $11,$1F,$BF                ; TFR DP,#$FF
+!byte $11,$1F,$C0                ; TFR #$FFFF,D
+!byte $11,$1F,$C1                ; TFR #$FFFF,X
+!byte $11,$1F,$C2                ; TFR #$FFFF,Y
+!byte $11,$1F,$C3                ; TFR #$FFFF,U
+!byte $11,$1F,$C4                ; TFR #$FFFF,S
+!byte $11,$1F,$C5                ; TFR #$FFFF,PC
+!byte $11,$1F,$C6                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$C7                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$C8                ; TFR #$FF,A
+!byte $11,$1F,$C9                ; TFR #$FF,B
+!byte $11,$1F,$CA                ; TFR #$FF,CC
+!byte $11,$1F,$CB                ; TFR #$FF,DP
+!byte $11,$1F,$CC                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$CD                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$CE                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$CF                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$D0                ; TFR #$FFFF,D
+!byte $11,$1F,$D1                ; TFR #$FFFF,X
+!byte $11,$1F,$D2                ; TFR #$FFFF,Y
+!byte $11,$1F,$D3                ; TFR #$FFFF,U
+!byte $11,$1F,$D4                ; TFR #$FFFF,S
+!byte $11,$1F,$D5                ; TFR #$FFFF,PC
+!byte $11,$1F,$D6                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$D7                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$D8                ; TFR #$FF,A
+!byte $11,$1F,$D9                ; TFR #$FF,B
+!byte $11,$1F,$DA                ; TFR #$FF,CC
+!byte $11,$1F,$DB                ; TFR #$FF,DP
+!byte $11,$1F,$DC                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$DD                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$DE                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$DF                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$E0                ; TFR #$FFFF,D
+!byte $11,$1F,$E1                ; TFR #$FFFF,X
+!byte $11,$1F,$E2                ; TFR #$FFFF,Y
+!byte $11,$1F,$E3                ; TFR #$FFFF,U
+!byte $11,$1F,$E4                ; TFR #$FFFF,S
+!byte $11,$1F,$E5                ; TFR #$FFFF,PC
+!byte $11,$1F,$E6                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$E7                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$E8                ; TFR #$FF,A
+!byte $11,$1F,$E9                ; TFR #$FF,B
+!byte $11,$1F,$EA                ; TFR #$FF,CC
+!byte $11,$1F,$EB                ; TFR #$FF,DP
+!byte $11,$1F,$EC                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$ED                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$EE                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$EF                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$F0                ; TFR #$FFFF,D
+!byte $11,$1F,$F1                ; TFR #$FFFF,X
+!byte $11,$1F,$F2                ; TFR #$FFFF,Y
+!byte $11,$1F,$F3                ; TFR #$FFFF,U
+!byte $11,$1F,$F4                ; TFR #$FFFF,S
+!byte $11,$1F,$F5                ; TFR #$FFFF,PC
+!byte $11,$1F,$F6                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$F7                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$F8                ; TFR #$FF,A
+!byte $11,$1F,$F9                ; TFR #$FF,B
+!byte $11,$1F,$FA                ; TFR #$FF,CC
+!byte $11,$1F,$FB                ; TFR #$FF,DP
+!byte $11,$1F,$FC                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$FD                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$FE                ; TFR #$FFFF,#$FFFF
+!byte $11,$1F,$FF                ; TFR #$FFFF,#$FFFF
 
-      !byte $1F,$00                   ; TFR D,D
-      !byte $1F,$01                   ; TFR D,X
-      !byte $1F,$02                   ; TFR D,Y
-      !byte $1F,$03                   ; TFR D,U
-      !byte $1F,$04                   ; TFR D,S
-      !byte $1F,$05                   ; TFR D,PC
-      !byte $1F,$08                   ; TFR D,A
-      !byte $1F,$09                   ; TFR D,B
-      !byte $1F,$0A                   ; TFR D,CC
-      !byte $1F,$0B                   ; TFR D,DP
-      !byte $1F,$10                   ; TFR X,D
-      !byte $1F,$11                   ; TFR X,X
-      !byte $1F,$12                   ; TFR X,Y
-      !byte $1F,$13                   ; TFR X,U
-      !byte $1F,$14                   ; TFR X,S
-      !byte $1F,$15                   ; TFR X,PC
-      !byte $1F,$18                   ; TFR X,A
-      !byte $1F,$19                   ; TFR X,B
-      !byte $1F,$1A                   ; TFR X,CC
-      !byte $1F,$1B                   ; TFR X,DP
-      !byte $1F,$20                   ; TFR Y,D
-      !byte $1F,$21                   ; TFR Y,X
-      !byte $1F,$22                   ; TFR Y,Y
-      !byte $1F,$23                   ; TFR Y,U
-      !byte $1F,$24                   ; TFR Y,S
-      !byte $1F,$25                   ; TFR Y,PC
-      !byte $1F,$28                   ; TFR Y,A
-      !byte $1F,$29                   ; TFR Y,B
-      !byte $1F,$2A                   ; TFR Y,CC
-      !byte $1F,$2B                   ; TFR Y,DP
-      !byte $1F,$30                   ; TFR U,D
-      !byte $1F,$31                   ; TFR U,X
-      !byte $1F,$32                   ; TFR U,Y
-      !byte $1F,$33                   ; TFR U,U
-      !byte $1F,$34                   ; TFR U,S
-      !byte $1F,$35                   ; TFR U,PC
-      !byte $1F,$38                   ; TFR U,A
-      !byte $1F,$39                   ; TFR U,B
-      !byte $1F,$3A                   ; TFR U,CC
-      !byte $1F,$3B                   ; TFR U,DP
-      !byte $1F,$40                   ; TFR S,D
-      !byte $1F,$41                   ; TFR S,X
-      !byte $1F,$42                   ; TFR S,Y
-      !byte $1F,$43                   ; TFR S,U
-      !byte $1F,$44                   ; TFR S,S
-      !byte $1F,$45                   ; TFR S,PC
-      !byte $1F,$48                   ; TFR S,A
-      !byte $1F,$49                   ; TFR S,B
-      !byte $1F,$4A                   ; TFR S,CC
-      !byte $1F,$4B                   ; TFR S,DP
-      !byte $1F,$50                   ; TFR PC,D
-      !byte $1F,$51                   ; TFR PC,X
-      !byte $1F,$52                   ; TFR PC,Y
-      !byte $1F,$53                   ; TFR PC,U
-      !byte $1F,$54                   ; TFR PC,S
-      !byte $1F,$55                   ; TFR PC,PC
-      !byte $1F,$58                   ; TFR PC,A
-      !byte $1F,$59                   ; TFR PC,B
-      !byte $1F,$5A                   ; TFR PC,CC
-      !byte $1F,$5B                   ; TFR PC,DP
-      !byte $1F,$80                   ; TFR A,D
-      !byte $1F,$81                   ; TFR A,X
-      !byte $1F,$82                   ; TFR A,Y
-      !byte $1F,$83                   ; TFR A,U
-      !byte $1F,$84                   ; TFR A,S
-      !byte $1F,$85                   ; TFR A,PC
-      !byte $1F,$88                   ; TFR A,A
-      !byte $1F,$89                   ; TFR A,B
-      !byte $1F,$8A                   ; TFR A,CC
-      !byte $1F,$8B                   ; TFR A,DP
-      !byte $1F,$90                   ; TFR B,D
-      !byte $1F,$91                   ; TFR B,X
-      !byte $1F,$92                   ; TFR B,Y
-      !byte $1F,$93                   ; TFR B,U
-      !byte $1F,$94                   ; TFR B,S
-      !byte $1F,$95                   ; TFR B,PC
-      !byte $1F,$98                   ; TFR B,A
-      !byte $1F,$99                   ; TFR B,B
-      !byte $1F,$9A                   ; TFR B,CC
-      !byte $1F,$9B                   ; TFR B,DP
-      !byte $1F,$A0                   ; TFR CC,D
-      !byte $1F,$A1                   ; TFR CC,X
-      !byte $1F,$A2                   ; TFR CC,Y
-      !byte $1F,$A3                   ; TFR CC,U
-      !byte $1F,$A4                   ; TFR CC,S
-      !byte $1F,$A5                   ; TFR CC,PC
-      !byte $1F,$A8                   ; TFR CC,A
-      !byte $1F,$A9                   ; TFR CC,B
-      !byte $1F,$AA                   ; TFR CC,CC
-      !byte $1F,$AB                   ; TFR CC,DP
-      !byte $1F,$B0                   ; TFR DP,D
-      !byte $1F,$B1                   ; TFR DP,X
-      !byte $1F,$B2                   ; TFR DP,Y
-      !byte $1F,$B3                   ; TFR DP,U
-      !byte $1F,$B4                   ; TFR DP,S
-      !byte $1F,$B5                   ; TFR DP,PC
-      !byte $1F,$B8                   ; TFR DP,A
-      !byte $1F,$B9                   ; TFR DP,B
-      !byte $1F,$BA                   ; TFR DP,CC
-      !byte $1F,$BB                   ; TFR DP,DP
       !byte $30,$84                   ; LEAX ,X
       !byte $30,$A4                   ; LEAX ,Y
       !byte $30,$C4                   ; LEAX ,U
