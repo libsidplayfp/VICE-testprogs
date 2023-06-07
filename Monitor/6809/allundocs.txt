@@ -37,121 +37,710 @@
 !byte $11,$05,$30                ; LSR $30
 !byte $10,$06,$40                ; ROR $40
 !byte $11,$06,$40                ; ROR $40
+!byte $10,$07,$50                ; ASR $50
+!byte $11,$07,$50                ; ASR $50
+!byte $10,$08,$60                ; ASL $60
+!byte $11,$08,$60                ; ASL $60
+!byte $10,$09,$70                ; ROL $70
+!byte $11,$09,$70                ; ROL $70
+!byte $0B,$80                    ; DEC $80
+!byte $10,$0A,$80                ; DEC $80
+!byte $10,$0B,$80                ; DEC $80
+!byte $11,$0A,$80                ; DEC $80
+!byte $11,$0B,$80                ; DEC $80
+!byte $10,$0C,$90                ; INC $90
+!byte $11,$0C,$90                ; INC $90
+!byte $10,$0D,$A0                ; TST $A0
+!byte $11,$0D,$A0                ; TST $A0
+!byte $10,$0E,$B0                ; JMP $B0
+!byte $11,$0E,$B0                ; JMP $B0
+!byte $10,$0F,$C0                ; CLR $C0
+!byte $11,$0F,$C0                ; CLR $C0
+!byte $1B                        ; NOP
+!byte $10,$12                    ; NOP
+!byte $10,$1B                    ; NOP
+!byte $11,$12                    ; NOP
+!byte $11,$1B                    ; NOP
+!byte $10,$13                    ; SYNC
+!byte $11,$13                    ; SYNC
+!byte $10,$19                    ; DAA
+!byte $11,$19                    ; DAA
+!byte $10,$1A,$D0                ; ORCC #$D0
+!byte $11,$1A,$D0                ; ORCC #$D0
+!byte $10,$1C,$E0                ; ANDCC #$E0
+!byte $11,$1C,$E0                ; ANDCC #$E0
+!byte $10,$1D                    ; SEX
+!byte $11,$1D                    ; SEX
 
-      !byte $07,$00                   ; ASR $00
-      !byte $08,$00                   ; ASL $00
-      !byte $09,$00                   ; ROL $00
-      !byte $0A,$00                   ; DEC $00
-      !byte $0C,$00                   ; INC $00
-      !byte $0D,$00                   ; TST $00
-      !byte $0E,$00                   ; JMP $00
-      !byte $0F,$00                   ; CLR $00
-      !byte $12                       ; NOP
-      !byte $13                       ; SYNC
-      !byte $19                       ; DAA
-      !byte $1A,$00                   ; ORCC #$00
-      !byte $1C,$00                   ; ANDCC #$00
-      !byte $1D                       ; SEX
-      !byte $1E,$00                   ; EXG D,D
-      !byte $1E,$01                   ; EXG D,X
-      !byte $1E,$02                   ; EXG D,Y
-      !byte $1E,$03                   ; EXG D,U
-      !byte $1E,$04                   ; EXG D,S
-      !byte $1E,$05                   ; EXG D,PC
-      !byte $1E,$08                   ; EXG D,A
-      !byte $1E,$09                   ; EXG D,B
-      !byte $1E,$0A                   ; EXG D,CC
-      !byte $1E,$0B                   ; EXG D,DP
-      !byte $1E,$10                   ; EXG X,D
-      !byte $1E,$11                   ; EXG X,X
-      !byte $1E,$12                   ; EXG X,Y
-      !byte $1E,$13                   ; EXG X,U
-      !byte $1E,$14                   ; EXG X,S
-      !byte $1E,$15                   ; EXG X,PC
-      !byte $1E,$18                   ; EXG X,A
-      !byte $1E,$19                   ; EXG X,B
-      !byte $1E,$1A                   ; EXG X,CC
-      !byte $1E,$1B                   ; EXG X,DP
-      !byte $1E,$20                   ; EXG Y,D
-      !byte $1E,$21                   ; EXG Y,X
-      !byte $1E,$22                   ; EXG Y,Y
-      !byte $1E,$23                   ; EXG Y,U
-      !byte $1E,$24                   ; EXG Y,S
-      !byte $1E,$25                   ; EXG Y,PC
-      !byte $1E,$28                   ; EXG Y,A
-      !byte $1E,$29                   ; EXG Y,B
-      !byte $1E,$2A                   ; EXG Y,CC
-      !byte $1E,$2B                   ; EXG Y,DP
-      !byte $1E,$30                   ; EXG U,D
-      !byte $1E,$31                   ; EXG U,X
-      !byte $1E,$32                   ; EXG U,Y
-      !byte $1E,$33                   ; EXG U,U
-      !byte $1E,$34                   ; EXG U,S
-      !byte $1E,$35                   ; EXG U,PC
-      !byte $1E,$38                   ; EXG U,A
-      !byte $1E,$39                   ; EXG U,B
-      !byte $1E,$3A                   ; EXG U,CC
-      !byte $1E,$3B                   ; EXG U,DP
-      !byte $1E,$40                   ; EXG S,D
-      !byte $1E,$41                   ; EXG S,X
-      !byte $1E,$42                   ; EXG S,Y
-      !byte $1E,$43                   ; EXG S,U
-      !byte $1E,$44                   ; EXG S,S
-      !byte $1E,$45                   ; EXG S,PC
-      !byte $1E,$48                   ; EXG S,A
-      !byte $1E,$49                   ; EXG S,B
-      !byte $1E,$4A                   ; EXG S,CC
-      !byte $1E,$4B                   ; EXG S,DP
-      !byte $1E,$50                   ; EXG PC,D
-      !byte $1E,$51                   ; EXG PC,X
-      !byte $1E,$52                   ; EXG PC,Y
-      !byte $1E,$53                   ; EXG PC,U
-      !byte $1E,$54                   ; EXG PC,S
-      !byte $1E,$55                   ; EXG PC,PC
-      !byte $1E,$58                   ; EXG PC,A
-      !byte $1E,$59                   ; EXG PC,B
-      !byte $1E,$5A                   ; EXG PC,CC
-      !byte $1E,$5B                   ; EXG PC,DP
-      !byte $1E,$80                   ; EXG A,D
-      !byte $1E,$81                   ; EXG A,X
-      !byte $1E,$82                   ; EXG A,Y
-      !byte $1E,$83                   ; EXG A,U
-      !byte $1E,$84                   ; EXG A,S
-      !byte $1E,$85                   ; EXG A,PC
-      !byte $1E,$88                   ; EXG A,A
-      !byte $1E,$89                   ; EXG A,B
-      !byte $1E,$8A                   ; EXG A,CC
-      !byte $1E,$8B                   ; EXG A,DP
-      !byte $1E,$90                   ; EXG B,D
-      !byte $1E,$91                   ; EXG B,X
-      !byte $1E,$92                   ; EXG B,Y
-      !byte $1E,$93                   ; EXG B,U
-      !byte $1E,$94                   ; EXG B,S
-      !byte $1E,$95                   ; EXG B,PC
-      !byte $1E,$98                   ; EXG B,A
-      !byte $1E,$99                   ; EXG B,B
-      !byte $1E,$9A                   ; EXG B,CC
-      !byte $1E,$9B                   ; EXG B,DP
-      !byte $1E,$A0                   ; EXG CC,D
-      !byte $1E,$A1                   ; EXG CC,X
-      !byte $1E,$A2                   ; EXG CC,Y
-      !byte $1E,$A3                   ; EXG CC,U
-      !byte $1E,$A4                   ; EXG CC,S
-      !byte $1E,$A5                   ; EXG CC,PC
-      !byte $1E,$A8                   ; EXG CC,A
-      !byte $1E,$A9                   ; EXG CC,B
-      !byte $1E,$AA                   ; EXG CC,CC
-      !byte $1E,$AB                   ; EXG CC,DP
-      !byte $1E,$B0                   ; EXG DP,D
-      !byte $1E,$B1                   ; EXG DP,X
-      !byte $1E,$B2                   ; EXG DP,Y
-      !byte $1E,$B3                   ; EXG DP,U
-      !byte $1E,$B4                   ; EXG DP,S
-      !byte $1E,$B5                   ; EXG DP,PC
-      !byte $1E,$B8                   ; EXG DP,A
-      !byte $1E,$B9                   ; EXG DP,B
-      !byte $1E,$BA                   ; EXG DP,CC
-      !byte $1E,$BB                   ; EXG DP,DP
+!byte $1E,$06                    ; EXG D,#$FFFF
+!byte $1E,$07                    ; EXG D,#$FFFF
+!byte $1E,$0C                    ; EXG D,#$FFFF
+!byte $1E,$0D                    ; EXG D,#$FFFF
+!byte $1E,$0E                    ; EXG D,#$FFFF
+!byte $1E,$0F                    ; EXG D,#$FFFF
+!byte $1E,$16                    ; EXG X,#$FFFF
+!byte $1E,$17                    ; EXG X,#$FFFF
+!byte $1E,$1C                    ; EXG X,#$FFFF
+!byte $1E,$1D                    ; EXG X,#$FFFF
+!byte $1E,$1E                    ; EXG X,#$FFFF
+!byte $1E,$1F                    ; EXG X,#$FFFF
+!byte $1E,$26                    ; EXG Y,#$FFFF
+!byte $1E,$27                    ; EXG Y,#$FFFF
+!byte $1E,$2C                    ; EXG Y,#$FFFF
+!byte $1E,$2D                    ; EXG Y,#$FFFF
+!byte $1E,$2E                    ; EXG Y,#$FFFF
+!byte $1E,$2F                    ; EXG Y,#$FFFF
+!byte $1E,$36                    ; EXG U,#$FFFF
+!byte $1E,$37                    ; EXG U,#$FFFF
+!byte $1E,$3C                    ; EXG U,#$FFFF
+!byte $1E,$3D                    ; EXG U,#$FFFF
+!byte $1E,$3E                    ; EXG U,#$FFFF
+!byte $1E,$3F                    ; EXG U,#$FFFF
+!byte $1E,$46                    ; EXG S,#$FFFF
+!byte $1E,$47                    ; EXG S,#$FFFF
+!byte $1E,$4C                    ; EXG S,#$FFFF
+!byte $1E,$4D                    ; EXG S,#$FFFF
+!byte $1E,$4E                    ; EXG S,#$FFFF
+!byte $1E,$4F                    ; EXG S,#$FFFF
+!byte $1E,$56                    ; EXG PC,#$FFFF
+!byte $1E,$57                    ; EXG PC,#$FFFF
+!byte $1E,$5C                    ; EXG PC,#$FFFF
+!byte $1E,$5D                    ; EXG PC,#$FFFF
+!byte $1E,$5E                    ; EXG PC,#$FFFF
+!byte $1E,$5F                    ; EXG PC,#$FFFF
+!byte $1E,$60                    ; EXG #$FFFF,D
+!byte $1E,$61                    ; EXG #$FFFF,X
+!byte $1E,$62                    ; EXG #$FFFF,Y
+!byte $1E,$63                    ; EXG #$FFFF,U
+!byte $1E,$64                    ; EXG #$FFFF,S
+!byte $1E,$65                    ; EXG #$FFFF,PC
+!byte $1E,$66                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$67                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$68                    ; EXG #$FF,A
+!byte $1E,$69                    ; EXG #$FF,B
+!byte $1E,$6A                    ; EXG #$FF,CC
+!byte $1E,$6B                    ; EXG #$FF,DP
+!byte $1E,$6C                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$6D                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$6E                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$6F                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$70                    ; EXG #$FFFF,D
+!byte $1E,$71                    ; EXG #$FFFF,X
+!byte $1E,$72                    ; EXG #$FFFF,Y
+!byte $1E,$73                    ; EXG #$FFFF,U
+!byte $1E,$74                    ; EXG #$FFFF,S
+!byte $1E,$75                    ; EXG #$FFFF,PC
+!byte $1E,$76                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$77                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$78                    ; EXG #$FF,A
+!byte $1E,$79                    ; EXG #$FF,B
+!byte $1E,$7A                    ; EXG #$FF,CC
+!byte $1E,$7B                    ; EXG #$FF,DP
+!byte $1E,$7C                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$7D                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$7E                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$7F                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$86                    ; EXG A,#$FF
+!byte $1E,$87                    ; EXG A,#$FF
+!byte $1E,$8C                    ; EXG A,#$FF
+!byte $1E,$8D                    ; EXG A,#$FF
+!byte $1E,$8E                    ; EXG A,#$FF
+!byte $1E,$8F                    ; EXG A,#$FF
+!byte $1E,$96                    ; EXG B,#$FF
+!byte $1E,$97                    ; EXG B,#$FF
+!byte $1E,$9C                    ; EXG B,#$FF
+!byte $1E,$9D                    ; EXG B,#$FF
+!byte $1E,$9E                    ; EXG B,#$FF
+!byte $1E,$9F                    ; EXG B,#$FF
+!byte $1E,$A6                    ; EXG CC,#$FF
+!byte $1E,$A7                    ; EXG CC,#$FF
+!byte $1E,$AC                    ; EXG CC,#$FF
+!byte $1E,$AD                    ; EXG CC,#$FF
+!byte $1E,$AE                    ; EXG CC,#$FF
+!byte $1E,$AF                    ; EXG CC,#$FF
+!byte $1E,$B6                    ; EXG DP,#$FF
+!byte $1E,$B7                    ; EXG DP,#$FF
+!byte $1E,$BC                    ; EXG DP,#$FF
+!byte $1E,$BD                    ; EXG DP,#$FF
+!byte $1E,$BE                    ; EXG DP,#$FF
+!byte $1E,$BF                    ; EXG DP,#$FF
+!byte $1E,$C0                    ; EXG #$FFFF,D
+!byte $1E,$C1                    ; EXG #$FFFF,X
+!byte $1E,$C2                    ; EXG #$FFFF,Y
+!byte $1E,$C3                    ; EXG #$FFFF,U
+!byte $1E,$C4                    ; EXG #$FFFF,S
+!byte $1E,$C5                    ; EXG #$FFFF,PC
+!byte $1E,$C6                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$C7                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$C8                    ; EXG #$FF,A
+!byte $1E,$C9                    ; EXG #$FF,B
+!byte $1E,$CA                    ; EXG #$FF,CC
+!byte $1E,$CB                    ; EXG #$FF,DP
+!byte $1E,$CC                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$CD                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$CE                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$CF                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$D0                    ; EXG #$FFFF,D
+!byte $1E,$D1                    ; EXG #$FFFF,X
+!byte $1E,$D2                    ; EXG #$FFFF,Y
+!byte $1E,$D3                    ; EXG #$FFFF,U
+!byte $1E,$D4                    ; EXG #$FFFF,S
+!byte $1E,$D5                    ; EXG #$FFFF,PC
+!byte $1E,$D6                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$D7                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$D8                    ; EXG #$FF,A
+!byte $1E,$D9                    ; EXG #$FF,B
+!byte $1E,$DA                    ; EXG #$FF,CC
+!byte $1E,$DB                    ; EXG #$FF,DP
+!byte $1E,$DC                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$DD                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$DE                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$DF                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$E0                    ; EXG #$FFFF,D
+!byte $1E,$E1                    ; EXG #$FFFF,X
+!byte $1E,$E2                    ; EXG #$FFFF,Y
+!byte $1E,$E3                    ; EXG #$FFFF,U
+!byte $1E,$E4                    ; EXG #$FFFF,S
+!byte $1E,$E5                    ; EXG #$FFFF,PC
+!byte $1E,$E6                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$E7                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$E8                    ; EXG #$FF,A
+!byte $1E,$E9                    ; EXG #$FF,B
+!byte $1E,$EA                    ; EXG #$FF,CC
+!byte $1E,$EB                    ; EXG #$FF,DP
+!byte $1E,$EC                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$ED                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$EE                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$EF                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$F0                    ; EXG #$FFFF,D
+!byte $1E,$F1                    ; EXG #$FFFF,X
+!byte $1E,$F2                    ; EXG #$FFFF,Y
+!byte $1E,$F3                    ; EXG #$FFFF,U
+!byte $1E,$F4                    ; EXG #$FFFF,S
+!byte $1E,$F5                    ; EXG #$FFFF,PC
+!byte $1E,$F6                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$F7                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$F8                    ; EXG #$FF,A
+!byte $1E,$F9                    ; EXG #$FF,B
+!byte $1E,$FA                    ; EXG #$FF,CC
+!byte $1E,$FB                    ; EXG #$FF,DP
+!byte $1E,$FC                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$FD                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$FE                    ; EXG #$FFFF,#$FFFF
+!byte $1E,$FF                    ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$00                ; EXG D,D
+!byte $10,$1E,$01                ; EXG D,X
+!byte $10,$1E,$02                ; EXG D,Y
+!byte $10,$1E,$03                ; EXG D,U
+!byte $10,$1E,$04                ; EXG D,S
+!byte $10,$1E,$05                ; EXG D,PC
+!byte $10,$1E,$06                ; EXG D,#$FFFF
+!byte $10,$1E,$07                ; EXG D,#$FFFF
+!byte $10,$1E,$08                ; EXG D,A
+!byte $10,$1E,$09                ; EXG D,B
+!byte $10,$1E,$0A                ; EXG D,CC
+!byte $10,$1E,$0B                ; EXG D,DP
+!byte $10,$1E,$0C                ; EXG D,#$FFFF
+!byte $10,$1E,$0D                ; EXG D,#$FFFF
+!byte $10,$1E,$0E                ; EXG D,#$FFFF
+!byte $10,$1E,$0F                ; EXG D,#$FFFF
+!byte $10,$1E,$10                ; EXG X,D
+!byte $10,$1E,$11                ; EXG X,X
+!byte $10,$1E,$12                ; EXG X,Y
+!byte $10,$1E,$13                ; EXG X,U
+!byte $10,$1E,$14                ; EXG X,S
+!byte $10,$1E,$15                ; EXG X,PC
+!byte $10,$1E,$16                ; EXG X,#$FFFF
+!byte $10,$1E,$17                ; EXG X,#$FFFF
+!byte $10,$1E,$18                ; EXG X,A
+!byte $10,$1E,$19                ; EXG X,B
+!byte $10,$1E,$1A                ; EXG X,CC
+!byte $10,$1E,$1B                ; EXG X,DP
+!byte $10,$1E,$1C                ; EXG X,#$FFFF
+!byte $10,$1E,$1D                ; EXG X,#$FFFF
+!byte $10,$1E,$1E                ; EXG X,#$FFFF
+!byte $10,$1E,$1F                ; EXG X,#$FFFF
+!byte $10,$1E,$20                ; EXG Y,D
+!byte $10,$1E,$21                ; EXG Y,X
+!byte $10,$1E,$22                ; EXG Y,Y
+!byte $10,$1E,$23                ; EXG Y,U
+!byte $10,$1E,$24                ; EXG Y,S
+!byte $10,$1E,$25                ; EXG Y,PC
+!byte $10,$1E,$26                ; EXG Y,#$FFFF
+!byte $10,$1E,$27                ; EXG Y,#$FFFF
+!byte $10,$1E,$28                ; EXG Y,A
+!byte $10,$1E,$29                ; EXG Y,B
+!byte $10,$1E,$2A                ; EXG Y,CC
+!byte $10,$1E,$2B                ; EXG Y,DP
+!byte $10,$1E,$2C                ; EXG Y,#$FFFF
+!byte $10,$1E,$2D                ; EXG Y,#$FFFF
+!byte $10,$1E,$2E                ; EXG Y,#$FFFF
+!byte $10,$1E,$2F                ; EXG Y,#$FFFF
+!byte $10,$1E,$30                ; EXG U,D
+!byte $10,$1E,$31                ; EXG U,X
+!byte $10,$1E,$32                ; EXG U,Y
+!byte $10,$1E,$33                ; EXG U,U
+!byte $10,$1E,$34                ; EXG U,S
+!byte $10,$1E,$35                ; EXG U,PC
+!byte $10,$1E,$36                ; EXG U,#$FFFF
+!byte $10,$1E,$37                ; EXG U,#$FFFF
+!byte $10,$1E,$38                ; EXG U,A
+!byte $10,$1E,$39                ; EXG U,B
+!byte $10,$1E,$3A                ; EXG U,CC
+!byte $10,$1E,$3B                ; EXG U,DP
+!byte $10,$1E,$3C                ; EXG U,#$FFFF
+!byte $10,$1E,$3D                ; EXG U,#$FFFF
+!byte $10,$1E,$3E                ; EXG U,#$FFFF
+!byte $10,$1E,$3F                ; EXG U,#$FFFF
+!byte $10,$1E,$40                ; EXG S,D
+!byte $10,$1E,$41                ; EXG S,X
+!byte $10,$1E,$42                ; EXG S,Y
+!byte $10,$1E,$43                ; EXG S,U
+!byte $10,$1E,$44                ; EXG S,S
+!byte $10,$1E,$45                ; EXG S,PC
+!byte $10,$1E,$46                ; EXG S,#$FFFF
+!byte $10,$1E,$47                ; EXG S,#$FFFF
+!byte $10,$1E,$48                ; EXG S,A
+!byte $10,$1E,$49                ; EXG S,B
+!byte $10,$1E,$4A                ; EXG S,CC
+!byte $10,$1E,$4B                ; EXG S,DP
+!byte $10,$1E,$4C                ; EXG S,#$FFFF
+!byte $10,$1E,$4D                ; EXG S,#$FFFF
+!byte $10,$1E,$4E                ; EXG S,#$FFFF
+!byte $10,$1E,$4F                ; EXG S,#$FFFF
+!byte $10,$1E,$50                ; EXG PC,D
+!byte $10,$1E,$51                ; EXG PC,X
+!byte $10,$1E,$52                ; EXG PC,Y
+!byte $10,$1E,$53                ; EXG PC,U
+!byte $10,$1E,$54                ; EXG PC,S
+!byte $10,$1E,$55                ; EXG PC,PC
+!byte $10,$1E,$56                ; EXG PC,#$FFFF
+!byte $10,$1E,$57                ; EXG PC,#$FFFF
+!byte $10,$1E,$58                ; EXG PC,A
+!byte $10,$1E,$59                ; EXG PC,B
+!byte $10,$1E,$5A                ; EXG PC,CC
+!byte $10,$1E,$5B                ; EXG PC,DP
+!byte $10,$1E,$5C                ; EXG PC,#$FFFF
+!byte $10,$1E,$5D                ; EXG PC,#$FFFF
+!byte $10,$1E,$5E                ; EXG PC,#$FFFF
+!byte $10,$1E,$5F                ; EXG PC,#$FFFF
+!byte $10,$1E,$60                ; EXG #$FFFF,D
+!byte $10,$1E,$61                ; EXG #$FFFF,X
+!byte $10,$1E,$62                ; EXG #$FFFF,Y
+!byte $10,$1E,$63                ; EXG #$FFFF,U
+!byte $10,$1E,$64                ; EXG #$FFFF,S
+!byte $10,$1E,$65                ; EXG #$FFFF,PC
+!byte $10,$1E,$66                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$67                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$68                ; EXG #$FF,A
+!byte $10,$1E,$69                ; EXG #$FF,B
+!byte $10,$1E,$6A                ; EXG #$FF,CC
+!byte $10,$1E,$6B                ; EXG #$FF,DP
+!byte $10,$1E,$6C                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$6D                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$6E                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$6F                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$70                ; EXG #$FFFF,D
+!byte $10,$1E,$71                ; EXG #$FFFF,X
+!byte $10,$1E,$72                ; EXG #$FFFF,Y
+!byte $10,$1E,$73                ; EXG #$FFFF,U
+!byte $10,$1E,$74                ; EXG #$FFFF,S
+!byte $10,$1E,$75                ; EXG #$FFFF,PC
+!byte $10,$1E,$76                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$77                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$78                ; EXG #$FF,A
+!byte $10,$1E,$79                ; EXG #$FF,B
+!byte $10,$1E,$7A                ; EXG #$FF,CC
+!byte $10,$1E,$7B                ; EXG #$FF,DP
+!byte $10,$1E,$7C                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$7D                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$7E                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$7F                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$80                ; EXG A,D
+!byte $10,$1E,$81                ; EXG A,X
+!byte $10,$1E,$82                ; EXG A,Y
+!byte $10,$1E,$83                ; EXG A,U
+!byte $10,$1E,$84                ; EXG A,S
+!byte $10,$1E,$85                ; EXG A,PC
+!byte $10,$1E,$86                ; EXG A,#$FF
+!byte $10,$1E,$87                ; EXG A,#$FF
+!byte $10,$1E,$88                ; EXG A,A
+!byte $10,$1E,$89                ; EXG A,B
+!byte $10,$1E,$8A                ; EXG A,CC
+!byte $10,$1E,$8B                ; EXG A,DP
+!byte $10,$1E,$8C                ; EXG A,#$FF
+!byte $10,$1E,$8D                ; EXG A,#$FF
+!byte $10,$1E,$8E                ; EXG A,#$FF
+!byte $10,$1E,$8F                ; EXG A,#$FF
+!byte $10,$1E,$90                ; EXG B,D
+!byte $10,$1E,$91                ; EXG B,X
+!byte $10,$1E,$92                ; EXG B,Y
+!byte $10,$1E,$93                ; EXG B,U
+!byte $10,$1E,$94                ; EXG B,S
+!byte $10,$1E,$95                ; EXG B,PC
+!byte $10,$1E,$96                ; EXG B,#$FF
+!byte $10,$1E,$97                ; EXG B,#$FF
+!byte $10,$1E,$98                ; EXG B,A
+!byte $10,$1E,$99                ; EXG B,B
+!byte $10,$1E,$9A                ; EXG B,CC
+!byte $10,$1E,$9B                ; EXG B,DP
+!byte $10,$1E,$9C                ; EXG B,#$FF
+!byte $10,$1E,$9D                ; EXG B,#$FF
+!byte $10,$1E,$9E                ; EXG B,#$FF
+!byte $10,$1E,$9F                ; EXG B,#$FF
+!byte $10,$1E,$A0                ; EXG CC,D
+!byte $10,$1E,$A1                ; EXG CC,X
+!byte $10,$1E,$A2                ; EXG CC,Y
+!byte $10,$1E,$A3                ; EXG CC,U
+!byte $10,$1E,$A4                ; EXG CC,S
+!byte $10,$1E,$A5                ; EXG CC,PC
+!byte $10,$1E,$A6                ; EXG CC,#$FF
+!byte $10,$1E,$A7                ; EXG CC,#$FF
+!byte $10,$1E,$A8                ; EXG CC,A
+!byte $10,$1E,$A9                ; EXG CC,B
+!byte $10,$1E,$AA                ; EXG CC,CC
+!byte $10,$1E,$AB                ; EXG CC,DP
+!byte $10,$1E,$AC                ; EXG CC,#$FF
+!byte $10,$1E,$AD                ; EXG CC,#$FF
+!byte $10,$1E,$AE                ; EXG CC,#$FF
+!byte $10,$1E,$AF                ; EXG CC,#$FF
+!byte $10,$1E,$B0                ; EXG DP,D
+!byte $10,$1E,$B1                ; EXG DP,X
+!byte $10,$1E,$B2                ; EXG DP,Y
+!byte $10,$1E,$B3                ; EXG DP,U
+!byte $10,$1E,$B4                ; EXG DP,S
+!byte $10,$1E,$B5                ; EXG DP,PC
+!byte $10,$1E,$B6                ; EXG DP,#$FF
+!byte $10,$1E,$B7                ; EXG DP,#$FF
+!byte $10,$1E,$B8                ; EXG DP,A
+!byte $10,$1E,$B9                ; EXG DP,B
+!byte $10,$1E,$BA                ; EXG DP,CC
+!byte $10,$1E,$BB                ; EXG DP,DP
+!byte $10,$1E,$BC                ; EXG DP,#$FF
+!byte $10,$1E,$BD                ; EXG DP,#$FF
+!byte $10,$1E,$BE                ; EXG DP,#$FF
+!byte $10,$1E,$BF                ; EXG DP,#$FF
+!byte $10,$1E,$C0                ; EXG #$FFFF,D
+!byte $10,$1E,$C1                ; EXG #$FFFF,X
+!byte $10,$1E,$C2                ; EXG #$FFFF,Y
+!byte $10,$1E,$C3                ; EXG #$FFFF,U
+!byte $10,$1E,$C4                ; EXG #$FFFF,S
+!byte $10,$1E,$C5                ; EXG #$FFFF,PC
+!byte $10,$1E,$C6                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$C7                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$C8                ; EXG #$FF,A
+!byte $10,$1E,$C9                ; EXG #$FF,B
+!byte $10,$1E,$CA                ; EXG #$FF,CC
+!byte $10,$1E,$CB                ; EXG #$FF,DP
+!byte $10,$1E,$CC                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$CD                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$CE                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$CF                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$D0                ; EXG #$FFFF,D
+!byte $10,$1E,$D1                ; EXG #$FFFF,X
+!byte $10,$1E,$D2                ; EXG #$FFFF,Y
+!byte $10,$1E,$D3                ; EXG #$FFFF,U
+!byte $10,$1E,$D4                ; EXG #$FFFF,S
+!byte $10,$1E,$D5                ; EXG #$FFFF,PC
+!byte $10,$1E,$D6                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$D7                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$D8                ; EXG #$FF,A
+!byte $10,$1E,$D9                ; EXG #$FF,B
+!byte $10,$1E,$DA                ; EXG #$FF,CC
+!byte $10,$1E,$DB                ; EXG #$FF,DP
+!byte $10,$1E,$DC                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$DD                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$DE                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$DF                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$E0                ; EXG #$FFFF,D
+!byte $10,$1E,$E1                ; EXG #$FFFF,X
+!byte $10,$1E,$E2                ; EXG #$FFFF,Y
+!byte $10,$1E,$E3                ; EXG #$FFFF,U
+!byte $10,$1E,$E4                ; EXG #$FFFF,S
+!byte $10,$1E,$E5                ; EXG #$FFFF,PC
+!byte $10,$1E,$E6                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$E7                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$E8                ; EXG #$FF,A
+!byte $10,$1E,$E9                ; EXG #$FF,B
+!byte $10,$1E,$EA                ; EXG #$FF,CC
+!byte $10,$1E,$EB                ; EXG #$FF,DP
+!byte $10,$1E,$EC                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$ED                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$EE                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$EF                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$F0                ; EXG #$FFFF,D
+!byte $10,$1E,$F1                ; EXG #$FFFF,X
+!byte $10,$1E,$F2                ; EXG #$FFFF,Y
+!byte $10,$1E,$F3                ; EXG #$FFFF,U
+!byte $10,$1E,$F4                ; EXG #$FFFF,S
+!byte $10,$1E,$F5                ; EXG #$FFFF,PC
+!byte $10,$1E,$F6                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$F7                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$F8                ; EXG #$FF,A
+!byte $10,$1E,$F9                ; EXG #$FF,B
+!byte $10,$1E,$FA                ; EXG #$FF,CC
+!byte $10,$1E,$FB                ; EXG #$FF,DP
+!byte $10,$1E,$FC                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$FD                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$FE                ; EXG #$FFFF,#$FFFF
+!byte $10,$1E,$FF                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$00                ; EXG D,D
+!byte $11,$1E,$01                ; EXG D,X
+!byte $11,$1E,$02                ; EXG D,Y
+!byte $11,$1E,$03                ; EXG D,U
+!byte $11,$1E,$04                ; EXG D,S
+!byte $11,$1E,$05                ; EXG D,PC
+!byte $11,$1E,$06                ; EXG D,#$FFFF
+!byte $11,$1E,$07                ; EXG D,#$FFFF
+!byte $11,$1E,$08                ; EXG D,A
+!byte $11,$1E,$09                ; EXG D,B
+!byte $11,$1E,$0A                ; EXG D,CC
+!byte $11,$1E,$0B                ; EXG D,DP
+!byte $11,$1E,$0C                ; EXG D,#$FFFF
+!byte $11,$1E,$0D                ; EXG D,#$FFFF
+!byte $11,$1E,$0E                ; EXG D,#$FFFF
+!byte $11,$1E,$0F                ; EXG D,#$FFFF
+!byte $11,$1E,$10                ; EXG X,D
+!byte $11,$1E,$11                ; EXG X,X
+!byte $11,$1E,$12                ; EXG X,Y
+!byte $11,$1E,$13                ; EXG X,U
+!byte $11,$1E,$14                ; EXG X,S
+!byte $11,$1E,$15                ; EXG X,PC
+!byte $11,$1E,$16                ; EXG X,#$FFFF
+!byte $11,$1E,$17                ; EXG X,#$FFFF
+!byte $11,$1E,$18                ; EXG X,A
+!byte $11,$1E,$19                ; EXG X,B
+!byte $11,$1E,$1A                ; EXG X,CC
+!byte $11,$1E,$1B                ; EXG X,DP
+!byte $11,$1E,$1C                ; EXG X,#$FFFF
+!byte $11,$1E,$1D                ; EXG X,#$FFFF
+!byte $11,$1E,$1E                ; EXG X,#$FFFF
+!byte $11,$1E,$1F                ; EXG X,#$FFFF
+!byte $11,$1E,$20                ; EXG Y,D
+!byte $11,$1E,$21                ; EXG Y,X
+!byte $11,$1E,$22                ; EXG Y,Y
+!byte $11,$1E,$23                ; EXG Y,U
+!byte $11,$1E,$24                ; EXG Y,S
+!byte $11,$1E,$25                ; EXG Y,PC
+!byte $11,$1E,$26                ; EXG Y,#$FFFF
+!byte $11,$1E,$27                ; EXG Y,#$FFFF
+!byte $11,$1E,$28                ; EXG Y,A
+!byte $11,$1E,$29                ; EXG Y,B
+!byte $11,$1E,$2A                ; EXG Y,CC
+!byte $11,$1E,$2B                ; EXG Y,DP
+!byte $11,$1E,$2C                ; EXG Y,#$FFFF
+!byte $11,$1E,$2D                ; EXG Y,#$FFFF
+!byte $11,$1E,$2E                ; EXG Y,#$FFFF
+!byte $11,$1E,$2F                ; EXG Y,#$FFFF
+!byte $11,$1E,$30                ; EXG U,D
+!byte $11,$1E,$31                ; EXG U,X
+!byte $11,$1E,$32                ; EXG U,Y
+!byte $11,$1E,$33                ; EXG U,U
+!byte $11,$1E,$34                ; EXG U,S
+!byte $11,$1E,$35                ; EXG U,PC
+!byte $11,$1E,$36                ; EXG U,#$FFFF
+!byte $11,$1E,$37                ; EXG U,#$FFFF
+!byte $11,$1E,$38                ; EXG U,A
+!byte $11,$1E,$39                ; EXG U,B
+!byte $11,$1E,$3A                ; EXG U,CC
+!byte $11,$1E,$3B                ; EXG U,DP
+!byte $11,$1E,$3C                ; EXG U,#$FFFF
+!byte $11,$1E,$3D                ; EXG U,#$FFFF
+!byte $11,$1E,$3E                ; EXG U,#$FFFF
+!byte $11,$1E,$3F                ; EXG U,#$FFFF
+!byte $11,$1E,$40                ; EXG S,D
+!byte $11,$1E,$41                ; EXG S,X
+!byte $11,$1E,$42                ; EXG S,Y
+!byte $11,$1E,$43                ; EXG S,U
+!byte $11,$1E,$44                ; EXG S,S
+!byte $11,$1E,$45                ; EXG S,PC
+!byte $11,$1E,$46                ; EXG S,#$FFFF
+!byte $11,$1E,$47                ; EXG S,#$FFFF
+!byte $11,$1E,$48                ; EXG S,A
+!byte $11,$1E,$49                ; EXG S,B
+!byte $11,$1E,$4A                ; EXG S,CC
+!byte $11,$1E,$4B                ; EXG S,DP
+!byte $11,$1E,$4C                ; EXG S,#$FFFF
+!byte $11,$1E,$4D                ; EXG S,#$FFFF
+!byte $11,$1E,$4E                ; EXG S,#$FFFF
+!byte $11,$1E,$4F                ; EXG S,#$FFFF
+!byte $11,$1E,$50                ; EXG PC,D
+!byte $11,$1E,$51                ; EXG PC,X
+!byte $11,$1E,$52                ; EXG PC,Y
+!byte $11,$1E,$53                ; EXG PC,U
+!byte $11,$1E,$54                ; EXG PC,S
+!byte $11,$1E,$55                ; EXG PC,PC
+!byte $11,$1E,$56                ; EXG PC,#$FFFF
+!byte $11,$1E,$57                ; EXG PC,#$FFFF
+!byte $11,$1E,$58                ; EXG PC,A
+!byte $11,$1E,$59                ; EXG PC,B
+!byte $11,$1E,$5A                ; EXG PC,CC
+!byte $11,$1E,$5B                ; EXG PC,DP
+!byte $11,$1E,$5C                ; EXG PC,#$FFFF
+!byte $11,$1E,$5D                ; EXG PC,#$FFFF
+!byte $11,$1E,$5E                ; EXG PC,#$FFFF
+!byte $11,$1E,$5F                ; EXG PC,#$FFFF
+!byte $11,$1E,$60                ; EXG #$FFFF,D
+!byte $11,$1E,$61                ; EXG #$FFFF,X
+!byte $11,$1E,$62                ; EXG #$FFFF,Y
+!byte $11,$1E,$63                ; EXG #$FFFF,U
+!byte $11,$1E,$64                ; EXG #$FFFF,S
+!byte $11,$1E,$65                ; EXG #$FFFF,PC
+!byte $11,$1E,$66                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$67                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$68                ; EXG #$FF,A
+!byte $11,$1E,$69                ; EXG #$FF,B
+!byte $11,$1E,$6A                ; EXG #$FF,CC
+!byte $11,$1E,$6B                ; EXG #$FF,DP
+!byte $11,$1E,$6C                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$6D                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$6E                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$6F                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$70                ; EXG #$FFFF,D
+!byte $11,$1E,$71                ; EXG #$FFFF,X
+!byte $11,$1E,$72                ; EXG #$FFFF,Y
+!byte $11,$1E,$73                ; EXG #$FFFF,U
+!byte $11,$1E,$74                ; EXG #$FFFF,S
+!byte $11,$1E,$75                ; EXG #$FFFF,PC
+!byte $11,$1E,$76                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$77                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$78                ; EXG #$FF,A
+!byte $11,$1E,$79                ; EXG #$FF,B
+!byte $11,$1E,$7A                ; EXG #$FF,CC
+!byte $11,$1E,$7B                ; EXG #$FF,DP
+!byte $11,$1E,$7C                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$7D                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$7E                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$7F                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$80                ; EXG A,D
+!byte $11,$1E,$81                ; EXG A,X
+!byte $11,$1E,$82                ; EXG A,Y
+!byte $11,$1E,$83                ; EXG A,U
+!byte $11,$1E,$84                ; EXG A,S
+!byte $11,$1E,$85                ; EXG A,PC
+!byte $11,$1E,$86                ; EXG A,#$FF
+!byte $11,$1E,$87                ; EXG A,#$FF
+!byte $11,$1E,$88                ; EXG A,A
+!byte $11,$1E,$89                ; EXG A,B
+!byte $11,$1E,$8A                ; EXG A,CC
+!byte $11,$1E,$8B                ; EXG A,DP
+!byte $11,$1E,$8C                ; EXG A,#$FF
+!byte $11,$1E,$8D                ; EXG A,#$FF
+!byte $11,$1E,$8E                ; EXG A,#$FF
+!byte $11,$1E,$8F                ; EXG A,#$FF
+!byte $11,$1E,$90                ; EXG B,D
+!byte $11,$1E,$91                ; EXG B,X
+!byte $11,$1E,$92                ; EXG B,Y
+!byte $11,$1E,$93                ; EXG B,U
+!byte $11,$1E,$94                ; EXG B,S
+!byte $11,$1E,$95                ; EXG B,PC
+!byte $11,$1E,$96                ; EXG B,#$FF
+!byte $11,$1E,$97                ; EXG B,#$FF
+!byte $11,$1E,$98                ; EXG B,A
+!byte $11,$1E,$99                ; EXG B,B
+!byte $11,$1E,$9A                ; EXG B,CC
+!byte $11,$1E,$9B                ; EXG B,DP
+!byte $11,$1E,$9C                ; EXG B,#$FF
+!byte $11,$1E,$9D                ; EXG B,#$FF
+!byte $11,$1E,$9E                ; EXG B,#$FF
+!byte $11,$1E,$9F                ; EXG B,#$FF
+!byte $11,$1E,$A0                ; EXG CC,D
+!byte $11,$1E,$A1                ; EXG CC,X
+!byte $11,$1E,$A2                ; EXG CC,Y
+!byte $11,$1E,$A3                ; EXG CC,U
+!byte $11,$1E,$A4                ; EXG CC,S
+!byte $11,$1E,$A5                ; EXG CC,PC
+!byte $11,$1E,$A6                ; EXG CC,#$FF
+!byte $11,$1E,$A7                ; EXG CC,#$FF
+!byte $11,$1E,$A8                ; EXG CC,A
+!byte $11,$1E,$A9                ; EXG CC,B
+!byte $11,$1E,$AA                ; EXG CC,CC
+!byte $11,$1E,$AB                ; EXG CC,DP
+!byte $11,$1E,$AC                ; EXG CC,#$FF
+!byte $11,$1E,$AD                ; EXG CC,#$FF
+!byte $11,$1E,$AE                ; EXG CC,#$FF
+!byte $11,$1E,$AF                ; EXG CC,#$FF
+!byte $11,$1E,$B0                ; EXG DP,D
+!byte $11,$1E,$B1                ; EXG DP,X
+!byte $11,$1E,$B2                ; EXG DP,Y
+!byte $11,$1E,$B3                ; EXG DP,U
+!byte $11,$1E,$B4                ; EXG DP,S
+!byte $11,$1E,$B5                ; EXG DP,PC
+!byte $11,$1E,$B6                ; EXG DP,#$FF
+!byte $11,$1E,$B7                ; EXG DP,#$FF
+!byte $11,$1E,$B8                ; EXG DP,A
+!byte $11,$1E,$B9                ; EXG DP,B
+!byte $11,$1E,$BA                ; EXG DP,CC
+!byte $11,$1E,$BB                ; EXG DP,DP
+!byte $11,$1E,$BC                ; EXG DP,#$FF
+!byte $11,$1E,$BD                ; EXG DP,#$FF
+!byte $11,$1E,$BE                ; EXG DP,#$FF
+!byte $11,$1E,$BF                ; EXG DP,#$FF
+!byte $11,$1E,$C0                ; EXG #$FFFF,D
+!byte $11,$1E,$C1                ; EXG #$FFFF,X
+!byte $11,$1E,$C2                ; EXG #$FFFF,Y
+!byte $11,$1E,$C3                ; EXG #$FFFF,U
+!byte $11,$1E,$C4                ; EXG #$FFFF,S
+!byte $11,$1E,$C5                ; EXG #$FFFF,PC
+!byte $11,$1E,$C6                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$C7                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$C8                ; EXG #$FF,A
+!byte $11,$1E,$C9                ; EXG #$FF,B
+!byte $11,$1E,$CA                ; EXG #$FF,CC
+!byte $11,$1E,$CB                ; EXG #$FF,DP
+!byte $11,$1E,$CC                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$CD                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$CE                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$CF                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$D0                ; EXG #$FFFF,D
+!byte $11,$1E,$D1                ; EXG #$FFFF,X
+!byte $11,$1E,$D2                ; EXG #$FFFF,Y
+!byte $11,$1E,$D3                ; EXG #$FFFF,U
+!byte $11,$1E,$D4                ; EXG #$FFFF,S
+!byte $11,$1E,$D5                ; EXG #$FFFF,PC
+!byte $11,$1E,$D6                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$D7                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$D8                ; EXG #$FF,A
+!byte $11,$1E,$D9                ; EXG #$FF,B
+!byte $11,$1E,$DA                ; EXG #$FF,CC
+!byte $11,$1E,$DB                ; EXG #$FF,DP
+!byte $11,$1E,$DC                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$DD                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$DE                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$DF                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$E0                ; EXG #$FFFF,D
+!byte $11,$1E,$E1                ; EXG #$FFFF,X
+!byte $11,$1E,$E2                ; EXG #$FFFF,Y
+!byte $11,$1E,$E3                ; EXG #$FFFF,U
+!byte $11,$1E,$E4                ; EXG #$FFFF,S
+!byte $11,$1E,$E5                ; EXG #$FFFF,PC
+!byte $11,$1E,$E6                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$E7                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$E8                ; EXG #$FF,A
+!byte $11,$1E,$E9                ; EXG #$FF,B
+!byte $11,$1E,$EA                ; EXG #$FF,CC
+!byte $11,$1E,$EB                ; EXG #$FF,DP
+!byte $11,$1E,$EC                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$ED                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$EE                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$EF                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$F0                ; EXG #$FFFF,D
+!byte $11,$1E,$F1                ; EXG #$FFFF,X
+!byte $11,$1E,$F2                ; EXG #$FFFF,Y
+!byte $11,$1E,$F3                ; EXG #$FFFF,U
+!byte $11,$1E,$F4                ; EXG #$FFFF,S
+!byte $11,$1E,$F5                ; EXG #$FFFF,PC
+!byte $11,$1E,$F6                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$F7                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$F8                ; EXG #$FF,A
+!byte $11,$1E,$F9                ; EXG #$FF,B
+!byte $11,$1E,$FA                ; EXG #$FF,CC
+!byte $11,$1E,$FB                ; EXG #$FF,DP
+!byte $11,$1E,$FC                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$FD                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$FE                ; EXG #$FFFF,#$FFFF
+!byte $11,$1E,$FF                ; EXG #$FFFF,#$FFFF
+
       !byte $1F,$00                   ; TFR D,D
       !byte $1F,$01                   ; TFR D,X
       !byte $1F,$02                   ; TFR D,Y
