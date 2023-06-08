@@ -4848,16 +4848,29 @@
 !byte $11,$37,$FD                ; PULU PC,S,Y,X,DP,B,CC
 !byte $11,$37,$FE                ; PULU PC,S,Y,X,DP,D
 !byte $11,$37,$FF                ; PULU PC,S,Y,X,DP,D,CC
+!byte $10,$39                    ; RTS
+!byte $11,$39                    ; RTS
+!byte $10,$3A                    ; ABX
+!byte $11,$3A                    ; ABX
+!byte $10,$3B                    ; RTI
+!byte $11,$3B                    ; RTI
+!byte $10,$3C,$00                ; CWAI #$00
+!byte $11,$3C,$00                ; CWAI #$00
+!byte $10,$3D                    ; MUL
+!byte $11,$3D                    ; MUL
+!byte $41                        ; NEGA
+!byte $10,$40                    ; NEGA
+!byte $10,$41                    ; NEGA
+!byte $11,$40                    ; NEGA
+!byte $11,$41                    ; NEGA
+!byte $10,$43                    ; COMA
+!byte $11,$43                    ; COMA
+!byte $45                        ; LSRA
+!byte $10,$44                    ; LSRA
+!byte $10,$45                    ; LSRA
+!byte $11,$44                    ; LSRA
+!byte $11,$45                    ; LSRA
 
-      !byte $39                       ; RTS
-      !byte $3A                       ; ABX
-      !byte $3B                       ; RTI
-      !byte $3C,$00                   ; CWAI #$00
-      !byte $3D                       ; MUL
-      !byte $3F                       ; SWI
-      !byte $40                       ; NEGA
-      !byte $43                       ; COMA
-      !byte $44                       ; LSRA
       !byte $46                       ; RORA
       !byte $47                       ; ASRA
       !byte $48                       ; ASLA
