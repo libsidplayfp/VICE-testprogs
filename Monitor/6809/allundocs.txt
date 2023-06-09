@@ -9846,271 +9846,703 @@
 !byte $11,$6D,$B0                ; TST [,Y+]
 !byte $11,$6D,$D0                ; TST [,U+]
 !byte $11,$6D,$F0                ; TST [,S+]
+!byte $6E,$87                    ; JMP ,X
+!byte $6E,$A7                    ; JMP ,Y
+!byte $6E,$C7                    ; JMP ,U
+!byte $6E,$E7                    ; JMP ,S
+!byte $6E,$8A                    ; JMP ,PClo
+!byte $6E,$AA                    ; JMP ,PClo
+!byte $6E,$CA                    ; JMP ,PClo
+!byte $6E,$EA                    ; JMP ,PClo
+!byte $6E,$8F,$DE,$AD            ; JMP ,$DEAD
+!byte $6E,$AF,$DE,$AD            ; JMP ,$DEAD
+!byte $6E,$CF,$DE,$AD            ; JMP ,$DEAD
+!byte $6E,$EF,$DE,$AD            ; JMP ,$DEAD
+!byte $6E,$97                    ; JMP [,X]
+!byte $6E,$B7                    ; JMP [,Y]
+!byte $6E,$D7                    ; JMP [,U]
+!byte $6E,$F7                    ; JMP [,S]
+!byte $6E,$9A                    ; JMP [,PClo]
+!byte $6E,$BA                    ; JMP [,PClo]
+!byte $6E,$DA                    ; JMP [,PClo]
+!byte $6E,$FA                    ; JMP [,PClo]
+!byte $6E,$92                    ; JMP [,-X]
+!byte $6E,$B2                    ; JMP [,-Y]
+!byte $6E,$D2                    ; JMP [,-U]
+!byte $6E,$F2                    ; JMP [,-S]
+!byte $6E,$90                    ; JMP [,X+]
+!byte $6E,$B0                    ; JMP [,Y+]
+!byte $6E,$D0                    ; JMP [,U+]
+!byte $6E,$F0                    ; JMP [,S+]
+!byte $10,$6E,$84                ; JMP ,X
+!byte $10,$6E,$A4                ; JMP ,Y
+!byte $10,$6E,$C4                ; JMP ,U
+!byte $10,$6E,$E4                ; JMP ,S
+!byte $10,$6E,$15                ; JMP -$0B,X
+!byte $10,$6E,$35                ; JMP -$0B,Y
+!byte $10,$6E,$55                ; JMP -$0B,U
+!byte $10,$6E,$75                ; JMP -$0B,S
+!byte $10,$6E,$0C                ; JMP $0C,X
+!byte $10,$6E,$2C                ; JMP $0C,Y
+!byte $10,$6E,$4C                ; JMP $0C,U
+!byte $10,$6E,$6C                ; JMP $0C,S
+!byte $10,$6E,$88,$FF            ; JMP -$01,X
+!byte $10,$6E,$A8,$FF            ; JMP -$01,Y
+!byte $10,$6E,$C8,$FF            ; JMP -$01,U
+!byte $10,$6E,$E8,$FF            ; JMP -$01,S
+!byte $10,$6E,$88,$60            ; JMP $60,X
+!byte $10,$6E,$A8,$60            ; JMP $60,Y
+!byte $10,$6E,$C8,$60            ; JMP $60,U
+!byte $10,$6E,$E8,$60            ; JMP $60,S
+!byte $10,$6E,$89,$DE,$AD        ; JMP $DEAD,X
+!byte $10,$6E,$A9,$DE,$AD        ; JMP $DEAD,Y
+!byte $10,$6E,$C9,$DE,$AD        ; JMP $DEAD,U
+!byte $10,$6E,$E9,$DE,$AD        ; JMP $DEAD,S
+!byte $10,$6E,$89,$10,$00        ; JMP $1000,X
+!byte $10,$6E,$A9,$10,$00        ; JMP $1000,Y
+!byte $10,$6E,$C9,$10,$00        ; JMP $1000,U
+!byte $10,$6E,$E9,$10,$00        ; JMP $1000,S
+!byte $10,$6E,$86                ; JMP A,X
+!byte $10,$6E,$A6                ; JMP A,Y
+!byte $10,$6E,$C6                ; JMP A,U
+!byte $10,$6E,$E6                ; JMP A,S
+!byte $10,$6E,$85                ; JMP B,X
+!byte $10,$6E,$A5                ; JMP B,Y
+!byte $10,$6E,$C5                ; JMP B,U
+!byte $10,$6E,$E5                ; JMP B,S
+!byte $10,$6E,$87                ; JMP ,X
+!byte $10,$6E,$A7                ; JMP ,Y
+!byte $10,$6E,$C7                ; JMP ,U
+!byte $10,$6E,$E7                ; JMP ,S
+!byte $10,$6E,$8A                ; JMP ,PClo
+!byte $10,$6E,$AA                ; JMP ,PClo
+!byte $10,$6E,$CA                ; JMP ,PClo
+!byte $10,$6E,$EA                ; JMP ,PClo
+!byte $10,$6E,$8B                ; JMP D,X
+!byte $10,$6E,$AB                ; JMP D,Y
+!byte $10,$6E,$CB                ; JMP D,U
+!byte $10,$6E,$EB                ; JMP D,S
+!byte $10,$6E,$80                ; JMP ,X+
+!byte $10,$6E,$A0                ; JMP ,Y+
+!byte $10,$6E,$C0                ; JMP ,U+
+!byte $10,$6E,$E0                ; JMP ,S+
+!byte $10,$6E,$81                ; JMP ,X++
+!byte $10,$6E,$A1                ; JMP ,Y++
+!byte $10,$6E,$C1                ; JMP ,U++
+!byte $10,$6E,$E1                ; JMP ,S++
+!byte $10,$6E,$82                ; JMP ,-X
+!byte $10,$6E,$A2                ; JMP ,-Y
+!byte $10,$6E,$C2                ; JMP ,-U
+!byte $10,$6E,$E2                ; JMP ,-S
+!byte $10,$6E,$83                ; JMP ,--X
+!byte $10,$6E,$A3                ; JMP ,--Y
+!byte $10,$6E,$C3                ; JMP ,--U
+!byte $10,$6E,$E3                ; JMP ,--S
+!byte $10,$6E,$8C,$FF            ; JMP -$01,PC
+!byte $10,$6E,$AC,$FF            ; JMP -$01,PC
+!byte $10,$6E,$CC,$FF            ; JMP -$01,PC
+!byte $10,$6E,$EC,$FF            ; JMP -$01,PC
+!byte $10,$6E,$8C,$60            ; JMP $60,PC
+!byte $10,$6E,$AC,$60            ; JMP $60,PC
+!byte $10,$6E,$CC,$60            ; JMP $60,PC
+!byte $10,$6E,$EC,$60            ; JMP $60,PC
+!byte $10,$6E,$8D,$DE,$AD        ; JMP $DEAD,PC
+!byte $10,$6E,$AD,$DE,$AD        ; JMP $DEAD,PC
+!byte $10,$6E,$CD,$DE,$AD        ; JMP $DEAD,PC
+!byte $10,$6E,$ED,$DE,$AD        ; JMP $DEAD,PC
+!byte $10,$6E,$8D,$10,$00        ; JMP $1000,PC
+!byte $10,$6E,$AD,$10,$00        ; JMP $1000,PC
+!byte $10,$6E,$CD,$10,$00        ; JMP $1000,PC
+!byte $10,$6E,$ED,$10,$00        ; JMP $1000,PC
+!byte $10,$6E,$8F,$DE,$AD        ; JMP ,$DEAD
+!byte $10,$6E,$AF,$DE,$AD        ; JMP ,$DEAD
+!byte $10,$6E,$CF,$DE,$AD        ; JMP ,$DEAD
+!byte $10,$6E,$EF,$DE,$AD        ; JMP ,$DEAD
+!byte $10,$6E,$94                ; JMP [,X]
+!byte $10,$6E,$B4                ; JMP [,Y]
+!byte $10,$6E,$D4                ; JMP [,U]
+!byte $10,$6E,$F4                ; JMP [,S]
+!byte $10,$6E,$98,$FF            ; JMP [-$01,X]
+!byte $10,$6E,$B8,$FF            ; JMP [-$01,Y]
+!byte $10,$6E,$D8,$FF            ; JMP [-$01,U]
+!byte $10,$6E,$F8,$FF            ; JMP [-$01,S]
+!byte $10,$6E,$98,$60            ; JMP [$60,X]
+!byte $10,$6E,$B8,$60            ; JMP [$60,Y]
+!byte $10,$6E,$D8,$60            ; JMP [$60,U]
+!byte $10,$6E,$F8,$60            ; JMP [$60,S]
+!byte $10,$6E,$99,$DE,$AD        ; JMP [$DEAD,X]
+!byte $10,$6E,$B9,$DE,$AD        ; JMP [$DEAD,Y]
+!byte $10,$6E,$D9,$DE,$AD        ; JMP [$DEAD,U]
+!byte $10,$6E,$F9,$DE,$AD        ; JMP [$DEAD,S]
+!byte $10,$6E,$99,$DE,$10        ; JMP [$DE10,X]
+!byte $10,$6E,$B9,$DE,$10        ; JMP [$DE10,Y]
+!byte $10,$6E,$D9,$DE,$10        ; JMP [$DE10,U]
+!byte $10,$6E,$F9,$DE,$10        ; JMP [$DE10,S]
+!byte $10,$6E,$96                ; JMP [A,X]
+!byte $10,$6E,$B6                ; JMP [A,Y]
+!byte $10,$6E,$D6                ; JMP [A,U]
+!byte $10,$6E,$F6                ; JMP [A,S]
+!byte $10,$6E,$95                ; JMP [B,X]
+!byte $10,$6E,$B5                ; JMP [B,Y]
+!byte $10,$6E,$D5                ; JMP [B,U]
+!byte $10,$6E,$F5                ; JMP [B,S]
+!byte $10,$6E,$97                ; JMP [,X]
+!byte $10,$6E,$B7                ; JMP [,Y]
+!byte $10,$6E,$D7                ; JMP [,U]
+!byte $10,$6E,$F7                ; JMP [,S]
+!byte $10,$6E,$9A                ; JMP [,PClo]
+!byte $10,$6E,$BA                ; JMP [,PClo]
+!byte $10,$6E,$DA                ; JMP [,PClo]
+!byte $10,$6E,$FA                ; JMP [,PClo]
+!byte $10,$6E,$9B                ; JMP [D,X]
+!byte $10,$6E,$BB                ; JMP [D,Y]
+!byte $10,$6E,$DB                ; JMP [D,U]
+!byte $10,$6E,$FB                ; JMP [D,S]
+!byte $10,$6E,$91                ; JMP [,X++]
+!byte $10,$6E,$B1                ; JMP [,Y++]
+!byte $10,$6E,$D1                ; JMP [,U++]
+!byte $10,$6E,$F1                ; JMP [,S++]
+!byte $10,$6E,$92                ; JMP [,-X]
+!byte $10,$6E,$B2                ; JMP [,-Y]
+!byte $10,$6E,$D2                ; JMP [,-U]
+!byte $10,$6E,$F2                ; JMP [,-S]
+!byte $10,$6E,$93                ; JMP [,--X]
+!byte $10,$6E,$B3                ; JMP [,--Y]
+!byte $10,$6E,$D3                ; JMP [,--U]
+!byte $10,$6E,$F3                ; JMP [,--S]
+!byte $10,$6E,$9C,$FF            ; JMP [-$01,PC]
+!byte $10,$6E,$BC,$FF            ; JMP [-$01,PC]
+!byte $10,$6E,$DC,$FF            ; JMP [-$01,PC]
+!byte $10,$6E,$FC,$FF            ; JMP [-$01,PC]
+!byte $10,$6E,$9C,$60            ; JMP [$60,PC]
+!byte $10,$6E,$BC,$60            ; JMP [$60,PC]
+!byte $10,$6E,$DC,$60            ; JMP [$60,PC]
+!byte $10,$6E,$FC,$60            ; JMP [$60,PC]
+!byte $10,$6E,$9D,$DE,$AD        ; JMP [$DEAD,PC]
+!byte $10,$6E,$BD,$DE,$AD        ; JMP [$DEAD,PC]
+!byte $10,$6E,$DD,$DE,$AD        ; JMP [$DEAD,PC]
+!byte $10,$6E,$FD,$DE,$AD        ; JMP [$DEAD,PC]
+!byte $10,$6E,$9D,$10,$00        ; JMP [$1000,PC]
+!byte $10,$6E,$BD,$10,$00        ; JMP [$1000,PC]
+!byte $10,$6E,$DD,$10,$00        ; JMP [$1000,PC]
+!byte $10,$6E,$FD,$10,$00        ; JMP [$1000,PC]
+!byte $10,$6E,$9F,$DE,$AD        ; JMP [$DEAD]
+!byte $10,$6E,$BF,$DE,$AD        ; JMP [$DEAD]
+!byte $10,$6E,$DF,$DE,$AD        ; JMP [$DEAD]
+!byte $10,$6E,$FF,$DE,$AD        ; JMP [$DEAD]
+!byte $10,$6E,$90                ; JMP [,X+]
+!byte $10,$6E,$B0                ; JMP [,Y+]
+!byte $10,$6E,$D0                ; JMP [,U+]
+!byte $10,$6E,$F0                ; JMP [,S+]
+!byte $11,$6E,$84                ; JMP ,X
+!byte $11,$6E,$A4                ; JMP ,Y
+!byte $11,$6E,$C4                ; JMP ,U
+!byte $11,$6E,$E4                ; JMP ,S
+!byte $11,$6E,$15                ; JMP -$0B,X
+!byte $11,$6E,$35                ; JMP -$0B,Y
+!byte $11,$6E,$55                ; JMP -$0B,U
+!byte $11,$6E,$75                ; JMP -$0B,S
+!byte $11,$6E,$0C                ; JMP $0C,X
+!byte $11,$6E,$2C                ; JMP $0C,Y
+!byte $11,$6E,$4C                ; JMP $0C,U
+!byte $11,$6E,$6C                ; JMP $0C,S
+!byte $11,$6E,$88,$FF            ; JMP -$01,X
+!byte $11,$6E,$A8,$FF            ; JMP -$01,Y
+!byte $11,$6E,$C8,$FF            ; JMP -$01,U
+!byte $11,$6E,$E8,$FF            ; JMP -$01,S
+!byte $11,$6E,$88,$60            ; JMP $60,X
+!byte $11,$6E,$A8,$60            ; JMP $60,Y
+!byte $11,$6E,$C8,$60            ; JMP $60,U
+!byte $11,$6E,$E8,$60            ; JMP $60,S
+!byte $11,$6E,$89,$DE,$AD        ; JMP $DEAD,X
+!byte $11,$6E,$A9,$DE,$AD        ; JMP $DEAD,Y
+!byte $11,$6E,$C9,$DE,$AD        ; JMP $DEAD,U
+!byte $11,$6E,$E9,$DE,$AD        ; JMP $DEAD,S
+!byte $11,$6E,$89,$10,$00        ; JMP $1000,X
+!byte $11,$6E,$A9,$10,$00        ; JMP $1000,Y
+!byte $11,$6E,$C9,$10,$00        ; JMP $1000,U
+!byte $11,$6E,$E9,$10,$00        ; JMP $1000,S
+!byte $11,$6E,$86                ; JMP A,X
+!byte $11,$6E,$A6                ; JMP A,Y
+!byte $11,$6E,$C6                ; JMP A,U
+!byte $11,$6E,$E6                ; JMP A,S
+!byte $11,$6E,$85                ; JMP B,X
+!byte $11,$6E,$A5                ; JMP B,Y
+!byte $11,$6E,$C5                ; JMP B,U
+!byte $11,$6E,$E5                ; JMP B,S
+!byte $11,$6E,$87                ; JMP ,X
+!byte $11,$6E,$A7                ; JMP ,Y
+!byte $11,$6E,$C7                ; JMP ,U
+!byte $11,$6E,$E7                ; JMP ,S
+!byte $11,$6E,$8A                ; JMP ,PClo
+!byte $11,$6E,$AA                ; JMP ,PClo
+!byte $11,$6E,$CA                ; JMP ,PClo
+!byte $11,$6E,$EA                ; JMP ,PClo
+!byte $11,$6E,$8B                ; JMP D,X
+!byte $11,$6E,$AB                ; JMP D,Y
+!byte $11,$6E,$CB                ; JMP D,U
+!byte $11,$6E,$EB                ; JMP D,S
+!byte $11,$6E,$80                ; JMP ,X+
+!byte $11,$6E,$A0                ; JMP ,Y+
+!byte $11,$6E,$C0                ; JMP ,U+
+!byte $11,$6E,$E0                ; JMP ,S+
+!byte $11,$6E,$81                ; JMP ,X++
+!byte $11,$6E,$A1                ; JMP ,Y++
+!byte $11,$6E,$C1                ; JMP ,U++
+!byte $11,$6E,$E1                ; JMP ,S++
+!byte $11,$6E,$82                ; JMP ,-X
+!byte $11,$6E,$A2                ; JMP ,-Y
+!byte $11,$6E,$C2                ; JMP ,-U
+!byte $11,$6E,$E2                ; JMP ,-S
+!byte $11,$6E,$83                ; JMP ,--X
+!byte $11,$6E,$A3                ; JMP ,--Y
+!byte $11,$6E,$C3                ; JMP ,--U
+!byte $11,$6E,$E3                ; JMP ,--S
+!byte $11,$6E,$8C,$FF            ; JMP -$01,PC
+!byte $11,$6E,$AC,$FF            ; JMP -$01,PC
+!byte $11,$6E,$CC,$FF            ; JMP -$01,PC
+!byte $11,$6E,$EC,$FF            ; JMP -$01,PC
+!byte $11,$6E,$8C,$60            ; JMP $60,PC
+!byte $11,$6E,$AC,$60            ; JMP $60,PC
+!byte $11,$6E,$CC,$60            ; JMP $60,PC
+!byte $11,$6E,$EC,$60            ; JMP $60,PC
+!byte $11,$6E,$8D,$DE,$AD        ; JMP $DEAD,PC
+!byte $11,$6E,$AD,$DE,$AD        ; JMP $DEAD,PC
+!byte $11,$6E,$CD,$DE,$AD        ; JMP $DEAD,PC
+!byte $11,$6E,$ED,$DE,$AD        ; JMP $DEAD,PC
+!byte $11,$6E,$8D,$10,$00        ; JMP $1000,PC
+!byte $11,$6E,$AD,$10,$00        ; JMP $1000,PC
+!byte $11,$6E,$CD,$10,$00        ; JMP $1000,PC
+!byte $11,$6E,$ED,$10,$00        ; JMP $1000,PC
+!byte $11,$6E,$8F,$DE,$AD        ; JMP ,$DEAD
+!byte $11,$6E,$AF,$DE,$AD        ; JMP ,$DEAD
+!byte $11,$6E,$CF,$DE,$AD        ; JMP ,$DEAD
+!byte $11,$6E,$EF,$DE,$AD        ; JMP ,$DEAD
+!byte $11,$6E,$94                ; JMP [,X]
+!byte $11,$6E,$B4                ; JMP [,Y]
+!byte $11,$6E,$D4                ; JMP [,U]
+!byte $11,$6E,$F4                ; JMP [,S]
+!byte $11,$6E,$98,$FF            ; JMP [-$01,X]
+!byte $11,$6E,$B8,$FF            ; JMP [-$01,Y]
+!byte $11,$6E,$D8,$FF            ; JMP [-$01,U]
+!byte $11,$6E,$F8,$FF            ; JMP [-$01,S]
+!byte $11,$6E,$98,$60            ; JMP [$60,X]
+!byte $11,$6E,$B8,$60            ; JMP [$60,Y]
+!byte $11,$6E,$D8,$60            ; JMP [$60,U]
+!byte $11,$6E,$F8,$60            ; JMP [$60,S]
+!byte $11,$6E,$99,$DE,$AD        ; JMP [$DEAD,X]
+!byte $11,$6E,$B9,$DE,$AD        ; JMP [$DEAD,Y]
+!byte $11,$6E,$D9,$DE,$AD        ; JMP [$DEAD,U]
+!byte $11,$6E,$F9,$DE,$AD        ; JMP [$DEAD,S]
+!byte $11,$6E,$99,$DE,$10        ; JMP [$DE10,X]
+!byte $11,$6E,$B9,$DE,$10        ; JMP [$DE10,Y]
+!byte $11,$6E,$D9,$DE,$10        ; JMP [$DE10,U]
+!byte $11,$6E,$F9,$DE,$10        ; JMP [$DE10,S]
+!byte $11,$6E,$96                ; JMP [A,X]
+!byte $11,$6E,$B6                ; JMP [A,Y]
+!byte $11,$6E,$D6                ; JMP [A,U]
+!byte $11,$6E,$F6                ; JMP [A,S]
+!byte $11,$6E,$95                ; JMP [B,X]
+!byte $11,$6E,$B5                ; JMP [B,Y]
+!byte $11,$6E,$D5                ; JMP [B,U]
+!byte $11,$6E,$F5                ; JMP [B,S]
+!byte $11,$6E,$97                ; JMP [,X]
+!byte $11,$6E,$B7                ; JMP [,Y]
+!byte $11,$6E,$D7                ; JMP [,U]
+!byte $11,$6E,$F7                ; JMP [,S]
+!byte $11,$6E,$9A                ; JMP [,PClo]
+!byte $11,$6E,$BA                ; JMP [,PClo]
+!byte $11,$6E,$DA                ; JMP [,PClo]
+!byte $11,$6E,$FA                ; JMP [,PClo]
+!byte $11,$6E,$9B                ; JMP [D,X]
+!byte $11,$6E,$BB                ; JMP [D,Y]
+!byte $11,$6E,$DB                ; JMP [D,U]
+!byte $11,$6E,$FB                ; JMP [D,S]
+!byte $11,$6E,$91                ; JMP [,X++]
+!byte $11,$6E,$B1                ; JMP [,Y++]
+!byte $11,$6E,$D1                ; JMP [,U++]
+!byte $11,$6E,$F1                ; JMP [,S++]
+!byte $11,$6E,$92                ; JMP [,-X]
+!byte $11,$6E,$B2                ; JMP [,-Y]
+!byte $11,$6E,$D2                ; JMP [,-U]
+!byte $11,$6E,$F2                ; JMP [,-S]
+!byte $11,$6E,$93                ; JMP [,--X]
+!byte $11,$6E,$B3                ; JMP [,--Y]
+!byte $11,$6E,$D3                ; JMP [,--U]
+!byte $11,$6E,$F3                ; JMP [,--S]
+!byte $11,$6E,$9C,$FF            ; JMP [-$01,PC]
+!byte $11,$6E,$BC,$FF            ; JMP [-$01,PC]
+!byte $11,$6E,$DC,$FF            ; JMP [-$01,PC]
+!byte $11,$6E,$FC,$FF            ; JMP [-$01,PC]
+!byte $11,$6E,$9C,$60            ; JMP [$60,PC]
+!byte $11,$6E,$BC,$60            ; JMP [$60,PC]
+!byte $11,$6E,$DC,$60            ; JMP [$60,PC]
+!byte $11,$6E,$FC,$60            ; JMP [$60,PC]
+!byte $11,$6E,$9D,$DE,$AD        ; JMP [$DEAD,PC]
+!byte $11,$6E,$BD,$DE,$AD        ; JMP [$DEAD,PC]
+!byte $11,$6E,$DD,$DE,$AD        ; JMP [$DEAD,PC]
+!byte $11,$6E,$FD,$DE,$AD        ; JMP [$DEAD,PC]
+!byte $11,$6E,$9D,$10,$00        ; JMP [$1000,PC]
+!byte $11,$6E,$BD,$10,$00        ; JMP [$1000,PC]
+!byte $11,$6E,$DD,$10,$00        ; JMP [$1000,PC]
+!byte $11,$6E,$FD,$10,$00        ; JMP [$1000,PC]
+!byte $11,$6E,$9F,$DE,$AD        ; JMP [$DEAD]
+!byte $11,$6E,$BF,$DE,$AD        ; JMP [$DEAD]
+!byte $11,$6E,$DF,$DE,$AD        ; JMP [$DEAD]
+!byte $11,$6E,$FF,$DE,$AD        ; JMP [$DEAD]
+!byte $11,$6E,$90                ; JMP [,X+]
+!byte $11,$6E,$B0                ; JMP [,Y+]
+!byte $11,$6E,$D0                ; JMP [,U+]
+!byte $11,$6E,$F0                ; JMP [,S+]
+!byte $6F,$87                    ; CLR ,X
+!byte $6F,$A7                    ; CLR ,Y
+!byte $6F,$C7                    ; CLR ,U
+!byte $6F,$E7                    ; CLR ,S
+!byte $6F,$8A                    ; CLR ,PClo
+!byte $6F,$AA                    ; CLR ,PClo
+!byte $6F,$CA                    ; CLR ,PClo
+!byte $6F,$EA                    ; CLR ,PClo
+!byte $6F,$8F,$DE,$AD            ; CLR ,$DEAD
+!byte $6F,$AF,$DE,$AD            ; CLR ,$DEAD
+!byte $6F,$CF,$DE,$AD            ; CLR ,$DEAD
+!byte $6F,$EF,$DE,$AD            ; CLR ,$DEAD
+!byte $6F,$97                    ; CLR [,X]
+!byte $6F,$B7                    ; CLR [,Y]
+!byte $6F,$D7                    ; CLR [,U]
+!byte $6F,$F7                    ; CLR [,S]
+!byte $6F,$9A                    ; CLR [,PClo]
+!byte $6F,$BA                    ; CLR [,PClo]
+!byte $6F,$DA                    ; CLR [,PClo]
+!byte $6F,$FA                    ; CLR [,PClo]
+!byte $6F,$92                    ; CLR [,-X]
+!byte $6F,$B2                    ; CLR [,-Y]
+!byte $6F,$D2                    ; CLR [,-U]
+!byte $6F,$F2                    ; CLR [,-S]
+!byte $6F,$90                    ; CLR [,X+]
+!byte $6F,$B0                    ; CLR [,Y+]
+!byte $6F,$D0                    ; CLR [,U+]
+!byte $6F,$F0                    ; CLR [,S+]
+!byte $10,$6F,$84                ; CLR ,X
+!byte $10,$6F,$A4                ; CLR ,Y
+!byte $10,$6F,$C4                ; CLR ,U
+!byte $10,$6F,$E4                ; CLR ,S
+!byte $10,$6F,$15                ; CLR -$0B,X
+!byte $10,$6F,$35                ; CLR -$0B,Y
+!byte $10,$6F,$55                ; CLR -$0B,U
+!byte $10,$6F,$75                ; CLR -$0B,S
+!byte $10,$6F,$0C                ; CLR $0C,X
+!byte $10,$6F,$2C                ; CLR $0C,Y
+!byte $10,$6F,$4C                ; CLR $0C,U
+!byte $10,$6F,$6C                ; CLR $0C,S
+!byte $10,$6F,$88,$FF            ; CLR -$01,X
+!byte $10,$6F,$A8,$FF            ; CLR -$01,Y
+!byte $10,$6F,$C8,$FF            ; CLR -$01,U
+!byte $10,$6F,$E8,$FF            ; CLR -$01,S
+!byte $10,$6F,$88,$60            ; CLR $60,X
+!byte $10,$6F,$A8,$60            ; CLR $60,Y
+!byte $10,$6F,$C8,$60            ; CLR $60,U
+!byte $10,$6F,$E8,$60            ; CLR $60,S
+!byte $10,$6F,$89,$DE,$AD        ; CLR $DEAD,X
+!byte $10,$6F,$A9,$DE,$AD        ; CLR $DEAD,Y
+!byte $10,$6F,$C9,$DE,$AD        ; CLR $DEAD,U
+!byte $10,$6F,$E9,$DE,$AD        ; CLR $DEAD,S
+!byte $10,$6F,$89,$10,$00        ; CLR $1000,X
+!byte $10,$6F,$A9,$10,$00        ; CLR $1000,Y
+!byte $10,$6F,$C9,$10,$00        ; CLR $1000,U
+!byte $10,$6F,$E9,$10,$00        ; CLR $1000,S
+!byte $10,$6F,$86                ; CLR A,X
+!byte $10,$6F,$A6                ; CLR A,Y
+!byte $10,$6F,$C6                ; CLR A,U
+!byte $10,$6F,$E6                ; CLR A,S
+!byte $10,$6F,$85                ; CLR B,X
+!byte $10,$6F,$A5                ; CLR B,Y
+!byte $10,$6F,$C5                ; CLR B,U
+!byte $10,$6F,$E5                ; CLR B,S
+!byte $10,$6F,$87                ; CLR ,X
+!byte $10,$6F,$A7                ; CLR ,Y
+!byte $10,$6F,$C7                ; CLR ,U
+!byte $10,$6F,$E7                ; CLR ,S
+!byte $10,$6F,$8A                ; CLR ,PClo
+!byte $10,$6F,$AA                ; CLR ,PClo
+!byte $10,$6F,$CA                ; CLR ,PClo
+!byte $10,$6F,$EA                ; CLR ,PClo
+!byte $10,$6F,$8B                ; CLR D,X
+!byte $10,$6F,$AB                ; CLR D,Y
+!byte $10,$6F,$CB                ; CLR D,U
+!byte $10,$6F,$EB                ; CLR D,S
+!byte $10,$6F,$80                ; CLR ,X+
+!byte $10,$6F,$A0                ; CLR ,Y+
+!byte $10,$6F,$C0                ; CLR ,U+
+!byte $10,$6F,$E0                ; CLR ,S+
+!byte $10,$6F,$81                ; CLR ,X++
+!byte $10,$6F,$A1                ; CLR ,Y++
+!byte $10,$6F,$C1                ; CLR ,U++
+!byte $10,$6F,$E1                ; CLR ,S++
+!byte $10,$6F,$82                ; CLR ,-X
+!byte $10,$6F,$A2                ; CLR ,-Y
+!byte $10,$6F,$C2                ; CLR ,-U
+!byte $10,$6F,$E2                ; CLR ,-S
+!byte $10,$6F,$83                ; CLR ,--X
+!byte $10,$6F,$A3                ; CLR ,--Y
+!byte $10,$6F,$C3                ; CLR ,--U
+!byte $10,$6F,$E3                ; CLR ,--S
+!byte $10,$6F,$8C,$FF            ; CLR -$01,PC
+!byte $10,$6F,$AC,$FF            ; CLR -$01,PC
+!byte $10,$6F,$CC,$FF            ; CLR -$01,PC
+!byte $10,$6F,$EC,$FF            ; CLR -$01,PC
+!byte $10,$6F,$8C,$60            ; CLR $60,PC
+!byte $10,$6F,$AC,$60            ; CLR $60,PC
+!byte $10,$6F,$CC,$60            ; CLR $60,PC
+!byte $10,$6F,$EC,$60            ; CLR $60,PC
+!byte $10,$6F,$8D,$DE,$AD        ; CLR $DEAD,PC
+!byte $10,$6F,$AD,$DE,$AD        ; CLR $DEAD,PC
+!byte $10,$6F,$CD,$DE,$AD        ; CLR $DEAD,PC
+!byte $10,$6F,$ED,$DE,$AD        ; CLR $DEAD,PC
+!byte $10,$6F,$8D,$10,$00        ; CLR $1000,PC
+!byte $10,$6F,$AD,$10,$00        ; CLR $1000,PC
+!byte $10,$6F,$CD,$10,$00        ; CLR $1000,PC
+!byte $10,$6F,$ED,$10,$00        ; CLR $1000,PC
+!byte $10,$6F,$8F,$DE,$AD        ; CLR ,$DEAD
+!byte $10,$6F,$AF,$DE,$AD        ; CLR ,$DEAD
+!byte $10,$6F,$CF,$DE,$AD        ; CLR ,$DEAD
+!byte $10,$6F,$EF,$DE,$AD        ; CLR ,$DEAD
+!byte $10,$6F,$94                ; CLR [,X]
+!byte $10,$6F,$B4                ; CLR [,Y]
+!byte $10,$6F,$D4                ; CLR [,U]
+!byte $10,$6F,$F4                ; CLR [,S]
+!byte $10,$6F,$98,$FF            ; CLR [-$01,X]
+!byte $10,$6F,$B8,$FF            ; CLR [-$01,Y]
+!byte $10,$6F,$D8,$FF            ; CLR [-$01,U]
+!byte $10,$6F,$F8,$FF            ; CLR [-$01,S]
+!byte $10,$6F,$98,$60            ; CLR [$60,X]
+!byte $10,$6F,$B8,$60            ; CLR [$60,Y]
+!byte $10,$6F,$D8,$60            ; CLR [$60,U]
+!byte $10,$6F,$F8,$60            ; CLR [$60,S]
+!byte $10,$6F,$99,$DE,$AD        ; CLR [$DEAD,X]
+!byte $10,$6F,$B9,$DE,$AD        ; CLR [$DEAD,Y]
+!byte $10,$6F,$D9,$DE,$AD        ; CLR [$DEAD,U]
+!byte $10,$6F,$F9,$DE,$AD        ; CLR [$DEAD,S]
+!byte $10,$6F,$99,$DE,$10        ; CLR [$DE10,X]
+!byte $10,$6F,$B9,$DE,$10        ; CLR [$DE10,Y]
+!byte $10,$6F,$D9,$DE,$10        ; CLR [$DE10,U]
+!byte $10,$6F,$F9,$DE,$10        ; CLR [$DE10,S]
+!byte $10,$6F,$96                ; CLR [A,X]
+!byte $10,$6F,$B6                ; CLR [A,Y]
+!byte $10,$6F,$D6                ; CLR [A,U]
+!byte $10,$6F,$F6                ; CLR [A,S]
+!byte $10,$6F,$95                ; CLR [B,X]
+!byte $10,$6F,$B5                ; CLR [B,Y]
+!byte $10,$6F,$D5                ; CLR [B,U]
+!byte $10,$6F,$F5                ; CLR [B,S]
+!byte $10,$6F,$97                ; CLR [,X]
+!byte $10,$6F,$B7                ; CLR [,Y]
+!byte $10,$6F,$D7                ; CLR [,U]
+!byte $10,$6F,$F7                ; CLR [,S]
+!byte $10,$6F,$9A                ; CLR [,PClo]
+!byte $10,$6F,$BA                ; CLR [,PClo]
+!byte $10,$6F,$DA                ; CLR [,PClo]
+!byte $10,$6F,$FA                ; CLR [,PClo]
+!byte $10,$6F,$9B                ; CLR [D,X]
+!byte $10,$6F,$BB                ; CLR [D,Y]
+!byte $10,$6F,$DB                ; CLR [D,U]
+!byte $10,$6F,$FB                ; CLR [D,S]
+!byte $10,$6F,$91                ; CLR [,X++]
+!byte $10,$6F,$B1                ; CLR [,Y++]
+!byte $10,$6F,$D1                ; CLR [,U++]
+!byte $10,$6F,$F1                ; CLR [,S++]
+!byte $10,$6F,$92                ; CLR [,-X]
+!byte $10,$6F,$B2                ; CLR [,-Y]
+!byte $10,$6F,$D2                ; CLR [,-U]
+!byte $10,$6F,$F2                ; CLR [,-S]
+!byte $10,$6F,$93                ; CLR [,--X]
+!byte $10,$6F,$B3                ; CLR [,--Y]
+!byte $10,$6F,$D3                ; CLR [,--U]
+!byte $10,$6F,$F3                ; CLR [,--S]
+!byte $10,$6F,$9C,$FF            ; CLR [-$01,PC]
+!byte $10,$6F,$BC,$FF            ; CLR [-$01,PC]
+!byte $10,$6F,$DC,$FF            ; CLR [-$01,PC]
+!byte $10,$6F,$FC,$FF            ; CLR [-$01,PC]
+!byte $10,$6F,$9C,$60            ; CLR [$60,PC]
+!byte $10,$6F,$BC,$60            ; CLR [$60,PC]
+!byte $10,$6F,$DC,$60            ; CLR [$60,PC]
+!byte $10,$6F,$FC,$60            ; CLR [$60,PC]
+!byte $10,$6F,$9D,$DE,$AD        ; CLR [$DEAD,PC]
+!byte $10,$6F,$BD,$DE,$AD        ; CLR [$DEAD,PC]
+!byte $10,$6F,$DD,$DE,$AD        ; CLR [$DEAD,PC]
+!byte $10,$6F,$FD,$DE,$AD        ; CLR [$DEAD,PC]
+!byte $10,$6F,$9D,$10,$00        ; CLR [$1000,PC]
+!byte $10,$6F,$BD,$10,$00        ; CLR [$1000,PC]
+!byte $10,$6F,$DD,$10,$00        ; CLR [$1000,PC]
+!byte $10,$6F,$FD,$10,$00        ; CLR [$1000,PC]
+!byte $10,$6F,$9F,$DE,$AD        ; CLR [$DEAD]
+!byte $10,$6F,$BF,$DE,$AD        ; CLR [$DEAD]
+!byte $10,$6F,$DF,$DE,$AD        ; CLR [$DEAD]
+!byte $10,$6F,$FF,$DE,$AD        ; CLR [$DEAD]
+!byte $10,$6F,$90                ; CLR [,X+]
+!byte $10,$6F,$B0                ; CLR [,Y+]
+!byte $10,$6F,$D0                ; CLR [,U+]
+!byte $10,$6F,$F0                ; CLR [,S+]
+!byte $11,$6F,$84                ; CLR ,X
+!byte $11,$6F,$A4                ; CLR ,Y
+!byte $11,$6F,$C4                ; CLR ,U
+!byte $11,$6F,$E4                ; CLR ,S
+!byte $11,$6F,$15                ; CLR -$0B,X
+!byte $11,$6F,$35                ; CLR -$0B,Y
+!byte $11,$6F,$55                ; CLR -$0B,U
+!byte $11,$6F,$75                ; CLR -$0B,S
+!byte $11,$6F,$0C                ; CLR $0C,X
+!byte $11,$6F,$2C                ; CLR $0C,Y
+!byte $11,$6F,$4C                ; CLR $0C,U
+!byte $11,$6F,$6C                ; CLR $0C,S
+!byte $11,$6F,$88,$FF            ; CLR -$01,X
+!byte $11,$6F,$A8,$FF            ; CLR -$01,Y
+!byte $11,$6F,$C8,$FF            ; CLR -$01,U
+!byte $11,$6F,$E8,$FF            ; CLR -$01,S
+!byte $11,$6F,$88,$60            ; CLR $60,X
+!byte $11,$6F,$A8,$60            ; CLR $60,Y
+!byte $11,$6F,$C8,$60            ; CLR $60,U
+!byte $11,$6F,$E8,$60            ; CLR $60,S
+!byte $11,$6F,$89,$DE,$AD        ; CLR $DEAD,X
+!byte $11,$6F,$A9,$DE,$AD        ; CLR $DEAD,Y
+!byte $11,$6F,$C9,$DE,$AD        ; CLR $DEAD,U
+!byte $11,$6F,$E9,$DE,$AD        ; CLR $DEAD,S
+!byte $11,$6F,$89,$10,$00        ; CLR $1000,X
+!byte $11,$6F,$A9,$10,$00        ; CLR $1000,Y
+!byte $11,$6F,$C9,$10,$00        ; CLR $1000,U
+!byte $11,$6F,$E9,$10,$00        ; CLR $1000,S
+!byte $11,$6F,$86                ; CLR A,X
+!byte $11,$6F,$A6                ; CLR A,Y
+!byte $11,$6F,$C6                ; CLR A,U
+!byte $11,$6F,$E6                ; CLR A,S
+!byte $11,$6F,$85                ; CLR B,X
+!byte $11,$6F,$A5                ; CLR B,Y
+!byte $11,$6F,$C5                ; CLR B,U
+!byte $11,$6F,$E5                ; CLR B,S
+!byte $11,$6F,$87                ; CLR ,X
+!byte $11,$6F,$A7                ; CLR ,Y
+!byte $11,$6F,$C7                ; CLR ,U
+!byte $11,$6F,$E7                ; CLR ,S
+!byte $11,$6F,$8A                ; CLR ,PClo
+!byte $11,$6F,$AA                ; CLR ,PClo
+!byte $11,$6F,$CA                ; CLR ,PClo
+!byte $11,$6F,$EA                ; CLR ,PClo
+!byte $11,$6F,$8B                ; CLR D,X
+!byte $11,$6F,$AB                ; CLR D,Y
+!byte $11,$6F,$CB                ; CLR D,U
+!byte $11,$6F,$EB                ; CLR D,S
+!byte $11,$6F,$80                ; CLR ,X+
+!byte $11,$6F,$A0                ; CLR ,Y+
+!byte $11,$6F,$C0                ; CLR ,U+
+!byte $11,$6F,$E0                ; CLR ,S+
+!byte $11,$6F,$81                ; CLR ,X++
+!byte $11,$6F,$A1                ; CLR ,Y++
+!byte $11,$6F,$C1                ; CLR ,U++
+!byte $11,$6F,$E1                ; CLR ,S++
+!byte $11,$6F,$82                ; CLR ,-X
+!byte $11,$6F,$A2                ; CLR ,-Y
+!byte $11,$6F,$C2                ; CLR ,-U
+!byte $11,$6F,$E2                ; CLR ,-S
+!byte $11,$6F,$83                ; CLR ,--X
+!byte $11,$6F,$A3                ; CLR ,--Y
+!byte $11,$6F,$C3                ; CLR ,--U
+!byte $11,$6F,$E3                ; CLR ,--S
+!byte $11,$6F,$8C,$FF            ; CLR -$01,PC
+!byte $11,$6F,$AC,$FF            ; CLR -$01,PC
+!byte $11,$6F,$CC,$FF            ; CLR -$01,PC
+!byte $11,$6F,$EC,$FF            ; CLR -$01,PC
+!byte $11,$6F,$8C,$60            ; CLR $60,PC
+!byte $11,$6F,$AC,$60            ; CLR $60,PC
+!byte $11,$6F,$CC,$60            ; CLR $60,PC
+!byte $11,$6F,$EC,$60            ; CLR $60,PC
+!byte $11,$6F,$8D,$DE,$AD        ; CLR $DEAD,PC
+!byte $11,$6F,$AD,$DE,$AD        ; CLR $DEAD,PC
+!byte $11,$6F,$CD,$DE,$AD        ; CLR $DEAD,PC
+!byte $11,$6F,$ED,$DE,$AD        ; CLR $DEAD,PC
+!byte $11,$6F,$8D,$10,$00        ; CLR $1000,PC
+!byte $11,$6F,$AD,$10,$00        ; CLR $1000,PC
+!byte $11,$6F,$CD,$10,$00        ; CLR $1000,PC
+!byte $11,$6F,$ED,$10,$00        ; CLR $1000,PC
+!byte $11,$6F,$8F,$DE,$AD        ; CLR ,$DEAD
+!byte $11,$6F,$AF,$DE,$AD        ; CLR ,$DEAD
+!byte $11,$6F,$CF,$DE,$AD        ; CLR ,$DEAD
+!byte $11,$6F,$EF,$DE,$AD        ; CLR ,$DEAD
+!byte $11,$6F,$94                ; CLR [,X]
+!byte $11,$6F,$B4                ; CLR [,Y]
+!byte $11,$6F,$D4                ; CLR [,U]
+!byte $11,$6F,$F4                ; CLR [,S]
+!byte $11,$6F,$98,$FF            ; CLR [-$01,X]
+!byte $11,$6F,$B8,$FF            ; CLR [-$01,Y]
+!byte $11,$6F,$D8,$FF            ; CLR [-$01,U]
+!byte $11,$6F,$F8,$FF            ; CLR [-$01,S]
+!byte $11,$6F,$98,$60            ; CLR [$60,X]
+!byte $11,$6F,$B8,$60            ; CLR [$60,Y]
+!byte $11,$6F,$D8,$60            ; CLR [$60,U]
+!byte $11,$6F,$F8,$60            ; CLR [$60,S]
+!byte $11,$6F,$99,$DE,$AD        ; CLR [$DEAD,X]
+!byte $11,$6F,$B9,$DE,$AD        ; CLR [$DEAD,Y]
+!byte $11,$6F,$D9,$DE,$AD        ; CLR [$DEAD,U]
+!byte $11,$6F,$F9,$DE,$AD        ; CLR [$DEAD,S]
+!byte $11,$6F,$99,$DE,$10        ; CLR [$DE10,X]
+!byte $11,$6F,$B9,$DE,$10        ; CLR [$DE10,Y]
+!byte $11,$6F,$D9,$DE,$10        ; CLR [$DE10,U]
+!byte $11,$6F,$F9,$DE,$10        ; CLR [$DE10,S]
+!byte $11,$6F,$96                ; CLR [A,X]
+!byte $11,$6F,$B6                ; CLR [A,Y]
+!byte $11,$6F,$D6                ; CLR [A,U]
+!byte $11,$6F,$F6                ; CLR [A,S]
+!byte $11,$6F,$95                ; CLR [B,X]
+!byte $11,$6F,$B5                ; CLR [B,Y]
+!byte $11,$6F,$D5                ; CLR [B,U]
+!byte $11,$6F,$F5                ; CLR [B,S]
+!byte $11,$6F,$97                ; CLR [,X]
+!byte $11,$6F,$B7                ; CLR [,Y]
+!byte $11,$6F,$D7                ; CLR [,U]
+!byte $11,$6F,$F7                ; CLR [,S]
+!byte $11,$6F,$9A                ; CLR [,PClo]
+!byte $11,$6F,$BA                ; CLR [,PClo]
+!byte $11,$6F,$DA                ; CLR [,PClo]
+!byte $11,$6F,$FA                ; CLR [,PClo]
+!byte $11,$6F,$9B                ; CLR [D,X]
+!byte $11,$6F,$BB                ; CLR [D,Y]
+!byte $11,$6F,$DB                ; CLR [D,U]
+!byte $11,$6F,$FB                ; CLR [D,S]
+!byte $11,$6F,$91                ; CLR [,X++]
+!byte $11,$6F,$B1                ; CLR [,Y++]
+!byte $11,$6F,$D1                ; CLR [,U++]
+!byte $11,$6F,$F1                ; CLR [,S++]
+!byte $11,$6F,$92                ; CLR [,-X]
+!byte $11,$6F,$B2                ; CLR [,-Y]
+!byte $11,$6F,$D2                ; CLR [,-U]
+!byte $11,$6F,$F2                ; CLR [,-S]
+!byte $11,$6F,$93                ; CLR [,--X]
+!byte $11,$6F,$B3                ; CLR [,--Y]
+!byte $11,$6F,$D3                ; CLR [,--U]
+!byte $11,$6F,$F3                ; CLR [,--S]
+!byte $11,$6F,$9C,$FF            ; CLR [-$01,PC]
+!byte $11,$6F,$BC,$FF            ; CLR [-$01,PC]
+!byte $11,$6F,$DC,$FF            ; CLR [-$01,PC]
+!byte $11,$6F,$FC,$FF            ; CLR [-$01,PC]
+!byte $11,$6F,$9C,$60            ; CLR [$60,PC]
+!byte $11,$6F,$BC,$60            ; CLR [$60,PC]
+!byte $11,$6F,$DC,$60            ; CLR [$60,PC]
+!byte $11,$6F,$FC,$60            ; CLR [$60,PC]
+!byte $11,$6F,$9D,$DE,$AD        ; CLR [$DEAD,PC]
+!byte $11,$6F,$BD,$DE,$AD        ; CLR [$DEAD,PC]
+!byte $11,$6F,$DD,$DE,$AD        ; CLR [$DEAD,PC]
+!byte $11,$6F,$FD,$DE,$AD        ; CLR [$DEAD,PC]
+!byte $11,$6F,$9D,$10,$00        ; CLR [$1000,PC]
+!byte $11,$6F,$BD,$10,$00        ; CLR [$1000,PC]
+!byte $11,$6F,$DD,$10,$00        ; CLR [$1000,PC]
+!byte $11,$6F,$FD,$10,$00        ; CLR [$1000,PC]
+!byte $11,$6F,$9F,$DE,$AD        ; CLR [$DEAD]
+!byte $11,$6F,$BF,$DE,$AD        ; CLR [$DEAD]
+!byte $11,$6F,$DF,$DE,$AD        ; CLR [$DEAD]
+!byte $11,$6F,$FF,$DE,$AD        ; CLR [$DEAD]
+!byte $11,$6F,$90                ; CLR [,X+]
+!byte $11,$6F,$B0                ; CLR [,Y+]
+!byte $11,$6F,$D0                ; CLR [,U+]
+!byte $11,$6F,$F0                ; CLR [,S+]
 
-      !byte $6E,$84                   ; JMP ,X
-      !byte $6E,$A4                   ; JMP ,Y
-      !byte $6E,$C4                   ; JMP ,U
-      !byte $6E,$E4                   ; JMP ,S
-      !byte $6E,$15                   ; JMP -$0B,X
-      !byte $6E,$35                   ; JMP -$0B,Y
-      !byte $6E,$55                   ; JMP -$0B,U
-      !byte $6E,$75                   ; JMP -$0B,S
-      !byte $6E,$0C                   ; JMP $0C,X
-      !byte $6E,$2C                   ; JMP $0C,Y
-      !byte $6E,$4C                   ; JMP $0C,U
-      !byte $6E,$6C                   ; JMP $0C,S
-      !byte $6E,$88,$FF               ; JMP -$01,X
-      !byte $6E,$A8,$FF               ; JMP -$01,Y
-      !byte $6E,$C8,$FF               ; JMP -$01,U
-      !byte $6E,$E8,$FF               ; JMP -$01,S
-      !byte $6E,$88,$60               ; JMP $60,X
-      !byte $6E,$A8,$60               ; JMP $60,Y
-      !byte $6E,$C8,$60               ; JMP $60,U
-      !byte $6E,$E8,$60               ; JMP $60,S
-      !byte $6E,$89,$DE,$AD           ; JMP $DEAD,X
-      !byte $6E,$A9,$DE,$AD           ; JMP $DEAD,Y
-      !byte $6E,$C9,$DE,$AD           ; JMP $DEAD,U
-      !byte $6E,$E9,$DE,$AD           ; JMP $DEAD,S
-      !byte $6E,$89,$10,$00           ; JMP $1000,X
-      !byte $6E,$A9,$10,$00           ; JMP $1000,Y
-      !byte $6E,$C9,$10,$00           ; JMP $1000,U
-      !byte $6E,$E9,$10,$00           ; JMP $1000,S
-      !byte $6E,$86                   ; JMP A,X
-      !byte $6E,$A6                   ; JMP A,Y
-      !byte $6E,$C6                   ; JMP A,U
-      !byte $6E,$E6                   ; JMP A,S
-      !byte $6E,$85                   ; JMP B,X
-      !byte $6E,$A5                   ; JMP B,Y
-      !byte $6E,$C5                   ; JMP B,U
-      !byte $6E,$E5                   ; JMP B,S
-      !byte $6E,$8B                   ; JMP D,X
-      !byte $6E,$AB                   ; JMP D,Y
-      !byte $6E,$CB                   ; JMP D,U
-      !byte $6E,$EB                   ; JMP D,S
-      !byte $6E,$80                   ; JMP ,X+
-      !byte $6E,$A0                   ; JMP ,Y+
-      !byte $6E,$C0                   ; JMP ,U+
-      !byte $6E,$E0                   ; JMP ,S+
-      !byte $6E,$81                   ; JMP ,X++
-      !byte $6E,$A1                   ; JMP ,Y++
-      !byte $6E,$C1                   ; JMP ,U++
-      !byte $6E,$E1                   ; JMP ,S++
-      !byte $6E,$82                   ; JMP ,-X
-      !byte $6E,$A2                   ; JMP ,-Y
-      !byte $6E,$C2                   ; JMP ,-U
-      !byte $6E,$E2                   ; JMP ,-S
-      !byte $6E,$83                   ; JMP ,--X
-      !byte $6E,$A3                   ; JMP ,--Y
-      !byte $6E,$C3                   ; JMP ,--U
-      !byte $6E,$E3                   ; JMP ,--S
-      !byte $6E,$8C,$FF               ; JMP -$01,PC
-      !byte $6E,$AC,$FF               ; JMP -$01,PC
-      !byte $6E,$CC,$FF               ; JMP -$01,PC
-      !byte $6E,$EC,$FF               ; JMP -$01,PC
-      !byte $6E,$8C,$60               ; JMP $60,PC
-      !byte $6E,$AC,$60               ; JMP $60,PC
-      !byte $6E,$CC,$60               ; JMP $60,PC
-      !byte $6E,$EC,$60               ; JMP $60,PC
-      !byte $6E,$8D,$DE,$AD           ; JMP $DEAD,PC
-      !byte $6E,$AD,$DE,$AD           ; JMP $DEAD,PC
-      !byte $6E,$CD,$DE,$AD           ; JMP $DEAD,PC
-      !byte $6E,$ED,$DE,$AD           ; JMP $DEAD,PC
-      !byte $6E,$8D,$10,$00           ; JMP $1000,PC
-      !byte $6E,$AD,$10,$00           ; JMP $1000,PC
-      !byte $6E,$CD,$10,$00           ; JMP $1000,PC
-      !byte $6E,$ED,$10,$00           ; JMP $1000,PC
-      !byte $6E,$94                   ; JMP [,X]
-      !byte $6E,$B4                   ; JMP [,Y]
-      !byte $6E,$D4                   ; JMP [,U]
-      !byte $6E,$F4                   ; JMP [,S]
-      !byte $6E,$98,$FF               ; JMP [-$01,X]
-      !byte $6E,$B8,$FF               ; JMP [-$01,Y]
-      !byte $6E,$D8,$FF               ; JMP [-$01,U]
-      !byte $6E,$F8,$FF               ; JMP [-$01,S]
-      !byte $6E,$98,$60               ; JMP [$60,X]
-      !byte $6E,$B8,$60               ; JMP [$60,Y]
-      !byte $6E,$D8,$60               ; JMP [$60,U]
-      !byte $6E,$F8,$60               ; JMP [$60,S]
-      !byte $6E,$99,$DE,$AD           ; JMP [$DEAD,X]
-      !byte $6E,$B9,$DE,$AD           ; JMP [$DEAD,Y]
-      !byte $6E,$D9,$DE,$AD           ; JMP [$DEAD,U]
-      !byte $6E,$F9,$DE,$AD           ; JMP [$DEAD,S]
-      !byte $6E,$99,$DE,$10           ; JMP [$DE10,X]
-      !byte $6E,$B9,$DE,$10           ; JMP [$DE10,Y]
-      !byte $6E,$D9,$DE,$10           ; JMP [$DE10,U]
-      !byte $6E,$F9,$DE,$10           ; JMP [$DE10,S]
-      !byte $6E,$96                   ; JMP [A,X]
-      !byte $6E,$B6                   ; JMP [A,Y]
-      !byte $6E,$D6                   ; JMP [A,U]
-      !byte $6E,$F6                   ; JMP [A,S]
-      !byte $6E,$95                   ; JMP [B,X]
-      !byte $6E,$B5                   ; JMP [B,Y]
-      !byte $6E,$D5                   ; JMP [B,U]
-      !byte $6E,$F5                   ; JMP [B,S]
-      !byte $6E,$9B                   ; JMP [D,X]
-      !byte $6E,$BB                   ; JMP [D,Y]
-      !byte $6E,$DB                   ; JMP [D,U]
-      !byte $6E,$FB                   ; JMP [D,S]
-      !byte $6E,$91                   ; JMP [,X++]
-      !byte $6E,$B1                   ; JMP [,Y++]
-      !byte $6E,$D1                   ; JMP [,U++]
-      !byte $6E,$F1                   ; JMP [,S++]
-      !byte $6E,$93                   ; JMP [,--X]
-      !byte $6E,$B3                   ; JMP [,--Y]
-      !byte $6E,$D3                   ; JMP [,--U]
-      !byte $6E,$F3                   ; JMP [,--S]
-      !byte $6E,$9C,$FF               ; JMP [-$01,PC]
-      !byte $6E,$BC,$FF               ; JMP [-$01,PC]
-      !byte $6E,$DC,$FF               ; JMP [-$01,PC]
-      !byte $6E,$FC,$FF               ; JMP [-$01,PC]
-      !byte $6E,$9C,$60               ; JMP [$60,PC]
-      !byte $6E,$BC,$60               ; JMP [$60,PC]
-      !byte $6E,$DC,$60               ; JMP [$60,PC]
-      !byte $6E,$FC,$60               ; JMP [$60,PC]
-      !byte $6E,$9D,$DE,$AD           ; JMP [$DEAD,PC]
-      !byte $6E,$BD,$DE,$AD           ; JMP [$DEAD,PC]
-      !byte $6E,$DD,$DE,$AD           ; JMP [$DEAD,PC]
-      !byte $6E,$FD,$DE,$AD           ; JMP [$DEAD,PC]
-      !byte $6E,$9D,$10,$00           ; JMP [$1000,PC]
-      !byte $6E,$BD,$10,$00           ; JMP [$1000,PC]
-      !byte $6E,$DD,$10,$00           ; JMP [$1000,PC]
-      !byte $6E,$FD,$10,$00           ; JMP [$1000,PC]
-      !byte $6E,$9F,$DE,$AD           ; JMP [$DEAD]
-      !byte $6E,$BF,$DE,$AD           ; JMP [$DEAD]
-      !byte $6E,$DF,$DE,$AD           ; JMP [$DEAD]
-      !byte $6E,$FF,$DE,$AD           ; JMP [$DEAD]
-      !byte $6F,$84                   ; CLR ,X
-      !byte $6F,$A4                   ; CLR ,Y
-      !byte $6F,$C4                   ; CLR ,U
-      !byte $6F,$E4                   ; CLR ,S
-      !byte $6F,$15                   ; CLR -$0B,X
-      !byte $6F,$35                   ; CLR -$0B,Y
-      !byte $6F,$55                   ; CLR -$0B,U
-      !byte $6F,$75                   ; CLR -$0B,S
-      !byte $6F,$0C                   ; CLR $0C,X
-      !byte $6F,$2C                   ; CLR $0C,Y
-      !byte $6F,$4C                   ; CLR $0C,U
-      !byte $6F,$6C                   ; CLR $0C,S
-      !byte $6F,$88,$FF               ; CLR -$01,X
-      !byte $6F,$A8,$FF               ; CLR -$01,Y
-      !byte $6F,$C8,$FF               ; CLR -$01,U
-      !byte $6F,$E8,$FF               ; CLR -$01,S
-      !byte $6F,$88,$60               ; CLR $60,X
-      !byte $6F,$A8,$60               ; CLR $60,Y
-      !byte $6F,$C8,$60               ; CLR $60,U
-      !byte $6F,$E8,$60               ; CLR $60,S
-      !byte $6F,$89,$DE,$AD           ; CLR $DEAD,X
-      !byte $6F,$A9,$DE,$AD           ; CLR $DEAD,Y
-      !byte $6F,$C9,$DE,$AD           ; CLR $DEAD,U
-      !byte $6F,$E9,$DE,$AD           ; CLR $DEAD,S
-      !byte $6F,$89,$10,$00           ; CLR $1000,X
-      !byte $6F,$A9,$10,$00           ; CLR $1000,Y
-      !byte $6F,$C9,$10,$00           ; CLR $1000,U
-      !byte $6F,$E9,$10,$00           ; CLR $1000,S
-      !byte $6F,$86                   ; CLR A,X
-      !byte $6F,$A6                   ; CLR A,Y
-      !byte $6F,$C6                   ; CLR A,U
-      !byte $6F,$E6                   ; CLR A,S
-      !byte $6F,$85                   ; CLR B,X
-      !byte $6F,$A5                   ; CLR B,Y
-      !byte $6F,$C5                   ; CLR B,U
-      !byte $6F,$E5                   ; CLR B,S
-      !byte $6F,$8B                   ; CLR D,X
-      !byte $6F,$AB                   ; CLR D,Y
-      !byte $6F,$CB                   ; CLR D,U
-      !byte $6F,$EB                   ; CLR D,S
-      !byte $6F,$80                   ; CLR ,X+
-      !byte $6F,$A0                   ; CLR ,Y+
-      !byte $6F,$C0                   ; CLR ,U+
-      !byte $6F,$E0                   ; CLR ,S+
-      !byte $6F,$81                   ; CLR ,X++
-      !byte $6F,$A1                   ; CLR ,Y++
-      !byte $6F,$C1                   ; CLR ,U++
-      !byte $6F,$E1                   ; CLR ,S++
-      !byte $6F,$82                   ; CLR ,-X
-      !byte $6F,$A2                   ; CLR ,-Y
-      !byte $6F,$C2                   ; CLR ,-U
-      !byte $6F,$E2                   ; CLR ,-S
-      !byte $6F,$83                   ; CLR ,--X
-      !byte $6F,$A3                   ; CLR ,--Y
-      !byte $6F,$C3                   ; CLR ,--U
-      !byte $6F,$E3                   ; CLR ,--S
-      !byte $6F,$8C,$FF               ; CLR -$01,PC
-      !byte $6F,$AC,$FF               ; CLR -$01,PC
-      !byte $6F,$CC,$FF               ; CLR -$01,PC
-      !byte $6F,$EC,$FF               ; CLR -$01,PC
-      !byte $6F,$8C,$60               ; CLR $60,PC
-      !byte $6F,$AC,$60               ; CLR $60,PC
-      !byte $6F,$CC,$60               ; CLR $60,PC
-      !byte $6F,$EC,$60               ; CLR $60,PC
-      !byte $6F,$8D,$DE,$AD           ; CLR $DEAD,PC
-      !byte $6F,$AD,$DE,$AD           ; CLR $DEAD,PC
-      !byte $6F,$CD,$DE,$AD           ; CLR $DEAD,PC
-      !byte $6F,$ED,$DE,$AD           ; CLR $DEAD,PC
-      !byte $6F,$8D,$10,$00           ; CLR $1000,PC
-      !byte $6F,$AD,$10,$00           ; CLR $1000,PC
-      !byte $6F,$CD,$10,$00           ; CLR $1000,PC
-      !byte $6F,$ED,$10,$00           ; CLR $1000,PC
-      !byte $6F,$94                   ; CLR [,X]
-      !byte $6F,$B4                   ; CLR [,Y]
-      !byte $6F,$D4                   ; CLR [,U]
-      !byte $6F,$F4                   ; CLR [,S]
-      !byte $6F,$98,$FF               ; CLR [-$01,X]
-      !byte $6F,$B8,$FF               ; CLR [-$01,Y]
-      !byte $6F,$D8,$FF               ; CLR [-$01,U]
-      !byte $6F,$F8,$FF               ; CLR [-$01,S]
-      !byte $6F,$98,$60               ; CLR [$60,X]
-      !byte $6F,$B8,$60               ; CLR [$60,Y]
-      !byte $6F,$D8,$60               ; CLR [$60,U]
-      !byte $6F,$F8,$60               ; CLR [$60,S]
-      !byte $6F,$99,$DE,$AD           ; CLR [$DEAD,X]
-      !byte $6F,$B9,$DE,$AD           ; CLR [$DEAD,Y]
-      !byte $6F,$D9,$DE,$AD           ; CLR [$DEAD,U]
-      !byte $6F,$F9,$DE,$AD           ; CLR [$DEAD,S]
-      !byte $6F,$99,$DE,$10           ; CLR [$DE10,X]
-      !byte $6F,$B9,$DE,$10           ; CLR [$DE10,Y]
-      !byte $6F,$D9,$DE,$10           ; CLR [$DE10,U]
-      !byte $6F,$F9,$DE,$10           ; CLR [$DE10,S]
-      !byte $6F,$96                   ; CLR [A,X]
-      !byte $6F,$B6                   ; CLR [A,Y]
-      !byte $6F,$D6                   ; CLR [A,U]
-      !byte $6F,$F6                   ; CLR [A,S]
-      !byte $6F,$95                   ; CLR [B,X]
-      !byte $6F,$B5                   ; CLR [B,Y]
-      !byte $6F,$D5                   ; CLR [B,U]
-      !byte $6F,$F5                   ; CLR [B,S]
-      !byte $6F,$9B                   ; CLR [D,X]
-      !byte $6F,$BB                   ; CLR [D,Y]
-      !byte $6F,$DB                   ; CLR [D,U]
-      !byte $6F,$FB                   ; CLR [D,S]
-      !byte $6F,$91                   ; CLR [,X++]
-      !byte $6F,$B1                   ; CLR [,Y++]
-      !byte $6F,$D1                   ; CLR [,U++]
-      !byte $6F,$F1                   ; CLR [,S++]
-      !byte $6F,$93                   ; CLR [,--X]
-      !byte $6F,$B3                   ; CLR [,--Y]
-      !byte $6F,$D3                   ; CLR [,--U]
-      !byte $6F,$F3                   ; CLR [,--S]
-      !byte $6F,$9C,$FF               ; CLR [-$01,PC]
-      !byte $6F,$BC,$FF               ; CLR [-$01,PC]
-      !byte $6F,$DC,$FF               ; CLR [-$01,PC]
-      !byte $6F,$FC,$FF               ; CLR [-$01,PC]
-      !byte $6F,$9C,$60               ; CLR [$60,PC]
-      !byte $6F,$BC,$60               ; CLR [$60,PC]
-      !byte $6F,$DC,$60               ; CLR [$60,PC]
-      !byte $6F,$FC,$60               ; CLR [$60,PC]
-      !byte $6F,$9D,$DE,$AD           ; CLR [$DEAD,PC]
-      !byte $6F,$BD,$DE,$AD           ; CLR [$DEAD,PC]
-      !byte $6F,$DD,$DE,$AD           ; CLR [$DEAD,PC]
-      !byte $6F,$FD,$DE,$AD           ; CLR [$DEAD,PC]
-      !byte $6F,$9D,$10,$00           ; CLR [$1000,PC]
-      !byte $6F,$BD,$10,$00           ; CLR [$1000,PC]
-      !byte $6F,$DD,$10,$00           ; CLR [$1000,PC]
-      !byte $6F,$FD,$10,$00           ; CLR [$1000,PC]
-      !byte $6F,$9F,$DE,$AD           ; CLR [$DEAD]
-      !byte $6F,$BF,$DE,$AD           ; CLR [$DEAD]
-      !byte $6F,$DF,$DE,$AD           ; CLR [$DEAD]
-      !byte $6F,$FF,$DE,$AD           ; CLR [$DEAD]
       !byte $70,$DE,$AD               ; NEG $DEAD
       !byte $73,$DE,$AD               ; COM $DEAD
       !byte $74,$DE,$AD               ; LSR $DEAD
