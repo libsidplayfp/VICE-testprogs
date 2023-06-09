@@ -4870,158 +4870,891 @@
 !byte $10,$45                    ; LSRA
 !byte $11,$44                    ; LSRA
 !byte $11,$45                    ; LSRA
+!byte $10,$46                    ; RORA
+!byte $11,$46                    ; RORA
+!byte $10,$47                    ; ASRA
+!byte $11,$47                    ; ASRA
+!byte $10,$48                    ; ASLA
+!byte $11,$48                    ; ASLA
+!byte $10,$49                    ; ROLA
+!byte $11,$49                    ; ROLA
+!byte $4B                        ; DECA
+!byte $10,$4A                    ; DECA
+!byte $10,$4B                    ; DECA
+!byte $11,$4A                    ; DECA
+!byte $11,$4B                    ; DECA
+!byte $10,$4C                    ; INCA
+!byte $11,$4C                    ; INCA
+!byte $10,$4D                    ; TSTA
+!byte $11,$4D                    ; TSTA
+!byte $4E                        ; CLRA
+!byte $10,$4E                    ; CLRA
+!byte $10,$4F                    ; CLRA
+!byte $11,$4E                    ; CLRA
+!byte $11,$4F                    ; CLRA
+!byte $51                        ; NEGB
+!byte $10,$50                    ; NEGB
+!byte $10,$51                    ; NEGB
+!byte $11,$50                    ; NEGB
+!byte $11,$51                    ; NEGB
+!byte $10,$53                    ; COMB
+!byte $11,$53                    ; COMB
+!byte $55                        ; LSRB
+!byte $10,$54                    ; LSRB
+!byte $10,$55                    ; LSRB
+!byte $11,$54                    ; LSRB
+!byte $11,$55                    ; LSRB
+!byte $10,$56                    ; RORB
+!byte $11,$56                    ; RORB
+!byte $10,$57                    ; ASRB
+!byte $11,$57                    ; ASRB
+!byte $10,$58                    ; ASLB
+!byte $11,$58                    ; ASLB
+!byte $10,$59                    ; ROLB
+!byte $11,$59                    ; ROLB
+!byte $5B                        ; DECB
+!byte $10,$5A                    ; DECB
+!byte $10,$5B                    ; DECB
+!byte $11,$5A                    ; DECB
+!byte $11,$5B                    ; DECB
+!byte $10,$5C                    ; INCB
+!byte $11,$5C                    ; INCB
+!byte $10,$5D                    ; TSTB
+!byte $11,$5D                    ; TSTB
+!byte $5E                        ; CLRB
+!byte $10,$5E                    ; CLRB
+!byte $10,$5F                    ; CLRB
+!byte $11,$5E                    ; CLRB
+!byte $11,$5F                    ; CLRB
+!byte $60,$87                    ; NEG ,X
+!byte $60,$A7                    ; NEG ,Y
+!byte $60,$C7                    ; NEG ,U
+!byte $60,$E7                    ; NEG ,S
+!byte $60,$8A                    ; NEG ,PClo
+!byte $60,$AA                    ; NEG ,PClo
+!byte $60,$CA                    ; NEG ,PClo
+!byte $60,$EA                    ; NEG ,PClo
+!byte $60,$8F,$DE,$AD            ; NEG ,$DEAD
+!byte $60,$AF,$DE,$AD            ; NEG ,$DEAD
+!byte $60,$CF,$DE,$AD            ; NEG ,$DEAD
+!byte $60,$EF,$DE,$AD            ; NEG ,$DEAD
+!byte $60,$97                    ; NEG [,X]
+!byte $60,$B7                    ; NEG [,Y]
+!byte $60,$D7                    ; NEG [,U]
+!byte $60,$F7                    ; NEG [,S]
+!byte $60,$9A                    ; NEG [,PClo]
+!byte $60,$BA                    ; NEG [,PClo]
+!byte $60,$DA                    ; NEG [,PClo]
+!byte $60,$FA                    ; NEG [,PClo]
+!byte $60,$92                    ; NEG [,-X]
+!byte $60,$B2                    ; NEG [,-Y]
+!byte $60,$D2                    ; NEG [,-U]
+!byte $60,$F2                    ; NEG [,-S]
+!byte $60,$90                    ; NEG [,X+]
+!byte $60,$B0                    ; NEG [,Y+]
+!byte $60,$D0                    ; NEG [,U+]
+!byte $60,$F0                    ; NEG [,S+]
+!byte $61,$84                    ; NEG ,X
+!byte $61,$A4                    ; NEG ,Y
+!byte $61,$C4                    ; NEG ,U
+!byte $61,$E4                    ; NEG ,S
+!byte $61,$15                    ; NEG -$0B,X
+!byte $61,$35                    ; NEG -$0B,Y
+!byte $61,$55                    ; NEG -$0B,U
+!byte $61,$75                    ; NEG -$0B,S
+!byte $61,$0C                    ; NEG $0C,X
+!byte $61,$2C                    ; NEG $0C,Y
+!byte $61,$4C                    ; NEG $0C,U
+!byte $61,$6C                    ; NEG $0C,S
+!byte $61,$88,$FF                ; NEG -$01,X
+!byte $61,$A8,$FF                ; NEG -$01,Y
+!byte $61,$C8,$FF                ; NEG -$01,U
+!byte $61,$E8,$FF                ; NEG -$01,S
+!byte $61,$88,$60                ; NEG $60,X
+!byte $61,$A8,$60                ; NEG $60,Y
+!byte $61,$C8,$60                ; NEG $60,U
+!byte $61,$E8,$60                ; NEG $60,S
+!byte $61,$89,$DE,$AD            ; NEG $DEAD,X
+!byte $61,$A9,$DE,$AD            ; NEG $DEAD,Y
+!byte $61,$C9,$DE,$AD            ; NEG $DEAD,U
+!byte $61,$E9,$DE,$AD            ; NEG $DEAD,S
+!byte $61,$89,$10,$00            ; NEG $1000,X
+!byte $61,$A9,$10,$00            ; NEG $1000,Y
+!byte $61,$C9,$10,$00            ; NEG $1000,U
+!byte $61,$E9,$10,$00            ; NEG $1000,S
+!byte $61,$86                    ; NEG A,X
+!byte $61,$A6                    ; NEG A,Y
+!byte $61,$C6                    ; NEG A,U
+!byte $61,$E6                    ; NEG A,S
+!byte $61,$85                    ; NEG B,X
+!byte $61,$A5                    ; NEG B,Y
+!byte $61,$C5                    ; NEG B,U
+!byte $61,$E5                    ; NEG B,S
+!byte $61,$87                    ; NEG ,X
+!byte $61,$A7                    ; NEG ,Y
+!byte $61,$C7                    ; NEG ,U
+!byte $61,$E7                    ; NEG ,S
+!byte $61,$8A                    ; NEG ,PClo
+!byte $61,$AA                    ; NEG ,PClo
+!byte $61,$CA                    ; NEG ,PClo
+!byte $61,$EA                    ; NEG ,PClo
+!byte $61,$8B                    ; NEG D,X
+!byte $61,$AB                    ; NEG D,Y
+!byte $61,$CB                    ; NEG D,U
+!byte $61,$EB                    ; NEG D,S
+!byte $61,$80                    ; NEG ,X+
+!byte $61,$A0                    ; NEG ,Y+
+!byte $61,$C0                    ; NEG ,U+
+!byte $61,$E0                    ; NEG ,S+
+!byte $61,$81                    ; NEG ,X++
+!byte $61,$A1                    ; NEG ,Y++
+!byte $61,$C1                    ; NEG ,U++
+!byte $61,$E1                    ; NEG ,S++
+!byte $61,$82                    ; NEG ,-X
+!byte $61,$A2                    ; NEG ,-Y
+!byte $61,$C2                    ; NEG ,-U
+!byte $61,$E2                    ; NEG ,-S
+!byte $61,$83                    ; NEG ,--X
+!byte $61,$A3                    ; NEG ,--Y
+!byte $61,$C3                    ; NEG ,--U
+!byte $61,$E3                    ; NEG ,--S
+!byte $61,$8C,$FF                ; NEG -$01,PC
+!byte $61,$AC,$FF                ; NEG -$01,PC
+!byte $61,$CC,$FF                ; NEG -$01,PC
+!byte $61,$EC,$FF                ; NEG -$01,PC
+!byte $61,$8C,$60                ; NEG $60,PC
+!byte $61,$AC,$60                ; NEG $60,PC
+!byte $61,$CC,$60                ; NEG $60,PC
+!byte $61,$EC,$60                ; NEG $60,PC
+!byte $61,$8D,$DE,$AD            ; NEG $DEAD,PC
+!byte $61,$AD,$DE,$AD            ; NEG $DEAD,PC
+!byte $61,$CD,$DE,$AD            ; NEG $DEAD,PC
+!byte $61,$ED,$DE,$AD            ; NEG $DEAD,PC
+!byte $61,$8D,$10,$00            ; NEG $1000,PC
+!byte $61,$AD,$10,$00            ; NEG $1000,PC
+!byte $61,$CD,$10,$00            ; NEG $1000,PC
+!byte $61,$ED,$10,$00            ; NEG $1000,PC
+!byte $61,$8F,$DE,$AD            ; NEG ,$DEAD
+!byte $61,$AF,$DE,$AD            ; NEG ,$DEAD
+!byte $61,$CF,$DE,$AD            ; NEG ,$DEAD
+!byte $61,$EF,$DE,$AD            ; NEG ,$DEAD
+!byte $61,$94                    ; NEG [,X]
+!byte $61,$B4                    ; NEG [,Y]
+!byte $61,$D4                    ; NEG [,U]
+!byte $61,$F4                    ; NEG [,S]
+!byte $61,$98,$FF                ; NEG [-$01,X]
+!byte $61,$B8,$FF                ; NEG [-$01,Y]
+!byte $61,$D8,$FF                ; NEG [-$01,U]
+!byte $61,$F8,$FF                ; NEG [-$01,S]
+!byte $61,$98,$60                ; NEG [$60,X]
+!byte $61,$B8,$60                ; NEG [$60,Y]
+!byte $61,$D8,$60                ; NEG [$60,U]
+!byte $61,$F8,$60                ; NEG [$60,S]
+!byte $61,$99,$DE,$AD            ; NEG [$DEAD,X]
+!byte $61,$B9,$DE,$AD            ; NEG [$DEAD,Y]
+!byte $61,$D9,$DE,$AD            ; NEG [$DEAD,U]
+!byte $61,$F9,$DE,$AD            ; NEG [$DEAD,S]
+!byte $61,$99,$DE,$10            ; NEG [$DE10,X]
+!byte $61,$B9,$DE,$10            ; NEG [$DE10,Y]
+!byte $61,$D9,$DE,$10            ; NEG [$DE10,U]
+!byte $61,$F9,$DE,$10            ; NEG [$DE10,S]
+!byte $61,$96                    ; NEG [A,X]
+!byte $61,$B6                    ; NEG [A,Y]
+!byte $61,$D6                    ; NEG [A,U]
+!byte $61,$F6                    ; NEG [A,S]
+!byte $61,$95                    ; NEG [B,X]
+!byte $61,$B5                    ; NEG [B,Y]
+!byte $61,$D5                    ; NEG [B,U]
+!byte $61,$F5                    ; NEG [B,S]
+!byte $61,$97                    ; NEG [,X]
+!byte $61,$B7                    ; NEG [,Y]
+!byte $61,$D7                    ; NEG [,U]
+!byte $61,$F7                    ; NEG [,S]
+!byte $61,$9A                    ; NEG [,PClo]
+!byte $61,$BA                    ; NEG [,PClo]
+!byte $61,$DA                    ; NEG [,PClo]
+!byte $61,$FA                    ; NEG [,PClo]
+!byte $61,$9B                    ; NEG [D,X]
+!byte $61,$BB                    ; NEG [D,Y]
+!byte $61,$DB                    ; NEG [D,U]
+!byte $61,$FB                    ; NEG [D,S]
+!byte $61,$91                    ; NEG [,X++]
+!byte $61,$B1                    ; NEG [,Y++]
+!byte $61,$D1                    ; NEG [,U++]
+!byte $61,$F1                    ; NEG [,S++]
+!byte $61,$92                    ; NEG [,-X]
+!byte $61,$B2                    ; NEG [,-Y]
+!byte $61,$D2                    ; NEG [,-U]
+!byte $61,$F2                    ; NEG [,-S]
+!byte $61,$93                    ; NEG [,--X]
+!byte $61,$B3                    ; NEG [,--Y]
+!byte $61,$D3                    ; NEG [,--U]
+!byte $61,$F3                    ; NEG [,--S]
+!byte $61,$9C,$FF                ; NEG [-$01,PC]
+!byte $61,$BC,$FF                ; NEG [-$01,PC]
+!byte $61,$DC,$FF                ; NEG [-$01,PC]
+!byte $61,$FC,$FF                ; NEG [-$01,PC]
+!byte $61,$9C,$60                ; NEG [$60,PC]
+!byte $61,$BC,$60                ; NEG [$60,PC]
+!byte $61,$DC,$60                ; NEG [$60,PC]
+!byte $61,$FC,$60                ; NEG [$60,PC]
+!byte $61,$9D,$DE,$AD            ; NEG [$DEAD,PC]
+!byte $61,$BD,$DE,$AD            ; NEG [$DEAD,PC]
+!byte $61,$DD,$DE,$AD            ; NEG [$DEAD,PC]
+!byte $61,$FD,$DE,$AD            ; NEG [$DEAD,PC]
+!byte $61,$9D,$10,$00            ; NEG [$1000,PC]
+!byte $61,$BD,$10,$00            ; NEG [$1000,PC]
+!byte $61,$DD,$10,$00            ; NEG [$1000,PC]
+!byte $61,$FD,$10,$00            ; NEG [$1000,PC]
+!byte $61,$9F,$DE,$AD            ; NEG [$DEAD]
+!byte $61,$BF,$DE,$AD            ; NEG [$DEAD]
+!byte $61,$DF,$DE,$AD            ; NEG [$DEAD]
+!byte $61,$FF,$DE,$AD            ; NEG [$DEAD]
+!byte $61,$90                    ; NEG [,X+]
+!byte $61,$B0                    ; NEG [,Y+]
+!byte $61,$D0                    ; NEG [,U+]
+!byte $61,$F0                    ; NEG [,S+]
+!byte $10,$60,$84                ; NEG ,X
+!byte $10,$60,$A4                ; NEG ,Y
+!byte $10,$60,$C4                ; NEG ,U
+!byte $10,$60,$E4                ; NEG ,S
+!byte $10,$60,$15                ; NEG -$0B,X
+!byte $10,$60,$35                ; NEG -$0B,Y
+!byte $10,$60,$55                ; NEG -$0B,U
+!byte $10,$60,$75                ; NEG -$0B,S
+!byte $10,$60,$0C                ; NEG $0C,X
+!byte $10,$60,$2C                ; NEG $0C,Y
+!byte $10,$60,$4C                ; NEG $0C,U
+!byte $10,$60,$6C                ; NEG $0C,S
+!byte $10,$60,$88,$FF            ; NEG -$01,X
+!byte $10,$60,$A8,$FF            ; NEG -$01,Y
+!byte $10,$60,$C8,$FF            ; NEG -$01,U
+!byte $10,$60,$E8,$FF            ; NEG -$01,S
+!byte $10,$60,$88,$60            ; NEG $60,X
+!byte $10,$60,$A8,$60            ; NEG $60,Y
+!byte $10,$60,$C8,$60            ; NEG $60,U
+!byte $10,$60,$E8,$60            ; NEG $60,S
+!byte $10,$60,$89,$DE,$AD        ; NEG $DEAD,X
+!byte $10,$60,$A9,$DE,$AD        ; NEG $DEAD,Y
+!byte $10,$60,$C9,$DE,$AD        ; NEG $DEAD,U
+!byte $10,$60,$E9,$DE,$AD        ; NEG $DEAD,S
+!byte $10,$60,$89,$10,$00        ; NEG $1000,X
+!byte $10,$60,$A9,$10,$00        ; NEG $1000,Y
+!byte $10,$60,$C9,$10,$00        ; NEG $1000,U
+!byte $10,$60,$E9,$10,$00        ; NEG $1000,S
+!byte $10,$60,$86                ; NEG A,X
+!byte $10,$60,$A6                ; NEG A,Y
+!byte $10,$60,$C6                ; NEG A,U
+!byte $10,$60,$E6                ; NEG A,S
+!byte $10,$60,$85                ; NEG B,X
+!byte $10,$60,$A5                ; NEG B,Y
+!byte $10,$60,$C5                ; NEG B,U
+!byte $10,$60,$E5                ; NEG B,S
+!byte $10,$60,$87                ; NEG ,X
+!byte $10,$60,$A7                ; NEG ,Y
+!byte $10,$60,$C7                ; NEG ,U
+!byte $10,$60,$E7                ; NEG ,S
+!byte $10,$60,$8A                ; NEG ,PClo
+!byte $10,$60,$AA                ; NEG ,PClo
+!byte $10,$60,$CA                ; NEG ,PClo
+!byte $10,$60,$EA                ; NEG ,PClo
+!byte $10,$60,$8B                ; NEG D,X
+!byte $10,$60,$AB                ; NEG D,Y
+!byte $10,$60,$CB                ; NEG D,U
+!byte $10,$60,$EB                ; NEG D,S
+!byte $10,$60,$80                ; NEG ,X+
+!byte $10,$60,$A0                ; NEG ,Y+
+!byte $10,$60,$C0                ; NEG ,U+
+!byte $10,$60,$E0                ; NEG ,S+
+!byte $10,$60,$81                ; NEG ,X++
+!byte $10,$60,$A1                ; NEG ,Y++
+!byte $10,$60,$C1                ; NEG ,U++
+!byte $10,$60,$E1                ; NEG ,S++
+!byte $10,$60,$82                ; NEG ,-X
+!byte $10,$60,$A2                ; NEG ,-Y
+!byte $10,$60,$C2                ; NEG ,-U
+!byte $10,$60,$E2                ; NEG ,-S
+!byte $10,$60,$83                ; NEG ,--X
+!byte $10,$60,$A3                ; NEG ,--Y
+!byte $10,$60,$C3                ; NEG ,--U
+!byte $10,$60,$E3                ; NEG ,--S
+!byte $10,$60,$8C,$FF            ; NEG -$01,PC
+!byte $10,$60,$AC,$FF            ; NEG -$01,PC
+!byte $10,$60,$CC,$FF            ; NEG -$01,PC
+!byte $10,$60,$EC,$FF            ; NEG -$01,PC
+!byte $10,$60,$8C,$60            ; NEG $60,PC
+!byte $10,$60,$AC,$60            ; NEG $60,PC
+!byte $10,$60,$CC,$60            ; NEG $60,PC
+!byte $10,$60,$EC,$60            ; NEG $60,PC
+!byte $10,$60,$8D,$DE,$AD        ; NEG $DEAD,PC
+!byte $10,$60,$AD,$DE,$AD        ; NEG $DEAD,PC
+!byte $10,$60,$CD,$DE,$AD        ; NEG $DEAD,PC
+!byte $10,$60,$ED,$DE,$AD        ; NEG $DEAD,PC
+!byte $10,$60,$8D,$10,$00        ; NEG $1000,PC
+!byte $10,$60,$AD,$10,$00        ; NEG $1000,PC
+!byte $10,$60,$CD,$10,$00        ; NEG $1000,PC
+!byte $10,$60,$ED,$10,$00        ; NEG $1000,PC
+!byte $10,$60,$8F,$DE,$AD        ; NEG ,$DEAD
+!byte $10,$60,$AF,$DE,$AD        ; NEG ,$DEAD
+!byte $10,$60,$CF,$DE,$AD        ; NEG ,$DEAD
+!byte $10,$60,$EF,$DE,$AD        ; NEG ,$DEAD
+!byte $10,$60,$94                ; NEG [,X]
+!byte $10,$60,$B4                ; NEG [,Y]
+!byte $10,$60,$D4                ; NEG [,U]
+!byte $10,$60,$F4                ; NEG [,S]
+!byte $10,$60,$98,$FF            ; NEG [-$01,X]
+!byte $10,$60,$B8,$FF            ; NEG [-$01,Y]
+!byte $10,$60,$D8,$FF            ; NEG [-$01,U]
+!byte $10,$60,$F8,$FF            ; NEG [-$01,S]
+!byte $10,$60,$98,$60            ; NEG [$60,X]
+!byte $10,$60,$B8,$60            ; NEG [$60,Y]
+!byte $10,$60,$D8,$60            ; NEG [$60,U]
+!byte $10,$60,$F8,$60            ; NEG [$60,S]
+!byte $10,$60,$99,$DE,$AD        ; NEG [$DEAD,X]
+!byte $10,$60,$B9,$DE,$AD        ; NEG [$DEAD,Y]
+!byte $10,$60,$D9,$DE,$AD        ; NEG [$DEAD,U]
+!byte $10,$60,$F9,$DE,$AD        ; NEG [$DEAD,S]
+!byte $10,$60,$99,$DE,$10        ; NEG [$DE10,X]
+!byte $10,$60,$B9,$DE,$10        ; NEG [$DE10,Y]
+!byte $10,$60,$D9,$DE,$10        ; NEG [$DE10,U]
+!byte $10,$60,$F9,$DE,$10        ; NEG [$DE10,S]
+!byte $10,$60,$96                ; NEG [A,X]
+!byte $10,$60,$B6                ; NEG [A,Y]
+!byte $10,$60,$D6                ; NEG [A,U]
+!byte $10,$60,$F6                ; NEG [A,S]
+!byte $10,$60,$95                ; NEG [B,X]
+!byte $10,$60,$B5                ; NEG [B,Y]
+!byte $10,$60,$D5                ; NEG [B,U]
+!byte $10,$60,$F5                ; NEG [B,S]
+!byte $10,$60,$97                ; NEG [,X]
+!byte $10,$60,$B7                ; NEG [,Y]
+!byte $10,$60,$D7                ; NEG [,U]
+!byte $10,$60,$F7                ; NEG [,S]
+!byte $10,$60,$9A                ; NEG [,PClo]
+!byte $10,$60,$BA                ; NEG [,PClo]
+!byte $10,$60,$DA                ; NEG [,PClo]
+!byte $10,$60,$FA                ; NEG [,PClo]
+!byte $10,$60,$9B                ; NEG [D,X]
+!byte $10,$60,$BB                ; NEG [D,Y]
+!byte $10,$60,$DB                ; NEG [D,U]
+!byte $10,$60,$FB                ; NEG [D,S]
+!byte $10,$60,$91                ; NEG [,X++]
+!byte $10,$60,$B1                ; NEG [,Y++]
+!byte $10,$60,$D1                ; NEG [,U++]
+!byte $10,$60,$F1                ; NEG [,S++]
+!byte $10,$60,$92                ; NEG [,-X]
+!byte $10,$60,$B2                ; NEG [,-Y]
+!byte $10,$60,$D2                ; NEG [,-U]
+!byte $10,$60,$F2                ; NEG [,-S]
+!byte $10,$60,$93                ; NEG [,--X]
+!byte $10,$60,$B3                ; NEG [,--Y]
+!byte $10,$60,$D3                ; NEG [,--U]
+!byte $10,$60,$F3                ; NEG [,--S]
+!byte $10,$60,$9C,$FF            ; NEG [-$01,PC]
+!byte $10,$60,$BC,$FF            ; NEG [-$01,PC]
+!byte $10,$60,$DC,$FF            ; NEG [-$01,PC]
+!byte $10,$60,$FC,$FF            ; NEG [-$01,PC]
+!byte $10,$60,$9C,$60            ; NEG [$60,PC]
+!byte $10,$60,$BC,$60            ; NEG [$60,PC]
+!byte $10,$60,$DC,$60            ; NEG [$60,PC]
+!byte $10,$60,$FC,$60            ; NEG [$60,PC]
+!byte $10,$60,$9D,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $10,$60,$BD,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $10,$60,$DD,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $10,$60,$FD,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $10,$60,$9D,$10,$00        ; NEG [$1000,PC]
+!byte $10,$60,$BD,$10,$00        ; NEG [$1000,PC]
+!byte $10,$60,$DD,$10,$00        ; NEG [$1000,PC]
+!byte $10,$60,$FD,$10,$00        ; NEG [$1000,PC]
+!byte $10,$60,$9F,$DE,$AD        ; NEG [$DEAD]
+!byte $10,$60,$BF,$DE,$AD        ; NEG [$DEAD]
+!byte $10,$60,$DF,$DE,$AD        ; NEG [$DEAD]
+!byte $10,$60,$FF,$DE,$AD        ; NEG [$DEAD]
+!byte $10,$60,$90                ; NEG [,X+]
+!byte $10,$60,$B0                ; NEG [,Y+]
+!byte $10,$60,$D0                ; NEG [,U+]
+!byte $10,$60,$F0                ; NEG [,S+]
+!byte $10,$61,$84                ; NEG ,X
+!byte $10,$61,$A4                ; NEG ,Y
+!byte $10,$61,$C4                ; NEG ,U
+!byte $10,$61,$E4                ; NEG ,S
+!byte $10,$61,$15                ; NEG -$0B,X
+!byte $10,$61,$35                ; NEG -$0B,Y
+!byte $10,$61,$55                ; NEG -$0B,U
+!byte $10,$61,$75                ; NEG -$0B,S
+!byte $10,$61,$0C                ; NEG $0C,X
+!byte $10,$61,$2C                ; NEG $0C,Y
+!byte $10,$61,$4C                ; NEG $0C,U
+!byte $10,$61,$6C                ; NEG $0C,S
+!byte $10,$61,$88,$FF            ; NEG -$01,X
+!byte $10,$61,$A8,$FF            ; NEG -$01,Y
+!byte $10,$61,$C8,$FF            ; NEG -$01,U
+!byte $10,$61,$E8,$FF            ; NEG -$01,S
+!byte $10,$61,$88,$60            ; NEG $60,X
+!byte $10,$61,$A8,$60            ; NEG $60,Y
+!byte $10,$61,$C8,$60            ; NEG $60,U
+!byte $10,$61,$E8,$60            ; NEG $60,S
+!byte $10,$61,$89,$DE,$AD        ; NEG $DEAD,X
+!byte $10,$61,$A9,$DE,$AD        ; NEG $DEAD,Y
+!byte $10,$61,$C9,$DE,$AD        ; NEG $DEAD,U
+!byte $10,$61,$E9,$DE,$AD        ; NEG $DEAD,S
+!byte $10,$61,$89,$10,$00        ; NEG $1000,X
+!byte $10,$61,$A9,$10,$00        ; NEG $1000,Y
+!byte $10,$61,$C9,$10,$00        ; NEG $1000,U
+!byte $10,$61,$E9,$10,$00        ; NEG $1000,S
+!byte $10,$61,$86                ; NEG A,X
+!byte $10,$61,$A6                ; NEG A,Y
+!byte $10,$61,$C6                ; NEG A,U
+!byte $10,$61,$E6                ; NEG A,S
+!byte $10,$61,$85                ; NEG B,X
+!byte $10,$61,$A5                ; NEG B,Y
+!byte $10,$61,$C5                ; NEG B,U
+!byte $10,$61,$E5                ; NEG B,S
+!byte $10,$61,$87                ; NEG ,X
+!byte $10,$61,$A7                ; NEG ,Y
+!byte $10,$61,$C7                ; NEG ,U
+!byte $10,$61,$E7                ; NEG ,S
+!byte $10,$61,$8A                ; NEG ,PClo
+!byte $10,$61,$AA                ; NEG ,PClo
+!byte $10,$61,$CA                ; NEG ,PClo
+!byte $10,$61,$EA                ; NEG ,PClo
+!byte $10,$61,$8B                ; NEG D,X
+!byte $10,$61,$AB                ; NEG D,Y
+!byte $10,$61,$CB                ; NEG D,U
+!byte $10,$61,$EB                ; NEG D,S
+!byte $10,$61,$80                ; NEG ,X+
+!byte $10,$61,$A0                ; NEG ,Y+
+!byte $10,$61,$C0                ; NEG ,U+
+!byte $10,$61,$E0                ; NEG ,S+
+!byte $10,$61,$81                ; NEG ,X++
+!byte $10,$61,$A1                ; NEG ,Y++
+!byte $10,$61,$C1                ; NEG ,U++
+!byte $10,$61,$E1                ; NEG ,S++
+!byte $10,$61,$82                ; NEG ,-X
+!byte $10,$61,$A2                ; NEG ,-Y
+!byte $10,$61,$C2                ; NEG ,-U
+!byte $10,$61,$E2                ; NEG ,-S
+!byte $10,$61,$83                ; NEG ,--X
+!byte $10,$61,$A3                ; NEG ,--Y
+!byte $10,$61,$C3                ; NEG ,--U
+!byte $10,$61,$E3                ; NEG ,--S
+!byte $10,$61,$8C,$FF            ; NEG -$01,PC
+!byte $10,$61,$AC,$FF            ; NEG -$01,PC
+!byte $10,$61,$CC,$FF            ; NEG -$01,PC
+!byte $10,$61,$EC,$FF            ; NEG -$01,PC
+!byte $10,$61,$8C,$60            ; NEG $60,PC
+!byte $10,$61,$AC,$60            ; NEG $60,PC
+!byte $10,$61,$CC,$60            ; NEG $60,PC
+!byte $10,$61,$EC,$60            ; NEG $60,PC
+!byte $10,$61,$8D,$DE,$AD        ; NEG $DEAD,PC
+!byte $10,$61,$AD,$DE,$AD        ; NEG $DEAD,PC
+!byte $10,$61,$CD,$DE,$AD        ; NEG $DEAD,PC
+!byte $10,$61,$ED,$DE,$AD        ; NEG $DEAD,PC
+!byte $10,$61,$8D,$10,$00        ; NEG $1000,PC
+!byte $10,$61,$AD,$10,$00        ; NEG $1000,PC
+!byte $10,$61,$CD,$10,$00        ; NEG $1000,PC
+!byte $10,$61,$ED,$10,$00        ; NEG $1000,PC
+!byte $10,$61,$8F,$DE,$AD        ; NEG ,$DEAD
+!byte $10,$61,$AF,$DE,$AD        ; NEG ,$DEAD
+!byte $10,$61,$CF,$DE,$AD        ; NEG ,$DEAD
+!byte $10,$61,$EF,$DE,$AD        ; NEG ,$DEAD
+!byte $10,$61,$94                ; NEG [,X]
+!byte $10,$61,$B4                ; NEG [,Y]
+!byte $10,$61,$D4                ; NEG [,U]
+!byte $10,$61,$F4                ; NEG [,S]
+!byte $10,$61,$98,$FF            ; NEG [-$01,X]
+!byte $10,$61,$B8,$FF            ; NEG [-$01,Y]
+!byte $10,$61,$D8,$FF            ; NEG [-$01,U]
+!byte $10,$61,$F8,$FF            ; NEG [-$01,S]
+!byte $10,$61,$98,$60            ; NEG [$60,X]
+!byte $10,$61,$B8,$60            ; NEG [$60,Y]
+!byte $10,$61,$D8,$60            ; NEG [$60,U]
+!byte $10,$61,$F8,$60            ; NEG [$60,S]
+!byte $10,$61,$99,$DE,$AD        ; NEG [$DEAD,X]
+!byte $10,$61,$B9,$DE,$AD        ; NEG [$DEAD,Y]
+!byte $10,$61,$D9,$DE,$AD        ; NEG [$DEAD,U]
+!byte $10,$61,$F9,$DE,$AD        ; NEG [$DEAD,S]
+!byte $10,$61,$99,$DE,$10        ; NEG [$DE10,X]
+!byte $10,$61,$B9,$DE,$10        ; NEG [$DE10,Y]
+!byte $10,$61,$D9,$DE,$10        ; NEG [$DE10,U]
+!byte $10,$61,$F9,$DE,$10        ; NEG [$DE10,S]
+!byte $10,$61,$96                ; NEG [A,X]
+!byte $10,$61,$B6                ; NEG [A,Y]
+!byte $10,$61,$D6                ; NEG [A,U]
+!byte $10,$61,$F6                ; NEG [A,S]
+!byte $10,$61,$95                ; NEG [B,X]
+!byte $10,$61,$B5                ; NEG [B,Y]
+!byte $10,$61,$D5                ; NEG [B,U]
+!byte $10,$61,$F5                ; NEG [B,S]
+!byte $10,$61,$97                ; NEG [,X]
+!byte $10,$61,$B7                ; NEG [,Y]
+!byte $10,$61,$D7                ; NEG [,U]
+!byte $10,$61,$F7                ; NEG [,S]
+!byte $10,$61,$9A                ; NEG [,PClo]
+!byte $10,$61,$BA                ; NEG [,PClo]
+!byte $10,$61,$DA                ; NEG [,PClo]
+!byte $10,$61,$FA                ; NEG [,PClo]
+!byte $10,$61,$9B                ; NEG [D,X]
+!byte $10,$61,$BB                ; NEG [D,Y]
+!byte $10,$61,$DB                ; NEG [D,U]
+!byte $10,$61,$FB                ; NEG [D,S]
+!byte $10,$61,$91                ; NEG [,X++]
+!byte $10,$61,$B1                ; NEG [,Y++]
+!byte $10,$61,$D1                ; NEG [,U++]
+!byte $10,$61,$F1                ; NEG [,S++]
+!byte $10,$61,$92                ; NEG [,-X]
+!byte $10,$61,$B2                ; NEG [,-Y]
+!byte $10,$61,$D2                ; NEG [,-U]
+!byte $10,$61,$F2                ; NEG [,-S]
+!byte $10,$61,$93                ; NEG [,--X]
+!byte $10,$61,$B3                ; NEG [,--Y]
+!byte $10,$61,$D3                ; NEG [,--U]
+!byte $10,$61,$F3                ; NEG [,--S]
+!byte $10,$61,$9C,$FF            ; NEG [-$01,PC]
+!byte $10,$61,$BC,$FF            ; NEG [-$01,PC]
+!byte $10,$61,$DC,$FF            ; NEG [-$01,PC]
+!byte $10,$61,$FC,$FF            ; NEG [-$01,PC]
+!byte $10,$61,$9C,$60            ; NEG [$60,PC]
+!byte $10,$61,$BC,$60            ; NEG [$60,PC]
+!byte $10,$61,$DC,$60            ; NEG [$60,PC]
+!byte $10,$61,$FC,$60            ; NEG [$60,PC]
+!byte $10,$61,$9D,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $10,$61,$BD,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $10,$61,$DD,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $10,$61,$FD,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $10,$61,$9D,$10,$00        ; NEG [$1000,PC]
+!byte $10,$61,$BD,$10,$00        ; NEG [$1000,PC]
+!byte $10,$61,$DD,$10,$00        ; NEG [$1000,PC]
+!byte $10,$61,$FD,$10,$00        ; NEG [$1000,PC]
+!byte $10,$61,$9F,$DE,$AD        ; NEG [$DEAD]
+!byte $10,$61,$BF,$DE,$AD        ; NEG [$DEAD]
+!byte $10,$61,$DF,$DE,$AD        ; NEG [$DEAD]
+!byte $10,$61,$FF,$DE,$AD        ; NEG [$DEAD]
+!byte $10,$61,$90                ; NEG [,X+]
+!byte $10,$61,$B0                ; NEG [,Y+]
+!byte $10,$61,$D0                ; NEG [,U+]
+!byte $10,$61,$F0                ; NEG [,S+]
+!byte $11,$60,$84                ; NEG ,X
+!byte $11,$60,$A4                ; NEG ,Y
+!byte $11,$60,$C4                ; NEG ,U
+!byte $11,$60,$E4                ; NEG ,S
+!byte $11,$60,$15                ; NEG -$0B,X
+!byte $11,$60,$35                ; NEG -$0B,Y
+!byte $11,$60,$55                ; NEG -$0B,U
+!byte $11,$60,$75                ; NEG -$0B,S
+!byte $11,$60,$0C                ; NEG $0C,X
+!byte $11,$60,$2C                ; NEG $0C,Y
+!byte $11,$60,$4C                ; NEG $0C,U
+!byte $11,$60,$6C                ; NEG $0C,S
+!byte $11,$60,$88,$FF            ; NEG -$01,X
+!byte $11,$60,$A8,$FF            ; NEG -$01,Y
+!byte $11,$60,$C8,$FF            ; NEG -$01,U
+!byte $11,$60,$E8,$FF            ; NEG -$01,S
+!byte $11,$60,$88,$60            ; NEG $60,X
+!byte $11,$60,$A8,$60            ; NEG $60,Y
+!byte $11,$60,$C8,$60            ; NEG $60,U
+!byte $11,$60,$E8,$60            ; NEG $60,S
+!byte $11,$60,$89,$DE,$AD        ; NEG $DEAD,X
+!byte $11,$60,$A9,$DE,$AD        ; NEG $DEAD,Y
+!byte $11,$60,$C9,$DE,$AD        ; NEG $DEAD,U
+!byte $11,$60,$E9,$DE,$AD        ; NEG $DEAD,S
+!byte $11,$60,$89,$10,$00        ; NEG $1000,X
+!byte $11,$60,$A9,$10,$00        ; NEG $1000,Y
+!byte $11,$60,$C9,$10,$00        ; NEG $1000,U
+!byte $11,$60,$E9,$10,$00        ; NEG $1000,S
+!byte $11,$60,$86                ; NEG A,X
+!byte $11,$60,$A6                ; NEG A,Y
+!byte $11,$60,$C6                ; NEG A,U
+!byte $11,$60,$E6                ; NEG A,S
+!byte $11,$60,$85                ; NEG B,X
+!byte $11,$60,$A5                ; NEG B,Y
+!byte $11,$60,$C5                ; NEG B,U
+!byte $11,$60,$E5                ; NEG B,S
+!byte $11,$60,$87                ; NEG ,X
+!byte $11,$60,$A7                ; NEG ,Y
+!byte $11,$60,$C7                ; NEG ,U
+!byte $11,$60,$E7                ; NEG ,S
+!byte $11,$60,$8A                ; NEG ,PClo
+!byte $11,$60,$AA                ; NEG ,PClo
+!byte $11,$60,$CA                ; NEG ,PClo
+!byte $11,$60,$EA                ; NEG ,PClo
+!byte $11,$60,$8B                ; NEG D,X
+!byte $11,$60,$AB                ; NEG D,Y
+!byte $11,$60,$CB                ; NEG D,U
+!byte $11,$60,$EB                ; NEG D,S
+!byte $11,$60,$80                ; NEG ,X+
+!byte $11,$60,$A0                ; NEG ,Y+
+!byte $11,$60,$C0                ; NEG ,U+
+!byte $11,$60,$E0                ; NEG ,S+
+!byte $11,$60,$81                ; NEG ,X++
+!byte $11,$60,$A1                ; NEG ,Y++
+!byte $11,$60,$C1                ; NEG ,U++
+!byte $11,$60,$E1                ; NEG ,S++
+!byte $11,$60,$82                ; NEG ,-X
+!byte $11,$60,$A2                ; NEG ,-Y
+!byte $11,$60,$C2                ; NEG ,-U
+!byte $11,$60,$E2                ; NEG ,-S
+!byte $11,$60,$83                ; NEG ,--X
+!byte $11,$60,$A3                ; NEG ,--Y
+!byte $11,$60,$C3                ; NEG ,--U
+!byte $11,$60,$E3                ; NEG ,--S
+!byte $11,$60,$8C,$FF            ; NEG -$01,PC
+!byte $11,$60,$AC,$FF            ; NEG -$01,PC
+!byte $11,$60,$CC,$FF            ; NEG -$01,PC
+!byte $11,$60,$EC,$FF            ; NEG -$01,PC
+!byte $11,$60,$8C,$60            ; NEG $60,PC
+!byte $11,$60,$AC,$60            ; NEG $60,PC
+!byte $11,$60,$CC,$60            ; NEG $60,PC
+!byte $11,$60,$EC,$60            ; NEG $60,PC
+!byte $11,$60,$8D,$DE,$AD        ; NEG $DEAD,PC
+!byte $11,$60,$AD,$DE,$AD        ; NEG $DEAD,PC
+!byte $11,$60,$CD,$DE,$AD        ; NEG $DEAD,PC
+!byte $11,$60,$ED,$DE,$AD        ; NEG $DEAD,PC
+!byte $11,$60,$8D,$10,$00        ; NEG $1000,PC
+!byte $11,$60,$AD,$10,$00        ; NEG $1000,PC
+!byte $11,$60,$CD,$10,$00        ; NEG $1000,PC
+!byte $11,$60,$ED,$10,$00        ; NEG $1000,PC
+!byte $11,$60,$8F,$DE,$AD        ; NEG ,$DEAD
+!byte $11,$60,$AF,$DE,$AD        ; NEG ,$DEAD
+!byte $11,$60,$CF,$DE,$AD        ; NEG ,$DEAD
+!byte $11,$60,$EF,$DE,$AD        ; NEG ,$DEAD
+!byte $11,$60,$94                ; NEG [,X]
+!byte $11,$60,$B4                ; NEG [,Y]
+!byte $11,$60,$D4                ; NEG [,U]
+!byte $11,$60,$F4                ; NEG [,S]
+!byte $11,$60,$98,$FF            ; NEG [-$01,X]
+!byte $11,$60,$B8,$FF            ; NEG [-$01,Y]
+!byte $11,$60,$D8,$FF            ; NEG [-$01,U]
+!byte $11,$60,$F8,$FF            ; NEG [-$01,S]
+!byte $11,$60,$98,$60            ; NEG [$60,X]
+!byte $11,$60,$B8,$60            ; NEG [$60,Y]
+!byte $11,$60,$D8,$60            ; NEG [$60,U]
+!byte $11,$60,$F8,$60            ; NEG [$60,S]
+!byte $11,$60,$99,$DE,$AD        ; NEG [$DEAD,X]
+!byte $11,$60,$B9,$DE,$AD        ; NEG [$DEAD,Y]
+!byte $11,$60,$D9,$DE,$AD        ; NEG [$DEAD,U]
+!byte $11,$60,$F9,$DE,$AD        ; NEG [$DEAD,S]
+!byte $11,$60,$99,$DE,$10        ; NEG [$DE10,X]
+!byte $11,$60,$B9,$DE,$10        ; NEG [$DE10,Y]
+!byte $11,$60,$D9,$DE,$10        ; NEG [$DE10,U]
+!byte $11,$60,$F9,$DE,$10        ; NEG [$DE10,S]
+!byte $11,$60,$96                ; NEG [A,X]
+!byte $11,$60,$B6                ; NEG [A,Y]
+!byte $11,$60,$D6                ; NEG [A,U]
+!byte $11,$60,$F6                ; NEG [A,S]
+!byte $11,$60,$95                ; NEG [B,X]
+!byte $11,$60,$B5                ; NEG [B,Y]
+!byte $11,$60,$D5                ; NEG [B,U]
+!byte $11,$60,$F5                ; NEG [B,S]
+!byte $11,$60,$97                ; NEG [,X]
+!byte $11,$60,$B7                ; NEG [,Y]
+!byte $11,$60,$D7                ; NEG [,U]
+!byte $11,$60,$F7                ; NEG [,S]
+!byte $11,$60,$9A                ; NEG [,PClo]
+!byte $11,$60,$BA                ; NEG [,PClo]
+!byte $11,$60,$DA                ; NEG [,PClo]
+!byte $11,$60,$FA                ; NEG [,PClo]
+!byte $11,$60,$9B                ; NEG [D,X]
+!byte $11,$60,$BB                ; NEG [D,Y]
+!byte $11,$60,$DB                ; NEG [D,U]
+!byte $11,$60,$FB                ; NEG [D,S]
+!byte $11,$60,$91                ; NEG [,X++]
+!byte $11,$60,$B1                ; NEG [,Y++]
+!byte $11,$60,$D1                ; NEG [,U++]
+!byte $11,$60,$F1                ; NEG [,S++]
+!byte $11,$60,$92                ; NEG [,-X]
+!byte $11,$60,$B2                ; NEG [,-Y]
+!byte $11,$60,$D2                ; NEG [,-U]
+!byte $11,$60,$F2                ; NEG [,-S]
+!byte $11,$60,$93                ; NEG [,--X]
+!byte $11,$60,$B3                ; NEG [,--Y]
+!byte $11,$60,$D3                ; NEG [,--U]
+!byte $11,$60,$F3                ; NEG [,--S]
+!byte $11,$60,$9C,$FF            ; NEG [-$01,PC]
+!byte $11,$60,$BC,$FF            ; NEG [-$01,PC]
+!byte $11,$60,$DC,$FF            ; NEG [-$01,PC]
+!byte $11,$60,$FC,$FF            ; NEG [-$01,PC]
+!byte $11,$60,$9C,$60            ; NEG [$60,PC]
+!byte $11,$60,$BC,$60            ; NEG [$60,PC]
+!byte $11,$60,$DC,$60            ; NEG [$60,PC]
+!byte $11,$60,$FC,$60            ; NEG [$60,PC]
+!byte $11,$60,$9D,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $11,$60,$BD,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $11,$60,$DD,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $11,$60,$FD,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $11,$60,$9D,$10,$00        ; NEG [$1000,PC]
+!byte $11,$60,$BD,$10,$00        ; NEG [$1000,PC]
+!byte $11,$60,$DD,$10,$00        ; NEG [$1000,PC]
+!byte $11,$60,$FD,$10,$00        ; NEG [$1000,PC]
+!byte $11,$60,$9F,$DE,$AD        ; NEG [$DEAD]
+!byte $11,$60,$BF,$DE,$AD        ; NEG [$DEAD]
+!byte $11,$60,$DF,$DE,$AD        ; NEG [$DEAD]
+!byte $11,$60,$FF,$DE,$AD        ; NEG [$DEAD]
+!byte $11,$60,$90                ; NEG [,X+]
+!byte $11,$60,$B0                ; NEG [,Y+]
+!byte $11,$60,$D0                ; NEG [,U+]
+!byte $11,$60,$F0                ; NEG [,S+]
+!byte $11,$61,$84                ; NEG ,X
+!byte $11,$61,$A4                ; NEG ,Y
+!byte $11,$61,$C4                ; NEG ,U
+!byte $11,$61,$E4                ; NEG ,S
+!byte $11,$61,$15                ; NEG -$0B,X
+!byte $11,$61,$35                ; NEG -$0B,Y
+!byte $11,$61,$55                ; NEG -$0B,U
+!byte $11,$61,$75                ; NEG -$0B,S
+!byte $11,$61,$0C                ; NEG $0C,X
+!byte $11,$61,$2C                ; NEG $0C,Y
+!byte $11,$61,$4C                ; NEG $0C,U
+!byte $11,$61,$6C                ; NEG $0C,S
+!byte $11,$61,$88,$FF            ; NEG -$01,X
+!byte $11,$61,$A8,$FF            ; NEG -$01,Y
+!byte $11,$61,$C8,$FF            ; NEG -$01,U
+!byte $11,$61,$E8,$FF            ; NEG -$01,S
+!byte $11,$61,$88,$60            ; NEG $60,X
+!byte $11,$61,$A8,$60            ; NEG $60,Y
+!byte $11,$61,$C8,$60            ; NEG $60,U
+!byte $11,$61,$E8,$60            ; NEG $60,S
+!byte $11,$61,$89,$DE,$AD        ; NEG $DEAD,X
+!byte $11,$61,$A9,$DE,$AD        ; NEG $DEAD,Y
+!byte $11,$61,$C9,$DE,$AD        ; NEG $DEAD,U
+!byte $11,$61,$E9,$DE,$AD        ; NEG $DEAD,S
+!byte $11,$61,$89,$10,$00        ; NEG $1000,X
+!byte $11,$61,$A9,$10,$00        ; NEG $1000,Y
+!byte $11,$61,$C9,$10,$00        ; NEG $1000,U
+!byte $11,$61,$E9,$10,$00        ; NEG $1000,S
+!byte $11,$61,$86                ; NEG A,X
+!byte $11,$61,$A6                ; NEG A,Y
+!byte $11,$61,$C6                ; NEG A,U
+!byte $11,$61,$E6                ; NEG A,S
+!byte $11,$61,$85                ; NEG B,X
+!byte $11,$61,$A5                ; NEG B,Y
+!byte $11,$61,$C5                ; NEG B,U
+!byte $11,$61,$E5                ; NEG B,S
+!byte $11,$61,$87                ; NEG ,X
+!byte $11,$61,$A7                ; NEG ,Y
+!byte $11,$61,$C7                ; NEG ,U
+!byte $11,$61,$E7                ; NEG ,S
+!byte $11,$61,$8A                ; NEG ,PClo
+!byte $11,$61,$AA                ; NEG ,PClo
+!byte $11,$61,$CA                ; NEG ,PClo
+!byte $11,$61,$EA                ; NEG ,PClo
+!byte $11,$61,$8B                ; NEG D,X
+!byte $11,$61,$AB                ; NEG D,Y
+!byte $11,$61,$CB                ; NEG D,U
+!byte $11,$61,$EB                ; NEG D,S
+!byte $11,$61,$80                ; NEG ,X+
+!byte $11,$61,$A0                ; NEG ,Y+
+!byte $11,$61,$C0                ; NEG ,U+
+!byte $11,$61,$E0                ; NEG ,S+
+!byte $11,$61,$81                ; NEG ,X++
+!byte $11,$61,$A1                ; NEG ,Y++
+!byte $11,$61,$C1                ; NEG ,U++
+!byte $11,$61,$E1                ; NEG ,S++
+!byte $11,$61,$82                ; NEG ,-X
+!byte $11,$61,$A2                ; NEG ,-Y
+!byte $11,$61,$C2                ; NEG ,-U
+!byte $11,$61,$E2                ; NEG ,-S
+!byte $11,$61,$83                ; NEG ,--X
+!byte $11,$61,$A3                ; NEG ,--Y
+!byte $11,$61,$C3                ; NEG ,--U
+!byte $11,$61,$E3                ; NEG ,--S
+!byte $11,$61,$8C,$FF            ; NEG -$01,PC
+!byte $11,$61,$AC,$FF            ; NEG -$01,PC
+!byte $11,$61,$CC,$FF            ; NEG -$01,PC
+!byte $11,$61,$EC,$FF            ; NEG -$01,PC
+!byte $11,$61,$8C,$60            ; NEG $60,PC
+!byte $11,$61,$AC,$60            ; NEG $60,PC
+!byte $11,$61,$CC,$60            ; NEG $60,PC
+!byte $11,$61,$EC,$60            ; NEG $60,PC
+!byte $11,$61,$8D,$DE,$AD        ; NEG $DEAD,PC
+!byte $11,$61,$AD,$DE,$AD        ; NEG $DEAD,PC
+!byte $11,$61,$CD,$DE,$AD        ; NEG $DEAD,PC
+!byte $11,$61,$ED,$DE,$AD        ; NEG $DEAD,PC
+!byte $11,$61,$8D,$10,$00        ; NEG $1000,PC
+!byte $11,$61,$AD,$10,$00        ; NEG $1000,PC
+!byte $11,$61,$CD,$10,$00        ; NEG $1000,PC
+!byte $11,$61,$ED,$10,$00        ; NEG $1000,PC
+!byte $11,$61,$8F,$DE,$AD        ; NEG ,$DEAD
+!byte $11,$61,$AF,$DE,$AD        ; NEG ,$DEAD
+!byte $11,$61,$CF,$DE,$AD        ; NEG ,$DEAD
+!byte $11,$61,$EF,$DE,$AD        ; NEG ,$DEAD
+!byte $11,$61,$94                ; NEG [,X]
+!byte $11,$61,$B4                ; NEG [,Y]
+!byte $11,$61,$D4                ; NEG [,U]
+!byte $11,$61,$F4                ; NEG [,S]
+!byte $11,$61,$98,$FF            ; NEG [-$01,X]
+!byte $11,$61,$B8,$FF            ; NEG [-$01,Y]
+!byte $11,$61,$D8,$FF            ; NEG [-$01,U]
+!byte $11,$61,$F8,$FF            ; NEG [-$01,S]
+!byte $11,$61,$98,$60            ; NEG [$60,X]
+!byte $11,$61,$B8,$60            ; NEG [$60,Y]
+!byte $11,$61,$D8,$60            ; NEG [$60,U]
+!byte $11,$61,$F8,$60            ; NEG [$60,S]
+!byte $11,$61,$99,$DE,$AD        ; NEG [$DEAD,X]
+!byte $11,$61,$B9,$DE,$AD        ; NEG [$DEAD,Y]
+!byte $11,$61,$D9,$DE,$AD        ; NEG [$DEAD,U]
+!byte $11,$61,$F9,$DE,$AD        ; NEG [$DEAD,S]
+!byte $11,$61,$99,$DE,$10        ; NEG [$DE10,X]
+!byte $11,$61,$B9,$DE,$10        ; NEG [$DE10,Y]
+!byte $11,$61,$D9,$DE,$10        ; NEG [$DE10,U]
+!byte $11,$61,$F9,$DE,$10        ; NEG [$DE10,S]
+!byte $11,$61,$96                ; NEG [A,X]
+!byte $11,$61,$B6                ; NEG [A,Y]
+!byte $11,$61,$D6                ; NEG [A,U]
+!byte $11,$61,$F6                ; NEG [A,S]
+!byte $11,$61,$95                ; NEG [B,X]
+!byte $11,$61,$B5                ; NEG [B,Y]
+!byte $11,$61,$D5                ; NEG [B,U]
+!byte $11,$61,$F5                ; NEG [B,S]
+!byte $11,$61,$97                ; NEG [,X]
+!byte $11,$61,$B7                ; NEG [,Y]
+!byte $11,$61,$D7                ; NEG [,U]
+!byte $11,$61,$F7                ; NEG [,S]
+!byte $11,$61,$9A                ; NEG [,PClo]
+!byte $11,$61,$BA                ; NEG [,PClo]
+!byte $11,$61,$DA                ; NEG [,PClo]
+!byte $11,$61,$FA                ; NEG [,PClo]
+!byte $11,$61,$9B                ; NEG [D,X]
+!byte $11,$61,$BB                ; NEG [D,Y]
+!byte $11,$61,$DB                ; NEG [D,U]
+!byte $11,$61,$FB                ; NEG [D,S]
+!byte $11,$61,$91                ; NEG [,X++]
+!byte $11,$61,$B1                ; NEG [,Y++]
+!byte $11,$61,$D1                ; NEG [,U++]
+!byte $11,$61,$F1                ; NEG [,S++]
+!byte $11,$61,$92                ; NEG [,-X]
+!byte $11,$61,$B2                ; NEG [,-Y]
+!byte $11,$61,$D2                ; NEG [,-U]
+!byte $11,$61,$F2                ; NEG [,-S]
+!byte $11,$61,$93                ; NEG [,--X]
+!byte $11,$61,$B3                ; NEG [,--Y]
+!byte $11,$61,$D3                ; NEG [,--U]
+!byte $11,$61,$F3                ; NEG [,--S]
+!byte $11,$61,$9C,$FF            ; NEG [-$01,PC]
+!byte $11,$61,$BC,$FF            ; NEG [-$01,PC]
+!byte $11,$61,$DC,$FF            ; NEG [-$01,PC]
+!byte $11,$61,$FC,$FF            ; NEG [-$01,PC]
+!byte $11,$61,$9C,$60            ; NEG [$60,PC]
+!byte $11,$61,$BC,$60            ; NEG [$60,PC]
+!byte $11,$61,$DC,$60            ; NEG [$60,PC]
+!byte $11,$61,$FC,$60            ; NEG [$60,PC]
+!byte $11,$61,$9D,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $11,$61,$BD,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $11,$61,$DD,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $11,$61,$FD,$DE,$AD        ; NEG [$DEAD,PC]
+!byte $11,$61,$9D,$10,$00        ; NEG [$1000,PC]
+!byte $11,$61,$BD,$10,$00        ; NEG [$1000,PC]
+!byte $11,$61,$DD,$10,$00        ; NEG [$1000,PC]
+!byte $11,$61,$FD,$10,$00        ; NEG [$1000,PC]
+!byte $11,$61,$9F,$DE,$AD        ; NEG [$DEAD]
+!byte $11,$61,$BF,$DE,$AD        ; NEG [$DEAD]
+!byte $11,$61,$DF,$DE,$AD        ; NEG [$DEAD]
+!byte $11,$61,$FF,$DE,$AD        ; NEG [$DEAD]
+!byte $11,$61,$90                ; NEG [,X+]
+!byte $11,$61,$B0                ; NEG [,Y+]
+!byte $11,$61,$D0                ; NEG [,U+]
+!byte $11,$61,$F0                ; NEG [,S+]
 
-      !byte $46                       ; RORA
-      !byte $47                       ; ASRA
-      !byte $48                       ; ASLA
-      !byte $49                       ; ROLA
-      !byte $4A                       ; DECA
-      !byte $4C                       ; INCA
-      !byte $4D                       ; TSTA
-      !byte $4F                       ; CLRA
-      !byte $50                       ; NEGB
-      !byte $53                       ; COMB
-      !byte $54                       ; LSRB
-      !byte $56                       ; RORB
-      !byte $57                       ; ASRB
-      !byte $58                       ; ASLB
-      !byte $59                       ; ROLB
-      !byte $5A                       ; DECB
-      !byte $5C                       ; INCB
-      !byte $5D                       ; TSTB
-      !byte $5F                       ; CLRB
-      !byte $60,$84                   ; NEG ,X
-      !byte $60,$A4                   ; NEG ,Y
-      !byte $60,$C4                   ; NEG ,U
-      !byte $60,$E4                   ; NEG ,S
-      !byte $60,$15                   ; NEG -$0B,X
-      !byte $60,$35                   ; NEG -$0B,Y
-      !byte $60,$55                   ; NEG -$0B,U
-      !byte $60,$75                   ; NEG -$0B,S
-      !byte $60,$0C                   ; NEG $0C,X
-      !byte $60,$2C                   ; NEG $0C,Y
-      !byte $60,$4C                   ; NEG $0C,U
-      !byte $60,$6C                   ; NEG $0C,S
-      !byte $60,$88,$FF               ; NEG -$01,X
-      !byte $60,$A8,$FF               ; NEG -$01,Y
-      !byte $60,$C8,$FF               ; NEG -$01,U
-      !byte $60,$E8,$FF               ; NEG -$01,S
-      !byte $60,$88,$60               ; NEG $60,X
-      !byte $60,$A8,$60               ; NEG $60,Y
-      !byte $60,$C8,$60               ; NEG $60,U
-      !byte $60,$E8,$60               ; NEG $60,S
-      !byte $60,$89,$DE,$AD           ; NEG $DEAD,X
-      !byte $60,$A9,$DE,$AD           ; NEG $DEAD,Y
-      !byte $60,$C9,$DE,$AD           ; NEG $DEAD,U
-      !byte $60,$E9,$DE,$AD           ; NEG $DEAD,S
-      !byte $60,$89,$10,$00           ; NEG $1000,X
-      !byte $60,$A9,$10,$00           ; NEG $1000,Y
-      !byte $60,$C9,$10,$00           ; NEG $1000,U
-      !byte $60,$E9,$10,$00           ; NEG $1000,S
-      !byte $60,$86                   ; NEG A,X
-      !byte $60,$A6                   ; NEG A,Y
-      !byte $60,$C6                   ; NEG A,U
-      !byte $60,$E6                   ; NEG A,S
-      !byte $60,$85                   ; NEG B,X
-      !byte $60,$A5                   ; NEG B,Y
-      !byte $60,$C5                   ; NEG B,U
-      !byte $60,$E5                   ; NEG B,S
-      !byte $60,$8B                   ; NEG D,X
-      !byte $60,$AB                   ; NEG D,Y
-      !byte $60,$CB                   ; NEG D,U
-      !byte $60,$EB                   ; NEG D,S
-      !byte $60,$80                   ; NEG ,X+
-      !byte $60,$A0                   ; NEG ,Y+
-      !byte $60,$C0                   ; NEG ,U+
-      !byte $60,$E0                   ; NEG ,S+
-      !byte $60,$81                   ; NEG ,X++
-      !byte $60,$A1                   ; NEG ,Y++
-      !byte $60,$C1                   ; NEG ,U++
-      !byte $60,$E1                   ; NEG ,S++
-      !byte $60,$82                   ; NEG ,-X
-      !byte $60,$A2                   ; NEG ,-Y
-      !byte $60,$C2                   ; NEG ,-U
-      !byte $60,$E2                   ; NEG ,-S
-      !byte $60,$83                   ; NEG ,--X
-      !byte $60,$A3                   ; NEG ,--Y
-      !byte $60,$C3                   ; NEG ,--U
-      !byte $60,$E3                   ; NEG ,--S
-      !byte $60,$8C,$FF               ; NEG -$01,PC
-      !byte $60,$AC,$FF               ; NEG -$01,PC
-      !byte $60,$CC,$FF               ; NEG -$01,PC
-      !byte $60,$EC,$FF               ; NEG -$01,PC
-      !byte $60,$8C,$60               ; NEG $60,PC
-      !byte $60,$AC,$60               ; NEG $60,PC
-      !byte $60,$CC,$60               ; NEG $60,PC
-      !byte $60,$EC,$60               ; NEG $60,PC
-      !byte $60,$8D,$DE,$AD           ; NEG $DEAD,PC
-      !byte $60,$AD,$DE,$AD           ; NEG $DEAD,PC
-      !byte $60,$CD,$DE,$AD           ; NEG $DEAD,PC
-      !byte $60,$ED,$DE,$AD           ; NEG $DEAD,PC
-      !byte $60,$8D,$10,$00           ; NEG $1000,PC
-      !byte $60,$AD,$10,$00           ; NEG $1000,PC
-      !byte $60,$CD,$10,$00           ; NEG $1000,PC
-      !byte $60,$ED,$10,$00           ; NEG $1000,PC
-      !byte $60,$94                   ; NEG [,X]
-      !byte $60,$B4                   ; NEG [,Y]
-      !byte $60,$D4                   ; NEG [,U]
-      !byte $60,$F4                   ; NEG [,S]
-      !byte $60,$98,$FF               ; NEG [-$01,X]
-      !byte $60,$B8,$FF               ; NEG [-$01,Y]
-      !byte $60,$D8,$FF               ; NEG [-$01,U]
-      !byte $60,$F8,$FF               ; NEG [-$01,S]
-      !byte $60,$98,$60               ; NEG [$60,X]
-      !byte $60,$B8,$60               ; NEG [$60,Y]
-      !byte $60,$D8,$60               ; NEG [$60,U]
-      !byte $60,$F8,$60               ; NEG [$60,S]
-      !byte $60,$99,$DE,$AD           ; NEG [$DEAD,X]
-      !byte $60,$B9,$DE,$AD           ; NEG [$DEAD,Y]
-      !byte $60,$D9,$DE,$AD           ; NEG [$DEAD,U]
-      !byte $60,$F9,$DE,$AD           ; NEG [$DEAD,S]
-      !byte $60,$99,$DE,$10           ; NEG [$DE10,X]
-      !byte $60,$B9,$DE,$10           ; NEG [$DE10,Y]
-      !byte $60,$D9,$DE,$10           ; NEG [$DE10,U]
-      !byte $60,$F9,$DE,$10           ; NEG [$DE10,S]
-      !byte $60,$96                   ; NEG [A,X]
-      !byte $60,$B6                   ; NEG [A,Y]
-      !byte $60,$D6                   ; NEG [A,U]
-      !byte $60,$F6                   ; NEG [A,S]
-      !byte $60,$95                   ; NEG [B,X]
-      !byte $60,$B5                   ; NEG [B,Y]
-      !byte $60,$D5                   ; NEG [B,U]
-      !byte $60,$F5                   ; NEG [B,S]
-      !byte $60,$9B                   ; NEG [D,X]
-      !byte $60,$BB                   ; NEG [D,Y]
-      !byte $60,$DB                   ; NEG [D,U]
-      !byte $60,$FB                   ; NEG [D,S]
-      !byte $60,$91                   ; NEG [,X++]
-      !byte $60,$B1                   ; NEG [,Y++]
-      !byte $60,$D1                   ; NEG [,U++]
-      !byte $60,$F1                   ; NEG [,S++]
-      !byte $60,$93                   ; NEG [,--X]
-      !byte $60,$B3                   ; NEG [,--Y]
-      !byte $60,$D3                   ; NEG [,--U]
-      !byte $60,$F3                   ; NEG [,--S]
-      !byte $60,$9C,$FF               ; NEG [-$01,PC]
-      !byte $60,$BC,$FF               ; NEG [-$01,PC]
-      !byte $60,$DC,$FF               ; NEG [-$01,PC]
-      !byte $60,$FC,$FF               ; NEG [-$01,PC]
-      !byte $60,$9C,$60               ; NEG [$60,PC]
-      !byte $60,$BC,$60               ; NEG [$60,PC]
-      !byte $60,$DC,$60               ; NEG [$60,PC]
-      !byte $60,$FC,$60               ; NEG [$60,PC]
-      !byte $60,$9D,$DE,$AD           ; NEG [$DEAD,PC]
-      !byte $60,$BD,$DE,$AD           ; NEG [$DEAD,PC]
-      !byte $60,$DD,$DE,$AD           ; NEG [$DEAD,PC]
-      !byte $60,$FD,$DE,$AD           ; NEG [$DEAD,PC]
-      !byte $60,$9D,$10,$00           ; NEG [$1000,PC]
-      !byte $60,$BD,$10,$00           ; NEG [$1000,PC]
-      !byte $60,$DD,$10,$00           ; NEG [$1000,PC]
-      !byte $60,$FD,$10,$00           ; NEG [$1000,PC]
-      !byte $60,$9F,$DE,$AD           ; NEG [$DEAD]
-      !byte $60,$BF,$DE,$AD           ; NEG [$DEAD]
-      !byte $60,$DF,$DE,$AD           ; NEG [$DEAD]
-      !byte $60,$FF,$DE,$AD           ; NEG [$DEAD]
       !byte $63,$84                   ; COM ,X
       !byte $63,$A4                   ; COM ,Y
       !byte $63,$C4                   ; COM ,U
