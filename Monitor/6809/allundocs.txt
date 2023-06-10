@@ -15230,52 +15230,88 @@
 !byte $11,$AF,$B0                ; STX [,Y+]
 !byte $11,$AF,$D0                ; STX [,U+]
 !byte $11,$AF,$F0                ; STX [,S+]
+!byte $10,$B0,$DE,$AD            ; SUBA $DEAD
+!byte $11,$B0,$DE,$AD            ; SUBA $DEAD
+!byte $10,$B1,$DE,$AD            ; CMPA $DEAD
+!byte $11,$B1,$DE,$AD            ; CMPA $DEAD
+!byte $10,$B2,$DE,$AD            ; SBCA $DEAD
+!byte $11,$B2,$DE,$AD            ; SBCA $DEAD
+!byte $10,$B4,$DE,$AD            ; ANDA $DEAD
+!byte $11,$B4,$DE,$AD            ; ANDA $DEAD
+!byte $10,$B5,$DE,$AD            ; BITA $DEAD
+!byte $11,$B5,$DE,$AD            ; BITA $DEAD
+!byte $10,$B6,$DE,$AD            ; LDA $DEAD
+!byte $11,$B6,$DE,$AD            ; LDA $DEAD
+!byte $10,$B7,$DE,$AD            ; STA $DEAD
+!byte $11,$B7,$DE,$AD            ; STA $DEAD
+!byte $10,$B8,$DE,$AD            ; EORA $DEAD
+!byte $11,$B8,$DE,$AD            ; EORA $DEAD
+!byte $10,$B9,$DE,$AD            ; ADCA $DEAD
+!byte $11,$B9,$DE,$AD            ; ADCA $DEAD
+!byte $10,$BA,$DE,$AD            ; ORA $DEAD
+!byte $11,$BA,$DE,$AD            ; ORA $DEAD
+!byte $10,$BB,$DE,$AD            ; ADDA $DEAD
+!byte $11,$BB,$DE,$AD            ; ADDA $DEAD
+!byte $10,$BD,$DE,$AD            ; JSR $DEAD
+!byte $11,$BD,$DE,$AD            ; JSR $DEAD
+!byte $11,$BE,$DE,$AD            ; LDX $DEAD
+!byte $11,$BF,$DE,$AD            ; STX $DEAD
+!byte $10,$C0,$00                ; SUBB #$00
+!byte $11,$C0,$00                ; SUBB #$00
+!byte $10,$C1,$00                ; CMPB #$00
+!byte $11,$C1,$00                ; CMPB #$00
+!byte $10,$C2,$00                ; SBCB #$00
+!byte $11,$C2,$00                ; SBCB #$00
+!byte $10,$C3,$DE,$AD            ; ADDD #$DEAD
+!byte $11,$C3,$DE,$AD            ; ADDD #$DEAD
+!byte $10,$C4,$00                ; ANDB #$00
+!byte $11,$C4,$00                ; ANDB #$00
+!byte $10,$C5,$00                ; BITB #$00
+!byte $11,$C5,$00                ; BITB #$00
+!byte $10,$C6,$00                ; LDB #$00
+!byte $11,$C6,$00                ; LDB #$00
+!byte $10,$C8,$00                ; EORB #$00
+!byte $11,$C8,$00                ; EORB #$00
+!byte $10,$C9,$00                ; ADCB #$00
+!byte $11,$C9,$00                ; ADCB #$00
+!byte $10,$CA,$00                ; ORB #$00
+!byte $11,$CA,$00                ; ORB #$00
+!byte $10,$CB,$00                ; ADDB #$00
+!byte $11,$CB,$00                ; ADDB #$00
+!byte $10,$CC,$DE,$AD            ; LDD #$DEAD
+!byte $11,$CC,$DE,$AD            ; LDD #$DEAD
+!byte $11,$CE,$DE,$AD            ; LDU #$DEAD
+!byte $10,$D0,$00                ; SUBB $00
+!byte $11,$D0,$00                ; SUBB $00
+!byte $10,$D1,$00                ; CMPB $00
+!byte $11,$D1,$00                ; CMPB $00
+!byte $10,$D2,$00                ; SBCB $00
+!byte $11,$D2,$00                ; SBCB $00
+!byte $10,$D3,$00                ; ADDD $00
+!byte $11,$D3,$00                ; ADDD $00
+!byte $10,$D4,$00                ; ANDB $00
+!byte $11,$D4,$00                ; ANDB $00
+!byte $10,$D5,$00                ; BITB $00
+!byte $11,$D5,$00                ; BITB $00
+!byte $10,$D6,$00                ; LDB $00
+!byte $11,$D6,$00                ; LDB $00
+!byte $10,$D7,$00                ; STB $00
+!byte $11,$D7,$00                ; STB $00
+!byte $10,$D8,$00                ; EORB $00
+!byte $11,$D8,$00                ; EORB $00
+!byte $10,$D9,$00                ; ADCB $00
+!byte $11,$D9,$00                ; ADCB $00
+!byte $10,$DA,$00                ; ORB $00
+!byte $11,$DA,$00                ; ORB $00
+!byte $10,$DB,$00                ; ADDB $00
+!byte $11,$DB,$00                ; ADDB $00
+!byte $10,$DC,$00                ; LDD $00
+!byte $11,$DC,$00                ; LDD $00
+!byte $10,$DD,$00                ; STD $00
+!byte $11,$DD,$00                ; STD $00
+!byte $11,$DE,$00                ; LDU $00
+!byte $11,$DF,$00                ; STU $00
 
-      !byte $B0,$DE,$AD               ; SUBA $DEAD
-      !byte $B1,$DE,$AD               ; CMPA $DEAD
-      !byte $B2,$DE,$AD               ; SBCA $DEAD
-      !byte $B3,$DE,$AD               ; SUBD $DEAD
-      !byte $B4,$DE,$AD               ; ANDA $DEAD
-      !byte $B5,$DE,$AD               ; BITA $DEAD
-      !byte $B6,$DE,$AD               ; LDA $DEAD
-      !byte $B7,$DE,$AD               ; STA $DEAD
-      !byte $B8,$DE,$AD               ; EORA $DEAD
-      !byte $B9,$DE,$AD               ; ADCA $DEAD
-      !byte $BA,$DE,$AD               ; ORA $DEAD
-      !byte $BB,$DE,$AD               ; ADDA $DEAD
-      !byte $BC,$DE,$AD               ; CMPX $DEAD
-      !byte $BD,$DE,$AD               ; JSR $DEAD
-      !byte $BE,$DE,$AD               ; LDX $DEAD
-      !byte $BF,$DE,$AD               ; STX $DEAD
-      !byte $C0,$00                   ; SUBB #$00
-      !byte $C1,$00                   ; CMPB #$00
-      !byte $C2,$00                   ; SBCB #$00
-      !byte $C3,$DE,$AD               ; ADDD #$DEAD
-      !byte $C4,$00                   ; ANDB #$00
-      !byte $C5,$00                   ; BITB #$00
-      !byte $C6,$00                   ; LDB #$00
-      !byte $C8,$00                   ; EORB #$00
-      !byte $C9,$00                   ; ADCB #$00
-      !byte $CA,$00                   ; ORB #$00
-      !byte $CB,$00                   ; ADDB #$00
-      !byte $CC,$DE,$AD               ; LDD #$DEAD
-      !byte $CE,$DE,$AD               ; LDU #$DEAD
-      !byte $D0,$00                   ; SUBB $00
-      !byte $D1,$00                   ; CMPB $00
-      !byte $D2,$00                   ; SBCB $00
-      !byte $D3,$00                   ; ADDD $00
-      !byte $D4,$00                   ; ANDB $00
-      !byte $D5,$00                   ; BITB $00
-      !byte $D6,$00                   ; LDB $00
-      !byte $D7,$00                   ; STB $00
-      !byte $D8,$00                   ; EORB $00
-      !byte $D9,$00                   ; ADCB $00
-      !byte $DA,$00                   ; ORB $00
-      !byte $DB,$00                   ; ADDB $00
-      !byte $DC,$00                   ; LDD $00
-      !byte $DD,$00                   ; STD $00
-      !byte $DE,$00                   ; LDU $00
-      !byte $DF,$00                   ; STU $00
       !byte $E0,$84                   ; SUBB ,X
       !byte $E0,$A4                   ; SUBB ,Y
       !byte $E0,$C4                   ; SUBB ,U
