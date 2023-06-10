@@ -10970,403 +10970,731 @@
 !byte $11,$A0,$B0                ; SUBA [,Y+]
 !byte $11,$A0,$D0                ; SUBA [,U+]
 !byte $11,$A0,$F0                ; SUBA [,S+]
+!byte $A1,$87                    ; CMPA ,X
+!byte $A1,$A7                    ; CMPA ,Y
+!byte $A1,$C7                    ; CMPA ,U
+!byte $A1,$E7                    ; CMPA ,S
+!byte $A1,$8A                    ; CMPA ,PClo
+!byte $A1,$AA                    ; CMPA ,PClo
+!byte $A1,$CA                    ; CMPA ,PClo
+!byte $A1,$EA                    ; CMPA ,PClo
+!byte $A1,$8F,$DE,$AD            ; CMPA $DEAD,X
+!byte $A1,$AF,$DE,$AD            ; CMPA $DEAD,Y
+!byte $A1,$CF,$DE,$AD            ; CMPA $DEAD,U
+!byte $A1,$EF,$DE,$AD            ; CMPA $DEAD,S
+!byte $A1,$97                    ; CMPA [,X]
+!byte $A1,$B7                    ; CMPA [,Y]
+!byte $A1,$D7                    ; CMPA [,U]
+!byte $A1,$F7                    ; CMPA [,S]
+!byte $A1,$97                    ; CMPA [,PClo]
+!byte $A1,$B7                    ; CMPA [,PClo]
+!byte $A1,$D7                    ; CMPA [,PClo]
+!byte $A1,$F7                    ; CMPA [,PClo]
+!byte $A1,$92                    ; CMPA [,-X]
+!byte $A1,$B2                    ; CMPA [,-Y]
+!byte $A1,$D2                    ; CMPA [,-U]
+!byte $A1,$F2                    ; CMPA [,-S]
+!byte $A1,$90                    ; CMPA [,X+]
+!byte $A1,$B0                    ; CMPA [,Y+]
+!byte $A1,$D0                    ; CMPA [,U+]
+!byte $A1,$F0                    ; CMPA [,S+]
+!byte $10,$A1,$84                ; CMPA ,X
+!byte $10,$A1,$A4                ; CMPA ,Y
+!byte $10,$A1,$C4                ; CMPA ,U
+!byte $10,$A1,$E4                ; CMPA ,S
+!byte $10,$A1,$15                ; CMPA -$0B,X
+!byte $10,$A1,$35                ; CMPA -$0B,Y
+!byte $10,$A1,$55                ; CMPA -$0B,U
+!byte $10,$A1,$75                ; CMPA -$0B,S
+!byte $10,$A1,$0C                ; CMPA $0C,X
+!byte $10,$A1,$2C                ; CMPA $0C,Y
+!byte $10,$A1,$4C                ; CMPA $0C,U
+!byte $10,$A1,$6C                ; CMPA $0C,S
+!byte $10,$A1,$88,$FF            ; CMPA -$01,X
+!byte $10,$A1,$A8,$FF            ; CMPA -$01,Y
+!byte $10,$A1,$C8,$FF            ; CMPA -$01,U
+!byte $10,$A1,$E8,$FF            ; CMPA -$01,S
+!byte $10,$A1,$88,$60            ; CMPA $60,X
+!byte $10,$A1,$A8,$60            ; CMPA $60,Y
+!byte $10,$A1,$C8,$60            ; CMPA $60,U
+!byte $10,$A1,$E8,$60            ; CMPA $60,S
+!byte $10,$A1,$89,$DE,$AD        ; CMPA $DEAD,X
+!byte $10,$A1,$A9,$DE,$AD        ; CMPA $DEAD,Y
+!byte $10,$A1,$C9,$DE,$AD        ; CMPA $DEAD,U
+!byte $10,$A1,$E9,$DE,$AD        ; CMPA $DEAD,S
+!byte $10,$A1,$89,$10,$00        ; CMPA $1000,X
+!byte $10,$A1,$A9,$10,$00        ; CMPA $1000,Y
+!byte $10,$A1,$C9,$10,$00        ; CMPA $1000,U
+!byte $10,$A1,$E9,$10,$00        ; CMPA $1000,S
+!byte $10,$A1,$86                ; CMPA A,X
+!byte $10,$A1,$A6                ; CMPA A,Y
+!byte $10,$A1,$C6                ; CMPA A,U
+!byte $10,$A1,$E6                ; CMPA A,S
+!byte $10,$A1,$85                ; CMPA B,X
+!byte $10,$A1,$A5                ; CMPA B,Y
+!byte $10,$A1,$C5                ; CMPA B,U
+!byte $10,$A1,$E5                ; CMPA B,S
+!byte $10,$A1,$87                ; CMPA ,X
+!byte $10,$A1,$A7                ; CMPA ,Y
+!byte $10,$A1,$C7                ; CMPA ,U
+!byte $10,$A1,$E7                ; CMPA ,S
+!byte $10,$A1,$8A                ; CMPA ,PClo
+!byte $10,$A1,$AA                ; CMPA ,PClo
+!byte $10,$A1,$CA                ; CMPA ,PClo
+!byte $10,$A1,$EA                ; CMPA ,PClo
+!byte $10,$A1,$8B                ; CMPA D,X
+!byte $10,$A1,$AB                ; CMPA D,Y
+!byte $10,$A1,$CB                ; CMPA D,U
+!byte $10,$A1,$EB                ; CMPA D,S
+!byte $10,$A1,$80                ; CMPA ,X+
+!byte $10,$A1,$A0                ; CMPA ,Y+
+!byte $10,$A1,$C0                ; CMPA ,U+
+!byte $10,$A1,$E0                ; CMPA ,S+
+!byte $10,$A1,$81                ; CMPA ,X++
+!byte $10,$A1,$A1                ; CMPA ,Y++
+!byte $10,$A1,$C1                ; CMPA ,U++
+!byte $10,$A1,$E1                ; CMPA ,S++
+!byte $10,$A1,$82                ; CMPA ,-X
+!byte $10,$A1,$A2                ; CMPA ,-Y
+!byte $10,$A1,$C2                ; CMPA ,-U
+!byte $10,$A1,$E2                ; CMPA ,-S
+!byte $10,$A1,$83                ; CMPA ,--X
+!byte $10,$A1,$A3                ; CMPA ,--Y
+!byte $10,$A1,$C3                ; CMPA ,--U
+!byte $10,$A1,$E3                ; CMPA ,--S
+!byte $10,$A1,$8C,$FF            ; CMPA -$01,PC
+!byte $10,$A1,$AC,$FF            ; CMPA -$01,PC
+!byte $10,$A1,$CC,$FF            ; CMPA -$01,PC
+!byte $10,$A1,$EC,$FF            ; CMPA -$01,PC
+!byte $10,$A1,$8C,$60            ; CMPA $60,PC
+!byte $10,$A1,$AC,$60            ; CMPA $60,PC
+!byte $10,$A1,$CC,$60            ; CMPA $60,PC
+!byte $10,$A1,$EC,$60            ; CMPA $60,PC
+!byte $10,$A1,$8D,$DE,$AD        ; CMPA $DEAD,PC
+!byte $10,$A1,$AD,$DE,$AD        ; CMPA $DEAD,PC
+!byte $10,$A1,$CD,$DE,$AD        ; CMPA $DEAD,PC
+!byte $10,$A1,$ED,$DE,$AD        ; CMPA $DEAD,PC
+!byte $10,$A1,$8D,$10,$00        ; CMPA $1000,PC
+!byte $10,$A1,$AD,$10,$00        ; CMPA $1000,PC
+!byte $10,$A1,$CD,$10,$00        ; CMPA $1000,PC
+!byte $10,$A1,$ED,$10,$00        ; CMPA $1000,PC
+!byte $10,$A1,$8F,$DE,$AD        ; CMPA ,$DEAD
+!byte $10,$A1,$AF,$DE,$AD        ; CMPA ,$DEAD
+!byte $10,$A1,$CF,$DE,$AD        ; CMPA ,$DEAD
+!byte $10,$A1,$EF,$DE,$AD        ; CMPA ,$DEAD
+!byte $10,$A1,$94                ; CMPA [,X]
+!byte $10,$A1,$B4                ; CMPA [,Y]
+!byte $10,$A1,$D4                ; CMPA [,U]
+!byte $10,$A1,$F4                ; CMPA [,S]
+!byte $10,$A1,$98,$FF            ; CMPA [-$01,X]
+!byte $10,$A1,$B8,$FF            ; CMPA [-$01,Y]
+!byte $10,$A1,$D8,$FF            ; CMPA [-$01,U]
+!byte $10,$A1,$F8,$FF            ; CMPA [-$01,S]
+!byte $10,$A1,$98,$60            ; CMPA [$60,X]
+!byte $10,$A1,$B8,$60            ; CMPA [$60,Y]
+!byte $10,$A1,$D8,$60            ; CMPA [$60,U]
+!byte $10,$A1,$F8,$60            ; CMPA [$60,S]
+!byte $10,$A1,$99,$DE,$AD        ; CMPA [$DEAD,X]
+!byte $10,$A1,$B9,$DE,$AD        ; CMPA [$DEAD,Y]
+!byte $10,$A1,$D9,$DE,$AD        ; CMPA [$DEAD,U]
+!byte $10,$A1,$F9,$DE,$AD        ; CMPA [$DEAD,S]
+!byte $10,$A1,$99,$DE,$10        ; CMPA [$DE10,X]
+!byte $10,$A1,$B9,$DE,$10        ; CMPA [$DE10,Y]
+!byte $10,$A1,$D9,$DE,$10        ; CMPA [$DE10,U]
+!byte $10,$A1,$F9,$DE,$10        ; CMPA [$DE10,S]
+!byte $10,$A1,$96                ; CMPA [A,X]
+!byte $10,$A1,$B6                ; CMPA [A,Y]
+!byte $10,$A1,$D6                ; CMPA [A,U]
+!byte $10,$A1,$F6                ; CMPA [A,S]
+!byte $10,$A1,$95                ; CMPA [B,X]
+!byte $10,$A1,$B5                ; CMPA [B,Y]
+!byte $10,$A1,$D5                ; CMPA [B,U]
+!byte $10,$A1,$F5                ; CMPA [B,S]
+!byte $10,$A1,$97                ; CMPA [,X]
+!byte $10,$A1,$B7                ; CMPA [,Y]
+!byte $10,$A1,$D7                ; CMPA [,U]
+!byte $10,$A1,$F7                ; CMPA [,S]
+!byte $10,$A1,$97                ; CMPA [,PClo]
+!byte $10,$A1,$B7                ; CMPA [,PClo]
+!byte $10,$A1,$D7                ; CMPA [,PClo]
+!byte $10,$A1,$F7                ; CMPA [,PClo]
+!byte $10,$A1,$9B                ; CMPA [D,X]
+!byte $10,$A1,$BB                ; CMPA [D,Y]
+!byte $10,$A1,$DB                ; CMPA [D,U]
+!byte $10,$A1,$FB                ; CMPA [D,S]
+!byte $10,$A1,$91                ; CMPA [,X++]
+!byte $10,$A1,$B1                ; CMPA [,Y++]
+!byte $10,$A1,$D1                ; CMPA [,U++]
+!byte $10,$A1,$F1                ; CMPA [,S++]
+!byte $10,$A1,$92                ; CMPA [,-X]
+!byte $10,$A1,$B2                ; CMPA [,-Y]
+!byte $10,$A1,$D2                ; CMPA [,-U]
+!byte $10,$A1,$F2                ; CMPA [,-S]
+!byte $10,$A1,$93                ; CMPA [,--X]
+!byte $10,$A1,$B3                ; CMPA [,--Y]
+!byte $10,$A1,$D3                ; CMPA [,--U]
+!byte $10,$A1,$F3                ; CMPA [,--S]
+!byte $10,$A1,$9C,$FF            ; CMPA [-$01,PC]
+!byte $10,$A1,$BC,$FF            ; CMPA [-$01,PC]
+!byte $10,$A1,$DC,$FF            ; CMPA [-$01,PC]
+!byte $10,$A1,$FC,$FF            ; CMPA [-$01,PC]
+!byte $10,$A1,$9C,$60            ; CMPA [$60,PC]
+!byte $10,$A1,$BC,$60            ; CMPA [$60,PC]
+!byte $10,$A1,$DC,$60            ; CMPA [$60,PC]
+!byte $10,$A1,$FC,$60            ; CMPA [$60,PC]
+!byte $10,$A1,$9D,$DE,$AD        ; CMPA [$DEAD,PC]
+!byte $10,$A1,$BD,$DE,$AD        ; CMPA [$DEAD,PC]
+!byte $10,$A1,$DD,$DE,$AD        ; CMPA [$DEAD,PC]
+!byte $10,$A1,$FD,$DE,$AD        ; CMPA [$DEAD,PC]
+!byte $10,$A1,$9D,$10,$00        ; CMPA [$1000,PC]
+!byte $10,$A1,$BD,$10,$00        ; CMPA [$1000,PC]
+!byte $10,$A1,$DD,$10,$00        ; CMPA [$1000,PC]
+!byte $10,$A1,$FD,$10,$00        ; CMPA [$1000,PC]
+!byte $10,$A1,$9F,$DE,$AD        ; CMPA [$DEAD]
+!byte $10,$A1,$BF,$DE,$AD        ; CMPA [$DEAD]
+!byte $10,$A1,$DF,$DE,$AD        ; CMPA [$DEAD]
+!byte $10,$A1,$FF,$DE,$AD        ; CMPA [$DEAD]
+!byte $10,$A1,$90                ; CMPA [,X+]
+!byte $10,$A1,$B0                ; CMPA [,Y+]
+!byte $10,$A1,$D0                ; CMPA [,U+]
+!byte $10,$A1,$F0                ; CMPA [,S+]
+!byte $11,$A1,$84                ; CMPA ,X
+!byte $11,$A1,$A4                ; CMPA ,Y
+!byte $11,$A1,$C4                ; CMPA ,U
+!byte $11,$A1,$E4                ; CMPA ,S
+!byte $11,$A1,$15                ; CMPA -$0B,X
+!byte $11,$A1,$35                ; CMPA -$0B,Y
+!byte $11,$A1,$55                ; CMPA -$0B,U
+!byte $11,$A1,$75                ; CMPA -$0B,S
+!byte $11,$A1,$0C                ; CMPA $0C,X
+!byte $11,$A1,$2C                ; CMPA $0C,Y
+!byte $11,$A1,$4C                ; CMPA $0C,U
+!byte $11,$A1,$6C                ; CMPA $0C,S
+!byte $11,$A1,$88,$FF            ; CMPA -$01,X
+!byte $11,$A1,$A8,$FF            ; CMPA -$01,Y
+!byte $11,$A1,$C8,$FF            ; CMPA -$01,U
+!byte $11,$A1,$E8,$FF            ; CMPA -$01,S
+!byte $11,$A1,$88,$60            ; CMPA $60,X
+!byte $11,$A1,$A8,$60            ; CMPA $60,Y
+!byte $11,$A1,$C8,$60            ; CMPA $60,U
+!byte $11,$A1,$E8,$60            ; CMPA $60,S
+!byte $11,$A1,$89,$DE,$AD        ; CMPA $DEAD,X
+!byte $11,$A1,$A9,$DE,$AD        ; CMPA $DEAD,Y
+!byte $11,$A1,$C9,$DE,$AD        ; CMPA $DEAD,U
+!byte $11,$A1,$E9,$DE,$AD        ; CMPA $DEAD,S
+!byte $11,$A1,$89,$10,$00        ; CMPA $1000,X
+!byte $11,$A1,$A9,$10,$00        ; CMPA $1000,Y
+!byte $11,$A1,$C9,$10,$00        ; CMPA $1000,U
+!byte $11,$A1,$E9,$10,$00        ; CMPA $1000,S
+!byte $11,$A1,$86                ; CMPA A,X
+!byte $11,$A1,$A6                ; CMPA A,Y
+!byte $11,$A1,$C6                ; CMPA A,U
+!byte $11,$A1,$E6                ; CMPA A,S
+!byte $11,$A1,$85                ; CMPA B,X
+!byte $11,$A1,$A5                ; CMPA B,Y
+!byte $11,$A1,$C5                ; CMPA B,U
+!byte $11,$A1,$E5                ; CMPA B,S
+!byte $11,$A1,$87                ; CMPA ,X
+!byte $11,$A1,$A7                ; CMPA ,Y
+!byte $11,$A1,$C7                ; CMPA ,U
+!byte $11,$A1,$E7                ; CMPA ,S
+!byte $11,$A1,$8A                ; CMPA ,PClo
+!byte $11,$A1,$AA                ; CMPA ,PClo
+!byte $11,$A1,$CA                ; CMPA ,PClo
+!byte $11,$A1,$EA                ; CMPA ,PClo
+!byte $11,$A1,$8B                ; CMPA D,X
+!byte $11,$A1,$AB                ; CMPA D,Y
+!byte $11,$A1,$CB                ; CMPA D,U
+!byte $11,$A1,$EB                ; CMPA D,S
+!byte $11,$A1,$80                ; CMPA ,X+
+!byte $11,$A1,$A0                ; CMPA ,Y+
+!byte $11,$A1,$C0                ; CMPA ,U+
+!byte $11,$A1,$E0                ; CMPA ,S+
+!byte $11,$A1,$81                ; CMPA ,X++
+!byte $11,$A1,$A1                ; CMPA ,Y++
+!byte $11,$A1,$C1                ; CMPA ,U++
+!byte $11,$A1,$E1                ; CMPA ,S++
+!byte $11,$A1,$82                ; CMPA ,-X
+!byte $11,$A1,$A2                ; CMPA ,-Y
+!byte $11,$A1,$C2                ; CMPA ,-U
+!byte $11,$A1,$E2                ; CMPA ,-S
+!byte $11,$A1,$83                ; CMPA ,--X
+!byte $11,$A1,$A3                ; CMPA ,--Y
+!byte $11,$A1,$C3                ; CMPA ,--U
+!byte $11,$A1,$E3                ; CMPA ,--S
+!byte $11,$A1,$8C,$FF            ; CMPA -$01,PC
+!byte $11,$A1,$AC,$FF            ; CMPA -$01,PC
+!byte $11,$A1,$CC,$FF            ; CMPA -$01,PC
+!byte $11,$A1,$EC,$FF            ; CMPA -$01,PC
+!byte $11,$A1,$8C,$60            ; CMPA $60,PC
+!byte $11,$A1,$AC,$60            ; CMPA $60,PC
+!byte $11,$A1,$CC,$60            ; CMPA $60,PC
+!byte $11,$A1,$EC,$60            ; CMPA $60,PC
+!byte $11,$A1,$8D,$DE,$AD        ; CMPA $DEAD,PC
+!byte $11,$A1,$AD,$DE,$AD        ; CMPA $DEAD,PC
+!byte $11,$A1,$CD,$DE,$AD        ; CMPA $DEAD,PC
+!byte $11,$A1,$ED,$DE,$AD        ; CMPA $DEAD,PC
+!byte $11,$A1,$8D,$10,$00        ; CMPA $1000,PC
+!byte $11,$A1,$AD,$10,$00        ; CMPA $1000,PC
+!byte $11,$A1,$CD,$10,$00        ; CMPA $1000,PC
+!byte $11,$A1,$ED,$10,$00        ; CMPA $1000,PC
+!byte $11,$A1,$8F,$DE,$AD        ; CMPA ,$DEAD
+!byte $11,$A1,$AF,$DE,$AD        ; CMPA ,$DEAD
+!byte $11,$A1,$CF,$DE,$AD        ; CMPA ,$DEAD
+!byte $11,$A1,$EF,$DE,$AD        ; CMPA ,$DEAD
+!byte $11,$A1,$94                ; CMPA [,X]
+!byte $11,$A1,$B4                ; CMPA [,Y]
+!byte $11,$A1,$D4                ; CMPA [,U]
+!byte $11,$A1,$F4                ; CMPA [,S]
+!byte $11,$A1,$98,$FF            ; CMPA [-$01,X]
+!byte $11,$A1,$B8,$FF            ; CMPA [-$01,Y]
+!byte $11,$A1,$D8,$FF            ; CMPA [-$01,U]
+!byte $11,$A1,$F8,$FF            ; CMPA [-$01,S]
+!byte $11,$A1,$98,$60            ; CMPA [$60,X]
+!byte $11,$A1,$B8,$60            ; CMPA [$60,Y]
+!byte $11,$A1,$D8,$60            ; CMPA [$60,U]
+!byte $11,$A1,$F8,$60            ; CMPA [$60,S]
+!byte $11,$A1,$99,$DE,$AD        ; CMPA [$DEAD,X]
+!byte $11,$A1,$B9,$DE,$AD        ; CMPA [$DEAD,Y]
+!byte $11,$A1,$D9,$DE,$AD        ; CMPA [$DEAD,U]
+!byte $11,$A1,$F9,$DE,$AD        ; CMPA [$DEAD,S]
+!byte $11,$A1,$99,$DE,$10        ; CMPA [$DE10,X]
+!byte $11,$A1,$B9,$DE,$10        ; CMPA [$DE10,Y]
+!byte $11,$A1,$D9,$DE,$10        ; CMPA [$DE10,U]
+!byte $11,$A1,$F9,$DE,$10        ; CMPA [$DE10,S]
+!byte $11,$A1,$96                ; CMPA [A,X]
+!byte $11,$A1,$B6                ; CMPA [A,Y]
+!byte $11,$A1,$D6                ; CMPA [A,U]
+!byte $11,$A1,$F6                ; CMPA [A,S]
+!byte $11,$A1,$95                ; CMPA [B,X]
+!byte $11,$A1,$B5                ; CMPA [B,Y]
+!byte $11,$A1,$D5                ; CMPA [B,U]
+!byte $11,$A1,$F5                ; CMPA [B,S]
+!byte $11,$A1,$97                ; CMPA [,X]
+!byte $11,$A1,$B7                ; CMPA [,Y]
+!byte $11,$A1,$D7                ; CMPA [,U]
+!byte $11,$A1,$F7                ; CMPA [,S]
+!byte $11,$A1,$97                ; CMPA [,PClo]
+!byte $11,$A1,$B7                ; CMPA [,PClo]
+!byte $11,$A1,$D7                ; CMPA [,PClo]
+!byte $11,$A1,$F7                ; CMPA [,PClo]
+!byte $11,$A1,$9B                ; CMPA [D,X]
+!byte $11,$A1,$BB                ; CMPA [D,Y]
+!byte $11,$A1,$DB                ; CMPA [D,U]
+!byte $11,$A1,$FB                ; CMPA [D,S]
+!byte $11,$A1,$91                ; CMPA [,X++]
+!byte $11,$A1,$B1                ; CMPA [,Y++]
+!byte $11,$A1,$D1                ; CMPA [,U++]
+!byte $11,$A1,$F1                ; CMPA [,S++]
+!byte $11,$A1,$92                ; CMPA [,-X]
+!byte $11,$A1,$B2                ; CMPA [,-Y]
+!byte $11,$A1,$D2                ; CMPA [,-U]
+!byte $11,$A1,$F2                ; CMPA [,-S]
+!byte $11,$A1,$93                ; CMPA [,--X]
+!byte $11,$A1,$B3                ; CMPA [,--Y]
+!byte $11,$A1,$D3                ; CMPA [,--U]
+!byte $11,$A1,$F3                ; CMPA [,--S]
+!byte $11,$A1,$9C,$FF            ; CMPA [-$01,PC]
+!byte $11,$A1,$BC,$FF            ; CMPA [-$01,PC]
+!byte $11,$A1,$DC,$FF            ; CMPA [-$01,PC]
+!byte $11,$A1,$FC,$FF            ; CMPA [-$01,PC]
+!byte $11,$A1,$9C,$60            ; CMPA [$60,PC]
+!byte $11,$A1,$BC,$60            ; CMPA [$60,PC]
+!byte $11,$A1,$DC,$60            ; CMPA [$60,PC]
+!byte $11,$A1,$FC,$60            ; CMPA [$60,PC]
+!byte $11,$A1,$9D,$DE,$AD        ; CMPA [$DEAD,PC]
+!byte $11,$A1,$BD,$DE,$AD        ; CMPA [$DEAD,PC]
+!byte $11,$A1,$DD,$DE,$AD        ; CMPA [$DEAD,PC]
+!byte $11,$A1,$FD,$DE,$AD        ; CMPA [$DEAD,PC]
+!byte $11,$A1,$9D,$10,$00        ; CMPA [$1000,PC]
+!byte $11,$A1,$BD,$10,$00        ; CMPA [$1000,PC]
+!byte $11,$A1,$DD,$10,$00        ; CMPA [$1000,PC]
+!byte $11,$A1,$FD,$10,$00        ; CMPA [$1000,PC]
+!byte $11,$A1,$9F,$DE,$AD        ; CMPA [$DEAD]
+!byte $11,$A1,$BF,$DE,$AD        ; CMPA [$DEAD]
+!byte $11,$A1,$DF,$DE,$AD        ; CMPA [$DEAD]
+!byte $11,$A1,$FF,$DE,$AD        ; CMPA [$DEAD]
+!byte $11,$A1,$90                ; CMPA [,X+]
+!byte $11,$A1,$B0                ; CMPA [,Y+]
+!byte $11,$A1,$D0                ; CMPA [,U+]
+!byte $11,$A1,$F0                ; CMPA [,S+]
+!byte $A2,$87                    ; SBCA ,X
+!byte $A2,$A7                    ; SBCA ,Y
+!byte $A2,$C7                    ; SBCA ,U
+!byte $A2,$E7                    ; SBCA ,S
+!byte $A2,$8A                    ; SBCA ,PClo
+!byte $A2,$AA                    ; SBCA ,PClo
+!byte $A2,$CA                    ; SBCA ,PClo
+!byte $A2,$EA                    ; SBCA ,PClo
+!byte $A2,$8F,$DE,$AD            ; SBCA ,$DEAD
+!byte $A2,$AF,$DE,$AD            ; SBCA ,$DEAD
+!byte $A2,$CF,$DE,$AD            ; SBCA ,$DEAD
+!byte $A2,$EF,$DE,$AD            ; SBCA ,$DEAD
+!byte $A2,$97                    ; SBCA [,X]
+!byte $A2,$B7                    ; SBCA [,Y]
+!byte $A2,$D7                    ; SBCA [,U]
+!byte $A2,$F7                    ; SBCA [,S]
+!byte $A2,$9A                    ; SBCA [,PClo]
+!byte $A2,$BA                    ; SBCA [,PClo]
+!byte $A2,$DA                    ; SBCA [,PClo]
+!byte $A2,$FA                    ; SBCA [,PClo]
+!byte $A2,$92                    ; SBCA [,-X]
+!byte $A2,$B2                    ; SBCA [,-Y]
+!byte $A2,$D2                    ; SBCA [,-U]
+!byte $A2,$F2                    ; SBCA [,-S]
+!byte $A2,$90                    ; SBCA [,X+]
+!byte $A2,$B0                    ; SBCA [,Y+]
+!byte $A2,$D0                    ; SBCA [,U+]
+!byte $A2,$F0                    ; SBCA [,S+]
+!byte $10,$A2,$84                ; SBCA ,X
+!byte $10,$A2,$A4                ; SBCA ,Y
+!byte $10,$A2,$C4                ; SBCA ,U
+!byte $10,$A2,$E4                ; SBCA ,S
+!byte $10,$A2,$15                ; SBCA -$0B,X
+!byte $10,$A2,$35                ; SBCA -$0B,Y
+!byte $10,$A2,$55                ; SBCA -$0B,U
+!byte $10,$A2,$75                ; SBCA -$0B,S
+!byte $10,$A2,$0C                ; SBCA $0C,X
+!byte $10,$A2,$2C                ; SBCA $0C,Y
+!byte $10,$A2,$4C                ; SBCA $0C,U
+!byte $10,$A2,$6C                ; SBCA $0C,S
+!byte $10,$A2,$88,$FF            ; SBCA -$01,X
+!byte $10,$A2,$A8,$FF            ; SBCA -$01,Y
+!byte $10,$A2,$C8,$FF            ; SBCA -$01,U
+!byte $10,$A2,$E8,$FF            ; SBCA -$01,S
+!byte $10,$A2,$88,$60            ; SBCA $60,X
+!byte $10,$A2,$A8,$60            ; SBCA $60,Y
+!byte $10,$A2,$C8,$60            ; SBCA $60,U
+!byte $10,$A2,$E8,$60            ; SBCA $60,S
+!byte $10,$A2,$89,$DE,$AD        ; SBCA $DEAD,X
+!byte $10,$A2,$A9,$DE,$AD        ; SBCA $DEAD,Y
+!byte $10,$A2,$C9,$DE,$AD        ; SBCA $DEAD,U
+!byte $10,$A2,$E9,$DE,$AD        ; SBCA $DEAD,S
+!byte $10,$A2,$89,$10,$00        ; SBCA $1000,X
+!byte $10,$A2,$A9,$10,$00        ; SBCA $1000,Y
+!byte $10,$A2,$C9,$10,$00        ; SBCA $1000,U
+!byte $10,$A2,$E9,$10,$00        ; SBCA $1000,S
+!byte $10,$A2,$86                ; SBCA A,X
+!byte $10,$A2,$A6                ; SBCA A,Y
+!byte $10,$A2,$C6                ; SBCA A,U
+!byte $10,$A2,$E6                ; SBCA A,S
+!byte $10,$A2,$85                ; SBCA B,X
+!byte $10,$A2,$A5                ; SBCA B,Y
+!byte $10,$A2,$C5                ; SBCA B,U
+!byte $10,$A2,$E5                ; SBCA B,S
+!byte $10,$A2,$87                ; SBCA ,X
+!byte $10,$A2,$A7                ; SBCA ,Y
+!byte $10,$A2,$C7                ; SBCA ,U
+!byte $10,$A2,$E7                ; SBCA ,S
+!byte $10,$A2,$8A                ; SBCA ,PClo
+!byte $10,$A2,$AA                ; SBCA ,PClo
+!byte $10,$A2,$CA                ; SBCA ,PClo
+!byte $10,$A2,$EA                ; SBCA ,PClo
+!byte $10,$A2,$8B                ; SBCA D,X
+!byte $10,$A2,$AB                ; SBCA D,Y
+!byte $10,$A2,$CB                ; SBCA D,U
+!byte $10,$A2,$EB                ; SBCA D,S
+!byte $10,$A2,$80                ; SBCA ,X+
+!byte $10,$A2,$A0                ; SBCA ,Y+
+!byte $10,$A2,$C0                ; SBCA ,U+
+!byte $10,$A2,$E0                ; SBCA ,S+
+!byte $10,$A2,$81                ; SBCA ,X++
+!byte $10,$A2,$A1                ; SBCA ,Y++
+!byte $10,$A2,$C1                ; SBCA ,U++
+!byte $10,$A2,$E1                ; SBCA ,S++
+!byte $10,$A2,$82                ; SBCA ,-X
+!byte $10,$A2,$A2                ; SBCA ,-Y
+!byte $10,$A2,$C2                ; SBCA ,-U
+!byte $10,$A2,$E2                ; SBCA ,-S
+!byte $10,$A2,$83                ; SBCA ,--X
+!byte $10,$A2,$A3                ; SBCA ,--Y
+!byte $10,$A2,$C3                ; SBCA ,--U
+!byte $10,$A2,$E3                ; SBCA ,--S
+!byte $10,$A2,$8C,$FF            ; SBCA -$01,PC
+!byte $10,$A2,$AC,$FF            ; SBCA -$01,PC
+!byte $10,$A2,$CC,$FF            ; SBCA -$01,PC
+!byte $10,$A2,$EC,$FF            ; SBCA -$01,PC
+!byte $10,$A2,$8C,$60            ; SBCA $60,PC
+!byte $10,$A2,$AC,$60            ; SBCA $60,PC
+!byte $10,$A2,$CC,$60            ; SBCA $60,PC
+!byte $10,$A2,$EC,$60            ; SBCA $60,PC
+!byte $10,$A2,$8D,$DE,$AD        ; SBCA $DEAD,PC
+!byte $10,$A2,$AD,$DE,$AD        ; SBCA $DEAD,PC
+!byte $10,$A2,$CD,$DE,$AD        ; SBCA $DEAD,PC
+!byte $10,$A2,$ED,$DE,$AD        ; SBCA $DEAD,PC
+!byte $10,$A2,$8D,$10,$00        ; SBCA $1000,PC
+!byte $10,$A2,$AD,$10,$00        ; SBCA $1000,PC
+!byte $10,$A2,$CD,$10,$00        ; SBCA $1000,PC
+!byte $10,$A2,$ED,$10,$00        ; SBCA $1000,PC
+!byte $10,$A2,$8F,$DE,$AD        ; SBCA ,$DEAD
+!byte $10,$A2,$AF,$DE,$AD        ; SBCA ,$DEAD
+!byte $10,$A2,$CF,$DE,$AD        ; SBCA ,$DEAD
+!byte $10,$A2,$EF,$DE,$AD        ; SBCA ,$DEAD
+!byte $10,$A2,$94                ; SBCA [,X]
+!byte $10,$A2,$B4                ; SBCA [,Y]
+!byte $10,$A2,$D4                ; SBCA [,U]
+!byte $10,$A2,$F4                ; SBCA [,S]
+!byte $10,$A2,$98,$FF            ; SBCA [-$01,X]
+!byte $10,$A2,$B8,$FF            ; SBCA [-$01,Y]
+!byte $10,$A2,$D8,$FF            ; SBCA [-$01,U]
+!byte $10,$A2,$F8,$FF            ; SBCA [-$01,S]
+!byte $10,$A2,$98,$60            ; SBCA [$60,X]
+!byte $10,$A2,$B8,$60            ; SBCA [$60,Y]
+!byte $10,$A2,$D8,$60            ; SBCA [$60,U]
+!byte $10,$A2,$F8,$60            ; SBCA [$60,S]
+!byte $10,$A2,$99,$DE,$AD        ; SBCA [$DEAD,X]
+!byte $10,$A2,$B9,$DE,$AD        ; SBCA [$DEAD,Y]
+!byte $10,$A2,$D9,$DE,$AD        ; SBCA [$DEAD,U]
+!byte $10,$A2,$F9,$DE,$AD        ; SBCA [$DEAD,S]
+!byte $10,$A2,$99,$DE,$10        ; SBCA [$DE10,X]
+!byte $10,$A2,$B9,$DE,$10        ; SBCA [$DE10,Y]
+!byte $10,$A2,$D9,$DE,$10        ; SBCA [$DE10,U]
+!byte $10,$A2,$F9,$DE,$10        ; SBCA [$DE10,S]
+!byte $10,$A2,$96                ; SBCA [A,X]
+!byte $10,$A2,$B6                ; SBCA [A,Y]
+!byte $10,$A2,$D6                ; SBCA [A,U]
+!byte $10,$A2,$F6                ; SBCA [A,S]
+!byte $10,$A2,$95                ; SBCA [B,X]
+!byte $10,$A2,$B5                ; SBCA [B,Y]
+!byte $10,$A2,$D5                ; SBCA [B,U]
+!byte $10,$A2,$F5                ; SBCA [B,S]
+!byte $10,$A2,$97                ; SBCA [,X]
+!byte $10,$A2,$B7                ; SBCA [,Y]
+!byte $10,$A2,$D7                ; SBCA [,U]
+!byte $10,$A2,$F7                ; SBCA [,S]
+!byte $10,$A2,$9A                ; SBCA [,PClo]
+!byte $10,$A2,$BA                ; SBCA [,PClo]
+!byte $10,$A2,$DA                ; SBCA [,PClo]
+!byte $10,$A2,$FA                ; SBCA [,PClo]
+!byte $10,$A2,$9B                ; SBCA [D,X]
+!byte $10,$A2,$BB                ; SBCA [D,Y]
+!byte $10,$A2,$DB                ; SBCA [D,U]
+!byte $10,$A2,$FB                ; SBCA [D,S]
+!byte $10,$A2,$91                ; SBCA [,X++]
+!byte $10,$A2,$B1                ; SBCA [,Y++]
+!byte $10,$A2,$D1                ; SBCA [,U++]
+!byte $10,$A2,$F1                ; SBCA [,S++]
+!byte $10,$A2,$92                ; SBCA [,-X]
+!byte $10,$A2,$B2                ; SBCA [,-Y]
+!byte $10,$A2,$D2                ; SBCA [,-U]
+!byte $10,$A2,$F2                ; SBCA [,-S]
+!byte $10,$A2,$93                ; SBCA [,--X]
+!byte $10,$A2,$B3                ; SBCA [,--Y]
+!byte $10,$A2,$D3                ; SBCA [,--U]
+!byte $10,$A2,$F3                ; SBCA [,--S]
+!byte $10,$A2,$9C,$FF            ; SBCA [-$01,PC]
+!byte $10,$A2,$BC,$FF            ; SBCA [-$01,PC]
+!byte $10,$A2,$DC,$FF            ; SBCA [-$01,PC]
+!byte $10,$A2,$FC,$FF            ; SBCA [-$01,PC]
+!byte $10,$A2,$9C,$60            ; SBCA [$60,PC]
+!byte $10,$A2,$BC,$60            ; SBCA [$60,PC]
+!byte $10,$A2,$DC,$60            ; SBCA [$60,PC]
+!byte $10,$A2,$FC,$60            ; SBCA [$60,PC]
+!byte $10,$A2,$9D,$DE,$AD        ; SBCA [$DEAD,PC]
+!byte $10,$A2,$BD,$DE,$AD        ; SBCA [$DEAD,PC]
+!byte $10,$A2,$DD,$DE,$AD        ; SBCA [$DEAD,PC]
+!byte $10,$A2,$FD,$DE,$AD        ; SBCA [$DEAD,PC]
+!byte $10,$A2,$9D,$10,$00        ; SBCA [$1000,PC]
+!byte $10,$A2,$BD,$10,$00        ; SBCA [$1000,PC]
+!byte $10,$A2,$DD,$10,$00        ; SBCA [$1000,PC]
+!byte $10,$A2,$FD,$10,$00        ; SBCA [$1000,PC]
+!byte $10,$A2,$9F,$DE,$AD        ; SBCA [$DEAD]
+!byte $10,$A2,$BF,$DE,$AD        ; SBCA [$DEAD]
+!byte $10,$A2,$DF,$DE,$AD        ; SBCA [$DEAD]
+!byte $10,$A2,$FF,$DE,$AD        ; SBCA [$DEAD]
+!byte $10,$A2,$90                ; SBCA [,X+]
+!byte $10,$A2,$B0                ; SBCA [,Y+]
+!byte $10,$A2,$D0                ; SBCA [,U+]
+!byte $10,$A2,$F0                ; SBCA [,S+]
+!byte $11,$A2,$84                ; SBCA ,X
+!byte $11,$A2,$A4                ; SBCA ,Y
+!byte $11,$A2,$C4                ; SBCA ,U
+!byte $11,$A2,$E4                ; SBCA ,S
+!byte $11,$A2,$15                ; SBCA -$0B,X
+!byte $11,$A2,$35                ; SBCA -$0B,Y
+!byte $11,$A2,$55                ; SBCA -$0B,U
+!byte $11,$A2,$75                ; SBCA -$0B,S
+!byte $11,$A2,$0C                ; SBCA $0C,X
+!byte $11,$A2,$2C                ; SBCA $0C,Y
+!byte $11,$A2,$4C                ; SBCA $0C,U
+!byte $11,$A2,$6C                ; SBCA $0C,S
+!byte $11,$A2,$88,$FF            ; SBCA -$01,X
+!byte $11,$A2,$A8,$FF            ; SBCA -$01,Y
+!byte $11,$A2,$C8,$FF            ; SBCA -$01,U
+!byte $11,$A2,$E8,$FF            ; SBCA -$01,S
+!byte $11,$A2,$88,$60            ; SBCA $60,X
+!byte $11,$A2,$A8,$60            ; SBCA $60,Y
+!byte $11,$A2,$C8,$60            ; SBCA $60,U
+!byte $11,$A2,$E8,$60            ; SBCA $60,S
+!byte $11,$A2,$89,$DE,$AD        ; SBCA $DEAD,X
+!byte $11,$A2,$A9,$DE,$AD        ; SBCA $DEAD,Y
+!byte $11,$A2,$C9,$DE,$AD        ; SBCA $DEAD,U
+!byte $11,$A2,$E9,$DE,$AD        ; SBCA $DEAD,S
+!byte $11,$A2,$89,$10,$00        ; SBCA $1000,X
+!byte $11,$A2,$A9,$10,$00        ; SBCA $1000,Y
+!byte $11,$A2,$C9,$10,$00        ; SBCA $1000,U
+!byte $11,$A2,$E9,$10,$00        ; SBCA $1000,S
+!byte $11,$A2,$86                ; SBCA A,X
+!byte $11,$A2,$A6                ; SBCA A,Y
+!byte $11,$A2,$C6                ; SBCA A,U
+!byte $11,$A2,$E6                ; SBCA A,S
+!byte $11,$A2,$85                ; SBCA B,X
+!byte $11,$A2,$A5                ; SBCA B,Y
+!byte $11,$A2,$C5                ; SBCA B,U
+!byte $11,$A2,$E5                ; SBCA B,S
+!byte $11,$A2,$87                ; SBCA ,X
+!byte $11,$A2,$A7                ; SBCA ,Y
+!byte $11,$A2,$C7                ; SBCA ,U
+!byte $11,$A2,$E7                ; SBCA ,S
+!byte $11,$A2,$8A                ; SBCA ,PClo
+!byte $11,$A2,$AA                ; SBCA ,PClo
+!byte $11,$A2,$CA                ; SBCA ,PClo
+!byte $11,$A2,$EA                ; SBCA ,PClo
+!byte $11,$A2,$8B                ; SBCA D,X
+!byte $11,$A2,$AB                ; SBCA D,Y
+!byte $11,$A2,$CB                ; SBCA D,U
+!byte $11,$A2,$EB                ; SBCA D,S
+!byte $11,$A2,$80                ; SBCA ,X+
+!byte $11,$A2,$A0                ; SBCA ,Y+
+!byte $11,$A2,$C0                ; SBCA ,U+
+!byte $11,$A2,$E0                ; SBCA ,S+
+!byte $11,$A2,$81                ; SBCA ,X++
+!byte $11,$A2,$A1                ; SBCA ,Y++
+!byte $11,$A2,$C1                ; SBCA ,U++
+!byte $11,$A2,$E1                ; SBCA ,S++
+!byte $11,$A2,$82                ; SBCA ,-X
+!byte $11,$A2,$A2                ; SBCA ,-Y
+!byte $11,$A2,$C2                ; SBCA ,-U
+!byte $11,$A2,$E2                ; SBCA ,-S
+!byte $11,$A2,$83                ; SBCA ,--X
+!byte $11,$A2,$A3                ; SBCA ,--Y
+!byte $11,$A2,$C3                ; SBCA ,--U
+!byte $11,$A2,$E3                ; SBCA ,--S
+!byte $11,$A2,$8C,$FF            ; SBCA -$01,PC
+!byte $11,$A2,$AC,$FF            ; SBCA -$01,PC
+!byte $11,$A2,$CC,$FF            ; SBCA -$01,PC
+!byte $11,$A2,$EC,$FF            ; SBCA -$01,PC
+!byte $11,$A2,$8C,$60            ; SBCA $60,PC
+!byte $11,$A2,$AC,$60            ; SBCA $60,PC
+!byte $11,$A2,$CC,$60            ; SBCA $60,PC
+!byte $11,$A2,$EC,$60            ; SBCA $60,PC
+!byte $11,$A2,$8D,$DE,$AD        ; SBCA $DEAD,PC
+!byte $11,$A2,$AD,$DE,$AD        ; SBCA $DEAD,PC
+!byte $11,$A2,$CD,$DE,$AD        ; SBCA $DEAD,PC
+!byte $11,$A2,$ED,$DE,$AD        ; SBCA $DEAD,PC
+!byte $11,$A2,$8D,$10,$00        ; SBCA $1000,PC
+!byte $11,$A2,$AD,$10,$00        ; SBCA $1000,PC
+!byte $11,$A2,$CD,$10,$00        ; SBCA $1000,PC
+!byte $11,$A2,$ED,$10,$00        ; SBCA $1000,PC
+!byte $11,$A2,$8F,$DE,$AD        ; SBCA ,$DEAD
+!byte $11,$A2,$AF,$DE,$AD        ; SBCA ,$DEAD
+!byte $11,$A2,$CF,$DE,$AD        ; SBCA ,$DEAD
+!byte $11,$A2,$EF,$DE,$AD        ; SBCA ,$DEAD
+!byte $11,$A2,$94                ; SBCA [,X]
+!byte $11,$A2,$B4                ; SBCA [,Y]
+!byte $11,$A2,$D4                ; SBCA [,U]
+!byte $11,$A2,$F4                ; SBCA [,S]
+!byte $11,$A2,$98,$FF            ; SBCA [-$01,X]
+!byte $11,$A2,$B8,$FF            ; SBCA [-$01,Y]
+!byte $11,$A2,$D8,$FF            ; SBCA [-$01,U]
+!byte $11,$A2,$F8,$FF            ; SBCA [-$01,S]
+!byte $11,$A2,$98,$60            ; SBCA [$60,X]
+!byte $11,$A2,$B8,$60            ; SBCA [$60,Y]
+!byte $11,$A2,$D8,$60            ; SBCA [$60,U]
+!byte $11,$A2,$F8,$60            ; SBCA [$60,S]
+!byte $11,$A2,$99,$DE,$AD        ; SBCA [$DEAD,X]
+!byte $11,$A2,$B9,$DE,$AD        ; SBCA [$DEAD,Y]
+!byte $11,$A2,$D9,$DE,$AD        ; SBCA [$DEAD,U]
+!byte $11,$A2,$F9,$DE,$AD        ; SBCA [$DEAD,S]
+!byte $11,$A2,$99,$DE,$10        ; SBCA [$DE10,X]
+!byte $11,$A2,$B9,$DE,$10        ; SBCA [$DE10,Y]
+!byte $11,$A2,$D9,$DE,$10        ; SBCA [$DE10,U]
+!byte $11,$A2,$F9,$DE,$10        ; SBCA [$DE10,S]
+!byte $11,$A2,$96                ; SBCA [A,X]
+!byte $11,$A2,$B6                ; SBCA [A,Y]
+!byte $11,$A2,$D6                ; SBCA [A,U]
+!byte $11,$A2,$F6                ; SBCA [A,S]
+!byte $11,$A2,$95                ; SBCA [B,X]
+!byte $11,$A2,$B5                ; SBCA [B,Y]
+!byte $11,$A2,$D5                ; SBCA [B,U]
+!byte $11,$A2,$F5                ; SBCA [B,S]
+!byte $11,$A2,$97                ; SBCA [,X]
+!byte $11,$A2,$B7                ; SBCA [,Y]
+!byte $11,$A2,$D7                ; SBCA [,U]
+!byte $11,$A2,$F7                ; SBCA [,S]
+!byte $11,$A2,$9A                ; SBCA [,PClo]
+!byte $11,$A2,$BA                ; SBCA [,PClo]
+!byte $11,$A2,$DA                ; SBCA [,PClo]
+!byte $11,$A2,$FA                ; SBCA [,PClo]
+!byte $11,$A2,$9B                ; SBCA [D,X]
+!byte $11,$A2,$BB                ; SBCA [D,Y]
+!byte $11,$A2,$DB                ; SBCA [D,U]
+!byte $11,$A2,$FB                ; SBCA [D,S]
+!byte $11,$A2,$91                ; SBCA [,X++]
+!byte $11,$A2,$B1                ; SBCA [,Y++]
+!byte $11,$A2,$D1                ; SBCA [,U++]
+!byte $11,$A2,$F1                ; SBCA [,S++]
+!byte $11,$A2,$92                ; SBCA [,-X]
+!byte $11,$A2,$B2                ; SBCA [,-Y]
+!byte $11,$A2,$D2                ; SBCA [,-U]
+!byte $11,$A2,$F2                ; SBCA [,-S]
+!byte $11,$A2,$93                ; SBCA [,--X]
+!byte $11,$A2,$B3                ; SBCA [,--Y]
+!byte $11,$A2,$D3                ; SBCA [,--U]
+!byte $11,$A2,$F3                ; SBCA [,--S]
+!byte $11,$A2,$9C,$FF            ; SBCA [-$01,PC]
+!byte $11,$A2,$BC,$FF            ; SBCA [-$01,PC]
+!byte $11,$A2,$DC,$FF            ; SBCA [-$01,PC]
+!byte $11,$A2,$FC,$FF            ; SBCA [-$01,PC]
+!byte $11,$A2,$9C,$60            ; SBCA [$60,PC]
+!byte $11,$A2,$BC,$60            ; SBCA [$60,PC]
+!byte $11,$A2,$DC,$60            ; SBCA [$60,PC]
+!byte $11,$A2,$FC,$60            ; SBCA [$60,PC]
+!byte $11,$A2,$9D,$DE,$AD        ; SBCA [$DEAD,PC]
+!byte $11,$A2,$BD,$DE,$AD        ; SBCA [$DEAD,PC]
+!byte $11,$A2,$DD,$DE,$AD        ; SBCA [$DEAD,PC]
+!byte $11,$A2,$FD,$DE,$AD        ; SBCA [$DEAD,PC]
+!byte $11,$A2,$9D,$10,$00        ; SBCA [$1000,PC]
+!byte $11,$A2,$BD,$10,$00        ; SBCA [$1000,PC]
+!byte $11,$A2,$DD,$10,$00        ; SBCA [$1000,PC]
+!byte $11,$A2,$FD,$10,$00        ; SBCA [$1000,PC]
+!byte $11,$A2,$9F,$DE,$AD        ; SBCA [$DEAD]
+!byte $11,$A2,$BF,$DE,$AD        ; SBCA [$DEAD]
+!byte $11,$A2,$DF,$DE,$AD        ; SBCA [$DEAD]
+!byte $11,$A2,$FF,$DE,$AD        ; SBCA [$DEAD]
+!byte $11,$A2,$90                ; SBCA [,X+]
+!byte $11,$A2,$B0                ; SBCA [,Y+]
+!byte $11,$A2,$D0                ; SBCA [,U+]
+!byte $11,$A2,$F0                ; SBCA [,S+]
+!byte $A3,$87                    ; SUBD ,X
+!byte $A3,$A7                    ; SUBD ,Y
+!byte $A3,$C7                    ; SUBD ,U
+!byte $A3,$E7                    ; SUBD ,S
+!byte $A3,$8A                    ; SUBD ,PClo
+!byte $A3,$AA                    ; SUBD ,PClo
+!byte $A3,$CA                    ; SUBD ,PClo
+!byte $A3,$EA                    ; SUBD ,PClo
+!byte $A3,$8F,$DE,$AD            ; SUBD ,$DEAD
+!byte $A3,$AF,$DE,$AD            ; SUBD ,$DEAD
+!byte $A3,$CF,$DE,$AD            ; SUBD ,$DEAD
+!byte $A3,$EF,$DE,$AD            ; SUBD ,$DEAD
+!byte $A3,$97                    ; SUBD [,X]
+!byte $A3,$B7                    ; SUBD [,Y]
+!byte $A3,$D7                    ; SUBD [,U]
+!byte $A3,$F7                    ; SUBD [,S]
+!byte $A3,$9A                    ; SUBD [,PClo]
+!byte $A3,$BA                    ; SUBD [,PClo]
+!byte $A3,$DA                    ; SUBD [,PClo]
+!byte $A3,$FA                    ; SUBD [,PClo]
+!byte $A3,$92                    ; SUBD [,-X]
+!byte $A3,$B2                    ; SUBD [,-Y]
+!byte $A3,$D2                    ; SUBD [,-U]
+!byte $A3,$F2                    ; SUBD [,-S]
+!byte $A3,$90                    ; SUBD [,X+]
+!byte $A3,$B0                    ; SUBD [,Y+]
+!byte $A3,$D0                    ; SUBD [,U+]
+!byte $A3,$F0                    ; SUBD [,S+]
 
-      !byte $A1,$84                   ; CMPA ,X
-      !byte $A1,$A4                   ; CMPA ,Y
-      !byte $A1,$C4                   ; CMPA ,U
-      !byte $A1,$E4                   ; CMPA ,S
-      !byte $A1,$15                   ; CMPA -$0B,X
-      !byte $A1,$35                   ; CMPA -$0B,Y
-      !byte $A1,$55                   ; CMPA -$0B,U
-      !byte $A1,$75                   ; CMPA -$0B,S
-      !byte $A1,$0C                   ; CMPA $0C,X
-      !byte $A1,$2C                   ; CMPA $0C,Y
-      !byte $A1,$4C                   ; CMPA $0C,U
-      !byte $A1,$6C                   ; CMPA $0C,S
-      !byte $A1,$88,$FF               ; CMPA -$01,X
-      !byte $A1,$A8,$FF               ; CMPA -$01,Y
-      !byte $A1,$C8,$FF               ; CMPA -$01,U
-      !byte $A1,$E8,$FF               ; CMPA -$01,S
-      !byte $A1,$88,$60               ; CMPA $60,X
-      !byte $A1,$A8,$60               ; CMPA $60,Y
-      !byte $A1,$C8,$60               ; CMPA $60,U
-      !byte $A1,$E8,$60               ; CMPA $60,S
-      !byte $A1,$89,$DE,$AD           ; CMPA $DEAD,X
-      !byte $A1,$A9,$DE,$AD           ; CMPA $DEAD,Y
-      !byte $A1,$C9,$DE,$AD           ; CMPA $DEAD,U
-      !byte $A1,$E9,$DE,$AD           ; CMPA $DEAD,S
-      !byte $A1,$89,$10,$00           ; CMPA $1000,X
-      !byte $A1,$A9,$10,$00           ; CMPA $1000,Y
-      !byte $A1,$C9,$10,$00           ; CMPA $1000,U
-      !byte $A1,$E9,$10,$00           ; CMPA $1000,S
-      !byte $A1,$86                   ; CMPA A,X
-      !byte $A1,$A6                   ; CMPA A,Y
-      !byte $A1,$C6                   ; CMPA A,U
-      !byte $A1,$E6                   ; CMPA A,S
-      !byte $A1,$85                   ; CMPA B,X
-      !byte $A1,$A5                   ; CMPA B,Y
-      !byte $A1,$C5                   ; CMPA B,U
-      !byte $A1,$E5                   ; CMPA B,S
-      !byte $A1,$8B                   ; CMPA D,X
-      !byte $A1,$AB                   ; CMPA D,Y
-      !byte $A1,$CB                   ; CMPA D,U
-      !byte $A1,$EB                   ; CMPA D,S
-      !byte $A1,$80                   ; CMPA ,X+
-      !byte $A1,$A0                   ; CMPA ,Y+
-      !byte $A1,$C0                   ; CMPA ,U+
-      !byte $A1,$E0                   ; CMPA ,S+
-      !byte $A1,$81                   ; CMPA ,X++
-      !byte $A1,$A1                   ; CMPA ,Y++
-      !byte $A1,$C1                   ; CMPA ,U++
-      !byte $A1,$E1                   ; CMPA ,S++
-      !byte $A1,$82                   ; CMPA ,-X
-      !byte $A1,$A2                   ; CMPA ,-Y
-      !byte $A1,$C2                   ; CMPA ,-U
-      !byte $A1,$E2                   ; CMPA ,-S
-      !byte $A1,$83                   ; CMPA ,--X
-      !byte $A1,$A3                   ; CMPA ,--Y
-      !byte $A1,$C3                   ; CMPA ,--U
-      !byte $A1,$E3                   ; CMPA ,--S
-      !byte $A1,$8C,$FF               ; CMPA -$01,PC
-      !byte $A1,$AC,$FF               ; CMPA -$01,PC
-      !byte $A1,$CC,$FF               ; CMPA -$01,PC
-      !byte $A1,$EC,$FF               ; CMPA -$01,PC
-      !byte $A1,$8C,$60               ; CMPA $60,PC
-      !byte $A1,$AC,$60               ; CMPA $60,PC
-      !byte $A1,$CC,$60               ; CMPA $60,PC
-      !byte $A1,$EC,$60               ; CMPA $60,PC
-      !byte $A1,$8D,$DE,$AD           ; CMPA $DEAD,PC
-      !byte $A1,$AD,$DE,$AD           ; CMPA $DEAD,PC
-      !byte $A1,$CD,$DE,$AD           ; CMPA $DEAD,PC
-      !byte $A1,$ED,$DE,$AD           ; CMPA $DEAD,PC
-      !byte $A1,$8D,$10,$00           ; CMPA $1000,PC
-      !byte $A1,$AD,$10,$00           ; CMPA $1000,PC
-      !byte $A1,$CD,$10,$00           ; CMPA $1000,PC
-      !byte $A1,$ED,$10,$00           ; CMPA $1000,PC
-      !byte $A1,$94                   ; CMPA [,X]
-      !byte $A1,$B4                   ; CMPA [,Y]
-      !byte $A1,$D4                   ; CMPA [,U]
-      !byte $A1,$F4                   ; CMPA [,S]
-      !byte $A1,$98,$FF               ; CMPA [-$01,X]
-      !byte $A1,$B8,$FF               ; CMPA [-$01,Y]
-      !byte $A1,$D8,$FF               ; CMPA [-$01,U]
-      !byte $A1,$F8,$FF               ; CMPA [-$01,S]
-      !byte $A1,$98,$60               ; CMPA [$60,X]
-      !byte $A1,$B8,$60               ; CMPA [$60,Y]
-      !byte $A1,$D8,$60               ; CMPA [$60,U]
-      !byte $A1,$F8,$60               ; CMPA [$60,S]
-      !byte $A1,$99,$DE,$AD           ; CMPA [$DEAD,X]
-      !byte $A1,$B9,$DE,$AD           ; CMPA [$DEAD,Y]
-      !byte $A1,$D9,$DE,$AD           ; CMPA [$DEAD,U]
-      !byte $A1,$F9,$DE,$AD           ; CMPA [$DEAD,S]
-      !byte $A1,$99,$DE,$10           ; CMPA [$DE10,X]
-      !byte $A1,$B9,$DE,$10           ; CMPA [$DE10,Y]
-      !byte $A1,$D9,$DE,$10           ; CMPA [$DE10,U]
-      !byte $A1,$F9,$DE,$10           ; CMPA [$DE10,S]
-      !byte $A1,$96                   ; CMPA [A,X]
-      !byte $A1,$B6                   ; CMPA [A,Y]
-      !byte $A1,$D6                   ; CMPA [A,U]
-      !byte $A1,$F6                   ; CMPA [A,S]
-      !byte $A1,$95                   ; CMPA [B,X]
-      !byte $A1,$B5                   ; CMPA [B,Y]
-      !byte $A1,$D5                   ; CMPA [B,U]
-      !byte $A1,$F5                   ; CMPA [B,S]
-      !byte $A1,$9B                   ; CMPA [D,X]
-      !byte $A1,$BB                   ; CMPA [D,Y]
-      !byte $A1,$DB                   ; CMPA [D,U]
-      !byte $A1,$FB                   ; CMPA [D,S]
-      !byte $A1,$91                   ; CMPA [,X++]
-      !byte $A1,$B1                   ; CMPA [,Y++]
-      !byte $A1,$D1                   ; CMPA [,U++]
-      !byte $A1,$F1                   ; CMPA [,S++]
-      !byte $A1,$93                   ; CMPA [,--X]
-      !byte $A1,$B3                   ; CMPA [,--Y]
-      !byte $A1,$D3                   ; CMPA [,--U]
-      !byte $A1,$F3                   ; CMPA [,--S]
-      !byte $A1,$9C,$FF               ; CMPA [-$01,PC]
-      !byte $A1,$BC,$FF               ; CMPA [-$01,PC]
-      !byte $A1,$DC,$FF               ; CMPA [-$01,PC]
-      !byte $A1,$FC,$FF               ; CMPA [-$01,PC]
-      !byte $A1,$9C,$60               ; CMPA [$60,PC]
-      !byte $A1,$BC,$60               ; CMPA [$60,PC]
-      !byte $A1,$DC,$60               ; CMPA [$60,PC]
-      !byte $A1,$FC,$60               ; CMPA [$60,PC]
-      !byte $A1,$9D,$DE,$AD           ; CMPA [$DEAD,PC]
-      !byte $A1,$BD,$DE,$AD           ; CMPA [$DEAD,PC]
-      !byte $A1,$DD,$DE,$AD           ; CMPA [$DEAD,PC]
-      !byte $A1,$FD,$DE,$AD           ; CMPA [$DEAD,PC]
-      !byte $A1,$9D,$10,$00           ; CMPA [$1000,PC]
-      !byte $A1,$BD,$10,$00           ; CMPA [$1000,PC]
-      !byte $A1,$DD,$10,$00           ; CMPA [$1000,PC]
-      !byte $A1,$FD,$10,$00           ; CMPA [$1000,PC]
-      !byte $A1,$9F,$DE,$AD           ; CMPA [$DEAD]
-      !byte $A1,$BF,$DE,$AD           ; CMPA [$DEAD]
-      !byte $A1,$DF,$DE,$AD           ; CMPA [$DEAD]
-      !byte $A1,$FF,$DE,$AD           ; CMPA [$DEAD]
-      !byte $A2,$84                   ; SBCA ,X
-      !byte $A2,$A4                   ; SBCA ,Y
-      !byte $A2,$C4                   ; SBCA ,U
-      !byte $A2,$E4                   ; SBCA ,S
-      !byte $A2,$15                   ; SBCA -$0B,X
-      !byte $A2,$35                   ; SBCA -$0B,Y
-      !byte $A2,$55                   ; SBCA -$0B,U
-      !byte $A2,$75                   ; SBCA -$0B,S
-      !byte $A2,$0C                   ; SBCA $0C,X
-      !byte $A2,$2C                   ; SBCA $0C,Y
-      !byte $A2,$4C                   ; SBCA $0C,U
-      !byte $A2,$6C                   ; SBCA $0C,S
-      !byte $A2,$88,$FF               ; SBCA -$01,X
-      !byte $A2,$A8,$FF               ; SBCA -$01,Y
-      !byte $A2,$C8,$FF               ; SBCA -$01,U
-      !byte $A2,$E8,$FF               ; SBCA -$01,S
-      !byte $A2,$88,$60               ; SBCA $60,X
-      !byte $A2,$A8,$60               ; SBCA $60,Y
-      !byte $A2,$C8,$60               ; SBCA $60,U
-      !byte $A2,$E8,$60               ; SBCA $60,S
-      !byte $A2,$89,$DE,$AD           ; SBCA $DEAD,X
-      !byte $A2,$A9,$DE,$AD           ; SBCA $DEAD,Y
-      !byte $A2,$C9,$DE,$AD           ; SBCA $DEAD,U
-      !byte $A2,$E9,$DE,$AD           ; SBCA $DEAD,S
-      !byte $A2,$89,$10,$00           ; SBCA $1000,X
-      !byte $A2,$A9,$10,$00           ; SBCA $1000,Y
-      !byte $A2,$C9,$10,$00           ; SBCA $1000,U
-      !byte $A2,$E9,$10,$00           ; SBCA $1000,S
-      !byte $A2,$86                   ; SBCA A,X
-      !byte $A2,$A6                   ; SBCA A,Y
-      !byte $A2,$C6                   ; SBCA A,U
-      !byte $A2,$E6                   ; SBCA A,S
-      !byte $A2,$85                   ; SBCA B,X
-      !byte $A2,$A5                   ; SBCA B,Y
-      !byte $A2,$C5                   ; SBCA B,U
-      !byte $A2,$E5                   ; SBCA B,S
-      !byte $A2,$8B                   ; SBCA D,X
-      !byte $A2,$AB                   ; SBCA D,Y
-      !byte $A2,$CB                   ; SBCA D,U
-      !byte $A2,$EB                   ; SBCA D,S
-      !byte $A2,$80                   ; SBCA ,X+
-      !byte $A2,$A0                   ; SBCA ,Y+
-      !byte $A2,$C0                   ; SBCA ,U+
-      !byte $A2,$E0                   ; SBCA ,S+
-      !byte $A2,$81                   ; SBCA ,X++
-      !byte $A2,$A1                   ; SBCA ,Y++
-      !byte $A2,$C1                   ; SBCA ,U++
-      !byte $A2,$E1                   ; SBCA ,S++
-      !byte $A2,$82                   ; SBCA ,-X
-      !byte $A2,$A2                   ; SBCA ,-Y
-      !byte $A2,$C2                   ; SBCA ,-U
-      !byte $A2,$E2                   ; SBCA ,-S
-      !byte $A2,$83                   ; SBCA ,--X
-      !byte $A2,$A3                   ; SBCA ,--Y
-      !byte $A2,$C3                   ; SBCA ,--U
-      !byte $A2,$E3                   ; SBCA ,--S
-      !byte $A2,$8C,$FF               ; SBCA -$01,PC
-      !byte $A2,$AC,$FF               ; SBCA -$01,PC
-      !byte $A2,$CC,$FF               ; SBCA -$01,PC
-      !byte $A2,$EC,$FF               ; SBCA -$01,PC
-      !byte $A2,$8C,$60               ; SBCA $60,PC
-      !byte $A2,$AC,$60               ; SBCA $60,PC
-      !byte $A2,$CC,$60               ; SBCA $60,PC
-      !byte $A2,$EC,$60               ; SBCA $60,PC
-      !byte $A2,$8D,$DE,$AD           ; SBCA $DEAD,PC
-      !byte $A2,$AD,$DE,$AD           ; SBCA $DEAD,PC
-      !byte $A2,$CD,$DE,$AD           ; SBCA $DEAD,PC
-      !byte $A2,$ED,$DE,$AD           ; SBCA $DEAD,PC
-      !byte $A2,$8D,$10,$00           ; SBCA $1000,PC
-      !byte $A2,$AD,$10,$00           ; SBCA $1000,PC
-      !byte $A2,$CD,$10,$00           ; SBCA $1000,PC
-      !byte $A2,$ED,$10,$00           ; SBCA $1000,PC
-      !byte $A2,$94                   ; SBCA [,X]
-      !byte $A2,$B4                   ; SBCA [,Y]
-      !byte $A2,$D4                   ; SBCA [,U]
-      !byte $A2,$F4                   ; SBCA [,S]
-      !byte $A2,$98,$FF               ; SBCA [-$01,X]
-      !byte $A2,$B8,$FF               ; SBCA [-$01,Y]
-      !byte $A2,$D8,$FF               ; SBCA [-$01,U]
-      !byte $A2,$F8,$FF               ; SBCA [-$01,S]
-      !byte $A2,$98,$60               ; SBCA [$60,X]
-      !byte $A2,$B8,$60               ; SBCA [$60,Y]
-      !byte $A2,$D8,$60               ; SBCA [$60,U]
-      !byte $A2,$F8,$60               ; SBCA [$60,S]
-      !byte $A2,$99,$DE,$AD           ; SBCA [$DEAD,X]
-      !byte $A2,$B9,$DE,$AD           ; SBCA [$DEAD,Y]
-      !byte $A2,$D9,$DE,$AD           ; SBCA [$DEAD,U]
-      !byte $A2,$F9,$DE,$AD           ; SBCA [$DEAD,S]
-      !byte $A2,$99,$DE,$10           ; SBCA [$DE10,X]
-      !byte $A2,$B9,$DE,$10           ; SBCA [$DE10,Y]
-      !byte $A2,$D9,$DE,$10           ; SBCA [$DE10,U]
-      !byte $A2,$F9,$DE,$10           ; SBCA [$DE10,S]
-      !byte $A2,$96                   ; SBCA [A,X]
-      !byte $A2,$B6                   ; SBCA [A,Y]
-      !byte $A2,$D6                   ; SBCA [A,U]
-      !byte $A2,$F6                   ; SBCA [A,S]
-      !byte $A2,$95                   ; SBCA [B,X]
-      !byte $A2,$B5                   ; SBCA [B,Y]
-      !byte $A2,$D5                   ; SBCA [B,U]
-      !byte $A2,$F5                   ; SBCA [B,S]
-      !byte $A2,$9B                   ; SBCA [D,X]
-      !byte $A2,$BB                   ; SBCA [D,Y]
-      !byte $A2,$DB                   ; SBCA [D,U]
-      !byte $A2,$FB                   ; SBCA [D,S]
-      !byte $A2,$91                   ; SBCA [,X++]
-      !byte $A2,$B1                   ; SBCA [,Y++]
-      !byte $A2,$D1                   ; SBCA [,U++]
-      !byte $A2,$F1                   ; SBCA [,S++]
-      !byte $A2,$93                   ; SBCA [,--X]
-      !byte $A2,$B3                   ; SBCA [,--Y]
-      !byte $A2,$D3                   ; SBCA [,--U]
-      !byte $A2,$F3                   ; SBCA [,--S]
-      !byte $A2,$9C,$FF               ; SBCA [-$01,PC]
-      !byte $A2,$BC,$FF               ; SBCA [-$01,PC]
-      !byte $A2,$DC,$FF               ; SBCA [-$01,PC]
-      !byte $A2,$FC,$FF               ; SBCA [-$01,PC]
-      !byte $A2,$9C,$60               ; SBCA [$60,PC]
-      !byte $A2,$BC,$60               ; SBCA [$60,PC]
-      !byte $A2,$DC,$60               ; SBCA [$60,PC]
-      !byte $A2,$FC,$60               ; SBCA [$60,PC]
-      !byte $A2,$9D,$DE,$AD           ; SBCA [$DEAD,PC]
-      !byte $A2,$BD,$DE,$AD           ; SBCA [$DEAD,PC]
-      !byte $A2,$DD,$DE,$AD           ; SBCA [$DEAD,PC]
-      !byte $A2,$FD,$DE,$AD           ; SBCA [$DEAD,PC]
-      !byte $A2,$9D,$10,$00           ; SBCA [$1000,PC]
-      !byte $A2,$BD,$10,$00           ; SBCA [$1000,PC]
-      !byte $A2,$DD,$10,$00           ; SBCA [$1000,PC]
-      !byte $A2,$FD,$10,$00           ; SBCA [$1000,PC]
-      !byte $A2,$9F,$DE,$AD           ; SBCA [$DEAD]
-      !byte $A2,$BF,$DE,$AD           ; SBCA [$DEAD]
-      !byte $A2,$DF,$DE,$AD           ; SBCA [$DEAD]
-      !byte $A2,$FF,$DE,$AD           ; SBCA [$DEAD]
-      !byte $A3,$84                   ; SUBD ,X
-      !byte $A3,$A4                   ; SUBD ,Y
-      !byte $A3,$C4                   ; SUBD ,U
-      !byte $A3,$E4                   ; SUBD ,S
-      !byte $A3,$15                   ; SUBD -$0B,X
-      !byte $A3,$35                   ; SUBD -$0B,Y
-      !byte $A3,$55                   ; SUBD -$0B,U
-      !byte $A3,$75                   ; SUBD -$0B,S
-      !byte $A3,$0C                   ; SUBD $0C,X
-      !byte $A3,$2C                   ; SUBD $0C,Y
-      !byte $A3,$4C                   ; SUBD $0C,U
-      !byte $A3,$6C                   ; SUBD $0C,S
-      !byte $A3,$88,$FF               ; SUBD -$01,X
-      !byte $A3,$A8,$FF               ; SUBD -$01,Y
-      !byte $A3,$C8,$FF               ; SUBD -$01,U
-      !byte $A3,$E8,$FF               ; SUBD -$01,S
-      !byte $A3,$88,$60               ; SUBD $60,X
-      !byte $A3,$A8,$60               ; SUBD $60,Y
-      !byte $A3,$C8,$60               ; SUBD $60,U
-      !byte $A3,$E8,$60               ; SUBD $60,S
-      !byte $A3,$89,$DE,$AD           ; SUBD $DEAD,X
-      !byte $A3,$A9,$DE,$AD           ; SUBD $DEAD,Y
-      !byte $A3,$C9,$DE,$AD           ; SUBD $DEAD,U
-      !byte $A3,$E9,$DE,$AD           ; SUBD $DEAD,S
-      !byte $A3,$89,$10,$00           ; SUBD $1000,X
-      !byte $A3,$A9,$10,$00           ; SUBD $1000,Y
-      !byte $A3,$C9,$10,$00           ; SUBD $1000,U
-      !byte $A3,$E9,$10,$00           ; SUBD $1000,S
-      !byte $A3,$86                   ; SUBD A,X
-      !byte $A3,$A6                   ; SUBD A,Y
-      !byte $A3,$C6                   ; SUBD A,U
-      !byte $A3,$E6                   ; SUBD A,S
-      !byte $A3,$85                   ; SUBD B,X
-      !byte $A3,$A5                   ; SUBD B,Y
-      !byte $A3,$C5                   ; SUBD B,U
-      !byte $A3,$E5                   ; SUBD B,S
-      !byte $A3,$8B                   ; SUBD D,X
-      !byte $A3,$AB                   ; SUBD D,Y
-      !byte $A3,$CB                   ; SUBD D,U
-      !byte $A3,$EB                   ; SUBD D,S
-      !byte $A3,$80                   ; SUBD ,X+
-      !byte $A3,$A0                   ; SUBD ,Y+
-      !byte $A3,$C0                   ; SUBD ,U+
-      !byte $A3,$E0                   ; SUBD ,S+
-      !byte $A3,$81                   ; SUBD ,X++
-      !byte $A3,$A1                   ; SUBD ,Y++
-      !byte $A3,$C1                   ; SUBD ,U++
-      !byte $A3,$E1                   ; SUBD ,S++
-      !byte $A3,$82                   ; SUBD ,-X
-      !byte $A3,$A2                   ; SUBD ,-Y
-      !byte $A3,$C2                   ; SUBD ,-U
-      !byte $A3,$E2                   ; SUBD ,-S
-      !byte $A3,$83                   ; SUBD ,--X
-      !byte $A3,$A3                   ; SUBD ,--Y
-      !byte $A3,$C3                   ; SUBD ,--U
-      !byte $A3,$E3                   ; SUBD ,--S
-      !byte $A3,$8C,$FF               ; SUBD -$01,PC
-      !byte $A3,$AC,$FF               ; SUBD -$01,PC
-      !byte $A3,$CC,$FF               ; SUBD -$01,PC
-      !byte $A3,$EC,$FF               ; SUBD -$01,PC
-      !byte $A3,$8C,$60               ; SUBD $60,PC
-      !byte $A3,$AC,$60               ; SUBD $60,PC
-      !byte $A3,$CC,$60               ; SUBD $60,PC
-      !byte $A3,$EC,$60               ; SUBD $60,PC
-      !byte $A3,$8D,$DE,$AD           ; SUBD $DEAD,PC
-      !byte $A3,$AD,$DE,$AD           ; SUBD $DEAD,PC
-      !byte $A3,$CD,$DE,$AD           ; SUBD $DEAD,PC
-      !byte $A3,$ED,$DE,$AD           ; SUBD $DEAD,PC
-      !byte $A3,$8D,$10,$00           ; SUBD $1000,PC
-      !byte $A3,$AD,$10,$00           ; SUBD $1000,PC
-      !byte $A3,$CD,$10,$00           ; SUBD $1000,PC
-      !byte $A3,$ED,$10,$00           ; SUBD $1000,PC
-      !byte $A3,$94                   ; SUBD [,X]
-      !byte $A3,$B4                   ; SUBD [,Y]
-      !byte $A3,$D4                   ; SUBD [,U]
-      !byte $A3,$F4                   ; SUBD [,S]
-      !byte $A3,$98,$FF               ; SUBD [-$01,X]
-      !byte $A3,$B8,$FF               ; SUBD [-$01,Y]
-      !byte $A3,$D8,$FF               ; SUBD [-$01,U]
-      !byte $A3,$F8,$FF               ; SUBD [-$01,S]
-      !byte $A3,$98,$60               ; SUBD [$60,X]
-      !byte $A3,$B8,$60               ; SUBD [$60,Y]
-      !byte $A3,$D8,$60               ; SUBD [$60,U]
-      !byte $A3,$F8,$60               ; SUBD [$60,S]
-      !byte $A3,$99,$DE,$AD           ; SUBD [$DEAD,X]
-      !byte $A3,$B9,$DE,$AD           ; SUBD [$DEAD,Y]
-      !byte $A3,$D9,$DE,$AD           ; SUBD [$DEAD,U]
-      !byte $A3,$F9,$DE,$AD           ; SUBD [$DEAD,S]
-      !byte $A3,$99,$DE,$10           ; SUBD [$DE10,X]
-      !byte $A3,$B9,$DE,$10           ; SUBD [$DE10,Y]
-      !byte $A3,$D9,$DE,$10           ; SUBD [$DE10,U]
-      !byte $A3,$F9,$DE,$10           ; SUBD [$DE10,S]
-      !byte $A3,$96                   ; SUBD [A,X]
-      !byte $A3,$B6                   ; SUBD [A,Y]
-      !byte $A3,$D6                   ; SUBD [A,U]
-      !byte $A3,$F6                   ; SUBD [A,S]
-      !byte $A3,$95                   ; SUBD [B,X]
-      !byte $A3,$B5                   ; SUBD [B,Y]
-      !byte $A3,$D5                   ; SUBD [B,U]
-      !byte $A3,$F5                   ; SUBD [B,S]
-      !byte $A3,$9B                   ; SUBD [D,X]
-      !byte $A3,$BB                   ; SUBD [D,Y]
-      !byte $A3,$DB                   ; SUBD [D,U]
-      !byte $A3,$FB                   ; SUBD [D,S]
-      !byte $A3,$91                   ; SUBD [,X++]
-      !byte $A3,$B1                   ; SUBD [,Y++]
-      !byte $A3,$D1                   ; SUBD [,U++]
-      !byte $A3,$F1                   ; SUBD [,S++]
-      !byte $A3,$93                   ; SUBD [,--X]
-      !byte $A3,$B3                   ; SUBD [,--Y]
-      !byte $A3,$D3                   ; SUBD [,--U]
-      !byte $A3,$F3                   ; SUBD [,--S]
-      !byte $A3,$9C,$FF               ; SUBD [-$01,PC]
-      !byte $A3,$BC,$FF               ; SUBD [-$01,PC]
-      !byte $A3,$DC,$FF               ; SUBD [-$01,PC]
-      !byte $A3,$FC,$FF               ; SUBD [-$01,PC]
-      !byte $A3,$9C,$60               ; SUBD [$60,PC]
-      !byte $A3,$BC,$60               ; SUBD [$60,PC]
-      !byte $A3,$DC,$60               ; SUBD [$60,PC]
-      !byte $A3,$FC,$60               ; SUBD [$60,PC]
-      !byte $A3,$9D,$DE,$AD           ; SUBD [$DEAD,PC]
-      !byte $A3,$BD,$DE,$AD           ; SUBD [$DEAD,PC]
-      !byte $A3,$DD,$DE,$AD           ; SUBD [$DEAD,PC]
-      !byte $A3,$FD,$DE,$AD           ; SUBD [$DEAD,PC]
-      !byte $A3,$9D,$10,$00           ; SUBD [$1000,PC]
-      !byte $A3,$BD,$10,$00           ; SUBD [$1000,PC]
-      !byte $A3,$DD,$10,$00           ; SUBD [$1000,PC]
-      !byte $A3,$FD,$10,$00           ; SUBD [$1000,PC]
-      !byte $A3,$9F,$DE,$AD           ; SUBD [$DEAD]
-      !byte $A3,$BF,$DE,$AD           ; SUBD [$DEAD]
-      !byte $A3,$DF,$DE,$AD           ; SUBD [$DEAD]
-      !byte $A3,$FF,$DE,$AD           ; SUBD [$DEAD]
       !byte $A4,$84                   ; ANDA ,X
       !byte $A4,$A4                   ; ANDA ,Y
       !byte $A4,$C4                   ; ANDA ,U
