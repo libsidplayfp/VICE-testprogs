@@ -15311,667 +15311,1615 @@
 !byte $11,$DD,$00                ; STD $00
 !byte $11,$DE,$00                ; LDU $00
 !byte $11,$DF,$00                ; STU $00
+!byte $E0,$87                    ; SUBB ,X
+!byte $E0,$A7                    ; SUBB ,Y
+!byte $E0,$C7                    ; SUBB ,U
+!byte $E0,$E7                    ; SUBB ,S
+!byte $E0,$8A                    ; SUBB ,PClo
+!byte $E0,$AA                    ; SUBB ,PClo
+!byte $E0,$CA                    ; SUBB ,PClo
+!byte $E0,$EA                    ; SUBB ,PClo
+!byte $E0,$8F,$DE,$AD            ; SUBB ,$DEAD
+!byte $E0,$AF,$DE,$AD            ; SUBB ,$DEAD
+!byte $E0,$CF,$DE,$AD            ; SUBB ,$DEAD
+!byte $E0,$EF,$DE,$AD            ; SUBB ,$DEAD
+!byte $E0,$97                    ; SUBB [,X]
+!byte $E0,$B7                    ; SUBB [,Y]
+!byte $E0,$D7                    ; SUBB [,U]
+!byte $E0,$F7                    ; SUBB [,S]
+!byte $E0,$9A                    ; SUBB [,PClo]
+!byte $E0,$BA                    ; SUBB [,PClo]
+!byte $E0,$DA                    ; SUBB [,PClo]
+!byte $E0,$FA                    ; SUBB [,PClo]
+!byte $E0,$92                    ; SUBB [,-X]
+!byte $E0,$B2                    ; SUBB [,-Y]
+!byte $E0,$D2                    ; SUBB [,-U]
+!byte $E0,$F2                    ; SUBB [,-S]
+!byte $E0,$90                    ; SUBB [,X+]
+!byte $E0,$B0                    ; SUBB [,Y+]
+!byte $E0,$D0                    ; SUBB [,U+]
+!byte $E0,$F0                    ; SUBB [,S+]
+!byte $10,$E0,$84                ; SUBB ,X
+!byte $10,$E0,$A4                ; SUBB ,Y
+!byte $10,$E0,$C4                ; SUBB ,U
+!byte $10,$E0,$E4                ; SUBB ,S
+!byte $10,$E0,$15                ; SUBB -$0B,X
+!byte $10,$E0,$35                ; SUBB -$0B,Y
+!byte $10,$E0,$55                ; SUBB -$0B,U
+!byte $10,$E0,$75                ; SUBB -$0B,S
+!byte $10,$E0,$0C                ; SUBB $0C,X
+!byte $10,$E0,$2C                ; SUBB $0C,Y
+!byte $10,$E0,$4C                ; SUBB $0C,U
+!byte $10,$E0,$6C                ; SUBB $0C,S
+!byte $10,$E0,$88,$FF            ; SUBB -$01,X
+!byte $10,$E0,$A8,$FF            ; SUBB -$01,Y
+!byte $10,$E0,$C8,$FF            ; SUBB -$01,U
+!byte $10,$E0,$E8,$FF            ; SUBB -$01,S
+!byte $10,$E0,$88,$60            ; SUBB $60,X
+!byte $10,$E0,$A8,$60            ; SUBB $60,Y
+!byte $10,$E0,$C8,$60            ; SUBB $60,U
+!byte $10,$E0,$E8,$60            ; SUBB $60,S
+!byte $10,$E0,$89,$DE,$AD        ; SUBB $DEAD,X
+!byte $10,$E0,$A9,$DE,$AD        ; SUBB $DEAD,Y
+!byte $10,$E0,$C9,$DE,$AD        ; SUBB $DEAD,U
+!byte $10,$E0,$E9,$DE,$AD        ; SUBB $DEAD,S
+!byte $10,$E0,$89,$10,$00        ; SUBB $1000,X
+!byte $10,$E0,$A9,$10,$00        ; SUBB $1000,Y
+!byte $10,$E0,$C9,$10,$00        ; SUBB $1000,U
+!byte $10,$E0,$E9,$10,$00        ; SUBB $1000,S
+!byte $10,$E0,$86                ; SUBB A,X
+!byte $10,$E0,$A6                ; SUBB A,Y
+!byte $10,$E0,$C6                ; SUBB A,U
+!byte $10,$E0,$E6                ; SUBB A,S
+!byte $10,$E0,$85                ; SUBB B,X
+!byte $10,$E0,$A5                ; SUBB B,Y
+!byte $10,$E0,$C5                ; SUBB B,U
+!byte $10,$E0,$E5                ; SUBB B,S
+!byte $10,$E0,$87                ; SUBB ,X
+!byte $10,$E0,$A7                ; SUBB ,Y
+!byte $10,$E0,$C7                ; SUBB ,U
+!byte $10,$E0,$E7                ; SUBB ,S
+!byte $10,$E0,$8A                ; SUBB ,PClo
+!byte $10,$E0,$AA                ; SUBB ,PClo
+!byte $10,$E0,$CA                ; SUBB ,PClo
+!byte $10,$E0,$EA                ; SUBB ,PClo
+!byte $10,$E0,$8B                ; SUBB D,X
+!byte $10,$E0,$AB                ; SUBB D,Y
+!byte $10,$E0,$CB                ; SUBB D,U
+!byte $10,$E0,$EB                ; SUBB D,S
+!byte $10,$E0,$80                ; SUBB ,X+
+!byte $10,$E0,$A0                ; SUBB ,Y+
+!byte $10,$E0,$C0                ; SUBB ,U+
+!byte $10,$E0,$E0                ; SUBB ,S+
+!byte $10,$E0,$81                ; SUBB ,X++
+!byte $10,$E0,$A1                ; SUBB ,Y++
+!byte $10,$E0,$C1                ; SUBB ,U++
+!byte $10,$E0,$E1                ; SUBB ,S++
+!byte $10,$E0,$82                ; SUBB ,-X
+!byte $10,$E0,$A2                ; SUBB ,-Y
+!byte $10,$E0,$C2                ; SUBB ,-U
+!byte $10,$E0,$E2                ; SUBB ,-S
+!byte $10,$E0,$83                ; SUBB ,--X
+!byte $10,$E0,$A3                ; SUBB ,--Y
+!byte $10,$E0,$C3                ; SUBB ,--U
+!byte $10,$E0,$E3                ; SUBB ,--S
+!byte $10,$E0,$8C,$FF            ; SUBB -$01,PC
+!byte $10,$E0,$AC,$FF            ; SUBB -$01,PC
+!byte $10,$E0,$CC,$FF            ; SUBB -$01,PC
+!byte $10,$E0,$EC,$FF            ; SUBB -$01,PC
+!byte $10,$E0,$8C,$60            ; SUBB $60,PC
+!byte $10,$E0,$AC,$60            ; SUBB $60,PC
+!byte $10,$E0,$CC,$60            ; SUBB $60,PC
+!byte $10,$E0,$EC,$60            ; SUBB $60,PC
+!byte $10,$E0,$8D,$DE,$AD        ; SUBB $DEAD,PC
+!byte $10,$E0,$AD,$DE,$AD        ; SUBB $DEAD,PC
+!byte $10,$E0,$CD,$DE,$AD        ; SUBB $DEAD,PC
+!byte $10,$E0,$ED,$DE,$AD        ; SUBB $DEAD,PC
+!byte $10,$E0,$8D,$10,$00        ; SUBB $1000,PC
+!byte $10,$E0,$AD,$10,$00        ; SUBB $1000,PC
+!byte $10,$E0,$CD,$10,$00        ; SUBB $1000,PC
+!byte $10,$E0,$ED,$10,$00        ; SUBB $1000,PC
+!byte $10,$E0,$8F,$DE,$AD        ; SUBB ,$DEAD
+!byte $10,$E0,$AF,$DE,$AD        ; SUBB ,$DEAD
+!byte $10,$E0,$CF,$DE,$AD        ; SUBB ,$DEAD
+!byte $10,$E0,$EF,$DE,$AD        ; SUBB ,$DEAD
+!byte $10,$E0,$94                ; SUBB [,X]
+!byte $10,$E0,$B4                ; SUBB [,Y]
+!byte $10,$E0,$D4                ; SUBB [,U]
+!byte $10,$E0,$F4                ; SUBB [,S]
+!byte $10,$E0,$98,$FF            ; SUBB [-$01,X]
+!byte $10,$E0,$B8,$FF            ; SUBB [-$01,Y]
+!byte $10,$E0,$D8,$FF            ; SUBB [-$01,U]
+!byte $10,$E0,$F8,$FF            ; SUBB [-$01,S]
+!byte $10,$E0,$98,$60            ; SUBB [$60,X]
+!byte $10,$E0,$B8,$60            ; SUBB [$60,Y]
+!byte $10,$E0,$D8,$60            ; SUBB [$60,U]
+!byte $10,$E0,$F8,$60            ; SUBB [$60,S]
+!byte $10,$E0,$99,$DE,$AD        ; SUBB [$DEAD,X]
+!byte $10,$E0,$B9,$DE,$AD        ; SUBB [$DEAD,Y]
+!byte $10,$E0,$D9,$DE,$AD        ; SUBB [$DEAD,U]
+!byte $10,$E0,$F9,$DE,$AD        ; SUBB [$DEAD,S]
+!byte $10,$E0,$99,$DE,$10        ; SUBB [$DE10,X]
+!byte $10,$E0,$B9,$DE,$10        ; SUBB [$DE10,Y]
+!byte $10,$E0,$D9,$DE,$10        ; SUBB [$DE10,U]
+!byte $10,$E0,$F9,$DE,$10        ; SUBB [$DE10,S]
+!byte $10,$E0,$96                ; SUBB [A,X]
+!byte $10,$E0,$B6                ; SUBB [A,Y]
+!byte $10,$E0,$D6                ; SUBB [A,U]
+!byte $10,$E0,$F6                ; SUBB [A,S]
+!byte $10,$E0,$95                ; SUBB [B,X]
+!byte $10,$E0,$B5                ; SUBB [B,Y]
+!byte $10,$E0,$D5                ; SUBB [B,U]
+!byte $10,$E0,$F5                ; SUBB [B,S]
+!byte $10,$E0,$97                ; SUBB [,X]
+!byte $10,$E0,$B7                ; SUBB [,Y]
+!byte $10,$E0,$D7                ; SUBB [,U]
+!byte $10,$E0,$F7                ; SUBB [,S]
+!byte $10,$E0,$9A                ; SUBB [,PClo]
+!byte $10,$E0,$BA                ; SUBB [,PClo]
+!byte $10,$E0,$DA                ; SUBB [,PClo]
+!byte $10,$E0,$FA                ; SUBB [,PClo]
+!byte $10,$E0,$9B                ; SUBB [D,X]
+!byte $10,$E0,$BB                ; SUBB [D,Y]
+!byte $10,$E0,$DB                ; SUBB [D,U]
+!byte $10,$E0,$FB                ; SUBB [D,S]
+!byte $10,$E0,$91                ; SUBB [,X++]
+!byte $10,$E0,$B1                ; SUBB [,Y++]
+!byte $10,$E0,$D1                ; SUBB [,U++]
+!byte $10,$E0,$F1                ; SUBB [,S++]
+!byte $10,$E0,$92                ; SUBB [,-X]
+!byte $10,$E0,$B2                ; SUBB [,-Y]
+!byte $10,$E0,$D2                ; SUBB [,-U]
+!byte $10,$E0,$F2                ; SUBB [,-S]
+!byte $10,$E0,$93                ; SUBB [,--X]
+!byte $10,$E0,$B3                ; SUBB [,--Y]
+!byte $10,$E0,$D3                ; SUBB [,--U]
+!byte $10,$E0,$F3                ; SUBB [,--S]
+!byte $10,$E0,$9C,$FF            ; SUBB [-$01,PC]
+!byte $10,$E0,$BC,$FF            ; SUBB [-$01,PC]
+!byte $10,$E0,$DC,$FF            ; SUBB [-$01,PC]
+!byte $10,$E0,$FC,$FF            ; SUBB [-$01,PC]
+!byte $10,$E0,$9C,$60            ; SUBB [$60,PC]
+!byte $10,$E0,$BC,$60            ; SUBB [$60,PC]
+!byte $10,$E0,$DC,$60            ; SUBB [$60,PC]
+!byte $10,$E0,$FC,$60            ; SUBB [$60,PC]
+!byte $10,$E0,$9D,$DE,$AD        ; SUBB [$DEAD,PC]
+!byte $10,$E0,$BD,$DE,$AD        ; SUBB [$DEAD,PC]
+!byte $10,$E0,$DD,$DE,$AD        ; SUBB [$DEAD,PC]
+!byte $10,$E0,$FD,$DE,$AD        ; SUBB [$DEAD,PC]
+!byte $10,$E0,$9D,$10,$00        ; SUBB [$1000,PC]
+!byte $10,$E0,$BD,$10,$00        ; SUBB [$1000,PC]
+!byte $10,$E0,$DD,$10,$00        ; SUBB [$1000,PC]
+!byte $10,$E0,$FD,$10,$00        ; SUBB [$1000,PC]
+!byte $10,$E0,$9F,$DE,$AD        ; SUBB [$DEAD]
+!byte $10,$E0,$BF,$DE,$AD        ; SUBB [$DEAD]
+!byte $10,$E0,$DF,$DE,$AD        ; SUBB [$DEAD]
+!byte $10,$E0,$FF,$DE,$AD        ; SUBB [$DEAD]
+!byte $10,$E0,$90                ; SUBB [,X+]
+!byte $10,$E0,$B0                ; SUBB [,Y+]
+!byte $10,$E0,$D0                ; SUBB [,U+]
+!byte $10,$E0,$F0                ; SUBB [,S+]
+!byte $11,$E0,$84                ; SUBB ,X
+!byte $11,$E0,$A4                ; SUBB ,Y
+!byte $11,$E0,$C4                ; SUBB ,U
+!byte $11,$E0,$E4                ; SUBB ,S
+!byte $11,$E0,$15                ; SUBB -$0B,X
+!byte $11,$E0,$35                ; SUBB -$0B,Y
+!byte $11,$E0,$55                ; SUBB -$0B,U
+!byte $11,$E0,$75                ; SUBB -$0B,S
+!byte $11,$E0,$0C                ; SUBB $0C,X
+!byte $11,$E0,$2C                ; SUBB $0C,Y
+!byte $11,$E0,$4C                ; SUBB $0C,U
+!byte $11,$E0,$6C                ; SUBB $0C,S
+!byte $11,$E0,$88,$FF            ; SUBB -$01,X
+!byte $11,$E0,$A8,$FF            ; SUBB -$01,Y
+!byte $11,$E0,$C8,$FF            ; SUBB -$01,U
+!byte $11,$E0,$E8,$FF            ; SUBB -$01,S
+!byte $11,$E0,$88,$60            ; SUBB $60,X
+!byte $11,$E0,$A8,$60            ; SUBB $60,Y
+!byte $11,$E0,$C8,$60            ; SUBB $60,U
+!byte $11,$E0,$E8,$60            ; SUBB $60,S
+!byte $11,$E0,$89,$DE,$AD        ; SUBB $DEAD,X
+!byte $11,$E0,$A9,$DE,$AD        ; SUBB $DEAD,Y
+!byte $11,$E0,$C9,$DE,$AD        ; SUBB $DEAD,U
+!byte $11,$E0,$E9,$DE,$AD        ; SUBB $DEAD,S
+!byte $11,$E0,$89,$10,$00        ; SUBB $1000,X
+!byte $11,$E0,$A9,$10,$00        ; SUBB $1000,Y
+!byte $11,$E0,$C9,$10,$00        ; SUBB $1000,U
+!byte $11,$E0,$E9,$10,$00        ; SUBB $1000,S
+!byte $11,$E0,$86                ; SUBB A,X
+!byte $11,$E0,$A6                ; SUBB A,Y
+!byte $11,$E0,$C6                ; SUBB A,U
+!byte $11,$E0,$E6                ; SUBB A,S
+!byte $11,$E0,$85                ; SUBB B,X
+!byte $11,$E0,$A5                ; SUBB B,Y
+!byte $11,$E0,$C5                ; SUBB B,U
+!byte $11,$E0,$E5                ; SUBB B,S
+!byte $11,$E0,$87                ; SUBB ,X
+!byte $11,$E0,$A7                ; SUBB ,Y
+!byte $11,$E0,$C7                ; SUBB ,U
+!byte $11,$E0,$E7                ; SUBB ,S
+!byte $11,$E0,$8A                ; SUBB ,PClo
+!byte $11,$E0,$AA                ; SUBB ,PClo
+!byte $11,$E0,$CA                ; SUBB ,PClo
+!byte $11,$E0,$EA                ; SUBB ,PClo
+!byte $11,$E0,$8B                ; SUBB D,X
+!byte $11,$E0,$AB                ; SUBB D,Y
+!byte $11,$E0,$CB                ; SUBB D,U
+!byte $11,$E0,$EB                ; SUBB D,S
+!byte $11,$E0,$80                ; SUBB ,X+
+!byte $11,$E0,$A0                ; SUBB ,Y+
+!byte $11,$E0,$C0                ; SUBB ,U+
+!byte $11,$E0,$E0                ; SUBB ,S+
+!byte $11,$E0,$81                ; SUBB ,X++
+!byte $11,$E0,$A1                ; SUBB ,Y++
+!byte $11,$E0,$C1                ; SUBB ,U++
+!byte $11,$E0,$E1                ; SUBB ,S++
+!byte $11,$E0,$82                ; SUBB ,-X
+!byte $11,$E0,$A2                ; SUBB ,-Y
+!byte $11,$E0,$C2                ; SUBB ,-U
+!byte $11,$E0,$E2                ; SUBB ,-S
+!byte $11,$E0,$83                ; SUBB ,--X
+!byte $11,$E0,$A3                ; SUBB ,--Y
+!byte $11,$E0,$C3                ; SUBB ,--U
+!byte $11,$E0,$E3                ; SUBB ,--S
+!byte $11,$E0,$8C,$FF            ; SUBB -$01,PC
+!byte $11,$E0,$AC,$FF            ; SUBB -$01,PC
+!byte $11,$E0,$CC,$FF            ; SUBB -$01,PC
+!byte $11,$E0,$EC,$FF            ; SUBB -$01,PC
+!byte $11,$E0,$8C,$60            ; SUBB $60,PC
+!byte $11,$E0,$AC,$60            ; SUBB $60,PC
+!byte $11,$E0,$CC,$60            ; SUBB $60,PC
+!byte $11,$E0,$EC,$60            ; SUBB $60,PC
+!byte $11,$E0,$8D,$DE,$AD        ; SUBB $DEAD,PC
+!byte $11,$E0,$AD,$DE,$AD        ; SUBB $DEAD,PC
+!byte $11,$E0,$CD,$DE,$AD        ; SUBB $DEAD,PC
+!byte $11,$E0,$ED,$DE,$AD        ; SUBB $DEAD,PC
+!byte $11,$E0,$8D,$10,$00        ; SUBB $1000,PC
+!byte $11,$E0,$AD,$10,$00        ; SUBB $1000,PC
+!byte $11,$E0,$CD,$10,$00        ; SUBB $1000,PC
+!byte $11,$E0,$ED,$10,$00        ; SUBB $1000,PC
+!byte $11,$E0,$8F,$DE,$AD        ; SUBB ,$DEAD
+!byte $11,$E0,$AF,$DE,$AD        ; SUBB ,$DEAD
+!byte $11,$E0,$CF,$DE,$AD        ; SUBB ,$DEAD
+!byte $11,$E0,$EF,$DE,$AD        ; SUBB ,$DEAD
+!byte $11,$E0,$94                ; SUBB [,X]
+!byte $11,$E0,$B4                ; SUBB [,Y]
+!byte $11,$E0,$D4                ; SUBB [,U]
+!byte $11,$E0,$F4                ; SUBB [,S]
+!byte $11,$E0,$98,$FF            ; SUBB [-$01,X]
+!byte $11,$E0,$B8,$FF            ; SUBB [-$01,Y]
+!byte $11,$E0,$D8,$FF            ; SUBB [-$01,U]
+!byte $11,$E0,$F8,$FF            ; SUBB [-$01,S]
+!byte $11,$E0,$98,$60            ; SUBB [$60,X]
+!byte $11,$E0,$B8,$60            ; SUBB [$60,Y]
+!byte $11,$E0,$D8,$60            ; SUBB [$60,U]
+!byte $11,$E0,$F8,$60            ; SUBB [$60,S]
+!byte $11,$E0,$99,$DE,$AD        ; SUBB [$DEAD,X]
+!byte $11,$E0,$B9,$DE,$AD        ; SUBB [$DEAD,Y]
+!byte $11,$E0,$D9,$DE,$AD        ; SUBB [$DEAD,U]
+!byte $11,$E0,$F9,$DE,$AD        ; SUBB [$DEAD,S]
+!byte $11,$E0,$99,$DE,$10        ; SUBB [$DE10,X]
+!byte $11,$E0,$B9,$DE,$10        ; SUBB [$DE10,Y]
+!byte $11,$E0,$D9,$DE,$10        ; SUBB [$DE10,U]
+!byte $11,$E0,$F9,$DE,$10        ; SUBB [$DE10,S]
+!byte $11,$E0,$96                ; SUBB [A,X]
+!byte $11,$E0,$B6                ; SUBB [A,Y]
+!byte $11,$E0,$D6                ; SUBB [A,U]
+!byte $11,$E0,$F6                ; SUBB [A,S]
+!byte $11,$E0,$95                ; SUBB [B,X]
+!byte $11,$E0,$B5                ; SUBB [B,Y]
+!byte $11,$E0,$D5                ; SUBB [B,U]
+!byte $11,$E0,$F5                ; SUBB [B,S]
+!byte $11,$E0,$97                ; SUBB [,X]
+!byte $11,$E0,$B7                ; SUBB [,Y]
+!byte $11,$E0,$D7                ; SUBB [,U]
+!byte $11,$E0,$F7                ; SUBB [,S]
+!byte $11,$E0,$9A                ; SUBB [,PClo]
+!byte $11,$E0,$BA                ; SUBB [,PClo]
+!byte $11,$E0,$DA                ; SUBB [,PClo]
+!byte $11,$E0,$FA                ; SUBB [,PClo]
+!byte $11,$E0,$9B                ; SUBB [D,X]
+!byte $11,$E0,$BB                ; SUBB [D,Y]
+!byte $11,$E0,$DB                ; SUBB [D,U]
+!byte $11,$E0,$FB                ; SUBB [D,S]
+!byte $11,$E0,$91                ; SUBB [,X++]
+!byte $11,$E0,$B1                ; SUBB [,Y++]
+!byte $11,$E0,$D1                ; SUBB [,U++]
+!byte $11,$E0,$F1                ; SUBB [,S++]
+!byte $11,$E0,$92                ; SUBB [,-X]
+!byte $11,$E0,$B2                ; SUBB [,-Y]
+!byte $11,$E0,$D2                ; SUBB [,-U]
+!byte $11,$E0,$F2                ; SUBB [,-S]
+!byte $11,$E0,$93                ; SUBB [,--X]
+!byte $11,$E0,$B3                ; SUBB [,--Y]
+!byte $11,$E0,$D3                ; SUBB [,--U]
+!byte $11,$E0,$F3                ; SUBB [,--S]
+!byte $11,$E0,$9C,$FF            ; SUBB [-$01,PC]
+!byte $11,$E0,$BC,$FF            ; SUBB [-$01,PC]
+!byte $11,$E0,$DC,$FF            ; SUBB [-$01,PC]
+!byte $11,$E0,$FC,$FF            ; SUBB [-$01,PC]
+!byte $11,$E0,$9C,$60            ; SUBB [$60,PC]
+!byte $11,$E0,$BC,$60            ; SUBB [$60,PC]
+!byte $11,$E0,$DC,$60            ; SUBB [$60,PC]
+!byte $11,$E0,$FC,$60            ; SUBB [$60,PC]
+!byte $11,$E0,$9D,$DE,$AD        ; SUBB [$DEAD,PC]
+!byte $11,$E0,$BD,$DE,$AD        ; SUBB [$DEAD,PC]
+!byte $11,$E0,$DD,$DE,$AD        ; SUBB [$DEAD,PC]
+!byte $11,$E0,$FD,$DE,$AD        ; SUBB [$DEAD,PC]
+!byte $11,$E0,$9D,$10,$00        ; SUBB [$1000,PC]
+!byte $11,$E0,$BD,$10,$00        ; SUBB [$1000,PC]
+!byte $11,$E0,$DD,$10,$00        ; SUBB [$1000,PC]
+!byte $11,$E0,$FD,$10,$00        ; SUBB [$1000,PC]
+!byte $11,$E0,$9F,$DE,$AD        ; SUBB [$DEAD]
+!byte $11,$E0,$BF,$DE,$AD        ; SUBB [$DEAD]
+!byte $11,$E0,$DF,$DE,$AD        ; SUBB [$DEAD]
+!byte $11,$E0,$FF,$DE,$AD        ; SUBB [$DEAD]
+!byte $11,$E0,$90                ; SUBB [,X+]
+!byte $11,$E0,$B0                ; SUBB [,Y+]
+!byte $11,$E0,$D0                ; SUBB [,U+]
+!byte $11,$E0,$F0                ; SUBB [,S+]
+!byte $E1,$87                    ; CMPB ,X
+!byte $E1,$A7                    ; CMPB ,Y
+!byte $E1,$C7                    ; CMPB ,U
+!byte $E1,$E7                    ; CMPB ,S
+!byte $E1,$8A                    ; CMPB ,PClo
+!byte $E1,$AA                    ; CMPB ,PClo
+!byte $E1,$CA                    ; CMPB ,PClo
+!byte $E1,$EA                    ; CMPB ,PClo
+!byte $E1,$8F,$DE,$AD            ; CMPB ,$DEAD
+!byte $E1,$AF,$DE,$AD            ; CMPB ,$DEAD
+!byte $E1,$CF,$DE,$AD            ; CMPB ,$DEAD
+!byte $E1,$EF,$DE,$AD            ; CMPB ,$DEAD
+!byte $E1,$97                    ; CMPB [,X]
+!byte $E1,$B7                    ; CMPB [,Y]
+!byte $E1,$D7                    ; CMPB [,U]
+!byte $E1,$F7                    ; CMPB [,S]
+!byte $E1,$9A                    ; CMPB [,PClo]
+!byte $E1,$BA                    ; CMPB [,PClo]
+!byte $E1,$DA                    ; CMPB [,PClo]
+!byte $E1,$FA                    ; CMPB [,PClo]
+!byte $E1,$92                    ; CMPB [,-X]
+!byte $E1,$B2                    ; CMPB [,-Y]
+!byte $E1,$D2                    ; CMPB [,-U]
+!byte $E1,$F2                    ; CMPB [,-S]
+!byte $E1,$90                    ; CMPB [,X+]
+!byte $E1,$B0                    ; CMPB [,Y+]
+!byte $E1,$D0                    ; CMPB [,U+]
+!byte $E1,$F0                    ; CMPB [,S+]
+!byte $E1,$87                    ; CMPB ,X
+!byte $E1,$A7                    ; CMPB ,Y
+!byte $E1,$C7                    ; CMPB ,U
+!byte $E1,$E7                    ; CMPB ,S
+!byte $E1,$8A                    ; CMPB ,PClo
+!byte $E1,$AA                    ; CMPB ,PClo
+!byte $E1,$CA                    ; CMPB ,PClo
+!byte $E1,$EA                    ; CMPB ,PClo
+!byte $E1,$8F,$DE,$AD            ; CMPB ,$DEAD
+!byte $E1,$AF,$DE,$AD            ; CMPB ,$DEAD
+!byte $E1,$CF,$DE,$AD            ; CMPB ,$DEAD
+!byte $E1,$EF,$DE,$AD            ; CMPB ,$DEAD
+!byte $E1,$97                    ; CMPB [,X]
+!byte $E1,$B7                    ; CMPB [,Y]
+!byte $E1,$D7                    ; CMPB [,U]
+!byte $E1,$F7                    ; CMPB [,S]
+!byte $E1,$9A                    ; CMPB [,PClo]
+!byte $E1,$BA                    ; CMPB [,PClo]
+!byte $E1,$DA                    ; CMPB [,PClo]
+!byte $E1,$FA                    ; CMPB [,PClo]
+!byte $E1,$92                    ; CMPB [,-X]
+!byte $E1,$B2                    ; CMPB [,-Y]
+!byte $E1,$D2                    ; CMPB [,-U]
+!byte $E1,$F2                    ; CMPB [,-S]
+!byte $E1,$90                    ; CMPB [,X+]
+!byte $E1,$B0                    ; CMPB [,Y+]
+!byte $E1,$D0                    ; CMPB [,U+]
+!byte $E1,$F0                    ; CMPB [,S+]
+!byte $10,$E1,$84                ; CMPB ,X
+!byte $10,$E1,$A4                ; CMPB ,Y
+!byte $10,$E1,$C4                ; CMPB ,U
+!byte $10,$E1,$E4                ; CMPB ,S
+!byte $10,$E1,$15                ; CMPB -$0B,X
+!byte $10,$E1,$35                ; CMPB -$0B,Y
+!byte $10,$E1,$55                ; CMPB -$0B,U
+!byte $10,$E1,$75                ; CMPB -$0B,S
+!byte $10,$E1,$0C                ; CMPB $0C,X
+!byte $10,$E1,$2C                ; CMPB $0C,Y
+!byte $10,$E1,$4C                ; CMPB $0C,U
+!byte $10,$E1,$6C                ; CMPB $0C,S
+!byte $10,$E1,$88,$FF            ; CMPB -$01,X
+!byte $10,$E1,$A8,$FF            ; CMPB -$01,Y
+!byte $10,$E1,$C8,$FF            ; CMPB -$01,U
+!byte $10,$E1,$E8,$FF            ; CMPB -$01,S
+!byte $10,$E1,$88,$60            ; CMPB $60,X
+!byte $10,$E1,$A8,$60            ; CMPB $60,Y
+!byte $10,$E1,$C8,$60            ; CMPB $60,U
+!byte $10,$E1,$E8,$60            ; CMPB $60,S
+!byte $10,$E1,$89,$DE,$AD        ; CMPB $DEAD,X
+!byte $10,$E1,$A9,$DE,$AD        ; CMPB $DEAD,Y
+!byte $10,$E1,$C9,$DE,$AD        ; CMPB $DEAD,U
+!byte $10,$E1,$E9,$DE,$AD        ; CMPB $DEAD,S
+!byte $10,$E1,$89,$10,$00        ; CMPB $1000,X
+!byte $10,$E1,$A9,$10,$00        ; CMPB $1000,Y
+!byte $10,$E1,$C9,$10,$00        ; CMPB $1000,U
+!byte $10,$E1,$E9,$10,$00        ; CMPB $1000,S
+!byte $10,$E1,$86                ; CMPB A,X
+!byte $10,$E1,$A6                ; CMPB A,Y
+!byte $10,$E1,$C6                ; CMPB A,U
+!byte $10,$E1,$E6                ; CMPB A,S
+!byte $10,$E1,$85                ; CMPB B,X
+!byte $10,$E1,$A5                ; CMPB B,Y
+!byte $10,$E1,$C5                ; CMPB B,U
+!byte $10,$E1,$E5                ; CMPB B,S
+!byte $10,$E1,$87                ; CMPB ,X
+!byte $10,$E1,$A7                ; CMPB ,Y
+!byte $10,$E1,$C7                ; CMPB ,U
+!byte $10,$E1,$E7                ; CMPB ,S
+!byte $10,$E1,$8A                ; CMPB ,PClo
+!byte $10,$E1,$AA                ; CMPB ,PClo
+!byte $10,$E1,$CA                ; CMPB ,PClo
+!byte $10,$E1,$EA                ; CMPB ,PClo
+!byte $10,$E1,$8B                ; CMPB D,X
+!byte $10,$E1,$AB                ; CMPB D,Y
+!byte $10,$E1,$CB                ; CMPB D,U
+!byte $10,$E1,$EB                ; CMPB D,S
+!byte $10,$E1,$80                ; CMPB ,X+
+!byte $10,$E1,$A0                ; CMPB ,Y+
+!byte $10,$E1,$C0                ; CMPB ,U+
+!byte $10,$E1,$E0                ; CMPB ,S+
+!byte $10,$E1,$81                ; CMPB ,X++
+!byte $10,$E1,$A1                ; CMPB ,Y++
+!byte $10,$E1,$C1                ; CMPB ,U++
+!byte $10,$E1,$E1                ; CMPB ,S++
+!byte $10,$E1,$82                ; CMPB ,-X
+!byte $10,$E1,$A2                ; CMPB ,-Y
+!byte $10,$E1,$C2                ; CMPB ,-U
+!byte $10,$E1,$E2                ; CMPB ,-S
+!byte $10,$E1,$83                ; CMPB ,--X
+!byte $10,$E1,$A3                ; CMPB ,--Y
+!byte $10,$E1,$C3                ; CMPB ,--U
+!byte $10,$E1,$E3                ; CMPB ,--S
+!byte $10,$E1,$8C,$FF            ; CMPB -$01,PC
+!byte $10,$E1,$AC,$FF            ; CMPB -$01,PC
+!byte $10,$E1,$CC,$FF            ; CMPB -$01,PC
+!byte $10,$E1,$EC,$FF            ; CMPB -$01,PC
+!byte $10,$E1,$8C,$60            ; CMPB $60,PC
+!byte $10,$E1,$AC,$60            ; CMPB $60,PC
+!byte $10,$E1,$CC,$60            ; CMPB $60,PC
+!byte $10,$E1,$EC,$60            ; CMPB $60,PC
+!byte $10,$E1,$8D,$DE,$AD        ; CMPB $DEAD,PC
+!byte $10,$E1,$AD,$DE,$AD        ; CMPB $DEAD,PC
+!byte $10,$E1,$CD,$DE,$AD        ; CMPB $DEAD,PC
+!byte $10,$E1,$ED,$DE,$AD        ; CMPB $DEAD,PC
+!byte $10,$E1,$8D,$10,$00        ; CMPB $1000,PC
+!byte $10,$E1,$AD,$10,$00        ; CMPB $1000,PC
+!byte $10,$E1,$CD,$10,$00        ; CMPB $1000,PC
+!byte $10,$E1,$ED,$10,$00        ; CMPB $1000,PC
+!byte $10,$E1,$8F,$DE,$AD        ; CMPB ,$DEAD
+!byte $10,$E1,$AF,$DE,$AD        ; CMPB ,$DEAD
+!byte $10,$E1,$CF,$DE,$AD        ; CMPB ,$DEAD
+!byte $10,$E1,$EF,$DE,$AD        ; CMPB ,$DEAD
+!byte $10,$E1,$94                ; CMPB [,X]
+!byte $10,$E1,$B4                ; CMPB [,Y]
+!byte $10,$E1,$D4                ; CMPB [,U]
+!byte $10,$E1,$F4                ; CMPB [,S]
+!byte $10,$E1,$98,$FF            ; CMPB [-$01,X]
+!byte $10,$E1,$B8,$FF            ; CMPB [-$01,Y]
+!byte $10,$E1,$D8,$FF            ; CMPB [-$01,U]
+!byte $10,$E1,$F8,$FF            ; CMPB [-$01,S]
+!byte $10,$E1,$98,$60            ; CMPB [$60,X]
+!byte $10,$E1,$B8,$60            ; CMPB [$60,Y]
+!byte $10,$E1,$D8,$60            ; CMPB [$60,U]
+!byte $10,$E1,$F8,$60            ; CMPB [$60,S]
+!byte $10,$E1,$99,$DE,$AD        ; CMPB [$DEAD,X]
+!byte $10,$E1,$B9,$DE,$AD        ; CMPB [$DEAD,Y]
+!byte $10,$E1,$D9,$DE,$AD        ; CMPB [$DEAD,U]
+!byte $10,$E1,$F9,$DE,$AD        ; CMPB [$DEAD,S]
+!byte $10,$E1,$99,$DE,$10        ; CMPB [$DE10,X]
+!byte $10,$E1,$B9,$DE,$10        ; CMPB [$DE10,Y]
+!byte $10,$E1,$D9,$DE,$10        ; CMPB [$DE10,U]
+!byte $10,$E1,$F9,$DE,$10        ; CMPB [$DE10,S]
+!byte $10,$E1,$96                ; CMPB [A,X]
+!byte $10,$E1,$B6                ; CMPB [A,Y]
+!byte $10,$E1,$D6                ; CMPB [A,U]
+!byte $10,$E1,$F6                ; CMPB [A,S]
+!byte $10,$E1,$95                ; CMPB [B,X]
+!byte $10,$E1,$B5                ; CMPB [B,Y]
+!byte $10,$E1,$D5                ; CMPB [B,U]
+!byte $10,$E1,$F5                ; CMPB [B,S]
+!byte $10,$E1,$97                ; CMPB [,X]
+!byte $10,$E1,$B7                ; CMPB [,Y]
+!byte $10,$E1,$D7                ; CMPB [,U]
+!byte $10,$E1,$F7                ; CMPB [,S]
+!byte $10,$E1,$9A                ; CMPB [,PClo]
+!byte $10,$E1,$BA                ; CMPB [,PClo]
+!byte $10,$E1,$DA                ; CMPB [,PClo]
+!byte $10,$E1,$FA                ; CMPB [,PClo]
+!byte $10,$E1,$9B                ; CMPB [D,X]
+!byte $10,$E1,$BB                ; CMPB [D,Y]
+!byte $10,$E1,$DB                ; CMPB [D,U]
+!byte $10,$E1,$FB                ; CMPB [D,S]
+!byte $10,$E1,$91                ; CMPB [,X++]
+!byte $10,$E1,$B1                ; CMPB [,Y++]
+!byte $10,$E1,$D1                ; CMPB [,U++]
+!byte $10,$E1,$F1                ; CMPB [,S++]
+!byte $10,$E1,$92                ; CMPB [,-X]
+!byte $10,$E1,$B2                ; CMPB [,-Y]
+!byte $10,$E1,$D2                ; CMPB [,-U]
+!byte $10,$E1,$F2                ; CMPB [,-S]
+!byte $10,$E1,$93                ; CMPB [,--X]
+!byte $10,$E1,$B3                ; CMPB [,--Y]
+!byte $10,$E1,$D3                ; CMPB [,--U]
+!byte $10,$E1,$F3                ; CMPB [,--S]
+!byte $10,$E1,$9C,$FF            ; CMPB [-$01,PC]
+!byte $10,$E1,$BC,$FF            ; CMPB [-$01,PC]
+!byte $10,$E1,$DC,$FF            ; CMPB [-$01,PC]
+!byte $10,$E1,$FC,$FF            ; CMPB [-$01,PC]
+!byte $10,$E1,$9C,$60            ; CMPB [$60,PC]
+!byte $10,$E1,$BC,$60            ; CMPB [$60,PC]
+!byte $10,$E1,$DC,$60            ; CMPB [$60,PC]
+!byte $10,$E1,$FC,$60            ; CMPB [$60,PC]
+!byte $10,$E1,$9D,$DE,$AD        ; CMPB [$DEAD,PC]
+!byte $10,$E1,$BD,$DE,$AD        ; CMPB [$DEAD,PC]
+!byte $10,$E1,$DD,$DE,$AD        ; CMPB [$DEAD,PC]
+!byte $10,$E1,$FD,$DE,$AD        ; CMPB [$DEAD,PC]
+!byte $10,$E1,$9D,$10,$00        ; CMPB [$1000,PC]
+!byte $10,$E1,$BD,$10,$00        ; CMPB [$1000,PC]
+!byte $10,$E1,$DD,$10,$00        ; CMPB [$1000,PC]
+!byte $10,$E1,$FD,$10,$00        ; CMPB [$1000,PC]
+!byte $10,$E1,$9F,$DE,$AD        ; CMPB [$DEAD]
+!byte $10,$E1,$BF,$DE,$AD        ; CMPB [$DEAD]
+!byte $10,$E1,$DF,$DE,$AD        ; CMPB [$DEAD]
+!byte $10,$E1,$FF,$DE,$AD        ; CMPB [$DEAD]
+!byte $10,$E1,$90                ; CMPB [,X+]
+!byte $10,$E1,$B0                ; CMPB [,Y+]
+!byte $10,$E1,$D0                ; CMPB [,U+]
+!byte $10,$E1,$F0                ; CMPB [,S+]
+!byte $11,$E1,$84                ; CMPB ,X
+!byte $11,$E1,$A4                ; CMPB ,Y
+!byte $11,$E1,$C4                ; CMPB ,U
+!byte $11,$E1,$E4                ; CMPB ,S
+!byte $11,$E1,$15                ; CMPB -$0B,X
+!byte $11,$E1,$35                ; CMPB -$0B,Y
+!byte $11,$E1,$55                ; CMPB -$0B,U
+!byte $11,$E1,$75                ; CMPB -$0B,S
+!byte $11,$E1,$0C                ; CMPB $0C,X
+!byte $11,$E1,$2C                ; CMPB $0C,Y
+!byte $11,$E1,$4C                ; CMPB $0C,U
+!byte $11,$E1,$6C                ; CMPB $0C,S
+!byte $11,$E1,$88,$FF            ; CMPB -$01,X
+!byte $11,$E1,$A8,$FF            ; CMPB -$01,Y
+!byte $11,$E1,$C8,$FF            ; CMPB -$01,U
+!byte $11,$E1,$E8,$FF            ; CMPB -$01,S
+!byte $11,$E1,$88,$60            ; CMPB $60,X
+!byte $11,$E1,$A8,$60            ; CMPB $60,Y
+!byte $11,$E1,$C8,$60            ; CMPB $60,U
+!byte $11,$E1,$E8,$60            ; CMPB $60,S
+!byte $11,$E1,$89,$DE,$AD        ; CMPB $DEAD,X
+!byte $11,$E1,$A9,$DE,$AD        ; CMPB $DEAD,Y
+!byte $11,$E1,$C9,$DE,$AD        ; CMPB $DEAD,U
+!byte $11,$E1,$E9,$DE,$AD        ; CMPB $DEAD,S
+!byte $11,$E1,$89,$10,$00        ; CMPB $1000,X
+!byte $11,$E1,$A9,$10,$00        ; CMPB $1000,Y
+!byte $11,$E1,$C9,$10,$00        ; CMPB $1000,U
+!byte $11,$E1,$E9,$10,$00        ; CMPB $1000,S
+!byte $11,$E1,$86                ; CMPB A,X
+!byte $11,$E1,$A6                ; CMPB A,Y
+!byte $11,$E1,$C6                ; CMPB A,U
+!byte $11,$E1,$E6                ; CMPB A,S
+!byte $11,$E1,$85                ; CMPB B,X
+!byte $11,$E1,$A5                ; CMPB B,Y
+!byte $11,$E1,$C5                ; CMPB B,U
+!byte $11,$E1,$E5                ; CMPB B,S
+!byte $11,$E1,$87                ; CMPB ,X
+!byte $11,$E1,$A7                ; CMPB ,Y
+!byte $11,$E1,$C7                ; CMPB ,U
+!byte $11,$E1,$E7                ; CMPB ,S
+!byte $11,$E1,$8A                ; CMPB ,PClo
+!byte $11,$E1,$AA                ; CMPB ,PClo
+!byte $11,$E1,$CA                ; CMPB ,PClo
+!byte $11,$E1,$EA                ; CMPB ,PClo
+!byte $11,$E1,$8B                ; CMPB D,X
+!byte $11,$E1,$AB                ; CMPB D,Y
+!byte $11,$E1,$CB                ; CMPB D,U
+!byte $11,$E1,$EB                ; CMPB D,S
+!byte $11,$E1,$80                ; CMPB ,X+
+!byte $11,$E1,$A0                ; CMPB ,Y+
+!byte $11,$E1,$C0                ; CMPB ,U+
+!byte $11,$E1,$E0                ; CMPB ,S+
+!byte $11,$E1,$81                ; CMPB ,X++
+!byte $11,$E1,$A1                ; CMPB ,Y++
+!byte $11,$E1,$C1                ; CMPB ,U++
+!byte $11,$E1,$E1                ; CMPB ,S++
+!byte $11,$E1,$82                ; CMPB ,-X
+!byte $11,$E1,$A2                ; CMPB ,-Y
+!byte $11,$E1,$C2                ; CMPB ,-U
+!byte $11,$E1,$E2                ; CMPB ,-S
+!byte $11,$E1,$83                ; CMPB ,--X
+!byte $11,$E1,$A3                ; CMPB ,--Y
+!byte $11,$E1,$C3                ; CMPB ,--U
+!byte $11,$E1,$E3                ; CMPB ,--S
+!byte $11,$E1,$8C,$FF            ; CMPB -$01,PC
+!byte $11,$E1,$AC,$FF            ; CMPB -$01,PC
+!byte $11,$E1,$CC,$FF            ; CMPB -$01,PC
+!byte $11,$E1,$EC,$FF            ; CMPB -$01,PC
+!byte $11,$E1,$8C,$60            ; CMPB $60,PC
+!byte $11,$E1,$AC,$60            ; CMPB $60,PC
+!byte $11,$E1,$CC,$60            ; CMPB $60,PC
+!byte $11,$E1,$EC,$60            ; CMPB $60,PC
+!byte $11,$E1,$8D,$DE,$AD        ; CMPB $DEAD,PC
+!byte $11,$E1,$AD,$DE,$AD        ; CMPB $DEAD,PC
+!byte $11,$E1,$CD,$DE,$AD        ; CMPB $DEAD,PC
+!byte $11,$E1,$ED,$DE,$AD        ; CMPB $DEAD,PC
+!byte $11,$E1,$8D,$10,$00        ; CMPB $1000,PC
+!byte $11,$E1,$AD,$10,$00        ; CMPB $1000,PC
+!byte $11,$E1,$CD,$10,$00        ; CMPB $1000,PC
+!byte $11,$E1,$ED,$10,$00        ; CMPB $1000,PC
+!byte $11,$E1,$8F,$DE,$AD        ; CMPB ,$DEAD
+!byte $11,$E1,$AF,$DE,$AD        ; CMPB ,$DEAD
+!byte $11,$E1,$CF,$DE,$AD        ; CMPB ,$DEAD
+!byte $11,$E1,$EF,$DE,$AD        ; CMPB ,$DEAD
+!byte $11,$E1,$94                ; CMPB [,X]
+!byte $11,$E1,$B4                ; CMPB [,Y]
+!byte $11,$E1,$D4                ; CMPB [,U]
+!byte $11,$E1,$F4                ; CMPB [,S]
+!byte $11,$E1,$98,$FF            ; CMPB [-$01,X]
+!byte $11,$E1,$B8,$FF            ; CMPB [-$01,Y]
+!byte $11,$E1,$D8,$FF            ; CMPB [-$01,U]
+!byte $11,$E1,$F8,$FF            ; CMPB [-$01,S]
+!byte $11,$E1,$98,$60            ; CMPB [$60,X]
+!byte $11,$E1,$B8,$60            ; CMPB [$60,Y]
+!byte $11,$E1,$D8,$60            ; CMPB [$60,U]
+!byte $11,$E1,$F8,$60            ; CMPB [$60,S]
+!byte $11,$E1,$99,$DE,$AD        ; CMPB [$DEAD,X]
+!byte $11,$E1,$B9,$DE,$AD        ; CMPB [$DEAD,Y]
+!byte $11,$E1,$D9,$DE,$AD        ; CMPB [$DEAD,U]
+!byte $11,$E1,$F9,$DE,$AD        ; CMPB [$DEAD,S]
+!byte $11,$E1,$99,$DE,$10        ; CMPB [$DE10,X]
+!byte $11,$E1,$B9,$DE,$10        ; CMPB [$DE10,Y]
+!byte $11,$E1,$D9,$DE,$10        ; CMPB [$DE10,U]
+!byte $11,$E1,$F9,$DE,$10        ; CMPB [$DE10,S]
+!byte $11,$E1,$96                ; CMPB [A,X]
+!byte $11,$E1,$B6                ; CMPB [A,Y]
+!byte $11,$E1,$D6                ; CMPB [A,U]
+!byte $11,$E1,$F6                ; CMPB [A,S]
+!byte $11,$E1,$95                ; CMPB [B,X]
+!byte $11,$E1,$B5                ; CMPB [B,Y]
+!byte $11,$E1,$D5                ; CMPB [B,U]
+!byte $11,$E1,$F5                ; CMPB [B,S]
+!byte $11,$E1,$97                ; CMPB [,X]
+!byte $11,$E1,$B7                ; CMPB [,Y]
+!byte $11,$E1,$D7                ; CMPB [,U]
+!byte $11,$E1,$F7                ; CMPB [,S]
+!byte $11,$E1,$9A                ; CMPB [,PClo]
+!byte $11,$E1,$BA                ; CMPB [,PClo]
+!byte $11,$E1,$DA                ; CMPB [,PClo]
+!byte $11,$E1,$FA                ; CMPB [,PClo]
+!byte $11,$E1,$9B                ; CMPB [D,X]
+!byte $11,$E1,$BB                ; CMPB [D,Y]
+!byte $11,$E1,$DB                ; CMPB [D,U]
+!byte $11,$E1,$FB                ; CMPB [D,S]
+!byte $11,$E1,$91                ; CMPB [,X++]
+!byte $11,$E1,$B1                ; CMPB [,Y++]
+!byte $11,$E1,$D1                ; CMPB [,U++]
+!byte $11,$E1,$F1                ; CMPB [,S++]
+!byte $11,$E1,$92                ; CMPB [,-X]
+!byte $11,$E1,$B2                ; CMPB [,-Y]
+!byte $11,$E1,$D2                ; CMPB [,-U]
+!byte $11,$E1,$F2                ; CMPB [,-S]
+!byte $11,$E1,$93                ; CMPB [,--X]
+!byte $11,$E1,$B3                ; CMPB [,--Y]
+!byte $11,$E1,$D3                ; CMPB [,--U]
+!byte $11,$E1,$F3                ; CMPB [,--S]
+!byte $11,$E1,$9C,$FF            ; CMPB [-$01,PC]
+!byte $11,$E1,$BC,$FF            ; CMPB [-$01,PC]
+!byte $11,$E1,$DC,$FF            ; CMPB [-$01,PC]
+!byte $11,$E1,$FC,$FF            ; CMPB [-$01,PC]
+!byte $11,$E1,$9C,$60            ; CMPB [$60,PC]
+!byte $11,$E1,$BC,$60            ; CMPB [$60,PC]
+!byte $11,$E1,$DC,$60            ; CMPB [$60,PC]
+!byte $11,$E1,$FC,$60            ; CMPB [$60,PC]
+!byte $11,$E1,$9D,$DE,$AD        ; CMPB [$DEAD,PC]
+!byte $11,$E1,$BD,$DE,$AD        ; CMPB [$DEAD,PC]
+!byte $11,$E1,$DD,$DE,$AD        ; CMPB [$DEAD,PC]
+!byte $11,$E1,$FD,$DE,$AD        ; CMPB [$DEAD,PC]
+!byte $11,$E1,$9D,$10,$00        ; CMPB [$1000,PC]
+!byte $11,$E1,$BD,$10,$00        ; CMPB [$1000,PC]
+!byte $11,$E1,$DD,$10,$00        ; CMPB [$1000,PC]
+!byte $11,$E1,$FD,$10,$00        ; CMPB [$1000,PC]
+!byte $11,$E1,$9F,$DE,$AD        ; CMPB [$DEAD]
+!byte $11,$E1,$BF,$DE,$AD        ; CMPB [$DEAD]
+!byte $11,$E1,$DF,$DE,$AD        ; CMPB [$DEAD]
+!byte $11,$E1,$FF,$DE,$AD        ; CMPB [$DEAD]
+!byte $11,$E1,$90                ; CMPB [,X+]
+!byte $11,$E1,$B0                ; CMPB [,Y+]
+!byte $11,$E1,$D0                ; CMPB [,U+]
+!byte $11,$E1,$F0                ; CMPB [,S+]
+!byte $E2,$87                    ; SBCB ,X
+!byte $E2,$A7                    ; SBCB ,Y
+!byte $E2,$C7                    ; SBCB ,U
+!byte $E2,$E7                    ; SBCB ,S
+!byte $E2,$8A                    ; SBCB ,PClo
+!byte $E2,$AA                    ; SBCB ,PClo
+!byte $E2,$CA                    ; SBCB ,PClo
+!byte $E2,$EA                    ; SBCB ,PClo
+!byte $E2,$8F,$DE,$AD            ; SBCB ,$DEAD
+!byte $E2,$AF,$DE,$AD            ; SBCB ,$DEAD
+!byte $E2,$CF,$DE,$AD            ; SBCB ,$DEAD
+!byte $E2,$EF,$DE,$AD            ; SBCB ,$DEAD
+!byte $E2,$97                    ; SBCB [,X]
+!byte $E2,$B7                    ; SBCB [,Y]
+!byte $E2,$D7                    ; SBCB [,U]
+!byte $E2,$F7                    ; SBCB [,S]
+!byte $E2,$9A                    ; SBCB [,PClo]
+!byte $E2,$BA                    ; SBCB [,PClo]
+!byte $E2,$DA                    ; SBCB [,PClo]
+!byte $E2,$FA                    ; SBCB [,PClo]
+!byte $E2,$92                    ; SBCB [,-X]
+!byte $E2,$B2                    ; SBCB [,-Y]
+!byte $E2,$D2                    ; SBCB [,-U]
+!byte $E2,$F2                    ; SBCB [,-S]
+!byte $E2,$90                    ; SBCB [,X+]
+!byte $E2,$B0                    ; SBCB [,Y+]
+!byte $E2,$D0                    ; SBCB [,U+]
+!byte $E2,$F0                    ; SBCB [,S+]
+!byte $10,$E2,$84                ; SBCB ,X
+!byte $10,$E2,$A4                ; SBCB ,Y
+!byte $10,$E2,$C4                ; SBCB ,U
+!byte $10,$E2,$E4                ; SBCB ,S
+!byte $10,$E2,$15                ; SBCB -$0B,X
+!byte $10,$E2,$35                ; SBCB -$0B,Y
+!byte $10,$E2,$55                ; SBCB -$0B,U
+!byte $10,$E2,$75                ; SBCB -$0B,S
+!byte $10,$E2,$0C                ; SBCB $0C,X
+!byte $10,$E2,$2C                ; SBCB $0C,Y
+!byte $10,$E2,$4C                ; SBCB $0C,U
+!byte $10,$E2,$6C                ; SBCB $0C,S
+!byte $10,$E2,$88,$FF            ; SBCB -$01,X
+!byte $10,$E2,$A8,$FF            ; SBCB -$01,Y
+!byte $10,$E2,$C8,$FF            ; SBCB -$01,U
+!byte $10,$E2,$E8,$FF            ; SBCB -$01,S
+!byte $10,$E2,$88,$60            ; SBCB $60,X
+!byte $10,$E2,$A8,$60            ; SBCB $60,Y
+!byte $10,$E2,$C8,$60            ; SBCB $60,U
+!byte $10,$E2,$E8,$60            ; SBCB $60,S
+!byte $10,$E2,$89,$DE,$AD        ; SBCB $DEAD,X
+!byte $10,$E2,$A9,$DE,$AD        ; SBCB $DEAD,Y
+!byte $10,$E2,$C9,$DE,$AD        ; SBCB $DEAD,U
+!byte $10,$E2,$E9,$DE,$AD        ; SBCB $DEAD,S
+!byte $10,$E2,$89,$10,$00        ; SBCB $1000,X
+!byte $10,$E2,$A9,$10,$00        ; SBCB $1000,Y
+!byte $10,$E2,$C9,$10,$00        ; SBCB $1000,U
+!byte $10,$E2,$E9,$10,$00        ; SBCB $1000,S
+!byte $10,$E2,$86                ; SBCB A,X
+!byte $10,$E2,$A6                ; SBCB A,Y
+!byte $10,$E2,$C6                ; SBCB A,U
+!byte $10,$E2,$E6                ; SBCB A,S
+!byte $10,$E2,$85                ; SBCB B,X
+!byte $10,$E2,$A5                ; SBCB B,Y
+!byte $10,$E2,$C5                ; SBCB B,U
+!byte $10,$E2,$E5                ; SBCB B,S
+!byte $10,$E2,$87                ; SBCB ,X
+!byte $10,$E2,$A7                ; SBCB ,Y
+!byte $10,$E2,$C7                ; SBCB ,U
+!byte $10,$E2,$E7                ; SBCB ,S
+!byte $10,$E2,$8A                ; SBCB ,PClo
+!byte $10,$E2,$AA                ; SBCB ,PClo
+!byte $10,$E2,$CA                ; SBCB ,PClo
+!byte $10,$E2,$EA                ; SBCB ,PClo
+!byte $10,$E2,$8B                ; SBCB D,X
+!byte $10,$E2,$AB                ; SBCB D,Y
+!byte $10,$E2,$CB                ; SBCB D,U
+!byte $10,$E2,$EB                ; SBCB D,S
+!byte $10,$E2,$80                ; SBCB ,X+
+!byte $10,$E2,$A0                ; SBCB ,Y+
+!byte $10,$E2,$C0                ; SBCB ,U+
+!byte $10,$E2,$E0                ; SBCB ,S+
+!byte $10,$E2,$81                ; SBCB ,X++
+!byte $10,$E2,$A1                ; SBCB ,Y++
+!byte $10,$E2,$C1                ; SBCB ,U++
+!byte $10,$E2,$E1                ; SBCB ,S++
+!byte $10,$E2,$82                ; SBCB ,-X
+!byte $10,$E2,$A2                ; SBCB ,-Y
+!byte $10,$E2,$C2                ; SBCB ,-U
+!byte $10,$E2,$E2                ; SBCB ,-S
+!byte $10,$E2,$83                ; SBCB ,--X
+!byte $10,$E2,$A3                ; SBCB ,--Y
+!byte $10,$E2,$C3                ; SBCB ,--U
+!byte $10,$E2,$E3                ; SBCB ,--S
+!byte $10,$E2,$8C,$FF            ; SBCB -$01,PC
+!byte $10,$E2,$AC,$FF            ; SBCB -$01,PC
+!byte $10,$E2,$CC,$FF            ; SBCB -$01,PC
+!byte $10,$E2,$EC,$FF            ; SBCB -$01,PC
+!byte $10,$E2,$8C,$60            ; SBCB $60,PC
+!byte $10,$E2,$AC,$60            ; SBCB $60,PC
+!byte $10,$E2,$CC,$60            ; SBCB $60,PC
+!byte $10,$E2,$EC,$60            ; SBCB $60,PC
+!byte $10,$E2,$8D,$DE,$AD        ; SBCB $DEAD,PC
+!byte $10,$E2,$AD,$DE,$AD        ; SBCB $DEAD,PC
+!byte $10,$E2,$CD,$DE,$AD        ; SBCB $DEAD,PC
+!byte $10,$E2,$ED,$DE,$AD        ; SBCB $DEAD,PC
+!byte $10,$E2,$8D,$10,$00        ; SBCB $1000,PC
+!byte $10,$E2,$AD,$10,$00        ; SBCB $1000,PC
+!byte $10,$E2,$CD,$10,$00        ; SBCB $1000,PC
+!byte $10,$E2,$ED,$10,$00        ; SBCB $1000,PC
+!byte $10,$E2,$8F,$DE,$AD        ; SBCB ,$DEAD
+!byte $10,$E2,$AF,$DE,$AD        ; SBCB ,$DEAD
+!byte $10,$E2,$CF,$DE,$AD        ; SBCB ,$DEAD
+!byte $10,$E2,$EF,$DE,$AD        ; SBCB ,$DEAD
+!byte $10,$E2,$94                ; SBCB [,X]
+!byte $10,$E2,$B4                ; SBCB [,Y]
+!byte $10,$E2,$D4                ; SBCB [,U]
+!byte $10,$E2,$F4                ; SBCB [,S]
+!byte $10,$E2,$98,$FF            ; SBCB [-$01,X]
+!byte $10,$E2,$B8,$FF            ; SBCB [-$01,Y]
+!byte $10,$E2,$D8,$FF            ; SBCB [-$01,U]
+!byte $10,$E2,$F8,$FF            ; SBCB [-$01,S]
+!byte $10,$E2,$98,$60            ; SBCB [$60,X]
+!byte $10,$E2,$B8,$60            ; SBCB [$60,Y]
+!byte $10,$E2,$D8,$60            ; SBCB [$60,U]
+!byte $10,$E2,$F8,$60            ; SBCB [$60,S]
+!byte $10,$E2,$99,$DE,$AD        ; SBCB [$DEAD,X]
+!byte $10,$E2,$B9,$DE,$AD        ; SBCB [$DEAD,Y]
+!byte $10,$E2,$D9,$DE,$AD        ; SBCB [$DEAD,U]
+!byte $10,$E2,$F9,$DE,$AD        ; SBCB [$DEAD,S]
+!byte $10,$E2,$99,$DE,$10        ; SBCB [$DE10,X]
+!byte $10,$E2,$B9,$DE,$10        ; SBCB [$DE10,Y]
+!byte $10,$E2,$D9,$DE,$10        ; SBCB [$DE10,U]
+!byte $10,$E2,$F9,$DE,$10        ; SBCB [$DE10,S]
+!byte $10,$E2,$96                ; SBCB [A,X]
+!byte $10,$E2,$B6                ; SBCB [A,Y]
+!byte $10,$E2,$D6                ; SBCB [A,U]
+!byte $10,$E2,$F6                ; SBCB [A,S]
+!byte $10,$E2,$95                ; SBCB [B,X]
+!byte $10,$E2,$B5                ; SBCB [B,Y]
+!byte $10,$E2,$D5                ; SBCB [B,U]
+!byte $10,$E2,$F5                ; SBCB [B,S]
+!byte $10,$E2,$97                ; SBCB [,X]
+!byte $10,$E2,$B7                ; SBCB [,Y]
+!byte $10,$E2,$D7                ; SBCB [,U]
+!byte $10,$E2,$F7                ; SBCB [,S]
+!byte $10,$E2,$9A                ; SBCB [,PClo]
+!byte $10,$E2,$BA                ; SBCB [,PClo]
+!byte $10,$E2,$DA                ; SBCB [,PClo]
+!byte $10,$E2,$FA                ; SBCB [,PClo]
+!byte $10,$E2,$9B                ; SBCB [D,X]
+!byte $10,$E2,$BB                ; SBCB [D,Y]
+!byte $10,$E2,$DB                ; SBCB [D,U]
+!byte $10,$E2,$FB                ; SBCB [D,S]
+!byte $10,$E2,$91                ; SBCB [,X++]
+!byte $10,$E2,$B1                ; SBCB [,Y++]
+!byte $10,$E2,$D1                ; SBCB [,U++]
+!byte $10,$E2,$F1                ; SBCB [,S++]
+!byte $10,$E2,$92                ; SBCB [,-X]
+!byte $10,$E2,$B2                ; SBCB [,-Y]
+!byte $10,$E2,$D2                ; SBCB [,-U]
+!byte $10,$E2,$F2                ; SBCB [,-S]
+!byte $10,$E2,$93                ; SBCB [,--X]
+!byte $10,$E2,$B3                ; SBCB [,--Y]
+!byte $10,$E2,$D3                ; SBCB [,--U]
+!byte $10,$E2,$F3                ; SBCB [,--S]
+!byte $10,$E2,$9C,$FF            ; SBCB [-$01,PC]
+!byte $10,$E2,$BC,$FF            ; SBCB [-$01,PC]
+!byte $10,$E2,$DC,$FF            ; SBCB [-$01,PC]
+!byte $10,$E2,$FC,$FF            ; SBCB [-$01,PC]
+!byte $10,$E2,$9C,$60            ; SBCB [$60,PC]
+!byte $10,$E2,$BC,$60            ; SBCB [$60,PC]
+!byte $10,$E2,$DC,$60            ; SBCB [$60,PC]
+!byte $10,$E2,$FC,$60            ; SBCB [$60,PC]
+!byte $10,$E2,$9D,$DE,$AD        ; SBCB [$DEAD,PC]
+!byte $10,$E2,$BD,$DE,$AD        ; SBCB [$DEAD,PC]
+!byte $10,$E2,$DD,$DE,$AD        ; SBCB [$DEAD,PC]
+!byte $10,$E2,$FD,$DE,$AD        ; SBCB [$DEAD,PC]
+!byte $10,$E2,$9D,$10,$00        ; SBCB [$1000,PC]
+!byte $10,$E2,$BD,$10,$00        ; SBCB [$1000,PC]
+!byte $10,$E2,$DD,$10,$00        ; SBCB [$1000,PC]
+!byte $10,$E2,$FD,$10,$00        ; SBCB [$1000,PC]
+!byte $10,$E2,$9F,$DE,$AD        ; SBCB [$DEAD]
+!byte $10,$E2,$BF,$DE,$AD        ; SBCB [$DEAD]
+!byte $10,$E2,$DF,$DE,$AD        ; SBCB [$DEAD]
+!byte $10,$E2,$FF,$DE,$AD        ; SBCB [$DEAD]
+!byte $10,$E2,$90                ; SBCB [,X+]
+!byte $10,$E2,$B0                ; SBCB [,Y+]
+!byte $10,$E2,$D0                ; SBCB [,U+]
+!byte $10,$E2,$F0                ; SBCB [,S+]
+!byte $11,$E2,$84                ; SBCB ,X
+!byte $11,$E2,$A4                ; SBCB ,Y
+!byte $11,$E2,$C4                ; SBCB ,U
+!byte $11,$E2,$E4                ; SBCB ,S
+!byte $11,$E2,$15                ; SBCB -$0B,X
+!byte $11,$E2,$35                ; SBCB -$0B,Y
+!byte $11,$E2,$55                ; SBCB -$0B,U
+!byte $11,$E2,$75                ; SBCB -$0B,S
+!byte $11,$E2,$0C                ; SBCB $0C,X
+!byte $11,$E2,$2C                ; SBCB $0C,Y
+!byte $11,$E2,$4C                ; SBCB $0C,U
+!byte $11,$E2,$6C                ; SBCB $0C,S
+!byte $11,$E2,$88,$FF            ; SBCB -$01,X
+!byte $11,$E2,$A8,$FF            ; SBCB -$01,Y
+!byte $11,$E2,$C8,$FF            ; SBCB -$01,U
+!byte $11,$E2,$E8,$FF            ; SBCB -$01,S
+!byte $11,$E2,$88,$60            ; SBCB $60,X
+!byte $11,$E2,$A8,$60            ; SBCB $60,Y
+!byte $11,$E2,$C8,$60            ; SBCB $60,U
+!byte $11,$E2,$E8,$60            ; SBCB $60,S
+!byte $11,$E2,$89,$DE,$AD        ; SBCB $DEAD,X
+!byte $11,$E2,$A9,$DE,$AD        ; SBCB $DEAD,Y
+!byte $11,$E2,$C9,$DE,$AD        ; SBCB $DEAD,U
+!byte $11,$E2,$E9,$DE,$AD        ; SBCB $DEAD,S
+!byte $11,$E2,$89,$10,$00        ; SBCB $1000,X
+!byte $11,$E2,$A9,$10,$00        ; SBCB $1000,Y
+!byte $11,$E2,$C9,$10,$00        ; SBCB $1000,U
+!byte $11,$E2,$E9,$10,$00        ; SBCB $1000,S
+!byte $11,$E2,$86                ; SBCB A,X
+!byte $11,$E2,$A6                ; SBCB A,Y
+!byte $11,$E2,$C6                ; SBCB A,U
+!byte $11,$E2,$E6                ; SBCB A,S
+!byte $11,$E2,$85                ; SBCB B,X
+!byte $11,$E2,$A5                ; SBCB B,Y
+!byte $11,$E2,$C5                ; SBCB B,U
+!byte $11,$E2,$E5                ; SBCB B,S
+!byte $11,$E2,$87                ; SBCB ,X
+!byte $11,$E2,$A7                ; SBCB ,Y
+!byte $11,$E2,$C7                ; SBCB ,U
+!byte $11,$E2,$E7                ; SBCB ,S
+!byte $11,$E2,$8A                ; SBCB ,PClo
+!byte $11,$E2,$AA                ; SBCB ,PClo
+!byte $11,$E2,$CA                ; SBCB ,PClo
+!byte $11,$E2,$EA                ; SBCB ,PClo
+!byte $11,$E2,$8B                ; SBCB D,X
+!byte $11,$E2,$AB                ; SBCB D,Y
+!byte $11,$E2,$CB                ; SBCB D,U
+!byte $11,$E2,$EB                ; SBCB D,S
+!byte $11,$E2,$80                ; SBCB ,X+
+!byte $11,$E2,$A0                ; SBCB ,Y+
+!byte $11,$E2,$C0                ; SBCB ,U+
+!byte $11,$E2,$E0                ; SBCB ,S+
+!byte $11,$E2,$81                ; SBCB ,X++
+!byte $11,$E2,$A1                ; SBCB ,Y++
+!byte $11,$E2,$C1                ; SBCB ,U++
+!byte $11,$E2,$E1                ; SBCB ,S++
+!byte $11,$E2,$82                ; SBCB ,-X
+!byte $11,$E2,$A2                ; SBCB ,-Y
+!byte $11,$E2,$C2                ; SBCB ,-U
+!byte $11,$E2,$E2                ; SBCB ,-S
+!byte $11,$E2,$83                ; SBCB ,--X
+!byte $11,$E2,$A3                ; SBCB ,--Y
+!byte $11,$E2,$C3                ; SBCB ,--U
+!byte $11,$E2,$E3                ; SBCB ,--S
+!byte $11,$E2,$8C,$FF            ; SBCB -$01,PC
+!byte $11,$E2,$AC,$FF            ; SBCB -$01,PC
+!byte $11,$E2,$CC,$FF            ; SBCB -$01,PC
+!byte $11,$E2,$EC,$FF            ; SBCB -$01,PC
+!byte $11,$E2,$8C,$60            ; SBCB $60,PC
+!byte $11,$E2,$AC,$60            ; SBCB $60,PC
+!byte $11,$E2,$CC,$60            ; SBCB $60,PC
+!byte $11,$E2,$EC,$60            ; SBCB $60,PC
+!byte $11,$E2,$8D,$DE,$AD        ; SBCB $DEAD,PC
+!byte $11,$E2,$AD,$DE,$AD        ; SBCB $DEAD,PC
+!byte $11,$E2,$CD,$DE,$AD        ; SBCB $DEAD,PC
+!byte $11,$E2,$ED,$DE,$AD        ; SBCB $DEAD,PC
+!byte $11,$E2,$8D,$10,$00        ; SBCB $1000,PC
+!byte $11,$E2,$AD,$10,$00        ; SBCB $1000,PC
+!byte $11,$E2,$CD,$10,$00        ; SBCB $1000,PC
+!byte $11,$E2,$ED,$10,$00        ; SBCB $1000,PC
+!byte $11,$E2,$8F,$DE,$AD        ; SBCB ,$DEAD
+!byte $11,$E2,$AF,$DE,$AD        ; SBCB ,$DEAD
+!byte $11,$E2,$CF,$DE,$AD        ; SBCB ,$DEAD
+!byte $11,$E2,$EF,$DE,$AD        ; SBCB ,$DEAD
+!byte $11,$E2,$94                ; SBCB [,X]
+!byte $11,$E2,$B4                ; SBCB [,Y]
+!byte $11,$E2,$D4                ; SBCB [,U]
+!byte $11,$E2,$F4                ; SBCB [,S]
+!byte $11,$E2,$98,$FF            ; SBCB [-$01,X]
+!byte $11,$E2,$B8,$FF            ; SBCB [-$01,Y]
+!byte $11,$E2,$D8,$FF            ; SBCB [-$01,U]
+!byte $11,$E2,$F8,$FF            ; SBCB [-$01,S]
+!byte $11,$E2,$98,$60            ; SBCB [$60,X]
+!byte $11,$E2,$B8,$60            ; SBCB [$60,Y]
+!byte $11,$E2,$D8,$60            ; SBCB [$60,U]
+!byte $11,$E2,$F8,$60            ; SBCB [$60,S]
+!byte $11,$E2,$99,$DE,$AD        ; SBCB [$DEAD,X]
+!byte $11,$E2,$B9,$DE,$AD        ; SBCB [$DEAD,Y]
+!byte $11,$E2,$D9,$DE,$AD        ; SBCB [$DEAD,U]
+!byte $11,$E2,$F9,$DE,$AD        ; SBCB [$DEAD,S]
+!byte $11,$E2,$99,$DE,$10        ; SBCB [$DE10,X]
+!byte $11,$E2,$B9,$DE,$10        ; SBCB [$DE10,Y]
+!byte $11,$E2,$D9,$DE,$10        ; SBCB [$DE10,U]
+!byte $11,$E2,$F9,$DE,$10        ; SBCB [$DE10,S]
+!byte $11,$E2,$96                ; SBCB [A,X]
+!byte $11,$E2,$B6                ; SBCB [A,Y]
+!byte $11,$E2,$D6                ; SBCB [A,U]
+!byte $11,$E2,$F6                ; SBCB [A,S]
+!byte $11,$E2,$95                ; SBCB [B,X]
+!byte $11,$E2,$B5                ; SBCB [B,Y]
+!byte $11,$E2,$D5                ; SBCB [B,U]
+!byte $11,$E2,$F5                ; SBCB [B,S]
+!byte $11,$E2,$97                ; SBCB [,X]
+!byte $11,$E2,$B7                ; SBCB [,Y]
+!byte $11,$E2,$D7                ; SBCB [,U]
+!byte $11,$E2,$F7                ; SBCB [,S]
+!byte $11,$E2,$9A                ; SBCB [,PClo]
+!byte $11,$E2,$BA                ; SBCB [,PClo]
+!byte $11,$E2,$DA                ; SBCB [,PClo]
+!byte $11,$E2,$FA                ; SBCB [,PClo]
+!byte $11,$E2,$9B                ; SBCB [D,X]
+!byte $11,$E2,$BB                ; SBCB [D,Y]
+!byte $11,$E2,$DB                ; SBCB [D,U]
+!byte $11,$E2,$FB                ; SBCB [D,S]
+!byte $11,$E2,$91                ; SBCB [,X++]
+!byte $11,$E2,$B1                ; SBCB [,Y++]
+!byte $11,$E2,$D1                ; SBCB [,U++]
+!byte $11,$E2,$F1                ; SBCB [,S++]
+!byte $11,$E2,$92                ; SBCB [,-X]
+!byte $11,$E2,$B2                ; SBCB [,-Y]
+!byte $11,$E2,$D2                ; SBCB [,-U]
+!byte $11,$E2,$F2                ; SBCB [,-S]
+!byte $11,$E2,$93                ; SBCB [,--X]
+!byte $11,$E2,$B3                ; SBCB [,--Y]
+!byte $11,$E2,$D3                ; SBCB [,--U]
+!byte $11,$E2,$F3                ; SBCB [,--S]
+!byte $11,$E2,$9C,$FF            ; SBCB [-$01,PC]
+!byte $11,$E2,$BC,$FF            ; SBCB [-$01,PC]
+!byte $11,$E2,$DC,$FF            ; SBCB [-$01,PC]
+!byte $11,$E2,$FC,$FF            ; SBCB [-$01,PC]
+!byte $11,$E2,$9C,$60            ; SBCB [$60,PC]
+!byte $11,$E2,$BC,$60            ; SBCB [$60,PC]
+!byte $11,$E2,$DC,$60            ; SBCB [$60,PC]
+!byte $11,$E2,$FC,$60            ; SBCB [$60,PC]
+!byte $11,$E2,$9D,$DE,$AD        ; SBCB [$DEAD,PC]
+!byte $11,$E2,$BD,$DE,$AD        ; SBCB [$DEAD,PC]
+!byte $11,$E2,$DD,$DE,$AD        ; SBCB [$DEAD,PC]
+!byte $11,$E2,$FD,$DE,$AD        ; SBCB [$DEAD,PC]
+!byte $11,$E2,$9D,$10,$00        ; SBCB [$1000,PC]
+!byte $11,$E2,$BD,$10,$00        ; SBCB [$1000,PC]
+!byte $11,$E2,$DD,$10,$00        ; SBCB [$1000,PC]
+!byte $11,$E2,$FD,$10,$00        ; SBCB [$1000,PC]
+!byte $11,$E2,$9F,$DE,$AD        ; SBCB [$DEAD]
+!byte $11,$E2,$BF,$DE,$AD        ; SBCB [$DEAD]
+!byte $11,$E2,$DF,$DE,$AD        ; SBCB [$DEAD]
+!byte $11,$E2,$FF,$DE,$AD        ; SBCB [$DEAD]
+!byte $11,$E2,$90                ; SBCB [,X+]
+!byte $11,$E2,$B0                ; SBCB [,Y+]
+!byte $11,$E2,$D0                ; SBCB [,U+]
+!byte $11,$E2,$F0                ; SBCB [,S+]
+!byte $E3,$87                    ; ADDD ,X
+!byte $E3,$A7                    ; ADDD ,Y
+!byte $E3,$C7                    ; ADDD ,U
+!byte $E3,$E7                    ; ADDD ,S
+!byte $E3,$8A                    ; ADDD ,PClo
+!byte $E3,$AA                    ; ADDD ,PClo
+!byte $E3,$CA                    ; ADDD ,PClo
+!byte $E3,$EA                    ; ADDD ,PClo
+!byte $E3,$8F,$DE,$AD            ; ADDD ,$DEAD
+!byte $E3,$AF,$DE,$AD            ; ADDD ,$DEAD
+!byte $E3,$CF,$DE,$AD            ; ADDD ,$DEAD
+!byte $E3,$EF,$DE,$AD            ; ADDD ,$DEAD
+!byte $E3,$97                    ; ADDD [,X]
+!byte $E3,$B7                    ; ADDD [,Y]
+!byte $E3,$D7                    ; ADDD [,U]
+!byte $E3,$F7                    ; ADDD [,S]
+!byte $E3,$9A                    ; ADDD [,PClo]
+!byte $E3,$BA                    ; ADDD [,PClo]
+!byte $E3,$DA                    ; ADDD [,PClo]
+!byte $E3,$FA                    ; ADDD [,PClo]
+!byte $E3,$92                    ; ADDD [,-X]
+!byte $E3,$B2                    ; ADDD [,-Y]
+!byte $E3,$D2                    ; ADDD [,-U]
+!byte $E3,$F2                    ; ADDD [,-S]
+!byte $E3,$90                    ; ADDD [,X+]
+!byte $E3,$B0                    ; ADDD [,Y+]
+!byte $E3,$D0                    ; ADDD [,U+]
+!byte $E3,$F0                    ; ADDD [,S+]
+!byte $11,$E3,$84                ; ADDD ,X
+!byte $11,$E3,$A4                ; ADDD ,Y
+!byte $11,$E3,$C4                ; ADDD ,U
+!byte $11,$E3,$E4                ; ADDD ,S
+!byte $11,$E3,$15                ; ADDD -$0B,X
+!byte $11,$E3,$35                ; ADDD -$0B,Y
+!byte $11,$E3,$55                ; ADDD -$0B,U
+!byte $11,$E3,$75                ; ADDD -$0B,S
+!byte $11,$E3,$0C                ; ADDD $0C,X
+!byte $11,$E3,$2C                ; ADDD $0C,Y
+!byte $11,$E3,$4C                ; ADDD $0C,U
+!byte $11,$E3,$6C                ; ADDD $0C,S
+!byte $11,$E3,$88,$FF            ; ADDD -$01,X
+!byte $11,$E3,$A8,$FF            ; ADDD -$01,Y
+!byte $11,$E3,$C8,$FF            ; ADDD -$01,U
+!byte $11,$E3,$E8,$FF            ; ADDD -$01,S
+!byte $11,$E3,$88,$60            ; ADDD $60,X
+!byte $11,$E3,$A8,$60            ; ADDD $60,Y
+!byte $11,$E3,$C8,$60            ; ADDD $60,U
+!byte $11,$E3,$E8,$60            ; ADDD $60,S
+!byte $11,$E3,$89,$DE,$AD        ; ADDD $DEAD,X
+!byte $11,$E3,$A9,$DE,$AD        ; ADDD $DEAD,Y
+!byte $11,$E3,$C9,$DE,$AD        ; ADDD $DEAD,U
+!byte $11,$E3,$E9,$DE,$AD        ; ADDD $DEAD,S
+!byte $11,$E3,$89,$10,$00        ; ADDD $1000,X
+!byte $11,$E3,$A9,$10,$00        ; ADDD $1000,Y
+!byte $11,$E3,$C9,$10,$00        ; ADDD $1000,U
+!byte $11,$E3,$E9,$10,$00        ; ADDD $1000,S
+!byte $11,$E3,$86                ; ADDD A,X
+!byte $11,$E3,$A6                ; ADDD A,Y
+!byte $11,$E3,$C6                ; ADDD A,U
+!byte $11,$E3,$E6                ; ADDD A,S
+!byte $11,$E3,$85                ; ADDD B,X
+!byte $11,$E3,$A5                ; ADDD B,Y
+!byte $11,$E3,$C5                ; ADDD B,U
+!byte $11,$E3,$E5                ; ADDD B,S
+!byte $11,$E3,$87                ; ADDD ,X
+!byte $11,$E3,$A7                ; ADDD ,Y
+!byte $11,$E3,$C7                ; ADDD ,U
+!byte $11,$E3,$E7                ; ADDD ,S
+!byte $11,$E3,$8A                ; ADDD ,PClo
+!byte $11,$E3,$AA                ; ADDD ,PClo
+!byte $11,$E3,$CA                ; ADDD ,PClo
+!byte $11,$E3,$EA                ; ADDD ,PClo
+!byte $11,$E3,$8B                ; ADDD D,X
+!byte $11,$E3,$AB                ; ADDD D,Y
+!byte $11,$E3,$CB                ; ADDD D,U
+!byte $11,$E3,$EB                ; ADDD D,S
+!byte $11,$E3,$80                ; ADDD ,X+
+!byte $11,$E3,$A0                ; ADDD ,Y+
+!byte $11,$E3,$C0                ; ADDD ,U+
+!byte $11,$E3,$E0                ; ADDD ,S+
+!byte $11,$E3,$81                ; ADDD ,X++
+!byte $11,$E3,$A1                ; ADDD ,Y++
+!byte $11,$E3,$C1                ; ADDD ,U++
+!byte $11,$E3,$E1                ; ADDD ,S++
+!byte $11,$E3,$82                ; ADDD ,-X
+!byte $11,$E3,$A2                ; ADDD ,-Y
+!byte $11,$E3,$C2                ; ADDD ,-U
+!byte $11,$E3,$E2                ; ADDD ,-S
+!byte $11,$E3,$83                ; ADDD ,--X
+!byte $11,$E3,$A3                ; ADDD ,--Y
+!byte $11,$E3,$C3                ; ADDD ,--U
+!byte $11,$E3,$E3                ; ADDD ,--S
+!byte $11,$E3,$8C,$FF            ; ADDD -$01,PC
+!byte $11,$E3,$AC,$FF            ; ADDD -$01,PC
+!byte $11,$E3,$CC,$FF            ; ADDD -$01,PC
+!byte $11,$E3,$EC,$FF            ; ADDD -$01,PC
+!byte $11,$E3,$8C,$60            ; ADDD $60,PC
+!byte $11,$E3,$AC,$60            ; ADDD $60,PC
+!byte $11,$E3,$CC,$60            ; ADDD $60,PC
+!byte $11,$E3,$EC,$60            ; ADDD $60,PC
+!byte $11,$E3,$8D,$DE,$AD        ; ADDD $DEAD,PC
+!byte $11,$E3,$AD,$DE,$AD        ; ADDD $DEAD,PC
+!byte $11,$E3,$CD,$DE,$AD        ; ADDD $DEAD,PC
+!byte $11,$E3,$ED,$DE,$AD        ; ADDD $DEAD,PC
+!byte $11,$E3,$8D,$10,$00        ; ADDD $1000,PC
+!byte $11,$E3,$AD,$10,$00        ; ADDD $1000,PC
+!byte $11,$E3,$CD,$10,$00        ; ADDD $1000,PC
+!byte $11,$E3,$ED,$10,$00        ; ADDD $1000,PC
+!byte $11,$E3,$8F,$DE,$AD        ; ADDD ,$DEAD
+!byte $11,$E3,$AF,$DE,$AD        ; ADDD ,$DEAD
+!byte $11,$E3,$CF,$DE,$AD        ; ADDD ,$DEAD
+!byte $11,$E3,$EF,$DE,$AD        ; ADDD ,$DEAD
+!byte $11,$E3,$94                ; ADDD [,X]
+!byte $11,$E3,$B4                ; ADDD [,Y]
+!byte $11,$E3,$D4                ; ADDD [,U]
+!byte $11,$E3,$F4                ; ADDD [,S]
+!byte $11,$E3,$98,$FF            ; ADDD [-$01,X]
+!byte $11,$E3,$B8,$FF            ; ADDD [-$01,Y]
+!byte $11,$E3,$D8,$FF            ; ADDD [-$01,U]
+!byte $11,$E3,$F8,$FF            ; ADDD [-$01,S]
+!byte $11,$E3,$98,$60            ; ADDD [$60,X]
+!byte $11,$E3,$B8,$60            ; ADDD [$60,Y]
+!byte $11,$E3,$D8,$60            ; ADDD [$60,U]
+!byte $11,$E3,$F8,$60            ; ADDD [$60,S]
+!byte $11,$E3,$99,$DE,$AD        ; ADDD [$DEAD,X]
+!byte $11,$E3,$B9,$DE,$AD        ; ADDD [$DEAD,Y]
+!byte $11,$E3,$D9,$DE,$AD        ; ADDD [$DEAD,U]
+!byte $11,$E3,$F9,$DE,$AD        ; ADDD [$DEAD,S]
+!byte $11,$E3,$99,$DE,$10        ; ADDD [$DE10,X]
+!byte $11,$E3,$B9,$DE,$10        ; ADDD [$DE10,Y]
+!byte $11,$E3,$D9,$DE,$10        ; ADDD [$DE10,U]
+!byte $11,$E3,$F9,$DE,$10        ; ADDD [$DE10,S]
+!byte $11,$E3,$96                ; ADDD [A,X]
+!byte $11,$E3,$B6                ; ADDD [A,Y]
+!byte $11,$E3,$D6                ; ADDD [A,U]
+!byte $11,$E3,$F6                ; ADDD [A,S]
+!byte $11,$E3,$95                ; ADDD [B,X]
+!byte $11,$E3,$B5                ; ADDD [B,Y]
+!byte $11,$E3,$D5                ; ADDD [B,U]
+!byte $11,$E3,$F5                ; ADDD [B,S]
+!byte $11,$E3,$97                ; ADDD [,X]
+!byte $11,$E3,$B7                ; ADDD [,Y]
+!byte $11,$E3,$D7                ; ADDD [,U]
+!byte $11,$E3,$F7                ; ADDD [,S]
+!byte $11,$E3,$9A                ; ADDD [,PClo]
+!byte $11,$E3,$BA                ; ADDD [,PClo]
+!byte $11,$E3,$DA                ; ADDD [,PClo]
+!byte $11,$E3,$FA                ; ADDD [,PClo]
+!byte $11,$E3,$9B                ; ADDD [D,X]
+!byte $11,$E3,$BB                ; ADDD [D,Y]
+!byte $11,$E3,$DB                ; ADDD [D,U]
+!byte $11,$E3,$FB                ; ADDD [D,S]
+!byte $11,$E3,$91                ; ADDD [,X++]
+!byte $11,$E3,$B1                ; ADDD [,Y++]
+!byte $11,$E3,$D1                ; ADDD [,U++]
+!byte $11,$E3,$F1                ; ADDD [,S++]
+!byte $11,$E3,$92                ; ADDD [,-X]
+!byte $11,$E3,$B2                ; ADDD [,-Y]
+!byte $11,$E3,$D2                ; ADDD [,-U]
+!byte $11,$E3,$F2                ; ADDD [,-S]
+!byte $11,$E3,$93                ; ADDD [,--X]
+!byte $11,$E3,$B3                ; ADDD [,--Y]
+!byte $11,$E3,$D3                ; ADDD [,--U]
+!byte $11,$E3,$F3                ; ADDD [,--S]
+!byte $11,$E3,$9C,$FF            ; ADDD [-$01,PC]
+!byte $11,$E3,$BC,$FF            ; ADDD [-$01,PC]
+!byte $11,$E3,$DC,$FF            ; ADDD [-$01,PC]
+!byte $11,$E3,$FC,$FF            ; ADDD [-$01,PC]
+!byte $11,$E3,$9C,$60            ; ADDD [$60,PC]
+!byte $11,$E3,$BC,$60            ; ADDD [$60,PC]
+!byte $11,$E3,$DC,$60            ; ADDD [$60,PC]
+!byte $11,$E3,$FC,$60            ; ADDD [$60,PC]
+!byte $11,$E3,$9D,$DE,$AD        ; ADDD [$DEAD,PC]
+!byte $11,$E3,$BD,$DE,$AD        ; ADDD [$DEAD,PC]
+!byte $11,$E3,$DD,$DE,$AD        ; ADDD [$DEAD,PC]
+!byte $11,$E3,$FD,$DE,$AD        ; ADDD [$DEAD,PC]
+!byte $11,$E3,$9D,$10,$00        ; ADDD [$1000,PC]
+!byte $11,$E3,$BD,$10,$00        ; ADDD [$1000,PC]
+!byte $11,$E3,$DD,$10,$00        ; ADDD [$1000,PC]
+!byte $11,$E3,$FD,$10,$00        ; ADDD [$1000,PC]
+!byte $11,$E3,$9F,$DE,$AD        ; ADDD [$DEAD]
+!byte $11,$E3,$BF,$DE,$AD        ; ADDD [$DEAD]
+!byte $11,$E3,$DF,$DE,$AD        ; ADDD [$DEAD]
+!byte $11,$E3,$FF,$DE,$AD        ; ADDD [$DEAD]
+!byte $11,$E3,$90                ; ADDD [,X+]
+!byte $11,$E3,$B0                ; ADDD [,Y+]
+!byte $11,$E3,$D0                ; ADDD [,U+]
+!byte $11,$E3,$F0                ; ADDD [,S+]
+!byte $E4,$87                    ; ANDB ,X
+!byte $E4,$A7                    ; ANDB ,Y
+!byte $E4,$C7                    ; ANDB ,U
+!byte $E4,$E7                    ; ANDB ,S
+!byte $E4,$8A                    ; ANDB ,PClo
+!byte $E4,$AA                    ; ANDB ,PClo
+!byte $E4,$CA                    ; ANDB ,PClo
+!byte $E4,$EA                    ; ANDB ,PClo
+!byte $E4,$8F,$DE,$AD            ; ANDB ,$DEAD
+!byte $E4,$AF,$DE,$AD            ; ANDB ,$DEAD
+!byte $E4,$CF,$DE,$AD            ; ANDB ,$DEAD
+!byte $E4,$EF,$DE,$AD            ; ANDB ,$DEAD
+!byte $E4,$97                    ; ANDB [,X]
+!byte $E4,$B7                    ; ANDB [,Y]
+!byte $E4,$D7                    ; ANDB [,U]
+!byte $E4,$F7                    ; ANDB [,S]
+!byte $E4,$9A                    ; ANDB [,PClo]
+!byte $E4,$BA                    ; ANDB [,PClo]
+!byte $E4,$DA                    ; ANDB [,PClo]
+!byte $E4,$FA                    ; ANDB [,PClo]
+!byte $E4,$92                    ; ANDB [,-X]
+!byte $E4,$B2                    ; ANDB [,-Y]
+!byte $E4,$D2                    ; ANDB [,-U]
+!byte $E4,$F2                    ; ANDB [,-S]
+!byte $E4,$90                    ; ANDB [,X+]
+!byte $E4,$B0                    ; ANDB [,Y+]
+!byte $E4,$D0                    ; ANDB [,U+]
+!byte $E4,$F0                    ; ANDB [,S+]
+!byte $10,$E4,$84                ; ANDB ,X
+!byte $10,$E4,$A4                ; ANDB ,Y
+!byte $10,$E4,$C4                ; ANDB ,U
+!byte $10,$E4,$E4                ; ANDB ,S
+!byte $10,$E4,$15                ; ANDB -$0B,X
+!byte $10,$E4,$35                ; ANDB -$0B,Y
+!byte $10,$E4,$55                ; ANDB -$0B,U
+!byte $10,$E4,$75                ; ANDB -$0B,S
+!byte $10,$E4,$0C                ; ANDB $0C,X
+!byte $10,$E4,$2C                ; ANDB $0C,Y
+!byte $10,$E4,$4C                ; ANDB $0C,U
+!byte $10,$E4,$6C                ; ANDB $0C,S
+!byte $10,$E4,$88,$FF            ; ANDB -$01,X
+!byte $10,$E4,$A8,$FF            ; ANDB -$01,Y
+!byte $10,$E4,$C8,$FF            ; ANDB -$01,U
+!byte $10,$E4,$E8,$FF            ; ANDB -$01,S
+!byte $10,$E4,$88,$60            ; ANDB $60,X
+!byte $10,$E4,$A8,$60            ; ANDB $60,Y
+!byte $10,$E4,$C8,$60            ; ANDB $60,U
+!byte $10,$E4,$E8,$60            ; ANDB $60,S
+!byte $10,$E4,$89,$DE,$AD        ; ANDB $DEAD,X
+!byte $10,$E4,$A9,$DE,$AD        ; ANDB $DEAD,Y
+!byte $10,$E4,$C9,$DE,$AD        ; ANDB $DEAD,U
+!byte $10,$E4,$E9,$DE,$AD        ; ANDB $DEAD,S
+!byte $10,$E4,$89,$10,$00        ; ANDB $1000,X
+!byte $10,$E4,$A9,$10,$00        ; ANDB $1000,Y
+!byte $10,$E4,$C9,$10,$00        ; ANDB $1000,U
+!byte $10,$E4,$E9,$10,$00        ; ANDB $1000,S
+!byte $10,$E4,$86                ; ANDB A,X
+!byte $10,$E4,$A6                ; ANDB A,Y
+!byte $10,$E4,$C6                ; ANDB A,U
+!byte $10,$E4,$E6                ; ANDB A,S
+!byte $10,$E4,$85                ; ANDB B,X
+!byte $10,$E4,$A5                ; ANDB B,Y
+!byte $10,$E4,$C5                ; ANDB B,U
+!byte $10,$E4,$E5                ; ANDB B,S
+!byte $10,$E4,$87                ; ANDB ,X
+!byte $10,$E4,$A7                ; ANDB ,Y
+!byte $10,$E4,$C7                ; ANDB ,U
+!byte $10,$E4,$E7                ; ANDB ,S
+!byte $10,$E4,$8A                ; ANDB ,PClo
+!byte $10,$E4,$AA                ; ANDB ,PClo
+!byte $10,$E4,$CA                ; ANDB ,PClo
+!byte $10,$E4,$EA                ; ANDB ,PClo
+!byte $10,$E4,$8B                ; ANDB D,X
+!byte $10,$E4,$AB                ; ANDB D,Y
+!byte $10,$E4,$CB                ; ANDB D,U
+!byte $10,$E4,$EB                ; ANDB D,S
+!byte $10,$E4,$80                ; ANDB ,X+
+!byte $10,$E4,$A0                ; ANDB ,Y+
+!byte $10,$E4,$C0                ; ANDB ,U+
+!byte $10,$E4,$E0                ; ANDB ,S+
+!byte $10,$E4,$81                ; ANDB ,X++
+!byte $10,$E4,$A1                ; ANDB ,Y++
+!byte $10,$E4,$C1                ; ANDB ,U++
+!byte $10,$E4,$E1                ; ANDB ,S++
+!byte $10,$E4,$82                ; ANDB ,-X
+!byte $10,$E4,$A2                ; ANDB ,-Y
+!byte $10,$E4,$C2                ; ANDB ,-U
+!byte $10,$E4,$E2                ; ANDB ,-S
+!byte $10,$E4,$83                ; ANDB ,--X
+!byte $10,$E4,$A3                ; ANDB ,--Y
+!byte $10,$E4,$C3                ; ANDB ,--U
+!byte $10,$E4,$E3                ; ANDB ,--S
+!byte $10,$E4,$8C,$FF            ; ANDB -$01,PC
+!byte $10,$E4,$AC,$FF            ; ANDB -$01,PC
+!byte $10,$E4,$CC,$FF            ; ANDB -$01,PC
+!byte $10,$E4,$EC,$FF            ; ANDB -$01,PC
+!byte $10,$E4,$8C,$60            ; ANDB $60,PC
+!byte $10,$E4,$AC,$60            ; ANDB $60,PC
+!byte $10,$E4,$CC,$60            ; ANDB $60,PC
+!byte $10,$E4,$EC,$60            ; ANDB $60,PC
+!byte $10,$E4,$8D,$DE,$AD        ; ANDB $DEAD,PC
+!byte $10,$E4,$AD,$DE,$AD        ; ANDB $DEAD,PC
+!byte $10,$E4,$CD,$DE,$AD        ; ANDB $DEAD,PC
+!byte $10,$E4,$ED,$DE,$AD        ; ANDB $DEAD,PC
+!byte $10,$E4,$8D,$10,$00        ; ANDB $1000,PC
+!byte $10,$E4,$AD,$10,$00        ; ANDB $1000,PC
+!byte $10,$E4,$CD,$10,$00        ; ANDB $1000,PC
+!byte $10,$E4,$ED,$10,$00        ; ANDB $1000,PC
+!byte $10,$E4,$8F,$DE,$AD        ; ANDB ,$DEAD
+!byte $10,$E4,$AF,$DE,$AD        ; ANDB ,$DEAD
+!byte $10,$E4,$CF,$DE,$AD        ; ANDB ,$DEAD
+!byte $10,$E4,$EF,$DE,$AD        ; ANDB ,$DEAD
+!byte $10,$E4,$94                ; ANDB [,X]
+!byte $10,$E4,$B4                ; ANDB [,Y]
+!byte $10,$E4,$D4                ; ANDB [,U]
+!byte $10,$E4,$F4                ; ANDB [,S]
+!byte $10,$E4,$98,$FF            ; ANDB [-$01,X]
+!byte $10,$E4,$B8,$FF            ; ANDB [-$01,Y]
+!byte $10,$E4,$D8,$FF            ; ANDB [-$01,U]
+!byte $10,$E4,$F8,$FF            ; ANDB [-$01,S]
+!byte $10,$E4,$98,$60            ; ANDB [$60,X]
+!byte $10,$E4,$B8,$60            ; ANDB [$60,Y]
+!byte $10,$E4,$D8,$60            ; ANDB [$60,U]
+!byte $10,$E4,$F8,$60            ; ANDB [$60,S]
+!byte $10,$E4,$99,$DE,$AD        ; ANDB [$DEAD,X]
+!byte $10,$E4,$B9,$DE,$AD        ; ANDB [$DEAD,Y]
+!byte $10,$E4,$D9,$DE,$AD        ; ANDB [$DEAD,U]
+!byte $10,$E4,$F9,$DE,$AD        ; ANDB [$DEAD,S]
+!byte $10,$E4,$99,$DE,$10        ; ANDB [$DE10,X]
+!byte $10,$E4,$B9,$DE,$10        ; ANDB [$DE10,Y]
+!byte $10,$E4,$D9,$DE,$10        ; ANDB [$DE10,U]
+!byte $10,$E4,$F9,$DE,$10        ; ANDB [$DE10,S]
+!byte $10,$E4,$96                ; ANDB [A,X]
+!byte $10,$E4,$B6                ; ANDB [A,Y]
+!byte $10,$E4,$D6                ; ANDB [A,U]
+!byte $10,$E4,$F6                ; ANDB [A,S]
+!byte $10,$E4,$95                ; ANDB [B,X]
+!byte $10,$E4,$B5                ; ANDB [B,Y]
+!byte $10,$E4,$D5                ; ANDB [B,U]
+!byte $10,$E4,$F5                ; ANDB [B,S]
+!byte $10,$E4,$97                ; ANDB [,X]
+!byte $10,$E4,$B7                ; ANDB [,Y]
+!byte $10,$E4,$D7                ; ANDB [,U]
+!byte $10,$E4,$F7                ; ANDB [,S]
+!byte $10,$E4,$9A                ; ANDB [,PClo]
+!byte $10,$E4,$BA                ; ANDB [,PClo]
+!byte $10,$E4,$DA                ; ANDB [,PClo]
+!byte $10,$E4,$FA                ; ANDB [,PClo]
+!byte $10,$E4,$9B                ; ANDB [D,X]
+!byte $10,$E4,$BB                ; ANDB [D,Y]
+!byte $10,$E4,$DB                ; ANDB [D,U]
+!byte $10,$E4,$FB                ; ANDB [D,S]
+!byte $10,$E4,$91                ; ANDB [,X++]
+!byte $10,$E4,$B1                ; ANDB [,Y++]
+!byte $10,$E4,$D1                ; ANDB [,U++]
+!byte $10,$E4,$F1                ; ANDB [,S++]
+!byte $10,$E4,$92                ; ANDB [,-X]
+!byte $10,$E4,$B2                ; ANDB [,-Y]
+!byte $10,$E4,$D2                ; ANDB [,-U]
+!byte $10,$E4,$F2                ; ANDB [,-S]
+!byte $10,$E4,$93                ; ANDB [,--X]
+!byte $10,$E4,$B3                ; ANDB [,--Y]
+!byte $10,$E4,$D3                ; ANDB [,--U]
+!byte $10,$E4,$F3                ; ANDB [,--S]
+!byte $10,$E4,$9C,$FF            ; ANDB [-$01,PC]
+!byte $10,$E4,$BC,$FF            ; ANDB [-$01,PC]
+!byte $10,$E4,$DC,$FF            ; ANDB [-$01,PC]
+!byte $10,$E4,$FC,$FF            ; ANDB [-$01,PC]
+!byte $10,$E4,$9C,$60            ; ANDB [$60,PC]
+!byte $10,$E4,$BC,$60            ; ANDB [$60,PC]
+!byte $10,$E4,$DC,$60            ; ANDB [$60,PC]
+!byte $10,$E4,$FC,$60            ; ANDB [$60,PC]
+!byte $10,$E4,$9D,$DE,$AD        ; ANDB [$DEAD,PC]
+!byte $10,$E4,$BD,$DE,$AD        ; ANDB [$DEAD,PC]
+!byte $10,$E4,$DD,$DE,$AD        ; ANDB [$DEAD,PC]
+!byte $10,$E4,$FD,$DE,$AD        ; ANDB [$DEAD,PC]
+!byte $10,$E4,$9D,$10,$00        ; ANDB [$1000,PC]
+!byte $10,$E4,$BD,$10,$00        ; ANDB [$1000,PC]
+!byte $10,$E4,$DD,$10,$00        ; ANDB [$1000,PC]
+!byte $10,$E4,$FD,$10,$00        ; ANDB [$1000,PC]
+!byte $10,$E4,$9F,$DE,$AD        ; ANDB [$DEAD]
+!byte $10,$E4,$BF,$DE,$AD        ; ANDB [$DEAD]
+!byte $10,$E4,$DF,$DE,$AD        ; ANDB [$DEAD]
+!byte $10,$E4,$FF,$DE,$AD        ; ANDB [$DEAD]
+!byte $10,$E4,$90                ; ANDB [,X+]
+!byte $10,$E4,$B0                ; ANDB [,Y+]
+!byte $10,$E4,$D0                ; ANDB [,U+]
+!byte $10,$E4,$F0                ; ANDB [,S+]
+!byte $11,$E4,$84                ; ANDB ,X
+!byte $11,$E4,$A4                ; ANDB ,Y
+!byte $11,$E4,$C4                ; ANDB ,U
+!byte $11,$E4,$E4                ; ANDB ,S
+!byte $11,$E4,$15                ; ANDB -$0B,X
+!byte $11,$E4,$35                ; ANDB -$0B,Y
+!byte $11,$E4,$55                ; ANDB -$0B,U
+!byte $11,$E4,$75                ; ANDB -$0B,S
+!byte $11,$E4,$0C                ; ANDB $0C,X
+!byte $11,$E4,$2C                ; ANDB $0C,Y
+!byte $11,$E4,$4C                ; ANDB $0C,U
+!byte $11,$E4,$6C                ; ANDB $0C,S
+!byte $11,$E4,$88,$FF            ; ANDB -$01,X
+!byte $11,$E4,$A8,$FF            ; ANDB -$01,Y
+!byte $11,$E4,$C8,$FF            ; ANDB -$01,U
+!byte $11,$E4,$E8,$FF            ; ANDB -$01,S
+!byte $11,$E4,$88,$60            ; ANDB $60,X
+!byte $11,$E4,$A8,$60            ; ANDB $60,Y
+!byte $11,$E4,$C8,$60            ; ANDB $60,U
+!byte $11,$E4,$E8,$60            ; ANDB $60,S
+!byte $11,$E4,$89,$DE,$AD        ; ANDB $DEAD,X
+!byte $11,$E4,$A9,$DE,$AD        ; ANDB $DEAD,Y
+!byte $11,$E4,$C9,$DE,$AD        ; ANDB $DEAD,U
+!byte $11,$E4,$E9,$DE,$AD        ; ANDB $DEAD,S
+!byte $11,$E4,$89,$10,$00        ; ANDB $1000,X
+!byte $11,$E4,$A9,$10,$00        ; ANDB $1000,Y
+!byte $11,$E4,$C9,$10,$00        ; ANDB $1000,U
+!byte $11,$E4,$E9,$10,$00        ; ANDB $1000,S
+!byte $11,$E4,$86                ; ANDB A,X
+!byte $11,$E4,$A6                ; ANDB A,Y
+!byte $11,$E4,$C6                ; ANDB A,U
+!byte $11,$E4,$E6                ; ANDB A,S
+!byte $11,$E4,$85                ; ANDB B,X
+!byte $11,$E4,$A5                ; ANDB B,Y
+!byte $11,$E4,$C5                ; ANDB B,U
+!byte $11,$E4,$E5                ; ANDB B,S
+!byte $11,$E4,$87                ; ANDB ,X
+!byte $11,$E4,$A7                ; ANDB ,Y
+!byte $11,$E4,$C7                ; ANDB ,U
+!byte $11,$E4,$E7                ; ANDB ,S
+!byte $11,$E4,$8A                ; ANDB ,PClo
+!byte $11,$E4,$AA                ; ANDB ,PClo
+!byte $11,$E4,$CA                ; ANDB ,PClo
+!byte $11,$E4,$EA                ; ANDB ,PClo
+!byte $11,$E4,$8B                ; ANDB D,X
+!byte $11,$E4,$AB                ; ANDB D,Y
+!byte $11,$E4,$CB                ; ANDB D,U
+!byte $11,$E4,$EB                ; ANDB D,S
+!byte $11,$E4,$80                ; ANDB ,X+
+!byte $11,$E4,$A0                ; ANDB ,Y+
+!byte $11,$E4,$C0                ; ANDB ,U+
+!byte $11,$E4,$E0                ; ANDB ,S+
+!byte $11,$E4,$81                ; ANDB ,X++
+!byte $11,$E4,$A1                ; ANDB ,Y++
+!byte $11,$E4,$C1                ; ANDB ,U++
+!byte $11,$E4,$E1                ; ANDB ,S++
+!byte $11,$E4,$82                ; ANDB ,-X
+!byte $11,$E4,$A2                ; ANDB ,-Y
+!byte $11,$E4,$C2                ; ANDB ,-U
+!byte $11,$E4,$E2                ; ANDB ,-S
+!byte $11,$E4,$83                ; ANDB ,--X
+!byte $11,$E4,$A3                ; ANDB ,--Y
+!byte $11,$E4,$C3                ; ANDB ,--U
+!byte $11,$E4,$E3                ; ANDB ,--S
+!byte $11,$E4,$8C,$FF            ; ANDB -$01,PC
+!byte $11,$E4,$AC,$FF            ; ANDB -$01,PC
+!byte $11,$E4,$CC,$FF            ; ANDB -$01,PC
+!byte $11,$E4,$EC,$FF            ; ANDB -$01,PC
+!byte $11,$E4,$8C,$60            ; ANDB $60,PC
+!byte $11,$E4,$AC,$60            ; ANDB $60,PC
+!byte $11,$E4,$CC,$60            ; ANDB $60,PC
+!byte $11,$E4,$EC,$60            ; ANDB $60,PC
+!byte $11,$E4,$8D,$DE,$AD        ; ANDB $DEAD,PC
+!byte $11,$E4,$AD,$DE,$AD        ; ANDB $DEAD,PC
+!byte $11,$E4,$CD,$DE,$AD        ; ANDB $DEAD,PC
+!byte $11,$E4,$ED,$DE,$AD        ; ANDB $DEAD,PC
+!byte $11,$E4,$8D,$10,$00        ; ANDB $1000,PC
+!byte $11,$E4,$AD,$10,$00        ; ANDB $1000,PC
+!byte $11,$E4,$CD,$10,$00        ; ANDB $1000,PC
+!byte $11,$E4,$ED,$10,$00        ; ANDB $1000,PC
+!byte $11,$E4,$8F,$DE,$AD        ; ANDB ,$DEAD
+!byte $11,$E4,$AF,$DE,$AD        ; ANDB ,$DEAD
+!byte $11,$E4,$CF,$DE,$AD        ; ANDB ,$DEAD
+!byte $11,$E4,$EF,$DE,$AD        ; ANDB ,$DEAD
+!byte $11,$E4,$94                ; ANDB [,X]
+!byte $11,$E4,$B4                ; ANDB [,Y]
+!byte $11,$E4,$D4                ; ANDB [,U]
+!byte $11,$E4,$F4                ; ANDB [,S]
+!byte $11,$E4,$98,$FF            ; ANDB [-$01,X]
+!byte $11,$E4,$B8,$FF            ; ANDB [-$01,Y]
+!byte $11,$E4,$D8,$FF            ; ANDB [-$01,U]
+!byte $11,$E4,$F8,$FF            ; ANDB [-$01,S]
+!byte $11,$E4,$98,$60            ; ANDB [$60,X]
+!byte $11,$E4,$B8,$60            ; ANDB [$60,Y]
+!byte $11,$E4,$D8,$60            ; ANDB [$60,U]
+!byte $11,$E4,$F8,$60            ; ANDB [$60,S]
+!byte $11,$E4,$99,$DE,$AD        ; ANDB [$DEAD,X]
+!byte $11,$E4,$B9,$DE,$AD        ; ANDB [$DEAD,Y]
+!byte $11,$E4,$D9,$DE,$AD        ; ANDB [$DEAD,U]
+!byte $11,$E4,$F9,$DE,$AD        ; ANDB [$DEAD,S]
+!byte $11,$E4,$99,$DE,$10        ; ANDB [$DE10,X]
+!byte $11,$E4,$B9,$DE,$10        ; ANDB [$DE10,Y]
+!byte $11,$E4,$D9,$DE,$10        ; ANDB [$DE10,U]
+!byte $11,$E4,$F9,$DE,$10        ; ANDB [$DE10,S]
+!byte $11,$E4,$96                ; ANDB [A,X]
+!byte $11,$E4,$B6                ; ANDB [A,Y]
+!byte $11,$E4,$D6                ; ANDB [A,U]
+!byte $11,$E4,$F6                ; ANDB [A,S]
+!byte $11,$E4,$95                ; ANDB [B,X]
+!byte $11,$E4,$B5                ; ANDB [B,Y]
+!byte $11,$E4,$D5                ; ANDB [B,U]
+!byte $11,$E4,$F5                ; ANDB [B,S]
+!byte $11,$E4,$97                ; ANDB [,X]
+!byte $11,$E4,$B7                ; ANDB [,Y]
+!byte $11,$E4,$D7                ; ANDB [,U]
+!byte $11,$E4,$F7                ; ANDB [,S]
+!byte $11,$E4,$9A                ; ANDB [,PClo]
+!byte $11,$E4,$BA                ; ANDB [,PClo]
+!byte $11,$E4,$DA                ; ANDB [,PClo]
+!byte $11,$E4,$FA                ; ANDB [,PClo]
+!byte $11,$E4,$9B                ; ANDB [D,X]
+!byte $11,$E4,$BB                ; ANDB [D,Y]
+!byte $11,$E4,$DB                ; ANDB [D,U]
+!byte $11,$E4,$FB                ; ANDB [D,S]
+!byte $11,$E4,$91                ; ANDB [,X++]
+!byte $11,$E4,$B1                ; ANDB [,Y++]
+!byte $11,$E4,$D1                ; ANDB [,U++]
+!byte $11,$E4,$F1                ; ANDB [,S++]
+!byte $11,$E4,$92                ; ANDB [,-X]
+!byte $11,$E4,$B2                ; ANDB [,-Y]
+!byte $11,$E4,$D2                ; ANDB [,-U]
+!byte $11,$E4,$F2                ; ANDB [,-S]
+!byte $11,$E4,$93                ; ANDB [,--X]
+!byte $11,$E4,$B3                ; ANDB [,--Y]
+!byte $11,$E4,$D3                ; ANDB [,--U]
+!byte $11,$E4,$F3                ; ANDB [,--S]
+!byte $11,$E4,$9C,$FF            ; ANDB [-$01,PC]
+!byte $11,$E4,$BC,$FF            ; ANDB [-$01,PC]
+!byte $11,$E4,$DC,$FF            ; ANDB [-$01,PC]
+!byte $11,$E4,$FC,$FF            ; ANDB [-$01,PC]
+!byte $11,$E4,$9C,$60            ; ANDB [$60,PC]
+!byte $11,$E4,$BC,$60            ; ANDB [$60,PC]
+!byte $11,$E4,$DC,$60            ; ANDB [$60,PC]
+!byte $11,$E4,$FC,$60            ; ANDB [$60,PC]
+!byte $11,$E4,$9D,$DE,$AD        ; ANDB [$DEAD,PC]
+!byte $11,$E4,$BD,$DE,$AD        ; ANDB [$DEAD,PC]
+!byte $11,$E4,$DD,$DE,$AD        ; ANDB [$DEAD,PC]
+!byte $11,$E4,$FD,$DE,$AD        ; ANDB [$DEAD,PC]
+!byte $11,$E4,$9D,$10,$00        ; ANDB [$1000,PC]
+!byte $11,$E4,$BD,$10,$00        ; ANDB [$1000,PC]
+!byte $11,$E4,$DD,$10,$00        ; ANDB [$1000,PC]
+!byte $11,$E4,$FD,$10,$00        ; ANDB [$1000,PC]
+!byte $11,$E4,$9F,$DE,$AD        ; ANDB [$DEAD]
+!byte $11,$E4,$BF,$DE,$AD        ; ANDB [$DEAD]
+!byte $11,$E4,$DF,$DE,$AD        ; ANDB [$DEAD]
+!byte $11,$E4,$FF,$DE,$AD        ; ANDB [$DEAD]
+!byte $11,$E4,$90                ; ANDB [,X+]
+!byte $11,$E4,$B0                ; ANDB [,Y+]
+!byte $11,$E4,$D0                ; ANDB [,U+]
+!byte $11,$E4,$F0                ; ANDB [,S+]
 
-      !byte $E0,$84                   ; SUBB ,X
-      !byte $E0,$A4                   ; SUBB ,Y
-      !byte $E0,$C4                   ; SUBB ,U
-      !byte $E0,$E4                   ; SUBB ,S
-      !byte $E0,$15                   ; SUBB -$0B,X
-      !byte $E0,$35                   ; SUBB -$0B,Y
-      !byte $E0,$55                   ; SUBB -$0B,U
-      !byte $E0,$75                   ; SUBB -$0B,S
-      !byte $E0,$0C                   ; SUBB $0C,X
-      !byte $E0,$2C                   ; SUBB $0C,Y
-      !byte $E0,$4C                   ; SUBB $0C,U
-      !byte $E0,$6C                   ; SUBB $0C,S
-      !byte $E0,$88,$FF               ; SUBB -$01,X
-      !byte $E0,$A8,$FF               ; SUBB -$01,Y
-      !byte $E0,$C8,$FF               ; SUBB -$01,U
-      !byte $E0,$E8,$FF               ; SUBB -$01,S
-      !byte $E0,$88,$60               ; SUBB $60,X
-      !byte $E0,$A8,$60               ; SUBB $60,Y
-      !byte $E0,$C8,$60               ; SUBB $60,U
-      !byte $E0,$E8,$60               ; SUBB $60,S
-      !byte $E0,$89,$DE,$AD           ; SUBB $DEAD,X
-      !byte $E0,$A9,$DE,$AD           ; SUBB $DEAD,Y
-      !byte $E0,$C9,$DE,$AD           ; SUBB $DEAD,U
-      !byte $E0,$E9,$DE,$AD           ; SUBB $DEAD,S
-      !byte $E0,$89,$10,$00           ; SUBB $1000,X
-      !byte $E0,$A9,$10,$00           ; SUBB $1000,Y
-      !byte $E0,$C9,$10,$00           ; SUBB $1000,U
-      !byte $E0,$E9,$10,$00           ; SUBB $1000,S
-      !byte $E0,$86                   ; SUBB A,X
-      !byte $E0,$A6                   ; SUBB A,Y
-      !byte $E0,$C6                   ; SUBB A,U
-      !byte $E0,$E6                   ; SUBB A,S
-      !byte $E0,$85                   ; SUBB B,X
-      !byte $E0,$A5                   ; SUBB B,Y
-      !byte $E0,$C5                   ; SUBB B,U
-      !byte $E0,$E5                   ; SUBB B,S
-      !byte $E0,$8B                   ; SUBB D,X
-      !byte $E0,$AB                   ; SUBB D,Y
-      !byte $E0,$CB                   ; SUBB D,U
-      !byte $E0,$EB                   ; SUBB D,S
-      !byte $E0,$80                   ; SUBB ,X+
-      !byte $E0,$A0                   ; SUBB ,Y+
-      !byte $E0,$C0                   ; SUBB ,U+
-      !byte $E0,$E0                   ; SUBB ,S+
-      !byte $E0,$81                   ; SUBB ,X++
-      !byte $E0,$A1                   ; SUBB ,Y++
-      !byte $E0,$C1                   ; SUBB ,U++
-      !byte $E0,$E1                   ; SUBB ,S++
-      !byte $E0,$82                   ; SUBB ,-X
-      !byte $E0,$A2                   ; SUBB ,-Y
-      !byte $E0,$C2                   ; SUBB ,-U
-      !byte $E0,$E2                   ; SUBB ,-S
-      !byte $E0,$83                   ; SUBB ,--X
-      !byte $E0,$A3                   ; SUBB ,--Y
-      !byte $E0,$C3                   ; SUBB ,--U
-      !byte $E0,$E3                   ; SUBB ,--S
-      !byte $E0,$8C,$FF               ; SUBB -$01,PC
-      !byte $E0,$AC,$FF               ; SUBB -$01,PC
-      !byte $E0,$CC,$FF               ; SUBB -$01,PC
-      !byte $E0,$EC,$FF               ; SUBB -$01,PC
-      !byte $E0,$8C,$60               ; SUBB $60,PC
-      !byte $E0,$AC,$60               ; SUBB $60,PC
-      !byte $E0,$CC,$60               ; SUBB $60,PC
-      !byte $E0,$EC,$60               ; SUBB $60,PC
-      !byte $E0,$8D,$DE,$AD           ; SUBB $DEAD,PC
-      !byte $E0,$AD,$DE,$AD           ; SUBB $DEAD,PC
-      !byte $E0,$CD,$DE,$AD           ; SUBB $DEAD,PC
-      !byte $E0,$ED,$DE,$AD           ; SUBB $DEAD,PC
-      !byte $E0,$8D,$10,$00           ; SUBB $1000,PC
-      !byte $E0,$AD,$10,$00           ; SUBB $1000,PC
-      !byte $E0,$CD,$10,$00           ; SUBB $1000,PC
-      !byte $E0,$ED,$10,$00           ; SUBB $1000,PC
-      !byte $E0,$94                   ; SUBB [,X]
-      !byte $E0,$B4                   ; SUBB [,Y]
-      !byte $E0,$D4                   ; SUBB [,U]
-      !byte $E0,$F4                   ; SUBB [,S]
-      !byte $E0,$98,$FF               ; SUBB [-$01,X]
-      !byte $E0,$B8,$FF               ; SUBB [-$01,Y]
-      !byte $E0,$D8,$FF               ; SUBB [-$01,U]
-      !byte $E0,$F8,$FF               ; SUBB [-$01,S]
-      !byte $E0,$98,$60               ; SUBB [$60,X]
-      !byte $E0,$B8,$60               ; SUBB [$60,Y]
-      !byte $E0,$D8,$60               ; SUBB [$60,U]
-      !byte $E0,$F8,$60               ; SUBB [$60,S]
-      !byte $E0,$99,$DE,$AD           ; SUBB [$DEAD,X]
-      !byte $E0,$B9,$DE,$AD           ; SUBB [$DEAD,Y]
-      !byte $E0,$D9,$DE,$AD           ; SUBB [$DEAD,U]
-      !byte $E0,$F9,$DE,$AD           ; SUBB [$DEAD,S]
-      !byte $E0,$99,$DE,$10           ; SUBB [$DE10,X]
-      !byte $E0,$B9,$DE,$10           ; SUBB [$DE10,Y]
-      !byte $E0,$D9,$DE,$10           ; SUBB [$DE10,U]
-      !byte $E0,$F9,$DE,$10           ; SUBB [$DE10,S]
-      !byte $E0,$96                   ; SUBB [A,X]
-      !byte $E0,$B6                   ; SUBB [A,Y]
-      !byte $E0,$D6                   ; SUBB [A,U]
-      !byte $E0,$F6                   ; SUBB [A,S]
-      !byte $E0,$95                   ; SUBB [B,X]
-      !byte $E0,$B5                   ; SUBB [B,Y]
-      !byte $E0,$D5                   ; SUBB [B,U]
-      !byte $E0,$F5                   ; SUBB [B,S]
-      !byte $E0,$9B                   ; SUBB [D,X]
-      !byte $E0,$BB                   ; SUBB [D,Y]
-      !byte $E0,$DB                   ; SUBB [D,U]
-      !byte $E0,$FB                   ; SUBB [D,S]
-      !byte $E0,$91                   ; SUBB [,X++]
-      !byte $E0,$B1                   ; SUBB [,Y++]
-      !byte $E0,$D1                   ; SUBB [,U++]
-      !byte $E0,$F1                   ; SUBB [,S++]
-      !byte $E0,$93                   ; SUBB [,--X]
-      !byte $E0,$B3                   ; SUBB [,--Y]
-      !byte $E0,$D3                   ; SUBB [,--U]
-      !byte $E0,$F3                   ; SUBB [,--S]
-      !byte $E0,$9C,$FF               ; SUBB [-$01,PC]
-      !byte $E0,$BC,$FF               ; SUBB [-$01,PC]
-      !byte $E0,$DC,$FF               ; SUBB [-$01,PC]
-      !byte $E0,$FC,$FF               ; SUBB [-$01,PC]
-      !byte $E0,$9C,$60               ; SUBB [$60,PC]
-      !byte $E0,$BC,$60               ; SUBB [$60,PC]
-      !byte $E0,$DC,$60               ; SUBB [$60,PC]
-      !byte $E0,$FC,$60               ; SUBB [$60,PC]
-      !byte $E0,$9D,$DE,$AD           ; SUBB [$DEAD,PC]
-      !byte $E0,$BD,$DE,$AD           ; SUBB [$DEAD,PC]
-      !byte $E0,$DD,$DE,$AD           ; SUBB [$DEAD,PC]
-      !byte $E0,$FD,$DE,$AD           ; SUBB [$DEAD,PC]
-      !byte $E0,$9D,$10,$00           ; SUBB [$1000,PC]
-      !byte $E0,$BD,$10,$00           ; SUBB [$1000,PC]
-      !byte $E0,$DD,$10,$00           ; SUBB [$1000,PC]
-      !byte $E0,$FD,$10,$00           ; SUBB [$1000,PC]
-      !byte $E0,$9F,$DE,$AD           ; SUBB [$DEAD]
-      !byte $E0,$BF,$DE,$AD           ; SUBB [$DEAD]
-      !byte $E0,$DF,$DE,$AD           ; SUBB [$DEAD]
-      !byte $E0,$FF,$DE,$AD           ; SUBB [$DEAD]
-      !byte $E1,$84                   ; CMPB ,X
-      !byte $E1,$A4                   ; CMPB ,Y
-      !byte $E1,$C4                   ; CMPB ,U
-      !byte $E1,$E4                   ; CMPB ,S
-      !byte $E1,$15                   ; CMPB -$0B,X
-      !byte $E1,$35                   ; CMPB -$0B,Y
-      !byte $E1,$55                   ; CMPB -$0B,U
-      !byte $E1,$75                   ; CMPB -$0B,S
-      !byte $E1,$0C                   ; CMPB $0C,X
-      !byte $E1,$2C                   ; CMPB $0C,Y
-      !byte $E1,$4C                   ; CMPB $0C,U
-      !byte $E1,$6C                   ; CMPB $0C,S
-      !byte $E1,$88,$FF               ; CMPB -$01,X
-      !byte $E1,$A8,$FF               ; CMPB -$01,Y
-      !byte $E1,$C8,$FF               ; CMPB -$01,U
-      !byte $E1,$E8,$FF               ; CMPB -$01,S
-      !byte $E1,$88,$60               ; CMPB $60,X
-      !byte $E1,$A8,$60               ; CMPB $60,Y
-      !byte $E1,$C8,$60               ; CMPB $60,U
-      !byte $E1,$E8,$60               ; CMPB $60,S
-      !byte $E1,$89,$DE,$AD           ; CMPB $DEAD,X
-      !byte $E1,$A9,$DE,$AD           ; CMPB $DEAD,Y
-      !byte $E1,$C9,$DE,$AD           ; CMPB $DEAD,U
-      !byte $E1,$E9,$DE,$AD           ; CMPB $DEAD,S
-      !byte $E1,$89,$10,$00           ; CMPB $1000,X
-      !byte $E1,$A9,$10,$00           ; CMPB $1000,Y
-      !byte $E1,$C9,$10,$00           ; CMPB $1000,U
-      !byte $E1,$E9,$10,$00           ; CMPB $1000,S
-      !byte $E1,$86                   ; CMPB A,X
-      !byte $E1,$A6                   ; CMPB A,Y
-      !byte $E1,$C6                   ; CMPB A,U
-      !byte $E1,$E6                   ; CMPB A,S
-      !byte $E1,$85                   ; CMPB B,X
-      !byte $E1,$A5                   ; CMPB B,Y
-      !byte $E1,$C5                   ; CMPB B,U
-      !byte $E1,$E5                   ; CMPB B,S
-      !byte $E1,$8B                   ; CMPB D,X
-      !byte $E1,$AB                   ; CMPB D,Y
-      !byte $E1,$CB                   ; CMPB D,U
-      !byte $E1,$EB                   ; CMPB D,S
-      !byte $E1,$80                   ; CMPB ,X+
-      !byte $E1,$A0                   ; CMPB ,Y+
-      !byte $E1,$C0                   ; CMPB ,U+
-      !byte $E1,$E0                   ; CMPB ,S+
-      !byte $E1,$81                   ; CMPB ,X++
-      !byte $E1,$A1                   ; CMPB ,Y++
-      !byte $E1,$C1                   ; CMPB ,U++
-      !byte $E1,$E1                   ; CMPB ,S++
-      !byte $E1,$82                   ; CMPB ,-X
-      !byte $E1,$A2                   ; CMPB ,-Y
-      !byte $E1,$C2                   ; CMPB ,-U
-      !byte $E1,$E2                   ; CMPB ,-S
-      !byte $E1,$83                   ; CMPB ,--X
-      !byte $E1,$A3                   ; CMPB ,--Y
-      !byte $E1,$C3                   ; CMPB ,--U
-      !byte $E1,$E3                   ; CMPB ,--S
-      !byte $E1,$8C,$FF               ; CMPB -$01,PC
-      !byte $E1,$AC,$FF               ; CMPB -$01,PC
-      !byte $E1,$CC,$FF               ; CMPB -$01,PC
-      !byte $E1,$EC,$FF               ; CMPB -$01,PC
-      !byte $E1,$8C,$60               ; CMPB $60,PC
-      !byte $E1,$AC,$60               ; CMPB $60,PC
-      !byte $E1,$CC,$60               ; CMPB $60,PC
-      !byte $E1,$EC,$60               ; CMPB $60,PC
-      !byte $E1,$8D,$DE,$AD           ; CMPB $DEAD,PC
-      !byte $E1,$AD,$DE,$AD           ; CMPB $DEAD,PC
-      !byte $E1,$CD,$DE,$AD           ; CMPB $DEAD,PC
-      !byte $E1,$ED,$DE,$AD           ; CMPB $DEAD,PC
-      !byte $E1,$8D,$10,$00           ; CMPB $1000,PC
-      !byte $E1,$AD,$10,$00           ; CMPB $1000,PC
-      !byte $E1,$CD,$10,$00           ; CMPB $1000,PC
-      !byte $E1,$ED,$10,$00           ; CMPB $1000,PC
-      !byte $E1,$94                   ; CMPB [,X]
-      !byte $E1,$B4                   ; CMPB [,Y]
-      !byte $E1,$D4                   ; CMPB [,U]
-      !byte $E1,$F4                   ; CMPB [,S]
-      !byte $E1,$98,$FF               ; CMPB [-$01,X]
-      !byte $E1,$B8,$FF               ; CMPB [-$01,Y]
-      !byte $E1,$D8,$FF               ; CMPB [-$01,U]
-      !byte $E1,$F8,$FF               ; CMPB [-$01,S]
-      !byte $E1,$98,$60               ; CMPB [$60,X]
-      !byte $E1,$B8,$60               ; CMPB [$60,Y]
-      !byte $E1,$D8,$60               ; CMPB [$60,U]
-      !byte $E1,$F8,$60               ; CMPB [$60,S]
-      !byte $E1,$99,$DE,$AD           ; CMPB [$DEAD,X]
-      !byte $E1,$B9,$DE,$AD           ; CMPB [$DEAD,Y]
-      !byte $E1,$D9,$DE,$AD           ; CMPB [$DEAD,U]
-      !byte $E1,$F9,$DE,$AD           ; CMPB [$DEAD,S]
-      !byte $E1,$99,$DE,$10           ; CMPB [$DE10,X]
-      !byte $E1,$B9,$DE,$10           ; CMPB [$DE10,Y]
-      !byte $E1,$D9,$DE,$10           ; CMPB [$DE10,U]
-      !byte $E1,$F9,$DE,$10           ; CMPB [$DE10,S]
-      !byte $E1,$96                   ; CMPB [A,X]
-      !byte $E1,$B6                   ; CMPB [A,Y]
-      !byte $E1,$D6                   ; CMPB [A,U]
-      !byte $E1,$F6                   ; CMPB [A,S]
-      !byte $E1,$95                   ; CMPB [B,X]
-      !byte $E1,$B5                   ; CMPB [B,Y]
-      !byte $E1,$D5                   ; CMPB [B,U]
-      !byte $E1,$F5                   ; CMPB [B,S]
-      !byte $E1,$9B                   ; CMPB [D,X]
-      !byte $E1,$BB                   ; CMPB [D,Y]
-      !byte $E1,$DB                   ; CMPB [D,U]
-      !byte $E1,$FB                   ; CMPB [D,S]
-      !byte $E1,$91                   ; CMPB [,X++]
-      !byte $E1,$B1                   ; CMPB [,Y++]
-      !byte $E1,$D1                   ; CMPB [,U++]
-      !byte $E1,$F1                   ; CMPB [,S++]
-      !byte $E1,$93                   ; CMPB [,--X]
-      !byte $E1,$B3                   ; CMPB [,--Y]
-      !byte $E1,$D3                   ; CMPB [,--U]
-      !byte $E1,$F3                   ; CMPB [,--S]
-      !byte $E1,$9C,$FF               ; CMPB [-$01,PC]
-      !byte $E1,$BC,$FF               ; CMPB [-$01,PC]
-      !byte $E1,$DC,$FF               ; CMPB [-$01,PC]
-      !byte $E1,$FC,$FF               ; CMPB [-$01,PC]
-      !byte $E1,$9C,$60               ; CMPB [$60,PC]
-      !byte $E1,$BC,$60               ; CMPB [$60,PC]
-      !byte $E1,$DC,$60               ; CMPB [$60,PC]
-      !byte $E1,$FC,$60               ; CMPB [$60,PC]
-      !byte $E1,$9D,$DE,$AD           ; CMPB [$DEAD,PC]
-      !byte $E1,$BD,$DE,$AD           ; CMPB [$DEAD,PC]
-      !byte $E1,$DD,$DE,$AD           ; CMPB [$DEAD,PC]
-      !byte $E1,$FD,$DE,$AD           ; CMPB [$DEAD,PC]
-      !byte $E1,$9D,$10,$00           ; CMPB [$1000,PC]
-      !byte $E1,$BD,$10,$00           ; CMPB [$1000,PC]
-      !byte $E1,$DD,$10,$00           ; CMPB [$1000,PC]
-      !byte $E1,$FD,$10,$00           ; CMPB [$1000,PC]
-      !byte $E1,$9F,$DE,$AD           ; CMPB [$DEAD]
-      !byte $E1,$BF,$DE,$AD           ; CMPB [$DEAD]
-      !byte $E1,$DF,$DE,$AD           ; CMPB [$DEAD]
-      !byte $E1,$FF,$DE,$AD           ; CMPB [$DEAD]
-      !byte $E2,$84                   ; SBCB ,X
-      !byte $E2,$A4                   ; SBCB ,Y
-      !byte $E2,$C4                   ; SBCB ,U
-      !byte $E2,$E4                   ; SBCB ,S
-      !byte $E2,$15                   ; SBCB -$0B,X
-      !byte $E2,$35                   ; SBCB -$0B,Y
-      !byte $E2,$55                   ; SBCB -$0B,U
-      !byte $E2,$75                   ; SBCB -$0B,S
-      !byte $E2,$0C                   ; SBCB $0C,X
-      !byte $E2,$2C                   ; SBCB $0C,Y
-      !byte $E2,$4C                   ; SBCB $0C,U
-      !byte $E2,$6C                   ; SBCB $0C,S
-      !byte $E2,$88,$FF               ; SBCB -$01,X
-      !byte $E2,$A8,$FF               ; SBCB -$01,Y
-      !byte $E2,$C8,$FF               ; SBCB -$01,U
-      !byte $E2,$E8,$FF               ; SBCB -$01,S
-      !byte $E2,$88,$60               ; SBCB $60,X
-      !byte $E2,$A8,$60               ; SBCB $60,Y
-      !byte $E2,$C8,$60               ; SBCB $60,U
-      !byte $E2,$E8,$60               ; SBCB $60,S
-      !byte $E2,$89,$DE,$AD           ; SBCB $DEAD,X
-      !byte $E2,$A9,$DE,$AD           ; SBCB $DEAD,Y
-      !byte $E2,$C9,$DE,$AD           ; SBCB $DEAD,U
-      !byte $E2,$E9,$DE,$AD           ; SBCB $DEAD,S
-      !byte $E2,$89,$10,$00           ; SBCB $1000,X
-      !byte $E2,$A9,$10,$00           ; SBCB $1000,Y
-      !byte $E2,$C9,$10,$00           ; SBCB $1000,U
-      !byte $E2,$E9,$10,$00           ; SBCB $1000,S
-      !byte $E2,$86                   ; SBCB A,X
-      !byte $E2,$A6                   ; SBCB A,Y
-      !byte $E2,$C6                   ; SBCB A,U
-      !byte $E2,$E6                   ; SBCB A,S
-      !byte $E2,$85                   ; SBCB B,X
-      !byte $E2,$A5                   ; SBCB B,Y
-      !byte $E2,$C5                   ; SBCB B,U
-      !byte $E2,$E5                   ; SBCB B,S
-      !byte $E2,$8B                   ; SBCB D,X
-      !byte $E2,$AB                   ; SBCB D,Y
-      !byte $E2,$CB                   ; SBCB D,U
-      !byte $E2,$EB                   ; SBCB D,S
-      !byte $E2,$80                   ; SBCB ,X+
-      !byte $E2,$A0                   ; SBCB ,Y+
-      !byte $E2,$C0                   ; SBCB ,U+
-      !byte $E2,$E0                   ; SBCB ,S+
-      !byte $E2,$81                   ; SBCB ,X++
-      !byte $E2,$A1                   ; SBCB ,Y++
-      !byte $E2,$C1                   ; SBCB ,U++
-      !byte $E2,$E1                   ; SBCB ,S++
-      !byte $E2,$82                   ; SBCB ,-X
-      !byte $E2,$A2                   ; SBCB ,-Y
-      !byte $E2,$C2                   ; SBCB ,-U
-      !byte $E2,$E2                   ; SBCB ,-S
-      !byte $E2,$83                   ; SBCB ,--X
-      !byte $E2,$A3                   ; SBCB ,--Y
-      !byte $E2,$C3                   ; SBCB ,--U
-      !byte $E2,$E3                   ; SBCB ,--S
-      !byte $E2,$8C,$FF               ; SBCB -$01,PC
-      !byte $E2,$AC,$FF               ; SBCB -$01,PC
-      !byte $E2,$CC,$FF               ; SBCB -$01,PC
-      !byte $E2,$EC,$FF               ; SBCB -$01,PC
-      !byte $E2,$8C,$60               ; SBCB $60,PC
-      !byte $E2,$AC,$60               ; SBCB $60,PC
-      !byte $E2,$CC,$60               ; SBCB $60,PC
-      !byte $E2,$EC,$60               ; SBCB $60,PC
-      !byte $E2,$8D,$DE,$AD           ; SBCB $DEAD,PC
-      !byte $E2,$AD,$DE,$AD           ; SBCB $DEAD,PC
-      !byte $E2,$CD,$DE,$AD           ; SBCB $DEAD,PC
-      !byte $E2,$ED,$DE,$AD           ; SBCB $DEAD,PC
-      !byte $E2,$8D,$10,$00           ; SBCB $1000,PC
-      !byte $E2,$AD,$10,$00           ; SBCB $1000,PC
-      !byte $E2,$CD,$10,$00           ; SBCB $1000,PC
-      !byte $E2,$ED,$10,$00           ; SBCB $1000,PC
-      !byte $E2,$94                   ; SBCB [,X]
-      !byte $E2,$B4                   ; SBCB [,Y]
-      !byte $E2,$D4                   ; SBCB [,U]
-      !byte $E2,$F4                   ; SBCB [,S]
-      !byte $E2,$98,$FF               ; SBCB [-$01,X]
-      !byte $E2,$B8,$FF               ; SBCB [-$01,Y]
-      !byte $E2,$D8,$FF               ; SBCB [-$01,U]
-      !byte $E2,$F8,$FF               ; SBCB [-$01,S]
-      !byte $E2,$98,$60               ; SBCB [$60,X]
-      !byte $E2,$B8,$60               ; SBCB [$60,Y]
-      !byte $E2,$D8,$60               ; SBCB [$60,U]
-      !byte $E2,$F8,$60               ; SBCB [$60,S]
-      !byte $E2,$99,$DE,$AD           ; SBCB [$DEAD,X]
-      !byte $E2,$B9,$DE,$AD           ; SBCB [$DEAD,Y]
-      !byte $E2,$D9,$DE,$AD           ; SBCB [$DEAD,U]
-      !byte $E2,$F9,$DE,$AD           ; SBCB [$DEAD,S]
-      !byte $E2,$99,$DE,$10           ; SBCB [$DE10,X]
-      !byte $E2,$B9,$DE,$10           ; SBCB [$DE10,Y]
-      !byte $E2,$D9,$DE,$10           ; SBCB [$DE10,U]
-      !byte $E2,$F9,$DE,$10           ; SBCB [$DE10,S]
-      !byte $E2,$96                   ; SBCB [A,X]
-      !byte $E2,$B6                   ; SBCB [A,Y]
-      !byte $E2,$D6                   ; SBCB [A,U]
-      !byte $E2,$F6                   ; SBCB [A,S]
-      !byte $E2,$95                   ; SBCB [B,X]
-      !byte $E2,$B5                   ; SBCB [B,Y]
-      !byte $E2,$D5                   ; SBCB [B,U]
-      !byte $E2,$F5                   ; SBCB [B,S]
-      !byte $E2,$9B                   ; SBCB [D,X]
-      !byte $E2,$BB                   ; SBCB [D,Y]
-      !byte $E2,$DB                   ; SBCB [D,U]
-      !byte $E2,$FB                   ; SBCB [D,S]
-      !byte $E2,$91                   ; SBCB [,X++]
-      !byte $E2,$B1                   ; SBCB [,Y++]
-      !byte $E2,$D1                   ; SBCB [,U++]
-      !byte $E2,$F1                   ; SBCB [,S++]
-      !byte $E2,$93                   ; SBCB [,--X]
-      !byte $E2,$B3                   ; SBCB [,--Y]
-      !byte $E2,$D3                   ; SBCB [,--U]
-      !byte $E2,$F3                   ; SBCB [,--S]
-      !byte $E2,$9C,$FF               ; SBCB [-$01,PC]
-      !byte $E2,$BC,$FF               ; SBCB [-$01,PC]
-      !byte $E2,$DC,$FF               ; SBCB [-$01,PC]
-      !byte $E2,$FC,$FF               ; SBCB [-$01,PC]
-      !byte $E2,$9C,$60               ; SBCB [$60,PC]
-      !byte $E2,$BC,$60               ; SBCB [$60,PC]
-      !byte $E2,$DC,$60               ; SBCB [$60,PC]
-      !byte $E2,$FC,$60               ; SBCB [$60,PC]
-      !byte $E2,$9D,$DE,$AD           ; SBCB [$DEAD,PC]
-      !byte $E2,$BD,$DE,$AD           ; SBCB [$DEAD,PC]
-      !byte $E2,$DD,$DE,$AD           ; SBCB [$DEAD,PC]
-      !byte $E2,$FD,$DE,$AD           ; SBCB [$DEAD,PC]
-      !byte $E2,$9D,$10,$00           ; SBCB [$1000,PC]
-      !byte $E2,$BD,$10,$00           ; SBCB [$1000,PC]
-      !byte $E2,$DD,$10,$00           ; SBCB [$1000,PC]
-      !byte $E2,$FD,$10,$00           ; SBCB [$1000,PC]
-      !byte $E2,$9F,$DE,$AD           ; SBCB [$DEAD]
-      !byte $E2,$BF,$DE,$AD           ; SBCB [$DEAD]
-      !byte $E2,$DF,$DE,$AD           ; SBCB [$DEAD]
-      !byte $E2,$FF,$DE,$AD           ; SBCB [$DEAD]
-      !byte $E3,$84                   ; ADDD ,X
-      !byte $E3,$A4                   ; ADDD ,Y
-      !byte $E3,$C4                   ; ADDD ,U
-      !byte $E3,$E4                   ; ADDD ,S
-      !byte $E3,$15                   ; ADDD -$0B,X
-      !byte $E3,$35                   ; ADDD -$0B,Y
-      !byte $E3,$55                   ; ADDD -$0B,U
-      !byte $E3,$75                   ; ADDD -$0B,S
-      !byte $E3,$0C                   ; ADDD $0C,X
-      !byte $E3,$2C                   ; ADDD $0C,Y
-      !byte $E3,$4C                   ; ADDD $0C,U
-      !byte $E3,$6C                   ; ADDD $0C,S
-      !byte $E3,$88,$FF               ; ADDD -$01,X
-      !byte $E3,$A8,$FF               ; ADDD -$01,Y
-      !byte $E3,$C8,$FF               ; ADDD -$01,U
-      !byte $E3,$E8,$FF               ; ADDD -$01,S
-      !byte $E3,$88,$60               ; ADDD $60,X
-      !byte $E3,$A8,$60               ; ADDD $60,Y
-      !byte $E3,$C8,$60               ; ADDD $60,U
-      !byte $E3,$E8,$60               ; ADDD $60,S
-      !byte $E3,$89,$DE,$AD           ; ADDD $DEAD,X
-      !byte $E3,$A9,$DE,$AD           ; ADDD $DEAD,Y
-      !byte $E3,$C9,$DE,$AD           ; ADDD $DEAD,U
-      !byte $E3,$E9,$DE,$AD           ; ADDD $DEAD,S
-      !byte $E3,$89,$10,$00           ; ADDD $1000,X
-      !byte $E3,$A9,$10,$00           ; ADDD $1000,Y
-      !byte $E3,$C9,$10,$00           ; ADDD $1000,U
-      !byte $E3,$E9,$10,$00           ; ADDD $1000,S
-      !byte $E3,$86                   ; ADDD A,X
-      !byte $E3,$A6                   ; ADDD A,Y
-      !byte $E3,$C6                   ; ADDD A,U
-      !byte $E3,$E6                   ; ADDD A,S
-      !byte $E3,$85                   ; ADDD B,X
-      !byte $E3,$A5                   ; ADDD B,Y
-      !byte $E3,$C5                   ; ADDD B,U
-      !byte $E3,$E5                   ; ADDD B,S
-      !byte $E3,$8B                   ; ADDD D,X
-      !byte $E3,$AB                   ; ADDD D,Y
-      !byte $E3,$CB                   ; ADDD D,U
-      !byte $E3,$EB                   ; ADDD D,S
-      !byte $E3,$80                   ; ADDD ,X+
-      !byte $E3,$A0                   ; ADDD ,Y+
-      !byte $E3,$C0                   ; ADDD ,U+
-      !byte $E3,$E0                   ; ADDD ,S+
-      !byte $E3,$81                   ; ADDD ,X++
-      !byte $E3,$A1                   ; ADDD ,Y++
-      !byte $E3,$C1                   ; ADDD ,U++
-      !byte $E3,$E1                   ; ADDD ,S++
-      !byte $E3,$82                   ; ADDD ,-X
-      !byte $E3,$A2                   ; ADDD ,-Y
-      !byte $E3,$C2                   ; ADDD ,-U
-      !byte $E3,$E2                   ; ADDD ,-S
-      !byte $E3,$83                   ; ADDD ,--X
-      !byte $E3,$A3                   ; ADDD ,--Y
-      !byte $E3,$C3                   ; ADDD ,--U
-      !byte $E3,$E3                   ; ADDD ,--S
-      !byte $E3,$8C,$FF               ; ADDD -$01,PC
-      !byte $E3,$AC,$FF               ; ADDD -$01,PC
-      !byte $E3,$CC,$FF               ; ADDD -$01,PC
-      !byte $E3,$EC,$FF               ; ADDD -$01,PC
-      !byte $E3,$8C,$60               ; ADDD $60,PC
-      !byte $E3,$AC,$60               ; ADDD $60,PC
-      !byte $E3,$CC,$60               ; ADDD $60,PC
-      !byte $E3,$EC,$60               ; ADDD $60,PC
-      !byte $E3,$8D,$DE,$AD           ; ADDD $DEAD,PC
-      !byte $E3,$AD,$DE,$AD           ; ADDD $DEAD,PC
-      !byte $E3,$CD,$DE,$AD           ; ADDD $DEAD,PC
-      !byte $E3,$ED,$DE,$AD           ; ADDD $DEAD,PC
-      !byte $E3,$8D,$10,$00           ; ADDD $1000,PC
-      !byte $E3,$AD,$10,$00           ; ADDD $1000,PC
-      !byte $E3,$CD,$10,$00           ; ADDD $1000,PC
-      !byte $E3,$ED,$10,$00           ; ADDD $1000,PC
-      !byte $E3,$94                   ; ADDD [,X]
-      !byte $E3,$B4                   ; ADDD [,Y]
-      !byte $E3,$D4                   ; ADDD [,U]
-      !byte $E3,$F4                   ; ADDD [,S]
-      !byte $E3,$98,$FF               ; ADDD [-$01,X]
-      !byte $E3,$B8,$FF               ; ADDD [-$01,Y]
-      !byte $E3,$D8,$FF               ; ADDD [-$01,U]
-      !byte $E3,$F8,$FF               ; ADDD [-$01,S]
-      !byte $E3,$98,$60               ; ADDD [$60,X]
-      !byte $E3,$B8,$60               ; ADDD [$60,Y]
-      !byte $E3,$D8,$60               ; ADDD [$60,U]
-      !byte $E3,$F8,$60               ; ADDD [$60,S]
-      !byte $E3,$99,$DE,$AD           ; ADDD [$DEAD,X]
-      !byte $E3,$B9,$DE,$AD           ; ADDD [$DEAD,Y]
-      !byte $E3,$D9,$DE,$AD           ; ADDD [$DEAD,U]
-      !byte $E3,$F9,$DE,$AD           ; ADDD [$DEAD,S]
-      !byte $E3,$99,$DE,$10           ; ADDD [$DE10,X]
-      !byte $E3,$B9,$DE,$10           ; ADDD [$DE10,Y]
-      !byte $E3,$D9,$DE,$10           ; ADDD [$DE10,U]
-      !byte $E3,$F9,$DE,$10           ; ADDD [$DE10,S]
-      !byte $E3,$96                   ; ADDD [A,X]
-      !byte $E3,$B6                   ; ADDD [A,Y]
-      !byte $E3,$D6                   ; ADDD [A,U]
-      !byte $E3,$F6                   ; ADDD [A,S]
-      !byte $E3,$95                   ; ADDD [B,X]
-      !byte $E3,$B5                   ; ADDD [B,Y]
-      !byte $E3,$D5                   ; ADDD [B,U]
-      !byte $E3,$F5                   ; ADDD [B,S]
-      !byte $E3,$9B                   ; ADDD [D,X]
-      !byte $E3,$BB                   ; ADDD [D,Y]
-      !byte $E3,$DB                   ; ADDD [D,U]
-      !byte $E3,$FB                   ; ADDD [D,S]
-      !byte $E3,$91                   ; ADDD [,X++]
-      !byte $E3,$B1                   ; ADDD [,Y++]
-      !byte $E3,$D1                   ; ADDD [,U++]
-      !byte $E3,$F1                   ; ADDD [,S++]
-      !byte $E3,$93                   ; ADDD [,--X]
-      !byte $E3,$B3                   ; ADDD [,--Y]
-      !byte $E3,$D3                   ; ADDD [,--U]
-      !byte $E3,$F3                   ; ADDD [,--S]
-      !byte $E3,$9C,$FF               ; ADDD [-$01,PC]
-      !byte $E3,$BC,$FF               ; ADDD [-$01,PC]
-      !byte $E3,$DC,$FF               ; ADDD [-$01,PC]
-      !byte $E3,$FC,$FF               ; ADDD [-$01,PC]
-      !byte $E3,$9C,$60               ; ADDD [$60,PC]
-      !byte $E3,$BC,$60               ; ADDD [$60,PC]
-      !byte $E3,$DC,$60               ; ADDD [$60,PC]
-      !byte $E3,$FC,$60               ; ADDD [$60,PC]
-      !byte $E3,$9D,$DE,$AD           ; ADDD [$DEAD,PC]
-      !byte $E3,$BD,$DE,$AD           ; ADDD [$DEAD,PC]
-      !byte $E3,$DD,$DE,$AD           ; ADDD [$DEAD,PC]
-      !byte $E3,$FD,$DE,$AD           ; ADDD [$DEAD,PC]
-      !byte $E3,$9D,$10,$00           ; ADDD [$1000,PC]
-      !byte $E3,$BD,$10,$00           ; ADDD [$1000,PC]
-      !byte $E3,$DD,$10,$00           ; ADDD [$1000,PC]
-      !byte $E3,$FD,$10,$00           ; ADDD [$1000,PC]
-      !byte $E3,$9F,$DE,$AD           ; ADDD [$DEAD]
-      !byte $E3,$BF,$DE,$AD           ; ADDD [$DEAD]
-      !byte $E3,$DF,$DE,$AD           ; ADDD [$DEAD]
-      !byte $E3,$FF,$DE,$AD           ; ADDD [$DEAD]
-      !byte $E4,$84                   ; ANDB ,X
-      !byte $E4,$A4                   ; ANDB ,Y
-      !byte $E4,$C4                   ; ANDB ,U
-      !byte $E4,$E4                   ; ANDB ,S
-      !byte $E4,$15                   ; ANDB -$0B,X
-      !byte $E4,$35                   ; ANDB -$0B,Y
-      !byte $E4,$55                   ; ANDB -$0B,U
-      !byte $E4,$75                   ; ANDB -$0B,S
-      !byte $E4,$0C                   ; ANDB $0C,X
-      !byte $E4,$2C                   ; ANDB $0C,Y
-      !byte $E4,$4C                   ; ANDB $0C,U
-      !byte $E4,$6C                   ; ANDB $0C,S
-      !byte $E4,$88,$FF               ; ANDB -$01,X
-      !byte $E4,$A8,$FF               ; ANDB -$01,Y
-      !byte $E4,$C8,$FF               ; ANDB -$01,U
-      !byte $E4,$E8,$FF               ; ANDB -$01,S
-      !byte $E4,$88,$60               ; ANDB $60,X
-      !byte $E4,$A8,$60               ; ANDB $60,Y
-      !byte $E4,$C8,$60               ; ANDB $60,U
-      !byte $E4,$E8,$60               ; ANDB $60,S
-      !byte $E4,$89,$DE,$AD           ; ANDB $DEAD,X
-      !byte $E4,$A9,$DE,$AD           ; ANDB $DEAD,Y
-      !byte $E4,$C9,$DE,$AD           ; ANDB $DEAD,U
-      !byte $E4,$E9,$DE,$AD           ; ANDB $DEAD,S
-      !byte $E4,$89,$10,$00           ; ANDB $1000,X
-      !byte $E4,$A9,$10,$00           ; ANDB $1000,Y
-      !byte $E4,$C9,$10,$00           ; ANDB $1000,U
-      !byte $E4,$E9,$10,$00           ; ANDB $1000,S
-      !byte $E4,$86                   ; ANDB A,X
-      !byte $E4,$A6                   ; ANDB A,Y
-      !byte $E4,$C6                   ; ANDB A,U
-      !byte $E4,$E6                   ; ANDB A,S
-      !byte $E4,$85                   ; ANDB B,X
-      !byte $E4,$A5                   ; ANDB B,Y
-      !byte $E4,$C5                   ; ANDB B,U
-      !byte $E4,$E5                   ; ANDB B,S
-      !byte $E4,$8B                   ; ANDB D,X
-      !byte $E4,$AB                   ; ANDB D,Y
-      !byte $E4,$CB                   ; ANDB D,U
-      !byte $E4,$EB                   ; ANDB D,S
-      !byte $E4,$80                   ; ANDB ,X+
-      !byte $E4,$A0                   ; ANDB ,Y+
-      !byte $E4,$C0                   ; ANDB ,U+
-      !byte $E4,$E0                   ; ANDB ,S+
-      !byte $E4,$81                   ; ANDB ,X++
-      !byte $E4,$A1                   ; ANDB ,Y++
-      !byte $E4,$C1                   ; ANDB ,U++
-      !byte $E4,$E1                   ; ANDB ,S++
-      !byte $E4,$82                   ; ANDB ,-X
-      !byte $E4,$A2                   ; ANDB ,-Y
-      !byte $E4,$C2                   ; ANDB ,-U
-      !byte $E4,$E2                   ; ANDB ,-S
-      !byte $E4,$83                   ; ANDB ,--X
-      !byte $E4,$A3                   ; ANDB ,--Y
-      !byte $E4,$C3                   ; ANDB ,--U
-      !byte $E4,$E3                   ; ANDB ,--S
-      !byte $E4,$8C,$FF               ; ANDB -$01,PC
-      !byte $E4,$AC,$FF               ; ANDB -$01,PC
-      !byte $E4,$CC,$FF               ; ANDB -$01,PC
-      !byte $E4,$EC,$FF               ; ANDB -$01,PC
-      !byte $E4,$8C,$60               ; ANDB $60,PC
-      !byte $E4,$AC,$60               ; ANDB $60,PC
-      !byte $E4,$CC,$60               ; ANDB $60,PC
-      !byte $E4,$EC,$60               ; ANDB $60,PC
-      !byte $E4,$8D,$DE,$AD           ; ANDB $DEAD,PC
-      !byte $E4,$AD,$DE,$AD           ; ANDB $DEAD,PC
-      !byte $E4,$CD,$DE,$AD           ; ANDB $DEAD,PC
-      !byte $E4,$ED,$DE,$AD           ; ANDB $DEAD,PC
-      !byte $E4,$8D,$10,$00           ; ANDB $1000,PC
-      !byte $E4,$AD,$10,$00           ; ANDB $1000,PC
-      !byte $E4,$CD,$10,$00           ; ANDB $1000,PC
-      !byte $E4,$ED,$10,$00           ; ANDB $1000,PC
-      !byte $E4,$94                   ; ANDB [,X]
-      !byte $E4,$B4                   ; ANDB [,Y]
-      !byte $E4,$D4                   ; ANDB [,U]
-      !byte $E4,$F4                   ; ANDB [,S]
-      !byte $E4,$98,$FF               ; ANDB [-$01,X]
-      !byte $E4,$B8,$FF               ; ANDB [-$01,Y]
-      !byte $E4,$D8,$FF               ; ANDB [-$01,U]
-      !byte $E4,$F8,$FF               ; ANDB [-$01,S]
-      !byte $E4,$98,$60               ; ANDB [$60,X]
-      !byte $E4,$B8,$60               ; ANDB [$60,Y]
-      !byte $E4,$D8,$60               ; ANDB [$60,U]
-      !byte $E4,$F8,$60               ; ANDB [$60,S]
-      !byte $E4,$99,$DE,$AD           ; ANDB [$DEAD,X]
-      !byte $E4,$B9,$DE,$AD           ; ANDB [$DEAD,Y]
-      !byte $E4,$D9,$DE,$AD           ; ANDB [$DEAD,U]
-      !byte $E4,$F9,$DE,$AD           ; ANDB [$DEAD,S]
-      !byte $E4,$99,$DE,$10           ; ANDB [$DE10,X]
-      !byte $E4,$B9,$DE,$10           ; ANDB [$DE10,Y]
-      !byte $E4,$D9,$DE,$10           ; ANDB [$DE10,U]
-      !byte $E4,$F9,$DE,$10           ; ANDB [$DE10,S]
-      !byte $E4,$96                   ; ANDB [A,X]
-      !byte $E4,$B6                   ; ANDB [A,Y]
-      !byte $E4,$D6                   ; ANDB [A,U]
-      !byte $E4,$F6                   ; ANDB [A,S]
-      !byte $E4,$95                   ; ANDB [B,X]
-      !byte $E4,$B5                   ; ANDB [B,Y]
-      !byte $E4,$D5                   ; ANDB [B,U]
-      !byte $E4,$F5                   ; ANDB [B,S]
-      !byte $E4,$9B                   ; ANDB [D,X]
-      !byte $E4,$BB                   ; ANDB [D,Y]
-      !byte $E4,$DB                   ; ANDB [D,U]
-      !byte $E4,$FB                   ; ANDB [D,S]
-      !byte $E4,$91                   ; ANDB [,X++]
-      !byte $E4,$B1                   ; ANDB [,Y++]
-      !byte $E4,$D1                   ; ANDB [,U++]
-      !byte $E4,$F1                   ; ANDB [,S++]
-      !byte $E4,$93                   ; ANDB [,--X]
-      !byte $E4,$B3                   ; ANDB [,--Y]
-      !byte $E4,$D3                   ; ANDB [,--U]
-      !byte $E4,$F3                   ; ANDB [,--S]
-      !byte $E4,$9C,$FF               ; ANDB [-$01,PC]
-      !byte $E4,$BC,$FF               ; ANDB [-$01,PC]
-      !byte $E4,$DC,$FF               ; ANDB [-$01,PC]
-      !byte $E4,$FC,$FF               ; ANDB [-$01,PC]
-      !byte $E4,$9C,$60               ; ANDB [$60,PC]
-      !byte $E4,$BC,$60               ; ANDB [$60,PC]
-      !byte $E4,$DC,$60               ; ANDB [$60,PC]
-      !byte $E4,$FC,$60               ; ANDB [$60,PC]
-      !byte $E4,$9D,$DE,$AD           ; ANDB [$DEAD,PC]
-      !byte $E4,$BD,$DE,$AD           ; ANDB [$DEAD,PC]
-      !byte $E4,$DD,$DE,$AD           ; ANDB [$DEAD,PC]
-      !byte $E4,$FD,$DE,$AD           ; ANDB [$DEAD,PC]
-      !byte $E4,$9D,$10,$00           ; ANDB [$1000,PC]
-      !byte $E4,$BD,$10,$00           ; ANDB [$1000,PC]
-      !byte $E4,$DD,$10,$00           ; ANDB [$1000,PC]
-      !byte $E4,$FD,$10,$00           ; ANDB [$1000,PC]
-      !byte $E4,$9F,$DE,$AD           ; ANDB [$DEAD]
-      !byte $E4,$BF,$DE,$AD           ; ANDB [$DEAD]
-      !byte $E4,$DF,$DE,$AD           ; ANDB [$DEAD]
-      !byte $E4,$FF,$DE,$AD           ; ANDB [$DEAD]
       !byte $E5,$84                   ; BITB ,X
       !byte $E5,$A4                   ; BITB ,Y
       !byte $E5,$C4                   ; BITB ,U
