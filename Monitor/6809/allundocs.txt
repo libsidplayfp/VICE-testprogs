@@ -11694,535 +11694,1399 @@
 !byte $A3,$B0                    ; SUBD [,Y+]
 !byte $A3,$D0                    ; SUBD [,U+]
 !byte $A3,$F0                    ; SUBD [,S+]
+!byte $A4,$87                    ; ANDA ,X
+!byte $A4,$A7                    ; ANDA ,Y
+!byte $A4,$C7                    ; ANDA ,U
+!byte $A4,$E7                    ; ANDA ,S
+!byte $A4,$8A                    ; ANDA ,PClo
+!byte $A4,$AA                    ; ANDA ,PClo
+!byte $A4,$CA                    ; ANDA ,PClo
+!byte $A4,$EA                    ; ANDA ,PClo
+!byte $A4,$8F,$DE,$AD            ; ANDA ,$DEAD
+!byte $A4,$AF,$DE,$AD            ; ANDA ,$DEAD
+!byte $A4,$CF,$DE,$AD            ; ANDA ,$DEAD
+!byte $A4,$EF,$DE,$AD            ; ANDA ,$DEAD
+!byte $A4,$97                    ; ANDA [,X]
+!byte $A4,$B7                    ; ANDA [,Y]
+!byte $A4,$D7                    ; ANDA [,U]
+!byte $A4,$F7                    ; ANDA [,S]
+!byte $A4,$97                    ; ANDA [,PClo]
+!byte $A4,$B7                    ; ANDA [,PClo]
+!byte $A4,$D7                    ; ANDA [,PClo]
+!byte $A4,$F7                    ; ANDA [,PClo]
+!byte $A4,$92                    ; ANDA [,-X]
+!byte $A4,$B2                    ; ANDA [,-Y]
+!byte $A4,$D2                    ; ANDA [,-U]
+!byte $A4,$F2                    ; ANDA [,-S]
+!byte $A4,$90                    ; ANDA [,X+]
+!byte $A4,$B0                    ; ANDA [,Y+]
+!byte $A4,$D0                    ; ANDA [,U+]
+!byte $A4,$F0                    ; ANDA [,S+]
+!byte $10,$A4,$84                ; ANDA ,X
+!byte $10,$A4,$A4                ; ANDA ,Y
+!byte $10,$A4,$C4                ; ANDA ,U
+!byte $10,$A4,$E4                ; ANDA ,S
+!byte $10,$A4,$15                ; ANDA -$0B,X
+!byte $10,$A4,$35                ; ANDA -$0B,Y
+!byte $10,$A4,$55                ; ANDA -$0B,U
+!byte $10,$A4,$75                ; ANDA -$0B,S
+!byte $10,$A4,$0C                ; ANDA $0C,X
+!byte $10,$A4,$2C                ; ANDA $0C,Y
+!byte $10,$A4,$4C                ; ANDA $0C,U
+!byte $10,$A4,$6C                ; ANDA $0C,S
+!byte $10,$A4,$88,$FF            ; ANDA -$01,X
+!byte $10,$A4,$A8,$FF            ; ANDA -$01,Y
+!byte $10,$A4,$C8,$FF            ; ANDA -$01,U
+!byte $10,$A4,$E8,$FF            ; ANDA -$01,S
+!byte $10,$A4,$88,$60            ; ANDA $60,X
+!byte $10,$A4,$A8,$60            ; ANDA $60,Y
+!byte $10,$A4,$C8,$60            ; ANDA $60,U
+!byte $10,$A4,$E8,$60            ; ANDA $60,S
+!byte $10,$A4,$89,$DE,$AD        ; ANDA $DEAD,X
+!byte $10,$A4,$A9,$DE,$AD        ; ANDA $DEAD,Y
+!byte $10,$A4,$C9,$DE,$AD        ; ANDA $DEAD,U
+!byte $10,$A4,$E9,$DE,$AD        ; ANDA $DEAD,S
+!byte $10,$A4,$89,$10,$00        ; ANDA $1000,X
+!byte $10,$A4,$A9,$10,$00        ; ANDA $1000,Y
+!byte $10,$A4,$C9,$10,$00        ; ANDA $1000,U
+!byte $10,$A4,$E9,$10,$00        ; ANDA $1000,S
+!byte $10,$A4,$86                ; ANDA A,X
+!byte $10,$A4,$A6                ; ANDA A,Y
+!byte $10,$A4,$C6                ; ANDA A,U
+!byte $10,$A4,$E6                ; ANDA A,S
+!byte $10,$A4,$85                ; ANDA B,X
+!byte $10,$A4,$A5                ; ANDA B,Y
+!byte $10,$A4,$C5                ; ANDA B,U
+!byte $10,$A4,$E5                ; ANDA B,S
+!byte $10,$A4,$87                ; ANDA ,X
+!byte $10,$A4,$A7                ; ANDA ,Y
+!byte $10,$A4,$C7                ; ANDA ,U
+!byte $10,$A4,$E7                ; ANDA ,S
+!byte $10,$A4,$8A                ; ANDA ,PClo
+!byte $10,$A4,$AA                ; ANDA ,PClo
+!byte $10,$A4,$CA                ; ANDA ,PClo
+!byte $10,$A4,$EA                ; ANDA ,PClo
+!byte $10,$A4,$8B                ; ANDA D,X
+!byte $10,$A4,$AB                ; ANDA D,Y
+!byte $10,$A4,$CB                ; ANDA D,U
+!byte $10,$A4,$EB                ; ANDA D,S
+!byte $10,$A4,$80                ; ANDA ,X+
+!byte $10,$A4,$A0                ; ANDA ,Y+
+!byte $10,$A4,$C0                ; ANDA ,U+
+!byte $10,$A4,$E0                ; ANDA ,S+
+!byte $10,$A4,$81                ; ANDA ,X++
+!byte $10,$A4,$A1                ; ANDA ,Y++
+!byte $10,$A4,$C1                ; ANDA ,U++
+!byte $10,$A4,$E1                ; ANDA ,S++
+!byte $10,$A4,$82                ; ANDA ,-X
+!byte $10,$A4,$A2                ; ANDA ,-Y
+!byte $10,$A4,$C2                ; ANDA ,-U
+!byte $10,$A4,$E2                ; ANDA ,-S
+!byte $10,$A4,$83                ; ANDA ,--X
+!byte $10,$A4,$A3                ; ANDA ,--Y
+!byte $10,$A4,$C3                ; ANDA ,--U
+!byte $10,$A4,$E3                ; ANDA ,--S
+!byte $10,$A4,$8C,$FF            ; ANDA -$01,PC
+!byte $10,$A4,$AC,$FF            ; ANDA -$01,PC
+!byte $10,$A4,$CC,$FF            ; ANDA -$01,PC
+!byte $10,$A4,$EC,$FF            ; ANDA -$01,PC
+!byte $10,$A4,$8C,$60            ; ANDA $60,PC
+!byte $10,$A4,$AC,$60            ; ANDA $60,PC
+!byte $10,$A4,$CC,$60            ; ANDA $60,PC
+!byte $10,$A4,$EC,$60            ; ANDA $60,PC
+!byte $10,$A4,$8D,$DE,$AD        ; ANDA $DEAD,PC
+!byte $10,$A4,$AD,$DE,$AD        ; ANDA $DEAD,PC
+!byte $10,$A4,$CD,$DE,$AD        ; ANDA $DEAD,PC
+!byte $10,$A4,$ED,$DE,$AD        ; ANDA $DEAD,PC
+!byte $10,$A4,$8D,$10,$00        ; ANDA $1000,PC
+!byte $10,$A4,$AD,$10,$00        ; ANDA $1000,PC
+!byte $10,$A4,$CD,$10,$00        ; ANDA $1000,PC
+!byte $10,$A4,$ED,$10,$00        ; ANDA $1000,PC
+!byte $10,$A4,$8F,$DE,$AD        ; ANDA ,$DEAD
+!byte $10,$A4,$AF,$DE,$AD        ; ANDA ,$DEAD
+!byte $10,$A4,$CF,$DE,$AD        ; ANDA ,$DEAD
+!byte $10,$A4,$EF,$DE,$AD        ; ANDA ,$DEAD
+!byte $10,$A4,$94                ; ANDA [,X]
+!byte $10,$A4,$B4                ; ANDA [,Y]
+!byte $10,$A4,$D4                ; ANDA [,U]
+!byte $10,$A4,$F4                ; ANDA [,S]
+!byte $10,$A4,$98,$FF            ; ANDA [-$01,X]
+!byte $10,$A4,$B8,$FF            ; ANDA [-$01,Y]
+!byte $10,$A4,$D8,$FF            ; ANDA [-$01,U]
+!byte $10,$A4,$F8,$FF            ; ANDA [-$01,S]
+!byte $10,$A4,$98,$60            ; ANDA [$60,X]
+!byte $10,$A4,$B8,$60            ; ANDA [$60,Y]
+!byte $10,$A4,$D8,$60            ; ANDA [$60,U]
+!byte $10,$A4,$F8,$60            ; ANDA [$60,S]
+!byte $10,$A4,$99,$DE,$AD        ; ANDA [$DEAD,X]
+!byte $10,$A4,$B9,$DE,$AD        ; ANDA [$DEAD,Y]
+!byte $10,$A4,$D9,$DE,$AD        ; ANDA [$DEAD,U]
+!byte $10,$A4,$F9,$DE,$AD        ; ANDA [$DEAD,S]
+!byte $10,$A4,$99,$DE,$10        ; ANDA [$DE10,X]
+!byte $10,$A4,$B9,$DE,$10        ; ANDA [$DE10,Y]
+!byte $10,$A4,$D9,$DE,$10        ; ANDA [$DE10,U]
+!byte $10,$A4,$F9,$DE,$10        ; ANDA [$DE10,S]
+!byte $10,$A4,$96                ; ANDA [A,X]
+!byte $10,$A4,$B6                ; ANDA [A,Y]
+!byte $10,$A4,$D6                ; ANDA [A,U]
+!byte $10,$A4,$F6                ; ANDA [A,S]
+!byte $10,$A4,$95                ; ANDA [B,X]
+!byte $10,$A4,$B5                ; ANDA [B,Y]
+!byte $10,$A4,$D5                ; ANDA [B,U]
+!byte $10,$A4,$F5                ; ANDA [B,S]
+!byte $10,$A4,$97                ; ANDA [,X]
+!byte $10,$A4,$B7                ; ANDA [,Y]
+!byte $10,$A4,$D7                ; ANDA [,U]
+!byte $10,$A4,$F7                ; ANDA [,S]
+!byte $10,$A4,$97                ; ANDA [,PClo]
+!byte $10,$A4,$B7                ; ANDA [,PClo]
+!byte $10,$A4,$D7                ; ANDA [,PClo]
+!byte $10,$A4,$F7                ; ANDA [,PClo]
+!byte $10,$A4,$9B                ; ANDA [D,X]
+!byte $10,$A4,$BB                ; ANDA [D,Y]
+!byte $10,$A4,$DB                ; ANDA [D,U]
+!byte $10,$A4,$FB                ; ANDA [D,S]
+!byte $10,$A4,$91                ; ANDA [,X++]
+!byte $10,$A4,$B1                ; ANDA [,Y++]
+!byte $10,$A4,$D1                ; ANDA [,U++]
+!byte $10,$A4,$F1                ; ANDA [,S++]
+!byte $10,$A4,$92                ; ANDA [,-X]
+!byte $10,$A4,$B2                ; ANDA [,-Y]
+!byte $10,$A4,$D2                ; ANDA [,-U]
+!byte $10,$A4,$F2                ; ANDA [,-S]
+!byte $10,$A4,$93                ; ANDA [,--X]
+!byte $10,$A4,$B3                ; ANDA [,--Y]
+!byte $10,$A4,$D3                ; ANDA [,--U]
+!byte $10,$A4,$F3                ; ANDA [,--S]
+!byte $10,$A4,$9C,$FF            ; ANDA [-$01,PC]
+!byte $10,$A4,$BC,$FF            ; ANDA [-$01,PC]
+!byte $10,$A4,$DC,$FF            ; ANDA [-$01,PC]
+!byte $10,$A4,$FC,$FF            ; ANDA [-$01,PC]
+!byte $10,$A4,$9C,$60            ; ANDA [$60,PC]
+!byte $10,$A4,$BC,$60            ; ANDA [$60,PC]
+!byte $10,$A4,$DC,$60            ; ANDA [$60,PC]
+!byte $10,$A4,$FC,$60            ; ANDA [$60,PC]
+!byte $10,$A4,$9D,$DE,$AD        ; ANDA [$DEAD,PC]
+!byte $10,$A4,$BD,$DE,$AD        ; ANDA [$DEAD,PC]
+!byte $10,$A4,$DD,$DE,$AD        ; ANDA [$DEAD,PC]
+!byte $10,$A4,$FD,$DE,$AD        ; ANDA [$DEAD,PC]
+!byte $10,$A4,$9D,$10,$00        ; ANDA [$1000,PC]
+!byte $10,$A4,$BD,$10,$00        ; ANDA [$1000,PC]
+!byte $10,$A4,$DD,$10,$00        ; ANDA [$1000,PC]
+!byte $10,$A4,$FD,$10,$00        ; ANDA [$1000,PC]
+!byte $10,$A4,$9F,$DE,$AD        ; ANDA [$DEAD]
+!byte $10,$A4,$BF,$DE,$AD        ; ANDA [$DEAD]
+!byte $10,$A4,$DF,$DE,$AD        ; ANDA [$DEAD]
+!byte $10,$A4,$FF,$DE,$AD        ; ANDA [$DEAD]
+!byte $10,$A4,$90                ; ANDA [,X+]
+!byte $10,$A4,$B0                ; ANDA [,Y+]
+!byte $10,$A4,$D0                ; ANDA [,U+]
+!byte $10,$A4,$F0                ; ANDA [,S+]
+!byte $11,$A4,$84                ; ANDA ,X
+!byte $11,$A4,$A4                ; ANDA ,Y
+!byte $11,$A4,$C4                ; ANDA ,U
+!byte $11,$A4,$E4                ; ANDA ,S
+!byte $11,$A4,$15                ; ANDA -$0B,X
+!byte $11,$A4,$35                ; ANDA -$0B,Y
+!byte $11,$A4,$55                ; ANDA -$0B,U
+!byte $11,$A4,$75                ; ANDA -$0B,S
+!byte $11,$A4,$0C                ; ANDA $0C,X
+!byte $11,$A4,$2C                ; ANDA $0C,Y
+!byte $11,$A4,$4C                ; ANDA $0C,U
+!byte $11,$A4,$6C                ; ANDA $0C,S
+!byte $11,$A4,$88,$FF            ; ANDA -$01,X
+!byte $11,$A4,$A8,$FF            ; ANDA -$01,Y
+!byte $11,$A4,$C8,$FF            ; ANDA -$01,U
+!byte $11,$A4,$E8,$FF            ; ANDA -$01,S
+!byte $11,$A4,$88,$60            ; ANDA $60,X
+!byte $11,$A4,$A8,$60            ; ANDA $60,Y
+!byte $11,$A4,$C8,$60            ; ANDA $60,U
+!byte $11,$A4,$E8,$60            ; ANDA $60,S
+!byte $11,$A4,$89,$DE,$AD        ; ANDA $DEAD,X
+!byte $11,$A4,$A9,$DE,$AD        ; ANDA $DEAD,Y
+!byte $11,$A4,$C9,$DE,$AD        ; ANDA $DEAD,U
+!byte $11,$A4,$E9,$DE,$AD        ; ANDA $DEAD,S
+!byte $11,$A4,$89,$10,$00        ; ANDA $1000,X
+!byte $11,$A4,$A9,$10,$00        ; ANDA $1000,Y
+!byte $11,$A4,$C9,$10,$00        ; ANDA $1000,U
+!byte $11,$A4,$E9,$10,$00        ; ANDA $1000,S
+!byte $11,$A4,$86                ; ANDA A,X
+!byte $11,$A4,$A6                ; ANDA A,Y
+!byte $11,$A4,$C6                ; ANDA A,U
+!byte $11,$A4,$E6                ; ANDA A,S
+!byte $11,$A4,$85                ; ANDA B,X
+!byte $11,$A4,$A5                ; ANDA B,Y
+!byte $11,$A4,$C5                ; ANDA B,U
+!byte $11,$A4,$E5                ; ANDA B,S
+!byte $11,$A4,$87                ; ANDA ,X
+!byte $11,$A4,$A7                ; ANDA ,Y
+!byte $11,$A4,$C7                ; ANDA ,U
+!byte $11,$A4,$E7                ; ANDA ,S
+!byte $11,$A4,$8A                ; ANDA ,PClo
+!byte $11,$A4,$AA                ; ANDA ,PClo
+!byte $11,$A4,$CA                ; ANDA ,PClo
+!byte $11,$A4,$EA                ; ANDA ,PClo
+!byte $11,$A4,$8B                ; ANDA D,X
+!byte $11,$A4,$AB                ; ANDA D,Y
+!byte $11,$A4,$CB                ; ANDA D,U
+!byte $11,$A4,$EB                ; ANDA D,S
+!byte $11,$A4,$80                ; ANDA ,X+
+!byte $11,$A4,$A0                ; ANDA ,Y+
+!byte $11,$A4,$C0                ; ANDA ,U+
+!byte $11,$A4,$E0                ; ANDA ,S+
+!byte $11,$A4,$81                ; ANDA ,X++
+!byte $11,$A4,$A1                ; ANDA ,Y++
+!byte $11,$A4,$C1                ; ANDA ,U++
+!byte $11,$A4,$E1                ; ANDA ,S++
+!byte $11,$A4,$82                ; ANDA ,-X
+!byte $11,$A4,$A2                ; ANDA ,-Y
+!byte $11,$A4,$C2                ; ANDA ,-U
+!byte $11,$A4,$E2                ; ANDA ,-S
+!byte $11,$A4,$83                ; ANDA ,--X
+!byte $11,$A4,$A3                ; ANDA ,--Y
+!byte $11,$A4,$C3                ; ANDA ,--U
+!byte $11,$A4,$E3                ; ANDA ,--S
+!byte $11,$A4,$8C,$FF            ; ANDA -$01,PC
+!byte $11,$A4,$AC,$FF            ; ANDA -$01,PC
+!byte $11,$A4,$CC,$FF            ; ANDA -$01,PC
+!byte $11,$A4,$EC,$FF            ; ANDA -$01,PC
+!byte $11,$A4,$8C,$60            ; ANDA $60,PC
+!byte $11,$A4,$AC,$60            ; ANDA $60,PC
+!byte $11,$A4,$CC,$60            ; ANDA $60,PC
+!byte $11,$A4,$EC,$60            ; ANDA $60,PC
+!byte $11,$A4,$8D,$DE,$AD        ; ANDA $DEAD,PC
+!byte $11,$A4,$AD,$DE,$AD        ; ANDA $DEAD,PC
+!byte $11,$A4,$CD,$DE,$AD        ; ANDA $DEAD,PC
+!byte $11,$A4,$ED,$DE,$AD        ; ANDA $DEAD,PC
+!byte $11,$A4,$8D,$10,$00        ; ANDA $1000,PC
+!byte $11,$A4,$AD,$10,$00        ; ANDA $1000,PC
+!byte $11,$A4,$CD,$10,$00        ; ANDA $1000,PC
+!byte $11,$A4,$ED,$10,$00        ; ANDA $1000,PC
+!byte $11,$A4,$8F,$DE,$AD        ; ANDA ,$DEAD
+!byte $11,$A4,$AF,$DE,$AD        ; ANDA ,$DEAD
+!byte $11,$A4,$CF,$DE,$AD        ; ANDA ,$DEAD
+!byte $11,$A4,$EF,$DE,$AD        ; ANDA ,$DEAD
+!byte $11,$A4,$94                ; ANDA [,X]
+!byte $11,$A4,$B4                ; ANDA [,Y]
+!byte $11,$A4,$D4                ; ANDA [,U]
+!byte $11,$A4,$F4                ; ANDA [,S]
+!byte $11,$A4,$98,$FF            ; ANDA [-$01,X]
+!byte $11,$A4,$B8,$FF            ; ANDA [-$01,Y]
+!byte $11,$A4,$D8,$FF            ; ANDA [-$01,U]
+!byte $11,$A4,$F8,$FF            ; ANDA [-$01,S]
+!byte $11,$A4,$98,$60            ; ANDA [$60,X]
+!byte $11,$A4,$B8,$60            ; ANDA [$60,Y]
+!byte $11,$A4,$D8,$60            ; ANDA [$60,U]
+!byte $11,$A4,$F8,$60            ; ANDA [$60,S]
+!byte $11,$A4,$99,$DE,$AD        ; ANDA [$DEAD,X]
+!byte $11,$A4,$B9,$DE,$AD        ; ANDA [$DEAD,Y]
+!byte $11,$A4,$D9,$DE,$AD        ; ANDA [$DEAD,U]
+!byte $11,$A4,$F9,$DE,$AD        ; ANDA [$DEAD,S]
+!byte $11,$A4,$99,$DE,$10        ; ANDA [$DE10,X]
+!byte $11,$A4,$B9,$DE,$10        ; ANDA [$DE10,Y]
+!byte $11,$A4,$D9,$DE,$10        ; ANDA [$DE10,U]
+!byte $11,$A4,$F9,$DE,$10        ; ANDA [$DE10,S]
+!byte $11,$A4,$96                ; ANDA [A,X]
+!byte $11,$A4,$B6                ; ANDA [A,Y]
+!byte $11,$A4,$D6                ; ANDA [A,U]
+!byte $11,$A4,$F6                ; ANDA [A,S]
+!byte $11,$A4,$95                ; ANDA [B,X]
+!byte $11,$A4,$B5                ; ANDA [B,Y]
+!byte $11,$A4,$D5                ; ANDA [B,U]
+!byte $11,$A4,$F5                ; ANDA [B,S]
+!byte $11,$A4,$97                ; ANDA [,X]
+!byte $11,$A4,$B7                ; ANDA [,Y]
+!byte $11,$A4,$D7                ; ANDA [,U]
+!byte $11,$A4,$F7                ; ANDA [,S]
+!byte $11,$A4,$97                ; ANDA [,PClo]
+!byte $11,$A4,$B7                ; ANDA [,PClo]
+!byte $11,$A4,$D7                ; ANDA [,PClo]
+!byte $11,$A4,$F7                ; ANDA [,PClo]
+!byte $11,$A4,$9B                ; ANDA [D,X]
+!byte $11,$A4,$BB                ; ANDA [D,Y]
+!byte $11,$A4,$DB                ; ANDA [D,U]
+!byte $11,$A4,$FB                ; ANDA [D,S]
+!byte $11,$A4,$91                ; ANDA [,X++]
+!byte $11,$A4,$B1                ; ANDA [,Y++]
+!byte $11,$A4,$D1                ; ANDA [,U++]
+!byte $11,$A4,$F1                ; ANDA [,S++]
+!byte $11,$A4,$92                ; ANDA [,-X]
+!byte $11,$A4,$B2                ; ANDA [,-Y]
+!byte $11,$A4,$D2                ; ANDA [,-U]
+!byte $11,$A4,$F2                ; ANDA [,-S]
+!byte $11,$A4,$93                ; ANDA [,--X]
+!byte $11,$A4,$B3                ; ANDA [,--Y]
+!byte $11,$A4,$D3                ; ANDA [,--U]
+!byte $11,$A4,$F3                ; ANDA [,--S]
+!byte $11,$A4,$9C,$FF            ; ANDA [-$01,PC]
+!byte $11,$A4,$BC,$FF            ; ANDA [-$01,PC]
+!byte $11,$A4,$DC,$FF            ; ANDA [-$01,PC]
+!byte $11,$A4,$FC,$FF            ; ANDA [-$01,PC]
+!byte $11,$A4,$9C,$60            ; ANDA [$60,PC]
+!byte $11,$A4,$BC,$60            ; ANDA [$60,PC]
+!byte $11,$A4,$DC,$60            ; ANDA [$60,PC]
+!byte $11,$A4,$FC,$60            ; ANDA [$60,PC]
+!byte $11,$A4,$9D,$DE,$AD        ; ANDA [$DEAD,PC]
+!byte $11,$A4,$BD,$DE,$AD        ; ANDA [$DEAD,PC]
+!byte $11,$A4,$DD,$DE,$AD        ; ANDA [$DEAD,PC]
+!byte $11,$A4,$FD,$DE,$AD        ; ANDA [$DEAD,PC]
+!byte $11,$A4,$9D,$10,$00        ; ANDA [$1000,PC]
+!byte $11,$A4,$BD,$10,$00        ; ANDA [$1000,PC]
+!byte $11,$A4,$DD,$10,$00        ; ANDA [$1000,PC]
+!byte $11,$A4,$FD,$10,$00        ; ANDA [$1000,PC]
+!byte $11,$A4,$9F,$DE,$AD        ; ANDA [$DEAD]
+!byte $11,$A4,$BF,$DE,$AD        ; ANDA [$DEAD]
+!byte $11,$A4,$DF,$DE,$AD        ; ANDA [$DEAD]
+!byte $11,$A4,$FF,$DE,$AD        ; ANDA [$DEAD]
+!byte $11,$A4,$90                ; ANDA [,X+]
+!byte $11,$A4,$B0                ; ANDA [,Y+]
+!byte $11,$A4,$D0                ; ANDA [,U+]
+!byte $11,$A4,$F0                ; ANDA [,S+]
+!byte $A5,$87                    ; BITA ,X
+!byte $A5,$A7                    ; BITA ,Y
+!byte $A5,$C7                    ; BITA ,U
+!byte $A5,$E7                    ; BITA ,S
+!byte $A5,$8A                    ; BITA ,PClo
+!byte $A5,$AA                    ; BITA ,PClo
+!byte $A5,$CA                    ; BITA ,PClo
+!byte $A5,$EA                    ; BITA ,PClo
+!byte $A5,$8F,$DE,$AD            ; BITA ,$DEAD
+!byte $A5,$AF,$DE,$AD            ; BITA ,$DEAD
+!byte $A5,$CF,$DE,$AD            ; BITA ,$DEAD
+!byte $A5,$EF,$DE,$AD            ; BITA ,$DEAD
+!byte $A5,$97                    ; BITA [,X]
+!byte $A5,$B7                    ; BITA [,Y]
+!byte $A5,$D7                    ; BITA [,U]
+!byte $A5,$F7                    ; BITA [,S]
+!byte $A5,$9A                    ; BITA [,PClo]
+!byte $A5,$BA                    ; BITA [,PClo]
+!byte $A5,$DA                    ; BITA [,PClo]
+!byte $A5,$FA                    ; BITA [,PClo]
+!byte $A5,$92                    ; BITA [,-X]
+!byte $A5,$B2                    ; BITA [,-Y]
+!byte $A5,$D2                    ; BITA [,-U]
+!byte $A5,$F2                    ; BITA [,-S]
+!byte $A5,$90                    ; BITA [,X+]
+!byte $A5,$B0                    ; BITA [,Y+]
+!byte $A5,$D0                    ; BITA [,U+]
+!byte $A5,$F0                    ; BITA [,S+]
+!byte $10,$A5,$84                ; BITA ,X
+!byte $10,$A5,$A4                ; BITA ,Y
+!byte $10,$A5,$C4                ; BITA ,U
+!byte $10,$A5,$E4                ; BITA ,S
+!byte $10,$A5,$15                ; BITA -$0B,X
+!byte $10,$A5,$35                ; BITA -$0B,Y
+!byte $10,$A5,$55                ; BITA -$0B,U
+!byte $10,$A5,$75                ; BITA -$0B,S
+!byte $10,$A5,$0C                ; BITA $0C,X
+!byte $10,$A5,$2C                ; BITA $0C,Y
+!byte $10,$A5,$4C                ; BITA $0C,U
+!byte $10,$A5,$6C                ; BITA $0C,S
+!byte $10,$A5,$88,$FF            ; BITA -$01,X
+!byte $10,$A5,$A8,$FF            ; BITA -$01,Y
+!byte $10,$A5,$C8,$FF            ; BITA -$01,U
+!byte $10,$A5,$E8,$FF            ; BITA -$01,S
+!byte $10,$A5,$88,$60            ; BITA $60,X
+!byte $10,$A5,$A8,$60            ; BITA $60,Y
+!byte $10,$A5,$C8,$60            ; BITA $60,U
+!byte $10,$A5,$E8,$60            ; BITA $60,S
+!byte $10,$A5,$89,$DE,$AD        ; BITA $DEAD,X
+!byte $10,$A5,$A9,$DE,$AD        ; BITA $DEAD,Y
+!byte $10,$A5,$C9,$DE,$AD        ; BITA $DEAD,U
+!byte $10,$A5,$E9,$DE,$AD        ; BITA $DEAD,S
+!byte $10,$A5,$89,$10,$00        ; BITA $1000,X
+!byte $10,$A5,$A9,$10,$00        ; BITA $1000,Y
+!byte $10,$A5,$C9,$10,$00        ; BITA $1000,U
+!byte $10,$A5,$E9,$10,$00        ; BITA $1000,S
+!byte $10,$A5,$86                ; BITA A,X
+!byte $10,$A5,$A6                ; BITA A,Y
+!byte $10,$A5,$C6                ; BITA A,U
+!byte $10,$A5,$E6                ; BITA A,S
+!byte $10,$A5,$85                ; BITA B,X
+!byte $10,$A5,$A5                ; BITA B,Y
+!byte $10,$A5,$C5                ; BITA B,U
+!byte $10,$A5,$E5                ; BITA B,S
+!byte $10,$A5,$87                ; BITA ,X
+!byte $10,$A5,$A7                ; BITA ,Y
+!byte $10,$A5,$C7                ; BITA ,U
+!byte $10,$A5,$E7                ; BITA ,S
+!byte $10,$A5,$8A                ; BITA ,PClo
+!byte $10,$A5,$AA                ; BITA ,PClo
+!byte $10,$A5,$CA                ; BITA ,PClo
+!byte $10,$A5,$EA                ; BITA ,PClo
+!byte $10,$A5,$8B                ; BITA D,X
+!byte $10,$A5,$AB                ; BITA D,Y
+!byte $10,$A5,$CB                ; BITA D,U
+!byte $10,$A5,$EB                ; BITA D,S
+!byte $10,$A5,$80                ; BITA ,X+
+!byte $10,$A5,$A0                ; BITA ,Y+
+!byte $10,$A5,$C0                ; BITA ,U+
+!byte $10,$A5,$E0                ; BITA ,S+
+!byte $10,$A5,$81                ; BITA ,X++
+!byte $10,$A5,$A1                ; BITA ,Y++
+!byte $10,$A5,$C1                ; BITA ,U++
+!byte $10,$A5,$E1                ; BITA ,S++
+!byte $10,$A5,$82                ; BITA ,-X
+!byte $10,$A5,$A2                ; BITA ,-Y
+!byte $10,$A5,$C2                ; BITA ,-U
+!byte $10,$A5,$E2                ; BITA ,-S
+!byte $10,$A5,$83                ; BITA ,--X
+!byte $10,$A5,$A3                ; BITA ,--Y
+!byte $10,$A5,$C3                ; BITA ,--U
+!byte $10,$A5,$E3                ; BITA ,--S
+!byte $10,$A5,$8C,$FF            ; BITA -$01,PC
+!byte $10,$A5,$AC,$FF            ; BITA -$01,PC
+!byte $10,$A5,$CC,$FF            ; BITA -$01,PC
+!byte $10,$A5,$EC,$FF            ; BITA -$01,PC
+!byte $10,$A5,$8C,$60            ; BITA $60,PC
+!byte $10,$A5,$AC,$60            ; BITA $60,PC
+!byte $10,$A5,$CC,$60            ; BITA $60,PC
+!byte $10,$A5,$EC,$60            ; BITA $60,PC
+!byte $10,$A5,$8D,$DE,$AD        ; BITA $DEAD,PC
+!byte $10,$A5,$AD,$DE,$AD        ; BITA $DEAD,PC
+!byte $10,$A5,$CD,$DE,$AD        ; BITA $DEAD,PC
+!byte $10,$A5,$ED,$DE,$AD        ; BITA $DEAD,PC
+!byte $10,$A5,$8D,$10,$00        ; BITA $1000,PC
+!byte $10,$A5,$AD,$10,$00        ; BITA $1000,PC
+!byte $10,$A5,$CD,$10,$00        ; BITA $1000,PC
+!byte $10,$A5,$ED,$10,$00        ; BITA $1000,PC
+!byte $10,$A5,$8F,$DE,$AD        ; BITA ,$DEAD
+!byte $10,$A5,$AF,$DE,$AD        ; BITA ,$DEAD
+!byte $10,$A5,$CF,$DE,$AD        ; BITA ,$DEAD
+!byte $10,$A5,$EF,$DE,$AD        ; BITA ,$DEAD
+!byte $10,$A5,$94                ; BITA [,X]
+!byte $10,$A5,$B4                ; BITA [,Y]
+!byte $10,$A5,$D4                ; BITA [,U]
+!byte $10,$A5,$F4                ; BITA [,S]
+!byte $10,$A5,$98,$FF            ; BITA [-$01,X]
+!byte $10,$A5,$B8,$FF            ; BITA [-$01,Y]
+!byte $10,$A5,$D8,$FF            ; BITA [-$01,U]
+!byte $10,$A5,$F8,$FF            ; BITA [-$01,S]
+!byte $10,$A5,$98,$60            ; BITA [$60,X]
+!byte $10,$A5,$B8,$60            ; BITA [$60,Y]
+!byte $10,$A5,$D8,$60            ; BITA [$60,U]
+!byte $10,$A5,$F8,$60            ; BITA [$60,S]
+!byte $10,$A5,$99,$DE,$AD        ; BITA [$DEAD,X]
+!byte $10,$A5,$B9,$DE,$AD        ; BITA [$DEAD,Y]
+!byte $10,$A5,$D9,$DE,$AD        ; BITA [$DEAD,U]
+!byte $10,$A5,$F9,$DE,$AD        ; BITA [$DEAD,S]
+!byte $10,$A5,$99,$DE,$10        ; BITA [$DE10,X]
+!byte $10,$A5,$B9,$DE,$10        ; BITA [$DE10,Y]
+!byte $10,$A5,$D9,$DE,$10        ; BITA [$DE10,U]
+!byte $10,$A5,$F9,$DE,$10        ; BITA [$DE10,S]
+!byte $10,$A5,$96                ; BITA [A,X]
+!byte $10,$A5,$B6                ; BITA [A,Y]
+!byte $10,$A5,$D6                ; BITA [A,U]
+!byte $10,$A5,$F6                ; BITA [A,S]
+!byte $10,$A5,$95                ; BITA [B,X]
+!byte $10,$A5,$B5                ; BITA [B,Y]
+!byte $10,$A5,$D5                ; BITA [B,U]
+!byte $10,$A5,$F5                ; BITA [B,S]
+!byte $10,$A5,$97                ; BITA [,X]
+!byte $10,$A5,$B7                ; BITA [,Y]
+!byte $10,$A5,$D7                ; BITA [,U]
+!byte $10,$A5,$F7                ; BITA [,S]
+!byte $10,$A5,$9A                ; BITA [,PClo]
+!byte $10,$A5,$BA                ; BITA [,PClo]
+!byte $10,$A5,$DA                ; BITA [,PClo]
+!byte $10,$A5,$FA                ; BITA [,PClo]
+!byte $10,$A5,$9B                ; BITA [D,X]
+!byte $10,$A5,$BB                ; BITA [D,Y]
+!byte $10,$A5,$DB                ; BITA [D,U]
+!byte $10,$A5,$FB                ; BITA [D,S]
+!byte $10,$A5,$91                ; BITA [,X++]
+!byte $10,$A5,$B1                ; BITA [,Y++]
+!byte $10,$A5,$D1                ; BITA [,U++]
+!byte $10,$A5,$F1                ; BITA [,S++]
+!byte $10,$A5,$92                ; BITA [,-X]
+!byte $10,$A5,$B2                ; BITA [,-Y]
+!byte $10,$A5,$D2                ; BITA [,-U]
+!byte $10,$A5,$F2                ; BITA [,-S]
+!byte $10,$A5,$93                ; BITA [,--X]
+!byte $10,$A5,$B3                ; BITA [,--Y]
+!byte $10,$A5,$D3                ; BITA [,--U]
+!byte $10,$A5,$F3                ; BITA [,--S]
+!byte $10,$A5,$9C,$FF            ; BITA [-$01,PC]
+!byte $10,$A5,$BC,$FF            ; BITA [-$01,PC]
+!byte $10,$A5,$DC,$FF            ; BITA [-$01,PC]
+!byte $10,$A5,$FC,$FF            ; BITA [-$01,PC]
+!byte $10,$A5,$9C,$60            ; BITA [$60,PC]
+!byte $10,$A5,$BC,$60            ; BITA [$60,PC]
+!byte $10,$A5,$DC,$60            ; BITA [$60,PC]
+!byte $10,$A5,$FC,$60            ; BITA [$60,PC]
+!byte $10,$A5,$9D,$DE,$AD        ; BITA [$DEAD,PC]
+!byte $10,$A5,$BD,$DE,$AD        ; BITA [$DEAD,PC]
+!byte $10,$A5,$DD,$DE,$AD        ; BITA [$DEAD,PC]
+!byte $10,$A5,$FD,$DE,$AD        ; BITA [$DEAD,PC]
+!byte $10,$A5,$9D,$10,$00        ; BITA [$1000,PC]
+!byte $10,$A5,$BD,$10,$00        ; BITA [$1000,PC]
+!byte $10,$A5,$DD,$10,$00        ; BITA [$1000,PC]
+!byte $10,$A5,$FD,$10,$00        ; BITA [$1000,PC]
+!byte $10,$A5,$9F,$DE,$AD        ; BITA [$DEAD]
+!byte $10,$A5,$BF,$DE,$AD        ; BITA [$DEAD]
+!byte $10,$A5,$DF,$DE,$AD        ; BITA [$DEAD]
+!byte $10,$A5,$FF,$DE,$AD        ; BITA [$DEAD]
+!byte $10,$A5,$90                ; BITA [,X+]
+!byte $10,$A5,$B0                ; BITA [,Y+]
+!byte $10,$A5,$D0                ; BITA [,U+]
+!byte $10,$A5,$F0                ; BITA [,S+]
+!byte $11,$A5,$84                ; BITA ,X
+!byte $11,$A5,$A4                ; BITA ,Y
+!byte $11,$A5,$C4                ; BITA ,U
+!byte $11,$A5,$E4                ; BITA ,S
+!byte $11,$A5,$15                ; BITA -$0B,X
+!byte $11,$A5,$35                ; BITA -$0B,Y
+!byte $11,$A5,$55                ; BITA -$0B,U
+!byte $11,$A5,$75                ; BITA -$0B,S
+!byte $11,$A5,$0C                ; BITA $0C,X
+!byte $11,$A5,$2C                ; BITA $0C,Y
+!byte $11,$A5,$4C                ; BITA $0C,U
+!byte $11,$A5,$6C                ; BITA $0C,S
+!byte $11,$A5,$88,$FF            ; BITA -$01,X
+!byte $11,$A5,$A8,$FF            ; BITA -$01,Y
+!byte $11,$A5,$C8,$FF            ; BITA -$01,U
+!byte $11,$A5,$E8,$FF            ; BITA -$01,S
+!byte $11,$A5,$88,$60            ; BITA $60,X
+!byte $11,$A5,$A8,$60            ; BITA $60,Y
+!byte $11,$A5,$C8,$60            ; BITA $60,U
+!byte $11,$A5,$E8,$60            ; BITA $60,S
+!byte $11,$A5,$89,$DE,$AD        ; BITA $DEAD,X
+!byte $11,$A5,$A9,$DE,$AD        ; BITA $DEAD,Y
+!byte $11,$A5,$C9,$DE,$AD        ; BITA $DEAD,U
+!byte $11,$A5,$E9,$DE,$AD        ; BITA $DEAD,S
+!byte $11,$A5,$89,$10,$00        ; BITA $1000,X
+!byte $11,$A5,$A9,$10,$00        ; BITA $1000,Y
+!byte $11,$A5,$C9,$10,$00        ; BITA $1000,U
+!byte $11,$A5,$E9,$10,$00        ; BITA $1000,S
+!byte $11,$A5,$86                ; BITA A,X
+!byte $11,$A5,$A6                ; BITA A,Y
+!byte $11,$A5,$C6                ; BITA A,U
+!byte $11,$A5,$E6                ; BITA A,S
+!byte $11,$A5,$85                ; BITA B,X
+!byte $11,$A5,$A5                ; BITA B,Y
+!byte $11,$A5,$C5                ; BITA B,U
+!byte $11,$A5,$E5                ; BITA B,S
+!byte $11,$A5,$87                ; BITA ,X
+!byte $11,$A5,$A7                ; BITA ,Y
+!byte $11,$A5,$C7                ; BITA ,U
+!byte $11,$A5,$E7                ; BITA ,S
+!byte $11,$A5,$8A                ; BITA ,PClo
+!byte $11,$A5,$AA                ; BITA ,PClo
+!byte $11,$A5,$CA                ; BITA ,PClo
+!byte $11,$A5,$EA                ; BITA ,PClo
+!byte $11,$A5,$8B                ; BITA D,X
+!byte $11,$A5,$AB                ; BITA D,Y
+!byte $11,$A5,$CB                ; BITA D,U
+!byte $11,$A5,$EB                ; BITA D,S
+!byte $11,$A5,$80                ; BITA ,X+
+!byte $11,$A5,$A0                ; BITA ,Y+
+!byte $11,$A5,$C0                ; BITA ,U+
+!byte $11,$A5,$E0                ; BITA ,S+
+!byte $11,$A5,$81                ; BITA ,X++
+!byte $11,$A5,$A1                ; BITA ,Y++
+!byte $11,$A5,$C1                ; BITA ,U++
+!byte $11,$A5,$E1                ; BITA ,S++
+!byte $11,$A5,$82                ; BITA ,-X
+!byte $11,$A5,$A2                ; BITA ,-Y
+!byte $11,$A5,$C2                ; BITA ,-U
+!byte $11,$A5,$E2                ; BITA ,-S
+!byte $11,$A5,$83                ; BITA ,--X
+!byte $11,$A5,$A3                ; BITA ,--Y
+!byte $11,$A5,$C3                ; BITA ,--U
+!byte $11,$A5,$E3                ; BITA ,--S
+!byte $11,$A5,$8C,$FF            ; BITA -$01,PC
+!byte $11,$A5,$AC,$FF            ; BITA -$01,PC
+!byte $11,$A5,$CC,$FF            ; BITA -$01,PC
+!byte $11,$A5,$EC,$FF            ; BITA -$01,PC
+!byte $11,$A5,$8C,$60            ; BITA $60,PC
+!byte $11,$A5,$AC,$60            ; BITA $60,PC
+!byte $11,$A5,$CC,$60            ; BITA $60,PC
+!byte $11,$A5,$EC,$60            ; BITA $60,PC
+!byte $11,$A5,$8D,$DE,$AD        ; BITA $DEAD,PC
+!byte $11,$A5,$AD,$DE,$AD        ; BITA $DEAD,PC
+!byte $11,$A5,$CD,$DE,$AD        ; BITA $DEAD,PC
+!byte $11,$A5,$ED,$DE,$AD        ; BITA $DEAD,PC
+!byte $11,$A5,$8D,$10,$00        ; BITA $1000,PC
+!byte $11,$A5,$AD,$10,$00        ; BITA $1000,PC
+!byte $11,$A5,$CD,$10,$00        ; BITA $1000,PC
+!byte $11,$A5,$ED,$10,$00        ; BITA $1000,PC
+!byte $11,$A5,$8F,$DE,$AD        ; BITA ,$DEAD
+!byte $11,$A5,$AF,$DE,$AD        ; BITA ,$DEAD
+!byte $11,$A5,$CF,$DE,$AD        ; BITA ,$DEAD
+!byte $11,$A5,$EF,$DE,$AD        ; BITA ,$DEAD
+!byte $11,$A5,$94                ; BITA [,X]
+!byte $11,$A5,$B4                ; BITA [,Y]
+!byte $11,$A5,$D4                ; BITA [,U]
+!byte $11,$A5,$F4                ; BITA [,S]
+!byte $11,$A5,$98,$FF            ; BITA [-$01,X]
+!byte $11,$A5,$B8,$FF            ; BITA [-$01,Y]
+!byte $11,$A5,$D8,$FF            ; BITA [-$01,U]
+!byte $11,$A5,$F8,$FF            ; BITA [-$01,S]
+!byte $11,$A5,$98,$60            ; BITA [$60,X]
+!byte $11,$A5,$B8,$60            ; BITA [$60,Y]
+!byte $11,$A5,$D8,$60            ; BITA [$60,U]
+!byte $11,$A5,$F8,$60            ; BITA [$60,S]
+!byte $11,$A5,$99,$DE,$AD        ; BITA [$DEAD,X]
+!byte $11,$A5,$B9,$DE,$AD        ; BITA [$DEAD,Y]
+!byte $11,$A5,$D9,$DE,$AD        ; BITA [$DEAD,U]
+!byte $11,$A5,$F9,$DE,$AD        ; BITA [$DEAD,S]
+!byte $11,$A5,$99,$DE,$10        ; BITA [$DE10,X]
+!byte $11,$A5,$B9,$DE,$10        ; BITA [$DE10,Y]
+!byte $11,$A5,$D9,$DE,$10        ; BITA [$DE10,U]
+!byte $11,$A5,$F9,$DE,$10        ; BITA [$DE10,S]
+!byte $11,$A5,$96                ; BITA [A,X]
+!byte $11,$A5,$B6                ; BITA [A,Y]
+!byte $11,$A5,$D6                ; BITA [A,U]
+!byte $11,$A5,$F6                ; BITA [A,S]
+!byte $11,$A5,$95                ; BITA [B,X]
+!byte $11,$A5,$B5                ; BITA [B,Y]
+!byte $11,$A5,$D5                ; BITA [B,U]
+!byte $11,$A5,$F5                ; BITA [B,S]
+!byte $11,$A5,$97                ; BITA [,X]
+!byte $11,$A5,$B7                ; BITA [,Y]
+!byte $11,$A5,$D7                ; BITA [,U]
+!byte $11,$A5,$F7                ; BITA [,S]
+!byte $11,$A5,$9A                ; BITA [,PClo]
+!byte $11,$A5,$BA                ; BITA [,PClo]
+!byte $11,$A5,$DA                ; BITA [,PClo]
+!byte $11,$A5,$FA                ; BITA [,PClo]
+!byte $11,$A5,$9B                ; BITA [D,X]
+!byte $11,$A5,$BB                ; BITA [D,Y]
+!byte $11,$A5,$DB                ; BITA [D,U]
+!byte $11,$A5,$FB                ; BITA [D,S]
+!byte $11,$A5,$91                ; BITA [,X++]
+!byte $11,$A5,$B1                ; BITA [,Y++]
+!byte $11,$A5,$D1                ; BITA [,U++]
+!byte $11,$A5,$F1                ; BITA [,S++]
+!byte $11,$A5,$92                ; BITA [,-X]
+!byte $11,$A5,$B2                ; BITA [,-Y]
+!byte $11,$A5,$D2                ; BITA [,-U]
+!byte $11,$A5,$F2                ; BITA [,-S]
+!byte $11,$A5,$93                ; BITA [,--X]
+!byte $11,$A5,$B3                ; BITA [,--Y]
+!byte $11,$A5,$D3                ; BITA [,--U]
+!byte $11,$A5,$F3                ; BITA [,--S]
+!byte $11,$A5,$9C,$FF            ; BITA [-$01,PC]
+!byte $11,$A5,$BC,$FF            ; BITA [-$01,PC]
+!byte $11,$A5,$DC,$FF            ; BITA [-$01,PC]
+!byte $11,$A5,$FC,$FF            ; BITA [-$01,PC]
+!byte $11,$A5,$9C,$60            ; BITA [$60,PC]
+!byte $11,$A5,$BC,$60            ; BITA [$60,PC]
+!byte $11,$A5,$DC,$60            ; BITA [$60,PC]
+!byte $11,$A5,$FC,$60            ; BITA [$60,PC]
+!byte $11,$A5,$9D,$DE,$AD        ; BITA [$DEAD,PC]
+!byte $11,$A5,$BD,$DE,$AD        ; BITA [$DEAD,PC]
+!byte $11,$A5,$DD,$DE,$AD        ; BITA [$DEAD,PC]
+!byte $11,$A5,$FD,$DE,$AD        ; BITA [$DEAD,PC]
+!byte $11,$A5,$9D,$10,$00        ; BITA [$1000,PC]
+!byte $11,$A5,$BD,$10,$00        ; BITA [$1000,PC]
+!byte $11,$A5,$DD,$10,$00        ; BITA [$1000,PC]
+!byte $11,$A5,$FD,$10,$00        ; BITA [$1000,PC]
+!byte $11,$A5,$9F,$DE,$AD        ; BITA [$DEAD]
+!byte $11,$A5,$BF,$DE,$AD        ; BITA [$DEAD]
+!byte $11,$A5,$DF,$DE,$AD        ; BITA [$DEAD]
+!byte $11,$A5,$FF,$DE,$AD        ; BITA [$DEAD]
+!byte $11,$A5,$90                ; BITA [,X+]
+!byte $11,$A5,$B0                ; BITA [,Y+]
+!byte $11,$A5,$D0                ; BITA [,U+]
+!byte $11,$A5,$F0                ; BITA [,S+]
+!byte $A6,$87                    ; LDA ,X
+!byte $A6,$A7                    ; LDA ,Y
+!byte $A6,$C7                    ; LDA ,U
+!byte $A6,$E7                    ; LDA ,S
+!byte $A6,$8A                    ; LDA ,PClo
+!byte $A6,$AA                    ; LDA ,PClo
+!byte $A6,$CA                    ; LDA ,PClo
+!byte $A6,$EA                    ; LDA ,PClo
+!byte $A6,$8F,$DE,$AD            ; LDA ,$DEAD
+!byte $A6,$AF,$DE,$AD            ; LDA ,$DEAD
+!byte $A6,$CF,$DE,$AD            ; LDA ,$DEAD
+!byte $A6,$EF,$DE,$AD            ; LDA ,$DEAD
+!byte $A6,$97                    ; LDA [,X]
+!byte $A6,$B7                    ; LDA [,Y]
+!byte $A6,$D7                    ; LDA [,U]
+!byte $A6,$F7                    ; LDA [,S]
+!byte $A6,$9A                    ; LDA [,PClo]
+!byte $A6,$BA                    ; LDA [,PClo]
+!byte $A6,$DA                    ; LDA [,PClo]
+!byte $A6,$FA                    ; LDA [,PClo]
+!byte $A6,$92                    ; LDA [,-X]
+!byte $A6,$B2                    ; LDA [,-Y]
+!byte $A6,$D2                    ; LDA [,-U]
+!byte $A6,$F2                    ; LDA [,-S]
+!byte $A6,$90                    ; LDA [,X+]
+!byte $A6,$B0                    ; LDA [,Y+]
+!byte $A6,$D0                    ; LDA [,U+]
+!byte $A6,$F0                    ; LDA [,S+]
+!byte $10,$A6,$84                ; LDA ,X
+!byte $10,$A6,$A4                ; LDA ,Y
+!byte $10,$A6,$C4                ; LDA ,U
+!byte $10,$A6,$E4                ; LDA ,S
+!byte $10,$A6,$15                ; LDA -$0B,X
+!byte $10,$A6,$35                ; LDA -$0B,Y
+!byte $10,$A6,$55                ; LDA -$0B,U
+!byte $10,$A6,$75                ; LDA -$0B,S
+!byte $10,$A6,$0C                ; LDA $0C,X
+!byte $10,$A6,$2C                ; LDA $0C,Y
+!byte $10,$A6,$4C                ; LDA $0C,U
+!byte $10,$A6,$6C                ; LDA $0C,S
+!byte $10,$A6,$88,$FF            ; LDA -$01,X
+!byte $10,$A6,$A8,$FF            ; LDA -$01,Y
+!byte $10,$A6,$C8,$FF            ; LDA -$01,U
+!byte $10,$A6,$E8,$FF            ; LDA -$01,S
+!byte $10,$A6,$88,$60            ; LDA $60,X
+!byte $10,$A6,$A8,$60            ; LDA $60,Y
+!byte $10,$A6,$C8,$60            ; LDA $60,U
+!byte $10,$A6,$E8,$60            ; LDA $60,S
+!byte $10,$A6,$89,$DE,$AD        ; LDA $DEAD,X
+!byte $10,$A6,$A9,$DE,$AD        ; LDA $DEAD,Y
+!byte $10,$A6,$C9,$DE,$AD        ; LDA $DEAD,U
+!byte $10,$A6,$E9,$DE,$AD        ; LDA $DEAD,S
+!byte $10,$A6,$89,$10,$00        ; LDA $1000,X
+!byte $10,$A6,$A9,$10,$00        ; LDA $1000,Y
+!byte $10,$A6,$C9,$10,$00        ; LDA $1000,U
+!byte $10,$A6,$E9,$10,$00        ; LDA $1000,S
+!byte $10,$A6,$86                ; LDA A,X
+!byte $10,$A6,$A6                ; LDA A,Y
+!byte $10,$A6,$C6                ; LDA A,U
+!byte $10,$A6,$E6                ; LDA A,S
+!byte $10,$A6,$85                ; LDA B,X
+!byte $10,$A6,$A5                ; LDA B,Y
+!byte $10,$A6,$C5                ; LDA B,U
+!byte $10,$A6,$E5                ; LDA B,S
+!byte $10,$A6,$87                ; LDA ,X
+!byte $10,$A6,$A7                ; LDA ,Y
+!byte $10,$A6,$C7                ; LDA ,U
+!byte $10,$A6,$E7                ; LDA ,S
+!byte $10,$A6,$8A                ; LDA ,PClo
+!byte $10,$A6,$AA                ; LDA ,PClo
+!byte $10,$A6,$CA                ; LDA ,PClo
+!byte $10,$A6,$EA                ; LDA ,PClo
+!byte $10,$A6,$8B                ; LDA D,X
+!byte $10,$A6,$AB                ; LDA D,Y
+!byte $10,$A6,$CB                ; LDA D,U
+!byte $10,$A6,$EB                ; LDA D,S
+!byte $10,$A6,$80                ; LDA ,X+
+!byte $10,$A6,$A0                ; LDA ,Y+
+!byte $10,$A6,$C0                ; LDA ,U+
+!byte $10,$A6,$E0                ; LDA ,S+
+!byte $10,$A6,$81                ; LDA ,X++
+!byte $10,$A6,$A1                ; LDA ,Y++
+!byte $10,$A6,$C1                ; LDA ,U++
+!byte $10,$A6,$E1                ; LDA ,S++
+!byte $10,$A6,$82                ; LDA ,-X
+!byte $10,$A6,$A2                ; LDA ,-Y
+!byte $10,$A6,$C2                ; LDA ,-U
+!byte $10,$A6,$E2                ; LDA ,-S
+!byte $10,$A6,$83                ; LDA ,--X
+!byte $10,$A6,$A3                ; LDA ,--Y
+!byte $10,$A6,$C3                ; LDA ,--U
+!byte $10,$A6,$E3                ; LDA ,--S
+!byte $10,$A6,$8C,$FF            ; LDA -$01,PC
+!byte $10,$A6,$AC,$FF            ; LDA -$01,PC
+!byte $10,$A6,$CC,$FF            ; LDA -$01,PC
+!byte $10,$A6,$EC,$FF            ; LDA -$01,PC
+!byte $10,$A6,$8C,$60            ; LDA $60,PC
+!byte $10,$A6,$AC,$60            ; LDA $60,PC
+!byte $10,$A6,$CC,$60            ; LDA $60,PC
+!byte $10,$A6,$EC,$60            ; LDA $60,PC
+!byte $10,$A6,$8D,$DE,$AD        ; LDA $DEAD,PC
+!byte $10,$A6,$AD,$DE,$AD        ; LDA $DEAD,PC
+!byte $10,$A6,$CD,$DE,$AD        ; LDA $DEAD,PC
+!byte $10,$A6,$ED,$DE,$AD        ; LDA $DEAD,PC
+!byte $10,$A6,$8D,$10,$00        ; LDA $1000,PC
+!byte $10,$A6,$AD,$10,$00        ; LDA $1000,PC
+!byte $10,$A6,$CD,$10,$00        ; LDA $1000,PC
+!byte $10,$A6,$ED,$10,$00        ; LDA $1000,PC
+!byte $10,$A6,$8F,$DE,$AD        ; LDA ,$DEAD
+!byte $10,$A6,$AF,$DE,$AD        ; LDA ,$DEAD
+!byte $10,$A6,$CF,$DE,$AD        ; LDA ,$DEAD
+!byte $10,$A6,$EF,$DE,$AD        ; LDA ,$DEAD
+!byte $10,$A6,$94                ; LDA [,X]
+!byte $10,$A6,$B4                ; LDA [,Y]
+!byte $10,$A6,$D4                ; LDA [,U]
+!byte $10,$A6,$F4                ; LDA [,S]
+!byte $10,$A6,$98,$FF            ; LDA [-$01,X]
+!byte $10,$A6,$B8,$FF            ; LDA [-$01,Y]
+!byte $10,$A6,$D8,$FF            ; LDA [-$01,U]
+!byte $10,$A6,$F8,$FF            ; LDA [-$01,S]
+!byte $10,$A6,$98,$60            ; LDA [$60,X]
+!byte $10,$A6,$B8,$60            ; LDA [$60,Y]
+!byte $10,$A6,$D8,$60            ; LDA [$60,U]
+!byte $10,$A6,$F8,$60            ; LDA [$60,S]
+!byte $10,$A6,$99,$DE,$AD        ; LDA [$DEAD,X]
+!byte $10,$A6,$B9,$DE,$AD        ; LDA [$DEAD,Y]
+!byte $10,$A6,$D9,$DE,$AD        ; LDA [$DEAD,U]
+!byte $10,$A6,$F9,$DE,$AD        ; LDA [$DEAD,S]
+!byte $10,$A6,$99,$DE,$10        ; LDA [$DE10,X]
+!byte $10,$A6,$B9,$DE,$10        ; LDA [$DE10,Y]
+!byte $10,$A6,$D9,$DE,$10        ; LDA [$DE10,U]
+!byte $10,$A6,$F9,$DE,$10        ; LDA [$DE10,S]
+!byte $10,$A6,$96                ; LDA [A,X]
+!byte $10,$A6,$B6                ; LDA [A,Y]
+!byte $10,$A6,$D6                ; LDA [A,U]
+!byte $10,$A6,$F6                ; LDA [A,S]
+!byte $10,$A6,$95                ; LDA [B,X]
+!byte $10,$A6,$B5                ; LDA [B,Y]
+!byte $10,$A6,$D5                ; LDA [B,U]
+!byte $10,$A6,$F5                ; LDA [B,S]
+!byte $10,$A6,$97                ; LDA [,X]
+!byte $10,$A6,$B7                ; LDA [,Y]
+!byte $10,$A6,$D7                ; LDA [,U]
+!byte $10,$A6,$F7                ; LDA [,S]
+!byte $10,$A6,$9A                ; LDA [,PClo]
+!byte $10,$A6,$BA                ; LDA [,PClo]
+!byte $10,$A6,$DA                ; LDA [,PClo]
+!byte $10,$A6,$FA                ; LDA [,PClo]
+!byte $10,$A6,$9B                ; LDA [D,X]
+!byte $10,$A6,$BB                ; LDA [D,Y]
+!byte $10,$A6,$DB                ; LDA [D,U]
+!byte $10,$A6,$FB                ; LDA [D,S]
+!byte $10,$A6,$91                ; LDA [,X++]
+!byte $10,$A6,$B1                ; LDA [,Y++]
+!byte $10,$A6,$D1                ; LDA [,U++]
+!byte $10,$A6,$F1                ; LDA [,S++]
+!byte $10,$A6,$92                ; LDA [,-X]
+!byte $10,$A6,$B2                ; LDA [,-Y]
+!byte $10,$A6,$D2                ; LDA [,-U]
+!byte $10,$A6,$F2                ; LDA [,-S]
+!byte $10,$A6,$93                ; LDA [,--X]
+!byte $10,$A6,$B3                ; LDA [,--Y]
+!byte $10,$A6,$D3                ; LDA [,--U]
+!byte $10,$A6,$F3                ; LDA [,--S]
+!byte $10,$A6,$9C,$FF            ; LDA [-$01,PC]
+!byte $10,$A6,$BC,$FF            ; LDA [-$01,PC]
+!byte $10,$A6,$DC,$FF            ; LDA [-$01,PC]
+!byte $10,$A6,$FC,$FF            ; LDA [-$01,PC]
+!byte $10,$A6,$9C,$60            ; LDA [$60,PC]
+!byte $10,$A6,$BC,$60            ; LDA [$60,PC]
+!byte $10,$A6,$DC,$60            ; LDA [$60,PC]
+!byte $10,$A6,$FC,$60            ; LDA [$60,PC]
+!byte $10,$A6,$9D,$DE,$AD        ; LDA [$DEAD,PC]
+!byte $10,$A6,$BD,$DE,$AD        ; LDA [$DEAD,PC]
+!byte $10,$A6,$DD,$DE,$AD        ; LDA [$DEAD,PC]
+!byte $10,$A6,$FD,$DE,$AD        ; LDA [$DEAD,PC]
+!byte $10,$A6,$9D,$10,$00        ; LDA [$1000,PC]
+!byte $10,$A6,$BD,$10,$00        ; LDA [$1000,PC]
+!byte $10,$A6,$DD,$10,$00        ; LDA [$1000,PC]
+!byte $10,$A6,$FD,$10,$00        ; LDA [$1000,PC]
+!byte $10,$A6,$9F,$DE,$AD        ; LDA [$DEAD]
+!byte $10,$A6,$BF,$DE,$AD        ; LDA [$DEAD]
+!byte $10,$A6,$DF,$DE,$AD        ; LDA [$DEAD]
+!byte $10,$A6,$FF,$DE,$AD        ; LDA [$DEAD]
+!byte $10,$A6,$90                ; LDA [,X+]
+!byte $10,$A6,$B0                ; LDA [,Y+]
+!byte $10,$A6,$D0                ; LDA [,U+]
+!byte $10,$A6,$F0                ; LDA [,S+]
+!byte $11,$A6,$84                ; LDA ,X
+!byte $11,$A6,$A4                ; LDA ,Y
+!byte $11,$A6,$C4                ; LDA ,U
+!byte $11,$A6,$E4                ; LDA ,S
+!byte $11,$A6,$15                ; LDA -$0B,X
+!byte $11,$A6,$35                ; LDA -$0B,Y
+!byte $11,$A6,$55                ; LDA -$0B,U
+!byte $11,$A6,$75                ; LDA -$0B,S
+!byte $11,$A6,$0C                ; LDA $0C,X
+!byte $11,$A6,$2C                ; LDA $0C,Y
+!byte $11,$A6,$4C                ; LDA $0C,U
+!byte $11,$A6,$6C                ; LDA $0C,S
+!byte $11,$A6,$88,$FF            ; LDA -$01,X
+!byte $11,$A6,$A8,$FF            ; LDA -$01,Y
+!byte $11,$A6,$C8,$FF            ; LDA -$01,U
+!byte $11,$A6,$E8,$FF            ; LDA -$01,S
+!byte $11,$A6,$88,$60            ; LDA $60,X
+!byte $11,$A6,$A8,$60            ; LDA $60,Y
+!byte $11,$A6,$C8,$60            ; LDA $60,U
+!byte $11,$A6,$E8,$60            ; LDA $60,S
+!byte $11,$A6,$89,$DE,$AD        ; LDA $DEAD,X
+!byte $11,$A6,$A9,$DE,$AD        ; LDA $DEAD,Y
+!byte $11,$A6,$C9,$DE,$AD        ; LDA $DEAD,U
+!byte $11,$A6,$E9,$DE,$AD        ; LDA $DEAD,S
+!byte $11,$A6,$89,$10,$00        ; LDA $1000,X
+!byte $11,$A6,$A9,$10,$00        ; LDA $1000,Y
+!byte $11,$A6,$C9,$10,$00        ; LDA $1000,U
+!byte $11,$A6,$E9,$10,$00        ; LDA $1000,S
+!byte $11,$A6,$86                ; LDA A,X
+!byte $11,$A6,$A6                ; LDA A,Y
+!byte $11,$A6,$C6                ; LDA A,U
+!byte $11,$A6,$E6                ; LDA A,S
+!byte $11,$A6,$85                ; LDA B,X
+!byte $11,$A6,$A5                ; LDA B,Y
+!byte $11,$A6,$C5                ; LDA B,U
+!byte $11,$A6,$E5                ; LDA B,S
+!byte $11,$A6,$87                ; LDA ,X
+!byte $11,$A6,$A7                ; LDA ,Y
+!byte $11,$A6,$C7                ; LDA ,U
+!byte $11,$A6,$E7                ; LDA ,S
+!byte $11,$A6,$8A                ; LDA ,PClo
+!byte $11,$A6,$AA                ; LDA ,PClo
+!byte $11,$A6,$CA                ; LDA ,PClo
+!byte $11,$A6,$EA                ; LDA ,PClo
+!byte $11,$A6,$8B                ; LDA D,X
+!byte $11,$A6,$AB                ; LDA D,Y
+!byte $11,$A6,$CB                ; LDA D,U
+!byte $11,$A6,$EB                ; LDA D,S
+!byte $11,$A6,$80                ; LDA ,X+
+!byte $11,$A6,$A0                ; LDA ,Y+
+!byte $11,$A6,$C0                ; LDA ,U+
+!byte $11,$A6,$E0                ; LDA ,S+
+!byte $11,$A6,$81                ; LDA ,X++
+!byte $11,$A6,$A1                ; LDA ,Y++
+!byte $11,$A6,$C1                ; LDA ,U++
+!byte $11,$A6,$E1                ; LDA ,S++
+!byte $11,$A6,$82                ; LDA ,-X
+!byte $11,$A6,$A2                ; LDA ,-Y
+!byte $11,$A6,$C2                ; LDA ,-U
+!byte $11,$A6,$E2                ; LDA ,-S
+!byte $11,$A6,$83                ; LDA ,--X
+!byte $11,$A6,$A3                ; LDA ,--Y
+!byte $11,$A6,$C3                ; LDA ,--U
+!byte $11,$A6,$E3                ; LDA ,--S
+!byte $11,$A6,$8C,$FF            ; LDA -$01,PC
+!byte $11,$A6,$AC,$FF            ; LDA -$01,PC
+!byte $11,$A6,$CC,$FF            ; LDA -$01,PC
+!byte $11,$A6,$EC,$FF            ; LDA -$01,PC
+!byte $11,$A6,$8C,$60            ; LDA $60,PC
+!byte $11,$A6,$AC,$60            ; LDA $60,PC
+!byte $11,$A6,$CC,$60            ; LDA $60,PC
+!byte $11,$A6,$EC,$60            ; LDA $60,PC
+!byte $11,$A6,$8D,$DE,$AD        ; LDA $DEAD,PC
+!byte $11,$A6,$AD,$DE,$AD        ; LDA $DEAD,PC
+!byte $11,$A6,$CD,$DE,$AD        ; LDA $DEAD,PC
+!byte $11,$A6,$ED,$DE,$AD        ; LDA $DEAD,PC
+!byte $11,$A6,$8D,$10,$00        ; LDA $1000,PC
+!byte $11,$A6,$AD,$10,$00        ; LDA $1000,PC
+!byte $11,$A6,$CD,$10,$00        ; LDA $1000,PC
+!byte $11,$A6,$ED,$10,$00        ; LDA $1000,PC
+!byte $11,$A6,$8F,$DE,$AD        ; LDA ,$DEAD
+!byte $11,$A6,$AF,$DE,$AD        ; LDA ,$DEAD
+!byte $11,$A6,$CF,$DE,$AD        ; LDA ,$DEAD
+!byte $11,$A6,$EF,$DE,$AD        ; LDA ,$DEAD
+!byte $11,$A6,$94                ; LDA [,X]
+!byte $11,$A6,$B4                ; LDA [,Y]
+!byte $11,$A6,$D4                ; LDA [,U]
+!byte $11,$A6,$F4                ; LDA [,S]
+!byte $11,$A6,$98,$FF            ; LDA [-$01,X]
+!byte $11,$A6,$B8,$FF            ; LDA [-$01,Y]
+!byte $11,$A6,$D8,$FF            ; LDA [-$01,U]
+!byte $11,$A6,$F8,$FF            ; LDA [-$01,S]
+!byte $11,$A6,$98,$60            ; LDA [$60,X]
+!byte $11,$A6,$B8,$60            ; LDA [$60,Y]
+!byte $11,$A6,$D8,$60            ; LDA [$60,U]
+!byte $11,$A6,$F8,$60            ; LDA [$60,S]
+!byte $11,$A6,$99,$DE,$AD        ; LDA [$DEAD,X]
+!byte $11,$A6,$B9,$DE,$AD        ; LDA [$DEAD,Y]
+!byte $11,$A6,$D9,$DE,$AD        ; LDA [$DEAD,U]
+!byte $11,$A6,$F9,$DE,$AD        ; LDA [$DEAD,S]
+!byte $11,$A6,$99,$DE,$10        ; LDA [$DE10,X]
+!byte $11,$A6,$B9,$DE,$10        ; LDA [$DE10,Y]
+!byte $11,$A6,$D9,$DE,$10        ; LDA [$DE10,U]
+!byte $11,$A6,$F9,$DE,$10        ; LDA [$DE10,S]
+!byte $11,$A6,$96                ; LDA [A,X]
+!byte $11,$A6,$B6                ; LDA [A,Y]
+!byte $11,$A6,$D6                ; LDA [A,U]
+!byte $11,$A6,$F6                ; LDA [A,S]
+!byte $11,$A6,$95                ; LDA [B,X]
+!byte $11,$A6,$B5                ; LDA [B,Y]
+!byte $11,$A6,$D5                ; LDA [B,U]
+!byte $11,$A6,$F5                ; LDA [B,S]
+!byte $11,$A6,$97                ; LDA [,X]
+!byte $11,$A6,$B7                ; LDA [,Y]
+!byte $11,$A6,$D7                ; LDA [,U]
+!byte $11,$A6,$F7                ; LDA [,S]
+!byte $11,$A6,$9A                ; LDA [,PClo]
+!byte $11,$A6,$BA                ; LDA [,PClo]
+!byte $11,$A6,$DA                ; LDA [,PClo]
+!byte $11,$A6,$FA                ; LDA [,PClo]
+!byte $11,$A6,$9B                ; LDA [D,X]
+!byte $11,$A6,$BB                ; LDA [D,Y]
+!byte $11,$A6,$DB                ; LDA [D,U]
+!byte $11,$A6,$FB                ; LDA [D,S]
+!byte $11,$A6,$91                ; LDA [,X++]
+!byte $11,$A6,$B1                ; LDA [,Y++]
+!byte $11,$A6,$D1                ; LDA [,U++]
+!byte $11,$A6,$F1                ; LDA [,S++]
+!byte $11,$A6,$92                ; LDA [,-X]
+!byte $11,$A6,$B2                ; LDA [,-Y]
+!byte $11,$A6,$D2                ; LDA [,-U]
+!byte $11,$A6,$F2                ; LDA [,-S]
+!byte $11,$A6,$93                ; LDA [,--X]
+!byte $11,$A6,$B3                ; LDA [,--Y]
+!byte $11,$A6,$D3                ; LDA [,--U]
+!byte $11,$A6,$F3                ; LDA [,--S]
+!byte $11,$A6,$9C,$FF            ; LDA [-$01,PC]
+!byte $11,$A6,$BC,$FF            ; LDA [-$01,PC]
+!byte $11,$A6,$DC,$FF            ; LDA [-$01,PC]
+!byte $11,$A6,$FC,$FF            ; LDA [-$01,PC]
+!byte $11,$A6,$9C,$60            ; LDA [$60,PC]
+!byte $11,$A6,$BC,$60            ; LDA [$60,PC]
+!byte $11,$A6,$DC,$60            ; LDA [$60,PC]
+!byte $11,$A6,$FC,$60            ; LDA [$60,PC]
+!byte $11,$A6,$9D,$DE,$AD        ; LDA [$DEAD,PC]
+!byte $11,$A6,$BD,$DE,$AD        ; LDA [$DEAD,PC]
+!byte $11,$A6,$DD,$DE,$AD        ; LDA [$DEAD,PC]
+!byte $11,$A6,$FD,$DE,$AD        ; LDA [$DEAD,PC]
+!byte $11,$A6,$9D,$10,$00        ; LDA [$1000,PC]
+!byte $11,$A6,$BD,$10,$00        ; LDA [$1000,PC]
+!byte $11,$A6,$DD,$10,$00        ; LDA [$1000,PC]
+!byte $11,$A6,$FD,$10,$00        ; LDA [$1000,PC]
+!byte $11,$A6,$9F,$DE,$AD        ; LDA [$DEAD]
+!byte $11,$A6,$BF,$DE,$AD        ; LDA [$DEAD]
+!byte $11,$A6,$DF,$DE,$AD        ; LDA [$DEAD]
+!byte $11,$A6,$FF,$DE,$AD        ; LDA [$DEAD]
+!byte $11,$A6,$90                ; LDA [,X+]
+!byte $11,$A6,$B0                ; LDA [,Y+]
+!byte $11,$A6,$D0                ; LDA [,U+]
+!byte $11,$A6,$F0                ; LDA [,S+]
+!byte $A7,$87                    ; STA ,X
+!byte $A7,$A7                    ; STA ,Y
+!byte $A7,$C7                    ; STA ,U
+!byte $A7,$E7                    ; STA ,S
+!byte $A7,$8A                    ; STA ,PClo
+!byte $A7,$AA                    ; STA ,PClo
+!byte $A7,$CA                    ; STA ,PClo
+!byte $A7,$EA                    ; STA ,PClo
+!byte $A7,$8F,$DE,$AD            ; STA ,$DEAD
+!byte $A7,$AF,$DE,$AD            ; STA ,$DEAD
+!byte $A7,$CF,$DE,$AD            ; STA ,$DEAD
+!byte $A7,$EF,$DE,$AD            ; STA ,$DEAD
+!byte $A7,$97                    ; STA [,X]
+!byte $A7,$B7                    ; STA [,Y]
+!byte $A7,$D7                    ; STA [,U]
+!byte $A7,$F7                    ; STA [,S]
+!byte $A7,$9A                    ; STA [,PClo]
+!byte $A7,$BA                    ; STA [,PClo]
+!byte $A7,$DA                    ; STA [,PClo]
+!byte $A7,$FA                    ; STA [,PClo]
+!byte $A7,$92                    ; STA [,-X]
+!byte $A7,$B2                    ; STA [,-Y]
+!byte $A7,$D2                    ; STA [,-U]
+!byte $A7,$F2                    ; STA [,-S]
+!byte $A7,$90                    ; STA [,X+]
+!byte $A7,$B0                    ; STA [,Y+]
+!byte $A7,$D0                    ; STA [,U+]
+!byte $A7,$F0                    ; STA [,S+]
+!byte $10,$A7,$84                ; STA ,X
+!byte $10,$A7,$A4                ; STA ,Y
+!byte $10,$A7,$C4                ; STA ,U
+!byte $10,$A7,$E4                ; STA ,S
+!byte $10,$A7,$15                ; STA -$0B,X
+!byte $10,$A7,$35                ; STA -$0B,Y
+!byte $10,$A7,$55                ; STA -$0B,U
+!byte $10,$A7,$75                ; STA -$0B,S
+!byte $10,$A7,$0C                ; STA $0C,X
+!byte $10,$A7,$2C                ; STA $0C,Y
+!byte $10,$A7,$4C                ; STA $0C,U
+!byte $10,$A7,$6C                ; STA $0C,S
+!byte $10,$A7,$88,$FF            ; STA -$01,X
+!byte $10,$A7,$A8,$FF            ; STA -$01,Y
+!byte $10,$A7,$C8,$FF            ; STA -$01,U
+!byte $10,$A7,$E8,$FF            ; STA -$01,S
+!byte $10,$A7,$88,$60            ; STA $60,X
+!byte $10,$A7,$A8,$60            ; STA $60,Y
+!byte $10,$A7,$C8,$60            ; STA $60,U
+!byte $10,$A7,$E8,$60            ; STA $60,S
+!byte $10,$A7,$89,$DE,$AD        ; STA $DEAD,X
+!byte $10,$A7,$A9,$DE,$AD        ; STA $DEAD,Y
+!byte $10,$A7,$C9,$DE,$AD        ; STA $DEAD,U
+!byte $10,$A7,$E9,$DE,$AD        ; STA $DEAD,S
+!byte $10,$A7,$89,$10,$00        ; STA $1000,X
+!byte $10,$A7,$A9,$10,$00        ; STA $1000,Y
+!byte $10,$A7,$C9,$10,$00        ; STA $1000,U
+!byte $10,$A7,$E9,$10,$00        ; STA $1000,S
+!byte $10,$A7,$86                ; STA A,X
+!byte $10,$A7,$A6                ; STA A,Y
+!byte $10,$A7,$C6                ; STA A,U
+!byte $10,$A7,$E6                ; STA A,S
+!byte $10,$A7,$85                ; STA B,X
+!byte $10,$A7,$A5                ; STA B,Y
+!byte $10,$A7,$C5                ; STA B,U
+!byte $10,$A7,$E5                ; STA B,S
+!byte $10,$A7,$87                ; STA ,X
+!byte $10,$A7,$A7                ; STA ,Y
+!byte $10,$A7,$C7                ; STA ,U
+!byte $10,$A7,$E7                ; STA ,S
+!byte $10,$A7,$8A                ; STA ,PClo
+!byte $10,$A7,$AA                ; STA ,PClo
+!byte $10,$A7,$CA                ; STA ,PClo
+!byte $10,$A7,$EA                ; STA ,PClo
+!byte $10,$A7,$8B                ; STA D,X
+!byte $10,$A7,$AB                ; STA D,Y
+!byte $10,$A7,$CB                ; STA D,U
+!byte $10,$A7,$EB                ; STA D,S
+!byte $10,$A7,$80                ; STA ,X+
+!byte $10,$A7,$A0                ; STA ,Y+
+!byte $10,$A7,$C0                ; STA ,U+
+!byte $10,$A7,$E0                ; STA ,S+
+!byte $10,$A7,$81                ; STA ,X++
+!byte $10,$A7,$A1                ; STA ,Y++
+!byte $10,$A7,$C1                ; STA ,U++
+!byte $10,$A7,$E1                ; STA ,S++
+!byte $10,$A7,$82                ; STA ,-X
+!byte $10,$A7,$A2                ; STA ,-Y
+!byte $10,$A7,$C2                ; STA ,-U
+!byte $10,$A7,$E2                ; STA ,-S
+!byte $10,$A7,$83                ; STA ,--X
+!byte $10,$A7,$A3                ; STA ,--Y
+!byte $10,$A7,$C3                ; STA ,--U
+!byte $10,$A7,$E3                ; STA ,--S
+!byte $10,$A7,$8C,$FF            ; STA -$01,PC
+!byte $10,$A7,$AC,$FF            ; STA -$01,PC
+!byte $10,$A7,$CC,$FF            ; STA -$01,PC
+!byte $10,$A7,$EC,$FF            ; STA -$01,PC
+!byte $10,$A7,$8C,$60            ; STA $60,PC
+!byte $10,$A7,$AC,$60            ; STA $60,PC
+!byte $10,$A7,$CC,$60            ; STA $60,PC
+!byte $10,$A7,$EC,$60            ; STA $60,PC
+!byte $10,$A7,$8D,$DE,$AD        ; STA $DEAD,PC
+!byte $10,$A7,$AD,$DE,$AD        ; STA $DEAD,PC
+!byte $10,$A7,$CD,$DE,$AD        ; STA $DEAD,PC
+!byte $10,$A7,$ED,$DE,$AD        ; STA $DEAD,PC
+!byte $10,$A7,$8D,$10,$00        ; STA $1000,PC
+!byte $10,$A7,$AD,$10,$00        ; STA $1000,PC
+!byte $10,$A7,$CD,$10,$00        ; STA $1000,PC
+!byte $10,$A7,$ED,$10,$00        ; STA $1000,PC
+!byte $10,$A7,$8F,$DE,$AD        ; STA ,$DEAD
+!byte $10,$A7,$AF,$DE,$AD        ; STA ,$DEAD
+!byte $10,$A7,$CF,$DE,$AD        ; STA ,$DEAD
+!byte $10,$A7,$EF,$DE,$AD        ; STA ,$DEAD
+!byte $10,$A7,$94                ; STA [,X]
+!byte $10,$A7,$B4                ; STA [,Y]
+!byte $10,$A7,$D4                ; STA [,U]
+!byte $10,$A7,$F4                ; STA [,S]
+!byte $10,$A7,$98,$FF            ; STA [-$01,X]
+!byte $10,$A7,$B8,$FF            ; STA [-$01,Y]
+!byte $10,$A7,$D8,$FF            ; STA [-$01,U]
+!byte $10,$A7,$F8,$FF            ; STA [-$01,S]
+!byte $10,$A7,$98,$60            ; STA [$60,X]
+!byte $10,$A7,$B8,$60            ; STA [$60,Y]
+!byte $10,$A7,$D8,$60            ; STA [$60,U]
+!byte $10,$A7,$F8,$60            ; STA [$60,S]
+!byte $10,$A7,$99,$DE,$AD        ; STA [$DEAD,X]
+!byte $10,$A7,$B9,$DE,$AD        ; STA [$DEAD,Y]
+!byte $10,$A7,$D9,$DE,$AD        ; STA [$DEAD,U]
+!byte $10,$A7,$F9,$DE,$AD        ; STA [$DEAD,S]
+!byte $10,$A7,$99,$DE,$10        ; STA [$DE10,X]
+!byte $10,$A7,$B9,$DE,$10        ; STA [$DE10,Y]
+!byte $10,$A7,$D9,$DE,$10        ; STA [$DE10,U]
+!byte $10,$A7,$F9,$DE,$10        ; STA [$DE10,S]
+!byte $10,$A7,$96                ; STA [A,X]
+!byte $10,$A7,$B6                ; STA [A,Y]
+!byte $10,$A7,$D6                ; STA [A,U]
+!byte $10,$A7,$F6                ; STA [A,S]
+!byte $10,$A7,$95                ; STA [B,X]
+!byte $10,$A7,$B5                ; STA [B,Y]
+!byte $10,$A7,$D5                ; STA [B,U]
+!byte $10,$A7,$F5                ; STA [B,S]
+!byte $10,$A7,$97                ; STA [,X]
+!byte $10,$A7,$B7                ; STA [,Y]
+!byte $10,$A7,$D7                ; STA [,U]
+!byte $10,$A7,$F7                ; STA [,S]
+!byte $10,$A7,$9A                ; STA [,PClo]
+!byte $10,$A7,$BA                ; STA [,PClo]
+!byte $10,$A7,$DA                ; STA [,PClo]
+!byte $10,$A7,$FA                ; STA [,PClo]
+!byte $10,$A7,$9B                ; STA [D,X]
+!byte $10,$A7,$BB                ; STA [D,Y]
+!byte $10,$A7,$DB                ; STA [D,U]
+!byte $10,$A7,$FB                ; STA [D,S]
+!byte $10,$A7,$91                ; STA [,X++]
+!byte $10,$A7,$B1                ; STA [,Y++]
+!byte $10,$A7,$D1                ; STA [,U++]
+!byte $10,$A7,$F1                ; STA [,S++]
+!byte $10,$A7,$92                ; STA [,-X]
+!byte $10,$A7,$B2                ; STA [,-Y]
+!byte $10,$A7,$D2                ; STA [,-U]
+!byte $10,$A7,$F2                ; STA [,-S]
+!byte $10,$A7,$93                ; STA [,--X]
+!byte $10,$A7,$B3                ; STA [,--Y]
+!byte $10,$A7,$D3                ; STA [,--U]
+!byte $10,$A7,$F3                ; STA [,--S]
+!byte $10,$A7,$9C,$FF            ; STA [-$01,PC]
+!byte $10,$A7,$BC,$FF            ; STA [-$01,PC]
+!byte $10,$A7,$DC,$FF            ; STA [-$01,PC]
+!byte $10,$A7,$FC,$FF            ; STA [-$01,PC]
+!byte $10,$A7,$9C,$60            ; STA [$60,PC]
+!byte $10,$A7,$BC,$60            ; STA [$60,PC]
+!byte $10,$A7,$DC,$60            ; STA [$60,PC]
+!byte $10,$A7,$FC,$60            ; STA [$60,PC]
+!byte $10,$A7,$9D,$DE,$AD        ; STA [$DEAD,PC]
+!byte $10,$A7,$BD,$DE,$AD        ; STA [$DEAD,PC]
+!byte $10,$A7,$DD,$DE,$AD        ; STA [$DEAD,PC]
+!byte $10,$A7,$FD,$DE,$AD        ; STA [$DEAD,PC]
+!byte $10,$A7,$9D,$10,$00        ; STA [$1000,PC]
+!byte $10,$A7,$BD,$10,$00        ; STA [$1000,PC]
+!byte $10,$A7,$DD,$10,$00        ; STA [$1000,PC]
+!byte $10,$A7,$FD,$10,$00        ; STA [$1000,PC]
+!byte $10,$A7,$9F,$DE,$AD        ; STA [$DEAD]
+!byte $10,$A7,$BF,$DE,$AD        ; STA [$DEAD]
+!byte $10,$A7,$DF,$DE,$AD        ; STA [$DEAD]
+!byte $10,$A7,$FF,$DE,$AD        ; STA [$DEAD]
+!byte $10,$A7,$90                ; STA [,X+]
+!byte $10,$A7,$B0                ; STA [,Y+]
+!byte $10,$A7,$D0                ; STA [,U+]
+!byte $10,$A7,$F0                ; STA [,S+]
+!byte $11,$A7,$84                ; STA ,X
+!byte $11,$A7,$A4                ; STA ,Y
+!byte $11,$A7,$C4                ; STA ,U
+!byte $11,$A7,$E4                ; STA ,S
+!byte $11,$A7,$15                ; STA -$0B,X
+!byte $11,$A7,$35                ; STA -$0B,Y
+!byte $11,$A7,$55                ; STA -$0B,U
+!byte $11,$A7,$75                ; STA -$0B,S
+!byte $11,$A7,$0C                ; STA $0C,X
+!byte $11,$A7,$2C                ; STA $0C,Y
+!byte $11,$A7,$4C                ; STA $0C,U
+!byte $11,$A7,$6C                ; STA $0C,S
+!byte $11,$A7,$88,$FF            ; STA -$01,X
+!byte $11,$A7,$A8,$FF            ; STA -$01,Y
+!byte $11,$A7,$C8,$FF            ; STA -$01,U
+!byte $11,$A7,$E8,$FF            ; STA -$01,S
+!byte $11,$A7,$88,$60            ; STA $60,X
+!byte $11,$A7,$A8,$60            ; STA $60,Y
+!byte $11,$A7,$C8,$60            ; STA $60,U
+!byte $11,$A7,$E8,$60            ; STA $60,S
+!byte $11,$A7,$89,$DE,$AD        ; STA $DEAD,X
+!byte $11,$A7,$A9,$DE,$AD        ; STA $DEAD,Y
+!byte $11,$A7,$C9,$DE,$AD        ; STA $DEAD,U
+!byte $11,$A7,$E9,$DE,$AD        ; STA $DEAD,S
+!byte $11,$A7,$89,$10,$00        ; STA $1000,X
+!byte $11,$A7,$A9,$10,$00        ; STA $1000,Y
+!byte $11,$A7,$C9,$10,$00        ; STA $1000,U
+!byte $11,$A7,$E9,$10,$00        ; STA $1000,S
+!byte $11,$A7,$86                ; STA A,X
+!byte $11,$A7,$A6                ; STA A,Y
+!byte $11,$A7,$C6                ; STA A,U
+!byte $11,$A7,$E6                ; STA A,S
+!byte $11,$A7,$85                ; STA B,X
+!byte $11,$A7,$A5                ; STA B,Y
+!byte $11,$A7,$C5                ; STA B,U
+!byte $11,$A7,$E5                ; STA B,S
+!byte $11,$A7,$87                ; STA ,X
+!byte $11,$A7,$A7                ; STA ,Y
+!byte $11,$A7,$C7                ; STA ,U
+!byte $11,$A7,$E7                ; STA ,S
+!byte $11,$A7,$8A                ; STA ,PClo
+!byte $11,$A7,$AA                ; STA ,PClo
+!byte $11,$A7,$CA                ; STA ,PClo
+!byte $11,$A7,$EA                ; STA ,PClo
+!byte $11,$A7,$8B                ; STA D,X
+!byte $11,$A7,$AB                ; STA D,Y
+!byte $11,$A7,$CB                ; STA D,U
+!byte $11,$A7,$EB                ; STA D,S
+!byte $11,$A7,$80                ; STA ,X+
+!byte $11,$A7,$A0                ; STA ,Y+
+!byte $11,$A7,$C0                ; STA ,U+
+!byte $11,$A7,$E0                ; STA ,S+
+!byte $11,$A7,$81                ; STA ,X++
+!byte $11,$A7,$A1                ; STA ,Y++
+!byte $11,$A7,$C1                ; STA ,U++
+!byte $11,$A7,$E1                ; STA ,S++
+!byte $11,$A7,$82                ; STA ,-X
+!byte $11,$A7,$A2                ; STA ,-Y
+!byte $11,$A7,$C2                ; STA ,-U
+!byte $11,$A7,$E2                ; STA ,-S
+!byte $11,$A7,$83                ; STA ,--X
+!byte $11,$A7,$A3                ; STA ,--Y
+!byte $11,$A7,$C3                ; STA ,--U
+!byte $11,$A7,$E3                ; STA ,--S
+!byte $11,$A7,$8C,$FF            ; STA -$01,PC
+!byte $11,$A7,$AC,$FF            ; STA -$01,PC
+!byte $11,$A7,$CC,$FF            ; STA -$01,PC
+!byte $11,$A7,$EC,$FF            ; STA -$01,PC
+!byte $11,$A7,$8C,$60            ; STA $60,PC
+!byte $11,$A7,$AC,$60            ; STA $60,PC
+!byte $11,$A7,$CC,$60            ; STA $60,PC
+!byte $11,$A7,$EC,$60            ; STA $60,PC
+!byte $11,$A7,$8D,$DE,$AD        ; STA $DEAD,PC
+!byte $11,$A7,$AD,$DE,$AD        ; STA $DEAD,PC
+!byte $11,$A7,$CD,$DE,$AD        ; STA $DEAD,PC
+!byte $11,$A7,$ED,$DE,$AD        ; STA $DEAD,PC
+!byte $11,$A7,$8D,$10,$00        ; STA $1000,PC
+!byte $11,$A7,$AD,$10,$00        ; STA $1000,PC
+!byte $11,$A7,$CD,$10,$00        ; STA $1000,PC
+!byte $11,$A7,$ED,$10,$00        ; STA $1000,PC
+!byte $11,$A7,$8F,$DE,$AD        ; STA ,$DEAD
+!byte $11,$A7,$AF,$DE,$AD        ; STA ,$DEAD
+!byte $11,$A7,$CF,$DE,$AD        ; STA ,$DEAD
+!byte $11,$A7,$EF,$DE,$AD        ; STA ,$DEAD
+!byte $11,$A7,$94                ; STA [,X]
+!byte $11,$A7,$B4                ; STA [,Y]
+!byte $11,$A7,$D4                ; STA [,U]
+!byte $11,$A7,$F4                ; STA [,S]
+!byte $11,$A7,$98,$FF            ; STA [-$01,X]
+!byte $11,$A7,$B8,$FF            ; STA [-$01,Y]
+!byte $11,$A7,$D8,$FF            ; STA [-$01,U]
+!byte $11,$A7,$F8,$FF            ; STA [-$01,S]
+!byte $11,$A7,$98,$60            ; STA [$60,X]
+!byte $11,$A7,$B8,$60            ; STA [$60,Y]
+!byte $11,$A7,$D8,$60            ; STA [$60,U]
+!byte $11,$A7,$F8,$60            ; STA [$60,S]
+!byte $11,$A7,$99,$DE,$AD        ; STA [$DEAD,X]
+!byte $11,$A7,$B9,$DE,$AD        ; STA [$DEAD,Y]
+!byte $11,$A7,$D9,$DE,$AD        ; STA [$DEAD,U]
+!byte $11,$A7,$F9,$DE,$AD        ; STA [$DEAD,S]
+!byte $11,$A7,$99,$DE,$10        ; STA [$DE10,X]
+!byte $11,$A7,$B9,$DE,$10        ; STA [$DE10,Y]
+!byte $11,$A7,$D9,$DE,$10        ; STA [$DE10,U]
+!byte $11,$A7,$F9,$DE,$10        ; STA [$DE10,S]
+!byte $11,$A7,$96                ; STA [A,X]
+!byte $11,$A7,$B6                ; STA [A,Y]
+!byte $11,$A7,$D6                ; STA [A,U]
+!byte $11,$A7,$F6                ; STA [A,S]
+!byte $11,$A7,$95                ; STA [B,X]
+!byte $11,$A7,$B5                ; STA [B,Y]
+!byte $11,$A7,$D5                ; STA [B,U]
+!byte $11,$A7,$F5                ; STA [B,S]
+!byte $11,$A7,$97                ; STA [,X]
+!byte $11,$A7,$B7                ; STA [,Y]
+!byte $11,$A7,$D7                ; STA [,U]
+!byte $11,$A7,$F7                ; STA [,S]
+!byte $11,$A7,$9A                ; STA [,PClo]
+!byte $11,$A7,$BA                ; STA [,PClo]
+!byte $11,$A7,$DA                ; STA [,PClo]
+!byte $11,$A7,$FA                ; STA [,PClo]
+!byte $11,$A7,$9B                ; STA [D,X]
+!byte $11,$A7,$BB                ; STA [D,Y]
+!byte $11,$A7,$DB                ; STA [D,U]
+!byte $11,$A7,$FB                ; STA [D,S]
+!byte $11,$A7,$91                ; STA [,X++]
+!byte $11,$A7,$B1                ; STA [,Y++]
+!byte $11,$A7,$D1                ; STA [,U++]
+!byte $11,$A7,$F1                ; STA [,S++]
+!byte $11,$A7,$92                ; STA [,-X]
+!byte $11,$A7,$B2                ; STA [,-Y]
+!byte $11,$A7,$D2                ; STA [,-U]
+!byte $11,$A7,$F2                ; STA [,-S]
+!byte $11,$A7,$93                ; STA [,--X]
+!byte $11,$A7,$B3                ; STA [,--Y]
+!byte $11,$A7,$D3                ; STA [,--U]
+!byte $11,$A7,$F3                ; STA [,--S]
+!byte $11,$A7,$9C,$FF            ; STA [-$01,PC]
+!byte $11,$A7,$BC,$FF            ; STA [-$01,PC]
+!byte $11,$A7,$DC,$FF            ; STA [-$01,PC]
+!byte $11,$A7,$FC,$FF            ; STA [-$01,PC]
+!byte $11,$A7,$9C,$60            ; STA [$60,PC]
+!byte $11,$A7,$BC,$60            ; STA [$60,PC]
+!byte $11,$A7,$DC,$60            ; STA [$60,PC]
+!byte $11,$A7,$FC,$60            ; STA [$60,PC]
+!byte $11,$A7,$9D,$DE,$AD        ; STA [$DEAD,PC]
+!byte $11,$A7,$BD,$DE,$AD        ; STA [$DEAD,PC]
+!byte $11,$A7,$DD,$DE,$AD        ; STA [$DEAD,PC]
+!byte $11,$A7,$FD,$DE,$AD        ; STA [$DEAD,PC]
+!byte $11,$A7,$9D,$10,$00        ; STA [$1000,PC]
+!byte $11,$A7,$BD,$10,$00        ; STA [$1000,PC]
+!byte $11,$A7,$DD,$10,$00        ; STA [$1000,PC]
+!byte $11,$A7,$FD,$10,$00        ; STA [$1000,PC]
+!byte $11,$A7,$9F,$DE,$AD        ; STA [$DEAD]
+!byte $11,$A7,$BF,$DE,$AD        ; STA [$DEAD]
+!byte $11,$A7,$DF,$DE,$AD        ; STA [$DEAD]
+!byte $11,$A7,$FF,$DE,$AD        ; STA [$DEAD]
+!byte $11,$A7,$90                ; STA [,X+]
+!byte $11,$A7,$B0                ; STA [,Y+]
+!byte $11,$A7,$D0                ; STA [,U+]
+!byte $11,$A7,$F0                ; STA [,S+]
 
-      !byte $A4,$84                   ; ANDA ,X
-      !byte $A4,$A4                   ; ANDA ,Y
-      !byte $A4,$C4                   ; ANDA ,U
-      !byte $A4,$E4                   ; ANDA ,S
-      !byte $A4,$15                   ; ANDA -$0B,X
-      !byte $A4,$35                   ; ANDA -$0B,Y
-      !byte $A4,$55                   ; ANDA -$0B,U
-      !byte $A4,$75                   ; ANDA -$0B,S
-      !byte $A4,$0C                   ; ANDA $0C,X
-      !byte $A4,$2C                   ; ANDA $0C,Y
-      !byte $A4,$4C                   ; ANDA $0C,U
-      !byte $A4,$6C                   ; ANDA $0C,S
-      !byte $A4,$88,$FF               ; ANDA -$01,X
-      !byte $A4,$A8,$FF               ; ANDA -$01,Y
-      !byte $A4,$C8,$FF               ; ANDA -$01,U
-      !byte $A4,$E8,$FF               ; ANDA -$01,S
-      !byte $A4,$88,$60               ; ANDA $60,X
-      !byte $A4,$A8,$60               ; ANDA $60,Y
-      !byte $A4,$C8,$60               ; ANDA $60,U
-      !byte $A4,$E8,$60               ; ANDA $60,S
-      !byte $A4,$89,$DE,$AD           ; ANDA $DEAD,X
-      !byte $A4,$A9,$DE,$AD           ; ANDA $DEAD,Y
-      !byte $A4,$C9,$DE,$AD           ; ANDA $DEAD,U
-      !byte $A4,$E9,$DE,$AD           ; ANDA $DEAD,S
-      !byte $A4,$89,$10,$00           ; ANDA $1000,X
-      !byte $A4,$A9,$10,$00           ; ANDA $1000,Y
-      !byte $A4,$C9,$10,$00           ; ANDA $1000,U
-      !byte $A4,$E9,$10,$00           ; ANDA $1000,S
-      !byte $A4,$86                   ; ANDA A,X
-      !byte $A4,$A6                   ; ANDA A,Y
-      !byte $A4,$C6                   ; ANDA A,U
-      !byte $A4,$E6                   ; ANDA A,S
-      !byte $A4,$85                   ; ANDA B,X
-      !byte $A4,$A5                   ; ANDA B,Y
-      !byte $A4,$C5                   ; ANDA B,U
-      !byte $A4,$E5                   ; ANDA B,S
-      !byte $A4,$8B                   ; ANDA D,X
-      !byte $A4,$AB                   ; ANDA D,Y
-      !byte $A4,$CB                   ; ANDA D,U
-      !byte $A4,$EB                   ; ANDA D,S
-      !byte $A4,$80                   ; ANDA ,X+
-      !byte $A4,$A0                   ; ANDA ,Y+
-      !byte $A4,$C0                   ; ANDA ,U+
-      !byte $A4,$E0                   ; ANDA ,S+
-      !byte $A4,$81                   ; ANDA ,X++
-      !byte $A4,$A1                   ; ANDA ,Y++
-      !byte $A4,$C1                   ; ANDA ,U++
-      !byte $A4,$E1                   ; ANDA ,S++
-      !byte $A4,$82                   ; ANDA ,-X
-      !byte $A4,$A2                   ; ANDA ,-Y
-      !byte $A4,$C2                   ; ANDA ,-U
-      !byte $A4,$E2                   ; ANDA ,-S
-      !byte $A4,$83                   ; ANDA ,--X
-      !byte $A4,$A3                   ; ANDA ,--Y
-      !byte $A4,$C3                   ; ANDA ,--U
-      !byte $A4,$E3                   ; ANDA ,--S
-      !byte $A4,$8C,$FF               ; ANDA -$01,PC
-      !byte $A4,$AC,$FF               ; ANDA -$01,PC
-      !byte $A4,$CC,$FF               ; ANDA -$01,PC
-      !byte $A4,$EC,$FF               ; ANDA -$01,PC
-      !byte $A4,$8C,$60               ; ANDA $60,PC
-      !byte $A4,$AC,$60               ; ANDA $60,PC
-      !byte $A4,$CC,$60               ; ANDA $60,PC
-      !byte $A4,$EC,$60               ; ANDA $60,PC
-      !byte $A4,$8D,$DE,$AD           ; ANDA $DEAD,PC
-      !byte $A4,$AD,$DE,$AD           ; ANDA $DEAD,PC
-      !byte $A4,$CD,$DE,$AD           ; ANDA $DEAD,PC
-      !byte $A4,$ED,$DE,$AD           ; ANDA $DEAD,PC
-      !byte $A4,$8D,$10,$00           ; ANDA $1000,PC
-      !byte $A4,$AD,$10,$00           ; ANDA $1000,PC
-      !byte $A4,$CD,$10,$00           ; ANDA $1000,PC
-      !byte $A4,$ED,$10,$00           ; ANDA $1000,PC
-      !byte $A4,$94                   ; ANDA [,X]
-      !byte $A4,$B4                   ; ANDA [,Y]
-      !byte $A4,$D4                   ; ANDA [,U]
-      !byte $A4,$F4                   ; ANDA [,S]
-      !byte $A4,$98,$FF               ; ANDA [-$01,X]
-      !byte $A4,$B8,$FF               ; ANDA [-$01,Y]
-      !byte $A4,$D8,$FF               ; ANDA [-$01,U]
-      !byte $A4,$F8,$FF               ; ANDA [-$01,S]
-      !byte $A4,$98,$60               ; ANDA [$60,X]
-      !byte $A4,$B8,$60               ; ANDA [$60,Y]
-      !byte $A4,$D8,$60               ; ANDA [$60,U]
-      !byte $A4,$F8,$60               ; ANDA [$60,S]
-      !byte $A4,$99,$DE,$AD           ; ANDA [$DEAD,X]
-      !byte $A4,$B9,$DE,$AD           ; ANDA [$DEAD,Y]
-      !byte $A4,$D9,$DE,$AD           ; ANDA [$DEAD,U]
-      !byte $A4,$F9,$DE,$AD           ; ANDA [$DEAD,S]
-      !byte $A4,$99,$DE,$10           ; ANDA [$DE10,X]
-      !byte $A4,$B9,$DE,$10           ; ANDA [$DE10,Y]
-      !byte $A4,$D9,$DE,$10           ; ANDA [$DE10,U]
-      !byte $A4,$F9,$DE,$10           ; ANDA [$DE10,S]
-      !byte $A4,$96                   ; ANDA [A,X]
-      !byte $A4,$B6                   ; ANDA [A,Y]
-      !byte $A4,$D6                   ; ANDA [A,U]
-      !byte $A4,$F6                   ; ANDA [A,S]
-      !byte $A4,$95                   ; ANDA [B,X]
-      !byte $A4,$B5                   ; ANDA [B,Y]
-      !byte $A4,$D5                   ; ANDA [B,U]
-      !byte $A4,$F5                   ; ANDA [B,S]
-      !byte $A4,$9B                   ; ANDA [D,X]
-      !byte $A4,$BB                   ; ANDA [D,Y]
-      !byte $A4,$DB                   ; ANDA [D,U]
-      !byte $A4,$FB                   ; ANDA [D,S]
-      !byte $A4,$91                   ; ANDA [,X++]
-      !byte $A4,$B1                   ; ANDA [,Y++]
-      !byte $A4,$D1                   ; ANDA [,U++]
-      !byte $A4,$F1                   ; ANDA [,S++]
-      !byte $A4,$93                   ; ANDA [,--X]
-      !byte $A4,$B3                   ; ANDA [,--Y]
-      !byte $A4,$D3                   ; ANDA [,--U]
-      !byte $A4,$F3                   ; ANDA [,--S]
-      !byte $A4,$9C,$FF               ; ANDA [-$01,PC]
-      !byte $A4,$BC,$FF               ; ANDA [-$01,PC]
-      !byte $A4,$DC,$FF               ; ANDA [-$01,PC]
-      !byte $A4,$FC,$FF               ; ANDA [-$01,PC]
-      !byte $A4,$9C,$60               ; ANDA [$60,PC]
-      !byte $A4,$BC,$60               ; ANDA [$60,PC]
-      !byte $A4,$DC,$60               ; ANDA [$60,PC]
-      !byte $A4,$FC,$60               ; ANDA [$60,PC]
-      !byte $A4,$9D,$DE,$AD           ; ANDA [$DEAD,PC]
-      !byte $A4,$BD,$DE,$AD           ; ANDA [$DEAD,PC]
-      !byte $A4,$DD,$DE,$AD           ; ANDA [$DEAD,PC]
-      !byte $A4,$FD,$DE,$AD           ; ANDA [$DEAD,PC]
-      !byte $A4,$9D,$10,$00           ; ANDA [$1000,PC]
-      !byte $A4,$BD,$10,$00           ; ANDA [$1000,PC]
-      !byte $A4,$DD,$10,$00           ; ANDA [$1000,PC]
-      !byte $A4,$FD,$10,$00           ; ANDA [$1000,PC]
-      !byte $A4,$9F,$DE,$AD           ; ANDA [$DEAD]
-      !byte $A4,$BF,$DE,$AD           ; ANDA [$DEAD]
-      !byte $A4,$DF,$DE,$AD           ; ANDA [$DEAD]
-      !byte $A4,$FF,$DE,$AD           ; ANDA [$DEAD]
-      !byte $A5,$84                   ; BITA ,X
-      !byte $A5,$A4                   ; BITA ,Y
-      !byte $A5,$C4                   ; BITA ,U
-      !byte $A5,$E4                   ; BITA ,S
-      !byte $A5,$15                   ; BITA -$0B,X
-      !byte $A5,$35                   ; BITA -$0B,Y
-      !byte $A5,$55                   ; BITA -$0B,U
-      !byte $A5,$75                   ; BITA -$0B,S
-      !byte $A5,$0C                   ; BITA $0C,X
-      !byte $A5,$2C                   ; BITA $0C,Y
-      !byte $A5,$4C                   ; BITA $0C,U
-      !byte $A5,$6C                   ; BITA $0C,S
-      !byte $A5,$88,$FF               ; BITA -$01,X
-      !byte $A5,$A8,$FF               ; BITA -$01,Y
-      !byte $A5,$C8,$FF               ; BITA -$01,U
-      !byte $A5,$E8,$FF               ; BITA -$01,S
-      !byte $A5,$88,$60               ; BITA $60,X
-      !byte $A5,$A8,$60               ; BITA $60,Y
-      !byte $A5,$C8,$60               ; BITA $60,U
-      !byte $A5,$E8,$60               ; BITA $60,S
-      !byte $A5,$89,$DE,$AD           ; BITA $DEAD,X
-      !byte $A5,$A9,$DE,$AD           ; BITA $DEAD,Y
-      !byte $A5,$C9,$DE,$AD           ; BITA $DEAD,U
-      !byte $A5,$E9,$DE,$AD           ; BITA $DEAD,S
-      !byte $A5,$89,$10,$00           ; BITA $1000,X
-      !byte $A5,$A9,$10,$00           ; BITA $1000,Y
-      !byte $A5,$C9,$10,$00           ; BITA $1000,U
-      !byte $A5,$E9,$10,$00           ; BITA $1000,S
-      !byte $A5,$86                   ; BITA A,X
-      !byte $A5,$A6                   ; BITA A,Y
-      !byte $A5,$C6                   ; BITA A,U
-      !byte $A5,$E6                   ; BITA A,S
-      !byte $A5,$85                   ; BITA B,X
-      !byte $A5,$A5                   ; BITA B,Y
-      !byte $A5,$C5                   ; BITA B,U
-      !byte $A5,$E5                   ; BITA B,S
-      !byte $A5,$8B                   ; BITA D,X
-      !byte $A5,$AB                   ; BITA D,Y
-      !byte $A5,$CB                   ; BITA D,U
-      !byte $A5,$EB                   ; BITA D,S
-      !byte $A5,$80                   ; BITA ,X+
-      !byte $A5,$A0                   ; BITA ,Y+
-      !byte $A5,$C0                   ; BITA ,U+
-      !byte $A5,$E0                   ; BITA ,S+
-      !byte $A5,$81                   ; BITA ,X++
-      !byte $A5,$A1                   ; BITA ,Y++
-      !byte $A5,$C1                   ; BITA ,U++
-      !byte $A5,$E1                   ; BITA ,S++
-      !byte $A5,$82                   ; BITA ,-X
-      !byte $A5,$A2                   ; BITA ,-Y
-      !byte $A5,$C2                   ; BITA ,-U
-      !byte $A5,$E2                   ; BITA ,-S
-      !byte $A5,$83                   ; BITA ,--X
-      !byte $A5,$A3                   ; BITA ,--Y
-      !byte $A5,$C3                   ; BITA ,--U
-      !byte $A5,$E3                   ; BITA ,--S
-      !byte $A5,$8C,$FF               ; BITA -$01,PC
-      !byte $A5,$AC,$FF               ; BITA -$01,PC
-      !byte $A5,$CC,$FF               ; BITA -$01,PC
-      !byte $A5,$EC,$FF               ; BITA -$01,PC
-      !byte $A5,$8C,$60               ; BITA $60,PC
-      !byte $A5,$AC,$60               ; BITA $60,PC
-      !byte $A5,$CC,$60               ; BITA $60,PC
-      !byte $A5,$EC,$60               ; BITA $60,PC
-      !byte $A5,$8D,$DE,$AD           ; BITA $DEAD,PC
-      !byte $A5,$AD,$DE,$AD           ; BITA $DEAD,PC
-      !byte $A5,$CD,$DE,$AD           ; BITA $DEAD,PC
-      !byte $A5,$ED,$DE,$AD           ; BITA $DEAD,PC
-      !byte $A5,$8D,$10,$00           ; BITA $1000,PC
-      !byte $A5,$AD,$10,$00           ; BITA $1000,PC
-      !byte $A5,$CD,$10,$00           ; BITA $1000,PC
-      !byte $A5,$ED,$10,$00           ; BITA $1000,PC
-      !byte $A5,$94                   ; BITA [,X]
-      !byte $A5,$B4                   ; BITA [,Y]
-      !byte $A5,$D4                   ; BITA [,U]
-      !byte $A5,$F4                   ; BITA [,S]
-      !byte $A5,$98,$FF               ; BITA [-$01,X]
-      !byte $A5,$B8,$FF               ; BITA [-$01,Y]
-      !byte $A5,$D8,$FF               ; BITA [-$01,U]
-      !byte $A5,$F8,$FF               ; BITA [-$01,S]
-      !byte $A5,$98,$60               ; BITA [$60,X]
-      !byte $A5,$B8,$60               ; BITA [$60,Y]
-      !byte $A5,$D8,$60               ; BITA [$60,U]
-      !byte $A5,$F8,$60               ; BITA [$60,S]
-      !byte $A5,$99,$DE,$AD           ; BITA [$DEAD,X]
-      !byte $A5,$B9,$DE,$AD           ; BITA [$DEAD,Y]
-      !byte $A5,$D9,$DE,$AD           ; BITA [$DEAD,U]
-      !byte $A5,$F9,$DE,$AD           ; BITA [$DEAD,S]
-      !byte $A5,$99,$DE,$10           ; BITA [$DE10,X]
-      !byte $A5,$B9,$DE,$10           ; BITA [$DE10,Y]
-      !byte $A5,$D9,$DE,$10           ; BITA [$DE10,U]
-      !byte $A5,$F9,$DE,$10           ; BITA [$DE10,S]
-      !byte $A5,$96                   ; BITA [A,X]
-      !byte $A5,$B6                   ; BITA [A,Y]
-      !byte $A5,$D6                   ; BITA [A,U]
-      !byte $A5,$F6                   ; BITA [A,S]
-      !byte $A5,$95                   ; BITA [B,X]
-      !byte $A5,$B5                   ; BITA [B,Y]
-      !byte $A5,$D5                   ; BITA [B,U]
-      !byte $A5,$F5                   ; BITA [B,S]
-      !byte $A5,$9B                   ; BITA [D,X]
-      !byte $A5,$BB                   ; BITA [D,Y]
-      !byte $A5,$DB                   ; BITA [D,U]
-      !byte $A5,$FB                   ; BITA [D,S]
-      !byte $A5,$91                   ; BITA [,X++]
-      !byte $A5,$B1                   ; BITA [,Y++]
-      !byte $A5,$D1                   ; BITA [,U++]
-      !byte $A5,$F1                   ; BITA [,S++]
-      !byte $A5,$93                   ; BITA [,--X]
-      !byte $A5,$B3                   ; BITA [,--Y]
-      !byte $A5,$D3                   ; BITA [,--U]
-      !byte $A5,$F3                   ; BITA [,--S]
-      !byte $A5,$9C,$FF               ; BITA [-$01,PC]
-      !byte $A5,$BC,$FF               ; BITA [-$01,PC]
-      !byte $A5,$DC,$FF               ; BITA [-$01,PC]
-      !byte $A5,$FC,$FF               ; BITA [-$01,PC]
-      !byte $A5,$9C,$60               ; BITA [$60,PC]
-      !byte $A5,$BC,$60               ; BITA [$60,PC]
-      !byte $A5,$DC,$60               ; BITA [$60,PC]
-      !byte $A5,$FC,$60               ; BITA [$60,PC]
-      !byte $A5,$9D,$DE,$AD           ; BITA [$DEAD,PC]
-      !byte $A5,$BD,$DE,$AD           ; BITA [$DEAD,PC]
-      !byte $A5,$DD,$DE,$AD           ; BITA [$DEAD,PC]
-      !byte $A5,$FD,$DE,$AD           ; BITA [$DEAD,PC]
-      !byte $A5,$9D,$10,$00           ; BITA [$1000,PC]
-      !byte $A5,$BD,$10,$00           ; BITA [$1000,PC]
-      !byte $A5,$DD,$10,$00           ; BITA [$1000,PC]
-      !byte $A5,$FD,$10,$00           ; BITA [$1000,PC]
-      !byte $A5,$9F,$DE,$AD           ; BITA [$DEAD]
-      !byte $A5,$BF,$DE,$AD           ; BITA [$DEAD]
-      !byte $A5,$DF,$DE,$AD           ; BITA [$DEAD]
-      !byte $A5,$FF,$DE,$AD           ; BITA [$DEAD]
-      !byte $A6,$84                   ; LDA ,X
-      !byte $A6,$A4                   ; LDA ,Y
-      !byte $A6,$C4                   ; LDA ,U
-      !byte $A6,$E4                   ; LDA ,S
-      !byte $A6,$15                   ; LDA -$0B,X
-      !byte $A6,$35                   ; LDA -$0B,Y
-      !byte $A6,$55                   ; LDA -$0B,U
-      !byte $A6,$75                   ; LDA -$0B,S
-      !byte $A6,$0C                   ; LDA $0C,X
-      !byte $A6,$2C                   ; LDA $0C,Y
-      !byte $A6,$4C                   ; LDA $0C,U
-      !byte $A6,$6C                   ; LDA $0C,S
-      !byte $A6,$88,$FF               ; LDA -$01,X
-      !byte $A6,$A8,$FF               ; LDA -$01,Y
-      !byte $A6,$C8,$FF               ; LDA -$01,U
-      !byte $A6,$E8,$FF               ; LDA -$01,S
-      !byte $A6,$88,$60               ; LDA $60,X
-      !byte $A6,$A8,$60               ; LDA $60,Y
-      !byte $A6,$C8,$60               ; LDA $60,U
-      !byte $A6,$E8,$60               ; LDA $60,S
-      !byte $A6,$89,$DE,$AD           ; LDA $DEAD,X
-      !byte $A6,$A9,$DE,$AD           ; LDA $DEAD,Y
-      !byte $A6,$C9,$DE,$AD           ; LDA $DEAD,U
-      !byte $A6,$E9,$DE,$AD           ; LDA $DEAD,S
-      !byte $A6,$89,$10,$00           ; LDA $1000,X
-      !byte $A6,$A9,$10,$00           ; LDA $1000,Y
-      !byte $A6,$C9,$10,$00           ; LDA $1000,U
-      !byte $A6,$E9,$10,$00           ; LDA $1000,S
-      !byte $A6,$86                   ; LDA A,X
-      !byte $A6,$A6                   ; LDA A,Y
-      !byte $A6,$C6                   ; LDA A,U
-      !byte $A6,$E6                   ; LDA A,S
-      !byte $A6,$85                   ; LDA B,X
-      !byte $A6,$A5                   ; LDA B,Y
-      !byte $A6,$C5                   ; LDA B,U
-      !byte $A6,$E5                   ; LDA B,S
-      !byte $A6,$8B                   ; LDA D,X
-      !byte $A6,$AB                   ; LDA D,Y
-      !byte $A6,$CB                   ; LDA D,U
-      !byte $A6,$EB                   ; LDA D,S
-      !byte $A6,$80                   ; LDA ,X+
-      !byte $A6,$A0                   ; LDA ,Y+
-      !byte $A6,$C0                   ; LDA ,U+
-      !byte $A6,$E0                   ; LDA ,S+
-      !byte $A6,$81                   ; LDA ,X++
-      !byte $A6,$A1                   ; LDA ,Y++
-      !byte $A6,$C1                   ; LDA ,U++
-      !byte $A6,$E1                   ; LDA ,S++
-      !byte $A6,$82                   ; LDA ,-X
-      !byte $A6,$A2                   ; LDA ,-Y
-      !byte $A6,$C2                   ; LDA ,-U
-      !byte $A6,$E2                   ; LDA ,-S
-      !byte $A6,$83                   ; LDA ,--X
-      !byte $A6,$A3                   ; LDA ,--Y
-      !byte $A6,$C3                   ; LDA ,--U
-      !byte $A6,$E3                   ; LDA ,--S
-      !byte $A6,$8C,$FF               ; LDA -$01,PC
-      !byte $A6,$AC,$FF               ; LDA -$01,PC
-      !byte $A6,$CC,$FF               ; LDA -$01,PC
-      !byte $A6,$EC,$FF               ; LDA -$01,PC
-      !byte $A6,$8C,$60               ; LDA $60,PC
-      !byte $A6,$AC,$60               ; LDA $60,PC
-      !byte $A6,$CC,$60               ; LDA $60,PC
-      !byte $A6,$EC,$60               ; LDA $60,PC
-      !byte $A6,$8D,$DE,$AD           ; LDA $DEAD,PC
-      !byte $A6,$AD,$DE,$AD           ; LDA $DEAD,PC
-      !byte $A6,$CD,$DE,$AD           ; LDA $DEAD,PC
-      !byte $A6,$ED,$DE,$AD           ; LDA $DEAD,PC
-      !byte $A6,$8D,$10,$00           ; LDA $1000,PC
-      !byte $A6,$AD,$10,$00           ; LDA $1000,PC
-      !byte $A6,$CD,$10,$00           ; LDA $1000,PC
-      !byte $A6,$ED,$10,$00           ; LDA $1000,PC
-      !byte $A6,$94                   ; LDA [,X]
-      !byte $A6,$B4                   ; LDA [,Y]
-      !byte $A6,$D4                   ; LDA [,U]
-      !byte $A6,$F4                   ; LDA [,S]
-      !byte $A6,$98,$FF               ; LDA [-$01,X]
-      !byte $A6,$B8,$FF               ; LDA [-$01,Y]
-      !byte $A6,$D8,$FF               ; LDA [-$01,U]
-      !byte $A6,$F8,$FF               ; LDA [-$01,S]
-      !byte $A6,$98,$60               ; LDA [$60,X]
-      !byte $A6,$B8,$60               ; LDA [$60,Y]
-      !byte $A6,$D8,$60               ; LDA [$60,U]
-      !byte $A6,$F8,$60               ; LDA [$60,S]
-      !byte $A6,$99,$DE,$AD           ; LDA [$DEAD,X]
-      !byte $A6,$B9,$DE,$AD           ; LDA [$DEAD,Y]
-      !byte $A6,$D9,$DE,$AD           ; LDA [$DEAD,U]
-      !byte $A6,$F9,$DE,$AD           ; LDA [$DEAD,S]
-      !byte $A6,$99,$DE,$10           ; LDA [$DE10,X]
-      !byte $A6,$B9,$DE,$10           ; LDA [$DE10,Y]
-      !byte $A6,$D9,$DE,$10           ; LDA [$DE10,U]
-      !byte $A6,$F9,$DE,$10           ; LDA [$DE10,S]
-      !byte $A6,$96                   ; LDA [A,X]
-      !byte $A6,$B6                   ; LDA [A,Y]
-      !byte $A6,$D6                   ; LDA [A,U]
-      !byte $A6,$F6                   ; LDA [A,S]
-      !byte $A6,$95                   ; LDA [B,X]
-      !byte $A6,$B5                   ; LDA [B,Y]
-      !byte $A6,$D5                   ; LDA [B,U]
-      !byte $A6,$F5                   ; LDA [B,S]
-      !byte $A6,$9B                   ; LDA [D,X]
-      !byte $A6,$BB                   ; LDA [D,Y]
-      !byte $A6,$DB                   ; LDA [D,U]
-      !byte $A6,$FB                   ; LDA [D,S]
-      !byte $A6,$91                   ; LDA [,X++]
-      !byte $A6,$B1                   ; LDA [,Y++]
-      !byte $A6,$D1                   ; LDA [,U++]
-      !byte $A6,$F1                   ; LDA [,S++]
-      !byte $A6,$93                   ; LDA [,--X]
-      !byte $A6,$B3                   ; LDA [,--Y]
-      !byte $A6,$D3                   ; LDA [,--U]
-      !byte $A6,$F3                   ; LDA [,--S]
-      !byte $A6,$9C,$FF               ; LDA [-$01,PC]
-      !byte $A6,$BC,$FF               ; LDA [-$01,PC]
-      !byte $A6,$DC,$FF               ; LDA [-$01,PC]
-      !byte $A6,$FC,$FF               ; LDA [-$01,PC]
-      !byte $A6,$9C,$60               ; LDA [$60,PC]
-      !byte $A6,$BC,$60               ; LDA [$60,PC]
-      !byte $A6,$DC,$60               ; LDA [$60,PC]
-      !byte $A6,$FC,$60               ; LDA [$60,PC]
-      !byte $A6,$9D,$DE,$AD           ; LDA [$DEAD,PC]
-      !byte $A6,$BD,$DE,$AD           ; LDA [$DEAD,PC]
-      !byte $A6,$DD,$DE,$AD           ; LDA [$DEAD,PC]
-      !byte $A6,$FD,$DE,$AD           ; LDA [$DEAD,PC]
-      !byte $A6,$9D,$10,$00           ; LDA [$1000,PC]
-      !byte $A6,$BD,$10,$00           ; LDA [$1000,PC]
-      !byte $A6,$DD,$10,$00           ; LDA [$1000,PC]
-      !byte $A6,$FD,$10,$00           ; LDA [$1000,PC]
-      !byte $A6,$9F,$DE,$AD           ; LDA [$DEAD]
-      !byte $A6,$BF,$DE,$AD           ; LDA [$DEAD]
-      !byte $A6,$DF,$DE,$AD           ; LDA [$DEAD]
-      !byte $A6,$FF,$DE,$AD           ; LDA [$DEAD]
-      !byte $A7,$84                   ; STA ,X
-      !byte $A7,$A4                   ; STA ,Y
-      !byte $A7,$C4                   ; STA ,U
-      !byte $A7,$E4                   ; STA ,S
-      !byte $A7,$15                   ; STA -$0B,X
-      !byte $A7,$35                   ; STA -$0B,Y
-      !byte $A7,$55                   ; STA -$0B,U
-      !byte $A7,$75                   ; STA -$0B,S
-      !byte $A7,$0C                   ; STA $0C,X
-      !byte $A7,$2C                   ; STA $0C,Y
-      !byte $A7,$4C                   ; STA $0C,U
-      !byte $A7,$6C                   ; STA $0C,S
-      !byte $A7,$88,$FF               ; STA -$01,X
-      !byte $A7,$A8,$FF               ; STA -$01,Y
-      !byte $A7,$C8,$FF               ; STA -$01,U
-      !byte $A7,$E8,$FF               ; STA -$01,S
-      !byte $A7,$88,$60               ; STA $60,X
-      !byte $A7,$A8,$60               ; STA $60,Y
-      !byte $A7,$C8,$60               ; STA $60,U
-      !byte $A7,$E8,$60               ; STA $60,S
-      !byte $A7,$89,$DE,$AD           ; STA $DEAD,X
-      !byte $A7,$A9,$DE,$AD           ; STA $DEAD,Y
-      !byte $A7,$C9,$DE,$AD           ; STA $DEAD,U
-      !byte $A7,$E9,$DE,$AD           ; STA $DEAD,S
-      !byte $A7,$89,$10,$00           ; STA $1000,X
-      !byte $A7,$A9,$10,$00           ; STA $1000,Y
-      !byte $A7,$C9,$10,$00           ; STA $1000,U
-      !byte $A7,$E9,$10,$00           ; STA $1000,S
-      !byte $A7,$86                   ; STA A,X
-      !byte $A7,$A6                   ; STA A,Y
-      !byte $A7,$C6                   ; STA A,U
-      !byte $A7,$E6                   ; STA A,S
-      !byte $A7,$85                   ; STA B,X
-      !byte $A7,$A5                   ; STA B,Y
-      !byte $A7,$C5                   ; STA B,U
-      !byte $A7,$E5                   ; STA B,S
-      !byte $A7,$8B                   ; STA D,X
-      !byte $A7,$AB                   ; STA D,Y
-      !byte $A7,$CB                   ; STA D,U
-      !byte $A7,$EB                   ; STA D,S
-      !byte $A7,$80                   ; STA ,X+
-      !byte $A7,$A0                   ; STA ,Y+
-      !byte $A7,$C0                   ; STA ,U+
-      !byte $A7,$E0                   ; STA ,S+
-      !byte $A7,$81                   ; STA ,X++
-      !byte $A7,$A1                   ; STA ,Y++
-      !byte $A7,$C1                   ; STA ,U++
-      !byte $A7,$E1                   ; STA ,S++
-      !byte $A7,$82                   ; STA ,-X
-      !byte $A7,$A2                   ; STA ,-Y
-      !byte $A7,$C2                   ; STA ,-U
-      !byte $A7,$E2                   ; STA ,-S
-      !byte $A7,$83                   ; STA ,--X
-      !byte $A7,$A3                   ; STA ,--Y
-      !byte $A7,$C3                   ; STA ,--U
-      !byte $A7,$E3                   ; STA ,--S
-      !byte $A7,$8C,$FF               ; STA -$01,PC
-      !byte $A7,$AC,$FF               ; STA -$01,PC
-      !byte $A7,$CC,$FF               ; STA -$01,PC
-      !byte $A7,$EC,$FF               ; STA -$01,PC
-      !byte $A7,$8C,$60               ; STA $60,PC
-      !byte $A7,$AC,$60               ; STA $60,PC
-      !byte $A7,$CC,$60               ; STA $60,PC
-      !byte $A7,$EC,$60               ; STA $60,PC
-      !byte $A7,$8D,$DE,$AD           ; STA $DEAD,PC
-      !byte $A7,$AD,$DE,$AD           ; STA $DEAD,PC
-      !byte $A7,$CD,$DE,$AD           ; STA $DEAD,PC
-      !byte $A7,$ED,$DE,$AD           ; STA $DEAD,PC
-      !byte $A7,$8D,$10,$00           ; STA $1000,PC
-      !byte $A7,$AD,$10,$00           ; STA $1000,PC
-      !byte $A7,$CD,$10,$00           ; STA $1000,PC
-      !byte $A7,$ED,$10,$00           ; STA $1000,PC
-      !byte $A7,$94                   ; STA [,X]
-      !byte $A7,$B4                   ; STA [,Y]
-      !byte $A7,$D4                   ; STA [,U]
-      !byte $A7,$F4                   ; STA [,S]
-      !byte $A7,$98,$FF               ; STA [-$01,X]
-      !byte $A7,$B8,$FF               ; STA [-$01,Y]
-      !byte $A7,$D8,$FF               ; STA [-$01,U]
-      !byte $A7,$F8,$FF               ; STA [-$01,S]
-      !byte $A7,$98,$60               ; STA [$60,X]
-      !byte $A7,$B8,$60               ; STA [$60,Y]
-      !byte $A7,$D8,$60               ; STA [$60,U]
-      !byte $A7,$F8,$60               ; STA [$60,S]
-      !byte $A7,$99,$DE,$AD           ; STA [$DEAD,X]
-      !byte $A7,$B9,$DE,$AD           ; STA [$DEAD,Y]
-      !byte $A7,$D9,$DE,$AD           ; STA [$DEAD,U]
-      !byte $A7,$F9,$DE,$AD           ; STA [$DEAD,S]
-      !byte $A7,$99,$DE,$10           ; STA [$DE10,X]
-      !byte $A7,$B9,$DE,$10           ; STA [$DE10,Y]
-      !byte $A7,$D9,$DE,$10           ; STA [$DE10,U]
-      !byte $A7,$F9,$DE,$10           ; STA [$DE10,S]
-      !byte $A7,$96                   ; STA [A,X]
-      !byte $A7,$B6                   ; STA [A,Y]
-      !byte $A7,$D6                   ; STA [A,U]
-      !byte $A7,$F6                   ; STA [A,S]
-      !byte $A7,$95                   ; STA [B,X]
-      !byte $A7,$B5                   ; STA [B,Y]
-      !byte $A7,$D5                   ; STA [B,U]
-      !byte $A7,$F5                   ; STA [B,S]
-      !byte $A7,$9B                   ; STA [D,X]
-      !byte $A7,$BB                   ; STA [D,Y]
-      !byte $A7,$DB                   ; STA [D,U]
-      !byte $A7,$FB                   ; STA [D,S]
-      !byte $A7,$91                   ; STA [,X++]
-      !byte $A7,$B1                   ; STA [,Y++]
-      !byte $A7,$D1                   ; STA [,U++]
-      !byte $A7,$F1                   ; STA [,S++]
-      !byte $A7,$93                   ; STA [,--X]
-      !byte $A7,$B3                   ; STA [,--Y]
-      !byte $A7,$D3                   ; STA [,--U]
-      !byte $A7,$F3                   ; STA [,--S]
-      !byte $A7,$9C,$FF               ; STA [-$01,PC]
-      !byte $A7,$BC,$FF               ; STA [-$01,PC]
-      !byte $A7,$DC,$FF               ; STA [-$01,PC]
-      !byte $A7,$FC,$FF               ; STA [-$01,PC]
-      !byte $A7,$9C,$60               ; STA [$60,PC]
-      !byte $A7,$BC,$60               ; STA [$60,PC]
-      !byte $A7,$DC,$60               ; STA [$60,PC]
-      !byte $A7,$FC,$60               ; STA [$60,PC]
-      !byte $A7,$9D,$DE,$AD           ; STA [$DEAD,PC]
-      !byte $A7,$BD,$DE,$AD           ; STA [$DEAD,PC]
-      !byte $A7,$DD,$DE,$AD           ; STA [$DEAD,PC]
-      !byte $A7,$FD,$DE,$AD           ; STA [$DEAD,PC]
-      !byte $A7,$9D,$10,$00           ; STA [$1000,PC]
-      !byte $A7,$BD,$10,$00           ; STA [$1000,PC]
-      !byte $A7,$DD,$10,$00           ; STA [$1000,PC]
-      !byte $A7,$FD,$10,$00           ; STA [$1000,PC]
-      !byte $A7,$9F,$DE,$AD           ; STA [$DEAD]
-      !byte $A7,$BF,$DE,$AD           ; STA [$DEAD]
-      !byte $A7,$DF,$DE,$AD           ; STA [$DEAD]
-      !byte $A7,$FF,$DE,$AD           ; STA [$DEAD]
       !byte $A8,$84                   ; EORA ,X
       !byte $A8,$A4                   ; EORA ,Y
       !byte $A8,$C4                   ; EORA ,U
