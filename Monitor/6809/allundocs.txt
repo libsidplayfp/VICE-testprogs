@@ -1,5 +1,3 @@
-; This list is WIP, don't use till everyhing is filled in
-
 !byte $10,$16,$12,$34            ; LBRA $xxxx
 !byte $10,$20,$12,$34            ; LBRA $xxxx
 !byte $11,$16,$12,$34            ; LBRA $xxxx
