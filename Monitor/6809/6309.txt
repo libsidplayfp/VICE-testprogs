@@ -552,486 +552,512 @@
 !byte $2D,$12                   ; BLT $xxxx
 !byte $2E,$12                   ; BGT $xxxx
 !byte $2F,$12                   ; BLE $xxxx
-    !byte $30,$0C                   ; LEAX $0C,X
-    !byte $30,$15                   ; LEAX -$0B,X
-    !byte $30,$2C                   ; LEAX $0C,Y
-    !byte $30,$35                   ; LEAX -$0B,Y
-    !byte $30,$4C                   ; LEAX $0C,U
-    !byte $30,$55                   ; LEAX -$0B,U
-    !byte $30,$6C                   ; LEAX $0C,S
-    !byte $30,$75                   ; LEAX -$0B,S
-    !byte $30,$80                   ; LEAX ,X+
-    !byte $30,$81                   ; LEAX ,X++
-    !byte $30,$82                   ; LEAX ,-X
-    !byte $30,$83                   ; LEAX ,--X
-    !byte $30,$84                   ; LEAX ,X
-    !byte $30,$85                   ; LEAX B,X
-    !byte $30,$86                   ; LEAX A,X
-    !byte $30,$87                    ; LEAX ,X
-    !byte $30,$88,$60               ; LEAX $60,X
-    !byte $30,$88,$FF               ; LEAX -$01,X
-    !byte $30,$89,$10,$00           ; LEAX $1000,X
-    !byte $30,$89,$DE,$AD           ; LEAX $DEAD,X
-    !byte $30,$8A                    ; LEAX ,PClo
-    !byte $30,$8B                   ; LEAX D,X
-    !byte $30,$8C,$60               ; LEAX $60,PC
-    !byte $30,$8C,$FF               ; LEAX -$01,PC
-    !byte $30,$8D,$10,$00           ; LEAX $1000,PC
-    !byte $30,$8D,$DE,$AD           ; LEAX $DEAD,PC
-    !byte $30,$8F,$DE,$AD            ; LEAX ,$DEAD
-    !byte $30,$90,$DE,$AD            ; LEAX [,X+]
-    !byte $30,$91                   ; LEAX [,X++]
-    !byte $30,$92,$DE,$AD            ; LEAX [,-X]
-    !byte $30,$93                   ; LEAX [,--X]
-    !byte $30,$94                   ; LEAX [,X]
-    !byte $30,$95                   ; LEAX [B,X]
-    !byte $30,$96                   ; LEAX [A,X]
-    !byte $30,$97,$DE,$AD            ; LEAX [,X]
-    !byte $30,$98,$60               ; LEAX [$60,X]
-    !byte $30,$98,$FF               ; LEAX [-$01,X]
-    !byte $30,$99,$DE,$10           ; LEAX [$DE10,X]
-    !byte $30,$99,$DE,$AD           ; LEAX [$DEAD,X]
-    !byte $30,$9A,$DE,$AD            ; LEAX [,PClo]
-    !byte $30,$9B                   ; LEAX [D,X]
-    !byte $30,$9C,$60               ; LEAX [$60,PC]
-    !byte $30,$9C,$FF               ; LEAX [-$01,PC]
-    !byte $30,$9D,$10,$00           ; LEAX [$1000,PC]
-    !byte $30,$9D,$DE,$AD           ; LEAX [$DEAD,PC]
-    !byte $30,$9F,$DE,$AD           ; LEAX [$DEAD]
-    !byte $30,$A0                   ; LEAX ,Y+
-    !byte $30,$A1                   ; LEAX ,Y++
-    !byte $30,$A2                   ; LEAX ,-Y
-    !byte $30,$A3                   ; LEAX ,--Y
-    !byte $30,$A4                   ; LEAX ,Y
-    !byte $30,$A5                   ; LEAX B,Y
-    !byte $30,$A6                   ; LEAX A,Y
-    !byte $30,$A7                    ; LEAX ,Y
-    !byte $30,$A8,$60               ; LEAX $60,Y
-    !byte $30,$A8,$FF               ; LEAX -$01,Y
-    !byte $30,$A9,$10,$00           ; LEAX $1000,Y
-    !byte $30,$A9,$DE,$AD           ; LEAX $DEAD,Y
-    !byte $30,$AA                    ; LEAX ,PClo
-    !byte $30,$AB                   ; LEAX D,Y
-    !byte $30,$AC,$60               ; LEAX $60,PC
-    !byte $30,$AC,$FF               ; LEAX -$01,PC
-    !byte $30,$AD,$10,$00           ; LEAX $1000,PC
-    !byte $30,$AD,$DE,$AD           ; LEAX $DEAD,PC
-    !byte $30,$AF,$DE,$AD            ; LEAX ,$DEAD
-    !byte $30,$B0,$DE,$AD            ; LEAX [,Y+]
-    !byte $30,$B1                   ; LEAX [,Y++]
-    !byte $30,$B2,$DE,$AD            ; LEAX [,-Y]
-    !byte $30,$B3                   ; LEAX [,--Y]
-    !byte $30,$B4                   ; LEAX [,Y]
-    !byte $30,$B5                   ; LEAX [B,Y]
-    !byte $30,$B6                   ; LEAX [A,Y]
-    !byte $30,$B7,$DE,$AD            ; LEAX [,Y]
-    !byte $30,$B8,$60               ; LEAX [$60,Y]
-    !byte $30,$B8,$FF               ; LEAX [-$01,Y]
-    !byte $30,$B9,$DE,$10           ; LEAX [$DE10,Y]
-    !byte $30,$B9,$DE,$AD           ; LEAX [$DEAD,Y]
-    !byte $30,$BA,$DE,$AD            ; LEAX [,PClo]
-    !byte $30,$BB                   ; LEAX [D,Y]
-    !byte $30,$BC,$60               ; LEAX [$60,PC]
-    !byte $30,$BC,$FF               ; LEAX [-$01,PC]
-    !byte $30,$BD,$10,$00           ; LEAX [$1000,PC]
-    !byte $30,$BD,$DE,$AD           ; LEAX [$DEAD,PC]
-    !byte $30,$BF,$DE,$AD           ; LEAX [$DEAD]
-    !byte $30,$C0                   ; LEAX ,U+
-    !byte $30,$C1                   ; LEAX ,U++
-    !byte $30,$C2                   ; LEAX ,-U
-    !byte $30,$C3                   ; LEAX ,--U
-    !byte $30,$C4                   ; LEAX ,U
-    !byte $30,$C5                   ; LEAX B,U
-    !byte $30,$C6                   ; LEAX A,U
-    !byte $30,$C7                    ; LEAX ,U
-    !byte $30,$C8,$60               ; LEAX $60,U
-    !byte $30,$C8,$FF               ; LEAX -$01,U
-    !byte $30,$C9,$10,$00           ; LEAX $1000,U
-    !byte $30,$C9,$DE,$AD           ; LEAX $DEAD,U
-    !byte $30,$CA                    ; LEAX ,PClo
-    !byte $30,$CB                   ; LEAX D,U
-    !byte $30,$CC,$60               ; LEAX $60,PC
-    !byte $30,$CC,$FF               ; LEAX -$01,PC
-    !byte $30,$CD,$10,$00           ; LEAX $1000,PC
-    !byte $30,$CD,$DE,$AD           ; LEAX $DEAD,PC
-    !byte $30,$CF,$DE,$AD            ; LEAX ,$DEAD
-    !byte $30,$D0,$DE,$AD            ; LEAX [,U+]
-    !byte $30,$D1                   ; LEAX [,U++]
-    !byte $30,$D2,$DE,$AD            ; LEAX [,-U]
-    !byte $30,$D3                   ; LEAX [,--U]
-    !byte $30,$D4                   ; LEAX [,U]
-    !byte $30,$D5                   ; LEAX [B,U]
-    !byte $30,$D6                   ; LEAX [A,U]
-    !byte $30,$D7,$DE,$AD            ; LEAX [,U]
-    !byte $30,$D8,$60               ; LEAX [$60,U]
-    !byte $30,$D8,$FF               ; LEAX [-$01,U]
-    !byte $30,$D9,$DE,$10           ; LEAX [$DE10,U]
-    !byte $30,$D9,$DE,$AD           ; LEAX [$DEAD,U]
-    !byte $30,$DA,$DE,$AD            ; LEAX [,PClo]
-    !byte $30,$DB                   ; LEAX [D,U]
-    !byte $30,$DC,$60               ; LEAX [$60,PC]
-    !byte $30,$DC,$FF               ; LEAX [-$01,PC]
-    !byte $30,$DD,$10,$00           ; LEAX [$1000,PC]
-    !byte $30,$DD,$DE,$AD           ; LEAX [$DEAD,PC]
-    !byte $30,$DF,$DE,$AD           ; LEAX [$DEAD]
-    !byte $30,$E0                   ; LEAX ,S+
-    !byte $30,$E1                   ; LEAX ,S++
-    !byte $30,$E2                   ; LEAX ,-S
-    !byte $30,$E3                   ; LEAX ,--S
-    !byte $30,$E4                   ; LEAX ,S
-    !byte $30,$E5                   ; LEAX B,S
-    !byte $30,$E6                   ; LEAX A,S
-    !byte $30,$E7                    ; LEAX ,S
-    !byte $30,$E8,$60               ; LEAX $60,S
-    !byte $30,$E8,$FF               ; LEAX -$01,S
-    !byte $30,$E9,$10,$00           ; LEAX $1000,S
-    !byte $30,$E9,$DE,$AD           ; LEAX $DEAD,S
-    !byte $30,$EA                    ; LEAX ,PClo
-    !byte $30,$EB                   ; LEAX D,S
-    !byte $30,$EC,$60               ; LEAX $60,PC
-    !byte $30,$EC,$FF               ; LEAX -$01,PC
-    !byte $30,$ED,$10,$00           ; LEAX $1000,PC
-    !byte $30,$ED,$DE,$AD           ; LEAX $DEAD,PC
-    !byte $30,$EF,$DE,$AD            ; LEAX ,$DEAD
-    !byte $30,$F0,$DE,$AD            ; LEAX [,S+]
-    !byte $30,$F1                   ; LEAX [,S++]
-    !byte $30,$F2,$DE,$AD            ; LEAX [,-S]
-    !byte $30,$F3                   ; LEAX [,--S]
-    !byte $30,$F4                   ; LEAX [,S]
-    !byte $30,$F5                   ; LEAX [B,S]
-    !byte $30,$F6                   ; LEAX [A,S]
-    !byte $30,$F7,$DE,$AD            ; LEAX [,S]
-    !byte $30,$F8,$60               ; LEAX [$60,S]
-    !byte $30,$F8,$FF               ; LEAX [-$01,S]
-    !byte $30,$F9,$DE,$10           ; LEAX [$DE10,S]
-    !byte $30,$F9,$DE,$AD           ; LEAX [$DEAD,S]
-    !byte $30,$FA,$DE,$AD            ; LEAX [,PClo]
-    !byte $30,$FB                   ; LEAX [D,S]
-    !byte $30,$FC,$60               ; LEAX [$60,PC]
-    !byte $30,$FC,$FF               ; LEAX [-$01,PC]
-    !byte $30,$FD,$10,$00           ; LEAX [$1000,PC]
-    !byte $30,$FD,$DE,$AD           ; LEAX [$DEAD,PC]
-    !byte $30,$FF,$DE,$AD           ; LEAX [$DEAD]
-    !byte $31,$0C                   ; LEAY $0C,X
-    !byte $31,$15                   ; LEAY -$0B,X
-    !byte $31,$2C                   ; LEAY $0C,Y
-    !byte $31,$35                   ; LEAY -$0B,Y
-    !byte $31,$4C                   ; LEAY $0C,U
-    !byte $31,$55                   ; LEAY -$0B,U
-    !byte $31,$6C                   ; LEAY $0C,S
-    !byte $31,$75                   ; LEAY -$0B,S
-    !byte $31,$80                   ; LEAY ,X+
-    !byte $31,$81                   ; LEAY ,X++
-    !byte $31,$82                   ; LEAY ,-X
-    !byte $31,$83                   ; LEAY ,--X
-    !byte $31,$84                   ; LEAY ,X
-    !byte $31,$85                   ; LEAY B,X
-    !byte $31,$86                   ; LEAY A,X
-    !byte $31,$87                    ; LEAY ,X
-    !byte $31,$88,$60               ; LEAY $60,X
-    !byte $31,$88,$FF               ; LEAY -$01,X
-    !byte $31,$89,$10,$00           ; LEAY $1000,X
-    !byte $31,$89,$DE,$AD           ; LEAY $DEAD,X
-    !byte $31,$8A                    ; LEAY ,PClo
-    !byte $31,$8B                   ; LEAY D,X
-    !byte $31,$8C,$60               ; LEAY $60,PC
-    !byte $31,$8C,$FF               ; LEAY -$01,PC
-    !byte $31,$8D,$10,$00           ; LEAY $1000,PC
-    !byte $31,$8D,$DE,$AD           ; LEAY $DEAD,PC
-    !byte $31,$8F,$DE,$AD            ; LEAY ,$DEAD
-    !byte $31,$90                    ; LEAY [,X+]
-    !byte $31,$91                   ; LEAY [,X++]
-    !byte $31,$92                    ; LEAY [,-X]
-    !byte $31,$93                   ; LEAY [,--X]
-    !byte $31,$94                   ; LEAY [,X]
-    !byte $31,$95                   ; LEAY [B,X]
-    !byte $31,$96                   ; LEAY [A,X]
-    !byte $31,$97                    ; LEAY [,X]
-    !byte $31,$98,$60               ; LEAY [$60,X]
-    !byte $31,$98,$FF               ; LEAY [-$01,X]
-    !byte $31,$99,$DE,$10           ; LEAY [$DE10,X]
-    !byte $31,$99,$DE,$AD           ; LEAY [$DEAD,X]
-    !byte $31,$9A                    ; LEAY [,PClo]
-    !byte $31,$9B                   ; LEAY [D,X]
-    !byte $31,$9C,$60               ; LEAY [$60,PC]
-    !byte $31,$9C,$FF               ; LEAY [-$01,PC]
-    !byte $31,$9D,$10,$00           ; LEAY [$1000,PC]
-    !byte $31,$9D,$DE,$AD           ; LEAY [$DEAD,PC]
-    !byte $31,$9F,$DE,$AD           ; LEAY [$DEAD]
-    !byte $31,$A0                   ; LEAY ,Y+
-    !byte $31,$A1                   ; LEAY ,Y++
-    !byte $31,$A2                   ; LEAY ,-Y
-    !byte $31,$A3                   ; LEAY ,--Y
-    !byte $31,$A4                   ; LEAY ,Y
-    !byte $31,$A5                   ; LEAY B,Y
-    !byte $31,$A6                   ; LEAY A,Y
-    !byte $31,$A7                    ; LEAY ,Y
-    !byte $31,$A8,$60               ; LEAY $60,Y
-    !byte $31,$A8,$FF               ; LEAY -$01,Y
-    !byte $31,$A9,$10,$00           ; LEAY $1000,Y
-    !byte $31,$A9,$DE,$AD           ; LEAY $DEAD,Y
-    !byte $31,$AA                    ; LEAY ,PClo
-    !byte $31,$AB                   ; LEAY D,Y
-    !byte $31,$AC,$60               ; LEAY $60,PC
-    !byte $31,$AC,$FF               ; LEAY -$01,PC
-    !byte $31,$AD,$10,$00           ; LEAY $1000,PC
-    !byte $31,$AD,$DE,$AD           ; LEAY $DEAD,PC
-    !byte $31,$AF,$DE,$AD            ; LEAY ,$DEAD
-    !byte $31,$B0                    ; LEAY [,Y+]
-    !byte $31,$B1                   ; LEAY [,Y++]
-    !byte $31,$B2                    ; LEAY [,-Y]
-    !byte $31,$B3                   ; LEAY [,--Y]
-    !byte $31,$B4                   ; LEAY [,Y]
-    !byte $31,$B5                   ; LEAY [B,Y]
-    !byte $31,$B6                   ; LEAY [A,Y]
-    !byte $31,$B7                    ; LEAY [,Y]
-    !byte $31,$B8,$60               ; LEAY [$60,Y]
-    !byte $31,$B8,$FF               ; LEAY [-$01,Y]
-    !byte $31,$B9,$DE,$10           ; LEAY [$DE10,Y]
-    !byte $31,$B9,$DE,$AD           ; LEAY [$DEAD,Y]
-    !byte $31,$BA                    ; LEAY [,PClo]
-    !byte $31,$BB                   ; LEAY [D,Y]
-    !byte $31,$BC,$60               ; LEAY [$60,PC]
-    !byte $31,$BC,$FF               ; LEAY [-$01,PC]
-    !byte $31,$BD,$10,$00           ; LEAY [$1000,PC]
-    !byte $31,$BD,$DE,$AD           ; LEAY [$DEAD,PC]
-    !byte $31,$BF,$DE,$AD           ; LEAY [$DEAD]
-    !byte $31,$C0                   ; LEAY ,U+
-    !byte $31,$C1                   ; LEAY ,U++
-    !byte $31,$C2                   ; LEAY ,-U
-    !byte $31,$C3                   ; LEAY ,--U
-    !byte $31,$C4                   ; LEAY ,U
-    !byte $31,$C5                   ; LEAY B,U
-    !byte $31,$C6                   ; LEAY A,U
-    !byte $31,$C7                    ; LEAY ,U
-    !byte $31,$C8,$60               ; LEAY $60,U
-    !byte $31,$C8,$FF               ; LEAY -$01,U
-    !byte $31,$C9,$10,$00           ; LEAY $1000,U
-    !byte $31,$C9,$DE,$AD           ; LEAY $DEAD,U
-    !byte $31,$CA                    ; LEAY ,PClo
-    !byte $31,$CB                   ; LEAY D,U
-    !byte $31,$CC,$60               ; LEAY $60,PC
-    !byte $31,$CC,$FF               ; LEAY -$01,PC
-    !byte $31,$CD,$10,$00           ; LEAY $1000,PC
-    !byte $31,$CD,$DE,$AD           ; LEAY $DEAD,PC
-    !byte $31,$CF,$DE,$AD            ; LEAY ,$DEAD
-    !byte $31,$D0                    ; LEAY [,U+]
-    !byte $31,$D1                   ; LEAY [,U++]
-    !byte $31,$D2                    ; LEAY [,-U]
-    !byte $31,$D3                   ; LEAY [,--U]
-    !byte $31,$D4                   ; LEAY [,U]
-    !byte $31,$D5                   ; LEAY [B,U]
-    !byte $31,$D6                   ; LEAY [A,U]
-    !byte $31,$D7                    ; LEAY [,U]
-    !byte $31,$D8,$60               ; LEAY [$60,U]
-    !byte $31,$D8,$FF               ; LEAY [-$01,U]
-    !byte $31,$D9,$DE,$10           ; LEAY [$DE10,U]
-    !byte $31,$D9,$DE,$AD           ; LEAY [$DEAD,U]
-    !byte $31,$DA                    ; LEAY [,PClo]
-    !byte $31,$DB                   ; LEAY [D,U]
-    !byte $31,$DC,$60               ; LEAY [$60,PC]
-    !byte $31,$DC,$FF               ; LEAY [-$01,PC]
-    !byte $31,$DD,$10,$00           ; LEAY [$1000,PC]
-    !byte $31,$DD,$DE,$AD           ; LEAY [$DEAD,PC]
-    !byte $31,$DF,$DE,$AD           ; LEAY [$DEAD]
-    !byte $31,$E0                   ; LEAY ,S+
-    !byte $31,$E1                   ; LEAY ,S++
-    !byte $31,$E2                   ; LEAY ,-S
-    !byte $31,$E3                   ; LEAY ,--S
-    !byte $31,$E4                   ; LEAY ,S
-    !byte $31,$E5                   ; LEAY B,S
-    !byte $31,$E6                   ; LEAY A,S
-    !byte $31,$E7                    ; LEAY ,S
-    !byte $31,$E8,$60               ; LEAY $60,S
-    !byte $31,$E8,$FF               ; LEAY -$01,S
-    !byte $31,$E9,$10,$00           ; LEAY $1000,S
-    !byte $31,$E9,$DE,$AD           ; LEAY $DEAD,S
-    !byte $31,$EA                    ; LEAY ,PClo
-    !byte $31,$EB                   ; LEAY D,S
-    !byte $31,$EC,$60               ; LEAY $60,PC
-    !byte $31,$EC,$FF               ; LEAY -$01,PC
-    !byte $31,$ED,$10,$00           ; LEAY $1000,PC
-    !byte $31,$ED,$DE,$AD           ; LEAY $DEAD,PC
-    !byte $31,$EF,$DE,$AD            ; LEAY ,$DEAD
-    !byte $31,$F0                    ; LEAY [,S+]
-    !byte $31,$F1                   ; LEAY [,S++]
-    !byte $31,$F2                    ; LEAY [,-S]
-    !byte $31,$F3                   ; LEAY [,--S]
-    !byte $31,$F4                   ; LEAY [,S]
-    !byte $31,$F5                   ; LEAY [B,S]
-    !byte $31,$F6                   ; LEAY [A,S]
-    !byte $31,$F7                    ; LEAY [,S]
-    !byte $31,$F8,$60               ; LEAY [$60,S]
-    !byte $31,$F8,$FF               ; LEAY [-$01,S]
-    !byte $31,$F9,$DE,$10           ; LEAY [$DE10,S]
-    !byte $31,$F9,$DE,$AD           ; LEAY [$DEAD,S]
-    !byte $31,$FA                    ; LEAY [,PClo]
-    !byte $31,$FB                   ; LEAY [D,S]
-    !byte $31,$FC,$60               ; LEAY [$60,PC]
-    !byte $31,$FC,$FF               ; LEAY [-$01,PC]
-    !byte $31,$FD,$10,$00           ; LEAY [$1000,PC]
-    !byte $31,$FD,$DE,$AD           ; LEAY [$DEAD,PC]
-    !byte $31,$FF,$DE,$AD           ; LEAY [$DEAD]
-    !byte $32,$0C                   ; LEAS $0C,X
-    !byte $32,$15                   ; LEAS -$0B,X
-    !byte $32,$2C                   ; LEAS $0C,Y
-    !byte $32,$35                   ; LEAS -$0B,Y
-    !byte $32,$4C                   ; LEAS $0C,U
-    !byte $32,$55                   ; LEAS -$0B,U
-    !byte $32,$6C                   ; LEAS $0C,S
-    !byte $32,$75                   ; LEAS -$0B,S
-    !byte $32,$80                   ; LEAS ,X+
-    !byte $32,$81                   ; LEAS ,X++
-    !byte $32,$82                   ; LEAS ,-X
-    !byte $32,$83                   ; LEAS ,--X
-    !byte $32,$84                   ; LEAS ,X
-    !byte $32,$85                   ; LEAS B,X
-    !byte $32,$86                   ; LEAS A,X
-    !byte $32,$87                    ; LEAS ,X
-    !byte $32,$88,$60               ; LEAS $60,X
-    !byte $32,$88,$FF               ; LEAS -$01,X
-    !byte $32,$89,$10,$00           ; LEAS $1000,X
-    !byte $32,$89,$DE,$AD           ; LEAS $DEAD,X
-    !byte $32,$8A                    ; LEAS ,PClo
-    !byte $32,$8B                   ; LEAS D,X
-    !byte $32,$8C,$60               ; LEAS $60,PC
-    !byte $32,$8C,$FF               ; LEAS -$01,PC
-    !byte $32,$8D,$10,$00           ; LEAS $1000,PC
-    !byte $32,$8D,$DE,$AD           ; LEAS $DEAD,PC
-    !byte $32,$8F,$DE,$AD            ; LEAS ,$DEAD
-    !byte $32,$90                    ; LEAS [,X+]
-    !byte $32,$91                   ; LEAS [,X++]
-    !byte $32,$92                    ; LEAS [,-X]
-    !byte $32,$93                   ; LEAS [,--X]
-    !byte $32,$94                   ; LEAS [,X]
-    !byte $32,$95                   ; LEAS [B,X]
-    !byte $32,$96                   ; LEAS [A,X]
-    !byte $32,$97                    ; LEAS [,X]
-    !byte $32,$98,$60               ; LEAS [$60,X]
-    !byte $32,$98,$FF               ; LEAS [-$01,X]
-    !byte $32,$99,$DE,$10           ; LEAS [$DE10,X]
-    !byte $32,$99,$DE,$AD           ; LEAS [$DEAD,X]
-    !byte $32,$9A                    ; LEAS [,PClo]
-    !byte $32,$9B                   ; LEAS [D,X]
-    !byte $32,$9C,$60               ; LEAS [$60,PC]
-    !byte $32,$9C,$FF               ; LEAS [-$01,PC]
-    !byte $32,$9D,$10,$00           ; LEAS [$1000,PC]
-    !byte $32,$9D,$DE,$AD           ; LEAS [$DEAD,PC]
-    !byte $32,$9F,$DE,$AD           ; LEAS [$DEAD]
-    !byte $32,$A0                   ; LEAS ,Y+
-    !byte $32,$A1                   ; LEAS ,Y++
-    !byte $32,$A2                   ; LEAS ,-Y
-    !byte $32,$A3                   ; LEAS ,--Y
-    !byte $32,$A4                   ; LEAS ,Y
-    !byte $32,$A5                   ; LEAS B,Y
-    !byte $32,$A6                   ; LEAS A,Y
-    !byte $32,$A7                    ; LEAS ,Y
-    !byte $32,$A8,$60               ; LEAS $60,Y
-    !byte $32,$A8,$FF               ; LEAS -$01,Y
-    !byte $32,$A9,$10,$00           ; LEAS $1000,Y
-    !byte $32,$A9,$DE,$AD           ; LEAS $DEAD,Y
-    !byte $32,$AA                    ; LEAS ,PClo
-    !byte $32,$AB                   ; LEAS D,Y
-    !byte $32,$AC,$60               ; LEAS $60,PC
-    !byte $32,$AC,$FF               ; LEAS -$01,PC
-    !byte $32,$AD,$10,$00           ; LEAS $1000,PC
-    !byte $32,$AD,$DE,$AD           ; LEAS $DEAD,PC
-    !byte $32,$AF,$DE,$AD            ; LEAS ,$DEAD
-    !byte $32,$B0                    ; LEAS [,Y+]
-    !byte $32,$B1                   ; LEAS [,Y++]
-    !byte $32,$B2                    ; LEAS [,-Y]
-    !byte $32,$B3                   ; LEAS [,--Y]
-    !byte $32,$B4                   ; LEAS [,Y]
-    !byte $32,$B5                   ; LEAS [B,Y]
-    !byte $32,$B6                   ; LEAS [A,Y]
-    !byte $32,$B7                    ; LEAS [,Y]
-    !byte $32,$B8,$60               ; LEAS [$60,Y]
-    !byte $32,$B8,$FF               ; LEAS [-$01,Y]
-    !byte $32,$B9,$DE,$10           ; LEAS [$DE10,Y]
-    !byte $32,$B9,$DE,$AD           ; LEAS [$DEAD,Y]
-    !byte $32,$BA                    ; LEAS [,PClo]
-    !byte $32,$BB                   ; LEAS [D,Y]
-    !byte $32,$BC,$60               ; LEAS [$60,PC]
-    !byte $32,$BC,$FF               ; LEAS [-$01,PC]
-    !byte $32,$BD,$10,$00           ; LEAS [$1000,PC]
-    !byte $32,$BD,$DE,$AD           ; LEAS [$DEAD,PC]
-    !byte $32,$BF,$DE,$AD           ; LEAS [$DEAD]
-    !byte $32,$C0                   ; LEAS ,U+
-    !byte $32,$C1                   ; LEAS ,U++
-    !byte $32,$C2                   ; LEAS ,-U
-    !byte $32,$C3                   ; LEAS ,--U
-    !byte $32,$C4                   ; LEAS ,U
-    !byte $32,$C5                   ; LEAS B,U
-    !byte $32,$C6                   ; LEAS A,U
-    !byte $32,$C7                    ; LEAS ,U
-    !byte $32,$C8,$60               ; LEAS $60,U
-    !byte $32,$C8,$FF               ; LEAS -$01,U
-    !byte $32,$C9,$10,$00           ; LEAS $1000,U
-    !byte $32,$C9,$DE,$AD           ; LEAS $DEAD,U
-    !byte $32,$CA                    ; LEAS ,PClo
-    !byte $32,$CB                   ; LEAS D,U
-    !byte $32,$CC,$60               ; LEAS $60,PC
-    !byte $32,$CC,$FF               ; LEAS -$01,PC
-    !byte $32,$CD,$10,$00           ; LEAS $1000,PC
-    !byte $32,$CD,$DE,$AD           ; LEAS $DEAD,PC
-    !byte $32,$CF,$DE,$AD            ; LEAS ,$DEAD
-    !byte $32,$D0                    ; LEAS [,U+]
-    !byte $32,$D1                   ; LEAS [,U++]
-    !byte $32,$D2                    ; LEAS [,-U]
-    !byte $32,$D3                   ; LEAS [,--U]
-    !byte $32,$D4                   ; LEAS [,U]
-    !byte $32,$D5                   ; LEAS [B,U]
-    !byte $32,$D6                   ; LEAS [A,U]
-    !byte $32,$D7                    ; LEAS [,U]
-    !byte $32,$D8,$60               ; LEAS [$60,U]
-    !byte $32,$D8,$FF               ; LEAS [-$01,U]
-    !byte $32,$D9,$DE,$10           ; LEAS [$DE10,U]
-    !byte $32,$D9,$DE,$AD           ; LEAS [$DEAD,U]
-    !byte $32,$DA                    ; LEAS [,PClo]
-    !byte $32,$DB                   ; LEAS [D,U]
-    !byte $32,$DC,$60               ; LEAS [$60,PC]
-    !byte $32,$DC,$FF               ; LEAS [-$01,PC]
-    !byte $32,$DD,$10,$00           ; LEAS [$1000,PC]
-    !byte $32,$DD,$DE,$AD           ; LEAS [$DEAD,PC]
-    !byte $32,$DF,$DE,$AD           ; LEAS [$DEAD]
-    !byte $32,$E0                   ; LEAS ,S+
-    !byte $32,$E1                   ; LEAS ,S++
-    !byte $32,$E2                   ; LEAS ,-S
-    !byte $32,$E3                   ; LEAS ,--S
-    !byte $32,$E4                   ; LEAS ,S
-    !byte $32,$E5                   ; LEAS B,S
-    !byte $32,$E6                   ; LEAS A,S
-    !byte $32,$E7                    ; LEAS ,S
-    !byte $32,$E8,$60               ; LEAS $60,S
-    !byte $32,$E8,$FF               ; LEAS -$01,S
-    !byte $32,$E9,$10,$00           ; LEAS $1000,S
-    !byte $32,$E9,$DE,$AD           ; LEAS $DEAD,S
-    !byte $32,$EA                    ; LEAS ,PClo
-    !byte $32,$EB                   ; LEAS D,S
-    !byte $32,$EC,$60               ; LEAS $60,PC
-    !byte $32,$EC,$FF               ; LEAS -$01,PC
-    !byte $32,$ED,$10,$00           ; LEAS $1000,PC
-    !byte $32,$ED,$DE,$AD           ; LEAS $DEAD,PC
-    !byte $32,$EF,$DE,$AD            ; LEAS ,$DEAD
-    !byte $32,$F0                    ; LEAS [,S+]
-    !byte $32,$F1                   ; LEAS [,S++]
-    !byte $32,$F2                    ; LEAS [,-S]
-    !byte $32,$F3                   ; LEAS [,--S]
-    !byte $32,$F4                   ; LEAS [,S]
-    !byte $32,$F5                   ; LEAS [B,S]
-    !byte $32,$F6                   ; LEAS [A,S]
-    !byte $32,$F7                    ; LEAS [,S]
-    !byte $32,$F8,$60               ; LEAS [$60,S]
-    !byte $32,$F8,$FF               ; LEAS [-$01,S]
-    !byte $32,$F9,$DE,$10           ; LEAS [$DE10,S]
-    !byte $32,$F9,$DE,$AD           ; LEAS [$DEAD,S]
-    !byte $32,$FA                    ; LEAS [,PClo]
-    !byte $32,$FB                   ; LEAS [D,S]
-    !byte $32,$FC,$60               ; LEAS [$60,PC]
-    !byte $32,$FC,$FF               ; LEAS [-$01,PC]
-    !byte $32,$FD,$10,$00           ; LEAS [$1000,PC]
-    !byte $32,$FD,$DE,$AD           ; LEAS [$DEAD,PC]
-    !byte $32,$FF,$DE,$AD           ; LEAS [$DEAD]
+!byte $30,$84                   ; LEAX ,X
+!byte $30,$A4                   ; LEAX ,Y
+!byte $30,$C4                   ; LEAX ,U
+!byte $30,$E4                   ; LEAX ,S
+!byte $30,$15                   ; LEAX -$0B,X
+!byte $30,$35                   ; LEAX -$0B,Y
+!byte $30,$55                   ; LEAX -$0B,U
+!byte $30,$75                   ; LEAX -$0B,S
+!byte $30,$0C                   ; LEAX $0C,X
+!byte $30,$2C                   ; LEAX $0C,Y
+!byte $30,$4C                   ; LEAX $0C,U
+!byte $30,$6C                   ; LEAX $0C,S
+!byte $30,$88,$FF               ; LEAX -$01,X
+!byte $30,$A8,$FF               ; LEAX -$01,Y
+!byte $30,$C8,$FF               ; LEAX -$01,U
+!byte $30,$E8,$FF               ; LEAX -$01,S
+!byte $30,$88,$60               ; LEAX $60,X
+!byte $30,$A8,$60               ; LEAX $60,Y
+!byte $30,$C8,$60               ; LEAX $60,U
+!byte $30,$E8,$60               ; LEAX $60,S
+!byte $30,$89,$DE,$AD           ; LEAX $DEAD,X
+!byte $30,$A9,$DE,$AD           ; LEAX $DEAD,Y
+!byte $30,$C9,$DE,$AD           ; LEAX $DEAD,U
+!byte $30,$E9,$DE,$AD           ; LEAX $DEAD,S
+!byte $30,$89,$10,$00           ; LEAX $1000,X
+!byte $30,$A9,$10,$00           ; LEAX $1000,Y
+!byte $30,$C9,$10,$00           ; LEAX $1000,U
+!byte $30,$E9,$10,$00           ; LEAX $1000,S
+!byte $30,$86                   ; LEAX A,X
+!byte $30,$A6                   ; LEAX A,Y
+!byte $30,$C6                   ; LEAX A,U
+!byte $30,$E6                   ; LEAX A,S
+!byte $30,$85                   ; LEAX B,X
+!byte $30,$A5                   ; LEAX B,Y
+!byte $30,$C5                   ; LEAX B,U
+!byte $30,$E5                   ; LEAX B,S
+!byte $30,$87                   ; LEAX E,X
+!byte $30,$A7                   ; LEAX E,Y
+!byte $30,$C7                   ; LEAX E,U
+!byte $30,$E7                   ; LEAX E,S
+!byte $30,$8A                   ; LEAX F,X
+!byte $30,$AA                   ; LEAX F,Y
+!byte $30,$CA                   ; LEAX F,U
+!byte $30,$EA                   ; LEAX F,S
+!byte $30,$8B                   ; LEAX D,X
+!byte $30,$AB                   ; LEAX D,Y
+!byte $30,$CB                   ; LEAX D,U
+!byte $30,$EB                   ; LEAX D,S
+!byte $30,$8E                   ; LEAX W,X
+!byte $30,$AE                   ; LEAX W,Y
+!byte $30,$CE                   ; LEAX W,U
+!byte $30,$EE                   ; LEAX W,S
+!byte $30,$80                   ; LEAX ,X+
+!byte $30,$A0                   ; LEAX ,Y+
+!byte $30,$C0                   ; LEAX ,U+
+!byte $30,$E0                   ; LEAX ,S+
+!byte $30,$81                   ; LEAX ,X++
+!byte $30,$A1                   ; LEAX ,Y++
+!byte $30,$C1                   ; LEAX ,U++
+!byte $30,$E1                   ; LEAX ,S++
+!byte $30,$82                   ; LEAX ,-X
+!byte $30,$A2                   ; LEAX ,-Y
+!byte $30,$C2                   ; LEAX ,-U
+!byte $30,$E2                   ; LEAX ,-S
+!byte $30,$83                   ; LEAX ,--X
+!byte $30,$A3                   ; LEAX ,--Y
+!byte $30,$C3                   ; LEAX ,--U
+!byte $30,$E3                   ; LEAX ,--S
+!byte $30,$8C,$FF               ; LEAX -$01,PC
+!byte $30,$AC,$FF               ; LEAX -$01,PC
+!byte $30,$CC,$FF               ; LEAX -$01,PC
+!byte $30,$EC,$FF               ; LEAX -$01,PC
+!byte $30,$8C,$60               ; LEAX $60,PC
+!byte $30,$AC,$60               ; LEAX $60,PC
+!byte $30,$CC,$60               ; LEAX $60,PC
+!byte $30,$EC,$60               ; LEAX $60,PC
+!byte $30,$8D,$DE,$AD           ; LEAX $DEAD,PC
+!byte $30,$AD,$DE,$AD           ; LEAX $DEAD,PC
+!byte $30,$CD,$DE,$AD           ; LEAX $DEAD,PC
+!byte $30,$ED,$DE,$AD           ; LEAX $DEAD,PC
+!byte $30,$8D,$10,$00           ; LEAX $1000,PC
+!byte $30,$AD,$10,$00           ; LEAX $1000,PC
+!byte $30,$CD,$10,$00           ; LEAX $1000,PC
+!byte $30,$ED,$10,$00           ; LEAX $1000,PC
+!byte $30,$8F                   ; LEAX ,W
+!byte $30,$AF,$DE,$AD           ; LEAX $DEAD,W
+!byte $30,$AF,$10,$00           ; LEAX $1000,W
+!byte $30,$CF                   ; LEAX ,W++
+!byte $30,$EF                   ; LEAX ,--W
+!byte $30,$94                   ; LEAX [,X]
+!byte $30,$B4                   ; LEAX [,Y]
+!byte $30,$D4                   ; LEAX [,U]
+!byte $30,$F4                   ; LEAX [,S]
+!byte $30,$98,$FF               ; LEAX [-$01,X]
+!byte $30,$B8,$FF               ; LEAX [-$01,Y]
+!byte $30,$D8,$FF               ; LEAX [-$01,U]
+!byte $30,$F8,$FF               ; LEAX [-$01,S]
+!byte $30,$98,$60               ; LEAX [$60,X]
+!byte $30,$B8,$60               ; LEAX [$60,Y]
+!byte $30,$D8,$60               ; LEAX [$60,U]
+!byte $30,$F8,$60               ; LEAX [$60,S]
+!byte $30,$99,$DE,$AD           ; LEAX [$DEAD,X]
+!byte $30,$B9,$DE,$AD           ; LEAX [$DEAD,Y]
+!byte $30,$D9,$DE,$AD           ; LEAX [$DEAD,U]
+!byte $30,$F9,$DE,$AD           ; LEAX [$DEAD,S]
+!byte $30,$99,$10,$00           ; LEAX [$1000,X]
+!byte $30,$B9,$10,$00           ; LEAX [$1000,Y]
+!byte $30,$D9,$10,$00           ; LEAX [$1000,U]
+!byte $30,$F9,$10,$00           ; LEAX [$1000,S]
+!byte $30,$96                   ; LEAX [A,X]
+!byte $30,$B6                   ; LEAX [A,Y]
+!byte $30,$D6                   ; LEAX [A,U]
+!byte $30,$F6                   ; LEAX [A,S]
+!byte $30,$95                   ; LEAX [B,X]
+!byte $30,$B5                   ; LEAX [B,Y]
+!byte $30,$D5                   ; LEAX [B,U]
+!byte $30,$F5                   ; LEAX [B,S]
+!byte $30,$97                   ; LEAX [E,X]
+!byte $30,$B7                   ; LEAX [E,Y]
+!byte $30,$D7                   ; LEAX [E,U]
+!byte $30,$F7                   ; LEAX [E,S]
+!byte $30,$9A                   ; LEAX [F,X]
+!byte $30,$BA                   ; LEAX [F,Y]
+!byte $30,$DA                   ; LEAX [F,U]
+!byte $30,$FA                   ; LEAX [F,S]
+!byte $30,$9B                   ; LEAX [D,X]
+!byte $30,$BB                   ; LEAX [D,Y]
+!byte $30,$DB                   ; LEAX [D,U]
+!byte $30,$FB                   ; LEAX [D,S]
+!byte $30,$9E                   ; LEAX [W,X]
+!byte $30,$BE                   ; LEAX [W,Y]
+!byte $30,$DE                   ; LEAX [W,U]
+!byte $30,$FE                   ; LEAX [W,S]
+!byte $30,$91                   ; LEAX [,X++]
+!byte $30,$B1                   ; LEAX [,Y++]
+!byte $30,$D1                   ; LEAX [,U++]
+!byte $30,$F1                   ; LEAX [,S++]
+!byte $30,$92                   ; LEAX [,-X]
+!byte $30,$B2                   ; LEAX [,-Y]
+!byte $30,$D2                   ; LEAX [,-U]
+!byte $30,$F2                   ; LEAX [,-S]
+!byte $30,$93                   ; LEAX [,--X]
+!byte $30,$B3                   ; LEAX [,--Y]
+!byte $30,$D3                   ; LEAX [,--U]
+!byte $30,$F3                   ; LEAX [,--S]
+!byte $30,$9C,$FF               ; LEAX [-$01,PC]
+!byte $30,$BC,$FF               ; LEAX [-$01,PC]
+!byte $30,$DC,$FF               ; LEAX [-$01,PC]
+!byte $30,$FC,$FF               ; LEAX [-$01,PC]
+!byte $30,$9C,$60               ; LEAX [$60,PC]
+!byte $30,$BC,$60               ; LEAX [$60,PC]
+!byte $30,$DC,$60               ; LEAX [$60,PC]
+!byte $30,$FC,$60               ; LEAX [$60,PC]
+!byte $30,$9D,$DE,$AD           ; LEAX [$DEAD,PC]
+!byte $30,$BD,$DE,$AD           ; LEAX [$DEAD,PC]
+!byte $30,$DD,$DE,$AD           ; LEAX [$DEAD,PC]
+!byte $30,$FD,$DE,$AD           ; LEAX [$DEAD,PC]
+!byte $30,$9D,$10,$00           ; LEAX [$1000,PC]
+!byte $30,$BD,$10,$00           ; LEAX [$1000,PC]
+!byte $30,$DD,$10,$00           ; LEAX [$1000,PC]
+!byte $30,$FD,$10,$00           ; LEAX [$1000,PC]
+!byte $30,$9F,$DE,$AD           ; LEAX [$DEAD]
+!byte $30,$BF,$DE,$AD           ; LEAX [$DEAD]
+!byte $30,$DF,$DE,$AD           ; LEAX [$DEAD]
+!byte $30,$FF,$DE,$AD           ; LEAX [$DEAD]
+!byte $30,$90                   ; LEAX [,W]
+!byte $30,$B0,$DE,$AD           ; LEAX [$DEAD,W]
+!byte $30,$D0                   ; LEAX [,W++]
+!byte $30,$F0                   ; LEAX [,--W]
+!byte $31,$84                   ; LEAY ,X
+!byte $31,$A4                   ; LEAY ,Y
+!byte $31,$C4                   ; LEAY ,U
+!byte $31,$E4                   ; LEAY ,S
+!byte $31,$15                   ; LEAY -$0B,X
+!byte $31,$35                   ; LEAY -$0B,Y
+!byte $31,$55                   ; LEAY -$0B,U
+!byte $31,$75                   ; LEAY -$0B,S
+!byte $31,$0C                   ; LEAY $0C,X
+!byte $31,$2C                   ; LEAY $0C,Y
+!byte $31,$4C                   ; LEAY $0C,U
+!byte $31,$6C                   ; LEAY $0C,S
+!byte $31,$88,$FF               ; LEAY -$01,X
+!byte $31,$A8,$FF               ; LEAY -$01,Y
+!byte $31,$C8,$FF               ; LEAY -$01,U
+!byte $31,$E8,$FF               ; LEAY -$01,S
+!byte $31,$88,$60               ; LEAY $60,X
+!byte $31,$A8,$60               ; LEAY $60,Y
+!byte $31,$C8,$60               ; LEAY $60,U
+!byte $31,$E8,$60               ; LEAY $60,S
+!byte $31,$89,$DE,$AD           ; LEAY $DEAD,X
+!byte $31,$A9,$DE,$AD           ; LEAY $DEAD,Y
+!byte $31,$C9,$DE,$AD           ; LEAY $DEAD,U
+!byte $31,$E9,$DE,$AD           ; LEAY $DEAD,S
+!byte $31,$89,$10,$00           ; LEAY $1000,X
+!byte $31,$A9,$10,$00           ; LEAY $1000,Y
+!byte $31,$C9,$10,$00           ; LEAY $1000,U
+!byte $31,$E9,$10,$00           ; LEAY $1000,S
+!byte $31,$86                   ; LEAY A,X
+!byte $31,$A6                   ; LEAY A,Y
+!byte $31,$C6                   ; LEAY A,U
+!byte $31,$E6                   ; LEAY A,S
+!byte $31,$85                   ; LEAY B,X
+!byte $31,$A5                   ; LEAY B,Y
+!byte $31,$C5                   ; LEAY B,U
+!byte $31,$E5                   ; LEAY B,S
+!byte $31,$87                   ; LEAY E,X
+!byte $31,$A7                   ; LEAY E,Y
+!byte $31,$C7                   ; LEAY E,U
+!byte $31,$E7                   ; LEAY E,S
+!byte $31,$8A                   ; LEAY F,X
+!byte $31,$AA                   ; LEAY F,Y
+!byte $31,$CA                   ; LEAY F,U
+!byte $31,$EA                   ; LEAY F,S
+!byte $31,$8B                   ; LEAY D,X
+!byte $31,$AB                   ; LEAY D,Y
+!byte $31,$CB                   ; LEAY D,U
+!byte $31,$EB                   ; LEAY D,S
+!byte $31,$8E                   ; LEAY W,X
+!byte $31,$AE                   ; LEAY W,Y
+!byte $31,$CE                   ; LEAY W,U
+!byte $31,$EE                   ; LEAY W,S
+!byte $31,$80                   ; LEAY ,X+
+!byte $31,$A0                   ; LEAY ,Y+
+!byte $31,$C0                   ; LEAY ,U+
+!byte $31,$E0                   ; LEAY ,S+
+!byte $31,$81                   ; LEAY ,X++
+!byte $31,$A1                   ; LEAY ,Y++
+!byte $31,$C1                   ; LEAY ,U++
+!byte $31,$E1                   ; LEAY ,S++
+!byte $31,$82                   ; LEAY ,-X
+!byte $31,$A2                   ; LEAY ,-Y
+!byte $31,$C2                   ; LEAY ,-U
+!byte $31,$E2                   ; LEAY ,-S
+!byte $31,$83                   ; LEAY ,--X
+!byte $31,$A3                   ; LEAY ,--Y
+!byte $31,$C3                   ; LEAY ,--U
+!byte $31,$E3                   ; LEAY ,--S
+!byte $31,$8C,$FF               ; LEAY -$01,PC
+!byte $31,$AC,$FF               ; LEAY -$01,PC
+!byte $31,$CC,$FF               ; LEAY -$01,PC
+!byte $31,$EC,$FF               ; LEAY -$01,PC
+!byte $31,$8C,$60               ; LEAY $60,PC
+!byte $31,$AC,$60               ; LEAY $60,PC
+!byte $31,$CC,$60               ; LEAY $60,PC
+!byte $31,$EC,$60               ; LEAY $60,PC
+!byte $31,$8D,$DE,$AD           ; LEAY $DEAD,PC
+!byte $31,$AD,$DE,$AD           ; LEAY $DEAD,PC
+!byte $31,$CD,$DE,$AD           ; LEAY $DEAD,PC
+!byte $31,$ED,$DE,$AD           ; LEAY $DEAD,PC
+!byte $31,$8D,$10,$00           ; LEAY $1000,PC
+!byte $31,$AD,$10,$00           ; LEAY $1000,PC
+!byte $31,$CD,$10,$00           ; LEAY $1000,PC
+!byte $31,$ED,$10,$00           ; LEAY $1000,PC
+!byte $31,$8F                   ; LEAY ,W
+!byte $31,$AF,$DE,$AD           ; LEAY $DEAD,W
+!byte $31,$CF                   ; LEAY ,W++
+!byte $31,$EF                   ; LEAY ,--W
+!byte $31,$94                   ; LEAY [,X]
+!byte $31,$B4                   ; LEAY [,Y]
+!byte $31,$D4                   ; LEAY [,U]
+!byte $31,$F4                   ; LEAY [,S]
+!byte $31,$98,$FF               ; LEAY [-$01,X]
+!byte $31,$B8,$FF               ; LEAY [-$01,Y]
+!byte $31,$D8,$FF               ; LEAY [-$01,U]
+!byte $31,$F8,$FF               ; LEAY [-$01,S]
+!byte $31,$98,$60               ; LEAY [$60,X]
+!byte $31,$B8,$60               ; LEAY [$60,Y]
+!byte $31,$D8,$60               ; LEAY [$60,U]
+!byte $31,$F8,$60               ; LEAY [$60,S]
+!byte $31,$99,$DE,$AD           ; LEAY [$DEAD,X]
+!byte $31,$B9,$DE,$AD           ; LEAY [$DEAD,Y]
+!byte $31,$D9,$DE,$AD           ; LEAY [$DEAD,U]
+!byte $31,$F9,$DE,$AD           ; LEAY [$DEAD,S]
+!byte $31,$99,$10,$00           ; LEAY [$1000,X]
+!byte $31,$B9,$10,$00           ; LEAY [$1000,Y]
+!byte $31,$D9,$10,$00           ; LEAY [$1000,U]
+!byte $31,$F9,$10,$00           ; LEAY [$1000,S]
+!byte $31,$96                   ; LEAY [A,X]
+!byte $31,$B6                   ; LEAY [A,Y]
+!byte $31,$D6                   ; LEAY [A,U]
+!byte $31,$F6                   ; LEAY [A,S]
+!byte $31,$95                   ; LEAY [B,X]
+!byte $31,$B5                   ; LEAY [B,Y]
+!byte $31,$D5                   ; LEAY [B,U]
+!byte $31,$F5                   ; LEAY [B,S]
+!byte $31,$97                   ; LEAY [E,X]
+!byte $31,$B7                   ; LEAY [E,Y]
+!byte $31,$D7                   ; LEAY [E,U]
+!byte $31,$F7                   ; LEAY [E,S]
+!byte $31,$9A                   ; LEAY [F,X]
+!byte $31,$BA                   ; LEAY [F,Y]
+!byte $31,$DA                   ; LEAY [F,U]
+!byte $31,$FA                   ; LEAY [F,S]
+!byte $31,$9B                   ; LEAY [D,X]
+!byte $31,$BB                   ; LEAY [D,Y]
+!byte $31,$DB                   ; LEAY [D,U]
+!byte $31,$FB                   ; LEAY [D,S]
+!byte $31,$9E                   ; LEAY [W,X]
+!byte $31,$BE                   ; LEAY [W,Y]
+!byte $31,$DE                   ; LEAY [W,U]
+!byte $31,$FE                   ; LEAY [W,S]
+!byte $31,$91                   ; LEAY [,X++]
+!byte $31,$B1                   ; LEAY [,Y++]
+!byte $31,$D1                   ; LEAY [,U++]
+!byte $31,$F1                   ; LEAY [,S++]
+!byte $31,$92                   ; LEAY [,-X]
+!byte $31,$B2                   ; LEAY [,-Y]
+!byte $31,$D2                   ; LEAY [,-U]
+!byte $31,$F2                   ; LEAY [,-S]
+!byte $31,$93                   ; LEAY [,--X]
+!byte $31,$B3                   ; LEAY [,--Y]
+!byte $31,$D3                   ; LEAY [,--U]
+!byte $31,$F3                   ; LEAY [,--S]
+!byte $31,$9C,$FF               ; LEAY [-$01,PC]
+!byte $31,$BC,$FF               ; LEAY [-$01,PC]
+!byte $31,$DC,$FF               ; LEAY [-$01,PC]
+!byte $31,$FC,$FF               ; LEAY [-$01,PC]
+!byte $31,$9C,$60               ; LEAY [$60,PC]
+!byte $31,$BC,$60               ; LEAY [$60,PC]
+!byte $31,$DC,$60               ; LEAY [$60,PC]
+!byte $31,$FC,$60               ; LEAY [$60,PC]
+!byte $31,$9D,$DE,$AD           ; LEAY [$DEAD,PC]
+!byte $31,$BD,$DE,$AD           ; LEAY [$DEAD,PC]
+!byte $31,$DD,$DE,$AD           ; LEAY [$DEAD,PC]
+!byte $31,$FD,$DE,$AD           ; LEAY [$DEAD,PC]
+!byte $31,$9D,$10,$00           ; LEAY [$1000,PC]
+!byte $31,$BD,$10,$00           ; LEAY [$1000,PC]
+!byte $31,$DD,$10,$00           ; LEAY [$1000,PC]
+!byte $31,$FD,$10,$00           ; LEAY [$1000,PC]
+!byte $31,$9F,$DE,$AD           ; LEAY [$DEAD]
+!byte $31,$BF,$DE,$AD           ; LEAY [$DEAD]
+!byte $31,$DF,$DE,$AD           ; LEAY [$DEAD]
+!byte $31,$FF,$DE,$AD           ; LEAY [$DEAD]
+!byte $31,$90                   ; LEAY [,W]
+!byte $31,$B0,$DE,$AD           ; LEAY [$DEAD,W]
+!byte $31,$D0                   ; LEAY [,W++]
+!byte $31,$F0                   ; LEAY [,--W]
+!byte $32,$84                   ; LEAS ,X
+!byte $32,$A4                   ; LEAS ,Y
+!byte $32,$C4                   ; LEAS ,U
+!byte $32,$E4                   ; LEAS ,S
+!byte $32,$15                   ; LEAS -$0B,X
+!byte $32,$35                   ; LEAS -$0B,Y
+!byte $32,$55                   ; LEAS -$0B,U
+!byte $32,$75                   ; LEAS -$0B,S
+!byte $32,$0C                   ; LEAS $0C,X
+!byte $32,$2C                   ; LEAS $0C,Y
+!byte $32,$4C                   ; LEAS $0C,U
+!byte $32,$6C                   ; LEAS $0C,S
+!byte $32,$88,$FF               ; LEAS -$01,X
+!byte $32,$A8,$FF               ; LEAS -$01,Y
+!byte $32,$C8,$FF               ; LEAS -$01,U
+!byte $32,$E8,$FF               ; LEAS -$01,S
+!byte $32,$88,$60               ; LEAS $60,X
+!byte $32,$A8,$60               ; LEAS $60,Y
+!byte $32,$C8,$60               ; LEAS $60,U
+!byte $32,$E8,$60               ; LEAS $60,S
+!byte $32,$89,$DE,$AD           ; LEAS $DEAD,X
+!byte $32,$A9,$DE,$AD           ; LEAS $DEAD,Y
+!byte $32,$C9,$DE,$AD           ; LEAS $DEAD,U
+!byte $32,$E9,$DE,$AD           ; LEAS $DEAD,S
+!byte $32,$89,$10,$00           ; LEAS $1000,X
+!byte $32,$A9,$10,$00           ; LEAS $1000,Y
+!byte $32,$C9,$10,$00           ; LEAS $1000,U
+!byte $32,$E9,$10,$00           ; LEAS $1000,S
+!byte $32,$86                   ; LEAS A,X
+!byte $32,$A6                   ; LEAS A,Y
+!byte $32,$C6                   ; LEAS A,U
+!byte $32,$E6                   ; LEAS A,S
+!byte $32,$85                   ; LEAS B,X
+!byte $32,$A5                   ; LEAS B,Y
+!byte $32,$C5                   ; LEAS B,U
+!byte $32,$E5                   ; LEAS B,S
+!byte $32,$87                   ; LEAS E,X
+!byte $32,$A7                   ; LEAS E,Y
+!byte $32,$C7                   ; LEAS E,U
+!byte $32,$E7                   ; LEAS E,S
+!byte $32,$8A                   ; LEAS F,X
+!byte $32,$AA                   ; LEAS F,Y
+!byte $32,$CA                   ; LEAS F,U
+!byte $32,$EA                   ; LEAS F,S
+!byte $32,$8B                   ; LEAS D,X
+!byte $32,$AB                   ; LEAS D,Y
+!byte $32,$CB                   ; LEAS D,U
+!byte $32,$EB                   ; LEAS D,S
+!byte $32,$8E                   ; LEAS W,X
+!byte $32,$AE                   ; LEAS W,Y
+!byte $32,$CE                   ; LEAS W,U
+!byte $32,$EE                   ; LEAS W,S
+!byte $32,$80                   ; LEAS ,X+
+!byte $32,$A0                   ; LEAS ,Y+
+!byte $32,$C0                   ; LEAS ,U+
+!byte $32,$E0                   ; LEAS ,S+
+!byte $32,$81                   ; LEAS ,X++
+!byte $32,$A1                   ; LEAS ,Y++
+!byte $32,$C1                   ; LEAS ,U++
+!byte $32,$E1                   ; LEAS ,S++
+!byte $32,$82                   ; LEAS ,-X
+!byte $32,$A2                   ; LEAS ,-Y
+!byte $32,$C2                   ; LEAS ,-U
+!byte $32,$E2                   ; LEAS ,-S
+!byte $32,$83                   ; LEAS ,--X
+!byte $32,$A3                   ; LEAS ,--Y
+!byte $32,$C3                   ; LEAS ,--U
+!byte $32,$E3                   ; LEAS ,--S
+!byte $32,$8C,$FF               ; LEAS -$01,PC
+!byte $32,$AC,$FF               ; LEAS -$01,PC
+!byte $32,$CC,$FF               ; LEAS -$01,PC
+!byte $32,$EC,$FF               ; LEAS -$01,PC
+!byte $32,$8C,$60               ; LEAS $60,PC
+!byte $32,$AC,$60               ; LEAS $60,PC
+!byte $32,$CC,$60               ; LEAS $60,PC
+!byte $32,$EC,$60               ; LEAS $60,PC
+!byte $32,$8D,$DE,$AD           ; LEAS $DEAD,PC
+!byte $32,$AD,$DE,$AD           ; LEAS $DEAD,PC
+!byte $32,$CD,$DE,$AD           ; LEAS $DEAD,PC
+!byte $32,$ED,$DE,$AD           ; LEAS $DEAD,PC
+!byte $32,$8D,$10,$00           ; LEAS $1000,PC
+!byte $32,$AD,$10,$00           ; LEAS $1000,PC
+!byte $32,$CD,$10,$00           ; LEAS $1000,PC
+!byte $32,$ED,$10,$00           ; LEAS $1000,PC
+!byte $32,$8F                   ; LEAS ,W
+!byte $32,$AF,$DE,$AD           ; LEAS $DEAD,W
+!byte $32,$CF                   ; LEAS ,W++
+!byte $32,$EF                   ; LEAS ,--W
+!byte $32,$94                   ; LEAS [,X]
+!byte $32,$B4                   ; LEAS [,Y]
+!byte $32,$D4                   ; LEAS [,U]
+!byte $32,$F4                   ; LEAS [,S]
+!byte $32,$98,$FF               ; LEAS [-$01,X]
+!byte $32,$B8,$FF               ; LEAS [-$01,Y]
+!byte $32,$D8,$FF               ; LEAS [-$01,U]
+!byte $32,$F8,$FF               ; LEAS [-$01,S]
+!byte $32,$98,$60               ; LEAS [$60,X]
+!byte $32,$B8,$60               ; LEAS [$60,Y]
+!byte $32,$D8,$60               ; LEAS [$60,U]
+!byte $32,$F8,$60               ; LEAS [$60,S]
+!byte $32,$99,$DE,$AD           ; LEAS [$DEAD,X]
+!byte $32,$B9,$DE,$AD           ; LEAS [$DEAD,Y]
+!byte $32,$D9,$DE,$AD           ; LEAS [$DEAD,U]
+!byte $32,$F9,$DE,$AD           ; LEAS [$DEAD,S]
+!byte $32,$99,$10,$00           ; LEAS [$1000,X]
+!byte $32,$B9,$10,$00           ; LEAS [$1000,Y]
+!byte $32,$D9,$10,$00           ; LEAS [$1000,U]
+!byte $32,$F9,$10,$00           ; LEAS [$1000,S]
+!byte $32,$96                   ; LEAS [A,X]
+!byte $32,$B6                   ; LEAS [A,Y]
+!byte $32,$D6                   ; LEAS [A,U]
+!byte $32,$F6                   ; LEAS [A,S]
+!byte $32,$95                   ; LEAS [B,X]
+!byte $32,$B5                   ; LEAS [B,Y]
+!byte $32,$D5                   ; LEAS [B,U]
+!byte $32,$F5                   ; LEAS [B,S]
+!byte $32,$97                   ; LEAS [E,X]
+!byte $32,$B7                   ; LEAS [E,Y]
+!byte $32,$D7                   ; LEAS [E,U]
+!byte $32,$F7                   ; LEAS [E,S]
+!byte $32,$9A                   ; LEAS [F,X]
+!byte $32,$BA                   ; LEAS [F,Y]
+!byte $32,$DA                   ; LEAS [F,U]
+!byte $32,$FA                   ; LEAS [F,S]
+!byte $32,$9B                   ; LEAS [D,X]
+!byte $32,$BB                   ; LEAS [D,Y]
+!byte $32,$DB                   ; LEAS [D,U]
+!byte $32,$FB                   ; LEAS [D,S]
+!byte $32,$9E                   ; LEAS [W,X]
+!byte $32,$BE                   ; LEAS [W,Y]
+!byte $32,$DE                   ; LEAS [W,U]
+!byte $32,$FE                   ; LEAS [W,S]
+!byte $32,$91                   ; LEAS [,X++]
+!byte $32,$B1                   ; LEAS [,Y++]
+!byte $32,$D1                   ; LEAS [,U++]
+!byte $32,$F1                   ; LEAS [,S++]
+!byte $32,$92                   ; LEAS [,-X]
+!byte $32,$B2                   ; LEAS [,-Y]
+!byte $32,$D2                   ; LEAS [,-U]
+!byte $32,$F2                   ; LEAS [,-S]
+!byte $32,$93                   ; LEAS [,--X]
+!byte $32,$B3                   ; LEAS [,--Y]
+!byte $32,$D3                   ; LEAS [,--U]
+!byte $32,$F3                   ; LEAS [,--S]
+!byte $32,$9C,$FF               ; LEAS [-$01,PC]
+!byte $32,$BC,$FF               ; LEAS [-$01,PC]
+!byte $32,$DC,$FF               ; LEAS [-$01,PC]
+!byte $32,$FC,$FF               ; LEAS [-$01,PC]
+!byte $32,$9C,$60               ; LEAS [$60,PC]
+!byte $32,$BC,$60               ; LEAS [$60,PC]
+!byte $32,$DC,$60               ; LEAS [$60,PC]
+!byte $32,$FC,$60               ; LEAS [$60,PC]
+!byte $32,$9D,$DE,$AD           ; LEAS [$DEAD,PC]
+!byte $32,$BD,$DE,$AD           ; LEAS [$DEAD,PC]
+!byte $32,$DD,$DE,$AD           ; LEAS [$DEAD,PC]
+!byte $32,$FD,$DE,$AD           ; LEAS [$DEAD,PC]
+!byte $32,$9D,$10,$00           ; LEAS [$1000,PC]
+!byte $32,$BD,$10,$00           ; LEAS [$1000,PC]
+!byte $32,$DD,$10,$00           ; LEAS [$1000,PC]
+!byte $32,$FD,$10,$00           ; LEAS [$1000,PC]
+!byte $32,$9F,$DE,$AD           ; LEAS [$DEAD]
+!byte $32,$BF,$DE,$AD           ; LEAS [$DEAD]
+!byte $32,$DF,$DE,$AD           ; LEAS [$DEAD]
+!byte $32,$FF,$DE,$AD           ; LEAS [$DEAD]
+!byte $32,$90                   ; LEAS [,W]
+!byte $32,$B0,$DE,$AD           ; LEAS [$DEAD,W]
+!byte $32,$D0                   ; LEAS [,W++]
+!byte $32,$F0                   ; LEAS [,--W]
+
     !byte $33,$0C                   ; LEAU $0C,X
     !byte $33,$15                   ; LEAU -$0B,X
     !byte $33,$2C                   ; LEAU $0C,Y
