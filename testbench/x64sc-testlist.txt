@@ -1352,6 +1352,8 @@
 ################################################################################
 # REU
 ################################################################################
+../REU/64ktransfer/,toc64.prg,exitcode,13000000,reu512k
+../REU/64ktransfer/,toreu.prg,exitcode,13000000,reu512k
 ../REU/badoublewrite/,badoublewrite.prg,screenshot,6800000,reu512k
 ../REU/bonzai/,spritetiming.prg,exitcode,49000000,reu512k
 ../REU/bonzai/,checkchar.prg,exitcode,12000000,reu512k
