@@ -1,0 +1,80 @@
+
+
+    * = $0801
+    !byte $0c, $08, $00, $00, $9e, $20, $34, $30, $39, $36
+    !byte 0,0,0
+
+    * = $1000
+
+    sei
+    lda #$35
+    sta $01
+
+    lda #0
+    sta $d020
+
+        ; put test data at $ff00
+        ldx #0
+-       lda buffer,x
+        sta $ff00,x
+        lda #0
+        sta $0400,x
+        inx
+        bne -
+
+        ; transfer full c64 memory to the reu
+        LDA #$00
+        STA $DF09 ; interrupt mask
+        STA $DF04 ; REU lo
+        STA $DF06 ; REU bank
+        STA $DF05 ; REU hi
+        LDA #0
+        STA $DF03 ; c64 hi
+        LDA #0
+        STA $DF02 ; c64 lo
+        LDA #>$0000
+        STA $DF08 ; length hi
+        LDA #<$0000
+        STA $DF07 ; length lo
+        LDA #$00
+        STA $DF0A ; addr control  normal
+        LDA #$B0
+        STA $DF01 ; command     execute, autoload, immediately, C64 -> REU
+
+        ; transfer last page back
+        LDA #$00
+        STA $DF09 ; interrupt mask
+        STA $DF04 ; REU lo
+        STA $DF06 ; REU bank
+        lda #$ff
+        STA $DF05 ; REU hi
+        LDA #>$0400
+        STA $DF03 ; c64 hi
+        LDA #<$0400
+        STA $DF02 ; c64 lo
+        LDA #>$0100
+        STA $DF08 ; length hi
+        LDA #<$0100
+        STA $DF07 ; length lo
+        LDA #$00
+        STA $DF0A ; addr control  normal
+        LDA #$B1
+        STA $DF01 ; command     execute, autoload, immediately, REU -> C64
+
+        lda $04ff
+        sta $d020
+
+        ldy #0
+        cmp #$0d    ; OK
+        beq ok
+        ldy #$ff
+ok:
+        sty $d7ff
+        jmp *
+
+    !align 255,0
+buffer:
+    !for n, 255 {
+        !byte $0a
+    }
+    !byte $0d
