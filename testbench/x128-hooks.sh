@@ -331,10 +331,14 @@ function x128_run_screenshot
 function x128_run_exitcode
 {
     if [ $verbose == "1" ]; then
-        echo $X128 $X128OPTS ${@:5} "-limitcycles" "$3" "$4"
+        echo $X128 $X128OPTS $X128OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4"
+        $X128 $X128OPTS $X128OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 2> /dev/null | grep "cycles elapsed" | tr '\n' ' '
+        exitcode=${PIPESTATUS[0]}
+    else
+        $X128 $X128OPTS $X128OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
+        exitcode=$?
     fi
-    $X128 $X128OPTS $X128OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
-#    $X128 $X128OPTS $X128OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4"
-    exitcode=$?
-#    echo "exited with: " $exitcode
+    if [ $verbose == "1" ]; then
+        echo $X128 "exited with: " $exitcode
+    fi
 }
