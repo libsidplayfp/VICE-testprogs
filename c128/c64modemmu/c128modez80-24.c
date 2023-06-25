@@ -50,7 +50,7 @@ z80bios_found:
 	in a,(c)
 
 /* copy this first value into h in case it is a constant value */
-	ld h,a
+	ld l,a
 
 /* check what we got */
 	cp 0x55
@@ -169,6 +169,14 @@ d7xx_rom:
 	jr set_border
 
 d7xx_constant:
+	ld e,255
+	ld bc,0xd702
+d7xx_constant_loop:
+	in a,(c)
+	cp l
+	jr nz,d7xx_other
+	dec e
+	jr nz,d7xx_constant_loop
 	ld a,6
 	ld d,0xff
 
