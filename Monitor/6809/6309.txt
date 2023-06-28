@@ -3285,807 +3285,847 @@
 !byte $65,$33,$B0,$DE,$AD       ; EIM #$33,[$DEAD,W]
 !byte $65,$33,$D0               ; EIM #$33,[,W++]
 !byte $65,$33,$F0               ; EIM #$33,[,--W]
+!byte $66,$84                   ; ROR ,X
+!byte $66,$A4                   ; ROR ,Y
+!byte $66,$C4                   ; ROR ,U
+!byte $66,$E4                   ; ROR ,S
+!byte $66,$15                   ; ROR -$0B,X
+!byte $66,$35                   ; ROR -$0B,Y
+!byte $66,$55                   ; ROR -$0B,U
+!byte $66,$75                   ; ROR -$0B,S
+!byte $66,$0C                   ; ROR $0C,X
+!byte $66,$2C                   ; ROR $0C,Y
+!byte $66,$4C                   ; ROR $0C,U
+!byte $66,$6C                   ; ROR $0C,S
+!byte $66,$88,$FF               ; ROR -$01,X
+!byte $66,$A8,$FF               ; ROR -$01,Y
+!byte $66,$C8,$FF               ; ROR -$01,U
+!byte $66,$E8,$FF               ; ROR -$01,S
+!byte $66,$88,$60               ; ROR $60,X
+!byte $66,$A8,$60               ; ROR $60,Y
+!byte $66,$C8,$60               ; ROR $60,U
+!byte $66,$E8,$60               ; ROR $60,S
+!byte $66,$89,$DE,$AD           ; ROR $DEAD,X
+!byte $66,$A9,$DE,$AD           ; ROR $DEAD,Y
+!byte $66,$C9,$DE,$AD           ; ROR $DEAD,U
+!byte $66,$E9,$DE,$AD           ; ROR $DEAD,S
+!byte $66,$89,$10,$00           ; ROR $1000,X
+!byte $66,$A9,$10,$00           ; ROR $1000,Y
+!byte $66,$C9,$10,$00           ; ROR $1000,U
+!byte $66,$E9,$10,$00           ; ROR $1000,S
+!byte $66,$86                   ; ROR A,X
+!byte $66,$A6                   ; ROR A,Y
+!byte $66,$C6                   ; ROR A,U
+!byte $66,$E6                   ; ROR A,S
+!byte $66,$85                   ; ROR B,X
+!byte $66,$A5                   ; ROR B,Y
+!byte $66,$C5                   ; ROR B,U
+!byte $66,$E5                   ; ROR B,S
+!byte $66,$87                   ; ROR E,X
+!byte $66,$A7                   ; ROR E,Y
+!byte $66,$C7                   ; ROR E,U
+!byte $66,$E7                   ; ROR E,S
+!byte $66,$8A                   ; ROR F,X
+!byte $66,$AA                   ; ROR F,Y
+!byte $66,$CA                   ; ROR F,U
+!byte $66,$EA                   ; ROR F,S
+!byte $66,$8B                   ; ROR D,X
+!byte $66,$AB                   ; ROR D,Y
+!byte $66,$CB                   ; ROR D,U
+!byte $66,$EB                   ; ROR D,S
+!byte $66,$8E                   ; ROR W,X
+!byte $66,$AE                   ; ROR W,Y
+!byte $66,$CE                   ; ROR W,U
+!byte $66,$EE                   ; ROR W,S
+!byte $66,$80                   ; ROR ,X+
+!byte $66,$A0                   ; ROR ,Y+
+!byte $66,$C0                   ; ROR ,U+
+!byte $66,$E0                   ; ROR ,S+
+!byte $66,$81                   ; ROR ,X++
+!byte $66,$A1                   ; ROR ,Y++
+!byte $66,$C1                   ; ROR ,U++
+!byte $66,$E1                   ; ROR ,S++
+!byte $66,$82                   ; ROR ,-X
+!byte $66,$A2                   ; ROR ,-Y
+!byte $66,$C2                   ; ROR ,-U
+!byte $66,$E2                   ; ROR ,-S
+!byte $66,$83                   ; ROR ,--X
+!byte $66,$A3                   ; ROR ,--Y
+!byte $66,$C3                   ; ROR ,--U
+!byte $66,$E3                   ; ROR ,--S
+!byte $66,$8C,$FF               ; ROR -$01,PC
+!byte $66,$AC,$FF               ; ROR -$01,PC
+!byte $66,$CC,$FF               ; ROR -$01,PC
+!byte $66,$EC,$FF               ; ROR -$01,PC
+!byte $66,$8C,$60               ; ROR $60,PC
+!byte $66,$AC,$60               ; ROR $60,PC
+!byte $66,$CC,$60               ; ROR $60,PC
+!byte $66,$EC,$60               ; ROR $60,PC
+!byte $66,$8D,$DE,$AD           ; ROR $DEAD,PC
+!byte $66,$AD,$DE,$AD           ; ROR $DEAD,PC
+!byte $66,$CD,$DE,$AD           ; ROR $DEAD,PC
+!byte $66,$ED,$DE,$AD           ; ROR $DEAD,PC
+!byte $66,$8D,$10,$00           ; ROR $1000,PC
+!byte $66,$AD,$10,$00           ; ROR $1000,PC
+!byte $66,$CD,$10,$00           ; ROR $1000,PC
+!byte $66,$ED,$10,$00           ; ROR $1000,PC
+!byte $66,$8F                   ; ROR ,W
+!byte $66,$AF,$DE,$AD           ; ROR $DEAD,W
+!byte $66,$CF                   ; ROR ,W++
+!byte $66,$EF                   ; ROR ,--W
+!byte $66,$94                   ; ROR [,X]
+!byte $66,$B4                   ; ROR [,Y]
+!byte $66,$D4                   ; ROR [,U]
+!byte $66,$F4                   ; ROR [,S]
+!byte $66,$98,$FF               ; ROR [-$01,X]
+!byte $66,$B8,$FF               ; ROR [-$01,Y]
+!byte $66,$D8,$FF               ; ROR [-$01,U]
+!byte $66,$F8,$FF               ; ROR [-$01,S]
+!byte $66,$98,$60               ; ROR [$60,X]
+!byte $66,$B8,$60               ; ROR [$60,Y]
+!byte $66,$D8,$60               ; ROR [$60,U]
+!byte $66,$F8,$60               ; ROR [$60,S]
+!byte $66,$99,$DE,$AD           ; ROR [$DEAD,X]
+!byte $66,$B9,$DE,$AD           ; ROR [$DEAD,Y]
+!byte $66,$D9,$DE,$AD           ; ROR [$DEAD,U]
+!byte $66,$F9,$DE,$AD           ; ROR [$DEAD,S]
+!byte $66,$99,$10,$00           ; ROR [$1000,X]
+!byte $66,$B9,$10,$00           ; ROR [$1000,Y]
+!byte $66,$D9,$10,$00           ; ROR [$1000,U]
+!byte $66,$F9,$10,$00           ; ROR [$1000,S]
+!byte $66,$96                   ; ROR [A,X]
+!byte $66,$B6                   ; ROR [A,Y]
+!byte $66,$D6                   ; ROR [A,U]
+!byte $66,$F6                   ; ROR [A,S]
+!byte $66,$95                   ; ROR [B,X]
+!byte $66,$B5                   ; ROR [B,Y]
+!byte $66,$D5                   ; ROR [B,U]
+!byte $66,$F5                   ; ROR [B,S]
+!byte $66,$97                   ; ROR [E,X]
+!byte $66,$B7                   ; ROR [E,Y]
+!byte $66,$D7                   ; ROR [E,U]
+!byte $66,$F7                   ; ROR [E,S]
+!byte $66,$9A                   ; ROR [F,X]
+!byte $66,$BA                   ; ROR [F,Y]
+!byte $66,$DA                   ; ROR [F,U]
+!byte $66,$FA                   ; ROR [F,S]
+!byte $66,$9B                   ; ROR [D,X]
+!byte $66,$BB                   ; ROR [D,Y]
+!byte $66,$DB                   ; ROR [D,U]
+!byte $66,$FB                   ; ROR [D,S]
+!byte $66,$9E                   ; ROR [W,X]
+!byte $66,$BE                   ; ROR [W,Y]
+!byte $66,$DE                   ; ROR [W,U]
+!byte $66,$FE                   ; ROR [W,S]
+!byte $66,$91                   ; ROR [,X++]
+!byte $66,$B1                   ; ROR [,Y++]
+!byte $66,$D1                   ; ROR [,U++]
+!byte $66,$F1                   ; ROR [,S++]
+!byte $66,$92                   ; ROR [,-X]
+!byte $66,$B2                   ; ROR [,-Y]
+!byte $66,$D2                   ; ROR [,-U]
+!byte $66,$F2                   ; ROR [,-S]
+!byte $66,$93                   ; ROR [,--X]
+!byte $66,$B3                   ; ROR [,--Y]
+!byte $66,$D3                   ; ROR [,--U]
+!byte $66,$F3                   ; ROR [,--S]
+!byte $66,$9C,$FF               ; ROR [-$01,PC]
+!byte $66,$BC,$FF               ; ROR [-$01,PC]
+!byte $66,$DC,$FF               ; ROR [-$01,PC]
+!byte $66,$FC,$FF               ; ROR [-$01,PC]
+!byte $66,$9C,$60               ; ROR [$60,PC]
+!byte $66,$BC,$60               ; ROR [$60,PC]
+!byte $66,$DC,$60               ; ROR [$60,PC]
+!byte $66,$FC,$60               ; ROR [$60,PC]
+!byte $66,$9D,$DE,$AD           ; ROR [$DEAD,PC]
+!byte $66,$BD,$DE,$AD           ; ROR [$DEAD,PC]
+!byte $66,$DD,$DE,$AD           ; ROR [$DEAD,PC]
+!byte $66,$FD,$DE,$AD           ; ROR [$DEAD,PC]
+!byte $66,$9D,$10,$00           ; ROR [$1000,PC]
+!byte $66,$BD,$10,$00           ; ROR [$1000,PC]
+!byte $66,$DD,$10,$00           ; ROR [$1000,PC]
+!byte $66,$FD,$10,$00           ; ROR [$1000,PC]
+!byte $66,$9F,$DE,$AD           ; ROR [$DEAD]
+!byte $66,$BF,$DE,$AD           ; ROR [$DEAD]
+!byte $66,$DF,$DE,$AD           ; ROR [$DEAD]
+!byte $66,$FF,$DE,$AD           ; ROR [$DEAD]
+!byte $66,$90                   ; ROR [,W]
+!byte $66,$B0,$DE,$AD           ; ROR [$DEAD,W]
+!byte $66,$D0                   ; ROR [,W++]
+!byte $66,$F0                   ; ROR [,--W]
+!byte $67,$84                   ; ASR ,X
+!byte $67,$A4                   ; ASR ,Y
+!byte $67,$C4                   ; ASR ,U
+!byte $67,$E4                   ; ASR ,S
+!byte $67,$15                   ; ASR -$0B,X
+!byte $67,$35                   ; ASR -$0B,Y
+!byte $67,$55                   ; ASR -$0B,U
+!byte $67,$75                   ; ASR -$0B,S
+!byte $67,$0C                   ; ASR $0C,X
+!byte $67,$2C                   ; ASR $0C,Y
+!byte $67,$4C                   ; ASR $0C,U
+!byte $67,$6C                   ; ASR $0C,S
+!byte $67,$88,$FF               ; ASR -$01,X
+!byte $67,$A8,$FF               ; ASR -$01,Y
+!byte $67,$C8,$FF               ; ASR -$01,U
+!byte $67,$E8,$FF               ; ASR -$01,S
+!byte $67,$88,$60               ; ASR $60,X
+!byte $67,$A8,$60               ; ASR $60,Y
+!byte $67,$C8,$60               ; ASR $60,U
+!byte $67,$E8,$60               ; ASR $60,S
+!byte $67,$89,$DE,$AD           ; ASR $DEAD,X
+!byte $67,$A9,$DE,$AD           ; ASR $DEAD,Y
+!byte $67,$C9,$DE,$AD           ; ASR $DEAD,U
+!byte $67,$E9,$DE,$AD           ; ASR $DEAD,S
+!byte $67,$89,$10,$00           ; ASR $1000,X
+!byte $67,$A9,$10,$00           ; ASR $1000,Y
+!byte $67,$C9,$10,$00           ; ASR $1000,U
+!byte $67,$E9,$10,$00           ; ASR $1000,S
+!byte $67,$86                   ; ASR A,X
+!byte $67,$A6                   ; ASR A,Y
+!byte $67,$C6                   ; ASR A,U
+!byte $67,$E6                   ; ASR A,S
+!byte $67,$85                   ; ASR B,X
+!byte $67,$A5                   ; ASR B,Y
+!byte $67,$C5                   ; ASR B,U
+!byte $67,$E5                   ; ASR B,S
+!byte $67,$87                   ; ASR E,X
+!byte $67,$A7                   ; ASR E,Y
+!byte $67,$C7                   ; ASR E,U
+!byte $67,$E7                   ; ASR E,S
+!byte $67,$8A                   ; ASR F,X
+!byte $67,$AA                   ; ASR F,Y
+!byte $67,$CA                   ; ASR F,U
+!byte $67,$EA                   ; ASR F,S
+!byte $67,$8B                   ; ASR D,X
+!byte $67,$AB                   ; ASR D,Y
+!byte $67,$CB                   ; ASR D,U
+!byte $67,$EB                   ; ASR D,S
+!byte $67,$8E                   ; ASR W,X
+!byte $67,$AE                   ; ASR W,Y
+!byte $67,$CE                   ; ASR W,U
+!byte $67,$EE                   ; ASR W,S
+!byte $67,$80                   ; ASR ,X+
+!byte $67,$A0                   ; ASR ,Y+
+!byte $67,$C0                   ; ASR ,U+
+!byte $67,$E0                   ; ASR ,S+
+!byte $67,$81                   ; ASR ,X++
+!byte $67,$A1                   ; ASR ,Y++
+!byte $67,$C1                   ; ASR ,U++
+!byte $67,$E1                   ; ASR ,S++
+!byte $67,$82                   ; ASR ,-X
+!byte $67,$A2                   ; ASR ,-Y
+!byte $67,$C2                   ; ASR ,-U
+!byte $67,$E2                   ; ASR ,-S
+!byte $67,$83                   ; ASR ,--X
+!byte $67,$A3                   ; ASR ,--Y
+!byte $67,$C3                   ; ASR ,--U
+!byte $67,$E3                   ; ASR ,--S
+!byte $67,$8C,$FF               ; ASR -$01,PC
+!byte $67,$AC,$FF               ; ASR -$01,PC
+!byte $67,$CC,$FF               ; ASR -$01,PC
+!byte $67,$EC,$FF               ; ASR -$01,PC
+!byte $67,$8C,$60               ; ASR $60,PC
+!byte $67,$AC,$60               ; ASR $60,PC
+!byte $67,$CC,$60               ; ASR $60,PC
+!byte $67,$EC,$60               ; ASR $60,PC
+!byte $67,$8D,$DE,$AD           ; ASR $DEAD,PC
+!byte $67,$AD,$DE,$AD           ; ASR $DEAD,PC
+!byte $67,$CD,$DE,$AD           ; ASR $DEAD,PC
+!byte $67,$ED,$DE,$AD           ; ASR $DEAD,PC
+!byte $67,$8D,$10,$00           ; ASR $1000,PC
+!byte $67,$AD,$10,$00           ; ASR $1000,PC
+!byte $67,$CD,$10,$00           ; ASR $1000,PC
+!byte $67,$ED,$10,$00           ; ASR $1000,PC
+!byte $67,$8F                   ; ASR ,W
+!byte $67,$AF,$DE,$AD           ; ASR $DEAD,W
+!byte $67,$CF                   ; ASR ,W++
+!byte $67,$EF                   ; ASR ,--W
+!byte $67,$94                   ; ASR [,X]
+!byte $67,$B4                   ; ASR [,Y]
+!byte $67,$D4                   ; ASR [,U]
+!byte $67,$F4                   ; ASR [,S]
+!byte $67,$98,$FF               ; ASR [-$01,X]
+!byte $67,$B8,$FF               ; ASR [-$01,Y]
+!byte $67,$D8,$FF               ; ASR [-$01,U]
+!byte $67,$F8,$FF               ; ASR [-$01,S]
+!byte $67,$98,$60               ; ASR [$60,X]
+!byte $67,$B8,$60               ; ASR [$60,Y]
+!byte $67,$D8,$60               ; ASR [$60,U]
+!byte $67,$F8,$60               ; ASR [$60,S]
+!byte $67,$99,$DE,$AD           ; ASR [$DEAD,X]
+!byte $67,$B9,$DE,$AD           ; ASR [$DEAD,Y]
+!byte $67,$D9,$DE,$AD           ; ASR [$DEAD,U]
+!byte $67,$F9,$DE,$AD           ; ASR [$DEAD,S]
+!byte $67,$99,$10,$00           ; ASR [$1000,X]
+!byte $67,$B9,$10,$00           ; ASR [$1000,Y]
+!byte $67,$D9,$10,$00           ; ASR [$1000,U]
+!byte $67,$F9,$10,$00           ; ASR [$1000,S]
+!byte $67,$96                   ; ASR [A,X]
+!byte $67,$B6                   ; ASR [A,Y]
+!byte $67,$D6                   ; ASR [A,U]
+!byte $67,$F6                   ; ASR [A,S]
+!byte $67,$95                   ; ASR [B,X]
+!byte $67,$B5                   ; ASR [B,Y]
+!byte $67,$D5                   ; ASR [B,U]
+!byte $67,$F5                   ; ASR [B,S]
+!byte $67,$97                   ; ASR [E,X]
+!byte $67,$B7                   ; ASR [E,Y]
+!byte $67,$D7                   ; ASR [E,U]
+!byte $67,$F7                   ; ASR [E,S]
+!byte $67,$9A                   ; ASR [F,X]
+!byte $67,$BA                   ; ASR [F,Y]
+!byte $67,$DA                   ; ASR [F,U]
+!byte $67,$FA                   ; ASR [F,S]
+!byte $67,$9B                   ; ASR [D,X]
+!byte $67,$BB                   ; ASR [D,Y]
+!byte $67,$DB                   ; ASR [D,U]
+!byte $67,$FB                   ; ASR [D,S]
+!byte $67,$9E                   ; ASR [W,X]
+!byte $67,$BE                   ; ASR [W,Y]
+!byte $67,$DE                   ; ASR [W,U]
+!byte $67,$FE                   ; ASR [W,S]
+!byte $67,$91                   ; ASR [,X++]
+!byte $67,$B1                   ; ASR [,Y++]
+!byte $67,$D1                   ; ASR [,U++]
+!byte $67,$F1                   ; ASR [,S++]
+!byte $67,$92                   ; ASR [,-X]
+!byte $67,$B2                   ; ASR [,-Y]
+!byte $67,$D2                   ; ASR [,-U]
+!byte $67,$F2                   ; ASR [,-S]
+!byte $67,$93                   ; ASR [,--X]
+!byte $67,$B3                   ; ASR [,--Y]
+!byte $67,$D3                   ; ASR [,--U]
+!byte $67,$F3                   ; ASR [,--S]
+!byte $67,$9C,$FF               ; ASR [-$01,PC]
+!byte $67,$BC,$FF               ; ASR [-$01,PC]
+!byte $67,$DC,$FF               ; ASR [-$01,PC]
+!byte $67,$FC,$FF               ; ASR [-$01,PC]
+!byte $67,$9C,$60               ; ASR [$60,PC]
+!byte $67,$BC,$60               ; ASR [$60,PC]
+!byte $67,$DC,$60               ; ASR [$60,PC]
+!byte $67,$FC,$60               ; ASR [$60,PC]
+!byte $67,$9D,$DE,$AD           ; ASR [$DEAD,PC]
+!byte $67,$BD,$DE,$AD           ; ASR [$DEAD,PC]
+!byte $67,$DD,$DE,$AD           ; ASR [$DEAD,PC]
+!byte $67,$FD,$DE,$AD           ; ASR [$DEAD,PC]
+!byte $67,$9D,$10,$00           ; ASR [$1000,PC]
+!byte $67,$BD,$10,$00           ; ASR [$1000,PC]
+!byte $67,$DD,$10,$00           ; ASR [$1000,PC]
+!byte $67,$FD,$10,$00           ; ASR [$1000,PC]
+!byte $67,$9F,$DE,$AD           ; ASR [$DEAD]
+!byte $67,$BF,$DE,$AD           ; ASR [$DEAD]
+!byte $67,$DF,$DE,$AD           ; ASR [$DEAD]
+!byte $67,$FF,$DE,$AD           ; ASR [$DEAD]
+!byte $67,$90                   ; ASR [,W]
+!byte $67,$B0,$DE,$AD           ; ASR [$DEAD,W]
+!byte $67,$D0                   ; ASR [,W++]
+!byte $67,$F0                   ; ASR [,--W]
+!byte $68,$84                   ; ASL ,X
+!byte $68,$A4                   ; ASL ,Y
+!byte $68,$C4                   ; ASL ,U
+!byte $68,$E4                   ; ASL ,S
+!byte $68,$15                   ; ASL -$0B,X
+!byte $68,$35                   ; ASL -$0B,Y
+!byte $68,$55                   ; ASL -$0B,U
+!byte $68,$75                   ; ASL -$0B,S
+!byte $68,$0C                   ; ASL $0C,X
+!byte $68,$2C                   ; ASL $0C,Y
+!byte $68,$4C                   ; ASL $0C,U
+!byte $68,$6C                   ; ASL $0C,S
+!byte $68,$88,$FF               ; ASL -$01,X
+!byte $68,$A8,$FF               ; ASL -$01,Y
+!byte $68,$C8,$FF               ; ASL -$01,U
+!byte $68,$E8,$FF               ; ASL -$01,S
+!byte $68,$88,$60               ; ASL $60,X
+!byte $68,$A8,$60               ; ASL $60,Y
+!byte $68,$C8,$60               ; ASL $60,U
+!byte $68,$E8,$60               ; ASL $60,S
+!byte $68,$89,$DE,$AD           ; ASL $DEAD,X
+!byte $68,$A9,$DE,$AD           ; ASL $DEAD,Y
+!byte $68,$C9,$DE,$AD           ; ASL $DEAD,U
+!byte $68,$E9,$DE,$AD           ; ASL $DEAD,S
+!byte $68,$89,$10,$00           ; ASL $1000,X
+!byte $68,$A9,$10,$00           ; ASL $1000,Y
+!byte $68,$C9,$10,$00           ; ASL $1000,U
+!byte $68,$E9,$10,$00           ; ASL $1000,S
+!byte $68,$86                   ; ASL A,X
+!byte $68,$A6                   ; ASL A,Y
+!byte $68,$C6                   ; ASL A,U
+!byte $68,$E6                   ; ASL A,S
+!byte $68,$85                   ; ASL B,X
+!byte $68,$A5                   ; ASL B,Y
+!byte $68,$C5                   ; ASL B,U
+!byte $68,$E5                   ; ASL B,S
+!byte $68,$87                   ; ASL E,X
+!byte $68,$A7                   ; ASL E,Y
+!byte $68,$C7                   ; ASL E,U
+!byte $68,$E7                   ; ASL E,S
+!byte $68,$8A                   ; ASL F,X
+!byte $68,$AA                   ; ASL F,Y
+!byte $68,$CA                   ; ASL F,U
+!byte $68,$EA                   ; ASL F,S
+!byte $68,$8B                   ; ASL D,X
+!byte $68,$AB                   ; ASL D,Y
+!byte $68,$CB                   ; ASL D,U
+!byte $68,$EB                   ; ASL D,S
+!byte $68,$8E                   ; ASL W,X
+!byte $68,$AE                   ; ASL W,Y
+!byte $68,$CE                   ; ASL W,U
+!byte $68,$EE                   ; ASL W,S
+!byte $68,$80                   ; ASL ,X+
+!byte $68,$A0                   ; ASL ,Y+
+!byte $68,$C0                   ; ASL ,U+
+!byte $68,$E0                   ; ASL ,S+
+!byte $68,$81                   ; ASL ,X++
+!byte $68,$A1                   ; ASL ,Y++
+!byte $68,$C1                   ; ASL ,U++
+!byte $68,$E1                   ; ASL ,S++
+!byte $68,$82                   ; ASL ,-X
+!byte $68,$A2                   ; ASL ,-Y
+!byte $68,$C2                   ; ASL ,-U
+!byte $68,$E2                   ; ASL ,-S
+!byte $68,$83                   ; ASL ,--X
+!byte $68,$A3                   ; ASL ,--Y
+!byte $68,$C3                   ; ASL ,--U
+!byte $68,$E3                   ; ASL ,--S
+!byte $68,$8C,$FF               ; ASL -$01,PC
+!byte $68,$AC,$FF               ; ASL -$01,PC
+!byte $68,$CC,$FF               ; ASL -$01,PC
+!byte $68,$EC,$FF               ; ASL -$01,PC
+!byte $68,$8C,$60               ; ASL $60,PC
+!byte $68,$AC,$60               ; ASL $60,PC
+!byte $68,$CC,$60               ; ASL $60,PC
+!byte $68,$EC,$60               ; ASL $60,PC
+!byte $68,$8D,$DE,$AD           ; ASL $DEAD,PC
+!byte $68,$AD,$DE,$AD           ; ASL $DEAD,PC
+!byte $68,$CD,$DE,$AD           ; ASL $DEAD,PC
+!byte $68,$ED,$DE,$AD           ; ASL $DEAD,PC
+!byte $68,$8D,$10,$00           ; ASL $1000,PC
+!byte $68,$AD,$10,$00           ; ASL $1000,PC
+!byte $68,$CD,$10,$00           ; ASL $1000,PC
+!byte $68,$ED,$10,$00           ; ASL $1000,PC
+!byte $68,$8F                   ; ASL ,W
+!byte $68,$AF,$DE,$AD           ; ASL $DEAD,W
+!byte $68,$CF                   ; ASL ,W++
+!byte $68,$EF                   ; ASL ,--W
+!byte $68,$94                   ; ASL [,X]
+!byte $68,$B4                   ; ASL [,Y]
+!byte $68,$D4                   ; ASL [,U]
+!byte $68,$F4                   ; ASL [,S]
+!byte $68,$98,$FF               ; ASL [-$01,X]
+!byte $68,$B8,$FF               ; ASL [-$01,Y]
+!byte $68,$D8,$FF               ; ASL [-$01,U]
+!byte $68,$F8,$FF               ; ASL [-$01,S]
+!byte $68,$98,$60               ; ASL [$60,X]
+!byte $68,$B8,$60               ; ASL [$60,Y]
+!byte $68,$D8,$60               ; ASL [$60,U]
+!byte $68,$F8,$60               ; ASL [$60,S]
+!byte $68,$99,$DE,$AD           ; ASL [$DEAD,X]
+!byte $68,$B9,$DE,$AD           ; ASL [$DEAD,Y]
+!byte $68,$D9,$DE,$AD           ; ASL [$DEAD,U]
+!byte $68,$F9,$DE,$AD           ; ASL [$DEAD,S]
+!byte $68,$99,$10,$00           ; ASL [$1000,X]
+!byte $68,$B9,$10,$00           ; ASL [$1000,Y]
+!byte $68,$D9,$10,$00           ; ASL [$1000,U]
+!byte $68,$F9,$10,$00           ; ASL [$1000,S]
+!byte $68,$96                   ; ASL [A,X]
+!byte $68,$B6                   ; ASL [A,Y]
+!byte $68,$D6                   ; ASL [A,U]
+!byte $68,$F6                   ; ASL [A,S]
+!byte $68,$95                   ; ASL [B,X]
+!byte $68,$B5                   ; ASL [B,Y]
+!byte $68,$D5                   ; ASL [B,U]
+!byte $68,$F5                   ; ASL [B,S]
+!byte $68,$97                   ; ASL [E,X]
+!byte $68,$B7                   ; ASL [E,Y]
+!byte $68,$D7                   ; ASL [E,U]
+!byte $68,$F7                   ; ASL [E,S]
+!byte $68,$9A                   ; ASL [F,X]
+!byte $68,$BA                   ; ASL [F,Y]
+!byte $68,$DA                   ; ASL [F,U]
+!byte $68,$FA                   ; ASL [F,S]
+!byte $68,$9B                   ; ASL [D,X]
+!byte $68,$BB                   ; ASL [D,Y]
+!byte $68,$DB                   ; ASL [D,U]
+!byte $68,$FB                   ; ASL [D,S]
+!byte $68,$9E                   ; ASL [W,X]
+!byte $68,$BE                   ; ASL [W,Y]
+!byte $68,$DE                   ; ASL [W,U]
+!byte $68,$FE                   ; ASL [W,S]
+!byte $68,$91                   ; ASL [,X++]
+!byte $68,$B1                   ; ASL [,Y++]
+!byte $68,$D1                   ; ASL [,U++]
+!byte $68,$F1                   ; ASL [,S++]
+!byte $68,$92                   ; ASL [,-X]
+!byte $68,$B2                   ; ASL [,-Y]
+!byte $68,$D2                   ; ASL [,-U]
+!byte $68,$F2                   ; ASL [,-S]
+!byte $68,$93                   ; ASL [,--X]
+!byte $68,$B3                   ; ASL [,--Y]
+!byte $68,$D3                   ; ASL [,--U]
+!byte $68,$F3                   ; ASL [,--S]
+!byte $68,$9C,$FF               ; ASL [-$01,PC]
+!byte $68,$BC,$FF               ; ASL [-$01,PC]
+!byte $68,$DC,$FF               ; ASL [-$01,PC]
+!byte $68,$FC,$FF               ; ASL [-$01,PC]
+!byte $68,$9C,$60               ; ASL [$60,PC]
+!byte $68,$BC,$60               ; ASL [$60,PC]
+!byte $68,$DC,$60               ; ASL [$60,PC]
+!byte $68,$FC,$60               ; ASL [$60,PC]
+!byte $68,$9D,$DE,$AD           ; ASL [$DEAD,PC]
+!byte $68,$BD,$DE,$AD           ; ASL [$DEAD,PC]
+!byte $68,$DD,$DE,$AD           ; ASL [$DEAD,PC]
+!byte $68,$FD,$DE,$AD           ; ASL [$DEAD,PC]
+!byte $68,$9D,$10,$00           ; ASL [$1000,PC]
+!byte $68,$BD,$10,$00           ; ASL [$1000,PC]
+!byte $68,$DD,$10,$00           ; ASL [$1000,PC]
+!byte $68,$FD,$10,$00           ; ASL [$1000,PC]
+!byte $68,$9F,$DE,$AD           ; ASL [$DEAD]
+!byte $68,$BF,$DE,$AD           ; ASL [$DEAD]
+!byte $68,$DF,$DE,$AD           ; ASL [$DEAD]
+!byte $68,$FF,$DE,$AD           ; ASL [$DEAD]
+!byte $68,$90                   ; ASL [,W]
+!byte $68,$B0,$DE,$AD           ; ASL [$DEAD,W]
+!byte $68,$D0                   ; ASL [,W++]
+!byte $68,$F0                   ; ASL [,--W]
+!byte $69,$84                   ; ROL ,X
+!byte $69,$A4                   ; ROL ,Y
+!byte $69,$C4                   ; ROL ,U
+!byte $69,$E4                   ; ROL ,S
+!byte $69,$15                   ; ROL -$0B,X
+!byte $69,$35                   ; ROL -$0B,Y
+!byte $69,$55                   ; ROL -$0B,U
+!byte $69,$75                   ; ROL -$0B,S
+!byte $69,$0C                   ; ROL $0C,X
+!byte $69,$2C                   ; ROL $0C,Y
+!byte $69,$4C                   ; ROL $0C,U
+!byte $69,$6C                   ; ROL $0C,S
+!byte $69,$88,$FF               ; ROL -$01,X
+!byte $69,$A8,$FF               ; ROL -$01,Y
+!byte $69,$C8,$FF               ; ROL -$01,U
+!byte $69,$E8,$FF               ; ROL -$01,S
+!byte $69,$88,$60               ; ROL $60,X
+!byte $69,$A8,$60               ; ROL $60,Y
+!byte $69,$C8,$60               ; ROL $60,U
+!byte $69,$E8,$60               ; ROL $60,S
+!byte $69,$89,$DE,$AD           ; ROL $DEAD,X
+!byte $69,$A9,$DE,$AD           ; ROL $DEAD,Y
+!byte $69,$C9,$DE,$AD           ; ROL $DEAD,U
+!byte $69,$E9,$DE,$AD           ; ROL $DEAD,S
+!byte $69,$89,$10,$00           ; ROL $1000,X
+!byte $69,$A9,$10,$00           ; ROL $1000,Y
+!byte $69,$C9,$10,$00           ; ROL $1000,U
+!byte $69,$E9,$10,$00           ; ROL $1000,S
+!byte $69,$86                   ; ROL A,X
+!byte $69,$A6                   ; ROL A,Y
+!byte $69,$C6                   ; ROL A,U
+!byte $69,$E6                   ; ROL A,S
+!byte $69,$85                   ; ROL B,X
+!byte $69,$A5                   ; ROL B,Y
+!byte $69,$C5                   ; ROL B,U
+!byte $69,$E5                   ; ROL B,S
+!byte $69,$87                   ; ROL E,X
+!byte $69,$A7                   ; ROL E,Y
+!byte $69,$C7                   ; ROL E,U
+!byte $69,$E7                   ; ROL E,S
+!byte $69,$8A                   ; ROL F,X
+!byte $69,$AA                   ; ROL F,Y
+!byte $69,$CA                   ; ROL F,U
+!byte $69,$EA                   ; ROL F,S
+!byte $69,$8B                   ; ROL D,X
+!byte $69,$AB                   ; ROL D,Y
+!byte $69,$CB                   ; ROL D,U
+!byte $69,$EB                   ; ROL D,S
+!byte $69,$8E                   ; ROL W,X
+!byte $69,$AE                   ; ROL W,Y
+!byte $69,$CE                   ; ROL W,U
+!byte $69,$EE                   ; ROL W,S
+!byte $69,$80                   ; ROL ,X+
+!byte $69,$A0                   ; ROL ,Y+
+!byte $69,$C0                   ; ROL ,U+
+!byte $69,$E0                   ; ROL ,S+
+!byte $69,$81                   ; ROL ,X++
+!byte $69,$A1                   ; ROL ,Y++
+!byte $69,$C1                   ; ROL ,U++
+!byte $69,$E1                   ; ROL ,S++
+!byte $69,$82                   ; ROL ,-X
+!byte $69,$A2                   ; ROL ,-Y
+!byte $69,$C2                   ; ROL ,-U
+!byte $69,$E2                   ; ROL ,-S
+!byte $69,$83                   ; ROL ,--X
+!byte $69,$A3                   ; ROL ,--Y
+!byte $69,$C3                   ; ROL ,--U
+!byte $69,$E3                   ; ROL ,--S
+!byte $69,$8C,$FF               ; ROL -$01,PC
+!byte $69,$AC,$FF               ; ROL -$01,PC
+!byte $69,$CC,$FF               ; ROL -$01,PC
+!byte $69,$EC,$FF               ; ROL -$01,PC
+!byte $69,$8C,$60               ; ROL $60,PC
+!byte $69,$AC,$60               ; ROL $60,PC
+!byte $69,$CC,$60               ; ROL $60,PC
+!byte $69,$EC,$60               ; ROL $60,PC
+!byte $69,$8D,$DE,$AD           ; ROL $DEAD,PC
+!byte $69,$AD,$DE,$AD           ; ROL $DEAD,PC
+!byte $69,$CD,$DE,$AD           ; ROL $DEAD,PC
+!byte $69,$ED,$DE,$AD           ; ROL $DEAD,PC
+!byte $69,$8D,$10,$00           ; ROL $1000,PC
+!byte $69,$AD,$10,$00           ; ROL $1000,PC
+!byte $69,$CD,$10,$00           ; ROL $1000,PC
+!byte $69,$ED,$10,$00           ; ROL $1000,PC
+!byte $69,$8F                   ; ROL ,W
+!byte $69,$AF,$DE,$AD           ; ROL $DEAD,W
+!byte $69,$CF                   ; ROL ,W++
+!byte $69,$EF                   ; ROL ,--W
+!byte $69,$94                   ; ROL [,X]
+!byte $69,$B4                   ; ROL [,Y]
+!byte $69,$D4                   ; ROL [,U]
+!byte $69,$F4                   ; ROL [,S]
+!byte $69,$98,$FF               ; ROL [-$01,X]
+!byte $69,$B8,$FF               ; ROL [-$01,Y]
+!byte $69,$D8,$FF               ; ROL [-$01,U]
+!byte $69,$F8,$FF               ; ROL [-$01,S]
+!byte $69,$98,$60               ; ROL [$60,X]
+!byte $69,$B8,$60               ; ROL [$60,Y]
+!byte $69,$D8,$60               ; ROL [$60,U]
+!byte $69,$F8,$60               ; ROL [$60,S]
+!byte $69,$99,$DE,$AD           ; ROL [$DEAD,X]
+!byte $69,$B9,$DE,$AD           ; ROL [$DEAD,Y]
+!byte $69,$D9,$DE,$AD           ; ROL [$DEAD,U]
+!byte $69,$F9,$DE,$AD           ; ROL [$DEAD,S]
+!byte $69,$99,$10,$00           ; ROL [$1000,X]
+!byte $69,$B9,$10,$00           ; ROL [$1000,Y]
+!byte $69,$D9,$10,$00           ; ROL [$1000,U]
+!byte $69,$F9,$10,$00           ; ROL [$1000,S]
+!byte $69,$96                   ; ROL [A,X]
+!byte $69,$B6                   ; ROL [A,Y]
+!byte $69,$D6                   ; ROL [A,U]
+!byte $69,$F6                   ; ROL [A,S]
+!byte $69,$95                   ; ROL [B,X]
+!byte $69,$B5                   ; ROL [B,Y]
+!byte $69,$D5                   ; ROL [B,U]
+!byte $69,$F5                   ; ROL [B,S]
+!byte $69,$97                   ; ROL [E,X]
+!byte $69,$B7                   ; ROL [E,Y]
+!byte $69,$D7                   ; ROL [E,U]
+!byte $69,$F7                   ; ROL [E,S]
+!byte $69,$9A                   ; ROL [F,X]
+!byte $69,$BA                   ; ROL [F,Y]
+!byte $69,$DA                   ; ROL [F,U]
+!byte $69,$FA                   ; ROL [F,S]
+!byte $69,$9B                   ; ROL [D,X]
+!byte $69,$BB                   ; ROL [D,Y]
+!byte $69,$DB                   ; ROL [D,U]
+!byte $69,$FB                   ; ROL [D,S]
+!byte $69,$9E                   ; ROL [W,X]
+!byte $69,$BE                   ; ROL [W,Y]
+!byte $69,$DE                   ; ROL [W,U]
+!byte $69,$FE                   ; ROL [W,S]
+!byte $69,$91                   ; ROL [,X++]
+!byte $69,$B1                   ; ROL [,Y++]
+!byte $69,$D1                   ; ROL [,U++]
+!byte $69,$F1                   ; ROL [,S++]
+!byte $69,$92                   ; ROL [,-X]
+!byte $69,$B2                   ; ROL [,-Y]
+!byte $69,$D2                   ; ROL [,-U]
+!byte $69,$F2                   ; ROL [,-S]
+!byte $69,$93                   ; ROL [,--X]
+!byte $69,$B3                   ; ROL [,--Y]
+!byte $69,$D3                   ; ROL [,--U]
+!byte $69,$F3                   ; ROL [,--S]
+!byte $69,$9C,$FF               ; ROL [-$01,PC]
+!byte $69,$BC,$FF               ; ROL [-$01,PC]
+!byte $69,$DC,$FF               ; ROL [-$01,PC]
+!byte $69,$FC,$FF               ; ROL [-$01,PC]
+!byte $69,$9C,$60               ; ROL [$60,PC]
+!byte $69,$BC,$60               ; ROL [$60,PC]
+!byte $69,$DC,$60               ; ROL [$60,PC]
+!byte $69,$FC,$60               ; ROL [$60,PC]
+!byte $69,$9D,$DE,$AD           ; ROL [$DEAD,PC]
+!byte $69,$BD,$DE,$AD           ; ROL [$DEAD,PC]
+!byte $69,$DD,$DE,$AD           ; ROL [$DEAD,PC]
+!byte $69,$FD,$DE,$AD           ; ROL [$DEAD,PC]
+!byte $69,$9D,$10,$00           ; ROL [$1000,PC]
+!byte $69,$BD,$10,$00           ; ROL [$1000,PC]
+!byte $69,$DD,$10,$00           ; ROL [$1000,PC]
+!byte $69,$FD,$10,$00           ; ROL [$1000,PC]
+!byte $69,$9F,$DE,$AD           ; ROL [$DEAD]
+!byte $69,$BF,$DE,$AD           ; ROL [$DEAD]
+!byte $69,$DF,$DE,$AD           ; ROL [$DEAD]
+!byte $69,$FF,$DE,$AD           ; ROL [$DEAD]
+!byte $69,$90                   ; ROL [,W]
+!byte $69,$B0,$DE,$AD           ; ROL [$DEAD,W]
+!byte $69,$D0                   ; ROL [,W++]
+!byte $69,$F0                   ; ROL [,--W]
+!byte $6A,$84                   ; DEC ,X
+!byte $6A,$A4                   ; DEC ,Y
+!byte $6A,$C4                   ; DEC ,U
+!byte $6A,$E4                   ; DEC ,S
+!byte $6A,$15                   ; DEC -$0B,X
+!byte $6A,$35                   ; DEC -$0B,Y
+!byte $6A,$55                   ; DEC -$0B,U
+!byte $6A,$75                   ; DEC -$0B,S
+!byte $6A,$0C                   ; DEC $0C,X
+!byte $6A,$2C                   ; DEC $0C,Y
+!byte $6A,$4C                   ; DEC $0C,U
+!byte $6A,$6C                   ; DEC $0C,S
+!byte $6A,$88,$FF               ; DEC -$01,X
+!byte $6A,$A8,$FF               ; DEC -$01,Y
+!byte $6A,$C8,$FF               ; DEC -$01,U
+!byte $6A,$E8,$FF               ; DEC -$01,S
+!byte $6A,$88,$60               ; DEC $60,X
+!byte $6A,$A8,$60               ; DEC $60,Y
+!byte $6A,$C8,$60               ; DEC $60,U
+!byte $6A,$E8,$60               ; DEC $60,S
+!byte $6A,$89,$DE,$AD           ; DEC $DEAD,X
+!byte $6A,$A9,$DE,$AD           ; DEC $DEAD,Y
+!byte $6A,$C9,$DE,$AD           ; DEC $DEAD,U
+!byte $6A,$E9,$DE,$AD           ; DEC $DEAD,S
+!byte $6A,$89,$10,$00           ; DEC $1000,X
+!byte $6A,$A9,$10,$00           ; DEC $1000,Y
+!byte $6A,$C9,$10,$00           ; DEC $1000,U
+!byte $6A,$E9,$10,$00           ; DEC $1000,S
+!byte $6A,$86                   ; DEC A,X
+!byte $6A,$A6                   ; DEC A,Y
+!byte $6A,$C6                   ; DEC A,U
+!byte $6A,$E6                   ; DEC A,S
+!byte $6A,$85                   ; DEC B,X
+!byte $6A,$A5                   ; DEC B,Y
+!byte $6A,$C5                   ; DEC B,U
+!byte $6A,$E5                   ; DEC B,S
+!byte $6A,$87                   ; DEC E,X
+!byte $6A,$A7                   ; DEC E,Y
+!byte $6A,$C7                   ; DEC E,U
+!byte $6A,$E7                   ; DEC E,S
+!byte $6A,$8A                   ; DEC F,X
+!byte $6A,$AA                   ; DEC F,Y
+!byte $6A,$CA                   ; DEC F,U
+!byte $6A,$EA                   ; DEC F,S
+!byte $6A,$8B                   ; DEC D,X
+!byte $6A,$AB                   ; DEC D,Y
+!byte $6A,$CB                   ; DEC D,U
+!byte $6A,$EB                   ; DEC D,S
+!byte $6A,$8E                   ; DEC W,X
+!byte $6A,$AE                   ; DEC W,Y
+!byte $6A,$CE                   ; DEC W,U
+!byte $6A,$EE                   ; DEC W,S
+!byte $6A,$80                   ; DEC ,X+
+!byte $6A,$A0                   ; DEC ,Y+
+!byte $6A,$C0                   ; DEC ,U+
+!byte $6A,$E0                   ; DEC ,S+
+!byte $6A,$81                   ; DEC ,X++
+!byte $6A,$A1                   ; DEC ,Y++
+!byte $6A,$C1                   ; DEC ,U++
+!byte $6A,$E1                   ; DEC ,S++
+!byte $6A,$82                   ; DEC ,-X
+!byte $6A,$A2                   ; DEC ,-Y
+!byte $6A,$C2                   ; DEC ,-U
+!byte $6A,$E2                   ; DEC ,-S
+!byte $6A,$83                   ; DEC ,--X
+!byte $6A,$A3                   ; DEC ,--Y
+!byte $6A,$C3                   ; DEC ,--U
+!byte $6A,$E3                   ; DEC ,--S
+!byte $6A,$8C,$FF               ; DEC -$01,PC
+!byte $6A,$AC,$FF               ; DEC -$01,PC
+!byte $6A,$CC,$FF               ; DEC -$01,PC
+!byte $6A,$EC,$FF               ; DEC -$01,PC
+!byte $6A,$8C,$60               ; DEC $60,PC
+!byte $6A,$AC,$60               ; DEC $60,PC
+!byte $6A,$CC,$60               ; DEC $60,PC
+!byte $6A,$EC,$60               ; DEC $60,PC
+!byte $6A,$8D,$DE,$AD           ; DEC $DEAD,PC
+!byte $6A,$AD,$DE,$AD           ; DEC $DEAD,PC
+!byte $6A,$CD,$DE,$AD           ; DEC $DEAD,PC
+!byte $6A,$ED,$DE,$AD           ; DEC $DEAD,PC
+!byte $6A,$8D,$10,$00           ; DEC $1000,PC
+!byte $6A,$AD,$10,$00           ; DEC $1000,PC
+!byte $6A,$CD,$10,$00           ; DEC $1000,PC
+!byte $6A,$ED,$10,$00           ; DEC $1000,PC
+!byte $6A,$8F                   ; DEC ,W
+!byte $6A,$AF,$DE,$AD           ; DEC $DEAD,W
+!byte $6A,$CF                   ; DEC ,W++
+!byte $6A,$EF                   ; DEC ,--W
+!byte $6A,$94                   ; DEC [,X]
+!byte $6A,$B4                   ; DEC [,Y]
+!byte $6A,$D4                   ; DEC [,U]
+!byte $6A,$F4                   ; DEC [,S]
+!byte $6A,$98,$FF               ; DEC [-$01,X]
+!byte $6A,$B8,$FF               ; DEC [-$01,Y]
+!byte $6A,$D8,$FF               ; DEC [-$01,U]
+!byte $6A,$F8,$FF               ; DEC [-$01,S]
+!byte $6A,$98,$60               ; DEC [$60,X]
+!byte $6A,$B8,$60               ; DEC [$60,Y]
+!byte $6A,$D8,$60               ; DEC [$60,U]
+!byte $6A,$F8,$60               ; DEC [$60,S]
+!byte $6A,$99,$DE,$AD           ; DEC [$DEAD,X]
+!byte $6A,$B9,$DE,$AD           ; DEC [$DEAD,Y]
+!byte $6A,$D9,$DE,$AD           ; DEC [$DEAD,U]
+!byte $6A,$F9,$DE,$AD           ; DEC [$DEAD,S]
+!byte $6A,$99,$10,$00           ; DEC [$1000,X]
+!byte $6A,$B9,$10,$00           ; DEC [$1000,Y]
+!byte $6A,$D9,$10,$00           ; DEC [$1000,U]
+!byte $6A,$F9,$10,$00           ; DEC [$1000,S]
+!byte $6A,$96                   ; DEC [A,X]
+!byte $6A,$B6                   ; DEC [A,Y]
+!byte $6A,$D6                   ; DEC [A,U]
+!byte $6A,$F6                   ; DEC [A,S]
+!byte $6A,$95                   ; DEC [B,X]
+!byte $6A,$B5                   ; DEC [B,Y]
+!byte $6A,$D5                   ; DEC [B,U]
+!byte $6A,$F5                   ; DEC [B,S]
+!byte $6A,$97                   ; DEC [E,X]
+!byte $6A,$B7                   ; DEC [E,Y]
+!byte $6A,$D7                   ; DEC [E,U]
+!byte $6A,$F7                   ; DEC [E,S]
+!byte $6A,$9A                   ; DEC [F,X]
+!byte $6A,$BA                   ; DEC [F,Y]
+!byte $6A,$DA                   ; DEC [F,U]
+!byte $6A,$FA                   ; DEC [F,S]
+!byte $6A,$9B                   ; DEC [D,X]
+!byte $6A,$BB                   ; DEC [D,Y]
+!byte $6A,$DB                   ; DEC [D,U]
+!byte $6A,$FB                   ; DEC [D,S]
+!byte $6A,$9E                   ; DEC [W,X]
+!byte $6A,$BE                   ; DEC [W,Y]
+!byte $6A,$DE                   ; DEC [W,U]
+!byte $6A,$FE                   ; DEC [W,S]
+!byte $6A,$91                   ; DEC [,X++]
+!byte $6A,$B1                   ; DEC [,Y++]
+!byte $6A,$D1                   ; DEC [,U++]
+!byte $6A,$F1                   ; DEC [,S++]
+!byte $6A,$92                   ; DEC [,-X]
+!byte $6A,$B2                   ; DEC [,-Y]
+!byte $6A,$D2                   ; DEC [,-U]
+!byte $6A,$F2                   ; DEC [,-S]
+!byte $6A,$93                   ; DEC [,--X]
+!byte $6A,$B3                   ; DEC [,--Y]
+!byte $6A,$D3                   ; DEC [,--U]
+!byte $6A,$F3                   ; DEC [,--S]
+!byte $6A,$9C,$FF               ; DEC [-$01,PC]
+!byte $6A,$BC,$FF               ; DEC [-$01,PC]
+!byte $6A,$DC,$FF               ; DEC [-$01,PC]
+!byte $6A,$FC,$FF               ; DEC [-$01,PC]
+!byte $6A,$9C,$60               ; DEC [$60,PC]
+!byte $6A,$BC,$60               ; DEC [$60,PC]
+!byte $6A,$DC,$60               ; DEC [$60,PC]
+!byte $6A,$FC,$60               ; DEC [$60,PC]
+!byte $6A,$9D,$DE,$AD           ; DEC [$DEAD,PC]
+!byte $6A,$BD,$DE,$AD           ; DEC [$DEAD,PC]
+!byte $6A,$DD,$DE,$AD           ; DEC [$DEAD,PC]
+!byte $6A,$FD,$DE,$AD           ; DEC [$DEAD,PC]
+!byte $6A,$9D,$10,$00           ; DEC [$1000,PC]
+!byte $6A,$BD,$10,$00           ; DEC [$1000,PC]
+!byte $6A,$DD,$10,$00           ; DEC [$1000,PC]
+!byte $6A,$FD,$10,$00           ; DEC [$1000,PC]
+!byte $6A,$9F,$DE,$AD           ; DEC [$DEAD]
+!byte $6A,$BF,$DE,$AD           ; DEC [$DEAD]
+!byte $6A,$DF,$DE,$AD           ; DEC [$DEAD]
+!byte $6A,$FF,$DE,$AD           ; DEC [$DEAD]
+!byte $6A,$90                   ; DEC [,W]
+!byte $6A,$B0,$DE,$AD           ; DEC [$DEAD,W]
+!byte $6A,$D0                   ; DEC [,W++]
+!byte $6A,$F0                   ; DEC [,--W]
 
-    !byte $66,$0C                   ; ROR $0C,X
-    !byte $66,$15                   ; ROR -$0B,X
-    !byte $66,$2C                   ; ROR $0C,Y
-    !byte $66,$35                   ; ROR -$0B,Y
-    !byte $66,$4C                   ; ROR $0C,U
-    !byte $66,$55                   ; ROR -$0B,U
-    !byte $66,$6C                   ; ROR $0C,S
-    !byte $66,$75                   ; ROR -$0B,S
-    !byte $66,$80                   ; ROR ,X+
-    !byte $66,$81                   ; ROR ,X++
-    !byte $66,$82                   ; ROR ,-X
-    !byte $66,$83                   ; ROR ,--X
-    !byte $66,$84                   ; ROR ,X
-    !byte $66,$85                   ; ROR B,X
-    !byte $66,$86                   ; ROR A,X
-    !byte $66,$87                    ; ROR ,X
-    !byte $66,$88,$60               ; ROR $60,X
-    !byte $66,$88,$FF               ; ROR -$01,X
-    !byte $66,$89,$10,$00           ; ROR $1000,X
-    !byte $66,$89,$DE,$AD           ; ROR $DEAD,X
-    !byte $66,$8A                    ; ROR ,PClo
-    !byte $66,$8B                   ; ROR D,X
-    !byte $66,$8C,$60               ; ROR $60,PC
-    !byte $66,$8C,$FF               ; ROR -$01,PC
-    !byte $66,$8D,$10,$00           ; ROR $1000,PC
-    !byte $66,$8D,$DE,$AD           ; ROR $DEAD,PC
-    !byte $66,$8F,$DE,$AD            ; ROR ,$DEAD
-    !byte $66,$90                    ; ROR [,X+]
-    !byte $66,$91                   ; ROR [,X++]
-    !byte $66,$92                    ; ROR [,-X]
-    !byte $66,$93                   ; ROR [,--X]
-    !byte $66,$94                   ; ROR [,X]
-    !byte $66,$95                   ; ROR [B,X]
-    !byte $66,$96                   ; ROR [A,X]
-    !byte $66,$97                    ; ROR [,X]
-    !byte $66,$98,$60               ; ROR [$60,X]
-    !byte $66,$98,$FF               ; ROR [-$01,X]
-    !byte $66,$99,$DE,$10           ; ROR [$DE10,X]
-    !byte $66,$99,$DE,$AD           ; ROR [$DEAD,X]
-    !byte $66,$9A                    ; ROR [,PClo]
-    !byte $66,$9B                   ; ROR [D,X]
-    !byte $66,$9C,$60               ; ROR [$60,PC]
-    !byte $66,$9C,$FF               ; ROR [-$01,PC]
-    !byte $66,$9D,$10,$00           ; ROR [$1000,PC]
-    !byte $66,$9D,$DE,$AD           ; ROR [$DEAD,PC]
-    !byte $66,$9F,$DE,$AD           ; ROR [$DEAD]
-    !byte $66,$A0                   ; ROR ,Y+
-    !byte $66,$A1                   ; ROR ,Y++
-    !byte $66,$A2                   ; ROR ,-Y
-    !byte $66,$A3                   ; ROR ,--Y
-    !byte $66,$A4                   ; ROR ,Y
-    !byte $66,$A5                   ; ROR B,Y
-    !byte $66,$A6                   ; ROR A,Y
-    !byte $66,$A7                    ; ROR ,Y
-    !byte $66,$A8,$60               ; ROR $60,Y
-    !byte $66,$A8,$FF               ; ROR -$01,Y
-    !byte $66,$A9,$10,$00           ; ROR $1000,Y
-    !byte $66,$A9,$DE,$AD           ; ROR $DEAD,Y
-    !byte $66,$AA                    ; ROR ,PClo
-    !byte $66,$AB                   ; ROR D,Y
-    !byte $66,$AC,$60               ; ROR $60,PC
-    !byte $66,$AC,$FF               ; ROR -$01,PC
-    !byte $66,$AD,$10,$00           ; ROR $1000,PC
-    !byte $66,$AD,$DE,$AD           ; ROR $DEAD,PC
-    !byte $66,$AF,$DE,$AD            ; ROR ,$DEAD
-    !byte $66,$B0                    ; ROR [,Y+]
-    !byte $66,$B1                   ; ROR [,Y++]
-    !byte $66,$B2                    ; ROR [,-Y]
-    !byte $66,$B3                   ; ROR [,--Y]
-    !byte $66,$B4                   ; ROR [,Y]
-    !byte $66,$B5                   ; ROR [B,Y]
-    !byte $66,$B6                   ; ROR [A,Y]
-    !byte $66,$B7                    ; ROR [,Y]
-    !byte $66,$B8,$60               ; ROR [$60,Y]
-    !byte $66,$B8,$FF               ; ROR [-$01,Y]
-    !byte $66,$B9,$DE,$10           ; ROR [$DE10,Y]
-    !byte $66,$B9,$DE,$AD           ; ROR [$DEAD,Y]
-    !byte $66,$BA                    ; ROR [,PClo]
-    !byte $66,$BB                   ; ROR [D,Y]
-    !byte $66,$BC,$60               ; ROR [$60,PC]
-    !byte $66,$BC,$FF               ; ROR [-$01,PC]
-    !byte $66,$BD,$10,$00           ; ROR [$1000,PC]
-    !byte $66,$BD,$DE,$AD           ; ROR [$DEAD,PC]
-    !byte $66,$BF,$DE,$AD           ; ROR [$DEAD]
-    !byte $66,$C0                   ; ROR ,U+
-    !byte $66,$C1                   ; ROR ,U++
-    !byte $66,$C2                   ; ROR ,-U
-    !byte $66,$C3                   ; ROR ,--U
-    !byte $66,$C4                   ; ROR ,U
-    !byte $66,$C5                   ; ROR B,U
-    !byte $66,$C6                   ; ROR A,U
-    !byte $66,$C7                    ; ROR ,U
-    !byte $66,$C8,$60               ; ROR $60,U
-    !byte $66,$C8,$FF               ; ROR -$01,U
-    !byte $66,$C9,$10,$00           ; ROR $1000,U
-    !byte $66,$C9,$DE,$AD           ; ROR $DEAD,U
-    !byte $66,$CA                    ; ROR ,PClo
-    !byte $66,$CB                   ; ROR D,U
-    !byte $66,$CC,$60               ; ROR $60,PC
-    !byte $66,$CC,$FF               ; ROR -$01,PC
-    !byte $66,$CD,$10,$00           ; ROR $1000,PC
-    !byte $66,$CD,$DE,$AD           ; ROR $DEAD,PC
-    !byte $66,$CF,$DE,$AD            ; ROR ,$DEAD
-    !byte $66,$D0                    ; ROR [,U+]
-    !byte $66,$D1                   ; ROR [,U++]
-    !byte $66,$D2                    ; ROR [,-U]
-    !byte $66,$D3                   ; ROR [,--U]
-    !byte $66,$D4                   ; ROR [,U]
-    !byte $66,$D5                   ; ROR [B,U]
-    !byte $66,$D6                   ; ROR [A,U]
-    !byte $66,$D7                    ; ROR [,U]
-    !byte $66,$D8,$60               ; ROR [$60,U]
-    !byte $66,$D8,$FF               ; ROR [-$01,U]
-    !byte $66,$D9,$DE,$10           ; ROR [$DE10,U]
-    !byte $66,$D9,$DE,$AD           ; ROR [$DEAD,U]
-    !byte $66,$DA                    ; ROR [,PClo]
-    !byte $66,$DB                   ; ROR [D,U]
-    !byte $66,$DC,$60               ; ROR [$60,PC]
-    !byte $66,$DC,$FF               ; ROR [-$01,PC]
-    !byte $66,$DD,$10,$00           ; ROR [$1000,PC]
-    !byte $66,$DD,$DE,$AD           ; ROR [$DEAD,PC]
-    !byte $66,$DF,$DE,$AD           ; ROR [$DEAD]
-    !byte $66,$E0                   ; ROR ,S+
-    !byte $66,$E1                   ; ROR ,S++
-    !byte $66,$E2                   ; ROR ,-S
-    !byte $66,$E3                   ; ROR ,--S
-    !byte $66,$E4                   ; ROR ,S
-    !byte $66,$E5                   ; ROR B,S
-    !byte $66,$E6                   ; ROR A,S
-    !byte $66,$E7                    ; ROR ,S
-    !byte $66,$E8,$60               ; ROR $60,S
-    !byte $66,$E8,$FF               ; ROR -$01,S
-    !byte $66,$E9,$10,$00           ; ROR $1000,S
-    !byte $66,$E9,$DE,$AD           ; ROR $DEAD,S
-    !byte $66,$EA                    ; ROR ,PClo
-    !byte $66,$EB                   ; ROR D,S
-    !byte $66,$EC,$60               ; ROR $60,PC
-    !byte $66,$EC,$FF               ; ROR -$01,PC
-    !byte $66,$ED,$10,$00           ; ROR $1000,PC
-    !byte $66,$ED,$DE,$AD           ; ROR $DEAD,PC
-    !byte $66,$EF,$DE,$AD            ; ROR ,$DEAD
-    !byte $66,$F0                    ; ROR [,S+]
-    !byte $66,$F1                   ; ROR [,S++]
-    !byte $66,$F2                    ; ROR [,-S]
-    !byte $66,$F3                   ; ROR [,--S]
-    !byte $66,$F4                   ; ROR [,S]
-    !byte $66,$F5                   ; ROR [B,S]
-    !byte $66,$F6                   ; ROR [A,S]
-    !byte $66,$F7                    ; ROR [,S]
-    !byte $66,$F8,$60               ; ROR [$60,S]
-    !byte $66,$F8,$FF               ; ROR [-$01,S]
-    !byte $66,$F9,$DE,$10           ; ROR [$DE10,S]
-    !byte $66,$F9,$DE,$AD           ; ROR [$DEAD,S]
-    !byte $66,$FA                    ; ROR [,PClo]
-    !byte $66,$FB                   ; ROR [D,S]
-    !byte $66,$FC,$60               ; ROR [$60,PC]
-    !byte $66,$FC,$FF               ; ROR [-$01,PC]
-    !byte $66,$FD,$10,$00           ; ROR [$1000,PC]
-    !byte $66,$FD,$DE,$AD           ; ROR [$DEAD,PC]
-    !byte $66,$FF,$DE,$AD           ; ROR [$DEAD]
-    !byte $67,$0C                   ; ASR $0C,X
-    !byte $67,$15                   ; ASR -$0B,X
-    !byte $67,$2C                   ; ASR $0C,Y
-    !byte $67,$35                   ; ASR -$0B,Y
-    !byte $67,$4C                   ; ASR $0C,U
-    !byte $67,$55                   ; ASR -$0B,U
-    !byte $67,$6C                   ; ASR $0C,S
-    !byte $67,$75                   ; ASR -$0B,S
-    !byte $67,$80                   ; ASR ,X+
-    !byte $67,$81                   ; ASR ,X++
-    !byte $67,$82                   ; ASR ,-X
-    !byte $67,$83                   ; ASR ,--X
-    !byte $67,$84                   ; ASR ,X
-    !byte $67,$85                   ; ASR B,X
-    !byte $67,$86                   ; ASR A,X
-    !byte $67,$87                    ; ASR ,X
-    !byte $67,$88,$60               ; ASR $60,X
-    !byte $67,$88,$FF               ; ASR -$01,X
-    !byte $67,$89,$10,$00           ; ASR $1000,X
-    !byte $67,$89,$DE,$AD           ; ASR $DEAD,X
-    !byte $67,$8A                    ; ASR ,PClo
-    !byte $67,$8B                   ; ASR D,X
-    !byte $67,$8C,$60               ; ASR $60,PC
-    !byte $67,$8C,$FF               ; ASR -$01,PC
-    !byte $67,$8D,$10,$00           ; ASR $1000,PC
-    !byte $67,$8D,$DE,$AD           ; ASR $DEAD,PC
-    !byte $67,$8F,$DE,$AD            ; ASR ,$DEAD
-    !byte $67,$90                    ; ASR [,X+]
-    !byte $67,$91                   ; ASR [,X++]
-    !byte $67,$92                    ; ASR [,-X]
-    !byte $67,$93                   ; ASR [,--X]
-    !byte $67,$94                   ; ASR [,X]
-    !byte $67,$95                   ; ASR [B,X]
-    !byte $67,$96                   ; ASR [A,X]
-    !byte $67,$97                    ; ASR [,X]
-    !byte $67,$98,$60               ; ASR [$60,X]
-    !byte $67,$98,$FF               ; ASR [-$01,X]
-    !byte $67,$99,$DE,$10           ; ASR [$DE10,X]
-    !byte $67,$99,$DE,$AD           ; ASR [$DEAD,X]
-    !byte $67,$9A                    ; ASR [,PClo]
-    !byte $67,$9B                   ; ASR [D,X]
-    !byte $67,$9C,$60               ; ASR [$60,PC]
-    !byte $67,$9C,$FF               ; ASR [-$01,PC]
-    !byte $67,$9D,$10,$00           ; ASR [$1000,PC]
-    !byte $67,$9D,$DE,$AD           ; ASR [$DEAD,PC]
-    !byte $67,$9F,$DE,$AD           ; ASR [$DEAD]
-    !byte $67,$A0                   ; ASR ,Y+
-    !byte $67,$A1                   ; ASR ,Y++
-    !byte $67,$A2                   ; ASR ,-Y
-    !byte $67,$A3                   ; ASR ,--Y
-    !byte $67,$A4                   ; ASR ,Y
-    !byte $67,$A5                   ; ASR B,Y
-    !byte $67,$A6                   ; ASR A,Y
-    !byte $67,$A7                    ; ASR ,Y
-    !byte $67,$A8,$60               ; ASR $60,Y
-    !byte $67,$A8,$FF               ; ASR -$01,Y
-    !byte $67,$A9,$10,$00           ; ASR $1000,Y
-    !byte $67,$A9,$DE,$AD           ; ASR $DEAD,Y
-    !byte $67,$AA                    ; ASR ,PClo
-    !byte $67,$AB                   ; ASR D,Y
-    !byte $67,$AC,$60               ; ASR $60,PC
-    !byte $67,$AC,$FF               ; ASR -$01,PC
-    !byte $67,$AD,$10,$00           ; ASR $1000,PC
-    !byte $67,$AD,$DE,$AD           ; ASR $DEAD,PC
-    !byte $67,$AF,$DE,$AD            ; ASR ,$DEAD
-    !byte $67,$B0                    ; ASR [,Y+]
-    !byte $67,$B1                   ; ASR [,Y++]
-    !byte $67,$B2                    ; ASR [,-Y]
-    !byte $67,$B3                   ; ASR [,--Y]
-    !byte $67,$B4                   ; ASR [,Y]
-    !byte $67,$B5                   ; ASR [B,Y]
-    !byte $67,$B6                   ; ASR [A,Y]
-    !byte $67,$B7                    ; ASR [,Y]
-    !byte $67,$B8,$60               ; ASR [$60,Y]
-    !byte $67,$B8,$FF               ; ASR [-$01,Y]
-    !byte $67,$B9,$DE,$10           ; ASR [$DE10,Y]
-    !byte $67,$B9,$DE,$AD           ; ASR [$DEAD,Y]
-    !byte $67,$BA                    ; ASR [,PClo]
-    !byte $67,$BB                   ; ASR [D,Y]
-    !byte $67,$BC,$60               ; ASR [$60,PC]
-    !byte $67,$BC,$FF               ; ASR [-$01,PC]
-    !byte $67,$BD,$10,$00           ; ASR [$1000,PC]
-    !byte $67,$BD,$DE,$AD           ; ASR [$DEAD,PC]
-    !byte $67,$BF,$DE,$AD           ; ASR [$DEAD]
-    !byte $67,$C0                   ; ASR ,U+
-    !byte $67,$C1                   ; ASR ,U++
-    !byte $67,$C2                   ; ASR ,-U
-    !byte $67,$C3                   ; ASR ,--U
-    !byte $67,$C4                   ; ASR ,U
-    !byte $67,$C5                   ; ASR B,U
-    !byte $67,$C6                   ; ASR A,U
-    !byte $67,$C7                    ; ASR ,U
-    !byte $67,$C8,$60               ; ASR $60,U
-    !byte $67,$C8,$FF               ; ASR -$01,U
-    !byte $67,$C9,$10,$00           ; ASR $1000,U
-    !byte $67,$C9,$DE,$AD           ; ASR $DEAD,U
-    !byte $67,$CA                    ; ASR ,PClo
-    !byte $67,$CB                   ; ASR D,U
-    !byte $67,$CC,$60               ; ASR $60,PC
-    !byte $67,$CC,$FF               ; ASR -$01,PC
-    !byte $67,$CD,$10,$00           ; ASR $1000,PC
-    !byte $67,$CD,$DE,$AD           ; ASR $DEAD,PC
-    !byte $67,$CF,$DE,$AD            ; ASR ,$DEAD
-    !byte $67,$D0                    ; ASR [,U+]
-    !byte $67,$D1                   ; ASR [,U++]
-    !byte $67,$D2                    ; ASR [,-U]
-    !byte $67,$D3                   ; ASR [,--U]
-    !byte $67,$D4                   ; ASR [,U]
-    !byte $67,$D5                   ; ASR [B,U]
-    !byte $67,$D6                   ; ASR [A,U]
-    !byte $67,$D7                    ; ASR [,U]
-    !byte $67,$D8,$60               ; ASR [$60,U]
-    !byte $67,$D8,$FF               ; ASR [-$01,U]
-    !byte $67,$D9,$DE,$10           ; ASR [$DE10,U]
-    !byte $67,$D9,$DE,$AD           ; ASR [$DEAD,U]
-    !byte $67,$DA                    ; ASR [,PClo]
-    !byte $67,$DB                   ; ASR [D,U]
-    !byte $67,$DC,$60               ; ASR [$60,PC]
-    !byte $67,$DC,$FF               ; ASR [-$01,PC]
-    !byte $67,$DD,$10,$00           ; ASR [$1000,PC]
-    !byte $67,$DD,$DE,$AD           ; ASR [$DEAD,PC]
-    !byte $67,$DF,$DE,$AD           ; ASR [$DEAD]
-    !byte $67,$E0                   ; ASR ,S+
-    !byte $67,$E1                   ; ASR ,S++
-    !byte $67,$E2                   ; ASR ,-S
-    !byte $67,$E3                   ; ASR ,--S
-    !byte $67,$E4                   ; ASR ,S
-    !byte $67,$E5                   ; ASR B,S
-    !byte $67,$E6                   ; ASR A,S
-    !byte $67,$E7                    ; ASR ,S
-    !byte $67,$E8,$60               ; ASR $60,S
-    !byte $67,$E8,$FF               ; ASR -$01,S
-    !byte $67,$E9,$10,$00           ; ASR $1000,S
-    !byte $67,$E9,$DE,$AD           ; ASR $DEAD,S
-    !byte $67,$EA                    ; ASR ,PClo
-    !byte $67,$EB                   ; ASR D,S
-    !byte $67,$EC,$60               ; ASR $60,PC
-    !byte $67,$EC,$FF               ; ASR -$01,PC
-    !byte $67,$ED,$10,$00           ; ASR $1000,PC
-    !byte $67,$ED,$DE,$AD           ; ASR $DEAD,PC
-    !byte $67,$EF,$DE,$AD            ; ASR ,$DEAD
-    !byte $67,$F0                    ; ASR [,S+]
-    !byte $67,$F1                   ; ASR [,S++]
-    !byte $67,$F2                    ; ASR [,-S]
-    !byte $67,$F3                   ; ASR [,--S]
-    !byte $67,$F4                   ; ASR [,S]
-    !byte $67,$F5                   ; ASR [B,S]
-    !byte $67,$F6                   ; ASR [A,S]
-    !byte $67,$F7                    ; ASR [,S]
-    !byte $67,$F8,$60               ; ASR [$60,S]
-    !byte $67,$F8,$FF               ; ASR [-$01,S]
-    !byte $67,$F9,$DE,$10           ; ASR [$DE10,S]
-    !byte $67,$F9,$DE,$AD           ; ASR [$DEAD,S]
-    !byte $67,$FA                    ; ASR [,PClo]
-    !byte $67,$FB                   ; ASR [D,S]
-    !byte $67,$FC,$60               ; ASR [$60,PC]
-    !byte $67,$FC,$FF               ; ASR [-$01,PC]
-    !byte $67,$FD,$10,$00           ; ASR [$1000,PC]
-    !byte $67,$FD,$DE,$AD           ; ASR [$DEAD,PC]
-    !byte $67,$FF,$DE,$AD           ; ASR [$DEAD]
-    !byte $68,$0C                   ; ASL $0C,X
-    !byte $68,$15                   ; ASL -$0B,X
-    !byte $68,$2C                   ; ASL $0C,Y
-    !byte $68,$35                   ; ASL -$0B,Y
-    !byte $68,$4C                   ; ASL $0C,U
-    !byte $68,$55                   ; ASL -$0B,U
-    !byte $68,$6C                   ; ASL $0C,S
-    !byte $68,$75                   ; ASL -$0B,S
-    !byte $68,$80                   ; ASL ,X+
-    !byte $68,$81                   ; ASL ,X++
-    !byte $68,$82                   ; ASL ,-X
-    !byte $68,$83                   ; ASL ,--X
-    !byte $68,$84                   ; ASL ,X
-    !byte $68,$85                   ; ASL B,X
-    !byte $68,$86                   ; ASL A,X
-    !byte $68,$87                    ; ASL ,X
-    !byte $68,$88,$60               ; ASL $60,X
-    !byte $68,$88,$FF               ; ASL -$01,X
-    !byte $68,$89,$10,$00           ; ASL $1000,X
-    !byte $68,$89,$DE,$AD           ; ASL $DEAD,X
-    !byte $68,$8A                    ; ASL ,PClo
-    !byte $68,$8B                   ; ASL D,X
-    !byte $68,$8C,$60               ; ASL $60,PC
-    !byte $68,$8C,$FF               ; ASL -$01,PC
-    !byte $68,$8D,$10,$00           ; ASL $1000,PC
-    !byte $68,$8D,$DE,$AD           ; ASL $DEAD,PC
-    !byte $68,$8F,$DE,$AD            ; ASL ,$DEAD
-    !byte $68,$90                    ; ASL [,X+]
-    !byte $68,$91                   ; ASL [,X++]
-    !byte $68,$92                    ; ASL [,-X]
-    !byte $68,$93                   ; ASL [,--X]
-    !byte $68,$94                   ; ASL [,X]
-    !byte $68,$95                   ; ASL [B,X]
-    !byte $68,$96                   ; ASL [A,X]
-    !byte $68,$97                    ; ASL [,X]
-    !byte $68,$98,$60               ; ASL [$60,X]
-    !byte $68,$98,$FF               ; ASL [-$01,X]
-    !byte $68,$99,$DE,$10           ; ASL [$DE10,X]
-    !byte $68,$99,$DE,$AD           ; ASL [$DEAD,X]
-    !byte $68,$9A                    ; ASL [,PClo]
-    !byte $68,$9B                   ; ASL [D,X]
-    !byte $68,$9C,$60               ; ASL [$60,PC]
-    !byte $68,$9C,$FF               ; ASL [-$01,PC]
-    !byte $68,$9D,$10,$00           ; ASL [$1000,PC]
-    !byte $68,$9D,$DE,$AD           ; ASL [$DEAD,PC]
-    !byte $68,$9F,$DE,$AD           ; ASL [$DEAD]
-    !byte $68,$A0                   ; ASL ,Y+
-    !byte $68,$A1                   ; ASL ,Y++
-    !byte $68,$A2                   ; ASL ,-Y
-    !byte $68,$A3                   ; ASL ,--Y
-    !byte $68,$A4                   ; ASL ,Y
-    !byte $68,$A5                   ; ASL B,Y
-    !byte $68,$A6                   ; ASL A,Y
-    !byte $68,$A7                    ; ASL ,Y
-    !byte $68,$A8,$60               ; ASL $60,Y
-    !byte $68,$A8,$FF               ; ASL -$01,Y
-    !byte $68,$A9,$10,$00           ; ASL $1000,Y
-    !byte $68,$A9,$DE,$AD           ; ASL $DEAD,Y
-    !byte $68,$AA                    ; ASL ,PClo
-    !byte $68,$AB                   ; ASL D,Y
-    !byte $68,$AC,$60               ; ASL $60,PC
-    !byte $68,$AC,$FF               ; ASL -$01,PC
-    !byte $68,$AD,$10,$00           ; ASL $1000,PC
-    !byte $68,$AD,$DE,$AD           ; ASL $DEAD,PC
-    !byte $68,$AF,$DE,$AD            ; ASL ,$DEAD
-    !byte $68,$B0                    ; ASL [,Y+]
-    !byte $68,$B1                   ; ASL [,Y++]
-    !byte $68,$B2                    ; ASL [,-Y]
-    !byte $68,$B3                   ; ASL [,--Y]
-    !byte $68,$B4                   ; ASL [,Y]
-    !byte $68,$B5                   ; ASL [B,Y]
-    !byte $68,$B6                   ; ASL [A,Y]
-    !byte $68,$B7                    ; ASL [,Y]
-    !byte $68,$B8,$60               ; ASL [$60,Y]
-    !byte $68,$B8,$FF               ; ASL [-$01,Y]
-    !byte $68,$B9,$DE,$10           ; ASL [$DE10,Y]
-    !byte $68,$B9,$DE,$AD           ; ASL [$DEAD,Y]
-    !byte $68,$BA                    ; ASL [,PClo]
-    !byte $68,$BB                   ; ASL [D,Y]
-    !byte $68,$BC,$60               ; ASL [$60,PC]
-    !byte $68,$BC,$FF               ; ASL [-$01,PC]
-    !byte $68,$BD,$10,$00           ; ASL [$1000,PC]
-    !byte $68,$BD,$DE,$AD           ; ASL [$DEAD,PC]
-    !byte $68,$BF,$DE,$AD           ; ASL [$DEAD]
-    !byte $68,$C0                   ; ASL ,U+
-    !byte $68,$C1                   ; ASL ,U++
-    !byte $68,$C2                   ; ASL ,-U
-    !byte $68,$C3                   ; ASL ,--U
-    !byte $68,$C4                   ; ASL ,U
-    !byte $68,$C5                   ; ASL B,U
-    !byte $68,$C6                   ; ASL A,U
-    !byte $68,$C7                    ; ASL ,U
-    !byte $68,$C8,$60               ; ASL $60,U
-    !byte $68,$C8,$FF               ; ASL -$01,U
-    !byte $68,$C9,$10,$00           ; ASL $1000,U
-    !byte $68,$C9,$DE,$AD           ; ASL $DEAD,U
-    !byte $68,$CA                    ; ASL ,PClo
-    !byte $68,$CB                   ; ASL D,U
-    !byte $68,$CC,$60               ; ASL $60,PC
-    !byte $68,$CC,$FF               ; ASL -$01,PC
-    !byte $68,$CD,$10,$00           ; ASL $1000,PC
-    !byte $68,$CD,$DE,$AD           ; ASL $DEAD,PC
-    !byte $68,$CF,$DE,$AD            ; ASL ,$DEAD
-    !byte $68,$D0                    ; ASL [,U+]
-    !byte $68,$D1                   ; ASL [,U++]
-    !byte $68,$D2                    ; ASL [,-U]
-    !byte $68,$D3                   ; ASL [,--U]
-    !byte $68,$D4                   ; ASL [,U]
-    !byte $68,$D5                   ; ASL [B,U]
-    !byte $68,$D6                   ; ASL [A,U]
-    !byte $68,$D7                    ; ASL [,U]
-    !byte $68,$D8,$60               ; ASL [$60,U]
-    !byte $68,$D8,$FF               ; ASL [-$01,U]
-    !byte $68,$D9,$DE,$10           ; ASL [$DE10,U]
-    !byte $68,$D9,$DE,$AD           ; ASL [$DEAD,U]
-    !byte $68,$DA                    ; ASL [,PClo]
-    !byte $68,$DB                   ; ASL [D,U]
-    !byte $68,$DC,$60               ; ASL [$60,PC]
-    !byte $68,$DC,$FF               ; ASL [-$01,PC]
-    !byte $68,$DD,$10,$00           ; ASL [$1000,PC]
-    !byte $68,$DD,$DE,$AD           ; ASL [$DEAD,PC]
-    !byte $68,$DF,$DE,$AD           ; ASL [$DEAD]
-    !byte $68,$E0                   ; ASL ,S+
-    !byte $68,$E1                   ; ASL ,S++
-    !byte $68,$E2                   ; ASL ,-S
-    !byte $68,$E3                   ; ASL ,--S
-    !byte $68,$E4                   ; ASL ,S
-    !byte $68,$E5                   ; ASL B,S
-    !byte $68,$E6                   ; ASL A,S
-    !byte $68,$E7                    ; ASL ,S
-    !byte $68,$E8,$60               ; ASL $60,S
-    !byte $68,$E8,$FF               ; ASL -$01,S
-    !byte $68,$E9,$10,$00           ; ASL $1000,S
-    !byte $68,$E9,$DE,$AD           ; ASL $DEAD,S
-    !byte $68,$EA                    ; ASL ,PClo
-    !byte $68,$EB                   ; ASL D,S
-    !byte $68,$EC,$60               ; ASL $60,PC
-    !byte $68,$EC,$FF               ; ASL -$01,PC
-    !byte $68,$ED,$10,$00           ; ASL $1000,PC
-    !byte $68,$ED,$DE,$AD           ; ASL $DEAD,PC
-    !byte $68,$EF,$DE,$AD            ; ASL ,$DEAD
-    !byte $68,$F0                    ; ASL [,S+]
-    !byte $68,$F1                   ; ASL [,S++]
-    !byte $68,$F2                    ; ASL [,-S]
-    !byte $68,$F3                   ; ASL [,--S]
-    !byte $68,$F4                   ; ASL [,S]
-    !byte $68,$F5                   ; ASL [B,S]
-    !byte $68,$F6                   ; ASL [A,S]
-    !byte $68,$F7                    ; ASL [,S]
-    !byte $68,$F8,$60               ; ASL [$60,S]
-    !byte $68,$F8,$FF               ; ASL [-$01,S]
-    !byte $68,$F9,$DE,$10           ; ASL [$DE10,S]
-    !byte $68,$F9,$DE,$AD           ; ASL [$DEAD,S]
-    !byte $68,$FA                    ; ASL [,PClo]
-    !byte $68,$FB                   ; ASL [D,S]
-    !byte $68,$FC,$60               ; ASL [$60,PC]
-    !byte $68,$FC,$FF               ; ASL [-$01,PC]
-    !byte $68,$FD,$10,$00           ; ASL [$1000,PC]
-    !byte $68,$FD,$DE,$AD           ; ASL [$DEAD,PC]
-    !byte $68,$FF,$DE,$AD           ; ASL [$DEAD]
-    !byte $69,$0C                   ; ROL $0C,X
-    !byte $69,$15                   ; ROL -$0B,X
-    !byte $69,$2C                   ; ROL $0C,Y
-    !byte $69,$35                   ; ROL -$0B,Y
-    !byte $69,$4C                   ; ROL $0C,U
-    !byte $69,$55                   ; ROL -$0B,U
-    !byte $69,$6C                   ; ROL $0C,S
-    !byte $69,$75                   ; ROL -$0B,S
-    !byte $69,$80                   ; ROL ,X+
-    !byte $69,$81                   ; ROL ,X++
-    !byte $69,$82                   ; ROL ,-X
-    !byte $69,$83                   ; ROL ,--X
-    !byte $69,$84                   ; ROL ,X
-    !byte $69,$85                   ; ROL B,X
-    !byte $69,$86                   ; ROL A,X
-    !byte $69,$87                    ; ROL ,X
-    !byte $69,$88,$60               ; ROL $60,X
-    !byte $69,$88,$FF               ; ROL -$01,X
-    !byte $69,$89,$10,$00           ; ROL $1000,X
-    !byte $69,$89,$DE,$AD           ; ROL $DEAD,X
-    !byte $69,$8A                    ; ROL ,PClo
-    !byte $69,$8B                   ; ROL D,X
-    !byte $69,$8C,$60               ; ROL $60,PC
-    !byte $69,$8C,$FF               ; ROL -$01,PC
-    !byte $69,$8D,$10,$00           ; ROL $1000,PC
-    !byte $69,$8D,$DE,$AD           ; ROL $DEAD,PC
-    !byte $69,$8F,$DE,$AD            ; ROL ,$DEAD
-    !byte $69,$90                    ; ROL [,X+]
-    !byte $69,$91                   ; ROL [,X++]
-    !byte $69,$92                    ; ROL [,-X]
-    !byte $69,$93                   ; ROL [,--X]
-    !byte $69,$94                   ; ROL [,X]
-    !byte $69,$95                   ; ROL [B,X]
-    !byte $69,$96                   ; ROL [A,X]
-    !byte $69,$97                    ; ROL [,X]
-    !byte $69,$98,$60               ; ROL [$60,X]
-    !byte $69,$98,$FF               ; ROL [-$01,X]
-    !byte $69,$99,$DE,$10           ; ROL [$DE10,X]
-    !byte $69,$99,$DE,$AD           ; ROL [$DEAD,X]
-    !byte $69,$9A                    ; ROL [,PClo]
-    !byte $69,$9B                   ; ROL [D,X]
-    !byte $69,$9C,$60               ; ROL [$60,PC]
-    !byte $69,$9C,$FF               ; ROL [-$01,PC]
-    !byte $69,$9D,$10,$00           ; ROL [$1000,PC]
-    !byte $69,$9D,$DE,$AD           ; ROL [$DEAD,PC]
-    !byte $69,$9F,$DE,$AD           ; ROL [$DEAD]
-    !byte $69,$A0                   ; ROL ,Y+
-    !byte $69,$A1                   ; ROL ,Y++
-    !byte $69,$A2                   ; ROL ,-Y
-    !byte $69,$A3                   ; ROL ,--Y
-    !byte $69,$A4                   ; ROL ,Y
-    !byte $69,$A5                   ; ROL B,Y
-    !byte $69,$A6                   ; ROL A,Y
-    !byte $69,$A7                    ; ROL ,Y
-    !byte $69,$A8,$60               ; ROL $60,Y
-    !byte $69,$A8,$FF               ; ROL -$01,Y
-    !byte $69,$A9,$10,$00           ; ROL $1000,Y
-    !byte $69,$A9,$DE,$AD           ; ROL $DEAD,Y
-    !byte $69,$AA                    ; ROL ,PClo
-    !byte $69,$AB                   ; ROL D,Y
-    !byte $69,$AC,$60               ; ROL $60,PC
-    !byte $69,$AC,$FF               ; ROL -$01,PC
-    !byte $69,$AD,$10,$00           ; ROL $1000,PC
-    !byte $69,$AD,$DE,$AD           ; ROL $DEAD,PC
-    !byte $69,$AF,$DE,$AD            ; ROL ,$DEAD
-    !byte $69,$B0                    ; ROL [,Y+]
-    !byte $69,$B1                   ; ROL [,Y++]
-    !byte $69,$B2                    ; ROL [,-Y]
-    !byte $69,$B3                   ; ROL [,--Y]
-    !byte $69,$B4                   ; ROL [,Y]
-    !byte $69,$B5                   ; ROL [B,Y]
-    !byte $69,$B6                   ; ROL [A,Y]
-    !byte $69,$B7                    ; ROL [,Y]
-    !byte $69,$B8,$60               ; ROL [$60,Y]
-    !byte $69,$B8,$FF               ; ROL [-$01,Y]
-    !byte $69,$B9,$DE,$10           ; ROL [$DE10,Y]
-    !byte $69,$B9,$DE,$AD           ; ROL [$DEAD,Y]
-    !byte $69,$BA                    ; ROL [,PClo]
-    !byte $69,$BB                   ; ROL [D,Y]
-    !byte $69,$BC,$60               ; ROL [$60,PC]
-    !byte $69,$BC,$FF               ; ROL [-$01,PC]
-    !byte $69,$BD,$10,$00           ; ROL [$1000,PC]
-    !byte $69,$BD,$DE,$AD           ; ROL [$DEAD,PC]
-    !byte $69,$BF,$DE,$AD           ; ROL [$DEAD]
-    !byte $69,$C0                   ; ROL ,U+
-    !byte $69,$C1                   ; ROL ,U++
-    !byte $69,$C2                   ; ROL ,-U
-    !byte $69,$C3                   ; ROL ,--U
-    !byte $69,$C4                   ; ROL ,U
-    !byte $69,$C5                   ; ROL B,U
-    !byte $69,$C6                   ; ROL A,U
-    !byte $69,$C7                    ; ROL ,U
-    !byte $69,$C8,$60               ; ROL $60,U
-    !byte $69,$C8,$FF               ; ROL -$01,U
-    !byte $69,$C9,$10,$00           ; ROL $1000,U
-    !byte $69,$C9,$DE,$AD           ; ROL $DEAD,U
-    !byte $69,$CA                    ; ROL ,PClo
-    !byte $69,$CB                   ; ROL D,U
-    !byte $69,$CC,$60               ; ROL $60,PC
-    !byte $69,$CC,$FF               ; ROL -$01,PC
-    !byte $69,$CD,$10,$00           ; ROL $1000,PC
-    !byte $69,$CD,$DE,$AD           ; ROL $DEAD,PC
-    !byte $69,$CF,$DE,$AD            ; ROL ,$DEAD
-    !byte $69,$D0                    ; ROL [,U+]
-    !byte $69,$D1                   ; ROL [,U++]
-    !byte $69,$D2                    ; ROL [,-U]
-    !byte $69,$D3                   ; ROL [,--U]
-    !byte $69,$D4                   ; ROL [,U]
-    !byte $69,$D5                   ; ROL [B,U]
-    !byte $69,$D6                   ; ROL [A,U]
-    !byte $69,$D7                    ; ROL [,U]
-    !byte $69,$D8,$60               ; ROL [$60,U]
-    !byte $69,$D8,$FF               ; ROL [-$01,U]
-    !byte $69,$D9,$DE,$10           ; ROL [$DE10,U]
-    !byte $69,$D9,$DE,$AD           ; ROL [$DEAD,U]
-    !byte $69,$DA                    ; ROL [,PClo]
-    !byte $69,$DB                   ; ROL [D,U]
-    !byte $69,$DC,$60               ; ROL [$60,PC]
-    !byte $69,$DC,$FF               ; ROL [-$01,PC]
-    !byte $69,$DD,$10,$00           ; ROL [$1000,PC]
-    !byte $69,$DD,$DE,$AD           ; ROL [$DEAD,PC]
-    !byte $69,$DF,$DE,$AD           ; ROL [$DEAD]
-    !byte $69,$E0                   ; ROL ,S+
-    !byte $69,$E1                   ; ROL ,S++
-    !byte $69,$E2                   ; ROL ,-S
-    !byte $69,$E3                   ; ROL ,--S
-    !byte $69,$E4                   ; ROL ,S
-    !byte $69,$E5                   ; ROL B,S
-    !byte $69,$E6                   ; ROL A,S
-    !byte $69,$E7                    ; ROL ,S
-    !byte $69,$E8,$60               ; ROL $60,S
-    !byte $69,$E8,$FF               ; ROL -$01,S
-    !byte $69,$E9,$10,$00           ; ROL $1000,S
-    !byte $69,$E9,$DE,$AD           ; ROL $DEAD,S
-    !byte $69,$EA                    ; ROL ,PClo
-    !byte $69,$EB                   ; ROL D,S
-    !byte $69,$EC,$60               ; ROL $60,PC
-    !byte $69,$EC,$FF               ; ROL -$01,PC
-    !byte $69,$ED,$10,$00           ; ROL $1000,PC
-    !byte $69,$ED,$DE,$AD           ; ROL $DEAD,PC
-    !byte $69,$EF,$DE,$AD            ; ROL ,$DEAD
-    !byte $69,$F0                    ; ROL [,S+]
-    !byte $69,$F1                   ; ROL [,S++]
-    !byte $69,$F2                    ; ROL [,-S]
-    !byte $69,$F3                   ; ROL [,--S]
-    !byte $69,$F4                   ; ROL [,S]
-    !byte $69,$F5                   ; ROL [B,S]
-    !byte $69,$F6                   ; ROL [A,S]
-    !byte $69,$F7                    ; ROL [,S]
-    !byte $69,$F8,$60               ; ROL [$60,S]
-    !byte $69,$F8,$FF               ; ROL [-$01,S]
-    !byte $69,$F9,$DE,$10           ; ROL [$DE10,S]
-    !byte $69,$F9,$DE,$AD           ; ROL [$DEAD,S]
-    !byte $69,$FA                    ; ROL [,PClo]
-    !byte $69,$FB                   ; ROL [D,S]
-    !byte $69,$FC,$60               ; ROL [$60,PC]
-    !byte $69,$FC,$FF               ; ROL [-$01,PC]
-    !byte $69,$FD,$10,$00           ; ROL [$1000,PC]
-    !byte $69,$FD,$DE,$AD           ; ROL [$DEAD,PC]
-    !byte $69,$FF,$DE,$AD           ; ROL [$DEAD]
-    !byte $6A,$0C                   ; DEC $0C,X
-    !byte $6A,$15                   ; DEC -$0B,X
-    !byte $6A,$2C                   ; DEC $0C,Y
-    !byte $6A,$35                   ; DEC -$0B,Y
-    !byte $6A,$4C                   ; DEC $0C,U
-    !byte $6A,$55                   ; DEC -$0B,U
-    !byte $6A,$6C                   ; DEC $0C,S
-    !byte $6A,$75                   ; DEC -$0B,S
-    !byte $6A,$80                   ; DEC ,X+
-    !byte $6A,$81                   ; DEC ,X++
-    !byte $6A,$82                   ; DEC ,-X
-    !byte $6A,$83                   ; DEC ,--X
-    !byte $6A,$84                   ; DEC ,X
-    !byte $6A,$85                   ; DEC B,X
-    !byte $6A,$86                   ; DEC A,X
-    !byte $6A,$87                    ; DEC ,X
-    !byte $6A,$88,$60               ; DEC $60,X
-    !byte $6A,$88,$FF               ; DEC -$01,X
-    !byte $6A,$89,$10,$00           ; DEC $1000,X
-    !byte $6A,$89,$DE,$AD           ; DEC $DEAD,X
-    !byte $6A,$8A                    ; DEC ,PClo
-    !byte $6A,$8B                   ; DEC D,X
-    !byte $6A,$8C,$60               ; DEC $60,PC
-    !byte $6A,$8C,$FF               ; DEC -$01,PC
-    !byte $6A,$8D,$10,$00           ; DEC $1000,PC
-    !byte $6A,$8D,$DE,$AD           ; DEC $DEAD,PC
-    !byte $6A,$8F,$DE,$AD            ; DEC ,$DEAD
-    !byte $6A,$90                    ; DEC [,X+]
-    !byte $6A,$91                   ; DEC [,X++]
-    !byte $6A,$92                    ; DEC [,-X]
-    !byte $6A,$93                   ; DEC [,--X]
-    !byte $6A,$94                   ; DEC [,X]
-    !byte $6A,$95                   ; DEC [B,X]
-    !byte $6A,$96                   ; DEC [A,X]
-    !byte $6A,$97                    ; DEC [,X]
-    !byte $6A,$98,$60               ; DEC [$60,X]
-    !byte $6A,$98,$FF               ; DEC [-$01,X]
-    !byte $6A,$99,$DE,$10           ; DEC [$DE10,X]
-    !byte $6A,$99,$DE,$AD           ; DEC [$DEAD,X]
-    !byte $6A,$9A                    ; DEC [,PClo]
-    !byte $6A,$9B                   ; DEC [D,X]
-    !byte $6A,$9C,$60               ; DEC [$60,PC]
-    !byte $6A,$9C,$FF               ; DEC [-$01,PC]
-    !byte $6A,$9D,$10,$00           ; DEC [$1000,PC]
-    !byte $6A,$9D,$DE,$AD           ; DEC [$DEAD,PC]
-    !byte $6A,$9F,$DE,$AD           ; DEC [$DEAD]
-    !byte $6A,$A0                   ; DEC ,Y+
-    !byte $6A,$A1                   ; DEC ,Y++
-    !byte $6A,$A2                   ; DEC ,-Y
-    !byte $6A,$A3                   ; DEC ,--Y
-    !byte $6A,$A4                   ; DEC ,Y
-    !byte $6A,$A5                   ; DEC B,Y
-    !byte $6A,$A6                   ; DEC A,Y
-    !byte $6A,$A7                    ; DEC ,Y
-    !byte $6A,$A8,$60               ; DEC $60,Y
-    !byte $6A,$A8,$FF               ; DEC -$01,Y
-    !byte $6A,$A9,$10,$00           ; DEC $1000,Y
-    !byte $6A,$A9,$DE,$AD           ; DEC $DEAD,Y
-    !byte $6A,$AA                    ; DEC ,PClo
-    !byte $6A,$AB                   ; DEC D,Y
-    !byte $6A,$AC,$60               ; DEC $60,PC
-    !byte $6A,$AC,$FF               ; DEC -$01,PC
-    !byte $6A,$AD,$10,$00           ; DEC $1000,PC
-    !byte $6A,$AD,$DE,$AD           ; DEC $DEAD,PC
-    !byte $6A,$AF,$DE,$AD            ; DEC ,$DEAD
-    !byte $6A,$B0                    ; DEC [,Y+]
-    !byte $6A,$B1                   ; DEC [,Y++]
-    !byte $6A,$B2                    ; DEC [,-Y]
-    !byte $6A,$B3                   ; DEC [,--Y]
-    !byte $6A,$B4                   ; DEC [,Y]
-    !byte $6A,$B5                   ; DEC [B,Y]
-    !byte $6A,$B6                   ; DEC [A,Y]
-    !byte $6A,$B7                    ; DEC [,Y]
-    !byte $6A,$B8,$60               ; DEC [$60,Y]
-    !byte $6A,$B8,$FF               ; DEC [-$01,Y]
-    !byte $6A,$B9,$DE,$10           ; DEC [$DE10,Y]
-    !byte $6A,$B9,$DE,$AD           ; DEC [$DEAD,Y]
-    !byte $6A,$BA                    ; DEC [,PClo]
-    !byte $6A,$BB                   ; DEC [D,Y]
-    !byte $6A,$BC,$60               ; DEC [$60,PC]
-    !byte $6A,$BC,$FF               ; DEC [-$01,PC]
-    !byte $6A,$BD,$10,$00           ; DEC [$1000,PC]
-    !byte $6A,$BD,$DE,$AD           ; DEC [$DEAD,PC]
-    !byte $6A,$BF,$DE,$AD           ; DEC [$DEAD]
-    !byte $6A,$C0                   ; DEC ,U+
-    !byte $6A,$C1                   ; DEC ,U++
-    !byte $6A,$C2                   ; DEC ,-U
-    !byte $6A,$C3                   ; DEC ,--U
-    !byte $6A,$C4                   ; DEC ,U
-    !byte $6A,$C5                   ; DEC B,U
-    !byte $6A,$C6                   ; DEC A,U
-    !byte $6A,$C7                    ; DEC ,U
-    !byte $6A,$C8,$60               ; DEC $60,U
-    !byte $6A,$C8,$FF               ; DEC -$01,U
-    !byte $6A,$C9,$10,$00           ; DEC $1000,U
-    !byte $6A,$C9,$DE,$AD           ; DEC $DEAD,U
-    !byte $6A,$CA                    ; DEC ,PClo
-    !byte $6A,$CB                   ; DEC D,U
-    !byte $6A,$CC,$60               ; DEC $60,PC
-    !byte $6A,$CC,$FF               ; DEC -$01,PC
-    !byte $6A,$CD,$10,$00           ; DEC $1000,PC
-    !byte $6A,$CD,$DE,$AD           ; DEC $DEAD,PC
-    !byte $6A,$CF,$DE,$AD            ; DEC ,$DEAD
-    !byte $6A,$D0                    ; DEC [,U+]
-    !byte $6A,$D1                   ; DEC [,U++]
-    !byte $6A,$D2                    ; DEC [,-U]
-    !byte $6A,$D3                   ; DEC [,--U]
-    !byte $6A,$D4                   ; DEC [,U]
-    !byte $6A,$D5                   ; DEC [B,U]
-    !byte $6A,$D6                   ; DEC [A,U]
-    !byte $6A,$D7                    ; DEC [,U]
-    !byte $6A,$D8,$60               ; DEC [$60,U]
-    !byte $6A,$D8,$FF               ; DEC [-$01,U]
-    !byte $6A,$D9,$DE,$10           ; DEC [$DE10,U]
-    !byte $6A,$D9,$DE,$AD           ; DEC [$DEAD,U]
-    !byte $6A,$DA                    ; DEC [,PClo]
-    !byte $6A,$DB                   ; DEC [D,U]
-    !byte $6A,$DC,$60               ; DEC [$60,PC]
-    !byte $6A,$DC,$FF               ; DEC [-$01,PC]
-    !byte $6A,$DD,$10,$00           ; DEC [$1000,PC]
-    !byte $6A,$DD,$DE,$AD           ; DEC [$DEAD,PC]
-    !byte $6A,$DF,$DE,$AD           ; DEC [$DEAD]
-    !byte $6A,$E0                   ; DEC ,S+
-    !byte $6A,$E1                   ; DEC ,S++
-    !byte $6A,$E2                   ; DEC ,-S
-    !byte $6A,$E3                   ; DEC ,--S
-    !byte $6A,$E4                   ; DEC ,S
-    !byte $6A,$E5                   ; DEC B,S
-    !byte $6A,$E6                   ; DEC A,S
-    !byte $6A,$E7                    ; DEC ,S
-    !byte $6A,$E8,$60               ; DEC $60,S
-    !byte $6A,$E8,$FF               ; DEC -$01,S
-    !byte $6A,$E9,$10,$00           ; DEC $1000,S
-    !byte $6A,$E9,$DE,$AD           ; DEC $DEAD,S
-    !byte $6A,$EA                    ; DEC ,PClo
-    !byte $6A,$EB                   ; DEC D,S
-    !byte $6A,$EC,$60               ; DEC $60,PC
-    !byte $6A,$EC,$FF               ; DEC -$01,PC
-    !byte $6A,$ED,$10,$00           ; DEC $1000,PC
-    !byte $6A,$ED,$DE,$AD           ; DEC $DEAD,PC
-    !byte $6A,$EF,$DE,$AD            ; DEC ,$DEAD
-    !byte $6A,$F0                    ; DEC [,S+]
-    !byte $6A,$F1                   ; DEC [,S++]
-    !byte $6A,$F2                    ; DEC [,-S]
-    !byte $6A,$F3                   ; DEC [,--S]
-    !byte $6A,$F4                   ; DEC [,S]
-    !byte $6A,$F5                   ; DEC [B,S]
-    !byte $6A,$F6                   ; DEC [A,S]
-    !byte $6A,$F7                    ; DEC [,S]
-    !byte $6A,$F8,$60               ; DEC [$60,S]
-    !byte $6A,$F8,$FF               ; DEC [-$01,S]
-    !byte $6A,$F9,$DE,$10           ; DEC [$DE10,S]
-    !byte $6A,$F9,$DE,$AD           ; DEC [$DEAD,S]
-    !byte $6A,$FA                    ; DEC [,PClo]
-    !byte $6A,$FB                   ; DEC [D,S]
-    !byte $6A,$FC,$60               ; DEC [$60,PC]
-    !byte $6A,$FC,$FF               ; DEC [-$01,PC]
-    !byte $6A,$FD,$10,$00           ; DEC [$1000,PC]
-    !byte $6A,$FD,$DE,$AD           ; DEC [$DEAD,PC]
-    !byte $6A,$FF,$DE,$AD           ; DEC [$DEAD]
     !byte $6B,$0C                    ; DEC $0C,X
     !byte $6B,$15                    ; DEC -$0B,X
     !byte $6B,$2C                    ; DEC $0C,Y
