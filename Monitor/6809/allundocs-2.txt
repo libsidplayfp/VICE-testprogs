@@ -2302,10 +2302,10 @@
 !byte $A0,$A7                    ; SUBA ,Y
 !byte $A0,$C7                    ; SUBA ,U
 !byte $A0,$E7                    ; SUBA ,S
-!byte $A0,$87                    ; SUBA ,PClo
-!byte $A0,$A7                    ; SUBA ,PClo
-!byte $A0,$C7                    ; SUBA ,PClo
-!byte $A0,$E7                    ; SUBA ,PClo
+!byte $A0,$8A                    ; SUBA ,PClo
+!byte $A0,$AA                    ; SUBA ,PClo
+!byte $A0,$CA                    ; SUBA ,PClo
+!byte $A0,$EA                    ; SUBA ,PClo
 !byte $A0,$8F,$DE,$AD            ; SUBA ,$DEAD
 !byte $A0,$AF,$DE,$AD            ; SUBA ,$DEAD
 !byte $A0,$CF,$DE,$AD            ; SUBA ,$DEAD
