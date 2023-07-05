@@ -6691,327 +6691,343 @@
 !byte $A9,$B0,$DE,$AD           ; ADCA [$DEAD,W]
 !byte $A9,$D0                   ; ADCA [,W++]
 !byte $A9,$F0                   ; ADCA [,--W]
+!byte $AA,$84                   ; ORA ,X
+!byte $AA,$A4                   ; ORA ,Y
+!byte $AA,$C4                   ; ORA ,U
+!byte $AA,$E4                   ; ORA ,S
+!byte $AA,$15                   ; ORA -$0B,X
+!byte $AA,$35                   ; ORA -$0B,Y
+!byte $AA,$55                   ; ORA -$0B,U
+!byte $AA,$75                   ; ORA -$0B,S
+!byte $AA,$0C                   ; ORA $0C,X
+!byte $AA,$2C                   ; ORA $0C,Y
+!byte $AA,$4C                   ; ORA $0C,U
+!byte $AA,$6C                   ; ORA $0C,S
+!byte $AA,$88,$FF               ; ORA -$01,X
+!byte $AA,$A8,$FF               ; ORA -$01,Y
+!byte $AA,$C8,$FF               ; ORA -$01,U
+!byte $AA,$E8,$FF               ; ORA -$01,S
+!byte $AA,$88,$60               ; ORA $60,X
+!byte $AA,$A8,$60               ; ORA $60,Y
+!byte $AA,$C8,$60               ; ORA $60,U
+!byte $AA,$E8,$60               ; ORA $60,S
+!byte $AA,$89,$DE,$AD           ; ORA $DEAD,X
+!byte $AA,$A9,$DE,$AD           ; ORA $DEAD,Y
+!byte $AA,$C9,$DE,$AD           ; ORA $DEAD,U
+!byte $AA,$E9,$DE,$AD           ; ORA $DEAD,S
+!byte $AA,$89,$10,$00           ; ORA $1000,X
+!byte $AA,$A9,$10,$00           ; ORA $1000,Y
+!byte $AA,$C9,$10,$00           ; ORA $1000,U
+!byte $AA,$E9,$10,$00           ; ORA $1000,S
+!byte $AA,$86                   ; ORA A,X
+!byte $AA,$A6                   ; ORA A,Y
+!byte $AA,$C6                   ; ORA A,U
+!byte $AA,$E6                   ; ORA A,S
+!byte $AA,$85                   ; ORA B,X
+!byte $AA,$A5                   ; ORA B,Y
+!byte $AA,$C5                   ; ORA B,U
+!byte $AA,$E5                   ; ORA B,S
+!byte $AA,$87                   ; ORA E,X
+!byte $AA,$A7                   ; ORA E,Y
+!byte $AA,$C7                   ; ORA E,U
+!byte $AA,$E7                   ; ORA E,S
+!byte $AA,$8A                   ; ORA F,X
+!byte $AA,$AA                   ; ORA F,Y
+!byte $AA,$CA                   ; ORA F,U
+!byte $AA,$EA                   ; ORA F,S
+!byte $AA,$8B                   ; ORA D,X
+!byte $AA,$AB                   ; ORA D,Y
+!byte $AA,$CB                   ; ORA D,U
+!byte $AA,$EB                   ; ORA D,S
+!byte $AA,$8E                   ; ORA W,X
+!byte $AA,$AE                   ; ORA W,Y
+!byte $AA,$CE                   ; ORA W,U
+!byte $AA,$EE                   ; ORA W,S
+!byte $AA,$80                   ; ORA ,X+
+!byte $AA,$A0                   ; ORA ,Y+
+!byte $AA,$C0                   ; ORA ,U+
+!byte $AA,$E0                   ; ORA ,S+
+!byte $AA,$81                   ; ORA ,X++
+!byte $AA,$A1                   ; ORA ,Y++
+!byte $AA,$C1                   ; ORA ,U++
+!byte $AA,$E1                   ; ORA ,S++
+!byte $AA,$82                   ; ORA ,-X
+!byte $AA,$A2                   ; ORA ,-Y
+!byte $AA,$C2                   ; ORA ,-U
+!byte $AA,$E2                   ; ORA ,-S
+!byte $AA,$83                   ; ORA ,--X
+!byte $AA,$A3                   ; ORA ,--Y
+!byte $AA,$C3                   ; ORA ,--U
+!byte $AA,$E3                   ; ORA ,--S
+!byte $AA,$8C,$FF               ; ORA -$01,PC
+!byte $AA,$AC,$FF               ; ORA -$01,PC
+!byte $AA,$CC,$FF               ; ORA -$01,PC
+!byte $AA,$EC,$FF               ; ORA -$01,PC
+!byte $AA,$8C,$60               ; ORA $60,PC
+!byte $AA,$AC,$60               ; ORA $60,PC
+!byte $AA,$CC,$60               ; ORA $60,PC
+!byte $AA,$EC,$60               ; ORA $60,PC
+!byte $AA,$8D,$DE,$AD           ; ORA $DEAD,PC
+!byte $AA,$AD,$DE,$AD           ; ORA $DEAD,PC
+!byte $AA,$CD,$DE,$AD           ; ORA $DEAD,PC
+!byte $AA,$ED,$DE,$AD           ; ORA $DEAD,PC
+!byte $AA,$8D,$10,$00           ; ORA $1000,PC
+!byte $AA,$AD,$10,$00           ; ORA $1000,PC
+!byte $AA,$CD,$10,$00           ; ORA $1000,PC
+!byte $AA,$ED,$10,$00           ; ORA $1000,PC
+!byte $AA,$8F                   ; ORA ,W
+!byte $AA,$AF,$DE,$AD           ; ORA $DEAD,W
+!byte $AA,$CF,$DE,$AD           ; ORA ,W++
+!byte $AA,$EF,$DE,$AD           ; ORA ,--W
+!byte $AA,$94                   ; ORA [,X]
+!byte $AA,$B4                   ; ORA [,Y]
+!byte $AA,$D4                   ; ORA [,U]
+!byte $AA,$F4                   ; ORA [,S]
+!byte $AA,$98,$FF               ; ORA [-$01,X]
+!byte $AA,$B8,$FF               ; ORA [-$01,Y]
+!byte $AA,$D8,$FF               ; ORA [-$01,U]
+!byte $AA,$F8,$FF               ; ORA [-$01,S]
+!byte $AA,$98,$60               ; ORA [$60,X]
+!byte $AA,$B8,$60               ; ORA [$60,Y]
+!byte $AA,$D8,$60               ; ORA [$60,U]
+!byte $AA,$F8,$60               ; ORA [$60,S]
+!byte $AA,$99,$DE,$AD           ; ORA [$DEAD,X]
+!byte $AA,$B9,$DE,$AD           ; ORA [$DEAD,Y]
+!byte $AA,$D9,$DE,$AD           ; ORA [$DEAD,U]
+!byte $AA,$F9,$DE,$AD           ; ORA [$DEAD,S]
+!byte $AA,$99,$10,$00           ; ORA [$1000,X]
+!byte $AA,$B9,$10,$00           ; ORA [$1000,Y]
+!byte $AA,$D9,$10,$00           ; ORA [$1000,U]
+!byte $AA,$F9,$10,$00           ; ORA [$1000,S]
+!byte $AA,$96                   ; ORA [A,X]
+!byte $AA,$B6                   ; ORA [A,Y]
+!byte $AA,$D6                   ; ORA [A,U]
+!byte $AA,$F6                   ; ORA [A,S]
+!byte $AA,$95                   ; ORA [B,X]
+!byte $AA,$B5                   ; ORA [B,Y]
+!byte $AA,$D5                   ; ORA [B,U]
+!byte $AA,$F5                   ; ORA [B,S]
+!byte $AA,$97                   ; ORA [E,X]
+!byte $AA,$B7                   ; ORA [E,Y]
+!byte $AA,$D7                   ; ORA [E,U]
+!byte $AA,$F7                   ; ORA [E,S]
+!byte $AA,$9A                   ; ORA [F,X]
+!byte $AA,$BA                   ; ORA [F,Y]
+!byte $AA,$DA                   ; ORA [F,U]
+!byte $AA,$FA                   ; ORA [F,S]
+!byte $AA,$9B                   ; ORA [D,X]
+!byte $AA,$BB                   ; ORA [D,Y]
+!byte $AA,$DB                   ; ORA [D,U]
+!byte $AA,$FB                   ; ORA [D,S]
+!byte $AA,$9E                   ; ORA [W,X]
+!byte $AA,$BE                   ; ORA [W,Y]
+!byte $AA,$DE                   ; ORA [W,U]
+!byte $AA,$FE                   ; ORA [W,S]
+!byte $AA,$91                   ; ORA [,X++]
+!byte $AA,$B1                   ; ORA [,Y++]
+!byte $AA,$D1                   ; ORA [,U++]
+!byte $AA,$F1                   ; ORA [,S++]
+!byte $AA,$92                   ; ORA [,-X]
+!byte $AA,$B2                   ; ORA [,-Y]
+!byte $AA,$D2                   ; ORA [,-U]
+!byte $AA,$F2                   ; ORA [,-S]
+!byte $AA,$93                   ; ORA [,--X]
+!byte $AA,$B3                   ; ORA [,--Y]
+!byte $AA,$D3                   ; ORA [,--U]
+!byte $AA,$F3                   ; ORA [,--S]
+!byte $AA,$9C,$FF               ; ORA [-$01,PC]
+!byte $AA,$BC,$FF               ; ORA [-$01,PC]
+!byte $AA,$DC,$FF               ; ORA [-$01,PC]
+!byte $AA,$FC,$FF               ; ORA [-$01,PC]
+!byte $AA,$9C,$60               ; ORA [$60,PC]
+!byte $AA,$BC,$60               ; ORA [$60,PC]
+!byte $AA,$DC,$60               ; ORA [$60,PC]
+!byte $AA,$FC,$60               ; ORA [$60,PC]
+!byte $AA,$9D,$DE,$AD           ; ORA [$DEAD,PC]
+!byte $AA,$BD,$DE,$AD           ; ORA [$DEAD,PC]
+!byte $AA,$DD,$DE,$AD           ; ORA [$DEAD,PC]
+!byte $AA,$FD,$DE,$AD           ; ORA [$DEAD,PC]
+!byte $AA,$9D,$10,$00           ; ORA [$1000,PC]
+!byte $AA,$BD,$10,$00           ; ORA [$1000,PC]
+!byte $AA,$DD,$10,$00           ; ORA [$1000,PC]
+!byte $AA,$FD,$10,$00           ; ORA [$1000,PC]
+!byte $AA,$9F,$DE,$AD           ; ORA [$DEAD]
+!byte $AA,$BF,$DE,$AD           ; ORA [$DEAD]
+!byte $AA,$DF,$DE,$AD           ; ORA [$DEAD]
+!byte $AA,$FF,$DE,$AD           ; ORA [$DEAD]
+!byte $AA,$90                   ; ORA [,W]
+!byte $AA,$B0,$DE,$AD           ; ORA [$DEAD,W]
+!byte $AA,$D0                   ; ORA [,W++]
+!byte $AA,$F0                   ; ORA [,--W]
+!byte $AB,$84                   ; ADDA ,X
+!byte $AB,$A4                   ; ADDA ,Y
+!byte $AB,$C4                   ; ADDA ,U
+!byte $AB,$E4                   ; ADDA ,S
+!byte $AB,$15                   ; ADDA -$0B,X
+!byte $AB,$35                   ; ADDA -$0B,Y
+!byte $AB,$55                   ; ADDA -$0B,U
+!byte $AB,$75                   ; ADDA -$0B,S
+!byte $AB,$0C                   ; ADDA $0C,X
+!byte $AB,$2C                   ; ADDA $0C,Y
+!byte $AB,$4C                   ; ADDA $0C,U
+!byte $AB,$6C                   ; ADDA $0C,S
+!byte $AB,$88,$FF               ; ADDA -$01,X
+!byte $AB,$A8,$FF               ; ADDA -$01,Y
+!byte $AB,$C8,$FF               ; ADDA -$01,U
+!byte $AB,$E8,$FF               ; ADDA -$01,S
+!byte $AB,$88,$60               ; ADDA $60,X
+!byte $AB,$A8,$60               ; ADDA $60,Y
+!byte $AB,$C8,$60               ; ADDA $60,U
+!byte $AB,$E8,$60               ; ADDA $60,S
+!byte $AB,$89,$DE,$AD           ; ADDA $DEAD,X
+!byte $AB,$A9,$DE,$AD           ; ADDA $DEAD,Y
+!byte $AB,$C9,$DE,$AD           ; ADDA $DEAD,U
+!byte $AB,$E9,$DE,$AD           ; ADDA $DEAD,S
+!byte $AB,$89,$10,$00           ; ADDA $1000,X
+!byte $AB,$A9,$10,$00           ; ADDA $1000,Y
+!byte $AB,$C9,$10,$00           ; ADDA $1000,U
+!byte $AB,$E9,$10,$00           ; ADDA $1000,S
+!byte $AB,$86                   ; ADDA A,X
+!byte $AB,$A6                   ; ADDA A,Y
+!byte $AB,$C6                   ; ADDA A,U
+!byte $AB,$E6                   ; ADDA A,S
+!byte $AB,$85                   ; ADDA B,X
+!byte $AB,$A5                   ; ADDA B,Y
+!byte $AB,$C5                   ; ADDA B,U
+!byte $AB,$E5                   ; ADDA B,S
+!byte $AB,$87                   ; ADDA E,X
+!byte $AB,$A7                   ; ADDA E,Y
+!byte $AB,$C7                   ; ADDA E,U
+!byte $AB,$E7                   ; ADDA E,S
+!byte $AB,$8A                   ; ADDA F,X
+!byte $AB,$AA                   ; ADDA F,Y
+!byte $AB,$CA                   ; ADDA F,U
+!byte $AB,$EA                   ; ADDA F,S
+!byte $AB,$8B                   ; ADDA D,X
+!byte $AB,$AB                   ; ADDA D,Y
+!byte $AB,$CB                   ; ADDA D,U
+!byte $AB,$EB                   ; ADDA D,S
+!byte $AB,$8E                   ; ADDA W,X
+!byte $AB,$AE                   ; ADDA W,Y
+!byte $AB,$CE                   ; ADDA W,U
+!byte $AB,$EE                   ; ADDA W,S
+!byte $AB,$80                   ; ADDA ,X+
+!byte $AB,$A0                   ; ADDA ,Y+
+!byte $AB,$C0                   ; ADDA ,U+
+!byte $AB,$E0                   ; ADDA ,S+
+!byte $AB,$81                   ; ADDA ,X++
+!byte $AB,$A1                   ; ADDA ,Y++
+!byte $AB,$C1                   ; ADDA ,U++
+!byte $AB,$E1                   ; ADDA ,S++
+!byte $AB,$82                   ; ADDA ,-X
+!byte $AB,$A2                   ; ADDA ,-Y
+!byte $AB,$C2                   ; ADDA ,-U
+!byte $AB,$E2                   ; ADDA ,-S
+!byte $AB,$83                   ; ADDA ,--X
+!byte $AB,$A3                   ; ADDA ,--Y
+!byte $AB,$C3                   ; ADDA ,--U
+!byte $AB,$E3                   ; ADDA ,--S
+!byte $AB,$8C,$FF               ; ADDA -$01,PC
+!byte $AB,$AC,$FF               ; ADDA -$01,PC
+!byte $AB,$CC,$FF               ; ADDA -$01,PC
+!byte $AB,$EC,$FF               ; ADDA -$01,PC
+!byte $AB,$8C,$60               ; ADDA $60,PC
+!byte $AB,$AC,$60               ; ADDA $60,PC
+!byte $AB,$CC,$60               ; ADDA $60,PC
+!byte $AB,$EC,$60               ; ADDA $60,PC
+!byte $AB,$8D,$DE,$AD           ; ADDA $DEAD,PC
+!byte $AB,$AD,$DE,$AD           ; ADDA $DEAD,PC
+!byte $AB,$CD,$DE,$AD           ; ADDA $DEAD,PC
+!byte $AB,$ED,$DE,$AD           ; ADDA $DEAD,PC
+!byte $AB,$8D,$10,$00           ; ADDA $1000,PC
+!byte $AB,$AD,$10,$00           ; ADDA $1000,PC
+!byte $AB,$CD,$10,$00           ; ADDA $1000,PC
+!byte $AB,$ED,$10,$00           ; ADDA $1000,PC
+!byte $AB,$8F                   ; ADDA ,W
+!byte $AB,$AF,$DE,$AD           ; ADDA $DEAD,W
+!byte $AB,$CF                   ; ADDA ,W++
+!byte $AB,$EF                   ; ADDA ,--W
+!byte $AB,$94                   ; ADDA [,X]
+!byte $AB,$B4                   ; ADDA [,Y]
+!byte $AB,$D4                   ; ADDA [,U]
+!byte $AB,$F4                   ; ADDA [,S]
+!byte $AB,$98,$FF               ; ADDA [-$01,X]
+!byte $AB,$B8,$FF               ; ADDA [-$01,Y]
+!byte $AB,$D8,$FF               ; ADDA [-$01,U]
+!byte $AB,$F8,$FF               ; ADDA [-$01,S]
+!byte $AB,$98,$60               ; ADDA [$60,X]
+!byte $AB,$B8,$60               ; ADDA [$60,Y]
+!byte $AB,$D8,$60               ; ADDA [$60,U]
+!byte $AB,$F8,$60               ; ADDA [$60,S]
+!byte $AB,$99,$DE,$AD           ; ADDA [$DEAD,X]
+!byte $AB,$B9,$DE,$AD           ; ADDA [$DEAD,Y]
+!byte $AB,$D9,$DE,$AD           ; ADDA [$DEAD,U]
+!byte $AB,$F9,$DE,$AD           ; ADDA [$DEAD,S]
+!byte $AB,$99,$10,$00           ; ADDA [$1000,X]
+!byte $AB,$B9,$10,$00           ; ADDA [$1000,Y]
+!byte $AB,$D9,$10,$00           ; ADDA [$1000,U]
+!byte $AB,$F9,$10,$00           ; ADDA [$1000,S]
+!byte $AB,$96                   ; ADDA [A,X]
+!byte $AB,$B6                   ; ADDA [A,Y]
+!byte $AB,$D6                   ; ADDA [A,U]
+!byte $AB,$F6                   ; ADDA [A,S]
+!byte $AB,$95                   ; ADDA [B,X]
+!byte $AB,$B5                   ; ADDA [B,Y]
+!byte $AB,$D5                   ; ADDA [B,U]
+!byte $AB,$F5                   ; ADDA [B,S]
+!byte $AB,$97                   ; ADDA [E,X]
+!byte $AB,$B7                   ; ADDA [E,Y]
+!byte $AB,$D7                   ; ADDA [E,U]
+!byte $AB,$F7                   ; ADDA [E,S]
+!byte $AB,$9A                   ; ADDA [F,X]
+!byte $AB,$BA                   ; ADDA [F,Y]
+!byte $AB,$DA                   ; ADDA [F,U]
+!byte $AB,$FA                   ; ADDA [F,S]
+!byte $AB,$9B                   ; ADDA [D,X]
+!byte $AB,$BB                   ; ADDA [D,Y]
+!byte $AB,$DB                   ; ADDA [D,U]
+!byte $AB,$FB                   ; ADDA [D,S]
+!byte $AB,$9E                   ; ADDA [W,X]
+!byte $AB,$BE                   ; ADDA [W,Y]
+!byte $AB,$DE                   ; ADDA [W,U]
+!byte $AB,$FE                   ; ADDA [W,S]
+!byte $AB,$91                   ; ADDA [,X++]
+!byte $AB,$B1                   ; ADDA [,Y++]
+!byte $AB,$D1                   ; ADDA [,U++]
+!byte $AB,$F1                   ; ADDA [,S++]
+!byte $AB,$92                   ; ADDA [,-X]
+!byte $AB,$B2                   ; ADDA [,-Y]
+!byte $AB,$D2                   ; ADDA [,-U]
+!byte $AB,$F2                   ; ADDA [,-S]
+!byte $AB,$93                   ; ADDA [,--X]
+!byte $AB,$B3                   ; ADDA [,--Y]
+!byte $AB,$D3                   ; ADDA [,--U]
+!byte $AB,$F3                   ; ADDA [,--S]
+!byte $AB,$9C,$FF               ; ADDA [-$01,PC]
+!byte $AB,$BC,$FF               ; ADDA [-$01,PC]
+!byte $AB,$DC,$FF               ; ADDA [-$01,PC]
+!byte $AB,$FC,$FF               ; ADDA [-$01,PC]
+!byte $AB,$9C,$60               ; ADDA [$60,PC]
+!byte $AB,$BC,$60               ; ADDA [$60,PC]
+!byte $AB,$DC,$60               ; ADDA [$60,PC]
+!byte $AB,$FC,$60               ; ADDA [$60,PC]
+!byte $AB,$9D,$DE,$AD           ; ADDA [$DEAD,PC]
+!byte $AB,$BD,$DE,$AD           ; ADDA [$DEAD,PC]
+!byte $AB,$DD,$DE,$AD           ; ADDA [$DEAD,PC]
+!byte $AB,$FD,$DE,$AD           ; ADDA [$DEAD,PC]
+!byte $AB,$9D,$10,$00           ; ADDA [$1000,PC]
+!byte $AB,$BD,$10,$00           ; ADDA [$1000,PC]
+!byte $AB,$DD,$10,$00           ; ADDA [$1000,PC]
+!byte $AB,$FD,$10,$00           ; ADDA [$1000,PC]
+!byte $AB,$9F,$DE,$AD           ; ADDA [$DEAD]
+!byte $AB,$BF,$DE,$AD           ; ADDA [$DEAD]
+!byte $AB,$DF,$DE,$AD           ; ADDA [$DEAD]
+!byte $AB,$FF,$DE,$AD           ; ADDA [$DEAD]
+!byte $AB,$90                   ; ADDA [,W]
+!byte $AB,$B0,$DE,$AD           ; ADDA [$DEAD,W]
+!byte $AB,$D0                   ; ADDA [,W++]
+!byte $AB,$F0                   ; ADDA [,--W]
 
-    !byte $AA,$0C                   ; ORA $0C,X
-    !byte $AA,$15                   ; ORA -$0B,X
-    !byte $AA,$2C                   ; ORA $0C,Y
-    !byte $AA,$35                   ; ORA -$0B,Y
-    !byte $AA,$4C                   ; ORA $0C,U
-    !byte $AA,$55                   ; ORA -$0B,U
-    !byte $AA,$6C                   ; ORA $0C,S
-    !byte $AA,$75                   ; ORA -$0B,S
-    !byte $AA,$80                   ; ORA ,X+
-    !byte $AA,$81                   ; ORA ,X++
-    !byte $AA,$82                   ; ORA ,-X
-    !byte $AA,$83                   ; ORA ,--X
-    !byte $AA,$84                   ; ORA ,X
-    !byte $AA,$85                   ; ORA B,X
-    !byte $AA,$86                   ; ORA A,X
-    !byte $AA,$87                    ; ORA ,X
-    !byte $AA,$88,$60               ; ORA $60,X
-    !byte $AA,$88,$FF               ; ORA -$01,X
-    !byte $AA,$89,$10,$00           ; ORA $1000,X
-    !byte $AA,$89,$DE,$AD           ; ORA $DEAD,X
-    !byte $AA,$8A                    ; ORA ,PClo
-    !byte $AA,$8B                   ; ORA D,X
-    !byte $AA,$8C,$60               ; ORA $60,PC
-    !byte $AA,$8C,$FF               ; ORA -$01,PC
-    !byte $AA,$8D,$10,$00           ; ORA $1000,PC
-    !byte $AA,$8D,$DE,$AD           ; ORA $DEAD,PC
-    !byte $AA,$8F,$DE,$AD            ; ORA ,$DEAD
-    !byte $AA,$90                    ; ORA [,X+]
-    !byte $AA,$91                   ; ORA [,X++]
-    !byte $AA,$92                    ; ORA [,-X]
-    !byte $AA,$93                   ; ORA [,--X]
-    !byte $AA,$94                   ; ORA [,X]
-    !byte $AA,$95                   ; ORA [B,X]
-    !byte $AA,$96                   ; ORA [A,X]
-    !byte $AA,$97                    ; ORA [,X]
-    !byte $AA,$98,$60               ; ORA [$60,X]
-    !byte $AA,$98,$FF               ; ORA [-$01,X]
-    !byte $AA,$99,$DE,$10           ; ORA [$DE10,X]
-    !byte $AA,$99,$DE,$AD           ; ORA [$DEAD,X]
-    !byte $AA,$9A                    ; ORA [,PClo]
-    !byte $AA,$9B                   ; ORA [D,X]
-    !byte $AA,$9C,$60               ; ORA [$60,PC]
-    !byte $AA,$9C,$FF               ; ORA [-$01,PC]
-    !byte $AA,$9D,$10,$00           ; ORA [$1000,PC]
-    !byte $AA,$9D,$DE,$AD           ; ORA [$DEAD,PC]
-    !byte $AA,$9F,$DE,$AD           ; ORA [$DEAD]
-    !byte $AA,$A0                   ; ORA ,Y+
-    !byte $AA,$A1                   ; ORA ,Y++
-    !byte $AA,$A2                   ; ORA ,-Y
-    !byte $AA,$A3                   ; ORA ,--Y
-    !byte $AA,$A4                   ; ORA ,Y
-    !byte $AA,$A5                   ; ORA B,Y
-    !byte $AA,$A6                   ; ORA A,Y
-    !byte $AA,$A7                    ; ORA ,Y
-    !byte $AA,$A8,$60               ; ORA $60,Y
-    !byte $AA,$A8,$FF               ; ORA -$01,Y
-    !byte $AA,$A9,$10,$00           ; ORA $1000,Y
-    !byte $AA,$A9,$DE,$AD           ; ORA $DEAD,Y
-    !byte $AA,$AA                    ; ORA ,PClo
-    !byte $AA,$AB                   ; ORA D,Y
-    !byte $AA,$AC,$60               ; ORA $60,PC
-    !byte $AA,$AC,$FF               ; ORA -$01,PC
-    !byte $AA,$AD,$10,$00           ; ORA $1000,PC
-    !byte $AA,$AD,$DE,$AD           ; ORA $DEAD,PC
-    !byte $AA,$AF,$DE,$AD            ; ORA ,$DEAD
-    !byte $AA,$B0                    ; ORA [,Y+]
-    !byte $AA,$B1                   ; ORA [,Y++]
-    !byte $AA,$B2                    ; ORA [,-Y]
-    !byte $AA,$B3                   ; ORA [,--Y]
-    !byte $AA,$B4                   ; ORA [,Y]
-    !byte $AA,$B5                   ; ORA [B,Y]
-    !byte $AA,$B6                   ; ORA [A,Y]
-    !byte $AA,$B7                    ; ORA [,Y]
-    !byte $AA,$B8,$60               ; ORA [$60,Y]
-    !byte $AA,$B8,$FF               ; ORA [-$01,Y]
-    !byte $AA,$B9,$DE,$10           ; ORA [$DE10,Y]
-    !byte $AA,$B9,$DE,$AD           ; ORA [$DEAD,Y]
-    !byte $AA,$BA                    ; ORA [,PClo]
-    !byte $AA,$BB                   ; ORA [D,Y]
-    !byte $AA,$BC,$60               ; ORA [$60,PC]
-    !byte $AA,$BC,$FF               ; ORA [-$01,PC]
-    !byte $AA,$BD,$10,$00           ; ORA [$1000,PC]
-    !byte $AA,$BD,$DE,$AD           ; ORA [$DEAD,PC]
-    !byte $AA,$BF,$DE,$AD           ; ORA [$DEAD]
-    !byte $AA,$C0                   ; ORA ,U+
-    !byte $AA,$C1                   ; ORA ,U++
-    !byte $AA,$C2                   ; ORA ,-U
-    !byte $AA,$C3                   ; ORA ,--U
-    !byte $AA,$C4                   ; ORA ,U
-    !byte $AA,$C5                   ; ORA B,U
-    !byte $AA,$C6                   ; ORA A,U
-    !byte $AA,$C7                    ; ORA ,U
-    !byte $AA,$C8,$60               ; ORA $60,U
-    !byte $AA,$C8,$FF               ; ORA -$01,U
-    !byte $AA,$C9,$10,$00           ; ORA $1000,U
-    !byte $AA,$C9,$DE,$AD           ; ORA $DEAD,U
-    !byte $AA,$CA                    ; ORA ,PClo
-    !byte $AA,$CB                   ; ORA D,U
-    !byte $AA,$CC,$60               ; ORA $60,PC
-    !byte $AA,$CC,$FF               ; ORA -$01,PC
-    !byte $AA,$CD,$10,$00           ; ORA $1000,PC
-    !byte $AA,$CD,$DE,$AD           ; ORA $DEAD,PC
-    !byte $AA,$CF,$DE,$AD            ; ORA ,$DEAD
-    !byte $AA,$D0                    ; ORA [,U+]
-    !byte $AA,$D1                   ; ORA [,U++]
-    !byte $AA,$D2                    ; ORA [,-U]
-    !byte $AA,$D3                   ; ORA [,--U]
-    !byte $AA,$D4                   ; ORA [,U]
-    !byte $AA,$D5                   ; ORA [B,U]
-    !byte $AA,$D6                   ; ORA [A,U]
-    !byte $AA,$D7                    ; ORA [,U]
-    !byte $AA,$D8,$60               ; ORA [$60,U]
-    !byte $AA,$D8,$FF               ; ORA [-$01,U]
-    !byte $AA,$D9,$DE,$10           ; ORA [$DE10,U]
-    !byte $AA,$D9,$DE,$AD           ; ORA [$DEAD,U]
-    !byte $AA,$DA                    ; ORA [,PClo]
-    !byte $AA,$DB                   ; ORA [D,U]
-    !byte $AA,$DC,$60               ; ORA [$60,PC]
-    !byte $AA,$DC,$FF               ; ORA [-$01,PC]
-    !byte $AA,$DD,$10,$00           ; ORA [$1000,PC]
-    !byte $AA,$DD,$DE,$AD           ; ORA [$DEAD,PC]
-    !byte $AA,$DF,$DE,$AD           ; ORA [$DEAD]
-    !byte $AA,$E0                   ; ORA ,S+
-    !byte $AA,$E1                   ; ORA ,S++
-    !byte $AA,$E2                   ; ORA ,-S
-    !byte $AA,$E3                   ; ORA ,--S
-    !byte $AA,$E4                   ; ORA ,S
-    !byte $AA,$E5                   ; ORA B,S
-    !byte $AA,$E6                   ; ORA A,S
-    !byte $AA,$E7                    ; ORA ,S
-    !byte $AA,$E8,$60               ; ORA $60,S
-    !byte $AA,$E8,$FF               ; ORA -$01,S
-    !byte $AA,$E9,$10,$00           ; ORA $1000,S
-    !byte $AA,$E9,$DE,$AD           ; ORA $DEAD,S
-    !byte $AA,$EA                    ; ORA ,PClo
-    !byte $AA,$EB                   ; ORA D,S
-    !byte $AA,$EC,$60               ; ORA $60,PC
-    !byte $AA,$EC,$FF               ; ORA -$01,PC
-    !byte $AA,$ED,$10,$00           ; ORA $1000,PC
-    !byte $AA,$ED,$DE,$AD           ; ORA $DEAD,PC
-    !byte $AA,$EF,$DE,$AD            ; ORA ,$DEAD
-    !byte $AA,$F0                    ; ORA [,S+]
-    !byte $AA,$F1                   ; ORA [,S++]
-    !byte $AA,$F2                    ; ORA [,-S]
-    !byte $AA,$F3                   ; ORA [,--S]
-    !byte $AA,$F4                   ; ORA [,S]
-    !byte $AA,$F5                   ; ORA [B,S]
-    !byte $AA,$F6                   ; ORA [A,S]
-    !byte $AA,$F7                    ; ORA [,S]
-    !byte $AA,$F8,$60               ; ORA [$60,S]
-    !byte $AA,$F8,$FF               ; ORA [-$01,S]
-    !byte $AA,$F9,$DE,$10           ; ORA [$DE10,S]
-    !byte $AA,$F9,$DE,$AD           ; ORA [$DEAD,S]
-    !byte $AA,$FA                    ; ORA [,PClo]
-    !byte $AA,$FB                   ; ORA [D,S]
-    !byte $AA,$FC,$60               ; ORA [$60,PC]
-    !byte $AA,$FC,$FF               ; ORA [-$01,PC]
-    !byte $AA,$FD,$10,$00           ; ORA [$1000,PC]
-    !byte $AA,$FD,$DE,$AD           ; ORA [$DEAD,PC]
-    !byte $AA,$FF,$DE,$AD           ; ORA [$DEAD]
-    !byte $AB,$0C                   ; ADDA $0C,X
-    !byte $AB,$15                   ; ADDA -$0B,X
-    !byte $AB,$2C                   ; ADDA $0C,Y
-    !byte $AB,$35                   ; ADDA -$0B,Y
-    !byte $AB,$4C                   ; ADDA $0C,U
-    !byte $AB,$55                   ; ADDA -$0B,U
-    !byte $AB,$6C                   ; ADDA $0C,S
-    !byte $AB,$75                   ; ADDA -$0B,S
-    !byte $AB,$80                   ; ADDA ,X+
-    !byte $AB,$81                   ; ADDA ,X++
-    !byte $AB,$82                   ; ADDA ,-X
-    !byte $AB,$83                   ; ADDA ,--X
-    !byte $AB,$84                   ; ADDA ,X
-    !byte $AB,$85                   ; ADDA B,X
-    !byte $AB,$86                   ; ADDA A,X
-    !byte $AB,$87                    ; ADDA ,X
-    !byte $AB,$88,$60               ; ADDA $60,X
-    !byte $AB,$88,$FF               ; ADDA -$01,X
-    !byte $AB,$89,$10,$00           ; ADDA $1000,X
-    !byte $AB,$89,$DE,$AD           ; ADDA $DEAD,X
-    !byte $AB,$8A                    ; ADDA ,PClo
-    !byte $AB,$8B                   ; ADDA D,X
-    !byte $AB,$8C,$60               ; ADDA $60,PC
-    !byte $AB,$8C,$FF               ; ADDA -$01,PC
-    !byte $AB,$8D,$10,$00           ; ADDA $1000,PC
-    !byte $AB,$8D,$DE,$AD           ; ADDA $DEAD,PC
-    !byte $AB,$8F,$DE,$AD            ; ADDA ,$DEAD
-    !byte $AB,$90                    ; ADDA [,X+]
-    !byte $AB,$91                   ; ADDA [,X++]
-    !byte $AB,$92                    ; ADDA [,-X]
-    !byte $AB,$93                   ; ADDA [,--X]
-    !byte $AB,$94                   ; ADDA [,X]
-    !byte $AB,$95                   ; ADDA [B,X]
-    !byte $AB,$96                   ; ADDA [A,X]
-    !byte $AB,$97                    ; ADDA [,X]
-    !byte $AB,$98,$60               ; ADDA [$60,X]
-    !byte $AB,$98,$FF               ; ADDA [-$01,X]
-    !byte $AB,$99,$DE,$10           ; ADDA [$DE10,X]
-    !byte $AB,$99,$DE,$AD           ; ADDA [$DEAD,X]
-    !byte $AB,$9A                    ; ADDA [,PClo]
-    !byte $AB,$9B                   ; ADDA [D,X]
-    !byte $AB,$9C,$60               ; ADDA [$60,PC]
-    !byte $AB,$9C,$FF               ; ADDA [-$01,PC]
-    !byte $AB,$9D,$10,$00           ; ADDA [$1000,PC]
-    !byte $AB,$9D,$DE,$AD           ; ADDA [$DEAD,PC]
-    !byte $AB,$9F,$DE,$AD           ; ADDA [$DEAD]
-    !byte $AB,$A0                   ; ADDA ,Y+
-    !byte $AB,$A1                   ; ADDA ,Y++
-    !byte $AB,$A2                   ; ADDA ,-Y
-    !byte $AB,$A3                   ; ADDA ,--Y
-    !byte $AB,$A4                   ; ADDA ,Y
-    !byte $AB,$A5                   ; ADDA B,Y
-    !byte $AB,$A6                   ; ADDA A,Y
-    !byte $AB,$A7                    ; ADDA ,Y
-    !byte $AB,$A8,$60               ; ADDA $60,Y
-    !byte $AB,$A8,$FF               ; ADDA -$01,Y
-    !byte $AB,$A9,$10,$00           ; ADDA $1000,Y
-    !byte $AB,$A9,$DE,$AD           ; ADDA $DEAD,Y
-    !byte $AB,$AA                    ; ADDA ,PClo
-    !byte $AB,$AB                   ; ADDA D,Y
-    !byte $AB,$AC,$60               ; ADDA $60,PC
-    !byte $AB,$AC,$FF               ; ADDA -$01,PC
-    !byte $AB,$AD,$10,$00           ; ADDA $1000,PC
-    !byte $AB,$AD,$DE,$AD           ; ADDA $DEAD,PC
-    !byte $AB,$AF,$DE,$AD            ; ADDA ,$DEAD
-    !byte $AB,$B0                    ; ADDA [,Y+]
-    !byte $AB,$B1                   ; ADDA [,Y++]
-    !byte $AB,$B2                    ; ADDA [,-Y]
-    !byte $AB,$B3                   ; ADDA [,--Y]
-    !byte $AB,$B4                   ; ADDA [,Y]
-    !byte $AB,$B5                   ; ADDA [B,Y]
-    !byte $AB,$B6                   ; ADDA [A,Y]
-    !byte $AB,$B7                    ; ADDA [,Y]
-    !byte $AB,$B8,$60               ; ADDA [$60,Y]
-    !byte $AB,$B8,$FF               ; ADDA [-$01,Y]
-    !byte $AB,$B9,$DE,$10           ; ADDA [$DE10,Y]
-    !byte $AB,$B9,$DE,$AD           ; ADDA [$DEAD,Y]
-    !byte $AB,$BA                    ; ADDA [,PClo]
-    !byte $AB,$BB                   ; ADDA [D,Y]
-    !byte $AB,$BC,$60               ; ADDA [$60,PC]
-    !byte $AB,$BC,$FF               ; ADDA [-$01,PC]
-    !byte $AB,$BD,$10,$00           ; ADDA [$1000,PC]
-    !byte $AB,$BD,$DE,$AD           ; ADDA [$DEAD,PC]
-    !byte $AB,$BF,$DE,$AD           ; ADDA [$DEAD]
-    !byte $AB,$C0                   ; ADDA ,U+
-    !byte $AB,$C1                   ; ADDA ,U++
-    !byte $AB,$C2                   ; ADDA ,-U
-    !byte $AB,$C3                   ; ADDA ,--U
-    !byte $AB,$C4                   ; ADDA ,U
-    !byte $AB,$C5                   ; ADDA B,U
-    !byte $AB,$C6                   ; ADDA A,U
-    !byte $AB,$C7                    ; ADDA ,U
-    !byte $AB,$C8,$60               ; ADDA $60,U
-    !byte $AB,$C8,$FF               ; ADDA -$01,U
-    !byte $AB,$C9,$10,$00           ; ADDA $1000,U
-    !byte $AB,$C9,$DE,$AD           ; ADDA $DEAD,U
-    !byte $AB,$CA                    ; ADDA ,PClo
-    !byte $AB,$CB                   ; ADDA D,U
-    !byte $AB,$CC,$60               ; ADDA $60,PC
-    !byte $AB,$CC,$FF               ; ADDA -$01,PC
-    !byte $AB,$CD,$10,$00           ; ADDA $1000,PC
-    !byte $AB,$CD,$DE,$AD           ; ADDA $DEAD,PC
-    !byte $AB,$CF,$DE,$AD            ; ADDA ,$DEAD
-    !byte $AB,$D0                    ; ADDA [,U+]
-    !byte $AB,$D1                   ; ADDA [,U++]
-    !byte $AB,$D2                    ; ADDA [,-U]
-    !byte $AB,$D3                   ; ADDA [,--U]
-    !byte $AB,$D4                   ; ADDA [,U]
-    !byte $AB,$D5                   ; ADDA [B,U]
-    !byte $AB,$D6                   ; ADDA [A,U]
-    !byte $AB,$D7                    ; ADDA [,U]
-    !byte $AB,$D8,$60               ; ADDA [$60,U]
-    !byte $AB,$D8,$FF               ; ADDA [-$01,U]
-    !byte $AB,$D9,$DE,$10           ; ADDA [$DE10,U]
-    !byte $AB,$D9,$DE,$AD           ; ADDA [$DEAD,U]
-    !byte $AB,$DA                    ; ADDA [,PClo]
-    !byte $AB,$DB                   ; ADDA [D,U]
-    !byte $AB,$DC,$60               ; ADDA [$60,PC]
-    !byte $AB,$DC,$FF               ; ADDA [-$01,PC]
-    !byte $AB,$DD,$10,$00           ; ADDA [$1000,PC]
-    !byte $AB,$DD,$DE,$AD           ; ADDA [$DEAD,PC]
-    !byte $AB,$DF,$DE,$AD           ; ADDA [$DEAD]
-    !byte $AB,$E0                   ; ADDA ,S+
-    !byte $AB,$E1                   ; ADDA ,S++
-    !byte $AB,$E2                   ; ADDA ,-S
-    !byte $AB,$E3                   ; ADDA ,--S
-    !byte $AB,$E4                   ; ADDA ,S
-    !byte $AB,$E5                   ; ADDA B,S
-    !byte $AB,$E6                   ; ADDA A,S
-    !byte $AB,$E7                    ; ADDA ,S
-    !byte $AB,$E8,$60               ; ADDA $60,S
-    !byte $AB,$E8,$FF               ; ADDA -$01,S
-    !byte $AB,$E9,$10,$00           ; ADDA $1000,S
-    !byte $AB,$E9,$DE,$AD           ; ADDA $DEAD,S
-    !byte $AB,$EA                    ; ADDA ,PClo
-    !byte $AB,$EB                   ; ADDA D,S
-    !byte $AB,$EC,$60               ; ADDA $60,PC
-    !byte $AB,$EC,$FF               ; ADDA -$01,PC
-    !byte $AB,$ED,$10,$00           ; ADDA $1000,PC
-    !byte $AB,$ED,$DE,$AD           ; ADDA $DEAD,PC
-    !byte $AB,$EF,$DE,$AD            ; ADDA ,$DEAD
-    !byte $AB,$F0                    ; ADDA [,S+]
-    !byte $AB,$F1                   ; ADDA [,S++]
-    !byte $AB,$F2                    ; ADDA [,-S]
-    !byte $AB,$F3                   ; ADDA [,--S]
-    !byte $AB,$F4                   ; ADDA [,S]
-    !byte $AB,$F5                   ; ADDA [B,S]
-    !byte $AB,$F6                   ; ADDA [A,S]
-    !byte $AB,$F7                    ; ADDA [,S]
-    !byte $AB,$F8,$60               ; ADDA [$60,S]
-    !byte $AB,$F8,$FF               ; ADDA [-$01,S]
-    !byte $AB,$F9,$DE,$10           ; ADDA [$DE10,S]
-    !byte $AB,$F9,$DE,$AD           ; ADDA [$DEAD,S]
-    !byte $AB,$FA                    ; ADDA [,PClo]
-    !byte $AB,$FB                   ; ADDA [D,S]
-    !byte $AB,$FC,$60               ; ADDA [$60,PC]
-    !byte $AB,$FC,$FF               ; ADDA [-$01,PC]
-    !byte $AB,$FD,$10,$00           ; ADDA [$1000,PC]
-    !byte $AB,$FD,$DE,$AD           ; ADDA [$DEAD,PC]
-    !byte $AB,$FF,$DE,$AD           ; ADDA [$DEAD]
     !byte $AC,$0C                   ; CMPX $0C,X
     !byte $AC,$15                   ; CMPX -$0B,X
     !byte $AC,$2C                   ; CMPX $0C,Y
