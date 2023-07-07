@@ -7027,327 +7027,343 @@
 !byte $AB,$B0,$DE,$AD           ; ADDA [$DEAD,W]
 !byte $AB,$D0                   ; ADDA [,W++]
 !byte $AB,$F0                   ; ADDA [,--W]
+!byte $AC,$84                   ; CMPX ,X
+!byte $AC,$A4                   ; CMPX ,Y
+!byte $AC,$C4                   ; CMPX ,U
+!byte $AC,$E4                   ; CMPX ,S
+!byte $AC,$15                   ; CMPX -$0B,X
+!byte $AC,$35                   ; CMPX -$0B,Y
+!byte $AC,$55                   ; CMPX -$0B,U
+!byte $AC,$75                   ; CMPX -$0B,S
+!byte $AC,$0C                   ; CMPX $0C,X
+!byte $AC,$2C                   ; CMPX $0C,Y
+!byte $AC,$4C                   ; CMPX $0C,U
+!byte $AC,$6C                   ; CMPX $0C,S
+!byte $AC,$88,$FF               ; CMPX -$01,X
+!byte $AC,$A8,$FF               ; CMPX -$01,Y
+!byte $AC,$C8,$FF               ; CMPX -$01,U
+!byte $AC,$E8,$FF               ; CMPX -$01,S
+!byte $AC,$88,$60               ; CMPX $60,X
+!byte $AC,$A8,$60               ; CMPX $60,Y
+!byte $AC,$C8,$60               ; CMPX $60,U
+!byte $AC,$E8,$60               ; CMPX $60,S
+!byte $AC,$89,$DE,$AD           ; CMPX $DEAD,X
+!byte $AC,$A9,$DE,$AD           ; CMPX $DEAD,Y
+!byte $AC,$C9,$DE,$AD           ; CMPX $DEAD,U
+!byte $AC,$E9,$DE,$AD           ; CMPX $DEAD,S
+!byte $AC,$89,$10,$00           ; CMPX $1000,X
+!byte $AC,$A9,$10,$00           ; CMPX $1000,Y
+!byte $AC,$C9,$10,$00           ; CMPX $1000,U
+!byte $AC,$E9,$10,$00           ; CMPX $1000,S
+!byte $AC,$86                   ; CMPX A,X
+!byte $AC,$A6                   ; CMPX A,Y
+!byte $AC,$C6                   ; CMPX A,U
+!byte $AC,$E6                   ; CMPX A,S
+!byte $AC,$85                   ; CMPX B,X
+!byte $AC,$A5                   ; CMPX B,Y
+!byte $AC,$C5                   ; CMPX B,U
+!byte $AC,$E5                   ; CMPX B,S
+!byte $AC,$87                   ; CMPX E,X
+!byte $AC,$A7                   ; CMPX E,Y
+!byte $AC,$C7                   ; CMPX E,U
+!byte $AC,$E7                   ; CMPX E,S
+!byte $AC,$8A                   ; CMPX F,X
+!byte $AC,$AA                   ; CMPX F,Y
+!byte $AC,$CA                   ; CMPX F,U
+!byte $AC,$EA                   ; CMPX F,S
+!byte $AC,$8B                   ; CMPX D,X
+!byte $AC,$AB                   ; CMPX D,Y
+!byte $AC,$CB                   ; CMPX D,U
+!byte $AC,$EB                   ; CMPX D,S
+!byte $AC,$8E                   ; CMPX W,X
+!byte $AC,$AE                   ; CMPX W,Y
+!byte $AC,$CE                   ; CMPX W,U
+!byte $AC,$EE                   ; CMPX W,S
+!byte $AC,$80                   ; CMPX ,X+
+!byte $AC,$A0                   ; CMPX ,Y+
+!byte $AC,$C0                   ; CMPX ,U+
+!byte $AC,$E0                   ; CMPX ,S+
+!byte $AC,$81                   ; CMPX ,X++
+!byte $AC,$A1                   ; CMPX ,Y++
+!byte $AC,$C1                   ; CMPX ,U++
+!byte $AC,$E1                   ; CMPX ,S++
+!byte $AC,$82                   ; CMPX ,-X
+!byte $AC,$A2                   ; CMPX ,-Y
+!byte $AC,$C2                   ; CMPX ,-U
+!byte $AC,$E2                   ; CMPX ,-S
+!byte $AC,$83                   ; CMPX ,--X
+!byte $AC,$A3                   ; CMPX ,--Y
+!byte $AC,$C3                   ; CMPX ,--U
+!byte $AC,$E3                   ; CMPX ,--S
+!byte $AC,$8C,$FF               ; CMPX -$01,PC
+!byte $AC,$AC,$FF               ; CMPX -$01,PC
+!byte $AC,$CC,$FF               ; CMPX -$01,PC
+!byte $AC,$EC,$FF               ; CMPX -$01,PC
+!byte $AC,$8C,$60               ; CMPX $60,PC
+!byte $AC,$AC,$60               ; CMPX $60,PC
+!byte $AC,$CC,$60               ; CMPX $60,PC
+!byte $AC,$EC,$60               ; CMPX $60,PC
+!byte $AC,$8D,$DE,$AD           ; CMPX $DEAD,PC
+!byte $AC,$AD,$DE,$AD           ; CMPX $DEAD,PC
+!byte $AC,$CD,$DE,$AD           ; CMPX $DEAD,PC
+!byte $AC,$ED,$DE,$AD           ; CMPX $DEAD,PC
+!byte $AC,$8D,$10,$00           ; CMPX $1000,PC
+!byte $AC,$AD,$10,$00           ; CMPX $1000,PC
+!byte $AC,$CD,$10,$00           ; CMPX $1000,PC
+!byte $AC,$ED,$10,$00           ; CMPX $1000,PC
+!byte $AC,$8F                   ; CMPX ,W
+!byte $AC,$AF,$DE,$AD           ; CMPX $DEAD,W
+!byte $AC,$CF                   ; CMPX ,W++
+!byte $AC,$EF                   ; CMPX ,--W
+!byte $AC,$94                   ; CMPX [,X]
+!byte $AC,$B4                   ; CMPX [,Y]
+!byte $AC,$D4                   ; CMPX [,U]
+!byte $AC,$F4                   ; CMPX [,S]
+!byte $AC,$98,$FF               ; CMPX [-$01,X]
+!byte $AC,$B8,$FF               ; CMPX [-$01,Y]
+!byte $AC,$D8,$FF               ; CMPX [-$01,U]
+!byte $AC,$F8,$FF               ; CMPX [-$01,S]
+!byte $AC,$98,$60               ; CMPX [$60,X]
+!byte $AC,$B8,$60               ; CMPX [$60,Y]
+!byte $AC,$D8,$60               ; CMPX [$60,U]
+!byte $AC,$F8,$60               ; CMPX [$60,S]
+!byte $AC,$99,$DE,$AD           ; CMPX [$DEAD,X]
+!byte $AC,$B9,$DE,$AD           ; CMPX [$DEAD,Y]
+!byte $AC,$D9,$DE,$AD           ; CMPX [$DEAD,U]
+!byte $AC,$F9,$DE,$AD           ; CMPX [$DEAD,S]
+!byte $AC,$99,$10,$00           ; CMPX [$1000,X]
+!byte $AC,$B9,$10,$00           ; CMPX [$1000,Y]
+!byte $AC,$D9,$10,$00           ; CMPX [$1000,U]
+!byte $AC,$F9,$10,$00           ; CMPX [$1000,S]
+!byte $AC,$96                   ; CMPX [A,X]
+!byte $AC,$B6                   ; CMPX [A,Y]
+!byte $AC,$D6                   ; CMPX [A,U]
+!byte $AC,$F6                   ; CMPX [A,S]
+!byte $AC,$95                   ; CMPX [B,X]
+!byte $AC,$B5                   ; CMPX [B,Y]
+!byte $AC,$D5                   ; CMPX [B,U]
+!byte $AC,$F5                   ; CMPX [B,S]
+!byte $AC,$97                   ; CMPX [E,X]
+!byte $AC,$B7                   ; CMPX [E,Y]
+!byte $AC,$D7                   ; CMPX [E,U]
+!byte $AC,$F7                   ; CMPX [E,S]
+!byte $AC,$9A                   ; CMPX [F,X]
+!byte $AC,$BA                   ; CMPX [F,Y]
+!byte $AC,$DA                   ; CMPX [F,U]
+!byte $AC,$FA                   ; CMPX [F,S]
+!byte $AC,$9B                   ; CMPX [D,X]
+!byte $AC,$BB                   ; CMPX [D,Y]
+!byte $AC,$DB                   ; CMPX [D,U]
+!byte $AC,$FB                   ; CMPX [D,S]
+!byte $AC,$9E                   ; CMPX [W,X]
+!byte $AC,$BE                   ; CMPX [W,Y]
+!byte $AC,$DE                   ; CMPX [W,U]
+!byte $AC,$FE                   ; CMPX [W,S]
+!byte $AC,$91                   ; CMPX [,X++]
+!byte $AC,$B1                   ; CMPX [,Y++]
+!byte $AC,$D1                   ; CMPX [,U++]
+!byte $AC,$F1                   ; CMPX [,S++]
+!byte $AC,$92                   ; CMPX [,-X]
+!byte $AC,$B2                   ; CMPX [,-Y]
+!byte $AC,$D2                   ; CMPX [,-U]
+!byte $AC,$F2                   ; CMPX [,-S]
+!byte $AC,$93                   ; CMPX [,--X]
+!byte $AC,$B3                   ; CMPX [,--Y]
+!byte $AC,$D3                   ; CMPX [,--U]
+!byte $AC,$F3                   ; CMPX [,--S]
+!byte $AC,$9C,$FF               ; CMPX [-$01,PC]
+!byte $AC,$BC,$FF               ; CMPX [-$01,PC]
+!byte $AC,$DC,$FF               ; CMPX [-$01,PC]
+!byte $AC,$FC,$FF               ; CMPX [-$01,PC]
+!byte $AC,$9C,$60               ; CMPX [$60,PC]
+!byte $AC,$BC,$60               ; CMPX [$60,PC]
+!byte $AC,$DC,$60               ; CMPX [$60,PC]
+!byte $AC,$FC,$60               ; CMPX [$60,PC]
+!byte $AC,$9D,$DE,$AD           ; CMPX [$DEAD,PC]
+!byte $AC,$BD,$DE,$AD           ; CMPX [$DEAD,PC]
+!byte $AC,$DD,$DE,$AD           ; CMPX [$DEAD,PC]
+!byte $AC,$FD,$DE,$AD           ; CMPX [$DEAD,PC]
+!byte $AC,$9D,$10,$00           ; CMPX [$1000,PC]
+!byte $AC,$BD,$10,$00           ; CMPX [$1000,PC]
+!byte $AC,$DD,$10,$00           ; CMPX [$1000,PC]
+!byte $AC,$FD,$10,$00           ; CMPX [$1000,PC]
+!byte $AC,$9F,$DE,$AD           ; CMPX [$DEAD]
+!byte $AC,$BF,$DE,$AD           ; CMPX [$DEAD]
+!byte $AC,$DF,$DE,$AD           ; CMPX [$DEAD]
+!byte $AC,$FF,$DE,$AD           ; CMPX [$DEAD]
+!byte $AC,$90                   ; CMPX [,W]
+!byte $AC,$B0,$DE,$AD           ; CMPX [$DEAD,W]
+!byte $AC,$D0                   ; CMPX [,W++]
+!byte $AC,$F0                   ; CMPX [,--W]
+!byte $AD,$84                   ; JSR ,X
+!byte $AD,$A4                   ; JSR ,Y
+!byte $AD,$C4                   ; JSR ,U
+!byte $AD,$E4                   ; JSR ,S
+!byte $AD,$15                   ; JSR -$0B,X
+!byte $AD,$35                   ; JSR -$0B,Y
+!byte $AD,$55                   ; JSR -$0B,U
+!byte $AD,$75                   ; JSR -$0B,S
+!byte $AD,$0C                   ; JSR $0C,X
+!byte $AD,$2C                   ; JSR $0C,Y
+!byte $AD,$4C                   ; JSR $0C,U
+!byte $AD,$6C                   ; JSR $0C,S
+!byte $AD,$88,$FF               ; JSR -$01,X
+!byte $AD,$A8,$FF               ; JSR -$01,Y
+!byte $AD,$C8,$FF               ; JSR -$01,U
+!byte $AD,$E8,$FF               ; JSR -$01,S
+!byte $AD,$88,$60               ; JSR $60,X
+!byte $AD,$A8,$60               ; JSR $60,Y
+!byte $AD,$C8,$60               ; JSR $60,U
+!byte $AD,$E8,$60               ; JSR $60,S
+!byte $AD,$89,$DE,$AD           ; JSR $DEAD,X
+!byte $AD,$A9,$DE,$AD           ; JSR $DEAD,Y
+!byte $AD,$C9,$DE,$AD           ; JSR $DEAD,U
+!byte $AD,$E9,$DE,$AD           ; JSR $DEAD,S
+!byte $AD,$89,$10,$00           ; JSR $1000,X
+!byte $AD,$A9,$10,$00           ; JSR $1000,Y
+!byte $AD,$C9,$10,$00           ; JSR $1000,U
+!byte $AD,$E9,$10,$00           ; JSR $1000,S
+!byte $AD,$86                   ; JSR A,X
+!byte $AD,$A6                   ; JSR A,Y
+!byte $AD,$C6                   ; JSR A,U
+!byte $AD,$E6                   ; JSR A,S
+!byte $AD,$85                   ; JSR B,X
+!byte $AD,$A5                   ; JSR B,Y
+!byte $AD,$C5                   ; JSR B,U
+!byte $AD,$E5                   ; JSR B,S
+!byte $AD,$87                   ; JSR E,X
+!byte $AD,$A7                   ; JSR E,Y
+!byte $AD,$C7                   ; JSR E,U
+!byte $AD,$E7                   ; JSR E,S
+!byte $AD,$8A                   ; JSR F,X
+!byte $AD,$AA                   ; JSR F,Y
+!byte $AD,$CA                   ; JSR F,U
+!byte $AD,$EA                   ; JSR F,S
+!byte $AD,$8B                   ; JSR D,X
+!byte $AD,$AB                   ; JSR D,Y
+!byte $AD,$CB                   ; JSR D,U
+!byte $AD,$EB                   ; JSR D,S
+!byte $AD,$8E                   ; JSR W,X
+!byte $AD,$AE                   ; JSR W,Y
+!byte $AD,$CE                   ; JSR W,U
+!byte $AD,$EE                   ; JSR W,S
+!byte $AD,$80                   ; JSR ,X+
+!byte $AD,$A0                   ; JSR ,Y+
+!byte $AD,$C0                   ; JSR ,U+
+!byte $AD,$E0                   ; JSR ,S+
+!byte $AD,$81                   ; JSR ,X++
+!byte $AD,$A1                   ; JSR ,Y++
+!byte $AD,$C1                   ; JSR ,U++
+!byte $AD,$E1                   ; JSR ,S++
+!byte $AD,$82                   ; JSR ,-X
+!byte $AD,$A2                   ; JSR ,-Y
+!byte $AD,$C2                   ; JSR ,-U
+!byte $AD,$E2                   ; JSR ,-S
+!byte $AD,$83                   ; JSR ,--X
+!byte $AD,$A3                   ; JSR ,--Y
+!byte $AD,$C3                   ; JSR ,--U
+!byte $AD,$E3                   ; JSR ,--S
+!byte $AD,$8C,$FF               ; JSR -$01,PC
+!byte $AD,$AC,$FF               ; JSR -$01,PC
+!byte $AD,$CC,$FF               ; JSR -$01,PC
+!byte $AD,$EC,$FF               ; JSR -$01,PC
+!byte $AD,$8C,$60               ; JSR $60,PC
+!byte $AD,$AC,$60               ; JSR $60,PC
+!byte $AD,$CC,$60               ; JSR $60,PC
+!byte $AD,$EC,$60               ; JSR $60,PC
+!byte $AD,$8D,$DE,$AD           ; JSR $DEAD,PC
+!byte $AD,$AD,$DE,$AD           ; JSR $DEAD,PC
+!byte $AD,$CD,$DE,$AD           ; JSR $DEAD,PC
+!byte $AD,$ED,$DE,$AD           ; JSR $DEAD,PC
+!byte $AD,$8D,$10,$00           ; JSR $1000,PC
+!byte $AD,$AD,$10,$00           ; JSR $1000,PC
+!byte $AD,$CD,$10,$00           ; JSR $1000,PC
+!byte $AD,$ED,$10,$00           ; JSR $1000,PC
+!byte $AD,$8F                   ; JSR ,W
+!byte $AD,$AF,$DE,$AD           ; JSR $DEAD,W
+!byte $AD,$CF                   ; JSR ,W++
+!byte $AD,$EF                   ; JSR ,--W
+!byte $AD,$94                   ; JSR [,X]
+!byte $AD,$B4                   ; JSR [,Y]
+!byte $AD,$D4                   ; JSR [,U]
+!byte $AD,$F4                   ; JSR [,S]
+!byte $AD,$98,$FF               ; JSR [-$01,X]
+!byte $AD,$B8,$FF               ; JSR [-$01,Y]
+!byte $AD,$D8,$FF               ; JSR [-$01,U]
+!byte $AD,$F8,$FF               ; JSR [-$01,S]
+!byte $AD,$98,$60               ; JSR [$60,X]
+!byte $AD,$B8,$60               ; JSR [$60,Y]
+!byte $AD,$D8,$60               ; JSR [$60,U]
+!byte $AD,$F8,$60               ; JSR [$60,S]
+!byte $AD,$99,$DE,$AD           ; JSR [$DEAD,X]
+!byte $AD,$B9,$DE,$AD           ; JSR [$DEAD,Y]
+!byte $AD,$D9,$DE,$AD           ; JSR [$DEAD,U]
+!byte $AD,$F9,$DE,$AD           ; JSR [$DEAD,S]
+!byte $AD,$99,$10,$00           ; JSR [$1000,X]
+!byte $AD,$B9,$10,$00           ; JSR [$1000,Y]
+!byte $AD,$D9,$10,$00           ; JSR [$1000,U]
+!byte $AD,$F9,$10,$00           ; JSR [$1000,S]
+!byte $AD,$96                   ; JSR [A,X]
+!byte $AD,$B6                   ; JSR [A,Y]
+!byte $AD,$D6                   ; JSR [A,U]
+!byte $AD,$F6                   ; JSR [A,S]
+!byte $AD,$95                   ; JSR [B,X]
+!byte $AD,$B5                   ; JSR [B,Y]
+!byte $AD,$D5                   ; JSR [B,U]
+!byte $AD,$F5                   ; JSR [B,S]
+!byte $AD,$97                   ; JSR [E,X]
+!byte $AD,$B7                   ; JSR [E,Y]
+!byte $AD,$D7                   ; JSR [E,U]
+!byte $AD,$F7                   ; JSR [E,S]
+!byte $AD,$9A                   ; JSR [F,X]
+!byte $AD,$BA                   ; JSR [F,Y]
+!byte $AD,$DA                   ; JSR [F,U]
+!byte $AD,$FA                   ; JSR [F,S]
+!byte $AD,$9B                   ; JSR [D,X]
+!byte $AD,$BB                   ; JSR [D,Y]
+!byte $AD,$DB                   ; JSR [D,U]
+!byte $AD,$FB                   ; JSR [D,S]
+!byte $AD,$9E                   ; JSR [W,X]
+!byte $AD,$BE                   ; JSR [W,Y]
+!byte $AD,$DE                   ; JSR [W,U]
+!byte $AD,$FE                   ; JSR [W,S]
+!byte $AD,$91                   ; JSR [,X++]
+!byte $AD,$B1                   ; JSR [,Y++]
+!byte $AD,$D1                   ; JSR [,U++]
+!byte $AD,$F1                   ; JSR [,S++]
+!byte $AD,$92                   ; JSR [,-X]
+!byte $AD,$B2                   ; JSR [,-Y]
+!byte $AD,$D2                   ; JSR [,-U]
+!byte $AD,$F2                   ; JSR [,-S]
+!byte $AD,$93                   ; JSR [,--X]
+!byte $AD,$B3                   ; JSR [,--Y]
+!byte $AD,$D3                   ; JSR [,--U]
+!byte $AD,$F3                   ; JSR [,--S]
+!byte $AD,$9C,$FF               ; JSR [-$01,PC]
+!byte $AD,$BC,$FF               ; JSR [-$01,PC]
+!byte $AD,$DC,$FF               ; JSR [-$01,PC]
+!byte $AD,$FC,$FF               ; JSR [-$01,PC]
+!byte $AD,$9C,$60               ; JSR [$60,PC]
+!byte $AD,$BC,$60               ; JSR [$60,PC]
+!byte $AD,$DC,$60               ; JSR [$60,PC]
+!byte $AD,$FC,$60               ; JSR [$60,PC]
+!byte $AD,$9D,$DE,$AD           ; JSR [$DEAD,PC]
+!byte $AD,$BD,$DE,$AD           ; JSR [$DEAD,PC]
+!byte $AD,$DD,$DE,$AD           ; JSR [$DEAD,PC]
+!byte $AD,$FD,$DE,$AD           ; JSR [$DEAD,PC]
+!byte $AD,$9D,$10,$00           ; JSR [$1000,PC]
+!byte $AD,$BD,$10,$00           ; JSR [$1000,PC]
+!byte $AD,$DD,$10,$00           ; JSR [$1000,PC]
+!byte $AD,$FD,$10,$00           ; JSR [$1000,PC]
+!byte $AD,$9F,$DE,$AD           ; JSR [$DEAD]
+!byte $AD,$BF,$DE,$AD           ; JSR [$DEAD]
+!byte $AD,$DF,$DE,$AD           ; JSR [$DEAD]
+!byte $AD,$FF,$DE,$AD           ; JSR [$DEAD]
+!byte $AD,$90                   ; JSR [,W]
+!byte $AD,$B0,$DE,$AD           ; JSR [$DEAD,W]
+!byte $AD,$D0                   ; JSR [,W++]
+!byte $AD,$F0                   ; JSR [,--W]
 
-    !byte $AC,$0C                   ; CMPX $0C,X
-    !byte $AC,$15                   ; CMPX -$0B,X
-    !byte $AC,$2C                   ; CMPX $0C,Y
-    !byte $AC,$35                   ; CMPX -$0B,Y
-    !byte $AC,$4C                   ; CMPX $0C,U
-    !byte $AC,$55                   ; CMPX -$0B,U
-    !byte $AC,$6C                   ; CMPX $0C,S
-    !byte $AC,$75                   ; CMPX -$0B,S
-    !byte $AC,$80                   ; CMPX ,X+
-    !byte $AC,$81                   ; CMPX ,X++
-    !byte $AC,$82                   ; CMPX ,-X
-    !byte $AC,$83                   ; CMPX ,--X
-    !byte $AC,$84                   ; CMPX ,X
-    !byte $AC,$85                   ; CMPX B,X
-    !byte $AC,$86                   ; CMPX A,X
-    !byte $AC,$87                    ; CMPX ,X
-    !byte $AC,$88,$60               ; CMPX $60,X
-    !byte $AC,$88,$FF               ; CMPX -$01,X
-    !byte $AC,$89,$10,$00           ; CMPX $1000,X
-    !byte $AC,$89,$DE,$AD           ; CMPX $DEAD,X
-    !byte $AC,$8A                    ; CMPX ,PClo
-    !byte $AC,$8B                   ; CMPX D,X
-    !byte $AC,$8C,$60               ; CMPX $60,PC
-    !byte $AC,$8C,$FF               ; CMPX -$01,PC
-    !byte $AC,$8D,$10,$00           ; CMPX $1000,PC
-    !byte $AC,$8D,$DE,$AD           ; CMPX $DEAD,PC
-    !byte $AC,$8F,$DE,$AD            ; CMPX ,$DEAD
-    !byte $AC,$90                    ; CMPX [,X+]
-    !byte $AC,$91                   ; CMPX [,X++]
-    !byte $AC,$92                    ; CMPX [,-X]
-    !byte $AC,$93                   ; CMPX [,--X]
-    !byte $AC,$94                   ; CMPX [,X]
-    !byte $AC,$95                   ; CMPX [B,X]
-    !byte $AC,$96                   ; CMPX [A,X]
-    !byte $AC,$97                    ; CMPX [,X]
-    !byte $AC,$98,$60               ; CMPX [$60,X]
-    !byte $AC,$98,$FF               ; CMPX [-$01,X]
-    !byte $AC,$99,$DE,$10           ; CMPX [$DE10,X]
-    !byte $AC,$99,$DE,$AD           ; CMPX [$DEAD,X]
-    !byte $AC,$9A                    ; CMPX [,PClo]
-    !byte $AC,$9B                   ; CMPX [D,X]
-    !byte $AC,$9C,$60               ; CMPX [$60,PC]
-    !byte $AC,$9C,$FF               ; CMPX [-$01,PC]
-    !byte $AC,$9D,$10,$00           ; CMPX [$1000,PC]
-    !byte $AC,$9D,$DE,$AD           ; CMPX [$DEAD,PC]
-    !byte $AC,$9F,$DE,$AD           ; CMPX [$DEAD]
-    !byte $AC,$A0                   ; CMPX ,Y+
-    !byte $AC,$A1                   ; CMPX ,Y++
-    !byte $AC,$A2                   ; CMPX ,-Y
-    !byte $AC,$A3                   ; CMPX ,--Y
-    !byte $AC,$A4                   ; CMPX ,Y
-    !byte $AC,$A5                   ; CMPX B,Y
-    !byte $AC,$A6                   ; CMPX A,Y
-    !byte $AC,$A7                    ; CMPX ,Y
-    !byte $AC,$A8,$60               ; CMPX $60,Y
-    !byte $AC,$A8,$FF               ; CMPX -$01,Y
-    !byte $AC,$A9,$10,$00           ; CMPX $1000,Y
-    !byte $AC,$A9,$DE,$AD           ; CMPX $DEAD,Y
-    !byte $AC,$AA                    ; CMPX ,PClo
-    !byte $AC,$AB                   ; CMPX D,Y
-    !byte $AC,$AC,$60               ; CMPX $60,PC
-    !byte $AC,$AC,$FF               ; CMPX -$01,PC
-    !byte $AC,$AD,$10,$00           ; CMPX $1000,PC
-    !byte $AC,$AD,$DE,$AD           ; CMPX $DEAD,PC
-    !byte $AC,$AF,$DE,$AD            ; CMPX ,$DEAD
-    !byte $AC,$B0                    ; CMPX [,Y+]
-    !byte $AC,$B1                   ; CMPX [,Y++]
-    !byte $AC,$B2                    ; CMPX [,-Y]
-    !byte $AC,$B3                   ; CMPX [,--Y]
-    !byte $AC,$B4                   ; CMPX [,Y]
-    !byte $AC,$B5                   ; CMPX [B,Y]
-    !byte $AC,$B6                   ; CMPX [A,Y]
-    !byte $AC,$B7                    ; CMPX [,Y]
-    !byte $AC,$B8,$60               ; CMPX [$60,Y]
-    !byte $AC,$B8,$FF               ; CMPX [-$01,Y]
-    !byte $AC,$B9,$DE,$10           ; CMPX [$DE10,Y]
-    !byte $AC,$B9,$DE,$AD           ; CMPX [$DEAD,Y]
-    !byte $AC,$BA                    ; CMPX [,PClo]
-    !byte $AC,$BB                   ; CMPX [D,Y]
-    !byte $AC,$BC,$60               ; CMPX [$60,PC]
-    !byte $AC,$BC,$FF               ; CMPX [-$01,PC]
-    !byte $AC,$BD,$10,$00           ; CMPX [$1000,PC]
-    !byte $AC,$BD,$DE,$AD           ; CMPX [$DEAD,PC]
-    !byte $AC,$BF,$DE,$AD           ; CMPX [$DEAD]
-    !byte $AC,$C0                   ; CMPX ,U+
-    !byte $AC,$C1                   ; CMPX ,U++
-    !byte $AC,$C2                   ; CMPX ,-U
-    !byte $AC,$C3                   ; CMPX ,--U
-    !byte $AC,$C4                   ; CMPX ,U
-    !byte $AC,$C5                   ; CMPX B,U
-    !byte $AC,$C6                   ; CMPX A,U
-    !byte $AC,$C7                    ; CMPX ,U
-    !byte $AC,$C8,$60               ; CMPX $60,U
-    !byte $AC,$C8,$FF               ; CMPX -$01,U
-    !byte $AC,$C9,$10,$00           ; CMPX $1000,U
-    !byte $AC,$C9,$DE,$AD           ; CMPX $DEAD,U
-    !byte $AC,$CA                    ; CMPX ,PClo
-    !byte $AC,$CB                   ; CMPX D,U
-    !byte $AC,$CC,$60               ; CMPX $60,PC
-    !byte $AC,$CC,$FF               ; CMPX -$01,PC
-    !byte $AC,$CD,$10,$00           ; CMPX $1000,PC
-    !byte $AC,$CD,$DE,$AD           ; CMPX $DEAD,PC
-    !byte $AC,$CF,$DE,$AD            ; CMPX ,$DEAD
-    !byte $AC,$D0                    ; CMPX [,U+]
-    !byte $AC,$D1                   ; CMPX [,U++]
-    !byte $AC,$D2                    ; CMPX [,-U]
-    !byte $AC,$D3                   ; CMPX [,--U]
-    !byte $AC,$D4                   ; CMPX [,U]
-    !byte $AC,$D5                   ; CMPX [B,U]
-    !byte $AC,$D6                   ; CMPX [A,U]
-    !byte $AC,$D7                    ; CMPX [,U]
-    !byte $AC,$D8,$60               ; CMPX [$60,U]
-    !byte $AC,$D8,$FF               ; CMPX [-$01,U]
-    !byte $AC,$D9,$DE,$10           ; CMPX [$DE10,U]
-    !byte $AC,$D9,$DE,$AD           ; CMPX [$DEAD,U]
-    !byte $AC,$DA                    ; CMPX [,PClo]
-    !byte $AC,$DB                   ; CMPX [D,U]
-    !byte $AC,$DC,$60               ; CMPX [$60,PC]
-    !byte $AC,$DC,$FF               ; CMPX [-$01,PC]
-    !byte $AC,$DD,$10,$00           ; CMPX [$1000,PC]
-    !byte $AC,$DD,$DE,$AD           ; CMPX [$DEAD,PC]
-    !byte $AC,$DF,$DE,$AD           ; CMPX [$DEAD]
-    !byte $AC,$E0                   ; CMPX ,S+
-    !byte $AC,$E1                   ; CMPX ,S++
-    !byte $AC,$E2                   ; CMPX ,-S
-    !byte $AC,$E3                   ; CMPX ,--S
-    !byte $AC,$E4                   ; CMPX ,S
-    !byte $AC,$E5                   ; CMPX B,S
-    !byte $AC,$E6                   ; CMPX A,S
-    !byte $AC,$E7                    ; CMPX ,S
-    !byte $AC,$E8,$60               ; CMPX $60,S
-    !byte $AC,$E8,$FF               ; CMPX -$01,S
-    !byte $AC,$E9,$10,$00           ; CMPX $1000,S
-    !byte $AC,$E9,$DE,$AD           ; CMPX $DEAD,S
-    !byte $AC,$EA                    ; CMPX ,PClo
-    !byte $AC,$EB                   ; CMPX D,S
-    !byte $AC,$EC,$60               ; CMPX $60,PC
-    !byte $AC,$EC,$FF               ; CMPX -$01,PC
-    !byte $AC,$ED,$10,$00           ; CMPX $1000,PC
-    !byte $AC,$ED,$DE,$AD           ; CMPX $DEAD,PC
-    !byte $AC,$EF,$DE,$AD            ; CMPX ,$DEAD
-    !byte $AC,$F0                    ; CMPX [,S+]
-    !byte $AC,$F1                   ; CMPX [,S++]
-    !byte $AC,$F2                    ; CMPX [,-S]
-    !byte $AC,$F3                   ; CMPX [,--S]
-    !byte $AC,$F4                   ; CMPX [,S]
-    !byte $AC,$F5                   ; CMPX [B,S]
-    !byte $AC,$F6                   ; CMPX [A,S]
-    !byte $AC,$F7                    ; CMPX [,S]
-    !byte $AC,$F8,$60               ; CMPX [$60,S]
-    !byte $AC,$F8,$FF               ; CMPX [-$01,S]
-    !byte $AC,$F9,$DE,$10           ; CMPX [$DE10,S]
-    !byte $AC,$F9,$DE,$AD           ; CMPX [$DEAD,S]
-    !byte $AC,$FA                    ; CMPX [,PClo]
-    !byte $AC,$FB                   ; CMPX [D,S]
-    !byte $AC,$FC,$60               ; CMPX [$60,PC]
-    !byte $AC,$FC,$FF               ; CMPX [-$01,PC]
-    !byte $AC,$FD,$10,$00           ; CMPX [$1000,PC]
-    !byte $AC,$FD,$DE,$AD           ; CMPX [$DEAD,PC]
-    !byte $AC,$FF,$DE,$AD           ; CMPX [$DEAD]
-    !byte $AD,$0C                   ; JSR $0C,X
-    !byte $AD,$15                   ; JSR -$0B,X
-    !byte $AD,$2C                   ; JSR $0C,Y
-    !byte $AD,$35                   ; JSR -$0B,Y
-    !byte $AD,$4C                   ; JSR $0C,U
-    !byte $AD,$55                   ; JSR -$0B,U
-    !byte $AD,$6C                   ; JSR $0C,S
-    !byte $AD,$75                   ; JSR -$0B,S
-    !byte $AD,$80                   ; JSR ,X+
-    !byte $AD,$81                   ; JSR ,X++
-    !byte $AD,$82                   ; JSR ,-X
-    !byte $AD,$83                   ; JSR ,--X
-    !byte $AD,$84                   ; JSR ,X
-    !byte $AD,$85                   ; JSR B,X
-    !byte $AD,$86                   ; JSR A,X
-    !byte $AD,$87                    ; JSR ,X
-    !byte $AD,$88,$60               ; JSR $60,X
-    !byte $AD,$88,$FF               ; JSR -$01,X
-    !byte $AD,$89,$10,$00           ; JSR $1000,X
-    !byte $AD,$89,$DE,$AD           ; JSR $DEAD,X
-    !byte $AD,$8A                    ; JSR ,PClo
-    !byte $AD,$8B                   ; JSR D,X
-    !byte $AD,$8C,$60               ; JSR $60,PC
-    !byte $AD,$8C,$FF               ; JSR -$01,PC
-    !byte $AD,$8D,$10,$00           ; JSR $1000,PC
-    !byte $AD,$8D,$DE,$AD           ; JSR $DEAD,PC
-    !byte $AD,$8F,$DE,$AD            ; JSR ,$DEAD
-    !byte $AD,$90                    ; JSR [,X+]
-    !byte $AD,$91                   ; JSR [,X++]
-    !byte $AD,$92                    ; JSR [,-X]
-    !byte $AD,$93                   ; JSR [,--X]
-    !byte $AD,$94                   ; JSR [,X]
-    !byte $AD,$95                   ; JSR [B,X]
-    !byte $AD,$96                   ; JSR [A,X]
-    !byte $AD,$97                    ; JSR [,X]
-    !byte $AD,$98,$60               ; JSR [$60,X]
-    !byte $AD,$98,$FF               ; JSR [-$01,X]
-    !byte $AD,$99,$DE,$10           ; JSR [$DE10,X]
-    !byte $AD,$99,$DE,$AD           ; JSR [$DEAD,X]
-    !byte $AD,$9A                    ; JSR [,PClo]
-    !byte $AD,$9B                   ; JSR [D,X]
-    !byte $AD,$9C,$60               ; JSR [$60,PC]
-    !byte $AD,$9C,$FF               ; JSR [-$01,PC]
-    !byte $AD,$9D,$10,$00           ; JSR [$1000,PC]
-    !byte $AD,$9D,$DE,$AD           ; JSR [$DEAD,PC]
-    !byte $AD,$9F,$DE,$AD           ; JSR [$DEAD]
-    !byte $AD,$A0                   ; JSR ,Y+
-    !byte $AD,$A1                   ; JSR ,Y++
-    !byte $AD,$A2                   ; JSR ,-Y
-    !byte $AD,$A3                   ; JSR ,--Y
-    !byte $AD,$A4                   ; JSR ,Y
-    !byte $AD,$A5                   ; JSR B,Y
-    !byte $AD,$A6                   ; JSR A,Y
-    !byte $AD,$A7                    ; JSR ,Y
-    !byte $AD,$A8,$60               ; JSR $60,Y
-    !byte $AD,$A8,$FF               ; JSR -$01,Y
-    !byte $AD,$A9,$10,$00           ; JSR $1000,Y
-    !byte $AD,$A9,$DE,$AD           ; JSR $DEAD,Y
-    !byte $AD,$AA                    ; JSR ,PClo
-    !byte $AD,$AB                   ; JSR D,Y
-    !byte $AD,$AC,$60               ; JSR $60,PC
-    !byte $AD,$AC,$FF               ; JSR -$01,PC
-    !byte $AD,$AD,$10,$00           ; JSR $1000,PC
-    !byte $AD,$AD,$DE,$AD           ; JSR $DEAD,PC
-    !byte $AD,$AF,$DE,$AD            ; JSR ,$DEAD
-    !byte $AD,$B0                    ; JSR [,Y+]
-    !byte $AD,$B1                   ; JSR [,Y++]
-    !byte $AD,$B2                    ; JSR [,-Y]
-    !byte $AD,$B3                   ; JSR [,--Y]
-    !byte $AD,$B4                   ; JSR [,Y]
-    !byte $AD,$B5                   ; JSR [B,Y]
-    !byte $AD,$B6                   ; JSR [A,Y]
-    !byte $AD,$B7                    ; JSR [,Y]
-    !byte $AD,$B8,$60               ; JSR [$60,Y]
-    !byte $AD,$B8,$FF               ; JSR [-$01,Y]
-    !byte $AD,$B9,$DE,$10           ; JSR [$DE10,Y]
-    !byte $AD,$B9,$DE,$AD           ; JSR [$DEAD,Y]
-    !byte $AD,$BA                    ; JSR [,PClo]
-    !byte $AD,$BB                   ; JSR [D,Y]
-    !byte $AD,$BC,$60               ; JSR [$60,PC]
-    !byte $AD,$BC,$FF               ; JSR [-$01,PC]
-    !byte $AD,$BD,$10,$00           ; JSR [$1000,PC]
-    !byte $AD,$BD,$DE,$AD           ; JSR [$DEAD,PC]
-    !byte $AD,$BF,$DE,$AD           ; JSR [$DEAD]
-    !byte $AD,$C0                   ; JSR ,U+
-    !byte $AD,$C1                   ; JSR ,U++
-    !byte $AD,$C2                   ; JSR ,-U
-    !byte $AD,$C3                   ; JSR ,--U
-    !byte $AD,$C4                   ; JSR ,U
-    !byte $AD,$C5                   ; JSR B,U
-    !byte $AD,$C6                   ; JSR A,U
-    !byte $AD,$C7                    ; JSR ,U
-    !byte $AD,$C8,$60               ; JSR $60,U
-    !byte $AD,$C8,$FF               ; JSR -$01,U
-    !byte $AD,$C9,$10,$00           ; JSR $1000,U
-    !byte $AD,$C9,$DE,$AD           ; JSR $DEAD,U
-    !byte $AD,$CA                    ; JSR ,PClo
-    !byte $AD,$CB                   ; JSR D,U
-    !byte $AD,$CC,$60               ; JSR $60,PC
-    !byte $AD,$CC,$FF               ; JSR -$01,PC
-    !byte $AD,$CD,$10,$00           ; JSR $1000,PC
-    !byte $AD,$CD,$DE,$AD           ; JSR $DEAD,PC
-    !byte $AD,$CF,$DE,$AD            ; JSR ,$DEAD
-    !byte $AD,$D0                    ; JSR [,U+]
-    !byte $AD,$D1                   ; JSR [,U++]
-    !byte $AD,$D2                    ; JSR [,-U]
-    !byte $AD,$D3                   ; JSR [,--U]
-    !byte $AD,$D4                   ; JSR [,U]
-    !byte $AD,$D5                   ; JSR [B,U]
-    !byte $AD,$D6                   ; JSR [A,U]
-    !byte $AD,$D7                    ; JSR [,U]
-    !byte $AD,$D8,$60               ; JSR [$60,U]
-    !byte $AD,$D8,$FF               ; JSR [-$01,U]
-    !byte $AD,$D9,$DE,$10           ; JSR [$DE10,U]
-    !byte $AD,$D9,$DE,$AD           ; JSR [$DEAD,U]
-    !byte $AD,$DA                    ; JSR [,PClo]
-    !byte $AD,$DB                   ; JSR [D,U]
-    !byte $AD,$DC,$60               ; JSR [$60,PC]
-    !byte $AD,$DC,$FF               ; JSR [-$01,PC]
-    !byte $AD,$DD,$10,$00           ; JSR [$1000,PC]
-    !byte $AD,$DD,$DE,$AD           ; JSR [$DEAD,PC]
-    !byte $AD,$DF,$DE,$AD           ; JSR [$DEAD]
-    !byte $AD,$E0                   ; JSR ,S+
-    !byte $AD,$E1                   ; JSR ,S++
-    !byte $AD,$E2                   ; JSR ,-S
-    !byte $AD,$E3                   ; JSR ,--S
-    !byte $AD,$E4                   ; JSR ,S
-    !byte $AD,$E5                   ; JSR B,S
-    !byte $AD,$E6                   ; JSR A,S
-    !byte $AD,$E7                    ; JSR ,S
-    !byte $AD,$E8,$60               ; JSR $60,S
-    !byte $AD,$E8,$FF               ; JSR -$01,S
-    !byte $AD,$E9,$10,$00           ; JSR $1000,S
-    !byte $AD,$E9,$DE,$AD           ; JSR $DEAD,S
-    !byte $AD,$EA                    ; JSR ,PClo
-    !byte $AD,$EB                   ; JSR D,S
-    !byte $AD,$EC,$60               ; JSR $60,PC
-    !byte $AD,$EC,$FF               ; JSR -$01,PC
-    !byte $AD,$ED,$10,$00           ; JSR $1000,PC
-    !byte $AD,$ED,$DE,$AD           ; JSR $DEAD,PC
-    !byte $AD,$EF,$DE,$AD            ; JSR ,$DEAD
-    !byte $AD,$F0                    ; JSR [,S+]
-    !byte $AD,$F1                   ; JSR [,S++]
-    !byte $AD,$F2                    ; JSR [,-S]
-    !byte $AD,$F3                   ; JSR [,--S]
-    !byte $AD,$F4                   ; JSR [,S]
-    !byte $AD,$F5                   ; JSR [B,S]
-    !byte $AD,$F6                   ; JSR [A,S]
-    !byte $AD,$F7                    ; JSR [,S]
-    !byte $AD,$F8,$60               ; JSR [$60,S]
-    !byte $AD,$F8,$FF               ; JSR [-$01,S]
-    !byte $AD,$F9,$DE,$10           ; JSR [$DE10,S]
-    !byte $AD,$F9,$DE,$AD           ; JSR [$DEAD,S]
-    !byte $AD,$FA                    ; JSR [,PClo]
-    !byte $AD,$FB                   ; JSR [D,S]
-    !byte $AD,$FC,$60               ; JSR [$60,PC]
-    !byte $AD,$FC,$FF               ; JSR [-$01,PC]
-    !byte $AD,$FD,$10,$00           ; JSR [$1000,PC]
-    !byte $AD,$FD,$DE,$AD           ; JSR [$DEAD,PC]
-    !byte $AD,$FF,$DE,$AD           ; JSR [$DEAD]
     !byte $AE,$0C                   ; LDX $0C,X
     !byte $AE,$15                   ; LDX -$0B,X
     !byte $AE,$2C                   ; LDX $0C,Y
