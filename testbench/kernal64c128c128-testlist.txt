@@ -135,6 +135,8 @@
 ../c128/mmu/,p1h-rw-test.prg,exitcode,7000000
 ../c128/ram0001/,test1.prg,exitcode,10000000
 ../c128/ram0001/,test2.prg,exitcode,10000000
+../c128/ram0001mmu/,c128modebank0001.prg,exitcode,6000000
+../c128/ram0001mmu/,c128modezp0001.prg,exitcode,6000000
 ../c128/vdc4/,vdc4.prg,interactive,0
 ../c128/vdccrash/,crash.prg,exitcode,7000000
 ../c128/vdccrash/,nocrash.prg,exitcode,7000000
