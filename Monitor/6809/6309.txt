@@ -8417,327 +8417,343 @@
 !byte $E3,$B0,$DE,$AD           ; ADDD [$DEAD,W]
 !byte $E3,$D0                   ; ADDD [,W++]
 !byte $E3,$F0                   ; ADDD [,--W]
+!byte $E4,$84                   ; ANDB ,X
+!byte $E4,$A4                   ; ANDB ,Y
+!byte $E4,$C4                   ; ANDB ,U
+!byte $E4,$E4                   ; ANDB ,S
+!byte $E4,$15                   ; ANDB -$0B,X
+!byte $E4,$35                   ; ANDB -$0B,Y
+!byte $E4,$55                   ; ANDB -$0B,U
+!byte $E4,$75                   ; ANDB -$0B,S
+!byte $E4,$0C                   ; ANDB $0C,X
+!byte $E4,$2C                   ; ANDB $0C,Y
+!byte $E4,$4C                   ; ANDB $0C,U
+!byte $E4,$6C                   ; ANDB $0C,S
+!byte $E4,$88,$FF               ; ANDB -$01,X
+!byte $E4,$A8,$FF               ; ANDB -$01,Y
+!byte $E4,$C8,$FF               ; ANDB -$01,U
+!byte $E4,$E8,$FF               ; ANDB -$01,S
+!byte $E4,$88,$60               ; ANDB $60,X
+!byte $E4,$A8,$60               ; ANDB $60,Y
+!byte $E4,$C8,$60               ; ANDB $60,U
+!byte $E4,$E8,$60               ; ANDB $60,S
+!byte $E4,$89,$DE,$AD           ; ANDB $DEAD,X
+!byte $E4,$A9,$DE,$AD           ; ANDB $DEAD,Y
+!byte $E4,$C9,$DE,$AD           ; ANDB $DEAD,U
+!byte $E4,$E9,$DE,$AD           ; ANDB $DEAD,S
+!byte $E4,$89,$10,$00           ; ANDB $1000,X
+!byte $E4,$A9,$10,$00           ; ANDB $1000,Y
+!byte $E4,$C9,$10,$00           ; ANDB $1000,U
+!byte $E4,$E9,$10,$00           ; ANDB $1000,S
+!byte $E4,$86                   ; ANDB A,X
+!byte $E4,$A6                   ; ANDB A,Y
+!byte $E4,$C6                   ; ANDB A,U
+!byte $E4,$E6                   ; ANDB A,S
+!byte $E4,$85                   ; ANDB B,X
+!byte $E4,$A5                   ; ANDB B,Y
+!byte $E4,$C5                   ; ANDB B,U
+!byte $E4,$E5                   ; ANDB B,S
+!byte $E4,$87                   ; ANDB E,X
+!byte $E4,$A7                   ; ANDB E,Y
+!byte $E4,$C7                   ; ANDB E,U
+!byte $E4,$E7                   ; ANDB E,S
+!byte $E4,$8A                   ; ANDB F,X
+!byte $E4,$AA                   ; ANDB F,Y
+!byte $E4,$CA                   ; ANDB F,U
+!byte $E4,$EA                   ; ANDB F,S
+!byte $E4,$8B                   ; ANDB D,X
+!byte $E4,$AB                   ; ANDB D,Y
+!byte $E4,$CB                   ; ANDB D,U
+!byte $E4,$EB                   ; ANDB D,S
+!byte $E4,$8E                   ; ANDB W,X
+!byte $E4,$AE                   ; ANDB W,Y
+!byte $E4,$CE                   ; ANDB W,U
+!byte $E4,$EE                   ; ANDB W,S
+!byte $E4,$80                   ; ANDB ,X+
+!byte $E4,$A0                   ; ANDB ,Y+
+!byte $E4,$C0                   ; ANDB ,U+
+!byte $E4,$E0                   ; ANDB ,S+
+!byte $E4,$81                   ; ANDB ,X++
+!byte $E4,$A1                   ; ANDB ,Y++
+!byte $E4,$C1                   ; ANDB ,U++
+!byte $E4,$E1                   ; ANDB ,S++
+!byte $E4,$82                   ; ANDB ,-X
+!byte $E4,$A2                   ; ANDB ,-Y
+!byte $E4,$C2                   ; ANDB ,-U
+!byte $E4,$E2                   ; ANDB ,-S
+!byte $E4,$83                   ; ANDB ,--X
+!byte $E4,$A3                   ; ANDB ,--Y
+!byte $E4,$C3                   ; ANDB ,--U
+!byte $E4,$E3                   ; ANDB ,--S
+!byte $E4,$8C,$FF               ; ANDB -$01,PC
+!byte $E4,$AC,$FF               ; ANDB -$01,PC
+!byte $E4,$CC,$FF               ; ANDB -$01,PC
+!byte $E4,$EC,$FF               ; ANDB -$01,PC
+!byte $E4,$8C,$60               ; ANDB $60,PC
+!byte $E4,$AC,$60               ; ANDB $60,PC
+!byte $E4,$CC,$60               ; ANDB $60,PC
+!byte $E4,$EC,$60               ; ANDB $60,PC
+!byte $E4,$8D,$DE,$AD           ; ANDB $DEAD,PC
+!byte $E4,$AD,$DE,$AD           ; ANDB $DEAD,PC
+!byte $E4,$CD,$DE,$AD           ; ANDB $DEAD,PC
+!byte $E4,$ED,$DE,$AD           ; ANDB $DEAD,PC
+!byte $E4,$8D,$10,$00           ; ANDB $1000,PC
+!byte $E4,$AD,$10,$00           ; ANDB $1000,PC
+!byte $E4,$CD,$10,$00           ; ANDB $1000,PC
+!byte $E4,$ED,$10,$00           ; ANDB $1000,PC
+!byte $E4,$8F                   ; ANDB ,W
+!byte $E4,$AF,$DE,$AD           ; ANDB $DEAD,W
+!byte $E4,$CF                   ; ANDB ,W++
+!byte $E4,$EF                   ; ANDB ,--W
+!byte $E4,$94                   ; ANDB [,X]
+!byte $E4,$B4                   ; ANDB [,Y]
+!byte $E4,$D4                   ; ANDB [,U]
+!byte $E4,$F4                   ; ANDB [,S]
+!byte $E4,$98,$FF               ; ANDB [-$01,X]
+!byte $E4,$B8,$FF               ; ANDB [-$01,Y]
+!byte $E4,$D8,$FF               ; ANDB [-$01,U]
+!byte $E4,$F8,$FF               ; ANDB [-$01,S]
+!byte $E4,$98,$60               ; ANDB [$60,X]
+!byte $E4,$B8,$60               ; ANDB [$60,Y]
+!byte $E4,$D8,$60               ; ANDB [$60,U]
+!byte $E4,$F8,$60               ; ANDB [$60,S]
+!byte $E4,$99,$DE,$AD           ; ANDB [$DEAD,X]
+!byte $E4,$B9,$DE,$AD           ; ANDB [$DEAD,Y]
+!byte $E4,$D9,$DE,$AD           ; ANDB [$DEAD,U]
+!byte $E4,$F9,$DE,$AD           ; ANDB [$DEAD,S]
+!byte $E4,$99,$10,$00           ; ANDB [$1000,X]
+!byte $E4,$B9,$10,$00           ; ANDB [$1000,Y]
+!byte $E4,$D9,$10,$00           ; ANDB [$1000,U]
+!byte $E4,$F9,$10,$00           ; ANDB [$1000,S]
+!byte $E4,$96                   ; ANDB [A,X]
+!byte $E4,$B6                   ; ANDB [A,Y]
+!byte $E4,$D6                   ; ANDB [A,U]
+!byte $E4,$F6                   ; ANDB [A,S]
+!byte $E4,$95                   ; ANDB [B,X]
+!byte $E4,$B5                   ; ANDB [B,Y]
+!byte $E4,$D5                   ; ANDB [B,U]
+!byte $E4,$F5                   ; ANDB [B,S]
+!byte $E4,$97                   ; ANDB [E,X]
+!byte $E4,$B7                   ; ANDB [E,Y]
+!byte $E4,$D7                   ; ANDB [E,U]
+!byte $E4,$F7                   ; ANDB [E,S]
+!byte $E4,$9A                   ; ANDB [F,X]
+!byte $E4,$BA                   ; ANDB [F,Y]
+!byte $E4,$DA                   ; ANDB [F,U]
+!byte $E4,$FA                   ; ANDB [F,S]
+!byte $E4,$9B                   ; ANDB [D,X]
+!byte $E4,$BB                   ; ANDB [D,Y]
+!byte $E4,$DB                   ; ANDB [D,U]
+!byte $E4,$FB                   ; ANDB [D,S]
+!byte $E4,$9E                   ; ANDB [W,X]
+!byte $E4,$BE                   ; ANDB [W,Y]
+!byte $E4,$DE                   ; ANDB [W,U]
+!byte $E4,$FE                   ; ANDB [W,S]
+!byte $E4,$91                   ; ANDB [,X++]
+!byte $E4,$B1                   ; ANDB [,Y++]
+!byte $E4,$D1                   ; ANDB [,U++]
+!byte $E4,$F1                   ; ANDB [,S++]
+!byte $E4,$92                   ; ANDB [,-X]
+!byte $E4,$B2                   ; ANDB [,-Y]
+!byte $E4,$D2                   ; ANDB [,-U]
+!byte $E4,$F2                   ; ANDB [,-S]
+!byte $E4,$93                   ; ANDB [,--X]
+!byte $E4,$B3                   ; ANDB [,--Y]
+!byte $E4,$D3                   ; ANDB [,--U]
+!byte $E4,$F3                   ; ANDB [,--S]
+!byte $E4,$9C,$FF               ; ANDB [-$01,PC]
+!byte $E4,$BC,$FF               ; ANDB [-$01,PC]
+!byte $E4,$DC,$FF               ; ANDB [-$01,PC]
+!byte $E4,$FC,$FF               ; ANDB [-$01,PC]
+!byte $E4,$9C,$60               ; ANDB [$60,PC]
+!byte $E4,$BC,$60               ; ANDB [$60,PC]
+!byte $E4,$DC,$60               ; ANDB [$60,PC]
+!byte $E4,$FC,$60               ; ANDB [$60,PC]
+!byte $E4,$9D,$DE,$AD           ; ANDB [$DEAD,PC]
+!byte $E4,$BD,$DE,$AD           ; ANDB [$DEAD,PC]
+!byte $E4,$DD,$DE,$AD           ; ANDB [$DEAD,PC]
+!byte $E4,$FD,$DE,$AD           ; ANDB [$DEAD,PC]
+!byte $E4,$9D,$10,$00           ; ANDB [$1000,PC]
+!byte $E4,$BD,$10,$00           ; ANDB [$1000,PC]
+!byte $E4,$DD,$10,$00           ; ANDB [$1000,PC]
+!byte $E4,$FD,$10,$00           ; ANDB [$1000,PC]
+!byte $E4,$9F,$DE,$AD           ; ANDB [$DEAD]
+!byte $E4,$BF,$DE,$AD           ; ANDB [$DEAD]
+!byte $E4,$DF,$DE,$AD           ; ANDB [$DEAD]
+!byte $E4,$FF,$DE,$AD           ; ANDB [$DEAD]
+!byte $E4,$90                   ; ANDB [,W]
+!byte $E4,$B0,$DE,$AD           ; ANDB [$DEAD,W]
+!byte $E4,$D0                   ; ANDB [,W++]
+!byte $E4,$F0                   ; ANDB [,--W]
+!byte $E5,$84                   ; BITB ,X
+!byte $E5,$A4                   ; BITB ,Y
+!byte $E5,$C4                   ; BITB ,U
+!byte $E5,$E4                   ; BITB ,S
+!byte $E5,$15                   ; BITB -$0B,X
+!byte $E5,$35                   ; BITB -$0B,Y
+!byte $E5,$55                   ; BITB -$0B,U
+!byte $E5,$75                   ; BITB -$0B,S
+!byte $E5,$0C                   ; BITB $0C,X
+!byte $E5,$2C                   ; BITB $0C,Y
+!byte $E5,$4C                   ; BITB $0C,U
+!byte $E5,$6C                   ; BITB $0C,S
+!byte $E5,$88,$FF               ; BITB -$01,X
+!byte $E5,$A8,$FF               ; BITB -$01,Y
+!byte $E5,$C8,$FF               ; BITB -$01,U
+!byte $E5,$E8,$FF               ; BITB -$01,S
+!byte $E5,$88,$60               ; BITB $60,X
+!byte $E5,$A8,$60               ; BITB $60,Y
+!byte $E5,$C8,$60               ; BITB $60,U
+!byte $E5,$E8,$60               ; BITB $60,S
+!byte $E5,$89,$DE,$AD           ; BITB $DEAD,X
+!byte $E5,$A9,$DE,$AD           ; BITB $DEAD,Y
+!byte $E5,$C9,$DE,$AD           ; BITB $DEAD,U
+!byte $E5,$E9,$DE,$AD           ; BITB $DEAD,S
+!byte $E5,$89,$10,$00           ; BITB $1000,X
+!byte $E5,$A9,$10,$00           ; BITB $1000,Y
+!byte $E5,$C9,$10,$00           ; BITB $1000,U
+!byte $E5,$E9,$10,$00           ; BITB $1000,S
+!byte $E5,$86                   ; BITB A,X
+!byte $E5,$A6                   ; BITB A,Y
+!byte $E5,$C6                   ; BITB A,U
+!byte $E5,$E6                   ; BITB A,S
+!byte $E5,$85                   ; BITB B,X
+!byte $E5,$A5                   ; BITB B,Y
+!byte $E5,$C5                   ; BITB B,U
+!byte $E5,$E5                   ; BITB B,S
+!byte $E5,$87                   ; BITB E,X
+!byte $E5,$A7                   ; BITB E,Y
+!byte $E5,$C7                   ; BITB E,U
+!byte $E5,$E7                   ; BITB E,S
+!byte $E5,$8A                   ; BITB F,X
+!byte $E5,$AA                   ; BITB F,Y
+!byte $E5,$CA                   ; BITB F,U
+!byte $E5,$EA                   ; BITB F,S
+!byte $E5,$8B                   ; BITB D,X
+!byte $E5,$AB                   ; BITB D,Y
+!byte $E5,$CB                   ; BITB D,U
+!byte $E5,$EB                   ; BITB D,S
+!byte $E5,$8E                   ; BITB W,X
+!byte $E5,$AE                   ; BITB W,Y
+!byte $E5,$CE                   ; BITB W,U
+!byte $E5,$EE                   ; BITB W,S
+!byte $E5,$80                   ; BITB ,X+
+!byte $E5,$A0                   ; BITB ,Y+
+!byte $E5,$C0                   ; BITB ,U+
+!byte $E5,$E0                   ; BITB ,S+
+!byte $E5,$81                   ; BITB ,X++
+!byte $E5,$A1                   ; BITB ,Y++
+!byte $E5,$C1                   ; BITB ,U++
+!byte $E5,$E1                   ; BITB ,S++
+!byte $E5,$82                   ; BITB ,-X
+!byte $E5,$A2                   ; BITB ,-Y
+!byte $E5,$C2                   ; BITB ,-U
+!byte $E5,$E2                   ; BITB ,-S
+!byte $E5,$83                   ; BITB ,--X
+!byte $E5,$A3                   ; BITB ,--Y
+!byte $E5,$C3                   ; BITB ,--U
+!byte $E5,$E3                   ; BITB ,--S
+!byte $E5,$8C,$FF               ; BITB -$01,PC
+!byte $E5,$AC,$FF               ; BITB -$01,PC
+!byte $E5,$CC,$FF               ; BITB -$01,PC
+!byte $E5,$EC,$FF               ; BITB -$01,PC
+!byte $E5,$8C,$60               ; BITB $60,PC
+!byte $E5,$AC,$60               ; BITB $60,PC
+!byte $E5,$CC,$60               ; BITB $60,PC
+!byte $E5,$EC,$60               ; BITB $60,PC
+!byte $E5,$8D,$DE,$AD           ; BITB $DEAD,PC
+!byte $E5,$AD,$DE,$AD           ; BITB $DEAD,PC
+!byte $E5,$CD,$DE,$AD           ; BITB $DEAD,PC
+!byte $E5,$ED,$DE,$AD           ; BITB $DEAD,PC
+!byte $E5,$8D,$10,$00           ; BITB $1000,PC
+!byte $E5,$AD,$10,$00           ; BITB $1000,PC
+!byte $E5,$CD,$10,$00           ; BITB $1000,PC
+!byte $E5,$ED,$10,$00           ; BITB $1000,PC
+!byte $E5,$8F                   ; BITB ,W
+!byte $E5,$AF,$DE,$AD           ; BITB $DEAD,W
+!byte $E5,$CF                   ; BITB ,W++
+!byte $E5,$EF                   ; BITB ,--W
+!byte $E5,$94                   ; BITB [,X]
+!byte $E5,$B4                   ; BITB [,Y]
+!byte $E5,$D4                   ; BITB [,U]
+!byte $E5,$F4                   ; BITB [,S]
+!byte $E5,$98,$FF               ; BITB [-$01,X]
+!byte $E5,$B8,$FF               ; BITB [-$01,Y]
+!byte $E5,$D8,$FF               ; BITB [-$01,U]
+!byte $E5,$F8,$FF               ; BITB [-$01,S]
+!byte $E5,$98,$60               ; BITB [$60,X]
+!byte $E5,$B8,$60               ; BITB [$60,Y]
+!byte $E5,$D8,$60               ; BITB [$60,U]
+!byte $E5,$F8,$60               ; BITB [$60,S]
+!byte $E5,$99,$DE,$AD           ; BITB [$DEAD,X]
+!byte $E5,$B9,$DE,$AD           ; BITB [$DEAD,Y]
+!byte $E5,$D9,$DE,$AD           ; BITB [$DEAD,U]
+!byte $E5,$F9,$DE,$AD           ; BITB [$DEAD,S]
+!byte $E5,$99,$10,$00           ; BITB [$1000,X]
+!byte $E5,$B9,$10,$00           ; BITB [$1000,Y]
+!byte $E5,$D9,$10,$00           ; BITB [$1000,U]
+!byte $E5,$F9,$10,$00           ; BITB [$1000,S]
+!byte $E5,$96                   ; BITB [A,X]
+!byte $E5,$B6                   ; BITB [A,Y]
+!byte $E5,$D6                   ; BITB [A,U]
+!byte $E5,$F6                   ; BITB [A,S]
+!byte $E5,$95                   ; BITB [B,X]
+!byte $E5,$B5                   ; BITB [B,Y]
+!byte $E5,$D5                   ; BITB [B,U]
+!byte $E5,$F5                   ; BITB [B,S]
+!byte $E5,$97                   ; BITB [E,X]
+!byte $E5,$B7                   ; BITB [E,Y]
+!byte $E5,$D7                   ; BITB [E,U]
+!byte $E5,$F7                   ; BITB [E,S]
+!byte $E5,$9A                   ; BITB [F,X]
+!byte $E5,$BA                   ; BITB [F,Y]
+!byte $E5,$DA                   ; BITB [F,U]
+!byte $E5,$FA                   ; BITB [F,S]
+!byte $E5,$9B                   ; BITB [D,X]
+!byte $E5,$BB                   ; BITB [D,Y]
+!byte $E5,$DB                   ; BITB [D,U]
+!byte $E5,$FB                   ; BITB [D,S]
+!byte $E5,$9E                   ; BITB [W,X]
+!byte $E5,$BE                   ; BITB [W,Y]
+!byte $E5,$DE                   ; BITB [W,U]
+!byte $E5,$FE                   ; BITB [W,S]
+!byte $E5,$91                   ; BITB [,X++]
+!byte $E5,$B1                   ; BITB [,Y++]
+!byte $E5,$D1                   ; BITB [,U++]
+!byte $E5,$F1                   ; BITB [,S++]
+!byte $E5,$92                   ; BITB [,-X]
+!byte $E5,$B2                   ; BITB [,-Y]
+!byte $E5,$D2                   ; BITB [,-U]
+!byte $E5,$F2                   ; BITB [,-S]
+!byte $E5,$93                   ; BITB [,--X]
+!byte $E5,$B3                   ; BITB [,--Y]
+!byte $E5,$D3                   ; BITB [,--U]
+!byte $E5,$F3                   ; BITB [,--S]
+!byte $E5,$9C,$FF               ; BITB [-$01,PC]
+!byte $E5,$BC,$FF               ; BITB [-$01,PC]
+!byte $E5,$DC,$FF               ; BITB [-$01,PC]
+!byte $E5,$FC,$FF               ; BITB [-$01,PC]
+!byte $E5,$9C,$60               ; BITB [$60,PC]
+!byte $E5,$BC,$60               ; BITB [$60,PC]
+!byte $E5,$DC,$60               ; BITB [$60,PC]
+!byte $E5,$FC,$60               ; BITB [$60,PC]
+!byte $E5,$9D,$DE,$AD           ; BITB [$DEAD,PC]
+!byte $E5,$BD,$DE,$AD           ; BITB [$DEAD,PC]
+!byte $E5,$DD,$DE,$AD           ; BITB [$DEAD,PC]
+!byte $E5,$FD,$DE,$AD           ; BITB [$DEAD,PC]
+!byte $E5,$9D,$10,$00           ; BITB [$1000,PC]
+!byte $E5,$BD,$10,$00           ; BITB [$1000,PC]
+!byte $E5,$DD,$10,$00           ; BITB [$1000,PC]
+!byte $E5,$FD,$10,$00           ; BITB [$1000,PC]
+!byte $E5,$9F,$DE,$AD           ; BITB [$DEAD]
+!byte $E5,$BF,$DE,$AD           ; BITB [$DEAD]
+!byte $E5,$DF,$DE,$AD           ; BITB [$DEAD]
+!byte $E5,$FF,$DE,$AD           ; BITB [$DEAD]
+!byte $E5,$90                   ; BITB [,W]
+!byte $E5,$B0,$DE,$AD           ; BITB [$DEAD,W]
+!byte $E5,$D0                   ; BITB [,W++]
+!byte $E5,$F0                   ; BITB [,--W]
 
-    !byte $E4,$0C                   ; ANDB $0C,X
-    !byte $E4,$15                   ; ANDB -$0B,X
-    !byte $E4,$2C                   ; ANDB $0C,Y
-    !byte $E4,$35                   ; ANDB -$0B,Y
-    !byte $E4,$4C                   ; ANDB $0C,U
-    !byte $E4,$55                   ; ANDB -$0B,U
-    !byte $E4,$6C                   ; ANDB $0C,S
-    !byte $E4,$75                   ; ANDB -$0B,S
-    !byte $E4,$80                   ; ANDB ,X+
-    !byte $E4,$81                   ; ANDB ,X++
-    !byte $E4,$82                   ; ANDB ,-X
-    !byte $E4,$83                   ; ANDB ,--X
-    !byte $E4,$84                   ; ANDB ,X
-    !byte $E4,$85                   ; ANDB B,X
-    !byte $E4,$86                   ; ANDB A,X
-    !byte $E4,$87                    ; ANDB ,X
-    !byte $E4,$88,$60               ; ANDB $60,X
-    !byte $E4,$88,$FF               ; ANDB -$01,X
-    !byte $E4,$89,$10,$00           ; ANDB $1000,X
-    !byte $E4,$89,$DE,$AD           ; ANDB $DEAD,X
-    !byte $E4,$8A                    ; ANDB ,PClo
-    !byte $E4,$8B                   ; ANDB D,X
-    !byte $E4,$8C,$60               ; ANDB $60,PC
-    !byte $E4,$8C,$FF               ; ANDB -$01,PC
-    !byte $E4,$8D,$10,$00           ; ANDB $1000,PC
-    !byte $E4,$8D,$DE,$AD           ; ANDB $DEAD,PC
-    !byte $E4,$8F,$DE,$AD            ; ANDB ,$DEAD
-    !byte $E4,$90                    ; ANDB [,X+]
-    !byte $E4,$91                   ; ANDB [,X++]
-    !byte $E4,$92                    ; ANDB [,-X]
-    !byte $E4,$93                   ; ANDB [,--X]
-    !byte $E4,$94                   ; ANDB [,X]
-    !byte $E4,$95                   ; ANDB [B,X]
-    !byte $E4,$96                   ; ANDB [A,X]
-    !byte $E4,$97                    ; ANDB [,X]
-    !byte $E4,$98,$60               ; ANDB [$60,X]
-    !byte $E4,$98,$FF               ; ANDB [-$01,X]
-    !byte $E4,$99,$DE,$10           ; ANDB [$DE10,X]
-    !byte $E4,$99,$DE,$AD           ; ANDB [$DEAD,X]
-    !byte $E4,$9A                    ; ANDB [,PClo]
-    !byte $E4,$9B                   ; ANDB [D,X]
-    !byte $E4,$9C,$60               ; ANDB [$60,PC]
-    !byte $E4,$9C,$FF               ; ANDB [-$01,PC]
-    !byte $E4,$9D,$10,$00           ; ANDB [$1000,PC]
-    !byte $E4,$9D,$DE,$AD           ; ANDB [$DEAD,PC]
-    !byte $E4,$9F,$DE,$AD           ; ANDB [$DEAD]
-    !byte $E4,$A0                   ; ANDB ,Y+
-    !byte $E4,$A1                   ; ANDB ,Y++
-    !byte $E4,$A2                   ; ANDB ,-Y
-    !byte $E4,$A3                   ; ANDB ,--Y
-    !byte $E4,$A4                   ; ANDB ,Y
-    !byte $E4,$A5                   ; ANDB B,Y
-    !byte $E4,$A6                   ; ANDB A,Y
-    !byte $E4,$A7                    ; ANDB ,Y
-    !byte $E4,$A8,$60               ; ANDB $60,Y
-    !byte $E4,$A8,$FF               ; ANDB -$01,Y
-    !byte $E4,$A9,$10,$00           ; ANDB $1000,Y
-    !byte $E4,$A9,$DE,$AD           ; ANDB $DEAD,Y
-    !byte $E4,$AA                    ; ANDB ,PClo
-    !byte $E4,$AB                   ; ANDB D,Y
-    !byte $E4,$AC,$60               ; ANDB $60,PC
-    !byte $E4,$AC,$FF               ; ANDB -$01,PC
-    !byte $E4,$AD,$10,$00           ; ANDB $1000,PC
-    !byte $E4,$AD,$DE,$AD           ; ANDB $DEAD,PC
-    !byte $E4,$AF,$DE,$AD            ; ANDB ,$DEAD
-    !byte $E4,$B0                    ; ANDB [,Y+]
-    !byte $E4,$B1                   ; ANDB [,Y++]
-    !byte $E4,$B2                    ; ANDB [,-Y]
-    !byte $E4,$B3                   ; ANDB [,--Y]
-    !byte $E4,$B4                   ; ANDB [,Y]
-    !byte $E4,$B5                   ; ANDB [B,Y]
-    !byte $E4,$B6                   ; ANDB [A,Y]
-    !byte $E4,$B7                    ; ANDB [,Y]
-    !byte $E4,$B8,$60               ; ANDB [$60,Y]
-    !byte $E4,$B8,$FF               ; ANDB [-$01,Y]
-    !byte $E4,$B9,$DE,$10           ; ANDB [$DE10,Y]
-    !byte $E4,$B9,$DE,$AD           ; ANDB [$DEAD,Y]
-    !byte $E4,$BA                    ; ANDB [,PClo]
-    !byte $E4,$BB                   ; ANDB [D,Y]
-    !byte $E4,$BC,$60               ; ANDB [$60,PC]
-    !byte $E4,$BC,$FF               ; ANDB [-$01,PC]
-    !byte $E4,$BD,$10,$00           ; ANDB [$1000,PC]
-    !byte $E4,$BD,$DE,$AD           ; ANDB [$DEAD,PC]
-    !byte $E4,$BF,$DE,$AD           ; ANDB [$DEAD]
-    !byte $E4,$C0                   ; ANDB ,U+
-    !byte $E4,$C1                   ; ANDB ,U++
-    !byte $E4,$C2                   ; ANDB ,-U
-    !byte $E4,$C3                   ; ANDB ,--U
-    !byte $E4,$C4                   ; ANDB ,U
-    !byte $E4,$C5                   ; ANDB B,U
-    !byte $E4,$C6                   ; ANDB A,U
-    !byte $E4,$C7                    ; ANDB ,U
-    !byte $E4,$C8,$60               ; ANDB $60,U
-    !byte $E4,$C8,$FF               ; ANDB -$01,U
-    !byte $E4,$C9,$10,$00           ; ANDB $1000,U
-    !byte $E4,$C9,$DE,$AD           ; ANDB $DEAD,U
-    !byte $E4,$CA                    ; ANDB ,PClo
-    !byte $E4,$CB                   ; ANDB D,U
-    !byte $E4,$CC,$60               ; ANDB $60,PC
-    !byte $E4,$CC,$FF               ; ANDB -$01,PC
-    !byte $E4,$CD,$10,$00           ; ANDB $1000,PC
-    !byte $E4,$CD,$DE,$AD           ; ANDB $DEAD,PC
-    !byte $E4,$CF,$DE,$AD            ; ANDB ,$DEAD
-    !byte $E4,$D0                    ; ANDB [,U+]
-    !byte $E4,$D1                   ; ANDB [,U++]
-    !byte $E4,$D2                    ; ANDB [,-U]
-    !byte $E4,$D3                   ; ANDB [,--U]
-    !byte $E4,$D4                   ; ANDB [,U]
-    !byte $E4,$D5                   ; ANDB [B,U]
-    !byte $E4,$D6                   ; ANDB [A,U]
-    !byte $E4,$D7                    ; ANDB [,U]
-    !byte $E4,$D8,$60               ; ANDB [$60,U]
-    !byte $E4,$D8,$FF               ; ANDB [-$01,U]
-    !byte $E4,$D9,$DE,$10           ; ANDB [$DE10,U]
-    !byte $E4,$D9,$DE,$AD           ; ANDB [$DEAD,U]
-    !byte $E4,$DA                    ; ANDB [,PClo]
-    !byte $E4,$DB                   ; ANDB [D,U]
-    !byte $E4,$DC,$60               ; ANDB [$60,PC]
-    !byte $E4,$DC,$FF               ; ANDB [-$01,PC]
-    !byte $E4,$DD,$10,$00           ; ANDB [$1000,PC]
-    !byte $E4,$DD,$DE,$AD           ; ANDB [$DEAD,PC]
-    !byte $E4,$DF,$DE,$AD           ; ANDB [$DEAD]
-    !byte $E4,$E0                   ; ANDB ,S+
-    !byte $E4,$E1                   ; ANDB ,S++
-    !byte $E4,$E2                   ; ANDB ,-S
-    !byte $E4,$E3                   ; ANDB ,--S
-    !byte $E4,$E4                   ; ANDB ,S
-    !byte $E4,$E5                   ; ANDB B,S
-    !byte $E4,$E6                   ; ANDB A,S
-    !byte $E4,$E7                    ; ANDB ,S
-    !byte $E4,$E8,$60               ; ANDB $60,S
-    !byte $E4,$E8,$FF               ; ANDB -$01,S
-    !byte $E4,$E9,$10,$00           ; ANDB $1000,S
-    !byte $E4,$E9,$DE,$AD           ; ANDB $DEAD,S
-    !byte $E4,$EA                    ; ANDB ,PClo
-    !byte $E4,$EB                   ; ANDB D,S
-    !byte $E4,$EC,$60               ; ANDB $60,PC
-    !byte $E4,$EC,$FF               ; ANDB -$01,PC
-    !byte $E4,$ED,$10,$00           ; ANDB $1000,PC
-    !byte $E4,$ED,$DE,$AD           ; ANDB $DEAD,PC
-    !byte $E4,$EF,$DE,$AD            ; ANDB ,$DEAD
-    !byte $E4,$F0                    ; ANDB [,S+]
-    !byte $E4,$F1                   ; ANDB [,S++]
-    !byte $E4,$F2                    ; ANDB [,-S]
-    !byte $E4,$F3                   ; ANDB [,--S]
-    !byte $E4,$F4                   ; ANDB [,S]
-    !byte $E4,$F5                   ; ANDB [B,S]
-    !byte $E4,$F6                   ; ANDB [A,S]
-    !byte $E4,$F7                    ; ANDB [,S]
-    !byte $E4,$F8,$60               ; ANDB [$60,S]
-    !byte $E4,$F8,$FF               ; ANDB [-$01,S]
-    !byte $E4,$F9,$DE,$10           ; ANDB [$DE10,S]
-    !byte $E4,$F9,$DE,$AD           ; ANDB [$DEAD,S]
-    !byte $E4,$FA                    ; ANDB [,PClo]
-    !byte $E4,$FB                   ; ANDB [D,S]
-    !byte $E4,$FC,$60               ; ANDB [$60,PC]
-    !byte $E4,$FC,$FF               ; ANDB [-$01,PC]
-    !byte $E4,$FD,$10,$00           ; ANDB [$1000,PC]
-    !byte $E4,$FD,$DE,$AD           ; ANDB [$DEAD,PC]
-    !byte $E4,$FF,$DE,$AD           ; ANDB [$DEAD]
-    !byte $E5,$0C                   ; BITB $0C,X
-    !byte $E5,$15                   ; BITB -$0B,X
-    !byte $E5,$2C                   ; BITB $0C,Y
-    !byte $E5,$35                   ; BITB -$0B,Y
-    !byte $E5,$4C                   ; BITB $0C,U
-    !byte $E5,$55                   ; BITB -$0B,U
-    !byte $E5,$6C                   ; BITB $0C,S
-    !byte $E5,$75                   ; BITB -$0B,S
-    !byte $E5,$80                   ; BITB ,X+
-    !byte $E5,$81                   ; BITB ,X++
-    !byte $E5,$82                   ; BITB ,-X
-    !byte $E5,$83                   ; BITB ,--X
-    !byte $E5,$84                   ; BITB ,X
-    !byte $E5,$85                   ; BITB B,X
-    !byte $E5,$86                   ; BITB A,X
-    !byte $E5,$87                    ; BITB ,X
-    !byte $E5,$88,$60               ; BITB $60,X
-    !byte $E5,$88,$FF               ; BITB -$01,X
-    !byte $E5,$89,$10,$00           ; BITB $1000,X
-    !byte $E5,$89,$DE,$AD           ; BITB $DEAD,X
-    !byte $E5,$8A                    ; BITB ,PClo
-    !byte $E5,$8B                   ; BITB D,X
-    !byte $E5,$8C,$60               ; BITB $60,PC
-    !byte $E5,$8C,$FF               ; BITB -$01,PC
-    !byte $E5,$8D,$10,$00           ; BITB $1000,PC
-    !byte $E5,$8D,$DE,$AD           ; BITB $DEAD,PC
-    !byte $E5,$8F,$DE,$AD            ; BITB ,$DEAD
-    !byte $E5,$90                    ; BITB [,X+]
-    !byte $E5,$91                   ; BITB [,X++]
-    !byte $E5,$92                    ; BITB [,-X]
-    !byte $E5,$93                   ; BITB [,--X]
-    !byte $E5,$94                   ; BITB [,X]
-    !byte $E5,$95                   ; BITB [B,X]
-    !byte $E5,$96                   ; BITB [A,X]
-    !byte $E5,$97                    ; BITB [,X]
-    !byte $E5,$98,$60               ; BITB [$60,X]
-    !byte $E5,$98,$FF               ; BITB [-$01,X]
-    !byte $E5,$99,$DE,$10           ; BITB [$DE10,X]
-    !byte $E5,$99,$DE,$AD           ; BITB [$DEAD,X]
-    !byte $E5,$9A                    ; BITB [,PClo]
-    !byte $E5,$9B                   ; BITB [D,X]
-    !byte $E5,$9C,$60               ; BITB [$60,PC]
-    !byte $E5,$9C,$FF               ; BITB [-$01,PC]
-    !byte $E5,$9D,$10,$00           ; BITB [$1000,PC]
-    !byte $E5,$9D,$DE,$AD           ; BITB [$DEAD,PC]
-    !byte $E5,$9F,$DE,$AD           ; BITB [$DEAD]
-    !byte $E5,$A0                   ; BITB ,Y+
-    !byte $E5,$A1                   ; BITB ,Y++
-    !byte $E5,$A2                   ; BITB ,-Y
-    !byte $E5,$A3                   ; BITB ,--Y
-    !byte $E5,$A4                   ; BITB ,Y
-    !byte $E5,$A5                   ; BITB B,Y
-    !byte $E5,$A6                   ; BITB A,Y
-    !byte $E5,$A7                    ; BITB ,Y
-    !byte $E5,$A8,$60               ; BITB $60,Y
-    !byte $E5,$A8,$FF               ; BITB -$01,Y
-    !byte $E5,$A9,$10,$00           ; BITB $1000,Y
-    !byte $E5,$A9,$DE,$AD           ; BITB $DEAD,Y
-    !byte $E5,$AA                    ; BITB ,PClo
-    !byte $E5,$AB                   ; BITB D,Y
-    !byte $E5,$AC,$60               ; BITB $60,PC
-    !byte $E5,$AC,$FF               ; BITB -$01,PC
-    !byte $E5,$AD,$10,$00           ; BITB $1000,PC
-    !byte $E5,$AD,$DE,$AD           ; BITB $DEAD,PC
-    !byte $E5,$AF,$DE,$AD            ; BITB ,$DEAD
-    !byte $E5,$B0                    ; BITB [,Y+]
-    !byte $E5,$B1                   ; BITB [,Y++]
-    !byte $E5,$B2                    ; BITB [,-Y]
-    !byte $E5,$B3                   ; BITB [,--Y]
-    !byte $E5,$B4                   ; BITB [,Y]
-    !byte $E5,$B5                   ; BITB [B,Y]
-    !byte $E5,$B6                   ; BITB [A,Y]
-    !byte $E5,$B7                    ; BITB [,Y]
-    !byte $E5,$B8,$60               ; BITB [$60,Y]
-    !byte $E5,$B8,$FF               ; BITB [-$01,Y]
-    !byte $E5,$B9,$DE,$10           ; BITB [$DE10,Y]
-    !byte $E5,$B9,$DE,$AD           ; BITB [$DEAD,Y]
-    !byte $E5,$BA                    ; BITB [,PClo]
-    !byte $E5,$BB                   ; BITB [D,Y]
-    !byte $E5,$BC,$60               ; BITB [$60,PC]
-    !byte $E5,$BC,$FF               ; BITB [-$01,PC]
-    !byte $E5,$BD,$10,$00           ; BITB [$1000,PC]
-    !byte $E5,$BD,$DE,$AD           ; BITB [$DEAD,PC]
-    !byte $E5,$BF,$DE,$AD           ; BITB [$DEAD]
-    !byte $E5,$C0                   ; BITB ,U+
-    !byte $E5,$C1                   ; BITB ,U++
-    !byte $E5,$C2                   ; BITB ,-U
-    !byte $E5,$C3                   ; BITB ,--U
-    !byte $E5,$C4                   ; BITB ,U
-    !byte $E5,$C5                   ; BITB B,U
-    !byte $E5,$C6                   ; BITB A,U
-    !byte $E5,$C7                    ; BITB ,U
-    !byte $E5,$C8,$60               ; BITB $60,U
-    !byte $E5,$C8,$FF               ; BITB -$01,U
-    !byte $E5,$C9,$10,$00           ; BITB $1000,U
-    !byte $E5,$C9,$DE,$AD           ; BITB $DEAD,U
-    !byte $E5,$CA                    ; BITB ,PClo
-    !byte $E5,$CB                   ; BITB D,U
-    !byte $E5,$CC,$60               ; BITB $60,PC
-    !byte $E5,$CC,$FF               ; BITB -$01,PC
-    !byte $E5,$CD,$10,$00           ; BITB $1000,PC
-    !byte $E5,$CD,$DE,$AD           ; BITB $DEAD,PC
-    !byte $E5,$CF,$DE,$AD            ; BITB ,$DEAD
-    !byte $E5,$D0                    ; BITB [,U+]
-    !byte $E5,$D1                   ; BITB [,U++]
-    !byte $E5,$D2                    ; BITB [,-U]
-    !byte $E5,$D3                   ; BITB [,--U]
-    !byte $E5,$D4                   ; BITB [,U]
-    !byte $E5,$D5                   ; BITB [B,U]
-    !byte $E5,$D6                   ; BITB [A,U]
-    !byte $E5,$D7                    ; BITB [,U]
-    !byte $E5,$D8,$60               ; BITB [$60,U]
-    !byte $E5,$D8,$FF               ; BITB [-$01,U]
-    !byte $E5,$D9,$DE,$10           ; BITB [$DE10,U]
-    !byte $E5,$D9,$DE,$AD           ; BITB [$DEAD,U]
-    !byte $E5,$DA                    ; BITB [,PClo]
-    !byte $E5,$DB                   ; BITB [D,U]
-    !byte $E5,$DC,$60               ; BITB [$60,PC]
-    !byte $E5,$DC,$FF               ; BITB [-$01,PC]
-    !byte $E5,$DD,$10,$00           ; BITB [$1000,PC]
-    !byte $E5,$DD,$DE,$AD           ; BITB [$DEAD,PC]
-    !byte $E5,$DF,$DE,$AD           ; BITB [$DEAD]
-    !byte $E5,$E0                   ; BITB ,S+
-    !byte $E5,$E1                   ; BITB ,S++
-    !byte $E5,$E2                   ; BITB ,-S
-    !byte $E5,$E3                   ; BITB ,--S
-    !byte $E5,$E4                   ; BITB ,S
-    !byte $E5,$E5                   ; BITB B,S
-    !byte $E5,$E6                   ; BITB A,S
-    !byte $E5,$E7                    ; BITB ,S
-    !byte $E5,$E8,$60               ; BITB $60,S
-    !byte $E5,$E8,$FF               ; BITB -$01,S
-    !byte $E5,$E9,$10,$00           ; BITB $1000,S
-    !byte $E5,$E9,$DE,$AD           ; BITB $DEAD,S
-    !byte $E5,$EA                    ; BITB ,PClo
-    !byte $E5,$EB                   ; BITB D,S
-    !byte $E5,$EC,$60               ; BITB $60,PC
-    !byte $E5,$EC,$FF               ; BITB -$01,PC
-    !byte $E5,$ED,$10,$00           ; BITB $1000,PC
-    !byte $E5,$ED,$DE,$AD           ; BITB $DEAD,PC
-    !byte $E5,$EF,$DE,$AD            ; BITB ,$DEAD
-    !byte $E5,$F0                    ; BITB [,S+]
-    !byte $E5,$F1                   ; BITB [,S++]
-    !byte $E5,$F2                    ; BITB [,-S]
-    !byte $E5,$F3                   ; BITB [,--S]
-    !byte $E5,$F4                   ; BITB [,S]
-    !byte $E5,$F5                   ; BITB [B,S]
-    !byte $E5,$F6                   ; BITB [A,S]
-    !byte $E5,$F7                    ; BITB [,S]
-    !byte $E5,$F8,$60               ; BITB [$60,S]
-    !byte $E5,$F8,$FF               ; BITB [-$01,S]
-    !byte $E5,$F9,$DE,$10           ; BITB [$DE10,S]
-    !byte $E5,$F9,$DE,$AD           ; BITB [$DEAD,S]
-    !byte $E5,$FA                    ; BITB [,PClo]
-    !byte $E5,$FB                   ; BITB [D,S]
-    !byte $E5,$FC,$60               ; BITB [$60,PC]
-    !byte $E5,$FC,$FF               ; BITB [-$01,PC]
-    !byte $E5,$FD,$10,$00           ; BITB [$1000,PC]
-    !byte $E5,$FD,$DE,$AD           ; BITB [$DEAD,PC]
-    !byte $E5,$FF,$DE,$AD           ; BITB [$DEAD]
     !byte $E6,$0C                   ; LDB $0C,X
     !byte $E6,$15                   ; LDB -$B,X
     !byte $E6,$2C                   ; LDB $0C,Y
