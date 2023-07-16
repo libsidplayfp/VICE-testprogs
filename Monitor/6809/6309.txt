@@ -10097,327 +10097,343 @@
 !byte $ED,$B0,$DE,$AD           ; STD [$DEAD,W]
 !byte $ED,$D0                   ; STD [,W++]
 !byte $ED,$F0                   ; STD [,--W]
+!byte $EE,$84                   ; LDU ,X
+!byte $EE,$A4                   ; LDU ,Y
+!byte $EE,$C4                   ; LDU ,U
+!byte $EE,$E4                   ; LDU ,S
+!byte $EE,$15                   ; LDU -$0B,X
+!byte $EE,$35                   ; LDU -$0B,Y
+!byte $EE,$55                   ; LDU -$0B,U
+!byte $EE,$75                   ; LDU -$0B,S
+!byte $EE,$0C                   ; LDU $0C,X
+!byte $EE,$2C                   ; LDU $0C,Y
+!byte $EE,$4C                   ; LDU $0C,U
+!byte $EE,$6C                   ; LDU $0C,S
+!byte $EE,$88,$FF               ; LDU -$01,X
+!byte $EE,$A8,$FF               ; LDU -$01,Y
+!byte $EE,$C8,$FF               ; LDU -$01,U
+!byte $EE,$E8,$FF               ; LDU -$01,S
+!byte $EE,$88,$60               ; LDU $60,X
+!byte $EE,$A8,$60               ; LDU $60,Y
+!byte $EE,$C8,$60               ; LDU $60,U
+!byte $EE,$E8,$60               ; LDU $60,S
+!byte $EE,$89,$DE,$AD           ; LDU $DEAD,X
+!byte $EE,$A9,$DE,$AD           ; LDU $DEAD,Y
+!byte $EE,$C9,$DE,$AD           ; LDU $DEAD,U
+!byte $EE,$E9,$DE,$AD           ; LDU $DEAD,S
+!byte $EE,$89,$10,$00           ; LDU $1000,X
+!byte $EE,$A9,$10,$00           ; LDU $1000,Y
+!byte $EE,$C9,$10,$00           ; LDU $1000,U
+!byte $EE,$E9,$10,$00           ; LDU $1000,S
+!byte $EE,$86                   ; LDU A,X
+!byte $EE,$A6                   ; LDU A,Y
+!byte $EE,$C6                   ; LDU A,U
+!byte $EE,$E6                   ; LDU A,S
+!byte $EE,$85                   ; LDU B,X
+!byte $EE,$A5                   ; LDU B,Y
+!byte $EE,$C5                   ; LDU B,U
+!byte $EE,$E5                   ; LDU B,S
+!byte $EE,$87                   ; LDU E,X
+!byte $EE,$A7                   ; LDU E,Y
+!byte $EE,$C7                   ; LDU E,U
+!byte $EE,$E7                   ; LDU E,S
+!byte $EE,$8A                   ; LDU F,X
+!byte $EE,$AA                   ; LDU F,Y
+!byte $EE,$CA                   ; LDU F,U
+!byte $EE,$EA                   ; LDU F,S
+!byte $EE,$8B                   ; LDU D,X
+!byte $EE,$AB                   ; LDU D,Y
+!byte $EE,$CB                   ; LDU D,U
+!byte $EE,$EB                   ; LDU D,S
+!byte $EE,$8E                   ; LDU W,X
+!byte $EE,$AE                   ; LDU W,Y
+!byte $EE,$CE                   ; LDU W,U
+!byte $EE,$EE                   ; LDU W,S
+!byte $EE,$80                   ; LDU ,X+
+!byte $EE,$A0                   ; LDU ,Y+
+!byte $EE,$C0                   ; LDU ,U+
+!byte $EE,$E0                   ; LDU ,S+
+!byte $EE,$81                   ; LDU ,X++
+!byte $EE,$A1                   ; LDU ,Y++
+!byte $EE,$C1                   ; LDU ,U++
+!byte $EE,$E1                   ; LDU ,S++
+!byte $EE,$82                   ; LDU ,-X
+!byte $EE,$A2                   ; LDU ,-Y
+!byte $EE,$C2                   ; LDU ,-U
+!byte $EE,$E2                   ; LDU ,-S
+!byte $EE,$83                   ; LDU ,--X
+!byte $EE,$A3                   ; LDU ,--Y
+!byte $EE,$C3                   ; LDU ,--U
+!byte $EE,$E3                   ; LDU ,--S
+!byte $EE,$8C,$FF               ; LDU -$01,PC
+!byte $EE,$AC,$FF               ; LDU -$01,PC
+!byte $EE,$CC,$FF               ; LDU -$01,PC
+!byte $EE,$EC,$FF               ; LDU -$01,PC
+!byte $EE,$8C,$60               ; LDU $60,PC
+!byte $EE,$AC,$60               ; LDU $60,PC
+!byte $EE,$CC,$60               ; LDU $60,PC
+!byte $EE,$EC,$60               ; LDU $60,PC
+!byte $EE,$8D,$DE,$AD           ; LDU $DEAD,PC
+!byte $EE,$AD,$DE,$AD           ; LDU $DEAD,PC
+!byte $EE,$CD,$DE,$AD           ; LDU $DEAD,PC
+!byte $EE,$ED,$DE,$AD           ; LDU $DEAD,PC
+!byte $EE,$8D,$10,$00           ; LDU $1000,PC
+!byte $EE,$AD,$10,$00           ; LDU $1000,PC
+!byte $EE,$CD,$10,$00           ; LDU $1000,PC
+!byte $EE,$ED,$10,$00           ; LDU $1000,PC
+!byte $EE,$8F                   ; LDU ,W
+!byte $EE,$AF,$DE,$AD           ; LDU $DEAD,W
+!byte $EE,$CF                   ; LDU ,W++
+!byte $EE,$EF                   ; LDU ,--W
+!byte $EE,$94                   ; LDU [,X]
+!byte $EE,$B4                   ; LDU [,Y]
+!byte $EE,$D4                   ; LDU [,U]
+!byte $EE,$F4                   ; LDU [,S]
+!byte $EE,$98,$FF               ; LDU [-$01,X]
+!byte $EE,$B8,$FF               ; LDU [-$01,Y]
+!byte $EE,$D8,$FF               ; LDU [-$01,U]
+!byte $EE,$F8,$FF               ; LDU [-$01,S]
+!byte $EE,$98,$60               ; LDU [$60,X]
+!byte $EE,$B8,$60               ; LDU [$60,Y]
+!byte $EE,$D8,$60               ; LDU [$60,U]
+!byte $EE,$F8,$60               ; LDU [$60,S]
+!byte $EE,$99,$DE,$AD           ; LDU [$DEAD,X]
+!byte $EE,$B9,$DE,$AD           ; LDU [$DEAD,Y]
+!byte $EE,$D9,$DE,$AD           ; LDU [$DEAD,U]
+!byte $EE,$F9,$DE,$AD           ; LDU [$DEAD,S]
+!byte $EE,$99,$10,$00           ; LDU [$1000,X]
+!byte $EE,$B9,$10,$00           ; LDU [$1000,Y]
+!byte $EE,$D9,$10,$00           ; LDU [$1000,U]
+!byte $EE,$F9,$10,$00           ; LDU [$1000,S]
+!byte $EE,$96                   ; LDU [A,X]
+!byte $EE,$B6                   ; LDU [A,Y]
+!byte $EE,$D6                   ; LDU [A,U]
+!byte $EE,$F6                   ; LDU [A,S]
+!byte $EE,$95                   ; LDU [B,X]
+!byte $EE,$B5                   ; LDU [B,Y]
+!byte $EE,$D5                   ; LDU [B,U]
+!byte $EE,$F5                   ; LDU [B,S]
+!byte $EE,$97                   ; LDU [E,X]
+!byte $EE,$B7                   ; LDU [E,Y]
+!byte $EE,$D7                   ; LDU [E,U]
+!byte $EE,$F7                   ; LDU [E,S]
+!byte $EE,$9A                   ; LDU [F,X]
+!byte $EE,$BA                   ; LDU [F,Y]
+!byte $EE,$DA                   ; LDU [F,U]
+!byte $EE,$FA                   ; LDU [F,S]
+!byte $EE,$9B                   ; LDU [D,X]
+!byte $EE,$BB                   ; LDU [D,Y]
+!byte $EE,$DB                   ; LDU [D,U]
+!byte $EE,$FB                   ; LDU [D,S]
+!byte $EE,$9E                   ; LDU [W,X]
+!byte $EE,$BE                   ; LDU [W,Y]
+!byte $EE,$DE                   ; LDU [W,U]
+!byte $EE,$FE                   ; LDU [W,S]
+!byte $EE,$91                   ; LDU [,X++]
+!byte $EE,$B1                   ; LDU [,Y++]
+!byte $EE,$D1                   ; LDU [,U++]
+!byte $EE,$F1                   ; LDU [,S++]
+!byte $EE,$92                   ; LDU [,-X]
+!byte $EE,$B2                   ; LDU [,-Y]
+!byte $EE,$D2                   ; LDU [,-U]
+!byte $EE,$F2                   ; LDU [,-S]
+!byte $EE,$93                   ; LDU [,--X]
+!byte $EE,$B3                   ; LDU [,--Y]
+!byte $EE,$D3                   ; LDU [,--U]
+!byte $EE,$F3                   ; LDU [,--S]
+!byte $EE,$9C,$FF               ; LDU [-$01,PC]
+!byte $EE,$BC,$FF               ; LDU [-$01,PC]
+!byte $EE,$DC,$FF               ; LDU [-$01,PC]
+!byte $EE,$FC,$FF               ; LDU [-$01,PC]
+!byte $EE,$9C,$60               ; LDU [$60,PC]
+!byte $EE,$BC,$60               ; LDU [$60,PC]
+!byte $EE,$DC,$60               ; LDU [$60,PC]
+!byte $EE,$FC,$60               ; LDU [$60,PC]
+!byte $EE,$9D,$DE,$AD           ; LDU [$DEAD,PC]
+!byte $EE,$BD,$DE,$AD           ; LDU [$DEAD,PC]
+!byte $EE,$DD,$DE,$AD           ; LDU [$DEAD,PC]
+!byte $EE,$FD,$DE,$AD           ; LDU [$DEAD,PC]
+!byte $EE,$9D,$10,$00           ; LDU [$1000,PC]
+!byte $EE,$BD,$10,$00           ; LDU [$1000,PC]
+!byte $EE,$DD,$10,$00           ; LDU [$1000,PC]
+!byte $EE,$FD,$10,$00           ; LDU [$1000,PC]
+!byte $EE,$9F,$DE,$AD           ; LDU [$DEAD]
+!byte $EE,$BF,$DE,$AD           ; LDU [$DEAD]
+!byte $EE,$DF,$DE,$AD           ; LDU [$DEAD]
+!byte $EE,$FF,$DE,$AD           ; LDU [$DEAD]
+!byte $EE,$90                   ; LDU [,W]
+!byte $EE,$B0,$DE,$AD           ; LDU [$DEAD,W]
+!byte $EE,$D0                   ; LDU [,W++]
+!byte $EE,$F0                   ; LDU [,--W]
+!byte $EF,$84                   ; STU ,X
+!byte $EF,$A4                   ; STU ,Y
+!byte $EF,$C4                   ; STU ,U
+!byte $EF,$E4                   ; STU ,S
+!byte $EF,$15                   ; STU -$0B,X
+!byte $EF,$35                   ; STU -$0B,Y
+!byte $EF,$55                   ; STU -$0B,U
+!byte $EF,$75                   ; STU -$0B,S
+!byte $EF,$0C                   ; STU $0C,X
+!byte $EF,$2C                   ; STU $0C,Y
+!byte $EF,$4C                   ; STU $0C,U
+!byte $EF,$6C                   ; STU $0C,S
+!byte $EF,$88,$FF               ; STU -$01,X
+!byte $EF,$A8,$FF               ; STU -$01,Y
+!byte $EF,$C8,$FF               ; STU -$01,U
+!byte $EF,$E8,$FF               ; STU -$01,S
+!byte $EF,$88,$60               ; STU $60,X
+!byte $EF,$A8,$60               ; STU $60,Y
+!byte $EF,$C8,$60               ; STU $60,U
+!byte $EF,$E8,$60               ; STU $60,S
+!byte $EF,$89,$DE,$AD           ; STU $DEAD,X
+!byte $EF,$A9,$DE,$AD           ; STU $DEAD,Y
+!byte $EF,$C9,$DE,$AD           ; STU $DEAD,U
+!byte $EF,$E9,$DE,$AD           ; STU $DEAD,S
+!byte $EF,$89,$10,$00           ; STU $1000,X
+!byte $EF,$A9,$10,$00           ; STU $1000,Y
+!byte $EF,$C9,$10,$00           ; STU $1000,U
+!byte $EF,$E9,$10,$00           ; STU $1000,S
+!byte $EF,$86                   ; STU A,X
+!byte $EF,$A6                   ; STU A,Y
+!byte $EF,$C6                   ; STU A,U
+!byte $EF,$E6                   ; STU A,S
+!byte $EF,$85                   ; STU B,X
+!byte $EF,$A5                   ; STU B,Y
+!byte $EF,$C5                   ; STU B,U
+!byte $EF,$E5                   ; STU B,S
+!byte $EF,$87                   ; STU E,X
+!byte $EF,$A7                   ; STU E,Y
+!byte $EF,$C7                   ; STU E,U
+!byte $EF,$E7                   ; STU E,S
+!byte $EF,$8A                   ; STU F,X
+!byte $EF,$AA                   ; STU F,Y
+!byte $EF,$CA                   ; STU F,U
+!byte $EF,$EA                   ; STU F,S
+!byte $EF,$8B                   ; STU D,X
+!byte $EF,$AB                   ; STU D,Y
+!byte $EF,$CB                   ; STU D,U
+!byte $EF,$EB                   ; STU D,S
+!byte $EF,$8E                   ; STU W,X
+!byte $EF,$AE                   ; STU W,Y
+!byte $EF,$CE                   ; STU W,U
+!byte $EF,$EE                   ; STU W,S
+!byte $EF,$80                   ; STU ,X+
+!byte $EF,$A0                   ; STU ,Y+
+!byte $EF,$C0                   ; STU ,U+
+!byte $EF,$E0                   ; STU ,S+
+!byte $EF,$81                   ; STU ,X++
+!byte $EF,$A1                   ; STU ,Y++
+!byte $EF,$C1                   ; STU ,U++
+!byte $EF,$E1                   ; STU ,S++
+!byte $EF,$82                   ; STU ,-X
+!byte $EF,$A2                   ; STU ,-Y
+!byte $EF,$C2                   ; STU ,-U
+!byte $EF,$E2                   ; STU ,-S
+!byte $EF,$83                   ; STU ,--X
+!byte $EF,$A3                   ; STU ,--Y
+!byte $EF,$C3                   ; STU ,--U
+!byte $EF,$E3                   ; STU ,--S
+!byte $EF,$8C,$FF               ; STU -$01,PC
+!byte $EF,$AC,$FF               ; STU -$01,PC
+!byte $EF,$CC,$FF               ; STU -$01,PC
+!byte $EF,$EC,$FF               ; STU -$01,PC
+!byte $EF,$8C,$60               ; STU $60,PC
+!byte $EF,$AC,$60               ; STU $60,PC
+!byte $EF,$CC,$60               ; STU $60,PC
+!byte $EF,$EC,$60               ; STU $60,PC
+!byte $EF,$8D,$DE,$AD           ; STU $DEAD,PC
+!byte $EF,$AD,$DE,$AD           ; STU $DEAD,PC
+!byte $EF,$CD,$DE,$AD           ; STU $DEAD,PC
+!byte $EF,$ED,$DE,$AD           ; STU $DEAD,PC
+!byte $EF,$8D,$10,$00           ; STU $1000,PC
+!byte $EF,$AD,$10,$00           ; STU $1000,PC
+!byte $EF,$CD,$10,$00           ; STU $1000,PC
+!byte $EF,$ED,$10,$00           ; STU $1000,PC
+!byte $EF,$8F                   ; STU ,W
+!byte $EF,$AF,$DE,$AD           ; STU $DEAD,W
+!byte $EF,$CF                   ; STU ,W++
+!byte $EF,$EF                   ; STU ,--W
+!byte $EF,$94                   ; STU [,X]
+!byte $EF,$B4                   ; STU [,Y]
+!byte $EF,$D4                   ; STU [,U]
+!byte $EF,$F4                   ; STU [,S]
+!byte $EF,$98,$FF               ; STU [-$01,X]
+!byte $EF,$B8,$FF               ; STU [-$01,Y]
+!byte $EF,$D8,$FF               ; STU [-$01,U]
+!byte $EF,$F8,$FF               ; STU [-$01,S]
+!byte $EF,$98,$60               ; STU [$60,X]
+!byte $EF,$B8,$60               ; STU [$60,Y]
+!byte $EF,$D8,$60               ; STU [$60,U]
+!byte $EF,$F8,$60               ; STU [$60,S]
+!byte $EF,$99,$DE,$AD           ; STU [$DEAD,X]
+!byte $EF,$B9,$DE,$AD           ; STU [$DEAD,Y]
+!byte $EF,$D9,$DE,$AD           ; STU [$DEAD,U]
+!byte $EF,$F9,$DE,$AD           ; STU [$DEAD,S]
+!byte $EF,$99,$10,$00           ; STU [$1000,X]
+!byte $EF,$B9,$10,$00           ; STU [$1000,Y]
+!byte $EF,$D9,$10,$00           ; STU [$1000,U]
+!byte $EF,$F9,$10,$00           ; STU [$1000,S]
+!byte $EF,$96                   ; STU [A,X]
+!byte $EF,$B6                   ; STU [A,Y]
+!byte $EF,$D6                   ; STU [A,U]
+!byte $EF,$F6                   ; STU [A,S]
+!byte $EF,$95                   ; STU [B,X]
+!byte $EF,$B5                   ; STU [B,Y]
+!byte $EF,$D5                   ; STU [B,U]
+!byte $EF,$F5                   ; STU [B,S]
+!byte $EF,$97                   ; STU [E,X]
+!byte $EF,$B7                   ; STU [E,Y]
+!byte $EF,$D7                   ; STU [E,U]
+!byte $EF,$F7                   ; STU [E,S]
+!byte $EF,$9A                   ; STU [F,X]
+!byte $EF,$BA                   ; STU [F,Y]
+!byte $EF,$DA                   ; STU [F,U]
+!byte $EF,$FA                   ; STU [F,S]
+!byte $EF,$9B                   ; STU [D,X]
+!byte $EF,$BB                   ; STU [D,Y]
+!byte $EF,$DB                   ; STU [D,U]
+!byte $EF,$FB                   ; STU [D,S]
+!byte $EF,$9E                   ; STU [W,X]
+!byte $EF,$BE                   ; STU [W,Y]
+!byte $EF,$DE                   ; STU [W,U]
+!byte $EF,$FE                   ; STU [W,S]
+!byte $EF,$91                   ; STU [,X++]
+!byte $EF,$B1                   ; STU [,Y++]
+!byte $EF,$D1                   ; STU [,U++]
+!byte $EF,$F1                   ; STU [,S++]
+!byte $EF,$92                   ; STU [,-X]
+!byte $EF,$B2                   ; STU [,-Y]
+!byte $EF,$D2                   ; STU [,-U]
+!byte $EF,$F2                   ; STU [,-S]
+!byte $EF,$93                   ; STU [,--X]
+!byte $EF,$B3                   ; STU [,--Y]
+!byte $EF,$D3                   ; STU [,--U]
+!byte $EF,$F3                   ; STU [,--S]
+!byte $EF,$9C,$FF               ; STU [-$01,PC]
+!byte $EF,$BC,$FF               ; STU [-$01,PC]
+!byte $EF,$DC,$FF               ; STU [-$01,PC]
+!byte $EF,$FC,$FF               ; STU [-$01,PC]
+!byte $EF,$9C,$60               ; STU [$60,PC]
+!byte $EF,$BC,$60               ; STU [$60,PC]
+!byte $EF,$DC,$60               ; STU [$60,PC]
+!byte $EF,$FC,$60               ; STU [$60,PC]
+!byte $EF,$9D,$DE,$AD           ; STU [$DEAD,PC]
+!byte $EF,$BD,$DE,$AD           ; STU [$DEAD,PC]
+!byte $EF,$DD,$DE,$AD           ; STU [$DEAD,PC]
+!byte $EF,$FD,$DE,$AD           ; STU [$DEAD,PC]
+!byte $EF,$9D,$10,$00           ; STU [$1000,PC]
+!byte $EF,$BD,$10,$00           ; STU [$1000,PC]
+!byte $EF,$DD,$10,$00           ; STU [$1000,PC]
+!byte $EF,$FD,$10,$00           ; STU [$1000,PC]
+!byte $EF,$9F,$DE,$AD           ; STU [$DEAD]
+!byte $EF,$BF,$DE,$AD           ; STU [$DEAD]
+!byte $EF,$DF,$DE,$AD           ; STU [$DEAD]
+!byte $EF,$FF,$DE,$AD           ; STU [$DEAD]
+!byte $EF,$90                   ; STU [,W]
+!byte $EF,$B0,$DE,$AD           ; STU [$DEAD,W]
+!byte $EF,$D0                   ; STU [,W++]
+!byte $EF,$F0                   ; STU [,--W]
 
-    !byte $EE,$0C                   ; LDU $0C,X
-    !byte $EE,$15                   ; LDU -$0B,X
-    !byte $EE,$2C                   ; LDU $0C,Y
-    !byte $EE,$35                   ; LDU -$0B,Y
-    !byte $EE,$4C                   ; LDU $0C,U
-    !byte $EE,$55                   ; LDU -$0B,U
-    !byte $EE,$6C                   ; LDU $0C,S
-    !byte $EE,$75                   ; LDU -$0B,S
-    !byte $EE,$80                   ; LDU ,X+
-    !byte $EE,$81                   ; LDU ,X++
-    !byte $EE,$82                   ; LDU ,-X
-    !byte $EE,$83                   ; LDU ,--X
-    !byte $EE,$84                   ; LDU ,X
-    !byte $EE,$85                   ; LDU B,X
-    !byte $EE,$86                   ; LDU A,X
-    !byte $EE,$87                    ; LDU ,X
-    !byte $EE,$88,$60               ; LDU $60,X
-    !byte $EE,$88,$FF               ; LDU -$01,X
-    !byte $EE,$89,$10,$00           ; LDU $1000,X
-    !byte $EE,$89,$DE,$AD           ; LDU $DEAD,X
-    !byte $EE,$8A                    ; LDU ,PClo
-    !byte $EE,$8B                   ; LDU D,X
-    !byte $EE,$8C,$60               ; LDU $60,PC
-    !byte $EE,$8C,$FF               ; LDU -$01,PC
-    !byte $EE,$8D,$10,$00           ; LDU $1000,PC
-    !byte $EE,$8D,$DE,$AD           ; LDU $DEAD,PC
-    !byte $EE,$8F,$DE,$AD            ; LDU ,$DEAD
-    !byte $EE,$90                    ; LDU [,X+]
-    !byte $EE,$91                   ; LDU [,X++]
-    !byte $EE,$92                    ; LDU [,-X]
-    !byte $EE,$93                   ; LDU [,--X]
-    !byte $EE,$94                   ; LDU [,X]
-    !byte $EE,$95                   ; LDU [B,X]
-    !byte $EE,$96                   ; LDU [A,X]
-    !byte $EE,$97                    ; LDU [,X]
-    !byte $EE,$98,$60               ; LDU [$60,X]
-    !byte $EE,$98,$FF               ; LDU [-$01,X]
-    !byte $EE,$99,$DE,$10           ; LDU [$DE10,X]
-    !byte $EE,$99,$DE,$AD           ; LDU [$DEAD,X]
-    !byte $EE,$9A                    ; LDU [,PClo]
-    !byte $EE,$9B                   ; LDU [D,X]
-    !byte $EE,$9C,$60               ; LDU [$60,PC]
-    !byte $EE,$9C,$FF               ; LDU [-$01,PC]
-    !byte $EE,$9D,$10,$00           ; LDU [$1000,PC]
-    !byte $EE,$9D,$DE,$AD           ; LDU [$DEAD,PC]
-    !byte $EE,$9F,$DE,$AD           ; LDU [$DEAD]
-    !byte $EE,$A0                   ; LDU ,Y+
-    !byte $EE,$A1                   ; LDU ,Y++
-    !byte $EE,$A2                   ; LDU ,-Y
-    !byte $EE,$A3                   ; LDU ,--Y
-    !byte $EE,$A4                   ; LDU ,Y
-    !byte $EE,$A5                   ; LDU B,Y
-    !byte $EE,$A6                   ; LDU A,Y
-    !byte $EE,$A7                    ; LDU ,Y
-    !byte $EE,$A8,$60               ; LDU $60,Y
-    !byte $EE,$A8,$FF               ; LDU -$01,Y
-    !byte $EE,$A9,$10,$00           ; LDU $1000,Y
-    !byte $EE,$A9,$DE,$AD           ; LDU $DEAD,Y
-    !byte $EE,$AA                    ; LDU ,PClo
-    !byte $EE,$AB                   ; LDU D,Y
-    !byte $EE,$AC,$60               ; LDU $60,PC
-    !byte $EE,$AC,$FF               ; LDU -$01,PC
-    !byte $EE,$AD,$10,$00           ; LDU $1000,PC
-    !byte $EE,$AD,$DE,$AD           ; LDU $DEAD,PC
-    !byte $EE,$AF,$DE,$AD            ; LDU ,$DEAD
-    !byte $EE,$B0                    ; LDU [,Y+]
-    !byte $EE,$B1                   ; LDU [,Y++]
-    !byte $EE,$B2                    ; LDU [,-Y]
-    !byte $EE,$B3                   ; LDU [,--Y]
-    !byte $EE,$B4                   ; LDU [,Y]
-    !byte $EE,$B5                   ; LDU [B,Y]
-    !byte $EE,$B6                   ; LDU [A,Y]
-    !byte $EE,$B7                    ; LDU [,Y]
-    !byte $EE,$B8,$60               ; LDU [$60,Y]
-    !byte $EE,$B8,$FF               ; LDU [-$01,Y]
-    !byte $EE,$B9,$DE,$10           ; LDU [$DE10,Y]
-    !byte $EE,$B9,$DE,$AD           ; LDU [$DEAD,Y]
-    !byte $EE,$BA                    ; LDU [,PClo]
-    !byte $EE,$BB                   ; LDU [D,Y]
-    !byte $EE,$BC,$60               ; LDU [$60,PC]
-    !byte $EE,$BC,$FF               ; LDU [-$01,PC]
-    !byte $EE,$BD,$10,$00           ; LDU [$1000,PC]
-    !byte $EE,$BD,$DE,$AD           ; LDU [$DEAD,PC]
-    !byte $EE,$BF,$DE,$AD           ; LDU [$DEAD]
-    !byte $EE,$C0                   ; LDU ,U+
-    !byte $EE,$C1                   ; LDU ,U++
-    !byte $EE,$C2                   ; LDU ,-U
-    !byte $EE,$C3                   ; LDU ,--U
-    !byte $EE,$C4                   ; LDU ,U
-    !byte $EE,$C5                   ; LDU B,U
-    !byte $EE,$C6                   ; LDU A,U
-    !byte $EE,$C7                    ; LDU ,U
-    !byte $EE,$C8,$60               ; LDU $60,U
-    !byte $EE,$C8,$FF               ; LDU -$01,U
-    !byte $EE,$C9,$10,$00           ; LDU $1000,U
-    !byte $EE,$C9,$DE,$AD           ; LDU $DEAD,U
-    !byte $EE,$CA                    ; LDU ,PClo
-    !byte $EE,$CB                   ; LDU D,U
-    !byte $EE,$CC,$60               ; LDU $60,PC
-    !byte $EE,$CC,$FF               ; LDU -$01,PC
-    !byte $EE,$CD,$10,$00           ; LDU $1000,PC
-    !byte $EE,$CD,$DE,$AD           ; LDU $DEAD,PC
-    !byte $EE,$CF,$DE,$AD            ; LDU ,$DEAD
-    !byte $EE,$D0                    ; LDU [,U+]
-    !byte $EE,$D1                   ; LDU [,U++]
-    !byte $EE,$D2                    ; LDU [,-U]
-    !byte $EE,$D3                   ; LDU [,--U]
-    !byte $EE,$D4                   ; LDU [,U]
-    !byte $EE,$D5                   ; LDU [B,U]
-    !byte $EE,$D6                   ; LDU [A,U]
-    !byte $EE,$D7                    ; LDU [,U]
-    !byte $EE,$D8,$60               ; LDU [$60,U]
-    !byte $EE,$D8,$FF               ; LDU [-$01,U]
-    !byte $EE,$D9,$DE,$10           ; LDU [$DE10,U]
-    !byte $EE,$D9,$DE,$AD           ; LDU [$DEAD,U]
-    !byte $EE,$DA                    ; LDU [,PClo]
-    !byte $EE,$DB                   ; LDU [D,U]
-    !byte $EE,$DC,$60               ; LDU [$60,PC]
-    !byte $EE,$DC,$FF               ; LDU [-$01,PC]
-    !byte $EE,$DD,$10,$00           ; LDU [$1000,PC]
-    !byte $EE,$DD,$DE,$AD           ; LDU [$DEAD,PC]
-    !byte $EE,$DF,$DE,$AD           ; LDU [$DEAD]
-    !byte $EE,$E0                   ; LDU ,S+
-    !byte $EE,$E1                   ; LDU ,S++
-    !byte $EE,$E2                   ; LDU ,-S
-    !byte $EE,$E3                   ; LDU ,--S
-    !byte $EE,$E4                   ; LDU ,S
-    !byte $EE,$E5                   ; LDU B,S
-    !byte $EE,$E6                   ; LDU A,S
-    !byte $EE,$E7                    ; LDU ,S
-    !byte $EE,$E8,$60               ; LDU $60,S
-    !byte $EE,$E8,$FF               ; LDU -$01,S
-    !byte $EE,$E9,$10,$00           ; LDU $1000,S
-    !byte $EE,$E9,$DE,$AD           ; LDU $DEAD,S
-    !byte $EE,$EA                    ; LDU ,PClo
-    !byte $EE,$EB                   ; LDU D,S
-    !byte $EE,$EC,$60               ; LDU $60,PC
-    !byte $EE,$EC,$FF               ; LDU -$01,PC
-    !byte $EE,$ED,$10,$00           ; LDU $1000,PC
-    !byte $EE,$ED,$DE,$AD           ; LDU $DEAD,PC
-    !byte $EE,$EF,$DE,$AD            ; LDU ,$DEAD
-    !byte $EE,$F0                    ; LDU [,S+]
-    !byte $EE,$F1                   ; LDU [,S++]
-    !byte $EE,$F2                    ; LDU [,-S]
-    !byte $EE,$F3                   ; LDU [,--S]
-    !byte $EE,$F4                   ; LDU [,S]
-    !byte $EE,$F5                   ; LDU [B,S]
-    !byte $EE,$F6                   ; LDU [A,S]
-    !byte $EE,$F7                    ; LDU [,S]
-    !byte $EE,$F8,$60               ; LDU [$60,S]
-    !byte $EE,$F8,$FF               ; LDU [-$01,S]
-    !byte $EE,$F9,$DE,$10           ; LDU [$DE10,S]
-    !byte $EE,$F9,$DE,$AD           ; LDU [$DEAD,S]
-    !byte $EE,$FA                    ; LDU [,PClo]
-    !byte $EE,$FB                   ; LDU [D,S]
-    !byte $EE,$FC,$60               ; LDU [$60,PC]
-    !byte $EE,$FC,$FF               ; LDU [-$01,PC]
-    !byte $EE,$FD,$10,$00           ; LDU [$1000,PC]
-    !byte $EE,$FD,$DE,$AD           ; LDU [$DEAD,PC]
-    !byte $EE,$FF,$DE,$AD           ; LDU [$DEAD]
-    !byte $EF,$0C                   ; STU $0C,X
-    !byte $EF,$15                   ; STU -$0B,X
-    !byte $EF,$2C                   ; STU $0C,Y
-    !byte $EF,$35                   ; STU -$0B,Y
-    !byte $EF,$4C                   ; STU $0C,U
-    !byte $EF,$55                   ; STU -$0B,U
-    !byte $EF,$6C                   ; STU $0C,S
-    !byte $EF,$75                   ; STU -$0B,S
-    !byte $EF,$80                   ; STU ,X+
-    !byte $EF,$81                   ; STU ,X++
-    !byte $EF,$82                   ; STU ,-X
-    !byte $EF,$83                   ; STU ,--X
-    !byte $EF,$84                   ; STU ,X
-    !byte $EF,$85                   ; STU B,X
-    !byte $EF,$86                   ; STU A,X
-    !byte $EF,$87                    ; STU ,X
-    !byte $EF,$88,$60               ; STU $60,X
-    !byte $EF,$88,$FF               ; STU -$01,X
-    !byte $EF,$89,$10,$00           ; STU $1000,X
-    !byte $EF,$89,$DE,$AD           ; STU $DEAD,X
-    !byte $EF,$8A                    ; STU ,PClo
-    !byte $EF,$8B                   ; STU D,X
-    !byte $EF,$8C,$60               ; STU $60,PC
-    !byte $EF,$8C,$FF               ; STU -$01,PC
-    !byte $EF,$8D,$10,$00           ; STU $1000,PC
-    !byte $EF,$8D,$DE,$AD           ; STU $DEAD,PC
-    !byte $EF,$8F,$DE,$AD            ; STU ,$DEAD
-    !byte $EF,$90                    ; STU [,X+]
-    !byte $EF,$91                   ; STU [,X++]
-    !byte $EF,$92                    ; STU [,-X]
-    !byte $EF,$93                   ; STU [,--X]
-    !byte $EF,$94                   ; STU [,X]
-    !byte $EF,$95                   ; STU [B,X]
-    !byte $EF,$96                   ; STU [A,X]
-    !byte $EF,$97                    ; STU [,X]
-    !byte $EF,$98,$60               ; STU [$60,X]
-    !byte $EF,$98,$FF               ; STU [-$01,X]
-    !byte $EF,$99,$DE,$10           ; STU [$DE10,X]
-    !byte $EF,$99,$DE,$AD           ; STU [$DEAD,X]
-    !byte $EF,$9A                    ; STU [,PClo]
-    !byte $EF,$9B                   ; STU [D,X]
-    !byte $EF,$9C,$60               ; STU [$60,PC]
-    !byte $EF,$9C,$FF               ; STU [-$01,PC]
-    !byte $EF,$9D,$10,$00           ; STU [$1000,PC]
-    !byte $EF,$9D,$DE,$AD           ; STU [$DEAD,PC]
-    !byte $EF,$9F,$DE,$AD           ; STU [$DEAD]
-    !byte $EF,$A0                   ; STU ,Y+
-    !byte $EF,$A1                   ; STU ,Y++
-    !byte $EF,$A2                   ; STU ,-Y
-    !byte $EF,$A3                   ; STU ,--Y
-    !byte $EF,$A4                   ; STU ,Y
-    !byte $EF,$A5                   ; STU B,Y
-    !byte $EF,$A6                   ; STU A,Y
-    !byte $EF,$A7                    ; STU ,Y
-    !byte $EF,$A8,$60               ; STU $60,Y
-    !byte $EF,$A8,$FF               ; STU -$01,Y
-    !byte $EF,$A9,$10,$00           ; STU $1000,Y
-    !byte $EF,$A9,$DE,$AD           ; STU $DEAD,Y
-    !byte $EF,$AA                    ; STU ,PClo
-    !byte $EF,$AB                   ; STU D,Y
-    !byte $EF,$AC,$60               ; STU $60,PC
-    !byte $EF,$AC,$FF               ; STU -$01,PC
-    !byte $EF,$AD,$10,$00           ; STU $1000,PC
-    !byte $EF,$AD,$DE,$AD           ; STU $DEAD,PC
-    !byte $EF,$AF,$DE,$AD            ; STU ,$DEAD
-    !byte $EF,$B0                    ; STU [,Y+]
-    !byte $EF,$B1                   ; STU [,Y++]
-    !byte $EF,$B2                    ; STU [,-Y]
-    !byte $EF,$B3                   ; STU [,--Y]
-    !byte $EF,$B4                   ; STU [,Y]
-    !byte $EF,$B5                   ; STU [B,Y]
-    !byte $EF,$B6                   ; STU [A,Y]
-    !byte $EF,$B7                    ; STU [,Y]
-    !byte $EF,$B8,$60               ; STU [$60,Y]
-    !byte $EF,$B8,$FF               ; STU [-$01,Y]
-    !byte $EF,$B9,$DE,$10           ; STU [$DE10,Y]
-    !byte $EF,$B9,$DE,$AD           ; STU [$DEAD,Y]
-    !byte $EF,$BA                    ; STU [,PClo]
-    !byte $EF,$BB                   ; STU [D,Y]
-    !byte $EF,$BC,$60               ; STU [$60,PC]
-    !byte $EF,$BC,$FF               ; STU [-$01,PC]
-    !byte $EF,$BD,$10,$00           ; STU [$1000,PC]
-    !byte $EF,$BD,$DE,$AD           ; STU [$DEAD,PC]
-    !byte $EF,$BF,$DE,$AD           ; STU [$DEAD]
-    !byte $EF,$C0                   ; STU ,U+
-    !byte $EF,$C1                   ; STU ,U++
-    !byte $EF,$C2                   ; STU ,-U
-    !byte $EF,$C3                   ; STU ,--U
-    !byte $EF,$C4                   ; STU ,U
-    !byte $EF,$C5                   ; STU B,U
-    !byte $EF,$C6                   ; STU A,U
-    !byte $EF,$C7                    ; STU ,U
-    !byte $EF,$C8,$60               ; STU $60,U
-    !byte $EF,$C8,$FF               ; STU -$01,U
-    !byte $EF,$C9,$10,$00           ; STU $1000,U
-    !byte $EF,$C9,$DE,$AD           ; STU $DEAD,U
-    !byte $EF,$CA                    ; STU ,PClo
-    !byte $EF,$CB                   ; STU D,U
-    !byte $EF,$CC,$60               ; STU $60,PC
-    !byte $EF,$CC,$FF               ; STU -$01,PC
-    !byte $EF,$CD,$10,$00           ; STU $1000,PC
-    !byte $EF,$CD,$DE,$AD           ; STU $DEAD,PC
-    !byte $EF,$CF,$DE,$AD            ; STU ,$DEAD
-    !byte $EF,$D0                    ; STU [,U+]
-    !byte $EF,$D1                   ; STU [,U++]
-    !byte $EF,$D2                    ; STU [,-U]
-    !byte $EF,$D3                   ; STU [,--U]
-    !byte $EF,$D4                   ; STU [,U]
-    !byte $EF,$D5                   ; STU [B,U]
-    !byte $EF,$D6                   ; STU [A,U]
-    !byte $EF,$D7                    ; STU [,U]
-    !byte $EF,$D8,$60               ; STU [$60,U]
-    !byte $EF,$D8,$FF               ; STU [-$01,U]
-    !byte $EF,$D9,$DE,$10           ; STU [$DE10,U]
-    !byte $EF,$D9,$DE,$AD           ; STU [$DEAD,U]
-    !byte $EF,$DA                    ; STU [,PClo]
-    !byte $EF,$DB                   ; STU [D,U]
-    !byte $EF,$DC,$60               ; STU [$60,PC]
-    !byte $EF,$DC,$FF               ; STU [-$01,PC]
-    !byte $EF,$DD,$10,$00           ; STU [$1000,PC]
-    !byte $EF,$DD,$DE,$AD           ; STU [$DEAD,PC]
-    !byte $EF,$DF,$DE,$AD           ; STU [$DEAD]
-    !byte $EF,$E0                   ; STU ,S+
-    !byte $EF,$E1                   ; STU ,S++
-    !byte $EF,$E2                   ; STU ,-S
-    !byte $EF,$E3                   ; STU ,--S
-    !byte $EF,$E4                   ; STU ,S
-    !byte $EF,$E5                   ; STU B,S
-    !byte $EF,$E6                   ; STU A,S
-    !byte $EF,$E7                    ; STU ,S
-    !byte $EF,$E8,$60               ; STU $60,S
-    !byte $EF,$E8,$FF               ; STU -$01,S
-    !byte $EF,$E9,$10,$00           ; STU $1000,S
-    !byte $EF,$E9,$DE,$AD           ; STU $DEAD,S
-    !byte $EF,$EA                    ; STU ,PClo
-    !byte $EF,$EB                   ; STU D,S
-    !byte $EF,$EC,$60               ; STU $60,PC
-    !byte $EF,$EC,$FF               ; STU -$01,PC
-    !byte $EF,$ED,$10,$00           ; STU $1000,PC
-    !byte $EF,$ED,$DE,$AD           ; STU $DEAD,PC
-    !byte $EF,$EF,$DE,$AD            ; STU ,$DEAD
-    !byte $EF,$F0                    ; STU [,S+]
-    !byte $EF,$F1                   ; STU [,S++]
-    !byte $EF,$F2                    ; STU [,-S]
-    !byte $EF,$F3                   ; STU [,--S]
-    !byte $EF,$F4                   ; STU [,S]
-    !byte $EF,$F5                   ; STU [B,S]
-    !byte $EF,$F6                   ; STU [A,S]
-    !byte $EF,$F7                    ; STU [,S]
-    !byte $EF,$F8,$60               ; STU [$60,S]
-    !byte $EF,$F8,$FF               ; STU [-$01,S]
-    !byte $EF,$F9,$DE,$10           ; STU [$DE10,S]
-    !byte $EF,$F9,$DE,$AD           ; STU [$DEAD,S]
-    !byte $EF,$FA                    ; STU [,PClo]
-    !byte $EF,$FB                   ; STU [D,S]
-    !byte $EF,$FC,$60               ; STU [$60,PC]
-    !byte $EF,$FC,$FF               ; STU [-$01,PC]
-    !byte $EF,$FD,$10,$00           ; STU [$1000,PC]
-    !byte $EF,$FD,$DE,$AD           ; STU [$DEAD,PC]
-    !byte $EF,$FF,$DE,$AD           ; STU [$DEAD]
     !byte $F0,$DE,$AD               ; SUBB $DEAD
     !byte $F1,$DE,$AD               ; CMPB $DEAD
     !byte $F2,$DE,$AD               ; SBCB $DEAD
