@@ -2366,10 +2366,10 @@
 !byte $10,$A0,$A7                ; SUBA ,Y
 !byte $10,$A0,$C7                ; SUBA ,U
 !byte $10,$A0,$E7                ; SUBA ,S
-!byte $10,$A0,$87                ; SUBA ,PClo
-!byte $10,$A0,$A7                ; SUBA ,PClo
-!byte $10,$A0,$C7                ; SUBA ,PClo
-!byte $10,$A0,$E7                ; SUBA ,PClo
+!byte $10,$A0,$8A                ; SUBA ,PClo
+!byte $10,$A0,$AA                ; SUBA ,PClo
+!byte $10,$A0,$CA                ; SUBA ,PClo
+!byte $10,$A0,$EA                ; SUBA ,PClo
 !byte $10,$A0,$8B                ; SUBA D,X
 !byte $10,$A0,$AB                ; SUBA D,Y
 !byte $10,$A0,$CB                ; SUBA D,U
