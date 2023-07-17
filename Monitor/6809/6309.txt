@@ -10713,7 +10713,6 @@
 !byte $10,$30,$FD               ; ADDR F,Z
 !byte $10,$30,$FE               ; ADDR F,E
 !byte $10,$30,$FF               ; ADDR F,F
-
 !byte $10,$31,$00               ; ADCR D,D
 !byte $10,$31,$01               ; ADCR D,X
 !byte $10,$31,$02               ; ADCR D,Y
@@ -10963,1351 +10962,1501 @@
 !byte $10,$31,$FD               ; ADCR F,Z
 !byte $10,$31,$FE               ; ADCR F,E
 !byte $10,$31,$FF               ; ADCR F,F
+!byte $10,$32,$00               ; SUBR D,D
+!byte $10,$32,$01               ; SUBR D,X
+!byte $10,$32,$02               ; SUBR D,Y
+!byte $10,$32,$03               ; SUBR D,U
+!byte $10,$32,$04               ; SUBR D,S
+!byte $10,$32,$05               ; SUBR D,PC
+!byte $10,$32,$06               ; SUBR D,W
+!byte $10,$32,$07               ; SUBR D,V
+!byte $10,$32,$08               ; SUBR D,A
+!byte $10,$32,$09               ; SUBR D,B
+!byte $10,$32,$0A               ; SUBR D,CCR
+!byte $10,$32,$0B               ; SUBR D,DPR
+!byte $10,$32,$0C               ; SUBR D,Z
+!byte $10,$32,$0D               ; SUBR D,Z
+!byte $10,$32,$0E               ; SUBR D,E
+!byte $10,$32,$0F               ; SUBR D,F
+!byte $10,$32,$10               ; SUBR X,D
+!byte $10,$32,$11               ; SUBR X,X
+!byte $10,$32,$12               ; SUBR X,Y
+!byte $10,$32,$13               ; SUBR X,U
+!byte $10,$32,$14               ; SUBR X,S
+!byte $10,$32,$15               ; SUBR X,PC
+!byte $10,$32,$16               ; SUBR X,W
+!byte $10,$32,$17               ; SUBR X,V
+!byte $10,$32,$18               ; SUBR X,A
+!byte $10,$32,$19               ; SUBR X,B
+!byte $10,$32,$1A               ; SUBR X,CCR
+!byte $10,$32,$1B               ; SUBR X,DPR
+!byte $10,$32,$1C               ; SUBR X,Z
+!byte $10,$32,$1D               ; SUBR X,Z
+!byte $10,$32,$1E               ; SUBR X,E
+!byte $10,$32,$1F               ; SUBR X,F
+!byte $10,$32,$20               ; SUBR Y,D
+!byte $10,$32,$21               ; SUBR Y,X
+!byte $10,$32,$22               ; SUBR Y,Y
+!byte $10,$32,$23               ; SUBR Y,U
+!byte $10,$32,$24               ; SUBR Y,S
+!byte $10,$32,$25               ; SUBR Y,PC
+!byte $10,$32,$26               ; SUBR Y,W
+!byte $10,$32,$27               ; SUBR Y,V
+!byte $10,$32,$28               ; SUBR Y,A
+!byte $10,$32,$29               ; SUBR Y,B
+!byte $10,$32,$2A               ; SUBR Y,CCR
+!byte $10,$32,$2B               ; SUBR Y,DPR
+!byte $10,$32,$2C               ; SUBR Y,Z
+!byte $10,$32,$2D               ; SUBR Y,Z
+!byte $10,$32,$2E               ; SUBR Y,E
+!byte $10,$32,$2F               ; SUBR Y,F
+!byte $10,$32,$30               ; SUBR U,D
+!byte $10,$32,$31               ; SUBR U,X
+!byte $10,$32,$32               ; SUBR U,Y
+!byte $10,$32,$33               ; SUBR U,U
+!byte $10,$32,$34               ; SUBR U,S
+!byte $10,$32,$35               ; SUBR U,PC
+!byte $10,$32,$36               ; SUBR U,W
+!byte $10,$32,$37               ; SUBR U,V
+!byte $10,$32,$38               ; SUBR U,A
+!byte $10,$32,$39               ; SUBR U,B
+!byte $10,$32,$3A               ; SUBR U,CCR
+!byte $10,$32,$3B               ; SUBR U,DPR
+!byte $10,$32,$3C               ; SUBR U,Z
+!byte $10,$32,$3D               ; SUBR U,Z
+!byte $10,$32,$3E               ; SUBR U,E
+!byte $10,$32,$3F               ; SUBR U,F
+!byte $10,$32,$40               ; SUBR S,D
+!byte $10,$32,$41               ; SUBR S,X
+!byte $10,$32,$42               ; SUBR S,Y
+!byte $10,$32,$43               ; SUBR S,U
+!byte $10,$32,$44               ; SUBR S,S
+!byte $10,$32,$45               ; SUBR S,PC
+!byte $10,$32,$46               ; SUBR S,W
+!byte $10,$32,$47               ; SUBR S,V
+!byte $10,$32,$48               ; SUBR S,A
+!byte $10,$32,$49               ; SUBR S,B
+!byte $10,$32,$4A               ; SUBR S,CCR
+!byte $10,$32,$4B               ; SUBR S,DPR
+!byte $10,$32,$4C               ; SUBR S,Z
+!byte $10,$32,$4D               ; SUBR S,Z
+!byte $10,$32,$4E               ; SUBR S,E
+!byte $10,$32,$4F               ; SUBR S,F
+!byte $10,$32,$50               ; SUBR PC,D
+!byte $10,$32,$51               ; SUBR PC,X
+!byte $10,$32,$52               ; SUBR PC,Y
+!byte $10,$32,$53               ; SUBR PC,U
+!byte $10,$32,$54               ; SUBR PC,S
+!byte $10,$32,$55               ; SUBR PC,PC
+!byte $10,$32,$56               ; SUBR PC,W
+!byte $10,$32,$57               ; SUBR PC,V
+!byte $10,$32,$58               ; SUBR PC,A
+!byte $10,$32,$59               ; SUBR PC,B
+!byte $10,$32,$5A               ; SUBR PC,CCR
+!byte $10,$32,$5B               ; SUBR PC,DPR
+!byte $10,$32,$5C               ; SUBR PC,Z
+!byte $10,$32,$5D               ; SUBR PC,Z
+!byte $10,$32,$5E               ; SUBR PC,E
+!byte $10,$32,$5F               ; SUBR PC,F
+!byte $10,$32,$60               ; SUBR W,D
+!byte $10,$32,$61               ; SUBR W,X
+!byte $10,$32,$62               ; SUBR W,Y
+!byte $10,$32,$63               ; SUBR W,U
+!byte $10,$32,$64               ; SUBR W,S
+!byte $10,$32,$65               ; SUBR W,PC
+!byte $10,$32,$66               ; SUBR W,W
+!byte $10,$32,$67               ; SUBR W,V
+!byte $10,$32,$68               ; SUBR W,A
+!byte $10,$32,$69               ; SUBR W,B
+!byte $10,$32,$6A               ; SUBR W,CCR
+!byte $10,$32,$6B               ; SUBR W,DPR
+!byte $10,$32,$6C               ; SUBR W,Z
+!byte $10,$32,$6D               ; SUBR W,Z
+!byte $10,$32,$6E               ; SUBR W,E
+!byte $10,$32,$6F               ; SUBR W,F
+!byte $10,$32,$70               ; SUBR V,D
+!byte $10,$32,$71               ; SUBR V,X
+!byte $10,$32,$72               ; SUBR V,Y
+!byte $10,$32,$73               ; SUBR V,U
+!byte $10,$32,$74               ; SUBR V,S
+!byte $10,$32,$75               ; SUBR V,PC
+!byte $10,$32,$76               ; SUBR V,W
+!byte $10,$32,$77               ; SUBR V,V
+!byte $10,$32,$78               ; SUBR V,A
+!byte $10,$32,$79               ; SUBR V,B
+!byte $10,$32,$7A               ; SUBR V,CCR
+!byte $10,$32,$7B               ; SUBR V,DPR
+!byte $10,$32,$7C               ; SUBR V,Z
+!byte $10,$32,$7D               ; SUBR V,Z
+!byte $10,$32,$7E               ; SUBR V,E
+!byte $10,$32,$7F               ; SUBR V,F
+!byte $10,$32,$80               ; SUBR A,D
+!byte $10,$32,$81               ; SUBR A,X
+!byte $10,$32,$82               ; SUBR A,Y
+!byte $10,$32,$83               ; SUBR A,U
+!byte $10,$32,$84               ; SUBR A,S
+!byte $10,$32,$85               ; SUBR A,PC
+!byte $10,$32,$86               ; SUBR A,W
+!byte $10,$32,$87               ; SUBR A,V
+!byte $10,$32,$88               ; SUBR A,A
+!byte $10,$32,$89               ; SUBR A,B
+!byte $10,$32,$8A               ; SUBR A,CCR
+!byte $10,$32,$8B               ; SUBR A,DPR
+!byte $10,$32,$8C               ; SUBR A,Z
+!byte $10,$32,$8D               ; SUBR A,Z
+!byte $10,$32,$8E               ; SUBR A,E
+!byte $10,$32,$8F               ; SUBR A,F
+!byte $10,$32,$91               ; SUBR B,X
+!byte $10,$32,$92               ; SUBR B,Y
+!byte $10,$32,$93               ; SUBR B,U
+!byte $10,$32,$94               ; SUBR B,S
+!byte $10,$32,$95               ; SUBR B,PC
+!byte $10,$32,$96               ; SUBR B,W
+!byte $10,$32,$97               ; SUBR B,V
+!byte $10,$32,$98               ; SUBR B,A
+!byte $10,$32,$99               ; SUBR B,B
+!byte $10,$32,$9A               ; SUBR B,CCR
+!byte $10,$32,$9B               ; SUBR B,DPR
+!byte $10,$32,$9C               ; SUBR B,Z
+!byte $10,$32,$9D               ; SUBR B,Z
+!byte $10,$32,$9E               ; SUBR B,E
+!byte $10,$32,$9F               ; SUBR B,F
+!byte $10,$32,$A1               ; SUBR CCR,X
+!byte $10,$32,$A2               ; SUBR CCR,Y
+!byte $10,$32,$A3               ; SUBR CCR,U
+!byte $10,$32,$A4               ; SUBR CCR,S
+!byte $10,$32,$A5               ; SUBR CCR,PC
+!byte $10,$32,$A6               ; SUBR CCR,W
+!byte $10,$32,$A7               ; SUBR CCR,V
+!byte $10,$32,$A8               ; SUBR CCR,A
+!byte $10,$32,$A9               ; SUBR CCR,B
+!byte $10,$32,$AA               ; SUBR CCR,CCR
+!byte $10,$32,$AB               ; SUBR CCR,DPR
+!byte $10,$32,$AC               ; SUBR CCR,Z
+!byte $10,$32,$AD               ; SUBR CCR,Z
+!byte $10,$32,$AE               ; SUBR CCR,E
+!byte $10,$32,$AF               ; SUBR CCR,F
+!byte $10,$32,$B1               ; SUBR DPR,X
+!byte $10,$32,$B2               ; SUBR DPR,Y
+!byte $10,$32,$B3               ; SUBR DPR,U
+!byte $10,$32,$B4               ; SUBR DPR,S
+!byte $10,$32,$B5               ; SUBR DPR,PC
+!byte $10,$32,$B6               ; SUBR DPR,W
+!byte $10,$32,$B7               ; SUBR DPR,V
+!byte $10,$32,$B8               ; SUBR DPR,A
+!byte $10,$32,$B9               ; SUBR DPR,B
+!byte $10,$32,$BA               ; SUBR DPR,CCR
+!byte $10,$32,$BB               ; SUBR DPR,DPR
+!byte $10,$32,$BC               ; SUBR DPR,Z
+!byte $10,$32,$BD               ; SUBR DPR,Z
+!byte $10,$32,$BE               ; SUBR DPR,E
+!byte $10,$32,$BF               ; SUBR DPR,F
+!byte $10,$32,$C1               ; SUBR Z,X
+!byte $10,$32,$C2               ; SUBR Z,Y
+!byte $10,$32,$C3               ; SUBR Z,U
+!byte $10,$32,$C4               ; SUBR Z,S
+!byte $10,$32,$C5               ; SUBR Z,PC
+!byte $10,$32,$C6               ; SUBR Z,W
+!byte $10,$32,$C7               ; SUBR Z,V
+!byte $10,$32,$C8               ; SUBR Z,A
+!byte $10,$32,$C9               ; SUBR Z,B
+!byte $10,$32,$CA               ; SUBR Z,CCR
+!byte $10,$32,$CB               ; SUBR Z,DPR
+!byte $10,$32,$CC               ; SUBR Z,Z
+!byte $10,$32,$CD               ; SUBR Z,Z
+!byte $10,$32,$CE               ; SUBR Z,E
+!byte $10,$32,$CF               ; SUBR Z,F
+!byte $10,$32,$D1               ; SUBR Z,X
+!byte $10,$32,$D2               ; SUBR Z,Y
+!byte $10,$32,$D3               ; SUBR Z,U
+!byte $10,$32,$D4               ; SUBR Z,S
+!byte $10,$32,$D5               ; SUBR Z,PC
+!byte $10,$32,$D6               ; SUBR Z,W
+!byte $10,$32,$D7               ; SUBR Z,V
+!byte $10,$32,$D8               ; SUBR Z,A
+!byte $10,$32,$D9               ; SUBR Z,B
+!byte $10,$32,$DA               ; SUBR Z,CCR
+!byte $10,$32,$DB               ; SUBR Z,DPR
+!byte $10,$32,$DC               ; SUBR Z,Z
+!byte $10,$32,$DD               ; SUBR Z,Z
+!byte $10,$32,$DE               ; SUBR Z,E
+!byte $10,$32,$DF               ; SUBR Z,F
+!byte $10,$32,$E1               ; SUBR E,X
+!byte $10,$32,$E2               ; SUBR E,Y
+!byte $10,$32,$E3               ; SUBR E,U
+!byte $10,$32,$E4               ; SUBR E,S
+!byte $10,$32,$E5               ; SUBR E,PC
+!byte $10,$32,$E6               ; SUBR E,W
+!byte $10,$32,$E7               ; SUBR E,V
+!byte $10,$32,$E8               ; SUBR E,A
+!byte $10,$32,$E9               ; SUBR E,B
+!byte $10,$32,$EA               ; SUBR E,CCR
+!byte $10,$32,$EB               ; SUBR E,DPR
+!byte $10,$32,$EC               ; SUBR E,Z
+!byte $10,$32,$ED               ; SUBR E,Z
+!byte $10,$32,$EE               ; SUBR E,E
+!byte $10,$32,$EF               ; SUBR E,F
+!byte $10,$32,$F1               ; SUBR F,X
+!byte $10,$32,$F2               ; SUBR F,Y
+!byte $10,$32,$F3               ; SUBR F,U
+!byte $10,$32,$F4               ; SUBR F,S
+!byte $10,$32,$F5               ; SUBR F,PC
+!byte $10,$32,$F6               ; SUBR F,W
+!byte $10,$32,$F7               ; SUBR F,V
+!byte $10,$32,$F8               ; SUBR F,A
+!byte $10,$32,$F9               ; SUBR F,B
+!byte $10,$32,$FA               ; SUBR F,CCR
+!byte $10,$32,$FB               ; SUBR F,DPR
+!byte $10,$32,$FC               ; SUBR F,Z
+!byte $10,$32,$FD               ; SUBR F,Z
+!byte $10,$32,$FE               ; SUBR F,E
+!byte $10,$32,$FF               ; SUBR F,F
+!byte $10,$33,$00               ; SBCR D,D
+!byte $10,$33,$01               ; SBCR D,X
+!byte $10,$33,$02               ; SBCR D,Y
+!byte $10,$33,$03               ; SBCR D,U
+!byte $10,$33,$04               ; SBCR D,S
+!byte $10,$33,$05               ; SBCR D,PC
+!byte $10,$33,$06               ; SBCR D,W
+!byte $10,$33,$07               ; SBCR D,V
+!byte $10,$33,$08               ; SBCR D,A
+!byte $10,$33,$09               ; SBCR D,B
+!byte $10,$33,$0A               ; SBCR D,CCR
+!byte $10,$33,$0B               ; SBCR D,DPR
+!byte $10,$33,$0C               ; SBCR D,Z
+!byte $10,$33,$0D               ; SBCR D,Z
+!byte $10,$33,$0E               ; SBCR D,E
+!byte $10,$33,$0F               ; SBCR D,F
+!byte $10,$33,$10               ; SBCR X,D
+!byte $10,$33,$11               ; SBCR X,X
+!byte $10,$33,$12               ; SBCR X,Y
+!byte $10,$33,$13               ; SBCR X,U
+!byte $10,$33,$14               ; SBCR X,S
+!byte $10,$33,$15               ; SBCR X,PC
+!byte $10,$33,$16               ; SBCR X,W
+!byte $10,$33,$17               ; SBCR X,V
+!byte $10,$33,$18               ; SBCR X,A
+!byte $10,$33,$19               ; SBCR X,B
+!byte $10,$33,$1A               ; SBCR X,CCR
+!byte $10,$33,$1B               ; SBCR X,DPR
+!byte $10,$33,$1C               ; SBCR X,Z
+!byte $10,$33,$1D               ; SBCR X,Z
+!byte $10,$33,$1E               ; SBCR X,E
+!byte $10,$33,$1F               ; SBCR X,F
+!byte $10,$33,$20               ; SBCR Y,D
+!byte $10,$33,$21               ; SBCR Y,X
+!byte $10,$33,$22               ; SBCR Y,Y
+!byte $10,$33,$23               ; SBCR Y,U
+!byte $10,$33,$24               ; SBCR Y,S
+!byte $10,$33,$25               ; SBCR Y,PC
+!byte $10,$33,$26               ; SBCR Y,W
+!byte $10,$33,$27               ; SBCR Y,V
+!byte $10,$33,$28               ; SBCR Y,A
+!byte $10,$33,$29               ; SBCR Y,B
+!byte $10,$33,$2A               ; SBCR Y,CCR
+!byte $10,$33,$2B               ; SBCR Y,DPR
+!byte $10,$33,$2C               ; SBCR Y,Z
+!byte $10,$33,$2D               ; SBCR Y,Z
+!byte $10,$33,$2E               ; SBCR Y,E
+!byte $10,$33,$2F               ; SBCR Y,F
+!byte $10,$33,$30               ; SBCR U,D
+!byte $10,$33,$31               ; SBCR U,X
+!byte $10,$33,$32               ; SBCR U,Y
+!byte $10,$33,$33               ; SBCR U,U
+!byte $10,$33,$34               ; SBCR U,S
+!byte $10,$33,$35               ; SBCR U,PC
+!byte $10,$33,$36               ; SBCR U,W
+!byte $10,$33,$37               ; SBCR U,V
+!byte $10,$33,$38               ; SBCR U,A
+!byte $10,$33,$39               ; SBCR U,B
+!byte $10,$33,$3A               ; SBCR U,CCR
+!byte $10,$33,$3B               ; SBCR U,DPR
+!byte $10,$33,$3C               ; SBCR U,Z
+!byte $10,$33,$3D               ; SBCR U,Z
+!byte $10,$33,$3E               ; SBCR U,E
+!byte $10,$33,$3F               ; SBCR U,F
+!byte $10,$33,$40               ; SBCR S,D
+!byte $10,$33,$41               ; SBCR S,X
+!byte $10,$33,$42               ; SBCR S,Y
+!byte $10,$33,$43               ; SBCR S,U
+!byte $10,$33,$44               ; SBCR S,S
+!byte $10,$33,$45               ; SBCR S,PC
+!byte $10,$33,$46               ; SBCR S,W
+!byte $10,$33,$47               ; SBCR S,V
+!byte $10,$33,$48               ; SBCR S,A
+!byte $10,$33,$49               ; SBCR S,B
+!byte $10,$33,$4A               ; SBCR S,CCR
+!byte $10,$33,$4B               ; SBCR S,DPR
+!byte $10,$33,$4C               ; SBCR S,Z
+!byte $10,$33,$4D               ; SBCR S,Z
+!byte $10,$33,$4E               ; SBCR S,E
+!byte $10,$33,$4F               ; SBCR S,F
+!byte $10,$33,$50               ; SBCR PC,D
+!byte $10,$33,$51               ; SBCR PC,X
+!byte $10,$33,$52               ; SBCR PC,Y
+!byte $10,$33,$53               ; SBCR PC,U
+!byte $10,$33,$54               ; SBCR PC,S
+!byte $10,$33,$55               ; SBCR PC,PC
+!byte $10,$33,$56               ; SBCR PC,W
+!byte $10,$33,$57               ; SBCR PC,V
+!byte $10,$33,$58               ; SBCR PC,A
+!byte $10,$33,$59               ; SBCR PC,B
+!byte $10,$33,$5A               ; SBCR PC,CCR
+!byte $10,$33,$5B               ; SBCR PC,DPR
+!byte $10,$33,$5C               ; SBCR PC,Z
+!byte $10,$33,$5D               ; SBCR PC,Z
+!byte $10,$33,$5E               ; SBCR PC,E
+!byte $10,$33,$5F               ; SBCR PC,F
+!byte $10,$33,$60               ; SBCR W,D
+!byte $10,$33,$61               ; SBCR W,X
+!byte $10,$33,$62               ; SBCR W,Y
+!byte $10,$33,$63               ; SBCR W,U
+!byte $10,$33,$64               ; SBCR W,S
+!byte $10,$33,$65               ; SBCR W,PC
+!byte $10,$33,$66               ; SBCR W,W
+!byte $10,$33,$67               ; SBCR W,V
+!byte $10,$33,$68               ; SBCR W,A
+!byte $10,$33,$69               ; SBCR W,B
+!byte $10,$33,$6A               ; SBCR W,CCR
+!byte $10,$33,$6B               ; SBCR W,DPR
+!byte $10,$33,$6C               ; SBCR W,Z
+!byte $10,$33,$6D               ; SBCR W,Z
+!byte $10,$33,$6E               ; SBCR W,E
+!byte $10,$33,$6F               ; SBCR W,F
+!byte $10,$33,$70               ; SBCR V,D
+!byte $10,$33,$71               ; SBCR V,X
+!byte $10,$33,$72               ; SBCR V,Y
+!byte $10,$33,$73               ; SBCR V,U
+!byte $10,$33,$74               ; SBCR V,S
+!byte $10,$33,$75               ; SBCR V,PC
+!byte $10,$33,$76               ; SBCR V,W
+!byte $10,$33,$77               ; SBCR V,V
+!byte $10,$33,$78               ; SBCR V,A
+!byte $10,$33,$79               ; SBCR V,B
+!byte $10,$33,$7A               ; SBCR V,CCR
+!byte $10,$33,$7B               ; SBCR V,DPR
+!byte $10,$33,$7C               ; SBCR V,Z
+!byte $10,$33,$7D               ; SBCR V,Z
+!byte $10,$33,$7E               ; SBCR V,E
+!byte $10,$33,$7F               ; SBCR V,F
+!byte $10,$33,$80               ; SBCR A,D
+!byte $10,$33,$81               ; SBCR A,X
+!byte $10,$33,$82               ; SBCR A,Y
+!byte $10,$33,$83               ; SBCR A,U
+!byte $10,$33,$84               ; SBCR A,S
+!byte $10,$33,$85               ; SBCR A,PC
+!byte $10,$33,$86               ; SBCR A,W
+!byte $10,$33,$87               ; SBCR A,V
+!byte $10,$33,$88               ; SBCR A,A
+!byte $10,$33,$89               ; SBCR A,B
+!byte $10,$33,$8A               ; SBCR A,CCR
+!byte $10,$33,$8B               ; SBCR A,DPR
+!byte $10,$33,$8C               ; SBCR A,Z
+!byte $10,$33,$8D               ; SBCR A,Z
+!byte $10,$33,$8E               ; SBCR A,E
+!byte $10,$33,$8F               ; SBCR A,F
+!byte $10,$33,$91               ; SBCR B,X
+!byte $10,$33,$92               ; SBCR B,Y
+!byte $10,$33,$93               ; SBCR B,U
+!byte $10,$33,$94               ; SBCR B,S
+!byte $10,$33,$95               ; SBCR B,PC
+!byte $10,$33,$96               ; SBCR B,W
+!byte $10,$33,$97               ; SBCR B,V
+!byte $10,$33,$98               ; SBCR B,A
+!byte $10,$33,$99               ; SBCR B,B
+!byte $10,$33,$9A               ; SBCR B,CCR
+!byte $10,$33,$9B               ; SBCR B,DPR
+!byte $10,$33,$9C               ; SBCR B,Z
+!byte $10,$33,$9D               ; SBCR B,Z
+!byte $10,$33,$9E               ; SBCR B,E
+!byte $10,$33,$9F               ; SBCR B,F
+!byte $10,$33,$A1               ; SBCR CCR,X
+!byte $10,$33,$A2               ; SBCR CCR,Y
+!byte $10,$33,$A3               ; SBCR CCR,U
+!byte $10,$33,$A4               ; SBCR CCR,S
+!byte $10,$33,$A5               ; SBCR CCR,PC
+!byte $10,$33,$A6               ; SBCR CCR,W
+!byte $10,$33,$A7               ; SBCR CCR,V
+!byte $10,$33,$A8               ; SBCR CCR,A
+!byte $10,$33,$A9               ; SBCR CCR,B
+!byte $10,$33,$AA               ; SBCR CCR,CCR
+!byte $10,$33,$AB               ; SBCR CCR,DPR
+!byte $10,$33,$AC               ; SBCR CCR,Z
+!byte $10,$33,$AD               ; SBCR CCR,Z
+!byte $10,$33,$AE               ; SBCR CCR,E
+!byte $10,$33,$AF               ; SBCR CCR,F
+!byte $10,$33,$B1               ; SBCR DPR,X
+!byte $10,$33,$B2               ; SBCR DPR,Y
+!byte $10,$33,$B3               ; SBCR DPR,U
+!byte $10,$33,$B4               ; SBCR DPR,S
+!byte $10,$33,$B5               ; SBCR DPR,PC
+!byte $10,$33,$B6               ; SBCR DPR,W
+!byte $10,$33,$B7               ; SBCR DPR,V
+!byte $10,$33,$B8               ; SBCR DPR,A
+!byte $10,$33,$B9               ; SBCR DPR,B
+!byte $10,$33,$BA               ; SBCR DPR,CCR
+!byte $10,$33,$BB               ; SBCR DPR,DPR
+!byte $10,$33,$BC               ; SBCR DPR,Z
+!byte $10,$33,$BD               ; SBCR DPR,Z
+!byte $10,$33,$BE               ; SBCR DPR,E
+!byte $10,$33,$BF               ; SBCR DPR,F
+!byte $10,$33,$C1               ; SBCR Z,X
+!byte $10,$33,$C2               ; SBCR Z,Y
+!byte $10,$33,$C3               ; SBCR Z,U
+!byte $10,$33,$C4               ; SBCR Z,S
+!byte $10,$33,$C5               ; SBCR Z,PC
+!byte $10,$33,$C6               ; SBCR Z,W
+!byte $10,$33,$C7               ; SBCR Z,V
+!byte $10,$33,$C8               ; SBCR Z,A
+!byte $10,$33,$C9               ; SBCR Z,B
+!byte $10,$33,$CA               ; SBCR Z,CCR
+!byte $10,$33,$CB               ; SBCR Z,DPR
+!byte $10,$33,$CC               ; SBCR Z,Z
+!byte $10,$33,$CD               ; SBCR Z,Z
+!byte $10,$33,$CE               ; SBCR Z,E
+!byte $10,$33,$CF               ; SBCR Z,F
+!byte $10,$33,$D1               ; SBCR Z,X
+!byte $10,$33,$D2               ; SBCR Z,Y
+!byte $10,$33,$D3               ; SBCR Z,U
+!byte $10,$33,$D4               ; SBCR Z,S
+!byte $10,$33,$D5               ; SBCR Z,PC
+!byte $10,$33,$D6               ; SBCR Z,W
+!byte $10,$33,$D7               ; SBCR Z,V
+!byte $10,$33,$D8               ; SBCR Z,A
+!byte $10,$33,$D9               ; SBCR Z,B
+!byte $10,$33,$DA               ; SBCR Z,CCR
+!byte $10,$33,$DB               ; SBCR Z,DPR
+!byte $10,$33,$DC               ; SBCR Z,Z
+!byte $10,$33,$DD               ; SBCR Z,Z
+!byte $10,$33,$DE               ; SBCR Z,E
+!byte $10,$33,$DF               ; SBCR Z,F
+!byte $10,$33,$E1               ; SBCR E,X
+!byte $10,$33,$E2               ; SBCR E,Y
+!byte $10,$33,$E3               ; SBCR E,U
+!byte $10,$33,$E4               ; SBCR E,S
+!byte $10,$33,$E5               ; SBCR E,PC
+!byte $10,$33,$E6               ; SBCR E,W
+!byte $10,$33,$E7               ; SBCR E,V
+!byte $10,$33,$E8               ; SBCR E,A
+!byte $10,$33,$E9               ; SBCR E,B
+!byte $10,$33,$EA               ; SBCR E,CCR
+!byte $10,$33,$EB               ; SBCR E,DPR
+!byte $10,$33,$EC               ; SBCR E,Z
+!byte $10,$33,$ED               ; SBCR E,Z
+!byte $10,$33,$EE               ; SBCR E,E
+!byte $10,$33,$EF               ; SBCR E,F
+!byte $10,$33,$F1               ; SBCR F,X
+!byte $10,$33,$F2               ; SBCR F,Y
+!byte $10,$33,$F3               ; SBCR F,U
+!byte $10,$33,$F4               ; SBCR F,S
+!byte $10,$33,$F5               ; SBCR F,PC
+!byte $10,$33,$F6               ; SBCR F,W
+!byte $10,$33,$F7               ; SBCR F,V
+!byte $10,$33,$F8               ; SBCR F,A
+!byte $10,$33,$F9               ; SBCR F,B
+!byte $10,$33,$FA               ; SBCR F,CCR
+!byte $10,$33,$FB               ; SBCR F,DPR
+!byte $10,$33,$FC               ; SBCR F,Z
+!byte $10,$33,$FD               ; SBCR F,Z
+!byte $10,$33,$FE               ; SBCR F,E
+!byte $10,$33,$FF               ; SBCR F,F
+!byte $10,$34,$00               ; ANDR D,D
+!byte $10,$34,$01               ; ANDR D,X
+!byte $10,$34,$02               ; ANDR D,Y
+!byte $10,$34,$03               ; ANDR D,U
+!byte $10,$34,$04               ; ANDR D,S
+!byte $10,$34,$05               ; ANDR D,PC
+!byte $10,$34,$06               ; ANDR D,W
+!byte $10,$34,$07               ; ANDR D,V
+!byte $10,$34,$08               ; ANDR D,A
+!byte $10,$34,$09               ; ANDR D,B
+!byte $10,$34,$0A               ; ANDR D,CCR
+!byte $10,$34,$0B               ; ANDR D,DPR
+!byte $10,$34,$0C               ; ANDR D,Z
+!byte $10,$34,$0D               ; ANDR D,Z
+!byte $10,$34,$0E               ; ANDR D,E
+!byte $10,$34,$0F               ; ANDR D,F
+!byte $10,$34,$10               ; ANDR X,D
+!byte $10,$34,$11               ; ANDR X,X
+!byte $10,$34,$12               ; ANDR X,Y
+!byte $10,$34,$13               ; ANDR X,U
+!byte $10,$34,$14               ; ANDR X,S
+!byte $10,$34,$15               ; ANDR X,PC
+!byte $10,$34,$16               ; ANDR X,W
+!byte $10,$34,$17               ; ANDR X,V
+!byte $10,$34,$18               ; ANDR X,A
+!byte $10,$34,$19               ; ANDR X,B
+!byte $10,$34,$1A               ; ANDR X,CCR
+!byte $10,$34,$1B               ; ANDR X,DPR
+!byte $10,$34,$1C               ; ANDR X,Z
+!byte $10,$34,$1D               ; ANDR X,Z
+!byte $10,$34,$1E               ; ANDR X,E
+!byte $10,$34,$1F               ; ANDR X,F
+!byte $10,$34,$20               ; ANDR Y,D
+!byte $10,$34,$21               ; ANDR Y,X
+!byte $10,$34,$22               ; ANDR Y,Y
+!byte $10,$34,$23               ; ANDR Y,U
+!byte $10,$34,$24               ; ANDR Y,S
+!byte $10,$34,$25               ; ANDR Y,PC
+!byte $10,$34,$26               ; ANDR Y,W
+!byte $10,$34,$27               ; ANDR Y,V
+!byte $10,$34,$28               ; ANDR Y,A
+!byte $10,$34,$29               ; ANDR Y,B
+!byte $10,$34,$2A               ; ANDR Y,CCR
+!byte $10,$34,$2B               ; ANDR Y,DPR
+!byte $10,$34,$2C               ; ANDR Y,Z
+!byte $10,$34,$2D               ; ANDR Y,Z
+!byte $10,$34,$2E               ; ANDR Y,E
+!byte $10,$34,$2F               ; ANDR Y,F
+!byte $10,$34,$30               ; ANDR U,D
+!byte $10,$34,$31               ; ANDR U,X
+!byte $10,$34,$32               ; ANDR U,Y
+!byte $10,$34,$33               ; ANDR U,U
+!byte $10,$34,$34               ; ANDR U,S
+!byte $10,$34,$35               ; ANDR U,PC
+!byte $10,$34,$36               ; ANDR U,W
+!byte $10,$34,$37               ; ANDR U,V
+!byte $10,$34,$38               ; ANDR U,A
+!byte $10,$34,$39               ; ANDR U,B
+!byte $10,$34,$3A               ; ANDR U,CCR
+!byte $10,$34,$3B               ; ANDR U,DPR
+!byte $10,$34,$3C               ; ANDR U,Z
+!byte $10,$34,$3D               ; ANDR U,Z
+!byte $10,$34,$3E               ; ANDR U,E
+!byte $10,$34,$3F               ; ANDR U,F
+!byte $10,$34,$40               ; ANDR S,D
+!byte $10,$34,$41               ; ANDR S,X
+!byte $10,$34,$42               ; ANDR S,Y
+!byte $10,$34,$43               ; ANDR S,U
+!byte $10,$34,$44               ; ANDR S,S
+!byte $10,$34,$45               ; ANDR S,PC
+!byte $10,$34,$46               ; ANDR S,W
+!byte $10,$34,$47               ; ANDR S,V
+!byte $10,$34,$48               ; ANDR S,A
+!byte $10,$34,$49               ; ANDR S,B
+!byte $10,$34,$4A               ; ANDR S,CCR
+!byte $10,$34,$4B               ; ANDR S,DPR
+!byte $10,$34,$4C               ; ANDR S,Z
+!byte $10,$34,$4D               ; ANDR S,Z
+!byte $10,$34,$4E               ; ANDR S,E
+!byte $10,$34,$4F               ; ANDR S,F
+!byte $10,$34,$50               ; ANDR PC,D
+!byte $10,$34,$51               ; ANDR PC,X
+!byte $10,$34,$52               ; ANDR PC,Y
+!byte $10,$34,$53               ; ANDR PC,U
+!byte $10,$34,$54               ; ANDR PC,S
+!byte $10,$34,$55               ; ANDR PC,PC
+!byte $10,$34,$56               ; ANDR PC,W
+!byte $10,$34,$57               ; ANDR PC,V
+!byte $10,$34,$58               ; ANDR PC,A
+!byte $10,$34,$59               ; ANDR PC,B
+!byte $10,$34,$5A               ; ANDR PC,CCR
+!byte $10,$34,$5B               ; ANDR PC,DPR
+!byte $10,$34,$5C               ; ANDR PC,Z
+!byte $10,$34,$5D               ; ANDR PC,Z
+!byte $10,$34,$5E               ; ANDR PC,E
+!byte $10,$34,$5F               ; ANDR PC,F
+!byte $10,$34,$60               ; ANDR W,D
+!byte $10,$34,$61               ; ANDR W,X
+!byte $10,$34,$62               ; ANDR W,Y
+!byte $10,$34,$63               ; ANDR W,U
+!byte $10,$34,$64               ; ANDR W,S
+!byte $10,$34,$65               ; ANDR W,PC
+!byte $10,$34,$66               ; ANDR W,W
+!byte $10,$34,$67               ; ANDR W,V
+!byte $10,$34,$68               ; ANDR W,A
+!byte $10,$34,$69               ; ANDR W,B
+!byte $10,$34,$6A               ; ANDR W,CCR
+!byte $10,$34,$6B               ; ANDR W,DPR
+!byte $10,$34,$6C               ; ANDR W,Z
+!byte $10,$34,$6D               ; ANDR W,Z
+!byte $10,$34,$6E               ; ANDR W,E
+!byte $10,$34,$6F               ; ANDR W,F
+!byte $10,$34,$70               ; ANDR V,D
+!byte $10,$34,$71               ; ANDR V,X
+!byte $10,$34,$72               ; ANDR V,Y
+!byte $10,$34,$73               ; ANDR V,U
+!byte $10,$34,$74               ; ANDR V,S
+!byte $10,$34,$75               ; ANDR V,PC
+!byte $10,$34,$76               ; ANDR V,W
+!byte $10,$34,$77               ; ANDR V,V
+!byte $10,$34,$78               ; ANDR V,A
+!byte $10,$34,$79               ; ANDR V,B
+!byte $10,$34,$7A               ; ANDR V,CCR
+!byte $10,$34,$7B               ; ANDR V,DPR
+!byte $10,$34,$7C               ; ANDR V,Z
+!byte $10,$34,$7D               ; ANDR V,Z
+!byte $10,$34,$7E               ; ANDR V,E
+!byte $10,$34,$7F               ; ANDR V,F
+!byte $10,$34,$80               ; ANDR A,D
+!byte $10,$34,$81               ; ANDR A,X
+!byte $10,$34,$82               ; ANDR A,Y
+!byte $10,$34,$83               ; ANDR A,U
+!byte $10,$34,$84               ; ANDR A,S
+!byte $10,$34,$85               ; ANDR A,PC
+!byte $10,$34,$86               ; ANDR A,W
+!byte $10,$34,$87               ; ANDR A,V
+!byte $10,$34,$88               ; ANDR A,A
+!byte $10,$34,$89               ; ANDR A,B
+!byte $10,$34,$8A               ; ANDR A,CCR
+!byte $10,$34,$8B               ; ANDR A,DPR
+!byte $10,$34,$8C               ; ANDR A,Z
+!byte $10,$34,$8D               ; ANDR A,Z
+!byte $10,$34,$8E               ; ANDR A,E
+!byte $10,$34,$8F               ; ANDR A,F
+!byte $10,$34,$91               ; ANDR B,X
+!byte $10,$34,$92               ; ANDR B,Y
+!byte $10,$34,$93               ; ANDR B,U
+!byte $10,$34,$94               ; ANDR B,S
+!byte $10,$34,$95               ; ANDR B,PC
+!byte $10,$34,$96               ; ANDR B,W
+!byte $10,$34,$97               ; ANDR B,V
+!byte $10,$34,$98               ; ANDR B,A
+!byte $10,$34,$99               ; ANDR B,B
+!byte $10,$34,$9A               ; ANDR B,CCR
+!byte $10,$34,$9B               ; ANDR B,DPR
+!byte $10,$34,$9C               ; ANDR B,Z
+!byte $10,$34,$9D               ; ANDR B,Z
+!byte $10,$34,$9E               ; ANDR B,E
+!byte $10,$34,$9F               ; ANDR B,F
+!byte $10,$34,$A1               ; ANDR CCR,X
+!byte $10,$34,$A2               ; ANDR CCR,Y
+!byte $10,$34,$A3               ; ANDR CCR,U
+!byte $10,$34,$A4               ; ANDR CCR,S
+!byte $10,$34,$A5               ; ANDR CCR,PC
+!byte $10,$34,$A6               ; ANDR CCR,W
+!byte $10,$34,$A7               ; ANDR CCR,V
+!byte $10,$34,$A8               ; ANDR CCR,A
+!byte $10,$34,$A9               ; ANDR CCR,B
+!byte $10,$34,$AA               ; ANDR CCR,CCR
+!byte $10,$34,$AB               ; ANDR CCR,DPR
+!byte $10,$34,$AC               ; ANDR CCR,Z
+!byte $10,$34,$AD               ; ANDR CCR,Z
+!byte $10,$34,$AE               ; ANDR CCR,E
+!byte $10,$34,$AF               ; ANDR CCR,F
+!byte $10,$34,$B1               ; ANDR DPR,X
+!byte $10,$34,$B2               ; ANDR DPR,Y
+!byte $10,$34,$B3               ; ANDR DPR,U
+!byte $10,$34,$B4               ; ANDR DPR,S
+!byte $10,$34,$B5               ; ANDR DPR,PC
+!byte $10,$34,$B6               ; ANDR DPR,W
+!byte $10,$34,$B7               ; ANDR DPR,V
+!byte $10,$34,$B8               ; ANDR DPR,A
+!byte $10,$34,$B9               ; ANDR DPR,B
+!byte $10,$34,$BA               ; ANDR DPR,CCR
+!byte $10,$34,$BB               ; ANDR DPR,DPR
+!byte $10,$34,$BC               ; ANDR DPR,Z
+!byte $10,$34,$BD               ; ANDR DPR,Z
+!byte $10,$34,$BE               ; ANDR DPR,E
+!byte $10,$34,$BF               ; ANDR DPR,F
+!byte $10,$34,$C1               ; ANDR Z,X
+!byte $10,$34,$C2               ; ANDR Z,Y
+!byte $10,$34,$C3               ; ANDR Z,U
+!byte $10,$34,$C4               ; ANDR Z,S
+!byte $10,$34,$C5               ; ANDR Z,PC
+!byte $10,$34,$C6               ; ANDR Z,W
+!byte $10,$34,$C7               ; ANDR Z,V
+!byte $10,$34,$C8               ; ANDR Z,A
+!byte $10,$34,$C9               ; ANDR Z,B
+!byte $10,$34,$CA               ; ANDR Z,CCR
+!byte $10,$34,$CB               ; ANDR Z,DPR
+!byte $10,$34,$CC               ; ANDR Z,Z
+!byte $10,$34,$CD               ; ANDR Z,Z
+!byte $10,$34,$CE               ; ANDR Z,E
+!byte $10,$34,$CF               ; ANDR Z,F
+!byte $10,$34,$D1               ; ANDR Z,X
+!byte $10,$34,$D2               ; ANDR Z,Y
+!byte $10,$34,$D3               ; ANDR Z,U
+!byte $10,$34,$D4               ; ANDR Z,S
+!byte $10,$34,$D5               ; ANDR Z,PC
+!byte $10,$34,$D6               ; ANDR Z,W
+!byte $10,$34,$D7               ; ANDR Z,V
+!byte $10,$34,$D8               ; ANDR Z,A
+!byte $10,$34,$D9               ; ANDR Z,B
+!byte $10,$34,$DA               ; ANDR Z,CCR
+!byte $10,$34,$DB               ; ANDR Z,DPR
+!byte $10,$34,$DC               ; ANDR Z,Z
+!byte $10,$34,$DD               ; ANDR Z,Z
+!byte $10,$34,$DE               ; ANDR Z,E
+!byte $10,$34,$DF               ; ANDR Z,F
+!byte $10,$34,$E1               ; ANDR E,X
+!byte $10,$34,$E2               ; ANDR E,Y
+!byte $10,$34,$E3               ; ANDR E,U
+!byte $10,$34,$E4               ; ANDR E,S
+!byte $10,$34,$E5               ; ANDR E,PC
+!byte $10,$34,$E6               ; ANDR E,W
+!byte $10,$34,$E7               ; ANDR E,V
+!byte $10,$34,$E8               ; ANDR E,A
+!byte $10,$34,$E9               ; ANDR E,B
+!byte $10,$34,$EA               ; ANDR E,CCR
+!byte $10,$34,$EB               ; ANDR E,DPR
+!byte $10,$34,$EC               ; ANDR E,Z
+!byte $10,$34,$ED               ; ANDR E,Z
+!byte $10,$34,$EE               ; ANDR E,E
+!byte $10,$34,$EF               ; ANDR E,F
+!byte $10,$34,$F1               ; ANDR F,X
+!byte $10,$34,$F2               ; ANDR F,Y
+!byte $10,$34,$F3               ; ANDR F,U
+!byte $10,$34,$F4               ; ANDR F,S
+!byte $10,$34,$F5               ; ANDR F,PC
+!byte $10,$34,$F6               ; ANDR F,W
+!byte $10,$34,$F7               ; ANDR F,V
+!byte $10,$34,$F8               ; ANDR F,A
+!byte $10,$34,$F9               ; ANDR F,B
+!byte $10,$34,$FA               ; ANDR F,CCR
+!byte $10,$34,$FB               ; ANDR F,DPR
+!byte $10,$34,$FC               ; ANDR F,Z
+!byte $10,$34,$FD               ; ANDR F,Z
+!byte $10,$34,$FE               ; ANDR F,E
+!byte $10,$34,$FF               ; ANDR F,F
+!byte $10,$35,$00               ; ORR D,D
+!byte $10,$35,$01               ; ORR D,X
+!byte $10,$35,$02               ; ORR D,Y
+!byte $10,$35,$03               ; ORR D,U
+!byte $10,$35,$04               ; ORR D,S
+!byte $10,$35,$05               ; ORR D,PC
+!byte $10,$35,$06               ; ORR D,W
+!byte $10,$35,$07               ; ORR D,V
+!byte $10,$35,$08               ; ORR D,A
+!byte $10,$35,$09               ; ORR D,B
+!byte $10,$35,$0A               ; ORR D,CCR
+!byte $10,$35,$0B               ; ORR D,DPR
+!byte $10,$35,$0C               ; ORR D,Z
+!byte $10,$35,$0D               ; ORR D,Z
+!byte $10,$35,$0E               ; ORR D,E
+!byte $10,$35,$0F               ; ORR D,F
+!byte $10,$35,$10               ; ORR X,D
+!byte $10,$35,$11               ; ORR X,X
+!byte $10,$35,$12               ; ORR X,Y
+!byte $10,$35,$13               ; ORR X,U
+!byte $10,$35,$14               ; ORR X,S
+!byte $10,$35,$15               ; ORR X,PC
+!byte $10,$35,$16               ; ORR X,W
+!byte $10,$35,$17               ; ORR X,V
+!byte $10,$35,$18               ; ORR X,A
+!byte $10,$35,$19               ; ORR X,B
+!byte $10,$35,$1A               ; ORR X,CCR
+!byte $10,$35,$1B               ; ORR X,DPR
+!byte $10,$35,$1C               ; ORR X,Z
+!byte $10,$35,$1D               ; ORR X,Z
+!byte $10,$35,$1E               ; ORR X,E
+!byte $10,$35,$1F               ; ORR X,F
+!byte $10,$35,$20               ; ORR Y,D
+!byte $10,$35,$21               ; ORR Y,X
+!byte $10,$35,$22               ; ORR Y,Y
+!byte $10,$35,$23               ; ORR Y,U
+!byte $10,$35,$24               ; ORR Y,S
+!byte $10,$35,$25               ; ORR Y,PC
+!byte $10,$35,$26               ; ORR Y,W
+!byte $10,$35,$27               ; ORR Y,V
+!byte $10,$35,$28               ; ORR Y,A
+!byte $10,$35,$29               ; ORR Y,B
+!byte $10,$35,$2A               ; ORR Y,CCR
+!byte $10,$35,$2B               ; ORR Y,DPR
+!byte $10,$35,$2C               ; ORR Y,Z
+!byte $10,$35,$2D               ; ORR Y,Z
+!byte $10,$35,$2E               ; ORR Y,E
+!byte $10,$35,$2F               ; ORR Y,F
+!byte $10,$35,$30               ; ORR U,D
+!byte $10,$35,$31               ; ORR U,X
+!byte $10,$35,$32               ; ORR U,Y
+!byte $10,$35,$33               ; ORR U,U
+!byte $10,$35,$34               ; ORR U,S
+!byte $10,$35,$35               ; ORR U,PC
+!byte $10,$35,$36               ; ORR U,W
+!byte $10,$35,$37               ; ORR U,V
+!byte $10,$35,$38               ; ORR U,A
+!byte $10,$35,$39               ; ORR U,B
+!byte $10,$35,$3A               ; ORR U,CCR
+!byte $10,$35,$3B               ; ORR U,DPR
+!byte $10,$35,$3C               ; ORR U,Z
+!byte $10,$35,$3D               ; ORR U,Z
+!byte $10,$35,$3E               ; ORR U,E
+!byte $10,$35,$3F               ; ORR U,F
+!byte $10,$35,$40               ; ORR S,D
+!byte $10,$35,$41               ; ORR S,X
+!byte $10,$35,$42               ; ORR S,Y
+!byte $10,$35,$43               ; ORR S,U
+!byte $10,$35,$44               ; ORR S,S
+!byte $10,$35,$45               ; ORR S,PC
+!byte $10,$35,$46               ; ORR S,W
+!byte $10,$35,$47               ; ORR S,V
+!byte $10,$35,$48               ; ORR S,A
+!byte $10,$35,$49               ; ORR S,B
+!byte $10,$35,$4A               ; ORR S,CCR
+!byte $10,$35,$4B               ; ORR S,DPR
+!byte $10,$35,$4C               ; ORR S,Z
+!byte $10,$35,$4D               ; ORR S,Z
+!byte $10,$35,$4E               ; ORR S,E
+!byte $10,$35,$4F               ; ORR S,F
+!byte $10,$35,$50               ; ORR PC,D
+!byte $10,$35,$51               ; ORR PC,X
+!byte $10,$35,$52               ; ORR PC,Y
+!byte $10,$35,$53               ; ORR PC,U
+!byte $10,$35,$54               ; ORR PC,S
+!byte $10,$35,$55               ; ORR PC,PC
+!byte $10,$35,$56               ; ORR PC,W
+!byte $10,$35,$57               ; ORR PC,V
+!byte $10,$35,$58               ; ORR PC,A
+!byte $10,$35,$59               ; ORR PC,B
+!byte $10,$35,$5A               ; ORR PC,CCR
+!byte $10,$35,$5B               ; ORR PC,DPR
+!byte $10,$35,$5C               ; ORR PC,Z
+!byte $10,$35,$5D               ; ORR PC,Z
+!byte $10,$35,$5E               ; ORR PC,E
+!byte $10,$35,$5F               ; ORR PC,F
+!byte $10,$35,$60               ; ORR W,D
+!byte $10,$35,$61               ; ORR W,X
+!byte $10,$35,$62               ; ORR W,Y
+!byte $10,$35,$63               ; ORR W,U
+!byte $10,$35,$64               ; ORR W,S
+!byte $10,$35,$65               ; ORR W,PC
+!byte $10,$35,$66               ; ORR W,W
+!byte $10,$35,$67               ; ORR W,V
+!byte $10,$35,$68               ; ORR W,A
+!byte $10,$35,$69               ; ORR W,B
+!byte $10,$35,$6A               ; ORR W,CCR
+!byte $10,$35,$6B               ; ORR W,DPR
+!byte $10,$35,$6C               ; ORR W,Z
+!byte $10,$35,$6D               ; ORR W,Z
+!byte $10,$35,$6E               ; ORR W,E
+!byte $10,$35,$6F               ; ORR W,F
+!byte $10,$35,$70               ; ORR V,D
+!byte $10,$35,$71               ; ORR V,X
+!byte $10,$35,$72               ; ORR V,Y
+!byte $10,$35,$73               ; ORR V,U
+!byte $10,$35,$74               ; ORR V,S
+!byte $10,$35,$75               ; ORR V,PC
+!byte $10,$35,$76               ; ORR V,W
+!byte $10,$35,$77               ; ORR V,V
+!byte $10,$35,$78               ; ORR V,A
+!byte $10,$35,$79               ; ORR V,B
+!byte $10,$35,$7A               ; ORR V,CCR
+!byte $10,$35,$7B               ; ORR V,DPR
+!byte $10,$35,$7C               ; ORR V,Z
+!byte $10,$35,$7D               ; ORR V,Z
+!byte $10,$35,$7E               ; ORR V,E
+!byte $10,$35,$7F               ; ORR V,F
+!byte $10,$35,$80               ; ORR A,D
+!byte $10,$35,$81               ; ORR A,X
+!byte $10,$35,$82               ; ORR A,Y
+!byte $10,$35,$83               ; ORR A,U
+!byte $10,$35,$84               ; ORR A,S
+!byte $10,$35,$85               ; ORR A,PC
+!byte $10,$35,$86               ; ORR A,W
+!byte $10,$35,$87               ; ORR A,V
+!byte $10,$35,$88               ; ORR A,A
+!byte $10,$35,$89               ; ORR A,B
+!byte $10,$35,$8A               ; ORR A,CCR
+!byte $10,$35,$8B               ; ORR A,DPR
+!byte $10,$35,$8C               ; ORR A,Z
+!byte $10,$35,$8D               ; ORR A,Z
+!byte $10,$35,$8E               ; ORR A,E
+!byte $10,$35,$8F               ; ORR A,F
+!byte $10,$35,$91               ; ORR B,X
+!byte $10,$35,$92               ; ORR B,Y
+!byte $10,$35,$93               ; ORR B,U
+!byte $10,$35,$94               ; ORR B,S
+!byte $10,$35,$95               ; ORR B,PC
+!byte $10,$35,$96               ; ORR B,W
+!byte $10,$35,$97               ; ORR B,V
+!byte $10,$35,$98               ; ORR B,A
+!byte $10,$35,$99               ; ORR B,B
+!byte $10,$35,$9A               ; ORR B,CCR
+!byte $10,$35,$9B               ; ORR B,DPR
+!byte $10,$35,$9C               ; ORR B,Z
+!byte $10,$35,$9D               ; ORR B,Z
+!byte $10,$35,$9E               ; ORR B,E
+!byte $10,$35,$9F               ; ORR B,F
+!byte $10,$35,$A1               ; ORR CCR,X
+!byte $10,$35,$A2               ; ORR CCR,Y
+!byte $10,$35,$A3               ; ORR CCR,U
+!byte $10,$35,$A4               ; ORR CCR,S
+!byte $10,$35,$A5               ; ORR CCR,PC
+!byte $10,$35,$A6               ; ORR CCR,W
+!byte $10,$35,$A7               ; ORR CCR,V
+!byte $10,$35,$A8               ; ORR CCR,A
+!byte $10,$35,$A9               ; ORR CCR,B
+!byte $10,$35,$AA               ; ORR CCR,CCR
+!byte $10,$35,$AB               ; ORR CCR,DPR
+!byte $10,$35,$AC               ; ORR CCR,Z
+!byte $10,$35,$AD               ; ORR CCR,Z
+!byte $10,$35,$AE               ; ORR CCR,E
+!byte $10,$35,$AF               ; ORR CCR,F
+!byte $10,$35,$B1               ; ORR DPR,X
+!byte $10,$35,$B2               ; ORR DPR,Y
+!byte $10,$35,$B3               ; ORR DPR,U
+!byte $10,$35,$B4               ; ORR DPR,S
+!byte $10,$35,$B5               ; ORR DPR,PC
+!byte $10,$35,$B6               ; ORR DPR,W
+!byte $10,$35,$B7               ; ORR DPR,V
+!byte $10,$35,$B8               ; ORR DPR,A
+!byte $10,$35,$B9               ; ORR DPR,B
+!byte $10,$35,$BA               ; ORR DPR,CCR
+!byte $10,$35,$BB               ; ORR DPR,DPR
+!byte $10,$35,$BC               ; ORR DPR,Z
+!byte $10,$35,$BD               ; ORR DPR,Z
+!byte $10,$35,$BE               ; ORR DPR,E
+!byte $10,$35,$BF               ; ORR DPR,F
+!byte $10,$35,$C1               ; ORR Z,X
+!byte $10,$35,$C2               ; ORR Z,Y
+!byte $10,$35,$C3               ; ORR Z,U
+!byte $10,$35,$C4               ; ORR Z,S
+!byte $10,$35,$C5               ; ORR Z,PC
+!byte $10,$35,$C6               ; ORR Z,W
+!byte $10,$35,$C7               ; ORR Z,V
+!byte $10,$35,$C8               ; ORR Z,A
+!byte $10,$35,$C9               ; ORR Z,B
+!byte $10,$35,$CA               ; ORR Z,CCR
+!byte $10,$35,$CB               ; ORR Z,DPR
+!byte $10,$35,$CC               ; ORR Z,Z
+!byte $10,$35,$CD               ; ORR Z,Z
+!byte $10,$35,$CE               ; ORR Z,E
+!byte $10,$35,$CF               ; ORR Z,F
+!byte $10,$35,$D1               ; ORR Z,X
+!byte $10,$35,$D2               ; ORR Z,Y
+!byte $10,$35,$D3               ; ORR Z,U
+!byte $10,$35,$D4               ; ORR Z,S
+!byte $10,$35,$D5               ; ORR Z,PC
+!byte $10,$35,$D6               ; ORR Z,W
+!byte $10,$35,$D7               ; ORR Z,V
+!byte $10,$35,$D8               ; ORR Z,A
+!byte $10,$35,$D9               ; ORR Z,B
+!byte $10,$35,$DA               ; ORR Z,CCR
+!byte $10,$35,$DB               ; ORR Z,DPR
+!byte $10,$35,$DC               ; ORR Z,Z
+!byte $10,$35,$DD               ; ORR Z,Z
+!byte $10,$35,$DE               ; ORR Z,E
+!byte $10,$35,$DF               ; ORR Z,F
+!byte $10,$35,$E1               ; ORR E,X
+!byte $10,$35,$E2               ; ORR E,Y
+!byte $10,$35,$E3               ; ORR E,U
+!byte $10,$35,$E4               ; ORR E,S
+!byte $10,$35,$E5               ; ORR E,PC
+!byte $10,$35,$E6               ; ORR E,W
+!byte $10,$35,$E7               ; ORR E,V
+!byte $10,$35,$E8               ; ORR E,A
+!byte $10,$35,$E9               ; ORR E,B
+!byte $10,$35,$EA               ; ORR E,CCR
+!byte $10,$35,$EB               ; ORR E,DPR
+!byte $10,$35,$EC               ; ORR E,Z
+!byte $10,$35,$ED               ; ORR E,Z
+!byte $10,$35,$EE               ; ORR E,E
+!byte $10,$35,$EF               ; ORR E,F
+!byte $10,$35,$F1               ; ORR F,X
+!byte $10,$35,$F2               ; ORR F,Y
+!byte $10,$35,$F3               ; ORR F,U
+!byte $10,$35,$F4               ; ORR F,S
+!byte $10,$35,$F5               ; ORR F,PC
+!byte $10,$35,$F6               ; ORR F,W
+!byte $10,$35,$F7               ; ORR F,V
+!byte $10,$35,$F8               ; ORR F,A
+!byte $10,$35,$F9               ; ORR F,B
+!byte $10,$35,$FA               ; ORR F,CCR
+!byte $10,$35,$FB               ; ORR F,DPR
+!byte $10,$35,$FC               ; ORR F,Z
+!byte $10,$35,$FD               ; ORR F,Z
+!byte $10,$35,$FE               ; ORR F,E
+!byte $10,$35,$FF               ; ORR F,F
+!byte $10,$36,$00               ; EORR D,D
+!byte $10,$36,$01               ; EORR D,X
+!byte $10,$36,$02               ; EORR D,Y
+!byte $10,$36,$03               ; EORR D,U
+!byte $10,$36,$04               ; EORR D,S
+!byte $10,$36,$05               ; EORR D,PC
+!byte $10,$36,$06               ; EORR D,W
+!byte $10,$36,$07               ; EORR D,V
+!byte $10,$36,$08               ; EORR D,A
+!byte $10,$36,$09               ; EORR D,B
+!byte $10,$36,$0A               ; EORR D,CCR
+!byte $10,$36,$0B               ; EORR D,DPR
+!byte $10,$36,$0C               ; EORR D,Z
+!byte $10,$36,$0D               ; EORR D,Z
+!byte $10,$36,$0E               ; EORR D,E
+!byte $10,$36,$0F               ; EORR D,F
+!byte $10,$36,$10               ; EORR X,D
+!byte $10,$36,$11               ; EORR X,X
+!byte $10,$36,$12               ; EORR X,Y
+!byte $10,$36,$13               ; EORR X,U
+!byte $10,$36,$14               ; EORR X,S
+!byte $10,$36,$15               ; EORR X,PC
+!byte $10,$36,$16               ; EORR X,W
+!byte $10,$36,$17               ; EORR X,V
+!byte $10,$36,$18               ; EORR X,A
+!byte $10,$36,$19               ; EORR X,B
+!byte $10,$36,$1A               ; EORR X,CCR
+!byte $10,$36,$1B               ; EORR X,DPR
+!byte $10,$36,$1C               ; EORR X,Z
+!byte $10,$36,$1D               ; EORR X,Z
+!byte $10,$36,$1E               ; EORR X,E
+!byte $10,$36,$1F               ; EORR X,F
+!byte $10,$36,$20               ; EORR Y,D
+!byte $10,$36,$21               ; EORR Y,X
+!byte $10,$36,$22               ; EORR Y,Y
+!byte $10,$36,$23               ; EORR Y,U
+!byte $10,$36,$24               ; EORR Y,S
+!byte $10,$36,$25               ; EORR Y,PC
+!byte $10,$36,$26               ; EORR Y,W
+!byte $10,$36,$27               ; EORR Y,V
+!byte $10,$36,$28               ; EORR Y,A
+!byte $10,$36,$29               ; EORR Y,B
+!byte $10,$36,$2A               ; EORR Y,CCR
+!byte $10,$36,$2B               ; EORR Y,DPR
+!byte $10,$36,$2C               ; EORR Y,Z
+!byte $10,$36,$2D               ; EORR Y,Z
+!byte $10,$36,$2E               ; EORR Y,E
+!byte $10,$36,$2F               ; EORR Y,F
+!byte $10,$36,$30               ; EORR U,D
+!byte $10,$36,$31               ; EORR U,X
+!byte $10,$36,$32               ; EORR U,Y
+!byte $10,$36,$33               ; EORR U,U
+!byte $10,$36,$34               ; EORR U,S
+!byte $10,$36,$35               ; EORR U,PC
+!byte $10,$36,$36               ; EORR U,W
+!byte $10,$36,$37               ; EORR U,V
+!byte $10,$36,$38               ; EORR U,A
+!byte $10,$36,$39               ; EORR U,B
+!byte $10,$36,$3A               ; EORR U,CCR
+!byte $10,$36,$3B               ; EORR U,DPR
+!byte $10,$36,$3C               ; EORR U,Z
+!byte $10,$36,$3D               ; EORR U,Z
+!byte $10,$36,$3E               ; EORR U,E
+!byte $10,$36,$3F               ; EORR U,F
+!byte $10,$36,$40               ; EORR S,D
+!byte $10,$36,$41               ; EORR S,X
+!byte $10,$36,$42               ; EORR S,Y
+!byte $10,$36,$43               ; EORR S,U
+!byte $10,$36,$44               ; EORR S,S
+!byte $10,$36,$45               ; EORR S,PC
+!byte $10,$36,$46               ; EORR S,W
+!byte $10,$36,$47               ; EORR S,V
+!byte $10,$36,$48               ; EORR S,A
+!byte $10,$36,$49               ; EORR S,B
+!byte $10,$36,$4A               ; EORR S,CCR
+!byte $10,$36,$4B               ; EORR S,DPR
+!byte $10,$36,$4C               ; EORR S,Z
+!byte $10,$36,$4D               ; EORR S,Z
+!byte $10,$36,$4E               ; EORR S,E
+!byte $10,$36,$4F               ; EORR S,F
+!byte $10,$36,$50               ; EORR PC,D
+!byte $10,$36,$51               ; EORR PC,X
+!byte $10,$36,$52               ; EORR PC,Y
+!byte $10,$36,$53               ; EORR PC,U
+!byte $10,$36,$54               ; EORR PC,S
+!byte $10,$36,$55               ; EORR PC,PC
+!byte $10,$36,$56               ; EORR PC,W
+!byte $10,$36,$57               ; EORR PC,V
+!byte $10,$36,$58               ; EORR PC,A
+!byte $10,$36,$59               ; EORR PC,B
+!byte $10,$36,$5A               ; EORR PC,CCR
+!byte $10,$36,$5B               ; EORR PC,DPR
+!byte $10,$36,$5C               ; EORR PC,Z
+!byte $10,$36,$5D               ; EORR PC,Z
+!byte $10,$36,$5E               ; EORR PC,E
+!byte $10,$36,$5F               ; EORR PC,F
+!byte $10,$36,$60               ; EORR W,D
+!byte $10,$36,$61               ; EORR W,X
+!byte $10,$36,$62               ; EORR W,Y
+!byte $10,$36,$63               ; EORR W,U
+!byte $10,$36,$64               ; EORR W,S
+!byte $10,$36,$65               ; EORR W,PC
+!byte $10,$36,$66               ; EORR W,W
+!byte $10,$36,$67               ; EORR W,V
+!byte $10,$36,$68               ; EORR W,A
+!byte $10,$36,$69               ; EORR W,B
+!byte $10,$36,$6A               ; EORR W,CCR
+!byte $10,$36,$6B               ; EORR W,DPR
+!byte $10,$36,$6C               ; EORR W,Z
+!byte $10,$36,$6D               ; EORR W,Z
+!byte $10,$36,$6E               ; EORR W,E
+!byte $10,$36,$6F               ; EORR W,F
+!byte $10,$36,$70               ; EORR V,D
+!byte $10,$36,$71               ; EORR V,X
+!byte $10,$36,$72               ; EORR V,Y
+!byte $10,$36,$73               ; EORR V,U
+!byte $10,$36,$74               ; EORR V,S
+!byte $10,$36,$75               ; EORR V,PC
+!byte $10,$36,$76               ; EORR V,W
+!byte $10,$36,$77               ; EORR V,V
+!byte $10,$36,$78               ; EORR V,A
+!byte $10,$36,$79               ; EORR V,B
+!byte $10,$36,$7A               ; EORR V,CCR
+!byte $10,$36,$7B               ; EORR V,DPR
+!byte $10,$36,$7C               ; EORR V,Z
+!byte $10,$36,$7D               ; EORR V,Z
+!byte $10,$36,$7E               ; EORR V,E
+!byte $10,$36,$7F               ; EORR V,F
+!byte $10,$36,$80               ; EORR A,D
+!byte $10,$36,$81               ; EORR A,X
+!byte $10,$36,$82               ; EORR A,Y
+!byte $10,$36,$83               ; EORR A,U
+!byte $10,$36,$84               ; EORR A,S
+!byte $10,$36,$85               ; EORR A,PC
+!byte $10,$36,$86               ; EORR A,W
+!byte $10,$36,$87               ; EORR A,V
+!byte $10,$36,$88               ; EORR A,A
+!byte $10,$36,$89               ; EORR A,B
+!byte $10,$36,$8A               ; EORR A,CCR
+!byte $10,$36,$8B               ; EORR A,DPR
+!byte $10,$36,$8C               ; EORR A,Z
+!byte $10,$36,$8D               ; EORR A,Z
+!byte $10,$36,$8E               ; EORR A,E
+!byte $10,$36,$8F               ; EORR A,F
+!byte $10,$36,$91               ; EORR B,X
+!byte $10,$36,$92               ; EORR B,Y
+!byte $10,$36,$93               ; EORR B,U
+!byte $10,$36,$94               ; EORR B,S
+!byte $10,$36,$95               ; EORR B,PC
+!byte $10,$36,$96               ; EORR B,W
+!byte $10,$36,$97               ; EORR B,V
+!byte $10,$36,$98               ; EORR B,A
+!byte $10,$36,$99               ; EORR B,B
+!byte $10,$36,$9A               ; EORR B,CCR
+!byte $10,$36,$9B               ; EORR B,DPR
+!byte $10,$36,$9C               ; EORR B,Z
+!byte $10,$36,$9D               ; EORR B,Z
+!byte $10,$36,$9E               ; EORR B,E
+!byte $10,$36,$9F               ; EORR B,F
+!byte $10,$36,$A1               ; EORR CCR,X
+!byte $10,$36,$A2               ; EORR CCR,Y
+!byte $10,$36,$A3               ; EORR CCR,U
+!byte $10,$36,$A4               ; EORR CCR,S
+!byte $10,$36,$A5               ; EORR CCR,PC
+!byte $10,$36,$A6               ; EORR CCR,W
+!byte $10,$36,$A7               ; EORR CCR,V
+!byte $10,$36,$A8               ; EORR CCR,A
+!byte $10,$36,$A9               ; EORR CCR,B
+!byte $10,$36,$AA               ; EORR CCR,CCR
+!byte $10,$36,$AB               ; EORR CCR,DPR
+!byte $10,$36,$AC               ; EORR CCR,Z
+!byte $10,$36,$AD               ; EORR CCR,Z
+!byte $10,$36,$AE               ; EORR CCR,E
+!byte $10,$36,$AF               ; EORR CCR,F
+!byte $10,$36,$B1               ; EORR DPR,X
+!byte $10,$36,$B2               ; EORR DPR,Y
+!byte $10,$36,$B3               ; EORR DPR,U
+!byte $10,$36,$B4               ; EORR DPR,S
+!byte $10,$36,$B5               ; EORR DPR,PC
+!byte $10,$36,$B6               ; EORR DPR,W
+!byte $10,$36,$B7               ; EORR DPR,V
+!byte $10,$36,$B8               ; EORR DPR,A
+!byte $10,$36,$B9               ; EORR DPR,B
+!byte $10,$36,$BA               ; EORR DPR,CCR
+!byte $10,$36,$BB               ; EORR DPR,DPR
+!byte $10,$36,$BC               ; EORR DPR,Z
+!byte $10,$36,$BD               ; EORR DPR,Z
+!byte $10,$36,$BE               ; EORR DPR,E
+!byte $10,$36,$BF               ; EORR DPR,F
+!byte $10,$36,$C1               ; EORR Z,X
+!byte $10,$36,$C2               ; EORR Z,Y
+!byte $10,$36,$C3               ; EORR Z,U
+!byte $10,$36,$C4               ; EORR Z,S
+!byte $10,$36,$C5               ; EORR Z,PC
+!byte $10,$36,$C6               ; EORR Z,W
+!byte $10,$36,$C7               ; EORR Z,V
+!byte $10,$36,$C8               ; EORR Z,A
+!byte $10,$36,$C9               ; EORR Z,B
+!byte $10,$36,$CA               ; EORR Z,CCR
+!byte $10,$36,$CB               ; EORR Z,DPR
+!byte $10,$36,$CC               ; EORR Z,Z
+!byte $10,$36,$CD               ; EORR Z,Z
+!byte $10,$36,$CE               ; EORR Z,E
+!byte $10,$36,$CF               ; EORR Z,F
+!byte $10,$36,$D1               ; EORR Z,X
+!byte $10,$36,$D2               ; EORR Z,Y
+!byte $10,$36,$D3               ; EORR Z,U
+!byte $10,$36,$D4               ; EORR Z,S
+!byte $10,$36,$D5               ; EORR Z,PC
+!byte $10,$36,$D6               ; EORR Z,W
+!byte $10,$36,$D7               ; EORR Z,V
+!byte $10,$36,$D8               ; EORR Z,A
+!byte $10,$36,$D9               ; EORR Z,B
+!byte $10,$36,$DA               ; EORR Z,CCR
+!byte $10,$36,$DB               ; EORR Z,DPR
+!byte $10,$36,$DC               ; EORR Z,Z
+!byte $10,$36,$DD               ; EORR Z,Z
+!byte $10,$36,$DE               ; EORR Z,E
+!byte $10,$36,$DF               ; EORR Z,F
+!byte $10,$36,$E1               ; EORR E,X
+!byte $10,$36,$E2               ; EORR E,Y
+!byte $10,$36,$E3               ; EORR E,U
+!byte $10,$36,$E4               ; EORR E,S
+!byte $10,$36,$E5               ; EORR E,PC
+!byte $10,$36,$E6               ; EORR E,W
+!byte $10,$36,$E7               ; EORR E,V
+!byte $10,$36,$E8               ; EORR E,A
+!byte $10,$36,$E9               ; EORR E,B
+!byte $10,$36,$EA               ; EORR E,CCR
+!byte $10,$36,$EB               ; EORR E,DPR
+!byte $10,$36,$EC               ; EORR E,Z
+!byte $10,$36,$ED               ; EORR E,Z
+!byte $10,$36,$EE               ; EORR E,E
+!byte $10,$36,$EF               ; EORR E,F
+!byte $10,$36,$F1               ; EORR F,X
+!byte $10,$36,$F2               ; EORR F,Y
+!byte $10,$36,$F3               ; EORR F,U
+!byte $10,$36,$F4               ; EORR F,S
+!byte $10,$36,$F5               ; EORR F,PC
+!byte $10,$36,$F6               ; EORR F,W
+!byte $10,$36,$F7               ; EORR F,V
+!byte $10,$36,$F8               ; EORR F,A
+!byte $10,$36,$F9               ; EORR F,B
+!byte $10,$36,$FA               ; EORR F,CCR
+!byte $10,$36,$FB               ; EORR F,DPR
+!byte $10,$36,$FC               ; EORR F,Z
+!byte $10,$36,$FD               ; EORR F,Z
+!byte $10,$36,$FE               ; EORR F,E
+!byte $10,$36,$FF               ; EORR F,F
+!byte $10,$37,$00               ; CMPR D,D
+!byte $10,$37,$01               ; CMPR D,X
+!byte $10,$37,$02               ; CMPR D,Y
+!byte $10,$37,$03               ; CMPR D,U
+!byte $10,$37,$04               ; CMPR D,S
+!byte $10,$37,$05               ; CMPR D,PC
+!byte $10,$37,$06               ; CMPR D,W
+!byte $10,$37,$07               ; CMPR D,V
+!byte $10,$37,$08               ; CMPR D,A
+!byte $10,$37,$09               ; CMPR D,B
+!byte $10,$37,$0A               ; CMPR D,CCR
+!byte $10,$37,$0B               ; CMPR D,DPR
+!byte $10,$37,$0C               ; CMPR D,Z
+!byte $10,$37,$0D               ; CMPR D,Z
+!byte $10,$37,$0E               ; CMPR D,E
+!byte $10,$37,$0F               ; CMPR D,F
+!byte $10,$37,$10               ; CMPR X,D
+!byte $10,$37,$11               ; CMPR X,X
+!byte $10,$37,$12               ; CMPR X,Y
+!byte $10,$37,$13               ; CMPR X,U
+!byte $10,$37,$14               ; CMPR X,S
+!byte $10,$37,$15               ; CMPR X,PC
+!byte $10,$37,$16               ; CMPR X,W
+!byte $10,$37,$17               ; CMPR X,V
+!byte $10,$37,$18               ; CMPR X,A
+!byte $10,$37,$19               ; CMPR X,B
+!byte $10,$37,$1A               ; CMPR X,CCR
+!byte $10,$37,$1B               ; CMPR X,DPR
+!byte $10,$37,$1C               ; CMPR X,Z
+!byte $10,$37,$1D               ; CMPR X,Z
+!byte $10,$37,$1E               ; CMPR X,E
+!byte $10,$37,$1F               ; CMPR X,F
+!byte $10,$37,$20               ; CMPR Y,D
+!byte $10,$37,$21               ; CMPR Y,X
+!byte $10,$37,$22               ; CMPR Y,Y
+!byte $10,$37,$23               ; CMPR Y,U
+!byte $10,$37,$24               ; CMPR Y,S
+!byte $10,$37,$25               ; CMPR Y,PC
+!byte $10,$37,$26               ; CMPR Y,W
+!byte $10,$37,$27               ; CMPR Y,V
+!byte $10,$37,$28               ; CMPR Y,A
+!byte $10,$37,$29               ; CMPR Y,B
+!byte $10,$37,$2A               ; CMPR Y,CCR
+!byte $10,$37,$2B               ; CMPR Y,DPR
+!byte $10,$37,$2C               ; CMPR Y,Z
+!byte $10,$37,$2D               ; CMPR Y,Z
+!byte $10,$37,$2E               ; CMPR Y,E
+!byte $10,$37,$2F               ; CMPR Y,F
+!byte $10,$37,$30               ; CMPR U,D
+!byte $10,$37,$31               ; CMPR U,X
+!byte $10,$37,$32               ; CMPR U,Y
+!byte $10,$37,$33               ; CMPR U,U
+!byte $10,$37,$34               ; CMPR U,S
+!byte $10,$37,$35               ; CMPR U,PC
+!byte $10,$37,$36               ; CMPR U,W
+!byte $10,$37,$37               ; CMPR U,V
+!byte $10,$37,$38               ; CMPR U,A
+!byte $10,$37,$39               ; CMPR U,B
+!byte $10,$37,$3A               ; CMPR U,CCR
+!byte $10,$37,$3B               ; CMPR U,DPR
+!byte $10,$37,$3C               ; CMPR U,Z
+!byte $10,$37,$3D               ; CMPR U,Z
+!byte $10,$37,$3E               ; CMPR U,E
+!byte $10,$37,$3F               ; CMPR U,F
+!byte $10,$37,$40               ; CMPR S,D
+!byte $10,$37,$41               ; CMPR S,X
+!byte $10,$37,$42               ; CMPR S,Y
+!byte $10,$37,$43               ; CMPR S,U
+!byte $10,$37,$44               ; CMPR S,S
+!byte $10,$37,$45               ; CMPR S,PC
+!byte $10,$37,$46               ; CMPR S,W
+!byte $10,$37,$47               ; CMPR S,V
+!byte $10,$37,$48               ; CMPR S,A
+!byte $10,$37,$49               ; CMPR S,B
+!byte $10,$37,$4A               ; CMPR S,CCR
+!byte $10,$37,$4B               ; CMPR S,DPR
+!byte $10,$37,$4C               ; CMPR S,Z
+!byte $10,$37,$4D               ; CMPR S,Z
+!byte $10,$37,$4E               ; CMPR S,E
+!byte $10,$37,$4F               ; CMPR S,F
+!byte $10,$37,$50               ; CMPR PC,D
+!byte $10,$37,$51               ; CMPR PC,X
+!byte $10,$37,$52               ; CMPR PC,Y
+!byte $10,$37,$53               ; CMPR PC,U
+!byte $10,$37,$54               ; CMPR PC,S
+!byte $10,$37,$55               ; CMPR PC,PC
+!byte $10,$37,$56               ; CMPR PC,W
+!byte $10,$37,$57               ; CMPR PC,V
+!byte $10,$37,$58               ; CMPR PC,A
+!byte $10,$37,$59               ; CMPR PC,B
+!byte $10,$37,$5A               ; CMPR PC,CCR
+!byte $10,$37,$5B               ; CMPR PC,DPR
+!byte $10,$37,$5C               ; CMPR PC,Z
+!byte $10,$37,$5D               ; CMPR PC,Z
+!byte $10,$37,$5E               ; CMPR PC,E
+!byte $10,$37,$5F               ; CMPR PC,F
+!byte $10,$37,$60               ; CMPR W,D
+!byte $10,$37,$61               ; CMPR W,X
+!byte $10,$37,$62               ; CMPR W,Y
+!byte $10,$37,$63               ; CMPR W,U
+!byte $10,$37,$64               ; CMPR W,S
+!byte $10,$37,$65               ; CMPR W,PC
+!byte $10,$37,$66               ; CMPR W,W
+!byte $10,$37,$67               ; CMPR W,V
+!byte $10,$37,$68               ; CMPR W,A
+!byte $10,$37,$69               ; CMPR W,B
+!byte $10,$37,$6A               ; CMPR W,CCR
+!byte $10,$37,$6B               ; CMPR W,DPR
+!byte $10,$37,$6C               ; CMPR W,Z
+!byte $10,$37,$6D               ; CMPR W,Z
+!byte $10,$37,$6E               ; CMPR W,E
+!byte $10,$37,$6F               ; CMPR W,F
+!byte $10,$37,$70               ; CMPR V,D
+!byte $10,$37,$71               ; CMPR V,X
+!byte $10,$37,$72               ; CMPR V,Y
+!byte $10,$37,$73               ; CMPR V,U
+!byte $10,$37,$74               ; CMPR V,S
+!byte $10,$37,$75               ; CMPR V,PC
+!byte $10,$37,$76               ; CMPR V,W
+!byte $10,$37,$77               ; CMPR V,V
+!byte $10,$37,$78               ; CMPR V,A
+!byte $10,$37,$79               ; CMPR V,B
+!byte $10,$37,$7A               ; CMPR V,CCR
+!byte $10,$37,$7B               ; CMPR V,DPR
+!byte $10,$37,$7C               ; CMPR V,Z
+!byte $10,$37,$7D               ; CMPR V,Z
+!byte $10,$37,$7E               ; CMPR V,E
+!byte $10,$37,$7F               ; CMPR V,F
+!byte $10,$37,$80               ; CMPR A,D
+!byte $10,$37,$81               ; CMPR A,X
+!byte $10,$37,$82               ; CMPR A,Y
+!byte $10,$37,$83               ; CMPR A,U
+!byte $10,$37,$84               ; CMPR A,S
+!byte $10,$37,$85               ; CMPR A,PC
+!byte $10,$37,$86               ; CMPR A,W
+!byte $10,$37,$87               ; CMPR A,V
+!byte $10,$37,$88               ; CMPR A,A
+!byte $10,$37,$89               ; CMPR A,B
+!byte $10,$37,$8A               ; CMPR A,CCR
+!byte $10,$37,$8B               ; CMPR A,DPR
+!byte $10,$37,$8C               ; CMPR A,Z
+!byte $10,$37,$8D               ; CMPR A,Z
+!byte $10,$37,$8E               ; CMPR A,E
+!byte $10,$37,$8F               ; CMPR A,F
+!byte $10,$37,$91               ; CMPR B,X
+!byte $10,$37,$92               ; CMPR B,Y
+!byte $10,$37,$93               ; CMPR B,U
+!byte $10,$37,$94               ; CMPR B,S
+!byte $10,$37,$95               ; CMPR B,PC
+!byte $10,$37,$96               ; CMPR B,W
+!byte $10,$37,$97               ; CMPR B,V
+!byte $10,$37,$98               ; CMPR B,A
+!byte $10,$37,$99               ; CMPR B,B
+!byte $10,$37,$9A               ; CMPR B,CCR
+!byte $10,$37,$9B               ; CMPR B,DPR
+!byte $10,$37,$9C               ; CMPR B,Z
+!byte $10,$37,$9D               ; CMPR B,Z
+!byte $10,$37,$9E               ; CMPR B,E
+!byte $10,$37,$9F               ; CMPR B,F
+!byte $10,$37,$A1               ; CMPR CCR,X
+!byte $10,$37,$A2               ; CMPR CCR,Y
+!byte $10,$37,$A3               ; CMPR CCR,U
+!byte $10,$37,$A4               ; CMPR CCR,S
+!byte $10,$37,$A5               ; CMPR CCR,PC
+!byte $10,$37,$A6               ; CMPR CCR,W
+!byte $10,$37,$A7               ; CMPR CCR,V
+!byte $10,$37,$A8               ; CMPR CCR,A
+!byte $10,$37,$A9               ; CMPR CCR,B
+!byte $10,$37,$AA               ; CMPR CCR,CCR
+!byte $10,$37,$AB               ; CMPR CCR,DPR
+!byte $10,$37,$AC               ; CMPR CCR,Z
+!byte $10,$37,$AD               ; CMPR CCR,Z
+!byte $10,$37,$AE               ; CMPR CCR,E
+!byte $10,$37,$AF               ; CMPR CCR,F
+!byte $10,$37,$B1               ; CMPR DPR,X
+!byte $10,$37,$B2               ; CMPR DPR,Y
+!byte $10,$37,$B3               ; CMPR DPR,U
+!byte $10,$37,$B4               ; CMPR DPR,S
+!byte $10,$37,$B5               ; CMPR DPR,PC
+!byte $10,$37,$B6               ; CMPR DPR,W
+!byte $10,$37,$B7               ; CMPR DPR,V
+!byte $10,$37,$B8               ; CMPR DPR,A
+!byte $10,$37,$B9               ; CMPR DPR,B
+!byte $10,$37,$BA               ; CMPR DPR,CCR
+!byte $10,$37,$BB               ; CMPR DPR,DPR
+!byte $10,$37,$BC               ; CMPR DPR,Z
+!byte $10,$37,$BD               ; CMPR DPR,Z
+!byte $10,$37,$BE               ; CMPR DPR,E
+!byte $10,$37,$BF               ; CMPR DPR,F
+!byte $10,$37,$C1               ; CMPR Z,X
+!byte $10,$37,$C2               ; CMPR Z,Y
+!byte $10,$37,$C3               ; CMPR Z,U
+!byte $10,$37,$C4               ; CMPR Z,S
+!byte $10,$37,$C5               ; CMPR Z,PC
+!byte $10,$37,$C6               ; CMPR Z,W
+!byte $10,$37,$C7               ; CMPR Z,V
+!byte $10,$37,$C8               ; CMPR Z,A
+!byte $10,$37,$C9               ; CMPR Z,B
+!byte $10,$37,$CA               ; CMPR Z,CCR
+!byte $10,$37,$CB               ; CMPR Z,DPR
+!byte $10,$37,$CC               ; CMPR Z,Z
+!byte $10,$37,$CD               ; CMPR Z,Z
+!byte $10,$37,$CE               ; CMPR Z,E
+!byte $10,$37,$CF               ; CMPR Z,F
+!byte $10,$37,$D1               ; CMPR Z,X
+!byte $10,$37,$D2               ; CMPR Z,Y
+!byte $10,$37,$D3               ; CMPR Z,U
+!byte $10,$37,$D4               ; CMPR Z,S
+!byte $10,$37,$D5               ; CMPR Z,PC
+!byte $10,$37,$D6               ; CMPR Z,W
+!byte $10,$37,$D7               ; CMPR Z,V
+!byte $10,$37,$D8               ; CMPR Z,A
+!byte $10,$37,$D9               ; CMPR Z,B
+!byte $10,$37,$DA               ; CMPR Z,CCR
+!byte $10,$37,$DB               ; CMPR Z,DPR
+!byte $10,$37,$DC               ; CMPR Z,Z
+!byte $10,$37,$DD               ; CMPR Z,Z
+!byte $10,$37,$DE               ; CMPR Z,E
+!byte $10,$37,$DF               ; CMPR Z,F
+!byte $10,$37,$E1               ; CMPR E,X
+!byte $10,$37,$E2               ; CMPR E,Y
+!byte $10,$37,$E3               ; CMPR E,U
+!byte $10,$37,$E4               ; CMPR E,S
+!byte $10,$37,$E5               ; CMPR E,PC
+!byte $10,$37,$E6               ; CMPR E,W
+!byte $10,$37,$E7               ; CMPR E,V
+!byte $10,$37,$E8               ; CMPR E,A
+!byte $10,$37,$E9               ; CMPR E,B
+!byte $10,$37,$EA               ; CMPR E,CCR
+!byte $10,$37,$EB               ; CMPR E,DPR
+!byte $10,$37,$EC               ; CMPR E,Z
+!byte $10,$37,$ED               ; CMPR E,Z
+!byte $10,$37,$EE               ; CMPR E,E
+!byte $10,$37,$EF               ; CMPR E,F
+!byte $10,$37,$F1               ; CMPR F,X
+!byte $10,$37,$F2               ; CMPR F,Y
+!byte $10,$37,$F3               ; CMPR F,U
+!byte $10,$37,$F4               ; CMPR F,S
+!byte $10,$37,$F5               ; CMPR F,PC
+!byte $10,$37,$F6               ; CMPR F,W
+!byte $10,$37,$F7               ; CMPR F,V
+!byte $10,$37,$F8               ; CMPR F,A
+!byte $10,$37,$F9               ; CMPR F,B
+!byte $10,$37,$FA               ; CMPR F,CCR
+!byte $10,$37,$FB               ; CMPR F,DPR
+!byte $10,$37,$FC               ; CMPR F,Z
+!byte $10,$37,$FD               ; CMPR F,Z
+!byte $10,$37,$FE               ; CMPR F,E
+!byte $10,$37,$FF               ; CMPR F,F
 
-    !byte $10,$32,$0C                ; LEAS $0C,X
-    !byte $10,$32,$15                ; LEAS -$0B,X
-    !byte $10,$32,$2C                ; LEAS $0C,Y
-    !byte $10,$32,$35                ; LEAS -$0B,Y
-    !byte $10,$32,$4C                ; LEAS $0C,U
-    !byte $10,$32,$55                ; LEAS -$0B,U
-    !byte $10,$32,$6C                ; LEAS $0C,S
-    !byte $10,$32,$75                ; LEAS -$0B,S
-    !byte $10,$32,$80                ; LEAS ,X+
-    !byte $10,$32,$81                ; LEAS ,X++
-    !byte $10,$32,$82                ; LEAS ,-X
-    !byte $10,$32,$83                ; LEAS ,--X
-    !byte $10,$32,$84                ; LEAS ,X
-    !byte $10,$32,$85                ; LEAS B,X
-    !byte $10,$32,$86                ; LEAS A,X
-    !byte $10,$32,$87                ; LEAS ,X
-    !byte $10,$32,$88,$60            ; LEAS $60,X
-    !byte $10,$32,$88,$FF            ; LEAS -$01,X
-    !byte $10,$32,$89,$10,$00        ; LEAS $1000,X
-    !byte $10,$32,$89,$DE,$AD        ; LEAS $DEAD,X
-    !byte $10,$32,$8A                ; LEAS ,PClo
-    !byte $10,$32,$8B                ; LEAS D,X
-    !byte $10,$32,$8C,$60            ; LEAS $60,PC
-    !byte $10,$32,$8C,$FF            ; LEAS -$01,PC
-    !byte $10,$32,$8D,$10,$00        ; LEAS $1000,PC
-    !byte $10,$32,$8D,$DE,$AD        ; LEAS $DEAD,PC
-    !byte $10,$32,$8F,$DE,$AD        ; LEAS ,$DEAD
-    !byte $10,$32,$90                ; LEAS [,X+]
-    !byte $10,$32,$91                ; LEAS [,X++]
-    !byte $10,$32,$92                ; LEAS [,-X]
-    !byte $10,$32,$93                ; LEAS [,--X]
-    !byte $10,$32,$94                ; LEAS [,X]
-    !byte $10,$32,$95                ; LEAS [B,X]
-    !byte $10,$32,$96                ; LEAS [A,X]
-    !byte $10,$32,$97                ; LEAS [,X]
-    !byte $10,$32,$98,$60            ; LEAS [$60,X]
-    !byte $10,$32,$98,$FF            ; LEAS [-$01,X]
-    !byte $10,$32,$99,$DE,$10        ; LEAS [$DE10,X]
-    !byte $10,$32,$99,$DE,$AD        ; LEAS [$DEAD,X]
-    !byte $10,$32,$9A                ; LEAS [,PClo]
-    !byte $10,$32,$9B                ; LEAS [D,X]
-    !byte $10,$32,$9C,$60            ; LEAS [$60,PC]
-    !byte $10,$32,$9C,$FF            ; LEAS [-$01,PC]
-    !byte $10,$32,$9D,$10,$00        ; LEAS [$1000,PC]
-    !byte $10,$32,$9D,$DE,$AD        ; LEAS [$DEAD,PC]
-    !byte $10,$32,$9F,$DE,$AD        ; LEAS [$DEAD]
-    !byte $10,$32,$A0                ; LEAS ,Y+
-    !byte $10,$32,$A1                ; LEAS ,Y++
-    !byte $10,$32,$A2                ; LEAS ,-Y
-    !byte $10,$32,$A3                ; LEAS ,--Y
-    !byte $10,$32,$A4                ; LEAS ,Y
-    !byte $10,$32,$A5                ; LEAS B,Y
-    !byte $10,$32,$A6                ; LEAS A,Y
-    !byte $10,$32,$A7                ; LEAS ,Y
-    !byte $10,$32,$A8,$60            ; LEAS $60,Y
-    !byte $10,$32,$A8,$FF            ; LEAS -$01,Y
-    !byte $10,$32,$A9,$10,$00        ; LEAS $1000,Y
-    !byte $10,$32,$A9,$DE,$AD        ; LEAS $DEAD,Y
-    !byte $10,$32,$AA                ; LEAS ,PClo
-    !byte $10,$32,$AB                ; LEAS D,Y
-    !byte $10,$32,$AC,$60            ; LEAS $60,PC
-    !byte $10,$32,$AC,$FF            ; LEAS -$01,PC
-    !byte $10,$32,$AD,$10,$00        ; LEAS $1000,PC
-    !byte $10,$32,$AD,$DE,$AD        ; LEAS $DEAD,PC
-    !byte $10,$32,$AF,$DE,$AD        ; LEAS ,$DEAD
-    !byte $10,$32,$B0                ; LEAS [,Y+]
-    !byte $10,$32,$B1                ; LEAS [,Y++]
-    !byte $10,$32,$B2                ; LEAS [,-Y]
-    !byte $10,$32,$B3                ; LEAS [,--Y]
-    !byte $10,$32,$B4                ; LEAS [,Y]
-    !byte $10,$32,$B5                ; LEAS [B,Y]
-    !byte $10,$32,$B6                ; LEAS [A,Y]
-    !byte $10,$32,$B7                ; LEAS [,Y]
-    !byte $10,$32,$B8,$60            ; LEAS [$60,Y]
-    !byte $10,$32,$B8,$FF            ; LEAS [-$01,Y]
-    !byte $10,$32,$B9,$DE,$10        ; LEAS [$DE10,Y]
-    !byte $10,$32,$B9,$DE,$AD        ; LEAS [$DEAD,Y]
-    !byte $10,$32,$BA                ; LEAS [,PClo]
-    !byte $10,$32,$BB                ; LEAS [D,Y]
-    !byte $10,$32,$BC,$60            ; LEAS [$60,PC]
-    !byte $10,$32,$BC,$FF            ; LEAS [-$01,PC]
-    !byte $10,$32,$BD,$10,$00        ; LEAS [$1000,PC]
-    !byte $10,$32,$BD,$DE,$AD        ; LEAS [$DEAD,PC]
-    !byte $10,$32,$BF,$DE,$AD        ; LEAS [$DEAD]
-    !byte $10,$32,$C0                ; LEAS ,U+
-    !byte $10,$32,$C1                ; LEAS ,U++
-    !byte $10,$32,$C2                ; LEAS ,-U
-    !byte $10,$32,$C3                ; LEAS ,--U
-    !byte $10,$32,$C4                ; LEAS ,U
-    !byte $10,$32,$C5                ; LEAS B,U
-    !byte $10,$32,$C6                ; LEAS A,U
-    !byte $10,$32,$C7                ; LEAS ,U
-    !byte $10,$32,$C8,$60            ; LEAS $60,U
-    !byte $10,$32,$C8,$FF            ; LEAS -$01,U
-    !byte $10,$32,$C9,$10,$00        ; LEAS $1000,U
-    !byte $10,$32,$C9,$DE,$AD        ; LEAS $DEAD,U
-    !byte $10,$32,$CA                ; LEAS ,PClo
-    !byte $10,$32,$CB                ; LEAS D,U
-    !byte $10,$32,$CC,$60            ; LEAS $60,PC
-    !byte $10,$32,$CC,$FF            ; LEAS -$01,PC
-    !byte $10,$32,$CD,$10,$00        ; LEAS $1000,PC
-    !byte $10,$32,$CD,$DE,$AD        ; LEAS $DEAD,PC
-    !byte $10,$32,$CF,$DE,$AD        ; LEAS ,$DEAD
-    !byte $10,$32,$D0                ; LEAS [,U+]
-    !byte $10,$32,$D1                ; LEAS [,U++]
-    !byte $10,$32,$D2                ; LEAS [,-U]
-    !byte $10,$32,$D3                ; LEAS [,--U]
-    !byte $10,$32,$D4                ; LEAS [,U]
-    !byte $10,$32,$D5                ; LEAS [B,U]
-    !byte $10,$32,$D6                ; LEAS [A,U]
-    !byte $10,$32,$D7                ; LEAS [,U]
-    !byte $10,$32,$D8,$60            ; LEAS [$60,U]
-    !byte $10,$32,$D8,$FF            ; LEAS [-$01,U]
-    !byte $10,$32,$D9,$DE,$10        ; LEAS [$DE10,U]
-    !byte $10,$32,$D9,$DE,$AD        ; LEAS [$DEAD,U]
-    !byte $10,$32,$DA                ; LEAS [,PClo]
-    !byte $10,$32,$DB                ; LEAS [D,U]
-    !byte $10,$32,$DC,$60            ; LEAS [$60,PC]
-    !byte $10,$32,$DC,$FF            ; LEAS [-$01,PC]
-    !byte $10,$32,$DD,$10,$00        ; LEAS [$1000,PC]
-    !byte $10,$32,$DD,$DE,$AD        ; LEAS [$DEAD,PC]
-    !byte $10,$32,$DF,$DE,$AD        ; LEAS [$DEAD]
-    !byte $10,$32,$E0                ; LEAS ,S+
-    !byte $10,$32,$E1                ; LEAS ,S++
-    !byte $10,$32,$E2                ; LEAS ,-S
-    !byte $10,$32,$E3                ; LEAS ,--S
-    !byte $10,$32,$E4                ; LEAS ,S
-    !byte $10,$32,$E5                ; LEAS B,S
-    !byte $10,$32,$E6                ; LEAS A,S
-    !byte $10,$32,$E7                ; LEAS ,S
-    !byte $10,$32,$E8,$60            ; LEAS $60,S
-    !byte $10,$32,$E8,$FF            ; LEAS -$01,S
-    !byte $10,$32,$E9,$10,$00        ; LEAS $1000,S
-    !byte $10,$32,$E9,$DE,$AD        ; LEAS $DEAD,S
-    !byte $10,$32,$EA                ; LEAS ,PClo
-    !byte $10,$32,$EB                ; LEAS D,S
-    !byte $10,$32,$EC,$60            ; LEAS $60,PC
-    !byte $10,$32,$EC,$FF            ; LEAS -$01,PC
-    !byte $10,$32,$ED,$10,$00        ; LEAS $1000,PC
-    !byte $10,$32,$ED,$DE,$AD        ; LEAS $DEAD,PC
-    !byte $10,$32,$EF,$DE,$AD        ; LEAS ,$DEAD
-    !byte $10,$32,$F0                ; LEAS [,S+]
-    !byte $10,$32,$F1                ; LEAS [,S++]
-    !byte $10,$32,$F2                ; LEAS [,-S]
-    !byte $10,$32,$F3                ; LEAS [,--S]
-    !byte $10,$32,$F4                ; LEAS [,S]
-    !byte $10,$32,$F5                ; LEAS [B,S]
-    !byte $10,$32,$F6                ; LEAS [A,S]
-    !byte $10,$32,$F7                ; LEAS [,S]
-    !byte $10,$32,$F8,$60            ; LEAS [$60,S]
-    !byte $10,$32,$F8,$FF            ; LEAS [-$01,S]
-    !byte $10,$32,$F9,$DE,$10        ; LEAS [$DE10,S]
-    !byte $10,$32,$F9,$DE,$AD        ; LEAS [$DEAD,S]
-    !byte $10,$32,$FA                ; LEAS [,PClo]
-    !byte $10,$32,$FB                ; LEAS [D,S]
-    !byte $10,$32,$FC,$60            ; LEAS [$60,PC]
-    !byte $10,$32,$FC,$FF            ; LEAS [-$01,PC]
-    !byte $10,$32,$FD,$10,$00        ; LEAS [$1000,PC]
-    !byte $10,$32,$FD,$DE,$AD        ; LEAS [$DEAD,PC]
-    !byte $10,$32,$FF,$DE,$AD        ; LEAS [$DEAD]
-    !byte $10,$33,$0C                ; LEAU $0C,X
-    !byte $10,$33,$15                ; LEAU -$0B,X
-    !byte $10,$33,$2C                ; LEAU $0C,Y
-    !byte $10,$33,$35                ; LEAU -$0B,Y
-    !byte $10,$33,$4C                ; LEAU $0C,U
-    !byte $10,$33,$55                ; LEAU -$0B,U
-    !byte $10,$33,$6C                ; LEAU $0C,S
-    !byte $10,$33,$75                ; LEAU -$0B,S
-    !byte $10,$33,$80                ; LEAU ,X+
-    !byte $10,$33,$81                ; LEAU ,X++
-    !byte $10,$33,$82                ; LEAU ,-X
-    !byte $10,$33,$83                ; LEAU ,--X
-    !byte $10,$33,$84                ; LEAU ,X
-    !byte $10,$33,$85                ; LEAU B,X
-    !byte $10,$33,$86                ; LEAU A,X
-    !byte $10,$33,$87                ; LEAU ,X
-    !byte $10,$33,$88,$60            ; LEAU $60,X
-    !byte $10,$33,$88,$FF            ; LEAU -$01,X
-    !byte $10,$33,$89,$10,$00        ; LEAU $1000,X
-    !byte $10,$33,$89,$DE,$AD        ; LEAU $DEAD,X
-    !byte $10,$33,$8A                ; LEAU ,PClo
-    !byte $10,$33,$8B                ; LEAU D,X
-    !byte $10,$33,$8C,$60            ; LEAU $60,PC
-    !byte $10,$33,$8C,$FF            ; LEAU -$01,PC
-    !byte $10,$33,$8D,$10,$00        ; LEAU $1000,PC
-    !byte $10,$33,$8D,$DE,$AD        ; LEAU $DEAD,PC
-    !byte $10,$33,$8F,$DE,$AD        ; LEAU ,$DEAD
-    !byte $10,$33,$90                ; LEAU [,X+]
-    !byte $10,$33,$91                ; LEAU [,X++]
-    !byte $10,$33,$92                ; LEAU [,-X]
-    !byte $10,$33,$93                ; LEAU [,--X]
-    !byte $10,$33,$94                ; LEAU [,X]
-    !byte $10,$33,$95                ; LEAU [B,X]
-    !byte $10,$33,$96                ; LEAU [A,X]
-    !byte $10,$33,$97                ; LEAU [,X]
-    !byte $10,$33,$98,$60            ; LEAU [$60,X]
-    !byte $10,$33,$98,$FF            ; LEAU [-$01,X]
-    !byte $10,$33,$99,$DE,$10        ; LEAU [$DE10,X]
-    !byte $10,$33,$99,$DE,$AD        ; LEAU [$DEAD,X]
-    !byte $10,$33,$9A                ; LEAU [,PClo]
-    !byte $10,$33,$9B                ; LEAU [D,X]
-    !byte $10,$33,$9C,$60            ; LEAU [$60,PC]
-    !byte $10,$33,$9C,$FF            ; LEAU [-$01,PC]
-    !byte $10,$33,$9D,$10,$00        ; LEAU [$1000,PC]
-    !byte $10,$33,$9D,$DE,$AD        ; LEAU [$DEAD,PC]
-    !byte $10,$33,$9F,$DE,$AD        ; LEAU [$DEAD]
-    !byte $10,$33,$A0                ; LEAU ,Y+
-    !byte $10,$33,$A1                ; LEAU ,Y++
-    !byte $10,$33,$A2                ; LEAU ,-Y
-    !byte $10,$33,$A3                ; LEAU ,--Y
-    !byte $10,$33,$A4                ; LEAU ,Y
-    !byte $10,$33,$A5                ; LEAU B,Y
-    !byte $10,$33,$A6                ; LEAU A,Y
-    !byte $10,$33,$A7                ; LEAU ,Y
-    !byte $10,$33,$A8,$60            ; LEAU $60,Y
-    !byte $10,$33,$A8,$FF            ; LEAU -$01,Y
-    !byte $10,$33,$A9,$10,$00        ; LEAU $1000,Y
-    !byte $10,$33,$A9,$DE,$AD        ; LEAU $DEAD,Y
-    !byte $10,$33,$AA                ; LEAU ,PClo
-    !byte $10,$33,$AB                ; LEAU D,Y
-    !byte $10,$33,$AC,$60            ; LEAU $60,PC
-    !byte $10,$33,$AC,$FF            ; LEAU -$01,PC
-    !byte $10,$33,$AD,$10,$00        ; LEAU $1000,PC
-    !byte $10,$33,$AD,$DE,$AD        ; LEAU $DEAD,PC
-    !byte $10,$33,$AF,$DE,$AD        ; LEAU ,$DEAD
-    !byte $10,$33,$B0                ; LEAU [,Y+]
-    !byte $10,$33,$B1                ; LEAU [,Y++]
-    !byte $10,$33,$B2                ; LEAU [,-Y]
-    !byte $10,$33,$B3                ; LEAU [,--Y]
-    !byte $10,$33,$B4                ; LEAU [,Y]
-    !byte $10,$33,$B5                ; LEAU [B,Y]
-    !byte $10,$33,$B6                ; LEAU [A,Y]
-    !byte $10,$33,$B7                ; LEAU [,Y]
-    !byte $10,$33,$B8,$60            ; LEAU [$60,Y]
-    !byte $10,$33,$B8,$FF            ; LEAU [-$01,Y]
-    !byte $10,$33,$B9,$DE,$10        ; LEAU [$DE10,Y]
-    !byte $10,$33,$B9,$DE,$AD        ; LEAU [$DEAD,Y]
-    !byte $10,$33,$BA                ; LEAU [,PClo]
-    !byte $10,$33,$BB                ; LEAU [D,Y]
-    !byte $10,$33,$BC,$60            ; LEAU [$60,PC]
-    !byte $10,$33,$BC,$FF            ; LEAU [-$01,PC]
-    !byte $10,$33,$BD,$10,$00        ; LEAU [$1000,PC]
-    !byte $10,$33,$BD,$DE,$AD        ; LEAU [$DEAD,PC]
-    !byte $10,$33,$BF,$DE,$AD        ; LEAU [$DEAD]
-    !byte $10,$33,$C0                ; LEAU ,U+
-    !byte $10,$33,$C1                ; LEAU ,U++
-    !byte $10,$33,$C2                ; LEAU ,-U
-    !byte $10,$33,$C3                ; LEAU ,--U
-    !byte $10,$33,$C4                ; LEAU ,U
-    !byte $10,$33,$C5                ; LEAU B,U
-    !byte $10,$33,$C6                ; LEAU A,U
-    !byte $10,$33,$C7                ; LEAU ,U
-    !byte $10,$33,$C8,$60            ; LEAU $60,U
-    !byte $10,$33,$C8,$FF            ; LEAU -$01,U
-    !byte $10,$33,$C9,$10,$00        ; LEAU $1000,U
-    !byte $10,$33,$C9,$DE,$AD        ; LEAU $DEAD,U
-    !byte $10,$33,$CA                ; LEAU ,PClo
-    !byte $10,$33,$CB                ; LEAU D,U
-    !byte $10,$33,$CC,$60            ; LEAU $60,PC
-    !byte $10,$33,$CC,$FF            ; LEAU -$01,PC
-    !byte $10,$33,$CD,$10,$00        ; LEAU $1000,PC
-    !byte $10,$33,$CD,$DE,$AD        ; LEAU $DEAD,PC
-    !byte $10,$33,$CF,$DE,$AD        ; LEAU ,$DEAD
-    !byte $10,$33,$D0                ; LEAU [,U+]
-    !byte $10,$33,$D1                ; LEAU [,U++]
-    !byte $10,$33,$D2                ; LEAU [,-U]
-    !byte $10,$33,$D3                ; LEAU [,--U]
-    !byte $10,$33,$D4                ; LEAU [,U]
-    !byte $10,$33,$D5                ; LEAU [B,U]
-    !byte $10,$33,$D6                ; LEAU [A,U]
-    !byte $10,$33,$D7                ; LEAU [,U]
-    !byte $10,$33,$D8,$60            ; LEAU [$60,U]
-    !byte $10,$33,$D8,$FF            ; LEAU [-$01,U]
-    !byte $10,$33,$D9,$DE,$10        ; LEAU [$DE10,U]
-    !byte $10,$33,$D9,$DE,$AD        ; LEAU [$DEAD,U]
-    !byte $10,$33,$DA                ; LEAU [,PClo]
-    !byte $10,$33,$DB                ; LEAU [D,U]
-    !byte $10,$33,$DC,$60            ; LEAU [$60,PC]
-    !byte $10,$33,$DC,$FF            ; LEAU [-$01,PC]
-    !byte $10,$33,$DD,$10,$00        ; LEAU [$1000,PC]
-    !byte $10,$33,$DD,$DE,$AD        ; LEAU [$DEAD,PC]
-    !byte $10,$33,$DF,$DE,$AD        ; LEAU [$DEAD]
-    !byte $10,$33,$E0                ; LEAU ,S+
-    !byte $10,$33,$E1                ; LEAU ,S++
-    !byte $10,$33,$E2                ; LEAU ,-S
-    !byte $10,$33,$E3                ; LEAU ,--S
-    !byte $10,$33,$E4                ; LEAU ,S
-    !byte $10,$33,$E5                ; LEAU B,S
-    !byte $10,$33,$E6                ; LEAU A,S
-    !byte $10,$33,$E7                ; LEAU ,S
-    !byte $10,$33,$E8,$60            ; LEAU $60,S
-    !byte $10,$33,$E8,$FF            ; LEAU -$01,S
-    !byte $10,$33,$E9,$10,$00        ; LEAU $1000,S
-    !byte $10,$33,$E9,$DE,$AD        ; LEAU $DEAD,S
-    !byte $10,$33,$EA                ; LEAU ,PClo
-    !byte $10,$33,$EB                ; LEAU D,S
-    !byte $10,$33,$EC,$60            ; LEAU $60,PC
-    !byte $10,$33,$EC,$FF            ; LEAU -$01,PC
-    !byte $10,$33,$ED,$10,$00        ; LEAU $1000,PC
-    !byte $10,$33,$ED,$DE,$AD        ; LEAU $DEAD,PC
-    !byte $10,$33,$EF,$DE,$AD        ; LEAU ,$DEAD
-    !byte $10,$33,$F0                ; LEAU [,S+]
-    !byte $10,$33,$F1                ; LEAU [,S++]
-    !byte $10,$33,$F2                ; LEAU [,-S]
-    !byte $10,$33,$F3                ; LEAU [,--S]
-    !byte $10,$33,$F4                ; LEAU [,S]
-    !byte $10,$33,$F5                ; LEAU [B,S]
-    !byte $10,$33,$F6                ; LEAU [A,S]
-    !byte $10,$33,$F7                ; LEAU [,S]
-    !byte $10,$33,$F8,$60            ; LEAU [$60,S]
-    !byte $10,$33,$F8,$FF            ; LEAU [-$01,S]
-    !byte $10,$33,$F9,$DE,$10        ; LEAU [$DE10,S]
-    !byte $10,$33,$F9,$DE,$AD        ; LEAU [$DEAD,S]
-    !byte $10,$33,$FA                ; LEAU [,PClo]
-    !byte $10,$33,$FB                ; LEAU [D,S]
-    !byte $10,$33,$FC,$60            ; LEAU [$60,PC]
-    !byte $10,$33,$FC,$FF            ; LEAU [-$01,PC]
-    !byte $10,$33,$FD,$10,$00        ; LEAU [$1000,PC]
-    !byte $10,$33,$FD,$DE,$AD        ; LEAU [$DEAD,PC]
-    !byte $10,$33,$FF,$DE,$AD        ; LEAU [$DEAD]
-    !byte $10,$34,$00                ; PSHS
-    !byte $10,$34,$01                ; PSHS CC
-    !byte $10,$34,$02                ; PSHS A
-    !byte $10,$34,$03                ; PSHS A,CC
-    !byte $10,$34,$04                ; PSHS B
-    !byte $10,$34,$05                ; PSHS B,CC
-    !byte $10,$34,$06                ; PSHS D
-    !byte $10,$34,$07                ; PSHS D,CC
-    !byte $10,$34,$08                ; PSHS DP
-    !byte $10,$34,$09                ; PSHS DP,CC
-    !byte $10,$34,$0A                ; PSHS DP,A
-    !byte $10,$34,$0B                ; PSHS DP,A,CC
-    !byte $10,$34,$0C                ; PSHS DP,B
-    !byte $10,$34,$0D                ; PSHS DP,B,CC
-    !byte $10,$34,$0E                ; PSHS DP,D
-    !byte $10,$34,$0F                ; PSHS DP,D,CC
-    !byte $10,$34,$10                ; PSHS X
-    !byte $10,$34,$11                ; PSHS X,CC
-    !byte $10,$34,$12                ; PSHS X,A
-    !byte $10,$34,$13                ; PSHS X,A,CC
-    !byte $10,$34,$14                ; PSHS X,B
-    !byte $10,$34,$15                ; PSHS X,B,CC
-    !byte $10,$34,$16                ; PSHS X,D
-    !byte $10,$34,$17                ; PSHS X,D,CC
-    !byte $10,$34,$18                ; PSHS X,DP
-    !byte $10,$34,$19                ; PSHS X,DP,CC
-    !byte $10,$34,$1A                ; PSHS X,DP,A
-    !byte $10,$34,$1B                ; PSHS X,DP,A,CC
-    !byte $10,$34,$1C                ; PSHS X,DP,B
-    !byte $10,$34,$1D                ; PSHS X,DP,B,CC
-    !byte $10,$34,$1E                ; PSHS X,DP,D
-    !byte $10,$34,$1F                ; PSHS X,DP,D,CC
-    !byte $10,$34,$20                ; PSHS Y
-    !byte $10,$34,$21                ; PSHS Y,CC
-    !byte $10,$34,$22                ; PSHS Y,A
-    !byte $10,$34,$23                ; PSHS Y,A,CC
-    !byte $10,$34,$24                ; PSHS Y,B
-    !byte $10,$34,$25                ; PSHS Y,B,CC
-    !byte $10,$34,$26                ; PSHS Y,D
-    !byte $10,$34,$27                ; PSHS Y,D,CC
-    !byte $10,$34,$28                ; PSHS Y,DP
-    !byte $10,$34,$29                ; PSHS Y,DP,CC
-    !byte $10,$34,$2A                ; PSHS Y,DP,A
-    !byte $10,$34,$2B                ; PSHS Y,DP,A,CC
-    !byte $10,$34,$2C                ; PSHS Y,DP,B
-    !byte $10,$34,$2D                ; PSHS Y,DP,B,CC
-    !byte $10,$34,$2E                ; PSHS Y,DP,D
-    !byte $10,$34,$2F                ; PSHS Y,DP,D,CC
-    !byte $10,$34,$30                ; PSHS Y,X
-    !byte $10,$34,$31                ; PSHS Y,X,CC
-    !byte $10,$34,$32                ; PSHS Y,X,A
-    !byte $10,$34,$33                ; PSHS Y,X,A,CC
-    !byte $10,$34,$34                ; PSHS Y,X,B
-    !byte $10,$34,$35                ; PSHS Y,X,B,CC
-    !byte $10,$34,$36                ; PSHS Y,X,D
-    !byte $10,$34,$37                ; PSHS Y,X,D,CC
-    !byte $10,$34,$38                ; PSHS Y,X,DP
-    !byte $10,$34,$39                ; PSHS Y,X,DP,CC
-    !byte $10,$34,$3A                ; PSHS Y,X,DP,A
-    !byte $10,$34,$3B                ; PSHS Y,X,DP,A,CC
-    !byte $10,$34,$3C                ; PSHS Y,X,DP,B
-    !byte $10,$34,$3D                ; PSHS Y,X,DP,B,CC
-    !byte $10,$34,$3E                ; PSHS Y,X,DP,D
-    !byte $10,$34,$3F                ; PSHS Y,X,DP,D,CC
-    !byte $10,$34,$40                ; PSHS U
-    !byte $10,$34,$41                ; PSHS U,CC
-    !byte $10,$34,$42                ; PSHS U,A
-    !byte $10,$34,$43                ; PSHS U,A,CC
-    !byte $10,$34,$44                ; PSHS U,B
-    !byte $10,$34,$45                ; PSHS U,B,CC
-    !byte $10,$34,$46                ; PSHS U,D
-    !byte $10,$34,$47                ; PSHS U,D,CC
-    !byte $10,$34,$48                ; PSHS U,DP
-    !byte $10,$34,$49                ; PSHS U,DP,CC
-    !byte $10,$34,$4A                ; PSHS U,DP,A
-    !byte $10,$34,$4B                ; PSHS U,DP,A,CC
-    !byte $10,$34,$4C                ; PSHS U,DP,B
-    !byte $10,$34,$4D                ; PSHS U,DP,B,CC
-    !byte $10,$34,$4E                ; PSHS U,DP,D
-    !byte $10,$34,$4F                ; PSHS U,DP,D,CC
-    !byte $10,$34,$50                ; PSHS U,X
-    !byte $10,$34,$51                ; PSHS U,X,CC
-    !byte $10,$34,$52                ; PSHS U,X,A
-    !byte $10,$34,$53                ; PSHS U,X,A,CC
-    !byte $10,$34,$54                ; PSHS U,X,B
-    !byte $10,$34,$55                ; PSHS U,X,B,CC
-    !byte $10,$34,$56                ; PSHS U,X,D
-    !byte $10,$34,$57                ; PSHS U,X,D,CC
-    !byte $10,$34,$58                ; PSHS U,X,DP
-    !byte $10,$34,$59                ; PSHS U,X,DP,CC
-    !byte $10,$34,$5A                ; PSHS U,X,DP,A
-    !byte $10,$34,$5B                ; PSHS U,X,DP,A,CC
-    !byte $10,$34,$5C                ; PSHS U,X,DP,B
-    !byte $10,$34,$5D                ; PSHS U,X,DP,B,CC
-    !byte $10,$34,$5E                ; PSHS U,X,DP,D
-    !byte $10,$34,$5F                ; PSHS U,X,DP,D,CC
-    !byte $10,$34,$60                ; PSHS U,Y
-    !byte $10,$34,$61                ; PSHS U,Y,CC
-    !byte $10,$34,$62                ; PSHS U,Y,A
-    !byte $10,$34,$63                ; PSHS U,Y,A,CC
-    !byte $10,$34,$64                ; PSHS U,Y,B
-    !byte $10,$34,$65                ; PSHS U,Y,B,CC
-    !byte $10,$34,$66                ; PSHS U,Y,D
-    !byte $10,$34,$67                ; PSHS U,Y,D,CC
-    !byte $10,$34,$68                ; PSHS U,Y,DP
-    !byte $10,$34,$69                ; PSHS U,Y,DP,CC
-    !byte $10,$34,$6A                ; PSHS U,Y,DP,A
-    !byte $10,$34,$6B                ; PSHS U,Y,DP,A,CC
-    !byte $10,$34,$6C                ; PSHS U,Y,DP,B
-    !byte $10,$34,$6D                ; PSHS U,Y,DP,B,CC
-    !byte $10,$34,$6E                ; PSHS U,Y,DP,D
-    !byte $10,$34,$6F                ; PSHS U,Y,DP,D,CC
-    !byte $10,$34,$70                ; PSHS U,Y,X
-    !byte $10,$34,$71                ; PSHS U,Y,X,CC
-    !byte $10,$34,$72                ; PSHS U,Y,X,A
-    !byte $10,$34,$73                ; PSHS U,Y,X,A,CC
-    !byte $10,$34,$74                ; PSHS U,Y,X,B
-    !byte $10,$34,$75                ; PSHS U,Y,X,B,CC
-    !byte $10,$34,$76                ; PSHS U,Y,X,D
-    !byte $10,$34,$77                ; PSHS U,Y,X,D,CC
-    !byte $10,$34,$78                ; PSHS U,Y,X,DP
-    !byte $10,$34,$79                ; PSHS U,Y,X,DP,CC
-    !byte $10,$34,$7A                ; PSHS U,Y,X,DP,A
-    !byte $10,$34,$7B                ; PSHS U,Y,X,DP,A,CC
-    !byte $10,$34,$7C                ; PSHS U,Y,X,DP,B
-    !byte $10,$34,$7D                ; PSHS U,Y,X,DP,B,CC
-    !byte $10,$34,$7E                ; PSHS U,Y,X,DP,D
-    !byte $10,$34,$7F                ; PSHS U,Y,X,DP,D,CC
-    !byte $10,$34,$80                ; PSHS PC
-    !byte $10,$34,$81                ; PSHS PC,CC
-    !byte $10,$34,$82                ; PSHS PC,A
-    !byte $10,$34,$83                ; PSHS PC,A,CC
-    !byte $10,$34,$84                ; PSHS PC,B
-    !byte $10,$34,$85                ; PSHS PC,B,CC
-    !byte $10,$34,$86                ; PSHS PC,D
-    !byte $10,$34,$87                ; PSHS PC,D,CC
-    !byte $10,$34,$88                ; PSHS PC,DP
-    !byte $10,$34,$89                ; PSHS PC,DP,CC
-    !byte $10,$34,$8A                ; PSHS PC,DP,A
-    !byte $10,$34,$8B                ; PSHS PC,DP,A,CC
-    !byte $10,$34,$8C                ; PSHS PC,DP,B
-    !byte $10,$34,$8D                ; PSHS PC,DP,B,CC
-    !byte $10,$34,$8E                ; PSHS PC,DP,D
-    !byte $10,$34,$8F                ; PSHS PC,DP,D,CC
-    !byte $10,$34,$90                ; PSHS PC,X
-    !byte $10,$34,$91                ; PSHS PC,X,CC
-    !byte $10,$34,$92                ; PSHS PC,X,A
-    !byte $10,$34,$93                ; PSHS PC,X,A,CC
-    !byte $10,$34,$94                ; PSHS PC,X,B
-    !byte $10,$34,$95                ; PSHS PC,X,B,CC
-    !byte $10,$34,$96                ; PSHS PC,X,D
-    !byte $10,$34,$97                ; PSHS PC,X,D,CC
-    !byte $10,$34,$98                ; PSHS PC,X,DP
-    !byte $10,$34,$99                ; PSHS PC,X,DP,CC
-    !byte $10,$34,$9A                ; PSHS PC,X,DP,A
-    !byte $10,$34,$9B                ; PSHS PC,X,DP,A,CC
-    !byte $10,$34,$9C                ; PSHS PC,X,DP,B
-    !byte $10,$34,$9D                ; PSHS PC,X,DP,B,CC
-    !byte $10,$34,$9E                ; PSHS PC,X,DP,D
-    !byte $10,$34,$9F                ; PSHS PC,X,DP,D,CC
-    !byte $10,$34,$A0                ; PSHS PC,Y
-    !byte $10,$34,$A1                ; PSHS PC,Y,CC
-    !byte $10,$34,$A2                ; PSHS PC,Y,A
-    !byte $10,$34,$A3                ; PSHS PC,Y,A,CC
-    !byte $10,$34,$A4                ; PSHS PC,Y,B
-    !byte $10,$34,$A5                ; PSHS PC,Y,B,CC
-    !byte $10,$34,$A6                ; PSHS PC,Y,D
-    !byte $10,$34,$A7                ; PSHS PC,Y,D,CC
-    !byte $10,$34,$A8                ; PSHS PC,Y,DP
-    !byte $10,$34,$A9                ; PSHS PC,Y,DP,CC
-    !byte $10,$34,$AA                ; PSHS PC,Y,DP,A
-    !byte $10,$34,$AB                ; PSHS PC,Y,DP,A,CC
-    !byte $10,$34,$AC                ; PSHS PC,Y,DP,B
-    !byte $10,$34,$AD                ; PSHS PC,Y,DP,B,CC
-    !byte $10,$34,$AE                ; PSHS PC,Y,DP,D
-    !byte $10,$34,$AF                ; PSHS PC,Y,DP,D,CC
-    !byte $10,$34,$B0                ; PSHS PC,Y,X
-    !byte $10,$34,$B1                ; PSHS PC,Y,X,CC
-    !byte $10,$34,$B2                ; PSHS PC,Y,X,A
-    !byte $10,$34,$B3                ; PSHS PC,Y,X,A,CC
-    !byte $10,$34,$B4                ; PSHS PC,Y,X,B
-    !byte $10,$34,$B5                ; PSHS PC,Y,X,B,CC
-    !byte $10,$34,$B6                ; PSHS PC,Y,X,D
-    !byte $10,$34,$B7                ; PSHS PC,Y,X,D,CC
-    !byte $10,$34,$B8                ; PSHS PC,Y,X,DP
-    !byte $10,$34,$B9                ; PSHS PC,Y,X,DP,CC
-    !byte $10,$34,$BA                ; PSHS PC,Y,X,DP,A
-    !byte $10,$34,$BB                ; PSHS PC,Y,X,DP,A,CC
-    !byte $10,$34,$BC                ; PSHS PC,Y,X,DP,B
-    !byte $10,$34,$BD                ; PSHS PC,Y,X,DP,B,CC
-    !byte $10,$34,$BE                ; PSHS PC,Y,X,DP,D
-    !byte $10,$34,$BF                ; PSHS PC,Y,X,DP,D,CC
-    !byte $10,$34,$C0                ; PSHS PC,U
-    !byte $10,$34,$C1                ; PSHS PC,U,CC
-    !byte $10,$34,$C2                ; PSHS PC,U,A
-    !byte $10,$34,$C3                ; PSHS PC,U,A,CC
-    !byte $10,$34,$C4                ; PSHS PC,U,B
-    !byte $10,$34,$C5                ; PSHS PC,U,B,CC
-    !byte $10,$34,$C6                ; PSHS PC,U,D
-    !byte $10,$34,$C7                ; PSHS PC,U,D,CC
-    !byte $10,$34,$C8                ; PSHS PC,U,DP
-    !byte $10,$34,$C9                ; PSHS PC,U,DP,CC
-    !byte $10,$34,$CA                ; PSHS PC,U,DP,A
-    !byte $10,$34,$CB                ; PSHS PC,U,DP,A,CC
-    !byte $10,$34,$CC                ; PSHS PC,U,DP,B
-    !byte $10,$34,$CD                ; PSHS PC,U,DP,B,CC
-    !byte $10,$34,$CE                ; PSHS PC,U,DP,D
-    !byte $10,$34,$CF                ; PSHS PC,U,DP,D,CC
-    !byte $10,$34,$D0                ; PSHS PC,U,X
-    !byte $10,$34,$D1                ; PSHS PC,U,X,CC
-    !byte $10,$34,$D2                ; PSHS PC,U,X,A
-    !byte $10,$34,$D3                ; PSHS PC,U,X,A,CC
-    !byte $10,$34,$D4                ; PSHS PC,U,X,B
-    !byte $10,$34,$D5                ; PSHS PC,U,X,B,CC
-    !byte $10,$34,$D6                ; PSHS PC,U,X,D
-    !byte $10,$34,$D7                ; PSHS PC,U,X,D,CC
-    !byte $10,$34,$D8                ; PSHS PC,U,X,DP
-    !byte $10,$34,$D9                ; PSHS PC,U,X,DP,CC
-    !byte $10,$34,$DA                ; PSHS PC,U,X,DP,A
-    !byte $10,$34,$DB                ; PSHS PC,U,X,DP,A,CC
-    !byte $10,$34,$DC                ; PSHS PC,U,X,DP,B
-    !byte $10,$34,$DD                ; PSHS PC,U,X,DP,B,CC
-    !byte $10,$34,$DE                ; PSHS PC,U,X,DP,D
-    !byte $10,$34,$DF                ; PSHS PC,U,X,DP,D,CC
-    !byte $10,$34,$E0                ; PSHS PC,U,Y
-    !byte $10,$34,$E1                ; PSHS PC,U,Y,CC
-    !byte $10,$34,$E2                ; PSHS PC,U,Y,A
-    !byte $10,$34,$E3                ; PSHS PC,U,Y,A,CC
-    !byte $10,$34,$E4                ; PSHS PC,U,Y,B
-    !byte $10,$34,$E5                ; PSHS PC,U,Y,B,CC
-    !byte $10,$34,$E6                ; PSHS PC,U,Y,D
-    !byte $10,$34,$E7                ; PSHS PC,U,Y,D,CC
-    !byte $10,$34,$E8                ; PSHS PC,U,Y,DP
-    !byte $10,$34,$E9                ; PSHS PC,U,Y,DP,CC
-    !byte $10,$34,$EA                ; PSHS PC,U,Y,DP,A
-    !byte $10,$34,$EB                ; PSHS PC,U,Y,DP,A,CC
-    !byte $10,$34,$EC                ; PSHS PC,U,Y,DP,B
-    !byte $10,$34,$ED                ; PSHS PC,U,Y,DP,B,CC
-    !byte $10,$34,$EE                ; PSHS PC,U,Y,DP,D
-    !byte $10,$34,$EF                ; PSHS PC,U,Y,DP,D,CC
-    !byte $10,$34,$F0                ; PSHS PC,U,Y,X
-    !byte $10,$34,$F1                ; PSHS PC,U,Y,X,CC
-    !byte $10,$34,$F2                ; PSHS PC,U,Y,X,A
-    !byte $10,$34,$F3                ; PSHS PC,U,Y,X,A,CC
-    !byte $10,$34,$F4                ; PSHS PC,U,Y,X,B
-    !byte $10,$34,$F5                ; PSHS PC,U,Y,X,B,CC
-    !byte $10,$34,$F6                ; PSHS PC,U,Y,X,D
-    !byte $10,$34,$F7                ; PSHS PC,U,Y,X,D,CC
-    !byte $10,$34,$F8                ; PSHS PC,U,Y,X,DP
-    !byte $10,$34,$F9                ; PSHS PC,U,Y,X,DP,CC
-    !byte $10,$34,$FA                ; PSHS PC,U,Y,X,DP,A
-    !byte $10,$34,$FB                ; PSHS PC,U,Y,X,DP,A,CC
-    !byte $10,$34,$FC                ; PSHS PC,U,Y,X,DP,B
-    !byte $10,$34,$FD                ; PSHS PC,U,Y,X,DP,B,CC
-    !byte $10,$34,$FE                ; PSHS PC,U,Y,X,DP,D
-    !byte $10,$34,$FF                ; PSHS PC,U,Y,X,DP,D,CC
-    !byte $10,$35,$00                ; PULS
-    !byte $10,$35,$01                ; PULS CC
-    !byte $10,$35,$02                ; PULS A
-    !byte $10,$35,$03                ; PULS A,CC
-    !byte $10,$35,$04                ; PULS B
-    !byte $10,$35,$05                ; PULS B,CC
-    !byte $10,$35,$06                ; PULS D
-    !byte $10,$35,$07                ; PULS D,CC
-    !byte $10,$35,$08                ; PULS DP
-    !byte $10,$35,$09                ; PULS DP,CC
-    !byte $10,$35,$0A                ; PULS DP,A
-    !byte $10,$35,$0B                ; PULS DP,A,CC
-    !byte $10,$35,$0C                ; PULS DP,B
-    !byte $10,$35,$0D                ; PULS DP,B,CC
-    !byte $10,$35,$0E                ; PULS DP,D
-    !byte $10,$35,$0F                ; PULS DP,D,CC
-    !byte $10,$35,$10                ; PULS X
-    !byte $10,$35,$11                ; PULS X,CC
-    !byte $10,$35,$12                ; PULS X,A
-    !byte $10,$35,$13                ; PULS X,A,CC
-    !byte $10,$35,$14                ; PULS X,B
-    !byte $10,$35,$15                ; PULS X,B,CC
-    !byte $10,$35,$16                ; PULS X,D
-    !byte $10,$35,$17                ; PULS X,D,CC
-    !byte $10,$35,$18                ; PULS X,DP
-    !byte $10,$35,$19                ; PULS X,DP,CC
-    !byte $10,$35,$1A                ; PULS X,DP,A
-    !byte $10,$35,$1B                ; PULS X,DP,A,CC
-    !byte $10,$35,$1C                ; PULS X,DP,B
-    !byte $10,$35,$1D                ; PULS X,DP,B,CC
-    !byte $10,$35,$1E                ; PULS X,DP,D
-    !byte $10,$35,$1F                ; PULS X,DP,D,CC
-    !byte $10,$35,$20                ; PULS Y
-    !byte $10,$35,$21                ; PULS Y,CC
-    !byte $10,$35,$22                ; PULS Y,A
-    !byte $10,$35,$23                ; PULS Y,A,CC
-    !byte $10,$35,$24                ; PULS Y,B
-    !byte $10,$35,$25                ; PULS Y,B,CC
-    !byte $10,$35,$26                ; PULS Y,D
-    !byte $10,$35,$27                ; PULS Y,D,CC
-    !byte $10,$35,$28                ; PULS Y,DP
-    !byte $10,$35,$29                ; PULS Y,DP,CC
-    !byte $10,$35,$2A                ; PULS Y,DP,A
-    !byte $10,$35,$2B                ; PULS Y,DP,A,CC
-    !byte $10,$35,$2C                ; PULS Y,DP,B
-    !byte $10,$35,$2D                ; PULS Y,DP,B,CC
-    !byte $10,$35,$2E                ; PULS Y,DP,D
-    !byte $10,$35,$2F                ; PULS Y,DP,D,CC
-    !byte $10,$35,$30                ; PULS Y,X
-    !byte $10,$35,$31                ; PULS Y,X,CC
-    !byte $10,$35,$32                ; PULS Y,X,A
-    !byte $10,$35,$33                ; PULS Y,X,A,CC
-    !byte $10,$35,$34                ; PULS Y,X,B
-    !byte $10,$35,$35                ; PULS Y,X,B,CC
-    !byte $10,$35,$36                ; PULS Y,X,D
-    !byte $10,$35,$37                ; PULS Y,X,D,CC
-    !byte $10,$35,$38                ; PULS Y,X,DP
-    !byte $10,$35,$39                ; PULS Y,X,DP,CC
-    !byte $10,$35,$3A                ; PULS Y,X,DP,A
-    !byte $10,$35,$3B                ; PULS Y,X,DP,A,CC
-    !byte $10,$35,$3C                ; PULS Y,X,DP,B
-    !byte $10,$35,$3D                ; PULS Y,X,DP,B,CC
-    !byte $10,$35,$3E                ; PULS Y,X,DP,D
-    !byte $10,$35,$3F                ; PULS Y,X,DP,D,CC
-    !byte $10,$35,$40                ; PULS U
-    !byte $10,$35,$41                ; PULS U,CC
-    !byte $10,$35,$42                ; PULS U,A
-    !byte $10,$35,$43                ; PULS U,A,CC
-    !byte $10,$35,$44                ; PULS U,B
-    !byte $10,$35,$45                ; PULS U,B,CC
-    !byte $10,$35,$46                ; PULS U,D
-    !byte $10,$35,$47                ; PULS U,D,CC
-    !byte $10,$35,$48                ; PULS U,DP
-    !byte $10,$35,$49                ; PULS U,DP,CC
-    !byte $10,$35,$4A                ; PULS U,DP,A
-    !byte $10,$35,$4B                ; PULS U,DP,A,CC
-    !byte $10,$35,$4C                ; PULS U,DP,B
-    !byte $10,$35,$4D                ; PULS U,DP,B,CC
-    !byte $10,$35,$4E                ; PULS U,DP,D
-    !byte $10,$35,$4F                ; PULS U,DP,D,CC
-    !byte $10,$35,$50                ; PULS U,X
-    !byte $10,$35,$51                ; PULS U,X,CC
-    !byte $10,$35,$52                ; PULS U,X,A
-    !byte $10,$35,$53                ; PULS U,X,A,CC
-    !byte $10,$35,$54                ; PULS U,X,B
-    !byte $10,$35,$55                ; PULS U,X,B,CC
-    !byte $10,$35,$56                ; PULS U,X,D
-    !byte $10,$35,$57                ; PULS U,X,D,CC
-    !byte $10,$35,$58                ; PULS U,X,DP
-    !byte $10,$35,$59                ; PULS U,X,DP,CC
-    !byte $10,$35,$5A                ; PULS U,X,DP,A
-    !byte $10,$35,$5B                ; PULS U,X,DP,A,CC
-    !byte $10,$35,$5C                ; PULS U,X,DP,B
-    !byte $10,$35,$5D                ; PULS U,X,DP,B,CC
-    !byte $10,$35,$5E                ; PULS U,X,DP,D
-    !byte $10,$35,$5F                ; PULS U,X,DP,D,CC
-    !byte $10,$35,$60                ; PULS U,Y
-    !byte $10,$35,$61                ; PULS U,Y,CC
-    !byte $10,$35,$62                ; PULS U,Y,A
-    !byte $10,$35,$63                ; PULS U,Y,A,CC
-    !byte $10,$35,$64                ; PULS U,Y,B
-    !byte $10,$35,$65                ; PULS U,Y,B,CC
-    !byte $10,$35,$66                ; PULS U,Y,D
-    !byte $10,$35,$67                ; PULS U,Y,D,CC
-    !byte $10,$35,$68                ; PULS U,Y,DP
-    !byte $10,$35,$69                ; PULS U,Y,DP,CC
-    !byte $10,$35,$6A                ; PULS U,Y,DP,A
-    !byte $10,$35,$6B                ; PULS U,Y,DP,A,CC
-    !byte $10,$35,$6C                ; PULS U,Y,DP,B
-    !byte $10,$35,$6D                ; PULS U,Y,DP,B,CC
-    !byte $10,$35,$6E                ; PULS U,Y,DP,D
-    !byte $10,$35,$6F                ; PULS U,Y,DP,D,CC
-    !byte $10,$35,$70                ; PULS U,Y,X
-    !byte $10,$35,$71                ; PULS U,Y,X,CC
-    !byte $10,$35,$72                ; PULS U,Y,X,A
-    !byte $10,$35,$73                ; PULS U,Y,X,A,CC
-    !byte $10,$35,$74                ; PULS U,Y,X,B
-    !byte $10,$35,$75                ; PULS U,Y,X,B,CC
-    !byte $10,$35,$76                ; PULS U,Y,X,D
-    !byte $10,$35,$77                ; PULS U,Y,X,D,CC
-    !byte $10,$35,$78                ; PULS U,Y,X,DP
-    !byte $10,$35,$79                ; PULS U,Y,X,DP,CC
-    !byte $10,$35,$7A                ; PULS U,Y,X,DP,A
-    !byte $10,$35,$7B                ; PULS U,Y,X,DP,A,CC
-    !byte $10,$35,$7C                ; PULS U,Y,X,DP,B
-    !byte $10,$35,$7D                ; PULS U,Y,X,DP,B,CC
-    !byte $10,$35,$7E                ; PULS U,Y,X,DP,D
-    !byte $10,$35,$7F                ; PULS U,Y,X,DP,D,CC
-    !byte $10,$35,$80                ; PULS PC
-    !byte $10,$35,$81                ; PULS PC,CC
-    !byte $10,$35,$82                ; PULS PC,A
-    !byte $10,$35,$83                ; PULS PC,A,CC
-    !byte $10,$35,$84                ; PULS PC,B
-    !byte $10,$35,$85                ; PULS PC,B,CC
-    !byte $10,$35,$86                ; PULS PC,D
-    !byte $10,$35,$87                ; PULS PC,D,CC
-    !byte $10,$35,$88                ; PULS PC,DP
-    !byte $10,$35,$89                ; PULS PC,DP,CC
-    !byte $10,$35,$8A                ; PULS PC,DP,A
-    !byte $10,$35,$8B                ; PULS PC,DP,A,CC
-    !byte $10,$35,$8C                ; PULS PC,DP,B
-    !byte $10,$35,$8D                ; PULS PC,DP,B,CC
-    !byte $10,$35,$8E                ; PULS PC,DP,D
-    !byte $10,$35,$8F                ; PULS PC,DP,D,CC
-    !byte $10,$35,$90                ; PULS PC,X
-    !byte $10,$35,$91                ; PULS PC,X,CC
-    !byte $10,$35,$92                ; PULS PC,X,A
-    !byte $10,$35,$93                ; PULS PC,X,A,CC
-    !byte $10,$35,$94                ; PULS PC,X,B
-    !byte $10,$35,$95                ; PULS PC,X,B,CC
-    !byte $10,$35,$96                ; PULS PC,X,D
-    !byte $10,$35,$97                ; PULS PC,X,D,CC
-    !byte $10,$35,$98                ; PULS PC,X,DP
-    !byte $10,$35,$99                ; PULS PC,X,DP,CC
-    !byte $10,$35,$9A                ; PULS PC,X,DP,A
-    !byte $10,$35,$9B                ; PULS PC,X,DP,A,CC
-    !byte $10,$35,$9C                ; PULS PC,X,DP,B
-    !byte $10,$35,$9D                ; PULS PC,X,DP,B,CC
-    !byte $10,$35,$9E                ; PULS PC,X,DP,D
-    !byte $10,$35,$9F                ; PULS PC,X,DP,D,CC
-    !byte $10,$35,$A0                ; PULS PC,Y
-    !byte $10,$35,$A1                ; PULS PC,Y,CC
-    !byte $10,$35,$A2                ; PULS PC,Y,A
-    !byte $10,$35,$A3                ; PULS PC,Y,A,CC
-    !byte $10,$35,$A4                ; PULS PC,Y,B
-    !byte $10,$35,$A5                ; PULS PC,Y,B,CC
-    !byte $10,$35,$A6                ; PULS PC,Y,D
-    !byte $10,$35,$A7                ; PULS PC,Y,D,CC
-    !byte $10,$35,$A8                ; PULS PC,Y,DP
-    !byte $10,$35,$A9                ; PULS PC,Y,DP,CC
-    !byte $10,$35,$AA                ; PULS PC,Y,DP,A
-    !byte $10,$35,$AB                ; PULS PC,Y,DP,A,CC
-    !byte $10,$35,$AC                ; PULS PC,Y,DP,B
-    !byte $10,$35,$AD                ; PULS PC,Y,DP,B,CC
-    !byte $10,$35,$AE                ; PULS PC,Y,DP,D
-    !byte $10,$35,$AF                ; PULS PC,Y,DP,D,CC
-    !byte $10,$35,$B0                ; PULS PC,Y,X
-    !byte $10,$35,$B1                ; PULS PC,Y,X,CC
-    !byte $10,$35,$B2                ; PULS PC,Y,X,A
-    !byte $10,$35,$B3                ; PULS PC,Y,X,A,CC
-    !byte $10,$35,$B4                ; PULS PC,Y,X,B
-    !byte $10,$35,$B5                ; PULS PC,Y,X,B,CC
-    !byte $10,$35,$B6                ; PULS PC,Y,X,D
-    !byte $10,$35,$B7                ; PULS PC,Y,X,D,CC
-    !byte $10,$35,$B8                ; PULS PC,Y,X,DP
-    !byte $10,$35,$B9                ; PULS PC,Y,X,DP,CC
-    !byte $10,$35,$BA                ; PULS PC,Y,X,DP,A
-    !byte $10,$35,$BB                ; PULS PC,Y,X,DP,A,CC
-    !byte $10,$35,$BC                ; PULS PC,Y,X,DP,B
-    !byte $10,$35,$BD                ; PULS PC,Y,X,DP,B,CC
-    !byte $10,$35,$BE                ; PULS PC,Y,X,DP,D
-    !byte $10,$35,$BF                ; PULS PC,Y,X,DP,D,CC
-    !byte $10,$35,$C0                ; PULS PC,U
-    !byte $10,$35,$C1                ; PULS PC,U,CC
-    !byte $10,$35,$C2                ; PULS PC,U,A
-    !byte $10,$35,$C3                ; PULS PC,U,A,CC
-    !byte $10,$35,$C4                ; PULS PC,U,B
-    !byte $10,$35,$C5                ; PULS PC,U,B,CC
-    !byte $10,$35,$C6                ; PULS PC,U,D
-    !byte $10,$35,$C7                ; PULS PC,U,D,CC
-    !byte $10,$35,$C8                ; PULS PC,U,DP
-    !byte $10,$35,$C9                ; PULS PC,U,DP,CC
-    !byte $10,$35,$CA                ; PULS PC,U,DP,A
-    !byte $10,$35,$CB                ; PULS PC,U,DP,A,CC
-    !byte $10,$35,$CC                ; PULS PC,U,DP,B
-    !byte $10,$35,$CD                ; PULS PC,U,DP,B,CC
-    !byte $10,$35,$CE                ; PULS PC,U,DP,D
-    !byte $10,$35,$CF                ; PULS PC,U,DP,D,CC
-    !byte $10,$35,$D0                ; PULS PC,U,X
-    !byte $10,$35,$D1                ; PULS PC,U,X,CC
-    !byte $10,$35,$D2                ; PULS PC,U,X,A
-    !byte $10,$35,$D3                ; PULS PC,U,X,A,CC
-    !byte $10,$35,$D4                ; PULS PC,U,X,B
-    !byte $10,$35,$D5                ; PULS PC,U,X,B,CC
-    !byte $10,$35,$D6                ; PULS PC,U,X,D
-    !byte $10,$35,$D7                ; PULS PC,U,X,D,CC
-    !byte $10,$35,$D8                ; PULS PC,U,X,DP
-    !byte $10,$35,$D9                ; PULS PC,U,X,DP,CC
-    !byte $10,$35,$DA                ; PULS PC,U,X,DP,A
-    !byte $10,$35,$DB                ; PULS PC,U,X,DP,A,CC
-    !byte $10,$35,$DC                ; PULS PC,U,X,DP,B
-    !byte $10,$35,$DD                ; PULS PC,U,X,DP,B,CC
-    !byte $10,$35,$DE                ; PULS PC,U,X,DP,D
-    !byte $10,$35,$DF                ; PULS PC,U,X,DP,D,CC
-    !byte $10,$35,$E0                ; PULS PC,U,Y
-    !byte $10,$35,$E1                ; PULS PC,U,Y,CC
-    !byte $10,$35,$E2                ; PULS PC,U,Y,A
-    !byte $10,$35,$E3                ; PULS PC,U,Y,A,CC
-    !byte $10,$35,$E4                ; PULS PC,U,Y,B
-    !byte $10,$35,$E5                ; PULS PC,U,Y,B,CC
-    !byte $10,$35,$E6                ; PULS PC,U,Y,D
-    !byte $10,$35,$E7                ; PULS PC,U,Y,D,CC
-    !byte $10,$35,$E8                ; PULS PC,U,Y,DP
-    !byte $10,$35,$E9                ; PULS PC,U,Y,DP,CC
-    !byte $10,$35,$EA                ; PULS PC,U,Y,DP,A
-    !byte $10,$35,$EB                ; PULS PC,U,Y,DP,A,CC
-    !byte $10,$35,$EC                ; PULS PC,U,Y,DP,B
-    !byte $10,$35,$ED                ; PULS PC,U,Y,DP,B,CC
-    !byte $10,$35,$EE                ; PULS PC,U,Y,DP,D
-    !byte $10,$35,$EF                ; PULS PC,U,Y,DP,D,CC
-    !byte $10,$35,$F0                ; PULS PC,U,Y,X
-    !byte $10,$35,$F1                ; PULS PC,U,Y,X,CC
-    !byte $10,$35,$F2                ; PULS PC,U,Y,X,A
-    !byte $10,$35,$F3                ; PULS PC,U,Y,X,A,CC
-    !byte $10,$35,$F4                ; PULS PC,U,Y,X,B
-    !byte $10,$35,$F5                ; PULS PC,U,Y,X,B,CC
-    !byte $10,$35,$F6                ; PULS PC,U,Y,X,D
-    !byte $10,$35,$F7                ; PULS PC,U,Y,X,D,CC
-    !byte $10,$35,$F8                ; PULS PC,U,Y,X,DP
-    !byte $10,$35,$F9                ; PULS PC,U,Y,X,DP,CC
-    !byte $10,$35,$FA                ; PULS PC,U,Y,X,DP,A
-    !byte $10,$35,$FB                ; PULS PC,U,Y,X,DP,A,CC
-    !byte $10,$35,$FC                ; PULS PC,U,Y,X,DP,B
-    !byte $10,$35,$FD                ; PULS PC,U,Y,X,DP,B,CC
-    !byte $10,$35,$FE                ; PULS PC,U,Y,X,DP,D
-    !byte $10,$35,$FF                ; PULS PC,U,Y,X,DP,D,CC
-    !byte $10,$36,$00                ; PSHU
-    !byte $10,$36,$01                ; PSHU CC
-    !byte $10,$36,$02                ; PSHU A
-    !byte $10,$36,$03                ; PSHU A,CC
-    !byte $10,$36,$04                ; PSHU B
-    !byte $10,$36,$05                ; PSHU B,CC
-    !byte $10,$36,$06                ; PSHU D
-    !byte $10,$36,$07                ; PSHU D,CC
-    !byte $10,$36,$08                ; PSHU DP
-    !byte $10,$36,$09                ; PSHU DP,CC
-    !byte $10,$36,$0A                ; PSHU DP,A
-    !byte $10,$36,$0B                ; PSHU DP,A,CC
-    !byte $10,$36,$0C                ; PSHU DP,B
-    !byte $10,$36,$0D                ; PSHU DP,B,CC
-    !byte $10,$36,$0E                ; PSHU DP,D
-    !byte $10,$36,$0F                ; PSHU DP,D,CC
-    !byte $10,$36,$10                ; PSHU X
-    !byte $10,$36,$11                ; PSHU X,CC
-    !byte $10,$36,$12                ; PSHU X,A
-    !byte $10,$36,$13                ; PSHU X,A,CC
-    !byte $10,$36,$14                ; PSHU X,B
-    !byte $10,$36,$15                ; PSHU X,B,CC
-    !byte $10,$36,$16                ; PSHU X,D
-    !byte $10,$36,$17                ; PSHU X,D,CC
-    !byte $10,$36,$18                ; PSHU X,DP
-    !byte $10,$36,$19                ; PSHU X,DP,CC
-    !byte $10,$36,$1A                ; PSHU X,DP,A
-    !byte $10,$36,$1B                ; PSHU X,DP,A,CC
-    !byte $10,$36,$1C                ; PSHU X,DP,B
-    !byte $10,$36,$1D                ; PSHU X,DP,B,CC
-    !byte $10,$36,$1E                ; PSHU X,DP,D
-    !byte $10,$36,$1F                ; PSHU X,DP,D,CC
-    !byte $10,$36,$20                ; PSHU Y
-    !byte $10,$36,$21                ; PSHU Y,CC
-    !byte $10,$36,$22                ; PSHU Y,A
-    !byte $10,$36,$23                ; PSHU Y,A,CC
-    !byte $10,$36,$24                ; PSHU Y,B
-    !byte $10,$36,$25                ; PSHU Y,B,CC
-    !byte $10,$36,$26                ; PSHU Y,D
-    !byte $10,$36,$27                ; PSHU Y,D,CC
-    !byte $10,$36,$28                ; PSHU Y,DP
-    !byte $10,$36,$29                ; PSHU Y,DP,CC
-    !byte $10,$36,$2A                ; PSHU Y,DP,A
-    !byte $10,$36,$2B                ; PSHU Y,DP,A,CC
-    !byte $10,$36,$2C                ; PSHU Y,DP,B
-    !byte $10,$36,$2D                ; PSHU Y,DP,B,CC
-    !byte $10,$36,$2E                ; PSHU Y,DP,D
-    !byte $10,$36,$2F                ; PSHU Y,DP,D,CC
-    !byte $10,$36,$30                ; PSHU Y,X
-    !byte $10,$36,$31                ; PSHU Y,X,CC
-    !byte $10,$36,$32                ; PSHU Y,X,A
-    !byte $10,$36,$33                ; PSHU Y,X,A,CC
-    !byte $10,$36,$34                ; PSHU Y,X,B
-    !byte $10,$36,$35                ; PSHU Y,X,B,CC
-    !byte $10,$36,$36                ; PSHU Y,X,D
-    !byte $10,$36,$37                ; PSHU Y,X,D,CC
-    !byte $10,$36,$38                ; PSHU Y,X,DP
-    !byte $10,$36,$39                ; PSHU Y,X,DP,CC
-    !byte $10,$36,$3A                ; PSHU Y,X,DP,A
-    !byte $10,$36,$3B                ; PSHU Y,X,DP,A,CC
-    !byte $10,$36,$3C                ; PSHU Y,X,DP,B
-    !byte $10,$36,$3D                ; PSHU Y,X,DP,B,CC
-    !byte $10,$36,$3E                ; PSHU Y,X,DP,D
-    !byte $10,$36,$3F                ; PSHU Y,X,DP,D,CC
-    !byte $10,$36,$40                ; PSHU S
-    !byte $10,$36,$41                ; PSHU S,CC
-    !byte $10,$36,$42                ; PSHU S,A
-    !byte $10,$36,$43                ; PSHU S,A,CC
-    !byte $10,$36,$44                ; PSHU S,B
-    !byte $10,$36,$45                ; PSHU S,B,CC
-    !byte $10,$36,$46                ; PSHU S,D
-    !byte $10,$36,$47                ; PSHU S,D,CC
-    !byte $10,$36,$48                ; PSHU S,DP
-    !byte $10,$36,$49                ; PSHU S,DP,CC
-    !byte $10,$36,$4A                ; PSHU S,DP,A
-    !byte $10,$36,$4B                ; PSHU S,DP,A,CC
-    !byte $10,$36,$4C                ; PSHU S,DP,B
-    !byte $10,$36,$4D                ; PSHU S,DP,B,CC
-    !byte $10,$36,$4E                ; PSHU S,DP,D
-    !byte $10,$36,$4F                ; PSHU S,DP,D,CC
-    !byte $10,$36,$50                ; PSHU S,X
-    !byte $10,$36,$51                ; PSHU S,X,CC
-    !byte $10,$36,$52                ; PSHU S,X,A
-    !byte $10,$36,$53                ; PSHU S,X,A,CC
-    !byte $10,$36,$54                ; PSHU S,X,B
-    !byte $10,$36,$55                ; PSHU S,X,B,CC
-    !byte $10,$36,$56                ; PSHU S,X,D
-    !byte $10,$36,$57                ; PSHU S,X,D,CC
-    !byte $10,$36,$58                ; PSHU S,X,DP
-    !byte $10,$36,$59                ; PSHU S,X,DP,CC
-    !byte $10,$36,$5A                ; PSHU S,X,DP,A
-    !byte $10,$36,$5B                ; PSHU S,X,DP,A,CC
-    !byte $10,$36,$5C                ; PSHU S,X,DP,B
-    !byte $10,$36,$5D                ; PSHU S,X,DP,B,CC
-    !byte $10,$36,$5E                ; PSHU S,X,DP,D
-    !byte $10,$36,$5F                ; PSHU S,X,DP,D,CC
-    !byte $10,$36,$60                ; PSHU S,Y
-    !byte $10,$36,$61                ; PSHU S,Y,CC
-    !byte $10,$36,$62                ; PSHU S,Y,A
-    !byte $10,$36,$63                ; PSHU S,Y,A,CC
-    !byte $10,$36,$64                ; PSHU S,Y,B
-    !byte $10,$36,$65                ; PSHU S,Y,B,CC
-    !byte $10,$36,$66                ; PSHU S,Y,D
-    !byte $10,$36,$67                ; PSHU S,Y,D,CC
-    !byte $10,$36,$68                ; PSHU S,Y,DP
-    !byte $10,$36,$69                ; PSHU S,Y,DP,CC
-    !byte $10,$36,$6A                ; PSHU S,Y,DP,A
-    !byte $10,$36,$6B                ; PSHU S,Y,DP,A,CC
-    !byte $10,$36,$6C                ; PSHU S,Y,DP,B
-    !byte $10,$36,$6D                ; PSHU S,Y,DP,B,CC
-    !byte $10,$36,$6E                ; PSHU S,Y,DP,D
-    !byte $10,$36,$6F                ; PSHU S,Y,DP,D,CC
-    !byte $10,$36,$70                ; PSHU S,Y,X
-    !byte $10,$36,$71                ; PSHU S,Y,X,CC
-    !byte $10,$36,$72                ; PSHU S,Y,X,A
-    !byte $10,$36,$73                ; PSHU S,Y,X,A,CC
-    !byte $10,$36,$74                ; PSHU S,Y,X,B
-    !byte $10,$36,$75                ; PSHU S,Y,X,B,CC
-    !byte $10,$36,$76                ; PSHU S,Y,X,D
-    !byte $10,$36,$77                ; PSHU S,Y,X,D,CC
-    !byte $10,$36,$78                ; PSHU S,Y,X,DP
-    !byte $10,$36,$79                ; PSHU S,Y,X,DP,CC
-    !byte $10,$36,$7A                ; PSHU S,Y,X,DP,A
-    !byte $10,$36,$7B                ; PSHU S,Y,X,DP,A,CC
-    !byte $10,$36,$7C                ; PSHU S,Y,X,DP,B
-    !byte $10,$36,$7D                ; PSHU S,Y,X,DP,B,CC
-    !byte $10,$36,$7E                ; PSHU S,Y,X,DP,D
-    !byte $10,$36,$7F                ; PSHU S,Y,X,DP,D,CC
-    !byte $10,$36,$80                ; PSHU PC
-    !byte $10,$36,$81                ; PSHU PC,CC
-    !byte $10,$36,$82                ; PSHU PC,A
-    !byte $10,$36,$83                ; PSHU PC,A,CC
-    !byte $10,$36,$84                ; PSHU PC,B
-    !byte $10,$36,$85                ; PSHU PC,B,CC
-    !byte $10,$36,$86                ; PSHU PC,D
-    !byte $10,$36,$87                ; PSHU PC,D,CC
-    !byte $10,$36,$88                ; PSHU PC,DP
-    !byte $10,$36,$89                ; PSHU PC,DP,CC
-    !byte $10,$36,$8A                ; PSHU PC,DP,A
-    !byte $10,$36,$8B                ; PSHU PC,DP,A,CC
-    !byte $10,$36,$8C                ; PSHU PC,DP,B
-    !byte $10,$36,$8D                ; PSHU PC,DP,B,CC
-    !byte $10,$36,$8E                ; PSHU PC,DP,D
-    !byte $10,$36,$8F                ; PSHU PC,DP,D,CC
-    !byte $10,$36,$90                ; PSHU PC,X
-    !byte $10,$36,$91                ; PSHU PC,X,CC
-    !byte $10,$36,$92                ; PSHU PC,X,A
-    !byte $10,$36,$93                ; PSHU PC,X,A,CC
-    !byte $10,$36,$94                ; PSHU PC,X,B
-    !byte $10,$36,$95                ; PSHU PC,X,B,CC
-    !byte $10,$36,$96                ; PSHU PC,X,D
-    !byte $10,$36,$97                ; PSHU PC,X,D,CC
-    !byte $10,$36,$98                ; PSHU PC,X,DP
-    !byte $10,$36,$99                ; PSHU PC,X,DP,CC
-    !byte $10,$36,$9A                ; PSHU PC,X,DP,A
-    !byte $10,$36,$9B                ; PSHU PC,X,DP,A,CC
-    !byte $10,$36,$9C                ; PSHU PC,X,DP,B
-    !byte $10,$36,$9D                ; PSHU PC,X,DP,B,CC
-    !byte $10,$36,$9E                ; PSHU PC,X,DP,D
-    !byte $10,$36,$9F                ; PSHU PC,X,DP,D,CC
-    !byte $10,$36,$A0                ; PSHU PC,Y
-    !byte $10,$36,$A1                ; PSHU PC,Y,CC
-    !byte $10,$36,$A2                ; PSHU PC,Y,A
-    !byte $10,$36,$A3                ; PSHU PC,Y,A,CC
-    !byte $10,$36,$A4                ; PSHU PC,Y,B
-    !byte $10,$36,$A5                ; PSHU PC,Y,B,CC
-    !byte $10,$36,$A6                ; PSHU PC,Y,D
-    !byte $10,$36,$A7                ; PSHU PC,Y,D,CC
-    !byte $10,$36,$A8                ; PSHU PC,Y,DP
-    !byte $10,$36,$A9                ; PSHU PC,Y,DP,CC
-    !byte $10,$36,$AA                ; PSHU PC,Y,DP,A
-    !byte $10,$36,$AB                ; PSHU PC,Y,DP,A,CC
-    !byte $10,$36,$AC                ; PSHU PC,Y,DP,B
-    !byte $10,$36,$AD                ; PSHU PC,Y,DP,B,CC
-    !byte $10,$36,$AE                ; PSHU PC,Y,DP,D
-    !byte $10,$36,$AF                ; PSHU PC,Y,DP,D,CC
-    !byte $10,$36,$B0                ; PSHU PC,Y,X
-    !byte $10,$36,$B1                ; PSHU PC,Y,X,CC
-    !byte $10,$36,$B2                ; PSHU PC,Y,X,A
-    !byte $10,$36,$B3                ; PSHU PC,Y,X,A,CC
-    !byte $10,$36,$B4                ; PSHU PC,Y,X,B
-    !byte $10,$36,$B5                ; PSHU PC,Y,X,B,CC
-    !byte $10,$36,$B6                ; PSHU PC,Y,X,D
-    !byte $10,$36,$B7                ; PSHU PC,Y,X,D,CC
-    !byte $10,$36,$B8                ; PSHU PC,Y,X,DP
-    !byte $10,$36,$B9                ; PSHU PC,Y,X,DP,CC
-    !byte $10,$36,$BA                ; PSHU PC,Y,X,DP,A
-    !byte $10,$36,$BB                ; PSHU PC,Y,X,DP,A,CC
-    !byte $10,$36,$BC                ; PSHU PC,Y,X,DP,B
-    !byte $10,$36,$BD                ; PSHU PC,Y,X,DP,B,CC
-    !byte $10,$36,$BE                ; PSHU PC,Y,X,DP,D
-    !byte $10,$36,$BF                ; PSHU PC,Y,X,DP,D,CC
-    !byte $10,$36,$C0                ; PSHU PC,S
-    !byte $10,$36,$C1                ; PSHU PC,S,CC
-    !byte $10,$36,$C2                ; PSHU PC,S,A
-    !byte $10,$36,$C3                ; PSHU PC,S,A,CC
-    !byte $10,$36,$C4                ; PSHU PC,S,B
-    !byte $10,$36,$C5                ; PSHU PC,S,B,CC
-    !byte $10,$36,$C6                ; PSHU PC,S,D
-    !byte $10,$36,$C7                ; PSHU PC,S,D,CC
-    !byte $10,$36,$C8                ; PSHU PC,S,DP
-    !byte $10,$36,$C9                ; PSHU PC,S,DP,CC
-    !byte $10,$36,$CA                ; PSHU PC,S,DP,A
-    !byte $10,$36,$CB                ; PSHU PC,S,DP,A,CC
-    !byte $10,$36,$CC                ; PSHU PC,S,DP,B
-    !byte $10,$36,$CD                ; PSHU PC,S,DP,B,CC
-    !byte $10,$36,$CE                ; PSHU PC,S,DP,D
-    !byte $10,$36,$CF                ; PSHU PC,S,DP,D,CC
-    !byte $10,$36,$D0                ; PSHU PC,S,X
-    !byte $10,$36,$D1                ; PSHU PC,S,X,CC
-    !byte $10,$36,$D2                ; PSHU PC,S,X,A
-    !byte $10,$36,$D3                ; PSHU PC,S,X,A,CC
-    !byte $10,$36,$D4                ; PSHU PC,S,X,B
-    !byte $10,$36,$D5                ; PSHU PC,S,X,B,CC
-    !byte $10,$36,$D6                ; PSHU PC,S,X,D
-    !byte $10,$36,$D7                ; PSHU PC,S,X,D,CC
-    !byte $10,$36,$D8                ; PSHU PC,S,X,DP
-    !byte $10,$36,$D9                ; PSHU PC,S,X,DP,CC
-    !byte $10,$36,$DA                ; PSHU PC,S,X,DP,A
-    !byte $10,$36,$DB                ; PSHU PC,S,X,DP,A,CC
-    !byte $10,$36,$DC                ; PSHU PC,S,X,DP,B
-    !byte $10,$36,$DD                ; PSHU PC,S,X,DP,B,CC
-    !byte $10,$36,$DE                ; PSHU PC,S,X,DP,D
-    !byte $10,$36,$DF                ; PSHU PC,S,X,DP,D,CC
-    !byte $10,$36,$E0                ; PSHU PC,S,Y
-    !byte $10,$36,$E1                ; PSHU PC,S,Y,CC
-    !byte $10,$36,$E2                ; PSHU PC,S,Y,A
-    !byte $10,$36,$E3                ; PSHU PC,S,Y,A,CC
-    !byte $10,$36,$E4                ; PSHU PC,S,Y,B
-    !byte $10,$36,$E5                ; PSHU PC,S,Y,B,CC
-    !byte $10,$36,$E6                ; PSHU PC,S,Y,D
-    !byte $10,$36,$E7                ; PSHU PC,S,Y,D,CC
-    !byte $10,$36,$E8                ; PSHU PC,S,Y,DP
-    !byte $10,$36,$E9                ; PSHU PC,S,Y,DP,CC
-    !byte $10,$36,$EA                ; PSHU PC,S,Y,DP,A
-    !byte $10,$36,$EB                ; PSHU PC,S,Y,DP,A,CC
-    !byte $10,$36,$EC                ; PSHU PC,S,Y,DP,B
-    !byte $10,$36,$ED                ; PSHU PC,S,Y,DP,B,CC
-    !byte $10,$36,$EE                ; PSHU PC,S,Y,DP,D
-    !byte $10,$36,$EF                ; PSHU PC,S,Y,DP,D,CC
-    !byte $10,$36,$F0                ; PSHU PC,S,Y,X
-    !byte $10,$36,$F1                ; PSHU PC,S,Y,X,CC
-    !byte $10,$36,$F2                ; PSHU PC,S,Y,X,A
-    !byte $10,$36,$F3                ; PSHU PC,S,Y,X,A,CC
-    !byte $10,$36,$F4                ; PSHU PC,S,Y,X,B
-    !byte $10,$36,$F5                ; PSHU PC,S,Y,X,B,CC
-    !byte $10,$36,$F6                ; PSHU PC,S,Y,X,D
-    !byte $10,$36,$F7                ; PSHU PC,S,Y,X,D,CC
-    !byte $10,$36,$F8                ; PSHU PC,S,Y,X,DP
-    !byte $10,$36,$F9                ; PSHU PC,S,Y,X,DP,CC
-    !byte $10,$36,$FA                ; PSHU PC,S,Y,X,DP,A
-    !byte $10,$36,$FB                ; PSHU PC,S,Y,X,DP,A,CC
-    !byte $10,$36,$FC                ; PSHU PC,S,Y,X,DP,B
-    !byte $10,$36,$FD                ; PSHU PC,S,Y,X,DP,B,CC
-    !byte $10,$36,$FE                ; PSHU PC,S,Y,X,DP,D
-    !byte $10,$36,$FF                ; PSHU PC,S,Y,X,DP,D,CC
-    !byte $10,$37,$00                ; PULU
-    !byte $10,$37,$01                ; PULU CC
-    !byte $10,$37,$02                ; PULU A
-    !byte $10,$37,$03                ; PULU A,CC
-    !byte $10,$37,$04                ; PULU B
-    !byte $10,$37,$05                ; PULU B,CC
-    !byte $10,$37,$06                ; PULU D
-    !byte $10,$37,$07                ; PULU D,CC
-    !byte $10,$37,$08                ; PULU DP
-    !byte $10,$37,$09                ; PULU DP,CC
-    !byte $10,$37,$0A                ; PULU DP,A
-    !byte $10,$37,$0B                ; PULU DP,A,CC
-    !byte $10,$37,$0C                ; PULU DP,B
-    !byte $10,$37,$0D                ; PULU DP,B,CC
-    !byte $10,$37,$0E                ; PULU DP,D
-    !byte $10,$37,$0F                ; PULU DP,D,CC
-    !byte $10,$37,$10                ; PULU X
-    !byte $10,$37,$11                ; PULU X,CC
-    !byte $10,$37,$12                ; PULU X,A
-    !byte $10,$37,$13                ; PULU X,A,CC
-    !byte $10,$37,$14                ; PULU X,B
-    !byte $10,$37,$15                ; PULU X,B,CC
-    !byte $10,$37,$16                ; PULU X,D
-    !byte $10,$37,$17                ; PULU X,D,CC
-    !byte $10,$37,$18                ; PULU X,DP
-    !byte $10,$37,$19                ; PULU X,DP,CC
-    !byte $10,$37,$1A                ; PULU X,DP,A
-    !byte $10,$37,$1B                ; PULU X,DP,A,CC
-    !byte $10,$37,$1C                ; PULU X,DP,B
-    !byte $10,$37,$1D                ; PULU X,DP,B,CC
-    !byte $10,$37,$1E                ; PULU X,DP,D
-    !byte $10,$37,$1F                ; PULU X,DP,D,CC
-    !byte $10,$37,$20                ; PULU Y
-    !byte $10,$37,$21                ; PULU Y,CC
-    !byte $10,$37,$22                ; PULU Y,A
-    !byte $10,$37,$23                ; PULU Y,A,CC
-    !byte $10,$37,$24                ; PULU Y,B
-    !byte $10,$37,$25                ; PULU Y,B,CC
-    !byte $10,$37,$26                ; PULU Y,D
-    !byte $10,$37,$27                ; PULU Y,D,CC
-    !byte $10,$37,$28                ; PULU Y,DP
-    !byte $10,$37,$29                ; PULU Y,DP,CC
-    !byte $10,$37,$2A                ; PULU Y,DP,A
-    !byte $10,$37,$2B                ; PULU Y,DP,A,CC
-    !byte $10,$37,$2C                ; PULU Y,DP,B
-    !byte $10,$37,$2D                ; PULU Y,DP,B,CC
-    !byte $10,$37,$2E                ; PULU Y,DP,D
-    !byte $10,$37,$2F                ; PULU Y,DP,D,CC
-    !byte $10,$37,$30                ; PULU Y,X
-    !byte $10,$37,$31                ; PULU Y,X,CC
-    !byte $10,$37,$32                ; PULU Y,X,A
-    !byte $10,$37,$33                ; PULU Y,X,A,CC
-    !byte $10,$37,$34                ; PULU Y,X,B
-    !byte $10,$37,$35                ; PULU Y,X,B,CC
-    !byte $10,$37,$36                ; PULU Y,X,D
-    !byte $10,$37,$37                ; PULU Y,X,D,CC
-    !byte $10,$37,$38                ; PULU Y,X,DP
-    !byte $10,$37,$39                ; PULU Y,X,DP,CC
-    !byte $10,$37,$3A                ; PULU Y,X,DP,A
-    !byte $10,$37,$3B                ; PULU Y,X,DP,A,CC
-    !byte $10,$37,$3C                ; PULU Y,X,DP,B
-    !byte $10,$37,$3D                ; PULU Y,X,DP,B,CC
-    !byte $10,$37,$3E                ; PULU Y,X,DP,D
-    !byte $10,$37,$3F                ; PULU Y,X,DP,D,CC
-    !byte $10,$37,$40                ; PULU S
-    !byte $10,$37,$41                ; PULU S,CC
-    !byte $10,$37,$42                ; PULU S,A
-    !byte $10,$37,$43                ; PULU S,A,CC
-    !byte $10,$37,$44                ; PULU S,B
-    !byte $10,$37,$45                ; PULU S,B,CC
-    !byte $10,$37,$46                ; PULU S,D
-    !byte $10,$37,$47                ; PULU S,D,CC
-    !byte $10,$37,$48                ; PULU S,DP
-    !byte $10,$37,$49                ; PULU S,DP,CC
-    !byte $10,$37,$4A                ; PULU S,DP,A
-    !byte $10,$37,$4B                ; PULU S,DP,A,CC
-    !byte $10,$37,$4C                ; PULU S,DP,B
-    !byte $10,$37,$4D                ; PULU S,DP,B,CC
-    !byte $10,$37,$4E                ; PULU S,DP,D
-    !byte $10,$37,$4F                ; PULU S,DP,D,CC
-    !byte $10,$37,$50                ; PULU S,X
-    !byte $10,$37,$51                ; PULU S,X,CC
-    !byte $10,$37,$52                ; PULU S,X,A
-    !byte $10,$37,$53                ; PULU S,X,A,CC
-    !byte $10,$37,$54                ; PULU S,X,B
-    !byte $10,$37,$55                ; PULU S,X,B,CC
-    !byte $10,$37,$56                ; PULU S,X,D
-    !byte $10,$37,$57                ; PULU S,X,D,CC
-    !byte $10,$37,$58                ; PULU S,X,DP
-    !byte $10,$37,$59                ; PULU S,X,DP,CC
-    !byte $10,$37,$5A                ; PULU S,X,DP,A
-    !byte $10,$37,$5B                ; PULU S,X,DP,A,CC
-    !byte $10,$37,$5C                ; PULU S,X,DP,B
-    !byte $10,$37,$5D                ; PULU S,X,DP,B,CC
-    !byte $10,$37,$5E                ; PULU S,X,DP,D
-    !byte $10,$37,$5F                ; PULU S,X,DP,D,CC
-    !byte $10,$37,$60                ; PULU S,Y
-    !byte $10,$37,$61                ; PULU S,Y,CC
-    !byte $10,$37,$62                ; PULU S,Y,A
-    !byte $10,$37,$63                ; PULU S,Y,A,CC
-    !byte $10,$37,$64                ; PULU S,Y,B
-    !byte $10,$37,$65                ; PULU S,Y,B,CC
-    !byte $10,$37,$66                ; PULU S,Y,D
-    !byte $10,$37,$67                ; PULU S,Y,D,CC
-    !byte $10,$37,$68                ; PULU S,Y,DP
-    !byte $10,$37,$69                ; PULU S,Y,DP,CC
-    !byte $10,$37,$6A                ; PULU S,Y,DP,A
-    !byte $10,$37,$6B                ; PULU S,Y,DP,A,CC
-    !byte $10,$37,$6C                ; PULU S,Y,DP,B
-    !byte $10,$37,$6D                ; PULU S,Y,DP,B,CC
-    !byte $10,$37,$6E                ; PULU S,Y,DP,D
-    !byte $10,$37,$6F                ; PULU S,Y,DP,D,CC
-    !byte $10,$37,$70                ; PULU S,Y,X
-    !byte $10,$37,$71                ; PULU S,Y,X,CC
-    !byte $10,$37,$72                ; PULU S,Y,X,A
-    !byte $10,$37,$73                ; PULU S,Y,X,A,CC
-    !byte $10,$37,$74                ; PULU S,Y,X,B
-    !byte $10,$37,$75                ; PULU S,Y,X,B,CC
-    !byte $10,$37,$76                ; PULU S,Y,X,D
-    !byte $10,$37,$77                ; PULU S,Y,X,D,CC
-    !byte $10,$37,$78                ; PULU S,Y,X,DP
-    !byte $10,$37,$79                ; PULU S,Y,X,DP,CC
-    !byte $10,$37,$7A                ; PULU S,Y,X,DP,A
-    !byte $10,$37,$7B                ; PULU S,Y,X,DP,A,CC
-    !byte $10,$37,$7C                ; PULU S,Y,X,DP,B
-    !byte $10,$37,$7D                ; PULU S,Y,X,DP,B,CC
-    !byte $10,$37,$7E                ; PULU S,Y,X,DP,D
-    !byte $10,$37,$7F                ; PULU S,Y,X,DP,D,CC
-    !byte $10,$37,$80                ; PULU PC
-    !byte $10,$37,$81                ; PULU PC,CC
-    !byte $10,$37,$82                ; PULU PC,A
-    !byte $10,$37,$83                ; PULU PC,A,CC
-    !byte $10,$37,$84                ; PULU PC,B
-    !byte $10,$37,$85                ; PULU PC,B,CC
-    !byte $10,$37,$86                ; PULU PC,D
-    !byte $10,$37,$87                ; PULU PC,D,CC
-    !byte $10,$37,$88                ; PULU PC,DP
-    !byte $10,$37,$89                ; PULU PC,DP,CC
-    !byte $10,$37,$8A                ; PULU PC,DP,A
-    !byte $10,$37,$8B                ; PULU PC,DP,A,CC
-    !byte $10,$37,$8C                ; PULU PC,DP,B
-    !byte $10,$37,$8D                ; PULU PC,DP,B,CC
-    !byte $10,$37,$8E                ; PULU PC,DP,D
-    !byte $10,$37,$8F                ; PULU PC,DP,D,CC
-    !byte $10,$37,$90                ; PULU PC,X
-    !byte $10,$37,$91                ; PULU PC,X,CC
-    !byte $10,$37,$92                ; PULU PC,X,A
-    !byte $10,$37,$93                ; PULU PC,X,A,CC
-    !byte $10,$37,$94                ; PULU PC,X,B
-    !byte $10,$37,$95                ; PULU PC,X,B,CC
-    !byte $10,$37,$96                ; PULU PC,X,D
-    !byte $10,$37,$97                ; PULU PC,X,D,CC
-    !byte $10,$37,$98                ; PULU PC,X,DP
-    !byte $10,$37,$99                ; PULU PC,X,DP,CC
-    !byte $10,$37,$9A                ; PULU PC,X,DP,A
-    !byte $10,$37,$9B                ; PULU PC,X,DP,A,CC
-    !byte $10,$37,$9C                ; PULU PC,X,DP,B
-    !byte $10,$37,$9D                ; PULU PC,X,DP,B,CC
-    !byte $10,$37,$9E                ; PULU PC,X,DP,D
-    !byte $10,$37,$9F                ; PULU PC,X,DP,D,CC
-    !byte $10,$37,$A0                ; PULU PC,Y
-    !byte $10,$37,$A1                ; PULU PC,Y,CC
-    !byte $10,$37,$A2                ; PULU PC,Y,A
-    !byte $10,$37,$A3                ; PULU PC,Y,A,CC
-    !byte $10,$37,$A4                ; PULU PC,Y,B
-    !byte $10,$37,$A5                ; PULU PC,Y,B,CC
-    !byte $10,$37,$A6                ; PULU PC,Y,D
-    !byte $10,$37,$A7                ; PULU PC,Y,D,CC
-    !byte $10,$37,$A8                ; PULU PC,Y,DP
-    !byte $10,$37,$A9                ; PULU PC,Y,DP,CC
-    !byte $10,$37,$AA                ; PULU PC,Y,DP,A
-    !byte $10,$37,$AB                ; PULU PC,Y,DP,A,CC
-    !byte $10,$37,$AC                ; PULU PC,Y,DP,B
-    !byte $10,$37,$AD                ; PULU PC,Y,DP,B,CC
-    !byte $10,$37,$AE                ; PULU PC,Y,DP,D
-    !byte $10,$37,$AF                ; PULU PC,Y,DP,D,CC
-    !byte $10,$37,$B0                ; PULU PC,Y,X
-    !byte $10,$37,$B1                ; PULU PC,Y,X,CC
-    !byte $10,$37,$B2                ; PULU PC,Y,X,A
-    !byte $10,$37,$B3                ; PULU PC,Y,X,A,CC
-    !byte $10,$37,$B4                ; PULU PC,Y,X,B
-    !byte $10,$37,$B5                ; PULU PC,Y,X,B,CC
-    !byte $10,$37,$B6                ; PULU PC,Y,X,D
-    !byte $10,$37,$B7                ; PULU PC,Y,X,D,CC
-    !byte $10,$37,$B8                ; PULU PC,Y,X,DP
-    !byte $10,$37,$B9                ; PULU PC,Y,X,DP,CC
-    !byte $10,$37,$BA                ; PULU PC,Y,X,DP,A
-    !byte $10,$37,$BB                ; PULU PC,Y,X,DP,A,CC
-    !byte $10,$37,$BC                ; PULU PC,Y,X,DP,B
-    !byte $10,$37,$BD                ; PULU PC,Y,X,DP,B,CC
-    !byte $10,$37,$BE                ; PULU PC,Y,X,DP,D
-    !byte $10,$37,$BF                ; PULU PC,Y,X,DP,D,CC
-    !byte $10,$37,$C0                ; PULU PC,S
-    !byte $10,$37,$C1                ; PULU PC,S,CC
-    !byte $10,$37,$C2                ; PULU PC,S,A
-    !byte $10,$37,$C3                ; PULU PC,S,A,CC
-    !byte $10,$37,$C4                ; PULU PC,S,B
-    !byte $10,$37,$C5                ; PULU PC,S,B,CC
-    !byte $10,$37,$C6                ; PULU PC,S,D
-    !byte $10,$37,$C7                ; PULU PC,S,D,CC
-    !byte $10,$37,$C8                ; PULU PC,S,DP
-    !byte $10,$37,$C9                ; PULU PC,S,DP,CC
-    !byte $10,$37,$CA                ; PULU PC,S,DP,A
-    !byte $10,$37,$CB                ; PULU PC,S,DP,A,CC
-    !byte $10,$37,$CC                ; PULU PC,S,DP,B
-    !byte $10,$37,$CD                ; PULU PC,S,DP,B,CC
-    !byte $10,$37,$CE                ; PULU PC,S,DP,D
-    !byte $10,$37,$CF                ; PULU PC,S,DP,D,CC
-    !byte $10,$37,$D0                ; PULU PC,S,X
-    !byte $10,$37,$D1                ; PULU PC,S,X,CC
-    !byte $10,$37,$D2                ; PULU PC,S,X,A
-    !byte $10,$37,$D3                ; PULU PC,S,X,A,CC
-    !byte $10,$37,$D4                ; PULU PC,S,X,B
-    !byte $10,$37,$D5                ; PULU PC,S,X,B,CC
-    !byte $10,$37,$D6                ; PULU PC,S,X,D
-    !byte $10,$37,$D7                ; PULU PC,S,X,D,CC
-    !byte $10,$37,$D8                ; PULU PC,S,X,DP
-    !byte $10,$37,$D9                ; PULU PC,S,X,DP,CC
-    !byte $10,$37,$DA                ; PULU PC,S,X,DP,A
-    !byte $10,$37,$DB                ; PULU PC,S,X,DP,A,CC
-    !byte $10,$37,$DC                ; PULU PC,S,X,DP,B
-    !byte $10,$37,$DD                ; PULU PC,S,X,DP,B,CC
-    !byte $10,$37,$DE                ; PULU PC,S,X,DP,D
-    !byte $10,$37,$DF                ; PULU PC,S,X,DP,D,CC
-    !byte $10,$37,$E0                ; PULU PC,S,Y
-    !byte $10,$37,$E1                ; PULU PC,S,Y,CC
-    !byte $10,$37,$E2                ; PULU PC,S,Y,A
-    !byte $10,$37,$E3                ; PULU PC,S,Y,A,CC
-    !byte $10,$37,$E4                ; PULU PC,S,Y,B
-    !byte $10,$37,$E5                ; PULU PC,S,Y,B,CC
-    !byte $10,$37,$E6                ; PULU PC,S,Y,D
-    !byte $10,$37,$E7                ; PULU PC,S,Y,D,CC
-    !byte $10,$37,$E8                ; PULU PC,S,Y,DP
-    !byte $10,$37,$E9                ; PULU PC,S,Y,DP,CC
-    !byte $10,$37,$EA                ; PULU PC,S,Y,DP,A
-    !byte $10,$37,$EB                ; PULU PC,S,Y,DP,A,CC
-    !byte $10,$37,$EC                ; PULU PC,S,Y,DP,B
-    !byte $10,$37,$ED                ; PULU PC,S,Y,DP,B,CC
-    !byte $10,$37,$EE                ; PULU PC,S,Y,DP,D
-    !byte $10,$37,$EF                ; PULU PC,S,Y,DP,D,CC
-    !byte $10,$37,$F0                ; PULU PC,S,Y,X
-    !byte $10,$37,$F1                ; PULU PC,S,Y,X,CC
-    !byte $10,$37,$F2                ; PULU PC,S,Y,X,A
-    !byte $10,$37,$F3                ; PULU PC,S,Y,X,A,CC
-    !byte $10,$37,$F4                ; PULU PC,S,Y,X,B
-    !byte $10,$37,$F5                ; PULU PC,S,Y,X,B,CC
-    !byte $10,$37,$F6                ; PULU PC,S,Y,X,D
-    !byte $10,$37,$F7                ; PULU PC,S,Y,X,D,CC
-    !byte $10,$37,$F8                ; PULU PC,S,Y,X,DP
-    !byte $10,$37,$F9                ; PULU PC,S,Y,X,DP,CC
-    !byte $10,$37,$FA                ; PULU PC,S,Y,X,DP,A
-    !byte $10,$37,$FB                ; PULU PC,S,Y,X,DP,A,CC
-    !byte $10,$37,$FC                ; PULU PC,S,Y,X,DP,B
-    !byte $10,$37,$FD                ; PULU PC,S,Y,X,DP,B,CC
-    !byte $10,$37,$FE                ; PULU PC,S,Y,X,DP,D
-    !byte $10,$37,$FF                ; PULU PC,S,Y,X,DP,D,CC
     !byte $10,$38,$AA                ; XANDCC #$AA
     !byte $10,$39                    ; RTS
     !byte $10,$3A                    ; ABX
