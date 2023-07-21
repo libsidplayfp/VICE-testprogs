@@ -13180,327 +13180,343 @@
 !byte $10,$A3,$B0,$DE,$AD       ; CMPD [$DEAD,W]
 !byte $10,$A3,$D0               ; CMPD [,W++]
 !byte $10,$A3,$F0               ; CMPD [,--W]
+!byte $10,$A4,$84               ; ANDD ,X
+!byte $10,$A4,$A4               ; ANDD ,Y
+!byte $10,$A4,$C4               ; ANDD ,U
+!byte $10,$A4,$E4               ; ANDD ,S
+!byte $10,$A4,$15               ; ANDD -$0B,X
+!byte $10,$A4,$35               ; ANDD -$0B,Y
+!byte $10,$A4,$55               ; ANDD -$0B,U
+!byte $10,$A4,$75               ; ANDD -$0B,S
+!byte $10,$A4,$0C               ; ANDD $0C,X
+!byte $10,$A4,$2C               ; ANDD $0C,Y
+!byte $10,$A4,$4C               ; ANDD $0C,U
+!byte $10,$A4,$6C               ; ANDD $0C,S
+!byte $10,$A4,$88,$FF           ; ANDD -$01,X
+!byte $10,$A4,$A8,$FF           ; ANDD -$01,Y
+!byte $10,$A4,$C8,$FF           ; ANDD -$01,U
+!byte $10,$A4,$E8,$FF           ; ANDD -$01,S
+!byte $10,$A4,$88,$60           ; ANDD $60,X
+!byte $10,$A4,$A8,$60           ; ANDD $60,Y
+!byte $10,$A4,$C8,$60           ; ANDD $60,U
+!byte $10,$A4,$E8,$60           ; ANDD $60,S
+!byte $10,$A4,$89,$DE,$AD       ; ANDD $DEAD,X
+!byte $10,$A4,$A9,$DE,$AD       ; ANDD $DEAD,Y
+!byte $10,$A4,$C9,$DE,$AD       ; ANDD $DEAD,U
+!byte $10,$A4,$E9,$DE,$AD       ; ANDD $DEAD,S
+!byte $10,$A4,$89,$10,$00       ; ANDD $1000,X
+!byte $10,$A4,$A9,$10,$00       ; ANDD $1000,Y
+!byte $10,$A4,$C9,$10,$00       ; ANDD $1000,U
+!byte $10,$A4,$E9,$10,$00       ; ANDD $1000,S
+!byte $10,$A4,$86               ; ANDD A,X
+!byte $10,$A4,$A6               ; ANDD A,Y
+!byte $10,$A4,$C6               ; ANDD A,U
+!byte $10,$A4,$E6               ; ANDD A,S
+!byte $10,$A4,$85               ; ANDD B,X
+!byte $10,$A4,$A5               ; ANDD B,Y
+!byte $10,$A4,$C5               ; ANDD B,U
+!byte $10,$A4,$E5               ; ANDD B,S
+!byte $10,$A4,$87               ; ANDD E,X
+!byte $10,$A4,$A7               ; ANDD E,Y
+!byte $10,$A4,$C7               ; ANDD E,U
+!byte $10,$A4,$E7               ; ANDD E,S
+!byte $10,$A4,$8A               ; ANDD F,X
+!byte $10,$A4,$AA               ; ANDD F,Y
+!byte $10,$A4,$CA               ; ANDD F,U
+!byte $10,$A4,$EA               ; ANDD F,S
+!byte $10,$A4,$8B               ; ANDD D,X
+!byte $10,$A4,$AB               ; ANDD D,Y
+!byte $10,$A4,$CB               ; ANDD D,U
+!byte $10,$A4,$EB               ; ANDD D,S
+!byte $10,$A4,$8E               ; ANDD W,X
+!byte $10,$A4,$AE               ; ANDD W,Y
+!byte $10,$A4,$CE               ; ANDD W,U
+!byte $10,$A4,$EE               ; ANDD W,S
+!byte $10,$A4,$80               ; ANDD ,X+
+!byte $10,$A4,$A0               ; ANDD ,Y+
+!byte $10,$A4,$C0               ; ANDD ,U+
+!byte $10,$A4,$E0               ; ANDD ,S+
+!byte $10,$A4,$81               ; ANDD ,X++
+!byte $10,$A4,$A1               ; ANDD ,Y++
+!byte $10,$A4,$C1               ; ANDD ,U++
+!byte $10,$A4,$E1               ; ANDD ,S++
+!byte $10,$A4,$82               ; ANDD ,-X
+!byte $10,$A4,$A2               ; ANDD ,-Y
+!byte $10,$A4,$C2               ; ANDD ,-U
+!byte $10,$A4,$E2               ; ANDD ,-S
+!byte $10,$A4,$83               ; ANDD ,--X
+!byte $10,$A4,$A3               ; ANDD ,--Y
+!byte $10,$A4,$C3               ; ANDD ,--U
+!byte $10,$A4,$E3               ; ANDD ,--S
+!byte $10,$A4,$8C,$FF           ; ANDD -$01,PC
+!byte $10,$A4,$AC,$FF           ; ANDD -$01,PC
+!byte $10,$A4,$CC,$FF           ; ANDD -$01,PC
+!byte $10,$A4,$EC,$FF           ; ANDD -$01,PC
+!byte $10,$A4,$8C,$60           ; ANDD $60,PC
+!byte $10,$A4,$AC,$60           ; ANDD $60,PC
+!byte $10,$A4,$CC,$60           ; ANDD $60,PC
+!byte $10,$A4,$EC,$60           ; ANDD $60,PC
+!byte $10,$A4,$8D,$DE,$AD       ; ANDD $DEAD,PC
+!byte $10,$A4,$AD,$DE,$AD       ; ANDD $DEAD,PC
+!byte $10,$A4,$CD,$DE,$AD       ; ANDD $DEAD,PC
+!byte $10,$A4,$ED,$DE,$AD       ; ANDD $DEAD,PC
+!byte $10,$A4,$8D,$10,$00       ; ANDD $1000,PC
+!byte $10,$A4,$AD,$10,$00       ; ANDD $1000,PC
+!byte $10,$A4,$CD,$10,$00       ; ANDD $1000,PC
+!byte $10,$A4,$ED,$10,$00       ; ANDD $1000,PC
+!byte $10,$A4,$8F               ; ANDD ,W
+!byte $10,$A4,$AF,$DE,$AD       ; ANDD $DEAD,W
+!byte $10,$A4,$CF               ; ANDD ,W++
+!byte $10,$A4,$EF               ; ANDD ,--W
+!byte $10,$A4,$94               ; ANDD [,X]
+!byte $10,$A4,$B4               ; ANDD [,Y]
+!byte $10,$A4,$D4               ; ANDD [,U]
+!byte $10,$A4,$F4               ; ANDD [,S]
+!byte $10,$A4,$98,$FF           ; ANDD [-$01,X]
+!byte $10,$A4,$B8,$FF           ; ANDD [-$01,Y]
+!byte $10,$A4,$D8,$FF           ; ANDD [-$01,U]
+!byte $10,$A4,$F8,$FF           ; ANDD [-$01,S]
+!byte $10,$A4,$98,$60           ; ANDD [$60,X]
+!byte $10,$A4,$B8,$60           ; ANDD [$60,Y]
+!byte $10,$A4,$D8,$60           ; ANDD [$60,U]
+!byte $10,$A4,$F8,$60           ; ANDD [$60,S]
+!byte $10,$A4,$99,$DE,$AD       ; ANDD [$DEAD,X]
+!byte $10,$A4,$B9,$DE,$AD       ; ANDD [$DEAD,Y]
+!byte $10,$A4,$D9,$DE,$AD       ; ANDD [$DEAD,U]
+!byte $10,$A4,$F9,$DE,$AD       ; ANDD [$DEAD,S]
+!byte $10,$A4,$99,$10,$00       ; ANDD [$1000,X]
+!byte $10,$A4,$B9,$10,$00       ; ANDD [$1000,Y]
+!byte $10,$A4,$D9,$10,$00       ; ANDD [$1000,U]
+!byte $10,$A4,$F9,$10,$00       ; ANDD [$1000,S]
+!byte $10,$A4,$96               ; ANDD [A,X]
+!byte $10,$A4,$B6               ; ANDD [A,Y]
+!byte $10,$A4,$D6               ; ANDD [A,U]
+!byte $10,$A4,$F6               ; ANDD [A,S]
+!byte $10,$A4,$95               ; ANDD [B,X]
+!byte $10,$A4,$B5               ; ANDD [B,Y]
+!byte $10,$A4,$D5               ; ANDD [B,U]
+!byte $10,$A4,$F5               ; ANDD [B,S]
+!byte $10,$A4,$97               ; ANDD [E,X]
+!byte $10,$A4,$B7               ; ANDD [E,Y]
+!byte $10,$A4,$D7               ; ANDD [E,U]
+!byte $10,$A4,$F7               ; ANDD [E,S]
+!byte $10,$A4,$9A               ; ANDD [F,X]
+!byte $10,$A4,$BA               ; ANDD [F,Y]
+!byte $10,$A4,$DA               ; ANDD [F,U]
+!byte $10,$A4,$FA               ; ANDD [F,S]
+!byte $10,$A4,$9B               ; ANDD [D,X]
+!byte $10,$A4,$BB               ; ANDD [D,Y]
+!byte $10,$A4,$DB               ; ANDD [D,U]
+!byte $10,$A4,$FB               ; ANDD [D,S]
+!byte $10,$A4,$9E               ; ANDD [W,X]
+!byte $10,$A4,$BE               ; ANDD [W,Y]
+!byte $10,$A4,$DE               ; ANDD [W,U]
+!byte $10,$A4,$FE               ; ANDD [W,S]
+!byte $10,$A4,$91               ; ANDD [,X++]
+!byte $10,$A4,$B1               ; ANDD [,Y++]
+!byte $10,$A4,$D1               ; ANDD [,U++]
+!byte $10,$A4,$F1               ; ANDD [,S++]
+!byte $10,$A4,$92               ; ANDD [,-X]
+!byte $10,$A4,$B2               ; ANDD [,-Y]
+!byte $10,$A4,$D2               ; ANDD [,-U]
+!byte $10,$A4,$F2               ; ANDD [,-S]
+!byte $10,$A4,$93               ; ANDD [,--X]
+!byte $10,$A4,$B3               ; ANDD [,--Y]
+!byte $10,$A4,$D3               ; ANDD [,--U]
+!byte $10,$A4,$F3               ; ANDD [,--S]
+!byte $10,$A4,$9C,$FF           ; ANDD [-$01,PC]
+!byte $10,$A4,$BC,$FF           ; ANDD [-$01,PC]
+!byte $10,$A4,$DC,$FF           ; ANDD [-$01,PC]
+!byte $10,$A4,$FC,$FF           ; ANDD [-$01,PC]
+!byte $10,$A4,$9C,$60           ; ANDD [$60,PC]
+!byte $10,$A4,$BC,$60           ; ANDD [$60,PC]
+!byte $10,$A4,$DC,$60           ; ANDD [$60,PC]
+!byte $10,$A4,$FC,$60           ; ANDD [$60,PC]
+!byte $10,$A4,$9D,$DE,$AD       ; ANDD [$DEAD,PC]
+!byte $10,$A4,$BD,$DE,$AD       ; ANDD [$DEAD,PC]
+!byte $10,$A4,$DD,$DE,$AD       ; ANDD [$DEAD,PC]
+!byte $10,$A4,$FD,$DE,$AD       ; ANDD [$DEAD,PC]
+!byte $10,$A4,$9D,$10,$00       ; ANDD [$1000,PC]
+!byte $10,$A4,$BD,$10,$00       ; ANDD [$1000,PC]
+!byte $10,$A4,$DD,$10,$00       ; ANDD [$1000,PC]
+!byte $10,$A4,$FD,$10,$00       ; ANDD [$1000,PC]
+!byte $10,$A4,$9F,$DE,$AD       ; ANDD [$DEAD]
+!byte $10,$A4,$BF,$DE,$AD       ; ANDD [$DEAD]
+!byte $10,$A4,$DF,$DE,$AD       ; ANDD [$DEAD]
+!byte $10,$A4,$FF,$DE,$AD       ; ANDD [$DEAD]
+!byte $10,$A4,$90               ; ANDD [,W]
+!byte $10,$A4,$B0,$DE,$AD       ; ANDD [$DEAD,W]
+!byte $10,$A4,$D0               ; ANDD [,W++]
+!byte $10,$A4,$F0               ; ANDD [,--W]
+!byte $10,$A5,$84               ; BITD ,X
+!byte $10,$A5,$A4               ; BITD ,Y
+!byte $10,$A5,$C4               ; BITD ,U
+!byte $10,$A5,$E4               ; BITD ,S
+!byte $10,$A5,$15               ; BITD -$0B,X
+!byte $10,$A5,$35               ; BITD -$0B,Y
+!byte $10,$A5,$55               ; BITD -$0B,U
+!byte $10,$A5,$75               ; BITD -$0B,S
+!byte $10,$A5,$0C               ; BITD $0C,X
+!byte $10,$A5,$2C               ; BITD $0C,Y
+!byte $10,$A5,$4C               ; BITD $0C,U
+!byte $10,$A5,$6C               ; BITD $0C,S
+!byte $10,$A5,$88,$FF           ; BITD -$01,X
+!byte $10,$A5,$A8,$FF           ; BITD -$01,Y
+!byte $10,$A5,$C8,$FF           ; BITD -$01,U
+!byte $10,$A5,$E8,$FF           ; BITD -$01,S
+!byte $10,$A5,$88,$60           ; BITD $60,X
+!byte $10,$A5,$A8,$60           ; BITD $60,Y
+!byte $10,$A5,$C8,$60           ; BITD $60,U
+!byte $10,$A5,$E8,$60           ; BITD $60,S
+!byte $10,$A5,$89,$DE,$AD       ; BITD $DEAD,X
+!byte $10,$A5,$A9,$DE,$AD       ; BITD $DEAD,Y
+!byte $10,$A5,$C9,$DE,$AD       ; BITD $DEAD,U
+!byte $10,$A5,$E9,$DE,$AD       ; BITD $DEAD,S
+!byte $10,$A5,$89,$10,$00       ; BITD $1000,X
+!byte $10,$A5,$A9,$10,$00       ; BITD $1000,Y
+!byte $10,$A5,$C9,$10,$00       ; BITD $1000,U
+!byte $10,$A5,$E9,$10,$00       ; BITD $1000,S
+!byte $10,$A5,$86               ; BITD A,X
+!byte $10,$A5,$A6               ; BITD A,Y
+!byte $10,$A5,$C6               ; BITD A,U
+!byte $10,$A5,$E6               ; BITD A,S
+!byte $10,$A5,$85               ; BITD B,X
+!byte $10,$A5,$A5               ; BITD B,Y
+!byte $10,$A5,$C5               ; BITD B,U
+!byte $10,$A5,$E5               ; BITD B,S
+!byte $10,$A5,$87               ; BITD E,X
+!byte $10,$A5,$A7               ; BITD E,Y
+!byte $10,$A5,$C7               ; BITD E,U
+!byte $10,$A5,$E7               ; BITD E,S
+!byte $10,$A5,$8A               ; BITD F,X
+!byte $10,$A5,$AA               ; BITD F,Y
+!byte $10,$A5,$CA               ; BITD F,U
+!byte $10,$A5,$EA               ; BITD F,S
+!byte $10,$A5,$8B               ; BITD D,X
+!byte $10,$A5,$AB               ; BITD D,Y
+!byte $10,$A5,$CB               ; BITD D,U
+!byte $10,$A5,$EB               ; BITD D,S
+!byte $10,$A5,$8E               ; BITD W,X
+!byte $10,$A5,$AE               ; BITD W,Y
+!byte $10,$A5,$CE               ; BITD W,U
+!byte $10,$A5,$EE               ; BITD W,S
+!byte $10,$A5,$80               ; BITD ,X+
+!byte $10,$A5,$A0               ; BITD ,Y+
+!byte $10,$A5,$C0               ; BITD ,U+
+!byte $10,$A5,$E0               ; BITD ,S+
+!byte $10,$A5,$81               ; BITD ,X++
+!byte $10,$A5,$A1               ; BITD ,Y++
+!byte $10,$A5,$C1               ; BITD ,U++
+!byte $10,$A5,$E1               ; BITD ,S++
+!byte $10,$A5,$82               ; BITD ,-X
+!byte $10,$A5,$A2               ; BITD ,-Y
+!byte $10,$A5,$C2               ; BITD ,-U
+!byte $10,$A5,$E2               ; BITD ,-S
+!byte $10,$A5,$83               ; BITD ,--X
+!byte $10,$A5,$A3               ; BITD ,--Y
+!byte $10,$A5,$C3               ; BITD ,--U
+!byte $10,$A5,$E3               ; BITD ,--S
+!byte $10,$A5,$8C,$FF           ; BITD -$01,PC
+!byte $10,$A5,$AC,$FF           ; BITD -$01,PC
+!byte $10,$A5,$CC,$FF           ; BITD -$01,PC
+!byte $10,$A5,$EC,$FF           ; BITD -$01,PC
+!byte $10,$A5,$8C,$60           ; BITD $60,PC
+!byte $10,$A5,$AC,$60           ; BITD $60,PC
+!byte $10,$A5,$CC,$60           ; BITD $60,PC
+!byte $10,$A5,$EC,$60           ; BITD $60,PC
+!byte $10,$A5,$8D,$DE,$AD       ; BITD $DEAD,PC
+!byte $10,$A5,$AD,$DE,$AD       ; BITD $DEAD,PC
+!byte $10,$A5,$CD,$DE,$AD       ; BITD $DEAD,PC
+!byte $10,$A5,$ED,$DE,$AD       ; BITD $DEAD,PC
+!byte $10,$A5,$8D,$10,$00       ; BITD $1000,PC
+!byte $10,$A5,$AD,$10,$00       ; BITD $1000,PC
+!byte $10,$A5,$CD,$10,$00       ; BITD $1000,PC
+!byte $10,$A5,$ED,$10,$00       ; BITD $1000,PC
+!byte $10,$A5,$8F               ; BITD ,W
+!byte $10,$A5,$AF,$DE,$AD       ; BITD $DEAD,W
+!byte $10,$A5,$CF               ; BITD ,W++
+!byte $10,$A5,$EF               ; BITD ,--W
+!byte $10,$A5,$94               ; BITD [,X]
+!byte $10,$A5,$B4               ; BITD [,Y]
+!byte $10,$A5,$D4               ; BITD [,U]
+!byte $10,$A5,$F4               ; BITD [,S]
+!byte $10,$A5,$98,$FF           ; BITD [-$01,X]
+!byte $10,$A5,$B8,$FF           ; BITD [-$01,Y]
+!byte $10,$A5,$D8,$FF           ; BITD [-$01,U]
+!byte $10,$A5,$F8,$FF           ; BITD [-$01,S]
+!byte $10,$A5,$98,$60           ; BITD [$60,X]
+!byte $10,$A5,$B8,$60           ; BITD [$60,Y]
+!byte $10,$A5,$D8,$60           ; BITD [$60,U]
+!byte $10,$A5,$F8,$60           ; BITD [$60,S]
+!byte $10,$A5,$99,$DE,$AD       ; BITD [$DEAD,X]
+!byte $10,$A5,$B9,$DE,$AD       ; BITD [$DEAD,Y]
+!byte $10,$A5,$D9,$DE,$AD       ; BITD [$DEAD,U]
+!byte $10,$A5,$F9,$DE,$AD       ; BITD [$DEAD,S]
+!byte $10,$A5,$99,$10,$00       ; BITD [$1000,X]
+!byte $10,$A5,$B9,$10,$00       ; BITD [$1000,Y]
+!byte $10,$A5,$D9,$10,$00       ; BITD [$1000,U]
+!byte $10,$A5,$F9,$10,$00       ; BITD [$1000,S]
+!byte $10,$A5,$96               ; BITD [A,X]
+!byte $10,$A5,$B6               ; BITD [A,Y]
+!byte $10,$A5,$D6               ; BITD [A,U]
+!byte $10,$A5,$F6               ; BITD [A,S]
+!byte $10,$A5,$95               ; BITD [B,X]
+!byte $10,$A5,$B5               ; BITD [B,Y]
+!byte $10,$A5,$D5               ; BITD [B,U]
+!byte $10,$A5,$F5               ; BITD [B,S]
+!byte $10,$A5,$97               ; BITD [E,X]
+!byte $10,$A5,$B7               ; BITD [E,Y]
+!byte $10,$A5,$D7               ; BITD [E,U]
+!byte $10,$A5,$F7               ; BITD [E,S]
+!byte $10,$A5,$9A               ; BITD [F,X]
+!byte $10,$A5,$BA               ; BITD [F,Y]
+!byte $10,$A5,$DA               ; BITD [F,U]
+!byte $10,$A5,$FA               ; BITD [F,S]
+!byte $10,$A5,$9B               ; BITD [D,X]
+!byte $10,$A5,$BB               ; BITD [D,Y]
+!byte $10,$A5,$DB               ; BITD [D,U]
+!byte $10,$A5,$FB               ; BITD [D,S]
+!byte $10,$A5,$9E               ; BITD [W,X]
+!byte $10,$A5,$BE               ; BITD [W,Y]
+!byte $10,$A5,$DE               ; BITD [W,U]
+!byte $10,$A5,$FE               ; BITD [W,S]
+!byte $10,$A5,$91               ; BITD [,X++]
+!byte $10,$A5,$B1               ; BITD [,Y++]
+!byte $10,$A5,$D1               ; BITD [,U++]
+!byte $10,$A5,$F1               ; BITD [,S++]
+!byte $10,$A5,$92               ; BITD [,-X]
+!byte $10,$A5,$B2               ; BITD [,-Y]
+!byte $10,$A5,$D2               ; BITD [,-U]
+!byte $10,$A5,$F2               ; BITD [,-S]
+!byte $10,$A5,$93               ; BITD [,--X]
+!byte $10,$A5,$B3               ; BITD [,--Y]
+!byte $10,$A5,$D3               ; BITD [,--U]
+!byte $10,$A5,$F3               ; BITD [,--S]
+!byte $10,$A5,$9C,$FF           ; BITD [-$01,PC]
+!byte $10,$A5,$BC,$FF           ; BITD [-$01,PC]
+!byte $10,$A5,$DC,$FF           ; BITD [-$01,PC]
+!byte $10,$A5,$FC,$FF           ; BITD [-$01,PC]
+!byte $10,$A5,$9C,$60           ; BITD [$60,PC]
+!byte $10,$A5,$BC,$60           ; BITD [$60,PC]
+!byte $10,$A5,$DC,$60           ; BITD [$60,PC]
+!byte $10,$A5,$FC,$60           ; BITD [$60,PC]
+!byte $10,$A5,$9D,$DE,$AD       ; BITD [$DEAD,PC]
+!byte $10,$A5,$BD,$DE,$AD       ; BITD [$DEAD,PC]
+!byte $10,$A5,$DD,$DE,$AD       ; BITD [$DEAD,PC]
+!byte $10,$A5,$FD,$DE,$AD       ; BITD [$DEAD,PC]
+!byte $10,$A5,$9D,$10,$00       ; BITD [$1000,PC]
+!byte $10,$A5,$BD,$10,$00       ; BITD [$1000,PC]
+!byte $10,$A5,$DD,$10,$00       ; BITD [$1000,PC]
+!byte $10,$A5,$FD,$10,$00       ; BITD [$1000,PC]
+!byte $10,$A5,$9F,$DE,$AD       ; BITD [$DEAD]
+!byte $10,$A5,$BF,$DE,$AD       ; BITD [$DEAD]
+!byte $10,$A5,$DF,$DE,$AD       ; BITD [$DEAD]
+!byte $10,$A5,$FF,$DE,$AD       ; BITD [$DEAD]
+!byte $10,$A5,$90               ; BITD [,W]
+!byte $10,$A5,$B0,$DE,$AD       ; BITD [$DEAD,W]
+!byte $10,$A5,$D0               ; BITD [,W++]
+!byte $10,$A5,$F0               ; BITD [,--W]
 
-    !byte $10,$A4,$0C                ; ANDA $0C,X
-    !byte $10,$A4,$15                ; ANDA -$0B,X
-    !byte $10,$A4,$2C                ; ANDA $0C,Y
-    !byte $10,$A4,$35                ; ANDA -$0B,Y
-    !byte $10,$A4,$4C                ; ANDA $0C,U
-    !byte $10,$A4,$55                ; ANDA -$0B,U
-    !byte $10,$A4,$6C                ; ANDA $0C,S
-    !byte $10,$A4,$75                ; ANDA -$0B,S
-    !byte $10,$A4,$80                ; ANDA ,X+
-    !byte $10,$A4,$81                ; ANDA ,X++
-    !byte $10,$A4,$82                ; ANDA ,-X
-    !byte $10,$A4,$83                ; ANDA ,--X
-    !byte $10,$A4,$84                ; ANDA ,X
-    !byte $10,$A4,$85                ; ANDA B,X
-    !byte $10,$A4,$86                ; ANDA A,X
-    !byte $10,$A4,$87                ; ANDA ,X
-    !byte $10,$A4,$88,$60            ; ANDA $60,X
-    !byte $10,$A4,$88,$FF            ; ANDA -$01,X
-    !byte $10,$A4,$89,$10,$00        ; ANDA $1000,X
-    !byte $10,$A4,$89,$DE,$AD        ; ANDA $DEAD,X
-    !byte $10,$A4,$8A                ; ANDA ,PClo
-    !byte $10,$A4,$8B                ; ANDA D,X
-    !byte $10,$A4,$8C,$60            ; ANDA $60,PC
-    !byte $10,$A4,$8C,$FF            ; ANDA -$01,PC
-    !byte $10,$A4,$8D,$10,$00        ; ANDA $1000,PC
-    !byte $10,$A4,$8D,$DE,$AD        ; ANDA $DEAD,PC
-    !byte $10,$A4,$8F,$DE,$AD        ; ANDA ,$DEAD
-    !byte $10,$A4,$90                ; ANDA [,X+]
-    !byte $10,$A4,$91                ; ANDA [,X++]
-    !byte $10,$A4,$92                ; ANDA [,-X]
-    !byte $10,$A4,$93                ; ANDA [,--X]
-    !byte $10,$A4,$94                ; ANDA [,X]
-    !byte $10,$A4,$95                ; ANDA [B,X]
-    !byte $10,$A4,$96                ; ANDA [A,X]
-    !byte $10,$A4,$97                ; ANDA [,PClo]
-    !byte $10,$A4,$97                ; ANDA [,X]
-    !byte $10,$A4,$98,$60            ; ANDA [$60,X]
-    !byte $10,$A4,$98,$FF            ; ANDA [-$01,X]
-    !byte $10,$A4,$99,$DE,$10        ; ANDA [$DE10,X]
-    !byte $10,$A4,$99,$DE,$AD        ; ANDA [$DEAD,X]
-    !byte $10,$A4,$9B                ; ANDA [D,X]
-    !byte $10,$A4,$9C,$60            ; ANDA [$60,PC]
-    !byte $10,$A4,$9C,$FF            ; ANDA [-$01,PC]
-    !byte $10,$A4,$9D,$10,$00        ; ANDA [$1000,PC]
-    !byte $10,$A4,$9D,$DE,$AD        ; ANDA [$DEAD,PC]
-    !byte $10,$A4,$9F,$DE,$AD        ; ANDA [$DEAD]
-    !byte $10,$A4,$A0                ; ANDA ,Y+
-    !byte $10,$A4,$A1                ; ANDA ,Y++
-    !byte $10,$A4,$A2                ; ANDA ,-Y
-    !byte $10,$A4,$A3                ; ANDA ,--Y
-    !byte $10,$A4,$A4                ; ANDA ,Y
-    !byte $10,$A4,$A5                ; ANDA B,Y
-    !byte $10,$A4,$A6                ; ANDA A,Y
-    !byte $10,$A4,$A7                ; ANDA ,Y
-    !byte $10,$A4,$A8,$60            ; ANDA $60,Y
-    !byte $10,$A4,$A8,$FF            ; ANDA -$01,Y
-    !byte $10,$A4,$A9,$10,$00        ; ANDA $1000,Y
-    !byte $10,$A4,$A9,$DE,$AD        ; ANDA $DEAD,Y
-    !byte $10,$A4,$AA                ; ANDA ,PClo
-    !byte $10,$A4,$AB                ; ANDA D,Y
-    !byte $10,$A4,$AC,$60            ; ANDA $60,PC
-    !byte $10,$A4,$AC,$FF            ; ANDA -$01,PC
-    !byte $10,$A4,$AD,$10,$00        ; ANDA $1000,PC
-    !byte $10,$A4,$AD,$DE,$AD        ; ANDA $DEAD,PC
-    !byte $10,$A4,$AF,$DE,$AD        ; ANDA ,$DEAD
-    !byte $10,$A4,$B0                ; ANDA [,Y+]
-    !byte $10,$A4,$B1                ; ANDA [,Y++]
-    !byte $10,$A4,$B2                ; ANDA [,-Y]
-    !byte $10,$A4,$B3                ; ANDA [,--Y]
-    !byte $10,$A4,$B4                ; ANDA [,Y]
-    !byte $10,$A4,$B5                ; ANDA [B,Y]
-    !byte $10,$A4,$B6                ; ANDA [A,Y]
-    !byte $10,$A4,$B7                ; ANDA [,PClo]
-    !byte $10,$A4,$B7                ; ANDA [,Y]
-    !byte $10,$A4,$B8,$60            ; ANDA [$60,Y]
-    !byte $10,$A4,$B8,$FF            ; ANDA [-$01,Y]
-    !byte $10,$A4,$B9,$DE,$10        ; ANDA [$DE10,Y]
-    !byte $10,$A4,$B9,$DE,$AD        ; ANDA [$DEAD,Y]
-    !byte $10,$A4,$BB                ; ANDA [D,Y]
-    !byte $10,$A4,$BC,$60            ; ANDA [$60,PC]
-    !byte $10,$A4,$BC,$FF            ; ANDA [-$01,PC]
-    !byte $10,$A4,$BD,$10,$00        ; ANDA [$1000,PC]
-    !byte $10,$A4,$BD,$DE,$AD        ; ANDA [$DEAD,PC]
-    !byte $10,$A4,$BF,$DE,$AD        ; ANDA [$DEAD]
-    !byte $10,$A4,$C0                ; ANDA ,U+
-    !byte $10,$A4,$C1                ; ANDA ,U++
-    !byte $10,$A4,$C2                ; ANDA ,-U
-    !byte $10,$A4,$C3                ; ANDA ,--U
-    !byte $10,$A4,$C4                ; ANDA ,U
-    !byte $10,$A4,$C5                ; ANDA B,U
-    !byte $10,$A4,$C6                ; ANDA A,U
-    !byte $10,$A4,$C7                ; ANDA ,U
-    !byte $10,$A4,$C8,$60            ; ANDA $60,U
-    !byte $10,$A4,$C8,$FF            ; ANDA -$01,U
-    !byte $10,$A4,$C9,$10,$00        ; ANDA $1000,U
-    !byte $10,$A4,$C9,$DE,$AD        ; ANDA $DEAD,U
-    !byte $10,$A4,$CA                ; ANDA ,PClo
-    !byte $10,$A4,$CB                ; ANDA D,U
-    !byte $10,$A4,$CC,$60            ; ANDA $60,PC
-    !byte $10,$A4,$CC,$FF            ; ANDA -$01,PC
-    !byte $10,$A4,$CD,$10,$00        ; ANDA $1000,PC
-    !byte $10,$A4,$CD,$DE,$AD        ; ANDA $DEAD,PC
-    !byte $10,$A4,$CF,$DE,$AD        ; ANDA ,$DEAD
-    !byte $10,$A4,$D0                ; ANDA [,U+]
-    !byte $10,$A4,$D1                ; ANDA [,U++]
-    !byte $10,$A4,$D2                ; ANDA [,-U]
-    !byte $10,$A4,$D3                ; ANDA [,--U]
-    !byte $10,$A4,$D4                ; ANDA [,U]
-    !byte $10,$A4,$D5                ; ANDA [B,U]
-    !byte $10,$A4,$D6                ; ANDA [A,U]
-    !byte $10,$A4,$D7                ; ANDA [,PClo]
-    !byte $10,$A4,$D7                ; ANDA [,U]
-    !byte $10,$A4,$D8,$60            ; ANDA [$60,U]
-    !byte $10,$A4,$D8,$FF            ; ANDA [-$01,U]
-    !byte $10,$A4,$D9,$DE,$10        ; ANDA [$DE10,U]
-    !byte $10,$A4,$D9,$DE,$AD        ; ANDA [$DEAD,U]
-    !byte $10,$A4,$DB                ; ANDA [D,U]
-    !byte $10,$A4,$DC,$60            ; ANDA [$60,PC]
-    !byte $10,$A4,$DC,$FF            ; ANDA [-$01,PC]
-    !byte $10,$A4,$DD,$10,$00        ; ANDA [$1000,PC]
-    !byte $10,$A4,$DD,$DE,$AD        ; ANDA [$DEAD,PC]
-    !byte $10,$A4,$DF,$DE,$AD        ; ANDA [$DEAD]
-    !byte $10,$A4,$E0                ; ANDA ,S+
-    !byte $10,$A4,$E1                ; ANDA ,S++
-    !byte $10,$A4,$E2                ; ANDA ,-S
-    !byte $10,$A4,$E3                ; ANDA ,--S
-    !byte $10,$A4,$E4                ; ANDA ,S
-    !byte $10,$A4,$E5                ; ANDA B,S
-    !byte $10,$A4,$E6                ; ANDA A,S
-    !byte $10,$A4,$E7                ; ANDA ,S
-    !byte $10,$A4,$E8,$60            ; ANDA $60,S
-    !byte $10,$A4,$E8,$FF            ; ANDA -$01,S
-    !byte $10,$A4,$E9,$10,$00        ; ANDA $1000,S
-    !byte $10,$A4,$E9,$DE,$AD        ; ANDA $DEAD,S
-    !byte $10,$A4,$EA                ; ANDA ,PClo
-    !byte $10,$A4,$EB                ; ANDA D,S
-    !byte $10,$A4,$EC,$60            ; ANDA $60,PC
-    !byte $10,$A4,$EC,$FF            ; ANDA -$01,PC
-    !byte $10,$A4,$ED,$10,$00        ; ANDA $1000,PC
-    !byte $10,$A4,$ED,$DE,$AD        ; ANDA $DEAD,PC
-    !byte $10,$A4,$EF,$DE,$AD        ; ANDA ,$DEAD
-    !byte $10,$A4,$F0                ; ANDA [,S+]
-    !byte $10,$A4,$F1                ; ANDA [,S++]
-    !byte $10,$A4,$F2                ; ANDA [,-S]
-    !byte $10,$A4,$F3                ; ANDA [,--S]
-    !byte $10,$A4,$F4                ; ANDA [,S]
-    !byte $10,$A4,$F5                ; ANDA [B,S]
-    !byte $10,$A4,$F6                ; ANDA [A,S]
-    !byte $10,$A4,$F7                ; ANDA [,PClo]
-    !byte $10,$A4,$F7                ; ANDA [,S]
-    !byte $10,$A4,$F8,$60            ; ANDA [$60,S]
-    !byte $10,$A4,$F8,$FF            ; ANDA [-$01,S]
-    !byte $10,$A4,$F9,$DE,$10        ; ANDA [$DE10,S]
-    !byte $10,$A4,$F9,$DE,$AD        ; ANDA [$DEAD,S]
-    !byte $10,$A4,$FB                ; ANDA [D,S]
-    !byte $10,$A4,$FC,$60            ; ANDA [$60,PC]
-    !byte $10,$A4,$FC,$FF            ; ANDA [-$01,PC]
-    !byte $10,$A4,$FD,$10,$00        ; ANDA [$1000,PC]
-    !byte $10,$A4,$FD,$DE,$AD        ; ANDA [$DEAD,PC]
-    !byte $10,$A4,$FF,$DE,$AD        ; ANDA [$DEAD]
-    !byte $10,$A5,$0C                ; BITA $0C,X
-    !byte $10,$A5,$15                ; BITA -$0B,X
-    !byte $10,$A5,$2C                ; BITA $0C,Y
-    !byte $10,$A5,$35                ; BITA -$0B,Y
-    !byte $10,$A5,$4C                ; BITA $0C,U
-    !byte $10,$A5,$55                ; BITA -$0B,U
-    !byte $10,$A5,$6C                ; BITA $0C,S
-    !byte $10,$A5,$75                ; BITA -$0B,S
-    !byte $10,$A5,$80                ; BITA ,X+
-    !byte $10,$A5,$81                ; BITA ,X++
-    !byte $10,$A5,$82                ; BITA ,-X
-    !byte $10,$A5,$83                ; BITA ,--X
-    !byte $10,$A5,$84                ; BITA ,X
-    !byte $10,$A5,$85                ; BITA B,X
-    !byte $10,$A5,$86                ; BITA A,X
-    !byte $10,$A5,$87                ; BITA ,X
-    !byte $10,$A5,$88,$60            ; BITA $60,X
-    !byte $10,$A5,$88,$FF            ; BITA -$01,X
-    !byte $10,$A5,$89,$10,$00        ; BITA $1000,X
-    !byte $10,$A5,$89,$DE,$AD        ; BITA $DEAD,X
-    !byte $10,$A5,$8A                ; BITA ,PClo
-    !byte $10,$A5,$8B                ; BITA D,X
-    !byte $10,$A5,$8C,$60            ; BITA $60,PC
-    !byte $10,$A5,$8C,$FF            ; BITA -$01,PC
-    !byte $10,$A5,$8D,$10,$00        ; BITA $1000,PC
-    !byte $10,$A5,$8D,$DE,$AD        ; BITA $DEAD,PC
-    !byte $10,$A5,$8F,$DE,$AD        ; BITA ,$DEAD
-    !byte $10,$A5,$90                ; BITA [,X+]
-    !byte $10,$A5,$91                ; BITA [,X++]
-    !byte $10,$A5,$92                ; BITA [,-X]
-    !byte $10,$A5,$93                ; BITA [,--X]
-    !byte $10,$A5,$94                ; BITA [,X]
-    !byte $10,$A5,$95                ; BITA [B,X]
-    !byte $10,$A5,$96                ; BITA [A,X]
-    !byte $10,$A5,$97                ; BITA [,X]
-    !byte $10,$A5,$98,$60            ; BITA [$60,X]
-    !byte $10,$A5,$98,$FF            ; BITA [-$01,X]
-    !byte $10,$A5,$99,$DE,$10        ; BITA [$DE10,X]
-    !byte $10,$A5,$99,$DE,$AD        ; BITA [$DEAD,X]
-    !byte $10,$A5,$9A                ; BITA [,PClo]
-    !byte $10,$A5,$9B                ; BITA [D,X]
-    !byte $10,$A5,$9C,$60            ; BITA [$60,PC]
-    !byte $10,$A5,$9C,$FF            ; BITA [-$01,PC]
-    !byte $10,$A5,$9D,$10,$00        ; BITA [$1000,PC]
-    !byte $10,$A5,$9D,$DE,$AD        ; BITA [$DEAD,PC]
-    !byte $10,$A5,$9F,$DE,$AD        ; BITA [$DEAD]
-    !byte $10,$A5,$A0                ; BITA ,Y+
-    !byte $10,$A5,$A1                ; BITA ,Y++
-    !byte $10,$A5,$A2                ; BITA ,-Y
-    !byte $10,$A5,$A3                ; BITA ,--Y
-    !byte $10,$A5,$A4                ; BITA ,Y
-    !byte $10,$A5,$A5                ; BITA B,Y
-    !byte $10,$A5,$A6                ; BITA A,Y
-    !byte $10,$A5,$A7                ; BITA ,Y
-    !byte $10,$A5,$A8,$60            ; BITA $60,Y
-    !byte $10,$A5,$A8,$FF            ; BITA -$01,Y
-    !byte $10,$A5,$A9,$10,$00        ; BITA $1000,Y
-    !byte $10,$A5,$A9,$DE,$AD        ; BITA $DEAD,Y
-    !byte $10,$A5,$AA                ; BITA ,PClo
-    !byte $10,$A5,$AB                ; BITA D,Y
-    !byte $10,$A5,$AC,$60            ; BITA $60,PC
-    !byte $10,$A5,$AC,$FF            ; BITA -$01,PC
-    !byte $10,$A5,$AD,$10,$00        ; BITA $1000,PC
-    !byte $10,$A5,$AD,$DE,$AD        ; BITA $DEAD,PC
-    !byte $10,$A5,$AF,$DE,$AD        ; BITA ,$DEAD
-    !byte $10,$A5,$B0                ; BITA [,Y+]
-    !byte $10,$A5,$B1                ; BITA [,Y++]
-    !byte $10,$A5,$B2                ; BITA [,-Y]
-    !byte $10,$A5,$B3                ; BITA [,--Y]
-    !byte $10,$A5,$B4                ; BITA [,Y]
-    !byte $10,$A5,$B5                ; BITA [B,Y]
-    !byte $10,$A5,$B6                ; BITA [A,Y]
-    !byte $10,$A5,$B7                ; BITA [,Y]
-    !byte $10,$A5,$B8,$60            ; BITA [$60,Y]
-    !byte $10,$A5,$B8,$FF            ; BITA [-$01,Y]
-    !byte $10,$A5,$B9,$DE,$10        ; BITA [$DE10,Y]
-    !byte $10,$A5,$B9,$DE,$AD        ; BITA [$DEAD,Y]
-    !byte $10,$A5,$BA                ; BITA [,PClo]
-    !byte $10,$A5,$BB                ; BITA [D,Y]
-    !byte $10,$A5,$BC,$60            ; BITA [$60,PC]
-    !byte $10,$A5,$BC,$FF            ; BITA [-$01,PC]
-    !byte $10,$A5,$BD,$10,$00        ; BITA [$1000,PC]
-    !byte $10,$A5,$BD,$DE,$AD        ; BITA [$DEAD,PC]
-    !byte $10,$A5,$BF,$DE,$AD        ; BITA [$DEAD]
-    !byte $10,$A5,$C0                ; BITA ,U+
-    !byte $10,$A5,$C1                ; BITA ,U++
-    !byte $10,$A5,$C2                ; BITA ,-U
-    !byte $10,$A5,$C3                ; BITA ,--U
-    !byte $10,$A5,$C4                ; BITA ,U
-    !byte $10,$A5,$C5                ; BITA B,U
-    !byte $10,$A5,$C6                ; BITA A,U
-    !byte $10,$A5,$C7                ; BITA ,U
-    !byte $10,$A5,$C8,$60            ; BITA $60,U
-    !byte $10,$A5,$C8,$FF            ; BITA -$01,U
-    !byte $10,$A5,$C9,$10,$00        ; BITA $1000,U
-    !byte $10,$A5,$C9,$DE,$AD        ; BITA $DEAD,U
-    !byte $10,$A5,$CA                ; BITA ,PClo
-    !byte $10,$A5,$CB                ; BITA D,U
-    !byte $10,$A5,$CC,$60            ; BITA $60,PC
-    !byte $10,$A5,$CC,$FF            ; BITA -$01,PC
-    !byte $10,$A5,$CD,$10,$00        ; BITA $1000,PC
-    !byte $10,$A5,$CD,$DE,$AD        ; BITA $DEAD,PC
-    !byte $10,$A5,$CF,$DE,$AD        ; BITA ,$DEAD
-    !byte $10,$A5,$D0                ; BITA [,U+]
-    !byte $10,$A5,$D1                ; BITA [,U++]
-    !byte $10,$A5,$D2                ; BITA [,-U]
-    !byte $10,$A5,$D3                ; BITA [,--U]
-    !byte $10,$A5,$D4                ; BITA [,U]
-    !byte $10,$A5,$D5                ; BITA [B,U]
-    !byte $10,$A5,$D6                ; BITA [A,U]
-    !byte $10,$A5,$D7                ; BITA [,U]
-    !byte $10,$A5,$D8,$60            ; BITA [$60,U]
-    !byte $10,$A5,$D8,$FF            ; BITA [-$01,U]
-    !byte $10,$A5,$D9,$DE,$10        ; BITA [$DE10,U]
-    !byte $10,$A5,$D9,$DE,$AD        ; BITA [$DEAD,U]
-    !byte $10,$A5,$DA                ; BITA [,PClo]
-    !byte $10,$A5,$DB                ; BITA [D,U]
-    !byte $10,$A5,$DC,$60            ; BITA [$60,PC]
-    !byte $10,$A5,$DC,$FF            ; BITA [-$01,PC]
-    !byte $10,$A5,$DD,$10,$00        ; BITA [$1000,PC]
-    !byte $10,$A5,$DD,$DE,$AD        ; BITA [$DEAD,PC]
-    !byte $10,$A5,$DF,$DE,$AD        ; BITA [$DEAD]
-    !byte $10,$A5,$E0                ; BITA ,S+
-    !byte $10,$A5,$E1                ; BITA ,S++
-    !byte $10,$A5,$E2                ; BITA ,-S
-    !byte $10,$A5,$E3                ; BITA ,--S
-    !byte $10,$A5,$E4                ; BITA ,S
-    !byte $10,$A5,$E5                ; BITA B,S
-    !byte $10,$A5,$E6                ; BITA A,S
-    !byte $10,$A5,$E7                ; BITA ,S
-    !byte $10,$A5,$E8,$60            ; BITA $60,S
-    !byte $10,$A5,$E8,$FF            ; BITA -$01,S
-    !byte $10,$A5,$E9,$10,$00        ; BITA $1000,S
-    !byte $10,$A5,$E9,$DE,$AD        ; BITA $DEAD,S
-    !byte $10,$A5,$EA                ; BITA ,PClo
-    !byte $10,$A5,$EB                ; BITA D,S
-    !byte $10,$A5,$EC,$60            ; BITA $60,PC
-    !byte $10,$A5,$EC,$FF            ; BITA -$01,PC
-    !byte $10,$A5,$ED,$10,$00        ; BITA $1000,PC
-    !byte $10,$A5,$ED,$DE,$AD        ; BITA $DEAD,PC
-    !byte $10,$A5,$EF,$DE,$AD        ; BITA ,$DEAD
-    !byte $10,$A5,$F0                ; BITA [,S+]
-    !byte $10,$A5,$F1                ; BITA [,S++]
-    !byte $10,$A5,$F2                ; BITA [,-S]
-    !byte $10,$A5,$F3                ; BITA [,--S]
-    !byte $10,$A5,$F4                ; BITA [,S]
-    !byte $10,$A5,$F5                ; BITA [B,S]
-    !byte $10,$A5,$F6                ; BITA [A,S]
-    !byte $10,$A5,$F7                ; BITA [,S]
-    !byte $10,$A5,$F8,$60            ; BITA [$60,S]
-    !byte $10,$A5,$F8,$FF            ; BITA [-$01,S]
-    !byte $10,$A5,$F9,$DE,$10        ; BITA [$DE10,S]
-    !byte $10,$A5,$F9,$DE,$AD        ; BITA [$DEAD,S]
-    !byte $10,$A5,$FA                ; BITA [,PClo]
-    !byte $10,$A5,$FB                ; BITA [D,S]
-    !byte $10,$A5,$FC,$60            ; BITA [$60,PC]
-    !byte $10,$A5,$FC,$FF            ; BITA [-$01,PC]
-    !byte $10,$A5,$FD,$10,$00        ; BITA [$1000,PC]
-    !byte $10,$A5,$FD,$DE,$AD        ; BITA [$DEAD,PC]
-    !byte $10,$A5,$FF,$DE,$AD        ; BITA [$DEAD]
     !byte $10,$A6,$0C                ; LDA $0C,X
     !byte $10,$A6,$15                ; LDA -$0B,X
     !byte $10,$A6,$2C                ; LDA $0C,Y
