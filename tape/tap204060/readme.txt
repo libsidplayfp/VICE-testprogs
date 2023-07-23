@@ -9,6 +9,11 @@ $30/$50/$50/$30
 
 -------------------------------------------------------------------------------
 
+CAUTION: when testing, make sure to detach the .tap correctly, else changes
+         may not get written to the file
+
+-------------------------------------------------------------------------------
+
 normal:
 
 

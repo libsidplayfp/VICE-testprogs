@@ -1,6 +1,8 @@
 
-; this program writes tap pulses spaced apart (8*$20), (8*$40), (8*$60), (8*$40)
-; cycles.
+; this program writes tap pulses:
+;
+; normal:    <pause> <$20> <$40> <$60> | <$20> <$40> <$60> |
+; inverted:  <pause> <$30> <$50> <$50> | <$30> <$50> <$50> |
 
 ; see https://sourceforge.net/p/vice-emu/bugs/1917/
 
@@ -12,8 +14,9 @@
 start:
 
     jsr $e5a0         ; vic reset (only for testing)
-    sei
     jsr $f838         ; press record & play on tape
+
+    sei
 
     lda #$7f
     sta $dc0d
@@ -25,84 +28,106 @@ start:
     sta $d011
     sta $d020
 
-    ; initial state of write line
-!if (INVERT = 0) {
-    lda #$05          ; start tape motor, output = 0
-} else {
-    lda #$0d          ; start tape motor, output = 1
-}
-    sta $01
+    ;                 cycles        normal      inverted
+    ;                 --------      ----------  ----------
 
-    ; produce a long(er) pause
-    ldx #20
+    ; NOTE: usually, before running the program, $01 would be = $37, ie
+    ; motor: off,                   write = 0   write = 0
+
+    ; initial state of write line, start tape motor
+!if (INVERT = 0) {
+    lda #$05        ; 2 (write = 0)
+} else {
+    lda #$0d        ; 2 (write = 1)
+}
+    sta $01         ; 2             write = 0   write = 1           <- tap starts here
+
+    ; produce a long(er) pause (about 2 seconds)
+    lda #$3e
+    sta $02
+--
+    tya
+    pha
+
+    ; 31743us = 31.743ms
+    ldx #0          ; 2
 -
     jsr w16tap      ; 6 + 113 = 119
-    dex
-    bne -
+    dex             ; 2
+    bne -           ; 3 / 2
+
+    dec $02
+    bne --
+    dec $d020
 
 !if (INVERT = 0) {
     ; normal
-    ldx #$d     ; write = 1
-    lda #$5     ; write = 0
+    ldx #$d         ; 2 (write = 1)
+    lda #$5         ; 2 (write = 0)
 } else {
     ; inverted
-    ldx #$5     ; write = 0
-    lda #$d     ; write = 1
+    ldx #$5         ; 2 (write = 0)
+    lda #$d         ; 2 (write = 1)
 }
 
 loop:
 
 ; $20
-                    ; inverted           inverted
-                    ; --------------    -----------
-    stx $1          ; 2 output = 0      (509 (tap:$40) cycles since last falling edge, writes long pause on first iteration)
+                    ; cycles          normal      inverted
+                    ; -------------   ---------   ---------
+    stx $1          ; 2               write=1(*)  write=0      (512 (tap:$40) cycles since last falling edge, writes long pause on first iteration)
 
     jsr slide+21    ; 6+113+7 = 126
 
-    sta $1          ; 2 output = 1
+    sta $1          ; 2               write=0     write=1(*)   (384 (tap:$30) cycles since last falling edge, writes long pause on first iteration)
 
     jsr slide+21    ; 6+113+7 = 126
 
 ; $40
 
-    stx $1          ; 2 output = 0      (252 (tap:$20)  cycles since last falling edge)
+    stx $1          ; 2               write=1(*)  write=0      (256 (tap:$20) cycles since last falling edge)
 
     jsr w16tap      ; 6+113    = 119
-    jsr slide+11    ; 6+113+17 = 136
+    jsr slide+12    ; 6+113+16 = 135
 
-    sta $1          ; 2 output = 1
+    sta $1          ; 2               write=0     write=1(*)   (384 (tap:$30) cycles since last falling edge)
 
     jsr w16tap      ; 6+113    = 119
-    jsr slide+11    ; 6+113+17 = 136
+    jsr slide+12    ; 6+113+16 = 135
 
 
 ; $60
 
-    stx $1          ; 2 output = 0      (508 (tap:$40) cycles since last falling edge)
+    stx $1          ; 2               write=1(*)  write=0      (512 (tap:$40) cycles since last falling edge)
 
     jsr w16tap      ; 6 + 113 = 119
     jsr w16tap      ; 6 + 113 = 119
-    jsr slide+1     ; 6+113+27= 127
+    jsr slide+3     ; 6+113+25= 144
 
-    sta $1          ; 2 output = 1
+    sta $1          ; 2               write=0     write=1(*)   (640 (tap:$50) cycles since last falling edge)
 
     jsr w16tap      ; 6 + 113 = 119
     jsr w16tap      ; 6 + 113 = 119
-    jsr slide+1     ; 6+113+27= 127
+    jsr slide+3     ; 6+113+25= 144
 
 ; $40
 
-    stx $1          ; 2 output = 0      (764 (tap:$60) cycles since last falling edge)
+    stx $1          ; 2               write=1(*)  write=0      (768 (tap:$60) cycles since last falling edge)
 
     jsr w16tap      ; 6+113    = 119
-    jsr slide+11    ; 6+113+17 = 136
+    jsr slide+12    ; 6+113+16 = 135
 
-    sta $1          ; 2 output = 1
+    sta $1          ; 2               write=0     write=1(*)   (640 (tap:$50) cycles since last falling edge)
 
     jsr w16tap      ; 6+113    = 119
-    jsr slide+14    ; 6+113+14 = 133
+    jsr slide+15    ; 6+113+13 = 132
 
+!if LOOP = 1 {
     jmp loop        ; 3
+} else {
+    inc $d020
+    jmp *
+}
 
 ;---------------------------------------------------------------------------
 
