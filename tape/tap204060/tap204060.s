@@ -1,8 +1,15 @@
 
 ; this program writes tap pulses:
 ;
-; normal:    <pause> <$20> <$40> <$60> | <$20> <$40> <$60> |
-; inverted:  <pause> <$30> <$50> <$50> | <$30> <$50> <$50> |
+; looping version:
+;
+; normal:    <pause> | <$20> <$40> <$60> <$20> |
+; inverted:  <pause> | <$30> <$50> <$50> <$30> |
+;
+; non looping version:
+;
+; normal:    <pause> <$20> <$40> <$60> <$20>
+; inverted:  <pause> <$30> <$50> <$50>
 
 ; see https://sourceforge.net/p/vice-emu/bugs/1917/
 
@@ -43,21 +50,7 @@ start:
     sta $01         ; 2             write = 0   write = 1           <- tap starts here
 
     ; produce a long(er) pause (about 2 seconds)
-    lda #$3e
-    sta $02
---
-    tya
-    pha
-
-    ; 31743us = 31.743ms
-    ldx #0          ; 2
--
-    jsr w16tap      ; 6 + 113 = 119
-    dex             ; 2
-    bne -           ; 3 / 2
-
-    dec $02
-    bne --
+    jsr longpause
     dec $d020
 
 !if (INVERT = 0) {
@@ -88,12 +81,12 @@ loop:
     stx $1          ; 2               write=1(*)  write=0      (256 (tap:$20) cycles since last falling edge)
 
     jsr w16tap      ; 6+113    = 119
-    jsr slide+12    ; 6+113+16 = 135
+    jsr slide+11    ; 6+113+17 = 136
 
     sta $1          ; 2               write=0     write=1(*)   (384 (tap:$30) cycles since last falling edge)
 
     jsr w16tap      ; 6+113    = 119
-    jsr slide+12    ; 6+113+16 = 135
+    jsr slide+11    ; 6+113+17 = 136
 
 
 ; $60
@@ -102,30 +95,32 @@ loop:
 
     jsr w16tap      ; 6 + 113 = 119
     jsr w16tap      ; 6 + 113 = 119
-    jsr slide+3     ; 6+113+25= 144
+    jsr slide+1     ; 6+113+27= 146
 
     sta $1          ; 2               write=0     write=1(*)   (640 (tap:$50) cycles since last falling edge)
 
     jsr w16tap      ; 6 + 113 = 119
     jsr w16tap      ; 6 + 113 = 119
-    jsr slide+3     ; 6+113+25= 144
+    jsr slide+1     ; 6+113+27= 146
 
 ; $40
 
     stx $1          ; 2               write=1(*)  write=0      (768 (tap:$60) cycles since last falling edge)
 
     jsr w16tap      ; 6+113    = 119
-    jsr slide+12    ; 6+113+16 = 135
+    jsr slide+11    ; 6+113+17 = 136
 
     sta $1          ; 2               write=0     write=1(*)   (640 (tap:$50) cycles since last falling edge)
 
     jsr w16tap      ; 6+113    = 119
-    jsr slide+15    ; 6+113+13 = 132
+    jsr slide+14    ; 6+113+14 = 133
 
 !if LOOP = 1 {
     jmp loop        ; 3
 } else {
-    inc $d020
+    bit $02         ; 3
+    stx $1          ; 2               write=1(*)  write=0      (512 (tap:$40) cycles since last falling edge, writes long pause on first iteration)
+    dec $d020
     jmp *
 }
 
@@ -157,3 +152,17 @@ w16tap:     ; 113 cycles
     bne -         ; 3 (2)
     rts           ; 6
 
+longpause:
+    lda #$3e
+    sta $02
+--
+    ; 31743us = 31.743ms
+    ldx #0          ; 2
+-
+    jsr w16tap      ; 6 + 113 = 119
+    dex             ; 2
+    bne -           ; 3 / 2
+
+    dec $02
+    bne --
+    rts
