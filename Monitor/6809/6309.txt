@@ -15384,327 +15384,343 @@
 !byte $10,$ED,$B0,$DE,$AD       ; STQ [$DEAD,W]
 !byte $10,$ED,$D0               ; STQ [,W++]
 !byte $10,$ED,$F0               ; STQ [,--W]
+!byte $10,$EE,$84               ; LDS ,X
+!byte $10,$EE,$A4               ; LDS ,Y
+!byte $10,$EE,$C4               ; LDS ,U
+!byte $10,$EE,$E4               ; LDS ,S
+!byte $10,$EE,$15               ; LDS -$0B,X
+!byte $10,$EE,$35               ; LDS -$0B,Y
+!byte $10,$EE,$55               ; LDS -$0B,U
+!byte $10,$EE,$75               ; LDS -$0B,S
+!byte $10,$EE,$0C               ; LDS $0C,X
+!byte $10,$EE,$2C               ; LDS $0C,Y
+!byte $10,$EE,$4C               ; LDS $0C,U
+!byte $10,$EE,$6C               ; LDS $0C,S
+!byte $10,$EE,$88,$FF           ; LDS -$01,X
+!byte $10,$EE,$A8,$FF           ; LDS -$01,Y
+!byte $10,$EE,$C8,$FF           ; LDS -$01,U
+!byte $10,$EE,$E8,$FF           ; LDS -$01,S
+!byte $10,$EE,$88,$60           ; LDS $60,X
+!byte $10,$EE,$A8,$60           ; LDS $60,Y
+!byte $10,$EE,$C8,$60           ; LDS $60,U
+!byte $10,$EE,$E8,$60           ; LDS $60,S
+!byte $10,$EE,$89,$DE,$AD       ; LDS $DEAD,X
+!byte $10,$EE,$A9,$DE,$AD       ; LDS $DEAD,Y
+!byte $10,$EE,$C9,$DE,$AD       ; LDS $DEAD,U
+!byte $10,$EE,$E9,$DE,$AD       ; LDS $DEAD,S
+!byte $10,$EE,$89,$10,$00       ; LDS $1000,X
+!byte $10,$EE,$A9,$10,$00       ; LDS $1000,Y
+!byte $10,$EE,$C9,$10,$00       ; LDS $1000,U
+!byte $10,$EE,$E9,$10,$00       ; LDS $1000,S
+!byte $10,$EE,$86               ; LDS A,X
+!byte $10,$EE,$A6               ; LDS A,Y
+!byte $10,$EE,$C6               ; LDS A,U
+!byte $10,$EE,$E6               ; LDS A,S
+!byte $10,$EE,$85               ; LDS B,X
+!byte $10,$EE,$A5               ; LDS B,Y
+!byte $10,$EE,$C5               ; LDS B,U
+!byte $10,$EE,$E5               ; LDS B,S
+!byte $10,$EE,$87               ; LDS E,X
+!byte $10,$EE,$A7               ; LDS E,Y
+!byte $10,$EE,$C7               ; LDS E,U
+!byte $10,$EE,$E7               ; LDS E,S
+!byte $10,$EE,$8A               ; LDS F,X
+!byte $10,$EE,$AA               ; LDS F,Y
+!byte $10,$EE,$CA               ; LDS F,U
+!byte $10,$EE,$EA               ; LDS F,S
+!byte $10,$EE,$8B               ; LDS D,X
+!byte $10,$EE,$AB               ; LDS D,Y
+!byte $10,$EE,$CB               ; LDS D,U
+!byte $10,$EE,$EB               ; LDS D,S
+!byte $10,$EE,$8E               ; LDS W,X
+!byte $10,$EE,$AE               ; LDS W,Y
+!byte $10,$EE,$CE               ; LDS W,U
+!byte $10,$EE,$EE               ; LDS W,S
+!byte $10,$EE,$80               ; LDS ,X+
+!byte $10,$EE,$A0               ; LDS ,Y+
+!byte $10,$EE,$C0               ; LDS ,U+
+!byte $10,$EE,$E0               ; LDS ,S+
+!byte $10,$EE,$81               ; LDS ,X++
+!byte $10,$EE,$A1               ; LDS ,Y++
+!byte $10,$EE,$C1               ; LDS ,U++
+!byte $10,$EE,$E1               ; LDS ,S++
+!byte $10,$EE,$82               ; LDS ,-X
+!byte $10,$EE,$A2               ; LDS ,-Y
+!byte $10,$EE,$C2               ; LDS ,-U
+!byte $10,$EE,$E2               ; LDS ,-S
+!byte $10,$EE,$83               ; LDS ,--X
+!byte $10,$EE,$A3               ; LDS ,--Y
+!byte $10,$EE,$C3               ; LDS ,--U
+!byte $10,$EE,$E3               ; LDS ,--S
+!byte $10,$EE,$8C,$FF           ; LDS -$01,PC
+!byte $10,$EE,$AC,$FF           ; LDS -$01,PC
+!byte $10,$EE,$CC,$FF           ; LDS -$01,PC
+!byte $10,$EE,$EC,$FF           ; LDS -$01,PC
+!byte $10,$EE,$8C,$60           ; LDS $60,PC
+!byte $10,$EE,$AC,$60           ; LDS $60,PC
+!byte $10,$EE,$CC,$60           ; LDS $60,PC
+!byte $10,$EE,$EC,$60           ; LDS $60,PC
+!byte $10,$EE,$8D,$DE,$AD       ; LDS $DEAD,PC
+!byte $10,$EE,$AD,$DE,$AD       ; LDS $DEAD,PC
+!byte $10,$EE,$CD,$DE,$AD       ; LDS $DEAD,PC
+!byte $10,$EE,$ED,$DE,$AD       ; LDS $DEAD,PC
+!byte $10,$EE,$8D,$10,$00       ; LDS $1000,PC
+!byte $10,$EE,$AD,$10,$00       ; LDS $1000,PC
+!byte $10,$EE,$CD,$10,$00       ; LDS $1000,PC
+!byte $10,$EE,$ED,$10,$00       ; LDS $1000,PC
+!byte $10,$EE,$8F               ; LDS ,W
+!byte $10,$EE,$AF,$DE,$AD       ; LDS $DEAD,W
+!byte $10,$EE,$CF               ; LDS ,W++
+!byte $10,$EE,$EF               ; LDS ,--W
+!byte $10,$EE,$94               ; LDS [,X]
+!byte $10,$EE,$B4               ; LDS [,Y]
+!byte $10,$EE,$D4               ; LDS [,U]
+!byte $10,$EE,$F4               ; LDS [,S]
+!byte $10,$EE,$98,$FF           ; LDS [-$01,X]
+!byte $10,$EE,$B8,$FF           ; LDS [-$01,Y]
+!byte $10,$EE,$D8,$FF           ; LDS [-$01,U]
+!byte $10,$EE,$F8,$FF           ; LDS [-$01,S]
+!byte $10,$EE,$98,$60           ; LDS [$60,X]
+!byte $10,$EE,$B8,$60           ; LDS [$60,Y]
+!byte $10,$EE,$D8,$60           ; LDS [$60,U]
+!byte $10,$EE,$F8,$60           ; LDS [$60,S]
+!byte $10,$EE,$99,$DE,$AD       ; LDS [$DEAD,X]
+!byte $10,$EE,$B9,$DE,$AD       ; LDS [$DEAD,Y]
+!byte $10,$EE,$D9,$DE,$AD       ; LDS [$DEAD,U]
+!byte $10,$EE,$F9,$DE,$AD       ; LDS [$DEAD,S]
+!byte $10,$EE,$99,$10,$00       ; LDS [$1000,X]
+!byte $10,$EE,$B9,$10,$00       ; LDS [$1000,Y]
+!byte $10,$EE,$D9,$10,$00       ; LDS [$1000,U]
+!byte $10,$EE,$F9,$10,$00       ; LDS [$1000,S]
+!byte $10,$EE,$96               ; LDS [A,X]
+!byte $10,$EE,$B6               ; LDS [A,Y]
+!byte $10,$EE,$D6               ; LDS [A,U]
+!byte $10,$EE,$F6               ; LDS [A,S]
+!byte $10,$EE,$95               ; LDS [B,X]
+!byte $10,$EE,$B5               ; LDS [B,Y]
+!byte $10,$EE,$D5               ; LDS [B,U]
+!byte $10,$EE,$F5               ; LDS [B,S]
+!byte $10,$EE,$97               ; LDS [E,X]
+!byte $10,$EE,$B7               ; LDS [E,Y]
+!byte $10,$EE,$D7               ; LDS [E,U]
+!byte $10,$EE,$F7               ; LDS [E,S]
+!byte $10,$EE,$9A               ; LDS [F,X]
+!byte $10,$EE,$BA               ; LDS [F,Y]
+!byte $10,$EE,$DA               ; LDS [F,U]
+!byte $10,$EE,$FA               ; LDS [F,S]
+!byte $10,$EE,$9B               ; LDS [D,X]
+!byte $10,$EE,$BB               ; LDS [D,Y]
+!byte $10,$EE,$DB               ; LDS [D,U]
+!byte $10,$EE,$FB               ; LDS [D,S]
+!byte $10,$EE,$9E               ; LDS [W,X]
+!byte $10,$EE,$BE               ; LDS [W,Y]
+!byte $10,$EE,$DE               ; LDS [W,U]
+!byte $10,$EE,$FE               ; LDS [W,S]
+!byte $10,$EE,$91               ; LDS [,X++]
+!byte $10,$EE,$B1               ; LDS [,Y++]
+!byte $10,$EE,$D1               ; LDS [,U++]
+!byte $10,$EE,$F1               ; LDS [,S++]
+!byte $10,$EE,$92               ; LDS [,-X]
+!byte $10,$EE,$B2               ; LDS [,-Y]
+!byte $10,$EE,$D2               ; LDS [,-U]
+!byte $10,$EE,$F2               ; LDS [,-S]
+!byte $10,$EE,$93               ; LDS [,--X]
+!byte $10,$EE,$B3               ; LDS [,--Y]
+!byte $10,$EE,$D3               ; LDS [,--U]
+!byte $10,$EE,$F3               ; LDS [,--S]
+!byte $10,$EE,$9C,$FF           ; LDS [-$01,PC]
+!byte $10,$EE,$BC,$FF           ; LDS [-$01,PC]
+!byte $10,$EE,$DC,$FF           ; LDS [-$01,PC]
+!byte $10,$EE,$FC,$FF           ; LDS [-$01,PC]
+!byte $10,$EE,$9C,$60           ; LDS [$60,PC]
+!byte $10,$EE,$BC,$60           ; LDS [$60,PC]
+!byte $10,$EE,$DC,$60           ; LDS [$60,PC]
+!byte $10,$EE,$FC,$60           ; LDS [$60,PC]
+!byte $10,$EE,$9D,$DE,$AD       ; LDS [$DEAD,PC]
+!byte $10,$EE,$BD,$DE,$AD       ; LDS [$DEAD,PC]
+!byte $10,$EE,$DD,$DE,$AD       ; LDS [$DEAD,PC]
+!byte $10,$EE,$FD,$DE,$AD       ; LDS [$DEAD,PC]
+!byte $10,$EE,$9D,$10,$00       ; LDS [$1000,PC]
+!byte $10,$EE,$BD,$10,$00       ; LDS [$1000,PC]
+!byte $10,$EE,$DD,$10,$00       ; LDS [$1000,PC]
+!byte $10,$EE,$FD,$10,$00       ; LDS [$1000,PC]
+!byte $10,$EE,$9F,$DE,$AD       ; LDS [$DEAD]
+!byte $10,$EE,$BF,$DE,$AD       ; LDS [$DEAD]
+!byte $10,$EE,$DF,$DE,$AD       ; LDS [$DEAD]
+!byte $10,$EE,$FF,$DE,$AD       ; LDS [$DEAD]
+!byte $10,$EE,$90               ; LDS [,W]
+!byte $10,$EE,$B0,$DE,$AD       ; LDS [$DEAD,W]
+!byte $10,$EE,$D0               ; LDS [,W++]
+!byte $10,$EE,$F0               ; LDS [,--W]
+!byte $10,$EF,$84               ; STS ,X
+!byte $10,$EF,$A4               ; STS ,Y
+!byte $10,$EF,$C4               ; STS ,U
+!byte $10,$EF,$E4               ; STS ,S
+!byte $10,$EF,$15               ; STS -$0B,X
+!byte $10,$EF,$35               ; STS -$0B,Y
+!byte $10,$EF,$55               ; STS -$0B,U
+!byte $10,$EF,$75               ; STS -$0B,S
+!byte $10,$EF,$0C               ; STS $0C,X
+!byte $10,$EF,$2C               ; STS $0C,Y
+!byte $10,$EF,$4C               ; STS $0C,U
+!byte $10,$EF,$6C               ; STS $0C,S
+!byte $10,$EF,$88,$FF           ; STS -$01,X
+!byte $10,$EF,$A8,$FF           ; STS -$01,Y
+!byte $10,$EF,$C8,$FF           ; STS -$01,U
+!byte $10,$EF,$E8,$FF           ; STS -$01,S
+!byte $10,$EF,$88,$60           ; STS $60,X
+!byte $10,$EF,$A8,$60           ; STS $60,Y
+!byte $10,$EF,$C8,$60           ; STS $60,U
+!byte $10,$EF,$E8,$60           ; STS $60,S
+!byte $10,$EF,$89,$DE,$AD       ; STS $DEAD,X
+!byte $10,$EF,$A9,$DE,$AD       ; STS $DEAD,Y
+!byte $10,$EF,$C9,$DE,$AD       ; STS $DEAD,U
+!byte $10,$EF,$E9,$DE,$AD       ; STS $DEAD,S
+!byte $10,$EF,$89,$10,$00       ; STS $1000,X
+!byte $10,$EF,$A9,$10,$00       ; STS $1000,Y
+!byte $10,$EF,$C9,$10,$00       ; STS $1000,U
+!byte $10,$EF,$E9,$10,$00       ; STS $1000,S
+!byte $10,$EF,$86               ; STS A,X
+!byte $10,$EF,$A6               ; STS A,Y
+!byte $10,$EF,$C6               ; STS A,U
+!byte $10,$EF,$E6               ; STS A,S
+!byte $10,$EF,$85               ; STS B,X
+!byte $10,$EF,$A5               ; STS B,Y
+!byte $10,$EF,$C5               ; STS B,U
+!byte $10,$EF,$E5               ; STS B,S
+!byte $10,$EF,$87               ; STS E,X
+!byte $10,$EF,$A7               ; STS E,Y
+!byte $10,$EF,$C7               ; STS E,U
+!byte $10,$EF,$E7               ; STS E,S
+!byte $10,$EF,$8A               ; STS F,X
+!byte $10,$EF,$AA               ; STS F,Y
+!byte $10,$EF,$CA               ; STS F,U
+!byte $10,$EF,$EA               ; STS F,S
+!byte $10,$EF,$8B               ; STS D,X
+!byte $10,$EF,$AB               ; STS D,Y
+!byte $10,$EF,$CB               ; STS D,U
+!byte $10,$EF,$EB               ; STS D,S
+!byte $10,$EF,$8E               ; STS W,X
+!byte $10,$EF,$AE               ; STS W,Y
+!byte $10,$EF,$CE               ; STS W,U
+!byte $10,$EF,$EE               ; STS W,S
+!byte $10,$EF,$80               ; STS ,X+
+!byte $10,$EF,$A0               ; STS ,Y+
+!byte $10,$EF,$C0               ; STS ,U+
+!byte $10,$EF,$E0               ; STS ,S+
+!byte $10,$EF,$81               ; STS ,X++
+!byte $10,$EF,$A1               ; STS ,Y++
+!byte $10,$EF,$C1               ; STS ,U++
+!byte $10,$EF,$E1               ; STS ,S++
+!byte $10,$EF,$82               ; STS ,-X
+!byte $10,$EF,$A2               ; STS ,-Y
+!byte $10,$EF,$C2               ; STS ,-U
+!byte $10,$EF,$E2               ; STS ,-S
+!byte $10,$EF,$83               ; STS ,--X
+!byte $10,$EF,$A3               ; STS ,--Y
+!byte $10,$EF,$C3               ; STS ,--U
+!byte $10,$EF,$E3               ; STS ,--S
+!byte $10,$EF,$8C,$FF           ; STS -$01,PC
+!byte $10,$EF,$AC,$FF           ; STS -$01,PC
+!byte $10,$EF,$CC,$FF           ; STS -$01,PC
+!byte $10,$EF,$EC,$FF           ; STS -$01,PC
+!byte $10,$EF,$8C,$60           ; STS $60,PC
+!byte $10,$EF,$AC,$60           ; STS $60,PC
+!byte $10,$EF,$CC,$60           ; STS $60,PC
+!byte $10,$EF,$EC,$60           ; STS $60,PC
+!byte $10,$EF,$8D,$DE,$AD       ; STS $DEAD,PC
+!byte $10,$EF,$AD,$DE,$AD       ; STS $DEAD,PC
+!byte $10,$EF,$CD,$DE,$AD       ; STS $DEAD,PC
+!byte $10,$EF,$ED,$DE,$AD       ; STS $DEAD,PC
+!byte $10,$EF,$8D,$10,$00       ; STS $1000,PC
+!byte $10,$EF,$AD,$10,$00       ; STS $1000,PC
+!byte $10,$EF,$CD,$10,$00       ; STS $1000,PC
+!byte $10,$EF,$ED,$10,$00       ; STS $1000,PC
+!byte $10,$EF,$8F               ; STS ,W
+!byte $10,$EF,$AF,$DE,$AD       ; STS $DEAD,W
+!byte $10,$EF,$CF               ; STS ,W++
+!byte $10,$EF,$EF               ; STS ,--W
+!byte $10,$EF,$94               ; STS [,X]
+!byte $10,$EF,$B4               ; STS [,Y]
+!byte $10,$EF,$D4               ; STS [,U]
+!byte $10,$EF,$F4               ; STS [,S]
+!byte $10,$EF,$98,$FF           ; STS [-$01,X]
+!byte $10,$EF,$B8,$FF           ; STS [-$01,Y]
+!byte $10,$EF,$D8,$FF           ; STS [-$01,U]
+!byte $10,$EF,$F8,$FF           ; STS [-$01,S]
+!byte $10,$EF,$98,$60           ; STS [$60,X]
+!byte $10,$EF,$B8,$60           ; STS [$60,Y]
+!byte $10,$EF,$D8,$60           ; STS [$60,U]
+!byte $10,$EF,$F8,$60           ; STS [$60,S]
+!byte $10,$EF,$99,$DE,$AD       ; STS [$DEAD,X]
+!byte $10,$EF,$B9,$DE,$AD       ; STS [$DEAD,Y]
+!byte $10,$EF,$D9,$DE,$AD       ; STS [$DEAD,U]
+!byte $10,$EF,$F9,$DE,$AD       ; STS [$DEAD,S]
+!byte $10,$EF,$99,$10,$00       ; STS [$1000,X]
+!byte $10,$EF,$B9,$10,$00       ; STS [$1000,Y]
+!byte $10,$EF,$D9,$10,$00       ; STS [$1000,U]
+!byte $10,$EF,$F9,$10,$00       ; STS [$1000,S]
+!byte $10,$EF,$96               ; STS [A,X]
+!byte $10,$EF,$B6               ; STS [A,Y]
+!byte $10,$EF,$D6               ; STS [A,U]
+!byte $10,$EF,$F6               ; STS [A,S]
+!byte $10,$EF,$95               ; STS [B,X]
+!byte $10,$EF,$B5               ; STS [B,Y]
+!byte $10,$EF,$D5               ; STS [B,U]
+!byte $10,$EF,$F5               ; STS [B,S]
+!byte $10,$EF,$97               ; STS [E,X]
+!byte $10,$EF,$B7               ; STS [E,Y]
+!byte $10,$EF,$D7               ; STS [E,U]
+!byte $10,$EF,$F7               ; STS [E,S]
+!byte $10,$EF,$9A               ; STS [F,X]
+!byte $10,$EF,$BA               ; STS [F,Y]
+!byte $10,$EF,$DA               ; STS [F,U]
+!byte $10,$EF,$FA               ; STS [F,S]
+!byte $10,$EF,$9B               ; STS [D,X]
+!byte $10,$EF,$BB               ; STS [D,Y]
+!byte $10,$EF,$DB               ; STS [D,U]
+!byte $10,$EF,$FB               ; STS [D,S]
+!byte $10,$EF,$9E               ; STS [W,X]
+!byte $10,$EF,$BE               ; STS [W,Y]
+!byte $10,$EF,$DE               ; STS [W,U]
+!byte $10,$EF,$FE               ; STS [W,S]
+!byte $10,$EF,$91               ; STS [,X++]
+!byte $10,$EF,$B1               ; STS [,Y++]
+!byte $10,$EF,$D1               ; STS [,U++]
+!byte $10,$EF,$F1               ; STS [,S++]
+!byte $10,$EF,$92               ; STS [,-X]
+!byte $10,$EF,$B2               ; STS [,-Y]
+!byte $10,$EF,$D2               ; STS [,-U]
+!byte $10,$EF,$F2               ; STS [,-S]
+!byte $10,$EF,$93               ; STS [,--X]
+!byte $10,$EF,$B3               ; STS [,--Y]
+!byte $10,$EF,$D3               ; STS [,--U]
+!byte $10,$EF,$F3               ; STS [,--S]
+!byte $10,$EF,$9C,$FF           ; STS [-$01,PC]
+!byte $10,$EF,$BC,$FF           ; STS [-$01,PC]
+!byte $10,$EF,$DC,$FF           ; STS [-$01,PC]
+!byte $10,$EF,$FC,$FF           ; STS [-$01,PC]
+!byte $10,$EF,$9C,$60           ; STS [$60,PC]
+!byte $10,$EF,$BC,$60           ; STS [$60,PC]
+!byte $10,$EF,$DC,$60           ; STS [$60,PC]
+!byte $10,$EF,$FC,$60           ; STS [$60,PC]
+!byte $10,$EF,$9D,$DE,$AD       ; STS [$DEAD,PC]
+!byte $10,$EF,$BD,$DE,$AD       ; STS [$DEAD,PC]
+!byte $10,$EF,$DD,$DE,$AD       ; STS [$DEAD,PC]
+!byte $10,$EF,$FD,$DE,$AD       ; STS [$DEAD,PC]
+!byte $10,$EF,$9D,$10,$00       ; STS [$1000,PC]
+!byte $10,$EF,$BD,$10,$00       ; STS [$1000,PC]
+!byte $10,$EF,$DD,$10,$00       ; STS [$1000,PC]
+!byte $10,$EF,$FD,$10,$00       ; STS [$1000,PC]
+!byte $10,$EF,$9F,$DE,$AD       ; STS [$DEAD]
+!byte $10,$EF,$BF,$DE,$AD       ; STS [$DEAD]
+!byte $10,$EF,$DF,$DE,$AD       ; STS [$DEAD]
+!byte $10,$EF,$FF,$DE,$AD       ; STS [$DEAD]
+!byte $10,$EF,$90               ; STS [,W]
+!byte $10,$EF,$B0,$DE,$AD       ; STS [$DEAD,W]
+!byte $10,$EF,$D0               ; STS [,W++]
+!byte $10,$EF,$F0               ; STS [,--W]
 
-    !byte $10,$EE,$0C               ; LDS $0C,X
-    !byte $10,$EE,$15               ; LDS -$0B,X
-    !byte $10,$EE,$2C               ; LDS $0C,Y
-    !byte $10,$EE,$35               ; LDS -$0B,Y
-    !byte $10,$EE,$4C               ; LDS $0C,U
-    !byte $10,$EE,$55               ; LDS -$0B,U
-    !byte $10,$EE,$6C               ; LDS $0C,S
-    !byte $10,$EE,$75               ; LDS -$0B,S
-    !byte $10,$EE,$80               ; LDS ,X+
-    !byte $10,$EE,$81               ; LDS ,X++
-    !byte $10,$EE,$82               ; LDS ,-X
-    !byte $10,$EE,$83               ; LDS ,--X
-    !byte $10,$EE,$84               ; LDS ,X
-    !byte $10,$EE,$85               ; LDS B,X
-    !byte $10,$EE,$86               ; LDS A,X
-    !byte $10,$EE,$87                ; LDS ,X
-    !byte $10,$EE,$88,$60           ; LDS $60,X
-    !byte $10,$EE,$88,$FF           ; LDS -$01,X
-    !byte $10,$EE,$89,$10,$00       ; LDS $1000,X
-    !byte $10,$EE,$89,$DE,$AD       ; LDS $DEAD,X
-    !byte $10,$EE,$8A                ; LDS ,PClo
-    !byte $10,$EE,$8B               ; LDS D,X
-    !byte $10,$EE,$8C,$60           ; LDS $60,PC
-    !byte $10,$EE,$8C,$FF           ; LDS -$01,PC
-    !byte $10,$EE,$8D,$10,$00       ; LDS $1000,PC
-    !byte $10,$EE,$8D,$DE,$AD       ; LDS $DEAD,PC
-    !byte $10,$EE,$8G,$DE,$AD        ; LDS ,$DEAD
-    !byte $10,$EE,$90                ; LDS [,X+]
-    !byte $10,$EE,$91               ; LDS [,X++]
-    !byte $10,$EE,$92                ; LDS [,-X]
-    !byte $10,$EE,$93               ; LDS [,--X]
-    !byte $10,$EE,$94               ; LDS [,X]
-    !byte $10,$EE,$95               ; LDS [B,X]
-    !byte $10,$EE,$96               ; LDS [A,X]
-    !byte $10,$EE,$97                ; LDS [,X]
-    !byte $10,$EE,$98,$60           ; LDS [$60,X]
-    !byte $10,$EE,$98,$FF           ; LDS [-$01,X]
-    !byte $10,$EE,$99,$DE,$10       ; LDS [$DE10,X]
-    !byte $10,$EE,$99,$DE,$AD       ; LDS [$DEAD,X]
-    !byte $10,$EE,$9A                ; LDS [,PClo]
-    !byte $10,$EE,$9B               ; LDS [D,X]
-    !byte $10,$EE,$9C,$60           ; LDS [$60,PC]
-    !byte $10,$EE,$9C,$FF           ; LDS [-$01,PC]
-    !byte $10,$EE,$9D,$10,$00       ; LDS [$1000,PC]
-    !byte $10,$EE,$9D,$DE,$AD       ; LDS [$DEAD,PC]
-    !byte $10,$EE,$9F,$DE,$AD       ; LDS [$DEAD]
-    !byte $10,$EE,$A0               ; LDS ,Y+
-    !byte $10,$EE,$A1               ; LDS ,Y++
-    !byte $10,$EE,$A2               ; LDS ,-Y
-    !byte $10,$EE,$A3               ; LDS ,--Y
-    !byte $10,$EE,$A4               ; LDS ,Y
-    !byte $10,$EE,$A5               ; LDS B,Y
-    !byte $10,$EE,$A6               ; LDS A,Y
-    !byte $10,$EE,$A7                ; LDS ,Y
-    !byte $10,$EE,$A8,$60           ; LDS $60,Y
-    !byte $10,$EE,$A8,$FF           ; LDS -$01,Y
-    !byte $10,$EE,$A9,$10,$00       ; LDS $1000,Y
-    !byte $10,$EE,$A9,$DE,$AD       ; LDS $DEAD,Y
-    !byte $10,$EE,$AA                ; LDS ,PClo
-    !byte $10,$EE,$AB               ; LDS D,Y
-    !byte $10,$EE,$AC,$60           ; LDS $60,PC
-    !byte $10,$EE,$AC,$FF           ; LDS -$01,PC
-    !byte $10,$EE,$AD,$10,$00       ; LDS $1000,PC
-    !byte $10,$EE,$AD,$DE,$AD       ; LDS $DEAD,PC
-    !byte $10,$EE,$AF,$DE,$AD        ; LDS ,$DEAD
-    !byte $10,$EE,$B0                ; LDS [,Y+]
-    !byte $10,$EE,$B1               ; LDS [,Y++]
-    !byte $10,$EE,$B2                ; LDS [,-Y]
-    !byte $10,$EE,$B3               ; LDS [,--Y]
-    !byte $10,$EE,$B4               ; LDS [,Y]
-    !byte $10,$EE,$B5               ; LDS [B,Y]
-    !byte $10,$EE,$B6               ; LDS [A,Y]
-    !byte $10,$EE,$B7                ; LDS [,Y]
-    !byte $10,$EE,$B8,$60           ; LDS [$60,Y]
-    !byte $10,$EE,$B8,$FF           ; LDS [-$01,Y]
-    !byte $10,$EE,$B9,$DE,$10       ; LDS [$DE10,Y]
-    !byte $10,$EE,$B9,$DE,$AD       ; LDS [$DEAD,Y]
-    !byte $10,$EE,$BA                ; LDS [,PClo]
-    !byte $10,$EE,$BB               ; LDS [D,Y]
-    !byte $10,$EE,$BC,$60           ; LDS [$60,PC]
-    !byte $10,$EE,$BC,$FF           ; LDS [-$01,PC]
-    !byte $10,$EE,$BD,$10,$00       ; LDS [$1000,PC]
-    !byte $10,$EE,$BD,$DE,$AD       ; LDS [$DEAD,PC]
-    !byte $10,$EE,$BF,$DE,$AD       ; LDS [$DEAD]
-    !byte $10,$EE,$C0               ; LDS ,U+
-    !byte $10,$EE,$C1               ; LDS ,U++
-    !byte $10,$EE,$C2               ; LDS ,-U
-    !byte $10,$EE,$C3               ; LDS ,--U
-    !byte $10,$EE,$C4               ; LDS ,U
-    !byte $10,$EE,$C5               ; LDS B,U
-    !byte $10,$EE,$C6               ; LDS A,U
-    !byte $10,$EE,$C7                ; LDS ,U
-    !byte $10,$EE,$C8,$60           ; LDS $60,U
-    !byte $10,$EE,$C8,$FF           ; LDS -$01,U
-    !byte $10,$EE,$C9,$10,$00       ; LDS $1000,U
-    !byte $10,$EE,$C9,$DE,$AD       ; LDS $DEAD,U
-    !byte $10,$EE,$CA                ; LDS ,PClo
-    !byte $10,$EE,$CB               ; LDS D,U
-    !byte $10,$EE,$CC,$60           ; LDS $60,PC
-    !byte $10,$EE,$CC,$FF           ; LDS -$01,PC
-    !byte $10,$EE,$CD,$10,$00       ; LDS $1000,PC
-    !byte $10,$EE,$CD,$DE,$AD       ; LDS $DEAD,PC
-    !byte $10,$EE,$CF,$DE,$AD        ; LDS ,$DEAD
-    !byte $10,$EE,$D0                ; LDS [,U+]
-    !byte $10,$EE,$D1               ; LDS [,U++]
-    !byte $10,$EE,$D2                ; LDS [,-U]
-    !byte $10,$EE,$D3               ; LDS [,--U]
-    !byte $10,$EE,$D4               ; LDS [,U]
-    !byte $10,$EE,$D5               ; LDS [B,U]
-    !byte $10,$EE,$D6               ; LDS [A,U]
-    !byte $10,$EE,$D7                ; LDS [,U]
-    !byte $10,$EE,$D8,$60           ; LDS [$60,U]
-    !byte $10,$EE,$D8,$FF           ; LDS [-$01,U]
-    !byte $10,$EE,$D9,$DE,$10       ; LDS [$DE10,U]
-    !byte $10,$EE,$D9,$DE,$AD       ; LDS [$DEAD,U]
-    !byte $10,$EE,$DA                ; LDS [,PClo]
-    !byte $10,$EE,$DB               ; LDS [D,U]
-    !byte $10,$EE,$DC,$60           ; LDS [$60,PC]
-    !byte $10,$EE,$DC,$FF           ; LDS [-$01,PC]
-    !byte $10,$EE,$DD,$10,$00       ; LDS [$1000,PC]
-    !byte $10,$EE,$DD,$DE,$AD       ; LDS [$DEAD,PC]
-    !byte $10,$EE,$DF,$DE,$AD       ; LDS [$DEAD]
-    !byte $10,$EE,$E0               ; LDS ,S+
-    !byte $10,$EE,$E1               ; LDS ,S++
-    !byte $10,$EE,$E2               ; LDS ,-S
-    !byte $10,$EE,$E3               ; LDS ,--S
-    !byte $10,$EE,$E4               ; LDS ,S
-    !byte $10,$EE,$E5               ; LDS B,S
-    !byte $10,$EE,$E6               ; LDS A,S
-    !byte $10,$EE,$E7                ; LDS ,S
-    !byte $10,$EE,$E8,$60           ; LDS $60,S
-    !byte $10,$EE,$E8,$FF           ; LDS -$01,S
-    !byte $10,$EE,$E9,$10,$00       ; LDS $1000,S
-    !byte $10,$EE,$E9,$DE,$AD       ; LDS $DEAD,S
-    !byte $10,$EE,$EA                ; LDS ,PClo
-    !byte $10,$EE,$EB               ; LDS D,S
-    !byte $10,$EE,$EC,$60           ; LDS $60,PC
-    !byte $10,$EE,$EC,$FF           ; LDS -$01,PC
-    !byte $10,$EE,$ED,$10,$00       ; LDS $1000,PC
-    !byte $10,$EE,$ED,$DE,$AD       ; LDS $DEAD,PC
-    !byte $10,$EE,$EF,$DE,$AD        ; LDS ,$DEAD
-    !byte $10,$EE,$F0                ; LDS [,S+]
-    !byte $10,$EE,$F1               ; LDS [,S++]
-    !byte $10,$EE,$F2                ; LDS [,-S]
-    !byte $10,$EE,$F3               ; LDS [,--S]
-    !byte $10,$EE,$F4               ; LDS [,S]
-    !byte $10,$EE,$F5               ; LDS [B,S]
-    !byte $10,$EE,$F6               ; LDS [A,S]
-    !byte $10,$EE,$F7                ; LDS [,S]
-    !byte $10,$EE,$F8,$60           ; LDS [$60,S]
-    !byte $10,$EE,$F8,$FF           ; LDS [-$01,S]
-    !byte $10,$EE,$F9,$DE,$10       ; LDS [$DE10,S]
-    !byte $10,$EE,$F9,$DE,$AD       ; LDS [$DEAD,S]
-    !byte $10,$EE,$FA                ; LDS [,PClo]
-    !byte $10,$EE,$FB               ; LDS [D,S]
-    !byte $10,$EE,$FC,$60           ; LDS [$60,PC]
-    !byte $10,$EE,$FC,$FF           ; LDS [-$01,PC]
-    !byte $10,$EE,$FD,$10,$00       ; LDS [$1000,PC]
-    !byte $10,$EE,$FD,$DE,$AD       ; LDS [$DEAD,PC]
-    !byte $10,$EE,$FF,$DE,$AD       ; LDS [$DEAD]
-    !byte $10,$EF,$0C               ; STS $0C,X
-    !byte $10,$EF,$15               ; STS -$0B,X
-    !byte $10,$EF,$2C               ; STS $0C,Y
-    !byte $10,$EF,$35               ; STS -$0B,Y
-    !byte $10,$EF,$4C               ; STS $0C,U
-    !byte $10,$EF,$55               ; STS -$0B,U
-    !byte $10,$EF,$6C               ; STS $0C,S
-    !byte $10,$EF,$75               ; STS -$0B,S
-    !byte $10,$EF,$80               ; STS ,X+
-    !byte $10,$EF,$81               ; STS ,X++
-    !byte $10,$EF,$82               ; STS ,-X
-    !byte $10,$EF,$83               ; STS ,--X
-    !byte $10,$EF,$84               ; STS ,X
-    !byte $10,$EF,$85               ; STS B,X
-    !byte $10,$EF,$86               ; STS A,X
-    !byte $10,$EF,$87                ; STS ,X
-    !byte $10,$EF,$88,$60           ; STS $60,X
-    !byte $10,$EF,$88,$FF           ; STS -$01,X
-    !byte $10,$EF,$89,$10,$00       ; STS $1000,X
-    !byte $10,$EF,$89,$DE,$AD       ; STS $DEAD,X
-    !byte $10,$EF,$8A                ; STS ,PClo
-    !byte $10,$EF,$8B               ; STS D,X
-    !byte $10,$EF,$8C,$60           ; STS $60,PC
-    !byte $10,$EF,$8C,$FF           ; STS -$01,PC
-    !byte $10,$EF,$8D,$10,$00       ; STS $1000,PC
-    !byte $10,$EF,$8D,$DE,$AD       ; STS $DEAD,PC
-    !byte $10,$EF,$8F,$DE,$AD        ; STS ,$DEAD
-    !byte $10,$EF,$90                ; STS [,X+]
-    !byte $10,$EF,$91               ; STS [,X++]
-    !byte $10,$EF,$92                ; STS [,-X]
-    !byte $10,$EF,$93               ; STS [,--X]
-    !byte $10,$EF,$94               ; STS [,X]
-    !byte $10,$EF,$95               ; STS [B,X]
-    !byte $10,$EF,$96               ; STS [A,X]
-    !byte $10,$EF,$97                ; STS [,X]
-    !byte $10,$EF,$98,$60           ; STS [$60,X]
-    !byte $10,$EF,$98,$FF           ; STS [-$01,X]
-    !byte $10,$EF,$99,$DE,$10       ; STS [$DE10,X]
-    !byte $10,$EF,$99,$DE,$AD       ; STS [$DEAD,X]
-    !byte $10,$EF,$9A                ; STS [,PClo]
-    !byte $10,$EF,$9B               ; STS [D,X]
-    !byte $10,$EF,$9C,$60           ; STS [$60,PC]
-    !byte $10,$EF,$9C,$FF           ; STS [-$01,PC]
-    !byte $10,$EF,$9D,$10,$00       ; STS [$1000,PC]
-    !byte $10,$EF,$9D,$DE,$AD       ; STS [$DEAD,PC]
-    !byte $10,$EF,$9F,$DE,$AD       ; STS [$DEAD]
-    !byte $10,$EF,$A0               ; STS ,Y+
-    !byte $10,$EF,$A1               ; STS ,Y++
-    !byte $10,$EF,$A2               ; STS ,-Y
-    !byte $10,$EF,$A3               ; STS ,--Y
-    !byte $10,$EF,$A4               ; STS ,Y
-    !byte $10,$EF,$A5               ; STS B,Y
-    !byte $10,$EF,$A6               ; STS A,Y
-    !byte $10,$EF,$A7                ; STS ,Y
-    !byte $10,$EF,$A8,$60           ; STS $60,Y
-    !byte $10,$EF,$A8,$FF           ; STS -$01,Y
-    !byte $10,$EF,$A9,$10,$00       ; STS $1000,Y
-    !byte $10,$EF,$A9,$DE,$AD       ; STS $DEAD,Y
-    !byte $10,$EF,$AA                ; STS ,PClo
-    !byte $10,$EF,$AB               ; STS D,Y
-    !byte $10,$EF,$AC,$60           ; STS $60,PC
-    !byte $10,$EF,$AC,$FF           ; STS -$01,PC
-    !byte $10,$EF,$AD,$10,$00       ; STS $1000,PC
-    !byte $10,$EF,$AD,$DE,$AD       ; STS $DEAD,PC
-    !byte $10,$EF,$AF,$DE,$AD        ; STS ,$DEAD
-    !byte $10,$EF,$B0                ; STS [,Y+]
-    !byte $10,$EF,$B1               ; STS [,Y++]
-    !byte $10,$EF,$B2                ; STS [,-Y]
-    !byte $10,$EF,$B3               ; STS [,--Y]
-    !byte $10,$EF,$B4               ; STS [,Y]
-    !byte $10,$EF,$B5               ; STS [B,Y]
-    !byte $10,$EF,$B6               ; STS [A,Y]
-    !byte $10,$EF,$B7                ; STS [,Y]
-    !byte $10,$EF,$B8,$60           ; STS [$60,Y]
-    !byte $10,$EF,$B8,$FF           ; STS [-$01,Y]
-    !byte $10,$EF,$B9,$DE,$10       ; STS [$DE10,Y]
-    !byte $10,$EF,$B9,$DE,$AD       ; STS [$DEAD,Y]
-    !byte $10,$EF,$BA                ; STS [,PClo]
-    !byte $10,$EF,$BB               ; STS [D,Y]
-    !byte $10,$EF,$BC,$60           ; STS [$60,PC]
-    !byte $10,$EF,$BC,$FF           ; STS [-$01,PC]
-    !byte $10,$EF,$BD,$10,$00       ; STS [$1000,PC]
-    !byte $10,$EF,$BD,$DE,$AD       ; STS [$DEAD,PC]
-    !byte $10,$EF,$BF,$DE,$AD       ; STS [$DEAD]
-    !byte $10,$EF,$C0               ; STS ,U+
-    !byte $10,$EF,$C1               ; STS ,U++
-    !byte $10,$EF,$C2               ; STS ,-U
-    !byte $10,$EF,$C3               ; STS ,--U
-    !byte $10,$EF,$C4               ; STS ,U
-    !byte $10,$EF,$C5               ; STS B,U
-    !byte $10,$EF,$C6               ; STS A,U
-    !byte $10,$EF,$C7                ; STS ,U
-    !byte $10,$EF,$C8,$60           ; STS $60,U
-    !byte $10,$EF,$C8,$FF           ; STS -$01,U
-    !byte $10,$EF,$C9,$10,$00       ; STS $1000,U
-    !byte $10,$EF,$C9,$DE,$AD       ; STS $DEAD,U
-    !byte $10,$EF,$CA                ; STS ,PClo
-    !byte $10,$EF,$CB               ; STS D,U
-    !byte $10,$EF,$CC,$60           ; STS $60,PC
-    !byte $10,$EF,$CC,$FF           ; STS -$01,PC
-    !byte $10,$EF,$CD,$10,$00       ; STS $1000,PC
-    !byte $10,$EF,$CD,$DE,$AD       ; STS $DEAD,PC
-    !byte $10,$EF,$CF,$DE,$AD        ; STS ,$DEAD
-    !byte $10,$EF,$D0                ; STS [,U+]
-    !byte $10,$EF,$D1               ; STS [,U++]
-    !byte $10,$EF,$D2                ; STS [,-U]
-    !byte $10,$EF,$D3               ; STS [,--U]
-    !byte $10,$EF,$D4               ; STS [,U]
-    !byte $10,$EF,$D5               ; STS [B,U]
-    !byte $10,$EF,$D6               ; STS [A,U]
-    !byte $10,$EF,$D7                ; STS [,U]
-    !byte $10,$EF,$D8,$60           ; STS [$60,U]
-    !byte $10,$EF,$D8,$FF           ; STS [-$01,U]
-    !byte $10,$EF,$D9,$DE,$10       ; STS [$DE10,U]
-    !byte $10,$EF,$D9,$DE,$AD       ; STS [$DEAD,U]
-    !byte $10,$EF,$DA                ; STS [,PClo]
-    !byte $10,$EF,$DB               ; STS [D,U]
-    !byte $10,$EF,$DC,$60           ; STS [$60,PC]
-    !byte $10,$EF,$DC,$FF           ; STS [-$01,PC]
-    !byte $10,$EF,$DD,$10,$00       ; STS [$1000,PC]
-    !byte $10,$EF,$DD,$DE,$AD       ; STS [$DEAD,PC]
-    !byte $10,$EF,$DF,$DE,$AD       ; STS [$DEAD]
-    !byte $10,$EF,$E0               ; STS ,S+
-    !byte $10,$EF,$E1               ; STS ,S++
-    !byte $10,$EF,$E2               ; STS ,-S
-    !byte $10,$EF,$E3               ; STS ,--S
-    !byte $10,$EF,$E4               ; STS ,S
-    !byte $10,$EF,$E5               ; STS B,S
-    !byte $10,$EF,$E6               ; STS A,S
-    !byte $10,$EF,$E7                ; STS ,S
-    !byte $10,$EF,$E8,$60           ; STS $60,S
-    !byte $10,$EF,$E8,$FF           ; STS -$01,S
-    !byte $10,$EF,$E9,$10,$00       ; STS $1000,S
-    !byte $10,$EF,$E9,$DE,$AD       ; STS $DEAD,S
-    !byte $10,$EF,$EA                ; STS ,PClo
-    !byte $10,$EF,$EB               ; STS D,S
-    !byte $10,$EF,$EC,$60           ; STS $60,PC
-    !byte $10,$EF,$EC,$FF           ; STS -$01,PC
-    !byte $10,$EF,$ED,$10,$00       ; STS $1000,PC
-    !byte $10,$EF,$ED,$DE,$AD       ; STS $DEAD,PC
-    !byte $10,$EF,$EF,$DE,$AD        ; STS ,$DEAD
-    !byte $10,$EF,$F0                ; STS [,S+]
-    !byte $10,$EF,$F1               ; STS [,S++]
-    !byte $10,$EF,$F2                ; STS [,-S]
-    !byte $10,$EF,$F3               ; STS [,--S]
-    !byte $10,$EF,$F4               ; STS [,S]
-    !byte $10,$EF,$F5               ; STS [B,S]
-    !byte $10,$EF,$F6               ; STS [A,S]
-    !byte $10,$EF,$F7                ; STS [,S]
-    !byte $10,$EF,$F8,$60           ; STS [$60,S]
-    !byte $10,$EF,$F8,$FF           ; STS [-$01,S]
-    !byte $10,$EF,$F9,$DE,$10       ; STS [$DE10,S]
-    !byte $10,$EF,$F9,$DE,$AD       ; STS [$DEAD,S]
-    !byte $10,$EF,$FA                ; STS [,PClo]
-    !byte $10,$EF,$FB               ; STS [D,S]
-    !byte $10,$EF,$FC,$60           ; STS [$60,PC]
-    !byte $10,$EF,$FC,$FF           ; STS [-$01,PC]
-    !byte $10,$EF,$FD,$10,$00       ; STS [$1000,PC]
-    !byte $10,$EF,$FD,$DE,$AD       ; STS [$DEAD,PC]
-    !byte $10,$EF,$FF,$DE,$AD       ; STS [$DEAD]
     !byte $10,$F0,$DE,$AD            ; SUBB $DEAD
     !byte $10,$F1,$DE,$AD            ; CMPB $DEAD
     !byte $10,$F2,$DE,$AD            ; SBCB $DEAD
