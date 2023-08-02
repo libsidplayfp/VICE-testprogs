@@ -1,4 +1,3 @@
-; WIP
 !byte $00,$10                   ; NEG $10
 !byte $01,$10,$20               ; OIM #$10,$20
 !byte $02,$30,$40               ; AIM #$30,$40
@@ -19175,1463 +19174,179 @@
 !byte $11,$E7,$B0,$DE,$AD       ; STF [$DEAD,W]
 !byte $11,$E7,$D0               ; STF [,W++]
 !byte $11,$E7,$F0               ; STF [,--W]
-
-    !byte $11,$E8,$0C                ; EORB $0C,X
-    !byte $11,$E8,$15                ; EORB -$0B,X
-    !byte $11,$E8,$2C                ; EORB $0C,Y
-    !byte $11,$E8,$35                ; EORB -$0B,Y
-    !byte $11,$E8,$4C                ; EORB $0C,U
-    !byte $11,$E8,$55                ; EORB -$0B,U
-    !byte $11,$E8,$6C                ; EORB $0C,S
-    !byte $11,$E8,$75                ; EORB -$0B,S
-    !byte $11,$E8,$80                ; EORB ,X+
-    !byte $11,$E8,$81                ; EORB ,X++
-    !byte $11,$E8,$82                ; EORB ,-X
-    !byte $11,$E8,$83                ; EORB ,--X
-    !byte $11,$E8,$84                ; EORB ,X
-    !byte $11,$E8,$85                ; EORB B,X
-    !byte $11,$E8,$86                ; EORB A,X
-    !byte $11,$E8,$87                ; EORB ,X
-    !byte $11,$E8,$88,$60            ; EORB $60,X
-    !byte $11,$E8,$88,$FF            ; EORB -$01,X
-    !byte $11,$E8,$89,$10,$00        ; EORB $1000,X
-    !byte $11,$E8,$89,$DE,$AD        ; EORB $DEAD,X
-    !byte $11,$E8,$8A                ; EORB ,PClo
-    !byte $11,$E8,$8B                ; EORB D,X
-    !byte $11,$E8,$8C,$60            ; EORB $60,PC
-    !byte $11,$E8,$8C,$FF            ; EORB -$01,PC
-    !byte $11,$E8,$8D,$10,$00        ; EORB $1000,PC
-    !byte $11,$E8,$8D,$DE,$AD        ; EORB $DEAD,PC
-    !byte $11,$E8,$8F,$DE,$AD        ; EORB ,$DEAD
-    !byte $11,$E8,$90                ; EORB [,X+]
-    !byte $11,$E8,$91                ; EORB [,X++]
-    !byte $11,$E8,$92                ; EORB [,-X]
-    !byte $11,$E8,$93                ; EORB [,--X]
-    !byte $11,$E8,$94                ; EORB [,X]
-    !byte $11,$E8,$95                ; EORB [B,X]
-    !byte $11,$E8,$96                ; EORB [A,X]
-    !byte $11,$E8,$97                ; EORB [,X]
-    !byte $11,$E8,$98,$60            ; EORB [$60,X]
-    !byte $11,$E8,$98,$FF            ; EORB [-$01,X]
-    !byte $11,$E8,$99,$DE,$10        ; EORB [$DE10,X]
-    !byte $11,$E8,$99,$DE,$AD        ; EORB [$DEAD,X]
-    !byte $11,$E8,$9A                ; EORB [,PClo]
-    !byte $11,$E8,$9B                ; EORB [D,X]
-    !byte $11,$E8,$9C,$60            ; EORB [$60,PC]
-    !byte $11,$E8,$9C,$FF            ; EORB [-$01,PC]
-    !byte $11,$E8,$9D,$10,$00        ; EORB [$1000,PC]
-    !byte $11,$E8,$9D,$DE,$AD        ; EORB [$DEAD,PC]
-    !byte $11,$E8,$9F,$DE,$AD        ; EORB [$DEAD]
-    !byte $11,$E8,$A0                ; EORB ,Y+
-    !byte $11,$E8,$A1                ; EORB ,Y++
-    !byte $11,$E8,$A2                ; EORB ,-Y
-    !byte $11,$E8,$A3                ; EORB ,--Y
-    !byte $11,$E8,$A4                ; EORB ,Y
-    !byte $11,$E8,$A5                ; EORB B,Y
-    !byte $11,$E8,$A6                ; EORB A,Y
-    !byte $11,$E8,$A7                ; EORB ,Y
-    !byte $11,$E8,$A8,$60            ; EORB $60,Y
-    !byte $11,$E8,$A8,$FF            ; EORB -$01,Y
-    !byte $11,$E8,$A9,$10,$00        ; EORB $1000,Y
-    !byte $11,$E8,$A9,$DE,$AD        ; EORB $DEAD,Y
-    !byte $11,$E8,$AA                ; EORB ,PClo
-    !byte $11,$E8,$AB                ; EORB D,Y
-    !byte $11,$E8,$AC,$60            ; EORB $60,PC
-    !byte $11,$E8,$AC,$FF            ; EORB -$01,PC
-    !byte $11,$E8,$AD,$10,$00        ; EORB $1000,PC
-    !byte $11,$E8,$AD,$DE,$AD        ; EORB $DEAD,PC
-    !byte $11,$E8,$AF,$DE,$AD        ; EORB ,$DEAD
-    !byte $11,$E8,$B0                ; EORB [,Y+]
-    !byte $11,$E8,$B1                ; EORB [,Y++]
-    !byte $11,$E8,$B2                ; EORB [,-Y]
-    !byte $11,$E8,$B3                ; EORB [,--Y]
-    !byte $11,$E8,$B4                ; EORB [,Y]
-    !byte $11,$E8,$B5                ; EORB [B,Y]
-    !byte $11,$E8,$B6                ; EORB [A,Y]
-    !byte $11,$E8,$B7                ; EORB [,Y]
-    !byte $11,$E8,$B8,$60            ; EORB [$60,Y]
-    !byte $11,$E8,$B8,$FF            ; EORB [-$01,Y]
-    !byte $11,$E8,$B9,$DE,$10        ; EORB [$DE10,Y]
-    !byte $11,$E8,$B9,$DE,$AD        ; EORB [$DEAD,Y]
-    !byte $11,$E8,$BA                ; EORB [,PClo]
-    !byte $11,$E8,$BB                ; EORB [D,Y]
-    !byte $11,$E8,$BC,$60            ; EORB [$60,PC]
-    !byte $11,$E8,$BC,$FF            ; EORB [-$01,PC]
-    !byte $11,$E8,$BD,$10,$00        ; EORB [$1000,PC]
-    !byte $11,$E8,$BD,$DE,$AD        ; EORB [$DEAD,PC]
-    !byte $11,$E8,$BF,$DE,$AD        ; EORB [$DEAD]
-    !byte $11,$E8,$C0                ; EORB ,U+
-    !byte $11,$E8,$C1                ; EORB ,U++
-    !byte $11,$E8,$C2                ; EORB ,-U
-    !byte $11,$E8,$C3                ; EORB ,--U
-    !byte $11,$E8,$C4                ; EORB ,U
-    !byte $11,$E8,$C5                ; EORB B,U
-    !byte $11,$E8,$C6                ; EORB A,U
-    !byte $11,$E8,$C7                ; EORB ,U
-    !byte $11,$E8,$C8,$60            ; EORB $60,U
-    !byte $11,$E8,$C8,$FF            ; EORB -$01,U
-    !byte $11,$E8,$C9,$10,$00        ; EORB $1000,U
-    !byte $11,$E8,$C9,$DE,$AD        ; EORB $DEAD,U
-    !byte $11,$E8,$CA                ; EORB ,PClo
-    !byte $11,$E8,$CB                ; EORB D,U
-    !byte $11,$E8,$CC,$60            ; EORB $60,PC
-    !byte $11,$E8,$CC,$FF            ; EORB -$01,PC
-    !byte $11,$E8,$CD,$10,$00        ; EORB $1000,PC
-    !byte $11,$E8,$CD,$DE,$AD        ; EORB $DEAD,PC
-    !byte $11,$E8,$CF,$DE,$AD        ; EORB ,$DEAD
-    !byte $11,$E8,$D0                ; EORB [,U+]
-    !byte $11,$E8,$D1                ; EORB [,U++]
-    !byte $11,$E8,$D2                ; EORB [,-U]
-    !byte $11,$E8,$D3                ; EORB [,--U]
-    !byte $11,$E8,$D4                ; EORB [,U]
-    !byte $11,$E8,$D5                ; EORB [B,U]
-    !byte $11,$E8,$D6                ; EORB [A,U]
-    !byte $11,$E8,$D7                ; EORB [,U]
-    !byte $11,$E8,$D8,$60            ; EORB [$60,U]
-    !byte $11,$E8,$D8,$FF            ; EORB [-$01,U]
-    !byte $11,$E8,$D9,$DE,$10        ; EORB [$DE10,U]
-    !byte $11,$E8,$D9,$DE,$AD        ; EORB [$DEAD,U]
-    !byte $11,$E8,$DA                ; EORB [,PClo]
-    !byte $11,$E8,$DB                ; EORB [D,U]
-    !byte $11,$E8,$DC,$60            ; EORB [$60,PC]
-    !byte $11,$E8,$DC,$FF            ; EORB [-$01,PC]
-    !byte $11,$E8,$DD,$10,$00        ; EORB [$1000,PC]
-    !byte $11,$E8,$DD,$DE,$AD        ; EORB [$DEAD,PC]
-    !byte $11,$E8,$DF,$DE,$AD        ; EORB [$DEAD]
-    !byte $11,$E8,$E0                ; EORB ,S+
-    !byte $11,$E8,$E1                ; EORB ,S++
-    !byte $11,$E8,$E2                ; EORB ,-S
-    !byte $11,$E8,$E3                ; EORB ,--S
-    !byte $11,$E8,$E4                ; EORB ,S
-    !byte $11,$E8,$E5                ; EORB B,S
-    !byte $11,$E8,$E6                ; EORB A,S
-    !byte $11,$E8,$E7                ; EORB ,S
-    !byte $11,$E8,$E8,$60            ; EORB $60,S
-    !byte $11,$E8,$E8,$FF            ; EORB -$01,S
-    !byte $11,$E8,$E9,$10,$00        ; EORB $1000,S
-    !byte $11,$E8,$E9,$DE,$AD        ; EORB $DEAD,S
-    !byte $11,$E8,$EA                ; EORB ,PClo
-    !byte $11,$E8,$EB                ; EORB D,S
-    !byte $11,$E8,$EC,$60            ; EORB $60,PC
-    !byte $11,$E8,$EC,$FF            ; EORB -$01,PC
-    !byte $11,$E8,$ED,$10,$00        ; EORB $1000,PC
-    !byte $11,$E8,$ED,$DE,$AD        ; EORB $DEAD,PC
-    !byte $11,$E8,$EF,$DE,$AD        ; EORB ,$DEAD
-    !byte $11,$E8,$F0                ; EORB [,S+]
-    !byte $11,$E8,$F1                ; EORB [,S++]
-    !byte $11,$E8,$F2                ; EORB [,-S]
-    !byte $11,$E8,$F3                ; EORB [,--S]
-    !byte $11,$E8,$F4                ; EORB [,S]
-    !byte $11,$E8,$F5                ; EORB [B,S]
-    !byte $11,$E8,$F6                ; EORB [A,S]
-    !byte $11,$E8,$F7                ; EORB [,S]
-    !byte $11,$E8,$F8,$60            ; EORB [$60,S]
-    !byte $11,$E8,$F8,$FF            ; EORB [-$01,S]
-    !byte $11,$E8,$F9,$DE,$10        ; EORB [$DE10,S]
-    !byte $11,$E8,$F9,$DE,$AD        ; EORB [$DEAD,S]
-    !byte $11,$E8,$FA                ; EORB [,PClo]
-    !byte $11,$E8,$FB                ; EORB [D,S]
-    !byte $11,$E8,$FC,$60            ; EORB [$60,PC]
-    !byte $11,$E8,$FC,$FF            ; EORB [-$01,PC]
-    !byte $11,$E8,$FD,$10,$00        ; EORB [$1000,PC]
-    !byte $11,$E8,$FD,$DE,$AD        ; EORB [$DEAD,PC]
-    !byte $11,$E8,$FF,$DE,$AD        ; EORB [$DEAD]
-    !byte $11,$E9,$0C                ; ADCB $0C,X
-    !byte $11,$E9,$15                ; ADCB -$0B,X
-    !byte $11,$E9,$2C                ; ADCB $0C,Y
-    !byte $11,$E9,$35                ; ADCB -$0B,Y
-    !byte $11,$E9,$4C                ; ADCB $0C,U
-    !byte $11,$E9,$55                ; ADCB -$0B,U
-    !byte $11,$E9,$6C                ; ADCB $0C,S
-    !byte $11,$E9,$75                ; ADCB -$0B,S
-    !byte $11,$E9,$80                ; ADCB ,X+
-    !byte $11,$E9,$81                ; ADCB ,X++
-    !byte $11,$E9,$82                ; ADCB ,-X
-    !byte $11,$E9,$83                ; ADCB ,--X
-    !byte $11,$E9,$84                ; ADCB ,X
-    !byte $11,$E9,$85                ; ADCB B,X
-    !byte $11,$E9,$86                ; ADCB A,X
-    !byte $11,$E9,$87                ; ADCB ,X
-    !byte $11,$E9,$88,$60            ; ADCB $60,X
-    !byte $11,$E9,$88,$FF            ; ADCB -$01,X
-    !byte $11,$E9,$89,$10,$00        ; ADCB $1000,X
-    !byte $11,$E9,$89,$DE,$AD        ; ADCB $DEAD,X
-    !byte $11,$E9,$8A                ; ADCB ,PClo
-    !byte $11,$E9,$8B                ; ADCB D,X
-    !byte $11,$E9,$8C,$60            ; ADCB $60,PC
-    !byte $11,$E9,$8C,$FF            ; ADCB -$01,PC
-    !byte $11,$E9,$8D,$10,$00        ; ADCB $1000,PC
-    !byte $11,$E9,$8D,$DE,$AD        ; ADCB $DEAD,PC
-    !byte $11,$E9,$8F,$DE,$AD        ; ADCB ,$DEAD
-    !byte $11,$E9,$90                ; ADCB [,X+]
-    !byte $11,$E9,$91                ; ADCB [,X++]
-    !byte $11,$E9,$92                ; ADCB [,-X]
-    !byte $11,$E9,$93                ; ADCB [,--X]
-    !byte $11,$E9,$94                ; ADCB [,X]
-    !byte $11,$E9,$95                ; ADCB [B,X]
-    !byte $11,$E9,$96                ; ADCB [A,X]
-    !byte $11,$E9,$97                ; ADCB [,X]
-    !byte $11,$E9,$98,$60            ; ADCB [$60,X]
-    !byte $11,$E9,$98,$FF            ; ADCB [-$01,X]
-    !byte $11,$E9,$99,$DE,$10        ; ADCB [$DE10,X]
-    !byte $11,$E9,$99,$DE,$AD        ; ADCB [$DEAD,X]
-    !byte $11,$E9,$9A                ; ADCB [,PClo]
-    !byte $11,$E9,$9B                ; ADCB [D,X]
-    !byte $11,$E9,$9C,$60            ; ADCB [$60,PC]
-    !byte $11,$E9,$9C,$FF            ; ADCB [-$01,PC]
-    !byte $11,$E9,$9D,$10,$00        ; ADCB [$1000,PC]
-    !byte $11,$E9,$9D,$DE,$AD        ; ADCB [$DEAD,PC]
-    !byte $11,$E9,$9F,$DE,$AD        ; ADCB [$DEAD]
-    !byte $11,$E9,$A0                ; ADCB ,Y+
-    !byte $11,$E9,$A1                ; ADCB ,Y++
-    !byte $11,$E9,$A2                ; ADCB ,-Y
-    !byte $11,$E9,$A3                ; ADCB ,--Y
-    !byte $11,$E9,$A4                ; ADCB ,Y
-    !byte $11,$E9,$A5                ; ADCB B,Y
-    !byte $11,$E9,$A6                ; ADCB A,Y
-    !byte $11,$E9,$A7                ; ADCB ,Y
-    !byte $11,$E9,$A8,$60            ; ADCB $60,Y
-    !byte $11,$E9,$A8,$FF            ; ADCB -$01,Y
-    !byte $11,$E9,$A9,$10,$00        ; ADCB $1000,Y
-    !byte $11,$E9,$A9,$DE,$AD        ; ADCB $DEAD,Y
-    !byte $11,$E9,$AA                ; ADCB ,PClo
-    !byte $11,$E9,$AB                ; ADCB D,Y
-    !byte $11,$E9,$AC,$60            ; ADCB $60,PC
-    !byte $11,$E9,$AC,$FF            ; ADCB -$01,PC
-    !byte $11,$E9,$AD,$10,$00        ; ADCB $1000,PC
-    !byte $11,$E9,$AD,$DE,$AD        ; ADCB $DEAD,PC
-    !byte $11,$E9,$AF,$DE,$AD        ; ADCB ,$DEAD
-    !byte $11,$E9,$B0                ; ADCB [,Y+]
-    !byte $11,$E9,$B1                ; ADCB [,Y++]
-    !byte $11,$E9,$B2                ; ADCB [,-Y]
-    !byte $11,$E9,$B3                ; ADCB [,--Y]
-    !byte $11,$E9,$B4                ; ADCB [,Y]
-    !byte $11,$E9,$B5                ; ADCB [B,Y]
-    !byte $11,$E9,$B6                ; ADCB [A,Y]
-    !byte $11,$E9,$B7                ; ADCB [,Y]
-    !byte $11,$E9,$B8,$60            ; ADCB [$60,Y]
-    !byte $11,$E9,$B8,$FF            ; ADCB [-$01,Y]
-    !byte $11,$E9,$B9,$DE,$10        ; ADCB [$DE10,Y]
-    !byte $11,$E9,$B9,$DE,$AD        ; ADCB [$DEAD,Y]
-    !byte $11,$E9,$BA                ; ADCB [,PClo]
-    !byte $11,$E9,$BB                ; ADCB [D,Y]
-    !byte $11,$E9,$BC,$60            ; ADCB [$60,PC]
-    !byte $11,$E9,$BC,$FF            ; ADCB [-$01,PC]
-    !byte $11,$E9,$BD,$10,$00        ; ADCB [$1000,PC]
-    !byte $11,$E9,$BD,$DE,$AD        ; ADCB [$DEAD,PC]
-    !byte $11,$E9,$BF,$DE,$AD        ; ADCB [$DEAD]
-    !byte $11,$E9,$C0                ; ADCB ,U+
-    !byte $11,$E9,$C1                ; ADCB ,U++
-    !byte $11,$E9,$C2                ; ADCB ,-U
-    !byte $11,$E9,$C3                ; ADCB ,--U
-    !byte $11,$E9,$C4                ; ADCB ,U
-    !byte $11,$E9,$C5                ; ADCB B,U
-    !byte $11,$E9,$C6                ; ADCB A,U
-    !byte $11,$E9,$C7                ; ADCB ,U
-    !byte $11,$E9,$C8,$60            ; ADCB $60,U
-    !byte $11,$E9,$C8,$FF            ; ADCB -$01,U
-    !byte $11,$E9,$C9,$10,$00        ; ADCB $1000,U
-    !byte $11,$E9,$C9,$DE,$AD        ; ADCB $DEAD,U
-    !byte $11,$E9,$CA                ; ADCB ,PClo
-    !byte $11,$E9,$CB                ; ADCB D,U
-    !byte $11,$E9,$CC,$60            ; ADCB $60,PC
-    !byte $11,$E9,$CC,$FF            ; ADCB -$01,PC
-    !byte $11,$E9,$CD,$10,$00        ; ADCB $1000,PC
-    !byte $11,$E9,$CD,$DE,$AD        ; ADCB $DEAD,PC
-    !byte $11,$E9,$CF,$DE,$AD        ; ADCB ,$DEAD
-    !byte $11,$E9,$D0                ; ADCB [,U+]
-    !byte $11,$E9,$D1                ; ADCB [,U++]
-    !byte $11,$E9,$D2                ; ADCB [,-U]
-    !byte $11,$E9,$D3                ; ADCB [,--U]
-    !byte $11,$E9,$D4                ; ADCB [,U]
-    !byte $11,$E9,$D5                ; ADCB [B,U]
-    !byte $11,$E9,$D6                ; ADCB [A,U]
-    !byte $11,$E9,$D7                ; ADCB [,U]
-    !byte $11,$E9,$D8,$60            ; ADCB [$60,U]
-    !byte $11,$E9,$D8,$FF            ; ADCB [-$01,U]
-    !byte $11,$E9,$D9,$DE,$10        ; ADCB [$DE10,U]
-    !byte $11,$E9,$D9,$DE,$AD        ; ADCB [$DEAD,U]
-    !byte $11,$E9,$DA                ; ADCB [,PClo]
-    !byte $11,$E9,$DB                ; ADCB [D,U]
-    !byte $11,$E9,$DC,$60            ; ADCB [$60,PC]
-    !byte $11,$E9,$DC,$FF            ; ADCB [-$01,PC]
-    !byte $11,$E9,$DD,$10,$00        ; ADCB [$1000,PC]
-    !byte $11,$E9,$DD,$DE,$AD        ; ADCB [$DEAD,PC]
-    !byte $11,$E9,$DF,$DE,$AD        ; ADCB [$DEAD]
-    !byte $11,$E9,$E0                ; ADCB ,S+
-    !byte $11,$E9,$E1                ; ADCB ,S++
-    !byte $11,$E9,$E2                ; ADCB ,-S
-    !byte $11,$E9,$E3                ; ADCB ,--S
-    !byte $11,$E9,$E4                ; ADCB ,S
-    !byte $11,$E9,$E5                ; ADCB B,S
-    !byte $11,$E9,$E6                ; ADCB A,S
-    !byte $11,$E9,$E7                ; ADCB ,S
-    !byte $11,$E9,$E8,$60            ; ADCB $60,S
-    !byte $11,$E9,$E8,$FF            ; ADCB -$01,S
-    !byte $11,$E9,$E9,$10,$00        ; ADCB $1000,S
-    !byte $11,$E9,$E9,$DE,$AD        ; ADCB $DEAD,S
-    !byte $11,$E9,$EA                ; ADCB ,PClo
-    !byte $11,$E9,$EB                ; ADCB D,S
-    !byte $11,$E9,$EC,$60            ; ADCB $60,PC
-    !byte $11,$E9,$EC,$FF            ; ADCB -$01,PC
-    !byte $11,$E9,$ED,$10,$00        ; ADCB $1000,PC
-    !byte $11,$E9,$ED,$DE,$AD        ; ADCB $DEAD,PC
-    !byte $11,$E9,$EF,$DE,$AD        ; ADCB ,$DEAD
-    !byte $11,$E9,$F0                ; ADCB [,S+]
-    !byte $11,$E9,$F1                ; ADCB [,S++]
-    !byte $11,$E9,$F2                ; ADCB [,-S]
-    !byte $11,$E9,$F3                ; ADCB [,--S]
-    !byte $11,$E9,$F4                ; ADCB [,S]
-    !byte $11,$E9,$F5                ; ADCB [B,S]
-    !byte $11,$E9,$F6                ; ADCB [A,S]
-    !byte $11,$E9,$F7                ; ADCB [,S]
-    !byte $11,$E9,$F8,$60            ; ADCB [$60,S]
-    !byte $11,$E9,$F8,$FF            ; ADCB [-$01,S]
-    !byte $11,$E9,$F9,$DE,$10        ; ADCB [$DE10,S]
-    !byte $11,$E9,$F9,$DE,$AD        ; ADCB [$DEAD,S]
-    !byte $11,$E9,$FA                ; ADCB [,PClo]
-    !byte $11,$E9,$FB                ; ADCB [D,S]
-    !byte $11,$E9,$FC,$60            ; ADCB [$60,PC]
-    !byte $11,$E9,$FC,$FF            ; ADCB [-$01,PC]
-    !byte $11,$E9,$FD,$10,$00        ; ADCB [$1000,PC]
-    !byte $11,$E9,$FD,$DE,$AD        ; ADCB [$DEAD,PC]
-    !byte $11,$E9,$FF,$DE,$AD        ; ADCB [$DEAD]
-    !byte $11,$EA,$0C                ; ORB $0C,X
-    !byte $11,$EA,$15                ; ORB -$0B,X
-    !byte $11,$EA,$2C                ; ORB $0C,Y
-    !byte $11,$EA,$35                ; ORB -$0B,Y
-    !byte $11,$EA,$4C                ; ORB $0C,U
-    !byte $11,$EA,$55                ; ORB -$0B,U
-    !byte $11,$EA,$6C                ; ORB $0C,S
-    !byte $11,$EA,$75                ; ORB -$0B,S
-    !byte $11,$EA,$80                ; ORB ,X+
-    !byte $11,$EA,$81                ; ORB ,X++
-    !byte $11,$EA,$82                ; ORB ,-X
-    !byte $11,$EA,$83                ; ORB ,--X
-    !byte $11,$EA,$84                ; ORB ,X
-    !byte $11,$EA,$85                ; ORB B,X
-    !byte $11,$EA,$86                ; ORB A,X
-    !byte $11,$EA,$87                ; ORB ,X
-    !byte $11,$EA,$88,$60            ; ORB $60,X
-    !byte $11,$EA,$88,$FF            ; ORB -$01,X
-    !byte $11,$EA,$89,$10,$00        ; ORB $1000,X
-    !byte $11,$EA,$89,$DE,$AD        ; ORB $DEAD,X
-    !byte $11,$EA,$89,$DE,$AD        ; ORB ,$DEAD
-    !byte $11,$EA,$8A                ; ORB ,PClo
-    !byte $11,$EA,$8B                ; ORB D,X
-    !byte $11,$EA,$8C,$60            ; ORB $60,PC
-    !byte $11,$EA,$8C,$FF            ; ORB -$01,PC
-    !byte $11,$EA,$8D,$10,$00        ; ORB $1000,PC
-    !byte $11,$EA,$8D,$DE,$AD        ; ORB $DEAD,PC
-    !byte $11,$EA,$90                ; ORB [,X+]
-    !byte $11,$EA,$91                ; ORB [,X++]
-    !byte $11,$EA,$92                ; ORB [,-X]
-    !byte $11,$EA,$93                ; ORB [,--X]
-    !byte $11,$EA,$94                ; ORB [,X]
-    !byte $11,$EA,$95                ; ORB [B,X]
-    !byte $11,$EA,$96                ; ORB [A,X]
-    !byte $11,$EA,$97                ; ORB [,X]
-    !byte $11,$EA,$98,$60            ; ORB [$60,X]
-    !byte $11,$EA,$98,$FF            ; ORB [-$01,X]
-    !byte $11,$EA,$99,$DE,$10        ; ORB [$DE10,X]
-    !byte $11,$EA,$99,$DE,$AD        ; ORB [$DEAD,X]
-    !byte $11,$EA,$9A                ; ORB [,PClo]
-    !byte $11,$EA,$9B                ; ORB [D,X]
-    !byte $11,$EA,$9C,$60            ; ORB [$60,PC]
-    !byte $11,$EA,$9C,$FF            ; ORB [-$01,PC]
-    !byte $11,$EA,$9D,$10,$00        ; ORB [$1000,PC]
-    !byte $11,$EA,$9D,$DE,$AD        ; ORB [$DEAD,PC]
-    !byte $11,$EA,$9F,$DE,$AD        ; ORB [$DEAD]
-    !byte $11,$EA,$A0                ; ORB ,Y+
-    !byte $11,$EA,$A1                ; ORB ,Y++
-    !byte $11,$EA,$A2                ; ORB ,-Y
-    !byte $11,$EA,$A3                ; ORB ,--Y
-    !byte $11,$EA,$A4                ; ORB ,Y
-    !byte $11,$EA,$A5                ; ORB B,Y
-    !byte $11,$EA,$A6                ; ORB A,Y
-    !byte $11,$EA,$A7                ; ORB ,Y
-    !byte $11,$EA,$A8,$60            ; ORB $60,Y
-    !byte $11,$EA,$A8,$FF            ; ORB -$01,Y
-    !byte $11,$EA,$A9,$10,$00        ; ORB $1000,Y
-    !byte $11,$EA,$A9,$DE,$AD        ; ORB $DEAD,Y
-    !byte $11,$EA,$A9,$DE,$AD        ; ORB ,$DEAD
-    !byte $11,$EA,$AA                ; ORB ,PClo
-    !byte $11,$EA,$AB                ; ORB D,Y
-    !byte $11,$EA,$AC,$60            ; ORB $60,PC
-    !byte $11,$EA,$AC,$FF            ; ORB -$01,PC
-    !byte $11,$EA,$AD,$10,$00        ; ORB $1000,PC
-    !byte $11,$EA,$AD,$DE,$AD        ; ORB $DEAD,PC
-    !byte $11,$EA,$B0                ; ORB [,Y+]
-    !byte $11,$EA,$B1                ; ORB [,Y++]
-    !byte $11,$EA,$B2                ; ORB [,-Y]
-    !byte $11,$EA,$B3                ; ORB [,--Y]
-    !byte $11,$EA,$B4                ; ORB [,Y]
-    !byte $11,$EA,$B5                ; ORB [B,Y]
-    !byte $11,$EA,$B6                ; ORB [A,Y]
-    !byte $11,$EA,$B7                ; ORB [,Y]
-    !byte $11,$EA,$B8,$60            ; ORB [$60,Y]
-    !byte $11,$EA,$B8,$FF            ; ORB [-$01,Y]
-    !byte $11,$EA,$B9,$DE,$10        ; ORB [$DE10,Y]
-    !byte $11,$EA,$B9,$DE,$AD        ; ORB [$DEAD,Y]
-    !byte $11,$EA,$BA                ; ORB [,PClo]
-    !byte $11,$EA,$BB                ; ORB [D,Y]
-    !byte $11,$EA,$BC,$60            ; ORB [$60,PC]
-    !byte $11,$EA,$BC,$FF            ; ORB [-$01,PC]
-    !byte $11,$EA,$BD,$10,$00        ; ORB [$1000,PC]
-    !byte $11,$EA,$BD,$DE,$AD        ; ORB [$DEAD,PC]
-    !byte $11,$EA,$BF,$DE,$AD        ; ORB [$DEAD]
-    !byte $11,$EA,$C0                ; ORB ,U+
-    !byte $11,$EA,$C1                ; ORB ,U++
-    !byte $11,$EA,$C2                ; ORB ,-U
-    !byte $11,$EA,$C3                ; ORB ,--U
-    !byte $11,$EA,$C4                ; ORB ,U
-    !byte $11,$EA,$C5                ; ORB B,U
-    !byte $11,$EA,$C6                ; ORB A,U
-    !byte $11,$EA,$C7                ; ORB ,U
-    !byte $11,$EA,$C8,$60            ; ORB $60,U
-    !byte $11,$EA,$C8,$FF            ; ORB -$01,U
-    !byte $11,$EA,$C9,$10,$00        ; ORB $1000,U
-    !byte $11,$EA,$C9,$DE,$AD        ; ORB $DEAD,U
-    !byte $11,$EA,$C9,$DE,$AD        ; ORB ,$DEAD
-    !byte $11,$EA,$CA                ; ORB ,PClo
-    !byte $11,$EA,$CB                ; ORB D,U
-    !byte $11,$EA,$CC,$60            ; ORB $60,PC
-    !byte $11,$EA,$CC,$FF            ; ORB -$01,PC
-    !byte $11,$EA,$CD,$10,$00        ; ORB $1000,PC
-    !byte $11,$EA,$CD,$DE,$AD        ; ORB $DEAD,PC
-    !byte $11,$EA,$D0                ; ORB [,U+]
-    !byte $11,$EA,$D1                ; ORB [,U++]
-    !byte $11,$EA,$D2                ; ORB [,-U]
-    !byte $11,$EA,$D3                ; ORB [,--U]
-    !byte $11,$EA,$D4                ; ORB [,U]
-    !byte $11,$EA,$D5                ; ORB [B,U]
-    !byte $11,$EA,$D6                ; ORB [A,U]
-    !byte $11,$EA,$D7                ; ORB [,U]
-    !byte $11,$EA,$D8,$60            ; ORB [$60,U]
-    !byte $11,$EA,$D8,$FF            ; ORB [-$01,U]
-    !byte $11,$EA,$D9,$DE,$10        ; ORB [$DE10,U]
-    !byte $11,$EA,$D9,$DE,$AD        ; ORB [$DEAD,U]
-    !byte $11,$EA,$DA                ; ORB [,PClo]
-    !byte $11,$EA,$DB                ; ORB [D,U]
-    !byte $11,$EA,$DC,$60            ; ORB [$60,PC]
-    !byte $11,$EA,$DC,$FF            ; ORB [-$01,PC]
-    !byte $11,$EA,$DD,$10,$00        ; ORB [$1000,PC]
-    !byte $11,$EA,$DD,$DE,$AD        ; ORB [$DEAD,PC]
-    !byte $11,$EA,$DF,$DE,$AD        ; ORB [$DEAD]
-    !byte $11,$EA,$E0                ; ORB ,S+
-    !byte $11,$EA,$E1                ; ORB ,S++
-    !byte $11,$EA,$E2                ; ORB ,-S
-    !byte $11,$EA,$E3                ; ORB ,--S
-    !byte $11,$EA,$E4                ; ORB ,S
-    !byte $11,$EA,$E5                ; ORB B,S
-    !byte $11,$EA,$E6                ; ORB A,S
-    !byte $11,$EA,$E7                ; ORB ,S
-    !byte $11,$EA,$E8,$60            ; ORB $60,S
-    !byte $11,$EA,$E8,$FF            ; ORB -$01,S
-    !byte $11,$EA,$E9,$10,$00        ; ORB $1000,S
-    !byte $11,$EA,$E9,$DE,$AD        ; ORB $DEAD,S
-    !byte $11,$EA,$E9,$DE,$AD        ; ORB ,$DEAD
-    !byte $11,$EA,$EA                ; ORB ,PClo
-    !byte $11,$EA,$EB                ; ORB D,S
-    !byte $11,$EA,$EC,$60            ; ORB $60,PC
-    !byte $11,$EA,$EC,$FF            ; ORB -$01,PC
-    !byte $11,$EA,$ED,$10,$00        ; ORB $1000,PC
-    !byte $11,$EA,$ED,$DE,$AD        ; ORB $DEAD,PC
-    !byte $11,$EA,$F0                ; ORB [,S+]
-    !byte $11,$EA,$F1                ; ORB [,S++]
-    !byte $11,$EA,$F2                ; ORB [,-S]
-    !byte $11,$EA,$F3                ; ORB [,--S]
-    !byte $11,$EA,$F4                ; ORB [,S]
-    !byte $11,$EA,$F5                ; ORB [B,S]
-    !byte $11,$EA,$F6                ; ORB [A,S]
-    !byte $11,$EA,$F7                ; ORB [,S]
-    !byte $11,$EA,$F8,$60            ; ORB [$60,S]
-    !byte $11,$EA,$F8,$FF            ; ORB [-$01,S]
-    !byte $11,$EA,$F9,$DE,$10        ; ORB [$DE10,S]
-    !byte $11,$EA,$F9,$DE,$AD        ; ORB [$DEAD,S]
-    !byte $11,$EA,$FA                ; ORB [,PClo]
-    !byte $11,$EA,$FB                ; ORB [D,S]
-    !byte $11,$EA,$FC,$60            ; ORB [$60,PC]
-    !byte $11,$EA,$FC,$FF            ; ORB [-$01,PC]
-    !byte $11,$EA,$FD,$10,$00        ; ORB [$1000,PC]
-    !byte $11,$EA,$FD,$DE,$AD        ; ORB [$DEAD,PC]
-    !byte $11,$EA,$FF,$DE,$AD        ; ORB [$DEAD]
-    !byte $11,$EB,$0C                ; ADDB $0C,X
-    !byte $11,$EB,$15                ; ADDB -$0B,X
-    !byte $11,$EB,$2C                ; ADDB $0C,Y
-    !byte $11,$EB,$35                ; ADDB -$0B,Y
-    !byte $11,$EB,$4C                ; ADDB $0C,U
-    !byte $11,$EB,$55                ; ADDB -$0B,U
-    !byte $11,$EB,$6C                ; ADDB $0C,S
-    !byte $11,$EB,$75                ; ADDB -$0B,S
-    !byte $11,$EB,$80                ; ADDB ,X+
-    !byte $11,$EB,$81                ; ADDB ,X++
-    !byte $11,$EB,$82                ; ADDB ,-X
-    !byte $11,$EB,$83                ; ADDB ,--X
-    !byte $11,$EB,$84                ; ADDB ,X
-    !byte $11,$EB,$85                ; ADDB B,X
-    !byte $11,$EB,$86                ; ADDB A,X
-    !byte $11,$EB,$87                ; ADDB ,X
-    !byte $11,$EB,$88,$60            ; ADDB $60,X
-    !byte $11,$EB,$88,$FF            ; ADDB -$01,X
-    !byte $11,$EB,$89,$10,$00        ; ADDB $1000,X
-    !byte $11,$EB,$89,$DE,$AD        ; ADDB $DEAD,X
-    !byte $11,$EB,$8A                ; ADDB ,PClo
-    !byte $11,$EB,$8B                ; ADDB D,X
-    !byte $11,$EB,$8C,$60            ; ADDB $60,PC
-    !byte $11,$EB,$8C,$FF            ; ADDB -$01,PC
-    !byte $11,$EB,$8D,$10,$00        ; ADDB $1000,PC
-    !byte $11,$EB,$8D,$DE,$AD        ; ADDB $DEAD,PC
-    !byte $11,$EB,$8F,$DE,$AD        ; ADDB ,$DEAD
-    !byte $11,$EB,$90                ; ADDB [,X+]
-    !byte $11,$EB,$91                ; ADDB [,X++]
-    !byte $11,$EB,$92                ; ADDB [,-X]
-    !byte $11,$EB,$93                ; ADDB [,--X]
-    !byte $11,$EB,$94                ; ADDB [,X]
-    !byte $11,$EB,$95                ; ADDB [B,X]
-    !byte $11,$EB,$96                ; ADDB [A,X]
-    !byte $11,$EB,$97                ; ADDB [,X]
-    !byte $11,$EB,$98,$60            ; ADDB [$60,X]
-    !byte $11,$EB,$98,$FF            ; ADDB [-$01,X]
-    !byte $11,$EB,$99,$DE,$10        ; ADDB [$DE10,X]
-    !byte $11,$EB,$99,$DE,$AD        ; ADDB [$DEAD,X]
-    !byte $11,$EB,$9A                ; ADDB [,PClo]
-    !byte $11,$EB,$9B                ; ADDB [D,X]
-    !byte $11,$EB,$9C,$60            ; ADDB [$60,PC]
-    !byte $11,$EB,$9C,$FF            ; ADDB [-$01,PC]
-    !byte $11,$EB,$9D,$10,$00        ; ADDB [$1000,PC]
-    !byte $11,$EB,$9D,$DE,$AD        ; ADDB [$DEAD,PC]
-    !byte $11,$EB,$9F,$DE,$AD        ; ADDB [$DEAD]
-    !byte $11,$EB,$A0                ; ADDB ,Y+
-    !byte $11,$EB,$A1                ; ADDB ,Y++
-    !byte $11,$EB,$A2                ; ADDB ,-Y
-    !byte $11,$EB,$A3                ; ADDB ,--Y
-    !byte $11,$EB,$A4                ; ADDB ,Y
-    !byte $11,$EB,$A5                ; ADDB B,Y
-    !byte $11,$EB,$A6                ; ADDB A,Y
-    !byte $11,$EB,$A7                ; ADDB ,Y
-    !byte $11,$EB,$A8,$60            ; ADDB $60,Y
-    !byte $11,$EB,$A8,$FF            ; ADDB -$01,Y
-    !byte $11,$EB,$A9,$10,$00        ; ADDB $1000,Y
-    !byte $11,$EB,$A9,$DE,$AD        ; ADDB $DEAD,Y
-    !byte $11,$EB,$AA                ; ADDB ,PClo
-    !byte $11,$EB,$AB                ; ADDB D,Y
-    !byte $11,$EB,$AC,$60            ; ADDB $60,PC
-    !byte $11,$EB,$AC,$FF            ; ADDB -$01,PC
-    !byte $11,$EB,$AD,$10,$00        ; ADDB $1000,PC
-    !byte $11,$EB,$AD,$DE,$AD        ; ADDB $DEAD,PC
-    !byte $11,$EB,$AF,$DE,$AD        ; ADDB ,$DEAD
-    !byte $11,$EB,$B0                ; ADDB [,Y+]
-    !byte $11,$EB,$B1                ; ADDB [,Y++]
-    !byte $11,$EB,$B2                ; ADDB [,-Y]
-    !byte $11,$EB,$B3                ; ADDB [,--Y]
-    !byte $11,$EB,$B4                ; ADDB [,Y]
-    !byte $11,$EB,$B5                ; ADDB [B,Y]
-    !byte $11,$EB,$B6                ; ADDB [A,Y]
-    !byte $11,$EB,$B7                ; ADDB [,Y]
-    !byte $11,$EB,$B8,$60            ; ADDB [$60,Y]
-    !byte $11,$EB,$B8,$FF            ; ADDB [-$01,Y]
-    !byte $11,$EB,$B9,$DE,$10        ; ADDB [$DE10,Y]
-    !byte $11,$EB,$B9,$DE,$AD        ; ADDB [$DEAD,Y]
-    !byte $11,$EB,$BA                ; ADDB [,PClo]
-    !byte $11,$EB,$BB                ; ADDB [D,Y]
-    !byte $11,$EB,$BC,$60            ; ADDB [$60,PC]
-    !byte $11,$EB,$BC,$FF            ; ADDB [-$01,PC]
-    !byte $11,$EB,$BD,$10,$00        ; ADDB [$1000,PC]
-    !byte $11,$EB,$BD,$DE,$AD        ; ADDB [$DEAD,PC]
-    !byte $11,$EB,$BF,$DE,$AD        ; ADDB [$DEAD]
-    !byte $11,$EB,$C0                ; ADDB ,U+
-    !byte $11,$EB,$C1                ; ADDB ,U++
-    !byte $11,$EB,$C2                ; ADDB ,-U
-    !byte $11,$EB,$C3                ; ADDB ,--U
-    !byte $11,$EB,$C4                ; ADDB ,U
-    !byte $11,$EB,$C5                ; ADDB B,U
-    !byte $11,$EB,$C6                ; ADDB A,U
-    !byte $11,$EB,$C7                ; ADDB ,U
-    !byte $11,$EB,$C8,$60            ; ADDB $60,U
-    !byte $11,$EB,$C8,$FF            ; ADDB -$01,U
-    !byte $11,$EB,$C9,$10,$00        ; ADDB $1000,U
-    !byte $11,$EB,$C9,$DE,$AD        ; ADDB $DEAD,U
-    !byte $11,$EB,$CA                ; ADDB ,PClo
-    !byte $11,$EB,$CB                ; ADDB D,U
-    !byte $11,$EB,$CC,$60            ; ADDB $60,PC
-    !byte $11,$EB,$CC,$FF            ; ADDB -$01,PC
-    !byte $11,$EB,$CD,$10,$00        ; ADDB $1000,PC
-    !byte $11,$EB,$CD,$DE,$AD        ; ADDB $DEAD,PC
-    !byte $11,$EB,$CF,$DE,$AD        ; ADDB ,$DEAD
-    !byte $11,$EB,$D0                ; ADDB [,U+]
-    !byte $11,$EB,$D1                ; ADDB [,U++]
-    !byte $11,$EB,$D2                ; ADDB [,-U]
-    !byte $11,$EB,$D3                ; ADDB [,--U]
-    !byte $11,$EB,$D4                ; ADDB [,U]
-    !byte $11,$EB,$D5                ; ADDB [B,U]
-    !byte $11,$EB,$D6                ; ADDB [A,U]
-    !byte $11,$EB,$D7                ; ADDB [,U]
-    !byte $11,$EB,$D8,$60            ; ADDB [$60,U]
-    !byte $11,$EB,$D8,$FF            ; ADDB [-$01,U]
-    !byte $11,$EB,$D9,$DE,$10        ; ADDB [$DE10,U]
-    !byte $11,$EB,$D9,$DE,$AD        ; ADDB [$DEAD,U]
-    !byte $11,$EB,$DA                ; ADDB [,PClo]
-    !byte $11,$EB,$DB                ; ADDB [D,U]
-    !byte $11,$EB,$DC,$60            ; ADDB [$60,PC]
-    !byte $11,$EB,$DC,$FF            ; ADDB [-$01,PC]
-    !byte $11,$EB,$DD,$10,$00        ; ADDB [$1000,PC]
-    !byte $11,$EB,$DD,$DE,$AD        ; ADDB [$DEAD,PC]
-    !byte $11,$EB,$DF,$DE,$AD        ; ADDB [$DEAD]
-    !byte $11,$EB,$E0                ; ADDB ,S+
-    !byte $11,$EB,$E1                ; ADDB ,S++
-    !byte $11,$EB,$E2                ; ADDB ,-S
-    !byte $11,$EB,$E3                ; ADDB ,--S
-    !byte $11,$EB,$E4                ; ADDB ,S
-    !byte $11,$EB,$E5                ; ADDB B,S
-    !byte $11,$EB,$E6                ; ADDB A,S
-    !byte $11,$EB,$E7                ; ADDB ,S
-    !byte $11,$EB,$E8,$60            ; ADDB $60,S
-    !byte $11,$EB,$E8,$FF            ; ADDB -$01,S
-    !byte $11,$EB,$E9,$10,$00        ; ADDB $1000,S
-    !byte $11,$EB,$E9,$DE,$AD        ; ADDB $DEAD,S
-    !byte $11,$EB,$EA                ; ADDB ,PClo
-    !byte $11,$EB,$EB                ; ADDB D,S
-    !byte $11,$EB,$EC,$60            ; ADDB $60,PC
-    !byte $11,$EB,$EC,$FF            ; ADDB -$01,PC
-    !byte $11,$EB,$ED,$10,$00        ; ADDB $1000,PC
-    !byte $11,$EB,$ED,$DE,$AD        ; ADDB $DEAD,PC
-    !byte $11,$EB,$EF,$DE,$AD        ; ADDB ,$DEAD
-    !byte $11,$EB,$F0                ; ADDB [,S+]
-    !byte $11,$EB,$F1                ; ADDB [,S++]
-    !byte $11,$EB,$F2                ; ADDB [,-S]
-    !byte $11,$EB,$F3                ; ADDB [,--S]
-    !byte $11,$EB,$F4                ; ADDB [,S]
-    !byte $11,$EB,$F5                ; ADDB [B,S]
-    !byte $11,$EB,$F6                ; ADDB [A,S]
-    !byte $11,$EB,$F7                ; ADDB [,S]
-    !byte $11,$EB,$F8,$60            ; ADDB [$60,S]
-    !byte $11,$EB,$F8,$FF            ; ADDB [-$01,S]
-    !byte $11,$EB,$F9,$DE,$10        ; ADDB [$DE10,S]
-    !byte $11,$EB,$F9,$DE,$AD        ; ADDB [$DEAD,S]
-    !byte $11,$EB,$FA                ; ADDB [,PClo]
-    !byte $11,$EB,$FB                ; ADDB [D,S]
-    !byte $11,$EB,$FC,$60            ; ADDB [$60,PC]
-    !byte $11,$EB,$FC,$FF            ; ADDB [-$01,PC]
-    !byte $11,$EB,$FD,$10,$00        ; ADDB [$1000,PC]
-    !byte $11,$EB,$FD,$DE,$AD        ; ADDB [$DEAD,PC]
-    !byte $11,$EB,$FF,$DE,$AD        ; ADDB [$DEAD]
-    !byte $11,$EC,$0C                ; LDD $0C,X
-    !byte $11,$EC,$15                ; LDD -$0B,X
-    !byte $11,$EC,$2C                ; LDD $0C,Y
-    !byte $11,$EC,$35                ; LDD -$0B,Y
-    !byte $11,$EC,$4C                ; LDD $0C,U
-    !byte $11,$EC,$55                ; LDD -$0B,U
-    !byte $11,$EC,$6C                ; LDD $0C,S
-    !byte $11,$EC,$75                ; LDD -$0B,S
-    !byte $11,$EC,$80                ; LDD ,X+
-    !byte $11,$EC,$81                ; LDD ,X++
-    !byte $11,$EC,$82                ; LDD ,-X
-    !byte $11,$EC,$83                ; LDD ,--X
-    !byte $11,$EC,$84                ; LDD ,X
-    !byte $11,$EC,$85                ; LDD B,X
-    !byte $11,$EC,$86                ; LDD A,X
-    !byte $11,$EC,$87                ; LDD ,X
-    !byte $11,$EC,$88,$60            ; LDD $60,X
-    !byte $11,$EC,$88,$FF            ; LDD -$01,X
-    !byte $11,$EC,$89,$10,$00        ; LDD $1000,X
-    !byte $11,$EC,$89,$DE,$AD        ; LDD $DEAD,X
-    !byte $11,$EC,$8A                ; LDD ,PClo
-    !byte $11,$EC,$8B                ; LDD D,X
-    !byte $11,$EC,$8C,$60            ; LDD $60,PC
-    !byte $11,$EC,$8C,$FF            ; LDD -$01,PC
-    !byte $11,$EC,$8D,$10,$00        ; LDD $1000,PC
-    !byte $11,$EC,$8D,$DE,$AD        ; LDD $DEAD,PC
-    !byte $11,$EC,$8F,$DE,$AD        ; LDD ,$DEAD
-    !byte $11,$EC,$90                ; LDD [,X+]
-    !byte $11,$EC,$91                ; LDD [,X++]
-    !byte $11,$EC,$92                ; LDD [,-X]
-    !byte $11,$EC,$93                ; LDD [,--X]
-    !byte $11,$EC,$94                ; LDD [,X]
-    !byte $11,$EC,$95                ; LDD [B,X]
-    !byte $11,$EC,$96                ; LDD [A,X]
-    !byte $11,$EC,$97                ; LDD [,X]
-    !byte $11,$EC,$98,$60            ; LDD [$60,X]
-    !byte $11,$EC,$98,$FF            ; LDD [-$01,X]
-    !byte $11,$EC,$99,$DE,$10        ; LDD [$DE10,X]
-    !byte $11,$EC,$99,$DE,$AD        ; LDD [$DEAD,X]
-    !byte $11,$EC,$9A                ; LDD [,PClo]
-    !byte $11,$EC,$9B                ; LDD [D,X]
-    !byte $11,$EC,$9C,$60            ; LDD [$60,PC]
-    !byte $11,$EC,$9C,$FF            ; LDD [-$01,PC]
-    !byte $11,$EC,$9D,$10,$00        ; LDD [$1000,PC]
-    !byte $11,$EC,$9D,$DE,$AD        ; LDD [$DEAD,PC]
-    !byte $11,$EC,$9F,$DE,$AD        ; LDD [$DEAD]
-    !byte $11,$EC,$A0                ; LDD ,Y+
-    !byte $11,$EC,$A1                ; LDD ,Y++
-    !byte $11,$EC,$A2                ; LDD ,-Y
-    !byte $11,$EC,$A3                ; LDD ,--Y
-    !byte $11,$EC,$A4                ; LDD ,Y
-    !byte $11,$EC,$A5                ; LDD B,Y
-    !byte $11,$EC,$A6                ; LDD A,Y
-    !byte $11,$EC,$A7                ; LDD ,Y
-    !byte $11,$EC,$A8,$60            ; LDD $60,Y
-    !byte $11,$EC,$A8,$FF            ; LDD -$01,Y
-    !byte $11,$EC,$A9,$10,$00        ; LDD $1000,Y
-    !byte $11,$EC,$A9,$DE,$AD        ; LDD $DEAD,Y
-    !byte $11,$EC,$AA                ; LDD ,PClo
-    !byte $11,$EC,$AB                ; LDD D,Y
-    !byte $11,$EC,$AC,$60            ; LDD $60,PC
-    !byte $11,$EC,$AC,$FF            ; LDD -$01,PC
-    !byte $11,$EC,$AD,$10,$00        ; LDD $1000,PC
-    !byte $11,$EC,$AD,$DE,$AD        ; LDD $DEAD,PC
-    !byte $11,$EC,$AF,$DE,$AD        ; LDD ,$DEAD
-    !byte $11,$EC,$B0                ; LDD [,Y+]
-    !byte $11,$EC,$B1                ; LDD [,Y++]
-    !byte $11,$EC,$B2                ; LDD [,-Y]
-    !byte $11,$EC,$B3                ; LDD [,--Y]
-    !byte $11,$EC,$B4                ; LDD [,Y]
-    !byte $11,$EC,$B5                ; LDD [B,Y]
-    !byte $11,$EC,$B6                ; LDD [A,Y]
-    !byte $11,$EC,$B7                ; LDD [,Y]
-    !byte $11,$EC,$B8,$60            ; LDD [$60,Y]
-    !byte $11,$EC,$B8,$FF            ; LDD [-$01,Y]
-    !byte $11,$EC,$B9,$DE,$10        ; LDD [$DE10,Y]
-    !byte $11,$EC,$B9,$DE,$AD        ; LDD [$DEAD,Y]
-    !byte $11,$EC,$BA                ; LDD [,PClo]
-    !byte $11,$EC,$BB                ; LDD [D,Y]
-    !byte $11,$EC,$BC,$60            ; LDD [$60,PC]
-    !byte $11,$EC,$BC,$FF            ; LDD [-$01,PC]
-    !byte $11,$EC,$BD,$10,$00        ; LDD [$1000,PC]
-    !byte $11,$EC,$BD,$DE,$AD        ; LDD [$DEAD,PC]
-    !byte $11,$EC,$BF,$DE,$AD        ; LDD [$DEAD]
-    !byte $11,$EC,$C0                ; LDD ,U+
-    !byte $11,$EC,$C1                ; LDD ,U++
-    !byte $11,$EC,$C2                ; LDD ,-U
-    !byte $11,$EC,$C3                ; LDD ,--U
-    !byte $11,$EC,$C4                ; LDD ,U
-    !byte $11,$EC,$C5                ; LDD B,U
-    !byte $11,$EC,$C6                ; LDD A,U
-    !byte $11,$EC,$C7                ; LDD ,U
-    !byte $11,$EC,$C8,$60            ; LDD $60,U
-    !byte $11,$EC,$C8,$FF            ; LDD -$01,U
-    !byte $11,$EC,$C9,$10,$00        ; LDD $1000,U
-    !byte $11,$EC,$C9,$DE,$AD        ; LDD $DEAD,U
-    !byte $11,$EC,$CA                ; LDD ,PClo
-    !byte $11,$EC,$CB                ; LDD D,U
-    !byte $11,$EC,$CC,$60            ; LDD $60,PC
-    !byte $11,$EC,$CC,$FF            ; LDD -$01,PC
-    !byte $11,$EC,$CD,$10,$00        ; LDD $1000,PC
-    !byte $11,$EC,$CD,$DE,$AD        ; LDD $DEAD,PC
-    !byte $11,$EC,$CF,$DE,$AD        ; LDD ,$DEAD
-    !byte $11,$EC,$D0                ; LDD [,U+]
-    !byte $11,$EC,$D1                ; LDD [,U++]
-    !byte $11,$EC,$D2                ; LDD [,-U]
-    !byte $11,$EC,$D3                ; LDD [,--U]
-    !byte $11,$EC,$D4                ; LDD [,U]
-    !byte $11,$EC,$D5                ; LDD [B,U]
-    !byte $11,$EC,$D6                ; LDD [A,U]
-    !byte $11,$EC,$D7                ; LDD [,U]
-    !byte $11,$EC,$D8,$60            ; LDD [$60,U]
-    !byte $11,$EC,$D8,$FF            ; LDD [-$01,U]
-    !byte $11,$EC,$D9,$DE,$10        ; LDD [$DE10,U]
-    !byte $11,$EC,$D9,$DE,$AD        ; LDD [$DEAD,U]
-    !byte $11,$EC,$DA                ; LDD [,PClo]
-    !byte $11,$EC,$DB                ; LDD [D,U]
-    !byte $11,$EC,$DC,$60            ; LDD [$60,PC]
-    !byte $11,$EC,$DC,$FF            ; LDD [-$01,PC]
-    !byte $11,$EC,$DD,$10,$00        ; LDD [$1000,PC]
-    !byte $11,$EC,$DD,$DE,$AD        ; LDD [$DEAD,PC]
-    !byte $11,$EC,$DF,$DE,$AD        ; LDD [$DEAD]
-    !byte $11,$EC,$E0                ; LDD ,S+
-    !byte $11,$EC,$E1                ; LDD ,S++
-    !byte $11,$EC,$E2                ; LDD ,-S
-    !byte $11,$EC,$E3                ; LDD ,--S
-    !byte $11,$EC,$E4                ; LDD ,S
-    !byte $11,$EC,$E5                ; LDD B,S
-    !byte $11,$EC,$E6                ; LDD A,S
-    !byte $11,$EC,$E7                ; LDD ,S
-    !byte $11,$EC,$E8,$60            ; LDD $60,S
-    !byte $11,$EC,$E8,$FF            ; LDD -$01,S
-    !byte $11,$EC,$E9,$10,$00        ; LDD $1000,S
-    !byte $11,$EC,$E9,$DE,$AD        ; LDD $DEAD,S
-    !byte $11,$EC,$EA                ; LDD ,PClo
-    !byte $11,$EC,$EB                ; LDD D,S
-    !byte $11,$EC,$EC,$60            ; LDD $60,PC
-    !byte $11,$EC,$EC,$FF            ; LDD -$01,PC
-    !byte $11,$EC,$ED,$10,$00        ; LDD $1000,PC
-    !byte $11,$EC,$ED,$DE,$AD        ; LDD $DEAD,PC
-    !byte $11,$EC,$EF,$DE,$AD        ; LDD ,$DEAD
-    !byte $11,$EC,$F0                ; LDD [,S+]
-    !byte $11,$EC,$F1                ; LDD [,S++]
-    !byte $11,$EC,$F2                ; LDD [,-S]
-    !byte $11,$EC,$F3                ; LDD [,--S]
-    !byte $11,$EC,$F4                ; LDD [,S]
-    !byte $11,$EC,$F5                ; LDD [B,S]
-    !byte $11,$EC,$F6                ; LDD [A,S]
-    !byte $11,$EC,$F7                ; LDD [,S]
-    !byte $11,$EC,$F8,$60            ; LDD [$60,S]
-    !byte $11,$EC,$F8,$FF            ; LDD [-$01,S]
-    !byte $11,$EC,$F9,$DE,$10        ; LDD [$DE10,S]
-    !byte $11,$EC,$F9,$DE,$AD        ; LDD [$DEAD,S]
-    !byte $11,$EC,$FA                ; LDD [,PClo]
-    !byte $11,$EC,$FB                ; LDD [D,S]
-    !byte $11,$EC,$FC,$60            ; LDD [$60,PC]
-    !byte $11,$EC,$FC,$FF            ; LDD [-$01,PC]
-    !byte $11,$EC,$FD,$10,$00        ; LDD [$1000,PC]
-    !byte $11,$EC,$FD,$DE,$AD        ; LDD [$DEAD,PC]
-    !byte $11,$EC,$FF,$DE,$AD        ; LDD [$DEAD]
-    !byte $11,$ED,$0C                ; STD $0C,X
-    !byte $11,$ED,$15                ; STD -$0B,X
-    !byte $11,$ED,$2C                ; STD $0C,Y
-    !byte $11,$ED,$35                ; STD -$0B,Y
-    !byte $11,$ED,$4C                ; STD $0C,U
-    !byte $11,$ED,$55                ; STD -$0B,U
-    !byte $11,$ED,$6C                ; STD $0C,S
-    !byte $11,$ED,$75                ; STD -$0B,S
-    !byte $11,$ED,$80                ; STD ,X+
-    !byte $11,$ED,$81                ; STD ,X++
-    !byte $11,$ED,$82                ; STD ,-X
-    !byte $11,$ED,$83                ; STD ,--X
-    !byte $11,$ED,$84                ; STD ,X
-    !byte $11,$ED,$85                ; STD B,X
-    !byte $11,$ED,$86                ; STD A,X
-    !byte $11,$ED,$87                ; STD ,X
-    !byte $11,$ED,$88,$60            ; STD $60,X
-    !byte $11,$ED,$88,$FF            ; STD -$01,X
-    !byte $11,$ED,$89,$10,$00        ; STD $1000,X
-    !byte $11,$ED,$89,$DE,$AD        ; STD $DEAD,X
-    !byte $11,$ED,$8A                ; STD ,PClo
-    !byte $11,$ED,$8B                ; STD D,X
-    !byte $11,$ED,$8C,$60            ; STD $60,PC
-    !byte $11,$ED,$8C,$FF            ; STD -$01,PC
-    !byte $11,$ED,$8D,$10,$00        ; STD $1000,PC
-    !byte $11,$ED,$8D,$DE,$AD        ; STD $DEAD,PC
-    !byte $11,$ED,$8F,$DE,$AD        ; STD ,$DEAD
-    !byte $11,$ED,$90                ; STD [,X+]
-    !byte $11,$ED,$91                ; STD [,X++]
-    !byte $11,$ED,$92                ; STD [,-X]
-    !byte $11,$ED,$93                ; STD [,--X]
-    !byte $11,$ED,$94                ; STD [,X]
-    !byte $11,$ED,$95                ; STD [B,X]
-    !byte $11,$ED,$96                ; STD [A,X]
-    !byte $11,$ED,$97                ; STD [,X]
-    !byte $11,$ED,$98,$60            ; STD [$60,X]
-    !byte $11,$ED,$98,$FF            ; STD [-$01,X]
-    !byte $11,$ED,$99,$DE,$10        ; STD [$DE10,X]
-    !byte $11,$ED,$99,$DE,$AD        ; STD [$DEAD,X]
-    !byte $11,$ED,$9A                ; STD [,PClo]
-    !byte $11,$ED,$9B                ; STD [D,X]
-    !byte $11,$ED,$9C,$60            ; STD [$60,PC]
-    !byte $11,$ED,$9C,$FF            ; STD [-$01,PC]
-    !byte $11,$ED,$9D,$10,$00        ; STD [$1000,PC]
-    !byte $11,$ED,$9D,$DE,$AD        ; STD [$DEAD,PC]
-    !byte $11,$ED,$9F,$DE,$AD        ; STD [$DEAD]
-    !byte $11,$ED,$A0                ; STD ,Y+
-    !byte $11,$ED,$A1                ; STD ,Y++
-    !byte $11,$ED,$A2                ; STD ,-Y
-    !byte $11,$ED,$A3                ; STD ,--Y
-    !byte $11,$ED,$A4                ; STD ,Y
-    !byte $11,$ED,$A5                ; STD B,Y
-    !byte $11,$ED,$A6                ; STD A,Y
-    !byte $11,$ED,$A7                ; STD ,Y
-    !byte $11,$ED,$A8,$60            ; STD $60,Y
-    !byte $11,$ED,$A8,$FF            ; STD -$01,Y
-    !byte $11,$ED,$A9,$10,$00        ; STD $1000,Y
-    !byte $11,$ED,$A9,$DE,$AD        ; STD $DEAD,Y
-    !byte $11,$ED,$AA                ; STD ,PClo
-    !byte $11,$ED,$AB                ; STD D,Y
-    !byte $11,$ED,$AC,$60            ; STD $60,PC
-    !byte $11,$ED,$AC,$FF            ; STD -$01,PC
-    !byte $11,$ED,$AD,$10,$00        ; STD $1000,PC
-    !byte $11,$ED,$AD,$DE,$AD        ; STD $DEAD,PC
-    !byte $11,$ED,$AF,$DE,$AD        ; STD ,$DEAD
-    !byte $11,$ED,$B0                ; STD [,Y+]
-    !byte $11,$ED,$B1                ; STD [,Y++]
-    !byte $11,$ED,$B2                ; STD [,-Y]
-    !byte $11,$ED,$B3                ; STD [,--Y]
-    !byte $11,$ED,$B4                ; STD [,Y]
-    !byte $11,$ED,$B5                ; STD [B,Y]
-    !byte $11,$ED,$B6                ; STD [A,Y]
-    !byte $11,$ED,$B7                ; STD [,Y]
-    !byte $11,$ED,$B8,$60            ; STD [$60,Y]
-    !byte $11,$ED,$B8,$FF            ; STD [-$01,Y]
-    !byte $11,$ED,$B9,$DE,$10        ; STD [$DE10,Y]
-    !byte $11,$ED,$B9,$DE,$AD        ; STD [$DEAD,Y]
-    !byte $11,$ED,$BA                ; STD [,PClo]
-    !byte $11,$ED,$BB                ; STD [D,Y]
-    !byte $11,$ED,$BC,$60            ; STD [$60,PC]
-    !byte $11,$ED,$BC,$FF            ; STD [-$01,PC]
-    !byte $11,$ED,$BD,$10,$00        ; STD [$1000,PC]
-    !byte $11,$ED,$BD,$DE,$AD        ; STD [$DEAD,PC]
-    !byte $11,$ED,$BF,$DE,$AD        ; STD [$DEAD]
-    !byte $11,$ED,$C0                ; STD ,U+
-    !byte $11,$ED,$C1                ; STD ,U++
-    !byte $11,$ED,$C2                ; STD ,-U
-    !byte $11,$ED,$C3                ; STD ,--U
-    !byte $11,$ED,$C4                ; STD ,U
-    !byte $11,$ED,$C5                ; STD B,U
-    !byte $11,$ED,$C6                ; STD A,U
-    !byte $11,$ED,$C7                ; STD ,U
-    !byte $11,$ED,$C8,$60            ; STD $60,U
-    !byte $11,$ED,$C8,$FF            ; STD -$01,U
-    !byte $11,$ED,$C9,$10,$00        ; STD $1000,U
-    !byte $11,$ED,$C9,$DE,$AD        ; STD $DEAD,U
-    !byte $11,$ED,$CA                ; STD ,PClo
-    !byte $11,$ED,$CB                ; STD D,U
-    !byte $11,$ED,$CC,$60            ; STD $60,PC
-    !byte $11,$ED,$CC,$FF            ; STD -$01,PC
-    !byte $11,$ED,$CD,$10,$00        ; STD $1000,PC
-    !byte $11,$ED,$CD,$DE,$AD        ; STD $DEAD,PC
-    !byte $11,$ED,$CF,$DE,$AD        ; STD ,$DEAD
-    !byte $11,$ED,$D0                ; STD [,U+]
-    !byte $11,$ED,$D1                ; STD [,U++]
-    !byte $11,$ED,$D2                ; STD [,-U]
-    !byte $11,$ED,$D3                ; STD [,--U]
-    !byte $11,$ED,$D4                ; STD [,U]
-    !byte $11,$ED,$D5                ; STD [B,U]
-    !byte $11,$ED,$D6                ; STD [A,U]
-    !byte $11,$ED,$D7                ; STD [,U]
-    !byte $11,$ED,$D8,$60            ; STD [$60,U]
-    !byte $11,$ED,$D8,$FF            ; STD [-$01,U]
-    !byte $11,$ED,$D9,$DE,$10        ; STD [$DE10,U]
-    !byte $11,$ED,$D9,$DE,$AD        ; STD [$DEAD,U]
-    !byte $11,$ED,$DA                ; STD [,PClo]
-    !byte $11,$ED,$DB                ; STD [D,U]
-    !byte $11,$ED,$DC,$60            ; STD [$60,PC]
-    !byte $11,$ED,$DC,$FF            ; STD [-$01,PC]
-    !byte $11,$ED,$DD,$10,$00        ; STD [$1000,PC]
-    !byte $11,$ED,$DD,$DE,$AD        ; STD [$DEAD,PC]
-    !byte $11,$ED,$DF,$DE,$AD        ; STD [$DEAD]
-    !byte $11,$ED,$E0                ; STD ,S+
-    !byte $11,$ED,$E1                ; STD ,S++
-    !byte $11,$ED,$E2                ; STD ,-S
-    !byte $11,$ED,$E3                ; STD ,--S
-    !byte $11,$ED,$E4                ; STD ,S
-    !byte $11,$ED,$E5                ; STD B,S
-    !byte $11,$ED,$E6                ; STD A,S
-    !byte $11,$ED,$E7                ; STD ,S
-    !byte $11,$ED,$E8,$60            ; STD $60,S
-    !byte $11,$ED,$E8,$FF            ; STD -$01,S
-    !byte $11,$ED,$E9,$10,$00        ; STD $1000,S
-    !byte $11,$ED,$E9,$DE,$AD        ; STD $DEAD,S
-    !byte $11,$ED,$EA                ; STD ,PClo
-    !byte $11,$ED,$EB                ; STD D,S
-    !byte $11,$ED,$EC,$60            ; STD $60,PC
-    !byte $11,$ED,$EC,$FF            ; STD -$01,PC
-    !byte $11,$ED,$ED,$10,$00        ; STD $1000,PC
-    !byte $11,$ED,$ED,$DE,$AD        ; STD $DEAD,PC
-    !byte $11,$ED,$EF,$DE,$AD        ; STD ,$DEAD
-    !byte $11,$ED,$F0                ; STD [,S+]
-    !byte $11,$ED,$F1                ; STD [,S++]
-    !byte $11,$ED,$F2                ; STD [,-S]
-    !byte $11,$ED,$F3                ; STD [,--S]
-    !byte $11,$ED,$F4                ; STD [,S]
-    !byte $11,$ED,$F5                ; STD [B,S]
-    !byte $11,$ED,$F6                ; STD [A,S]
-    !byte $11,$ED,$F7                ; STD [,S]
-    !byte $11,$ED,$F8,$60            ; STD [$60,S]
-    !byte $11,$ED,$F8,$FF            ; STD [-$01,S]
-    !byte $11,$ED,$F9,$DE,$10        ; STD [$DE10,S]
-    !byte $11,$ED,$F9,$DE,$AD        ; STD [$DEAD,S]
-    !byte $11,$ED,$FA                ; STD [,PClo]
-    !byte $11,$ED,$FB                ; STD [D,S]
-    !byte $11,$ED,$FC,$60            ; STD [$60,PC]
-    !byte $11,$ED,$FC,$FF            ; STD [-$01,PC]
-    !byte $11,$ED,$FD,$10,$00        ; STD [$1000,PC]
-    !byte $11,$ED,$FD,$DE,$AD        ; STD [$DEAD,PC]
-    !byte $11,$ED,$FF,$DE,$AD        ; STD [$DEAD]
-    !byte $11,$EE,$0C                ; LDU $0C,X
-    !byte $11,$EE,$15                ; LDU -$0B,X
-    !byte $11,$EE,$2C                ; LDU $0C,Y
-    !byte $11,$EE,$35                ; LDU -$0B,Y
-    !byte $11,$EE,$4C                ; LDU $0C,U
-    !byte $11,$EE,$55                ; LDU -$0B,U
-    !byte $11,$EE,$6C                ; LDU $0C,S
-    !byte $11,$EE,$75                ; LDU -$0B,S
-    !byte $11,$EE,$80                ; LDU ,X+
-    !byte $11,$EE,$81                ; LDU ,X++
-    !byte $11,$EE,$82                ; LDU ,-X
-    !byte $11,$EE,$83                ; LDU ,--X
-    !byte $11,$EE,$84                ; LDU ,X
-    !byte $11,$EE,$85                ; LDU B,X
-    !byte $11,$EE,$86                ; LDU A,X
-    !byte $11,$EE,$87                ; LDU ,X
-    !byte $11,$EE,$88,$60            ; LDU $60,X
-    !byte $11,$EE,$88,$FF            ; LDU -$01,X
-    !byte $11,$EE,$89,$10,$00        ; LDU $1000,X
-    !byte $11,$EE,$89,$DE,$AD        ; LDU $DEAD,X
-    !byte $11,$EE,$8A                ; LDU ,PClo
-    !byte $11,$EE,$8B                ; LDU D,X
-    !byte $11,$EE,$8C,$60            ; LDU $60,PC
-    !byte $11,$EE,$8C,$FF            ; LDU -$01,PC
-    !byte $11,$EE,$8D,$10,$00        ; LDU $1000,PC
-    !byte $11,$EE,$8D,$DE,$AD        ; LDU $DEAD,PC
-    !byte $11,$EE,$8F,$DE,$AD        ; LDU ,$DEAD
-    !byte $11,$EE,$90                ; LDU [,X+]
-    !byte $11,$EE,$91                ; LDU [,X++]
-    !byte $11,$EE,$92                ; LDU [,-X]
-    !byte $11,$EE,$93                ; LDU [,--X]
-    !byte $11,$EE,$94                ; LDU [,X]
-    !byte $11,$EE,$95                ; LDU [B,X]
-    !byte $11,$EE,$96                ; LDU [A,X]
-    !byte $11,$EE,$97                ; LDU [,X]
-    !byte $11,$EE,$98,$60            ; LDU [$60,X]
-    !byte $11,$EE,$98,$FF            ; LDU [-$01,X]
-    !byte $11,$EE,$99,$DE,$10        ; LDU [$DE10,X]
-    !byte $11,$EE,$99,$DE,$AD        ; LDU [$DEAD,X]
-    !byte $11,$EE,$9A                ; LDU [,PClo]
-    !byte $11,$EE,$9B                ; LDU [D,X]
-    !byte $11,$EE,$9C,$60            ; LDU [$60,PC]
-    !byte $11,$EE,$9C,$FF            ; LDU [-$01,PC]
-    !byte $11,$EE,$9D,$10,$00        ; LDU [$1000,PC]
-    !byte $11,$EE,$9D,$DE,$AD        ; LDU [$DEAD,PC]
-    !byte $11,$EE,$9F,$DE,$AD        ; LDU [$DEAD]
-    !byte $11,$EE,$A0                ; LDU ,Y+
-    !byte $11,$EE,$A1                ; LDU ,Y++
-    !byte $11,$EE,$A2                ; LDU ,-Y
-    !byte $11,$EE,$A3                ; LDU ,--Y
-    !byte $11,$EE,$A4                ; LDU ,Y
-    !byte $11,$EE,$A5                ; LDU B,Y
-    !byte $11,$EE,$A6                ; LDU A,Y
-    !byte $11,$EE,$A7                ; LDU ,Y
-    !byte $11,$EE,$A8,$60            ; LDU $60,Y
-    !byte $11,$EE,$A8,$FF            ; LDU -$01,Y
-    !byte $11,$EE,$A9,$10,$00        ; LDU $1000,Y
-    !byte $11,$EE,$A9,$DE,$AD        ; LDU $DEAD,Y
-    !byte $11,$EE,$AA                ; LDU ,PClo
-    !byte $11,$EE,$AB                ; LDU D,Y
-    !byte $11,$EE,$AC,$60            ; LDU $60,PC
-    !byte $11,$EE,$AC,$FF            ; LDU -$01,PC
-    !byte $11,$EE,$AD,$10,$00        ; LDU $1000,PC
-    !byte $11,$EE,$AD,$DE,$AD        ; LDU $DEAD,PC
-    !byte $11,$EE,$AF,$DE,$AD        ; LDU ,$DEAD
-    !byte $11,$EE,$B0                ; LDU [,Y+]
-    !byte $11,$EE,$B1                ; LDU [,Y++]
-    !byte $11,$EE,$B2                ; LDU [,-Y]
-    !byte $11,$EE,$B3                ; LDU [,--Y]
-    !byte $11,$EE,$B4                ; LDU [,Y]
-    !byte $11,$EE,$B5                ; LDU [B,Y]
-    !byte $11,$EE,$B6                ; LDU [A,Y]
-    !byte $11,$EE,$B7                ; LDU [,Y]
-    !byte $11,$EE,$B8,$60            ; LDU [$60,Y]
-    !byte $11,$EE,$B8,$FF            ; LDU [-$01,Y]
-    !byte $11,$EE,$B9,$DE,$10        ; LDU [$DE10,Y]
-    !byte $11,$EE,$B9,$DE,$AD        ; LDU [$DEAD,Y]
-    !byte $11,$EE,$BA                ; LDU [,PClo]
-    !byte $11,$EE,$BB                ; LDU [D,Y]
-    !byte $11,$EE,$BC,$60            ; LDU [$60,PC]
-    !byte $11,$EE,$BC,$FF            ; LDU [-$01,PC]
-    !byte $11,$EE,$BD,$10,$00        ; LDU [$1000,PC]
-    !byte $11,$EE,$BD,$DE,$AD        ; LDU [$DEAD,PC]
-    !byte $11,$EE,$BF,$DE,$AD        ; LDU [$DEAD]
-    !byte $11,$EE,$C0                ; LDU ,U+
-    !byte $11,$EE,$C1                ; LDU ,U++
-    !byte $11,$EE,$C2                ; LDU ,-U
-    !byte $11,$EE,$C3                ; LDU ,--U
-    !byte $11,$EE,$C4                ; LDU ,U
-    !byte $11,$EE,$C5                ; LDU B,U
-    !byte $11,$EE,$C6                ; LDU A,U
-    !byte $11,$EE,$C7                ; LDU ,U
-    !byte $11,$EE,$C8,$60            ; LDU $60,U
-    !byte $11,$EE,$C8,$FF            ; LDU -$01,U
-    !byte $11,$EE,$C9,$10,$00        ; LDU $1000,U
-    !byte $11,$EE,$C9,$DE,$AD        ; LDU $DEAD,U
-    !byte $11,$EE,$CA                ; LDU ,PClo
-    !byte $11,$EE,$CB                ; LDU D,U
-    !byte $11,$EE,$CC,$60            ; LDU $60,PC
-    !byte $11,$EE,$CC,$FF            ; LDU -$01,PC
-    !byte $11,$EE,$CD,$10,$00        ; LDU $1000,PC
-    !byte $11,$EE,$CD,$DE,$AD        ; LDU $DEAD,PC
-    !byte $11,$EE,$CF,$DE,$AD        ; LDU ,$DEAD
-    !byte $11,$EE,$D0                ; LDU [,U+]
-    !byte $11,$EE,$D1                ; LDU [,U++]
-    !byte $11,$EE,$D2                ; LDU [,-U]
-    !byte $11,$EE,$D3                ; LDU [,--U]
-    !byte $11,$EE,$D4                ; LDU [,U]
-    !byte $11,$EE,$D5                ; LDU [B,U]
-    !byte $11,$EE,$D6                ; LDU [A,U]
-    !byte $11,$EE,$D7                ; LDU [,U]
-    !byte $11,$EE,$D8,$60            ; LDU [$60,U]
-    !byte $11,$EE,$D8,$FF            ; LDU [-$01,U]
-    !byte $11,$EE,$D9,$DE,$10        ; LDU [$DE10,U]
-    !byte $11,$EE,$D9,$DE,$AD        ; LDU [$DEAD,U]
-    !byte $11,$EE,$DA                ; LDU [,PClo]
-    !byte $11,$EE,$DB                ; LDU [D,U]
-    !byte $11,$EE,$DC,$60            ; LDU [$60,PC]
-    !byte $11,$EE,$DC,$FF            ; LDU [-$01,PC]
-    !byte $11,$EE,$DD,$10,$00        ; LDU [$1000,PC]
-    !byte $11,$EE,$DD,$DE,$AD        ; LDU [$DEAD,PC]
-    !byte $11,$EE,$DF,$DE,$AD        ; LDU [$DEAD]
-    !byte $11,$EE,$E0                ; LDU ,S+
-    !byte $11,$EE,$E1                ; LDU ,S++
-    !byte $11,$EE,$E2                ; LDU ,-S
-    !byte $11,$EE,$E3                ; LDU ,--S
-    !byte $11,$EE,$E4                ; LDU ,S
-    !byte $11,$EE,$E5                ; LDU B,S
-    !byte $11,$EE,$E6                ; LDU A,S
-    !byte $11,$EE,$E7                ; LDU ,S
-    !byte $11,$EE,$E8,$60            ; LDU $60,S
-    !byte $11,$EE,$E8,$FF            ; LDU -$01,S
-    !byte $11,$EE,$E9,$10,$00        ; LDU $1000,S
-    !byte $11,$EE,$E9,$DE,$AD        ; LDU $DEAD,S
-    !byte $11,$EE,$EA                ; LDU ,PClo
-    !byte $11,$EE,$EB                ; LDU D,S
-    !byte $11,$EE,$EC,$60            ; LDU $60,PC
-    !byte $11,$EE,$EC,$FF            ; LDU -$01,PC
-    !byte $11,$EE,$ED,$10,$00        ; LDU $1000,PC
-    !byte $11,$EE,$ED,$DE,$AD        ; LDU $DEAD,PC
-    !byte $11,$EE,$EF,$DE,$AD        ; LDU ,$DEAD
-    !byte $11,$EE,$F0                ; LDU [,S+]
-    !byte $11,$EE,$F1                ; LDU [,S++]
-    !byte $11,$EE,$F2                ; LDU [,-S]
-    !byte $11,$EE,$F3                ; LDU [,--S]
-    !byte $11,$EE,$F4                ; LDU [,S]
-    !byte $11,$EE,$F5                ; LDU [B,S]
-    !byte $11,$EE,$F6                ; LDU [A,S]
-    !byte $11,$EE,$F7                ; LDU [,S]
-    !byte $11,$EE,$F8,$60            ; LDU [$60,S]
-    !byte $11,$EE,$F8,$FF            ; LDU [-$01,S]
-    !byte $11,$EE,$F9,$DE,$10        ; LDU [$DE10,S]
-    !byte $11,$EE,$F9,$DE,$AD        ; LDU [$DEAD,S]
-    !byte $11,$EE,$FA                ; LDU [,PClo]
-    !byte $11,$EE,$FB                ; LDU [D,S]
-    !byte $11,$EE,$FC,$60            ; LDU [$60,PC]
-    !byte $11,$EE,$FC,$FF            ; LDU [-$01,PC]
-    !byte $11,$EE,$FD,$10,$00        ; LDU [$1000,PC]
-    !byte $11,$EE,$FD,$DE,$AD        ; LDU [$DEAD,PC]
-    !byte $11,$EE,$FF,$DE,$AD        ; LDU [$DEAD]
-    !byte $11,$EF,$0C                ; STU $0C,X
-    !byte $11,$EF,$15                ; STU -$0B,X
-    !byte $11,$EF,$2C                ; STU $0C,Y
-    !byte $11,$EF,$35                ; STU -$0B,Y
-    !byte $11,$EF,$4C                ; STU $0C,U
-    !byte $11,$EF,$55                ; STU -$0B,U
-    !byte $11,$EF,$6C                ; STU $0C,S
-    !byte $11,$EF,$75                ; STU -$0B,S
-    !byte $11,$EF,$80                ; STU ,X+
-    !byte $11,$EF,$81                ; STU ,X++
-    !byte $11,$EF,$82                ; STU ,-X
-    !byte $11,$EF,$83                ; STU ,--X
-    !byte $11,$EF,$84                ; STU ,X
-    !byte $11,$EF,$85                ; STU B,X
-    !byte $11,$EF,$86                ; STU A,X
-    !byte $11,$EF,$87                ; STU ,X
-    !byte $11,$EF,$88,$60            ; STU $60,X
-    !byte $11,$EF,$88,$FF            ; STU -$01,X
-    !byte $11,$EF,$89,$10,$00        ; STU $1000,X
-    !byte $11,$EF,$89,$DE,$AD        ; STU $DEAD,X
-    !byte $11,$EF,$8A                ; STU ,PClo
-    !byte $11,$EF,$8B                ; STU D,X
-    !byte $11,$EF,$8C,$60            ; STU $60,PC
-    !byte $11,$EF,$8C,$FF            ; STU -$01,PC
-    !byte $11,$EF,$8D,$10,$00        ; STU $1000,PC
-    !byte $11,$EF,$8D,$DE,$AD        ; STU $DEAD,PC
-    !byte $11,$EF,$8F,$DE,$AD        ; STU ,$DEAD
-    !byte $11,$EF,$90                ; STU [,X+]
-    !byte $11,$EF,$91                ; STU [,X++]
-    !byte $11,$EF,$92                ; STU [,-X]
-    !byte $11,$EF,$93                ; STU [,--X]
-    !byte $11,$EF,$94                ; STU [,X]
-    !byte $11,$EF,$95                ; STU [B,X]
-    !byte $11,$EF,$96                ; STU [A,X]
-    !byte $11,$EF,$97                ; STU [,X]
-    !byte $11,$EF,$98,$60            ; STU [$60,X]
-    !byte $11,$EF,$98,$FF            ; STU [-$01,X]
-    !byte $11,$EF,$99,$DE,$10        ; STU [$DE10,X]
-    !byte $11,$EF,$99,$DE,$AD        ; STU [$DEAD,X]
-    !byte $11,$EF,$9A                ; STU [,PClo]
-    !byte $11,$EF,$9B                ; STU [D,X]
-    !byte $11,$EF,$9C,$60            ; STU [$60,PC]
-    !byte $11,$EF,$9C,$FF            ; STU [-$01,PC]
-    !byte $11,$EF,$9D,$10,$00        ; STU [$1000,PC]
-    !byte $11,$EF,$9D,$DE,$AD        ; STU [$DEAD,PC]
-    !byte $11,$EF,$9F,$DE,$AD        ; STU [$DEAD]
-    !byte $11,$EF,$A0                ; STU ,Y+
-    !byte $11,$EF,$A1                ; STU ,Y++
-    !byte $11,$EF,$A2                ; STU ,-Y
-    !byte $11,$EF,$A3                ; STU ,--Y
-    !byte $11,$EF,$A4                ; STU ,Y
-    !byte $11,$EF,$A5                ; STU B,Y
-    !byte $11,$EF,$A6                ; STU A,Y
-    !byte $11,$EF,$A7                ; STU ,Y
-    !byte $11,$EF,$A8,$60            ; STU $60,Y
-    !byte $11,$EF,$A8,$FF            ; STU -$01,Y
-    !byte $11,$EF,$A9,$10,$00        ; STU $1000,Y
-    !byte $11,$EF,$A9,$DE,$AD        ; STU $DEAD,Y
-    !byte $11,$EF,$AA                ; STU ,PClo
-    !byte $11,$EF,$AB                ; STU D,Y
-    !byte $11,$EF,$AC,$60            ; STU $60,PC
-    !byte $11,$EF,$AC,$FF            ; STU -$01,PC
-    !byte $11,$EF,$AD,$10,$00        ; STU $1000,PC
-    !byte $11,$EF,$AD,$DE,$AD        ; STU $DEAD,PC
-    !byte $11,$EF,$AF,$DE,$AD        ; STU ,$DEAD
-    !byte $11,$EF,$B0                ; STU [,Y+]
-    !byte $11,$EF,$B1                ; STU [,Y++]
-    !byte $11,$EF,$B2                ; STU [,-Y]
-    !byte $11,$EF,$B3                ; STU [,--Y]
-    !byte $11,$EF,$B4                ; STU [,Y]
-    !byte $11,$EF,$B5                ; STU [B,Y]
-    !byte $11,$EF,$B6                ; STU [A,Y]
-    !byte $11,$EF,$B7                ; STU [,Y]
-    !byte $11,$EF,$B8,$60            ; STU [$60,Y]
-    !byte $11,$EF,$B8,$FF            ; STU [-$01,Y]
-    !byte $11,$EF,$B9,$DE,$10        ; STU [$DE10,Y]
-    !byte $11,$EF,$B9,$DE,$AD        ; STU [$DEAD,Y]
-    !byte $11,$EF,$BA                ; STU [,PClo]
-    !byte $11,$EF,$BB                ; STU [D,Y]
-    !byte $11,$EF,$BC,$60            ; STU [$60,PC]
-    !byte $11,$EF,$BC,$FF            ; STU [-$01,PC]
-    !byte $11,$EF,$BD,$10,$00        ; STU [$1000,PC]
-    !byte $11,$EF,$BD,$DE,$AD        ; STU [$DEAD,PC]
-    !byte $11,$EF,$BF,$DE,$AD        ; STU [$DEAD]
-    !byte $11,$EF,$C0                ; STU ,U+
-    !byte $11,$EF,$C1                ; STU ,U++
-    !byte $11,$EF,$C2                ; STU ,-U
-    !byte $11,$EF,$C3                ; STU ,--U
-    !byte $11,$EF,$C4                ; STU ,U
-    !byte $11,$EF,$C5                ; STU B,U
-    !byte $11,$EF,$C6                ; STU A,U
-    !byte $11,$EF,$C7                ; STU ,U
-    !byte $11,$EF,$C8,$60            ; STU $60,U
-    !byte $11,$EF,$C8,$FF            ; STU -$01,U
-    !byte $11,$EF,$C9,$10,$00        ; STU $1000,U
-    !byte $11,$EF,$C9,$DE,$AD        ; STU $DEAD,U
-    !byte $11,$EF,$CA                ; STU ,PClo
-    !byte $11,$EF,$CB                ; STU D,U
-    !byte $11,$EF,$CC,$60            ; STU $60,PC
-    !byte $11,$EF,$CC,$FF            ; STU -$01,PC
-    !byte $11,$EF,$CD,$10,$00        ; STU $1000,PC
-    !byte $11,$EF,$CD,$DE,$AD        ; STU $DEAD,PC
-    !byte $11,$EF,$CF,$DE,$AD        ; STU ,$DEAD
-    !byte $11,$EF,$D0                ; STU [,U+]
-    !byte $11,$EF,$D1                ; STU [,U++]
-    !byte $11,$EF,$D2                ; STU [,-U]
-    !byte $11,$EF,$D3                ; STU [,--U]
-    !byte $11,$EF,$D4                ; STU [,U]
-    !byte $11,$EF,$D5                ; STU [B,U]
-    !byte $11,$EF,$D6                ; STU [A,U]
-    !byte $11,$EF,$D7                ; STU [,U]
-    !byte $11,$EF,$D8,$60            ; STU [$60,U]
-    !byte $11,$EF,$D8,$FF            ; STU [-$01,U]
-    !byte $11,$EF,$D9,$DE,$10        ; STU [$DE10,U]
-    !byte $11,$EF,$D9,$DE,$AD        ; STU [$DEAD,U]
-    !byte $11,$EF,$DA                ; STU [,PClo]
-    !byte $11,$EF,$DB                ; STU [D,U]
-    !byte $11,$EF,$DC,$60            ; STU [$60,PC]
-    !byte $11,$EF,$DC,$FF            ; STU [-$01,PC]
-    !byte $11,$EF,$DD,$10,$00        ; STU [$1000,PC]
-    !byte $11,$EF,$DD,$DE,$AD        ; STU [$DEAD,PC]
-    !byte $11,$EF,$DF,$DE,$AD        ; STU [$DEAD]
-    !byte $11,$EF,$E0                ; STU ,S+
-    !byte $11,$EF,$E1                ; STU ,S++
-    !byte $11,$EF,$E2                ; STU ,-S
-    !byte $11,$EF,$E3                ; STU ,--S
-    !byte $11,$EF,$E4                ; STU ,S
-    !byte $11,$EF,$E5                ; STU B,S
-    !byte $11,$EF,$E6                ; STU A,S
-    !byte $11,$EF,$E7                ; STU ,S
-    !byte $11,$EF,$E8,$60            ; STU $60,S
-    !byte $11,$EF,$E8,$FF            ; STU -$01,S
-    !byte $11,$EF,$E9,$10,$00        ; STU $1000,S
-    !byte $11,$EF,$E9,$DE,$AD        ; STU $DEAD,S
-    !byte $11,$EF,$EA                ; STU ,PClo
-    !byte $11,$EF,$EB                ; STU D,S
-    !byte $11,$EF,$EC,$60            ; STU $60,PC
-    !byte $11,$EF,$EC,$FF            ; STU -$01,PC
-    !byte $11,$EF,$ED,$10,$00        ; STU $1000,PC
-    !byte $11,$EF,$ED,$DE,$AD        ; STU $DEAD,PC
-    !byte $11,$EF,$EF,$DE,$AD        ; STU ,$DEAD
-    !byte $11,$EF,$F0                ; STU [,S+]
-    !byte $11,$EF,$F1                ; STU [,S++]
-    !byte $11,$EF,$F2                ; STU [,-S]
-    !byte $11,$EF,$F3                ; STU [,--S]
-    !byte $11,$EF,$F4                ; STU [,S]
-    !byte $11,$EF,$F5                ; STU [B,S]
-    !byte $11,$EF,$F6                ; STU [A,S]
-    !byte $11,$EF,$F7                ; STU [,S]
-    !byte $11,$EF,$F8,$60            ; STU [$60,S]
-    !byte $11,$EF,$F8,$FF            ; STU [-$01,S]
-    !byte $11,$EF,$F9,$DE,$10        ; STU [$DE10,S]
-    !byte $11,$EF,$F9,$DE,$AD        ; STU [$DEAD,S]
-    !byte $11,$EF,$FA                ; STU [,PClo]
-    !byte $11,$EF,$FB                ; STU [D,S]
-    !byte $11,$EF,$FC,$60            ; STU [$60,PC]
-    !byte $11,$EF,$FC,$FF            ; STU [-$01,PC]
-    !byte $11,$EF,$FD,$10,$00        ; STU [$1000,PC]
-    !byte $11,$EF,$FD,$DE,$AD        ; STU [$DEAD,PC]
-    !byte $11,$EF,$FF,$DE,$AD        ; STU [$DEAD]
-    !byte $11,$F0,$DE,$AD            ; SUBB $DEAD
-    !byte $11,$F1,$DE,$AD            ; CMPB $DEAD
-    !byte $11,$F2,$DE,$AD            ; SBCB $DEAD
-    !byte $11,$F3,$DE,$AD            ; ADDD $DEAD
-    !byte $11,$F4,$DE,$AD            ; ANDB $DEAD
-    !byte $11,$F5,$DE,$AD            ; BITB $DEAD
-    !byte $11,$F6,$DE,$AD            ; LDB $DEAD
-    !byte $11,$F7,$DE,$AD            ; STB $DEAD
-    !byte $11,$F8,$DE,$AD            ; EORB $DEAD
-    !byte $11,$F9,$DE,$AD            ; ADCB $DEAD
-    !byte $11,$FA,$DE,$AD            ; ORB $DEAD
-    !byte $11,$FB,$DE,$AD            ; ADDB $DEAD
-    !byte $11,$FC,$DE,$AD            ; LDD $DEAD
-    !byte $11,$FD,$DE,$AD            ; STD $DEAD
-    !byte $11,$FE,$DE,$AD            ; LDU $DEAD
-    !byte $11,$FF,$DE,$AD            ; STU $DEAD
-    !byte $11,31,$0C                 ; LEAY $0C,X
-    !byte $11,31,$15                 ; LEAY -$0B,X
-    !byte $11,31,$2C                 ; LEAY $0C,Y
-    !byte $11,31,$35                 ; LEAY -$0B,Y
-    !byte $11,31,$4C                 ; LEAY $0C,U
-    !byte $11,31,$55                 ; LEAY -$0B,U
-    !byte $11,31,$6C                 ; LEAY $0C,S
-    !byte $11,31,$75                 ; LEAY -$0B,S
-    !byte $11,31,$80                 ; LEAY ,X+
-    !byte $11,31,$81                 ; LEAY ,X++
-    !byte $11,31,$82                 ; LEAY ,-X
-    !byte $11,31,$83                 ; LEAY ,--X
-    !byte $11,31,$84                 ; LEAY ,X
-    !byte $11,31,$85                 ; LEAY B,X
-    !byte $11,31,$86                 ; LEAY A,X
-    !byte $11,31,$87                 ; LEAY ,X
-    !byte $11,31,$88,$60             ; LEAY $60,X
-    !byte $11,31,$88,$FF             ; LEAY -$01,X
-    !byte $11,31,$89,$10,$00         ; LEAY $1000,X
-    !byte $11,31,$89,$DE,$AD         ; LEAY $DEAD,X
-    !byte $11,31,$8A                 ; LEAY ,PClo
-    !byte $11,31,$8B                 ; LEAY D,X
-    !byte $11,31,$8C,$60             ; LEAY $60,PC
-    !byte $11,31,$8C,$FF             ; LEAY -$01,PC
-    !byte $11,31,$8D,$10,$00         ; LEAY $1000,PC
-    !byte $11,31,$8D,$DE,$AD         ; LEAY $DEAD,PC
-    !byte $11,31,$8F,$DE,$AD         ; LEAY ,$DEAD
-    !byte $11,31,$90                 ; LEAY [,X+]
-    !byte $11,31,$91                 ; LEAY [,X++]
-    !byte $11,31,$92                 ; LEAY [,-X]
-    !byte $11,31,$93                 ; LEAY [,--X]
-    !byte $11,31,$94                 ; LEAY [,X]
-    !byte $11,31,$95                 ; LEAY [B,X]
-    !byte $11,31,$96                 ; LEAY [A,X]
-    !byte $11,31,$97                 ; LEAY [,X]
-    !byte $11,31,$98,$60             ; LEAY [$60,X]
-    !byte $11,31,$98,$FF             ; LEAY [-$01,X]
-    !byte $11,31,$99,$DE,$10         ; LEAY [$DE10,X]
-    !byte $11,31,$99,$DE,$AD         ; LEAY [$DEAD,X]
-    !byte $11,31,$9A                 ; LEAY [,PClo]
-    !byte $11,31,$9B                 ; LEAY [D,X]
-    !byte $11,31,$9C,$60             ; LEAY [$60,PC]
-    !byte $11,31,$9C,$FF             ; LEAY [-$01,PC]
-    !byte $11,31,$9D,$10,$00         ; LEAY [$1000,PC]
-    !byte $11,31,$9D,$DE,$AD         ; LEAY [$DEAD,PC]
-    !byte $11,31,$9F,$DE,$AD         ; LEAY [$DEAD]
-    !byte $11,31,$A0                 ; LEAY ,Y+
-    !byte $11,31,$A1                 ; LEAY ,Y++
-    !byte $11,31,$A2                 ; LEAY ,-Y
-    !byte $11,31,$A3                 ; LEAY ,--Y
-    !byte $11,31,$A4                 ; LEAY ,Y
-    !byte $11,31,$A5                 ; LEAY B,Y
-    !byte $11,31,$A6                 ; LEAY A,Y
-    !byte $11,31,$A7                 ; LEAY ,Y
-    !byte $11,31,$A8,$60             ; LEAY $60,Y
-    !byte $11,31,$A8,$FF             ; LEAY -$01,Y
-    !byte $11,31,$A9,$10,$00         ; LEAY $1000,Y
-    !byte $11,31,$A9,$DE,$AD         ; LEAY $DEAD,Y
-    !byte $11,31,$AA                 ; LEAY ,PClo
-    !byte $11,31,$AB                 ; LEAY D,Y
-    !byte $11,31,$AC,$60             ; LEAY $60,PC
-    !byte $11,31,$AC,$FF             ; LEAY -$01,PC
-    !byte $11,31,$AD,$10,$00         ; LEAY $1000,PC
-    !byte $11,31,$AD,$DE,$AD         ; LEAY $DEAD,PC
-    !byte $11,31,$AF,$DE,$AD         ; LEAY ,$DEAD
-    !byte $11,31,$B0                 ; LEAY [,Y+]
-    !byte $11,31,$B1                 ; LEAY [,Y++]
-    !byte $11,31,$B2                 ; LEAY [,-Y]
-    !byte $11,31,$B3                 ; LEAY [,--Y]
-    !byte $11,31,$B4                 ; LEAY [,Y]
-    !byte $11,31,$B5                 ; LEAY [B,Y]
-    !byte $11,31,$B6                 ; LEAY [A,Y]
-    !byte $11,31,$B7                 ; LEAY [,Y]
-    !byte $11,31,$B8,$60             ; LEAY [$60,Y]
-    !byte $11,31,$B8,$FF             ; LEAY [-$01,Y]
-    !byte $11,31,$B9,$DE,$10         ; LEAY [$DE10,Y]
-    !byte $11,31,$B9,$DE,$AD         ; LEAY [$DEAD,Y]
-    !byte $11,31,$BA                 ; LEAY [,PClo]
-    !byte $11,31,$BB                 ; LEAY [D,Y]
-    !byte $11,31,$BC,$60             ; LEAY [$60,PC]
-    !byte $11,31,$BC,$FF             ; LEAY [-$01,PC]
-    !byte $11,31,$BD,$10,$00         ; LEAY [$1000,PC]
-    !byte $11,31,$BD,$DE,$AD         ; LEAY [$DEAD,PC]
-    !byte $11,31,$BF,$DE,$AD         ; LEAY [$DEAD]
-    !byte $11,31,$C0                 ; LEAY ,U+
-    !byte $11,31,$C1                 ; LEAY ,U++
-    !byte $11,31,$C2                 ; LEAY ,-U
-    !byte $11,31,$C3                 ; LEAY ,--U
-    !byte $11,31,$C4                 ; LEAY ,U
-    !byte $11,31,$C5                 ; LEAY B,U
-    !byte $11,31,$C6                 ; LEAY A,U
-    !byte $11,31,$C7                 ; LEAY ,U
-    !byte $11,31,$C8,$60             ; LEAY $60,U
-    !byte $11,31,$C8,$FF             ; LEAY -$01,U
-    !byte $11,31,$C9,$10,$00         ; LEAY $1000,U
-    !byte $11,31,$C9,$DE,$AD         ; LEAY $DEAD,U
-    !byte $11,31,$CA                 ; LEAY ,PClo
-    !byte $11,31,$CB                 ; LEAY D,U
-    !byte $11,31,$CC,$60             ; LEAY $60,PC
-    !byte $11,31,$CC,$FF             ; LEAY -$01,PC
-    !byte $11,31,$CD,$10,$00         ; LEAY $1000,PC
-    !byte $11,31,$CD,$DE,$AD         ; LEAY $DEAD,PC
-    !byte $11,31,$CF,$DE,$AD         ; LEAY ,$DEAD
-    !byte $11,31,$D0                 ; LEAY [,U+]
-    !byte $11,31,$D1                 ; LEAY [,U++]
-    !byte $11,31,$D2                 ; LEAY [,-U]
-    !byte $11,31,$D3                 ; LEAY [,--U]
-    !byte $11,31,$D4                 ; LEAY [,U]
-    !byte $11,31,$D5                 ; LEAY [B,U]
-    !byte $11,31,$D6                 ; LEAY [A,U]
-    !byte $11,31,$D7                 ; LEAY [,U]
-    !byte $11,31,$D8,$60             ; LEAY [$60,U]
-    !byte $11,31,$D8,$FF             ; LEAY [-$01,U]
-    !byte $11,31,$D9,$DE,$10         ; LEAY [$DE10,U]
-    !byte $11,31,$D9,$DE,$AD         ; LEAY [$DEAD,U]
-    !byte $11,31,$DA                 ; LEAY [,PClo]
-    !byte $11,31,$DB                 ; LEAY [D,U]
-    !byte $11,31,$DC,$60             ; LEAY [$60,PC]
-    !byte $11,31,$DC,$FF             ; LEAY [-$01,PC]
-    !byte $11,31,$DD,$10,$00         ; LEAY [$1000,PC]
-    !byte $11,31,$DD,$DE,$AD         ; LEAY [$DEAD,PC]
-    !byte $11,31,$DF,$DE,$AD         ; LEAY [$DEAD]
-    !byte $11,31,$E0                 ; LEAY ,S+
-    !byte $11,31,$E1                 ; LEAY ,S++
-    !byte $11,31,$E2                 ; LEAY ,-S
-    !byte $11,31,$E3                 ; LEAY ,--S
-    !byte $11,31,$E4                 ; LEAY ,S
-    !byte $11,31,$E5                 ; LEAY B,S
-    !byte $11,31,$E6                 ; LEAY A,S
-    !byte $11,31,$E7                 ; LEAY ,S
-    !byte $11,31,$E8,$60             ; LEAY $60,S
-    !byte $11,31,$E8,$FF             ; LEAY -$01,S
-    !byte $11,31,$E9,$10,$00         ; LEAY $1000,S
-    !byte $11,31,$E9,$DE,$AD         ; LEAY $DEAD,S
-    !byte $11,31,$EA                 ; LEAY ,PClo
-    !byte $11,31,$EB                 ; LEAY D,S
-    !byte $11,31,$EC,$60             ; LEAY $60,PC
-    !byte $11,31,$EC,$FF             ; LEAY -$01,PC
-    !byte $11,31,$ED,$10,$00         ; LEAY $1000,PC
-    !byte $11,31,$ED,$DE,$AD         ; LEAY $DEAD,PC
-    !byte $11,31,$EF,$DE,$AD         ; LEAY ,$DEAD
-    !byte $11,31,$F0                 ; LEAY [,S+]
-    !byte $11,31,$F1                 ; LEAY [,S++]
-    !byte $11,31,$F2                 ; LEAY [,-S]
-    !byte $11,31,$F3                 ; LEAY [,--S]
-    !byte $11,31,$F4                 ; LEAY [,S]
-    !byte $11,31,$F5                 ; LEAY [B,S]
-    !byte $11,31,$F6                 ; LEAY [A,S]
-    !byte $11,31,$F7                 ; LEAY [,S]
-    !byte $11,31,$F8,$60             ; LEAY [$60,S]
-    !byte $11,31,$F8,$FF             ; LEAY [-$01,S]
-    !byte $11,31,$F9,$DE,$10         ; LEAY [$DE10,S]
-    !byte $11,31,$F9,$DE,$AD         ; LEAY [$DEAD,S]
-    !byte $11,31,$FA                 ; LEAY [,PClo]
-    !byte $11,31,$FB                 ; LEAY [D,S]
-    !byte $11,31,$FC,$60             ; LEAY [$60,PC]
-    !byte $11,31,$FC,$FF             ; LEAY [-$01,PC]
-    !byte $11,31,$FD,$10,$00         ; LEAY [$1000,PC]
-    !byte $11,31,$FD,$DE,$AD         ; LEAY [$DEAD,PC]
-    !byte $11,31,$FF,$DE,$AD         ; LEAY [$DEAD]
+!byte $11,$EB,$84               ; ADDF ,X
+!byte $11,$EB,$A4               ; ADDF ,Y
+!byte $11,$EB,$C4               ; ADDF ,U
+!byte $11,$EB,$E4               ; ADDF ,S
+!byte $11,$EB,$15               ; ADDF -$0B,X
+!byte $11,$EB,$35               ; ADDF -$0B,Y
+!byte $11,$EB,$55               ; ADDF -$0B,U
+!byte $11,$EB,$75               ; ADDF -$0B,S
+!byte $11,$EB,$0C               ; ADDF $0C,X
+!byte $11,$EB,$2C               ; ADDF $0C,Y
+!byte $11,$EB,$4C               ; ADDF $0C,U
+!byte $11,$EB,$6C               ; ADDF $0C,S
+!byte $11,$EB,$88,$FF           ; ADDF -$01,X
+!byte $11,$EB,$A8,$FF           ; ADDF -$01,Y
+!byte $11,$EB,$C8,$FF           ; ADDF -$01,U
+!byte $11,$EB,$E8,$FF           ; ADDF -$01,S
+!byte $11,$EB,$88,$60           ; ADDF $60,X
+!byte $11,$EB,$A8,$60           ; ADDF $60,Y
+!byte $11,$EB,$C8,$60           ; ADDF $60,U
+!byte $11,$EB,$E8,$60           ; ADDF $60,S
+!byte $11,$EB,$89,$DE,$AD       ; ADDF $DEAD,X
+!byte $11,$EB,$A9,$DE,$AD       ; ADDF $DEAD,Y
+!byte $11,$EB,$C9,$DE,$AD       ; ADDF $DEAD,U
+!byte $11,$EB,$E9,$DE,$AD       ; ADDF $DEAD,S
+!byte $11,$EB,$89,$10,$00       ; ADDF $1000,X
+!byte $11,$EB,$A9,$10,$00       ; ADDF $1000,Y
+!byte $11,$EB,$C9,$10,$00       ; ADDF $1000,U
+!byte $11,$EB,$E9,$10,$00       ; ADDF $1000,S
+!byte $11,$EB,$86               ; ADDF A,X
+!byte $11,$EB,$A6               ; ADDF A,Y
+!byte $11,$EB,$C6               ; ADDF A,U
+!byte $11,$EB,$E6               ; ADDF A,S
+!byte $11,$EB,$85               ; ADDF B,X
+!byte $11,$EB,$A5               ; ADDF B,Y
+!byte $11,$EB,$C5               ; ADDF B,U
+!byte $11,$EB,$E5               ; ADDF B,S
+!byte $11,$EB,$87               ; ADDF E,X
+!byte $11,$EB,$A7               ; ADDF E,Y
+!byte $11,$EB,$C7               ; ADDF E,U
+!byte $11,$EB,$E7               ; ADDF E,S
+!byte $11,$EB,$8A               ; ADDF F,X
+!byte $11,$EB,$AA               ; ADDF F,Y
+!byte $11,$EB,$CA               ; ADDF F,U
+!byte $11,$EB,$EA               ; ADDF F,S
+!byte $11,$EB,$8B               ; ADDF D,X
+!byte $11,$EB,$AB               ; ADDF D,Y
+!byte $11,$EB,$CB               ; ADDF D,U
+!byte $11,$EB,$EB               ; ADDF D,S
+!byte $11,$EB,$8E               ; ADDF W,X
+!byte $11,$EB,$AE               ; ADDF W,Y
+!byte $11,$EB,$CE               ; ADDF W,U
+!byte $11,$EB,$EE               ; ADDF W,S
+!byte $11,$EB,$80               ; ADDF ,X+
+!byte $11,$EB,$A0               ; ADDF ,Y+
+!byte $11,$EB,$C0               ; ADDF ,U+
+!byte $11,$EB,$E0               ; ADDF ,S+
+!byte $11,$EB,$81               ; ADDF ,X++
+!byte $11,$EB,$A1               ; ADDF ,Y++
+!byte $11,$EB,$C1               ; ADDF ,U++
+!byte $11,$EB,$E1               ; ADDF ,S++
+!byte $11,$EB,$82               ; ADDF ,-X
+!byte $11,$EB,$A2               ; ADDF ,-Y
+!byte $11,$EB,$C2               ; ADDF ,-U
+!byte $11,$EB,$E2               ; ADDF ,-S
+!byte $11,$EB,$83               ; ADDF ,--X
+!byte $11,$EB,$A3               ; ADDF ,--Y
+!byte $11,$EB,$C3               ; ADDF ,--U
+!byte $11,$EB,$E3               ; ADDF ,--S
+!byte $11,$EB,$8C,$FF           ; ADDF -$01,PC
+!byte $11,$EB,$AC,$FF           ; ADDF -$01,PC
+!byte $11,$EB,$CC,$FF           ; ADDF -$01,PC
+!byte $11,$EB,$EC,$FF           ; ADDF -$01,PC
+!byte $11,$EB,$8C,$60           ; ADDF $60,PC
+!byte $11,$EB,$AC,$60           ; ADDF $60,PC
+!byte $11,$EB,$CC,$60           ; ADDF $60,PC
+!byte $11,$EB,$EC,$60           ; ADDF $60,PC
+!byte $11,$EB,$8D,$DE,$AD       ; ADDF $DEAD,PC
+!byte $11,$EB,$AD,$DE,$AD       ; ADDF $DEAD,PC
+!byte $11,$EB,$CD,$DE,$AD       ; ADDF $DEAD,PC
+!byte $11,$EB,$ED,$DE,$AD       ; ADDF $DEAD,PC
+!byte $11,$EB,$8D,$10,$00       ; ADDF $1000,PC
+!byte $11,$EB,$AD,$10,$00       ; ADDF $1000,PC
+!byte $11,$EB,$CD,$10,$00       ; ADDF $1000,PC
+!byte $11,$EB,$ED,$10,$00       ; ADDF $1000,PC
+!byte $11,$EB,$8F               ; ADDF ,W
+!byte $11,$EB,$AF,$DE,$AD       ; ADDF $DEAD,W
+!byte $11,$EB,$CF               ; ADDF ,W++
+!byte $11,$EB,$EF               ; ADDF ,--W
+!byte $11,$EB,$94               ; ADDF [,X]
+!byte $11,$EB,$B4               ; ADDF [,Y]
+!byte $11,$EB,$D4               ; ADDF [,U]
+!byte $11,$EB,$F4               ; ADDF [,S]
+!byte $11,$EB,$98,$FF           ; ADDF [-$01,X]
+!byte $11,$EB,$B8,$FF           ; ADDF [-$01,Y]
+!byte $11,$EB,$D8,$FF           ; ADDF [-$01,U]
+!byte $11,$EB,$F8,$FF           ; ADDF [-$01,S]
+!byte $11,$EB,$98,$60           ; ADDF [$60,X]
+!byte $11,$EB,$B8,$60           ; ADDF [$60,Y]
+!byte $11,$EB,$D8,$60           ; ADDF [$60,U]
+!byte $11,$EB,$F8,$60           ; ADDF [$60,S]
+!byte $11,$EB,$99,$DE,$AD       ; ADDF [$DEAD,X]
+!byte $11,$EB,$B9,$DE,$AD       ; ADDF [$DEAD,Y]
+!byte $11,$EB,$D9,$DE,$AD       ; ADDF [$DEAD,U]
+!byte $11,$EB,$F9,$DE,$AD       ; ADDF [$DEAD,S]
+!byte $11,$EB,$99,$10,$00       ; ADDF [$1000,X]
+!byte $11,$EB,$B9,$10,$00       ; ADDF [$1000,Y]
+!byte $11,$EB,$D9,$10,$00       ; ADDF [$1000,U]
+!byte $11,$EB,$F9,$10,$00       ; ADDF [$1000,S]
+!byte $11,$EB,$96               ; ADDF [A,X]
+!byte $11,$EB,$B6               ; ADDF [A,Y]
+!byte $11,$EB,$D6               ; ADDF [A,U]
+!byte $11,$EB,$F6               ; ADDF [A,S]
+!byte $11,$EB,$95               ; ADDF [B,X]
+!byte $11,$EB,$B5               ; ADDF [B,Y]
+!byte $11,$EB,$D5               ; ADDF [B,U]
+!byte $11,$EB,$F5               ; ADDF [B,S]
+!byte $11,$EB,$97               ; ADDF [E,X]
+!byte $11,$EB,$B7               ; ADDF [E,Y]
+!byte $11,$EB,$D7               ; ADDF [E,U]
+!byte $11,$EB,$F7               ; ADDF [E,S]
+!byte $11,$EB,$9A               ; ADDF [F,X]
+!byte $11,$EB,$BA               ; ADDF [F,Y]
+!byte $11,$EB,$DA               ; ADDF [F,U]
+!byte $11,$EB,$FA               ; ADDF [F,S]
+!byte $11,$EB,$9B               ; ADDF [D,X]
+!byte $11,$EB,$BB               ; ADDF [D,Y]
+!byte $11,$EB,$DB               ; ADDF [D,U]
+!byte $11,$EB,$FB               ; ADDF [D,S]
+!byte $11,$EB,$9E               ; ADDF [W,X]
+!byte $11,$EB,$BE               ; ADDF [W,Y]
+!byte $11,$EB,$DE               ; ADDF [W,U]
+!byte $11,$EB,$FE               ; ADDF [W,S]
+!byte $11,$EB,$91               ; ADDF [,X++]
+!byte $11,$EB,$B1               ; ADDF [,Y++]
+!byte $11,$EB,$D1               ; ADDF [,U++]
+!byte $11,$EB,$F1               ; ADDF [,S++]
+!byte $11,$EB,$92               ; ADDF [,-X]
+!byte $11,$EB,$B2               ; ADDF [,-Y]
+!byte $11,$EB,$D2               ; ADDF [,-U]
+!byte $11,$EB,$F2               ; ADDF [,-S]
+!byte $11,$EB,$93               ; ADDF [,--X]
+!byte $11,$EB,$B3               ; ADDF [,--Y]
+!byte $11,$EB,$D3               ; ADDF [,--U]
+!byte $11,$EB,$F3               ; ADDF [,--S]
+!byte $11,$EB,$9C,$FF           ; ADDF [-$01,PC]
+!byte $11,$EB,$BC,$FF           ; ADDF [-$01,PC]
+!byte $11,$EB,$DC,$FF           ; ADDF [-$01,PC]
+!byte $11,$EB,$FC,$FF           ; ADDF [-$01,PC]
+!byte $11,$EB,$9C,$60           ; ADDF [$60,PC]
+!byte $11,$EB,$BC,$60           ; ADDF [$60,PC]
+!byte $11,$EB,$DC,$60           ; ADDF [$60,PC]
+!byte $11,$EB,$FC,$60           ; ADDF [$60,PC]
+!byte $11,$EB,$9D,$DE,$AD       ; ADDF [$DEAD,PC]
+!byte $11,$EB,$BD,$DE,$AD       ; ADDF [$DEAD,PC]
+!byte $11,$EB,$DD,$DE,$AD       ; ADDF [$DEAD,PC]
+!byte $11,$EB,$FD,$DE,$AD       ; ADDF [$DEAD,PC]
+!byte $11,$EB,$9D,$10,$00       ; ADDF [$1000,PC]
+!byte $11,$EB,$BD,$10,$00       ; ADDF [$1000,PC]
+!byte $11,$EB,$DD,$10,$00       ; ADDF [$1000,PC]
+!byte $11,$EB,$FD,$10,$00       ; ADDF [$1000,PC]
+!byte $11,$EB,$9F,$DE,$AD       ; ADDF [$DEAD]
+!byte $11,$EB,$BF,$DE,$AD       ; ADDF [$DEAD]
+!byte $11,$EB,$DF,$DE,$AD       ; ADDF [$DEAD]
+!byte $11,$EB,$FF,$DE,$AD       ; ADDF [$DEAD]
+!byte $11,$EB,$90               ; ADDF [,W]
+!byte $11,$EB,$B0,$DE,$AD       ; ADDF [$DEAD,W]
+!byte $11,$EB,$D0               ; ADDF [,W++]
+!byte $11,$EB,$F0               ; ADDF [,--W]
+!byte $11,$F0,$DE,$AD           ; SUBF $DEAD
+!byte $11,$F1,$DE,$AD           ; CMPF $DEAD
+!byte $11,$F6,$DE,$AD           ; LDF $DEAD
+!byte $11,$F7,$DE,$AD           ; STF $DEAD
+!byte $11,$FB,$DE,$AD           ; ADDF $DEAD
 
 !byte $15                       ; TRAP
 !byte $18                       ; TRAP
@@ -20941,3 +19656,21 @@
 !byte $11,$E3                   ; TRAP
 !byte $11,$E4                   ; TRAP
 !byte $11,$E5                   ; TRAP
+!byte $11,$E8                   ; TRAP
+!byte $11,$E9                   ; TRAP
+!byte $11,$EA                   ; TRAP
+!byte $11,$EC                   ; TRAP
+!byte $11,$ED                   ; TRAP
+!byte $11,$EE                   ; TRAP
+!byte $11,$EF                   ; TRAP
+!byte $11,$F2                   ; TRAP
+!byte $11,$F3                   ; TRAP
+!byte $11,$F4                   ; TRAP
+!byte $11,$F5                   ; TRAP
+!byte $11,$F8                   ; TRAP
+!byte $11,$F9                   ; TRAP
+!byte $11,$FA                   ; TRAP
+!byte $11,$FC                   ; TRAP
+!byte $11,$FD                   ; TRAP
+!byte $11,$FE                   ; TRAP
+!byte $11,$FF                   ; TRAP
