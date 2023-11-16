@@ -453,6 +453,7 @@
 ../CPU/shxy/,shyx3.prg,exitcode,20000000
 ../CPU/shxy/,shyx4.prg,exitcode,20000000
 ../CPU/shxy/,shyx5.prg,exitcode,7000000,vicii-pal
+../CPU/jsrselfmod/,jsr.prg,exitcode,7000000
 ../CPU/cputest/,start-c64.prg,analyzer,0,mountd64:cputest-c64.d64
 ################################################################################
 # Interrupts
