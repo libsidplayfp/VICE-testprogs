@@ -31,6 +31,7 @@ z80cx-plain.txt: z80cx-expected.txt
 		> z80cx-plain.txt
 	
 disasm: z80cx-displain.txt z80cx-plain.txt
+	diff --suppress-common-lines --side-by-side --ignore-all-space z80cx-displain.txt z80cx-plain.txt | wc -l
 	diff --suppress-common-lines --side-by-side --ignore-all-space z80cx-displain.txt z80cx-plain.txt
 
 ################################################################################

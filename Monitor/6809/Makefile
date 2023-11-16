@@ -5,7 +5,7 @@
 EMUDIR:=../../../trunk/vice/src
 #$(info $$EMUDIR is [${EMUDIR}])
 
-EMU=$(EMUDIR)/xpet -default -model SuperPET -minimize
+EMU=$(EMUDIR)/xpet -default +sound -warp -model SuperPET -minimize
 $(info using EMU: [${EMU}])
 
 all: testlegal
@@ -49,19 +49,27 @@ testlegal0: legalopcodes0.txt legalopcodes1.txt
 
 # somehow assembling 6809 doesnt work at all
 legalopcodes3.bin: legalopcodes1.txt
-	echo "cpu 6809" > disasmcmds.txt
+	echo "logname \"disasmlog.txt\"" > disasmcmds.txt
+	echo "log on" >> disasmcmds.txt
+	echo "cpu 6809" >> disasmcmds.txt
 	echo "bank 6809" >> disasmcmds.txt
+	echo "z 100000" >> disasmcmds.txt
 	echo -ne "a 1000 " >> disasmcmds.txt
 	cat legalopcodes1.txt >> disasmcmds.txt
 	echo -ne "\n" >> disasmcmds.txt
+	echo "cpu 6809" >> disasmcmds.txt
+	echo "bank 6809" >> disasmcmds.txt
 	echo "bs \"legalopcodes3.bin\" 0 1000 563c" >> disasmcmds.txt
-#	echo "bs \"legalopcodes3.bin\" 0 1000 1017" >> disasmcmds.txt
-#	xpet -default -model SuperPET -moncommands disasmcmds.txt
+	echo "log off" >> disasmcmds.txt
+#	$(EMU) -moncommands disasmcmds.txt
+#	$(EMU)
 	echo "quit" >> disasmcmds.txt
+	$(RM) disasmlog.txt
 	$(EMU) -moncommands disasmcmds.txt > vicelog
 
 testlegal2: legalopcodes.bin legalopcodes3.bin
-	diff -q legalopcodes.bin legalopcodes3.bin
+	diff -q legalopcodes.bin legalopcodes3.bin ; \
+		head -50 disasmlog.txt
 
 testlegal: testlegal0 testlegal2
 

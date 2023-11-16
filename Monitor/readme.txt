@@ -42,9 +42,7 @@ TODO: 65816 disassembler and assembler test(s)
 - assemble the disassembly (legalopcodes1.txt)
 - compare with reference (legalopcodes.bin)
 
-TODO: disassembler seems to mess up "B,A" and "D"
-TODO: disassembler produces invalid syntax (like [,D])
-TODO: assembling fails due to invalid disassembly
+TODO: the assembler fails on (some) valid instructions
 
 R65C02
 ------
