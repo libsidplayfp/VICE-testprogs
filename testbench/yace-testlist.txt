@@ -1187,6 +1187,7 @@
 ../REU/bonzai/,reudetect.prg,exitcode,15000000,reu512k
 ../REU/colorram/,colorram.prg,exitcode,1000000000,reu512k
 ../REU/colorram/,dmacolortest.prg,interactive,0
+../REU/cpuport/,cpuport.prg,exitcode,1000000000,reu512k
 ../REU/detectsize/,detectreu.prg,exitcode,10000000,reu512k
 ../REU/floatingbus/,floating.prg,exitcode,14000000,reu256k
 ../REU/floatingbus/,floating-a.prg,exitcode,14000000,reu256k
