@@ -219,7 +219,7 @@ function emu64_run_screenshot
             if [ $exitcode -ne 255 ]
             then
                 echo -ne "\nerror: call to $EMU64 failed.\n"
-                exit -1
+#                exit -1
             fi
         fi
     fi

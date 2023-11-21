@@ -101,11 +101,11 @@ function kernal64cbm2_run_screenshot
     fi
 
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$screenshottest"-KERNAL64CBM2.png
+    rm -f "$1"/.testbench/"$screenshottest"-kernal64cbm2.png
     if [ $verbose == "1" ]; then
-        echo $KERNAL64CBM2 $KERNAL64CBM2OPTS $KERNAL64CBM2OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-KERNAL64CBM2.png "$4"
+        echo $KERNAL64CBM2 $KERNAL64CBM2OPTS $KERNAL64CBM2OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64cbm2.png "$4"
     fi
-    $KERNAL64CBM2 $KERNAL64CBM2OPTS $KERNAL64CBM2OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-KERNAL64CBM2.png "$4" 1> /dev/null 2> /dev/null
+    $KERNAL64CBM2 $KERNAL64CBM2OPTS $KERNAL64CBM2OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64cbm2.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     
     if [ $verbose == "1" ]; then
@@ -149,7 +149,7 @@ function kernal64cbm2_run_screenshot
                 KERNAL64CBM2SYO=23
             fi
         
-            ./cmpscreens "$refscreenshotname" "$KERNAL64CBM2REFSXO" "$KERNAL64CBM2REFSYO" "$1"/.testbench/"$screenshottest"-KERNAL64CBM2.png "$KERNAL64CBM2SXO" "$KERNAL64CBM2SYO"
+            ./cmpscreens "$refscreenshotname" "$KERNAL64CBM2REFSXO" "$KERNAL64CBM2REFSYO" "$1"/.testbench/"$screenshottest"-kernal64cbm2.png "$KERNAL64CBM2SXO" "$KERNAL64CBM2SYO"
             exitcode=$?
         else
             echo -ne "reference screenshot missing - "

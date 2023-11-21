@@ -34,6 +34,11 @@ function hoxs64_check_environment
         #HOXS64=hoxs64
     fi
 
+    if [ ! -f "$EMUDIR"hoxs64.exe ]; then
+        echo "Error:" $EMUDIR"hoxs64.exe does not exist."
+        exit 1;
+    fi
+
     emu_default_videosubtype="8565early"
 }
 
@@ -195,7 +200,7 @@ function hoxs64_run_screenshot
     if [ $verbose == "1" ]; then
         echo $HOXS64 $HOXS64OPTS $HOXS64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-hoxs64.png "-autoload" "$4"
     fi
-    $HOXS64 $HOXS64OPTS $HOXS64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-hoxs64.png "-autoload" "$4" 1> /dev/null
+    $HOXS64 $HOXS64OPTS $HOXS64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-hoxs64.png "-autoload" "$4" 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -258,12 +263,12 @@ function hoxs64_run_exitcode
         if [ $verbose == "1" ]; then
             echo $HOXS64 $HOXS64OPTS $HOXS64OPTSEXITCODE ${@:5} "-limitcycles" "$3"
         fi
-        $HOXS64 $HOXS64OPTS $HOXS64OPTSEXITCODE ${@:5} "-limitcycles" "$3" 1> /dev/null
+        $HOXS64 $HOXS64OPTS $HOXS64OPTSEXITCODE ${@:5} "-limitcycles" "$3" 2> /dev/null
     else
         if [ $verbose == "1" ]; then
             echo $HOXS64 $HOXS64OPTS $HOXS64OPTSEXITCODE ${@:5} "-limitcycles" "$3" "-autoload" "$4"
         fi
-        $HOXS64 $HOXS64OPTS $HOXS64OPTSEXITCODE ${@:5} "-limitcycles" "$3" "-autoload" "$4" 1> /dev/null
+        $HOXS64 $HOXS64OPTS $HOXS64OPTSEXITCODE ${@:5} "-limitcycles" "$3" "-autoload" "$4" 2> /dev/null
     fi
     exitcode=$?
     if [ $verbose == "1" ]; then

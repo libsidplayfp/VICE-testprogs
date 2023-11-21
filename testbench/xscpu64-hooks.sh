@@ -229,11 +229,11 @@ function xscpu64_run_screenshot
     fi
 
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$screenshottest"-x64sc.png
+    rm -f "$1"/.testbench/"$screenshottest"-xscpu64.png
     if [ $verbose == "1" ]; then
-        echo $XSCPU64 $XSCPU64OPTS $XSCPU64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x64sc.png "$4"
+        echo $XSCPU64 $XSCPU64OPTS $XSCPU64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xscpu64.png "$4"
     fi
-    $XSCPU64 $XSCPU64OPTS $XSCPU64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-x64sc.png "$4" 1> /dev/null 2> /dev/null
+    $XSCPU64 $XSCPU64OPTS $XSCPU64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-xscpu64.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
     
     if [ $verbose == "1" ]; then
@@ -277,7 +277,7 @@ function xscpu64_run_screenshot
                 XSCPU64SYO=23
             fi
         
-            ./cmpscreens "$refscreenshotname" "$XSCPU64REFSXO" "$XSCPU64REFSYO" "$1"/.testbench/"$screenshottest"-x64sc.png "$XSCPU64SXO" "$XSCPU64SYO"
+            ./cmpscreens "$refscreenshotname" "$XSCPU64REFSXO" "$XSCPU64REFSYO" "$1"/.testbench/"$screenshottest"-xscpu64.png "$XSCPU64SXO" "$XSCPU64SYO"
             exitcode=$?
         else
             echo -ne "reference screenshot missing - "

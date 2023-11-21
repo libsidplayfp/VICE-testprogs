@@ -30,15 +30,19 @@
 </pre></tt>
   then
 <tt><pre>
-  $./testresults.sh sid / c64 / vic20 / c128 / plus4 / pet / dtv / scpu / cbm2 / cbm5x0 --html
+  $./maketable --omit-clean --html --list sid / c64 / vic20 / c128 / plus4 / pet / dtv / scpu / cbm2 / cbm5x0-testlist.in
 </pre></tt>
+  That means only the "interesting" rows will be shown, rows where eg all tests passed, or are all
+  interactive, will be omitted. Additionally for building the tables for individual emulators, the
+  --omit-two-ok option is used, which means that all lines where the two leftmost columns show OK
+  are also considered uninteresting.
 
   <h1>Results</h1>
 
 <p>
 Comparing latest results from various emulators for each system:
 </p>
-  
+
 <p>
   <a href="sid.html">SID</a>
   <a href="c64.html">C64</a>
@@ -68,10 +72,12 @@ C64:
   <a href="hoxs64.html">HOXS64</a>
   <a href="z64kc64.html">Z64K</a>
   <a href="denise.html">Denise</a>
+  <a href="kernal64c64.html">Kernal64</a>
   <a href="micro64.html">Micro64</a>
   <a href="yace.html">YACE</a>
   <a href="emu64.html">Emu64</a>
   <a href="chameleon.html">Turbo Chameleon 64</a>
+  <a href="chameleon-cartridge.html">Turbo Chameleon 64 (Cartridge)</a>
   <a href="u64.html">Ultimate64</a>
 </p>
 <p>
@@ -84,11 +90,13 @@ VIC20:
 C128:
   <a href="x128.html">x128</a>
   <a href="z64kc128.html">Z64K</a>
+  <a href="kernal64c128c128.html">Kernal64</a>
 </p>
 <p>
 C128-C64:
   <a href="x128c64.html">x128</a>
   <a href="z64kc128c64.html">Z64K</a>
+  <a href="kernal64c128c64.html">Kernal64</a>
 </p>
 <p>
 Plus4:
@@ -105,6 +113,7 @@ DTV:
 <p>
 SCPU:
   <a href="xscpu64.html">xscpu64</a>
+  <a href="kernal64scpu64.html">Kernal64</a>
 </p>
 <p>
 CBM6x0:

@@ -162,18 +162,18 @@ function kernal64c128c128_run_screenshot
     fi
 
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$screenshottest"-kernal64C128C128.png
+    rm -f "$1"/.testbench/"$screenshottest"-kernal64c128c128.png
     if [ $verbose == "1" ]; then
         if [ $viciiscreenshot == "1" ]; then
-            echo "RUN: "$KERNAL64C128C128 $KERNAL64C128C128OPTS $KERNAL64C128C128OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64C128C128.png "$4"
+            echo "RUN: "$KERNAL64C128C128 $KERNAL64C128C128OPTS $KERNAL64C128C128OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64c128c128.png "$4"
         else
-            echo "RUN: "$KERNAL64C128C128 $KERNAL64C128C128OPTS $KERNAL64C128C128OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--vdcscreenshot" "$1"/.testbench/"$screenshottest"-kernal64C128C128.png "$4"
+            echo "RUN: "$KERNAL64C128C128 $KERNAL64C128C128OPTS $KERNAL64C128C128OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--vdcscreenshot" "$1"/.testbench/"$screenshottest"-kernal64c128c128.png "$4"
         fi
     fi
     if [ $viciiscreenshot == "1" ]; then
-        $KERNAL64C128C128 $KERNAL64C128C128OPTS $KERNAL64C128C128OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64C128C128.png "$4" 1> /dev/null 2> /dev/null
+        $KERNAL64C128C128 $KERNAL64C128C128OPTS $KERNAL64C128C128OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64c128c128.png "$4" 1> /dev/null 2> /dev/null
     else
-        $KERNAL64C128C128 $KERNAL64C128C128OPTS $KERNAL64C128C128OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--vdcscreenshot" "$1"/.testbench/"$screenshottest"-kernal64C128C128.png "$4" 1> /dev/null 2> /dev/null
+        $KERNAL64C128C128 $KERNAL64C128C128OPTS $KERNAL64C128C128OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--vdcscreenshot" "$1"/.testbench/"$screenshottest"-kernal64c128c128.png "$4" 1> /dev/null 2> /dev/null
     fi
     exitcode=$?
 #    echo exitcode:$exitcode
@@ -216,9 +216,9 @@ function kernal64c128c128_run_screenshot
             fi
 
             if [ $verbose == "1" ]; then
-                echo ./cmpscreens "$refscreenshotname" "$KERNAL64C128C128REFSXO" "$KERNAL64C128C128REFSYO" "$1"/.testbench/"$screenshottest"-kernal64C128C128.png "$KERNAL64C128C128SXO" "$KERNAL64C128C128SYO"
+                echo ./cmpscreens "$refscreenshotname" "$KERNAL64C128C128REFSXO" "$KERNAL64C128C128REFSYO" "$1"/.testbench/"$screenshottest"-kernal64c128c128.png "$KERNAL64C128C128SXO" "$KERNAL64C128C128SYO"
             fi
-            ./cmpscreens "$refscreenshotname" "$KERNAL64C128C128REFSXO" "$KERNAL64C128C128REFSYO" "$1"/.testbench/"$screenshottest"-kernal64C128C128.png "$KERNAL64C128C128SXO" "$KERNAL64C128C128SYO"
+            ./cmpscreens "$refscreenshotname" "$KERNAL64C128C128REFSXO" "$KERNAL64C128C128REFSYO" "$1"/.testbench/"$screenshottest"-kernal64c128c128.png "$KERNAL64C128C128SXO" "$KERNAL64C128C128SYO"
             exitcode=$?
         else
             echo -ne "reference screenshot missing - "

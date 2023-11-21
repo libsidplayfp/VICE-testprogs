@@ -155,7 +155,11 @@ function kernal64c64_run_screenshot
     fi
     $KERNAL64C64 $KERNAL64C64OPTS $KERNAL64C64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64c64.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
-#    echo exitcode:$exitcode
+
+    if [ $verbose == "1" ]; then
+        echo "exited with: " $exitcode
+    fi
+
     if [ $exitcode -ne 0 ]
     then
         if [ $exitcode -ne 1 ]
@@ -198,13 +202,16 @@ function kernal64c64_run_screenshot
             fi
             ./cmpscreens "$refscreenshotname" "$KERNAL64C64REFSXO" "$KERNAL64C64REFSYO" "$1"/.testbench/"$screenshottest"-kernal64c64.png "$KERNAL64C64SXO" "$KERNAL64C64SYO"
             exitcode=$?
+            if [ $verbose == "1" ]; then
+                echo "cmpscreen exited with: " $exitcode
+            fi
         else
             echo -ne "reference screenshot missing - "
             exitcode=255
         fi
     fi
     if [ $verbose == "1" ]; then
-        echo "cmpscreen exited with: " $exitcode
+        echo "run_screenshot exited with: " $exitcode
     fi
 }
 
@@ -226,7 +233,11 @@ function kernal64c64_run_exitcode
     fi
     $KERNAL64C64 $KERNAL64C64OPTS $KERNAL64C64OPTSEXITCODE ${@:5} "--limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
-    #echo EXIT CODE for $2 is $exitcode
+
+    if [ $verbose == "1" ]; then
+        echo "exited with: " $exitcode
+    fi
+
     if [ $exitcode -ne 0 ]
     then
         if [ $exitcode -ne 1 ]

@@ -21,7 +21,9 @@
 
 int verbose = 0;
 int format = 0;
+int omit2ok = 0;
 int errormode = 0;
+int cleanmode = 0;
 int diffmode = 0;
 int filterntscold = 0;
 int firstcolisref = 0;
@@ -416,14 +418,19 @@ void printtablestart(void)
     }
 }
 
-void printtableend(void)
+void printtableend(int totaltests, int skippedtests)
 {
     if (format == FORMAT_HTML) {
         printf("</table>"
                "\n"
+               "<small>%d tests (%d not shown)</small>\n"
+               ,totaltests, skippedtests
         );
     } else if (format == FORMAT_WIKI) {
-        printf("|}\n");
+        printf("|}\n"
+               "<small>%d tests (%d not shown)</small>\n"
+               ,totaltests, skippedtests
+        );
     }
 }
 
@@ -891,36 +898,63 @@ void printrow(int row, int *res)
 
 void printtable(void)
 {
-    int i, ii, iserror, isdiff;
+    int i, ii, iserror, isdiff, isclean, is2ok;
     int res[MAXLISTS];
+    int skipped = 0;
 
-    
     printtablestart();
     // first the headers
     printheader();
 
-    // loop over all tests
+    // loop over all tests (top to down)
     for (i = 0; i < refnum; i++) {
         iserror = 0;
         isdiff = 0;
-        
-        // loop over all result files
-        for (ii = 0; ii < numfiles; ii++) {
+        isclean = 1;
+        is2ok = 0;
+
+        // loop over all result files (left to right)
+        res[0] = findresult(testlist[0], &reflist[i]);
+        for (ii = (firstcolisref ? 1 : 0); ii < numfiles; ii++) {
             res[ii] = findresult(testlist[ii], &reflist[i]);
-            if (res[ii] == RESULT_ERROR) iserror = 1;
-            if (res[ii] != res[0]) isdiff = 1;
+            if (res[ii] == RESULT_ERROR) {
+                iserror = 1;
+                if (reflist[i].expect != RESULT_ERROR) {
+                    isclean = 0;
+                }
+            }
+            if (res[ii] != res[(firstcolisref ? 1 : 0)]) { isdiff = 1; isclean = 0; }
+            if (res[ii] == RESULT_TIMEOUT) {
+                if (reflist[i].expect != RESULT_TIMEOUT) {
+                    isclean = 0;
+                }
+            }
         }
+
+        if (omit2ok) {
+            int first = (firstcolisref ? 1 : 0);
+            int second = (firstcolisref ? 2 : 1);
+            if (res[first] == res[second]) {
+                if (res[first] == reflist[i].expect) {
+                    is2ok = 1;
+                }
+            }
+        }
+
         // skip this line if we only want to see errors
-        if (errormode && !iserror) continue;
+        if (errormode && !iserror) { skipped++; continue; }
+        // skip this line if we only want to see errors
+        if (cleanmode && isclean) { skipped++; continue; }
         // skip this line if we only want to see diffs
-        if (diffmode && !isdiff) continue;
+        if (diffmode && !isdiff) { skipped++; continue; }
+        if (omit2ok && is2ok) { skipped++; continue; }
         // skip this line if we dont want to see results for ntscold
-        if (filterntscold && (reflist[i].videotype == VIDEOTYPE_NTSCOLD)) continue;
+        if (filterntscold && (reflist[i].videotype == VIDEOTYPE_NTSCOLD)) { skipped++; continue; }
 
         printrow(i, res);
     }
-    
-    printtableend();
+
+    printtableend(refnum, skipped);
 }
 
 //------------------------------------------------------------------------------
@@ -943,6 +977,8 @@ void usage(char *name)
     "  --percentages <format>       print percentages in first row\n"
     "  --diff                       omit rows in which all columns are the same\n"
     "  --errors                     output only rows that contain errors\n"
+    "  --omit-clean                 output only rows that are not \"clean\"\n"
+    "  --omit-two-ok                omit row when leftmost two columns are ok\n"
     "  --verbose                    be more verbose\n", name, name
     );
 }
@@ -962,10 +998,14 @@ int main(int argc, char *argv[])
     for (i = 1; i < argc; i++) {
         if(!strcmp(argv[i], "--verbose")) {
             verbose = 1;
+        } else if(!strcmp(argv[i], "--omit-clean")) {
+            cleanmode = 1;
         } else if(!strcmp(argv[i], "--errors")) {
             errormode = 1;
         } else if(!strcmp(argv[i], "--diff")) {
             diffmode = 1;
+        } else if(!strcmp(argv[i], "--omit-two-ok")) {
+            omit2ok = 1;
         } else if(!strcmp(argv[i], "--filter-ntscold")) {
             filterntscold = 1;
         } else if(!strcmp(argv[i], "--html")) {

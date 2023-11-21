@@ -149,11 +149,11 @@ function kernal64scpu64_run_screenshot
     fi
 
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$screenshottest"-kernal64c64.png
+    rm -f "$1"/.testbench/"$screenshottest"-kernal64scpu64.png
     if [ $verbose == "1" ]; then
-        echo "RUN: "$KERNAL64SCPU64 $KERNAL64SCPU64OPTS $KERNAL64SCPU64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64c64.png "$4"
+        echo "RUN: "$KERNAL64SCPU64 $KERNAL64SCPU64OPTS $KERNAL64SCPU64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64scpu64.png "$4"
     fi
-    $KERNAL64SCPU64 $KERNAL64SCPU64OPTS $KERNAL64SCPU64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64c64.png "$4" 1> /dev/null 2> /dev/null
+    $KERNAL64SCPU64 $KERNAL64SCPU64OPTS $KERNAL64SCPU64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64scpu64.png "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo exitcode:$exitcode
     if [ $exitcode -ne 0 ]
@@ -194,9 +194,9 @@ function kernal64scpu64_run_screenshot
             fi
 
             if [ $verbose == "1" ]; then
-                echo ./cmpscreens "$refscreenshotname" "$KERNAL64SCPU64REFSXO" "$KERNAL64SCPU64REFSYO" "$1"/.testbench/"$screenshottest"-kernal64c64.png "$KERNAL64SCPU64SXO" "$KERNAL64SCPU64SYO"
+                echo ./cmpscreens "$refscreenshotname" "$KERNAL64SCPU64REFSXO" "$KERNAL64SCPU64REFSYO" "$1"/.testbench/"$screenshottest"-kernal64scpu64.png "$KERNAL64SCPU64SXO" "$KERNAL64SCPU64SYO"
             fi
-            ./cmpscreens "$refscreenshotname" "$KERNAL64SCPU64REFSXO" "$KERNAL64SCPU64REFSYO" "$1"/.testbench/"$screenshottest"-kernal64c64.png "$KERNAL64SCPU64SXO" "$KERNAL64SCPU64SYO"
+            ./cmpscreens "$refscreenshotname" "$KERNAL64SCPU64REFSXO" "$KERNAL64SCPU64REFSYO" "$1"/.testbench/"$screenshottest"-kernal64scpu64.png "$KERNAL64SCPU64SXO" "$KERNAL64SCPU64SYO"
             exitcode=$?
         else
             echo -ne "reference screenshot missing - "

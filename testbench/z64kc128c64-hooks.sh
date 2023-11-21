@@ -108,8 +108,36 @@ function z64kc128c64_get_options
                 exitoptions="-sidenginemodel 257"
                 new_sid_enabled=1
             ;;
+        "reu128k")
+                exitoptions="-reu -reusize 128"
+                reu_enabled=1
+            ;;
+        "reu256k")
+                exitoptions="-reu -reusize 256"
+                reu_enabled=1
+            ;;
         "reu512k")
                 exitoptions="-reu -reusize 512"
+                reu_enabled=1
+            ;;
+        "reu1m")
+                exitoptions="-reu -reusize 1024"
+                reu_enabled=1
+            ;;
+        "reu2m")
+                exitoptions="-reu -reusize 2048"
+                reu_enabled=1
+            ;;
+        "reu4m")
+                exitoptions="-reu -reusize 4096"
+                reu_enabled=1
+            ;;
+        "reu8m")
+                exitoptions="-reu -reusize 8192"
+                reu_enabled=1
+            ;;
+        "reu16m")
+                exitoptions="-reu -reusize 16384"
                 reu_enabled=1
             ;;
         "geo512k")
@@ -219,7 +247,7 @@ function z64kc128c64_run_screenshot
     fi
 
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$screenshottest"-x64.png
+    rm -f "$1"/.testbench/"$screenshottest"-z64kc128c64.png
     if [ $verbose == "1" ]; then
         if [ $vdcscreenshot == "1" ]; then
             echo $Z64KC128C64 $Z64KC128C64OPTS $Z64KC128C64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-z64kc128c64.png "$4"

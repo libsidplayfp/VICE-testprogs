@@ -184,6 +184,7 @@
 ################################################################################
 # GEO-RAM
 ################################################################################
+../GEO-RAM/,georam128.prg,exitcode,10000000,geo512k
 ################################################################################
 # Joystick/Mouse
 ################################################################################
@@ -199,6 +200,7 @@
 ../sfx_soundsampler/,c128-test.prg,interactive,0
 ../ramcart/,rc128um.d64,interactive,0
 ../userportrtc/,testrtc-c128.prg,interactive,0
+../memory-expansions/,c128-georam-emd.prg,exitcode,600000000,geo512k
 ../memory-expansions/,c128-ram-emd.prg,exitcode,200000000
 ../memory-expansions/,c128-ram2-emd.prg,exitcode,280000000,c128fullbanks
 ../memory-expansions/,c128-reu-emd.prg,exitcode,1500000000,reu512k

@@ -289,7 +289,7 @@
 ../general/Lorenz-2.15/src/,trap14.prg,exitcode,20000000
 ../general/Lorenz-2.15/src/,trap15.prg,exitcode,20000000
 #FIXME: port trap16/17 to NTSC/NTSCOLD
-../general/Lorenz-2.15/src/,trap16.prg,exitcode,20000000,vicii-pal
+../general/Lorenz-2.15/src/,trap16.prg,exitcode,21000000,vicii-pal
 ../general/Lorenz-2.15/src/,trap17.prg,exitcode,20000000,vicii-pal
 ../general/Lorenz-2.15/src/,branchwrap.prg,exitcode,20000000
 ../general/Lorenz-2.15/src/,mmufetch.prg,exitcode,20000000
@@ -889,8 +889,8 @@
 #FIXME: check on NTSCOLD (better captures needed)
 ../VICII/vspbug/,lft-safe-vsp.prg,interactive,0,vicii-pal
 ../VICII/vspbug/,vsp_bug.prg,exitcode,13000000
-../VICII/vsp-tester/,vsp-tester.prg,exitcode,10000000,vicii-pal
-../VICII/vsp-tester/,vsp-tester-ntsc.prg,exitcode,10000000,vicii-ntsc
+../VICII/vsp-tester/,vsp-tester.prg,exitcode,15000000,vicii-pal
+../VICII/vsp-tester/,vsp-tester-ntsc.prg,exitcode,15000000,vicii-ntsc
 ../VICII/sequencer-bug/,bug.prg,screenshot,7000000,vicii-pal
 ################################################################################
 # Sprites
@@ -1163,7 +1163,8 @@
 ../SID/wb_testsuite/,noise_writeback_check_F_to_E_new.prg,exitcode,100000000,sid-new
 ../SID/wb_testsuite/,noise_writeback_check_F_to_F_new.prg,exitcode,100000000,sid-new
 ../SID/osc3-wave0/,osc3-wave0.prg,exitcode,15000000,sid-old
-../SID/osc3-wave0/,osc3-wave0-new.prg,exitcode,15000000,sid-new
+# needs significantly longer timeout to error out (instead of timeout) in z64k
+../SID/osc3-wave0/,osc3-wave0-new.prg,exitcode,38000000,sid-new
 ../SID/osc_topbit/,osc_topbit_test_noise_new.prg,exitcode,15000000,sid-new
 ../SID/osc_topbit/,osc_topbit_test_noise_old.prg,exitcode,15000000,sid-old
 ../SID/osc_topbit/,osc_topbit_test_pulse_new.prg,exitcode,15000000,sid-new

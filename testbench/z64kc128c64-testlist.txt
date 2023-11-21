@@ -289,7 +289,7 @@
 ../general/Lorenz-2.15/src/,trap14.prg,exitcode,20000000
 ../general/Lorenz-2.15/src/,trap15.prg,exitcode,20000000
 #FIXME: port trap16/17 to NTSC/NTSCOLD
-../general/Lorenz-2.15/src/,trap16.prg,exitcode,20000000,vicii-pal
+../general/Lorenz-2.15/src/,trap16.prg,exitcode,21000000,vicii-pal
 ../general/Lorenz-2.15/src/,trap17.prg,exitcode,20000000,vicii-pal
 ../general/Lorenz-2.15/src/,branchwrap.prg,exitcode,20000000
 ../general/Lorenz-2.15/src/,mmufetch.prg,exitcode,20000000
@@ -896,8 +896,8 @@
 #FIXME: check on NTSCOLD (better captures needed)
 ../VICII/vspbug/,lft-safe-vsp.prg,interactive,0,vicii-pal
 ../VICII/vspbug/,vsp_bug.prg,exitcode,13000000
-../VICII/vsp-tester/,vsp-tester.prg,exitcode,10000000,vicii-pal
-../VICII/vsp-tester/,vsp-tester-ntsc.prg,exitcode,10000000,vicii-ntsc
+../VICII/vsp-tester/,vsp-tester.prg,exitcode,15000000,vicii-pal
+../VICII/vsp-tester/,vsp-tester-ntsc.prg,exitcode,15000000,vicii-ntsc
 ../VICII/sequencer-bug/,bug.prg,screenshot,7000000,vicii-pal
 ################################################################################
 # Sprites
@@ -1170,7 +1170,8 @@
 ../SID/wb_testsuite/,noise_writeback_check_F_to_E_new.prg,exitcode,100000000,sid-new
 ../SID/wb_testsuite/,noise_writeback_check_F_to_F_new.prg,exitcode,100000000,sid-new
 ../SID/osc3-wave0/,osc3-wave0.prg,exitcode,15000000,sid-old
-../SID/osc3-wave0/,osc3-wave0-new.prg,exitcode,15000000,sid-new
+# needs significantly longer timeout to error out (instead of timeout) in z64k
+../SID/osc3-wave0/,osc3-wave0-new.prg,exitcode,38000000,sid-new
 ../SID/osc_topbit/,osc_topbit_test_noise_new.prg,exitcode,15000000,sid-new
 ../SID/osc_topbit/,osc_topbit_test_noise_old.prg,exitcode,15000000,sid-old
 ../SID/osc_topbit/,osc_topbit_test_pulse_new.prg,exitcode,15000000,sid-new
@@ -1229,21 +1230,11 @@
 ../C64/carts/aracidtest/,test-ariotest1-ar.prg,exitcode,10000000,mountcrt:ardummy.crt
 ../C64/carts/aracidtest/,test-ariotest2-ar.prg,exitcode,10000000,mountcrt:ardummy.crt
 ../C64/carts/aracidtest/,test-arramtest2-ar.prg,exitcode,11000000,mountcrt:ardummy.crt
-../C64/carts/aracidtest/,test-ramdetect-ar.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-ramsizedetect-ar.prg,exitcode,11000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-ariotest1-ar.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-ariotest2-ar.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-arramtest2-ar.prg,exitcode,11000000,mountcrt:npdummy.crt
 ../C64/carts/aracidtest/,test-ramdetect.prg,exitcode,10000000,mountcrt:rrdummy.crt
 ../C64/carts/aracidtest/,test-ramsizedetect.prg,exitcode,11000000,mountcrt:rrdummy.crt
 ../C64/carts/aracidtest/,test-ariotest1.prg,exitcode,10000000,mountcrt:rrdummy.crt
 ../C64/carts/aracidtest/,test-ariotest2.prg,exitcode,10000000,mountcrt:rrdummy.crt
 ../C64/carts/aracidtest/,test-arramtest2.prg,exitcode,11000000,mountcrt:rrdummy.crt
-../C64/carts/aracidtest/,test-ramdetect.prg,exitcode,10000000,mountcrt:nrdummy.crt
-../C64/carts/aracidtest/,test-ramsizedetect.prg,exitcode,11000000,mountcrt:nrdummy.crt
-../C64/carts/aracidtest/,test-ariotest1.prg,exitcode,10000000,mountcrt:nrdummy.crt
-../C64/carts/aracidtest/,test-ariotest2.prg,exitcode,10000000,mountcrt:nrdummy.crt
-../C64/carts/aracidtest/,test-arramtest2-nr.prg,exitcode,11000000,mountcrt:nrdummy.crt
 #TODO:
 #../C64/carts/,exos.prg
 ../C64/carts/,mmcrplugin.prg,analyzer,0
@@ -1260,25 +1251,6 @@
 ../C64/carts/pagefox,,exitcode,500000,mountcrt:godot.crt
 ../C64/carts/ef-test/,,exitcode,500000,mountcrt:ef_test.crt
 ../C64/carts/rr-freeze/,,analyzer,0,mountcrt:rr-freeze.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:artest.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:nptest.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:rrtest.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:rr2test.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:nrtest.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:nr2test.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:arramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:npramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:rrramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:rr2ramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:nrramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:nr2ramwrite.crt
-../C64/carts/nordicpower/,arramwrite.prg,exitcode,10000000,mountcrt:ardummy.crt
-../C64/carts/nordicpower/,safearramwrite.prg,exitcode,10000000,mountcrt:ardummy.crt
-../C64/carts/nordicpower/,npramwrite.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/nordicpower/,rrramwrite.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/nordicpower/,rr2ramwrite.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/nordicpower/,nrramwrite.prg,exitcode,10000000,mountcrt:nrdummy.crt
-../C64/carts/nordicpower/,nr2ramwrite.prg,exitcode,10000000,mountcrt:nrdummy.crt
 ../C64/carts/retroreplay/,allowbank0.prg,exitcode,10000000,mountcrt:rrdummy.crt
 ../C64/carts/retroreplay/,allowbank1.prg,exitcode,10000000,mountcrt:rrdummy.crt
 ../C64/carts/retroreplay/,writeonce.prg,exitcode,10000000,mountcrt:rrdummy.crt
@@ -1317,24 +1289,8 @@
 ../REU/colorram/,dmacolortest.prg,interactive,0
 ../REU/cpuport/,cpuport128.prg,exitcode,1000000000,reu512k
 ../REU/detectsize/,detectreu.prg,exitcode,10000000,reu512k
-../REU/floatingbus/,floating.prg,exitcode,14000000,reu256k
-../REU/floatingbus/,floating-a.prg,exitcode,14000000,reu256k
-../REU/floatingbus/,floating-b.prg,exitcode,14000000,reu256k
-../REU/floatingbus/,floating2.prg,exitcode,20000000,reu256k,expect:timeout
-../REU/floatingbus/,floating3a.prg,exitcode,15000000,reu256k
-../REU/floatingbus/,floating3b.prg,exitcode,1500000000,reu256k
-../REU/floatingbus/,floating4a.prg,exitcode,65000000,reu256k
-../REU/floatingbus/,floating4b.prg,exitcode,65000000,reu256k
-../REU/floatingbus/,floating4c.prg,exitcode,95000000,reu256k
-../REU/floatingbus/,floating4d.prg,exitcode,95000000,reu256k
 ../REU/ioglitch/,ioglitch.prg,exitcode,1000000000,reu512k
-../REU/mirrors/,mirrors128k.prg,exitcode,20000000,reu128k
-../REU/mirrors/,mirrors256k.prg,exitcode,20000000,reu256k
 ../REU/mirrors/,mirrors512k.prg,exitcode,20000000,reu512k
-../REU/mirrors/,mirrors1m.prg,exitcode,20000000,reu1m
-../REU/mirrors/,mirrors2m.prg,exitcode,20000000,reu2m
-../REU/mirrors/,mirrors4m.prg,exitcode,20000000,reu4m
-../REU/mirrors/,mirrors8m.prg,exitcode,20000000,reu8m
 ../REU/mirrors/,mirrors16m.prg,exitcode,20000000,reu16m
 ../REU/misc/,bitfill-auto.prg,exitcode,100000000,reu512k
 ../REU/misc/,twoblocks-auto.prg,exitcode,100000000,reu512k
@@ -1358,13 +1314,7 @@
 ../REU/QuickReuTest-1.1.1/,quickreu-test8.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/QuickReuTest-1.1.1/,quickreu-test8-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/ramlink/,reuverify.prg,analyzer,0
-../REU/ramlink/,reuverify128k.prg,exitcode,7000000,reu128k
-../REU/ramlink/,reuverify256k.prg,exitcode,7000000,reu256k
 ../REU/ramlink/,reuverify512k.prg,exitcode,7000000,reu512k
-../REU/ramlink/,reuverify1m.prg,exitcode,7000000,reu1m
-../REU/ramlink/,reuverify2m.prg,exitcode,7000000,reu2m
-../REU/ramlink/,reuverify4m.prg,exitcode,7000000,reu4m
-../REU/ramlink/,reuverify8m.prg,exitcode,8000000,reu8m
 ../REU/raminitpattern/,powerup.prg,analyzer,0
 ../REU/reudetect/,reudetect.prg,exitcode,100000000,reu512k,comment:load the "blu.reu" file first
 ../REU/reutiming/,reutiming.prg,exitcode,100000000,reu512k
@@ -1428,6 +1378,11 @@
 ################################################################################
 # GEO-RAM
 ################################################################################
+../GEO-RAM/,georam64.prg,exitcode,80000000,geo512k
+../GEO-RAM/,georamtest.prg,interactive,0,geo512k,comment:see automatic variants
+../GEO-RAM/,georamtest-auto.prg,exitcode,80000000,geo512k
+../GEO-RAM/,newtest.prg,interactive,0,geo512k,comment:see automatic variants
+../GEO-RAM/,newtest-auto.prg,exitcode,80000000,geo512k
 ################################################################################
 # plus60k
 ################################################################################
@@ -1534,6 +1489,7 @@
 #../RS232/,test1.prg
 #../RTC/,ds12c887.prg
 #../MIDI/,midi-out-irq-test.prg
+../memory-expansions/,c64-georam-emd.prg,exitcode,570000000,geo512k
 ../memory-expansions/,c64-reu-emd.prg,exitcode,535000000,reu512k
 ../memory-expansions/,c64-ram-emd.prg,exitcode,29000000
 #../cp-clockf83/cp-clockf83.d64

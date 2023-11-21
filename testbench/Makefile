@@ -24,38 +24,44 @@ XVICHEAD := $(shell ls results/xvic-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-re
 XPLUS4HEAD := $(shell ls results/xplus4-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
 XCBM2HEAD := $(shell ls results/xcbm2-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
 XCBM5X0HEAD := $(shell ls results/xcbm5x0-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
-
-DENISELAST=20220316
-DENISELASTSTRING="git 16.03.2022"
-
-HOXS64LAST=1-1-0-5
-HOXS64LASTSTRING=1.1.0.5
-
-Z64KC64LAST=20220130
-Z64KC64LASTSTRING="30 January 2022"
-Z64KC128C64LAST=20220130
-Z64KC128C64LASTSTRING="30 January 2022"
-Z64KC128LAST=20220130
-Z64KC128LASTSTRING="30 January 2022"
-Z64KVIC20LAST=20220130
-Z64KVIC20LASTSTRING="30 January 2022"
-
-KERNAL64C64LAST=1-7-3_b13
-KERNAL64C64LASTSTRING=1.7.3_b13
-KERNAL64C128C64LAST=1-7-3_b13
-KERNAL64C128C64LASTSTRING=1.7.3_b13
-KERNAL64C128C128LAST=1-7-3_b13
-KERNAL64C128C128LASTSTRING=1.7.3_b13
-KERNAL64SCPU64LAST=1-7-3_b13
-KERNAL64SCPU64LASTSTRING=1.7.3_b13
+# checked 19/11/2023
+DENISELAST=20231119
+DENISELASTSTRING="git 19.11.2023"
+# checked 19/11/2023
+HOXS64LAST=1-1-2-3
+HOXS64LASTSTRING=1.1.2.3
+# checked 20/11/2023
+Z64KC64LAST=20230522
+Z64KC64LASTSTRING="22 May 2023"
+Z64KC128C64LAST=20230522
+Z64KC128C64LASTSTRING="22 May 2023"
+Z64KC128LAST=20230522
+Z64KC128LASTSTRING="22 May 2023"
+Z64KVIC20LAST=20230522
+Z64KVIC20LASTSTRING="22 May 2023"
+# checked 20/11/2023
+KERNAL64C64LAST=1-8-4_b1
+KERNAL64C64LASTSTRING=1.8.4_b1
+KERNAL64C128C64LAST=1-8-4_b1
+KERNAL64C128C64LASTSTRING=1.8.4_b1
+KERNAL64C128C128LAST=1-8-4_b1
+KERNAL64C128C128LASTSTRING=1.8.4_b1
+KERNAL64SCPU64LAST=1-8-4_b1
+KERNAL64SCPU64LASTSTRING=1.8.4_b1
+KERNAL64CBM2LAST=1-8-4_b1
+KERNAL64CBM2LASTSTRING=1.8.4_b1
+#KERNAL64CBM5X0LAST=1-8-4_b1
+#KERNAL64CBM5X0LASTSTRING=1.8.4_b1
 
 U64LAST=141
 U64LASTSTRING="1.41"
 
+# checked 20/11/2023
 MICRO64LAST=20180316
 MICRO64LASTSTRING="1.00.2018.03.16 (build 719)"
 
-EMU64HEAD=20220320
+# checked 20/11/2023
+EMU64HEAD=20231120
 
 YACEHEAD=2-2-0-47
 
@@ -248,8 +254,9 @@ micro64-testlist.txt: c64-testlist.in Makefile
 		>> micro64-testlist.txt
 
 # The official cartridge file support list is:
-# Action Reply
-# Retro Reply
+#
+# Action Replay
+# Retro Replay
 # Easy Flash (1MB)
 # Ocean
 # System 3
@@ -261,6 +268,12 @@ micro64-testlist.txt: c64-testlist.in Makefile
 # Simons Basic
 # 
 # Simple 8K/16K and Ultimax cartridges should work also.
+#
+# REU 512k only!
+
+# FIXME: apparently mounting a cartridge and then running a prg file does not
+#        work right in hoxs64
+
 hoxs64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  hoxs64-testlist.txt
 	cat  c64-testlist.in \
@@ -268,13 +281,23 @@ hoxs64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
 		| grep -v ",sid-old" \
-		| grep -v ",reu512k" \
+		| grep -v ",reu128k" \
+		| grep -v ",reu256k" \
+		| grep -v ",reu1m" \
+		| grep -v ",reu2m" \
+		| grep -v ",reu4m" \
+		| grep -v ",reu8m" \
+		| grep -v ",reu16m" \
 		| grep -v ",geo512k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
+		| grep -v "C64/carts/nordicpower" \
+		| grep -v "C64/carts/pagefox" \
+		| grep -v "mountcrt:nrdummy.crt" \
+		| grep -v "mountcrt:npdummy.crt" \
 		>> hoxs64-testlist.txt
 
 emu64-testlist.txt: c64-testlist.in Makefile
@@ -319,17 +342,50 @@ yace-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",ramcart128k" \
 		>> yace-testlist.txt
 		
+#Cartridge support for the following crt types:
+# - Action Replay
+# - KCS Power Cartridge
+# - Final Cartridge III
+# - Simons' Basic
+# - Ocean Type 1
+# - Expert cartridge
+# - Super Games
+# - Epyx Fastload
+# - Final Cartridge I
+# - Game System
+# - Dinamic
+# - Zaxxon
+# - Magic Desk
+# - Super Snapshot V5
+# - Comal80
+# - EasyFlash
+# - GMod2
+#Digimax
+#REU - 512KB and 16MB
+#GEORAM
+#CPM cartridge
+#Swiftlink cartridge
+#Userport RS232 - UP9600
+
 z64kc64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  z64kc64-testlist.txt
 	cat  c64-testlist.in \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
-		| grep -v ",geo512k" \
+		| grep -v ",reu128k" \
+		| grep -v ",reu256k" \
+		| grep -v ",reu1m" \
+		| grep -v ",reu2m" \
+		| grep -v ",reu4m" \
+		| grep -v ",reu8m" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
+		| grep -v "C64/carts/nordicpower" \
+		| grep -v "mountcrt:nrdummy.crt" \
+		| grep -v "mountcrt:npdummy.crt" \
 		>> z64kc64-testlist.txt
 		
 z64kc128c64-testlist.txt: c64-testlist.in Makefile
@@ -338,12 +394,20 @@ z64kc128c64-testlist.txt: c64-testlist.in Makefile
 		| sed -e 's/cpuport.prg/cpuport128.prg/g' \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
-		| grep -v ",geo512k" \
+		| grep -v ",reu128k" \
+		| grep -v ",reu256k" \
+		| grep -v ",reu1m" \
+		| grep -v ",reu2m" \
+		| grep -v ",reu4m" \
+		| grep -v ",reu8m" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
+		| grep -v "C64/carts/nordicpower" \
+		| grep -v "mountcrt:nrdummy.crt" \
+		| grep -v "mountcrt:npdummy.crt" \
 		>> z64kc128c64-testlist.txt
 		
 x128-testlist.txt: c128-testlist.in Makefile
@@ -358,12 +422,20 @@ z64kc128-testlist.txt: c128-testlist.in Makefile
 		| grep -v ",mountg71" \
 		| grep -v ",efnram" \
 		| grep -v ",ifnram" \
-		| grep -v ",geo512k" \
+		| grep -v ",reu128k" \
+		| grep -v ",reu256k" \
+		| grep -v ",reu1m" \
+		| grep -v ",reu2m" \
+		| grep -v ",reu4m" \
+		| grep -v ",reu8m" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
+		| grep -v "C64/carts/nordicpower" \
+		| grep -v "mountcrt:nrdummy.crt" \
+		| grep -v "mountcrt:npdummy.crt" \
 		>> z64kc128-testlist.txt
 
 # official list of supported cartridges for kernal64 is this:
@@ -607,10 +679,10 @@ testdenise: prereq
 #	EMUDIR="$(DENISEDIR)" ./testbench.sh denise --resume
 	EMUDIR="$(DENISEDIR)" ./testbench.sh denise
 testemu64: prereq
-#	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --verbose
+#	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --verbose --resume
 	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --resume
 
-testkernal64: testkernal64c64 testkernal64c128c64 testkernal64c128c128 testkernal64scpu64
+testkernal64: testkernal64c64 testkernal64c128c64 testkernal64c128c128 testkernal64scpu64 testkernal64cbm2
 testkernal64c64: prereq
 #	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --verbose
 	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --resume
@@ -623,7 +695,10 @@ testkernal64c128c128: prereq
 testkernal64scpu64: prereq
 #	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64scpu64 --verbose
 	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64scpu64 --resume
-	
+testkernal64cbm2: prereq
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64cbm2 --verbose
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64cbm2 --resume
+
 ##############################################################################
 
 prereq-chameleon: chameleon-helper.prg chameleon-crtoff.prg chameleon-videomode.prg \
@@ -793,27 +868,27 @@ results0: maketable
 		--results results/vsid-$(VSIDHEAD)-result.txt "vsid "$(VSIDHEAD)""
 
 results: maketable
-	./maketable --html --list c64-testlist.in \
+	./maketable --omit-clean --html --list c64-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
-		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
-		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
-		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
-		--results results/z64kc64-$(Z64KC64LAST)-result.txt "z64k (c64) "$(Z64KC64LASTSTRING)"" \
-		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
-		--results results/micro64-$(MICRO64LAST)-result.txt "micro64 "$(MICRO64LASTSTRING)"" \
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
-		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
-		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
-		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
-		--results results/yace-$(YACEHEAD)-result.txt "yace "$(YACEHEAD)"" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
+		--results results/z64kc64-$(Z64KC64LAST)-result.txt "z64k (c64) "$(Z64KC64LASTSTRING)"" \
 		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST)" (cartridge)" \
-		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
+		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
+		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
+		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
+		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)" \
+		--results results/micro64-$(MICRO64LAST)-result.txt "micro64 "$(MICRO64LASTSTRING)"" \
+		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
+		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
+		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
+		--results results/yace-$(YACEHEAD)-result.txt "yace "$(YACEHEAD)"" \
+		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
 		\
 		> results/c64.html
 		
-	./maketable  --html --list vic20-testlist.in \
+	./maketable  --omit-clean --html --list vic20-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		--results results/z64kvic20-$(Z64KVIC20LAST)-result.txt "z64k (vic20) "$(Z64KVIC20LASTSTRING)"" \
@@ -821,52 +896,53 @@ results: maketable
 		\
 		> results/vic20.html
 		
-	./maketable  --html --list c128-testlist.in \
+	./maketable  --omit-clean --html --list c128-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
 		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64k (c128) "$(Z64KC128LASTSTRING)"" \
+		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
 		--results results/kernal64c128c128-$(KERNAL64C128C128LAST)-result.txt "kernal64 (c128) "$(KERNAL64C128C128LASTSTRING)"" \
 		\
 		> results/c128.html
 
-	./maketable  --html --list plus4-testlist.in \
+	./maketable  --omit-clean --html --list plus4-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xplus4-$(XPLUS4HEAD)-result.txt "xplus4 "$(XPLUS4HEAD)"" \
 		\
 		> results/plus4.html
 
-	./maketable  --html --list pet-testlist.in \
+	./maketable  --omit-clean --html --list pet-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xpet-$(XPETHEAD)-result.txt "xpet "$(XPETHEAD)"" \
 		\
 		> results/pet.html
 
-	./maketable  --html --list dtv-testlist.in \
+	./maketable  --omit-clean --html --list dtv-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64dtv-$(X64DTVHEAD)-result.txt "x64dtv "$(X64DTVHEAD)"" \
 		\
 		> results/dtv.html
 
-	./maketable  --html --list scpu-testlist.in \
+	./maketable  --omit-clean --html --list scpu-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)"" \
 		--results results/kernal64scpu64-$(KERNAL64SCPU64LAST)-result.txt "kernal64 (scpu64) "$(KERNAL64SCPU64LASTSTRING)"" \
+		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)"" \
 		\
 		> results/scpu.html
 		
-	./maketable  --html --list cbm510-testlist.in \
+	./maketable  --omit-clean --html --list cbm510-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xcbm5x0-$(XCBM5X0HEAD)-result.txt "xcbm5x0 "$(XCBM5X0HEAD)"" \
 		\
 		> results/cbm5x0.html
 		
-	./maketable  --html --list cbm610-testlist.in \
+	./maketable  --omit-clean --html --list cbm610-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xcbm2-$(XCBM2HEAD)-result.txt "xcbm2 "$(XCBM2HEAD)"" \
+		--results results/kernal64cbm2-$(KERNAL64CBM2LAST)-result.txt "kernal64 (cbm2) "$(KERNAL64CBM2LASTSTRING)"" \
 		\
 		> results/cbm2.html
 		
-	./maketable  --html --list vsid-testlist.in \
+	./maketable  --omit-clean --html --list vsid-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/vsid-$(VSIDHEAD)-result.txt "vsid "$(VSIDHEAD)"" \
 		\
@@ -877,62 +953,62 @@ results: maketable
 resultswiki: maketable
 	@echo "== Results =="
 	@echo "=== C64 ==="
-	./maketable  --wiki --list c64-testlist.in \
+	./maketable --omit-clean --wiki --list c64-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
-		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
-		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
-		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
-		--results results/z64kc64-$(Z64KC64LAST)-result.txt "z64k (c64) "$(Z64KC64LASTSTRING)"" \
-		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
-		--results results/micro64-$(MICRO64LAST)-result.txt "micro64 "$(MICRO64LASTSTRING)"" \
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
-		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
-		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
-		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
-		--results results/yace-$(YACEHEAD)-result.txt "yace "$(YACEHEAD)"" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
+		--results results/z64kc64-$(Z64KC64LAST)-result.txt "z64k (c64) "$(Z64KC64LASTSTRING)"" \
 		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST)" (cartridge)" \
+		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
+		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
+		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
+		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
+		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)" \
+		--results results/micro64-$(MICRO64LAST)-result.txt "micro64 "$(MICRO64LASTSTRING)"" \
 		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
-		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING)" (PAL)"
+		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
+		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
+		--results results/yace-$(YACEHEAD)-result.txt "yace "$(YACEHEAD)"" \
+		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)""
 	@echo "=== VIC20 ==="
-	./maketable  --wiki --list vic20-testlist.in \
+	./maketable --omit-clean --wiki --list vic20-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
 		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		--results results/z64kvic20-$(Z64KVIC20LAST)-result.txt "z64k (vic20) "$(Z64KVIC20LASTSTRING)"" \
 		--results results/cham20-$(CHAM20LAST)-result.txt "cham20 "$(CHAM20LAST)""
 	@echo "=== C128 ==="
-	./maketable  --wiki --list c128-testlist.in \
+	./maketable --omit-clean --wiki --list c128-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
 		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64k (c128) "$(Z64KC128LASTSTRING)"" \
+		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
 		--results results/kernal64c128c128-$(KERNAL64C128C128LAST)-result.txt "kernal64 (c128) "$(KERNAL64C128C128LASTSTRING)""
 	@echo "=== PLUS4 ==="
-	./maketable  --wiki --list plus4-testlist.in \
+	./maketable --omit-clean --wiki --list plus4-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
 		--results results/xplus4-$(XPLUS4HEAD)-result.txt "xplus4 "$(XPLUS4HEAD)""
 	@echo "=== PET ==="
-	./maketable  --wiki --list pet-testlist.in \
+	./maketable --omit-clean --wiki --list pet-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
 		--results results/xpet-$(XPETHEAD)-result.txt "xpet "$(XPETHEAD)""
 	@echo "=== DTV ==="
-	./maketable  --wiki --list dtv-testlist.in \
+	./maketable --omit-clean --wiki --list dtv-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
 		--results results/x64dtv-$(X64DTVHEAD)-result.txt "x64dtv "$(X64DTVHEAD)""
 	@echo "=== SCPU ==="
-	./maketable  --wiki --list scpu-testlist.in \
+	./maketable --omit-clean --wiki --list scpu-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
-		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)"" \
-		--results results/kernal64scpu64-$(KERNAL64SCPU64LAST)-result.txt "kernal64 (scpu64) "$(KERNAL64SCPU64LASTSTRING)""
+		--results results/kernal64scpu64-$(KERNAL64SCPU64LAST)-result.txt "kernal64 (scpu64) "$(KERNAL64SCPU64LASTSTRING)"" \
+		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)""
 	@echo "=== CBM5x0 ==="
-	./maketable  --wiki --list cbm510-testlist.in \
+	./maketable --omit-clean --wiki --list cbm510-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
 		--results results/xcbm5x0-$(XCBM5X0HEAD)-result.txt "xcbm5x0 "$(XCBM5X0HEAD)""
 	@echo "=== CBM2 ==="
-	./maketable  --wiki --list cbm610-testlist.in \
+	./maketable --omit-clean --wiki --list cbm610-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
 		--results results/xcbm2-$(XCBM2HEAD)-result.txt "xcbm2 "$(XCBM2HEAD)""
 	@echo "=== SID ==="
-	./maketable  --wiki --list vsid-testlist.in \
+	./maketable --omit-clean --wiki --list vsid-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
 		--results results/vsid-$(VSIDHEAD)-result.txt "vsid "$(VSIDHEAD)""
 
@@ -940,96 +1016,96 @@ resultswiki: maketable
 
 .PHONY: resultsx64
 resultsx64: maketable
-	OPTS=`ls results/x64-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt x64-\2/g'` ; \
-	./maketable --html --list c64-testlist.in \
+	OPTS=`ls -r results/x64-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt x64-\2/g'` ; \
+	./maketable --omit-two-ok --omit-clean --html --list c64-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		$$OPTS \
 		> results/x64.html
 
 .PHONY: resultsx64sc
 resultsx64sc: maketable
-	OPTS=`ls results/x64sc-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt x64sc-\2/g'` ; \
-	./maketable --html --list c64-testlist.in \
+	OPTS=`ls -r results/x64sc-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt x64sc-\2/g'` ; \
+	./maketable --omit-two-ok --omit-clean --html --list c64-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		$$OPTS \
 		> results/x64sc.html
 
 .PHONY: resultsx128
 resultsx128: maketable
-	OPTS=`ls results/x128-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt x128-\2/g'` ; \
-	./maketable --html --list c128-testlist.in \
+	OPTS=`ls -r results/x128-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt x128-\2/g'` ; \
+	./maketable --omit-two-ok --omit-clean --html --list c128-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		$$OPTS \
 		> results/x128.html
 
 .PHONY: resultsx128c64
 resultsx128c64: maketable
-	OPTS=`ls results/x128c64-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt x128c64-\2/g'` ; \
-	./maketable --html --list c64-testlist.in \
+	OPTS=`ls -r results/x128c64-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt x128c64-\2/g'` ; \
+	./maketable --omit-two-ok --omit-clean --html --list c64-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		$$OPTS \
 		> results/x128c64.html
 
 .PHONY: resultsxcbm2
 resultsxcbm2: maketable
-	OPTS=`ls results/xcbm2-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xcbm2-\2/g'` ; \
-	./maketable --html --list cbm610-testlist.in \
+	OPTS=`ls -r results/xcbm2-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xcbm2-\2/g'` ; \
+	./maketable --omit-two-ok --omit-clean --html --list cbm610-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		$$OPTS \
 		> results/xcbm2.html
 
 .PHONY: resultsxcbm5x0
 resultsxcbm5x0: maketable
-	OPTS=`ls results/xcbm5x0-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xcbm5x0-\2/g'` ; \
-	./maketable --html --list cbm510-testlist.in \
+	OPTS=`ls -r results/xcbm5x0-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xcbm5x0-\2/g'` ; \
+	./maketable --omit-two-ok --omit-clean --html --list cbm510-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		$$OPTS \
 		> results/xcbm5x0.html
 
 .PHONY: resultsx64dtv
 resultsx64dtv: maketable
-	OPTS=`ls results/x64dtv-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt x64dtv-\2/g'` ; \
-	./maketable --html --list dtv-testlist.in \
+	OPTS=`ls -r results/x64dtv-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt x64dtv-\2/g'` ; \
+	./maketable --omit-two-ok --omit-clean --html --list dtv-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		$$OPTS \
 		> results/x64dtv.html
 
 .PHONY: resultsxpet
 resultsxpet: maketable
-	OPTS=`ls results/xpet-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xpet-\2/g'` ; \
-	./maketable --html --list pet-testlist.in \
+	OPTS=`ls -r results/xpet-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xpet-\2/g'` ; \
+	./maketable --omit-two-ok --omit-clean --html --list pet-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		$$OPTS \
 		> results/xpet.html
 
 .PHONY: resultsxplus4
 resultsxplus4: maketable
-	OPTS=`ls results/xplus4-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xplus4-\2/g'` ; \
-	./maketable --html --list plus4-testlist.in \
+	OPTS=`ls -r results/xplus4-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xplus4-\2/g'` ; \
+	./maketable --omit-two-ok --omit-clean --html --list plus4-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		$$OPTS \
 		> results/xplus4.html
 
 .PHONY: resultsxscpu64
 resultsxscpu64: maketable
-	OPTS=`ls results/xscpu64-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xscpu64-\2/g'` ; \
-	./maketable --html --list scpu-testlist.in \
+	OPTS=`ls -r results/xscpu64-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xscpu64-\2/g'` ; \
+	./maketable --omit-two-ok --omit-clean --html --list scpu-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		$$OPTS \
 		> results/xscpu64.html
 
 .PHONY: resultsxvic
 resultsxvic: maketable
-	OPTS=`ls results/xvic-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xvic-\2/g'` ; \
-	./maketable --html --list vic20-testlist.in \
+	OPTS=`ls -r results/xvic-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt xvic-\2/g'` ; \
+	./maketable --omit-two-ok --omit-clean --html --list vic20-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		$$OPTS \
 		> results/xvic.html
 
 .PHONY: resultsvsid
 resultsvsid: maketable
-	OPTS=`ls results/vsid-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt vsid-\2/g'` ; \
-	./maketable --html --list vsid-testlist.in \
+	OPTS=`ls -r results/vsid-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/--results \1-\2-result.txt vsid-\2/g'` ; \
+	./maketable --omit-two-ok --omit-clean --html --list vsid-testlist.in \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		$$OPTS \
 		> results/vsid.html
@@ -1040,102 +1116,108 @@ resultsvsid: maketable
 
 .PHONY: resultsz64kc64
 resultsz64kc64: maketable z64kc64-testlist.txt
-	./maketable --html --list z64kc64-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --html --list z64kc64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
-		--results results/z64kc64-20181202-result.txt "z64kc64 20181202" \
-		--results results/z64kc64-1_2-result.txt "z64kc64 1.2" \
-		--results results/z64kc64-20201224-result.txt "z64kc64 24 December 2020" \
-		--results results/z64kc64-20201230-result.txt "z64kc64 30 December 2020" \
 		--results results/z64kc64-$(Z64KC64LAST)-result.txt "z64kc64 "$(Z64KC64LASTSTRING)"" \
+		--results results/z64kc64-20220130-result.txt "z64kc64 30 January 2022" \
+		--results results/z64kc64-20201230-result.txt "z64kc64 30 December 2020" \
+		--results results/z64kc64-20201224-result.txt "z64kc64 24 December 2020" \
+		--results results/z64kc64-1_2-result.txt "z64kc64 1.2" \
+		--results results/z64kc64-20181202-result.txt "z64kc64 2nd December 2018" \
 		\
 		> results/z64kc64.html
 
 .PHONY: resultsz64kc128
 resultsz64kc128: maketable z64kc128-testlist.txt
-	./maketable --html --list z64kc128-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --html --list z64kc128-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
-		--results results/z64kc128-20181202-result.txt "z64kc128 20181202" \
-		--results results/z64kc128-1_2-result.txt "z64kc128 1.2" \
-		--results results/z64kc128-20201217-result.txt "z64kc128 17 December 2020" \
-		--results results/z64kc128-20201230-result.txt "z64kc128 30 December 2020" \
 		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64kc128 "$(Z64KC128LASTSTRING)"" \
+		--results results/z64kc128-20220130-result.txt "z64kc128 30 January 2022" \
+		--results results/z64kc128-20201230-result.txt "z64kc128 30 December 2020" \
+		--results results/z64kc128-20201217-result.txt "z64kc128 17 December 2020" \
+		--results results/z64kc128-1_2-result.txt "z64kc128 1.2" \
+		--results results/z64kc128-20181202-result.txt "z64kc128 20181202" \
 		\
 		> results/z64kc128.html
 
 .PHONY: resultsz64kc128c64
 resultsz64kc128c64: maketable z64kc128c64-testlist.txt
-	./maketable --html --list z64kc128c64-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --html --list z64kc128c64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
-		--results results/z64kc128c64-20181202-result.txt "z64kc128c64 20181202" \
-		--results results/z64kc128c64-1_2-result.txt "z64kc128c64 1.2" \
-		--results results/z64kc128c64-20201217-result.txt "z64kc128c64 17 December 2020" \
-		--results results/z64kc128c64-20201230-result.txt "z64kc128c64 30 December 2020" \
 		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64kc128c64 "$(Z64KC128C64LASTSTRING)"" \
+		--results results/z64kc128c64-20220130-result.txt "z64kc128c64 30 January 2022" \
+		--results results/z64kc128c64-20201230-result.txt "z64kc128c64 30 December 2020" \
+		--results results/z64kc128c64-20201217-result.txt "z64kc128c64 17 December 2020" \
+		--results results/z64kc128c64-1_2-result.txt "z64kc128c64 1.2" \
+		--results results/z64kc128c64-20181202-result.txt "z64kc128c64 20181202" \
 		\
 		> results/z64kc128c64.html
 
 .PHONY: resultsz64kvic20
 resultsz64kvic20: maketable z64kvic20-testlist.txt
-	./maketable --html --list z64kvic20-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --html --list z64kvic20-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
-		--results results/z64kvic20-20181202-result.txt "z64kvic20 20181202" \
-		--results results/z64kvic20-1_2-result.txt "z64kvic20 1.2" \
-		--results results/z64kvic20-20201217-result.txt "z64kvic20 17 December 2020" \
 		--results results/z64kvic20-$(Z64KVIC20LAST)-result.txt "z64kvic20 "$(Z64KVIC20LASTSTRING)"" \
+		--results results/z64kvic20-20220130-result.txt "z64kvic20 30 January 2022" \
+		--results results/z64kvic20-20201217-result.txt "z64kvic20 17 December 2020" \
+		--results results/z64kvic20-1_2-result.txt "z64kvic20 1.2" \
+		--results results/z64kvic20-20181202-result.txt "z64kvic20 20181202" \
 		\
 		> results/z64kvic20.html
 		
 .PHONY: resultshoxs64
 resultshoxs64: maketable hoxs64-testlist.txt
-	./maketable --html --list hoxs64-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --html --list hoxs64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
-		--results results/hoxs64-1-0-16-0-result.txt "hoxs64 1.0.16.0" \
-		--results results/hoxs64-1-0-21-0-result.txt "hoxs64 1.0.21.0" \
-		--results results/hoxs64-1-0-21-2-result.txt "hoxs64 1.0.21.2" \
-		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.32" \
 		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
+		--results results/hoxs64-1-1-0-5-result.txt "hoxs64 1.1.0.5" \
+		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.32" \
+		--results results/hoxs64-1-0-21-2-result.txt "hoxs64 1.0.21.2" \
+		--results results/hoxs64-1-0-21-0-result.txt "hoxs64 1.0.21.0" \
+		--results results/hoxs64-1-0-16-0-result.txt "hoxs64 1.0.16.0" \
 		\
 		> results/hoxs64.html
 
 .PHONY: resultsdenise
 resultsdenise: maketable denise-testlist.txt
-	./maketable --html --list denise-testlist.txt \
+	./maketable --omit-two-ok  --omit-clean --html --list denise-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
-		--results results/denise-1-0-5-result.txt "denise 1.0.5" \
-		--results results/denise-20191012-result.txt "denise 20191012" \
-		--results results/denise-20200110-result.txt "denise 20200110" \
-		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
-		--results results/denise-20201223-result.txt "git 23.12.2020" \
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
+		--results results/denise-20220316-result.txt "git 16.03.2022" \
+		--results results/denise-20201223-result.txt "git 23.12.2020" \
+		--results results/denise-1-0-8-result.txt "denise 1.0.8" \
+		--results results/denise-20200110-result.txt "denise 20200110" \
+		--results results/denise-20191012-result.txt "denise 20191012" \
+		--results results/denise-1-0-5-result.txt "denise 1.0.5" \
 		\
 		> results/denise.html
 
 .PHONY: resultsmicro64
 resultsmicro64: maketable micro64-testlist.txt
-	./maketable --html --list micro64-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --html --list micro64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
-		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		--results results/micro64-$(MICRO64LAST)-result.txt "micro64 "$(MICRO64LASTSTRING)"" \
+		--results results/micro64-20180314-result.txt "micro64 20180314" \
 		\
 		> results/micro64.html
 		
 .PHONY: resultsyace
 resultsyace: maketable yace-testlist.txt
-	./maketable --html --list yace-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --html --list yace-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
@@ -1145,56 +1227,61 @@ resultsyace: maketable yace-testlist.txt
 		
 .PHONY: resultsemu64
 resultsemu64: maketable emu64-testlist.txt
-	./maketable --html --list emu64-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --html --list emu64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
-		--results results/emu64-20191025-result.txt "emu64 20191025" \
 		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
+		--results results/emu64-20220320-result.txt "emu64 20220320" \
+		--results results/emu64-20191025-result.txt "emu64 20191025" \
 		\
 		> results/emu64.html
 		
 .PHONY: resultskernal64c64
 resultskernal64c64: maketable kernal64c64-testlist.txt
-	./maketable --html --list kernal64c64-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --html --list kernal64c64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
-		--results results/kernal64c64-1-6-2_b8-result.txt "kernal64 (c64) 1.6.2_b8" \
-		--results results/kernal64c64-1-7-0_b15-result.txt "kernal64 (c64) 1.7.0_b15" \
 		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
+		--results results/kernal64c64-1-7-3_b13-result.txt "kernal64 (c64) 1.7.3_b13" \
+		--results results/kernal64c64-1-7-0_b15-result.txt "kernal64 (c64) 1.7.0_b15" \
+		--results results/kernal64c64-1-6-2_b8-result.txt "kernal64 (c64) 1.6.2_b8" \
 		\
 		> results/kernal64c64.html
 		
 .PHONY: resultskernal64c128c64
 resultskernal64c128c64: maketable kernal64c128c64-testlist.txt
-	./maketable --html --list kernal64c128c64-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --html --list kernal64c128c64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
-		--results results/kernal64c128c64-1-6-2_b8-result.txt "Kernal64 (c128/64) 1.6.2_b8" \
-		--results results/kernal64c128c64-1-7-0_b15-result.txt "Kernal64 (c128/64) 1.7.0_b15" \
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "Kernal64 (c128/64) "$(KERNAL64C128C64LASTSTRING)"" \
+		--results results/kernal64c128c64-1-7-3_b13-result.txt "Kernal64 (c128/64) 1.7.3_b13" \
+		--results results/kernal64c128c64-1-7-0_b15-result.txt "Kernal64 (c128/64) 1.7.0_b15" \
+		--results results/kernal64c128c64-1-6-2_b8-result.txt "Kernal64 (c128/64) 1.6.2_b8" \
 		\
 		> results/kernal64c128c64.html
 
 .PHONY: resultskernal64c128c128
 resultskernal64c128c128: maketable kernal64c128c128-testlist.txt
-	./maketable --html --list kernal64c128c128-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --html --list kernal64c128c128-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/kernal64c128c128-1-6-2_b8-result.txt "Kernal64 (c128) 1.6.2_b8" \
-		--results results/kernal64c128c128-1-7-0_b15-result.txt "Kernal64 (c128) 1.7.0_b15" \
 		--results results/kernal64c128c128-$(KERNAL64C128C128LAST)-result.txt "Kernal64 (c128) "$(KERNAL64C128C128LASTSTRING)"" \
+		--results results/kernal64c128c128-1-7-3_b13-result.txt "Kernal64 (c128) 1.7.3_b13" \
+		--results results/kernal64c128c128-1-7-0_b15-result.txt "Kernal64 (c128) 1.7.0_b15" \
+		--results results/kernal64c128c128-1-6-2_b8-result.txt "Kernal64 (c128) 1.6.2_b8" \
 		\
 		> results/kernal64c128c128.html
 
 .PHONY: resultskernal64scpu64
 resultskernal64scpu64: maketable kernal64scpu64-testlist.txt
-	./maketable --html --list kernal64scpu64-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --html --list kernal64scpu64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
-		--results results/kernal64scpu64-1-6-2_b8-result.txt "kernal64 (scpu) 1.6.2_b8" \
-		--results results/kernal64scpu64-1-7-0_b15-result.txt "kernal64 (scpu) 1.7.0_b15" \
 		--results results/kernal64scpu64-$(KERNAL64SCPU64LAST)-result.txt "kernal64 (scpu) "$(KERNAL64SCPU64LASTSTRING)"" \
+		--results results/kernal64scpu64-1-7-3_b13-result.txt "kernal64 (scpu) 1.7.3_b13" \
+		--results results/kernal64scpu64-1-7-0_b15-result.txt "kernal64 (scpu) 1.7.0_b15" \
+		--results results/kernal64scpu64-1-6-2_b8-result.txt "kernal64 (scpu) 1.6.2_b8" \
 		\
 		> results/kernal64scpu64.html
 
@@ -1202,55 +1289,71 @@ resultskernal64scpu64: maketable kernal64scpu64-testlist.txt
 		
 .PHONY: resultscham
 resultscham: maketable chameleon-testlist.txt 
-	./maketable --filter-ntscold --html --list chameleon-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --filter-ntscold --html --list chameleon-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--warnvicefail "<small><b>fails on VICE</b></small>" \
 		--warnvicfetch "<small><b>VIC may be wrong!</b></small>" \
-		--results results/chameleon-9h-result.txt "TC64 9h (standalone)" \
-		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
-		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
-		--results results/chameleon-9k-standalone-result.txt "TC64 9k (standalone)" \
-		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
-		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
-		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
-		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
-		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST)" (cartridge)" \
+		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST) \
+		--results results/chameleon-9l-standalone-result.txt "TC64 9l" \
+		--results results/chameleon-9k-standalone-result.txt "TC64 9k" \
+		--results results/chameleon-9j-standalone-result.txt "TC64 9j" \
+		--results results/chameleon-9i-standalone-result.txt "TC64 9i" \
+		--results results/chameleon-9h-result.txt "TC64 9h" \
 		\
 		> results/chameleon.html
+
+	./maketable --omit-two-ok --omit-clean --filter-ntscold --html --list chameleon-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
+		--firstcolisref "<small><b>fails on VICE</b></small>" \
+		--warnvicefail "<small><b>fails on VICE</b></small>" \
+		--warnvicfetch "<small><b>VIC may be wrong!</b></small>" \
+		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST) \
+		--results results/chameleon-9j-cartridge-result.txt "TC64 9j" \
+		--results results/chameleon-9i-cartridge-result.txt "TC64 9i" \
+		\
+		> results/chameleon-cartridge.html
 
 # use with something like "make resultschamwiki | xclip -selection clipboard"
 
 .PHONY: resultschamwiki
 resultschamwiki: maketable chameleon-testlist.txt
 	@echo "=== Results ==="
-	./maketable --filter-ntscold --wiki --list chameleon-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --filter-ntscold --wiki --list chameleon-testlist.txt \
 		--percentages "{{Progress|%d|%d|%d|}}" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "{{BREAKSEMU}}" \
 		--warnvicefail "{{BREAKSEMU}}" \
 		--warnvicfetch "{{BREAKSVIC}}" \
-		--results results/chameleon-9h-result.txt "TC64 9h (standalone)" \
-		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
-		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
-		--results results/chameleon-9k-standalone-result.txt "TC64 9k (standalone)" \
-		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
 		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
-		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)" \
-		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
+		--results results/chameleon-9l-standalone-result.txt "TC64 9l (standalone)" \
+		--results results/chameleon-9k-standalone-result.txt "TC64 9k (standalone)" \
+		--results results/chameleon-9j-standalone-result.txt "TC64 9j (standalone)" \
+		--results results/chameleon-9i-standalone-result.txt "TC64 9i (standalone)" \
+		--results results/chameleon-9h-result.txt "TC64 9h (standalone)"
+
+	./maketable --omit-two-ok --omit-clean --filter-ntscold --wiki --list chameleon-testlist.txt \
+		--percentages "{{Progress|%d|%d|%d|}}" \
+		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
+		--firstcolisref "{{BREAKSEMU}}" \
+		--warnvicefail "{{BREAKSEMU}}" \
+		--warnvicfetch "{{BREAKSVIC}}" \
 		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST)" (cartridge)" \
+		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
+		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)"
 
 .PHONY: resultscham20
 resultscham20: maketable cham20-testlist.txt 
-	./maketable --filter-ntscold --html --list cham20-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --filter-ntscold --html --list cham20-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--warnvicefail "<small><b>fails on VICE</b></small>" \
 		--warnvicfetch "<small><b>VIC may be wrong!</b></small>" \
-		--results results/cham20-20150818-result.txt "cham20 20150818" \
 		--results results/cham20-$(CHAM20LAST)-result.txt "cham20 "$(CHAM20LAST)"" \
+		--results results/cham20-20150818-result.txt "cham20 20150818" \
 		\
 		> results/cham20.html
 
@@ -1264,14 +1367,14 @@ resultscham20wiki: maketable cham20-testlist.txt
 		--firstcolisref "{{BREAKSEMU}}" \
 		--warnvicefail "{{BREAKSEMU}}" \
 		--warnvicfetch "{{BREAKSVIC}}" \
-		--results results/cham20-20150818-result.txt "cham20 20150818" \
 		--results results/cham20-$(CHAM20LAST)-result.txt "cham20 "$(CHAM20LAST)"" \
+		--results results/cham20-20150818-result.txt "cham20 20150818"
 		
 ################################################################################
 		
 .PHONY: resultsu64
 resultsu64: maketable u64-testlist.txt 
-	./maketable --filter-ntscold --html --list u64-testlist.txt \
+	./maketable --omit-two-ok --omit-clean --filter-ntscold --html --list u64-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \

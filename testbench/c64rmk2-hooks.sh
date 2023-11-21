@@ -281,7 +281,7 @@ function c64rmk2_get_cmdline_options
 ##    echo chameleon "$1"/"$2"
 #    extraopts=""$4" "$5" "$6""
 #    mkdir -p "$1"/".testbench"
-#    rm -f "$1"/.testbench/"$2"-chameleon.png
+#    rm -f "$1"/.testbench/"$2"-c64rmk2.png
 #
 #    # overwrite the CBM80 signature with generic "cartridge off" program
 #    chacocmd --addr 0x00b00000 --writemem chameleon-crtoff.prg > /dev/null
@@ -308,10 +308,10 @@ function c64rmk2_get_cmdline_options
 #    timeoutsecs=`expr \( $3 + 5000000 \) / 10000000`
 #    sleep $timeoutsecs
 #    if [ "${videotype}" == "NTSC" ]; then
-#        chshot --ntsc -o "$1"/.testbench/"$2"-chameleon.png
+#        chshot --ntsc -o "$1"/.testbench/"$2"-c64rmk2.png
 #        if [ "$?" != "0" ]; then exit -1; fi
 #    else
-#        chshot -o "$1"/.testbench/"$2"-chameleon.png
+#        chshot -o "$1"/.testbench/"$2"-c64rmk2.png
 #        if [ "$?" != "0" ]; then exit -1; fi
 #    fi
 ##    echo "exited with: " $exitcode
@@ -335,8 +335,8 @@ function c64rmk2_get_cmdline_options
 #            C64RMK2SYO=38
 #        fi
 #
-##        echo ./cmpscreens "$refscreenshotname" "$CHAMREFSXO" "$CHAMREFSYO" "$1"/.testbench/"$2"-chameleon.png "$C64RMK2SXO" "$C64RMK2SYO"
-#        ./cmpscreens "$refscreenshotname" "$CHAMREFSXO" "$CHAMREFSYO" "$1"/.testbench/"$2"-chameleon.png "$C64RMK2SXO" "$C64RMK2SYO"
+##        echo ./cmpscreens "$refscreenshotname" "$CHAMREFSXO" "$CHAMREFSYO" "$1"/.testbench/"$2"-c64rmk2.png "$C64RMK2SXO" "$C64RMK2SYO"
+#        ./cmpscreens "$refscreenshotname" "$CHAMREFSXO" "$CHAMREFSYO" "$1"/.testbench/"$2"-c64rmk2.png "$C64RMK2SXO" "$C64RMK2SYO"
 #        exitcode=$?
 #    else
 #        echo -ne "reference screenshot missing ("$refscreenshotname") - "

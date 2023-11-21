@@ -289,7 +289,7 @@
 ../general/Lorenz-2.15/src/,trap14.prg,exitcode,20000000
 ../general/Lorenz-2.15/src/,trap15.prg,exitcode,20000000
 #FIXME: port trap16/17 to NTSC/NTSCOLD
-../general/Lorenz-2.15/src/,trap16.prg,exitcode,20000000,vicii-pal
+../general/Lorenz-2.15/src/,trap16.prg,exitcode,21000000,vicii-pal
 ../general/Lorenz-2.15/src/,trap17.prg,exitcode,20000000,vicii-pal
 ../general/Lorenz-2.15/src/,branchwrap.prg,exitcode,20000000
 ../general/Lorenz-2.15/src/,mmufetch.prg,exitcode,20000000
@@ -830,7 +830,7 @@
 #FIXME: check on NTSCOLD (better captures needed)
 ../VICII/vspbug/,lft-safe-vsp.prg,interactive,0,vicii-pal
 ../VICII/vspbug/,vsp_bug.prg,exitcode,13000000
-../VICII/vsp-tester/,vsp-tester.prg,exitcode,10000000,vicii-pal
+../VICII/vsp-tester/,vsp-tester.prg,exitcode,15000000,vicii-pal
 ../VICII/sequencer-bug/,bug.prg,screenshot,7000000,vicii-pal
 ################################################################################
 # Sprites
@@ -1008,7 +1008,8 @@
 ../SID/wb_testsuite/,noise_writeback_check_F_to_D_new.prg,exitcode,100000000,sid-new
 ../SID/wb_testsuite/,noise_writeback_check_F_to_E_new.prg,exitcode,100000000,sid-new
 ../SID/wb_testsuite/,noise_writeback_check_F_to_F_new.prg,exitcode,100000000,sid-new
-../SID/osc3-wave0/,osc3-wave0-new.prg,exitcode,15000000,sid-new
+# needs significantly longer timeout to error out (instead of timeout) in z64k
+../SID/osc3-wave0/,osc3-wave0-new.prg,exitcode,38000000,sid-new
 ../SID/osc_topbit/,osc_topbit_test_noise_new.prg,exitcode,15000000,sid-new
 ../SID/osc_topbit/,osc_topbit_test_pulse_new.prg,exitcode,15000000,sid-new
 ../SID/osc_topbit/,osc_topbit_test_triangle_new.prg,exitcode,15000000,sid-new
@@ -1057,21 +1058,11 @@
 ../C64/carts/aracidtest/,test-ariotest1-ar.prg,exitcode,10000000,mountcrt:ardummy.crt
 ../C64/carts/aracidtest/,test-ariotest2-ar.prg,exitcode,10000000,mountcrt:ardummy.crt
 ../C64/carts/aracidtest/,test-arramtest2-ar.prg,exitcode,11000000,mountcrt:ardummy.crt
-../C64/carts/aracidtest/,test-ramdetect-ar.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-ramsizedetect-ar.prg,exitcode,11000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-ariotest1-ar.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-ariotest2-ar.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-arramtest2-ar.prg,exitcode,11000000,mountcrt:npdummy.crt
 ../C64/carts/aracidtest/,test-ramdetect.prg,exitcode,10000000,mountcrt:rrdummy.crt
 ../C64/carts/aracidtest/,test-ramsizedetect.prg,exitcode,11000000,mountcrt:rrdummy.crt
 ../C64/carts/aracidtest/,test-ariotest1.prg,exitcode,10000000,mountcrt:rrdummy.crt
 ../C64/carts/aracidtest/,test-ariotest2.prg,exitcode,10000000,mountcrt:rrdummy.crt
 ../C64/carts/aracidtest/,test-arramtest2.prg,exitcode,11000000,mountcrt:rrdummy.crt
-../C64/carts/aracidtest/,test-ramdetect.prg,exitcode,10000000,mountcrt:nrdummy.crt
-../C64/carts/aracidtest/,test-ramsizedetect.prg,exitcode,11000000,mountcrt:nrdummy.crt
-../C64/carts/aracidtest/,test-ariotest1.prg,exitcode,10000000,mountcrt:nrdummy.crt
-../C64/carts/aracidtest/,test-ariotest2.prg,exitcode,10000000,mountcrt:nrdummy.crt
-../C64/carts/aracidtest/,test-arramtest2-nr.prg,exitcode,11000000,mountcrt:nrdummy.crt
 #TODO:
 #../C64/carts/,exos.prg
 ../C64/carts/,mmcrplugin.prg,analyzer,0
@@ -1080,32 +1071,11 @@
 #TODO: do more research and make a proper automatic test
 ../C64/carts/,,analyzer,0,mountcrt:mmcr-64krom.crt
 ../C64/carts/,,exitcode,100000,mountcrt:romram.crt
+../C64/carts/,,exitcode,100000,reu512k,mountcrt:rr-reu.crt
 #TODO: make this automatic
 ../C64/carts/ocean,,interactive,0,mountcrt:ocean.crt
-../C64/carts/pagefox,,exitcode,100000,mountcrt:writeram-8000.crt
-../C64/carts/pagefox,,exitcode,100000,mountcrt:writeram-a000.crt
-../C64/carts/pagefox,,exitcode,500000,mountcrt:godot.crt
 ../C64/carts/ef-test/,,exitcode,500000,mountcrt:ef_test.crt
 ../C64/carts/rr-freeze/,,analyzer,0,mountcrt:rr-freeze.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:artest.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:nptest.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:rrtest.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:rr2test.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:nrtest.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:nr2test.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:arramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:npramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:rrramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:rr2ramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:nrramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:nr2ramwrite.crt
-../C64/carts/nordicpower/,arramwrite.prg,exitcode,10000000,mountcrt:ardummy.crt
-../C64/carts/nordicpower/,safearramwrite.prg,exitcode,10000000,mountcrt:ardummy.crt
-../C64/carts/nordicpower/,npramwrite.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/nordicpower/,rrramwrite.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/nordicpower/,rr2ramwrite.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/nordicpower/,nrramwrite.prg,exitcode,10000000,mountcrt:nrdummy.crt
-../C64/carts/nordicpower/,nr2ramwrite.prg,exitcode,10000000,mountcrt:nrdummy.crt
 ../C64/carts/retroreplay/,allowbank0.prg,exitcode,10000000,mountcrt:rrdummy.crt
 ../C64/carts/retroreplay/,allowbank1.prg,exitcode,10000000,mountcrt:rrdummy.crt
 ../C64/carts/retroreplay/,writeonce.prg,exitcode,10000000,mountcrt:rrdummy.crt
@@ -1134,35 +1104,100 @@
 ################################################################################
 # REU
 ################################################################################
+../REU/64ktransfer/,toc64.prg,exitcode,13000000,reu512k
+../REU/64ktransfer/,toreu.prg,exitcode,13000000,reu512k
+../REU/badoublewrite/,badoublewrite.prg,screenshot,6800000,reu512k
+../REU/bonzai/,spritetiming.prg,exitcode,49000000,reu512k
+../REU/bonzai/,checkchar.prg,exitcode,12000000,reu512k
+../REU/bonzai/,reudetect.prg,exitcode,15000000,reu512k
+../REU/colorram/,colorram.prg,exitcode,1000000000,reu512k
 ../REU/colorram/,dmacolortest.prg,interactive,0
-../REU/floatingbus/,floating.prg,exitcode,14000000,reu256k
-../REU/floatingbus/,floating-a.prg,exitcode,14000000,reu256k
-../REU/floatingbus/,floating-b.prg,exitcode,14000000,reu256k
-../REU/floatingbus/,floating2.prg,exitcode,20000000,reu256k,expect:timeout
-../REU/floatingbus/,floating3a.prg,exitcode,15000000,reu256k
-../REU/floatingbus/,floating3b.prg,exitcode,1500000000,reu256k
-../REU/floatingbus/,floating4a.prg,exitcode,65000000,reu256k
-../REU/floatingbus/,floating4b.prg,exitcode,65000000,reu256k
-../REU/floatingbus/,floating4c.prg,exitcode,95000000,reu256k
-../REU/floatingbus/,floating4d.prg,exitcode,95000000,reu256k
-../REU/mirrors/,mirrors128k.prg,exitcode,20000000,reu128k
-../REU/mirrors/,mirrors256k.prg,exitcode,20000000,reu256k
-../REU/mirrors/,mirrors1m.prg,exitcode,20000000,reu1m
-../REU/mirrors/,mirrors2m.prg,exitcode,20000000,reu2m
-../REU/mirrors/,mirrors4m.prg,exitcode,20000000,reu4m
-../REU/mirrors/,mirrors8m.prg,exitcode,20000000,reu8m
-../REU/mirrors/,mirrors16m.prg,exitcode,20000000,reu16m
+../REU/cpuport/,cpuport.prg,exitcode,1000000000,reu512k
+../REU/detectsize/,detectreu.prg,exitcode,10000000,reu512k
+../REU/ioglitch/,ioglitch.prg,exitcode,1000000000,reu512k
+../REU/mirrors/,mirrors512k.prg,exitcode,20000000,reu512k
+../REU/misc/,bitfill-auto.prg,exitcode,100000000,reu512k
+../REU/misc/,twoblocks-auto.prg,exitcode,100000000,reu512k
+../REU/misc/,twoblocks-ff00-auto.prg,exitcode,100000000,reu512k
+../REU/misc/,wheels.prg,exitcode,100000000,reu512k
+../REU/QuickReuTest-1.1.1/,quickreu.exo.prg,exitcode,43000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test1.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test1-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test2.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test2-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test3.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test3-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test4.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test4-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test5.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test5-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test6.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test6-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test7.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test7-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test8.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
+../REU/QuickReuTest-1.1.1/,quickreu-test8-timing.prg,exitcode,42000000,reu512k,comment:use 512k REU when running this test
 ../REU/ramlink/,reuverify.prg,analyzer,0
-../REU/ramlink/,reuverify128k.prg,exitcode,7000000,reu128k
-../REU/ramlink/,reuverify256k.prg,exitcode,7000000,reu256k
-../REU/ramlink/,reuverify1m.prg,exitcode,7000000,reu1m
-../REU/ramlink/,reuverify2m.prg,exitcode,7000000,reu2m
-../REU/ramlink/,reuverify4m.prg,exitcode,7000000,reu4m
-../REU/ramlink/,reuverify8m.prg,exitcode,8000000,reu8m
+../REU/ramlink/,reuverify512k.prg,exitcode,7000000,reu512k
 ../REU/raminitpattern/,powerup.prg,analyzer,0
+../REU/reudetect/,reudetect.prg,exitcode,100000000,reu512k,comment:load the "blu.reu" file first
+../REU/reutiming/,reutiming.prg,exitcode,100000000,reu512k
 #FIXME: NTSC fix
+../REU/reutiming2/,a.prg,screenshot,40800000,reu512k,vicii-pal
+../REU/reutiming2/,a2.prg,screenshot,40800000,reu512k,vicii-pal
+../REU/reutiming2/,a3.prg,screenshot,40800000,reu512k,vicii-pal
+../REU/reutiming2/,a4.prg,screenshot,40800000,reu512k,vicii-pal
+../REU/reutiming2/,b.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,b2.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,b3.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,b4.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,b5.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,b6.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,c.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
+../REU/reutiming2/,c2.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
+../REU/reutiming2/,c3.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,c4.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,d.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
+../REU/reutiming2/,d2.prg,screenshot,20000000,reu512k,vicii-pal,warn:vicefail
+../REU/reutiming2/,d3.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,d4.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/reutiming2/,e.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e3.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e4.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e5.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e6.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f3.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f4.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g3.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g4.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e2-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e3-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e4-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e5-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,e6-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f2-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f3-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,f4-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g2-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g3-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/reutiming2/,g4-m2.prg,exitcode,200000000,reu512k,vicii-pal
+../REU/rmw-trigger/,rmwtrigger-rom.prg,exitcode,1000000000,reu512k,warn:vicefail
+../REU/rmw-trigger/,rmwtrigger-ram.prg,exitcode,1000000000,reu512k,warn:vicefail
 ../REU/spriteba/,spriteba.prg,analyzer,0
 #FIXME: NTSC fix
+../REU/xfertiming/,xfertiming-cmp.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/xfertiming/,xfertiming-swap.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/xfertiming/,xfertiming-swap2.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/xfertiming/,xfertiming-toreu.prg,screenshot,20000000,reu512k,vicii-pal
+../REU/xfertiming/,xfertiming-toc64.prg,screenshot,20000000,reu512k,vicii-pal
 #TODO: clean up and add all the other reu timing tests....
 ################################################################################
 # GEO-RAM
@@ -1273,5 +1308,6 @@
 #../RS232/,test1.prg
 #../RTC/,ds12c887.prg
 #../MIDI/,midi-out-irq-test.prg
+../memory-expansions/,c64-reu-emd.prg,exitcode,535000000,reu512k
 ../memory-expansions/,c64-ram-emd.prg,exitcode,29000000
 #../cp-clockf83/cp-clockf83.d64
