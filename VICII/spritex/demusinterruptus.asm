@@ -23,6 +23,11 @@ bend:   !word 0
         inx
         bne -
         
+-       bit $d011
+        bpl -
+-       bit $d011
+        bmi -
+
         LDA #$7F
         STA $DC0D
         LDA $DC0D
