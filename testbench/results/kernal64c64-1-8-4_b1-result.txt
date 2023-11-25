@@ -2,10 +2,10 @@
 ./selftest/,c64-pass.prg,ok,exitcode,,,,-1,-1,-1
 ./selftest/,c64-fail.prg,error,screenshot,,,,-1,-1,-1
 ./selftest/,c64-pass.prg,ok,screenshot,,,,-1,-1,-1
-./selftest/,,timeout,exitcode,,,c64-fail.crt,-1,-1,-1
-./selftest/,,timeout,exitcode,,,c64-pass.crt,-1,-1,-1
-./selftest/,,timeout,screenshot,,,c64-fail.crt,-1,-1,-1
-./selftest/,,timeout,screenshot,,,c64-pass.crt,-1,-1,-1
+./selftest/,,error,exitcode,,,c64-fail.crt,-1,-1,-1
+./selftest/,,ok,exitcode,,,c64-pass.crt,-1,-1,-1
+./selftest/,,error,screenshot,,,c64-fail.crt,-1,-1,-1
+./selftest/,,ok,screenshot,,,c64-pass.crt,-1,-1,-1
 ../C64/raminitpattern/,cyberloadtest.prg,ok,exitcode,,,,-1,-1,-1
 ../C64/raminitpattern/,darkstarbbstest.prg,ok,exitcode,,,,-1,-1,-1
 ../C64/raminitpattern/,platoontest.prg,ok,exitcode,,,,-1,-1,-1
@@ -351,7 +351,7 @@
 ../CPU/cpujam/,jamirq.prg,timeout,exitcode,,,,-1,-1,-1
 ../CPU/cpujam/,jamnmi.prg,timeout,exitcode,,,,-1,-1,-1
 ../CPU/cpuport/,test1.prg,ok,exitcode,,,,-1,-1,-1
-../CPU/cpuport/,,timeout,exitcode,,,initvalue.crt,-1,-1,-1
+../CPU/cpuport/,,ok,exitcode,,,initvalue.crt,-1,-1,-1
 ../CPU/decimalmode/,scanner.prg,ok,exitcode,,,,-1,-1,-1
 ../CPU/decimalmode/,adc00.prg,ok,exitcode,,,,-1,-1,-1
 ../CPU/decimalmode/,adc01.prg,ok,exitcode,,,,-1,-1,-1
@@ -605,7 +605,7 @@
 ../VICII/border/,hvborder1.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/border/,hvborder2.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/border/,vborder-32-08.prg,error,screenshot,,,,-1,-1,PAL
-../VICII/border/,vborder-32-09.prg,timeout,screenshot,,,,-1,-1,PAL
+../VICII/border/,vborder-32-09.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/border/,vborder-33-08.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/border/,vborder-33-09.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/border/,vborder2-21.prg,ok,screenshot,,,,-1,-1,PAL
@@ -613,8 +613,8 @@
 ../VICII/border/,vborder2-35.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/border/,vborder2-36.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/border/,vborder2-63.prg,error,screenshot,,,,-1,-1,PAL
-../VICII/border/,vborder2-64.prg,timeout,screenshot,,,,-1,-1,PAL
-../VICII/colorfetchbug,bitmap.prg,timeout,screenshot,,,,-1,-1,PAL
+../VICII/border/,vborder2-64.prg,ok,screenshot,,,,-1,-1,PAL
+../VICII/colorfetchbug,bitmap.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/colorfetchbug,main.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/colorfetchbug,main2.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/colorfetchbug,main3.prg,error,screenshot,,,,-1,-1,PAL
@@ -625,7 +625,7 @@
 ../VICII/D011Test/,disable-bad_ntsc.prg,ok,screenshot,,,,-1,-1,NTSC
 ../VICII/dentest/,den01-48-0.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/dentest/,den01-48-1.prg,ok,screenshot,,,,-1,-1,PAL
-../VICII/dentest/,den01-48-2.prg,timeout,screenshot,,,,-1,-1,PAL
+../VICII/dentest/,den01-48-2.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/dentest/,den01-49-0.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/dentest/,den01-49-1.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/dentest/,den01-49-2.prg,ok,screenshot,,,,-1,-1,PAL
@@ -710,7 +710,7 @@
 ../VICII/fldscroll/,fldscroll-20-60.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/fldscroll/,fldscroll-21-60.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/fldscroll/,fldscroll-22-60.prg,ok,screenshot,,,,-1,-1,PAL
-../VICII/fldscroll/,fldscroll-29-60.prg,timeout,screenshot,,,,-1,-1,PAL
+../VICII/fldscroll/,fldscroll-29-60.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/fldscroll/,fldscroll-2A-60.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/fldscroll/,fldscroll-2B-60.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/flibug/,blackmail-ee.prg,error,screenshot,,,,-1,-1,PAL
@@ -783,7 +783,7 @@
 ../VICII/spritecrunch/,spritecrunch2-27.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/spritecrunch/,spritecrunch2-28.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/spritecrunch/,spritecrunch2-29.prg,error,screenshot,,,,-1,-1,PAL
-../VICII/spritedma/,d017-54.prg,timeout,screenshot,,,,-1,-1,PAL
+../VICII/spritedma/,d017-54.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/spritedma/,d017-57.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/spritedma/,d017-54_ntsc.prg,ok,screenshot,,,,-1,-1,NTSC
 ../VICII/spritedma/,d017-57_ntsc.prg,ok,screenshot,,,,-1,-1,NTSC
@@ -962,7 +962,7 @@
 ../SID/wb_testsuite/,noise_writeback_check_F_to_E_new.prg,ok,exitcode,,,,-1,1,-1
 ../SID/wb_testsuite/,noise_writeback_check_F_to_F_new.prg,ok,exitcode,,,,-1,1,-1
 ../SID/osc3-wave0/,osc3-wave0.prg,error,exitcode,,,,-1,0,-1
-../SID/osc3-wave0/,osc3-wave0-new.prg,timeout,exitcode,,,,-1,1,-1
+../SID/osc3-wave0/,osc3-wave0-new.prg,error,exitcode,,,,-1,1,-1
 ../SID/osc_topbit/,osc_topbit_test_noise_new.prg,ok,exitcode,,,,-1,1,-1
 ../SID/osc_topbit/,osc_topbit_test_noise_old.prg,ok,exitcode,,,,-1,0,-1
 ../SID/osc_topbit/,osc_topbit_test_pulse_new.prg,ok,exitcode,,,,-1,1,-1
@@ -995,24 +995,24 @@
 ../SID/writedelay/,writedelay.prg,ok,exitcode,,,,-1,-1,-1
 ../SID/wf12nsr/,wf12nsr.prg,ok,exitcode,,,,-1,0,-1
 ../SID/wf12nsr/,wf12nsr-8580.prg,error,exitcode,,,,-1,1,-1
-../C64/autostart/defaults/,,timeout,exitcode,,,test.crt,-1,-1,-1
+../C64/autostart/defaults/,,ok,exitcode,,,test.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-ramdetect-ar.prg,ok,exitcode,,,ardummy.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-ramsizedetect-ar.prg,ok,exitcode,,,ardummy.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-ariotest1-ar.prg,ok,exitcode,,,ardummy.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-ariotest2-ar.prg,ok,exitcode,,,ardummy.crt,-1,-1,-1
 ../C64/carts/aracidtest/,test-arramtest2-ar.prg,ok,exitcode,,,ardummy.crt,-1,-1,-1
-../C64/carts/,,timeout,exitcode,,,8kgame.crt,-1,-1,-1
-../C64/carts/,,timeout,exitcode,,,16kgame.crt,-1,-1,-1
-../C64/carts/,,timeout,exitcode,,,romram.crt,-1,-1,-1
-../C64/carts/pagefox,,timeout,exitcode,,,writeram-8000.crt,-1,-1,-1
-../C64/carts/pagefox,,timeout,exitcode,,,writeram-a000.crt,-1,-1,-1
-../C64/carts/pagefox,,timeout,exitcode,,,godot.crt,-1,-1,-1
-../C64/carts/ef-test/,,timeout,exitcode,,,ef_test.crt,-1,-1,-1
-../C64/carts/supergames/,,timeout,exitcode,,,supergames.crt,-1,-1,-1
+../C64/carts/,,ok,exitcode,,,8kgame.crt,-1,-1,-1
+../C64/carts/,,ok,exitcode,,,16kgame.crt,-1,-1,-1
+../C64/carts/,,ok,exitcode,,,romram.crt,-1,-1,-1
+../C64/carts/pagefox,,ok,exitcode,,,writeram-8000.crt,-1,-1,-1
+../C64/carts/pagefox,,ok,exitcode,,,writeram-a000.crt,-1,-1,-1
+../C64/carts/pagefox,,error,exitcode,,,godot.crt,-1,-1,-1
+../C64/carts/ef-test/,,ok,exitcode,,,ef_test.crt,-1,-1,-1
+../C64/carts/supergames/,,ok,exitcode,,,supergames.crt,-1,-1,-1
 ../C64/carts/tamtest/,,error,exitcode,,,tamtest.crt,-1,-1,-1
-../C64/carts/ultimax,,timeout,screenshot,,,8k-vic-ef.crt,-1,-1,PAL
-../C64/carts/ultimax,,timeout,screenshot,,,16k-vic-ef.crt,-1,-1,PAL
-../C64/carts/ultimax,,timeout,screenshot,,,ultimax-vic-ef.crt,-1,-1,PAL
+../C64/carts/ultimax,,ok,screenshot,,,8k-vic-ef.crt,-1,-1,PAL
+../C64/carts/ultimax,,ok,screenshot,,,16k-vic-ef.crt,-1,-1,PAL
+../C64/carts/ultimax,,ok,screenshot,,,ultimax-vic-ef.crt,-1,-1,PAL
 ../REU/64ktransfer/,toc64.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/64ktransfer/,toreu.prg,ok,exitcode,,,,-1,-1,-1
 ../REU/badoublewrite/,badoublewrite.prg,error,screenshot,,,,-1,-1,-1
@@ -1119,7 +1119,7 @@
 ../REU/reutiming2/,g4-m2.prg,error,exitcode,,,,-1,-1,PAL
 ../REU/rmw-trigger/,rmwtrigger-rom.prg,error,exitcode,,,,-1,-1,-1
 ../REU/rmw-trigger/,rmwtrigger-ram.prg,error,exitcode,,,,-1,-1,-1
-../REU/xfertiming/,xfertiming-cmp.prg,timeout,screenshot,,,,-1,-1,PAL
+../REU/xfertiming/,xfertiming-cmp.prg,error,screenshot,,,,-1,-1,PAL
 ../REU/xfertiming/,xfertiming-swap.prg,error,screenshot,,,,-1,-1,PAL
 ../REU/xfertiming/,xfertiming-swap2.prg,error,screenshot,,,,-1,-1,PAL
 ../REU/xfertiming/,xfertiming-toreu.prg,error,screenshot,,,,-1,-1,PAL
@@ -1146,7 +1146,7 @@
 ../drive/rpm/,rpm3.prg,error,exitcode,,rpm.g64,,-1,-1,PAL
 ../drive/rpm/,rpm3.prg,timeout,exitcode,,,,-1,-1,PAL
 ../drive/scanner/,scanner35.prg,ok,exitcode,scan35.d64,,,-1,-1,-1
-../drive/scanner/,scanner35e.prg,ok,exitcode,scan35err.d64,,,-1,-1,-1
+../drive/scanner/,scanner35e.prg,timeout,exitcode,scan35err.d64,,,-1,-1,-1
 ../drive/scanner/,scanner40.prg,ok,exitcode,scan40.d64,,,-1,-1,-1
 ../drive/scanner/,scanner40e.prg,ok,exitcode,scan40err.d64,,,-1,-1,-1
 ../drive/scanner/,scanner42.prg,ok,exitcode,scan42.d64,,,-1,-1,-1
@@ -1154,7 +1154,7 @@
 ../drive/scanner/,scanner35.prg,ok,exitcode,,scan35.g64,,-1,-1,-1
 ../drive/scanner/,scanner40.prg,ok,exitcode,,scan40.g64,,-1,-1,-1
 ../drive/scanner/,scanner42.prg,ok,exitcode,,scan42.g64,,-1,-1,-1
-../drive/skew/,skew1.prg,error,exitcode,skew.d64,,,-1,-1,-1
+../drive/skew/,skew1.prg,ok,exitcode,skew.d64,,,-1,-1,-1
 ../drive/skew/,skew1.prg,ok,exitcode,,skew.g64,,-1,-1,-1
 ../drive/selftest/,selftest.prg,ok,exitcode,,,,-1,-1,-1
 ../drive/openbus/,openbus.prg,error,exitcode,,,,-1,-1,-1
@@ -1177,4 +1177,4 @@
 ../memory-expansions/,c64-georam-emd.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c64-reu-emd.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c64-ram-emd.prg,ok,exitcode,,,,-1,-1,-1
-# 179 minutes and 53 seconds elapsed.
+# 138 minutes and 7 seconds elapsed.

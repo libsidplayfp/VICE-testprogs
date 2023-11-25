@@ -137,10 +137,12 @@ function kernal64vic20_run_screenshot
     rm -f "$1"/.testbench/"$screenshottest"-kernal64vic20.png
     if [ $verbose == "1" ]; then
         echo $KERNAL64VIC20 $KERNAL64VIC20OPTS $KERNAL64VIC20OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64vic20.png "$4"
-        $KERNAL64VIC20 $KERNAL64VIC20OPTS $KERNAL64VIC20OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64vic20.png "$4" 2> /dev/null | grep "cycles elapsed" | tr '\n' ' '
+# CAUTION: $4 must not be in quotes, else kernal64 sees an empty paramater, which will make it error out
+        $KERNAL64VIC20 $KERNAL64VIC20OPTS $KERNAL64VIC20OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64vic20.png $4 2> /dev/null | grep "cycles elapsed" | tr '\n' ' '
         exitcode=${PIPESTATUS[0]}
     else
-        $KERNAL64VIC20 $KERNAL64VIC20OPTS $KERNAL64VIC20OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64vic20.png "$4" 1> /dev/null 2> /dev/null
+# CAUTION: $4 must not be in quotes, else kernal64 sees an empty paramater, which will make it error out
+        $KERNAL64VIC20 $KERNAL64VIC20OPTS $KERNAL64VIC20OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64vic20.png $4 1> /dev/null 2> /dev/null
         exitcode=$?
     fi
 
@@ -211,10 +213,12 @@ function kernal64vic20_run_exitcode
 {
     if [ $verbose == "1" ]; then
         echo $KERNAL64VIC20 $KERNAL64VIC20OPTS $KERNAL64VIC20OPTSEXITCODE ${@:5} "--limitcycles" "$3" "$4" "1> /dev/null 2> /dev/null"
-        $KERNAL64VIC20 $KERNAL64VIC20OPTS $KERNAL64VIC20OPTSEXITCODE ${@:5} "--limitcycles" "$3" "$4" 2> /dev/null | grep "cycles elapsed" | tr '\n' ' '
+# CAUTION: $4 must not be in quotes, else kernal64 sees an empty paramater, which will make it error out
+        $KERNAL64VIC20 $KERNAL64VIC20OPTS $KERNAL64VIC20OPTSEXITCODE ${@:5} "--limitcycles" "$3" $4 2> /dev/null | grep "cycles elapsed" | tr '\n' ' '
         exitcode=${PIPESTATUS[0]}
     else
-        $KERNAL64VIC20 $KERNAL64VIC20OPTS $KERNAL64VIC20OPTSEXITCODE ${@:5} "--limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
+# CAUTION: $4 must not be in quotes, else kernal64 sees an empty paramater, which will make it error out
+        $KERNAL64VIC20 $KERNAL64VIC20OPTS $KERNAL64VIC20OPTSEXITCODE ${@:5} "--limitcycles" "$3" $4 1> /dev/null 2> /dev/null
         exitcode=$?
     fi
 #    echo "exited with: " $exitcode

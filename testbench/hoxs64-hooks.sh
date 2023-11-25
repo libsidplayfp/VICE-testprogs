@@ -104,10 +104,10 @@ function hoxs64_get_options
 #               exitoptions="-SID8580"
                 new_sid_enabled=1
            ;;
-#       "reu512k")
-#               exitoptions="+REUMODE=3"
-#               reu_enabled=1
-#           ;;
+       "reu512k")
+               exitoptions="-reu512k"
+               reu_enabled=1
+           ;;
 #       "geo512k")
 #               exitoptions="+NEORAMMODE=3"
 #               georam_enabled=1

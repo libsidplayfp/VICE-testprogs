@@ -1,3 +1,4 @@
 ./selftest/,cbm610-pass.prg,ok,exitcode,,,,-1,-1,-1
 ./selftest/,cbm610-fail.prg,error,exitcode,,,,-1,-1,-1
 # 0 minutes and 11 seconds elapsed.
+# 0 minutes and 0 seconds elapsed.

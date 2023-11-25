@@ -15,10 +15,6 @@
 ./selftest/,c64-pass.prg,exitcode,10000000
 ./selftest/,c64-fail.prg,screenshot,10000000,expect:error
 ./selftest/,c64-pass.prg,screenshot,10000000
-./selftest/,,exitcode,10000000,mountcrt:c64-fail.crt,expect:error
-./selftest/,,exitcode,10000000,mountcrt:c64-pass.crt
-./selftest/,,screenshot,10000000,mountcrt:c64-fail.crt,expect:error
-./selftest/,,screenshot,10000000,mountcrt:c64-pass.crt
 ################################################################################
 # general
 ################################################################################
@@ -347,6 +343,7 @@
 ../CPU/Acid800/,cpu_illegal.prg,exitcode,41000000
 ../CPU/Acid800/,cpu_insn.prg,exitcode,35000000
 ../CPU/Acid800/,cpu_timing.prg,exitcode,22000000,vicii-pal
+../CPU/Acid800/,cpu_timing_ntsc.prg,exitcode,23000000,vicii-ntsc,comment:not 100% stable - rerun on failure
 ../CPU/Acid800/,cpu_bugs.prg,exitcode,25000000
 ../CPU/Acid800/,cpu_clisei.prg,exitcode,23000000
 ../CPU/ane/,ane.prg,exitcode,70000000,vicii-pal
@@ -377,7 +374,6 @@
 ../CPU/cpuport/,bitfade.prg,analyzer,0
 ../CPU/cpuport/,delaytime.prg,analyzer,0
 ../CPU/cpuport/,test1.prg,exitcode,5500000
-../CPU/cpuport/,,exitcode,100000,mountcrt:initvalue.crt
 ../CPU/decimalmode/,scanner.prg,exitcode,750000000
 ../CPU/decimalmode/,adc00.prg,exitcode,550000000
 ../CPU/decimalmode/,adc01.prg,exitcode,550000000
@@ -502,6 +498,8 @@
 ../CIA/CIA-AcountsB/,cia-b-counts-a.prg,exitcode,100000000,vicii-pal
 ../CIA/CIA-AcountsB/,cmp-b-counts-a-old.prg,exitcode,100000000,cia-old,vicii-pal
 #FIXME: fix the following three tests also for NTSCOLD
+../CIA/CIA-AcountsB/,cia-b-counts-a_ntsc.prg,exitcode,100000000,vicii-ntsc
+../CIA/CIA-AcountsB/,cmp-b-counts-a-old_ntsc.prg,exitcode,100000000,cia-old,vicii-ntsc
 ../CIA/cia-timer/,cia-timer-oldcias.prg,exitcode,200000000,cia-old
 ../CIA/ciaports/,ciaports.prg,interactive,0,comment:various Keys must be pressed and results compared manually
 ../CIA/ciaports/,ghosting.prg,interactive,0,comment:various Keys must be pressed and results compared manually
@@ -619,6 +617,7 @@
 ../CIA/tod/,powerup.prg,exitcode,100000000
 ../CIA/tod/,read-latch.prg,exitcode,100000000,vicii-pal
 ../CIA/tod/,stability.prg,exitcode,40000000,vicii-pal
+../CIA/tod/,stability-ntsc.prg,exitcode,41000000,vicii-ntsc
 ../CIA/tod/,write-stop.prg,exitcode,100000000
 ../CIA/transactor/,ciatest64.prg,interactive,0
 ################################################################################
@@ -647,6 +646,8 @@
 ../VICII/border/,vborder2-36.prg,screenshot,12000000,vicii-pal
 ../VICII/border/,vborder2-63.prg,screenshot,12000000,vicii-pal
 ../VICII/border/,vborder2-64.prg,screenshot,12000000,vicii-pal
+../VICII/border/,vborder_ntsc.prg,interactive,0,vicii-ntsc
+../VICII/border/,vborder2_ntsc.prg,interactive,0,vicii-ntsc
 ../VICII/colorfetchbug,bitmap.prg,screenshot,7100000,vicii-pal
 ../VICII/colorfetchbug,main.prg,screenshot,7100000,vicii-pal
 ../VICII/colorfetchbug,main2.prg,screenshot,7100000,vicii-pal
@@ -658,6 +659,7 @@
 ../VICII/D011Test/,d011h1.prg,interactive,0,vicii-pal
 ../VICII/D011Test/,d011h2.prg,interactive,0,vicii-pal
 ../VICII/D011Test/,d011n.prg,interactive,0,vicii-pal
+../VICII/D011Test/,d011ntsc.prg,interactive,0,vicii-ntsc
 ../VICII/D011Test/,d011sc.prg,interactive,0,vicii-pal
 ../VICII/D011Test/,d011v1.prg,interactive,0,vicii-pal
 ../VICII/D011Test/,d011v2.prg,interactive,0,vicii-pal
@@ -668,6 +670,7 @@
 ../VICII/D011Test/,s1.prg,interactive,0,vicii-pal
 ../VICII/D011Test/,vicnt2.prg,interactive,0,vicii-pal
 ../VICII/D011Test/,disable-bad.prg,screenshot,100000000,vicii-pal
+../VICII/D011Test/,disable-bad_ntsc.prg,screenshot,100000000,vicii-ntsc
 #FIXME: fix and check on NTSCOLD
 ../VICII/dentest/,den01-48-0.prg,screenshot,10000000,vicii-pal
 ../VICII/dentest/,den01-48-1.prg,screenshot,10000000,vicii-pal
@@ -690,11 +693,32 @@
 ../VICII/dentest/,denrsel-s0.prg,screenshot,10000000,vicii-pal
 ../VICII/dentest/,denrsel-s1.prg,screenshot,10000000,vicii-pal
 ../VICII/dentest/,denrsel-s2.prg,screenshot,10000000,vicii-pal
+../VICII/dentest/,den01-48-0_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/dentest/,den01-48-1_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/dentest/,den01-48-2_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/dentest/,den01-49-0_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/dentest/,den01-49-1_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: this test is broken on NTSC
+../VICII/dentest/,den01-49-2_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/dentest/,den10-48-0_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/dentest/,den10-48-1_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/dentest/,den10-48-2_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/dentest/,den10-51-0_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/dentest/,den10-51-1_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/dentest/,den10-51-2_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/dentest/,den10-51-3_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/dentest/,denrsel-0_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: this test is broken on NTSC
+../VICII/dentest/,denrsel-1_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: this test is broken on NTSC
+../VICII/dentest/,denrsel-2_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/dentest/,denrsel-63_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/dentest/,denrsel-s0_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: this test is broken on NTSC
+../VICII/dentest/,denrsel-s1_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: this test is broken on NTSC
+../VICII/dentest/,denrsel-s2_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/dentest/,denrsel55_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: check tests on NTSCOLD
 ../VICII/dmadelay/,test1.prg,interactive,0,vicii-pal,warn:vicfetch,comment:see automatic variants
 ../VICII/dmadelay/,test1-2a-03.prg,screenshot,10000000,vicii-pal,warn:vicfetch
@@ -720,6 +744,30 @@
 ../VICII/dmadelay/,test3-28-18.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/dmadelay/,test3-28-19.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/dmadelay/,test3-28-1a.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/dmadelay/,test1-ntsc.prg,interactive,0,vicii-ntsc,warn:vicfetch,comment:see automatic variants
+../VICII/dmadelay/,test1-2e-03-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test1-2e-04-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test1-2e-10-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test1-2e-11-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test1-2e-16-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test1-2e-17-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test1-2e-18-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test2-ntsc.prg,interactive,0,vicii-ntsc,warn:vicfetch,comment:see automatic variants
+../VICII/dmadelay/,test2-2c-05-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test2-2c-06-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test2-2c-11-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test2-2c-12-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test2-2c-16-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test2-2c-17-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test2-2c-18-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test3-ntsc.prg,interactive,0,vicii-ntsc,warn:vicfetch,comment:see automatic variants
+../VICII/dmadelay/,test3-2c-07-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test3-2c-08-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test3-2c-13-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test3-2c-14-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test3-2c-18-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test3-2c-19-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/dmadelay/,test3-2c-1a-ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
 #FIXME: doesnt work in emu, possibly unstable on real hw
 ../VICII/dmadelay/,test4.prg,interactive,0,vicii-pal,warn:vicfetch,warn:vicefail
 ../VICII/fldscroll/,fldscroll.prg,interactive,0,vicii-pal,warn:vicfetch,comment:see automatic variants
@@ -741,6 +789,7 @@
 ../VICII/frodotests/,tech-tech.prg,interactive,0,vicii-pal
 ../VICII/frodotests/,text26.prg,screenshot,9000000,vicii-pal
 ../VICII/gfxfetch/,gfxfetch.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/gfxfetch/,gfxfetch_ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
 #FIXME: check on NTSCOLD
 ../VICII/greydot/,greydot.prg,screenshot,20000000,vicii-pal
 ../VICII/lpcoordinates/,lpcoords.prg,interactive,0
@@ -750,11 +799,14 @@
 ../VICII/lp-trigger/,test2.prg,exitcode,20000000,vicii-pal,vicii-old
 ../VICII/lp-trigger/,test2new.prg,exitcode,20000000,vicii-pal,vicii-new
 ../VICII/movesplit/,movesplit.prg,analyzer,0,vicii-pal
+../VICII/movesplit/,movesplit_ntsc.prg,analyzer,0,vicii-ntsc
 ../VICII/phi1timing/,phi1timing.prg,exitcode,10000000,vicii-pal,warn:vicfetch
+../VICII/phi1timing/,phi1timing_ntsc.prg,exitcode,10000000,vicii-ntsc,warn:vicfetch
 ../VICII/rasterirq/,rasterirq_hold.prg,screenshot,10000000,vicii-pal
 ../VICII/screenpos/,screenpos.prg,screenshot,10000000,vicii-pal
 ../VICII/sb_sprite_fetch/,sbsprf24-163.prg,screenshot,11000000,vicii-pal
 ../VICII/sb_sprite_fetch/,sbsprf24-164.prg,screenshot,11000000,vicii-pal
+../VICII/screenpos/,screenpos_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: check tests on NTSCOLD
 #FIXME: fix test for NTSC, dump reference data
 ../VICII/split-tests/bascan/,bascan.prg,exitcode,100000000,vicii-pal
@@ -770,6 +822,7 @@
 ../VICII/vicii_timing/,vicii_reg_timing-a5.prg,screenshot,35000000,vicii-pal,warn:vicfetch
 ../VICII/vicii_timing/,vicii_reg_timing-ff.prg,screenshot,35000000,vicii-pal,warn:vicfetch
 ../VICII/videomode/,rmwtest.prg,screenshot,10000000,vicii-pal
+../VICII/videomode/,rmwtest_ntsc.prg,screenshot,10000000,vicii-ntsc
 ../VICII/videomode/,videomode1.prg,screenshot,10000000,vicii-pal
 ../VICII/videomode/,videomode2.prg,screenshot,10000000,vicii-pal
 ../VICII/videomode/,videomode-v.prg,screenshot,10000000,vicii-pal
@@ -778,10 +831,18 @@
 ../VICII/videomode/,videomode-y.prg,screenshot,10000000,vicii-pal
 ../VICII/videomode/,videomode-z.prg,screenshot,10000000,vicii-pal
 #FIXME: VICE output doesnt match my C64 (better captures needed)
+../VICII/videomode/,videomode-v_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/videomode/,videomode-w_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/videomode/,videomode-x_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/videomode/,videomode-y_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/videomode/,videomode-z_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/videomode/,videomode2_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/videomode/,videomode1_ntsc.prg,screenshot,10000000,vicii-ntsc
 #FIXME: check on NTSCOLD (better captures needed)
 ../VICII/vspbug/,lft-safe-vsp.prg,interactive,0,vicii-pal
 ../VICII/vspbug/,vsp_bug.prg,exitcode,13000000
 ../VICII/vsp-tester/,vsp-tester.prg,exitcode,15000000,vicii-pal
+../VICII/vsp-tester/,vsp-tester-ntsc.prg,exitcode,15000000,vicii-ntsc
 ../VICII/sequencer-bug/,bug.prg,screenshot,7000000,vicii-pal
 ################################################################################
 # Sprites
@@ -789,6 +850,7 @@
 ################################################################################
 ../VICII/sprite0move/,sprite0move.prg,analyzer,0,vicii-pal
 #FIXME: tests are broken on NTSC
+#../VICII/sprite0move/,sprite0move.prg_ntsc,analyzer,0,vicii-ntsc
 ../VICII/spritebug/,spritebug.prg,interactive,0,vicii-pal,comment:see automatic variants
 ../VICII/spritebug/,spritebug-104.prg,screenshot,10000000,vicii-pal
 ../VICII/spritebug/,spritebug-105.prg,screenshot,10000000,vicii-pal
@@ -805,6 +867,9 @@
 ../VICII/spritecollisions/,sprite-gfx-hi-mc.prg,exitcode,10000000
 ../VICII/spritecollisions/,sprite-gfx-mc-mc.prg,exitcode,10000000
 #FIXME: tests are broken on NTSC
+#../VICII/spritecollisions/,sprite-gfx-collision-cycle_ntsc.prg,exitcode,10000000,vicii-ntsc
+#../VICII/spritecollisions/,sprite-sprite-collision-cycle_ntsc.prg,exitcode,10000000,vicii-ntsc
+#../VICII/spritecollisions/,sprite-sprite_ntsc.prg,exitcode,10000000,vicii-ntsc
 ../VICII/spritecrunch/,spritecrunch.prg,interactive,0,vicii-pal,warn:vicfetch,comment:see automatic variants
 ../VICII/spritecrunch/,spritecrunch-3b-00.prg,screenshot,21000000,vicii-pal,warn:vicfetch
 ../VICII/spritecrunch/,spritecrunch-3c-00.prg,screenshot,21000000,vicii-pal,warn:vicfetch
@@ -821,11 +886,18 @@
 #FIXME: check on NTSCOLD and make reference screenshots
 ../VICII/spritedma/,d017-54.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/spritedma/,d017-57.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/spritedma/,d017-54_ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/spritedma/,d017-57_ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
 ../VICII/spriteenable/,spriteenable1.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/spriteenable/,spriteenable2.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/spriteenable/,spriteenable3.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/spriteenable/,spriteenable4.prg,screenshot,10000000,vicii-pal,warn:vicfetch
 ../VICII/spriteenable/,spriteenable5.prg,screenshot,10000000,vicii-pal,warn:vicfetch
+../VICII/spriteenable/,spriteenable1_ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/spriteenable/,spriteenable2_ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/spriteenable/,spriteenable3_ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/spriteenable/,spriteenable4_ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
+../VICII/spriteenable/,spriteenable5_ntsc.prg,screenshot,10000000,vicii-ntsc,warn:vicfetch
 ../VICII/spritefetchbug/,test.prg,interactive,0,vicii-pal,comment:see automatic variants
 ../VICII/spritefetchbug/,test-136-2a.prg,screenshot,10000000,vicii-pal
 #FIXME: seems to fail randomly, hard to reproduce
@@ -853,10 +925,12 @@
 ../VICII/spritesplit/,ss-unexp-exp-mc.prg,screenshot,10000000,vicii-pal
 ../VICII/spritesplit/,ss-xpos.prg,screenshot,10000000,vicii-pal
 ../VICII/spritesteal/,spritesteal.prg,exitcode,100000000,vicii-pal
+../VICII/spritesteal/,spritesteal_ntsc.prg,exitcode,100000000,vicii-ntsc
 ../VICII/spritevssprite/,spritevssprite.prg,exitcode,32000000,vicii-pal
 ../VICII/spritex/,demusinterruptus.prg,exitcode,6500000,vicii-pal
 #FIXME: check on NTSCOLD
 ../VICII/spritex/,testsuite.prg,exitcode,10000000,vicii-pal
+../VICII/spritex/,testsuite_ntsc.prg,exitcode,10000000,vicii-ntsc
 #FIXME: port test to NTSC
 ../VICII/spritey/,spritey.prg,exitcode,100000000,vicii-pal
 ################################################################################
@@ -1095,76 +1169,14 @@
 # ../C64/carts runtime 0 minutes and 44 seconds (chameleon)
 ################################################################################
 ../C64/autostart/cartio/,test.prg,analyzer,0
-../C64/autostart/defaults/,,exitcode,4000000,mountcrt:test.crt,comment:repeatedly press reset to check i/o register reset behaviour
-../C64/carts/aracidtest/,test-ramdetect-ar.prg,exitcode,10000000,mountcrt:ardummy.crt
-../C64/carts/aracidtest/,test-ramsizedetect-ar.prg,exitcode,11000000,mountcrt:ardummy.crt
-../C64/carts/aracidtest/,test-ariotest1-ar.prg,exitcode,10000000,mountcrt:ardummy.crt
-../C64/carts/aracidtest/,test-ariotest2-ar.prg,exitcode,10000000,mountcrt:ardummy.crt
-../C64/carts/aracidtest/,test-arramtest2-ar.prg,exitcode,11000000,mountcrt:ardummy.crt
-../C64/carts/aracidtest/,test-ramdetect-ar.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-ramsizedetect-ar.prg,exitcode,11000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-ariotest1-ar.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-ariotest2-ar.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-arramtest2-ar.prg,exitcode,11000000,mountcrt:npdummy.crt
-../C64/carts/aracidtest/,test-ramdetect.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/aracidtest/,test-ramsizedetect.prg,exitcode,11000000,mountcrt:rrdummy.crt
-../C64/carts/aracidtest/,test-ariotest1.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/aracidtest/,test-ariotest2.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/aracidtest/,test-arramtest2.prg,exitcode,11000000,mountcrt:rrdummy.crt
-../C64/carts/aracidtest/,test-ramdetect.prg,exitcode,10000000,mountcrt:nrdummy.crt
-../C64/carts/aracidtest/,test-ramsizedetect.prg,exitcode,11000000,mountcrt:nrdummy.crt
-../C64/carts/aracidtest/,test-ariotest1.prg,exitcode,10000000,mountcrt:nrdummy.crt
-../C64/carts/aracidtest/,test-ariotest2.prg,exitcode,10000000,mountcrt:nrdummy.crt
-../C64/carts/aracidtest/,test-arramtest2-nr.prg,exitcode,11000000,mountcrt:nrdummy.crt
 #TODO:
 #../C64/carts/,exos.prg
 ../C64/carts/,mmcrplugin.prg,analyzer,0
-../C64/carts/,,exitcode,2500000,mountcrt:8kgame.crt
-../C64/carts/,,exitcode,2500000,mountcrt:16kgame.crt
 #TODO: do more research and make a proper automatic test
-../C64/carts/,,analyzer,0,mountcrt:mmcr-64krom.crt
-../C64/carts/,,exitcode,100000,mountcrt:romram.crt
-../C64/carts/,,exitcode,100000,reu512k,mountcrt:rr-reu.crt
 #TODO: make this automatic
-../C64/carts/ocean,,interactive,0,mountcrt:ocean.crt
-../C64/carts/pagefox,,exitcode,100000,mountcrt:writeram-8000.crt
-../C64/carts/pagefox,,exitcode,100000,mountcrt:writeram-a000.crt
-../C64/carts/pagefox,,exitcode,500000,mountcrt:godot.crt
-../C64/carts/ef-test/,,exitcode,500000,mountcrt:ef_test.crt
-../C64/carts/rr-freeze/,,analyzer,0,mountcrt:rr-freeze.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:artest.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:nptest.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:rrtest.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:rr2test.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:nrtest.crt
-../C64/carts/nordicpower/,,exitcode,100000,mountcrt:nr2test.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:arramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:npramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:rrramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:rr2ramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:nrramwrite.crt
-../C64/carts/nordicpower/,,exitcode,1000000,mountcrt:nr2ramwrite.crt
-../C64/carts/nordicpower/,arramwrite.prg,exitcode,10000000,mountcrt:ardummy.crt
-../C64/carts/nordicpower/,safearramwrite.prg,exitcode,10000000,mountcrt:ardummy.crt
-../C64/carts/nordicpower/,npramwrite.prg,exitcode,10000000,mountcrt:npdummy.crt
-../C64/carts/nordicpower/,rrramwrite.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/nordicpower/,rr2ramwrite.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/nordicpower/,nrramwrite.prg,exitcode,10000000,mountcrt:nrdummy.crt
-../C64/carts/nordicpower/,nr2ramwrite.prg,exitcode,10000000,mountcrt:nrdummy.crt
-../C64/carts/retroreplay/,allowbank0.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/retroreplay/,allowbank1.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/retroreplay/,writeonce.prg,exitcode,10000000,mountcrt:rrdummy.crt
-../C64/carts/supergames/,,exitcode,100000,mountcrt:supergames.crt
-../C64/carts/tamtest/,,exitcode,35000000,mountcrt:tamtest.crt
 #TODO: make this automatic
 ../C64/carts/ultimax,ultimax-ef.crt,interactive,0
 ../C64/carts/ultimax,ultimax-rr.crt,interactive,0
-../C64/carts/ultimax,,screenshot,1000000,mountcrt:8k-vic-ef.crt,vicii-pal
-../C64/carts/ultimax,,screenshot,1000000,mountcrt:8k-vic-rr.crt,vicii-pal
-../C64/carts/ultimax,,screenshot,1000000,mountcrt:16k-vic-rr.crt,vicii-pal
-../C64/carts/ultimax,,screenshot,1000000,mountcrt:16k-vic-ef.crt,vicii-pal
-../C64/carts/ultimax,,screenshot,1000000,mountcrt:ultimax-vic-rr.crt,vicii-pal
-../C64/carts/ultimax,,screenshot,1000000,mountcrt:ultimax-vic-ef.crt,vicii-pal
 ../C64/freezer/ciairq,ciairq1t1.prg,interactive,0,comment:freeze and restart
 ../C64/freezer/ciairq,ciairq1t2.prg,interactive,0,comment:freeze and restart
 ../C64/freezer/ciairq,ciairq2t1.prg,interactive,0,comment:freeze and restart

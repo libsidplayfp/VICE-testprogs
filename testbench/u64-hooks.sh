@@ -30,7 +30,20 @@ function u64_check_environment
 
 function u64_ucodenet
 {
-    ucodenet -n $u64_ip $1 $2 $3 $4 $5 $6 $7 $8 $9
+    if [ $verbose == "1" ]; then
+        echo ucodenet -n $u64_ip $1 $2 $3 $4 $5 $6 $7 $8 $9
+    fi
+    ucodenet -n $u64_ip $1 $2 $3 $4 $5 $6 $7 $8
+#    sleep 1
+}
+
+function u64_ugrab
+{
+    if [ $verbose == "1" ]; then
+        echo ugrab $1 $2 $3 $4 $5 $6 $7 $8 $9
+    fi
+    ugrab $1 $2 $3 $4 $5 $6 $7 $8 $9
+#    sleep 1
 }
 
 function u64_clear_returncode
@@ -95,6 +108,9 @@ function u64_prepare
     echo -ne "preparing u64."
     echo -ne "."
     u64_ucodenet --resetwait
+    if [ "$?" != "0" ]; then exit -1; fi
+    u64_ucodenet --vicstream-start
+    if [ "$?" != "0" ]; then exit -1; fi
     echo "ok"
 }
 
@@ -287,7 +303,7 @@ function u64_run_screenshot
 
     # run program
     u64_clear_returncode
-    u64_ucodenet -x "$1"/"$2" > /dev/null
+    u64_ucodenet -x "$1"/"$2"
     if [ "$?" != "0" ]; then exit -1; fi
 #    u64_poll_returncode 5
 #    exitcode=$?
@@ -297,18 +313,13 @@ function u64_run_screenshot
 
     u64_poll_returncode $(($3 + 1))
     exitcode=$?
-    
-#    if [ "${videotype}" == "NTSC" ]; then
-#        chshot --ntsc -o "$1"/.testbench/"$2"-u64.png
-#        if [ "$?" != "0" ]; then exit -1; fi
-#    else
-        u64_ucodenet --vicstream-start
-        if [ "$?" != "0" ]; then exit -1; fi
-        ugrab "$1"/.testbench/"$screenshottest"-u64.png
-        if [ "$?" != "0" ]; then exit -1; fi
-        u64_ucodenet --vicstream-stop
-        if [ "$?" != "0" ]; then exit -1; fi
-#    fi
+
+#    u64_ucodenet --vicstream-start
+#    if [ "$?" != "0" ]; then exit -1; fi
+    u64_ugrab "$1"/.testbench/"$screenshottest"-u64.png
+    if [ "$?" != "0" ]; then exit -1; fi
+#    u64_ucodenet --vicstream-stop
+#    if [ "$?" != "0" ]; then exit -1; fi
 
 #    echo "exited with: " $exitcode
 
@@ -358,7 +369,7 @@ function u64_run_screenshot
 # $5- extra options for the emulator
 function u64_run_exitcode
 {
-#    echo u64 X"$1"X / X"$2"X
+#    echo u64 X"$1"X / X"$2"X / X"$3"X / X"$4"X / X"$5"X
 
     if [ X"$2"X = X""X ]
     then
@@ -394,12 +405,7 @@ function u64_run_exitcode
         # reset
         u64_ucodenet --resetwait
     else
-        # overwrite the CBM80 signature with generic "cartridge off" program
-#        chacocmd --addr 0x00b00000 --writemem u64-crtoff.prg > /dev/null
-
-#        sleep 5
-#        if [ "$?" != "0" ]; then exit -1; fi
-#        echo "reset"
+#        echo "exitcode(normal)"
         # reset
         u64_ucodenet --resetwait
         if [ "$?" != "0" ]; then exit -1; fi
@@ -416,7 +422,7 @@ function u64_run_exitcode
 
         # run program
         u64_clear_returncode
-        u64_ucodenet -x "$1"/"$2" > /dev/null
+        u64_ucodenet -x "$1"/"$2"
         if [ "$?" != "0" ]; then exit -1; fi
         u64_poll_returncode $(($3 + 1))
         exitcode=$?

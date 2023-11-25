@@ -133,11 +133,11 @@
 ../c128/z80/mmu_zp_sp/,tstz80bk.prg,ok,exitcode,,,,-1,-1,-1
 ../VDC/vdcdump/,vdcdump.prg,ok,exitcode,,,,-1,-1,-1
 ../drive/scanner/,scanner1571-35.prg,ok,exitcode,scan35.d71,,,-1,-1,-1
-../drive/scanner/,scanner1571-35e.prg,error,exitcode,scan35err.d71,,,-1,-1,-1
+../drive/scanner/,scanner1571-35e.prg,ok,exitcode,scan35err.d71,,,-1,-1,-1
 ../GEO-RAM/,georam128.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c128-georam-emd.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c128-ram-emd.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c128-ram2-emd.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c128-reu-emd.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c128-vdc-emd.prg,ok,exitcode,,,,-1,-1,-1
-# 30 minutes and 46 seconds elapsed.
+# 22 minutes and 41 seconds elapsed.

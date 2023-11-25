@@ -105,7 +105,8 @@ function kernal64cbm2_run_screenshot
     if [ $verbose == "1" ]; then
         echo $KERNAL64CBM2 $KERNAL64CBM2OPTS $KERNAL64CBM2OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64cbm2.png "$4"
     fi
-    $KERNAL64CBM2 $KERNAL64CBM2OPTS $KERNAL64CBM2OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64cbm2.png "$4" 1> /dev/null 2> /dev/null
+# CAUTION: $4 must not be in quotes, else kernal64 sees an empty paramater, which will make it error out
+    $KERNAL64CBM2 $KERNAL64CBM2OPTS $KERNAL64CBM2OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64cbm2.png $4 1> /dev/null 2> /dev/null
     exitcode=$?
     
     if [ $verbose == "1" ]; then
@@ -175,8 +176,9 @@ function kernal64cbm2_run_exitcode
     if [ $verbose == "1" ]; then
         echo $KERNAL64CBM2 $KERNAL64CBM2OPTS $KERNAL64CBM2OPTSEXITCODE ${@:5} "--limitcycles" "$3" "$4"
     fi
-    #$KERNAL64CBM2 $KERNAL64CBM2OPTS $KERNAL64CBM2OPTSEXITCODE ${@:5} "--limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
-	$KERNAL64CBM2 $KERNAL64CBM2OPTS $KERNAL64CBM2OPTSEXITCODE ${@:5} "--limitcycles" "$3" "$4"
+# CAUTION: $4 must not be in quotes, else kernal64 sees an empty paramater, which will make it error out
+    #$KERNAL64CBM2 $KERNAL64CBM2OPTS $KERNAL64CBM2OPTSEXITCODE ${@:5} "--limitcycles" "$3" $4 1> /dev/null 2> /dev/null
+	$KERNAL64CBM2 $KERNAL64CBM2OPTS $KERNAL64CBM2OPTSEXITCODE ${@:5} "--limitcycles" "$3" $4
     exitcode=$?
     echo "exited with: " $exitcode
 }

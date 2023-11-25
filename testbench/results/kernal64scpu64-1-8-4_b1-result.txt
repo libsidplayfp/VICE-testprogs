@@ -6,4 +6,4 @@
 ../memory-expansions/,c64-ram-emd.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c64-georam-emd.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c64-reu-emd.prg,ok,exitcode,,,,-1,-1,-1
-# 1 minutes and 5 seconds elapsed.
+# 0 minutes and 57 seconds elapsed.

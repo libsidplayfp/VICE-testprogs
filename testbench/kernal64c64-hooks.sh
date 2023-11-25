@@ -153,7 +153,9 @@ function kernal64c64_run_screenshot
     if [ $verbose == "1" ]; then
         echo "RUN: "$KERNAL64C64 $KERNAL64C64OPTS $KERNAL64C64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64c64.png "$4"
     fi
-    $KERNAL64C64 $KERNAL64C64OPTS $KERNAL64C64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64c64.png "$4" 1> /dev/null 2> /dev/null
+
+# CAUTION: $4 must not be in quotes, else kernal64 sees an empty paramater, which will make it error out
+    $KERNAL64C64 $KERNAL64C64OPTS $KERNAL64C64OPTSSCREENSHOT ${@:5} "--limitcycles" "$3" "--screenshot" "$1"/.testbench/"$screenshottest"-kernal64c64.png $4 1> /dev/null 2> /dev/null
     exitcode=$?
 
     if [ $verbose == "1" ]; then
@@ -231,7 +233,9 @@ function kernal64c64_run_exitcode
     if [ $verbose == "1" ]; then
         echo "RUN: "$KERNAL64C64 $KERNAL64C64OPTS $KERNAL64C64OPTSEXITCODE ${@:5} "--limitcycles" "$3" "$4"
     fi
-    $KERNAL64C64 $KERNAL64C64OPTS $KERNAL64C64OPTSEXITCODE ${@:5} "--limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
+
+# CAUTION: $4 must not be in quotes, else kernal64 sees an empty paramater, which will make it error out
+    $KERNAL64C64 $KERNAL64C64OPTS $KERNAL64C64OPTSEXITCODE ${@:5} "--limitcycles" "$3" $4 1> /dev/null 2> /dev/null
     exitcode=$?
 
     if [ $verbose == "1" ]; then
