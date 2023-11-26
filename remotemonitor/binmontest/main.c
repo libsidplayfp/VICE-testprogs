@@ -348,6 +348,49 @@ void checkpoint_get_works(CuTest *tc) {
     CuAssertIntEquals(tc, 0, response[HEADER_LENGTH + 22]);
 }
 
+uint32_t list_checkpoint_ids(CuTest *tc, uint32_t* checkpoint_ids, uint32_t maxcheckpoints) {
+    uint32_t length;
+    uint32_t nof_checkpoints;
+    unsigned char list_command[] = { 
+        0x02, API_VERSION, 
+        0xff, 0xff, 0xff, 0xff, // length
+        0xe1, 0xc7, 0x52, 0x2f, // request id
+
+        0x14, // command "checkpoint list"
+    };
+
+    nof_checkpoints = 0;
+    send_command(list_command);
+    for(;;) {
+        wait_for_response_id(tc, list_command);
+        if (response[RESPONSE_TYPE] == 0x14) {
+            break;
+        }
+        if (response[RESPONSE_TYPE]== 0x11) {
+            CuAssertTrue(tc, nof_checkpoints < maxcheckpoints);
+            checkpoint_ids[nof_checkpoints++] = little_endian_to_uint32(&response[HEADER_LENGTH + 0]);
+        }
+    }
+    return nof_checkpoints;
+}
+
+void delete_checkpoint(CuTest* tc, uint32_t checkpointId) {
+    unsigned char delete_command[] = { 
+        0x02, API_VERSION, 
+        0xff, 0xff, 0xff, 0xff, 
+        0xcc, 0xd2, 0x16, 0x2b, 
+
+        0x13,
+
+        0xff, 0xff, 0xff, 0xff,
+    };
+
+    write_uint32(checkpointId, &delete_command[COMMAND_HEADER_LENGTH]);
+    send_command(delete_command);
+    wait_for_response_id(tc, delete_command);
+    CuAssertIntEquals(tc, 0x13, response[RESPONSE_TYPE]);
+}
+
 void checkpoint_delete_works(CuTest *tc) {
     int length;
     uint32_t brknum;
@@ -369,16 +412,6 @@ void checkpoint_delete_works(CuTest *tc) {
         0x00,
     };
 
-    unsigned char delete_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xcc, 0xd2, 0x16, 0x2b, 
-
-        0x13,
-
-        0xff, 0xff, 0xff, 0xff,
-    };
-
     setup(tc);
 
     send_command(set_command);
@@ -390,14 +423,7 @@ void checkpoint_delete_works(CuTest *tc) {
     brknum = little_endian_to_uint32(&response[HEADER_LENGTH + 0]);
 
     // delete
-
-    write_uint32(brknum, &delete_command[COMMAND_HEADER_LENGTH]);
-
-    send_command(delete_command);
-
-    length = wait_for_response_id(tc, delete_command);
-
-    CuAssertIntEquals(tc, 0x13, response[RESPONSE_TYPE]);
+    delete_checkpoint(tc, brknum);
 }
 
 void checkpoint_list_works(CuTest *tc) {
@@ -447,6 +473,48 @@ void checkpoint_list_works(CuTest *tc) {
     CuAssertIntEquals(tc, 0x14, response[RESPONSE_TYPE]);
 
     CuAssertTrue(tc, little_endian_to_uint32(&response[HEADER_LENGTH]) >= 1);
+}
+
+void checkpoint_list_does_dedupe(CuTest *tc) {
+    int length;
+    uint32_t nof_checkpoints;
+    uint32_t checkpoint_ids[1024];
+
+    unsigned char set_command[] = { 
+        0x02, API_VERSION, 
+        0xff, 0xff, 0xff, 0xff, // length
+        0xb7, 0xde, 0x2d, 0x1d, // request id
+
+        0x12, // command "checkpoint set"
+
+        0xe2, 0xfc, // address start
+        0xe3, 0xfc, // address end
+        0x01,       // stop when hit
+        0x00,       // enabled
+        0x07,       // operation (load | store | exec)
+        0x00,       // memspace
+    };
+
+    setup(tc);
+
+    // Delete all the existing checkpoints
+    nof_checkpoints = list_checkpoint_ids(tc, checkpoint_ids, sizeof(checkpoint_ids)/sizeof(uint32_t));
+    while (nof_checkpoints > 0) {
+        delete_checkpoint(tc, checkpoint_ids[--nof_checkpoints]);
+    }
+
+    // Verify that there are no checkpoints left
+    nof_checkpoints = list_checkpoint_ids(tc, checkpoint_ids, sizeof(checkpoint_ids)/sizeof(uint32_t));
+    CuAssertIntEquals(tc, 0, nof_checkpoints);
+
+    // Create a new checkpoint for load, store, exec
+    send_command(set_command);
+    wait_for_response_id(tc, set_command);
+    CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
+
+    // Verify that we only get back 1 checkpoint
+    nof_checkpoints = list_checkpoint_ids(tc, checkpoint_ids, sizeof(checkpoint_ids)/sizeof(uint32_t));
+    CuAssertIntEquals(tc, 1, nof_checkpoints);
 }
 
 void checkpoint_enable_works(CuTest *tc) {
@@ -1692,6 +1760,7 @@ CuSuite* get_suite(void)
     SUITE_ADD_TEST(suite, checkpoint_get_works);
     SUITE_ADD_TEST(suite, checkpoint_delete_works);
     SUITE_ADD_TEST(suite, checkpoint_list_works);
+    SUITE_ADD_TEST(suite, checkpoint_list_does_dedupe);
     SUITE_ADD_TEST(suite, checkpoint_enable_works);
     SUITE_ADD_TEST(suite, checkpoint_disable_works);
 
