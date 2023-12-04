@@ -126,6 +126,8 @@ function hoxs64_get_options
                 fi
                 if [ "${1:0:9}" == "mountcrt:" ]; then
                     exitoptions="-autoload $2/${1:9}"
+# coming in next version
+#                    exitoptions="-mountcrt $2/${1:9}"
                     mounted_crt="${1:9}"
                     echo -ne "(cartridge:${1:9}) "
                 fi

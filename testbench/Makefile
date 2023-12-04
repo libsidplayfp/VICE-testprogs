@@ -50,6 +50,8 @@ KERNAL64SCPU64LAST=1-8-4_b1
 KERNAL64SCPU64LASTSTRING=1.8.4_b1
 KERNAL64CBM2LAST=1-8-4_b1
 KERNAL64CBM2LASTSTRING=1.8.4_b1
+KERNAL64VIC20LAST=1-8-4_b1
+KERNAL64VIC20LASTSTRING=1.8.4_b1
 #KERNAL64CBM5X0LAST=1-8-4_b1
 #KERNAL64CBM5X0LASTSTRING=1.8.4_b1
 
@@ -690,7 +692,7 @@ testemu64: prereq
 #	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --verbose --resume
 	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --resume
 
-testkernal64: testkernal64c64 testkernal64c128c64 testkernal64c128c128 testkernal64scpu64 testkernal64cbm2
+testkernal64: testkernal64c64 testkernal64c128c64 testkernal64c128c128 testkernal64scpu64 testkernal64cbm2 testkernal64vic20
 testkernal64c64: prereq
 #	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --verbose
 	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --resume
@@ -706,6 +708,9 @@ testkernal64scpu64: prereq
 testkernal64cbm2: prereq
 #	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64cbm2 --verbose
 	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64cbm2 --resume
+testkernal64vic20: prereq
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64vic20 --verbose
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64vic20 --resume
 
 ##############################################################################
 
@@ -846,6 +851,7 @@ results0: maketable
 	./maketable --list vic20-testlist.in \
 		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		--results results/z64kvic20-$(Z64KVIC20LAST)-result.txt "z64k (vic20) "$(Z64KVIC20LASTSTRING)"" \
+		--results results/kernal64vic20-$(KERNAL64VIC20LAST)-result.txt "kernal64 (vic20) "$(KERNAL64VIC20LASTSTRING)"" \
 		--results results/cham20-$(CHAM20LAST)-result.txt "cham20 "$(CHAM20LAST)""
 
 	./maketable --list c128-testlist.in \
@@ -900,6 +906,7 @@ results: maketable
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		--results results/z64kvic20-$(Z64KVIC20LAST)-result.txt "z64k (vic20) "$(Z64KVIC20LASTSTRING)"" \
+		--results results/kernal64vic20-$(KERNAL64VIC20LAST)-result.txt "kernal64 (vic20) "$(KERNAL64VIC20LASTSTRING)"" \
 		--results results/cham20-$(CHAM20LAST)-result.txt "cham20 "$(CHAM20LAST)"" \
 		\
 		> results/vic20.html
@@ -983,6 +990,7 @@ resultswiki: maketable
 		--ranking "{{Progress|%d|%d|%d|}}" \
 		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		--results results/z64kvic20-$(Z64KVIC20LAST)-result.txt "z64k (vic20) "$(Z64KVIC20LASTSTRING)"" \
+		--results results/kernal64vic20-$(KERNAL64VIC20LAST)-result.txt "kernal64 (vic20) "$(KERNAL64VIC20LASTSTRING)"" \
 		--results results/cham20-$(CHAM20LAST)-result.txt "cham20 "$(CHAM20LAST)""
 	@echo "=== C128 ==="
 	./maketable --omit-clean --wiki --list c128-testlist.in \
@@ -1302,6 +1310,14 @@ resultskernal64cbm2: maketable kernal64cbm2-testlist.txt
 		\
 		> results/kernal64cbm2.html
 
+.PHONY: resultskernal64vic20
+resultskernal64vic20: maketable kernal64vic20-testlist.txt
+	./maketable --omit-two-ok --omit-clean --html --list kernal64vic20-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/kernal64vic20-$(KERNAL64VIC20LAST)-result.txt "kernal64 (vic20) "$(KERNAL64VIC20LASTSTRING)"" \
+		\
+		> results/kernal64vic20.html
+
 ################################################################################
 		
 .PHONY: resultscham
@@ -1416,7 +1432,7 @@ allresults: results resultsx64 resultsx64sc resultsx128 resultsx128c64 resultsxc
 		resultsxpet resultsxplus4 resultsxscpu64 resultsxvic resultsvsid \
 		resultsz64kc64 resultsz64kc128 resultsz64kc128c64 resultsz64kvic20 \
 		resultshoxs64 resultsdenise resultsmicro64 resultsyace resultsemu64 \
-		resultskernal64c64 resultskernal64c128c64 resultskernal64c128c128 resultskernal64scpu64 resultskernal64cbm2 \
+		resultskernal64c64 resultskernal64c128c64 resultskernal64c128c128 resultskernal64scpu64 resultskernal64cbm2 resultskernal64vic20 \
 		resultscham resultscham20 resultsu64 
 
 .PHONY: clean zap
