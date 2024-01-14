@@ -13,3 +13,5 @@ VIC20CARTS=
 PLUS4CARTS=
 # path to C128 .crt files that can be used for testing
 C128CARTS=
+# path to CBM2 .crt files that can be used for testing
+CBM2CARTS=

@@ -3,7 +3,7 @@
 
 include Makefile.config
 
-all: c64 vic20 plus4 c128
+all: c64 vic20 plus4 c128 cbm2
 
 c64:
 	@./cartconv-test.sh $(C64CARTS) c64
@@ -13,6 +13,8 @@ plus4:
 	@./cartconv-test.sh $(PLUS4CARTS) plus4
 c128:
 	@./cartconv-test.sh $(C128CARTS) c128
+cbm2:
+	@./cartconv-test.sh $(CBM2CARTS) cbm2
 
 clean:
 	@$(RM) -rf test

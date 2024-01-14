@@ -197,6 +197,9 @@ case "$2" in
     c128)
             SYSTEM=c128
         ;;
+    cbm2)
+            SYSTEM=cbm2
+        ;;
     *)
             echo "Unknown option:" "$2"
             dohelp
