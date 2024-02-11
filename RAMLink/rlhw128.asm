@@ -160,7 +160,7 @@ comp3
 .)
 
 .(
-; see if we have the internation keyboard code at $fc80 by looking at $c014
+; see if we have the international keyboard code at $fc80 by looking at $c014
 ;  if it is $fc, then it is an international machine
 	jsr newtest
 	lda #0
@@ -249,7 +249,7 @@ fcheck9
 	ldy #ikernal
 	jsr checkall
 
-; make sure there is nothing in the external function areas
+; make sure there is nothing in the function rom areas
 	jsr checkjunk8
 	jsr checkjunkm
 
@@ -285,7 +285,7 @@ fcheck9
 	ldy #ikernals
 	jsr checkall
 
-; make sure there is nothing in the external function areas
+; make sure there is nothing in the function rom areas
 	jsr checkjunk8
 	jsr checkjunks
 
@@ -306,7 +306,7 @@ fcheck9
 	ldy #ikernals
 	jsr checkall
 
-; make sure there is nothing in the external function areas above $c000
+; make sure there is nothing in the function rom areas above $c000
 	jsr checkjunks
 
 	jsr checkfes
@@ -341,7 +341,7 @@ fcheck9
 	ldy #ikernals
 	jsr checkall
 
-; make sure there is nothing in the external function areas above $c000
+; make sure there is nothing in the function rom areas above $c000
 	jsr checkjunks
 
 	jsr checkfes
@@ -380,7 +380,7 @@ fcheck9
 	ldy #ikernals
 	jsr checkall
 
-; make sure there is nothing in the external function areas above $c000
+; make sure there is nothing in the function rom areas above $c000
 	jsr checkjunks
 
 	jsr checkfes
@@ -397,7 +397,7 @@ fcheck9
 	ldy #ikernals
 	jsr checkall
 
-; make sure there is nothing in the external function areas
+; make sure there is nothing in the function rom areas
 	jsr checkjunk8
 	jsr checkjunks
 
@@ -411,7 +411,7 @@ fcheck9
 	ldy #ikernal
 	jsr checkall
 
-; make sure there is nothing in the external function areas
+; make sure there is nothing in the function rom areas
 	jsr checkjunkm
 
 	jsr checkfem
@@ -745,6 +745,14 @@ junkx
 	sta junkmemy+1
 	lda valjcpy,x
 	sta junkmems+1
+	stx index+1
+	jsr passx
+; patch to check for internal ROM as well
+index
+	ldx #0
+	lda valjcm2,x
+	sta comp2+1
+passx
 	lda #$7f
 	sta vary
 
@@ -773,7 +781,8 @@ skip
 valjloc	.byt $80,$c0,$d0,$ff,$ff,$eb,$f7,$fd,$ff
 valjlen	.byt $40,$10,$10,$01,$01,$02,$01,$02,$01
 valjmsk	.byt $0c,$30,$31,$30,$30,$30,$30,$30,$30
-valjcmp	.byt $08,$20,$21,$20,$20,$20,$20,$20,$20
+valjcmp	.byt $08,$20,$21,$20,$20,$20,$20,$20,$20	; external ROM
+valjcm2	.byt $04,$10,$11,$10,$10,$10,$10,$10,$10	; internal ROM
 valjsty .byt $00,$00,$00,$05,$f0,$00,$a0,$00,$50
 valjcpy .byt $00,$00,$00,$10,$00,$00,$b0,$00,$60
 
