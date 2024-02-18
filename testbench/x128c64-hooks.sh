@@ -16,6 +16,8 @@ X128C64OPTS+=" -jamaction 1"
 #X128C64OPTS+=" -console"
 X128C64OPTS+=" -drive8extend 0"
 
+#X128C64OPTS+=" -autostartprgmode 1"
+
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started
 #        with -console
@@ -62,7 +64,7 @@ function x128c64_get_options
                 testprogvideotype="PAL"
             ;;
         "vicii-ntsc")
-                exitoptions="-ntsc"
+                exitoptions="-ntsc -power60"
                 testprogvideotype="NTSC"
             ;;
         "vicii-old") 

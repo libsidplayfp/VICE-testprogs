@@ -14,6 +14,7 @@ X64OPTS+=" -debugcart"
 #X64OPTS+=" -console"
 X64OPTS+=" -jamaction 1"
 X64OPTS+=" -drive8extend 0"
+#X64OPTS+=" -autostartprgmode 1"
 
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started
@@ -57,11 +58,11 @@ function x64_get_options
                 testprogvideotype="PAL"
             ;;
         "vicii-ntsc")
-                exitoptions="-ntsc"
+                exitoptions="-ntsc -power60"
                 testprogvideotype="NTSC"
             ;;
         "vicii-ntscold")
-                exitoptions="-ntscold"
+                exitoptions="-ntscold -power60"
                 testprogvideotype="NTSCOLD"
             ;;
         "vicii-old") 

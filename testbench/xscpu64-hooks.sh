@@ -52,11 +52,11 @@ function xscpu64_get_options
                 testprogvideotype="PAL"
             ;;
         "vicii-ntsc")
-                exitoptions="-ntsc"
+                exitoptions="-ntsc -power60"
                 testprogvideotype="NTSC"
             ;;
         "vicii-ntscold")
-                exitoptions="-ntscold"
+                exitoptions="-ntscold -power60"
                 testprogvideotype="NTSCOLD"
             ;;
         "vicii-old") 
