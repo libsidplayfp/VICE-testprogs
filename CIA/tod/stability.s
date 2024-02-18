@@ -27,7 +27,12 @@ alarmirq:
             stx $d020
 
             ; stop timer
+    !if SYNC = 0 {
             lda #%10000000
+    }
+    !if SYNC > 0 {
+            lda #%00000000
+    }
             sta $dc0e
 
             ; read timer values and save them

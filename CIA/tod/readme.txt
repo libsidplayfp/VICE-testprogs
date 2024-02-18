@@ -232,6 +232,16 @@ reset by write to hour reg, but still running while clock is stopped)
 expected: counter is either not running while clock is stopped or reset when 
           clock is restarted (which pretty much has the same outcome). (5s)
 
+* hzsync6.prg:
+
+the divider that divides the line clock frequeny down to 10 Hz uses a counter
+that can go up to 6. For NTSC, it is compared with 6, but for PAL with 5. The
+comparison is only done when the line clock ticks.
+If we start with 6, then switch to 5 when the counter is already 5, it
+will not be detected. Instead the counter will count to 6, wrap to 0,
+and compare equal at the next time it is 5. So the time between
+increases of the 1/10 second is longer than usual.
+
 --------------------------------------------------------------------------------
 
 * powerup.prg
