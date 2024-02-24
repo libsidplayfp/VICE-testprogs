@@ -15,6 +15,7 @@ X64OPTS+=" -debugcart"
 X64OPTS+=" -jamaction 1"
 X64OPTS+=" -drive8extend 0"
 #X64OPTS+=" -autostartprgmode 1"
+X64OPTS+=" +easyflashcrtwrite"
 
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started

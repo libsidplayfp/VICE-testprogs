@@ -15,6 +15,7 @@ X128C64OPTS+=" -debugcart"
 X128C64OPTS+=" -jamaction 1"
 #X128C64OPTS+=" -console"
 X128C64OPTS+=" -drive8extend 0"
+X128C64OPTS+=" +easyflashcrtwrite"
 
 #X128C64OPTS+=" -autostartprgmode 1"
 

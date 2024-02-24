@@ -28,6 +28,7 @@ X64SCOPTS+=" -jamaction 1"
 #X64SCOPTS+=" -raminitrepeatrandom 0"
 #X64SCOPTS+=" -raminitrandomchance 1"
 X64SCOPTS+=" -drive8extend 0"
+X64SCOPTS+=" +easyflashcrtwrite"
 
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started

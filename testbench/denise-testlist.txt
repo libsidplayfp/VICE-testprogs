@@ -1311,6 +1311,7 @@
 ../C64/carts/pagefox,,exitcode,100000,mountcrt:writeram-a000.crt
 ../C64/carts/pagefox,,exitcode,500000,mountcrt:godot.crt
 ../C64/carts/ef-test/,,exitcode,500000,mountcrt:ef_test.crt
+../C64/carts/ef-eapi/,,exitcode,4000000,mountcrt:test-eapi.crt
 ../C64/carts/rr-freeze/,,analyzer,0,mountcrt:rr-freeze.crt
 ../C64/carts/nordicpower/,,exitcode,100000,mountcrt:artest.crt
 ../C64/carts/nordicpower/,,exitcode,100000,mountcrt:nptest.crt

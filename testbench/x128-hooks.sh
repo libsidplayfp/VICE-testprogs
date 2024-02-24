@@ -13,6 +13,7 @@ X128OPTS+=" -warp"
 X128OPTS+=" -debugcart"
 X128OPTS+=" -jamaction 1"
 X128OPTS+=" -drive8extend 0"
+X128OPTS+=" +easyflashcrtwrite"
 
 # extra options for the different ways tests can be run
 # FIXME: the emulators may crash when making screenshots when emu was started
