@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 
 
 uint8_t areas[] = { 0x9e, 0xbe, 0xde, 0xdf, 0xfe };
@@ -36,7 +37,9 @@ typedef struct {
 } Dump;
 
 
-uint8_t ident[16];
+#define IDENT_STR "RR-FREEZE"
+uint8_t ident[15];
+uint8_t format_rev;
 
 uint8_t de01_conf;
 
@@ -56,8 +59,21 @@ void read_dump(const char *name)
 
     /* skip header */
     fseek(fp, 0x2, SEEK_CUR);
-    fread(&ident, 1, sizeof(ident), fp);
 
+    /* check file format */
+    fread(&ident, 1, sizeof(ident), fp);
+    format_rev = fgetc(fp);
+
+    if (memcmp(IDENT_STR, ident, strlen(IDENT_STR)) != 0) {
+	fprintf(stderr, "unsupported file format!\n");
+	exit(-1);
+    }
+    if (format_rev != 0) {
+	fprintf(stderr, "unsupported format revision (%d)!\n", format_rev);
+	exit(-1);
+    }
+
+    /* $DE01 configuration */
     de01_conf = fgetc(fp);
 
     /* load dumps */
@@ -168,7 +184,7 @@ int main(int argc, char *argv[])
     setup_vmap();
     read_dump(argv[1]);
     printf("analyzing file: %s\n", argv[1]);
-    printf("  program: %s, format: %d\n", ident, ident[15]);
+    printf("  program: %s, format: %d\n", ident, format_rev);
 
     printf("\n<RESET>\n");
     print_dump(&rst, "RST");

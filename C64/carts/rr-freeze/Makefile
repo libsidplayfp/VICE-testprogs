@@ -20,8 +20,10 @@ rr-freeze.bin:	rr-freeze.crt
 nr-freeze.crt:	rr-freeze.prg
 	cartconv -i $< -o $@ -t rr -s 1
 
+CC=gcc
+CFLAGS=-Wall -Wextra -Wno-unused-parameter
 analyze:	analyze.c
-	gcc -Wall -o$@ $^
+	$(CC) $(CFLAGS) -o$@ $^
 
 # clean out old targets
 clean::
