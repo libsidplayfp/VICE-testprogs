@@ -178,7 +178,7 @@ re_lp2:
 
 re_done:
 	jmp	perform_test
-	
+
 
 greet_msg:
 	dc.b	147,"RR-FREEZE ",TEST_REVISION," / TLR",13,13
@@ -202,7 +202,7 @@ de01_tab:
 	dc.b	%00000110	; REU-Comp=0, NoFreeze=1, AllowBank=1
 
 
-	
+
 ;**************************************************************************
 ;*
 ;* NAME  prefill_ram
@@ -326,7 +326,7 @@ prc_lp2:
 
 	lda	#$37
 	sta	$01
-	
+
 	lda	#%00000000
 	sta	$de00
 	rts
@@ -555,7 +555,7 @@ sb_lp1:
 
 	plp
 	rts
-	
+
 scan_banks_int:
 	sta	mode_zp
 	ldx	#0
@@ -567,7 +567,7 @@ sca_lp1:
 	txa
 	pha
 	jsr	scan_areas_int
-	
+
 	ldy	#0
 	ldx	#0
 sca_lp2:
@@ -580,7 +580,7 @@ sca_lp2:
 	inx
 	cpx	#NUM_AREAS
 	bne	sca_lp2
-	
+
 	pla
 	tax
 
@@ -623,7 +623,7 @@ wait_freeze:
 wf_lp1:
 	jmp	wf_lp1
 
-	
+
 ;**************************************************************************
 ;*
 ;* NAME  freeze_entry
@@ -675,12 +675,12 @@ freeze_entry:
 	lda	#%00000000	; Normal conf, RR-ROM at $8000
 	sta	$de00
 	jmp	continue_test
-	
+
 	rend
 RAM_CODE_LEN	equ	.-ram_code_st
 
 
-	
+
 ;**************************************************************************
 ;*
 ;* NAME  perform_test, continue_test
@@ -739,11 +739,11 @@ perform_test:
 	jsr	print_banks
 
 	cli
-	
+
 	lda	#<freeze_msg
 	ldy	#>freeze_msg
 	jsr	print_str
-	
+
 ; cursor on
 	lda	#0
 	sta	$cc
@@ -771,12 +771,12 @@ ct_lp1:
 	iny
 	sty	$d3		; x-pos
 	sty	$cf		; cursor not in the inverted state
-	
+
 	if	0
 	lda	#145		; cursor up
 	jsr	$ffd2
 	endif
-	
+
 ; present state
 	lda	#<frz_msg
 	ldy	#>frz_msg
@@ -797,7 +797,7 @@ ct_lp1:
 	ldx	#<banks_post_ack
 	ldy	#>banks_post_ack
 	jsr	print_banks
-	
+
 	lda	de00_pre
 	jsr	print_hex
 	jsr	print_space
@@ -862,7 +862,7 @@ pas_lp1:
 	jsr	print_tag
 	pla
 	tay
-	
+
 	jsr	print_space
 	iny
 	cpy	#NUM_AREAS
@@ -921,7 +921,7 @@ pbs_skp1:
 pbs_skp2:
 	jsr	print_cr
 pbs_skp3:
-	
+
 	inx
 	cpx	#NUM_AREAS
 	bne	pbs_lp1
@@ -975,7 +975,7 @@ ptg_ex1:
 	sta	($d1),y
 	rts
 
-	
+
 ;**************************************************************************
 ;*
 ;* NAME  clone_ff87
@@ -1259,7 +1259,7 @@ end_de00rom:
 ;* $9f00 Tag for bank 0
 	ds.b	$9f80-.,$ff
 	BANK_TAG $9f,0,1
-	
+
 	ds.b	$9ffa-.,$ff
 	dc.w	freeze_entry	; nmi vector
 	dc.w	freeze_entry	; reset vector
@@ -1278,7 +1278,7 @@ bank	set	1
 	rend
 bank	set	bank+1
 	repend
-	
-	
+
+
 
 ; eof
