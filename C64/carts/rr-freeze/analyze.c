@@ -141,18 +141,38 @@ static void v_to_str(char *str, uint8_t v)
 
 }
 
-char vmap[256][4];
-
-static void setup_vmap(void)
+static void v_to_str_raw(char *str, uint8_t v)
 {
-    int v;
-    for (v = 0; v < 0x100; v++) {
-	v_to_str(vmap[v], v);
+    switch (v) {
+    case 0xfe:
+	sprintf(str, "? ");
+	break;
+    case 0xff:
+	sprintf(str, "- ");
+	break;
+    default:
+	sprintf(str, "%02x", v);
+	break;
     }
 }
 
 
-static void print_dump(Dump *d, char *str, int raw_hex)
+char vmap[256][4];
+
+static void setup_vmap(int raw_hex)
+{
+    int v;
+    for (v = 0; v < 0x100; v++) {
+	if (!raw_hex) {
+	    v_to_str(vmap[v], v);
+	} else {
+	    v_to_str_raw(vmap[v], v);
+	}
+    }
+}
+
+
+static void print_dump(Dump *d, char *str)
 {
     int i, j, k;
 
@@ -183,41 +203,13 @@ static void print_dump(Dump *d, char *str, int raw_hex)
 	    /* RAM */
 	    for (j = 0; j < 8; j++) {
 		uint8_t v =  d->mode[k].ram.v[i][j];
-		if (!raw_hex) {
-		    printf("%s ", vmap[v]);
-		} else {
-		    switch (v) {
-		    case 0xfe:
-			printf("?  ");
-			break;
-		    case 0xff:
-			printf("-  ");
-			break;
-		    default:
-			printf("%02x ", v);
-			break;
-		    }
-		}
+		printf("%s ", vmap[v]);
 	    }
 	    printf("   ");
 	    /* ROM */
 	    for (j = 0; j < 8; j++) {
 		uint8_t v =  d->mode[k].rom.v[i][j];
-		if (!raw_hex) {
-		    printf("%s ", vmap[v]);
-		} else {
-		    switch (v) {
-		    case 0xfe:
-			printf("?  ");
-			break;
-		    case 0xff:
-			printf("-  ");
-			break;
-		    default:
-			printf("%02x ", v);
-			break;
-		    }
-		}
+		printf("%s ", vmap[v]);
 	    }
 	    printf("\n");
 	}
@@ -308,31 +300,47 @@ PROGRAM " " VERSION ": rr-freeze.crt dump analyzer\n"
 
 
 
-    setup_vmap();
+    setup_vmap(raw_hex);
     read_dump(infile);
     printf("analyzing file: %s\n", argv[1]);
     printf("  program: %s, format: %d\n", ident, format_rev);
 
     printf("\n<RESET>\n");
-    print_dump(&rst, "RST", raw_hex);
+    print_dump(&rst, "RST");
     printf("\n$%02X -> $DE01  (REU-Comp=%c, NoFreeze=%c, AllowBank=%c)\n",
 	   de01_conf,
 	   (de01_conf & 0x40) ? '1':'0',
 	   (de01_conf & 0x04) ? '1':'0',
 	   (de01_conf & 0x02) ? '1':'0'
     );
-    print_dump(&cnfd, "CNFD", raw_hex);
+    print_dump(&cnfd, "CNFD");
     printf("\n$88 -> $DE00  (\"random\" mapping, bank 5 in ROM)\n$8C -> $DE00 (kill)\n");
     printf("\n<FREEZE>\n");
-    print_dump(&frz, "FRZ", raw_hex);
+    print_dump(&frz, "FRZ");
     printf("\n$60 -> $DE00  (ACK)\n$20 -> $DE00\n");
-    print_dump(&ackd, "ACKD", raw_hex);
+    print_dump(&ackd, "ACKD");
 
     printf(
 "\n\n"
 "LEGEND:\n"
+    );
+    if (!raw_hex) {
+	printf(
 "   0-7   -> RAM banks 0-7, an '*' means read only.\n"
 "   A-H   -> ROM banks 0-7, should have an '*', otherwise it is writable (!)\n"
+	);
+    } else {
+	if (format_rev == 1) {
+	    printf(
+"   RWTS0BBB (R=ROM, W=RW, T=WriteC64, S=Switch01, B=bank)\n"
+	    );
+	} else {
+	    printf(
+"   RW000BBB (R=ROM, W=RW, B=bank)\n"
+	    );
+	}
+    }
+    printf(
 "   -     -> no cart detected\n"
 "   ?     -> mapping mismatch (e.g $de not mapped to $9e and similar)\n"
 "\n"
