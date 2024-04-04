@@ -20,12 +20,14 @@ CHK_MAGIC	equ	$35
 	dc.b	"BANK"
 	dc.b	{1}				; page
 	dc.b	{2}				; bank
-	dc.b	{3}				; is_rom?
+	dc.b	{3}				; flags
 	dc.b	"B"^"A"^"N"^"K"^{1}^{2}^{3}^CHK_MAGIC	; checksum
 	endm
 
 FLAG_IS_ROM	equ	%10000000
 FLAG_WRITABLE	equ	%01000000
+FLAGS_MISMATCH	equ	$fe
+FLAGS_NOCART	equ	$ff
 
 	seg.u	zp
 ;**************************************************************************
@@ -44,7 +46,7 @@ page_zp:
 	ds.b	1
 bank_zp:
 	ds.b	1
-wr_zp:
+flags_zp:
 	ds.b	1
 banks_zp:
 	ds.b	5
@@ -390,7 +392,7 @@ tag_page:
 	dc.b	$9e				; page
 tag_bank:
 	dc.b	0				; bank
-	dc.b	0				; is_rom?
+	dc.b	0				; flags
 TAG_LEN	equ	.-tag
 
 
@@ -415,7 +417,7 @@ verify_section:
 	sta	ptr_zp
 
 	lda	#0
-	sta	wr_zp
+	sta	flags_zp
 
 	lda	#CHK_MAGIC
 	sta	chk_zp
@@ -446,32 +448,30 @@ vs_skp1:
 	cmp	(ptr_zp),y
 	bne	vs_skp2
 	lda	#FLAG_WRITABLE
-	ora	wr_zp
-	sta	wr_zp
+	ora	flags_zp
+	sta	flags_zp
 vs_skp2:
 
 	ldy	#4
-	lda	(ptr_zp),y
+	lda	(ptr_zp),y	; page
 	sta	page_zp
 	eor	ptr_zp+1
 	and	#$1f
 	bne	vs_fl2
 	iny
-	lda	(ptr_zp),y
-	sta	bank_zp
+	lda	(ptr_zp),y	; bank
 	iny
-	lda	(ptr_zp),y
-	ora	wr_zp
-	ora	bank_zp
+	ora	(ptr_zp),y	; flags
+	ora	flags_zp
 	sta	bank_zp
 	clc
 	rts
 
 vs_fl2:
-	lda	#$fe
+	lda	#FLAGS_MISMATCH
 	dc.b	$2c
 vs_fl1:
-	lda	#$ff
+	lda	#FLAGS_NOCART
 	sta	bank_zp
 	sec
 	rts
@@ -946,9 +946,9 @@ print_tag:
 	tay
 	jsr	print_space	; place holder for the char to be printed
 	tya
-	cmp	#$fe
+	cmp	#FLAGS_MISMATCH
 	beq	ptg_fl1
-	cmp	#$ff
+	cmp	#FLAGS_NOCART
 	beq	ptg_fl2
 	sta	tmp_zp
 	tay
