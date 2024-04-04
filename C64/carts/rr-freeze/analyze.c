@@ -1,18 +1,41 @@
-/*
+/**************************************************************************
+ *
  * FILE  analyze.c
  *
- * Copyright (c) 2016 Daniel Kahlin <daniel@kahlin.net>
+ * Copyright (c) 2016, 2024 Daniel Kahlin <daniel@kahlin.net>
  * Written by Daniel Kahlin <daniel@kahlin.net>
  *
  * DESCRIPTION
  *   analysis of rr-freeze.crt dumps.
  *
- */
-
+ ******/
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <unistd.h>
+
+#define PROGRAM "analyze"
+#define VERSION "0.2"
+
+
+/* global variables */
+int verbose_g;
+int debug_g;
+
+
+void panic(const char *str, ...)
+{
+    va_list args;
+
+    fprintf(stderr, "%s: ", PROGRAM);
+    va_start(args, str);
+    vfprintf(stderr, str, args);
+    va_end(args);
+    fputc('\n', stderr);
+    exit(1);
+}
 
 
 uint8_t areas[] = { 0x9e, 0xbe, 0xde, 0xdf, 0xfe };
@@ -53,8 +76,7 @@ void read_dump(const char *name)
 {
     FILE *fp = fopen(name, "rb");
     if (!fp) {
-	fprintf(stderr, "couldn't open file\n");
-	exit(-1);
+	panic("couldn't open file");
     }
 
     /* skip header */
@@ -65,12 +87,10 @@ void read_dump(const char *name)
     format_rev = fgetc(fp);
 
     if (memcmp(IDENT_STR, ident, strlen(IDENT_STR)) != 0) {
-	fprintf(stderr, "unsupported file format!\n");
-	exit(-1);
+	panic("unsupported file format!");
     }
     if (format_rev != 0) {
-	fprintf(stderr, "unsupported format revision (%d)!\n", format_rev);
-	exit(-1);
+	panic("unsupported format revision (%d)!", format_rev);
     }
 
     /* $DE01 configuration */
@@ -162,12 +182,14 @@ static void print_dump(Dump *d, char *str)
 	    printf("  %02X: ", areas[i]);
 	    /* RAM */
 	    for (j = 0; j < 8; j++) {
-		printf("%s ", vmap[d->mode[k].ram.v[i][j]]);
+		uint8_t v =  d->mode[k].ram.v[i][j];
+		printf("%s ",  vmap[v]);
 	    }
 	    printf("   ");
 	    /* ROM */
 	    for (j = 0; j < 8; j++) {
-		printf("%s ", vmap[d->mode[k].rom.v[i][j]]);
+		uint8_t v =  d->mode[k].rom.v[i][j];
+		printf("%s ", vmap[v]);
 	    }
 	    printf("\n");
 	}
@@ -180,9 +202,78 @@ static void print_dump(Dump *d, char *str)
 
 int main(int argc, char *argv[])
 {
+    int c;
+    char *infile;
+
+    /* defaults */
+    verbose_g = 0;
+    debug_g = 0;
+
+    /*
+     * scan for valid options
+     */
+    while (EOF != (c = getopt(argc, argv, "f:o:vdVh"))) {
+        switch (c) {
+
+	/* a missing parameter */
+	case ':':
+	/* an illegal option */
+	case '?':
+	    exit(1);
+
+	/* set verbose mode */
+	case 'v':
+	    verbose_g = 1;
+	    break;
+
+	/* set debug mode */
+	case 'd':
+	    debug_g = 1;
+	    break;
+
+	/* print version */
+	case 'V':
+	    fprintf(stdout, PROGRAM " " VERSION "\n");
+	    exit(0);
+
+	/* print help */
+	case 'h':
+	    fprintf(stderr,
+PROGRAM " " VERSION ": rr-freeze.crt dump analyzer\n"
+"Copyright (c) 2016, 2024 Daniel Kahlin <daniel@kahlin.net>\n"
+"Written by Daniel Kahlin <daniel@kahlin.net>\n"
+"\n"
+"usage: " PROGRAM " [-v][-d][-h][-V] <file>\n"
+"\n"
+"Valid options:\n"
+"    -v              be verbose\n"
+"    -d              display debug information\n"
+"    -h              displays this help text\n"
+"    -V              output program version\n"
+	    );
+	    exit(0);
+
+	/* default behavior */
+	default:
+	    break;
+	}
+    }
+
+    /* optind now points at the first non option argument */
+    argc -= optind;
+    argv += optind;
+
+    /* expect one more argument */
+    if (argc < 1)
+    	panic("too few arguments");
+    if (argc > 1)
+    	panic("too many arguments");
+    infile = argv[0];
+
+
 
     setup_vmap();
-    read_dump(argv[1]);
+    read_dump(infile);
     printf("analyzing file: %s\n", argv[1]);
     printf("  program: %s, format: %d\n", ident, format_rev);
 
