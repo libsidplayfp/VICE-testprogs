@@ -11,7 +11,7 @@
 	processor 6502
 
 TEST_REVISION	eqm	"R06"
-FORMAT_REVISION	equ	0
+FORMAT_REVISION	equ	1
 
 ;******
 ;* tag to place in each bank for identification by scanning
@@ -26,6 +26,7 @@ CHK_MAGIC	equ	$35
 
 FLAG_IS_ROM	equ	%10000000
 FLAG_WRITABLE	equ	%01000000
+FLAG_IS_C64RAM	equ	%00100000
 FLAGS_MISMATCH	equ	$fe
 FLAGS_NOCART	equ	$ff
 
@@ -54,7 +55,8 @@ dst_zp:
 	ds.w	1
 mode_zp:
 	ds.b	1
-
+de00_zp:
+	ds.b	1
 
 	seg.u	bss
 ;**************************************************************************
@@ -341,6 +343,21 @@ prc_lp2:
 	sta	$fe00,x
 	inx
 	bne	prc_lp2
+; X=0
+	lda	#FLAG_IS_C64RAM
+	sta	tag_flag
+	lda	#$9e
+	jsr	tag_section
+	lda	#$9f
+	jsr	tag_section
+	lda	#$be
+	jsr	tag_section
+	lda	#$de
+	jsr	tag_section
+	lda	#$df
+	jsr	tag_section
+	lda	#$fe
+	jsr	tag_section
 
 	lda	#$37
 	sta	$01
@@ -450,8 +467,13 @@ vs_skp1:
 	iny
 	cpy	#TAG_LEN
 	bne	vs_lp1
-	cmp	(ptr_zp),y
+	cmp	(ptr_zp),y	; checksum
 	bne	vs_fl1
+	ldy	#6
+	lda	(ptr_zp),y	; flags
+	cmp	#FLAG_IS_C64RAM
+	beq	vs_fl1
+
 
 ; check if writable
 	ldy	#8
@@ -507,6 +529,8 @@ scan_areas:
 	sei
 	stx	dst_zp
 	sty	dst_zp+1
+	lda	#0
+	sta	de00_zp		; mark as don't touch
 	jsr	scan_areas_int
 	ldy	#NUM_AREAS-1
 sar_lp1:
@@ -582,6 +606,7 @@ sca_lp1:
 	lda	bank_tab,x
 	ora	mode_zp
 	sta	$de00
+	sta	de00_zp
 
 	txa
 	pha
