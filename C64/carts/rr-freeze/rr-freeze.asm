@@ -26,10 +26,12 @@ CHK_MAGIC	equ	$35
 
 FLAG_IS_ROM	equ	%10000000
 FLAG_WRITABLE	equ	%01000000
-FLAG_IS_C64RAM	equ	%00100000
+FLAG_WRITETHROUGH equ	%00100000
 FLAG_SWITCHABLE	equ	%00010000
+FLAG_IS_C64RAM	equ	%00000001 	; internal marker
 FLAGS_MISMATCH	equ	$fe
 FLAGS_NOCART	equ	$ff
+
 
 DONT_TOUCH_DE00	equ	$ff
 
@@ -460,9 +462,9 @@ verify_section:
 ;******
 ;* check if mapped
 	jsr	check_mapping
-	bcs	vs_fl1
+	bcs	vs_no_cart_visible
 	cmp	#FLAG_IS_C64RAM
-	beq	vs_fl1
+	beq	vs_no_cart_visible
 
 ;******
 ;* check if switchable using $01
@@ -512,7 +514,7 @@ vs_not_writable:
 ;	cmp	(ptr_zp),y
 	jsr	vs_ramcmp
 	bne	vs_not_writethrough
-	lda	#FLAG_IS_C64RAM
+	lda	#FLAG_WRITETHROUGH
 	ora	flags_zp
 	sta	flags_zp
 vs_not_writethrough:
@@ -524,26 +526,28 @@ vs_not_writethrough:
 	sta	page_zp
 	eor	ptr_zp+1
 	and	#$1f
-	bne	vs_fl2
+	bne	vs_page_mismatch
 	iny
 	lda	(ptr_zp),y	; bank
 	iny
-	ora	(ptr_zp),y	; flags
+	ora	(ptr_zp),y	; flags	(ROM or RAM)
 	ora	flags_zp
 	sta	bank_zp
 	clc
 	rts
 
-vs_fl2:
+vs_page_mismatch:
 	lda	#FLAGS_MISMATCH
 	dc.b	$2c
-vs_fl1:
+vs_no_cart_visible:
 	lda	#FLAGS_NOCART
 	sta	bank_zp
 	sec
 	rts
 
 
+;******
+;* check mapping, C=1 not mapped, C=0 mapped and Acc=flags
 check_mapping:
 	lda	#CHK_MAGIC
 	sta	chk_zp
@@ -571,6 +575,8 @@ cm_fl1:
 	rts
 
 
+;******
+;* check mapping, C=1 not mapped, C=0 mapped and Acc=flags
 vs_ramcmp:
 	pha
 	lda	#%00000010
@@ -1057,16 +1063,20 @@ pbs_skp3:
 ;*
 ;******
 print_tag:
-	tay
+	sta	tmp_zp
 	jsr	print_space	; place holder for the char to be printed
-	tya
+	ldy	$d3
+	dey
+
+	lda	tmp_zp
 	cmp	#FLAGS_MISMATCH
 	beq	ptg_fl1
 	cmp	#FLAGS_NOCART
 	beq	ptg_fl2
-	sta	tmp_zp
-	tay
-	bmi	ptg_rom
+
+	asl	tmp_zp
+; C=FLAG_IS_ROM
+	bcs	ptg_rom
 ptg_ram:
 	and	#$0f
 	ora	#$30
@@ -1076,19 +1086,33 @@ ptg_rom:
 	clc
 	adc	#$01
 ptg_common:
-	bit	tmp_zp
-	bvs	ptg_ex1
+	asl	tmp_zp
+; C=FLAG_WRITABLE
+	bcs	ptg_skp1	; is read/write
+; is read only
 	eor	#$80
-	bvc	ptg_ex1		; always taken
+ptg_skp1:
+	sta	($d1),y
+
+	lda	646
+	asl	tmp_zp
+; C=FLAG_WRITETHROUGH
+	bcc	ptg_skp2
+	lda	#10
+ptg_skp2:
+	asl	tmp_zp
+; C=FLAG_SWITCHABLE
+	bcs	ptg_skp3
+	lda	#1
+ptg_skp3:
+	sta	($f3),y
+	rts
 
 ptg_fl1:
 	lda	#"?"
 	dc.b	$2c
 ptg_fl2:
 	lda	#"-"
-ptg_ex1:
-	ldy	$d3
-	dey
 	sta	($d1),y
 	rts
 
