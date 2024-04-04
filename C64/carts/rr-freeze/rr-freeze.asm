@@ -110,7 +110,13 @@ BUFFER_END:
 
 	org	$0e00
 code_area:
-	ds.b	$0200
+	ds.b	RAM_CODE_LEN
+code_area_end:
+
+	if	code_area_end > $1000
+	echo	"ERROR: ram_code exceeds ultimax available ram", code_area_end
+	err
+	endif
 
 
 	seg	code
@@ -278,6 +284,10 @@ ic_lp1:
 	lda	ram_code_st+$0100,x
 	sta	ram_code+$0100,x
 	endif
+	if	RAM_CODE_LEN > $0200
+	lda	ram_code_st+$0200,x
+	sta	ram_code+$0200,x
+	endif
 	inx
 	bne	ic_lp1
 
@@ -325,6 +335,10 @@ prc_lp1:
 prc_lp2:
 	sta	$9e00,x
 	sta	$9f00,x
+	sta	$be00,x
+	sta	$de00,x
+	sta	$df00,x
+	sta	$fe00,x
 	inx
 	bne	prc_lp2
 
@@ -388,10 +402,12 @@ ts_lp1:
 ;* tag data
 tag:
 	dc.b	"BANK"
+TAG_HD_LEN	equ	.-tag
 tag_page:
-	dc.b	$9e				; page
+	dc.b	0				; page
 tag_bank:
 	dc.b	0				; bank
+tag_flag:
 	dc.b	0				; flags
 TAG_LEN	equ	.-tag
 
@@ -424,7 +440,7 @@ verify_section:
 	ldy	#0
 vs_lp1:
 	lda	(ptr_zp),y
-	cpy	#4
+	cpy	#TAG_HD_LEN
 	bcs	vs_skp1
 	cmp	tag,y
 	bne	vs_fl1
