@@ -31,6 +31,8 @@ FLAG_SWITCHABLE	equ	%00010000
 FLAGS_MISMATCH	equ	$fe
 FLAGS_NOCART	equ	$ff
 
+DONT_TOUCH_DE00	equ	$ff
+
 	seg.u	zp
 ;**************************************************************************
 ;*
@@ -345,6 +347,8 @@ prc_lp2:
 	inx
 	bne	prc_lp2
 ; X=0
+;******
+;* tag c64 ram areas
 	lda	#FLAG_IS_C64RAM
 	sta	tag_flag
 	lda	#$9e
@@ -455,25 +459,8 @@ verify_section:
 
 ;******
 ;* check if mapped
-	lda	#CHK_MAGIC
-	sta	chk_zp
-	ldy	#0
-vs_lp1:
-	lda	(ptr_zp),y
-	cpy	#TAG_HD_LEN
-	bcs	vs_skp1
-	cmp	tag,y
-	bne	vs_fl1
-vs_skp1:
-	eor	chk_zp
-	sta	chk_zp
-	iny
-	cpy	#TAG_LEN
-	bne	vs_lp1
-	cmp	(ptr_zp),y	; checksum
-	bne	vs_fl1
-	ldy	#6
-	lda	(ptr_zp),y	; flags
+	jsr	check_mapping
+	bcs	vs_fl1
 	cmp	#FLAG_IS_C64RAM
 	beq	vs_fl1
 
@@ -481,32 +468,14 @@ vs_skp1:
 ;* check if switchable using $01
 	lda	#$34
 	sta	$01
-
-	lda	#CHK_MAGIC
-	sta	chk_zp
-	ldy	#0
-vss_lp1:
-	lda	(ptr_zp),y
-	cpy	#4
-	bcs	vss_skp1
-	cmp	tag,y
-	bne	vss_fl1
-vss_skp1:
-	eor	chk_zp
-	sta	chk_zp
-	iny
-	cpy	#TAG_LEN
-	bne	vss_lp1
-	cmp	(ptr_zp),y
-	bne	vss_fl1
-	ldy	#6
-	lda	(ptr_zp),y
+	jsr	check_mapping
+	bcs	vs_not_switchable
 	cmp	#FLAG_IS_C64RAM
-	bne	vss_fl1
+	bne	vs_not_switchable
 	lda	#FLAG_SWITCHABLE
 	ora	flags_zp
 	sta	flags_zp
-vss_fl1:
+vs_not_switchable:
 	lda	#$37
 	sta	$01
 
@@ -516,16 +485,40 @@ vss_fl1:
 	lda	#$aa
 	sta	(ptr_zp),y
 	cmp	(ptr_zp),y
-	bne	vs_skp2
+	bne	vs_not_writable
 	lda	#$55
 	sta	(ptr_zp),y
 	cmp	(ptr_zp),y
-	bne	vs_skp2
+	bne	vs_not_writable
 	lda	#FLAG_WRITABLE
 	ora	flags_zp
 	sta	flags_zp
-vs_skp2:
+vs_not_writable:
 
+;******
+;* check if write through to c64 ram
+	lda	de00_zp
+	cmp	#DONT_TOUCH_DE00
+	beq	vs_not_writethrough 	; disabled
+
+; can only be checked if $01 switching works
+	lda	#$aa
+	sta	(ptr_zp),y
+;	cmp	(ptr_zp),y
+	jsr	vs_ramcmp
+	bne	vs_not_writethrough
+	lda	#$55
+	sta	(ptr_zp),y
+;	cmp	(ptr_zp),y
+	jsr	vs_ramcmp
+	bne	vs_not_writethrough
+	lda	#FLAG_IS_C64RAM
+	ora	flags_zp
+	sta	flags_zp
+vs_not_writethrough:
+
+;******
+;* all passed, check page mapping and collect information
 	ldy	#4
 	lda	(ptr_zp),y	; page
 	sta	page_zp
@@ -551,6 +544,50 @@ vs_fl1:
 	rts
 
 
+check_mapping:
+	lda	#CHK_MAGIC
+	sta	chk_zp
+	ldy	#0
+cm_lp1:
+	lda	(ptr_zp),y
+	cpy	#TAG_HD_LEN
+	bcs	cm_skp1
+	cmp	tag,y
+	bne	cm_fl1
+cm_skp1:
+	eor	chk_zp
+	sta	chk_zp
+	iny
+	cpy	#TAG_LEN
+	bne	cm_lp1
+	cmp	(ptr_zp),y	; checksum
+	bne	cm_fl1
+	ldy	#6
+	lda	(ptr_zp),y	; flags
+	clc
+	rts
+cm_fl1:
+	sec
+	rts
+
+
+vs_ramcmp:
+	pha
+	lda	#%00000010
+	sta	$de00
+	lda	#$34
+	sta	$01
+	pla
+	cmp	(ptr_zp),y
+	php
+	lda	#$37
+	sta	$01
+	lda	de00_zp
+	sta	$de00
+	plp
+	rts
+
+
 ;**************************************************************************
 ;*
 ;* NAME  scan_areas, scan_areas_int
@@ -565,7 +602,7 @@ scan_areas:
 	sei
 	stx	dst_zp
 	sty	dst_zp+1
-	lda	#0
+	lda	#DONT_TOUCH_DE00
 	sta	de00_zp		; mark as don't touch
 	jsr	scan_areas_int
 	ldy	#NUM_AREAS-1
