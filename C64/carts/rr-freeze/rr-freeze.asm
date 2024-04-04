@@ -1,7 +1,7 @@
 ;**************************************************************************
 ;*
 ;* FILE  rr-freeze.asm
-;* Copyright (c) 2016 Daniel Kahlin <daniel@kahlin.net>
+;* Copyright (c) 2016, 2024 Daniel Kahlin <daniel@kahlin.net>
 ;* Written by Daniel Kahlin <daniel@kahlin.net>
 ;*
 ;* DESCRIPTION
@@ -10,7 +10,7 @@
 ;******
 	processor 6502
 
-TEST_REVISION	eqm	"R05"
+TEST_REVISION	eqm	"R06"
 FORMAT_REVISION	equ	0
 
 ;******
@@ -24,6 +24,8 @@ CHK_MAGIC	equ	$35
 	dc.b	"B"^"A"^"N"^"K"^{1}^{2}^{3}^CHK_MAGIC	; checksum
 	endm
 
+FLAG_IS_ROM	equ	%10000000
+FLAG_WRITABLE	equ	%01000000
 
 	seg.u	zp
 ;**************************************************************************
@@ -412,6 +414,9 @@ verify_section:
 	lda	#$80
 	sta	ptr_zp
 
+	lda	#0
+	sta	wr_zp
+
 	lda	#CHK_MAGIC
 	sta	chk_zp
 	ldy	#0
@@ -431,9 +436,7 @@ vs_skp1:
 	bne	vs_fl1
 
 ; check if writable
-	iny
-	lda	#0
-	sta	wr_zp
+	ldy	#8
 	lda	#$aa
 	sta	(ptr_zp),y
 	cmp	(ptr_zp),y
@@ -442,7 +445,9 @@ vs_skp1:
 	sta	(ptr_zp),y
 	cmp	(ptr_zp),y
 	bne	vs_skp2
-	inc	wr_zp
+	lda	#FLAG_WRITABLE
+	ora	wr_zp
+	sta	wr_zp
 vs_skp2:
 
 	ldy	#4
@@ -456,9 +461,7 @@ vs_skp2:
 	sta	bank_zp
 	iny
 	lda	(ptr_zp),y
-	lsr	wr_zp
-	ror
-	ror
+	ora	wr_zp
 	ora	bank_zp
 	sta	bank_zp
 	clc
@@ -1253,12 +1256,12 @@ end_de00rom:
 ;******
 ;* $9e00 Tag for bank 0
 	ds.b	$9e80-.,$ff
-	BANK_TAG $9e,0,1
+	BANK_TAG $9e,0,FLAG_IS_ROM
 
 ;******
 ;* $9f00 Tag for bank 0
 	ds.b	$9f80-.,$ff
-	BANK_TAG $9f,0,1
+	BANK_TAG $9f,0,FLAG_IS_ROM
 
 	ds.b	$9ffa-.,$ff
 	dc.w	freeze_entry	; nmi vector
@@ -1271,9 +1274,9 @@ bank	set	1
 	repeat	7
 	rorg	$8000
 	ds.b	$9e80-.,$ff
-	BANK_TAG $9e,bank,1
+	BANK_TAG $9e,bank,FLAG_IS_ROM
 	ds.b	$9f80-.,$ff
-	BANK_TAG $9f,bank,1
+	BANK_TAG $9f,bank,FLAG_IS_ROM
 	ds.b	$a000-.,$ff
 	rend
 bank	set	bank+1
