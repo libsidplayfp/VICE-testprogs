@@ -152,7 +152,7 @@ static void setup_vmap(void)
 }
 
 
-static void print_dump(Dump *d, char *str)
+static void print_dump(Dump *d, char *str, int raw_hex)
 {
     int i, j, k;
 
@@ -183,13 +183,41 @@ static void print_dump(Dump *d, char *str)
 	    /* RAM */
 	    for (j = 0; j < 8; j++) {
 		uint8_t v =  d->mode[k].ram.v[i][j];
-		printf("%s ",  vmap[v]);
+		if (!raw_hex) {
+		    printf("%s ", vmap[v]);
+		} else {
+		    switch (v) {
+		    case 0xfe:
+			printf("?  ");
+			break;
+		    case 0xff:
+			printf("-  ");
+			break;
+		    default:
+			printf("%02x ", v);
+			break;
+		    }
+		}
 	    }
 	    printf("   ");
 	    /* ROM */
 	    for (j = 0; j < 8; j++) {
 		uint8_t v =  d->mode[k].rom.v[i][j];
-		printf("%s ", vmap[v]);
+		if (!raw_hex) {
+		    printf("%s ", vmap[v]);
+		} else {
+		    switch (v) {
+		    case 0xfe:
+			printf("?  ");
+			break;
+		    case 0xff:
+			printf("-  ");
+			break;
+		    default:
+			printf("%02x ", v);
+			break;
+		    }
+		}
 	    }
 	    printf("\n");
 	}
@@ -204,15 +232,17 @@ int main(int argc, char *argv[])
 {
     int c;
     char *infile;
+    int raw_hex;
 
     /* defaults */
     verbose_g = 0;
     debug_g = 0;
+    raw_hex = 0;
 
     /*
      * scan for valid options
      */
-    while (EOF != (c = getopt(argc, argv, "f:o:vdVh"))) {
+    while (EOF != (c = getopt(argc, argv, "rvdVh"))) {
         switch (c) {
 
 	/* a missing parameter */
@@ -243,15 +273,21 @@ PROGRAM " " VERSION ": rr-freeze.crt dump analyzer\n"
 "Copyright (c) 2016, 2024 Daniel Kahlin <daniel@kahlin.net>\n"
 "Written by Daniel Kahlin <daniel@kahlin.net>\n"
 "\n"
-"usage: " PROGRAM " [-v][-d][-h][-V] <file>\n"
+"usage: " PROGRAM " [-r][-v][-d][-h][-V] <file>\n"
 "\n"
 "Valid options:\n"
+"    -r              raw hex output\n"
 "    -v              be verbose\n"
 "    -d              display debug information\n"
 "    -h              displays this help text\n"
 "    -V              output program version\n"
 	    );
 	    exit(0);
+
+	/* raw hex mode */
+	case 'r':
+	    raw_hex = 1;
+	    break;
 
 	/* default behavior */
 	default:
@@ -278,19 +314,19 @@ PROGRAM " " VERSION ": rr-freeze.crt dump analyzer\n"
     printf("  program: %s, format: %d\n", ident, format_rev);
 
     printf("\n<RESET>\n");
-    print_dump(&rst, "RST");
+    print_dump(&rst, "RST", raw_hex);
     printf("\n$%02X -> $DE01  (REU-Comp=%c, NoFreeze=%c, AllowBank=%c)\n",
 	   de01_conf,
 	   (de01_conf & 0x40) ? '1':'0',
 	   (de01_conf & 0x04) ? '1':'0',
 	   (de01_conf & 0x02) ? '1':'0'
     );
-    print_dump(&cnfd, "CNFD");
+    print_dump(&cnfd, "CNFD", raw_hex);
     printf("\n$88 -> $DE00  (\"random\" mapping, bank 5 in ROM)\n$8C -> $DE00 (kill)\n");
     printf("\n<FREEZE>\n");
-    print_dump(&frz, "FRZ");
+    print_dump(&frz, "FRZ", raw_hex);
     printf("\n$60 -> $DE00  (ACK)\n$20 -> $DE00\n");
-    print_dump(&ackd, "ACKD");
+    print_dump(&ackd, "ACKD", raw_hex);
 
     printf(
 "\n\n"
