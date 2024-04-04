@@ -75,6 +75,7 @@ tab_selected:
 
 	org	$0800
 BUFFER:
+header_start:
 ident:
 	ds.b	15
 format_rev:
@@ -95,7 +96,7 @@ de01_post:
 	ds.b	1
 
 	ds.b	8
-
+HEADER_LEN	equ	.-header_start
 areas_post_rst:
 	ds.b	NUM_AREAS
 banks_post_rst:
@@ -257,12 +258,19 @@ pf_lp1:
 ;*
 ;******
 setup_dump:
-	ldx	#IDENT_LEN
+	ldx	#HEADER_LEN
+	lda	#0
 sd_lp1:
+	sta	header_start-1,x
+	dex
+	bne	sd_lp1
+
+	ldx	#IDENT_LEN
+sd_lp2:
 	lda	ident_st-1,x
 	sta	ident-1,x
 	dex
-	bne	sd_lp1
+	bne	sd_lp2
 
 	lda	#FORMAT_REVISION
 	sta	format_rev

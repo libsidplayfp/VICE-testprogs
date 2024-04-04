@@ -302,7 +302,7 @@ PROGRAM " " VERSION ": rr-freeze.crt dump analyzer\n"
 
     setup_vmap(raw_hex);
     read_dump(infile);
-    printf("analyzing file: %s\n", argv[1]);
+    printf("analyzing file: %s\n", infile);
     printf("  program: %s, format: %d\n", ident, format_rev);
 
     printf("\n<RESET>\n");
