@@ -27,6 +27,7 @@ CHK_MAGIC	equ	$35
 FLAG_IS_ROM	equ	%10000000
 FLAG_WRITABLE	equ	%01000000
 FLAG_IS_C64RAM	equ	%00100000
+FLAG_SWITCHABLE	equ	%00010000
 FLAGS_MISMATCH	equ	$fe
 FLAGS_NOCART	equ	$ff
 
@@ -110,7 +111,7 @@ banks_post_ack:
 BUFFER_END:
 
 
-	org	$0e00
+	org	$0da0
 code_area:
 	ds.b	RAM_CODE_LEN
 code_area_end:
@@ -438,7 +439,7 @@ TAG_LEN	equ	.-tag
 ;*
 ;*   IN: Acc=MSB
 ;*   OUT: Acc=bank_zp
-;*     C=0:  bank_zp=RW000BBB (R=ROM, W=RW, B=bank), page_zp=MSB
+;*     C=0:  bank_zp=RWTS0BBB (R=ROM, W=RW, T=WriteC64, S=Switch01, B=bank), page_zp=MSB
 ;*     C=1:  bank_zp=$fe (page mismatch), bank_zp=$ff (no cart present here)
 ;*
 ;*     X is preserved.
@@ -452,6 +453,8 @@ verify_section:
 	lda	#0
 	sta	flags_zp
 
+;******
+;* check if mapped
 	lda	#CHK_MAGIC
 	sta	chk_zp
 	ldy	#0
@@ -474,8 +477,41 @@ vs_skp1:
 	cmp	#FLAG_IS_C64RAM
 	beq	vs_fl1
 
+;******
+;* check if switchable using $01
+	lda	#$34
+	sta	$01
 
-; check if writable
+	lda	#CHK_MAGIC
+	sta	chk_zp
+	ldy	#0
+vss_lp1:
+	lda	(ptr_zp),y
+	cpy	#4
+	bcs	vss_skp1
+	cmp	tag,y
+	bne	vss_fl1
+vss_skp1:
+	eor	chk_zp
+	sta	chk_zp
+	iny
+	cpy	#TAG_LEN
+	bne	vss_lp1
+	cmp	(ptr_zp),y
+	bne	vss_fl1
+	ldy	#6
+	lda	(ptr_zp),y
+	cmp	#FLAG_IS_C64RAM
+	bne	vss_fl1
+	lda	#FLAG_SWITCHABLE
+	ora	flags_zp
+	sta	flags_zp
+vss_fl1:
+	lda	#$37
+	sta	$01
+
+;******
+;* check if writable
 	ldy	#8
 	lda	#$aa
 	sta	(ptr_zp),y

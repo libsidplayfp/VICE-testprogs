@@ -89,7 +89,7 @@ void read_dump(const char *name)
     if (memcmp(IDENT_STR, ident, strlen(IDENT_STR)) != 0) {
 	panic("unsupported file format!");
     }
-    if (format_rev != 0) {
+    if (format_rev != 0 && format_rev != 1) {
 	panic("unsupported format revision (%d)!", format_rev);
     }
 
@@ -125,10 +125,10 @@ static void v_to_str(char *str, uint8_t v)
 
     if (v & 0x80) {
 	/* ROM bank */
-	str[0] = 'A' + (v & 0x3f);
+	str[0] = 'A' + (v & 0x0f);
     } else {
 	/* RAM bank */
-	str[0] = '0' + (v & 0x3f);
+	str[0] = '0' + (v & 0x0f);
     }
     if (v & 0x40) {
 	/* read/write */
