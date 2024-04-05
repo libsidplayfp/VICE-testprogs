@@ -946,10 +946,6 @@ ct_lp1:
 	jsr	print_cr
 	jsr	print_cr
 
-	ldx	#<dumpname
-	ldy	#>dumpname
-	lda	#DUMPNAME_LEN
-	jsr	$ffbd
 	jsr	save_file
 ct_lp2:
 	jmp	ct_lp2
@@ -964,10 +960,6 @@ frz_msg:
 ackd_msg:
 	dc.b	18,"ACKD",146," ",0
 
-
-dumpname:
-	dc.b	"RR-FRZ"
-DUMPNAME_LEN	equ	.-dumpname
 
 ;**************************************************************************
 ;*
@@ -1299,13 +1291,14 @@ sf_lp1:
 	ldx	$d3
 	ldy	#0
 sf_lp2:
-	cpy	$b7
+	lda	default_name,y
 	beq	sf_skp2
-	lda	($bb),y
 	jsr	$ffd2
 	iny
 	bne	sf_lp2		; always taken
 sf_skp2:
+	lda	de01_selected
+	jsr	print_hex
 	stx	$d3
 
 	ldx	#<namebuf
@@ -1362,6 +1355,9 @@ filename_msg:
 	dc.b	13,"FILENAME: ",0
 ok_msg:
 	dc.b	13,"OK",13,0
+
+default_name:
+	dc.b	"RR-FRZ",0
 
 NAMEBUF_LEN	equ	32
 namebuf		equ	$0120
