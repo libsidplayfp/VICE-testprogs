@@ -31,6 +31,7 @@ FLAG_SWITCHABLE	equ	%00010000
 FLAG_IS_C64RAM	equ	%00000001 	; internal marker
 FLAGS_MISMATCH	equ	$fe
 FLAGS_NOCART	equ	$ff
+FLAGS_PREFILL	equ	$aa		; mark as untouched
 
 
 DONT_TOUCH_DE00	equ	$ff
@@ -232,12 +233,14 @@ de01_tab:
 prefill_ram:
 
 ;******
-;* prefill ram area with $aa
+;* prefill buffer area with prefill pattern
+	lda	#<BUFFER
+	sta	ptr_zp
+	lda	#>BUFFER
+	sta	ptr_zp+1
 	ldy	#0
-	sty	ptr_zp
-	ldx	#8
-	stx	ptr_zp+1
-	lda	#$aa
+	ldx	#>[BUFFER_END-BUFFER+$ff]
+	lda	#FLAGS_PREFILL
 pf_lp1:
 	sta	(ptr_zp),y
 	iny
@@ -699,6 +702,9 @@ sca_lp1:
 	pha
 	jsr	scan_areas_int
 
+	lda	#%00000000
+	sta	$de00
+
 	ldy	#0
 	ldx	#0
 sca_lp2:
@@ -722,9 +728,6 @@ sca_skp1:
 	inx
 	cpx	#NUM_BANKS
 	bne	sca_lp1
-
-	lda	#%00000000
-	sta	$de00
 
 	lda	dst_zp
 	clc
