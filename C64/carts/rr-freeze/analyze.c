@@ -108,50 +108,107 @@ void read_dump(const char *name)
 
 
 
-static void v_to_str(char *str, uint8_t v)
+static void v_to_str_fmt0(char *str, uint8_t v)
 {
+    char buf[16];
+    char *p;
+
     if (v == 0xff) {
-	str[0] = '-';
-	str[1] = ' ';
-	str[2] = 0;
+	sprintf(str, " - ");
 	return;
     }
     if (v == 0xfe) {
-	str[0] = '?';
-	str[1] = ' ';
-	str[2] = 0;
+	sprintf(str, " ? ");
 	return;
     }
 
+    p = buf;
+
+    *p++ = ' ';
     if (v & 0x80) {
 	/* ROM bank */
-	str[0] = 'A' + (v & 0x0f);
+	*p++ = 'A' + (v & 0x0f);
     } else {
 	/* RAM bank */
-	str[0] = '0' + (v & 0x0f);
+	*p++ = '0' + (v & 0x0f);
     }
     if (v & 0x40) {
 	/* read/write */
-	str[1] = ' ';
     } else {
 	/* read only */
-	str[1] = '*';
+	*p++ = '*';
     }
-    str[2] = 0;
+    *p = 0;
 
+    sprintf(str, "%-3s", buf);
+}
+
+static void v_to_str(char *str, uint8_t v)
+{
+    char buf[16];
+    char *p;
+
+    if (v == 0xff) {
+	sprintf(str, " - ");
+	return;
+    }
+    if (v == 0xfe) {
+	sprintf(str, " ? ");
+	return;
+    }
+
+    p = buf;
+    switch (v & 0x30) {
+    case 0x00:
+	/* not write through */
+	/* not $01 switchable */
+	*p++ = '^';
+	break;
+    case 0x10:
+	/* not write through */
+	/* $01 switchable */
+	*p++ = ' ';
+	break;
+    case 0x20:
+	/* write through */
+	/* not $01 switchable */
+	*p++ = '|';
+	break;
+    case 0x30:
+	/* not write through */
+	/* not $01 switchable */
+	*p++ = '!';
+	break;
+    }
+    if (v & 0x80) {
+	/* ROM bank */
+	*p++ = 'A' + (v & 0x0f);
+    } else {
+	/* RAM bank */
+	*p++ = '0' + (v & 0x0f);
+    }
+    if (v & 0x40) {
+	/* read/write */
+    } else {
+	/* read only */
+	*p++ = '*';
+    }
+    *p = 0;
+
+    sprintf(str, "%-3s", buf);
 }
 
 static void v_to_str_raw(char *str, uint8_t v)
 {
     switch (v) {
     case 0xfe:
-	sprintf(str, "? ");
+	sprintf(str, "?? ");
 	break;
     case 0xff:
-	sprintf(str, "- ");
+	sprintf(str, "-- ");
 	break;
     default:
-	sprintf(str, "%02x", v);
+	sprintf(str, "%02x ", v);
 	break;
     }
 }
@@ -164,7 +221,11 @@ static void setup_vmap(int raw_hex)
     int v;
     for (v = 0; v < 0x100; v++) {
 	if (!raw_hex) {
-	    v_to_str(vmap[v], v);
+	    if (format_rev == 0) {
+		v_to_str_fmt0(vmap[v], v);
+	    } else {
+		v_to_str(vmap[v], v);
+	    }
 	} else {
 	    v_to_str_raw(vmap[v], v);
 	}
@@ -191,7 +252,7 @@ static void print_dump(Dump *d, char *str)
 	       (k & 2) ? '1':'0',
 	       (k & 1) ? '1':'0'
 	);
-	printf("    x00xx0%c%c -> $DE00 (ROM)",
+	printf("            x00xx0%c%c -> $DE00 (ROM)",
 	       (k & 2) ? '1':'0',
 	       (k & 1) ? '1':'0'
         );
@@ -299,11 +360,11 @@ PROGRAM " " VERSION ": rr-freeze.crt dump analyzer\n"
     infile = argv[0];
 
 
-
-    setup_vmap(raw_hex);
     read_dump(infile);
     printf("analyzing file: %s\n", infile);
     printf("  program: %s, format: %d\n", ident, format_rev);
+
+    setup_vmap(raw_hex);
 
     printf("\n<RESET>\n");
     print_dump(&rst, "RST");
@@ -329,6 +390,18 @@ PROGRAM " " VERSION ": rr-freeze.crt dump analyzer\n"
 "   0-7   -> RAM banks 0-7, an '*' means read only.\n"
 "   A-H   -> ROM banks 0-7, should have an '*', otherwise it is writable (!)\n"
 	);
+	if (format_rev == 1) {
+	    printf(
+"   ^     -> not $01 switchable\n"
+"   !     -> write through to C64 RAM\n"
+"   |     -> not $01 switchable and write through to C64 RAM\n"
+	    );
+	}
+	printf(
+"   -     -> no cart detected\n"
+"   ?     -> mapping mismatch (e.g $de not mapped to $9e and similar)\n"
+"\n"
+	);
     } else {
 	if (format_rev == 1) {
 	    printf(
@@ -339,12 +412,12 @@ PROGRAM " " VERSION ": rr-freeze.crt dump analyzer\n"
 "   RW000BBB (R=ROM, W=RW, B=bank)\n"
 	    );
 	}
-    }
-    printf(
-"   -     -> no cart detected\n"
-"   ?     -> mapping mismatch (e.g $de not mapped to $9e and similar)\n"
+	printf(
+"   --    -> no cart detected\n"
+"   ??    -> mapping mismatch (e.g $de not mapped to $9e and similar)\n"
 "\n"
-    );
+	);
+    }
 
     exit(0);
 }
