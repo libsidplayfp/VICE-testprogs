@@ -1,6 +1,6 @@
 rr-freeze R05
 -------------
- 
+
 
 DESCRIPTION
 -----------
@@ -21,7 +21,7 @@ Scanning is done in two steps.
 
 2. bank scan
    This performs an area scan for each of the eight possible bank bit
-   combinations, once with RAM=1 and once with RAM=0. 
+   combinations, once with RAM=1 and once with RAM=0.
    Bank scan is "destructive" as it has to write $DE00 to sweep the bank
    bits.   The base configuration (i.e bits 1 and 0) are set to 00.
 
@@ -29,7 +29,7 @@ Output format:
   <NAME>  9E:A BE:- DE:- DF:A FE:-    <- detected config (area scan)
     9E:01230123  BE:--------  DE:--------      / bank scan with
     DF:00000000  FE:ABCDEFGH               <---\ RAM-bit=1
-    9E:ABCDEFGH  BE:--------  DE:--------    / bank scan with 
+    9E:ABCDEFGH  BE:--------  DE:--------    / bank scan with
     DF:ABCDEFGH  FE:ABCDEFGH               <-\ RAM-bit=0  (ROM)
 
   Letter meaning:
@@ -48,7 +48,7 @@ What it doesn't check but perhaps ought to:
 - can we check the "bus contention" condition?
 - it doesn't allow you to select which GAME/EXROM bits to set during ack.
 - it doesn't check what happens if bank switching is done using the banking
-  bits in $de01 instead of $de00. 
+  bits in $de01 instead of $de00.
 
 Requests:
 - append the de01 value to the default filename (rr-frz00 etc)
@@ -80,7 +80,7 @@ Steps:
 6. Ack freeze
 7. Dump state, "ACKD"
 
- 
+
 
 
 +---------------------+
@@ -96,7 +96,7 @@ What to do for each cartridge:
 5. press freeze when requested.
 6. choose save and save as dump_rr_40.prg (dev 8 is hardcoded)
 
-Repeat from (2) for $DE01 = $00, $42 and $02 -> dump_rr_00.prg, dump_rr_42.prg, 
+Repeat from (2) for $DE01 = $00, $42 and $02 -> dump_rr_00.prg, dump_rr_42.prg,
 dump_rr_02.prg
 ---
 
@@ -119,14 +119,14 @@ Details:
 
 Tests are done on C64C (short board 250469).
 
-Retro Replay cart (rr-freeze.bin is flashed on the lower bank) as only device on 
+Retro Replay cart (rr-freeze.bin is flashed on the lower bank) as only device on
 the Expansion Port.
 
-SD2IEC on the serial port (with a .d81 image mounted). Test outputs are saved on 
+SD2IEC on the serial port (with a .d81 image mounted). Test outputs are saved on
 this image.
 
 $DE01 values 00, 02, 40, 42 were OK.
-The other values didn't work. After starting the test freeze button didn't 
+The other values didn't work. After starting the test freeze button didn't
 affect anything.
 
 Let me know if you need more tests.
@@ -135,8 +135,8 @@ Let me know if you need more tests.
 
 You're welcome. Glad my dumps shed more light on the case :)
 
-Yes, the cart I have is 'a genuine Individual Computers Retro Replay'. With the 
-red PCB. I think this one was the last batch of the RR cartridges. I don't have 
+Yes, the cart I have is 'a genuine Individual Computers Retro Replay'. With the
+red PCB. I think this one was the last batch of the RR cartridges. I don't have
 a 1541U nor an EF.
 
 Good luck.
@@ -154,7 +154,7 @@ dumps/dump_rr_42_sample_cz.prg
 ---
 Message sent by: Count Zero on 2016-03-02 20:36:48+01
 
-RR - is a test run on a RR labeled "sample" - one of the first 10 ever I assume 
+RR - is a test run on a RR labeled "sample" - one of the first 10 ever I assume
 - all chips on a socket, etc.
 ---
 
@@ -200,8 +200,8 @@ ignored.
 ---
 Message sent by: Count Zero on 2016-02-29 19:36:29+01
 
-on a c64c (short board), svn checkout from today on 1541U with softloaded 2.6d 
-Firmware - somehow cannot load a crt or the bin from sd card with 1.72b 
+on a c64c (short board), svn checkout from today on 1541U with softloaded 2.6d
+Firmware - somehow cannot load a crt or the bin from sd card with 1.72b
 firmware. will run the romtests when I find back the update utility :)
 
 Nordic Replay, EF3 and several RRs to come soon.
@@ -223,8 +223,8 @@ ignored.
 ---
 Message sent by: Count Zero on 2016-03-02 20:36:48+01
 
-EF - easyflash3 - curious observation: on $44 and $46 after "Save again? N" and 
-"OK" a reset took the c64 into plain basic mode with 30k bytes free - needed 
+EF - easyflash3 - curious observation: on $44 and $46 after "Save again? N" and
+"OK" a reset took the c64 into plain basic mode with 30k bytes free - needed
 another reset or power cycle to restart the RR rom.
 ---
 
@@ -251,7 +251,7 @@ dumps/dump_rr_40_hoxs64-v1087.prg
 
 OLD version
 -----------
- 
+
 Select one of the following bit patterns that is written to $de01, then press
 RETURN to do it, then FREEZE and observe the result.
 
