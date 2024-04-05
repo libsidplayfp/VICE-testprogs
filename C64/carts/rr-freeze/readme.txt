@@ -1,17 +1,20 @@
-rr-freeze R05
+rr-freeze R06
 -------------
 
 
 DESCRIPTION
 -----------
 
-$9E80 and $9F80 of each bank in cartridge RAM is pre-filled with tags
+$9e80 and $9f80 of each bank in cartridge RAM is pre-filled with tags
 to indicate which bank it is.  This is done for all eight possible bank bit
 combinations in reverse.  This ensures that any aliases are overwritten with
 the lowest possible bank number.
 
 $9e80 and $9f80 of each bank in cartridge ROM is prepared with tags inside
 the image.
+
+$9e80, $9f80, $be80, $de80, $df80 and $fe80 in C64 RAM is prepared with tags
+to be able to verify if $01 switching is possible.
 
 Scanning is done in two steps.
 1. area scan
@@ -37,21 +40,23 @@ Output format:
     A-H   -> ROM banks 0-7, if non-inverted, it is writable (!)
     -     -> no cart detected
     ?     -> mapping mismatch (e.g $de not mapped to $9e and similar)
-
+  Colors:
+    light blue -> normal
+    light red -> write through to C64 RAM happens
+    white     -> no $01 switching possible
 
 What it doesn't check but perhaps ought to:
 - what happens with the mapping after KILL in the "random" state.
 - what happens with the mapping _during_ when the ack bit is set =1.
 - it doesn't detect open bus vs. C64 RAM when no cart is detected.
-- another thing that would be interesting to test: do writes "fall through"
-  to C64 memory or not?
+- fall through to C64 memory is not tested in the "frozen" state
+  (tricky because no normal $de00 or $01 switching)
 - can we check the "bus contention" condition?
 - it doesn't allow you to select which GAME/EXROM bits to set during ack.
 - it doesn't check what happens if bank switching is done using the banking
   bits in $de01 instead of $de00.
 
 Requests:
-- append the de01 value to the default filename (rr-frz00 etc)
 - a version for regular AR.
 
 

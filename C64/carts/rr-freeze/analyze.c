@@ -205,7 +205,7 @@ static void v_to_str(char *str, uint8_t v)
 	return;
     }
     /* prefill pattern means we have encountered unwritten memory
-       (0xaa was used up to rr-freeze r05) */
+       (0xaa was used up to rr-freeze r06) */
     if (v == 0xaa) {
 	sprintf(str, "err");
 	return;
