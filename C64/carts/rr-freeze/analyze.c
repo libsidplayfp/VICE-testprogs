@@ -72,7 +72,48 @@ Dump frz;
 Dump ackd;
 
 
-void read_dump(const char *name)
+static void read_section_fmt0(FILE *fp, Dump *p)
+{
+    int area, mode, bank;
+    AreaScan *initial = &p->initial;
+
+    /* get the initial state of the 5 mapped areas (AreaScan) */
+    for (area = 0; area < 5; area++) {
+	initial->v[area] = fgetc(fp);
+    }
+
+    /* get the mapping four modes (ModeScan) */
+    for (mode = 0; mode < 4; mode++) {
+	ModeScan *ms = &p->mode[mode];
+	BankScan *bs = &ms->ram;
+	for (area = 0; area < 5; area++) {
+	    for (bank = 0; bank < 8; bank++) {
+		bs->v[area][bank] = fgetc(fp);
+	    }
+	}
+	bs = &ms->rom;
+	for (area = 0; area < 5; area++) {
+	    for (bank = 0; bank < 8; bank++) {
+		bs->v[area][bank] = fgetc(fp);
+	    }
+	}
+    }
+}
+
+static void read_dump_fmt0(FILE *fp)
+{
+    /* $DE01 configuration */
+    de01_conf = fgetc(fp);
+
+    /* load dumps */
+    fseek(fp, 0x22, SEEK_SET);
+    read_section_fmt0(fp, &rst);
+    read_section_fmt0(fp, &cnfd);
+    read_section_fmt0(fp, &frz);
+    read_section_fmt0(fp, &ackd);
+}
+
+static void read_dump(const char *name)
 {
     FILE *fp = fopen(name, "rb");
     if (!fp) {
@@ -91,6 +132,13 @@ void read_dump(const char *name)
     }
     if (format_rev != 0 && format_rev != 1) {
 	panic("unsupported format revision (%d)!", format_rev);
+    }
+
+
+    if (format_rev == 0) {
+	read_dump_fmt0(fp);
+	fclose(fp);
+	return;
     }
 
     /* $DE01 configuration */
@@ -148,12 +196,18 @@ static void v_to_str(char *str, uint8_t v)
     char buf[16];
     char *p;
 
+    if (v == 0xfe) {
+	sprintf(str, " ? ");
+	return;
+    }
     if (v == 0xff) {
 	sprintf(str, " - ");
 	return;
     }
-    if (v == 0xfe) {
-	sprintf(str, " ? ");
+    /* prefill pattern means we have encountered unwritten memory
+       (0xaa was used up to rr-freeze r05) */
+    if (v == 0xaa) {
+	sprintf(str, "err");
 	return;
     }
 
