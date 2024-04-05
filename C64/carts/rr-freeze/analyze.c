@@ -215,6 +215,7 @@ static void v_to_str_raw(char *str, uint8_t v)
 
 
 char vmap[256][4];
+char vmap_left[256][4];
 
 static void setup_vmap(int raw_hex)
 {
@@ -229,6 +230,12 @@ static void setup_vmap(int raw_hex)
 	} else {
 	    v_to_str_raw(vmap[v], v);
 	}
+	/* create left aligned version of the vmap */
+	if (vmap[v][0] == ' ') {
+	    sprintf(vmap_left[v], "%-3s", &vmap[v][1]);
+	} else {
+	    memcpy(vmap_left[v], vmap[v], 4);
+	}
     }
 }
 
@@ -241,7 +248,7 @@ static void print_dump(Dump *d, char *str)
     printf("\n--- %s ---\n", str);
     printf(" detected initial state:\n");
     for (i = 0; i < 5; i++) {
-	printf("  %02X:%s", areas[i], vmap[d->initial.v[i]]);
+	printf("  %02X:%s", areas[i], vmap_left[d->initial.v[i]]);
     }
     printf("\n");
 
