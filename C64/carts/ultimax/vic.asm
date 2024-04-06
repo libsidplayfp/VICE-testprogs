@@ -261,7 +261,7 @@ loop:
         stx $d018
         ; inc $d020
         ldy #2
-        ldx #$22        ; screen $0800 char $0800 
+        ldx #$22        ; screen $4800 char $4800
 
         lda #$31+(4*8)
 -       cmp $d012
@@ -287,7 +287,7 @@ loop:
         stx $d018
         
 ;         inc $d020
-        ldx #$66        ; screen $1800 char $1800
+        ldx #$66        ; screen $5800 char $5800
 
         lda #$31+(5*8)
 -       cmp $d012
@@ -297,7 +297,7 @@ loop:
 
         stx $d018
         ; inc $d020
-        ldx #$aa        ; screen $2800 char $2800
+        ldx #$aa        ; screen $6800 char $6800
 
         lda #$31+(6*8)
 -       cmp $d012
@@ -307,7 +307,7 @@ loop:
 
         stx $d018
         ; inc $d020
-        ldx #$ee        ; screen $3800 char $3800
+        ldx #$ee        ; screen $7800 char $7800
 
         lda #$31+(7*8)
 -       cmp $d012
@@ -318,7 +318,7 @@ loop:
         stx $d018
         ; inc $d020
         ldy #1
-        ldx #$22        ; screen $0800 char $0800 
+        ldx #$22        ; screen $8800 char $8800
 
         lda #$31+(8*8)
 -       cmp $d012
@@ -344,7 +344,7 @@ loop:
         stx $d018
 
         ; inc $d020
-        ldx #$66        ; screen $1800 char $1800
+        ldx #$66        ; screen $9800 char $9800
 
         lda #$31+(9*8)
 -       cmp $d012
@@ -354,7 +354,7 @@ loop:
 
         stx $d018
         ; inc $d020
-        ldx #$aa        ; screen $2800 char $2800
+        ldx #$aa        ; screen $a800 char $a800
 
         lda #$31+(10*8)
 -       cmp $d012
@@ -364,7 +364,7 @@ loop:
 
         stx $d018
         ; inc $d020
-        ldx #$ee        ; screen $3800 char $3800
+        ldx #$ee        ; screen $b800 char $b800
 
         lda #$31+(11*8)
 -       cmp $d012
@@ -375,7 +375,7 @@ loop:
         stx $d018
         ; inc $d020
         ldy #0
-        ldx #$22        ; screen $0800 char $0800 
+        ldx #$22        ; screen $c800 char $c800
 
         lda #$31+(12*8)
 -       cmp $d012
@@ -400,7 +400,7 @@ loop:
         sty $dd00
         stx $d018
         ; inc $d020
-        ldx #$66        ; screen $1800 char $1800
+        ldx #$66        ; screen $d800 char $d800
 
         lda #$31+(13*8)
 -       cmp $d012
@@ -410,7 +410,7 @@ loop:
 
         stx $d018
         ; inc $d020
-        ldx #$aa        ; screen $2800 char $2800
+        ldx #$aa        ; screen $e800 char $e800
 
         lda #$31+(14*8)
 -       cmp $d012
@@ -420,7 +420,7 @@ loop:
 
         stx $d018
         ; inc $d020
-        ldx #$ee        ; screen $3800 char $3800
+        ldx #$ee        ; screen $f800 char $f800
 
         lda #$31+(15*8)
 -       cmp $d012
