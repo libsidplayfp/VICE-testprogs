@@ -226,7 +226,7 @@ static void v_to_str(char *str, uint8_t v)
     case 0x20:
 	/* write through */
 	/* not $01 switchable */
-	*p++ = '|';
+	*p++ = '}';
 	break;
     case 0x30:
 	/* not write through */
@@ -455,7 +455,7 @@ PROGRAM " " VERSION ": rr-freeze.crt dump analyzer\n"
 	    printf(
 "   ^     -> not $01 switchable\n"
 "   !     -> write through to C64 RAM\n"
-"   |     -> not $01 switchable and write through to C64 RAM\n"
+"   }     -> write through to C64 RAM and not $01 switchable\n"
 	    );
 	}
 	printf(
