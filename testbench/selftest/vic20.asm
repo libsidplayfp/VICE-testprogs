@@ -3,19 +3,41 @@ SCREENCOLOR = $900f
 DEBUGREG = $910f        ; http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?f=2&t=7763&p=84058#p84058
 
 ; by default, VIC20 tests should run on +8K expanded VIC20
-;SCREENRAM = $1e00
+!if EXPANDED = 1 {
 SCREENRAM = $1000
-;COLORRAM = $9600
 COLORRAM = $9400
+} else {
+SCREENRAM = $1e00
+COLORRAM = $9600
+}
 
+!if CART = 0 {
             * = $1201
             !word eol,0
             !byte $9e, $34,$36,$32,$31, 0 ; SYS 4621
 eol:        !word 0
+} else {
+            * = $a000
+
+            !word start
+            !word start
+            !byte $41, $30, $c3, $c2, $cd
+}
 
 start:
 ; usually we want to SEI and set background to black at start
             sei
+!if CART = 1 {
+            ldx #$ff
+            txs
+            cld
+
+            JSR $FD8D ; initialise and test RAM
+            JSR $FD52 ; restore default I/O vectors
+            JSR $FDF9 ; initialize I/O registers
+            JSR $E518 ; initialise hardware
+}
+
             lda #$08
             sta SCREENCOLOR
 ; when a test starts, the screen- and color memory should be initialized

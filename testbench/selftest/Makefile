@@ -12,6 +12,7 @@ all: c64-pass.prg c64-fail.prg \
 	c128-pass.d64 \
 	vic20-pass.prg vic20-fail.prg \
 	vic20-pass.d64 \
+	vic20-pass.crt vic20-fail.crt \
 	pet-pass.prg pet-fail.prg \
 	pet-pass.d82 \
 	cbm610-pass.prg cbm610-fail.prg \
@@ -55,9 +56,15 @@ dtv-pass.d64: dtv-pass.prg
 	c1541 -format "dtv pass,00" d64 dtv-pass.d64 \
 		-write dtv-pass.prg "dtv-pass"
 vic20-pass.prg: vic20.asm
-	acme -DFAIL=0 -f cbm -o vic20-pass.prg vic20.asm
+	acme -DEXPANDED=1 -DCART=0 -DFAIL=0 -f cbm -o vic20-pass.prg vic20.asm
 vic20-fail.prg: vic20.asm
-	acme -DFAIL=1 -f cbm -o vic20-fail.prg vic20.asm
+	acme -DEXPANDED=1 -DCART=0 -DFAIL=1 -f cbm -o vic20-fail.prg vic20.asm
+vic20-pass.crt: vic20.asm
+	acme -DEXPANDED=0 -DCART=1 -DFAIL=0 -f plain -o vic20-pass.bin vic20.asm
+	cartconv -p -t vic20 -l 0xa000 -i vic20-pass.bin -o vic20-pass.crt
+vic20-fail.crt: vic20.asm
+	acme -DEXPANDED=0 -DCART=1 -DFAIL=1 -f plain -o vic20-fail.bin vic20.asm
+	cartconv -p -t vic20 -l 0xa000 -i vic20-fail.bin -o vic20-fail.crt
 vic20-pass.d64: vic20-pass.prg
 	c1541 -format "vic20 pass,00" d64 vic20-pass.d64 \
 		-write vic20-pass.prg "vic20-pass"
@@ -93,3 +100,8 @@ cbm510-fail.prg: cbm510.asm
 cbm510-pass.d82: cbm510-pass.prg
 	c1541 -format "cbm510 pass,00" d82 cbm510-pass.d82 \
 		-write cbm510-pass.prg "cbm510-pass"
+
+clean:
+	$(RM) *.prg
+	$(RM) *.bin
+	$(RM) *.crt

@@ -95,6 +95,11 @@ function xvic_get_options
                     mounted_p64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
+                if [ "${1:0:9}" == "mountcrt:" ]; then
+                    exitoptions="-cartcrt $2/${1:9}"
+                    mounted_crt="${1:9}"
+                    echo -ne "(cartridge:${1:9}) "
+                fi
             ;;
     esac
 }
