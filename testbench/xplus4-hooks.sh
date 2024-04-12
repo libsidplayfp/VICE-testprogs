@@ -2,7 +2,7 @@
 XPLUS4OPTS+=" -default"
 XPLUS4OPTS+=" -TEDfilter 0"
 XPLUS4OPTS+=" -TEDextpal"
-XPLUS4OPTS+=" -TEDpalette pepto-pal.vpl"
+XPLUS4OPTS+=" -TEDpalette colodore_ted.vpl"
 XPLUS4OPTS+=" -TEDsaturation 1000"
 XPLUS4OPTS+=" -TEDbrightness 1000"
 XPLUS4OPTS+=" -TEDcontrast 1000"
@@ -67,7 +67,33 @@ function xplus4_get_options
             ;;
         *)
                 exitoptions=""
+                if [ "${1:0:9}" == "mountd64:" ]; then
+                    exitoptions="-8 $2/${1:9}"
+                    mounted_d64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
+                if [ "${1:0:9}" == "mountd71:" ]; then
+                    exitoptions="-drive8type 1571 -8 $2/${1:9}"
+                    mounted_d64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
+                if [ "${1:0:9}" == "mountg64:" ]; then
+                    exitoptions="-8 $2/${1:9}"
+                    mounted_g64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
+                if [ "${1:0:9}" == "mountp64:" ]; then
+                    exitoptions="-8 $2/${1:9}"
+                    mounted_p64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
+                if [ "${1:0:9}" == "mountcrt:" ]; then
+                    exitoptions="-cartcrt $2/${1:9}"
+                    mounted_crt="${1:9}"
+                    echo -ne "(cartridge:${1:9}) "
+                fi
             ;;
+
     esac
 }
 

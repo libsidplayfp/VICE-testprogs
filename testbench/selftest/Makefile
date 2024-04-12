@@ -3,6 +3,7 @@ all: c64-pass.prg c64-fail.prg \
 	c64-pass.d64 \
 	c64-pass.crt c64-fail.crt \
 	plus4-pass.prg plus4-fail.prg \
+	plus4-pass.crt plus4-fail.crt \
 	plus4-pass.d64 \
 	scpu-pass.prg scpu-fail.prg \
 	scpu-pass.crt scpu-fail.crt \
@@ -38,12 +39,18 @@ c64-fail.crt: c64.asm
 	cartconv -p -t normal -i c64-fail.bin -o c64-fail.crt
 
 plus4-pass.prg: plus4.asm
-	acme -DFAIL=0 -f cbm -o plus4-pass.prg plus4.asm
+	acme -DCART=0 -DFAIL=0 -f cbm -o plus4-pass.prg plus4.asm
 plus4-pass.d64: plus4-pass.prg
 	c1541 -format "plus4 pass,00" d64 plus4-pass.d64 \
 		-write plus4-pass.prg "plus4-pass"
 plus4-fail.prg: plus4.asm
-	acme -DFAIL=1 -f cbm -o plus4-fail.prg plus4.asm
+	acme -DCART=0 -DFAIL=1 -f cbm -o plus4-fail.prg plus4.asm
+plus4-pass.crt: plus4.asm
+	acme -DCART=1 -DFAIL=0 -f plain -o plus4-pass.bin plus4.asm
+	cartconv -p -t c1lo -i plus4-pass.bin -o plus4-pass.crt
+plus4-fail.crt: plus4.asm
+	acme -DCART=1 -DFAIL=1 -f plain -o plus4-fail.bin plus4.asm
+	cartconv -p -t c1lo -i plus4-fail.bin -o plus4-fail.crt
 
 scpu-pass.prg: scpu.asm
 	acme -DCART=0 -DFAIL=0 -f cbm -o scpu-pass.prg scpu.asm

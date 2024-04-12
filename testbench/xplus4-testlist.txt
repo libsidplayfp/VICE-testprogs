@@ -7,6 +7,12 @@
 ################################################################################
 ./selftest/,plus4-pass.prg,exitcode,10000000
 ./selftest/,plus4-fail.prg,exitcode,10000000,expect:error
+./selftest/,plus4-pass.prg,screenshot,10000000
+./selftest/,plus4-fail.prg,screenshot,10000000,expect:error
+./selftest/,,exitcode,10000000,mountcrt:plus4-pass.crt
+./selftest/,,exitcode,10000000,mountcrt:plus4-fail.crt,expect:error
+./selftest/,,screenshot,10000000,mountcrt:plus4-pass.crt
+./selftest/,,screenshot,10000000,mountcrt:plus4-fail.crt,expect:error
 ################################################################################
 # Joystick/Mouse
 ################################################################################
