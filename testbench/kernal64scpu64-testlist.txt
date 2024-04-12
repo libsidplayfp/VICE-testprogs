@@ -7,6 +7,12 @@
 ################################################################################
 ./selftest/,scpu-pass.prg,exitcode,10000000
 ./selftest/,scpu-fail.prg,exitcode,10000000,expect:error
+./selftest/,scpu-pass.prg,screenshot,10000000
+./selftest/,scpu-fail.prg,screenshot,10000000,expect:error
+./selftest/,,exitcode,10000000,mountcrt:scpu-pass.crt
+./selftest/,,exitcode,10000000,mountcrt:scpu-fail.crt,expect:error
+./selftest/,,screenshot,10000000,mountcrt:scpu-pass.crt
+./selftest/,,screenshot,10000000,mountcrt:scpu-fail.crt,expect:error
 ################################################################################
 # CPU
 ################################################################################

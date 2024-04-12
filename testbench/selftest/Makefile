@@ -5,6 +5,7 @@ all: c64-pass.prg c64-fail.prg \
 	plus4-pass.prg plus4-fail.prg \
 	plus4-pass.d64 \
 	scpu-pass.prg scpu-fail.prg \
+	scpu-pass.crt scpu-fail.crt \
 	scpu-pass.d64 \
 	dtv-pass.prg dtv-fail.prg \
 	dtv-pass.d64 \
@@ -45,12 +46,18 @@ plus4-fail.prg: plus4.asm
 	acme -DFAIL=1 -f cbm -o plus4-fail.prg plus4.asm
 
 scpu-pass.prg: scpu.asm
-	acme -DFAIL=0 -f cbm -o scpu-pass.prg scpu.asm
+	acme -DCART=0 -DFAIL=0 -f cbm -o scpu-pass.prg scpu.asm
 scpu-fail.prg: scpu.asm
-	acme -DFAIL=1 -f cbm -o scpu-fail.prg scpu.asm
+	acme -DCART=0 -DFAIL=1 -f cbm -o scpu-fail.prg scpu.asm
 scpu-pass.d64: scpu-pass.prg
 	c1541 -format "scpu pass,00" d64 scpu-pass.d64 \
 		-write scpu-pass.prg "scpu-pass"
+scpu-pass.crt: scpu.asm
+	acme -DCART=1 -DFAIL=0 -f plain -o scpu-pass.bin scpu.asm
+	cartconv -p -t normal -i scpu-pass.bin -o scpu-pass.crt
+scpu-fail.crt: scpu.asm
+	acme -DCART=1 -DFAIL=1 -f plain -o scpu-fail.bin scpu.asm
+	cartconv -p -t normal -i scpu-fail.bin -o scpu-fail.crt
 
 dtv-pass.prg: dtv.asm
 	acme -DFAIL=0 -f cbm -o dtv-pass.prg dtv.asm

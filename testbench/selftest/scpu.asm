@@ -3,14 +3,48 @@ BORDERCOLOR = $d020
 SCREENCOLOR = $d021
 DEBUGREG = $d7ff
 
+!if CART = 0 {
             * = $0801
             !word eol,0
             !byte $9e, $32,$30,$36,$31, 0 ; SYS 2061
 eol:        !word 0
+} else {
+            * = $8000
+
+            !word start
+            !word start
+            !byte $c3, $c2, $cd, $38, $30
+}
 
 start:
 ; usually we want to SEI and set background to black at start
             sei
+!if CART = 1 {
+            ldx #$ff
+            txs
+            cld
+
+            ; we must set data first, then update DDR
+            lda #$37
+            sta $01
+            lda #$2f
+            sta $00
+
+            ; enable VIC (e.g. RAM refresh)
+            lda #8
+            sta $d016
+
+            ; write to RAM to make sure it starts up correctly (=> RAM datasheets)
+-
+            sta $0100, x
+            dex
+            bne -
+
+            jsr $ff84   ; Initialise I/O
+            jsr $ff87   ; Initialise System Constants
+            jsr $ff8a   ; Restore Kernal Vectors
+            jsr $ff81   ; Initialize screen editor
+}
             lda #0
             sta BORDERCOLOR
             sta SCREENCOLOR
