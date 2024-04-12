@@ -3,14 +3,42 @@ BORDERCOLOR = $d020
 SCREENCOLOR = $d021
 DEBUGREG = $d7ff
 
+!if CART=0 {
             * = $1c01
             !word eol,0
             !byte $9e, $37,$31,$38,$31, 0 ; SYS 7181
 eol:        !word 0
+} else {
+            * = $8000
+            JMP start       ; cold-start vector
+            JMP start       ; warm-start vector
+            !byte 1             ; identifier byte. 1 = Autostart immediately.
+            !byte $43,$42,$4D   ; "CBM" string
+}
 
 start:
 ; usually we want to SEI and set background to black at start
             sei
+!if CART=1 {
+            ldx #$ff
+            txs
+            cld
+            lda #$e3
+            sta $01
+            lda #$37
+            sta $00
+
+            lda #%00001010     ; BIT 0   : $D000-$DFFF (0 = I/O Block)
+                                ; BIT 1   : $4000-$7FFF (1 = RAM)
+                                ; BIT 2/3 : $8000-$BFFF (10 = External ROM)
+                                ; BIT 4/5 : $C000-$CFFF/$E000-$FFFF (00 = Kernal ROM)
+                                ; BIT 6/7 : RAM used. (00 = RAM 0)
+            sta $ff00          ; MMU Configuration Register
+
+            jsr $ff8a          ; Restore Vectors
+            jsr $ff84          ; Init I/O Devices, Ports & Timers
+            jsr $ff81          ; Init Editor & Video Chips
+}
             lda #0
             sta BORDERCOLOR
             sta SCREENCOLOR

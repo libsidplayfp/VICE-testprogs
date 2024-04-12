@@ -10,14 +10,14 @@
 ################################################################################
 # selftest
 ################################################################################
-./selftest/,c64-fail.prg,exitcode,10000000,expect:error
 ./selftest/,c64-pass.prg,exitcode,10000000
-./selftest/,c64-fail.prg,screenshot,10000000,expect:error
+./selftest/,c64-fail.prg,exitcode,10000000,expect:error
 ./selftest/,c64-pass.prg,screenshot,10000000
-./selftest/,,exitcode,10000000,mountcrt:c64-fail.crt,expect:error
+./selftest/,c64-fail.prg,screenshot,10000000,expect:error
 ./selftest/,,exitcode,10000000,mountcrt:c64-pass.crt
-./selftest/,,screenshot,10000000,mountcrt:c64-fail.crt,expect:error
+./selftest/,,exitcode,10000000,mountcrt:c64-fail.crt,expect:error
 ./selftest/,,screenshot,10000000,mountcrt:c64-pass.crt
+./selftest/,,screenshot,10000000,mountcrt:c64-fail.crt,expect:error
 ################################################################################
 # general
 ################################################################################

@@ -8,6 +8,12 @@
 ################################################################################
 ./selftest/,c128-pass.prg,exitcode,10000000
 ./selftest/,c128-fail.prg,exitcode,10000000,expect:error
+./selftest/,c128-pass.prg,screenshot,10000000,vicii-screenshot
+./selftest/,c128-fail.prg,screenshot,10000000,vicii-screenshot,expect:error
+./selftest/,,exitcode,10000000,mountcrt:c128-pass.crt
+./selftest/,,exitcode,10000000,mountcrt:c128-fail.crt,expect:error
+./selftest/,,screenshot,10000000,mountcrt:c128-pass.crt,vicii-screenshot
+./selftest/,,screenshot,10000000,mountcrt:c128-fail.crt,vicii-screenshot,expect:error
 # FIXME: once these work, we can use screenshots
 ../c128/2mhztest,2mhztest.prg,interactive,0
 ../c128/2mhzVIC,2mhz-vic-hires.prg,screenshot,11300000,vicii-pal,vicii-screenshot
