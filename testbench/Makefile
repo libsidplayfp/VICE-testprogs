@@ -125,6 +125,7 @@ selftest:
 	make -s -C selftest --no-print-dir --silent
 	./testbench.sh x64sc selftest
 	./testbench.sh x128 selftest
+	./testbench.sh xscpu64 selftest
 	./testbench.sh x64dtv selftest
 	./testbench.sh xvic selftest
 	./testbench.sh xplus4 selftest
