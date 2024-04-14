@@ -2,7 +2,7 @@
 X64DTVOPTS+=" -default"
 X64DTVOPTS+=" -VICIIfilter 0"
 X64DTVOPTS+=" -VICIIextpal"
-#X64DTVOPTS+=" -VICIIpalette pepto-pal.vpl"
+X64DTVOPTS+=" -VICIIpalette spiff.vpl"
 X64DTVOPTS+=" -VICIIsaturation 1000"
 X64DTVOPTS+=" -VICIIbrightness 1000"
 X64DTVOPTS+=" -VICIIcontrast 1000"

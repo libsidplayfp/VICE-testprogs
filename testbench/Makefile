@@ -107,7 +107,7 @@ all: prereq
 #	echo "testyace"
 
 ################################################################################
-prereq: revertfiles selftest testlist cmpscreens maketable prereq-chameleon
+prereq: revertfiles testlist cmpscreens maketable prereq-chameleon
 
 .PHONY: testlist selftest prereq revertfiles
 
@@ -123,6 +123,14 @@ revertfiles:
 
 selftest:
 	make -s -C selftest --no-print-dir --silent
+	./testbench.sh x64sc selftest
+	./testbench.sh x128 selftest
+	./testbench.sh x64dtv selftest
+	./testbench.sh xvic selftest
+	./testbench.sh xplus4 selftest
+	./testbench.sh xpet selftest
+	./testbench.sh xcbm2 selftest
+	./testbench.sh xcbm5x0 selftest
 
 cmpscreens: cmpscreens.c
 	$(CC) -W -Wall -O3 -o cmpscreens cmpscreens.c -lm
