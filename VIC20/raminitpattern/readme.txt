@@ -136,10 +136,27 @@ uses non initialized $1046, a fixed/patched version does this to fix it:
 .C:bffa  8D 46 10    STA $1046
 .C:bffd  4C 1F A0    JMP $A01F
 
+---
 
 AE. The problem surfaces in a shifted display, see 
 https://www.lemon64.com/forum/viewtopic.php?t=73903
 
 uses non initialized $0288, writing $ff to it before starting the cart makes it
 work right.
+
+---
+
+also see https://www.lemon64.com/forum/viewtopic.php?p=1017591#p1017591
+
+
+other suspects:
+
+Titan               - crashes when you shoot blue ship, and bonus appears. (this
+                      may NOT be related to RAM init)
+Close Encounters    - unable to start (press 1) [could be ram init, $288=$ff]
+Frogman             - unable to start (press 9, 1, fire) [could be ram init, $288=$ff]
+Meteor Run          (seems to work?, no apparent ram init problem)
+Draw Poker          - unable to start (press F1) [could be ram init, $288=$ff]
+Money Wars          - unable to start (press F1) [could be ram init]
+Sargon II Chess     - crashes at random (could be something else)
 
