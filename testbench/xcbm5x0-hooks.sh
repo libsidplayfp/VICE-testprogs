@@ -3,14 +3,14 @@ XCBM5X0OPTS+=" -default"
 XCBM5X0OPTS+=" -model 510"
 XCBM5X0OPTS+=" -virtualdev8"
 XCBM5X0OPTS+=" +drive8truedrive"
-#XCBM5X0OPTS+=" -VICIIfilter 0"
-#XCBM5X0OPTS+=" -VICIIextpal"
-#XCBM5X0OPTS+=" -VICIIpalette pepto-pal.vpl"
-#XCBM5X0OPTS+=" -VICIIsaturation 1000"
-#XCBM5X0OPTS+=" -VICIIbrightness 1000"
-#XCBM5X0OPTS+=" -VICIIcontrast 1000"
-#XCBM5X0OPTS+=" -VICIIgamma 1000"
-#XCBM5X0OPTS+=" -VICIItint 1000"
+XCBM5X0OPTS+=" -VICIIfilter 0"
+XCBM5X0OPTS+=" -VICIIextpal"
+XCBM5X0OPTS+=" -VICIIpalette pepto-pal.vpl"
+XCBM5X0OPTS+=" -VICIIsaturation 1000"
+XCBM5X0OPTS+=" -VICIIbrightness 1000"
+XCBM5X0OPTS+=" -VICIIcontrast 1000"
+XCBM5X0OPTS+=" -VICIIgamma 1000"
+XCBM5X0OPTS+=" -VICIItint 1000"
 XCBM5X0OPTS+=" -warp"
 XCBM5X0OPTS+=" -debugcart"
 XCBM5X0OPTS+=" -jamaction 1"
@@ -78,8 +78,33 @@ function xcbm5x0_get_options
             ;;
         *)
                 exitoptions=""
+                if [ "${1:0:9}" == "mountd64:" ]; then
+                    exitoptions="-8 $2/${1:9}"
+                    mounted_d64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
+                if [ "${1:0:9}" == "mountd71:" ]; then
+                    exitoptions="-drive8type 1571 -8 $2/${1:9}"
+                    mounted_d64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
+                if [ "${1:0:9}" == "mountg64:" ]; then
+                    exitoptions="-8 $2/${1:9}"
+                    mounted_g64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
+                if [ "${1:0:9}" == "mountp64:" ]; then
+                    exitoptions="-8 $2/${1:9}"
+                    mounted_p64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
+                if [ "${1:0:9}" == "mountcrt:" ]; then
+                    exitoptions="-cartcrt $2/${1:9}"
+                    mounted_crt="${1:9}"
+                    echo -ne "(cartridge:${1:9}) "
+                fi
             ;;
-    esac
+        esac
 }
 
 # $1  option

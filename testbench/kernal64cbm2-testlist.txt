@@ -7,6 +7,12 @@
 ################################################################################
 ./selftest/,cbm610-pass.prg,exitcode,100000000
 ./selftest/,cbm610-fail.prg,exitcode,100000000,expect:error
+./selftest/,cbm610-pass.prg,screenshot,100000000
+./selftest/,cbm610-fail.prg,screenshot,100000000,expect:error
+./selftest/,,exitcode,100000000,mountcrt:cbm610-pass.crt
+./selftest/,,exitcode,100000000,mountcrt:cbm610-fail.crt,expect:error
+./selftest/,,screenshot,100000000,mountcrt:cbm610-pass.crt
+./selftest/,,screenshot,100000000,mountcrt:cbm610-fail.crt,expect:error
 ################################################################################
 # general
 ################################################################################

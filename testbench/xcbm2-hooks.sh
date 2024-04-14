@@ -3,14 +3,14 @@ XCBM2OPTS+=" -default"
 XCBM2OPTS+=" -model 610"
 XCBM2OPTS+=" -virtualdev8"
 XCBM2OPTS+=" +drive8truedrive"
-#XCBM2OPTS+=" -VICIIfilter 0"
-#XCBM2OPTS+=" -VICIIextpal"
-#XCBM2OPTS+=" -VICIIpalette pepto-pal.vpl"
-#XCBM2OPTS+=" -VICIIsaturation 1000"
-#XCBM2OPTS+=" -VICIIbrightness 1000"
-#XCBM2OPTS+=" -VICIIcontrast 1000"
-#XCBM2OPTS+=" -VICIIgamma 1000"
-#XCBM2OPTS+=" -VICIItint 1000"
+XCBM2OPTS+=" -CRTCfilter 0"
+XCBM2OPTS+=" -CRTCextpal"
+XCBM2OPTS+=" -CRTCpalette green.vpl"
+XCBM2OPTS+=" -CRTCsaturation 1000"
+XCBM2OPTS+=" -CRTCbrightness 1000"
+XCBM2OPTS+=" -CRTCcontrast 1000"
+XCBM2OPTS+=" -CRTCgamma 1000"
+XCBM2OPTS+=" -CRTCtint 1000"
 XCBM2OPTS+=" -warp"
 XCBM2OPTS+=" -debugcart"
 XCBM2OPTS+=" -jamaction 1"
@@ -102,6 +102,31 @@ function xcbm2_get_options
             ;;
         *)
                 exitoptions=""
+                if [ "${1:0:9}" == "mountd64:" ]; then
+                    exitoptions="-8 $2/${1:9}"
+                    mounted_d64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
+                if [ "${1:0:9}" == "mountd71:" ]; then
+                    exitoptions="-drive8type 1571 -8 $2/${1:9}"
+                    mounted_d64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
+                if [ "${1:0:9}" == "mountg64:" ]; then
+                    exitoptions="-8 $2/${1:9}"
+                    mounted_g64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
+                if [ "${1:0:9}" == "mountp64:" ]; then
+                    exitoptions="-8 $2/${1:9}"
+                    mounted_p64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
+                if [ "${1:0:9}" == "mountcrt:" ]; then
+                    exitoptions="-cartcrt $2/${1:9}"
+                    mounted_crt="${1:9}"
+                    echo -ne "(cartridge:${1:9}) "
+                fi
             ;;
     esac
 }

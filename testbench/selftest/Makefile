@@ -19,8 +19,10 @@ all: c64-pass.prg c64-fail.prg \
 	pet-pass.prg pet-fail.prg \
 	pet-pass.d82 \
 	cbm610-pass.prg cbm610-fail.prg \
+	cbm610-pass.crt cbm610-fail.crt \
 	cbm610-pass.d82 \
 	cbm510-pass.prg cbm510-fail.prg \
+	cbm510-pass.crt cbm510-fail.crt \
 	cbm510-pass.d82 \
 	vsid-pass.prg vsid-fail.prg
 
@@ -73,6 +75,7 @@ dtv-fail.prg: dtv.asm
 dtv-pass.d64: dtv-pass.prg
 	c1541 -format "dtv pass,00" d64 dtv-pass.d64 \
 		-write dtv-pass.prg "dtv-pass"
+# NOTE: dtv has no cartridges
 
 vic20-pass.prg: vic20.asm
 	acme -DEXPANDED=1 -DCART=0 -DFAIL=0 -f cbm -o vic20-pass.prg vic20.asm
@@ -109,27 +112,41 @@ pet-fail.prg: pet.asm
 pet-pass.d82: pet-pass.prg
 	c1541 -format "pet pass,00" d82 pet-pass.d82 \
 		-write pet-pass.prg "pet-pass"
+# NOTE: pet has no cartridges
 
 vsid-pass.prg: vsid.asm
 	acme -DFAIL=0 -f plain -o vsid-pass.sid vsid.asm
 vsid-fail.prg: vsid.asm
 	acme -DFAIL=1 -f plain -o vsid-fail.sid vsid.asm
+# NOTE: vsid has no cartridges
 
 cbm610-pass.prg: cbm610.asm
-	acme -DFAIL=0 -f cbm -o cbm610-pass.prg cbm610.asm
+	acme -DCART=0 -DFAIL=0 -f cbm -o cbm610-pass.prg cbm610.asm
 cbm610-fail.prg: cbm610.asm
-	acme -DFAIL=1 -f cbm -o cbm610-fail.prg cbm610.asm
+	acme -DCART=0 -DFAIL=1 -f cbm -o cbm610-fail.prg cbm610.asm
 cbm610-pass.d82: cbm610-pass.prg
 	c1541 -format "cbm610 pass,00" d82 cbm610-pass.d82 \
 		-write cbm610-pass.prg "cbm610-pass"
+cbm610-pass.crt: cbm610.asm
+	acme -DCART=1 -DFAIL=0 -f plain -o cbm610-pass.bin cbm610.asm
+	cartconv -p -t cbm2 -l 0x2000 -i cbm610-pass.bin -o cbm610-pass.crt
+cbm610-fail.crt: cbm610.asm
+	acme -DCART=1 -DFAIL=1 -f plain -o cbm610-fail.bin cbm610.asm
+	cartconv -p -t cbm2 -l 0x2000 -i cbm610-fail.bin -o cbm610-fail.crt
 
 cbm510-pass.prg: cbm510.asm
-	acme -DFAIL=0 -f cbm -o cbm510-pass.prg cbm510.asm
+	acme -DCART=0 -DFAIL=0 -f cbm -o cbm510-pass.prg cbm510.asm
 cbm510-fail.prg: cbm510.asm
-	acme -DFAIL=1 -f cbm -o cbm510-fail.prg cbm510.asm
+	acme -DCART=0 -DFAIL=1 -f cbm -o cbm510-fail.prg cbm510.asm
 cbm510-pass.d82: cbm510-pass.prg
 	c1541 -format "cbm510 pass,00" d82 cbm510-pass.d82 \
 		-write cbm510-pass.prg "cbm510-pass"
+cbm510-pass.crt: cbm510.asm
+	acme -DCART=1 -DFAIL=0 -f plain -o cbm510-pass.bin cbm510.asm
+	cartconv -p -t cbm2 -l 0x2000 -i cbm510-pass.bin -o cbm510-pass.crt
+cbm510-fail.crt: cbm510.asm
+	acme -DCART=1 -DFAIL=1 -f plain -o cbm510-fail.bin cbm510.asm
+	cartconv -p -t cbm2 -l 0x2000 -i cbm510-fail.bin -o cbm510-fail.crt
 
 clean:
 	$(RM) *.prg

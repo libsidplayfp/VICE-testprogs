@@ -3,6 +3,7 @@ BORDERCOLOR = $d820
 SCREENCOLOR = $d821
 DEBUGREG = $daff
 
+!if CART = 0 {
             ; the BASIC program is loaded to bank 0
 
             * = $0003
@@ -16,7 +17,16 @@ DEBUGREG = $daff
             !byte $82, $3a                                                        ; NEXT
             !byte $9e, $31, $30, $32, $34, 0                                      ; SYS 1024
 eol:        !word 0
+} else {
+            * = $2000
 
+            jmp start
+            jmp start
+            !byte $43, $c2, $cd, $32, $02
+}
+
+start:
+!if CART = 0 {
             ; SYS always executes code in bank 15
 
             * = $400
@@ -27,8 +37,41 @@ eol:        !word 0
 
             ;lda #0     ; switch to bank 0
             ;sta 0
+} else {
+            ; FIXME: the cartridge startup code really should be revised and
+            ;        cleaned up by somehow who knows what he is doing. The
+            ;        following was blindly copied from the only existing autostart
+            ;        cartridge i found, and may only work by chance.
+            sei
+;            jsr $f9fb   ; io init
 
-start:
+            LDA #$00
+            LDY #$08
+            STA $0700
+            STY $0701
+            JSR $FF7B
+
+            LDA #$F0
+            STA $C1
+            JSR $FF7E
+
+            LDA #$00
+            TAX
+-
+            STA $0002,X
+            STA $0200,X
+            STA $02F8,X
+            INX
+            BNE -
+
+            LDX #$04
+            JSR $FADA
+            JSR $FF7E
+
+            lda #$1b
+            sta $d81b
+}
+
 ; usually we want to SEI and set background to black at start
             sei
             lda #0
@@ -104,3 +147,7 @@ waitframes2:
             lda $d811
             bmi *-3
             rts
+
+!if CART=1 {
+    !align $1fff,0
+}

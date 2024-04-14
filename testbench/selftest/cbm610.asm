@@ -1,6 +1,7 @@
 
 DEBUGREG = $daff
 
+!if CART = 0 {
             ; the BASIC program is loaded to bank 1
 
             * = $0003
@@ -14,7 +15,16 @@ DEBUGREG = $daff
             !byte $82, $3a                                                        ; NEXT
             !byte $9e, $31, $30, $32, $34, 0                                      ; SYS 1024
 eol:        !word 0
+} else {
+            * = $2000
 
+            jmp start
+            jmp start
+            !byte $43, $c2, $cd, $32, $00
+}
+
+start:
+!if CART = 0 {
             ; SYS always executes code in bank 15
 
             * = $400
@@ -22,8 +32,41 @@ eol:        !word 0
 
             ;lda #1     ; switch to bank 1
             ;sta 0
+} else {
+            ; FIXME: the cartridge startup code really should be revised and
+            ;        cleaned up by somehow who knows what he is doing. The
+            ;        following was blindly copied from the only existing autostart
+            ;        cartridge i found, and may only work by chance.
+            ; TODO: disable the cursor
+            sei
+            jsr $f9fb   ; io init
 
-start:
+            LDA #$00
+            LDY #$08
+            STA $0700
+            STY $0701
+            JSR $FF7B
+
+            LDA #$F0
+            STA $C1
+            JSR $FF7E
+
+            LDA #$00
+            TAX
+-
+            ;STA $0002,X
+            !byte   $9D,$02,$00     ; STA $0002,X - no zeropage mode to avoid rewriting $00/$01
+            STA $0200,X
+            STA $02F8,X
+            INX
+            BNE -
+
+            LDX #$04
+            JSR $FADA
+            JSR $FBA2
+            JSR $FF7E
+}
+
 ; usually we want to SEI and set background to black at start
             sei
 
@@ -73,9 +116,36 @@ fail1:
             bne fail2
             ldx #0      ; success
 fail2:
+
+            jsr wait
+
             stx DEBUGREG
 
             jmp *
+
+wait:
+            pha
+            txa
+            pha
+            tya
+            pha
+
+            ldy #0
+--          ldx #0
+-           bit $eaea
+            bit $eaea
+            bit $eaea
+            inx
+            bne -
+            iny
+            bne --
+
+            pla
+            tay
+            pla
+            tax
+            pla
+            rts
 
 testname:
             !if FAIL=1 {
@@ -85,4 +155,13 @@ testname:
             !scr "cbm610-pass                             "
             }
 
+
+!if CART = 0 {
 BORDERCOLOR: !byte 0
+} else {
+BORDERCOLOR = $02   ; must be in RAM
+}
+
+!if CART=1 {
+    !align $1fff,0
+}
