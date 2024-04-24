@@ -1,0 +1,7 @@
+; <inc,dec> iyh (3072 cycles)
+incyh:	flag	0d7h		; flag mask
+	tstr	0ddh 024h 0 0 02836h 09f6fh 09116h 061b9h 082cbh 0e219h 092h 073h 0a98ch
+	tstr	0 1 0 0 0ff00h 0 0 0 0 0 0 0 0		; (512 cycles)
+	tstr	0 0 0 0 0 0 0 0 0 0 0d7h 0 0		; (6 cycles)
+	db	02dh,096h,06ch,0f3h			; expected crc
+	dm	'<inc,dec> iyh$'

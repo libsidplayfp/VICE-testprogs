@@ -1,0 +1,7 @@
+; bit n,<b,c,d,e,h,l,(hl),a> (49,152 cycles)
+bitz80:	flag	053h		; flag mask
+	tstr	0cbh 040h 0 0 03ef1h 09dfch 07acch msbt 0be61h 07a86h 050h 024h 01998h
+	tstr	0 03fh 0 0 0 0 0 0 0 0 053h 0 0		; (1024 cycles)
+	tstr	0 0 0 0 0ffh 0 0 0 -1 -1 0 -1 0		; (48 cycles)
+	db	07bh,055h,0e6h,0c8h			; expected crc
+	dm	'bit n,<b,c,d,e,h,l,(hl),a>$'

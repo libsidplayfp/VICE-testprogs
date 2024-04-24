@@ -1,0 +1,7 @@
+; aluop a,<b,c,d,e,h,l,(hl),a> (753,664 cycles)
+alu8r:	flag	0ffh		; flag mask
+	tstr	080h 0 0 0 0c53eh 0573ah 04c4dh msbt 0e309h 0a666h 0d0h 03bh 0adbbh
+	tstr	03fh 0 0 0 0 0 0 0 0 0 0 -1 0		; (16 384 cycles)
+	tstr	0 0 0 0 0ffh 0 0 0 -1 -1 0d7h 0 0	; (46 cycles)
+	db	006h,0c7h,0aah,08eh                     ; expected crc
+	dm	'aluop a,<b,c,d,e,h,l,(hl),a> (all)$'

@@ -1,0 +1,7 @@
+; cpd<r> (1) (6144 cycles)
+cpd1:	flag	0ffh		; flag mask
+	tstr	0edh 0a9h 0 0 0c7b6h 072b4h 018f6h msbt+17 08dbdh 1 0c0h 030h 094a3h
+	tstr	0 010h 0 0 0 0 0 0 0 10 0 -1 0		; (1024 cycles)
+	tstr	0 0 0 0 0 0 0 0 0 0 0d7h 0 0		; (6 cycles)
+	db	013h,04bh,062h,02dh                     ; expected crc
+	dm	'cpd<r> (all)$'

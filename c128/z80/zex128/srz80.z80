@@ -1,0 +1,7 @@
+; <set,res> n,<b,c,d,e,h,l,(hl),a> (7936 cycles)
+srz80:	flag	0d7h		; flag mask
+	tstr	0cbh 080h 0 0 02cd5h 097abh 039ffh msbt 0d14bh 06ab2h 053h 027h 0b538h
+	tstr	0 07fh 0 0 0 0 0 0 0 0 0 0 0		; (128 cycles)
+	tstr	0 0 0 0 0ffh 0 0 0 -1 -1 0d7h -1 0	; (62 cycles)
+	db	08bh,057h,0f0h,008h			; expected crc
+	dm	'<set,res> n,<bcdehl(hl)a>$'

@@ -1,0 +1,7 @@
+; ld (nnnn),hl (16 cycles)
+ld166:	flag	0ffh		; flag mask
+	tstr	022h msbtlo msbthi 0 0d003h 07772h 07f53h 03f72h 064eah 0e180h 010h 02dh 035e9h
+	tstr	0 0 0 0 0 0 0 0 0 0 0 0 0		; (1 cycle)
+	tstr	0 0 0 0 0 0 0 -1 0 0 0 0 0		; (16 cycles)
+	db	0a3h,060h,08bh,047h			; expected crc
+	dm	'ld (nnnn),hl (all)$'

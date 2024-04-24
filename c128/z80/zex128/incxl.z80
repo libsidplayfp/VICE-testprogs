@@ -1,0 +1,7 @@
+; <inc,dec> ixl (3072 cycles)
+incxl:	flag	0d7h		; flag mask
+	tstr	0ddh 02ch 0 0 04d14h 07460h 076d4h 006e7h 032a2h 0213ch 0d6h 0d7h 099a5h
+	tstr	0 1 0 0 0 0ffh 0 0 0 0 0 0 0		; (512 cycles)
+	tstr	0 0 0 0 0 0 0 0 0 0 0d7h 0 0		; (6 cycles)
+	db	002h,07bh,0efh,02ch			; expected crc
+	dm	'<inc,dec> ixl$'

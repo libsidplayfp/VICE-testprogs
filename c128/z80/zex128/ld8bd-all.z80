@@ -1,0 +1,7 @@
+; ld a,<(bc),(de)> (44 cycles)
+ld8bd:	flag	0ffh		; flag mask
+	tstr	00ah 0 0 0 0b3a8h 01d2ah 07f8eh 042ach msbt msbt 0c6h 0b1h 0ef8eh
+	tstr	010h 0 0 0 0 0 0 0 0 0 0 0 0		; (2 cycles)
+	tstr	0 0 0 0 0ffh 0 0 0 0 0 0d7h -1 0	; (22 cycles)
+	db	0b0h,081h,089h,035h			; expected crc
+	dm	'ld a,<(bc),(de)> (all)$'

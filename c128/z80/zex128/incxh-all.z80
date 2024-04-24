@@ -1,0 +1,7 @@
+; <inc,dec> ixh (3072 cycles)
+incxh:	flag	0ffh		; flag mask
+	tstr	0ddh 024h 0 0 0b838h 0316ch 0c6d4h 03e01h 08358h 015b4h 081h 0deh 04259h
+	tstr	0 1 0 0 0 0ff00h 0 0 0 0 0 0 0		; (512 cycles)
+	tstr	0 0 0 0 0 0 0 0 0 0 0d7h 0 0		; (6 cycles)
+	db	06fh,046h,036h,062h			; expected crc
+	dm	'<inc,dec> ixh (all)$'

@@ -1,0 +1,7 @@
+; ldi<r> (1) (44 cycles)
+ldi1:	flag	0d7h		; flag mask
+	tstr	0edh 0a0h 0 0 0fe30h 003cdh 06058h msbt+2 msbt 1 004h 060h 02688h
+	tstr	0 010h 0 0 0 0 0 0 0 0 0 0 0		; (2 cycles)
+	tstr	0 0 0 0 -1 0 0 0 0 0 0d7h 0 0		; (22 cycles)
+	db	09ah,0bdh,0f6h,0b5h			; expected crc
+	dm	'ldi<r> (1)$'

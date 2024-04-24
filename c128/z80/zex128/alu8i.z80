@@ -1,0 +1,7 @@
+; aluop a,nn (28,672 cycles)
+alu8i:	flag	0d7h		; flag mask
+	tstr	0c6h 0 0 0 009140h 07e3ch 07a67h 0df6dh 05b61h 00b29h 010h 066h 085b2h
+	tstr	038h 0 0 0 0 0 0 0 0 0 0 -1 0		; (2048 cycles)
+	tstr	0 -1 0 0 0 0 0 0 0 0 0d7h 0 0		; (14 cycles)
+	db	048h,079h,093h,060h			; expected crc
+	dm	'aluop a,nn$'

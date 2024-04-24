@@ -1,0 +1,7 @@
+; add iy,<bc,de,iy,sp> (19,456 cycles)
+add16y:	flag	0c7h		; flag mask
+	tstr	0fdh 9 0 0 0c7c2h 0f407h 051c1h 03e96h 00bf4h 0510fh 092h 01eh 071eah
+	tstr	0 030h 0 0 0 0f821h 0 0 0 0 0 0 0	; (512 cycles)
+	tstr	0 0 0 0 0 -1 0 0 -1 -1 0d7h 0 -1		; (38 cycles)
+	db	0e8h,081h,07bh,09eh			; expected crc
+	dm	'add iy,<bc,de,iy,sp>$'

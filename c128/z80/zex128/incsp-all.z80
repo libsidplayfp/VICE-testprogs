@@ -1,0 +1,7 @@
+; <inc,dec> sp (1536 cycles)
+incsp:	flag	0ffh		; flag mask
+	tstr	033h 0 0 0 0346fh 0d482h 0d169h 0deb6h 0a494h 0f476h 053h 002h 0855bh
+	tstr	008h 0 0 0 0 0 0 0 0 0 0 0 0f821h	; (256 cycles)
+	tstr	0 0 0 0 0 0 0 0 0 0 0d7h 0 0		; (6 cycles)
+	db	05dh,0ach,0d5h,027h			; expected crc
+	dm	'<inc,dec> sp (all)$'

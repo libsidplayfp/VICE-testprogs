@@ -1,0 +1,7 @@
+; ld (<bc,de>),a (96 cycles)
+stabd:	flag	0d7h		; flag mask
+	tstr	2 0 0 0 00c3bh 0b592h 06cffh 0959eh msbt msbt+1 0c1h 021h 0bde7h
+	tstr	018h 0 0 0 0 0 0 0 0 0 0 0 0		; (4 cycles)
+	tstr	0 0 0 0 -1 0 0 0 0 0 0 -1 0		; (24 cycles)
+	db	07ah,04ch,011h,04fh			; expected crc
+	dm	'ld (<bc,de>),a$'

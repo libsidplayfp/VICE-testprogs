@@ -1,0 +1,7 @@
+; ld <b,c,d,e,h,l,a>,<b,c,d,e,h,l,a> (3456 cycles)
+ld8rr:	flag	0d7h		; flag mask
+	tstr	040h 0 0 0 072a4h 0a024h 061ach msbt 082c7h 0718fh 097h 08fh 0ef8eh
+	tstr	03fh 0 0 0 0 0 0 0 0 0 0 0 0		; (64 cycles)
+	tstr	0 0 0 0 0ffh 0 0 0 -1 -1 0d7h -1 0	; (54 cycles)
+	db	074h,04bh,001h,018h			; expected crc
+	dm	'ld <bcdehla>,<bcdehla>$'

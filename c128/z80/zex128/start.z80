@@ -1,0 +1,5 @@
+	include 'macro.z80'
+
+	jp	stt
+
+table:	ds	0

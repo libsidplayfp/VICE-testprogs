@@ -1,0 +1,7 @@
+; <rld,rrd> (7168 cycles)
+rldop:	flag	0d7h		; flag mask
+	tstr	0edh 067h 0 0 091cbh 0c48bh 0fa62h msbt 0e720h 0b479h 040h 006h 08ae2h
+	tstr	0 8 0 0 0ffh 0 0 0 0 0 0 0 0		; (512 cycles)
+	tstr	0 0 0 0 0 0 0 0 0 0 0d7h -1 0		; (14 cycles)
+	db	095h,05bh,0a3h,026h			; expected crc
+	dm	'<rrd,rld>$'

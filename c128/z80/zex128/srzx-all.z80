@@ -1,0 +1,7 @@
+; <set,res> n,(<ix,iy>+1) (1792 cycles)
+srzx:	flag	0ffh		; flag mask
+	tstr	0ddh 0cbh 1 086h 0fb44h msbt-1 msbt-1 0ba09h 068beh 032d8h 010h 05eh 0a867h
+	tstr	020h 0 0 078h 0 0 0 0 0 0 0 0 0	; (128 cycles)
+	tstr	0 0 0 0 0ffh 0 0 0 0 0 0d7h 0 0		;(14 cycles)
+	db	0cch,063h,0f9h,08ah			; expected crc
+	dm	'<set,res> n,(<ix,iy>+1) (all)$'

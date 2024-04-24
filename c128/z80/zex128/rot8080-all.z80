@@ -1,0 +1,7 @@
+; <rlca,rrca,rla,rra> (6144 cycles)
+rot8080:	flag	0ffh		; flag mask
+	tstr	7 0 0 0 0cb92h 06d43h 00a90h 0c284h 00c53h 0f50eh 091h 0ebh 040fch
+	tstr	018h 0 0 0 0 0 0 0 0 0 0 -1 0		; (1024 cycles)
+	tstr	0 0 0 0 0 0 0 0 0 0 0d7h 0 0		; (6 cycles)
+	db	09bh,0a3h,080h,07ch                     ; expected crc
+	dm	'<rlca,rrca,rla,rra> (all)$'

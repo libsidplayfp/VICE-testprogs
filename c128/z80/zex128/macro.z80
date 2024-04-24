@@ -1,0 +1,20 @@
+flag:	macro	val
+flgmsk:	equ	val
+	endm
+
+tstr:	macro	insn1 insn2 insn3 insn4 memop riy rix rhl rde rbc flags acc rsp
+	db	insn1
+	db	insn2
+	db	insn3
+	db	insn4
+	dw	memop
+	dw	riy
+	dw	rix
+	dw	rhl
+	dw	rde
+	dw	rbc
+	db	flags
+	db	acc
+	dw	rsp
+	endm
+

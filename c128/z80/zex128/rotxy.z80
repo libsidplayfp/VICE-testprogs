@@ -1,0 +1,7 @@
+; shift/rotate (<ix,iy>+1) (416 cycles)
+rotxy:	flag	0d7h		; flag mask
+	tstr	0ddh 0cbh 1 6 0ddafh msbt-1 msbt-1 0ff3ch 0dbf6h 094f4h 082h 080h 061d9h
+	tstr	020h 0 0 038h 0 0 0 0 0 0 080h 0 0	; (32 cycles)
+	tstr	0 0 0 0 0ffh 0 0 0 0 0 057h 0 0		; (13 cycles)
+	db	071h,03ah,0cdh,081h			; expected crc
+	dm	'shf/rot (<ix,iy>+1)$'

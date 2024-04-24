@@ -1,0 +1,7 @@
+; ld <bc,de>,(nnnn) (32 cycles)
+ld161:	flag	0ffh		; flag mask
+	tstr	0edh 04bh msbtlo msbthi 0f9a8h 0f559h 093a4h 0f5edh 06f96h 0d968h 086h 0e6h 04bd8h
+	tstr	0 010h 0 0 0 0 0 0 0 0 0 0 0		; (2 cycles)
+	tstr	0 0 0 0 -1 0 0 0 0 0 0 0 0		; (16 cycles)
+	db	04dh,045h,0a9h,0ach			; expected crc
+	dm	'ld <bc,de>,(nnnn) (all)$'

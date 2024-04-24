@@ -1,0 +1,7 @@
+; <inc,dec> iyl (3072 cycles)
+incyl:	flag	0ffh		; flag mask
+	tstr	0ddh 02ch 0 0 0d7c6h 062d5h 0a09eh 07039h 03e7eh 09f12h 090h 0d9h 0220fh
+	tstr	0 1 0 0 0ffh 0 0 0 0 0 0 0 0		; (512 cycles)
+	tstr	0 0 0 0 0 0 0 0 0 0 0d7h 0 0		; (6 cycles)
+	db	036h,0c1h,01eh,075h                     ; expected crc
+	dm	'<inc,dec> iyl (all)$'

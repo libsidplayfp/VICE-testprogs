@@ -1,0 +1,7 @@
+; ld a,(nnnn) / ld (nnnn),a (44 cycles)
+lda:	flag	0d7h		; flag mask
+	tstr	032h msbtlo msbthi 0 0fd68h 0f4ech 044a0h 0b543h 00653h 0cdbah 0d2h 04fh 01fd8h
+	tstr	008h 0 0 0 0 0 0 0 0 0 0 0 0		; (2 cycle)
+	tstr	0 0 0 0 0ffh 0 0 0 0 0 0d7h -1 0	; (22 cycles)
+	db	0c9h,026h,02dh,0e5h			; expected crc
+	dm	'ld a,(nnnn) / ld (nnnn),a$'

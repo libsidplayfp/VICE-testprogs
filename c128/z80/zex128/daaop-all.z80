@@ -1,0 +1,7 @@
+; <daa,cpl,scf,ccf>
+daaop:	flag	0ffh		; flag mask
+	tstr	027h 0 0 0 02141h 009fah 01d60h 0a559h 08d5bh 09079h 004h 08eh 0299dh
+	tstr	018h 0 0 0 0 0 0 0 0 0 0d7h -1 0	; (65 536 cycles)
+	tstr	0 0 0 0 0 0 0 0 0 0 0 0 0		; (1 cycle)
+	db	06dh,02dh,0d2h,013h                     ; expected crc
+	dm	'<daa,cpl,scf,ccf> (all)$'

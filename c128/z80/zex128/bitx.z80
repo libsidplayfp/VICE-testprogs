@@ -1,0 +1,7 @@
+; bit n,(<ix,iy>+1) (2048 cycles)
+bitx:	flag	053h		; flag mask
+	tstr	0ddh 0cbh 1 046h 02075h msbt-1 msbt-1 03cfch 0a79ah 03d74h 051h 027h 0ca14h
+	tstr	020h 0 0 038h 0 0 0 0 0 0 053h 0 0	; (256 cycles)
+	tstr	0 0 0 0 0ffh 0 0 0 0 0 0 0 0		; (8 cycles)
+	db	0a8h,0eeh,008h,067h			; expected crc
+	dm	'bit n,(<ix,iy>+1)$'

@@ -1,0 +1,7 @@
+; <inc,dec> (hl) (3072 cycles)
+incm:	flag	0ffh		; flag mask
+	tstr	034h 0 0 0 0b856h 00c7ch 0e53eh msbt 0877eh 0da58h 015h 05ch 01f37h
+	tstr	001h 0 0 0 0ffh 0 0 0 0 0 0 0 0		; (512 cycles)
+	tstr	0 0 0 0 0 0 0 0 0 0 0d7h 0 0		; (6 cycles)
+	db	028h,029h,05eh,0ceh                     ; expected crc
+	dm	'<inc,dec> (hl) (all)$'

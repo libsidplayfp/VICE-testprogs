@@ -1,0 +1,7 @@
+; ld a,(<ix,iy>+1) (128 cycles)
+ld8ix3:	flag	0ffh		; flag mask
+	tstr	0ddh 07eh 1 0 0d8b6h msbt-1 msbt-1 0c612h 0df07h 09cd0h 043h 0a6h 0a0e5h
+	tstr	020h 0 0 0 0 1 1 0 0 0 0 0 0		; (8 cycles)
+	tstr	0 0 0 0 -1 0 0 0 0 0 0 0 0		; (16 cycles)
+	db	0a5h,0e9h,0ach,064h			; expected crc
+	dm	'ld a,(<ix,iy>+1) (all)$'

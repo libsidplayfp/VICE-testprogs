@@ -1,0 +1,7 @@
+; <adc,sbc> hl,<bc,de,hl,sp> (38,912 cycles)
+adc16:	flag	0c7h		; flag mask
+	tstr	0edh 042h 0 0 0832ch 04f88h 0f22bh 0b339h 07e1fh 01563h 0d3h 089h 0465eh
+	tstr	0 038h 0 0 0 0 0 0f821h 0 0 0 0 0	; (1024 cycles)
+	tstr	0 0 0 0 0 0 0 -1 -1 -1 0d7h 0 -1	; (38 cycles)
+	db	0f8h,0b4h,0eah,0a9h			; expected crc
+	dm	'<adc,sbc> hl,<bc,de,hl,sp>$'

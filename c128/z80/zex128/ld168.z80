@@ -1,0 +1,7 @@
+; ld (nnnn),<ix,iy> (64 cycles)
+ld168:	flag	0d7h		; flag mask
+	tstr	0ddh 022h msbtlo msbthi 06cc3h 00d91h 06900h 08ef8h 0e3d6h 0c3f7h 0c6h 0d9h 0c2dfh
+	tstr	020h 0 0 0 0 0 0 0 0 0 0 0 0		; (2 cycles)
+	tstr	0 0 0 0 0 -1 -1 0 0 0 0 0 0		; (32 cycles)
+	db	0bah,010h,02ah,06bh			; expected crc
+	dm	'ld (nnnn),<ix,iy>$'

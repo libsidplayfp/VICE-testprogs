@@ -1,0 +1,7 @@
+; <inc,dec> (<ix,iy>+1) (6144 cycles)
+incx:	flag	0ffh		; flag mask
+	tstr	0ddh 034h 1 0 0fa6eh msbt-1 msbt-1 02c28h 08894h 05057h 016h 033h 0286fh
+	tstr	020h 1 0 0 0ffh 0 0 0 0 0 0 0 0		; (1024 cycles)
+	tstr	0 0 0 0 0 0 0 0 0 0 0d7h 0 0		; (6 cycles)
+	db	00bh,095h,0a8h,0eah                     ; expected crc
+	dm	'<inc,dec> (<ix,iy>+1) (all)$'

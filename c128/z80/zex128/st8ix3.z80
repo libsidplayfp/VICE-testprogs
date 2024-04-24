@@ -1,0 +1,7 @@
+; ld (<ix,iy>+1),a (64 cycles)
+st8ix3:	flag	0d7h		; flag mask
+	tstr	0ddh 077h 1 0 067afh msbt-1 msbt-1 04f13h 00644h 0bcd7h 050h 0ach 05fafh
+	tstr	020h 0 0 0 0 1 1 0 0 0 0 0 0		; (8 cycles)
+	tstr	0 0 0 0 0 0 0 0 0 0 0 -1 0		; (8 cycles)
+	db	0cch,0beh,05ah,096h			; expected crc
+	dm	'ld (<ix,iy>+1),a$'

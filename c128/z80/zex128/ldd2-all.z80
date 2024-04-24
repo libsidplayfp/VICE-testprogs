@@ -1,0 +1,7 @@
+; ldd<r> (2) (44 cycles)
+ldd2:	flag	0ffh		; flag mask
+	tstr	0edh 0a8h 0 0 0f12eh 0eb2ah 0d5bah msbt+3 msbt+1 2 047h 0ffh 0fbe4h
+	tstr	0 010h 0 0 0 0 0 0 0 0 0 0 0		; (2 cycles)
+	tstr	0 0 0 0 -1 0 0 0 0 0 0d7h 0 0		; (22 cycles)
+	db	039h,0ddh,03dh,0e1h                     ; expected crc
+	dm	'ldd<r> (2) (all)$'

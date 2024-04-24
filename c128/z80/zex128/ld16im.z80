@@ -1,0 +1,7 @@
+; ld <bc,de,hl,sp>,nnnn (64 cycles)
+ld16im:	flag	0d7h		; flag mask
+	tstr	1 0 0 0 05c1ch 02d46h 08eb9h 06078h 074b1h 0b30eh 046h 0d1h 030cch
+	tstr	030h 0 0 0 0 0 0 0 0 0 0 0 0		; (4 cycles)
+	tstr	0 0ffh 0ffh 0 0 0 0 0 0 0 0 0 0		; (16 cycles)
+	db	0deh,039h,019h,069h			; expected crc
+	dm	'ld <bc,de,hl,sp>,nnnn$'

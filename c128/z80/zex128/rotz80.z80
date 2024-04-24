@@ -1,0 +1,7 @@
+; shift/rotate <b,c,d,e,h,l,(hl),a> (6784 cycles)
+rotz80:	flag	0d7h		; flag mask
+	tstr	0cbh 0 0 0 0ccebh 05d4ah 0e007h msbt 01395h 030eeh 043h 078h 03dadh
+	tstr	0 03fh 0 0 0 0 0 0 0 0 080h 0 0		; (128 cycles)
+	tstr	0 0 0 0 0ffh 0 0 0 -1 -1 057h -1 0	; (53 cycles)
+	db	0ebh,060h,04dh,058h			; expected crc
+	dm	'shf/rot <b,c,d,e,h,l,(hl),a>$'
