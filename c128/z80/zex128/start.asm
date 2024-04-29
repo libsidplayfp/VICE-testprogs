@@ -152,6 +152,7 @@ good
 next
 	sta $d020
 	stx $d7ff
+;	bne *		; uncomment if you want testing to stop on failure
 
 ; load next module
 

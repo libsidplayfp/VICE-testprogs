@@ -3,7 +3,7 @@ LA = 7169
 
 PRIPROGS = prelim.prg
 
-ZEXPROGS = \
+ZEXDOCPROGS = \
 	adc16.prg \
 	add16.prg \
 	add16x.prg \
@@ -70,7 +70,9 @@ ZEXPROGS = \
 	st8ix1.prg \
 	st8ix2.prg \
 	st8ix3.prg \
-	stabd.prg \
+	stabd.prg
+
+ZEXALLPROGS = \
 	adc16-all.prg \
 	add16-all.prg \
 	add16x-all.prg \
@@ -139,11 +141,11 @@ ZEXPROGS = \
 	st8ix3-all.prg \
 	stabd-all.prg
 
-PROGS = $(PRIPROGS) $(ZEXPROGS)
+PROGS = $(PRIPROGS) $(ZEXDOCPROGS) $(ZEXALLPROGS)
 
 all: $(PROGS) zex128.d81
 
-prelim.prg: prelim.z80
+prelim.prg: prelim.z80 start.asm
 	xa -bt `expr $(LA) - 2` -M -O PETSCII -DNAME=\"prelim\" -DNEXT=\"`echo $(basename $(PROGS)) - | awk -v NAME=prelim '{for(i=1;i<=NF;i++) if ($$i==NAME) print $$(i+1);}'`\" -o prelim.prga start.asm
 	(echo " org 0500h"; cat prelim.z80) | z80asm -i - -o prelim.prgb
 	cat prelim.prga prelim.prgb > prelim.prg
