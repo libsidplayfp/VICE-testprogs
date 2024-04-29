@@ -1,0 +1,5 @@
+preparetest 0100h
+teststart 00ffh 0d012h 0000h 40ffh 0000h 0000h 0d000h
+	ind
+	inc b
+testend

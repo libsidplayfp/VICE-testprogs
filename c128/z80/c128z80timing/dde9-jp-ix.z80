@@ -1,0 +1,10 @@
+preparetest 0100h ;the number of times test code is repeated
+teststart 0000h 5000h 0004h 2000h 2003h 0000h 0d000h ;AF BC DE HL IX IY SP register values
+
+;test code
+	add ix,de	
+	jp (ix)
+;test code ends
+
+testend
+

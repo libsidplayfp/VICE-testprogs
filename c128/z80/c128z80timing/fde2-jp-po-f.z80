@@ -1,0 +1,4 @@
+preparejp 0100h 0e2h 0fdh;the number of times test code is repeated
+jpretstart 00ffh ;AF
+testend
+

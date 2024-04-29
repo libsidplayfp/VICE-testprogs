@@ -1,0 +1,251 @@
+; When defining a macro with internal labels, it must be like this:
+; .label: instruction ...
+; You can't have a new line after the label
+
+result:	equ	01bfeh
+
+preparetest: macro _cpxt
+	di
+	ld	sp,0d000h
+	ld	de,2000h
+	ld	hl,_copy1 ;copied code is repeated
+	ld	bc,_copy2-_copy1
+	ldir
+	ld	bc,_cpxt ; code copied X times, bc = X - 1
+	dec	bc
+._copyloop:push	bc
+	ld	hl,_copy2
+	ld	bc,_copy3-_copy2
+	ldir
+	pop	bc
+	dec	bc
+	ld	a,b
+	inc	a
+	jr	nz,._copyloop
+	ld	hl,_copy3
+	ld	bc,_copy4-_copy3
+	ldir
+	waitborder
+endm
+
+;wait for one frame and until in vertical border region
+waitborder: macro
+;disable VIC screen
+	ld	bc,0d011h
+	ld	a,0bh
+	out	(c),a
+.wait1:	in	a,(c)
+	jp	p,.wait1
+.wait2:	in	a,(c)
+	jp	m,.wait2
+.wait3:	in	a,(c)
+	jp	p,.wait3
+endm
+
+preparetimer: macro
+	ld	bc,0dc0dh
+	ld	a,7fh	;prepare timer
+	out	(c),a
+	inc	c
+	xor	a
+	out	(c),a
+	dec	a
+	ld	c,04h
+	out	(c),a
+	inc	c
+	out	(c),a
+	ld	bc,0dc0eh
+	ld	d,19h
+endm
+
+teststart: macro _vAF _vBC _vDE _vHL _vIX _vIY _vSP
+	ld	sp,_vSP
+	preparetimer
+	ld	hl,_vAF
+	push	hl
+	pop	af
+	exx
+	ld	bc,_vBC
+	ld	de,_vDE
+	ld	hl,_vHL
+	ld	ix,_vIX
+	ld	iy,_vIY
+	exx
+	jp	2000h
+_copy1:	out	(c),d
+	exx
+_copy2:	endm
+
+;	tested code in main
+
+testend: macro
+_copy3: timerstop
+	ld	bc,0d011h ;enable VIC screen
+	ld	a,1bh
+	out	(c),a
+	jp	0ffe0h ;exit
+_copy4: endm
+
+timerstop: macro
+	ld	bc,0dc0eh ;stop the timer and read value in register de
+	ld	de,0008h
+	out	(c),e
+	ld	c,04h
+	in	e,(c)
+	inc	c
+	in	d,(c)
+	scf
+	ccf
+	ld	hl,0ffeeh ;make complement and add 11 cycles to set offset to 0
+	sbc	hl,de
+	ld	(result),hl ;save result to memory
+endm
+
+prepareretnm: macro _cpxt
+	di
+	ld	sp,0d000h
+	ld	de,2000h
+	ld	hl,_copy1
+	ld	bc,_copy2-_copy1
+	ldir
+	ld	bc,_cpxt
+; code copied X times, bc = X - 1
+	dec	bc
+._copyloop:push	bc
+	ld	hl,_copy2
+	ld	bc,_copy3-_copy2
+	ldir
+	pop	bc
+	dec	bc
+	ld	a,b
+	inc	a
+	jr	nz,._copyloop
+	ld	hl,_copy3
+	push	de ;put return address to stack
+	ld	bc,_copy4-_copy3
+	ldir
+	waitborder
+endm
+
+prepareretm: macro _cpxt
+	di
+	ld	sp,0d000h
+	ld	de,2000h
+	ld	hl,_copy1
+	ld	bc,_copy2-_copy1
+	ldir
+	ld	bc,_cpxt
+; code copied X times, bc = X - 1
+	dec	bc
+	ld	(1fe2h),bc
+._copyloop:push	bc
+	ld	hl,_copy2
+	ld	bc,_copy3-_copy2
+	ldir
+	pop	bc
+	dec	bc
+	ld	a,b
+	inc	a
+	jr	nz,._copyloop
+	ld	hl,_copy3
+	ld	(1fe0h),de ;return addresses to stack
+	ld	bc,_copy4-_copy3
+	ldir
+	ld	hl,(1fe0h)
+	ld	bc,(1fe2h)
+	ld	de,_copy3-_copy2
+	scf
+	ccf
+._stackloop:push	hl
+	sbc	hl,de
+	dec	bc	
+	ld	a,b
+	inc	a
+	jr	nz,._stackloop
+	waitborder
+endm
+
+preparejp: macro _cpxt _jpopc _jppre ;instruction opcode supplied as parameter
+	di
+	ld	sp,0d000h
+	ld	de,2000h
+	ld	hl,_copy1
+	ld	bc,_copy2-_copy1
+	ldir
+	ld	bc,_cpxt
+; code copied X times, bc = X - 1
+	dec	bc
+._copyloop:	ds 0
+	if	_jppre
+	ld	a,_jppre
+	ld	(de),a ;loop to generate the code
+	inc	de
+	endif
+	ld	a,_jpopc
+	ld	(de),a ;loop to generate the code
+	inc	de
+	ld	h,d
+	ld	l,e
+	inc	hl
+	inc	hl
+	ld	a,l
+	ld	(de),a
+	inc	de
+	ld	a,h
+	ld	(de),a
+	inc	de
+	inc	hl
+	dec	bc
+	ld	a,b
+	inc	a
+	jr	nz,._copyloop
+	ld	hl,_copy3
+	ld	bc,_copy4-_copy3
+	ldir
+	waitborder
+endm
+
+jpretstart: macro _vAF
+	preparetimer
+	ld	hl,_vAF
+	push	hl
+	pop	af
+	jp	2000h
+_copy1:	out	(c),d
+	exx
+_copy2:	endm
+
+rstxx: macro _rstaddr _rstpre
+	di
+	ld	sp,0d000h
+	ld	hl,0000h ;save zero page
+	ld	bc,0040h
+	ld	de,0e000h
+	ldir
+	ld	hl,._copy1
+	ld	bc,._endt-._copy1
+	ld	d,0
+	ld	e,_rstaddr
+	push	de
+	ldir
+waitborder
+preparetimer
+	pop	hl
+	out	(c),d
+	jp	(hl)
+._copy1:dec	a
+	jp	z,._endt
+	if	_rstpre
+	db	_rstpre
+	endif
+	rst	_rstaddr
+._endt:	timerstop
+	ld	bc,0d011h ;enable VIC screen
+	ld	a,1bh
+	out	(c),a
+	ld	de,0000h ;restore messed up zero page
+	ld	hl,0e000h
+	ld	bc,0040h
+	ldir
+	jp	0ffe0h ;exit
+endm

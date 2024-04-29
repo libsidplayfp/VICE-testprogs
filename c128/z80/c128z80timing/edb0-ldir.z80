@@ -1,0 +1,7 @@
+preparetest 0100h
+teststart 00ffh 0002h 3000h 4000h 0000h 0000h 0d000h
+	ldir
+	inc	c
+	inc	c
+testend
+

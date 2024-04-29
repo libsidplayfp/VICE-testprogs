@@ -1,0 +1,15 @@
+	ld 	a,(0100h)
+	ld	(0e000h),a
+preparetest 0100h
+teststart 00ffh 0200h 0000h 41ffh 0000h 0000h 0d000h
+	otdr
+	inc b
+	inc b
+_copy3:	timerstop
+	ld	a,(0e000h)
+	ld 	(0100h),a
+	ld	bc,0d011h ;enable VIC screen
+	ld	a,1bh
+	out	(c),a
+	jp	0ffe0h ;exit	
+_copy4:

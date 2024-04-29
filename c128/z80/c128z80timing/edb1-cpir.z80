@@ -1,0 +1,16 @@
+	ld a,0fh
+	ld hl,4000h
+_loop:	ld (hl),a
+	inc l
+	jr nz,_loop
+	inc h
+_loop2:	ld (hl),a
+	inc l
+	jr nz,_loop2
+preparetest 0100h
+teststart 00ffh 0002h 4000h 4000h 0000h 0000h 0d000h
+	cpir
+	inc c
+	inc c
+testend
+

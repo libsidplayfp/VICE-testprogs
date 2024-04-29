@@ -1,0 +1,10 @@
+	ld a,0fh
+	ld hl,4000h
+_loop:	ld (hl),a
+	inc l
+	jr nz,_loop
+preparetest 0100h
+teststart 00ffh 0100h 4000h 4000h 0000h 0000h 0d000h
+	cpi
+testend
+

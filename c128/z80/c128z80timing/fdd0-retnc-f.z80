@@ -1,0 +1,10 @@
+prepareretnm 0100h ;the number of times test code is repeated
+jpretstart 00ffh ;AF
+
+;test code
+	db 0fdh
+	ret nc
+;test code ends
+
+testend
+

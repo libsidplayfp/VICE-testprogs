@@ -1,0 +1,4 @@
+preparetest 0100h
+teststart 0100h 0000h 0000h 0000h 4000h 0000h 0d000h
+	db 0edh,5ch ;neg
+testend
