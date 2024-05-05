@@ -132,6 +132,7 @@ selftest:
 	./testbench.sh xpet selftest
 	./testbench.sh xcbm2 selftest
 	./testbench.sh xcbm5x0 selftest
+	./testbench.sh vsid selftest
 
 cmpscreens: cmpscreens.c
 	$(CC) -W -Wall -O3 -o cmpscreens cmpscreens.c -lm
