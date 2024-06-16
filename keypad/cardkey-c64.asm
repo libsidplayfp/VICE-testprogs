@@ -26,91 +26,111 @@ mainloop:
 	sta KEYS
 check_loop:
 	jsr check_port
+	eor #$ff
 	and #$1f
 	jsr show_key
 	jmp check_loop
 
+; KEY PRESSED   KEY3 KEY2 KEY1 KEY0
+; -----------   ---- ---- ---- ----
+; 0               0    0    0    0
+; 1               0    0    0    1
+; 2               0    0    1    0
+; 3               0    0    1    1
+; 4               0    1    0    0
+; 5               0    1    0    1
+; 6               0    1    1    0
+; 7               0    1    1    1
+; 8               1    0    0    0
+; 9               1    0    0    1
+; +               1    0    1    0
+; -               1    0    1    1
+; /               1    1    0    0
+; *               1    1    0    1
+; .               1    1    1    0
+; Enter           1    1    1    1
+
 show_key:
 	ldy #$00
 	ldx #$00
-	cmp #24
+	cmp #%00010111         ; 7
 	bne check_key_8
 	ldy #42
 	bne invert_key_4
 check_key_8:
-	cmp #23
+	cmp #%00011000         ; 8
 	bne check_key_9
 	ldy #46
 	bne invert_key_4
 check_key_9:
-	cmp #22
+	cmp #%00011001         ; 9
 	bne check_key_mult
 	ldy #50
 	bne invert_key_4
 check_key_mult:
-	cmp #18
+	cmp #%00011101         ; *
 	bne check_key_4
 	ldy #54
 	bne invert_key_4
 check_key_4:
-	cmp #27
+	cmp #%00010100         ; 4
 	bne check_key_5
 	ldy #122
 	bne invert_key_4
 check_key_5:
-	cmp #26
+	cmp #%00010101         ; 5
 	bne check_key_6
 	ldy #126
 	bne invert_key_4
 check_key_6:
-	cmp #25
+	cmp #%00010110         ; 6
 	bne check_key_div
 	ldy #130
 	bne invert_key_4
 check_key_div:
-	cmp #19
+	cmp #%00011100         ; /
 	bne check_key_1
 	ldy #134
 	bne invert_key_4
 check_key_1:
-	cmp #30
+	cmp #%00010001         ; 1
 	bne check_key_2
 	ldy #202
 	bne invert_key_4
 check_key_2:
-	cmp #29
+	cmp #%00010010         ; 2
 	bne check_key_3
 	ldy #206
 	bne invert_key_4
 check_key_3:
-	cmp #28
+	cmp #%00010011         ; 3
 	bne check_key_minus
 	ldy #210
 	bne invert_key_4
 check_key_minus:
-	cmp #20
+	cmp #%00011011         ; -
 	bne check_key_dot
 	ldy #214
 invert_key_4:
 	ldx #4
 	bne invert_key
 check_key_dot:
-	cmp #17
+	cmp #%00011110         ; .
 	bne check_key_0
 	ldy #26
 	bne invert_key_5
 check_key_0:
-	cmp #31
+	cmp #%00010000         ; 0
 	bne check_key_enter
 	ldy #30
 	bne invert_key_5
 check_key_enter:
-	cmp #16
+	cmp #%00011111         ; enter
 	bne check_key_plus
 	ldy #34
 	bne invert_key_5
 check_key_plus:
-	cmp #21
+	cmp #%00011010         ; +
 	bne no_key_pressed
 	ldy #38
 	bne invert_key_5
@@ -152,13 +172,13 @@ read_native_2:
 	jmp read_native_2_code
 
 read_native_1_code:
-	lda $dc00
-	and #$3f
-	ora #$40
-	sta $dc00
-	lda $d41a
-	bne read_key_1
-	rts
+; 	lda $dc00
+; 	and #$3f
+; 	ora #$40
+; 	sta $dc00
+; 	lda $d41a
+; 	bne read_key_1
+; 	rts
 read_key_1:
 	ldx #$7f
 	stx C64_CIA1_PRA
@@ -166,13 +186,13 @@ read_key_1:
 	rts
 
 read_native_2_code:
-	lda $dc00
-	and #$3f
-	ora #$80
-	sta $dc00
-	lda $d41a
-	bne read_key_2
-	rts
+; 	lda $dc00
+; 	and #$3f
+; 	ora #$80
+; 	sta $dc00
+; 	lda $d41a
+; 	bne read_key_2
+; 	rts
 read_key_2:
 	ldy C64_CIA1_DDRA
 	ldx #$ff
