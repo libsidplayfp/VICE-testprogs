@@ -25,6 +25,7 @@ mainloop:
 	jsr print_joy_device_screen
 	lda #$00
 	sta KEYS
+	sei    ; disable interrupt so the keyboard scanning doesn't disturb POT reads
 check_loop:
 	jsr check_port
 	and #$1f
@@ -36,64 +37,64 @@ show_key:
 	ldx #$00
 	cmp #1
 	bne check_key_2
-	ldy #42
-	bne invert_key_4
+	ldy #<((1*40)+10)
+	jmp invert_key_4
 check_key_2:
 	cmp #2
 	bne check_key_1
-	ldy #46
-	bne invert_key_4
+	ldy #<((1*40)+6)
+	jmp invert_key_4
 check_key_1:
 	cmp #3
 	bne check_key_6
-	ldy #50
-	bne invert_key_4
+	ldy #<((1*40)+2)
+	jmp invert_key_4
 check_key_6:
 	cmp #4
 	bne check_key_5
-	ldy #122
-	bne invert_key_4
+	ldy #<((3*40)+10)
+	jmp invert_key_4
 check_key_5:
 	cmp #5
 	bne check_key_4
-	ldy #126
-	bne invert_key_4
+	ldy #<((3*40)+6)
+	jmp invert_key_4
 check_key_4:
 	cmp #6
 	bne check_key_9
-	ldy #130
-	bne invert_key_4
+	ldy #<((3*40)+2)
+	jmp invert_key_4
 check_key_9:
 	cmp #7
 	bne check_key_8
-	ldy #202
-	bne invert_key_4
+	ldy #<((5*40)+10)
+	jmp invert_key_4
 check_key_8:
 	cmp #8
 	bne check_key_7
-	ldy #206
-	bne invert_key_4
+	ldy #<((5*40)+6)
+	jmp invert_key_4
 check_key_7:
 	cmp #9
 	bne check_key_hash
-	ldy #210
+	ldy #<((5*40)+2)
 invert_key_4:
 	ldx #4
 	bne invert_key
 check_key_hash:
 	cmp #10
 	bne check_key_0
-	ldy #26
+	ldy #<((7*40)+10)
 	bne invert_key_5
 check_key_0:
 	cmp #11
 	bne check_key_star
-	ldy #30
+	ldy #<((7*40)+6)
 	bne invert_key_5
 check_key_star:
 	cmp #12
 	bne no_key_pressed
-	ldy #34
+	ldy #<((7*40)+2)
 	bne invert_key_5
 no_key_pressed:
 	rts
@@ -142,6 +143,7 @@ loopx:
 	pla
 	tax
 	lda $d419
+	eor #$ff
 	rts
 
 read_poty:
@@ -154,6 +156,7 @@ loopy:
 	pla
 	tax
 	lda $d41a
+	eor #$ff
 	rts
 
 read_native_1_code:
@@ -398,16 +401,28 @@ port:	!by 0
 
 tmp:	!by 0
 
+
+; KEYPAD          KEYMAP KEYS
+; -------------   ----------------
+; | 1 | 2 | 3 |   |  1 |  2 |  3 |
+; -------------   ----------------
+; | 4 | 5 | 6 |   |  6 |  7 |  8 |
+; -------------   ----------------
+; | 7 | 8 | 9 |   | 11 | 12 | 13 |
+; -------------   ----------------
+; | * | 0 | # |   | 16 | 17 | 18 |
+; -------------   ----------------
+
 main_screen:
 	!by 147
 	!by 176,195,195,195,178,195,195,195,178,195,195,195,174,13
-	!by 194, 32,'3', 32,194, 32,'2', 32,194, 32,'1', 32,194,13
+	!by 194, 32,'1', 32,194, 32,'2', 32,194, 32,'3', 32,194,13
 	!by 171,195,195,195,219,195,195,195,219,195,195,195,179,13
-	!by 194, 32,'6', 32,194, 32,'5', 32,194, 32,'4', 32,194,13
+	!by 194, 32,'4', 32,194, 32,'5', 32,194, 32,'6', 32,194,13
 	!by 171,195,195,195,219,195,195,195,219,195,195,195,179,13
-	!by 194, 32,'9', 32,194, 32,'8', 32,194, 32,'7', 32,194,13
+	!by 194, 32,'7', 32,194, 32,'8', 32,194, 32,'9', 32,194,13
 	!by 171,195,195,195,219,195,195,195,219,195,195,195,179,13
-	!by 194, 32,'#', 32,194, 32,'0', 32,194, 32,'*', 32,194,13
+	!by 194, 32,'*', 32,194, 32,'0', 32,194, 32,'#', 32,194,13
 	!by 173,195,195,195,177,195,195,195,177,195,195,195,189,13
 	!by 0
 
