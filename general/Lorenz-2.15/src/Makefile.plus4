@@ -274,7 +274,7 @@ DISK3PROGSOLD = \
 	template-plus4.prg
 
 ALLPROGSOLD = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSOLD)
-	
+
 ALLPROGS = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSOLD)
 ALLDISKS = Disk1plus4.d64 Disk2plus4.d64 Disk3plus4.d64 LorenzPlus4.d81
 
@@ -336,7 +336,7 @@ cia2ta-plus4.prg: cia2ta.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i cia2ta.s -o cia2ta-plus4.prg
 cia2tb-plus4.prg: cia2tb.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i cia2tb.s -o cia2tb-plus4.prg
-	
+
 nextdisk1-plus4.prg: nextdisk.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEXT=1 -i nextdisk.s -o nextdisk1-plus4.prg
 nextdisk2-plus4.prg: nextdisk.s $(COMMONSRC)
@@ -348,27 +348,27 @@ nextdisk2-plus4.prg: nextdisk.s $(COMMONSRC)
 Disk1plus4.d64: $(DISK1PROGS) nextdisk1-plus4.prg
 	c1541 -format "test suite 2.15+,#1" d64 Disk1plus4.d64 > /dev/null
 	for I in $(basename $(DISK1PROGS)); do \
-		c1541 Disk1plus4.d64 -write "$$I.prg" `echo "$$I" | sed 's:-plus4::g'` > /dev/null; \
+		c1541 Disk1plus4.d64 -write "$$I.prg" $$(echo "$$I" | sed 's:-plus4::g') > /dev/null; \
 	done
-	c1541 Disk1plus4.d64 -write "nextdisk1-plus4.prg" `echo "$(basename $(DISK1NEXT))" | sed 's:-plus4::g'` > /dev/null
+	c1541 Disk1plus4.d64 -write "nextdisk1-plus4.prg" $$(echo "$(basename $(DISK1NEXT))" | sed 's:-plus4::g') > /dev/null
 #	c1541 Disk1plus4.d64 -list
 Disk2plus4.d64: $(DISK2PROGS) nextdisk2-plus4.prg
 	c1541 -format "test suite 2.15+,#2" d64 Disk2plus4.d64 > /dev/null
 	for I in $(basename $(DISK2PROGS)); do \
-		c1541 Disk2plus4.d64 -write "$$I.prg" `echo "$$I" | sed 's:-plus4::g'` > /dev/null; \
+		c1541 Disk2plus4.d64 -write "$$I.prg" $$(echo "$$I" | sed 's:-plus4::g') > /dev/null; \
 	done
-	c1541 Disk2plus4.d64 -write "nextdisk2-plus4.prg" `echo "$(basename $(DISK2NEXT))" | sed 's:-plus4::g'` > /dev/null
+	c1541 Disk2plus4.d64 -write "nextdisk2-plus4.prg" $$(echo "$(basename $(DISK2NEXT))" | sed 's:-plus4::g') > /dev/null
 #	c1541 Disk2plus4.d64 -list
 Disk3plus4.d64: $(DISK3PROGSOLD)
 	c1541 -format "test suite 2.15+,#3" d64 Disk3plus4.d64 > /dev/null
 	for I in $(basename $(DISK3PROGSOLD)); do \
-		c1541 Disk3plus4.d64 -write "$$I.prg" `echo "$$I" | sed 's:-plus4::g'` > /dev/null; \
+		c1541 Disk3plus4.d64 -write "$$I.prg" $$(echo "$$I" | sed 's:-plus4::g') > /dev/null; \
 	done
 #	c1541 Disk3plus4.d64 -list
 LorenzPlus4.d81: $(ALLPROGSOLD)
 	c1541 -format "test suite 2.15+,#1" d81 LorenzPlus4.d81 > /dev/null
 	for I in $(basename $(ALLPROGSOLD)); do \
-		c1541 LorenzPlus4.d81 -write "$$I.prg" `echo "$$I" | sed 's:-plus4::g'` > /dev/null; \
+		c1541 LorenzPlus4.d81 -write "$$I.prg" $$(echo "$$I" | sed 's:-plus4::g') > /dev/null; \
 	done
 #	c1541 LorenzPlus4.d81 -list
 

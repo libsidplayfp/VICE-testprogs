@@ -365,7 +365,7 @@ DISK2PROGS128 = \
 	mmu.prg \
 	cpuport128.prg \
 	cputiming.prg
-	
+
 DISK2NEXT = irq.prg
 
 DISK3PROGSOLD = \
@@ -423,13 +423,13 @@ DISK3PROGSNEW = \
 
 ALLPROGSOLD = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSOLD)
 ALLPROGSNEW = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSNEW)
-	
+
 ALLPROGS = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSOLD) $(DISK3PROGSNEW)
 ALLDISKS = Disk1.d64 Disk2.d64 Disk3.d64 Disk3new.d64 Lorenz.d81 Lorenznew.d81
 
 ALLPROGSOLD128 = $(DISK1PROGS) $(DISK2PROGS128) $(DISK3PROGSOLD)
 ALLPROGSNEW128 = $(DISK1PROGS) $(DISK2PROGS128) $(DISK3PROGSNEW)
-	
+
 ALLPROGS128 = $(DISK1PROGS) $(DISK2PROGS128) $(DISK3PROGSOLD) $(DISK3PROGSNEW)
 ALLDISKS128 = Disk1.d64 Disk2c128.d64 Disk3.d64 Disk3new.d64
 
@@ -509,7 +509,7 @@ cia2tb.prg: cia2tb.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i cia2tb.s -o cia2tb.prg
 cia2tbnew.prg: cia2tb.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=1 -i cia2tb.s -o cia2tbnew.prg
-	
+
 nextdisk1.prg: nextdisk.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEXT=1 -i nextdisk.s -o nextdisk1.prg
 nextdisk2.prg: nextdisk.s $(COMMONSRC)
@@ -541,7 +541,7 @@ Disk3.d64: $(DISK3PROGSOLD)
 Disk3new.d64: $(DISK3PROGSNEW)
 	c1541 -format "test suite 2.15+,#3" d64 Disk3new.d64 > /dev/null
 	for I in $(basename $(DISK3PROGSNEW)); do \
-		c1541 Disk3new.d64 -write "$$I.prg" `echo "$$I" | sed -e 's:new$$::'`; \
+		c1541 Disk3new.d64 -write "$$I.prg" $$(echo "$$I" | sed -e 's:new$$::') > /dev/null; \
 	done
 #	c1541 Disk3new.d64 -list
 Lorenz.d81: $(ALLPROGSOLD)
@@ -553,14 +553,14 @@ Lorenz.d81: $(ALLPROGSOLD)
 Lorenznew.d81: $(ALLPROGSNEW)
 	c1541 -format "test suite 2.15+,#1" d81 Lorenznew.d81 > /dev/null
 	for I in $(basename $(ALLPROGSNEW)); do \
-		c1541 Lorenznew.d81 -write "$$I.prg" `echo "$$I" | sed -e 's:new$$::'`; \
+		c1541 Lorenznew.d81 -write "$$I.prg" $$(echo "$$I" | sed -e 's:new$$::') > /dev/null; \
 	done
 #	c1541 Lorenznew.d81 -list
 
 Disk2c128.d64: $(DISK2PROGS128) nextdisk2.prg
 	c1541 -format "test suite 2.15+,#2" d64 Disk2c128.d64 > /dev/null
 	for I in $(basename $(DISK2PROGS128)); do \
-		c1541 Disk2c128.d64 -write "$$I.prg" `echo "$$I" | sed -e 's:128$$::'`; \
+		c1541 Disk2c128.d64 -write "$$I.prg" $$(echo "$$I" | sed -e 's:128$$::') > /dev/null; \
 	done
 	c1541 Disk2c128.d64 -write "nextdisk2.prg" "$(basename $(DISK2NEXT))" > /dev/null
 #	c1541 Disk2c128.d64 -list

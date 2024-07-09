@@ -293,7 +293,7 @@ DISK3PROGSOLD = \
 	template-dtv.prg
 
 ALLPROGSOLD = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSOLD)
-	
+
 ALLPROGS = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSOLD)
 ALLDISKS = Disk1DTV.d64 Disk2DTV.d64 Disk3DTV.d64 LorenzDTV.d81
 
@@ -355,7 +355,7 @@ cia2ta-dtv.prg: cia2ta.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i cia2ta.s -o cia2ta-dtv.prg
 cia2tb-dtv.prg: cia2tb.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i cia2tb.s -o cia2tb-dtv.prg
-	
+
 nextdisk1-dtv.prg: nextdisk.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEXT=1 -i nextdisk.s -o nextdisk1-dtv.prg
 nextdisk2-dtv.prg: nextdisk.s $(COMMONSRC)
@@ -367,27 +367,27 @@ nextdisk2-dtv.prg: nextdisk.s $(COMMONSRC)
 Disk1DTV.d64: $(DISK1PROGS) nextdisk1-dtv.prg
 	c1541 -format "test suite 2.15+,#1" d64 Disk1DTV.d64 > /dev/null
 	for I in $(basename $(DISK1PROGS)); do \
-		c1541 Disk1DTV.d64 -write "$$I.prg" `echo "$$I" | sed 's:-dtv::g'` > /dev/null; \
+		c1541 Disk1DTV.d64 -write "$$I.prg" $$(echo "$$I" | sed 's:-dtv::g') > /dev/null; \
 	done
-	c1541 Disk1DTV.d64 -write "nextdisk1-dtv.prg" `echo "$(basename $(DISK1NEXT))" | sed 's:-dtv::g'` > /dev/null
+	c1541 Disk1DTV.d64 -write "nextdisk1-dtv.prg" $$(echo "$(basename $(DISK1NEXT))" | sed 's:-dtv::g') > /dev/null
 #	c1541 Disk1DTV.d64 -list
 Disk2DTV.d64: $(DISK2PROGS) nextdisk2-dtv.prg
 	c1541 -format "test suite 2.15+,#2" d64 Disk2DTV.d64 > /dev/null
 	for I in $(basename $(DISK2PROGS)); do \
-		c1541 Disk2DTV.d64 -write "$$I.prg" `echo "$$I" | sed 's:-dtv::g'` > /dev/null; \
+		c1541 Disk2DTV.d64 -write "$$I.prg" $$(echo "$$I" | sed 's:-dtv::g') > /dev/null; \
 	done
-	c1541 Disk2DTV.d64 -write "nextdisk2-dtv.prg" `echo "$(basename $(DISK2NEXT))" | sed 's:-dtv::g'` > /dev/null
+	c1541 Disk2DTV.d64 -write "nextdisk2-dtv.prg" $$(echo "$(basename $(DISK2NEXT))" | sed 's:-dtv::g') > /dev/null
 #	c1541 Disk2DTV.d64 -list
 Disk3DTV.d64: $(DISK3PROGSOLD)
 	c1541 -format "test suite 2.15+,#3" d64 Disk3DTV.d64 > /dev/null
 	for I in $(basename $(DISK3PROGSOLD)); do \
-		c1541 Disk3DTV.d64 -write "$$I.prg" `echo "$$I" | sed 's:-dtv::g'` > /dev/null; \
+		c1541 Disk3DTV.d64 -write "$$I.prg" $$(echo "$$I" | sed 's:-dtv::g') > /dev/null; \
 	done
 #	c1541 Disk3DTV.d64 -list
 LorenzDTV.d81: $(ALLPROGSOLD)
 	c1541 -format "test suite 2.15+,#1" d81 LorenzDTV.d81 > /dev/null
 	for I in $(basename $(ALLPROGSOLD)); do \
-		c1541 LorenzDTV.d81 -write "$$I.prg" `echo "$$I" | sed 's:-dtv::g'` > /dev/null; \
+		c1541 LorenzDTV.d81 -write "$$I.prg" $$(echo "$$I" | sed 's:-dtv::g') > /dev/null; \
 	done
 #	c1541 LorenzDTV.d81 -list
 
