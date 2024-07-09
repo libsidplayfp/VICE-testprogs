@@ -7,10 +7,10 @@
             .include "printhb.asm"
             .include "showregs.asm"
 
-;------------------------------------------------------------------------------           
+;------------------------------------------------------------------------------
 thisname   .null "brkn"      ; name of this test
 nextname   .null "rtin"      ; name of next test, "-" means no more tests
-;------------------------------------------------------------------------------ 
+;------------------------------------------------------------------------------
 main:
          lda #%00011011
          sta db
@@ -72,11 +72,8 @@ next     lda db
          sbc #3
          sta sr
 
-         lda #127
-         sta $dc0d
-         lda $dc0d
-         lda #$30
-         sta 1
+         #SET_IRQ_DISABLE
+         #SET_ROM_DISABLE
 
          ldx sb
          txs
@@ -99,10 +96,8 @@ break    php
          tsx
          stx sa
 
-         lda #$37
-         sta 1
-         lda #129
-         sta $dc0d
+         #SET_ROM_ENABLE
+         #SET_IRQ_ENABLE
 
          jsr check
 

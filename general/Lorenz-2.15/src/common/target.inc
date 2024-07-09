@@ -1,5 +1,5 @@
 
-; the TARGETXXX constants are referred to by their absolute value in makefiles, 
+; the TARGETXXX constants are referred to by their absolute value in makefiles,
 ; so do not change them, only append new ones
 
 TARGETC64       = 0
@@ -61,11 +61,31 @@ SET_EXIT_CODE_FAILURE:  .macro
         pla
                         .endm
 
-RESET_MEMORY_MAP:   .macro
+SET_IRQ_ENABLE:     .macro
+         lda #$81
+         sta $dc0d
+                    .endm
+
+SET_IRQ_DISABLE:    .macro
+         lda #$7f
+         sta $dc0d
+         lda $dc0d
+                    .endm
+
+SET_ROM_ENABLE:     .macro
         lda #$37
-        sta 1
+        sta $01
+                    .endm
+
+SET_ROM_DISABLE:    .macro
+        lda #$35
+        sta $01
+                    .endm
+
+RESET_MEMORY_MAP:   .macro
         lda #$2f
         sta 0
+        #SET_ROM_ENABLE
                     .endm
 
 RESET_KERNAL_IO:    .macro
@@ -77,6 +97,7 @@ RESET_COLORS:       .macro
         lda #0 ; black
         sta $d020
                     .endm
+
 RESET_CURSOR:       .macro
         lda #0
         sta $d3
@@ -126,11 +147,31 @@ SET_EXIT_CODE_FAILURE:  .macro
         pla
                         .endm
 
-RESET_MEMORY_MAP:   .macro
+SET_IRQ_ENABLE:     .macro
+         lda #$81
+         sta $dc0d
+                    .endm
+
+SET_IRQ_DISABLE:    .macro
+         lda #$7f
+         sta $dc0d
+         lda $dc0d
+                    .endm
+
+SET_ROM_ENABLE:     .macro
         lda #$37
-        sta 1
+        sta $01
+                    .endm
+
+SET_ROM_DISABLE:    .macro
+        lda #$35
+        sta $01
+                    .endm
+
+RESET_MEMORY_MAP:   .macro
         lda #$2f
         sta 0
+        #SET_ROM_ENABLE
                     .endm
 
 RESET_KERNAL_IO:    .macro
@@ -201,11 +242,31 @@ SET_EXIT_CODE_FAILURE:  .macro
         pla
                         .endm
 
-RESET_MEMORY_MAP:   .macro
+SET_IRQ_ENABLE:     .macro
+         lda #$81
+         sta $dc0d
+                    .endm
+
+SET_IRQ_DISABLE:    .macro
+         lda #$7f
+         sta $dc0d
+         lda $dc0d
+                    .endm
+
+SET_ROM_ENABLE:     .macro
         lda #$37
-        sta 1
+        sta $01
+                    .endm
+
+SET_ROM_DISABLE:    .macro
+        lda #$35
+        sta $01
+                    .endm
+
+RESET_MEMORY_MAP:   .macro
         lda #$2f
         sta 0
+        #SET_ROM_ENABLE
                     .endm
 
 RESET_KERNAL_IO:    .macro
@@ -221,6 +282,7 @@ RESET_CURSOR:       .macro
         lda #0
         sta $d3
                     .endm
+
 .endif
 
 ;------------------------------------------------------------------------------
@@ -260,8 +322,29 @@ SET_EXIT_CODE_FAILURE:  .macro
         pla
                         .endm
 
+SET_IRQ_ENABLE:     .macro
+         lda #$a2
+         sta $ff0a
+                    .endm
+
+SET_IRQ_DISABLE:    .macro
+         lda #$00
+         sta $ff0a
+                    .endm
+
+SET_ROM_ENABLE:     .macro
+        sta $ff3e
+                    .endm
+
+SET_ROM_DISABLE:    .macro
+        sta $ff3f
+                    .endm
+
 RESET_MEMORY_MAP:   .macro
-        ; nothing to do here
+        lda #0
+        sta $fb
+        sta $fdd0
+        #SET_ROM_ENABLE
                     .endm
 
 RESET_KERNAL_IO:    .macro
