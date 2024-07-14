@@ -2,8 +2,8 @@ CFLAGS=-g -O0
 
 all: remotetest
 
-remotetest: CuTest.o main.o
-	$(CC) $(CFLAGS) -o remotetest CuTest.o main.o
+remotetest: CuTest.o connection.o checkpoint.o util.o main.o
+	$(CC) $(CFLAGS) -o remotetest $^
 
 test: remotetest
 	x64sc -default -binarymonitor -minimized > /dev/null & \

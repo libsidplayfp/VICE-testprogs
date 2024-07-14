@@ -1,5 +1,5 @@
 /*
- * main.c - Tests for VICE's binary monitor interface
+ * main.c - Test entrypoint for VICE's binary monitor interface
  *
  * Written by
  *  Empathic Qubit <empathicqubit@entan.gl>
@@ -26,161 +26,15 @@
 
 /* These tests are meant to be run against x64sc */
 
-#include <sys/socket.h>
-#include <netinet/tcp.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <arpa/inet.h>
-#include <string.h>
+#include <stdint.h>
 #include <unistd.h>
-#include <sys/poll.h>
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "CuTest.h"
-
-#define HEADER_LENGTH 12
-#define RESPONSE_TYPE 6
-#define RESPONSE_ERROR 7
-#define RESPONSE_ID 8
-
-#define COMMAND_ID 6
-#define COMMAND_HEADER_LENGTH 11
-#define COMMAND_LENGTH 2
-#define API_VERSION 0x02
-
-int response_count = 0;
-int sock = 0;
-struct pollfd fds[1];
-int port = 0;
-
-void setup(CuTest *tc) {
-    struct sockaddr_in *serv_addr;
-
-    if (sock) {
-        close(sock);
-        sock = 0;
-    }
-
-    response_count = 0;
-
-    if (sock) {
-        return;
-    }
-
-    sock = socket(AF_INET, SOCK_STREAM, 0);
-
-    /* Disable nagle algorithm to ensure we split commands over multiple packets */
-    int flag = 1;
-    int result = setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (char *)&flag, sizeof(int));
-
-    fds[0].fd = sock;
-    fds[0].events = POLLIN;
-    fds[0].revents = 0;
-
-    CuAssertTrue(tc, sock >= 0);
-
-    serv_addr = malloc(sizeof(struct sockaddr_in));
-
-    serv_addr->sin_family = AF_INET;
-    serv_addr->sin_port = htons(port);
-
-    CuAssertTrue(tc, inet_pton(AF_INET, "127.0.0.1", &serv_addr->sin_addr) > 0);
-
-    CuAssertTrue(tc, connect(sock, (struct sockaddr *)serv_addr, sizeof(*serv_addr)) >= 0);
-
-    free(serv_addr);
-}
-
-static uint32_t little_endian_to_uint32(unsigned char *input) {
-    return (input[3] << 24) + (input[2] << 16) + (input[1] << 8) + input[0];
-}
-
-static uint16_t little_endian_to_uint16(unsigned char *input) {
-    return (input[1] << 8) + input[0];
-}
-
-static unsigned char *write_uint16(uint16_t input, unsigned char *output) {
-    output[0] = input & 0xFFu;
-    output[1] = (input >> 8) & 0xFFu;
-
-    return output + 2;
-}
-
-static unsigned char *write_uint32(uint32_t input, unsigned char *output) {
-    output[0] = input & 0xFFu;
-    output[1] = (input >> 8) & 0xFFu;
-    output[2] = (input >> 16) & 0xFFu;
-    output[3] = (uint8_t)(input >> 24) & 0xFFu;
-
-    return output + 4;
-}
-
-void really_send_command(unsigned char* command, size_t length) {
-    write_uint32(length - COMMAND_HEADER_LENGTH, &command[COMMAND_LENGTH]);
-    for (int i = 0; i < length; i++) {
-        /* Send each byte to trigger incomplete reads on the other side */
-        send(sock, command + i, 1, 0);
-    }
-}
-
-#define send_command(command) really_send_command(command, sizeof(command))
-
-unsigned char response[1<<24];
-
-int readloop(CuTest *tc, unsigned char *ptr, int length) {
-    int n = 0;
-    while(n < length) {
-        CuAssertTrue(tc, poll(fds, 1, 10000));
-        int o = read(sock, &ptr[n], length - n);
-        CuAssertTrue(tc, o > 0);
-        n += o;
-    }
-
-    return n;
-}
-
-int read_response(CuTest *tc) {
-    response_count++;
-    readloop(tc, response, 6);
-    return 6 + readloop(tc, &response[6], 6 + little_endian_to_uint32(&response[2]));
-}
-
-int wait_for_response_type(CuTest *tc, uint8_t response_type) {
-    int length;
-
-    do {
-        length = read_response(tc);
-        fprintf(stderr, "%s: request %d: CID %8x RID %8x length %d type %2x error %2x \n", 
-            tc->name, 
-            response_count, 
-            0xffffffff, 
-            little_endian_to_uint32(&response[RESPONSE_ID]), 
-            length, 
-            response[RESPONSE_TYPE], 
-            response[RESPONSE_ERROR]
-        );
-    } while (response_type != response[RESPONSE_TYPE]);
-
-    return length;
-}
-
-int wait_for_response_id(CuTest *tc, unsigned char *command) {
-    int length;
-
-    do {
-        length = read_response(tc);
-        fprintf(stderr, "%s: request %d: CID %8x RID %8x length %d type %2x error %2x \n", 
-            tc->name, 
-            response_count, 
-            little_endian_to_uint32(&command[COMMAND_ID]), 
-            little_endian_to_uint32(&response[RESPONSE_ID]), 
-            length, 
-            response[RESPONSE_TYPE], 
-            response[RESPONSE_ERROR]
-        );
-    } while (little_endian_to_uint32(&command[COMMAND_ID]) != little_endian_to_uint32(&response[RESPONSE_ID]));
-
-    return length;
-}
+#include "util.h"
+#include "connection.h"
+#include "checkpoint.h"
 
 void request_id_is_set(CuTest* tc) {
     int length;
@@ -193,7 +47,7 @@ void request_id_is_set(CuTest* tc) {
         0x81, 
     };
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -202,548 +56,6 @@ void request_id_is_set(CuTest* tc) {
     CuAssertIntEquals(tc, 0x81, response[RESPONSE_TYPE]);
 
     CuAssertIntEquals(tc, 0, length - HEADER_LENGTH);
-}
-
-void checkpoint_set_works(CuTest *tc) {
-    int length;
-
-    unsigned char set_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xb4, 0xd8, 0x44, 0x19, 
-
-        0x12, 
-
-        0xe2, 0xfc,
-        0xe3, 0xfc,
-        0x01,
-        0x00,
-        0x04,
-        0x00,
-        0x01,
-    };
-
-    setup(tc);
-
-    send_command(set_command);
-
-    length = wait_for_response_id(tc, set_command);
-
-    CuAssertTrue(tc, response[RESPONSE_TYPE] == 0x11);
-
-    CuAssertTrue(tc, length - HEADER_LENGTH >= 22);
-
-    // start
-    CuAssertIntEquals(tc, little_endian_to_uint16(&set_command[COMMAND_HEADER_LENGTH + 0]), little_endian_to_uint16(&response[HEADER_LENGTH + 5]));
-
-    // end
-    CuAssertIntEquals(tc, little_endian_to_uint16(&set_command[COMMAND_HEADER_LENGTH + 2]), little_endian_to_uint16(&response[HEADER_LENGTH + 7]));
-
-    // stop
-    CuAssertIntEquals(tc, set_command[COMMAND_HEADER_LENGTH + 4], response[HEADER_LENGTH + 9]);
-
-    // enabled
-    CuAssertIntEquals(tc, set_command[COMMAND_HEADER_LENGTH + 5], response[HEADER_LENGTH + 10]);
-
-    // operation
-    CuAssertIntEquals(tc, set_command[COMMAND_HEADER_LENGTH + 6], response[HEADER_LENGTH + 11]);
-
-    // temp
-    CuAssertIntEquals(tc, set_command[COMMAND_HEADER_LENGTH + 7], response[HEADER_LENGTH + 12]);
-
-    // hit count
-    CuAssertIntEquals(tc, 0, little_endian_to_uint32(&response[HEADER_LENGTH + 13]));
-
-    // ignore count
-    CuAssertIntEquals(tc, 0, little_endian_to_uint32(&response[HEADER_LENGTH + 17]));
-
-    // condition
-    CuAssertIntEquals(tc, 0, response[HEADER_LENGTH + 17]);
-
-    // memspace
-    CuAssertIntEquals(tc, 1, response[HEADER_LENGTH + 22]);
-}
-
-void checkpoint_get_works(CuTest *tc) {
-    int length;
-    uint32_t brknum;
-
-    // set
-
-    unsigned char set_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xb7, 0xde, 0x2d, 0x1d, 
-
-        0x12, 
-
-        0xe2, 0xfc,
-        0xe3, 0xfc,
-        0x01,
-        0x00,
-        0x04,
-        0x00,
-    };
-
-    unsigned char get_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xe1, 0xc7, 0x52, 0x2f, 
-
-        0x11,
-
-        0xff, 0xff, 0xff, 0xff,
-    };
-
-    setup(tc);
-
-    send_command(set_command);
-
-    length = wait_for_response_id(tc, set_command);
-
-    CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
-
-    brknum = little_endian_to_uint32(&response[HEADER_LENGTH + 0]);
-
-    // get
-
-    write_uint32(brknum, &get_command[COMMAND_HEADER_LENGTH]);
-
-    send_command(get_command);
-
-    length = wait_for_response_id(tc, get_command);
-
-    CuAssertTrue(tc, length - HEADER_LENGTH >= 22);
-
-    CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
-
-    // start
-    CuAssertIntEquals(tc, little_endian_to_uint16(&set_command[COMMAND_HEADER_LENGTH + 0]), little_endian_to_uint16(&response[HEADER_LENGTH + 5]));
-
-    // end
-    CuAssertIntEquals(tc, little_endian_to_uint16(&set_command[COMMAND_HEADER_LENGTH + 2]), little_endian_to_uint16(&response[HEADER_LENGTH + 7]));
-
-    // stop
-    CuAssertIntEquals(tc, set_command[COMMAND_HEADER_LENGTH + 4], response[HEADER_LENGTH + 9]);
-
-    // enabled
-    CuAssertIntEquals(tc, set_command[COMMAND_HEADER_LENGTH + 5], response[HEADER_LENGTH + 10]);
-
-    // operation
-    CuAssertIntEquals(tc, set_command[COMMAND_HEADER_LENGTH + 6], response[HEADER_LENGTH + 11]);
-
-    // temp
-    CuAssertIntEquals(tc, set_command[COMMAND_HEADER_LENGTH + 7], response[HEADER_LENGTH + 12]);
-
-    // hit count
-    CuAssertIntEquals(tc, 0, little_endian_to_uint32(&response[HEADER_LENGTH + 13]));
-
-    // ignore count
-    CuAssertIntEquals(tc, 0, little_endian_to_uint32(&response[HEADER_LENGTH + 17]));
-
-    // condition
-    CuAssertIntEquals(tc, 0, response[HEADER_LENGTH + 17]);
-
-    // memspace
-    CuAssertIntEquals(tc, 0, response[HEADER_LENGTH + 22]);
-}
-
-uint32_t list_checkpoint_ids(CuTest *tc, uint32_t* checkpoint_ids, uint32_t maxcheckpoints) {
-    uint32_t length;
-    uint32_t nof_checkpoints;
-    unsigned char list_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, // length
-        0xe1, 0xc7, 0x52, 0x2f, // request id
-
-        0x14, // command "checkpoint list"
-    };
-
-    nof_checkpoints = 0;
-    send_command(list_command);
-    for(;;) {
-        wait_for_response_id(tc, list_command);
-        if (response[RESPONSE_TYPE] == 0x14) {
-            break;
-        }
-        if (response[RESPONSE_TYPE]== 0x11) {
-            CuAssertTrue(tc, nof_checkpoints < maxcheckpoints);
-            checkpoint_ids[nof_checkpoints++] = little_endian_to_uint32(&response[HEADER_LENGTH + 0]);
-        }
-    }
-    return nof_checkpoints;
-}
-
-void delete_checkpoint(CuTest* tc, uint32_t checkpointId) {
-    unsigned char delete_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xcc, 0xd2, 0x16, 0x2b, 
-
-        0x13,
-
-        0xff, 0xff, 0xff, 0xff,
-    };
-
-    write_uint32(checkpointId, &delete_command[COMMAND_HEADER_LENGTH]);
-    send_command(delete_command);
-    wait_for_response_id(tc, delete_command);
-    CuAssertIntEquals(tc, 0x13, response[RESPONSE_TYPE]);
-}
-
-void checkpoint_delete_works(CuTest *tc) {
-    int length;
-    uint32_t brknum;
-
-    // set
-
-    unsigned char set_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xc3, 0xc7, 0x4e, 0x53, 
-
-        0x12, 
-
-        0xe2, 0xfc,
-        0xe3, 0xfc,
-        0x01,
-        0x00,
-        0x04,
-        0x00,
-    };
-
-    setup(tc);
-
-    send_command(set_command);
-
-    length = wait_for_response_id(tc, set_command);
-
-    CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
-
-    brknum = little_endian_to_uint32(&response[HEADER_LENGTH + 0]);
-
-    // delete
-    delete_checkpoint(tc, brknum);
-}
-
-void checkpoint_list_works(CuTest *tc) {
-    int length;
-
-    unsigned char set_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xb2, 0xcf, 0x49, 0x16, 
-
-        0x12, 
-
-        0xe2, 0xfc,
-        0xe3, 0xfc,
-        0x01,
-        0x00,
-        0x04,
-        0x00,
-    };
-
-    unsigned char list_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xe3, 0xb5, 0xa4, 0xe4, 
-
-        0x14, 
-    };
-
-    setup(tc);
-
-    send_command(set_command);
-
-    length = wait_for_response_id(tc, set_command);
-
-    CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
-
-    send_command(list_command);
-
-    length = wait_for_response_id(tc, list_command);
-
-    while(response[RESPONSE_TYPE] != 0x14) {
-        CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
-
-        length = wait_for_response_id(tc, list_command);
-    }
-
-    CuAssertIntEquals(tc, 0x14, response[RESPONSE_TYPE]);
-
-    CuAssertTrue(tc, little_endian_to_uint32(&response[HEADER_LENGTH]) >= 1);
-}
-
-void checkpoint_list_does_dedupe(CuTest *tc) {
-    int length;
-    uint32_t nof_checkpoints;
-    uint32_t checkpoint_ids[1024];
-
-    unsigned char set_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, // length
-        0xb7, 0xde, 0x2d, 0x1d, // request id
-
-        0x12, // command "checkpoint set"
-
-        0xe2, 0xfc, // address start
-        0xe3, 0xfc, // address end
-        0x01,       // stop when hit
-        0x00,       // enabled
-        0x07,       // operation (load | store | exec)
-        0x00,       // memspace
-    };
-
-    setup(tc);
-
-    // Delete all the existing checkpoints
-    nof_checkpoints = list_checkpoint_ids(tc, checkpoint_ids, sizeof(checkpoint_ids)/sizeof(uint32_t));
-    while (nof_checkpoints > 0) {
-        delete_checkpoint(tc, checkpoint_ids[--nof_checkpoints]);
-    }
-
-    // Verify that there are no checkpoints left
-    nof_checkpoints = list_checkpoint_ids(tc, checkpoint_ids, sizeof(checkpoint_ids)/sizeof(uint32_t));
-    CuAssertIntEquals(tc, 0, nof_checkpoints);
-
-    // Create a new checkpoint for load, store, exec
-    send_command(set_command);
-    wait_for_response_id(tc, set_command);
-    CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
-
-    // Verify that we only get back 1 checkpoint
-    nof_checkpoints = list_checkpoint_ids(tc, checkpoint_ids, sizeof(checkpoint_ids)/sizeof(uint32_t));
-    CuAssertIntEquals(tc, 1, nof_checkpoints);
-}
-
-void checkpoint_enable_works(CuTest *tc) {
-    int length;
-    uint32_t brknum;
-
-    // set
-
-    unsigned char set_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xad, 0xde, 0x34, 0x12, 
-
-        0x12, 
-
-        0xe2, 0xfc,
-        0xe3, 0xfc,
-        0x01,
-        0x00,
-        0x04,
-        0x00,
-    };
-
-    unsigned char toggle_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xad, 0xde, 0xad, 0xde, 
-
-        0x15, 
-
-        0xff, 0xff, 0xff, 0xff,
-        0x01,
-    };
-
-    unsigned char get_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xef, 0xbe, 0x34, 0x12, 
-
-        0x11,
-
-        0xff, 0xff, 0xff, 0xff,
-    };
-
-    setup(tc);
-
-    send_command(set_command);
-
-    length = wait_for_response_id(tc, set_command);
-
-    CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
-
-    brknum = little_endian_to_uint32(&response[HEADER_LENGTH + 0]);
-
-    // toggle
-
-    write_uint32(brknum, &toggle_command[COMMAND_HEADER_LENGTH]);
-
-    send_command(toggle_command);
-
-    length = wait_for_response_id(tc, toggle_command);
-
-    CuAssertIntEquals(tc, 0x15, response[RESPONSE_TYPE]);
-
-    // get
-
-    write_uint32(brknum, &get_command[COMMAND_HEADER_LENGTH]);
-
-    send_command(get_command);
-
-    length = wait_for_response_id(tc, get_command);
-
-    CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
-
-    // enabled
-    CuAssertIntEquals(tc, 0x01, response[HEADER_LENGTH + 10]);
-}
-
-void checkpoint_disable_works(CuTest *tc) {
-    int length;
-    uint32_t brknum;
-
-    // set
-
-    unsigned char set_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xad, 0xdf, 0x35, 0x11, 
-
-        0x12, 
-
-        0xe2, 0xfc,
-        0xe3, 0xfc,
-        0x01,
-        0x01,
-        0x04,
-        0x00,
-    };
-
-    unsigned char toggle_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xa6, 0xe0, 0xab, 0xdf, 
-
-        0x15, 
-
-        0xff, 0xff, 0xff, 0xff,
-        0x00,
-    };
-
-    unsigned char get_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xf2, 0xba, 0x39, 0x10, 
-
-        0x11,
-
-        0xff, 0xff, 0xff, 0xff,
-    };
-
-    setup(tc);
-
-    send_command(set_command);
-
-    length = wait_for_response_id(tc, set_command);
-
-    CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
-
-    brknum = little_endian_to_uint32(&response[HEADER_LENGTH + 0]);
-
-    // toggle
-
-    write_uint32(brknum, &toggle_command[COMMAND_HEADER_LENGTH]);
-
-    send_command(toggle_command);
-
-    length = wait_for_response_id(tc, toggle_command);
-
-    CuAssertIntEquals(tc, 0x15, response[RESPONSE_TYPE]);
-
-    // get
-
-    write_uint32(brknum, &get_command[COMMAND_HEADER_LENGTH]);
-
-    send_command(get_command);
-
-    length = wait_for_response_id(tc, get_command);
-
-    CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
-
-    // enabled
-    CuAssertIntEquals(tc, 0x00, response[HEADER_LENGTH + 10]);
-}
-
-void condition_set_works(CuTest *tc) {
-    int length;
-    uint32_t brknum;
-
-    // set
-
-    unsigned char set_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xad, 0xdf, 0x35, 0x11, 
-
-        0x12, 
-
-        0xe2, 0xfc,
-        0xe3, 0xfc,
-        0x01,
-        0x01,
-        0x04,
-        0x00,
-    };
-
-    unsigned char cond_set[] =
-        "\x02\x01"
-        "\xff\xff\xff\xff"
-        "\xa6\xe0\xab\xdf"
-
-        "\x22"
-
-        "\xff\xff\xff\xff"
-        "\x0e"
-        "$9531 == $9531"
-    ;
-
-    unsigned char get_command[] = { 
-        0x02, API_VERSION, 
-        0xff, 0xff, 0xff, 0xff, 
-        0xf2, 0xba, 0x39, 0x10, 
-
-        0x11,
-
-        0xff, 0xff, 0xff, 0xff,
-    };
-
-    setup(tc);
-
-    send_command(set_command);
-
-    length = wait_for_response_id(tc, set_command);
-
-    CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
-
-    brknum = little_endian_to_uint32(&response[HEADER_LENGTH + 0]);
-
-    // toggle
-
-    write_uint32(brknum, &cond_set[COMMAND_HEADER_LENGTH]);
-
-    send_command(cond_set);
-
-    length = wait_for_response_id(tc, cond_set);
-
-    CuAssertIntEquals(tc, 0x22, response[RESPONSE_TYPE]);
-
-    // get
-
-    write_uint32(brknum, &get_command[COMMAND_HEADER_LENGTH]);
-
-    send_command(get_command);
-
-    length = wait_for_response_id(tc, get_command);
-
-    CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
-
-    // condition set
-    CuAssertIntEquals(tc, 0x01, response[HEADER_LENGTH + 21]);
 }
 
 void registers_set_works(CuTest *tc) {
@@ -774,7 +86,7 @@ void registers_set_works(CuTest *tc) {
 
     // set
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(set_command);
 
@@ -827,7 +139,7 @@ void registers_get_drive_works(CuTest *tc) {
         0x01,
     };
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(get_command);
 
@@ -890,7 +202,7 @@ void registers_get_works(CuTest *tc) {
         0x00,
     };
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(reset_command);
 
@@ -955,7 +267,7 @@ void dump_works(CuTest *tc) {
         "/dev/null"
     ;
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -1008,7 +320,7 @@ void undump_works(CuTest *tc) {
         "                                                                      "
     ;
 
-    setup(tc);
+    connection_setup(tc);
 
     /* reset */
     send_command(reset_command);
@@ -1055,7 +367,7 @@ void keyboard_feed_works(CuTest *tc) {
 
     // set mem
 
-    setup(tc);
+    connection_setup(tc);
 
     // keyboard
 
@@ -1097,9 +409,9 @@ void mem_set_works(CuTest *tc) {
         "\x53\x59\x53\x20\x32\x30\x36\x31\x0d"
     };
 
-    // set mem
+    // directly load the program into memory, then manually start it by typing out the sys line
 
-    setup(tc);
+    connection_setup(tc);
 
     CuAssertIntEquals(tc, 0, fseek(fil, 0, SEEK_END));
     prg_size = ftell(fil);
@@ -1117,13 +429,146 @@ void mem_set_works(CuTest *tc) {
 
     CuAssertIntEquals(tc, 0x02, response[RESPONSE_TYPE]);
 
-    // keyboard
+    // keyboard (sys 2061)
 
     send_command(keyboard_command);
 
     length = wait_for_response_id(tc, keyboard_command);
 
     CuAssertIntEquals(tc, 0x72, response[RESPONSE_TYPE]);
+}
+
+void mem_set_sidefx(CuTest *tc) {
+    int length;
+    #define sidefx_size 0x10000
+    FILE* fil = fopen("./cc65-test.prg", "rb");
+
+    unsigned char get_command[] = {
+        0x02, API_VERSION, 
+        0xff, 0xff, 0xff, 0xff, 
+        0xae, 0xed, 0xdf, 0xcb, 
+
+        0x01,
+
+        0x00, // sidefx
+        0x00, 0x00, // start
+        0xff, 0xff, // end
+        0x00, // memspace
+        0x00, 0x00, // bank id
+    };
+
+    unsigned char set_command[] = {
+        0x02, API_VERSION, 
+        0xff, 0xff, 0xff, 0xff, 
+        0xae, 0xeb, 0xe1, 0xcb, 
+
+        0x02,
+
+        0x01, // sidefx
+        0x00, 0x00, // start
+        0xff, 0xff, // end
+        0x00, // memspace
+        0x00, 0x00, // bank id
+    };
+
+    unsigned char color_set_command[] = {
+        0x02, API_VERSION, 
+        0xff, 0xff, 0xff, 0xff, 
+        0xad, 0xeb, 0xe3, 0xc9, 
+
+        0x02,
+
+        0x01, // sidefx
+        0xd0, 0x20, // start
+        0xd0, 0x21, // end
+        0x00, // memspace
+        0x00, 0x00, // bank id
+        0x00, // border color
+        0x00, // bg color
+    };
+
+    unsigned char real_command[sizeof(set_command) + sidefx_size];
+    unsigned char border_color;
+    unsigned char bg_color;
+    uint16_t border_addr = 0xd020;
+    uint16_t bg_addr = 0xd021;
+    unsigned char *border_ptr = &real_command[sizeof(set_command) + border_addr];
+    unsigned char *bg_ptr = &real_command[sizeof(set_command) + bg_addr];
+
+    // read the entire memory
+
+    connection_setup(tc);
+
+    send_command(get_command);
+
+    length = wait_for_response_id(tc, get_command);
+
+    memcpy(real_command, set_command, sizeof(set_command));
+
+    memcpy(&real_command[sizeof(set_command)], &response[HEADER_LENGTH + 2], sidefx_size);
+
+    // assert the end of the memory contains the cold reset address
+
+    CuAssertIntEquals(tc, 0xfce2, little_endian_to_uint16(&real_command[sizeof(real_command) - 4]));
+
+    // check that the memory is still the same
+
+    send_command(get_command);
+
+    length = wait_for_response_id(tc, get_command);
+
+    for(int i = 0; i < sidefx_size; i++) {
+        usleep(0);
+        fprintf(stderr, "  Comparing memory@%4x\r", i);
+        // compare to previous value
+        CuAssertIntEquals(tc, real_command[sizeof(set_command) + i], response[HEADER_LENGTH + 2 + i]);
+    }
+
+    fprintf(stderr, "\nMemory hasn't changed between multiple reads.\n");
+
+    // flip border and background colors
+    border_color = *border_ptr;
+    bg_color = *bg_ptr;
+
+    *border_ptr = bg_color;
+    *bg_ptr = border_color;
+
+    // write only the two bytes
+
+    color_set_command[COMMAND_HEADER_LENGTH + 8] = bg_color;
+    color_set_command[COMMAND_HEADER_LENGTH + 9] = border_color;
+
+    send_command(color_set_command);
+
+    length = wait_for_response_id(tc, color_set_command);
+
+    // assert the two bytes
+    send_command(get_command);
+
+    CuAssertIntEquals(tc, bg_color, response[HEADER_LENGTH + 2 + border_addr]);
+    CuAssertIntEquals(tc, border_color, response[HEADER_LENGTH + 2 + bg_addr]);
+
+    // write the entire memory
+
+    send_command(real_command);
+
+    length = wait_for_response_id(tc, set_command);
+
+
+    // check that the memory is still the same
+
+    send_command(get_command);
+
+    length = wait_for_response_id(tc, get_command);
+
+    for(int i = 0; i < sidefx_size; i++) {
+        usleep(0);
+        fprintf(stderr, "  Comparing memory@%4x\r", i);
+        // compare to previous value
+        CuAssertIntEquals(tc, real_command[sizeof(set_command) + i], response[HEADER_LENGTH + 2 + i]);
+    }
+
+    fprintf(stderr, "\nMemory hasn't changed after writing.\n");
 }
 
 void mem_get_works(CuTest *tc) {
@@ -1144,7 +589,7 @@ void mem_get_works(CuTest *tc) {
         0x00, 0x00,
     };
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -1170,7 +615,7 @@ void exit_works(CuTest *tc) {
         0xaa,
     };
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -1197,7 +642,7 @@ void advance_instructions_works(CuTest *tc) {
         0x01, 0x00,
     };
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -1281,7 +726,7 @@ void execute_until_return_works(CuTest *tc) {
 
     // set mem
 
-    setup(tc);
+    connection_setup(tc);
 
     CuAssertIntEquals(tc, 0, fseek(fil, 0, SEEK_END));
     prg_size = ftell(fil);
@@ -1361,7 +806,7 @@ void reset_works(CuTest *tc) {
         0x00,
     };
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -1375,7 +820,7 @@ void autostart_works(CuTest *tc) {
     int strpos = COMMAND_HEADER_LENGTH + 4;
 
     unsigned char command[] =
-        "\x02\x01"
+        "\x02\x02"
         "\xff\xff\xff\xff"
         "\xaf\xe9\x23\x3d"
 
@@ -1393,7 +838,7 @@ void autostart_works(CuTest *tc) {
 
     strcpy((char *)&command[strpos + strlen((char *)&command[strpos])], "/cc65-test.prg");
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -1410,6 +855,44 @@ void autostart_works(CuTest *tc) {
     CuAssertIntEquals(tc, 0x62, response[RESPONSE_TYPE]);
 }
 
+void autoload_works(CuTest *tc) {
+    int length;
+    int strpos = COMMAND_HEADER_LENGTH + 4;
+
+    unsigned char command[] =
+        "\x02\x02"
+        "\xff\xff\xff\xff"
+        "\x45\x09\x90\xae"
+
+        "\xdd"
+
+        "\x00"
+        "\x00\x00"
+        "\xd2"
+        "                                                                      "
+        "                                                                      "
+        "                                                                      "
+    ;
+
+    getcwd((char *)&command[strpos], 0xd2);
+
+    strcpy((char *)&command[strpos + strlen((char *)&command[strpos])], "/cc65-test.prg");
+
+    connection_setup(tc);
+
+    send_command(command);
+
+    length = wait_for_response_id(tc, command);
+
+    // autoload
+    CuAssertIntEquals(tc, 0xdd, response[RESPONSE_TYPE]);
+
+    // wait for resumed
+    length = wait_for_response_type(tc, 0x63);
+
+    CuAssertIntEquals(tc, 0x63, response[RESPONSE_TYPE]);
+}
+
 void banks_available_works(CuTest *tc) {
     int length, i, count;
     int assert_count = 0;
@@ -1423,7 +906,7 @@ void banks_available_works(CuTest *tc) {
         0x82,
     };
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -1473,7 +956,7 @@ void registers_available_works(CuTest *tc) {
         0x00,
     };
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -1535,7 +1018,7 @@ void resource_set_works(CuTest *tc) {
         "\x02\x00"
     ;
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -1558,7 +1041,7 @@ void resource_get_works(CuTest *tc) {
         "VICIIBorderMode"
     ;
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -1588,7 +1071,7 @@ void palette_get_works(CuTest *tc) {
         0x01   /* VIC-II */
     };
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -1642,7 +1125,7 @@ void joyport_set_works(CuTest *tc) {
         0xff, 0x00,
     };
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -1664,7 +1147,7 @@ void userport_set_works(CuTest *tc) {
         0xff, 0x00,
     };
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -1688,7 +1171,7 @@ void display_get_works(CuTest *tc) {
         0x00,
     };
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -1726,7 +1209,7 @@ void vice_info_works(CuTest *tc) {
         0x85,
     };
 
-    setup(tc);
+    connection_setup(tc);
 
     send_command(command);
 
@@ -1750,7 +1233,7 @@ void vice_info_works(CuTest *tc) {
     CuAssertTrue(tc, little_endian_to_uint32(&response[HEADER_LENGTH + 6]) > 38911);
 }
 
-CuSuite* get_suite(void)
+static CuSuite* get_suite(void)
 {
     CuSuite* suite = CuSuiteNew();
 
@@ -1771,6 +1254,7 @@ CuSuite* get_suite(void)
     SUITE_ADD_TEST(suite, registers_get_drive_works);
 
     SUITE_ADD_TEST(suite, mem_set_works);
+    //SUITE_ADD_TEST(suite, mem_set_sidefx);
     SUITE_ADD_TEST(suite, mem_get_works);
 
     SUITE_ADD_TEST(suite, dump_works);
@@ -1798,11 +1282,12 @@ CuSuite* get_suite(void)
     SUITE_ADD_TEST(suite, reset_works);
 
     SUITE_ADD_TEST(suite, autostart_works);
+    SUITE_ADD_TEST(suite, autoload_works);
 
     return suite;
 }
 
-int run_tests(CuSuite* inner)
+static int run_tests(CuSuite* inner)
 {
 	CuString *output = CuStringNew();
 	CuSuite* suite = CuSuiteNew();
@@ -1817,7 +1302,7 @@ int run_tests(CuSuite* inner)
     return suite->failCount;
 }
 
-void mon_quit() {
+static void mon_quit() {
     int length;
 
     unsigned char command[] = {
@@ -1838,6 +1323,7 @@ int main(int argc, char** argv)
     char* single_test_name = NULL;
     int ret;
     int i;
+    int port;
     CuSuite* suite = get_suite();
 
     if (argc < 2 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-help") == 0) {
@@ -1860,6 +1346,8 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
+    connection_set_port(port);
+
     if (single_test_name) {
         for (i = 0 ; i < suite->count ; i++) {
             CuTest* test = suite->list[i];
@@ -1880,7 +1368,7 @@ int main(int argc, char** argv)
         mon_quit();
     }
 
-    close(sock);
+    connection_close();
 
     return ret;
 }
