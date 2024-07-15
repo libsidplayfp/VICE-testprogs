@@ -1,4 +1,5 @@
-
+;FIXME: i couldn't make the test report "pass" after a while, like the CIA test
+;       does - instead it will run forever/time out when it works correctly
         * = $0801
         !word eol,0
         !byte $9e, $32,$30,$36,$31, 0 ; sys 2061
