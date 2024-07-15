@@ -61,13 +61,6 @@ next
          sta sr
 
          jsr waitborder
-;waitborder
-;         lda $d011
-;         bmi isborder
-;         lda $d012
-;         cmp #30
-;         bcs waitborder
-;isborder
 
          ldx sb
          txs

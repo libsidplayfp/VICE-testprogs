@@ -73,13 +73,6 @@ noneg    txa
 .endif
 
         jsr waitborder
-;waitborder
-;         lda $d011
-;         bmi isborder
-;         lda $d012
-;         cmp #30
-;         bcs waitborder
-;isborder
 
          ldx sb
          txs
@@ -90,7 +83,7 @@ noneg    txa
          ldy yb
          plp
 
-cmd      .byte $bb
+cmd      .byte $bb          ; LAS abs, y
          .word da
 
          php

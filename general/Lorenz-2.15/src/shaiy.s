@@ -67,13 +67,6 @@ next
          sta sr
 
          jsr waitborder
-;waitborder
-;         lda $d011
-;         bmi isborder
-;         lda $d012
-;         cmp #30
-;         bcs waitborder
-;isborder
 
          ldx sb
          txs
@@ -84,7 +77,7 @@ next
          ldy yb
          plp
 
-cmd      .byte $93
+cmd      .byte $93      ; SHA (zp),y
          .byte 174
 
          php

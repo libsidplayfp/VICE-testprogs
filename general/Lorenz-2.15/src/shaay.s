@@ -69,15 +69,6 @@ next
         sta sr
 
         jsr waitborder
-;waitborder
-;        lda $d011
-;        bmi isborder
-;        lda $d012
-;        cmp #30
-;        bcs waitborder
-;isborder
-
-;        inc $d020
 
         ldx sb ; stackpointer
         txs
@@ -102,8 +93,6 @@ cmd      .byte $9f      ; sha abs,y
         stx sa ; stackpointer
         lda mem
         sta da
-
-;        dec $d020
 
         jsr check
 

@@ -3,6 +3,8 @@
 ; original file was: aneb.asm
 ;-------------------------------------------------------------------------------
 
+TESTFAILURE = 0
+
             .include "common.asm"
             .include "printhb.asm"
             .include "showregs.asm"
@@ -13,16 +15,18 @@ thisname   .null "aneb"      ; name of this test
 nextname   .null "lxab"      ; name of next test, "-" means no more tests
 ;------------------------------------------------------------------------------ 
 main:
+        jsr waitborder
+
         lda #0
         ldx #$ff
         .byte $8b, $ff
         sta magicvalue+1
 
-         lda #32
-         jsr cbmk_bsout
-         lda magicvalue+1
-         jsr hexb
-        
+        jsr print
+        .text 13, "magic value: ", 0
+        lda magicvalue+1
+        jsr hexb
+
          lda #%00011011
          sta db
          lda #%11000110
@@ -78,14 +82,6 @@ nominus
          sta sr
 
          jsr waitborder
-;waitborder
-;         lda $d011
-;         bmi border
-;         lda $d012
-;         cmp #40
-;         bcs waitborder
-;border
-;        inc $d020
 
          ldx sb
          txs
@@ -96,7 +92,7 @@ nominus
          ldy yb
          plp
 
-cmd      .byte $8b
+cmd      .byte $8b              ; ANE #imm
          .byte 0
 
          php
@@ -109,8 +105,6 @@ cmd      .byte $8b
          tsx
          stx sa
          jsr check
-
-;        dec $d020
 
          inc ab
          clc
@@ -155,6 +149,9 @@ sr       .byte 0
 
 check
          .block
+.ifeq (TESTFAILURE - 1)
+        jmp error
+.endif
          lda da
          cmp dr
          bne error
@@ -196,8 +193,24 @@ error    jsr print
          ldx #<dr
          ldy #>dr
          jsr showregs
-         lda #13
-         jsr $ffd2
+;         lda #13
+;         jsr cbmk_bsout
+
+        ; show magic again
+        jsr waitborder
+
+        lda #0
+        ldx #$ff
+        .byte $8b, $ff
+        sta magicvalue+1
+
+        jsr print
+        .text 13, "magic value: ", 0
+        lda magicvalue+1
+        jsr hexb
+
+        lda #13
+        jsr cbmk_bsout
 
          #SET_EXIT_CODE_FAILURE
 
@@ -211,24 +224,24 @@ showregs stx 172
          lda (172),y
          jsr hexb
          lda #32
-         jsr $ffd2
+         jsr cbmk_bsout
          lda #32
-         jsr $ffd2
+         jsr cbmk_bsout
          iny
          lda (172),y
          jsr hexb
          lda #32
-         jsr $ffd2
+         jsr cbmk_bsout
          iny
          lda (172),y
          jsr hexb
          lda #32
-         jsr $ffd2
+         jsr cbmk_bsout
          iny
          lda (172),y
          jsr hexb
          lda #32
-         jsr $ffd2
+         jsr cbmk_bsout
          iny
          lda (172),y
          ldx #"n"
@@ -237,7 +250,7 @@ showregs stx 172
          ldx #"N"
 ok7      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          ldx #"v"
          asl a
@@ -245,7 +258,7 @@ ok7      pha
          ldx #"V"
 ok6      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          ldx #"0"
          asl a
@@ -253,7 +266,7 @@ ok6      pha
          ldx #"1"
 ok5      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          ldx #"b"
          asl a
@@ -261,7 +274,7 @@ ok5      pha
          ldx #"B"
 ok4      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          ldx #"d"
          asl a
@@ -269,7 +282,7 @@ ok4      pha
          ldx #"D"
 ok3      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          ldx #"i"
          asl a
@@ -277,7 +290,7 @@ ok3      pha
          ldx #"I"
 ok2      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          ldx #"z"
          asl a
@@ -285,7 +298,7 @@ ok2      pha
          ldx #"Z"
 ok1      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          ldx #"c"
          asl a
@@ -293,10 +306,10 @@ ok1      pha
          ldx #"C"
 ok0      pha
          txa
-         jsr $ffd2
+         jsr cbmk_bsout
          pla
          lda #32
-         jsr $ffd2
+         jsr cbmk_bsout
          iny
          lda (172),y
          .bend
@@ -312,4 +325,4 @@ hexn     ora #$30
          cmp #$3a
          bcc hexn0
          adc #6
-hexn0    jmp $ffd2
+hexn0    jmp cbmk_bsout
