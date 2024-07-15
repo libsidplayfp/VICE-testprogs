@@ -301,8 +301,13 @@ function xscpu64_run_exitcode
 {
     if [ $verbose == "1" ]; then
         echo $XSCPU64 $XSCPU64OPTS $XSCPU64OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4"
+        $XSCPU64 $XSCPU64OPTS $XSCPU64OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 2> /dev/null | grep "cycles elapsed" | tr '\n' ' '
+        exitcode=${PIPESTATUS[0]}
+    else
+        $XSCPU64 $XSCPU64OPTS $XSCPU64OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
+        exitcode=$?
     fi
-    $XSCPU64 $XSCPU64OPTS $XSCPU64OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
-    exitcode=$?
-#    echo "exited with: " $exitcode
+    if [ $verbose == "1" ]; then
+        echo $XSCPU64 "exited with: " $exitcode
+    fi
 }

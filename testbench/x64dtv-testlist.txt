@@ -25,6 +25,11 @@
 #../DTV/overscan/,overscan.prg,screenshot
 ../DTV/steal/,steal.prg,interactive,0
 ################################################################################
+# CPU
+################################################################################
+../interrupts/irqnoack/,ackcia.prg,exitcode,12000000
+../interrupts/irqnoack/,ackraster.prg,exitcode,12000000,expect:timeout
+################################################################################
 # Lorenz Suite
 #
 # ../general/ runtime: 8 minutes and 21 seconds (x64dtv)

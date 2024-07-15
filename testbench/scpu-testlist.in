@@ -16,6 +16,9 @@
 # CPU
 ################################################################################
 ../CPU/jeek816/,suite-a.prg,exitcode,10800000
+# this needs to be tested on real SCPU
+#../interrupts/irqnoack/,ackcia.prg,exitcode,7000000
+#../interrupts/irqnoack/,ackraster.prg,exitcode,7000000,expect:timeout
 ################################################################################
 ../SCPU/scputest/,scputest.prg,interactive,0
 ../SCPU/scputest/,scputest-0.prg,exitcode,30000000
