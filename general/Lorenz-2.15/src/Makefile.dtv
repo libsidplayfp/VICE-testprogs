@@ -304,36 +304,40 @@ all: $(ALLPROGS) $(ALLDISKS)
 cpuport-dtv.prg: cpuport.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D ISC128C64=0 -i cpuport.s -o cpuport-dtv.prg
 
-trap1-dtv.prg: trap1-15.s $(COMMONSRC)
+trap1-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=1 -i trap1-15.s -o trap1-dtv.prg
-trap2-dtv.prg: trap1-15.s $(COMMONSRC)
+trap2-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=2 -i trap1-15.s -o trap2-dtv.prg
-trap3-dtv.prg: trap1-15.s $(COMMONSRC)
+trap3-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=3 -i trap1-15.s -o trap3-dtv.prg
-trap4-dtv.prg: trap1-15.s $(COMMONSRC)
+trap4-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=4 -i trap1-15.s -o trap4-dtv.prg
-trap5-dtv.prg: trap1-15.s $(COMMONSRC)
+trap5-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=5 -i trap1-15.s -o trap5-dtv.prg
-trap6-dtv.prg: trap1-15.s $(COMMONSRC)
+trap6-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=6 -i trap1-15.s -o trap6-dtv.prg
-trap7-dtv.prg: trap1-15.s $(COMMONSRC)
+trap7-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=7 -i trap1-15.s -o trap7-dtv.prg
-trap8-dtv.prg: trap1-15.s $(COMMONSRC)
+trap8-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=8 -i trap1-15.s -o trap8-dtv.prg
-trap9-dtv.prg: trap1-15.s $(COMMONSRC)
+trap9-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=9 -i trap1-15.s -o trap9-dtv.prg
-trap10-dtv.prg: trap1-15.s $(COMMONSRC)
+trap10-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=10 -i trap1-15.s -o trap10-dtv.prg
-trap11-dtv.prg: trap1-15.s $(COMMONSRC)
+trap11-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=11 -i trap1-15.s -o trap11-dtv.prg
-trap12-dtv.prg: trap1-15.s $(COMMONSRC)
+trap12-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=12 -i trap1-15.s -o trap12-dtv.prg
-trap13-dtv.prg: trap1-15.s $(COMMONSRC)
+trap13-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=13 -i trap1-15.s -o trap13-dtv.prg
-trap14-dtv.prg: trap1-15.s $(COMMONSRC)
+trap14-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=14 -i trap1-15.s -o trap14-dtv.prg
-trap15-dtv.prg: trap1-15.s $(COMMONSRC)
+trap15-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=15 -i trap1-15.s -o trap15-dtv.prg
+trap16-dtv.prg: trap16.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TRAP=16 -i trap16.s -o trap16-dtv.prg
+trap17-dtv.prg: trap17.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TRAP=17 -i trap17.s -o trap17-dtv.prg
 
 irq-dtv.prg: irq.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i irq.s -o irq-dtv.prg

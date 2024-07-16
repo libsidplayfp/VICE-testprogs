@@ -442,36 +442,40 @@ cpuport.prg: cpuport.s $(COMMONSRC)
 cpuport128.prg: cpuport.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D ISC128C64=1 -i cpuport.s -o cpuport128.prg
 
-trap1.prg: trap1-15.s $(COMMONSRC)
+trap1.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=1 -i trap1-15.s -o trap1.prg
-trap2.prg: trap1-15.s $(COMMONSRC)
+trap2.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=2 -i trap1-15.s -o trap2.prg
-trap3.prg: trap1-15.s $(COMMONSRC)
+trap3.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=3 -i trap1-15.s -o trap3.prg
-trap4.prg: trap1-15.s $(COMMONSRC)
+trap4.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=4 -i trap1-15.s -o trap4.prg
-trap5.prg: trap1-15.s $(COMMONSRC)
+trap5.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=5 -i trap1-15.s -o trap5.prg
-trap6.prg: trap1-15.s $(COMMONSRC)
+trap6.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=6 -i trap1-15.s -o trap6.prg
-trap7.prg: trap1-15.s $(COMMONSRC)
+trap7.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=7 -i trap1-15.s -o trap7.prg
-trap8.prg: trap1-15.s $(COMMONSRC)
+trap8.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=8 -i trap1-15.s -o trap8.prg
-trap9.prg: trap1-15.s $(COMMONSRC)
+trap9.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=9 -i trap1-15.s -o trap9.prg
-trap10.prg: trap1-15.s $(COMMONSRC)
+trap10.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=10 -i trap1-15.s -o trap10.prg
-trap11.prg: trap1-15.s $(COMMONSRC)
+trap11.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=11 -i trap1-15.s -o trap11.prg
-trap12.prg: trap1-15.s $(COMMONSRC)
+trap12.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=12 -i trap1-15.s -o trap12.prg
-trap13.prg: trap1-15.s $(COMMONSRC)
+trap13.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=13 -i trap1-15.s -o trap13.prg
-trap14.prg: trap1-15.s $(COMMONSRC)
+trap14.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=14 -i trap1-15.s -o trap14.prg
-trap15.prg: trap1-15.s $(COMMONSRC)
+trap15.prg: trap1-15.s $(COMMONSRC) trap-table.s
 	64tass $(ASFLAGS) -D TRAP=15 -i trap1-15.s -o trap15.prg
+trap16.prg: trap16.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TRAP=16 -i trap16.s -o trap16.prg
+trap17.prg: trap17.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TRAP=17 -i trap17.s -o trap17.prg
 
 irq.prg: irq.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i irq.s -o irq.prg
