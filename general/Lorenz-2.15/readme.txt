@@ -107,14 +107,29 @@ flag combinations.
 Two operand commands: 256 data combinations 00/00, 00/11, ... FF/EE, FF/FF 
 multiplied by 256 flag combinations.
 
-ANEb, LASay, SHAay, SHAiy, SHXay, SHYax and SHSay are executed only in the y 
-border. These commands cause unpredictable results when a DMA comes between the 
-command byte and the operand.
+///////////////////////////////////////////////////////////////////////////////
+Notes on tests that perform unstable undocumented opcodes:
+
+ANEb, LXAb, LASay, SHAay, SHAiy, SHXay, SHYax and SHSay are executed only in the
+vertical border. These commands cause unpredictable results when a DMA comes
+between the command byte and the operand.
 
 SHAay, SHAiy, SHXay, SHYax and SHSay are tested on a data address xxFF only. 
 When the hibyte of the indexed address needs adjustment, these commands will 
 write to different locations, depending on the data written.
 
+ANEb and LXAb output the unstable "magic value" before the test (this value will
+be used during testing) and on failure determines it again and prints the new
+value. However, due to the unstable nature of this constant, these tests may not
+pass on some CPUs - even when the printed values before and after the test
+match. Wait a few minutes, letting the computer "warm up", before you run the
+test again eventually (the "magic value" is temperature dependent).
+
+NOTE: if any of the above tests fail - in particular on real CPUs - you might
+want to check the additional tests from the VICE test repository, located in:
+
+testprogs/CPU/ane, testprogs/CPU/lax, testprogs/CPU/sha, testprogs/CPU/shs,
+testprogs/CPU/shxy
 
 ///////////////////////////////////////////////////////////////////////////////
 Programs TRAP* - 6510 IO traps, page boundaries and wrap arounds
@@ -170,6 +185,8 @@ Relative jumps are tested in 4 combinations: offset 01 no jump, offset 01 jump,
 offset 80 no jump, offset 80 jump. For the offset 80, a RTS is written to the 
 location at code - 7E.
 
+NOTE: If the CPU port related tests fail, also check the additional tests in
+the VICE test repo, located in testprogs/CPU/cpuport/
 
 ///////////////////////////////////////////////////////////////////////////////
 Program BRANCHWRAP - Forward branches from FFxx to 00xx
