@@ -3,6 +3,8 @@
 ; original file was: trap1-15.asm
 ;-------------------------------------------------------------------------------
 
+TESTFAILURE = 0
+
             .include "common.asm"
             .include "printhb.asm"
             .include "waitborder.asm"
@@ -161,6 +163,7 @@ main:
            ldx #$ff
            ane #$ff
            sta anemagic
+
            ; calc reference test result
            lda #$c6 ; value in A
 anemagic = * + 1
@@ -179,6 +182,11 @@ anemagic = * + 1
            ora #$02
            sta aneresultstatus
 sk1:
+            jsr print
+            .text 13, "ane magic value: ", 0
+            lda anemagic
+            jsr printhb
+
            jsr waitborder
            ; read the LAX "magic constant"
            lda #0
@@ -202,6 +210,11 @@ laxmagic = * + 1
            ora #$02
            sta laxresultstatus
 sk2:
+            jsr print
+            .text 13, "lxa magic value: ", 0
+            lda laxmagic
+            jsr printhb
+
 
            lda #<code
            sta pcode+0
@@ -235,6 +248,10 @@ nextcommand
            jsr waitborder
 
 jump       jsr $1111
+
+.ifeq (TESTFAILURE - 1)
+            jmp error
+.endif
 
            ldy #5
            lda da
@@ -339,8 +356,34 @@ error
            iny
            lda (ptable),y
            jsr printhb
-           lda #13
-           jsr $ffd2
+;           lda #13
+;           jsr $ffd2
+
+            ; show magic again
+            jsr waitborder
+
+            lda #0
+            ldx #$ff
+            .byte $8b, $ff
+            sta anemagic
+
+            ; read the LAX "magic constant"
+            lda #0
+            .byte $ab, $ff
+            sta laxmagic
+
+            jsr print
+            .text 13, "ane magic value: ", 0
+            lda anemagic
+            jsr printhb
+
+            jsr print
+            .text 13, "lax magic value: ", 0
+            lda laxmagic
+            jsr printhb
+
+            lda #13
+            jsr cbmk_bsout
 
             #SET_EXIT_CODE_FAILURE
 

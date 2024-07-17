@@ -1,5 +1,7 @@
 ; this file is part of the C64 Emulator Test Suite. public domain, no copyright
 
+; TODO: this function is called "hexb" in some sourcefiles
+
             ; print hex byte in Akku
 printhb
             .block

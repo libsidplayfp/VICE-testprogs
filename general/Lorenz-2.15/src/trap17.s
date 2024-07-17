@@ -3,6 +3,8 @@
 ; original file was: trap17.asm
 ;-------------------------------------------------------------------------------
 
+TESTFAILURE = 0
+
             .include "common.asm"
             .include "printhb.asm"
             .include "waitborder.asm"
@@ -39,6 +41,11 @@ anemagic = * + 1
            ora #$02
            sta aneresultstatus
 sk1
+            jsr print
+            .text 13, "ane magic value: ", 0
+            lda anemagic
+            jsr printhb
+
            jsr waitborder
            ; read the LAX "magic constant"
            lda #0
@@ -62,6 +69,10 @@ laxmagic = * + 1
            ora #$02
            sta laxresultstatus
 sk2:
+            jsr print
+            .text 13, "lxa magic value: ", 0
+            lda laxmagic
+            jsr printhb
 
            jmp main2
 
@@ -122,14 +133,7 @@ main2
 nextcommand
 
            jsr waitborder
-;waitborder
-;           lda $d011
-;           bpl waitborder
-;           bmi isborder
-;           lda $d012
-;           cmp #20
-;           bcs waitborder
-;isborder
+
            jsr ram
 
            lda #$60
@@ -149,6 +153,10 @@ nextcommand
            sta jump+2
 
 jump       jsr $1111
+
+.ifeq (TESTFAILURE - 1)
+            jmp error
+.endif
 
            jsr rom
 
@@ -258,8 +266,34 @@ error
            iny
            lda (ptable),y
            jsr printhb
-           lda #13
-           jsr $ffd2
+;           lda #13
+;           jsr $ffd2
+
+            ; show magic again
+            jsr waitborder
+
+            lda #0
+            ldx #$ff
+            .byte $8b, $ff
+            sta anemagic
+
+            ; read the LAX "magic constant"
+            lda #0
+            .byte $ab, $ff
+            sta laxmagic
+
+            jsr print
+            .text 13, "ane magic value: ", 0
+            lda anemagic
+            jsr printhb
+
+            jsr print
+            .text 13, "lax magic value: ", 0
+            lda laxmagic
+            jsr printhb
+
+            lda #13
+            jsr cbmk_bsout
 
             #SET_EXIT_CODE_FAILURE
 
