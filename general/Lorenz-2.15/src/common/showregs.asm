@@ -1,7 +1,7 @@
 ; this file is part of the C64 Emulator Test Suite. public domain, no copyright
 
         ; x/y - pointer to register dump
-showregs 
+showregs
         .block
          stx 172
          sty 173
@@ -99,4 +99,4 @@ ok0      pha
          lda (172),y
         jmp printhb
          .bend
- 
+

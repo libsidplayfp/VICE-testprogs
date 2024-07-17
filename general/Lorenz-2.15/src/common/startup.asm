@@ -72,7 +72,7 @@ printnext
 ;            lda #0
 ;            sta $0a    ; load flag
 ;            sta $b9    ; secondary address
-; 
+;
 ;            stx $b7  ; namelen
 ;            lda #<nextname
 ;            sta $bb  ; namelo

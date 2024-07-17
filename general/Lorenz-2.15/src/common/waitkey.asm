@@ -20,7 +20,7 @@ stop
             .byte 13,0
             jmp loadnext
             ;jmp $a474
-            
+
 ;load
 ;            jsr print
 ;            .byte 13

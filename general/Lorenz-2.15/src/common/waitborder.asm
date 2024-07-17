@@ -14,7 +14,7 @@ wait
 ok
         inc $d020
             rts
-           .bend 
+           .bend
 .endif
 
 .ifeq (TARGET - TARGETDTV)
@@ -30,7 +30,7 @@ wait
 ok
         inc $d020
             rts
-           .bend 
+           .bend
 .endif
 
 .ifeq (TARGET - TARGETPLUS4)
@@ -53,5 +53,5 @@ wait0
 ok
         inc $ff19
             rts
-           .bend 
+           .bend
 .endif

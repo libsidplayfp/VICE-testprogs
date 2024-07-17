@@ -3,7 +3,7 @@
 ;print text which immediately follows
 ;the JSR and return to address after 0
 ; return addr on stack == ptr to string
-print      
+print
             .block
             pla
             sta print0+1
@@ -16,7 +16,7 @@ print0      lda $dead,x
             jsr cbmk_bsout
             inx
             bne print0
-print1     
+print1
             sec
             txa
             adc print0+1
