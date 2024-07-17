@@ -13,7 +13,7 @@
 thisname:   .null "trap17"      ; name of this test
 nextname:   .null "branchwrap"  ; name of next test, "-" means no more tests
 ;-------------------------------------------------------------------------------
-            
+
 main:
            jsr waitborder
            ; read ANE "magic constant"
@@ -61,8 +61,8 @@ laxmagic = * + 1
            lda laxresultstatus
            ora #$02
            sta laxresultstatus
-sk2:          
-           
+sk2:
+
            jmp main2
 
 ;-------------------------------------------------------------------------------
@@ -107,7 +107,7 @@ rom
 
 
 main2
-           
+
            ; pcode = $ffff
            lda #$ff
            sta pcode+0
@@ -131,12 +131,12 @@ nextcommand
 ;           bcs waitborder
 ;isborder
            jsr ram
-           
+
            lda #$60
            sta $ffff
            sta 2
            sta 3
-           
+
            ldy #0
            lda bcmd
            sta (pcode),y    ; $ffff
@@ -181,7 +181,7 @@ nostop
            lda ptable+1
            adc #0
            sta ptable+1
-           
+
            inc bcmd
            bne jmpnextcommand
            jmp ok

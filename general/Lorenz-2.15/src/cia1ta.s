@@ -7,8 +7,8 @@
             .include "printhb.asm"
 ;            .include "waitborder.asm"
             .include "waitkey.asm"
-           
-;-------------------------------------------------------------------------------           
+
+;-------------------------------------------------------------------------------
 thisname:
 .ifeq NEWCIA - 1
            .null "cia1ta (new cia)"
@@ -17,8 +17,8 @@ thisname:
 .endif
 
 nextname .null "cia1tb"
-;-------------------------------------------------------------------------------           
-         
+;-------------------------------------------------------------------------------
+
 waitborder
            .block
 ;           lda $d011
@@ -1046,7 +1046,7 @@ error
 
            jsr print
            .byte 13
-           .text "init   " 
+           .text "init   "
            .byte 0
            lda i4
            jsr printhb

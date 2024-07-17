@@ -8,10 +8,10 @@
             .include "showregs.asm"
             .include "waitborder.asm"
 
-;------------------------------------------------------------------------------           
+;------------------------------------------------------------------------------
 thisname   .null "shaay"      ; name of this test
 nextname   .null "shaiy"      ; name of next test, "-" means no more tests
-;------------------------------------------------------------------------------ 
+;------------------------------------------------------------------------------
 main:
          lda #%00011011
          sta db
@@ -125,7 +125,7 @@ nodec
         inc db
         inc pb
         beq nonext
-jmpnext  
+jmpnext
         jmp next
 nonext
 

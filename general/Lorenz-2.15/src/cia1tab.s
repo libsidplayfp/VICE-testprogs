@@ -154,9 +154,9 @@ diff
          .text "   "
          .byte 0
          jsr print12
-         
-        #SET_EXIT_CODE_FAILURE 
-         
+
+        #SET_EXIT_CODE_FAILURE
+
          jsr waitkey
          jmp outend
 

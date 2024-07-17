@@ -8,19 +8,19 @@
 
             .include "common.asm"
             .include "printhb.asm"
-           
-;------------------------------------------------------------------------------           
+
+;------------------------------------------------------------------------------
 thisname   .null "cpuport"      ; name of this test
 nextname   .null "cputiming"    ; name of next test, "-" means no more tests
-;------------------------------------------------------------------------------           
-           
+;------------------------------------------------------------------------------
+
 config      .byte 0
 abackup     .byte 0,0    ; copy of written values for error checking
 acheck      .byte 0,0    ; values read back
 laststate   .byte 0      ; track DATA bit 7,6,3 state
 right       .byte 0
 
-;-------------------------------------------------------------------------------           
+;-------------------------------------------------------------------------------
 
             ; enable BASIC+Kernal+IRQ
 rom:
@@ -32,7 +32,7 @@ rom:
             rts
 
 
-;-------------------------------------------------------------------------------           
+;-------------------------------------------------------------------------------
 main:
             lda #0
             sta config
@@ -90,7 +90,7 @@ delay
             bne pull
 
             ;check values
-            
+
             lda 0
             sta acheck+0
             lda 1
@@ -137,7 +137,7 @@ no5low
 ;            txa
 ;            ora #$40
 ;            tax
-;no6low         
+;no6low
             ; since we dont know the state of the key, ignore bit 6
             lda acheck+1
             ora #$40
@@ -157,7 +157,7 @@ noerror
 done
             jsr rom
             jmp ok
-            
+
             ;--------------------------------
 
 error
@@ -200,7 +200,7 @@ oldx
             ldx #$11
             dex
             bne pull1
-            
+
             jsr print
             .byte 13
             .text "after  "
@@ -212,30 +212,30 @@ oldx
             jsr $ffd2
             pla
             jsr printhb
-            
+
             jsr print
             .byte 13
             .text "right  "
             .byte 0
-            
+
             lda abackup+0
             jsr printhb
             lda #32
             jsr $ffd2
-            
+
             lda right
             jsr printhb
             lda #13
-            jsr $ffd2  
+            jsr $ffd2
 
             #SET_EXIT_CODE_FAILURE
 
-wait     
+wait
             jsr $ffe4
             beq wait
             jmp noerror
 
-         
+
             ; success, load the next test
 
 ok
@@ -245,7 +245,7 @@ load
 
             rts ; SUCCESS
 
-;-------------------------------------------------------------------------------           
-            
+;-------------------------------------------------------------------------------
+
 
 

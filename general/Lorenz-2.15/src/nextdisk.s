@@ -5,7 +5,7 @@
 
             .include "common.asm"
 
-;------------------------------------------------------------------------------           
+;------------------------------------------------------------------------------
 thisname   .null "nextdisk"     ; name of this test
 nextname   ; name of next test, "-" means no more tests
 .ifeq NEXT - 1
@@ -14,7 +14,7 @@ nextname   ; name of next test, "-" means no more tests
 .ifeq NEXT - 2
         .null "irq"
 .endif
-;-------------------------------------------------------------------------------           
+;-------------------------------------------------------------------------------
 
 main:
             jsr print

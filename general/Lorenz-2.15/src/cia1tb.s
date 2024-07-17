@@ -7,8 +7,8 @@
             .include "printhb.asm"
             .include "waitborder.asm"
             .include "waitkey.asm"
-           
-;-------------------------------------------------------------------------------           
+
+;-------------------------------------------------------------------------------
 thisname:
 .ifeq NEWCIA - 1
            .null "cia1tb (new cia)"
@@ -17,7 +17,7 @@ thisname:
 .endif
 
 nextname:   .null "cia2ta"
-;-------------------------------------------------------------------------------           
+;-------------------------------------------------------------------------------
 
 
 report
@@ -979,7 +979,7 @@ error
 
            jsr print
            .byte 13
-           .text "init   " 
+           .text "init   "
            .byte 0
            lda i4
            jsr printhb
@@ -1058,7 +1058,7 @@ skip
             bne lp
             .bend
 
-            
+
             rts ; SUCCESS
 
 testoktab

@@ -6,10 +6,10 @@
 
             .include "common.asm"
 
-;------------------------------------------------------------------------------           
+;------------------------------------------------------------------------------
 thisname    .null "branchwrap" ; name of this test
 nextname    .null "mmufetch"   ; name of next test, "-" means no more tests
-;-------------------------------------------------------------------------------           
+;-------------------------------------------------------------------------------
 
 irqdisable
         ; disable timer irq
@@ -63,7 +63,7 @@ main
 lp1
         ; flag cleared, branch taken
         ;
-        ; NV-BDIZC 
+        ; NV-BDIZC
         ; 00110000
         lda #$30
         pha
@@ -76,10 +76,10 @@ lp1
         ; $0004 rts
         bne ok1
         jmp failed
-ok1:        
+ok1:
         ; flag set, branch not taken
         ;
-        ; NV-BDIZC 
+        ; NV-BDIZC
         ; 11110011
         lda #$f3
         pha
@@ -92,8 +92,8 @@ ok1:
         ; $0004 rts
         beq ok2
         jmp failed
-ok2:        
-        
+ok2:
+
         clc
         lda $ffbe
         adc #$40
@@ -102,11 +102,11 @@ ok2:
 
         lda #$30  ; bmi
         sta $ffbe
-        
+
 lp2
         ; flag cleared, branch not taken
         ;
-        ; NV-BDIZC 
+        ; NV-BDIZC
         ; 00110000
         lda #$30
         pha
@@ -115,28 +115,28 @@ lp2
         ; $ffbe bpl, bvc, bcc, bne $0002
         ; $ffc0 lda #$00   <-
         ; $ffc2 rts
-        ; $0002 lda #$01    
+        ; $0002 lda #$01
         ; $0004 rts
         beq ok3
         jmp failed
-ok3:        
+ok3:
         ; flag set, branch taken
         ;
-        ; NV-BDIZC 
+        ; NV-BDIZC
         ; 11110011
         lda #$f3
         pha
         plp
         jsr $ffbe
         ; $ffbe bmi, bvs, bcs, beq $0002
-        ; $ffc0 lda #$00    
+        ; $ffc0 lda #$00
         ; $ffc2 rts
         ; $0002 lda #$01    <-
         ; $0004 rts
         bne ok4
         jmp failed
-ok4:        
-        
+ok4:
+
         clc
         lda $ffbe
         adc #$40

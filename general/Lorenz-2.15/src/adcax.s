@@ -6,11 +6,11 @@
             .include "common.asm"
             .include "printhb.asm"
             .include "showregs.asm"
-           
-;------------------------------------------------------------------------------           
+
+;------------------------------------------------------------------------------
 thisname   .null "adcax"      ; name of this test
 nextname   .null "adcay"      ; name of next test, "-" means no more tests
-;------------------------------------------------------------------------------           
+;------------------------------------------------------------------------------
 main:
 
          lda #%00011011
@@ -290,4 +290,4 @@ error    jsr print
 wait     jsr $ffe4
          beq wait
          rts
-            
+

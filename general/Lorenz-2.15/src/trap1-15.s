@@ -8,8 +8,8 @@
             .include "waitborder.asm"
             ;.include "waitkey.asm"
             ;.include "showregs.asm"
-           
-;------------------------------------------------------------------------------           
+
+;------------------------------------------------------------------------------
 thisname   ; name of this test
            .text "trap"
            .ifmi TRAP - 10
@@ -27,9 +27,9 @@ nextname   ; name of next test, "-" means no more tests
            .byte $31
            .byte $30 + (TRAP - 9)
            .endif
-;------------------------------------------------------------------------------           
-           
-           
+;------------------------------------------------------------------------------
+
+
 ; #  code  data  zd  zptr   aspect tested
 ;-----------------------------------------------------------------------------
 ; 1  2800  29C0  F7  F7/F8  basic functionality
@@ -201,7 +201,7 @@ laxmagic = * + 1
            lda laxresultstatus
            ora #$02
            sta laxresultstatus
-sk2:          
+sk2:
 
            lda #<code
            sta pcode+0

@@ -7,8 +7,8 @@
             .include "printhb.asm"
             .include "waitborder.asm"
             .include "waitkey.asm"
-           
-;-------------------------------------------------------------------------------           
+
+;-------------------------------------------------------------------------------
 thisname:
 .ifeq NEWCIA - 1
            .text "cia2ta (new cia) - (incomplete!)"
@@ -18,8 +18,8 @@ thisname:
            .byte 0
 
 nextname    .null "cia2tb"
-;-------------------------------------------------------------------------------           
-              
+;-------------------------------------------------------------------------------
+
 report
            .block
            sta savea+1
@@ -196,7 +196,7 @@ jumptab    .word x000,x001,x008,x009
            .word x010,x011,x018,x019
            .word x100,x101,x108,x109
            .word x110,x111,x118,x119
-           
+
            .word x800,x801,x808,x809
            .word x810,x811,x818,x819
            .word x900,x901,x908,x909
@@ -405,14 +405,14 @@ x108 ; test $0a
 
 .ifeq NEWCIA - 1
            ; new cia
-           
+
            lda a4
            sta r4
            lda ad
            sta rd
            lda ae
            sta re
-           
+
            jmp compare
 .else
            ; old cia
@@ -497,14 +497,14 @@ x101 ; test $09
 
 .ifeq NEWCIA - 1
            ; new cia
-           
+
            lda a4
            sta r4
            lda ad
            sta rd
            lda ae
            sta re
-           
+
            jmp compare
 .else
            ; old cia
@@ -585,7 +585,7 @@ nmisub
            bcs nonmiload
 nmiload
            lda b4
-           
+
 nonmiload
            sta r4
 nonmi
@@ -615,14 +615,14 @@ x109 ; test $0b
 
 .ifeq NEWCIA - 1
            ; new cia
-           
+
            lda a4
            sta r4
            lda ad
            sta rd
            lda ae
            sta re
-           
+
            jmp compare
 .else
            ; old cia
@@ -774,14 +774,14 @@ x111 ; test $0d
 
 .ifeq NEWCIA - 1
            ; new cia
-           
+
            lda a4
            sta r4
            lda ad
            sta rd
            lda ae
            sta re
-           
+
            jmp compare
 .else
            ; old cia
@@ -855,14 +855,14 @@ x119 ; test $0f
 
 .ifeq NEWCIA - 1
            ; new cia
-           
+
            lda a4
            sta r4
            lda ad
            sta rd
            lda ae
            sta re
-           
+
            jmp compare
 .else
            ; old cia
@@ -1032,14 +1032,14 @@ x901 ; test $19
 
 .ifeq NEWCIA - 1
            ; new cia
-           
+
            lda a4
            sta r4
            lda ad
            sta rd
            lda ae
            sta re
-           
+
            jmp compare
 .else
            ; old cia
@@ -1129,14 +1129,14 @@ x909 ; test $1b
 
 .ifeq NEWCIA - 1
            ; new cia
-           
+
            lda a4
            sta r4
            lda ad
            sta rd
            lda ae
            sta re
-           
+
            jmp compare
 .else
            ; old cia
@@ -1248,14 +1248,14 @@ x911 ; test $1d
 
 .ifeq NEWCIA - 1
            ; new cia
-           
+
            lda a4
            sta r4
            lda ad
            sta rd
            lda ae
            sta re
-           
+
            jmp compare
 .else
            ; old cia
@@ -1324,14 +1324,14 @@ x919 ; test 1f
 
 .ifeq NEWCIA - 1
            ; new cia
-           
+
            lda a4
            sta r4
            lda ad
            sta rd
            lda ae
            sta re
-           
+
            jmp compare
 .else
            ; old cia
@@ -1468,7 +1468,7 @@ error
 
            jsr print
            .byte 13
-           .text "init   " 
+           .text "init   "
            .byte 0
            lda i4
            jsr printhb

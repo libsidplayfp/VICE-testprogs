@@ -13,8 +13,8 @@
 thisname:   .null "trap16"      ; name of this test
 nextname:   .null "trap17"      ; name of next test, "-" means no more tests
 ;-------------------------------------------------------------------------------
-            
-main:           
+
+main:
            jsr waitborder
            ; read ANE "magic constant"
            lda #0
@@ -61,8 +61,8 @@ laxmagic = * + 1
            lda laxresultstatus
            ora #$02
            sta laxresultstatus
-sk2:          
-           
+sk2:
+
            jmp main2
 
 code       = $fffe

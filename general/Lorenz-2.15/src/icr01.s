@@ -28,7 +28,7 @@ main:
 
 ; FIXME: shouldnt complete vector reset be good enough?
 ; used before/after main, and in waitkey
-vector     
+vector
 ;           ldx #<$334
 ;           ldy #>$334
 ;           jmp $ff8d

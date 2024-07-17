@@ -6,10 +6,10 @@
             .include "common.asm"
             .include "printhb.asm"
 
-;------------------------------------------------------------------------------           
+;------------------------------------------------------------------------------
 thisname    .null "mmufetch" ; name of this test
 nextname    .null "mmu"      ; name of next test, "-" means no more tests
-;-------------------------------------------------------------------------------           
+;-------------------------------------------------------------------------------
 
 rom
          lda #$2f
@@ -28,10 +28,10 @@ irqhandler:
          lda $104,x
          and #$10
          bne breakhandler
-         
+
          inc $d020
          dec $d020
-         
+
          lda $dc0d
          pla
          tax
@@ -59,7 +59,7 @@ main
 
          lda #$30   ; "0"
          sta $0400
-         
+
          jsr rom
          sei
 
@@ -115,16 +115,16 @@ main
          sta $a4df
 
          inc $0400  ; 1
-         
+
 ;b000 ram-rom-ram
          ldy #1
          sty $14
          dey
          sty $15
-         
+
          lda #$36
          sta 1
-         
+
          ; save b828-b82c
          lda $b828
          pha
@@ -136,7 +136,7 @@ main
          pha
          lda $b82c
          pha
-         
+
          lda #$86   ; stx
          sta $b828
          lda #1     ; $01
@@ -146,7 +146,7 @@ main
          sta $b82b
          lda #$60   ; rts
          sta $b82c
-         
+
          lda #$36
          ldx #$37
          jsr $b828
@@ -154,7 +154,7 @@ main
          ; RAM b829 brk
          ; RAM b82a brk
          ; RAM b82b rts
-         
+
          ; restore b828-b82c
          pla
          sta $b82c
@@ -168,7 +168,7 @@ main
          sta $b828
 
          inc $0400  ; 2
-         
+
 ;e000 ram-rom-ram
          lda #$86   ; stx
          sta $ea77
@@ -179,7 +179,7 @@ main
          sta $ea7a
          lda #$60   ; rts
          sta $ea7b
-         
+
          lda #$35
          ldx #$37
          sta 1
@@ -190,23 +190,23 @@ main
          ; RAM ea7a rts
 
          inc $0400  ; 3
-         
+
 ;f000 ram-rom-ram
          ldy #1
          sty $c3
          dey
          sty $c4
-         
+
          lda #$86   ; stx
          sta $fd25
          lda #1     ; $01
-         sta $fd26  
+         sta $fd26
          lda #0     ; brk
          sta $fd27
          sta $fd28
          lda #$60   ; rts
          sta $fd29
-         
+
          lda #$35
          ldx #$37
          sta 1
@@ -217,7 +217,7 @@ main
          ; RAM fd29 rts
 
          inc $0400  ; 4
-         
+
 ;d000 ram-rom-ram
          lda $91
          pha
@@ -228,10 +228,10 @@ main
          sty $91
          dey
          sty $92
-         
+
          lda #$34
          sta 1
-         
+
          lda #$86   ; stx
          sta $d400
          lda #1     ; $01
@@ -241,7 +241,7 @@ main
          sta $d403
          lda #$60   ; rts
          sta $d404
-         
+
          lda #$34
          ldx #$33
          sta 1              ; switch to RAM
@@ -256,7 +256,7 @@ main
          sta $91
 
          inc $0400  ; 5
-         
+
 ;d000 ram-io-ram
          lda #$37
          sta 1      ; I/O at $d000
