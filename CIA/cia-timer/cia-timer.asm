@@ -309,7 +309,11 @@ out:
   .word $0450,$0518,$0464,$052c,$0608,$06d0,$061c,$06e4
 
 greet_msg:
+    if SHOWREF = 1
     dc.b 147,"CIA-TIMER R03 / REFERENCE: "
+    else
+    dc.b 147,"CIA-TIMER-ALT R03 / REFERENCE: "
+    endif
     if DUMP = 0
     dc.b "OLD"
     endif
@@ -338,8 +342,10 @@ skp1
     cmp #2
     bne skp1a
     sta bordercol
+    if SHOWREF = 1
     lda data_compare+$000,y
     sta $0428,y
+    endif
 skp1a:
 
     ldx #2
@@ -353,8 +359,10 @@ skp2
     cmp #2
     bne skp2a
     sta bordercol
+    if SHOWREF = 1
     lda data_compare+$100,y
     sta $0528,y
+    endif
 skp2a:
 
     ldx #2
@@ -368,8 +376,10 @@ skp3
     cmp #2
     bne skp3a
     sta bordercol
+    if SHOWREF = 1
     lda data_compare+$200,y
     sta $0628,y
+    endif
 skp3a:
 
     iny
@@ -387,8 +397,10 @@ skp4
     cmp #2
     bne skp4a
     sta bordercol
+    if SHOWREF = 1
     lda data_compare+$300,y
     sta $0728,y
+    endif
 skp4a:
 
     iny

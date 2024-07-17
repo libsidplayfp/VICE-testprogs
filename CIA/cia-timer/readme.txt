@@ -19,6 +19,13 @@ cia-timer
   CIA2TA     CIA2TB
    ICR=1      ICR=1
 
+NOTE: cia-timer-oldcias.prg and cia-timer-newcias.prg will always show the
+expected values/the reference data on screen, and color the non matching
+positions red.
+
+cia-timer-alt-oldcias.prg and cia-timer-alt-newcias.prg will always show the
+values that were read from the ICR.
+
 
 Results for real boxes
 ======================
