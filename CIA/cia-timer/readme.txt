@@ -3,8 +3,8 @@ cia-timer
 =========
 
 - eight tests using timers of CIA1/2 and check ICR near the timer underrun
-- for upper tests interrupt is disabled, only the IRC is read and displayed
-- lower tests enable the timer interrupt and IRC is checked even inside the 
+- for upper tests interrupt is disabled, only the ICR is read and displayed
+- lower tests enable the timer interrupt and ICR is checked even inside the
   interrupt handler
 
   CIA1TA     CIA1TB
