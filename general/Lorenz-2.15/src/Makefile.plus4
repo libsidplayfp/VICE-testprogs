@@ -259,13 +259,13 @@ DISK2PROGS = \
 	trap17-plus4.prg \
 	branchwrap-plus4.prg \
 	mmufetch-plus4.prg \
-	mmu-plus4.prg \
-	cpuport-plus4.prg \
-	cputiming-plus4.prg
+	mmu-plus4.prg
 
-DISK2NEXT = irq-plus4.prg
+DISK2NEXT = cpuport-plus4.prg
 
 DISK3PROGSOLD = \
+	  cpuport-plus4.prg \
+	  cputiming-plus4.prg \
 	  irq-plus4.prg \
 	  nmi-plus4.prg \
 	\
