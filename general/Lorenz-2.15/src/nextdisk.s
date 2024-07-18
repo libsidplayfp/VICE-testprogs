@@ -14,6 +14,9 @@ nextname   ; name of next test, "-" means no more tests
 .ifeq NEXT - 2
         .null "irq"
 .endif
+.ifeq NEXT - 3
+        .null "aneb"
+.endif
 ;-------------------------------------------------------------------------------
 
 main:

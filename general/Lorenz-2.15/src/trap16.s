@@ -12,11 +12,27 @@ TESTFAILURE = 0
             ;.include "showregs.asm"
 
 ;-------------------------------------------------------------------------------
-thisname:   .null "trap16"      ; name of this test
-nextname:   .null "trap17"      ; name of next test, "-" means no more tests
+thisname:   .text "trap16"      ; name of this test
+.ifeq (TESTANE - 1)
+            .text "ane"
+.endif
+.ifeq (TESTLXA - 1)
+            .text "lxa"
+.endif
+            .byte 0
+
+nextname:   .text "trap17"      ; name of next test, "-" means no more tests
+.ifeq (TESTANE - 1)
+            .text "ane"
+.endif
+.ifeq (TESTLXA - 1)
+            .text "lxa"
+.endif
+            .byte 0
 ;-------------------------------------------------------------------------------
 
 main:
+.ifeq (TESTANE - 1)
            jsr waitborder
            ; read ANE "magic constant"
            lda #0
@@ -45,7 +61,8 @@ sk1
             .text 13, "ane magic value: ", 0
             lda anemagic
             jsr printhb
-
+.endif
+.ifeq (TESTLXA - 1)
            jsr waitborder
            ; read the LAX "magic constant"
            lda #0
@@ -73,7 +90,7 @@ sk2:
             .text 13, "lxa magic value: ", 0
             lda laxmagic
             jsr printhb
-
+.endif
            jmp main2
 
 code       = $fffe
@@ -136,7 +153,15 @@ nextcommand
            sta 2
            sta 3
            ldy #0
-           lda bcmd
+           lda bcmd             ; the opcode we want to test
+.ifne (TESTANE - 1)
+            cmp #$8b    ; ane
+            beq skipcmd
+.endif
+.ifne (TESTLXA - 1)
+            cmp #$ab    ; lxa
+            beq skipcmd
+.endif
            sta (pcode),y
 
            ldy #3
@@ -182,6 +207,7 @@ nostop
            lda ptable+1
            adc #0
            sta ptable+1
+skipcmd
            inc bcmd
            bne jmpnextcommand
            jmp ok
@@ -261,6 +287,7 @@ error
 ;           lda #13
 ;           jsr $ffd2
 
+.ifeq (TESTANE - 1)
             ; show magic again
             jsr waitborder
 
@@ -269,20 +296,25 @@ error
             .byte $8b, $ff
             sta anemagic
 
+            jsr print
+            .text 13, "ane magic value: ", 0
+            lda anemagic
+            jsr printhb
+.endif
+
+.ifeq (TESTLXA - 1)
+            jsr waitborder
+
             ; read the LAX "magic constant"
             lda #0
             .byte $ab, $ff
             sta laxmagic
 
             jsr print
-            .text 13, "ane magic value: ", 0
-            lda anemagic
-            jsr printhb
-
-            jsr print
             .text 13, "lax magic value: ", 0
             lda laxmagic
             jsr printhb
+.endif
 
             lda #13
             jsr cbmk_bsout

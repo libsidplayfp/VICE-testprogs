@@ -20,7 +20,14 @@ thisname   ; name of this test
            .byte $31
            .byte $30 + (TRAP - 10)
            .endif
-           .byte 0
+.ifeq (TESTANE - 1)
+            .text "ane"
+.endif
+.ifeq (TESTLXA - 1)
+            .text "lxa"
+.endif
+            .byte 0
+
 nextname   ; name of next test, "-" means no more tests
            .text "trap"
            .ifmi TRAP - 9
@@ -29,6 +36,13 @@ nextname   ; name of next test, "-" means no more tests
            .byte $31
            .byte $30 + (TRAP - 9)
            .endif
+.ifeq (TESTANE - 1)
+            .text "ane"
+.endif
+.ifeq (TESTLXA - 1)
+            .text "lxa"
+.endif
+            .byte 0
 ;------------------------------------------------------------------------------
 
 
@@ -157,6 +171,7 @@ ya         .byte 0
 pa         .byte 0
 
 main:
+.ifeq (TESTANE - 1)
            jsr waitborder
            ; read ANE "magic constant"
            lda #0
@@ -186,7 +201,8 @@ sk1:
             .text 13, "ane magic value: ", 0
             lda anemagic
             jsr printhb
-
+.endif
+.ifeq (TESTLXA - 1)
            jsr waitborder
            ; read the LAX "magic constant"
            lda #0
@@ -214,7 +230,7 @@ sk2:
             .text 13, "lxa magic value: ", 0
             lda laxmagic
             jsr printhb
-
+.endif
 
            lda #<code
            sta pcode+0
@@ -229,7 +245,15 @@ sk2:
 nextcommand
 
            ldy #0
-           lda bcmd
+           lda bcmd             ; the opcode we want to test
+.ifne (TESTANE - 1)
+            cmp #$8b    ; ane
+            beq skipcmd
+.endif
+.ifne (TESTLXA - 1)
+            cmp #$ab    ; lxa
+            beq skipcmd
+.endif
            sta (pcode),y
            lda #$60
            iny
@@ -281,6 +305,7 @@ nostop
            lda ptable+1
            adc #0
            sta ptable+1
+skipcmd
            inc bcmd
            bne jmpnextcommand
            jmp ok
@@ -359,6 +384,7 @@ error
 ;           lda #13
 ;           jsr $ffd2
 
+.ifeq (TESTANE - 1)
             ; show magic again
             jsr waitborder
 
@@ -367,21 +393,25 @@ error
             .byte $8b, $ff
             sta anemagic
 
+            jsr print
+            .text 13, "ane magic value: ", 0
+            lda anemagic
+            jsr printhb
+.endif
+
+.ifeq (TESTLXA - 1)
+            jsr waitborder
+
             ; read the LAX "magic constant"
             lda #0
             .byte $ab, $ff
             sta laxmagic
 
             jsr print
-            .text 13, "ane magic value: ", 0
-            lda anemagic
-            jsr printhb
-
-            jsr print
             .text 13, "lax magic value: ", 0
             lda laxmagic
             jsr printhb
-
+.endif
             lda #13
             jsr cbmk_bsout
 

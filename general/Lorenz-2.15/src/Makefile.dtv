@@ -229,8 +229,6 @@ DISK2PROGS = \
 	axsix-dtv.prg \
 	alrb-dtv.prg \
 	arrb-dtv.prg \
-	aneb-dtv.prg \
-	lxab-dtv.prg \
 	sbxb-dtv.prg \
 	shaay-dtv.prg \
 	shaiy-dtv.prg \
@@ -286,16 +284,58 @@ DISK3PROGSOLD = \
 	  cia1ta-dtv.prg \
 	  cia1tb-dtv.prg \
 	  cia2ta-dtv.prg \
-	  cia2tb-dtv.prg \
+	  cia2tb-dtv.prg
+
+DISK3NEXT = aneb-dtv.prg
+
+DISK4PROGS = \
+	aneb-dtv.prg \
+	lxab-dtv.prg \
+	\
+	trap1ane-dtv.prg \
+	trap2ane-dtv.prg \
+	trap3ane-dtv.prg \
+	trap4ane-dtv.prg \
+	trap5ane-dtv.prg \
+	trap6ane-dtv.prg \
+	trap7ane-dtv.prg \
+	trap8ane-dtv.prg \
+	trap9ane-dtv.prg \
+	trap10ane-dtv.prg \
+	trap11ane-dtv.prg \
+	trap12ane-dtv.prg \
+	trap13ane-dtv.prg \
+	trap14ane-dtv.prg \
+	trap15ane-dtv.prg \
+	trap16ane-dtv.prg \
+	trap17ane-dtv.prg \
+	\
+	trap1lxa-dtv.prg \
+	trap2lxa-dtv.prg \
+	trap3lxa-dtv.prg \
+	trap4lxa-dtv.prg \
+	trap5lxa-dtv.prg \
+	trap6lxa-dtv.prg \
+	trap7lxa-dtv.prg \
+	trap8lxa-dtv.prg \
+	trap9lxa-dtv.prg \
+	trap10lxa-dtv.prg \
+	trap11lxa-dtv.prg \
+	trap12lxa-dtv.prg \
+	trap13lxa-dtv.prg \
+	trap14lxa-dtv.prg \
+	trap15lxa-dtv.prg \
+	trap16lxa-dtv.prg \
+	trap17lxa-dtv.prg \
 	\
 	finish-dtv.prg \
 	\
 	template-dtv.prg
 
-ALLPROGSOLD = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSOLD)
+ALLPROGSOLD = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSOLD) # $(DISK4PROGS)
 
-ALLPROGS = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSOLD)
-ALLDISKS = Disk1DTV.d64 Disk2DTV.d64 Disk3DTV.d64 LorenzDTV.d81
+ALLPROGS = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSOLD) $(DISK4PROGS)
+ALLDISKS = Disk1DTV.d64 Disk2DTV.d64 Disk3DTV.d64 Disk4DTV.d64 LorenzDTV.d81
 
 ASFLAGS=--m65dtv02 -C -T -a -q -I ./common -D TARGET=5
 
@@ -305,39 +345,109 @@ cpuport-dtv.prg: cpuport.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D ISC128C64=0 -i cpuport.s -o cpuport-dtv.prg
 
 trap1-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=1 -i trap1-15.s -o trap1-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=1 -i trap1-15.s -o trap1-dtv.prg
 trap2-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=2 -i trap1-15.s -o trap2-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=2 -i trap1-15.s -o trap2-dtv.prg
 trap3-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=3 -i trap1-15.s -o trap3-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=3 -i trap1-15.s -o trap3-dtv.prg
 trap4-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=4 -i trap1-15.s -o trap4-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=4 -i trap1-15.s -o trap4-dtv.prg
 trap5-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=5 -i trap1-15.s -o trap5-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=5 -i trap1-15.s -o trap5-dtv.prg
 trap6-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=6 -i trap1-15.s -o trap6-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=6 -i trap1-15.s -o trap6-dtv.prg
 trap7-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=7 -i trap1-15.s -o trap7-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=7 -i trap1-15.s -o trap7-dtv.prg
 trap8-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=8 -i trap1-15.s -o trap8-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=8 -i trap1-15.s -o trap8-dtv.prg
 trap9-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=9 -i trap1-15.s -o trap9-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=9 -i trap1-15.s -o trap9-dtv.prg
 trap10-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=10 -i trap1-15.s -o trap10-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=10 -i trap1-15.s -o trap10-dtv.prg
 trap11-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=11 -i trap1-15.s -o trap11-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=11 -i trap1-15.s -o trap11-dtv.prg
 trap12-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=12 -i trap1-15.s -o trap12-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=12 -i trap1-15.s -o trap12-dtv.prg
 trap13-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=13 -i trap1-15.s -o trap13-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=13 -i trap1-15.s -o trap13-dtv.prg
 trap14-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=14 -i trap1-15.s -o trap14-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=14 -i trap1-15.s -o trap14-dtv.prg
 trap15-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=15 -i trap1-15.s -o trap15-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=15 -i trap1-15.s -o trap15-dtv.prg
 trap16-dtv.prg: trap16.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=16 -i trap16.s -o trap16-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=16 -i trap16.s -o trap16-dtv.prg
 trap17-dtv.prg: trap17.s $(COMMONSRC) trap-table.s
-	64tass $(ASFLAGS) -D TRAP=17 -i trap17.s -o trap17-dtv.prg
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=0 -D TRAP=17 -i trap17.s -o trap17-dtv.prg
+
+trap1ane-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=1 -i trap1-15.s -o trap1ane-dtv.prg
+trap2ane-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=2 -i trap1-15.s -o trap2ane-dtv.prg
+trap3ane-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=3 -i trap1-15.s -o trap3ane-dtv.prg
+trap4ane-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=4 -i trap1-15.s -o trap4ane-dtv.prg
+trap5ane-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=5 -i trap1-15.s -o trap5ane-dtv.prg
+trap6ane-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=6 -i trap1-15.s -o trap6ane-dtv.prg
+trap7ane-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=7 -i trap1-15.s -o trap7ane-dtv.prg
+trap8ane-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=8 -i trap1-15.s -o trap8ane-dtv.prg
+trap9ane-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=9 -i trap1-15.s -o trap9ane-dtv.prg
+trap10ane-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=10 -i trap1-15.s -o trap10ane-dtv.prg
+trap11ane-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=11 -i trap1-15.s -o trap11ane-dtv.prg
+trap12ane-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=12 -i trap1-15.s -o trap12ane-dtv.prg
+trap13ane-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=13 -i trap1-15.s -o trap13ane-dtv.prg
+trap14ane-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=14 -i trap1-15.s -o trap14ane-dtv.prg
+trap15ane-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=15 -i trap1-15.s -o trap15ane-dtv.prg
+trap16ane-dtv.prg: trap16.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=16 -i trap16.s -o trap16ane-dtv.prg
+trap17ane-dtv.prg: trap17.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=1 -D TESTLXA=0 -D TRAP=17 -i trap17.s -o trap17ane-dtv.prg
+
+trap1lxa-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=1 -i trap1-15.s -o trap1lxa-dtv.prg
+trap2lxa-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=2 -i trap1-15.s -o trap2lxa-dtv.prg
+trap3lxa-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=3 -i trap1-15.s -o trap3lxa-dtv.prg
+trap4lxa-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=4 -i trap1-15.s -o trap4lxa-dtv.prg
+trap5lxa-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=5 -i trap1-15.s -o trap5lxa-dtv.prg
+trap6lxa-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=6 -i trap1-15.s -o trap6lxa-dtv.prg
+trap7lxa-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=7 -i trap1-15.s -o trap7lxa-dtv.prg
+trap8lxa-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=8 -i trap1-15.s -o trap8lxa-dtv.prg
+trap9lxa-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=9 -i trap1-15.s -o trap9lxa-dtv.prg
+trap10lxa-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=10 -i trap1-15.s -o trap10lxa-dtv.prg
+trap11lxa-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=11 -i trap1-15.s -o trap11lxa-dtv.prg
+trap12lxa-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=12 -i trap1-15.s -o trap12lxa-dtv.prg
+trap13lxa-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=13 -i trap1-15.s -o trap13lxa-dtv.prg
+trap14lxa-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=14 -i trap1-15.s -o trap14lxa-dtv.prg
+trap15lxa-dtv.prg: trap1-15.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=15 -i trap1-15.s -o trap15lxa-dtv.prg
+trap16lxa-dtv.prg: trap16.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=16 -i trap16.s -o trap16lxa-dtv.prg
+trap17lxa-dtv.prg: trap17.s $(COMMONSRC) trap-table.s
+	64tass $(ASFLAGS) -D TESTANE=0 -D TESTLXA=1 -D TRAP=17 -i trap17.s -o trap17lxa-dtv.prg
 
 irq-dtv.prg: irq.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i irq.s -o irq-dtv.prg
@@ -364,6 +474,8 @@ nextdisk1-dtv.prg: nextdisk.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEXT=1 -i nextdisk.s -o nextdisk1-dtv.prg
 nextdisk2-dtv.prg: nextdisk.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEXT=2 -i nextdisk.s -o nextdisk2-dtv.prg
+nextdisk3-dtv.prg: nextdisk.s $(COMMONSRC)
+	64tass $(ASFLAGS) -D NEXT=3 -i nextdisk.s -o nextdisk3-dtv.prg
 
 %-dtv.prg : %.s $(COMMONSRC)
 	64tass $(ASFLAGS) -i "$*.s" -o "$*-dtv.prg"
@@ -382,12 +494,19 @@ Disk2DTV.d64: $(DISK2PROGS) nextdisk2-dtv.prg
 	done
 	c1541 Disk2DTV.d64 -write "nextdisk2-dtv.prg" $$(echo "$(basename $(DISK2NEXT))" | sed 's:-dtv::g') > /dev/null
 #	c1541 Disk2DTV.d64 -list
-Disk3DTV.d64: $(DISK3PROGSOLD)
+Disk3DTV.d64: $(DISK3PROGSOLD) nextdisk3-dtv.prg
 	c1541 -format "test suite 2.15+,#3" d64 Disk3DTV.d64 > /dev/null
 	for I in $(basename $(DISK3PROGSOLD)); do \
 		c1541 Disk3DTV.d64 -write "$$I.prg" $$(echo "$$I" | sed 's:-dtv::g') > /dev/null; \
 	done
+	c1541 Disk3DTV.d64 -write "nextdisk3-dtv.prg" "$(basename $(DISK3NEXT))" > /dev/null
 #	c1541 Disk3DTV.d64 -list
+Disk4DTV.d64: $(DISK4PROGSOLD)
+	c1541 -format "test suite 2.15+,#4" d64 Disk4DTV.d64 > /dev/null
+	for I in $(basename $(DISK4PROGSOLD)); do \
+		c1541 Disk4DTV.d64 -write "$$I.prg" $$(echo "$$I" | sed 's:-dtv::g') > /dev/null; \
+	done
+#	c1541 Disk4DTV.d64 -list
 LorenzDTV.d81: $(ALLPROGSOLD)
 	c1541 -format "test suite 2.15+,#1" d81 LorenzDTV.d81 > /dev/null
 	for I in $(basename $(ALLPROGSOLD)); do \

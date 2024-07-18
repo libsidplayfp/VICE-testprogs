@@ -417,13 +417,13 @@ table
            .text "txa"
            .word n
            .byte $1b,$b1,$b1,$6c,$b0
-
+.ifeq (TESTANE - 1)
            .text "ane"  ; $8b
            .word b
 aneresult = * + 1
 aneresultstatus = * + 4
-           .byte $1b,$00,$b1,$6c,$32
-
+           .byte $1b,$01,$b1,$6c,$30
+.endif
            .text "sty"  ; $8c
            .word ac
            .byte $6c,$c6,$b1,$6c,$30
@@ -517,14 +517,14 @@ aneresultstatus = * + 4
            .text "tax"  ; $aa
            .word n
            .byte $1b,$c6,$c6,$6c,$b0
-
+.ifeq (TESTLXA - 1)
            .text "lxa"  ; $ab
            .word b
 laxresulta = * + 1
 laxresultx = * + 2
 laxresultstatus = * + 4
            .byte $1b,$0a,$0a,$6c,$30
-
+.endif
            .text "ldy"  ; $ac
            .word ac
            .byte $1b,$c6,$b1,$1b,$30

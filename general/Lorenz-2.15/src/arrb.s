@@ -9,7 +9,7 @@
 
 ;------------------------------------------------------------------------------
 thisname   .null "arrb"      ; name of this test
-nextname   .null "aneb"      ; name of next test, "-" means no more tests
+nextname   .null "sbxb"      ; name of next test, "-" means no more tests
 ;------------------------------------------------------------------------------
 main:
          lda #%00011011

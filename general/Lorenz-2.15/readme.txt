@@ -125,6 +125,11 @@ pass on some CPUs - even when the printed values before and after the test
 match. Wait a few minutes, letting the computer "warm up", before you run the
 test again eventually (the "magic value" is temperature dependent).
 
+All tests that perform the unstable "ANE" or "LXA" opcodes were moved to an
+extra disk (disk4) which will run after all other thests. This helps with
+running the testsuite unattended on real hardware, and lets you easily re-run
+all these "unstable" tests.
+
 NOTE: if any of the above tests fail - in particular on real CPUs - you might
 want to check the additional tests from the VICE test repository, located in:
 

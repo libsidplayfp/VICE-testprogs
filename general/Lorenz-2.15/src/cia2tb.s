@@ -17,7 +17,7 @@ thisname:
 .endif
            .byte 0
 
-nextname:   .null "finish"
+nextname:   .null "aneb"
 ;-------------------------------------------------------------------------------
 report
            .block

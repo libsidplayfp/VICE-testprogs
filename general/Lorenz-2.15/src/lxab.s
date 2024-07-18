@@ -12,7 +12,7 @@ TESTFAILURE = 0
 
 ;------------------------------------------------------------------------------
 thisname   .null "lxab"      ; name of this test
-nextname   .null "sbxb"      ; name of next test, "-" means no more tests
+nextname   .null "trap1ane"  ; name of next test, "-" means no more tests
 ;------------------------------------------------------------------------------
 main:
         jsr waitborder
