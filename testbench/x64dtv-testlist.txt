@@ -27,8 +27,9 @@
 ################################################################################
 # CPU
 ################################################################################
-../interrupts/irqnoack/,ackcia.prg,exitcode,12000000
-../interrupts/irqnoack/,ackraster.prg,exitcode,12000000,expect:timeout
+# this needs to be tested on real DTV
+#../interrupts/irqnoack/,ackcia.prg,exitcode,12000000
+#../interrupts/irqnoack/,ackraster.prg,exitcode,12000000,expect:timeout
 ################################################################################
 # Lorenz Suite
 #
@@ -275,6 +276,40 @@
 ../general/Lorenz-2.15/src/,trap15-dtv.prg,exitcode,20000000,comment:broken test
 ../general/Lorenz-2.15/src/,trap16-dtv.prg,exitcode,21000000,comment:broken test
 ../general/Lorenz-2.15/src/,trap17-dtv.prg,exitcode,25000000,comment:broken test
+../general/Lorenz-2.15/src/,trap1-dtvane.prg,exitcode,20500000,comment:broken test
+../general/Lorenz-2.15/src/,trap2-dtvane.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap3-dtvane.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap4-dtvane.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap5-dtvane.prg,exitcode,20500000,comment:broken test
+../general/Lorenz-2.15/src/,trap6-dtvane.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap7-dtvane.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap8-dtvane.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,trap9-dtvane.prg,exitcode,20500000,comment:broken test
+../general/Lorenz-2.15/src/,trap10-dtvane.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap11-dtvane.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap12-dtvane.prg,exitcode,20500000,comment:broken test
+../general/Lorenz-2.15/src/,trap13-dtvane.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,trap14-dtvane.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap15-dtvane.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap16-dtvane.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap17-dtvane.prg,exitcode,25000000,comment:broken test
+../general/Lorenz-2.15/src/,trap1-dtvlxa.prg,exitcode,20500000,comment:broken test
+../general/Lorenz-2.15/src/,trap2-dtvlxa.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap3-dtvlxa.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap4-dtvlxa.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap5-dtvlxa.prg,exitcode,20500000,comment:broken test
+../general/Lorenz-2.15/src/,trap6-dtvlxa.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap7-dtvlxa.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap8-dtvlxa.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,trap9-dtvlxa.prg,exitcode,20500000,comment:broken test
+../general/Lorenz-2.15/src/,trap10-dtvlxa.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap11-dtvlxa.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap12-dtvlxa.prg,exitcode,20500000,comment:broken test
+../general/Lorenz-2.15/src/,trap13-dtvlxa.prg,exitcode,20000000
+../general/Lorenz-2.15/src/,trap14-dtvlxa.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap15-dtvlxa.prg,exitcode,20000000,comment:broken test
+../general/Lorenz-2.15/src/,trap16-dtvlxa.prg,exitcode,21000000,comment:broken test
+../general/Lorenz-2.15/src/,trap17-dtvlxa.prg,exitcode,25000000,comment:broken test
 ../general/Lorenz-2.15/src/,branchwrap-dtv.prg,exitcode,20000000
 ../general/Lorenz-2.15/src/,mmufetch-dtv.prg,exitcode,20000000
 ../general/Lorenz-2.15/src/,mmu-dtv.prg,exitcode,36000000
