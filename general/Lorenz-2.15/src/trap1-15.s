@@ -422,10 +422,7 @@ wait     jsr $ffe4
 
            jmp nostop
 return
-           lda #$37
-           sta 1
-           lda #$2f
-           sta 0
+           #RESET_MEMORY_MAP
            rts
 
 ok
@@ -666,14 +663,7 @@ brkn
            lda #>continue
            sta $ffff
            sei
-           lda 0
-           sta old0+1
-           lda #47
-           sta 0
-           lda 1
-           sta old1+1
-           and #$fd
-           sta 1
+           #SET_ROM_DISABLE
            lda #0
            pha
            lda #ab
@@ -689,12 +679,7 @@ continue
            sty ya
            pla
            sta pa
-old1
-           lda #$11
-           sta 1
-old0
-           lda #$11
-           sta 0
+           #SET_ROM_ENABLE
            lda #db
            sta da
            cli
