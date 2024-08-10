@@ -13,6 +13,9 @@
 ./selftest/,,screenshot,10000000,mountcrt:plus4-pass.crt
 ./selftest/,,screenshot,10000000,mountcrt:plus4-fail.crt,expect:error
 ################################################################################
+../Plus4/openio/,outrun.prg,exitcode,10000000
+../Plus4/openio/,outrun2.prg,exitcode,10000000
+################################################################################
 # Joystick/Mouse
 ################################################################################
 ../testjoy/,testjoy_plus4.prg,interactive,0
