@@ -172,13 +172,6 @@ read_native_2:
 	jmp read_native_2_code
 
 read_native_1_code:
-; 	lda $dc00
-; 	and #$3f
-; 	ora #$40
-; 	sta $dc00
-; 	lda $d41a
-; 	bne read_key_1
-; 	rts
 read_key_1:
 	ldx #$7f
 	stx C64_CIA1_PRA
@@ -186,13 +179,6 @@ read_key_1:
 	rts
 
 read_native_2_code:
-; 	lda $dc00
-; 	and #$3f
-; 	ora #$80
-; 	sta $dc00
-; 	lda $d41a
-; 	bne read_key_2
-; 	rts
 read_key_2:
 	ldy C64_CIA1_DDRA
 	ldx #$ff
