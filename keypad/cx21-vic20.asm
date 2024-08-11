@@ -1,9 +1,29 @@
 *=$1001
 
-VIC20_VIA1_PRA = 0x9111
+; The following logic is used:
+;
+; keypad  pin write  pin read
+; ------- ---------  --------
+;  1       1  up      5  POT AY
+;  2       1  up      9  POT AX
+;  3       1  up      6  FIRE
+;  4       2  down    5  POT AY
+;  5       2  down    9  POT AX
+;  6       2  down    6  FIRE
+;  7       3  left    5  POT AY
+;  8       3  left    9  POT AX
+;  9       3  left    6  FIRE
+;  *       4  right   5  POT AY
+;  0       4  right   9  POT AX
+;  #       4  right   6  FIRE
+
+VIC20_VIA1_PRA = 0x9111     ; bit5-2: fire/down/left/up
 VIC20_VIA1_DDRA = 0x9113
-VIC20_VIA2_PRB = 0x9120
+VIC20_VIA2_PRB = 0x9120     ; bit7: right
 VIC20_VIA2_DDRB = 0x9122
+
+POTX = $9008
+POTY = $9009
 
 PICJMP = $0203
 
@@ -69,6 +89,8 @@ init_jsr_fixer:
 	ldx #$f0
 	stx $020A
 
+	sei
+
 mainloop:
 	ldx #<print_main_screen
 	ldy #>print_main_screen
@@ -90,62 +112,62 @@ show_key:
 	ldx #$00
 	cmp #1
 	bne check_key_2
-	ldy #24
+	ldy #<((1*22)+10)
 	bne invert_key
 check_key_2:
 	cmp #2
 	bne check_key_1
-	ldy #28
+	ldy #<((1*22)+6)
 	bne invert_key
 check_key_1:
 	cmp #3
 	bne check_key_6
-	ldy #32
+	ldy #<((1*22)+2)
 	bne invert_key
 check_key_6:
 	cmp #4
 	bne check_key_5
-	ldy #68
+	ldy #<((3*22)+10)
 	bne invert_key
 check_key_5:
 	cmp #5
 	bne check_key_4
-	ldy #72
+	ldy #<((3*22)+6)
 	bne invert_key
 check_key_4:
 	cmp #6
 	bne check_key_9
-	ldy #76
+	ldy #<((3*22)+2)
 	bne invert_key
 check_key_9:
 	cmp #7
 	bne check_key_8
-	ldy #112
+	ldy #<((5*22)+10)
 	bne invert_key
 check_key_8:
 	cmp #8
 	bne check_key_7
-	ldy #116
+	ldy #<((5*22)+6)
 	bne invert_key
 check_key_7:
 	cmp #9
 	bne check_key_hash
-	ldy #120
+	ldy #<((5*22)+2)
 	bne invert_key
 check_key_hash:
 	cmp #10
 	bne check_key_0
-	ldy #156
+	ldy #<((7*22)+10)
 	bne invert_key
 check_key_0:
 	cmp #11
 	bne check_key_star
-	ldy #160
+	ldy #<((7*22)+6)
 	bne invert_key
 check_key_star:
 	cmp #12
 	bne no_key_pressed
-	ldy #164
+	ldy #<((7*22)+2)
 invert_key:
 	sty $fb
 	ldx $2c
@@ -187,100 +209,121 @@ read_native_code:
 	pha
 	lda VIC20_VIA1_PRA
 	pha
-	lda VIC20_VIA1_DDRA
-	and #$c3
-	ora #$38
-	sta VIC20_VIA1_DDRA
+
 	lda VIC20_VIA2_DDRB
 	pha
 	lda VIC20_VIA2_PRB
 	pha
+
+	; fire = input, left/down/up = output
+	lda VIC20_VIA1_DDRA
+	and #%11000011
+	ora #%00011100
+	sta VIC20_VIA1_DDRA
+
+	; right = output
 	lda VIC20_VIA2_DDRB
-	and #$7f
-	ora #$80
+	;and #$7f
+	ora #%10000000
 	sta VIC20_VIA2_DDRB
-	lda #$80
+
+	; first row
+	lda #$80   ; right = 1
 	sta VIC20_VIA2_PRB
-	lda #$18
+	lda #$18   ; left = 1, down = 1, up = 0
 	sta VIC20_VIA1_PRA
+
 	lda VIC20_VIA1_PRA
-	and #$20
+	and #$20   ; check fire
 	bne native_key_2
 	ldx #1
 	bne found_native_key
 native_key_2:
-	lda $9008
-	bne native_key_1
+	lda POTX
+	beq native_key_1
 	ldx #2
 	bne found_native_key
 native_key_1:
-	lda $9009
-	bne native_key_6
+	lda POTY
+	beq native_key_6
 	ldx #3
 	bne found_native_key
 native_key_6:
-	lda #$14
+
+    ; second row
+	lda #$14   ; left = 1, down = 0, up = 1
 	sta VIC20_VIA1_PRA
+
 	lda VIC20_VIA1_PRA
-	and #$20
+	and #$20   ; check fire
 	bne native_key_5
 	ldx #4
 	bne found_native_key
 native_key_5:
-	lda $9008
-	bne native_key_4
+	lda POTX
+	beq native_key_4
 	ldx #5
 	bne found_native_key
 native_key_4:
-	lda $9009
-	bne native_key_9
+	lda POTY
+	beq native_key_9
 	ldx #6
 	bne found_native_key
 native_key_9:
-	lda #$0c
+
+    ; third row
+	lda #$0c   ; left = 0, down = 1, up = 1
 	sta VIC20_VIA1_PRA
+
 	lda VIC20_VIA1_PRA
-	and #$20
+	and #$20   ; check fire
 	bne native_key_8
 	ldx #7
 	bne found_native_key
 native_key_8:
-	lda $9008
-	bne native_key_7
+	lda POTX
+	beq native_key_7
 	ldx #8
 	bne found_native_key
 native_key_7:
-	lda $9009
-	bne native_key_hash
+	lda POTY
+	beq native_key_hash
 	ldx #9
 	bne found_native_key
 native_key_hash:
-	lda #$00
+
+    ; fourth row
+
+	lda #$00   ; right = 0
 	sta VIC20_VIA2_PRB
-	lda #$1c
+	lda #$1c   ; left = 1, down = 1, up = 1
 	sta VIC20_VIA1_PRA
+
 	lda VIC20_VIA1_PRA
-	and #$20
+	and #$20       ; check fire
 	bne native_key_0
 	ldx #10
 	bne found_native_key
 native_key_0:
-	lda $9008
-	bne native_key_star
+	lda POTX
+	beq native_key_star
 	ldx #11
 	bne found_native_key
 native_key_star:
-	lda $9009
-	bne nothing_pressed
+	lda POTY
+	beq nothing_pressed
 	ldx #12
 	bne found_native_key
 nothing_pressed:
+
 	ldx #0
 found_native_key:
+
 	pla
 	sta VIC20_VIA2_PRB
 	pla
 	sta VIC20_VIA2_DDRB
+
 	pla
 	sta VIC20_VIA1_PRA
 	pla
@@ -309,16 +352,27 @@ screen_loop:
 end_loop:
 	rts
 
+; KEYPAD          KEYMAP KEYS
+; -------------   ----------------
+; | 1 | 2 | 3 |   |  1 |  2 |  3 |
+; -------------   ----------------
+; | 4 | 5 | 6 |   |  6 |  7 |  8 |
+; -------------   ----------------
+; | 7 | 8 | 9 |   | 11 | 12 | 13 |
+; -------------   ----------------
+; | * | 0 | # |   | 16 | 17 | 18 |
+; -------------   ----------------
+
 main_screen:
 	!by 147
 	!by 176,192,192,192,178,192,192,192,178,192,192,192,174,13
-	!by 221, 32,'3', 32,221, 32,'2', 32,221, 32,'1', 32,221,13
+	!by 221, 32,'1', 32,221, 32,'2', 32,221, 32,'3', 32,221,13
 	!by 171,192,192,192,219,192,192,192,219,192,192,192,179,13
-	!by 221, 32,'6', 32,221, 32,'5', 32,221, 32,'4', 32,221,13
+	!by 221, 32,'4', 32,221, 32,'5', 32,221, 32,'6', 32,221,13
 	!by 171,192,192,192,219,192,192,192,219,192,192,192,179,13
-	!by 221, 32,'9', 32,221, 32,'8', 32,221, 32,'7', 32,221,13
+	!by 221, 32,'7', 32,221, 32,'8', 32,221, 32,'9', 32,221,13
 	!by 171,192,192,192,219,192,192,192,219,192,192,192,179,13
-	!by 221, 32,'#', 32,221, 32,'0', 32,221, 32,'*', 32,221,13
+	!by 221, 32,'*', 32,221, 32,'0', 32,221, 32,'#', 32,221,13
 	!by 173,192,192,192,177,192,192,192,177,192,192,192,189,13
 	!by 13,'A','T','A','R','I',' ','C','X','2','1',' ','K','E','Y','P','A','D',' ','I','N',13
 	!by 'N','A','T','I','V','E',0
