@@ -552,6 +552,8 @@
 ../interrupts/irqnmi/,irqnmi-new.prg,exitcode,20000000,cia-new
 ../interrupts/irqnmi/,irqnmi-old.prg,exitcode,20000000,cia-old
 ../interrupts/irqnoack/,ackcia.prg,exitcode,7000000
+../interrupts/irqnoack/,ackcia2.prg,exitcode,7000000
+../interrupts/irqnoack/,ackcia3.prg,exitcode,7000000
 ../interrupts/irqnoack/,ackraster.prg,exitcode,7000000,expect:timeout
 ../interrupts/nmitest/,nmitest.prg,interactive,0,comment:repeatedly press RESTORE
 ../interrupts/nmitest/,nmitest2.prg,interactive,0,comment:repeatedly press RESTORE
