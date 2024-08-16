@@ -1,0 +1,32 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/2025/
+logname "bug2025.log"
+log on
+
+;break $a7ae
+;x
+
+a $1000
+ldx #0
+ldy #0
+inx
+iny
+nop
+jmp $1007
+
+break $1005
+break $1007
+
+keybuf sys4096\n
+x
+
+r a = 1
+chis 6
+x
+
+r a = 2
+chis 6
+x
+
+r a = 3
+chis 6
+q

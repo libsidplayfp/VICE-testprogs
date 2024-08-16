@@ -3,9 +3,12 @@
 
 MAKE=make --no-print-dir
 
-all: test6502 test6809 test65816 testR65C02 testz80
+all: testbench test6502 test6809 test65816 testR65C02 testz80
 
-.PHONY: test6502 test6809 test65816 testR65C02 testz80
+.PHONY: testbench test6502 test6809 test65816 testR65C02 testz80
+
+testbench:
+	@$(MAKE) -C testbench
 
 test6502:
 	@$(MAKE) -C 6502
@@ -28,6 +31,7 @@ testz80:
 
 	
 clean:
+	@$(MAKE) -C testbench clean
 	@$(MAKE) -C 6502 clean
 	@$(MAKE) -C dummytest clean
 	@$(MAKE) -C 6809 clean

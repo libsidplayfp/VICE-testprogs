@@ -1,0 +1,28 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/2025/
+;
+; https://sourceforge.net/p/vice-emu/bugs/2025/#b4d6
+;
+; the instruction on that the breakpoint hit is/was repeated
+; (bug exists in 3.8, fixed in trunk)
+logname "bug2025-2b.log"
+log on
+
+;break $e5ca
+;reset
+;x
+
+a $1000
+inc $1006
+jmp $1003
+brk
+
+break $1003
+
+; if we leave the monitor (x) and re-enter it by the breakpoint, the bug goes away
+keybuf sys4096\n
+x
+;g 1000
+
+chis 1
+m 1006  1006
+q

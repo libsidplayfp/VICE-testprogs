@@ -1,0 +1,8 @@
+WATCH: 1  C:$100a  (Stop on load store)
+Stopwatch reset to 0.
+#1 (Stop on  load 100a)  296/$128,  55/$37
+.C:1001  EE 0A 10    INC $100A      - A:00 X:00 Y:00 SP:f7 N.-..I..      18701
+#1 (Stop on store 100a)  296/$128,  55/$37
+.C:1001  EE 0A 10    INC $100A      - A:00 X:00 Y:00 SP:f7 N.-..I..      18701
+#1 (Stop on  load 100a)  296/$128,  59/$3b
+.C:1004  AD 0A 10    LDA $100A      - A:EB X:00 Y:00 SP:f7 N.-..I..      18705

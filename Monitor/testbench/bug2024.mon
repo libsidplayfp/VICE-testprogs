@@ -1,0 +1,26 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/2024/
+logname "bug2024.log"
+log on
+
+l "bug2024.prg" 0
+
+delete
+; runUntil("start", "break")
+break exec 1035
+g 1000
+delete 1
+; waitRasterline(0xFE)
+break exec 0000 FFFF if RL == $fe
+x
+delete 1
+; printMemory(0xD019, 0xD019)
+m D019 D019
+; print which cycle we've breaked after
+r
+; runUntil("otherCode", "break")
+break exec 1035
+g 1044
+delete 1
+; printCpuHistory()
+cpuhistory 20
+q

@@ -1,0 +1,17 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/1488/
+;
+; binary number without % prefix is/was incorrectly recognized as octal
+
+logname "radix-binary.log"
+log on
+
+radix B
+radix
+
+m 0000010000000000 0000010000000001
+m 1000010000000000 1000010000000001
+
+m %0000010000000000 %0000010000000001
+m %1000010000000000 %1000010000000001
+
+q

@@ -1,0 +1,25 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/1836/
+;
+; a hex number that contains only letters is not recognized as such, and will
+; produce an error
+logname "bug1836.log"
+log on
+
+a 1000 stx f100
+stx fa00
+stx fb00
+stx fc00
+stx fd00
+stx fe00
+stx ff00
+stx ffa0
+stx fff0
+stx fffa
+;ERROR -- Wrong syntax:
+;  stx fffa
+;      ^
+a 101b stx fffa
+;ERROR -- Unexpected token:
+;  a 101b stx fffa
+;             ^
+q

@@ -1,0 +1,27 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/2024/
+logname "goonbreak-2.log"
+log on
+a c000
+inc $c006
+jmp $c000
+brk
+
+break exec $c000
+keybuf sys49152\n
+x
+
+; first trigger, c006 should be 0
+m c006 c006
+
+z
+m c006 c006
+
+;chis 2
+q
+
+;chis 2
+;q
+; we should NOT see something like this:
+;.C:c000  EE 20 D0    INC $1006      A:00 X:00 Y:0a SP:f3 ..-...Z.      5336228
+;.C:c003  4C 00 C0    JMP $1000      A:00 X:00 Y:0a SP:f3 N.-.....      5336234
+

@@ -1,0 +1,24 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/942/
+logname "bug942.log"
+log on
+
+a $1000
+sei
+inc $100a
+lda $100a
+jmp $1001
+brk
+
+watch $100a
+sw reset
+
+keybuf sys4096\n
+x
+;g $1000
+
+; first trigger
+x
+; second trigger
+x
+; third trigger
+q

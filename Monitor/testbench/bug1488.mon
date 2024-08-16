@@ -1,0 +1,28 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/1488/
+;
+; a hex number that contains only letters is not recognized as such, and will
+; produce an error
+logname "bug1488.log"
+log on
+
+> 0400 a
+> 0400 b
+> 0400 c
+> 0400 d
+> 0400 e
+> 0400 f
+
+> 0400 A
+> 0400 B
+;ERROR -- Wrong syntax:
+;  > 0400 B
+;         ^
+> 0400 C
+> 0400 D
+;ERROR -- Wrong syntax:
+;  > 0400 D
+;         ^
+> 0400 E
+> 0400 F
+
+q

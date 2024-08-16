@@ -1,0 +1,6 @@
+BREAK: 1  C:$c000  (Stop on exec)
+#1 (Stop on  exec c000)   15/$00f,  33/$21
+.C:c000  EE 06 C0    INC $C006      - A:00 X:00 Y:00 SP:f7 ..-.....    2163138
+>C:c006  00            @
+.C:c003  4C 00 C0    JMP $C000      - A:00 X:00 Y:00 SP:f7 ..-.....    2163144
+>C:c006  01            
