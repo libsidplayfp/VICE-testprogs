@@ -158,7 +158,7 @@ DISK1PROGS = \
 	jmpw-plus4.prg \
 	jmpi-plus4.prg
 
-DISK1NEXT = beqr-plus4.prg
+DISK1NEXT_PRG = beqr-plus4.prg
 
 DISK2PROGS = \
 	beqr-plus4.prg \
@@ -259,13 +259,15 @@ DISK2PROGS = \
 	mmufetch-plus4.prg \
 	mmu-plus4.prg
 
-DISK2NEXT = cpuport-plus4.prg
+DISK2NEXT_PRG = cpuport-plus4.prg
 
-DISK3PROGSOLD = \
+DISK3PROGS = \
 	  cpuport-plus4.prg \
 	  cputiming-plus4.prg \
 	  irq-plus4.prg \
 	  nmi-plus4.prg
+
+DISK3NEXT_PRG = aneb-plus4.prg
 
 DISK4PROGS = \
 	aneb-plus4.prg \
@@ -311,12 +313,14 @@ DISK4PROGS = \
 	\
 	template-plus4.prg
 
-ALLPROGSOLD = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSOLD) # $(DISK4PROGS)
-
-ALLPROGS = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGSOLD) $(DISK4PROGS)
+ALLPROGS = $(DISK1PROGS) $(DISK2PROGS) $(DISK3PROGS) $(DISK4PROGS)
 ALLDISKS = Disk1plus4.d64 Disk2plus4.d64 Disk3plus4.d64 Disk4plus4.d64 LorenzPlus4.d81
 
 ASFLAGS=-C -T -a -q -I ./common -D TARGET=4
+
+DISK1NEXT = $(DISK1NEXT_PRG:-plus4.prg=)
+DISK2NEXT = $(DISK2NEXT_PRG:-plus4.prg=)
+DISK3NEXT = $(DISK3NEXT_PRG:-plus4.prg=)
 
 all: $(ALLPROGS) $(ALLDISKS)
 
@@ -450,11 +454,11 @@ cia2tb-plus4.prg: cia2tb.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=0 -i cia2tb.s -o cia2tb-plus4.prg
 
 nextdisk1-plus4.prg: nextdisk.s $(COMMONSRC)
-	64tass $(ASFLAGS) -D NEXT=1 -i nextdisk.s -o nextdisk1-plus4.prg
+	64tass $(ASFLAGS) -D NEXT=1 -D NEXTNAME=\"$(DISK1NEXT)\" -i nextdisk.s -o nextdisk1-plus4.prg
 nextdisk2-plus4.prg: nextdisk.s $(COMMONSRC)
-	64tass $(ASFLAGS) -D NEXT=2 -i nextdisk.s -o nextdisk2-plus4.prg
+	64tass $(ASFLAGS) -D NEXT=2 -D NEXTNAME=\"$(DISK2NEXT)\" -i nextdisk.s -o nextdisk2-plus4.prg
 nextdisk3-plus4.prg: nextdisk.s $(COMMONSRC)
-	64tass $(ASFLAGS) -D NEXT=3 -i nextdisk.s -o nextdisk3-plus4.prg
+	64tass $(ASFLAGS) -D NEXT=3 -D NEXTNAME=\"$(DISK3NEXT)\" -i nextdisk.s -o nextdisk3-plus4.prg
 
 %-plus4.prg : %.s $(COMMONSRC)
 	64tass $(ASFLAGS) -i "$*.s" -o "$*-plus4.prg"
@@ -464,31 +468,35 @@ Disk1plus4.d64: $(DISK1PROGS) nextdisk1-plus4.prg
 	for I in $(basename $(DISK1PROGS)); do \
 		c1541 Disk1plus4.d64 -write "$$I.prg" $$(echo "$$I" | sed 's:-plus4::g') > /dev/null; \
 	done
-	c1541 Disk1plus4.d64 -write "nextdisk1-plus4.prg" $$(echo "$(basename $(DISK1NEXT))" | sed 's:-plus4::g') > /dev/null
+	c1541 Disk1plus4.d64 -write "nextdisk1-plus4.prg" $$(echo "$(DISK1NEXT)" | sed 's:-plus4::g') > /dev/null
 #	c1541 Disk1plus4.d64 -list
+
 Disk2plus4.d64: $(DISK2PROGS) nextdisk2-plus4.prg
 	c1541 -format "test suite 2.15+,#2" d64 Disk2plus4.d64 > /dev/null
 	for I in $(basename $(DISK2PROGS)); do \
 		c1541 Disk2plus4.d64 -write "$$I.prg" $$(echo "$$I" | sed 's:-plus4::g') > /dev/null; \
 	done
-	c1541 Disk2plus4.d64 -write "nextdisk2-plus4.prg" $$(echo "$(basename $(DISK2NEXT))" | sed 's:-plus4::g') > /dev/null
+	c1541 Disk2plus4.d64 -write "nextdisk2-plus4.prg" $$(echo "$(DISK2NEXT)" | sed 's:-plus4::g') > /dev/null
 #	c1541 Disk2plus4.d64 -list
-Disk3plus4.d64: $(DISK3PROGSOLD) nextdisk3-plus4.prg
+
+Disk3plus4.d64: $(DISK3PROGS) nextdisk3-plus4.prg
 	c1541 -format "test suite 2.15+,#3" d64 Disk3plus4.d64 > /dev/null
-	for I in $(basename $(DISK3PROGSOLD)); do \
+	for I in $(basename $(DISK3PROGS)); do \
 		c1541 Disk3plus4.d64 -write "$$I.prg" $$(echo "$$I" | sed 's:-plus4::g') > /dev/null; \
 	done
-	c1541 Disk3plus4.d64 -write "nextdisk3-plus4.prg" "$(basename $(DISK3NEXT))" > /dev/null
+	c1541 Disk3plus4.d64 -write "nextdisk3-plus4.prg" $$(echo "$(DISK3NEXT)"  | sed 's:-plus4::g') > /dev/null
 #	c1541 Disk3plus4.d64 -list
-Disk4plus4.d64: $(DISK4PROGSOLD)
+
+Disk4plus4.d64: $(DISK4PROGS)
 	c1541 -format "test suite 2.15+,#4" d64 Disk4plus4.d64 > /dev/null
-	for I in $(basename $(DISK3PROGSOLD)); do \
+	for I in $(basename $(DISK4PROGS)); do \
 		c1541 Disk4plus4.d64 -write "$$I.prg" $$(echo "$$I" | sed 's:-plus4::g') > /dev/null; \
 	done
 #	c1541 Disk4plus4.d64 -list
-LorenzPlus4.d81: $(ALLPROGSOLD)
+
+LorenzPlus4.d81: $(ALLPROGS)
 	c1541 -format "test suite 2.15+,#1" d81 LorenzPlus4.d81 > /dev/null
-	for I in $(basename $(ALLPROGSOLD)); do \
+	for I in $(basename $(ALLPROGS)); do \
 		c1541 LorenzPlus4.d81 -write "$$I.prg" $$(echo "$$I" | sed 's:-plus4::g') > /dev/null; \
 	done
 #	c1541 LorenzPlus4.d81 -list

@@ -158,7 +158,7 @@ DISK1PROGS = \
 	jmpw.prg \
 	jmpi.prg
 
-DISK1NEXT = beqr.prg
+DISK1NEXT_PRG = beqr.prg
 
 DISK2PROGS = \
 	beqr.prg \
@@ -364,7 +364,7 @@ DISK2PROGS128 = \
 	cpuport128.prg \
 	cputiming.prg
 
-DISK2NEXT = irq.prg
+DISK2NEXT_PRG = irq.prg
 
 DISK3PROGSOLD = \
 	  irq.prg \
@@ -411,7 +411,7 @@ DISK3PROGSNEW = \
 	  cia2tanew.prg \
 	  cia2tbnew.prg
 
-DISK3NEXT = aneb.prg
+DISK3NEXT_PRG = aneb.prg
 
 DISK4PROGS = \
 	aneb.prg \
@@ -470,6 +470,10 @@ ALLPROGS128 = $(DISK1PROGS) $(DISK2PROGS128) $(DISK3PROGSOLD) $(DISK3PROGSNEW) $
 ALLDISKS128 = Disk1.d64 Disk2c128.d64 Disk3.d64 Disk4.d64 Disk3new.d64
 
 ASFLAGS=-C -T -a -q -I ./common -D TARGET=0
+
+DISK1NEXT = $(DISK1NEXT_PRG:.prg=)
+DISK2NEXT = $(DISK2NEXT_PRG:.prg=)
+DISK3NEXT = $(DISK3NEXT_PRG:.prg=)
 
 all: $(ALLPROGS) $(ALLDISKS) $(ALLPROGS128) $(ALLDISKS128)
 
@@ -621,11 +625,11 @@ cia2tbnew.prg: cia2tb.s $(COMMONSRC)
 	64tass $(ASFLAGS) -D NEWCIA=1 -i cia2tb.s -o cia2tbnew.prg
 
 nextdisk1.prg: nextdisk.s $(COMMONSRC)
-	64tass $(ASFLAGS) -D NEXT=1 -i nextdisk.s -o nextdisk1.prg
+	64tass $(ASFLAGS) -D NEXT=1 -D NEXTNAME=\"$(DISK1NEXT)\" -i nextdisk.s -o nextdisk1.prg
 nextdisk2.prg: nextdisk.s $(COMMONSRC)
-	64tass $(ASFLAGS) -D NEXT=2 -i nextdisk.s -o nextdisk2.prg
+	64tass $(ASFLAGS) -D NEXT=2 -D NEXTNAME=\"$(DISK2NEXT)\" -i nextdisk.s -o nextdisk2.prg
 nextdisk3.prg: nextdisk.s $(COMMONSRC)
-	64tass $(ASFLAGS) -D NEXT=3 -i nextdisk.s -o nextdisk3.prg
+	64tass $(ASFLAGS) -D NEXT=3 -D NEXTNAME=\"$(DISK3NEXT)\" -i nextdisk.s -o nextdisk3.prg
 
 %.prg : %.s $(COMMONSRC)
 	64tass $(ASFLAGS) -i "$*.s" -o "$*.prg"
@@ -635,41 +639,47 @@ Disk1.d64: $(DISK1PROGS) nextdisk1.prg
 	for I in $(basename $(DISK1PROGS)); do \
 		c1541 Disk1.d64 -write "$$I.prg" "$$I" > /dev/null; \
 	done
-	c1541 Disk1.d64 -write "nextdisk1.prg" "$(basename $(DISK1NEXT))" > /dev/null
+	c1541 Disk1.d64 -write "nextdisk1.prg" "$(DISK1NEXT)" > /dev/null
 #	c1541 Disk1.d64 -list
+
 Disk2.d64: $(DISK2PROGS) nextdisk2.prg
 	c1541 -format "test suite 2.15+,#2" d64 Disk2.d64 > /dev/null
 	for I in $(basename $(DISK2PROGS)); do \
 		c1541 Disk2.d64 -write "$$I.prg" "$$I" > /dev/null; \
 	done
-	c1541 Disk2.d64 -write "nextdisk2.prg" "$(basename $(DISK2NEXT))" > /dev/null
+	c1541 Disk2.d64 -write "nextdisk2.prg" "$(DISK2NEXT)" > /dev/null
 #	c1541 Disk2.d64 -list
+
 Disk3.d64: $(DISK3PROGSOLD) nextdisk3.prg
 	c1541 -format "test suite 2.15+,#3" d64 Disk3.d64 > /dev/null
 	for I in $(basename $(DISK3PROGSOLD)); do \
 		c1541 Disk3.d64 -write "$$I.prg" "$$I" > /dev/null; \
 	done
-	c1541 Disk3.d64 -write "nextdisk3.prg" "$(basename $(DISK3NEXT))" > /dev/null
+	c1541 Disk3.d64 -write "nextdisk3.prg" "$(DISK3NEXT)" > /dev/null
 #	c1541 Disk3.d64 -list
+
 Disk4.d64: $(DISK4PROGS)
 	c1541 -format "test suite 2.15+,#4" d64 Disk4.d64 > /dev/null
 	for I in $(basename $(DISK4PROGS)); do \
 		c1541 Disk4.d64 -write "$$I.prg" "$$I" > /dev/null; \
 	done
 #	c1541 Disk4.d64 -list
+
 Disk3new.d64: $(DISK3PROGSNEW) nextdisk3.prg
 	c1541 -format "test suite 2.15+,#3" d64 Disk3new.d64 > /dev/null
 	for I in $(basename $(DISK3PROGSNEW)); do \
 		c1541 Disk3new.d64 -write "$$I.prg" $$(echo "$$I" | sed -e 's:new$$::') > /dev/null; \
 	done
-	c1541 Disk3new.d64 -write "nextdisk3.prg" "$(basename $(DISK3NEXT))" > /dev/null
+	c1541 Disk3new.d64 -write "nextdisk3.prg" "$(DISK3NEXT)" > /dev/null
 #	c1541 Disk3new.d64 -list
+
 Lorenz.d81: $(ALLPROGSOLD)
 	c1541 -format "test suite 2.15+,#1" d81 Lorenz.d81 > /dev/null
 	for I in $(basename $(ALLPROGSOLD)); do \
 		c1541 Lorenz.d81 -write "$$I.prg" "$$I" > /dev/null; \
 	done
 #	c1541 Lorenz.d81 -list
+
 Lorenznew.d81: $(ALLPROGSNEW)
 	c1541 -format "test suite 2.15+,#1" d81 Lorenznew.d81 > /dev/null
 	for I in $(basename $(ALLPROGSNEW)); do \
@@ -682,7 +692,7 @@ Disk2c128.d64: $(DISK2PROGS128) nextdisk2.prg
 	for I in $(basename $(DISK2PROGS128)); do \
 		c1541 Disk2c128.d64 -write "$$I.prg" $$(echo "$$I" | sed -e 's:128$$::') > /dev/null; \
 	done
-	c1541 Disk2c128.d64 -write "nextdisk2.prg" "$(basename $(DISK2NEXT))" > /dev/null
+	c1541 Disk2c128.d64 -write "nextdisk2.prg" "$(DISK2NEXT)" > /dev/null
 #	c1541 Disk2c128.d64 -list
 
 clean:
