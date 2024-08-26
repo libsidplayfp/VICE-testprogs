@@ -117,6 +117,8 @@ _testPassed:
             sta $d020
             lda #$00
             sta $d7ff
+            lda #$1b
+            sta $d011
             jmp *
 _fail
             sta videoram+(24*40)+0
@@ -124,6 +126,8 @@ _fail
             sta $d020
             lda #$ff
             sta $d7ff
+            lda #$1b
+            sta $d011
             jmp *
 
 _testFailed2
@@ -177,6 +181,10 @@ _printfinit:
             rts
 
 _screenOff:
+            lda #$0b
+            sta $d011
+            jsr _waitVCount
+            jsr _waitVCount
             rts
 
 _interruptsOff:
