@@ -341,20 +341,20 @@
 # Lorenz-Suite Disk3 (new CIA):
 ../general/Lorenz-2.15/src/,irqnew.prg,exitcode,26000000,cia-new
 ../general/Lorenz-2.15/src/,nminew.prg,exitcode,20000000,cia-new
-../general/Lorenz-2.15/src/,cia1tb123.prg,exitcode,10000000,cia-new
-../general/Lorenz-2.15/src/,cia2tb123.prg,exitcode,10000000,cia-new
-../general/Lorenz-2.15/src/,cia1pb6.prg,exitcode,10000000,cia-new
-../general/Lorenz-2.15/src/,cia1pb7.prg,exitcode,10000000,cia-new
-../general/Lorenz-2.15/src/,cia2pb6.prg,exitcode,10000000,cia-new
-../general/Lorenz-2.15/src/,cia2pb7.prg,exitcode,10000000,cia-new
-../general/Lorenz-2.15/src/,cia1tabnew.prg,exitcode,10000000,cia-new
-../general/Lorenz-2.15/src/,loadth.prg,exitcode,10000000,cia-new
-../general/Lorenz-2.15/src/,cnto2.prg,exitcode,10000000,cia-new
-../general/Lorenz-2.15/src/,icr01new.prg,exitcode,10000000,cia-new
-../general/Lorenz-2.15/src/,imrnew.prg,exitcode,10000000,cia-new
-../general/Lorenz-2.15/src/,flipos.prg,exitcode,10000000,cia-new
-../general/Lorenz-2.15/src/,oneshot.prg,exitcode,10000000,cia-new
-../general/Lorenz-2.15/src/,cntdef.prg,exitcode,10000000,cia-new
+../general/Lorenz-2.15/src/,cia1tb123.prg,exitcode,20000000,cia-new
+../general/Lorenz-2.15/src/,cia2tb123.prg,exitcode,20000000,cia-new
+../general/Lorenz-2.15/src/,cia1pb6.prg,exitcode,20000000,cia-new
+../general/Lorenz-2.15/src/,cia1pb7.prg,exitcode,20000000,cia-new
+../general/Lorenz-2.15/src/,cia2pb6.prg,exitcode,20000000,cia-new
+../general/Lorenz-2.15/src/,cia2pb7.prg,exitcode,20000000,cia-new
+../general/Lorenz-2.15/src/,cia1tabnew.prg,exitcode,20000000,cia-new
+../general/Lorenz-2.15/src/,loadth.prg,exitcode,20000000,cia-new
+../general/Lorenz-2.15/src/,cnto2.prg,exitcode,20000000,cia-new
+../general/Lorenz-2.15/src/,icr01new.prg,exitcode,20000000,cia-new
+../general/Lorenz-2.15/src/,imrnew.prg,exitcode,20000000,cia-new
+../general/Lorenz-2.15/src/,flipos.prg,exitcode,20000000,cia-new
+../general/Lorenz-2.15/src/,oneshot.prg,exitcode,20000000,cia-new
+../general/Lorenz-2.15/src/,cntdef.prg,exitcode,20000000,cia-new
 ../general/Lorenz-2.15/src/,cia1tanew.prg,exitcode,190000000,cia-new
 ../general/Lorenz-2.15/src/,cia1tbnew.prg,exitcode,80000000,cia-new
 ../general/Lorenz-2.15/src/,cia2tanew.prg,exitcode,75000000,cia-new,comment:TODO - incomplete

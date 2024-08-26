@@ -66,6 +66,7 @@ waitframe:
             ldx #0
 -
             jsr waitframe2
+            jsr waitframe2
             dex
             bne -
 waitframe2:

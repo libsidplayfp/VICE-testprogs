@@ -149,6 +149,10 @@ function xpet_run_screenshot
         then
             ./cmpscreens "$refscreenshotname" "$XPETREFSXO" "$XPETREFSYO" "$1"/.testbench/"$screenshottest"-xpet.png "$XPETSXO" "$XPETSYO"
             exitcode=$?
+            if [ $verbose == "1" ] && [ $exitcode -ne 0 ]; then
+                echo -ne "screenshot does not match - "
+#                exit -1
+            fi
         else
             echo -ne "reference screenshot missing - "
             exitcode=255
@@ -171,8 +175,13 @@ function xpet_run_exitcode
 {
     if [ $verbose == "1" ]; then
         echo $XPET $XPETOPTS $XPETOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4"
+        $XPET $XPETOPTS $XPETOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 2> /dev/null | grep "cycles elapsed" | tr '\n' ' '
+        exitcode=${PIPESTATUS[0]}
+    else
+        $XPET $XPETOPTS $XPETOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
+        exitcode=$?
     fi
-    $XPET $XPETOPTS $XPETOPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
-    exitcode=$?
-#    echo "exited with: " $exitcode
+    if [ $verbose == "1" ]; then
+        echo $XPET "exited with: " $exitcode
+    fi
 }
