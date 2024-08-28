@@ -19,6 +19,8 @@ RESULTS0=\
 	 bug942.log \
 	 bug1488.log \
 	 bug1836.log \
+	 bug1984.log \
+	 bug1984-2.log \
 	 bug2024.log \
 	 bug2025.log \
 	 bug2025-2.log \

@@ -1,0 +1,40 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/1984/
+;
+; the trace information/output is out of order
+logname "bug1984.log"
+log on
+
+a $c000
+jsr $c004
+rts
+lda #$00
+rts
+
+trace exec c000 c007
+trace load c002
+break c003
+
+keybuf sys49152\n
+x
+;g $c000
+
+q
+
+; Note the "Trace load c002" comes AFTER "Trace exec c004", and the trace load
+; also seems to have the wrong stopwatch value.
+
+;TRACE: 1  C:$c000-$c007  (Trace exec)
+;TRACE: 2  C:$c002  (Trace load)
+;UNTIL: 3  C:$c003  (Stop on exec)
+;#1 (Trace  exec c000)  233/$0e9,  54/$36
+;.C:c000  20 04 C0    JSR $C004      - A:00 X:00 Y:00 SP:f7 ..-.....   21911517
+;#1 (Trace  exec c004)  233/$0e9,  60/$3c
+;.C:c004  A9 00       LDA #$00       - A:00 X:00 Y:00 SP:f5 ..-.....   21911523
+;#2 (Trace  load c002)  233/$0e9,  60/$3c
+;.C:c000  20 04 C0    JSR $C004      - A:00 X:00 Y:00 SP:f5 ..-.....   21911523
+;#1 (Trace  exec c006)  233/$0e9,  62/$3e
+;.C:c006  60          RTS            - A:00 X:00 Y:00 SP:f5 ..-...Z.   21911525
+;#1 (Trace  exec c003)  234/$0ea,   5/$05
+;.C:c003  60          RTS            - A:00 X:00 Y:00 SP:f7 ..-...Z.   21911531
+;#3 (Stop on  exec c003)  234/$0ea,   5/$05
+;.C:c003  60          RTS            - A:00 X:00 Y:00 SP:f7 ..-...Z.   21911531

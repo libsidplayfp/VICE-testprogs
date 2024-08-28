@@ -1,0 +1,25 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/1984/
+;
+; the trace information/output is out of order
+logname "bug1984-2.log"
+log on
+
+a $c000
+jsr $c004
+rts
+lda #$00
+rts
+
+trace load c002
+break c000
+
+keybuf sys49152\n
+x
+;g $c000
+
+z
+z
+z
+z
+
+q

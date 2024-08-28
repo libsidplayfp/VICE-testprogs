@@ -10,6 +10,8 @@ WIP WIP WIP - this is very much work in progress, in particular:
 - results are not logged except on screen
 - it will always run all tests, even if they fail (at some point, when all tests
   are working, we want the testbench to fail by itself if any test fails)
+- perhaps we should make a "todo" directory that contains all tests that are
+  expected to fail, because of known bugs
 - many more tests are needed
 
 
@@ -25,12 +27,6 @@ note: have a look at eg bug2025*.mon on how to open a logfile, or how to execute
 custom assembly code.
 
 
-To add a new test:
-
-- in Makefile add "foo.log" to the RESULTS0 list
-- if the test uses an external .asm file, add "foo.prg" to the PROGS list
-
-
 configure the Makefile:
 
 - at the top set EMU to the x64sc you want to test
@@ -41,6 +37,18 @@ run the tests:
 $ make clean all
 
 (you will need a bash-shell and *nix like environment, msys on windows should work)
+
+
+you can run individual tests manually without the help of the scripts like this:
+
+x64sc -default -moncommands foo.mon
+
+
+To add a new test:
+
+- in Makefile add "foo.log" to the RESULTS0 list
+- if the test uses an external .asm file, add "foo.prg" to the PROGS list
+
 
 -------------------------------------------------------------------------------
 The individual tests:
@@ -77,6 +85,14 @@ https://sourceforge.net/p/vice-emu/bugs/1488/
 TODO!
 -------------------------------------------------------------------------------
 
+bug2024.mon
+
+attempt at making a test from the original bug report. however, since this is
+not stable, it can not work
+
+https://sourceforge.net/p/vice-emu/bugs/2024/
+
+
 goonbreak.mon
 goonbreak-2.mon
 
@@ -89,19 +105,19 @@ time!
 #2024 - it works in 3.8)
 
 
-bug2024.mon
-
-attempt at making a test from the original bug report. however, since this is
-not stable, it can not work
-
-https://sourceforge.net/p/vice-emu/bugs/2024/
-
-
 bug1488.log
 bug1836.log
 
-the parser has problems recognizing a hex number that is not prefixed by $ -
+The parser has problems recognizing a hex number that is not prefixed by $ -
 which these tests demonstrate
 
 https://sourceforge.net/p/vice-emu/bugs/1488/
 https://sourceforge.net/p/vice-emu/bugs/1836/
+
+
+bug1984.log
+bug1984-2.log
+
+The trace output is out of order
+
+https://sourceforge.net/p/vice-emu/bugs/1984/
