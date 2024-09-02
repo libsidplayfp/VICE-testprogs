@@ -3,7 +3,7 @@ all: progs disk
 
 progs: spriteba.prg
 
-spriteba.prg: spriteba.asm
+spriteba.prg: spriteba.asm keybscan.asm
 	acme -f cbm -o spriteba.prg spriteba.asm
 
 disk: progs

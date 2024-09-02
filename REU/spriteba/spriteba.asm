@@ -270,19 +270,6 @@ skipkeys:
     pla
     rti
 
-buffer:
-    !for i, 10 {
-        !byte 0,0,0,0,0,0,0
-        !byte 1,1,1,1,1,1
-        !byte 2,2,2,2,2,2
-        !byte 0, 0,1,2,3,4,5
-        !byte 6,7,8,9,10,11
-        !byte 12,13,14,15,0
-        !byte 6,6,6,6,6,6
-        !byte 7,7,7,7,7,7
-        !byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0
-    }
-
         !align 255,0
 
 ; the lightpen is usually connected to pin 6 of joystick port 1, which is the
@@ -377,4 +364,24 @@ timeout: bvc timeout
          rts
 
 
-!src "keybscan.asm"
+    !src "keybscan.asm"
+
+buffer:
+    !for i, 10 {
+        !byte 0,0,0,0,0,0,0
+        !byte 1,1,1,1,1,1
+        !byte 2,2,2,2,2,2
+        !byte 0, 0,1,2,3,4,5
+        !byte 6,7,8,9,10,11
+        !byte 12,13,14,15,0
+        !byte 6,6,6,6,6,6
+        !byte 7,7,7,7,7,7
+        !byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    }
+    !for i, ((63 * 200) - 620) / 16 {
+        !byte $0f, $0e, $0d, $0c
+        !byte $0b, $0a, $09, $08
+        !byte $07, $06, $05, $04
+        !byte $03, $02, $01, $00
+    }
+
