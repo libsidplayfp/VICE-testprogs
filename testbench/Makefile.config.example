@@ -32,5 +32,8 @@ DENISEDIR="~/c64stuff/denise/"
 # should point to the directory containing kernal64
 KERNAL64DIR="~/c64stuff/kernal64/"
 
+# should point to the directory containing virtualc64
+VIRTUALC64DIR="~/c64stuff/virtualc64/"
+
 # the IP used for the U64 remote interface
 U64IP="192.168.100.210"

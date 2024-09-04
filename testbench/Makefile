@@ -72,6 +72,10 @@ CHAMCARTRIDGELAST=9q
 
 CHAM20LAST=20201130
 
+# TODO
+VIRTUALC64LAST=20241010
+VIRTUALC64LASTSTRING="unknown"
+
 include Makefile.config
 
 .SILENT:
@@ -173,7 +177,8 @@ TESTLISTS=\
 	kernal64c128c128-testlist.txt \
 	kernal64scpu64-testlist.txt \
 	kernal64cbm2-testlist.txt \
-	kernal64vic20-testlist.txt
+	kernal64vic20-testlist.txt \
+	virtualc64-testlist.txt
 
 testlist: $(TESTLISTS)
 
@@ -568,6 +573,33 @@ kernal64scpu64-testlist.txt: scpu-testlist.in Makefile
 		| grep -v "mountcrt:ultimax-vic-rr.crt" \
 		>> kernal64scpu64-testlist.txt
 
+# TODO
+virtualc64-testlist.txt: c64-testlist.in Makefile
+	echo "# this is a generated file, do not edit." >  virtualc64-testlist.txt
+	cat  c64-testlist.in \
+		| grep -v ",vicii-ntsc" \
+		| grep -v ",vicii-ntscold" \
+		| grep -v ",vicii-drean" \
+		| grep -v ",sid-old" \
+		| grep -v ",reu128k" \
+		| grep -v ",reu256k" \
+		| grep -v ",reu1m" \
+		| grep -v ",reu2m" \
+		| grep -v ",reu4m" \
+		| grep -v ",reu8m" \
+		| grep -v ",reu16m" \
+		| grep -v ",geo512k" \
+		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
+		| grep -v "C64/carts/nordicpower" \
+		| grep -v "C64/carts/pagefox" \
+		| grep -v "mountcrt:nrdummy.crt" \
+		| grep -v "mountcrt:npdummy.crt" \
+		>> virtualc64-testlist.txt
+
 kernal64cbm2-testlist.txt: cbm610-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  kernal64cbm2-testlist.txt
 	cat  cbm610-testlist.in >> kernal64cbm2-testlist.txt
@@ -721,6 +753,9 @@ testkernal64cbm2: prereq
 testkernal64vic20: prereq
 #	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64vic20 --verbose
 	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64vic20 --resume
+
+testvirtualc64: prereq
+	EMUDIR="$(VIRTUALC64DIR)" ./testbench.sh virtualc64
 
 ##############################################################################
 

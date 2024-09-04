@@ -51,6 +51,7 @@ source "./kernal64c128c128-hooks.sh"
 source "./kernal64scpu64-hooks.sh"
 source "./kernal64cbm2-hooks.sh"
 source "./kernal64vic20-hooks.sh"
+source "./virtualc64-hooks.sh"
 
 ###############################################################################
 
@@ -104,6 +105,9 @@ function checktarget
                 target="$1"
             ;;
         kernal64c128c128)
+                target="$1"
+            ;;
+        virtualc64)
                 target="$1"
             ;;
     # C128 targets
@@ -672,7 +676,7 @@ function showhelp
     echo $NAME" - run test programs."
     echo "usage: "$NAME" [target] <filter> <options>"
     echo "  targets: x64, x64sc, x128c64, x128, xscpu64, x64dtv, xpet, xcbm2, xcbm5x0, xvic, xplus4, vsid,"
-    echo "           hoxs64, micro64, emu64, yace, z64kc64, z64kc128, z64kc128c64, z64kvic20, denise, kernal64c64, kernal64c64c128, kernal64c128c128, kernal64scpu64, kernal64cbm2, kernal64vic20,"
+    echo "           hoxs64, micro64, emu64, yace, z64kc64, z64kc128, z64kc128c64, z64kvic20, denise, kernal64c64, kernal64c64c128, kernal64c128c128, kernal64scpu64, kernal64cbm2, kernal64vic20, virtualc64,"
     echo "           chameleon, u64, cham20, c64rmk2"
     echo "  <filter> is a substring of the path of tests to restrict to"
     echo "  --help       show this help"
