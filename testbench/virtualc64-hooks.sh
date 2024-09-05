@@ -39,6 +39,7 @@ VIRTUALC64OPTS+=" -\"screenshot set path \"\"\""
 #VIRTUALC64OPTSSCREENSHOT+=" -minimized"
 #VIRTUALC64OPTSSCREENSHOT+=" -console"
 
+# TODO: adjust these two offsets here and below in the virtualc64_run_screenshot function
 # X and Y offsets for saved screenshots. when saving a screenshot in the
 # computers reset/startup screen, the offset gives the top left pixel of the
 # top left character on screen.
