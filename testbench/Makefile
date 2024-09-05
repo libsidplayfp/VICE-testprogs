@@ -574,30 +574,25 @@ kernal64scpu64-testlist.txt: scpu-testlist.in Makefile
 		>> kernal64scpu64-testlist.txt
 
 # TODO
+# NOT supported:
+# plus6k, plus256k
+# ramcart128k, dqbb, isepic
+# reu1m, reu4m, reu8m, reu16m
 virtualc64-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  virtualc64-testlist.txt
 	cat  c64-testlist.in \
 		| grep -v ",vicii-ntsc" \
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
-		| grep -v ",sid-old" \
-		| grep -v ",reu128k" \
-		| grep -v ",reu256k" \
 		| grep -v ",reu1m" \
-		| grep -v ",reu2m" \
 		| grep -v ",reu4m" \
 		| grep -v ",reu8m" \
 		| grep -v ",reu16m" \
-		| grep -v ",geo512k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
-		| grep -v "C64/carts/nordicpower" \
-		| grep -v "C64/carts/pagefox" \
-		| grep -v "mountcrt:nrdummy.crt" \
-		| grep -v "mountcrt:npdummy.crt" \
 		>> virtualc64-testlist.txt
 
 kernal64cbm2-testlist.txt: cbm610-testlist.in Makefile
