@@ -156,6 +156,7 @@ TESTLISTS=\
 	hoxs64-testlist.txt \
 	micro64-testlist.txt \
 	emu64-testlist.txt \
+	frodo-testlist.txt \
 	yace-testlist.txt \
 	x128-testlist.txt \
 	xscpu64-testlist.txt \
@@ -339,7 +340,34 @@ emu64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",mountp64:" \
 		>> emu64-testlist.txt
 
-		
+# Frodo only supports simple 8K and 16K game cartridges
+frodo-testlist.txt: c64-testlist.in Makefile
+	echo "# this is a generated file, do not edit." >  frodo-testlist.txt
+	cat  c64-testlist.in \
+		| grep -v ",vicii-ntsc" \
+		| grep -v ",vicii-ntscold" \
+		| grep -v ",vicii-drean" \
+		| grep -v ",cia-new" \
+		| grep -v ",reu1m" \
+		| grep -v ",reu2m" \
+		| grep -v ",reu4m" \
+		| grep -v ",reu8m" \
+		| grep -v ",plus60k" \
+		| grep -v ",plus256k" \
+		| grep -v ",isepic" \
+		| grep -v ",dqbb" \
+		| grep -v ",ramcart128k" \
+		| grep -v ",mountp64:" \
+		| grep -v "C64/carts/aracidtest" \
+		| grep -v "C64/carts/pagefox" \
+		| grep -v "C64/carts/ef" \
+		| grep -v "C64/carts/nordicpower" \
+		| grep -v "C64/carts/retroreplay" \
+		| grep -v "C64/carts/supergames" \
+		| grep -v "C64/carts/tamtest" \
+		| grep -v "C64/carts/ultimax" \
+		>> frodo-testlist.txt
+
 denise-testlist.txt: c64-testlist.in Makefile
 	echo "# this is a generated file, do not edit." >  denise-testlist.txt
 	cat  c64-testlist.in \
@@ -365,7 +393,7 @@ yace-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
 		>> yace-testlist.txt
-		
+
 #Cartridge support for the following crt types:
 # - Action Replay
 # - KCS Power Cartridge
@@ -728,6 +756,9 @@ testdenise: prereq
 testemu64: prereq
 #	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --verbose --resume
 	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --resume
+testfrodo: prereq
+#	EMUDIR="$(FRODODIR)" ./testbench.sh frodo --verbose
+	EMUDIR="$(FRODODIR)" ./testbench.sh frodo
 
 testkernal64: testkernal64c64 testkernal64c128c64 testkernal64c128c128 testkernal64scpu64 testkernal64cbm2 testkernal64vic20
 testkernal64c64: prereq
@@ -886,7 +917,8 @@ results0: maketable
 		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING) \
 		--results results/yace-$(YACEHEAD)-result.txt "yace "$(YACEHEAD)"" \
-		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)""
+		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
+		--results results/frodo-$(FRODOHEAD)-result.txt "frodo "$(FRODOHEAD)""
 
 	./maketable --list vic20-testlist.in \
 		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
@@ -939,6 +971,7 @@ results: maketable
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING) \
 		--results results/yace-$(YACEHEAD)-result.txt "yace "$(YACEHEAD)"" \
 		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
+		--results results/frodo-$(FRODOHEAD)-result.txt "frodo "$(FRODOHEAD)"" \
 		\
 		> results/c64.html
 		
@@ -1024,7 +1057,8 @@ resultswiki: maketable
 		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING) \
 		--results results/yace-$(YACEHEAD)-result.txt "yace "$(YACEHEAD)"" \
-		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)""
+		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
+		--results results/frodo-$(FRODOHEAD)-result.txt "frodo "$(FRODOHEAD)""
 	@echo "=== VIC20 ==="
 	./maketable --omit-clean --wiki --list vic20-testlist.in \
 		--ranking "{{Progress|%d|%d|%d|}}" \
