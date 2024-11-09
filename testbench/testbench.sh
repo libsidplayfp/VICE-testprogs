@@ -455,6 +455,8 @@ function runprogsfortarget
 #            echo " options: $testoptions"
 
             skiptest=0
+            expecterror=0
+            expecttimeout=0
             if [ "$2" == "" ] || [ "${progpath#*$2}" != "$progpath" ]; then
                 # create the commandline for the target...
                 testoptions=""
@@ -462,6 +464,12 @@ function runprogsfortarget
                 for (( i=5; i<${arraylength}+1; i++ ));
                 do
 #                    echo $i " / " ${arraylength} " : " ${myarray[$i-1]}
+                    if [ "${myarray[$i-1]}" == "expect:error" ]; then
+                        expecterror=1
+                    fi
+                    if [ "${myarray[$i-1]}" == "expect:timeout" ]; then
+                        expecttimeout=1
+                    fi
                     "$target"_get_options "${myarray[$i-1]}" "$testpath"
 #                    echo "exitoptions: $exitoptions"
 #                    echo "testprogvideotype: ${testprogvideotype}"
@@ -632,17 +640,33 @@ function runprogsfortarget
                         GREEN='\033[1;32m'
                         RED='\033[1;31m'
                         NC='\033[0m'
+                        extrastatus=""
                         case "$exitcode" in
                             0)
-                                    echo -ne $GREEN
+                                    if [ "${expecterror}" == "1" ] || [ "${expecttimeout}" == "1" ]; then
+                                        echo -ne $RED
+                                        extrastatus="(unexpected)"
+                                    else
+                                        echo -ne $GREEN
+                                    fi
                                     exitstatus="ok"
                                 ;;
                             1)
-                                    echo -ne $RED
+                                    if [ "${expecttimeout}" == "1" ]; then
+                                        echo -ne $GREEN
+                                        extrastatus="(expected)"
+                                    else
+                                        echo -ne $RED
+                                    fi
                                     exitstatus="timeout"
                                 ;;
                             255)
-                                    echo -ne $RED
+                                    if [ "${expecterror}" == "1" ]; then
+                                        echo -ne $GREEN
+                                        extrastatus="(expected)"
+                                    else
+                                        echo -ne $RED
+                                    fi
                                     exitstatus="error"
                                 ;;
                             *)
@@ -650,7 +674,7 @@ function runprogsfortarget
                                     exitstatus="error"
                                 ;;
                         esac
-                        echo -e "$exitstatus" $NC
+                        echo -e "$exitstatus" "$extrastatus" $NC
                         resultprintline "$testpath" "$testprog" "$exitstatus" "${testtype}"
                     fi
                 fi
