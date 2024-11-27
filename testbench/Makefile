@@ -72,13 +72,16 @@ CHAMCARTRIDGELAST=9q
 
 CHAM20LAST=20201130
 
+# checked 25/11/2024
+FRODOHEAD:=20241125
+
 # TODO
 VIRTUALC64LAST=20241010
 VIRTUALC64LASTSTRING="unknown"
 
 include Makefile.config
 
-.SILENT:
+#.SILENT:
 
 all: prereq
 #	12345678901234567890123456789012345678901234567890123456789012345678901234567890
@@ -1392,6 +1395,14 @@ resultskernal64vic20: maketable kernal64vic20-testlist.txt
 		\
 		> results/kernal64vic20.html
 
+.PHONY: resultsfrodo
+resultsfrodo: maketable frodo-testlist.txt
+	./maketable --omit-two-ok --omit-clean --html --list frodo-testlist.txt \
+		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
+		--results results/frodo-$(FRODOHEAD)-result.txt "Frodo "$(FRODOHEAD)"" \
+		\
+		> results/frodo.html
+
 ################################################################################
 		
 .PHONY: resultscham
@@ -1507,6 +1518,7 @@ allresults: results resultsx64 resultsx64sc resultsx128 resultsx128c64 resultsxc
 		resultsz64kc64 resultsz64kc128 resultsz64kc128c64 resultsz64kvic20 \
 		resultshoxs64 resultsdenise resultsmicro64 resultsyace resultsemu64 \
 		resultskernal64c64 resultskernal64c128c64 resultskernal64c128c128 resultskernal64scpu64 resultskernal64cbm2 resultskernal64vic20 \
+		resultsfrodo \
 		resultscham resultscham20 resultsu64 
 
 .PHONY: clean zap

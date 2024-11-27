@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define MAXLISTS    0x10
-#define MAXTESTS    2000
+#define MAXTESTS    5000
 #define MAXPATHLEN  0x100
 
 #define BLUE    "\033[1;34m"
