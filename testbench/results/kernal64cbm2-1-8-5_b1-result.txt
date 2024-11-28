@@ -1,0 +1,9 @@
+./selftest/,cbm610-pass.prg,ok,exitcode,,,,-1,-1,-1
+./selftest/,cbm610-fail.prg,error,exitcode,,,,-1,-1,-1
+./selftest/,cbm610-pass.prg,error,screenshot,,,,-1,-1,-1
+./selftest/,cbm610-fail.prg,error,screenshot,,,,-1,-1,-1
+./selftest/,,timeout,exitcode,,,,-1,-1,-1
+./selftest/,,timeout,exitcode,,,,-1,-1,-1
+./selftest/,,noref,screenshot,,,,-1,-1,-1
+./selftest/,,noref,screenshot,,,,-1,-1,-1
+# 0 minutes and 42 seconds elapsed.
