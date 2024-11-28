@@ -267,7 +267,7 @@ function z64kc128c64_run_screenshot
         then
             if [ $exitcode -ne 255 ]
             then
-                echo -ne "\nerror: call to $Z64KC64128C64 failed.\n"
+                echo -ne "\nerror: call to $Z64KC128C64 failed.\n"
                 exit -1
             fi
         fi

@@ -24,12 +24,12 @@ XVICHEAD := $(shell ls results/xvic-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-re
 XPLUS4HEAD := $(shell ls results/xplus4-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
 XCBM2HEAD := $(shell ls results/xcbm2-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
 XCBM5X0HEAD := $(shell ls results/xcbm5x0-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
-# checked 24/11/2028
+# checked 28/11/2024
 DENISELAST=20241128
 DENISELASTSTRING="git 24.11.2028"
-# checked 19/11/2023
-HOXS64LAST=1-1-2-3
-HOXS64LASTSTRING=1.1.2.3
+# checked 28/11/2024
+HOXS64LAST=1-1-2-6
+HOXS64LASTSTRING=1.1.2.6
 # checked 20/11/2023
 Z64KC64LAST=20230522
 Z64KC64LASTSTRING="22 May 2023"
