@@ -30,15 +30,15 @@ DENISELASTSTRING="git 24.11.2028"
 # checked 28/11/2024
 HOXS64LAST=1-1-2-6
 HOXS64LASTSTRING=1.1.2.6
-# checked 20/11/2023
-Z64KC64LAST=20230522
-Z64KC64LASTSTRING="22 May 2023"
-Z64KC128C64LAST=20230522
-Z64KC128C64LASTSTRING="22 May 2023"
-Z64KC128LAST=20230522
-Z64KC128LASTSTRING="22 May 2023"
-Z64KVIC20LAST=20230522
-Z64KVIC20LASTSTRING="22 May 2023"
+# checked 30/11/2024
+Z64KC64LAST=20241130
+Z64KC64LASTSTRING="30 November 2024"
+Z64KC128C64LAST=20241130
+Z64KC128C64LASTSTRING="30 November 2024"
+Z64KC128LAST=20241130
+Z64KC128LASTSTRING="30 November 2024"
+Z64KVIC20LAST=20241130
+Z64KVIC20LASTSTRING="30 November 2024"
 # checked 27/11/2024
 KERNAL64C64LAST=1-8-5_b1
 KERNAL64C64LASTSTRING=1.8.5_b1
@@ -1217,6 +1217,7 @@ resultsz64kc64: maketable z64kc64-testlist.txt
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kc64-$(Z64KC64LAST)-result.txt "z64kc64 "$(Z64KC64LASTSTRING)"" \
+		--results results/z64kc64-20230522-result.txt "z64kc64 22 May 2023" \
 		--results results/z64kc64-20220130-result.txt "z64kc64 30 January 2022" \
 		--results results/z64kc64-20201230-result.txt "z64kc64 30 December 2020" \
 		--results results/z64kc64-20201224-result.txt "z64kc64 24 December 2020" \
@@ -1232,6 +1233,7 @@ resultsz64kc128: maketable z64kc128-testlist.txt
 		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64kc128 "$(Z64KC128LASTSTRING)"" \
+		--results results/z64kc128-20230522-result.txt "z64kc128 22 May 2023" \
 		--results results/z64kc128-20220130-result.txt "z64kc128 30 January 2022" \
 		--results results/z64kc128-20201230-result.txt "z64kc128 30 December 2020" \
 		--results results/z64kc128-20201217-result.txt "z64kc128 17 December 2020" \
@@ -1247,6 +1249,7 @@ resultsz64kc128c64: maketable z64kc128c64-testlist.txt
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64kc128c64 "$(Z64KC128C64LASTSTRING)"" \
+		--results results/z64kc128c64-20230522-result.txt "z64kc128c64 22 May 2023" \
 		--results results/z64kc128c64-20220130-result.txt "z64kc128c64 30 January 2022" \
 		--results results/z64kc128c64-20201230-result.txt "z64kc128c64 30 December 2020" \
 		--results results/z64kc128c64-20201217-result.txt "z64kc128c64 17 December 2020" \
@@ -1262,6 +1265,7 @@ resultsz64kvic20: maketable z64kvic20-testlist.txt
 		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/z64kvic20-$(Z64KVIC20LAST)-result.txt "z64kvic20 "$(Z64KVIC20LASTSTRING)"" \
+		--results results/z64kvic20-20230522-result.txt "z64kvic20 22 May 2023" \
 		--results results/z64kvic20-20220130-result.txt "z64kvic20 30 January 2022" \
 		--results results/z64kvic20-20201217-result.txt "z64kvic20 17 December 2020" \
 		--results results/z64kvic20-1_2-result.txt "z64kvic20 1.2" \

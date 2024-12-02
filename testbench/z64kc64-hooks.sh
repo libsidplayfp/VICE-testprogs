@@ -1,7 +1,7 @@
 
 Z64KC64OPTS+=" -default"
 Z64KC64OPTS+=" -VICIIfilter 0"
-Z64KC64OPTS+=" -VICIIextpal"
+#Z64KC64OPTS+=" -VICIIextpal"
 Z64KC64OPTS+=" -VICIIpalette pepto-pal.vpl"
 Z64KC64OPTS+=" -warp"
 Z64KC64OPTS+=" -debugcart"
@@ -252,7 +252,7 @@ function z64kc64_run_screenshot
         then
             if [ $exitcode -ne 255 ]
             then
-                echo -ne "\nerror: call to $Z64KC64 failed.\n"
+                echo -ne "\nerror: call to $Z64KC64 failed with exitcode:"$exitcode"\n"
                 exit -1
             fi
         fi

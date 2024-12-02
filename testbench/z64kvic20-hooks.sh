@@ -1,7 +1,7 @@
 
 Z64KVIC20OPTS+=" -default"
 Z64KVIC20OPTS+=" -VICfilter 0"
-Z64KVIC20OPTS+=" -VICextpal"
+#Z64KVIC20OPTS+=" -VICextpal"
 Z64KVIC20OPTS+=" -VICpalette mike-pal.vpl"
 Z64KVIC20OPTS+=" -warp"
 Z64KVIC20OPTS+=" -debugcart"
@@ -160,7 +160,7 @@ function z64kvic20_run_screenshot
         then
             if [ $exitcode -ne 255 ]
             then
-                echo -ne "\nerror: call to $Z64KVIC20 failed.\n"
+                echo -ne "\nerror: call to $Z64KVIC20 failed with exitcode:"$exitcode"\n"
                 exit -1
             fi
         fi
