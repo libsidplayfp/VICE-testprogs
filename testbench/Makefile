@@ -26,7 +26,7 @@ XCBM2HEAD := $(shell ls results/xcbm2-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-
 XCBM5X0HEAD := $(shell ls results/xcbm5x0-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
 # checked 28/11/2024
 DENISELAST=20241128
-DENISELASTSTRING="git 24.11.2028"
+DENISELASTSTRING="git 28.11.2024"
 # checked 28/11/2024
 HOXS64LAST=1-1-2-6
 HOXS64LASTSTRING=1.1.2.6
@@ -55,8 +55,8 @@ KERNAL64VIC20LASTSTRING=1.8.5_b1
 #KERNAL64CBM5X0LAST=1-8-4_b1
 #KERNAL64CBM5X0LASTSTRING=1.8.4_b1
 
-U64LAST=142
-U64LASTSTRING="1.42"
+U64LAST=143
+U64LASTSTRING="1.43"
 
 # checked 20/11/2023
 MICRO64LAST=20180316
@@ -1512,6 +1512,7 @@ resultsu64: maketable u64-testlist.txt
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--warnvicefail "<small><b>fails on VICE</b></small>" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING) \
+		--results results/u64-142-result.txt "U64 PAL (1.42)" \
 		--results results/u64-141-result.txt "U64 PAL (1.41)" \
 		--results results/u64-137-result.txt "U64 PAL (1.37)" \
 		--results results/u64-133-result.txt "U64 PAL (1.33)" \
