@@ -698,7 +698,7 @@
 ../CIA/tod/,hzsync3.prg,exitcode,100000000,vicii-pal,comment:not 100% stable - rerun on failure
 ../CIA/tod/,hzsync4.prg,exitcode,100000000,vicii-pal
 ../CIA/tod/,hzsync5.prg,exitcode,100000000,vicii-pal
-../CIA/tod/,hzsync6.prg,exitcode,100000000,vicii-pal
+../CIA/tod/,hzsync6.prg,exitcode,100000000,vicii-pal,comment:not 100% stable - rerun on failure
 ../CIA/tod/,powerup.prg,exitcode,100000000
 ../CIA/tod/,read-latch.prg,exitcode,100000000,vicii-pal
 ../CIA/tod/,stability.prg,exitcode,40000000,vicii-pal

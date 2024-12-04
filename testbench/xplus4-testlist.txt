@@ -28,4 +28,4 @@
 # various expansions
 ################################################################################
 ../audio-io/,audio-io-plus4.prg,interactive,0
-../memory-expansions/,c16-ram-emd.prg,exitcode,68000000
+../memory-expansions/,c16-ram-emd.prg,exitcode,68500000

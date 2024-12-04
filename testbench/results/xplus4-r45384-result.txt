@@ -1,0 +1,12 @@
+./selftest/,plus4-pass.prg,ok,exitcode,,,,-1,-1,-1
+./selftest/,plus4-fail.prg,error,exitcode,,,,-1,-1,-1
+./selftest/,plus4-pass.prg,ok,screenshot,,,,-1,-1,-1
+./selftest/,plus4-fail.prg,error,screenshot,,,,-1,-1,-1
+./selftest/,,ok,exitcode,,,plus4-pass.crt,-1,-1,-1
+./selftest/,,error,exitcode,,,plus4-fail.crt,-1,-1,-1
+./selftest/,,ok,screenshot,,,plus4-pass.crt,-1,-1,-1
+./selftest/,,error,screenshot,,,plus4-fail.crt,-1,-1,-1
+../Plus4/openio/,outrun.prg,ok,exitcode,,,,-1,-1,-1
+../Plus4/openio/,outrun2.prg,ok,exitcode,,,,-1,-1,-1
+../memory-expansions/,c16-ram-emd.prg,ok,exitcode,,,,-1,-1,-1
+# 0 minutes and 15 seconds elapsed.

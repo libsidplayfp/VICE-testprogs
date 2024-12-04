@@ -195,8 +195,13 @@ function xplus4_run_exitcode
 {
     if [ $verbose == "1" ]; then
         echo $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4"
+        $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 2> /dev/null | grep "cycles elapsed" | tr '\n' ' '
+        exitcode=${PIPESTATUS[0]}
+    else
+        $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
+        exitcode=$?
     fi
-    $XPLUS4 $XPLUS4OPTS $XPLUS4OPTSEXITCODE ${@:5} "-limitcycles" "$3" "$4" 1> /dev/null 2> /dev/null
-    exitcode=$?
-#    echo "exited with: " $exitcode
+    if [ $verbose == "1" ]; then
+        echo $XPLUS4 "exited with: " $exitcode
+    fi
 }

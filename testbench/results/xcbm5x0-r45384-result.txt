@@ -1,0 +1,9 @@
+./selftest/,cbm510-pass.prg,ok,exitcode,,,,-1,-1,-1
+./selftest/,cbm510-fail.prg,error,exitcode,,,,-1,-1,-1
+./selftest/,cbm510-pass.prg,ok,screenshot,,,,-1,-1,-1
+./selftest/,cbm510-fail.prg,error,screenshot,,,,-1,-1,-1
+./selftest/,,ok,exitcode,,,cbm510-pass.crt,-1,-1,-1
+./selftest/,,error,exitcode,,,cbm510-fail.crt,-1,-1,-1
+./selftest/,,ok,screenshot,,,cbm510-pass.crt,-1,-1,-1
+./selftest/,,error,screenshot,,,cbm510-fail.crt,-1,-1,-1
+# 0 minutes and 11 seconds elapsed.
