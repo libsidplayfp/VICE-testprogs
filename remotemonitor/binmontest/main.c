@@ -175,6 +175,71 @@ void registers_get_drive_works(CuTest *tc) {
     CuAssertIntEquals(tc, 7, assert_count);
 }
 
+void cpuhistory_works(CuTest *tc) {
+    int length, count, i, j;
+    int assert_count = 0;
+    unsigned char* cursor;
+
+    // Get
+    unsigned char get_command[] = { 
+        0x02, API_VERSION, 
+        0xff, 0xff, 0xff, 0xff, 
+        0xa3, 0x1f, 0xd8, 0xc7, 
+
+        0x86, 
+
+        // memspace
+        0x00,
+
+        // record count
+        0x0a, 0x00, 0x00, 0x00
+    };
+
+    connection_setup(tc);
+
+    send_command(get_command);
+
+    length = wait_for_response_id(tc, get_command);
+
+    CuAssertIntEquals(tc, 0x86, response[RESPONSE_TYPE]);
+
+    count = little_endian_to_uint32(&response[HEADER_LENGTH]);
+
+    // record count
+    CuAssertIntEquals(tc, 10, count);
+
+    cursor = &response[HEADER_LENGTH + 4];
+
+    for (i = 0 ; i < count ; i++) {
+        uint8_t item_size = cursor[0];
+        uint8_t reg_count = little_endian_to_uint16(&cursor[1]);
+        unsigned char *reg_cursor = &cursor[3];
+
+        CuAssertIntEquals(tc, 47, item_size);
+        CuAssertIntEquals(tc, 8, reg_count);
+
+        for (j = 0 ; j < reg_count ; j++) {
+            uint8_t reg_size = reg_cursor[0];
+            uint8_t id = reg_cursor[1];
+            uint16_t val = little_endian_to_uint16(&reg_cursor[2]);
+
+            fprintf(stderr, "%02x:%04x ", id, val);
+
+            reg_cursor += reg_size + 1;
+        }
+
+        fprintf(stderr, "CLK:%08lx ", little_endian_to_uint64(&reg_cursor[0]));
+        reg_cursor += 8;
+
+        fprintf(stderr, "INST:%02x %02x %02x %02x\n", reg_cursor[1], reg_cursor[2], reg_cursor[3], reg_cursor[4]);
+
+        reg_cursor += reg_cursor[0] + 1;
+
+        cursor += item_size + 1;
+
+        CuAssertTrue(tc, cursor == reg_cursor);
+    }
+}
 
 void registers_get_works(CuTest *tc) {
     int length, count, i;
@@ -238,7 +303,7 @@ void registers_get_works(CuTest *tc) {
                 ) {
             ++assert_count;
         } else if(id == 0x38) {
-            CuAssertIntEquals(tc, 0x17, val);
+            CuAssertIntEquals(tc, 23, val);
             ++assert_count;
         }
 
@@ -1237,6 +1302,8 @@ static CuSuite* get_suite(void)
 {
     CuSuite* suite = CuSuiteNew();
 
+    SUITE_ADD_TEST(suite, little_endian_to_uint64_works);
+
     SUITE_ADD_TEST(suite, request_id_is_set);
 
     SUITE_ADD_TEST(suite, checkpoint_set_works);
@@ -1271,6 +1338,7 @@ static CuSuite* get_suite(void)
     SUITE_ADD_TEST(suite, registers_available_works);
     SUITE_ADD_TEST(suite, display_get_works);
     SUITE_ADD_TEST(suite, vice_info_works);
+    SUITE_ADD_TEST(suite, cpuhistory_works);
 
     SUITE_ADD_TEST(suite, palette_get_works);
 

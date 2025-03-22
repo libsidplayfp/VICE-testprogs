@@ -24,7 +24,17 @@
  *
  */
 
+#include "util.h"
+
 #include <stdint.h>
+
+uint64_t little_endian_to_uint64(unsigned char *input) {
+    uint64_t sum = 0;
+    for (int i = 0 ; i < 8 ; i++) {
+        sum += ((uint64_t)input[i]) << (8 * i);
+    }
+    return sum;
+}
 
 uint32_t little_endian_to_uint32(unsigned char *input) {
     return (input[3] << 24) + (input[2] << 16) + (input[1] << 8) + input[0];
@@ -49,3 +59,23 @@ unsigned char *write_uint32(uint32_t input, unsigned char *output) {
 
     return output + 4;
 }
+
+void little_endian_to_uint64_works(CuTest *tc) {
+    unsigned char max[] = {
+        0xff, 0xff, 0xff, 0xff,
+        0xff, 0xff, 0xff, 0xff,
+    };
+    unsigned char min[] = {
+        0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00,
+    };
+    unsigned char asc[] = {
+        0xf0, 0xde, 0xbc, 0x9a,
+        0x78, 0x56, 0x34, 0x12,
+    };
+
+    CuAssertTrue(tc, 0 == little_endian_to_uint64(min));
+    CuAssertTrue(tc, 0xffffffffffffffff == little_endian_to_uint64(max));
+    CuAssertTrue(tc, 0x123456789abcdef0 == little_endian_to_uint64(asc));
+}
+

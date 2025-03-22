@@ -27,6 +27,10 @@
 #ifndef BINMONTEST_UTIL_H
 #define BINMONTEST_UTIL_H
 
+#include "CuTest.h"
+
+#include <stdint.h>
+
 #define HEADER_LENGTH 12
 #define RESPONSE_TYPE 6
 #define RESPONSE_ERROR 7
@@ -37,6 +41,8 @@
 #define COMMAND_LENGTH 2
 #define API_VERSION 0x02
 
+void little_endian_to_uint64_works(CuTest *tc);
+uint64_t little_endian_to_uint64(unsigned char *input);
 uint32_t little_endian_to_uint32(unsigned char *input);
 uint16_t little_endian_to_uint16(unsigned char *input);
 unsigned char *write_uint16(uint16_t input, unsigned char *output);
