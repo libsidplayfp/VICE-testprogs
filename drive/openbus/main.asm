@@ -1,6 +1,5 @@
         !convtab pet
         !cpu 6510
-        !to "openbus.prg", cbm
 
 ;-------------------------------------------------------------------------------
 
@@ -60,6 +59,7 @@ start:
         bpl -
 
         ; check indirect RAM read data
+!if TEST = 1 {
         ldx #$00
 -
         txa
@@ -68,7 +68,17 @@ start:
         inx
         cpx #$ff
         bne -
-
+}
+!if TEST = 2 {
+        ldx #$00
+-
+        lda #$08
+        cmp $0401,x
+        bne chkerr1
+        inx
+        cpx #$ff
+        bne -
+}
         ; check high-byte read data 08xx-17xx
         ldx #$08
 -
@@ -163,7 +173,7 @@ drvstart
         sta .openbus,x
         inx
         bne -
-        
+
         ; generate test data
         ldx #$00
 -
@@ -173,15 +183,28 @@ drvstart
         bne -
 
         ; copy ram content via open bus and dummy cycle on indexing wrap
+!if TEST = 1 {
         ldx #$01
 -
         lda .openbus - 1,x
         sta .readdata,x
         inx
         bne -
+}
+!if TEST = 2 {
+        ldx #1
+-
+        stx lo
+lo=*+1
+        lda .openbus
+        sta .readdata,x
+        inx
+        bne -
+}
 
         ; some extra probes for high-byte-still-on-bus
         ; RAM/VIA mirrors will be skipped during validation on C64 side
+!if TEST = 1 {
         ldy #$23                ; arbitrary offset, must be less than $80
         sty $14
         ldy #$08
@@ -192,7 +215,21 @@ drvstart
         iny
         cpy #$78
         bne -
-        
+}
+!if TEST = 2 {
+        ldy #$23                ; arbitrary offset, must be less than $80
+        sty .lo
+        ldy #$08
+-
+        sty .hi
+.lo=*+1
+.hi=*+2
+        lda $dead
+        sta .wrdata,y
+        iny
+        cpy #$78
+        bne -
+}
         jsr snd_start
 
         ; send indirect read test data
