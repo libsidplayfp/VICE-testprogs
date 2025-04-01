@@ -1567,6 +1567,7 @@
 ../drive/skew/,skew1.prg,exitcode,30000000,mountg64:skew.g64
 ../drive/selftest/,selftest.prg,exitcode,8000000
 ../drive/openbus/,openbus.prg,exitcode,8000000
+../drive/openbus/,openbus2.prg,exitcode,8000000
 ../drive/viavarious/,via1.prg,exitcode,88000000
 ../drive/viavarious/,via2.prg,exitcode,130000000
 ../drive/viavarious/,via3.prg,exitcode,130000000
