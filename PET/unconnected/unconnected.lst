@@ -1,0 +1,434 @@
+
+; ******** Source: unconnected.asm
+     1                          ; unconnected
+     2                          ; -----------
+     3                          ; Derived from the VIC-20 version, 2009 Hannu Nuotio
+     4                          ; Modifications for PET by Olaf "Rhialto" Seibert 2025.
+     5                          
+     6                          ; This program tests PET unconnected bus behaviour.
+     7                          ; Use with a model with 16 KB of memory, so that there is empty space before
+     8                          ; the screen memory. Do not use BASIC 4.0 since it wants $Bxxx to be empty and
+     9                          ; $Cxxx to be filled.  Also depends on empty space after 2 KB of screen memory
+    10                          ; so do not use -screen2001. Also wants $9xxx to be empty.
+    11                          
+    12                          ; BUGS:
+    13                          ;  - if addr MSB or ROM contents are TESTBYTE_ABS or TESTBYTE_ABS_X, the results may be incorrect
+    14                          
+    15                          !ct scr
+    16                          
+    17                          ; --- Constants
+    18                          
+    19                          ; - hw
+    20                          
+    21                          LOAD_ADDR = $0401
+    22                          SYS_ADDR = $0410
+    23                          
+    24                          SCREEN = $8000
+    25                          
+    26                          ; - sw
+    27                          
+    28                          PRINT_LOC = SCREEN
+    29                          
+    30                          TESTBYTE_ABS = $55
+    31                          TESTBYTE_ABS_X = $aa
+    32                          
+    33                          ; result type
+    34                          RESULT_BYTE_ITSELF = 0  ; byte at addr or addr,x
+    35                          RESULT_ADDR_MSB = 1     ; addr >> 8
+    36                          RESULT_BYTE_WRAP_X = 2  ; byte at wrapped addr
+    37                          RESULT_VBUS = 3         ; vbus ("random")
+    38                          RESULT_ROM = 4          ; ROM
+    39                          
+    40                          ; --- Variables
+    41                          
+    42                          ; - zero page
+    43                          
+    44                          tmp = $5e
+    45                          
+    46                          ; pointer to print location
+    47                          res_print = $5f
+    48                          res_print_h = $60
+    49                          
+    50                          ; pointer to current test (definition) data
+    51                          test_p = $61
+    52                          test_ph = $62
+    53                          
+    54                          ; temp pointer to test location
+    55                          tmp_p = $63
+    56                          tmp_ph = $64
+    57                          
+    58                          ; result of test
+    59                          result = $65
+    60                          
+    62                          ; --- Main
+    63                          
+    64                          ; start of program
+    65                          * = LOAD_ADDR
+    66                          entry:
+    67                          ; BASIC stub: "1 SYS 1040"
+    68  0401 0c1001009e313034...!by $0c,$10,$01,$00,$9e,$31,$30,$34,$30,$00,$00,$00
+    69                          
+    70                          * = SYS_ADDR
+    71                          mlcodeentry:
+    72                          
+    73                          ; - print info
+    74                          
+    75  0410 200905             jsr clearscreen
+    76                          
+    77  0413 a980               lda #>PRINT_LOC
+    78  0415 8560               sta res_print_h
+    79  0417 a900               lda #<PRINT_LOC
+    80  0419 855f               sta res_print
+    81                          
+    82  041b a97a               lda #<infotext_top
+    83  041d a205               ldx #>infotext_top
+    84  041f 203805             jsr printstring
+    85                          
+    86                          ; - test init
+    87                          
+    88  0422 a906               lda #>testdata
+    89  0424 8562               sta test_ph
+    90  0426 a91a               lda #<testdata
+    91  0428 8561               sta test_p
+    92                          
+    93                          ; -- test loop
+    94                          
+    95                          test_next:
+    96  042a a000               ldy #0
+    97  042c b161               lda (test_p),y
+    98  042e d003               bne test_setup
+    99  0430 4cfa04             jmp test_finished
+   100                          
+   101                          ; - setup test
+   102                          
+   103                          test_setup:
+   104  0433 a8                 tay
+   105  0434 b95306             lda testdata_opcode,y
+   106  0437 8d8c04             sta test_opcode
+   107                          
+   108  043a a9f4               lda #<infotext_test_start
+   109  043c a205               ldx #>infotext_test_start
+   110  043e 203805             jsr printstring
+   111                          
+   112  0441 a001               ldy #1
+   113  0443 b161               lda (test_p),y
+   114  0445 8d8e04             sta test_operand_high
+   115  0448 8564               sta tmp_ph
+   116  044a 201d05             jsr printhex
+   117                          
+   118  044d a002               ldy #2
+   119  044f b161               lda (test_p),y
+   120  0451 8d8d04             sta test_operand_low
+   121  0454 8563               sta tmp_p
+   122  0456 201d05             jsr printhex
+   123                          
+   124  0459 a000               ldy #0
+   125  045b b161               lda (test_p),y
+   126  045d c901               cmp #1
+   127  045f f007               beq +
+   128  0461 a9fb               lda #<infotext_test_abs_x
+   129  0463 a205               ldx #>infotext_test_abs_x
+   130  0465 4c6c04             jmp ++
+   131                          +
+   132  0468 a9f6               lda #<infotext_test_abs
+   133  046a a205               ldx #>infotext_test_abs
+   134                          ++
+   135  046c 203805             jsr printstring
+   136                          
+   137  046f a003               ldy #3
+   138  0471 a9aa               lda #TESTBYTE_ABS_X
+   139  0473 9163               sta (tmp_p),y
+   140  0475 a000               ldy #0
+   141  0477 9163               sta (tmp_p),y
+   142                          
+   143  0479 a000               ldy #0
+   144  047b 18                 clc
+   145  047c a563               lda tmp_p
+   146  047e 6903               adc #3
+   147  0480 9006               bcc +
+   148  0482 8563               sta tmp_p
+   149  0484 a955               lda #TESTBYTE_ABS
+   150  0486 9163               sta (tmp_p),y
+   151                          +
+   152                          
+   153                          ; - actual test
+   154                          
+   155  0488 a000               ldy #0
+   156  048a a203               ldx #3
+   157                          testloop:
+   158                          test_opcode = *
+   159                          test_operand_low = * + 1
+   160                          test_operand_high = * + 2
+   161  048c ad3412             lda $1234
+   162  048f 996d06             sta result_buffer,y
+   163  0492 c8                 iny
+   164  0493 d0f7               bne testloop
+   165                          
+   166                          ; - calculate results
+   167                          
+   168  0495 ad6d06             lda result_buffer
+   169  0498 a001               ldy #1
+   170                          calc_loop:
+   171  049a d96d06             cmp result_buffer,y
+   172  049d d024               bne calc_found_difference
+   173  049f c8                 iny
+   174  04a0 d0f8               bne calc_loop
+   175                          ; no differences found, check type
+   176  04a2 c955               cmp #TESTBYTE_ABS
+   177  04a4 d005               bne +
+   178  04a6 a902               lda #RESULT_BYTE_WRAP_X
+   179  04a8 4cc504             jmp test_result_found
+   180                          +
+   181  04ab c9aa               cmp #TESTBYTE_ABS_X
+   182  04ad d005               bne +
+   183  04af a900               lda #RESULT_BYTE_ITSELF
+   184  04b1 4cc504             jmp test_result_found
+   185                          +
+   186  04b4 cd8e04             cmp test_operand_high
+   187  04b7 d005               bne +
+   188  04b9 a901               lda #RESULT_ADDR_MSB
+   189  04bb 4cc504             jmp test_result_found
+   190                          +
+   191                          ; assuming ROM
+   192  04be a904               lda #RESULT_ROM
+   193  04c0 4cc504             jmp test_result_found
+   194                          
+   195                          calc_found_difference:
+   196                          ; difference in results found -> v-bus (not relevant for PETs)
+   197  04c3 a903               lda #RESULT_VBUS
+   198                          
+   199                          test_result_found:
+   200  04c5 8565               sta result
+   201                          
+   202                          ; - print results
+   203                          test_result_print:
+   204  04c7 205c05             jsr printresult
+   205                          
+   206  04ca a900               lda #<infotext_test_res_sep
+   207  04cc a206               ldx #>infotext_test_res_sep
+   208  04ce 203805             jsr printstring
+   209                          
+   210                          ; - print reference
+   211  04d1 a003               ldy #3
+   212  04d3 b161               lda (test_p),y
+   213  04d5 205c05             jsr printresult
+   214                          
+   215                          ; - print first byte from buffer
+   216  04d8 a904               lda #<infotext_test_res_hex
+   217  04da a206               ldx #>infotext_test_res_hex
+   218  04dc 203805             jsr printstring
+   219                          
+   220  04df ad6d06             lda result_buffer
+   221  04e2 201d05             jsr printhex
+   222                          
+   223                          ; - fill up the rest of the line
+   224  04e5 a908               lda #<infotext_rest_of_line
+   225  04e7 a206               ldx #>infotext_rest_of_line
+   226  04e9 203805             jsr printstring
+   227                          ; - test done
+   228                          
+   229  04ec 18                 clc
+   230  04ed a561               lda test_p
+   231  04ef 6904               adc #4
+   232  04f1 8561               sta test_p
+   233  04f3 9002               bcc +
+   234  04f5 e662               inc test_ph
+   235                          +
+   236  04f7 4c2a04             jmp test_next
+   237                          
+   238                          ; - all tests finished
+   239                          
+   240                          test_finished:
+   241  04fa a9cb               lda #<infotext_bottom
+   242  04fc a205               ldx #>infotext_bottom
+   243  04fe 203805             jsr printstring
+   244                          
+   245  0501 20e4ff             - jsr $ffe4
+   246  0504 f0fb               beq -
+   247                          
+   248  0506 4c1004             jmp mlcodeentry
+   249                          
+   251                          ; --- Subroutines
+   252                          
+   253                          ; - clearscreen
+   254                          ; changes:
+   255                          ;  y = 0
+   256                          ;
+   257                          clearscreen:
+   258  0509 a000               ldy #0
+   259  050b a920               - lda #' '
+   260  050d 990080             sta SCREEN,y
+   261  0510 990081             sta SCREEN+$100,y
+   262  0513 990082             sta SCREEN+$200,y
+   263  0516 990083             sta SCREEN+$300,y
+   264  0519 c8                 iny
+   265  051a d0ef               bne -
+   266  051c 60                 rts
+   267                          
+   268                          ; - printhex
+   269                          ; parameters:
+   270                          ;  res_print -> screen location to print to
+   271                          ;  a = value to print
+   272                          ; changes:
+   273                          ;  a, y = 0, tmp, res_print++
+   274                          ;
+   275                          printhex:
+   276  051d 865e               stx tmp
+   277  051f 48                 pha
+   278                          ; get upper
+   279  0520 4a                 lsr
+   280  0521 4a                 lsr
+   281  0522 4a                 lsr
+   282  0523 4a                 lsr
+   283                          ; lookup
+   284  0524 aa                 tax
+   285  0525 bd6a05             lda hex_lut,x
+   286                          ; print
+   287  0528 205105             jsr print
+   288                          ; get lower
+   289  052b 68                 pla
+   290  052c 290f               and #$0f
+   291                          ; lookup
+   292  052e aa                 tax
+   293  052f bd6a05             lda hex_lut,x
+   294                          ; print
+   295  0532 205105             jsr print
+   296  0535 a65e               ldx tmp
+   297  0537 60                 rts
+   298                          
+   299                          ; - printstring
+   300                          ;  res_print -> screen location to print to
+   301                          ;  a:x -> string to print
+   302                          ; changes:
+   303                          ;  a, x, y, res_print++
+   304                          ;
+   305                          printstring:
+   306  0538 8d4105             sta printstring_src
+   307  053b 8e4205             stx printstring_src_h
+   308  053e a200               ldx #0
+   309                          printstring_src = * + 1
+   310                          printstring_src_h = * + 2
+   311                          -
+   312  0540 bd3412             lda $1234,x
+   313  0543 f00b               beq +
+   314  0545 205105             jsr print
+   315  0548 e8                 inx
+   316  0549 d0f5               bne -
+   317  054b ee4205             inc printstring_src_h
+   318  054e d0f0               bne -
+   319                          +
+   320  0550 60                 rts
+   321                          
+   322                          ; - print
+   323                          ; parameters:
+   324                          ;  res_print -> screen location to print to
+   325                          ;  a = char to print
+   326                          ; changes:
+   327                          ;  y = 0, res_print++
+   328                          ;
+   329                          print:
+   330  0551 a000               ldy #0
+   331  0553 915f               sta (res_print),y
+   332  0555 e65f               inc res_print
+   333  0557 d002               bne +
+   334  0559 e660               inc res_print_h
+   335                          +
+   336  055b 60                 rts
+   337                          
+   338                          ; - printresult
+   339                          ; parameters:
+   340                          ;  res_print -> screen location to print to
+   341                          ;  a = result
+   342                          ; changes:
+   343                          ;  a, x, y = 0, tmp, res_print++
+   344                          ;
+   345                          printresult:
+   346  055c 0a                 asl
+   347  055d 0a                 asl
+   348  055e a206               ldx #>infotext_test_result_tbl
+   349  0560 18                 clc
+   350  0561 6956               adc #<infotext_test_result_tbl
+   351  0563 9001               bcc +
+   352  0565 e8                 inx
+   353                          +
+   354  0566 203805             jsr printstring
+   355  0569 60                 rts
+   356                          
+   358                          ; --- Data
+   359                          
+   360                          ; - hex lookup table
+   361                          hex_lut:
+   362  056a 3031323334353637...!tx "0123456789abcdef"
+   363                          
+   364                          ; - Strings
+   365                          ;   |0123456789012345678901234567890123456789|
+   366                          infotext_top:
+   367  057a 150e2d030f0e0e05...!tx "un-connected testprog                   "
+   368  05a2 140513143a201205...!tx "test: result - ref/1st                  ",0
+   369                          
+   370                          infotext_bottom:
+   371  05cb 1012051313200120...!tx "press a key to restart                  ",0
+   372                          
+   373                          infotext_test_start:
+   374  05f4 2400               !tx "$",0
+   375                          infotext_test_abs:
+   376  05f6 20203a2000         !tx          "  : ",0
+   377                          infotext_test_abs_x:
+   378  05fb 2c183a2000         !tx          ",x: ",0
+   379                          infotext_test_res_sep:
+   380  0600 202d2000           !tx                " - ",0
+   381                          infotext_test_res_hex:
+   382  0604 2f242000           !tx                "/$ ",0
+   383                          infotext_rest_of_line:
+   384  0608 2020202020202020...!tx                        "                 ",0
+   385                          
+   386                          ; - test data
+   387                          ; format:
+   388                          ;  type - 0 = end, 1 = absolute, 2 = ,x
+   389                          ;  addr - hi, low
+   390                          ;  reference - (see defines)
+   391                          testdata:
+   392  061a 01f00004           !by 1, $f0, $00, RESULT_ROM
+   393  061e 02f00004           !by 2, $f0, $00, RESULT_ROM
+   394  0622 01150000           !by 1, $15, $00, RESULT_BYTE_ITSELF
+   395  0626 0216ff00           !by 2, $16, $ff, RESULT_BYTE_ITSELF
+   396  062a 01900001           !by 1, $90, $00, RESULT_ADDR_MSB
+   397  062e 02900001           !by 2, $90, $00, RESULT_ADDR_MSB
+   398  0632 0287ff02           !by 2, $87, $ff, RESULT_BYTE_WRAP_X ; X=3, 8702 is RAM, 8802 is empty; reads 8702
+   399  0636 019d3401           !by 1, $9d, $34, RESULT_ADDR_MSB
+   400  063a 0293ff01           !by 2, $93, $ff, RESULT_ADDR_MSB
+   401  063e 01e80001           !by 1, $e8, $00, RESULT_ADDR_MSB    ; E800-E80F is empty
+   402  0642 01e80f01           !by 1, $e8, $0f, RESULT_ADDR_MSB
+   403  0646 02e7ff04           !by 2, $e7, $ff, RESULT_ROM         ; X=3, E80x is empty, E7xx is ROM; reads E702
+   404  064a 027fff00           !by 2, $7f, $ff, RESULT_BYTE_ITSELF ; X=3, 7F02 is empty, 8002 is RAM; reads 8002
+   405  064e 02bfff04           !by 2, $bf, $ff, RESULT_ROM         ; X=3, BF02 is empty, C002 is ROM; reads C002
+   406  0652 00                 !by 0
+   407                          
+   408                          ; Test  2, $7f, $ff, RESULT_BYTE_ITSELF is meant for a 16 K PET so that it
+   409                          ; dummy-reads empty, then reads RAM, but the result "RAM" is also reached for
+   410                          ; 32 KB models, where it dummy-reads and real-reads RAM.
+   411                          
+   412                          ; Test 2, $bf, $ff, RESULT_ROM depends on $Bxxx being empty, so it won't work
+   413                          ; as intended for BASIC 4 machines. For those it should be 2, $af, $ff, RESULT_ROM.
+   414                          ; But the result will be "ROM" in both cases.
+   415                          
+   416                          ; opcode, indexed by type field of testdata
+   417                          testdata_opcode:
+   418  0653 00                 !by 0   ; 0 = unused
+   419  0654 ad                 !by $ad ; 1 = LDA $nnnn
+   420  0655 bd                 !by $bd ; 2 = LDA $nnnn,X
+   421                          
+   422                          ; result text table
+   423                          infotext_test_result_tbl:
+   424  0656 12010d00           !tx "ram",0
+   425  065a 0d130200           !tx "msb",0
+   426  065e 0e0f1800           !tx "nox",0
+   427  0662 162d0200           !tx "v-b",0
+   428  0666 120f0d00           !tx "rom",0
+   429                          
+   430  066a 010203             !by 1,2,3
+   431                          
+   432                          result_buffer:
+   433                          
+
+; ******** done
