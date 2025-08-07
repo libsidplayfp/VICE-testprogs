@@ -12,6 +12,9 @@ linecount = $02
         !byte $32,$30,$36,$34
         *= $0810
 
+!if IRQ=0 {
+        sei
+}
         lda #0
         sta $d020
         sta $d021
