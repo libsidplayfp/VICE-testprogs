@@ -95,27 +95,13 @@ doplot:
         lda bitmaplo,x
         sta lineaddr+0
 
-        clc
-        lda lineaddr+0
-        adc #<(20*8)
-        sta lineaddr2+0
-        lda lineaddr+1
-        adc #>(20*8)
-        sta lineaddr2+1
-
         ; clear the line
         ldx #0
 -
         lda #0
 lineaddr=*+1
         sta bitmap + (0 * 8),x
-lineaddr2=*+1
-        sta bitmap + (20 * 8),x
-;         txa
-;         clc
-;         adc #8
-;         tax
-;         cpx #(20*8)
+
         lda add8,x
         tax
         bne -
@@ -165,7 +151,7 @@ bitmapbits:
     !byte %00000010
     !byte %00000001
     }
-    
+
 !align 255,0
 
 bitmaphi:
@@ -182,9 +168,6 @@ bitmaplo:
 
 !align 255,0
 add8:
-    !for n, 0, 151 {
+    !for n, 0, 255 {
     !byte <(n+8)
-    }
-    !for n, 152, 255 {
-    !byte 0
     }
