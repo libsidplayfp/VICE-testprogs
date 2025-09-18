@@ -15,6 +15,7 @@ PROGS=\
 	cpujamd2.prg \
 	cpujamf2.prg \
 	nojam.prg \
+	unjam.prg \
 	jamirq.prg \
 	jamnmi.prg
 all:
@@ -33,6 +34,7 @@ all:
 	cl65 -C c64-asm.cfg -u __EXEHDR__ -o nojam.prg nojam.s
 	cl65 -C c64-asm.cfg -u __EXEHDR__ --asm-define MODE=0 -o jamirq.prg jamirqnmi.s
 	cl65 -C c64-asm.cfg -u __EXEHDR__ --asm-define MODE=1 -o jamnmi.prg jamirqnmi.s
+	cl65 -C c64-asm.cfg -u __EXEHDR__ -o unjam.prg unjam.s
 	rm -f *.o
 
 	c1541 -format "cpujam,1" d64 cpujam.d64 > /dev/null
