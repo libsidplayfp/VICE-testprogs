@@ -1,7 +1,7 @@
 
 XCBM5X0OPTS+=" -default"
 XCBM5X0OPTS+=" -model 510"
-XCBM5X0OPTS+=" -virtualdev8"
+XCBM5X0OPTS+=" -busdevice8"
 XCBM5X0OPTS+=" +drive8truedrive"
 XCBM5X0OPTS+=" -VICIIfilter 0"
 XCBM5X0OPTS+=" -VICIIextpal"

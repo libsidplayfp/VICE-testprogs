@@ -1,7 +1,7 @@
 
 XCBM2OPTS+=" -default"
 XCBM2OPTS+=" -model 610"
-XCBM2OPTS+=" -virtualdev8"
+XCBM2OPTS+=" -busdevice8"
 XCBM2OPTS+=" +drive8truedrive"
 XCBM2OPTS+=" -CRTCfilter 0"
 XCBM2OPTS+=" -CRTCextpal"
