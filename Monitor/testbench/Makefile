@@ -24,7 +24,11 @@ RESULTS0=\
 	 bug2024.log \
 	 bug2025.log \
 	 bug2025-2.log \
-	 bug2025-2b.log
+	 bug2025-2b.log \
+	 bug2025-3.log \
+	 bug2025-4.log \
+	 bug2025-4b.log \
+	 bug2025-4c.log
 
 all: helper tests
 
