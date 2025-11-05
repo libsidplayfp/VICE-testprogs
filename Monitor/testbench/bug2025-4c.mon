@@ -1,0 +1,20 @@
+logname "bug2025-4c.log"
+log on
+
+break 1000
+break e147
+
+a 1000
+inc $1004
+rts
+brk
+
+keybuf sys4096\n
+x
+
+r pc = 1003
+x
+
+m 1004 1004
+chis 5
+q

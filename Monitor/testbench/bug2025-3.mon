@@ -1,0 +1,6 @@
+logname "bug2025-3.log"
+log on
+break $ea31
+r a = ff
+reset
+q
