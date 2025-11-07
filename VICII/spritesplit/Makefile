@@ -10,55 +10,55 @@ all:	ss-hires-mc.prg ss-hires-mc-exp.prg \
 
 
 ss-hires-mc.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_HIRES_TO_MC
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%01010101 -DSPLIT_HIRES_TO_MC
 
 ss-hires-mc-exp.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_HIRES_TO_MC_EXPANDED
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%01010101 -DSPLIT_HIRES_TO_MC_EXPANDED
 
 ss-mc-hires.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_MC_TO_HIRES
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%01010101 -DSPLIT_MC_TO_HIRES
 
 ss-mc-hires-exp.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_MC_TO_HIRES_EXPANDED
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%01010101 -DSPLIT_MC_TO_HIRES_EXPANDED
 
 ss-hires-color.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_HIRES_COLOR
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%11001100 -DSPLIT_HIRES_COLOR
 
 ss-mc-color0.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_MC_COLOR0
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%10001000 -DSPLIT_MC_COLOR0
 
 ss-mc-color1.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_MC_COLOR1
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%01000100 -DSPLIT_MC_COLOR1
 
 ss-mc-color2.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_MC_COLOR2
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%11001100 -DSPLIT_MC_COLOR2
 
 ss-xpos.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_XPOS
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%11111111 -DSPLIT_XPOS
 
 ss-unexp-exp-hires.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_UNEXP_EXP_HIRES
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%01010101 -DSPLIT_UNEXP_EXP_HIRES
 
 ss-exp-unexp-hires.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_EXP_UNEXP_HIRES
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%01010101 -DSPLIT_EXP_UNEXP_HIRES
 
 ss-unexp-exp-mc.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_UNEXP_EXP_MC
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%10011001 -DSPLIT_UNEXP_EXP_MC
 
 ss-exp-unexp-mc.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_EXP_UNEXP_MC
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%10011001 -DSPLIT_EXP_UNEXP_MC
 
 ss-pri.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_PRI
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%01010101 -DSPLIT_PRI
 
 ss-pri-exp.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_PRI_EXP
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%01010101 -DSPLIT_PRI_EXP
 
 ss-pri-mc.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_PRI_MC
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%10011001 -DSPLIT_PRI_MC
 
 ss-pri-mc-exp.prg: spritesplit.asm
-	dasm $< -o$@ -DSPLIT_PRI_MC_EXP
+	dasm $< -o$@ -DSPRITE_PATTERN_VALUE=%10011001 -DSPLIT_PRI_MC_EXP
 
 clean:
 	rm -f *~ \#*\#
