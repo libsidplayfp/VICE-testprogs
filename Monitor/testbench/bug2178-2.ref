@@ -1,0 +1,6 @@
+BREAK: 1  C:$1000-$1800  (Stop on exec)
+BREAK: 2  C:$1000-$1200  (Stop on exec)
+Setting checkpoint 2 condition to: Y > $06
+BREAK: 3  C:$1200-$2000  (Stop on exec)
+#3 (Stop on  exec 1400)    0/$000,   2/$02
+.C:1400  EA          NOP            - A:00 X:00 Y:0A SP:f3 ..-B..Z.    2142506

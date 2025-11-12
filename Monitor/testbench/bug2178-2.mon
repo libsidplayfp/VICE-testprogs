@@ -1,0 +1,15 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/2178/
+logname "bug2178-2.log"
+log on
+
+f 1000 2000 ea
+break 1000 1800
+break 1000 1200 if y > 6
+break 1200 2000
+dis 1
+dis 2
+
+; should break on 1400 (bp #3)
+g 1400
+
+q
