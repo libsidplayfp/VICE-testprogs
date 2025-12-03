@@ -15,9 +15,22 @@ function u64_check_environment
         echo 'Error: ucodenet is not installed.' >&2
         exit 1
     fi
+    if [ $verbose == "1" ]; then
+        echo "ucodenet found in: " `which ucodenet`
+    fi
     if ! [ -x "$(command -v ugrab)" ]; then
         echo 'Error: ugrab is not installed.' >&2
         exit 1
+    fi
+    if [ $verbose == "1" ]; then
+        echo "ugrab found in: " `which ugrab`
+    fi
+    if ! [ -x "$(command -v curl)" ]; then
+        echo 'Error: curl is not installed.' >&2
+        exit 1
+    fi
+    if [ $verbose == "1" ]; then
+        echo "curl found in: " `which curl`
     fi
 
 # OLD cia
@@ -40,9 +53,12 @@ function u64_ucodenet
 function u64_ugrab
 {
     if [ $verbose == "1" ]; then
-        echo ugrab $1 $2 $3 $4 $5 $6 $7 $8 $9
+        echo ugrab -n $u64_ip $1 $2 $3 $4 $5 $6 $7 $8 $9
     fi
-    ugrab $1 $2 $3 $4 $5 $6 $7 $8 $9
+#    curl --silent -X PUT http://192.168.0.64/v1/streams/video:start
+    ucodenet -n $u64_ip --vicstream-start
+    ugrab -n $u64_ip $1 $2 $3 $4 $5 $6 $7 $8 $9
+    curl --silent -X PUT http://$u64_ip/v1/streams/video:stop >/dev/null
 #    sleep 1
 }
 

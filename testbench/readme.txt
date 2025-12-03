@@ -43,8 +43,10 @@ prerequisites
 
 a little bit of setup is needed to use the testbench:
 
+* VICE has to be installed (for petcat and c1541)
 * a C compiler must be available (to build some support tools)
 * the "acme" crossassembler must be installed (to (re)build the selftests)
+* micro64disktool is needed
 * copy "Makefile.config.example" to "Makefile.config" and edit it to your needs
 
 --------------------------------------------------------------------------------

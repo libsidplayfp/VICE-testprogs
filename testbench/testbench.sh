@@ -56,6 +56,38 @@ source "./virtualc64-hooks.sh"
 
 ###############################################################################
 
+function check_environment
+{
+    if ! [ -x "$(command -v petcat)" ]; then
+        echo 'Error: VICE (petcat) is not installed.' >&2
+        exit 1
+    fi
+    if [ $verbose == "1" ]; then
+        echo "petcat found in: " `which petcat`
+    fi
+    if ! [ -x "$(command -v c1541)" ]; then
+        echo 'Error: VICE (c1541) is not installed.' >&2
+        exit 1
+    fi
+    if [ $verbose == "1" ]; then
+        echo "c1541 found in: " `which c1541`
+    fi
+    if ! [ -x "$(command -v acme)" ]; then
+        echo 'Error: acme is not installed.' >&2
+        exit 1
+    fi
+    if [ $verbose == "1" ]; then
+        echo "acme found in: " `which acme`
+    fi
+    if ! [ -x "$(command -v micro64disktool)" ]; then
+        echo 'Error: micro64disktool is not installed.' >&2
+        exit 1
+    fi
+    if [ $verbose == "1" ]; then
+        echo "micro64disktool found in: " `which micro64disktool`
+    fi
+}
+
 function checktarget
 {
     case "$1" in
@@ -882,6 +914,7 @@ fi
 
 checkparams
 
+check_environment
 "$target"_check_environment
 
 if [ "$filter" == "" ]; then
