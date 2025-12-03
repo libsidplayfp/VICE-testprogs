@@ -125,8 +125,8 @@ function u64_prepare
     echo -ne "."
     u64_ucodenet --resetwait
     if [ "$?" != "0" ]; then exit -1; fi
-    u64_ucodenet --vicstream-start
-    if [ "$?" != "0" ]; then exit -1; fi
+#    u64_ucodenet --vicstream-start
+#    if [ "$?" != "0" ]; then exit -1; fi
     echo "ok"
 }
 
