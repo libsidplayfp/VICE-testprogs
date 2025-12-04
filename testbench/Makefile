@@ -24,12 +24,12 @@ XVICHEAD := $(shell ls results/xvic-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-re
 XPLUS4HEAD := $(shell ls results/xplus4-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
 XCBM2HEAD := $(shell ls results/xcbm2-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
 XCBM5X0HEAD := $(shell ls results/xcbm5x0-r*-result.txt | sed 's/\(.*\)-\(r[0-9]*\)-result.txt/\2/g' | sort | tail -1)
-# checked 28/11/2024
-DENISELAST=20241128
-DENISELASTSTRING="git 28.11.2024"
-# checked 28/11/2024
-HOXS64LAST=1-1-2-6
-HOXS64LASTSTRING=1.1.2.6
+# checked 4/12/2025
+DENISELAST=20251204
+DENISELASTSTRING="git 4.12.2025"
+# checked 4/12/2025
+HOXS64LAST=1-1-2-7
+HOXS64LASTSTRING=1.1.2.7
 # checked 30/11/2024
 Z64KC64LAST=20241130
 Z64KC64LASTSTRING="30 November 2024"
@@ -299,7 +299,7 @@ micro64-testlist.txt: c64-testlist.in Makefile
 # 
 # Simple 8K/16K and Ultimax cartridges should work also.
 #
-# REU 512k only!
+# REU 512k and 16M only!
 
 # FIXME: apparently mounting a cartridge and then running a prg file does not
 #        work right in hoxs64
@@ -317,7 +317,6 @@ hoxs64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",reu2m" \
 		| grep -v ",reu4m" \
 		| grep -v ",reu8m" \
-		| grep -v ",reu16m" \
 		| grep -v ",geo512k" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
@@ -1280,6 +1279,7 @@ resultshoxs64: maketable hoxs64-testlist.txt
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
+		--results results/hoxs64-1-1-2-6-result.txt "hoxs64 1.1.2.6" \
 		--results results/hoxs64-1-1-0-5-result.txt "hoxs64 1.1.0.5" \
 		--results results/hoxs64-1-1-0-3-result.txt "hoxs64 1.1.0.32" \
 		--results results/hoxs64-1-0-21-2-result.txt "hoxs64 1.0.21.2" \
@@ -1295,6 +1295,7 @@ resultsdenise: maketable denise-testlist.txt
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
+		--results results/denise-20241128-result.txt "git 28.11.2024" \
 		--results results/denise-20231119-result.txt "git 19.11.2023" \
 		--results results/denise-20220316-result.txt "git 16.03.2022" \
 		--results results/denise-20201223-result.txt "git 23.12.2020" \

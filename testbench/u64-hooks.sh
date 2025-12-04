@@ -58,7 +58,9 @@ function u64_ugrab
 #    curl --silent -X PUT http://192.168.0.64/v1/streams/video:start
     ucodenet -n $u64_ip --vicstream-start
     ugrab -n $u64_ip $1 $2 $3 $4 $5 $6 $7 $8 $9
+# FIXME: somehow the REST method didn't work for SLC on MK2 board
     curl --silent -X PUT http://$u64_ip/v1/streams/video:stop >/dev/null
+    ucodenet -n $u64_ip --vicstream-stop
 #    sleep 1
 }
 

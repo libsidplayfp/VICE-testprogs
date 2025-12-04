@@ -108,6 +108,10 @@ function hoxs64_get_options
                exitoptions="-reu512k"
                reu_enabled=1
            ;;
+       "reu16m")
+               exitoptions="-reu16m"
+               reu_enabled=1
+           ;;
 #       "geo512k")
 #               exitoptions="+NEORAMMODE=3"
 #               georam_enabled=1
@@ -125,7 +129,7 @@ function hoxs64_get_options
                     echo -ne "(disk:${1:9}) "
                 fi
                 if [ "${1:0:9}" == "mountcrt:" ]; then
-                    exitoptions="-mountcrt $2/${1:9}"
+                    exitoptions="-mountcart $2/${1:9}"
                     mounted_crt="${1:9}"
                     echo -ne "(cartridge:${1:9}) "
                 fi

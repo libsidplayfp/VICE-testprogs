@@ -1153,6 +1153,7 @@
 ../REU/detectsize/,detectreu.prg,exitcode,10000000,reu512k
 ../REU/ioglitch/,ioglitch.prg,exitcode,1000000000,reu512k
 ../REU/mirrors/,mirrors512k.prg,exitcode,20000000,reu512k
+../REU/mirrors/,mirrors16m.prg,exitcode,20000000,reu16m
 ../REU/misc/,bitfill-auto.prg,exitcode,100000000,reu512k
 ../REU/misc/,twoblocks-auto.prg,exitcode,100000000,reu512k
 ../REU/misc/,twoblocks-ff00-auto.prg,exitcode,100000000,reu512k
