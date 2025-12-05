@@ -62,8 +62,8 @@ U64LASTSTRING="1.45"
 MICRO64LAST=20180316
 MICRO64LASTSTRING="1.00.2018.03.16 (build 719)"
 
-# checked 27/11/2024
-EMU64HEAD=20241127
+# checked 5/12/2025
+EMU64HEAD=20251205
 
 YACEHEAD=2-2-0-47
 
@@ -72,8 +72,8 @@ CHAMCARTRIDGELAST=9q
 
 CHAM20LAST=20201130
 
-# checked 25/11/2024
-FRODOHEAD:=20241125
+# checked 5/12/2025
+FRODOHEAD:=20251205
 
 # TODO
 VIRTUALC64LAST=20241010
@@ -1334,6 +1334,7 @@ resultsemu64: maketable emu64-testlist.txt
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--firstcolisref "<small><b>fails on VICE</b></small>" \
 		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
+		--results results/emu64-20241127-result.txt "emu64 20241127" \
 		--results results/emu64-20231120-result.txt "emu64 20231120" \
 		--results results/emu64-20220320-result.txt "emu64 20220320" \
 		--results results/emu64-20191025-result.txt "emu64 20191025" \
@@ -1415,6 +1416,7 @@ resultsfrodo: maketable frodo-testlist.txt
 	./maketable --omit-two-ok --omit-clean --html --list frodo-testlist.txt \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/frodo-$(FRODOHEAD)-result.txt "Frodo "$(FRODOHEAD)"" \
+		--results results/frodo-20241125-result.txt "Frodo 20241125" \
 		\
 		> results/frodo.html
 
