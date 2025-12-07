@@ -758,11 +758,12 @@ testdenise: prereq
 #	EMUDIR="$(DENISEDIR)" ./testbench.sh denise --resume
 	EMUDIR="$(DENISEDIR)" ./testbench.sh denise
 testemu64: prereq
+# FIXME: unclear what CIA type
 #	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --verbose --resume
-	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --resume
+	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --ciaold --resume
 testfrodo: prereq
-#	EMUDIR="$(FRODODIR)" ./testbench.sh frodo --verbose
-	EMUDIR="$(FRODODIR)" ./testbench.sh frodo
+#	EMUDIR="$(FRODODIR)" ./testbench.sh frodo --ciaold --verbose
+	EMUDIR="$(FRODODIR)" ./testbench.sh frodo --ciaold
 
 testkernal64: testkernal64c64 testkernal64c128c64 testkernal64c128c128 testkernal64scpu64 testkernal64cbm2 testkernal64vic20
 testkernal64c64: prereq
@@ -962,23 +963,23 @@ results: maketable
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
-		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
 		--results results/z64kc64-$(Z64KC64LAST)-result.txt "z64k (c64) "$(Z64KC64LASTSTRING)"" \
+		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
 		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST)" (cartridge)" \
 		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
-		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
 		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
+		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
 		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
+		--results results/frodo-$(FRODOHEAD)-result.txt "frodo "$(FRODOHEAD)"" \
 		--results results/micro64-$(MICRO64LAST)-result.txt "micro64 "$(MICRO64LASTSTRING)"" \
-		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING) \
+		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/yace-$(YACEHEAD)-result.txt "yace "$(YACEHEAD)"" \
 		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
-		--results results/frodo-$(FRODOHEAD)-result.txt "frodo "$(FRODOHEAD)"" \
 		\
 		> results/c64.html
-		
+
 	./maketable  --omit-clean --html --list vic20-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \

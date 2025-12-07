@@ -234,7 +234,7 @@
 ../general/Lorenz-2.15/src/,sbxb.prg,ok,exitcode,,,,-1,-1,-1
 ../general/Lorenz-2.15/src/,shaay.prg,ok,exitcode,,,,-1,-1,-1
 ../general/Lorenz-2.15/src/,shaiy.prg,ok,exitcode,,,,-1,-1,-1
-../general/Lorenz-2.15/src/,shxay.prg,ok,exitcode,,,,-1,-1,-1
+../general/Lorenz-2.15/src/,shxay.prg,error,exitcode,,,,-1,-1,-1
 ../general/Lorenz-2.15/src/,shyax.prg,ok,exitcode,,,,-1,-1,-1
 ../general/Lorenz-2.15/src/,shsay.prg,ok,exitcode,,,,-1,-1,-1
 ../general/Lorenz-2.15/src/,ancb.prg,ok,exitcode,,,,-1,-1,-1
@@ -320,7 +320,7 @@
 ../general/fuxxortest,ef2-inst3.prg,error,exitcode,,,,-1,-1,-1
 ../general/fuxxortest,ef2-inst4a.prg,error,exitcode,,,,-1,-1,-1
 ../general/fuxxortest,ef2-inst4b.prg,ok,exitcode,,,,-1,-1,-1
-../general/fuxxortest,ef2-inst4c.prg,error,exitcode,,,,-1,-1,-1
+../general/fuxxortest,ef2-inst4c.prg,timeout,exitcode,,,,-1,-1,-1
 ../CPU/64doc/,dadc.prg,ok,exitcode,,,,-1,-1,-1
 ../CPU/64doc/,dincsbc-deccmp.prg,ok,exitcode,,,,-1,-1,-1
 ../CPU/64doc/,dincsbc.prg,ok,exitcode,,,,-1,-1,-1
@@ -616,7 +616,7 @@
 ../VICII/dentest/,den01-48-2.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/dentest/,den01-49-0.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/dentest/,den01-49-1.prg,ok,screenshot,,,,-1,-1,PAL
-../VICII/dentest/,den01-49-2.prg,ok,screenshot,,,,-1,-1,PAL
+../VICII/dentest/,den01-49-2.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/dentest/,den10-48-0.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/dentest/,den10-48-1.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/dentest/,den10-48-2.prg,error,screenshot,,,,-1,-1,PAL
@@ -637,14 +637,14 @@
 ../VICII/dmadelay/,test1-2a-10.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/dmadelay/,test1-2a-11.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/dmadelay/,test1-2a-16.prg,ok,screenshot,,,,-1,-1,PAL
-../VICII/dmadelay/,test1-2a-17.prg,error,screenshot,,,,-1,-1,PAL
+../VICII/dmadelay/,test1-2a-17.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/dmadelay/,test1-2a-18.prg,error,screenshot,,,,-1,-1,PAL
-../VICII/dmadelay/,test2-28-05.prg,ok,screenshot,,,,-1,-1,PAL
+../VICII/dmadelay/,test2-28-05.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/dmadelay/,test2-28-06.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/dmadelay/,test2-28-11.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/dmadelay/,test2-28-12.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/dmadelay/,test2-28-16.prg,ok,screenshot,,,,-1,-1,PAL
-../VICII/dmadelay/,test2-28-17.prg,ok,screenshot,,,,-1,-1,PAL
+../VICII/dmadelay/,test2-28-17.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/dmadelay/,test2-28-18.prg,error,screenshot,,,,-1,-1,PAL
 ../VICII/dmadelay/,test3-28-07.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/dmadelay/,test3-28-08.prg,error,screenshot,,,,-1,-1,PAL
@@ -1142,4 +1142,4 @@
 ../memory-expansions/,c64-georam-emd.prg,ok,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c64-reu-emd.prg,timeout,exitcode,,,,-1,-1,-1
 ../memory-expansions/,c64-ram-emd.prg,ok,exitcode,,,,-1,-1,-1
-# 81 minutes and 8 seconds elapsed.
+# 79 minutes and 45 seconds elapsed.

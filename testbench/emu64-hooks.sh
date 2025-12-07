@@ -101,12 +101,12 @@ function emu64_get_options
             ;;
         "cia-old")
 #FIXME: unclear what the CIA type is
-#                exitoptions="-ciamodel 0"
+#                exitoptions=""
                 new_cia_enabled=0
             ;;
         "cia-new")
 #FIXME: unclear what the CIA type is
-#                exitoptions="-ciamodel 1"
+#                exitoptions=""
                 new_cia_enabled=1
             ;;
         "sid-old")

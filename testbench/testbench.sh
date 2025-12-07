@@ -405,7 +405,7 @@ function resultstoplog
     echo "$1""$2""$3""$4" >> "$RESULT_LOG_NAME"
 }
 
-# check if a result exists in the resultfile already
+# check if a result exists in the resultfile already (used in resume)
 # $1 - path
 # $2 - exe name
 # $3 - status
@@ -504,6 +504,8 @@ function runprogsfortarget
                     fi
                     "$target"_get_options "${myarray[$i-1]}" "$testpath"
 #                    echo "exitoptions: $exitoptions"
+#                    echo "ciatype (cmdline) ${ciatype}"
+#                    echo "new_cia_enabled (test): ${new_cia_enabled}"
 #                    echo "testprogvideotype: ${testprogvideotype}"
 #                    echo "memoryexpansion:"  "${memoryexpansion}"
                     testoptions+="${exitoptions} "

@@ -28,6 +28,14 @@ function frodo_get_options
         "default")
                 exitoptions=""
             ;;
+        "cia-old")
+#                exitoptions=""
+                new_cia_enabled=0
+            ;;
+        "cia-new")
+#                exitoptions=""
+                new_cia_enabled=1
+            ;;
         "sid-old")
                 exitoptions="SIDType=6581"
                 new_sid_enabled=0
