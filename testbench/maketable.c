@@ -7,6 +7,12 @@
 #define MAXTESTS    5000
 #define MAXPATHLEN  0x100
 
+#define MAXPAGES  10
+
+int numpages = 0;
+int pages[MAXPAGES];
+int thispage = 0;
+
 #define BLUE    "\033[1;34m"
 #define YELLOW  "\033[1;33m"
 #define GREEN   "\033[1;32m"
@@ -22,6 +28,7 @@
 int verbose = 0;
 int format = 0;
 int omit2ok = 0;
+int omitallna = 0;
 int errormode = 0;
 int cleanmode = 0;
 int diffmode = 0;
@@ -434,10 +441,38 @@ void printtableend(int totaltests, int skippedtests)
     }
 }
 
+void printpercentcolor(float percent)
+{
+    /* #00ff00  100% green */
+    /* #80ff00  50% yellow 50% green */
+    /* #ffff00  100% yellow */
+    /* #ffffff  100% white */
+    float red = 0xff;
+    float green = 0xff;
+    float blue = 0xff;
+    if (percent > 90.0f) {
+        float rest = 100.0f - percent; /* 0..10 */
+        rest *= 12.8f;
+        red = rest;
+        blue = 0.0f;
+    } else if (percent > 80.0f) {
+        float rest = 90.0f - percent; /* 0..10 */
+        rest *= 12.8f;
+        rest += 127;
+        red = rest;
+        blue = 0.0f;
+    } else if (percent > 70.0f) {
+        float rest = 80.0f - percent; /* 0..10 */
+        rest *= 25.5f;
+        blue = rest;
+    }
+    printf("#%02x%02x%02x", (unsigned)red, (unsigned)green, (unsigned)blue);
+}
 
 void printranking(void)
 {
     char tmp[0x100];
+    float percent_f;
     int i, num, pass, percent;
     int sorted[0x100], sortnum = 0;
     int flipped, idx0, ii;
@@ -449,18 +484,20 @@ void printranking(void)
     
     // stupid bubblesort
     do {
-        int idx0, num0, pass0, percent0;
-        int idx1, num1, pass1, percent1;
+        int idx0, num0, pass0;
+        float percent0;
+        int idx1, num1, pass1;
+        float percent1;
         flipped = 0;
         for (i = 0; i < (sortnum-1); i++) {
             idx0 = sorted[i];
             num0 = testnum[idx0]; 
             pass0 = testnum[idx0] - testfailed[idx0];
-            percent0 = (pass0 * 100) / num0;
+            percent0 = (pass0 * 100.0f) / (float)num0;
             idx1 = sorted[i+1];
             num1 = testnum[idx1]; 
             pass1 = testnum[idx1] - testfailed[idx1];
-            percent1 = (pass1 * 100) / num1;
+            percent1 = (pass1 * 100.0f) / (float)num1;
             if ((percent1 > percent0) || 
                 ((percent1 == percent0) && (pass1 > pass0))) {
                 sorted[i] = idx1;
@@ -499,6 +536,7 @@ void printranking(void)
         num = testnum[idx0]; 
         pass = testnum[idx0] - testfailed[idx0];
         percent = (pass * 100) / num;
+        percent_f = (100.0f * pass) / (float)num;
         switch (format) {
             case FORMAT_TEXT: 
                 strcpy(tmp, headline[idx0]); tmp[19] = 0;
@@ -513,11 +551,15 @@ void printranking(void)
                 printf("] %3d%%\n", percent);
                 break;
             case FORMAT_HTML:
-                printf("<tr>");
+//                printf("<tr>");
+                printf("<tr bgcolor=");
+                    printpercentcolor(percent_f);
+                printf(">");
                 printf("<td>%s</td>", headline[idx0]);
                 printf("<td>%4d</td>", num);
                 printf("<td>%4d</td>", pass);
-                printf("<td>%3d%%</td><td>", percent);
+                //printf("<td>%3d%%</td><td>", percent);
+                printf("<td>%3.1f%%</td><td>", percent_f);
                 printf("<pre>");
                 for (ii = 0; ii < (percent / 2); ii++) {
                     printf("#");
@@ -534,8 +576,9 @@ void printranking(void)
                 printf("||%s\n", headline[idx0]); 
                 printf("||%d\n", num); 
                 printf("||%d\n", pass); 
-                printf("||%d%%\n", percent); 
-                printf("||"); 
+                //printf("||%d%%\n", percent);
+                printf("||%3.1f%%\n", percent_f);
+                printf("||");
                 printf(rankingpercentagestring, percent, pass, num);
                 printf("\n"); 
                 printf("|-\n"); 
@@ -560,6 +603,7 @@ void printheader(void)
 {
     char tmp[0x100];
     int i, num, pass;
+    int first, last;
 
     if (format == FORMAT_HTML) {
         printf("<tr>"
@@ -575,7 +619,21 @@ void printheader(void)
         );
     }
 
-    for (i = (firstcolisref ? 1 : 0); i < numfiles; i++) {
+    if (numpages) {
+        first = 0; // FIXME
+        last = pages[thispage];
+        if (thispage > 0) {
+            first = pages[thispage - 1];
+            if (last == 0) {
+                last = numfiles;
+            }
+        }
+    } else {
+        first = 0;
+        last = numfiles;
+    }
+
+    for (i = (firstcolisref ? first+1 : first+0); i < last; i++) {
         num = testnum[i]; pass = testnum[i] - testfailed[i];
         switch (format) {
             case FORMAT_TEXT: 
@@ -584,7 +642,9 @@ void printheader(void)
                 break;
             case FORMAT_HTML:
                 if (firstrowispercent) {
-                    printf("<th width=110>%s<br>", headline[i]);
+                    printf("<th bgcolor=");
+                    printpercentcolor((pass * 100.0f) / (float)num);
+                    printf(" width=110>%s<br>", headline[i]);
                     printf(percentagestring, (pass * 100) / num, pass, num);
                     printf("</th>");
                 } else {
@@ -881,8 +941,23 @@ void printrow(int row, int *res)
         printrowtesttype(row);
     }
 
-    for (ii = (firstcolisref ? 1 : 0); ii < numfiles; ii++) {
-        printrowtestresult(row, res[ii]);
+    if (numpages != 0) {
+        int pagefiles = pages[thispage];
+        int first = 0;
+        if (thispage > 0) {
+            first = pages[thispage - 1];
+            if (pagefiles == 0) {
+                pagefiles = numfiles;
+            }
+        }
+            // FIXME
+        for (ii = (firstcolisref ? first+1 : first+0); ii < pagefiles; ii++) {
+            printrowtestresult(row, res[ii]);
+        }
+    } else {
+        for (ii = (firstcolisref ? 1 : 0); ii < numfiles; ii++) {
+            printrowtestresult(row, res[ii]);
+        }
     }
 
     if (format == FORMAT_TEXT) {
@@ -898,7 +973,7 @@ void printrow(int row, int *res)
 
 void printtable(void)
 {
-    int i, ii, iserror, isdiff, isclean, is2ok;
+    int i, ii, iserror, isdiff, isclean, is2ok, isallna, isnacnt;
     int res[MAXLISTS];
     int skipped = 0;
 
@@ -912,23 +987,68 @@ void printtable(void)
         isdiff = 0;
         isclean = 1;
         is2ok = 0;
+        isallna = 0;
 
-        // loop over all result files (left to right)
-        res[0] = findresult(testlist[0], &reflist[i]);
-        for (ii = (firstcolisref ? 1 : 0); ii < numfiles; ii++) {
-            res[ii] = findresult(testlist[ii], &reflist[i]);
-            if (res[ii] == RESULT_ERROR) {
-                iserror = 1;
-                if (reflist[i].expect != RESULT_ERROR) {
-                    isclean = 0;
+        if (numpages == 0) {
+            // loop over all result files (left to right)
+            res[0] = findresult(testlist[0], &reflist[i]);
+            isnacnt = 0;
+            for (ii = (firstcolisref ? 1 : 0); ii < numfiles; ii++) {
+                res[ii] = findresult(testlist[ii], &reflist[i]);
+                if (res[ii] == RESULT_ERROR) {
+                    iserror = 1;
+                    if (reflist[i].expect != RESULT_ERROR) {
+                        isclean = 0;
+                    }
+                }
+                if (res[ii] == RESULT_NA) {
+                    isnacnt++;
+                    if (isnacnt >= (numfiles)) {
+                        isallna = 1;
+                    }
+                }
+                if (res[ii] != res[(firstcolisref ? 1 : 0)]) { isdiff = 1; isclean = 0; }
+                if (res[ii] == RESULT_TIMEOUT) {
+                    if (reflist[i].expect != RESULT_TIMEOUT) {
+                        isclean = 0;
+                    }
                 }
             }
-            if (res[ii] != res[(firstcolisref ? 1 : 0)]) { isdiff = 1; isclean = 0; }
-            if (res[ii] == RESULT_TIMEOUT) {
-                if (reflist[i].expect != RESULT_TIMEOUT) {
-                    isclean = 0;
+        } else {
+            int pagefiles = pages[thispage];
+            int first = 0;
+            if (thispage > 0) {
+                first = pages[thispage - 1];
+                if (pagefiles == 0) {
+                    pagefiles = numfiles;
                 }
             }
+//            if (i == 0) printf("thispage:%d first:%d pagefiles:%d\n", thispage, first, pagefiles);
+
+            res[0] = findresult(testlist[0], &reflist[i]);
+            isnacnt = 0;
+            for (ii = (firstcolisref ? first+1 : first+0); ii < pagefiles; ii++) {
+                res[ii] = findresult(testlist[ii], &reflist[i]);
+                if (res[ii] == RESULT_ERROR) {
+                    iserror = 1;
+                    if (reflist[i].expect != RESULT_ERROR) {
+                        isclean = 0;
+                    }
+                }
+                if (res[ii] == RESULT_NA) {
+                    isnacnt++;
+                    if (isnacnt >= (pagefiles - first)) {
+                        isallna = 1;
+                    }
+                }
+                if (res[ii] != res[(firstcolisref ? 1 : 0)]) { isdiff = 1; isclean = 0; }
+                if (res[ii] == RESULT_TIMEOUT) {
+                    if (reflist[i].expect != RESULT_TIMEOUT) {
+                        isclean = 0;
+                    }
+                }
+            }
+//            thispage++;
         }
 
         if (omit2ok) {
@@ -948,6 +1068,7 @@ void printtable(void)
         // skip this line if we only want to see diffs
         if (diffmode && !isdiff) { skipped++; continue; }
         if (omit2ok && is2ok) { skipped++; continue; }
+        if (omitallna && isallna) { skipped++; continue; }
         // skip this line if we dont want to see results for ntscold
         if (filterntscold && (reflist[i].videotype == VIDEOTYPE_NTSCOLD)) { skipped++; continue; }
 
@@ -1006,6 +1127,8 @@ int main(int argc, char *argv[])
             diffmode = 1;
         } else if(!strcmp(argv[i], "--omit-two-ok")) {
             omit2ok = 1;
+        } else if(!strcmp(argv[i], "--omit-all-na")) {
+            omitallna = 1;
         } else if(!strcmp(argv[i], "--filter-ntscold")) {
             filterntscold = 1;
         } else if(!strcmp(argv[i], "--html")) {
@@ -1052,6 +1175,10 @@ int main(int argc, char *argv[])
             i++;
             headline[numfiles] = argv[i];
             numfiles++;
+        } else if(!strcmp(argv[i], "--page")) {
+            pages[numpages] = numfiles;
+            numpages++;
+//            printf("pages:%d at file %d\n", numpages, numfiles);
         } else  {
             fprintf(stderr, "error: unknown option '%s'\n", argv[i]);
             usage(argv[0]);
@@ -1105,6 +1232,16 @@ int main(int argc, char *argv[])
     
     // output the table
     printtable();
+
+    if (numpages) {
+        while (thispage < numpages) {
+            thispage++;
+//            printf("thispage:%d\n", thispage);
+            printf("<p></p>\n");
+            // output the table
+            printtable();
+        }
+    }
 
     printdocumentend();
     

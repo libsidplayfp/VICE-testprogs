@@ -21,11 +21,24 @@ MICRO64REFSYO=35
 
 function micro64_check_environment
 {
-    MICRO64="$EMUDIR"micro64
+    MICRO64="$EMUDIR"micro64.exe
     if ! [ -x "$(command -v $MICRO64)" ]; then
         echo 'Error: '$MICRO64' not found.' >&2
         exit 1
     fi
+    if [ `uname` == "Linux" ]
+    then
+        if ! [ -x "$(command -v wine)" ]; then
+            echo 'Error: wine not installed.' >&2
+            exit 1
+        fi
+        export WINEDEBUG=-all
+        MICRO64="wine"
+        MICRO64+=" $EMUDIR"micro64.exe
+    else
+        MICRO64="$EMUDIR"micro64.exe
+    fi
+    echo "using MICRO64:"$MICRO64
     # is this correct?
     emu_default_videosubtype="6569"
 }
