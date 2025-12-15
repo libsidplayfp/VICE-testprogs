@@ -1,9 +1,29 @@
 Readme for modesplit
 --------------------
 
+The reference "screenshots" were crafted to match the supposed expected results.
+
+CAUTION: since this is a tedious and error prone process, there might still be
+errors left. Corrections welcome!
+
+modesplit.prg.png (PAL 6569)
+    (matched against my Breadbox, gpz 15/12/2025)
+modesplit.prg-8565.png (PAL 8565)
+    (matched against my C64C, gpz 15/12/2025)
+modesplit.prg-8565early.png (PAL 8565)
+    (created from the above, gpz 15/12/2025 - happens to match hoxs64 exactly)
+modesplit.prg-ntsc.png (NTSC 6567)
+    (matched against screenshot(s), gpz 15/12/2025)
+modesplit.prg-8562.png (NTSC 8562)
+    (matched against screenshot(s), gpz 15/12/2025)
+
+-R04: changed code to use videobank 2 ($8000-$bfff) and fill entire videoram
+ with known pattern(s)- this way no garbage will show up anywhere and automatic
+ testing becomes much more predictable :)
+
 -----------------------------------------------------------------------
 
-dumps/modesplit-6567r8.prg  (purple pixel in camera)
+dumps/modesplit-6567r8.jpg  (purple pixel in camera)
 --------------------------
 Dumped on Machine 1 (Jason Compton):
 
@@ -18,7 +38,7 @@ VIC: MOS/6567R8/2684
 SID: MOS/6581/2484
 
 
-dumps/modesplit-6569r3.prg
+dumps/modesplit-6569r3.jpg
 --------------------------
 Dumped on Machine 1 (tlr):
 
@@ -32,7 +52,7 @@ VICII: 6569R3 (guess)
 SID: <unknown>
 
 
-dumps/modesplit-6572.prg
+dumps/modesplit-6572.jpg
 ------------------------
 Dumped on Machine 1 (Thierry):
 
@@ -44,7 +64,7 @@ CIA2: MOS/6526A-1/0786 (U2)
 VICII: MOS/6572R0/4785 S (ceramic)
 
 
-dumps/modesplit-8562r4.prg  (purple pixel in camera)
+dumps/modesplit-8562r4.jpg  (purple pixel in camera)
 --------------------------
 Dumped on Machine 1 (Jason Compton):
 
@@ -59,7 +79,7 @@ VICII: MOS/8562 R4/4987 24
 SID: <unknown>
 
 
-dumps/modesplit-8564.prg
+dumps/modesplit-8564.jpg
 ------------------------
 Dumped on Machine 1 (Jason Compton):
 
@@ -73,7 +93,7 @@ VICII: <unknown>
 SID: MOS/8580R5/3488 25
 
 
-dumps/modesplit-8564r5.prg  (purple pixel in camera)
+dumps/modesplit-8564r5.jpg  (purple pixel in camera)
 --------------------------
 Running on C128 NTSC.
 
@@ -90,7 +110,7 @@ VICII: MOS/8564R5CA  V 6/4585
 SID: <unknown>
 
 
-dumps/modesplit-8565.prg
+dumps/modesplit-8565.jpg
 ------------------------
 Dumped on Machine 1 (Rubi):
 
@@ -99,7 +119,3 @@ CIA1: CSG/6526A/3590 216A
 CIA2: CSG/6526A/3590 216A
 VICII: 8565R2 (guess)
 SID: <unknown>
-
-
------------------------------------------------------------------------
-eof

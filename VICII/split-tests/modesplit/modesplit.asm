@@ -7,14 +7,60 @@
 ;* DESCRIPTION
 ;*
 ;******
+
 	processor 6502
+
+; videobank to use. original program (R03) uses bank 0 ($0000-$3fff), which has
+; some drawbacks (zeropage, stack, program etc in bitmap 0)
+;
+; we use bank 2 ($8000-$bfff) instead, since we can produce the same setup (with
+; the chargen getting "In the way"), but without the annyoing drawbacks.
+USEBANK = 2
+
+; if (USEBANK == 0)
+; ; bank 0 ($0000-$3fff)
+; vbank equ $0000
+; bitmap equ $0000
+; vram equ $0400
+; charset equ $1800
+; ;bitmap equ $2000
+; endif
+;
+; if USEBANK = 1
+; ; bank 1 ($4000-$7fff)
+; vbank equ $4000
+; bitmap equ $4000
+; vram equ $4400
+; charset equ $5800
+; endif
+
+;if USEBANK = 2
+; bank 2 ($8000-$bfff)
+vbank equ $8000
+bitmap equ $8000
+vram equ $8400
+charset equ $9800
+;endif
+
+; ;if USEBANK = 3
+; ; bank 2 ($c000-$ffff)
+; vbank equ $c000
+; bitmap equ $c000
+; vram equ $c400
+; charset equ $d800
+; ;endif
+
 
 SCREENSHOTEXIT  equ 1
 	
 LINE		equ	56
+; TEST_NAME	eqm	"MODESPLIT"
+; TEST_REVISION	eqm	"R04"
+; LABEL_LOWERCASE	equ	1
 TEST_NAME	eqm	"modesplit"
-TEST_REVISION	eqm	"r03"
+TEST_REVISION	eqm	"r04"
 LABEL_LOWERCASE	equ	1
+LABEL_SCRADDR	equ	vram
 
 	seg.u	zp
 ;**************************************************************************
@@ -60,15 +106,62 @@ test_present:
 ;******
 test_prepare:
 
+    php
+	sei
+	lda $01
+	pha
+
+; clear entire video bank
+    lda #%00011011
+	ldy #0
+bank_lp2:
+	ldx #0
+bank_lp1:
+	sta vbank,x
+	inx
+	bne	bank_lp1
+	inc bank_lp1+2 ; inc hi
+	iny
+	cpy #$40
+	bne	bank_lp2
+
+; clear bitmap area with a different pattern
+	lda #%00111100
+	ldy #0
+bm_lp2:
+	ldx #0
+bm_lp1:
+	sta bitmap,x
+	inx
+	bne	bm_lp1
+	inc bm_lp1+2 ; inc hi
+	iny
+	cpy #$20
+	bne	bm_lp2
+
 ; set up screen
+;     lda #>vram
+;     sta $0288
+; 	jsr	show_label_bar
+
+	ldx	#0
+vrm_lp1:
+	lda	$0400,x
+	sta	vram,x
+	inx
+	cpx #40
+	bne vrm_lp1
+
+
 	ldx	#0
 prt_lp1:
-	lda	#$5f
-	sta	$0428,x
-	sta	$0500,x
-	sta	$0600,x
-	sta	$06e8,x
-	lda	#14
+	lda	#$5f       ; original program clears vram with $5f
+;	lda	#$01
+	sta	vram+$0028,x
+	sta	vram+$0100,x
+	sta	vram+$0200,x
+	sta	vram+$02e8,x
+	lda	#$0e
 	sta	$d828,x
 	sta	$d900,x
 	sta	$da00,x
@@ -76,15 +169,63 @@ prt_lp1:
 	inx
 	bne	prt_lp1
 
+; copy data from char rom (only for banks that dont have one)
+	if 0
+
+	lda #$33
+	sta $01
+	ldy #0
+bm_lp4:
+	ldx #0
+bm_lp3:
+	lda $d000,x
+	sta charset,x
+	inx
+	bne	bm_lp3
+	inc bm_lp3+2 ; inc hi
+	inc bm_lp3+3+2 ; inc hi
+	iny
+	cpy #$02
+	bne	bm_lp4
+
+	ldx #0
+bm_lp5:
+;	lda $d800+(8*$5f),x
+	lda $daf8,x
+	sta charset+$2f8,x
+	inx
+	cpx #8
+	bne	bm_lp5
+
+	endif
+
+	pla
+	sta $01
+
+	;cli
+	plp
+
+
 	jsr	adjust_timing
 
-	lda	#$17
-	sta	$d018	
+; 	lda	#$18   ; vram at $0400|charset at $2000/bitmap at $2000
+	lda	#$17   ; vram at $0400|charset at $1800/bitmap at $0000 (original value)
+; 	lda	#$16   ; vram at $0400|charset at $1800/bitmap at $0000
+; 	lda	#$15   ; vram at $0400|charset at $1000/bitmap at $0000
+; 	lda	#$14   ; vram at $0400|charset at $1000/bitmap at $0000
+; 	lda	#$13   ; vram at $0400|charset at $0800/bitmap at $0000
+; 	lda	#$12   ; vram at $0400|charset at $0800/bitmap at $0000
+; 	lda	#$11   ; vram at $0400|charset at $0000/bitmap at $0000
+; 	lda	#$10   ; vram at $0400|charset at $0000/bitmap at $0000
+	sta	$d018
+	lda	#$03 - USEBANK
+	sta	$dd00
 
 	lda	#$1b | (>LINE << 7)
 	sta	$d011
 	lda	#<LINE
 	sta	$d012
+
 	rts
 
 	
@@ -174,17 +315,17 @@ section1:
 	EOL
 	ds.b	2,$ea
 	ldx	#$1b
-	stx	$d011
+	stx	$d011       ; text
 	sty	$d016
 	tya
 	ora	#%00010000
-	sta	$d016		; mc
+	sta	$d016		; mc text
 	ldx	#$5b		; illegal text
 	stx	$d011
-	ldx	#$3b		; bitmap
+	ldx	#$3b		; mc bitmap
 	stx	$d011
 	and	#%11101111
-	sta	$d016		; hires
+	sta	$d016		; hires bitmap
 	ldx	#$7b
 	stx	$d011		; illegal bitmap1
 	ldx	#$5b
