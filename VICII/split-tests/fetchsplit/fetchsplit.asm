@@ -441,8 +441,9 @@ tp_lp1:
 	align	256
 
 line18bm:
-	ds.b	6,$ea
-	sty	$d011
+    ldx #$7b    ; 2
+    stx $d011   ; 4
+
 	lda	#7
 	sta	$d021
 	lda	#6
@@ -451,9 +452,11 @@ line18bm:
 	stx	$dd00
 	ldx	#$3f
 	stx	$dd02
-	ldx	#$f0
+	ldx	#$f8
 	stx	$d018
-	ds.b	2,$ea
+
+    ds.b	2+3,$ea
+	sty	$d011
 
 	jsr	line18bm_do
 	jsr	line18bm_do
