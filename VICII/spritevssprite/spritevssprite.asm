@@ -12,45 +12,21 @@ basicLoader:
 	.code
 	jmp main
 
+spriteAnum = 0
+spriteBnum = 1
+
 SPRITEPOS = $0340
-REGENPOS = $0400
-SPRBASE0 = REGENPOS+1016
-SPRBASE1 = REGENPOS+1017
-SPRBASE2 = REGENPOS+1018
-SPRBASE3 = REGENPOS+1019
-SPRBASE4 = REGENPOS+1020
-SPRBASE5 = REGENPOS+1021
-SPRBASE6 = REGENPOS+1022
-SPRBASE7 = REGENPOS+1023
-MX8      = $D010  ; Mob 8th bit
-YSCROLL  = $D011
-RASTER   = $D012
-ME       = $D015  ; Mob enable
-XSCROLL  = $D016
-MYE      = $D017  ; Mob Y-expand
-MEMPTR   = $D018
-MMC      = $D01C  ; Mob multicolor mode
-MXE      = $D01D  ; Mob X-expand
-M2M      = $D01E  ; Mob 2 Mob collision
-M2D      = $D01F  ; Mob 2 data collision
-EC       = $D020  ; Exterior color
-BC0      = $D021  ; Background color #0
-BC1      = $D022  ; Background color #1
-BC2      = $D023  ; Background color #2
-BC3      = $D024  ; Background color #3
-MM0      = $D025  ; Mob multicolor #0
-MM1      = $D026  ; Mob multicolor #1
-MC0      = $D027  ; Mob color #0
-MC1      = $D028  ; Mob color #1
-MC2      = $D029  ; Mob color #2
-MC3      = $D02A  ; Mob color #3
-MC4      = $D02B  ; Mob color #4
-MC5      = $D02C  ; Mob color #5
-MC6      = $D02D  ; Mob color #6
-MC7      = $D02E  ; Mob color #7
+VRAM = $0400
+SPRBASE0 = VRAM+1016
+SPRBASE1 = VRAM+1017
+SPRBASE2 = VRAM+1018
+SPRBASE3 = VRAM+1019
+SPRBASE4 = VRAM+1020
+SPRBASE5 = VRAM+1021
+SPRBASE6 = VRAM+1022
+SPRBASE7 = VRAM+1023
 
-
-	.macro cycles nr_cycles
+    .macro cycles nr_cycles
 		.if ((nr_cycles .mod 2) = 1)
 			cmp	$ff
 			.repeat ((nr_cycles-3) / 2)
@@ -65,16 +41,16 @@ MC7      = $D02E  ; Mob color #7
 	
 	.macro test_mmc yval,res_addr
 		lda	#yval
-		sta	YSCROLL
-		lda	M2M
-		lda	M2M
+		sta	$d011
+		lda	$d01e ; Mob 2 Mob collision
+		lda	$d01e ; Mob 2 Mob collision
 		sta	res_addr,x
-		inc	BC0
+		inc	$d021 ; to show stableness
 		cycles 31
 	.endmacro
 
 stable:
-	cmp RASTER
+	cmp $d012
 	bne	stable
 	ldx	#$0B
 	nop
@@ -82,48 +58,57 @@ stable:
 	nop
 ;	nop
 stable1:
-	inc	EC
-	lda	RASTER
-	dec	EC
-	lda	RASTER
-	lda	RASTER
-	lda	RASTER
-	lda	RASTER
-	lda	RASTER
-	lda	RASTER
+	inc	$d020
+	lda	$d012
+	dec	$d020
+	lda	$d012
+	lda	$d012
+	lda	$d012
+	lda	$d012
+	lda	$d012
+	lda	$d012
 	inc	$ff
 	nop
 	nop
 	nop
-	cmp	RASTER
+	cmp	$d012
 	beq	stable2
 stable2:
 	dex
 	bne stable1
 	rts
 
+;------------------------------------------------------------------------------
 main:
 	jsr	init_sprite
 	jsr	init_colorram
-testagain:
+
+;testagain:
 	lda	#$00
 	sta	test_pos
 	sta passfail
 	lda #$CC
 	sta $3FFF
-	
+
 	lda	#SPRITEPOS/64
-	sta	SPRBASE0
-	sta	SPRBASE1
-	lda	#$03
-	sta	ME
-	
+	sta	SPRBASE0 + spriteAnum
+	sta	SPRBASE0 + spriteBnum
+	lda	#(1 << spriteAnum) | (1 << spriteBnum)
+	sta	$d015
+
+	; both sprites at exact same position
 	lda	#60
-	sta	$D000
-	sta	$D002
+	sta	$D000 + (spriteAnum * 2)
+	sta	$D000 + (spriteBnum * 2)
 	lda	#50
-	sta	$D001
-	sta	$D003
+	sta	$D001 + (spriteAnum * 2)
+	sta	$D001 + (spriteBnum * 2)
+
+	lda #1
+	sta $D027 + spriteAnum
+	lda #7
+	sta $D027 + spriteBnum
+
 main_loop:
 
 	sei
@@ -132,51 +117,55 @@ main_loop:
 ;	cycles 63
 	cycles 39
 	
-	inc	EC
+	inc	$d020
 	lda	test_pos
 	tax
 	clc
 	adc	#60
-	sta	$D000
-	sta	$D002
-	
-	test_mmc $10,REGENPOS+ 0*40
-	test_mmc $11,REGENPOS+ 1*40
-	test_mmc $12,REGENPOS+ 2*40
-	test_mmc $13,REGENPOS+ 3*40
-	test_mmc $14,REGENPOS+ 4*40
-	test_mmc $15,REGENPOS+ 5*40
-	test_mmc $16,REGENPOS+ 6*40
-	test_mmc $17,REGENPOS+ 7*40
-	test_mmc $10,REGENPOS+ 8*40
-	test_mmc $11,REGENPOS+ 9*40
-	test_mmc $12,REGENPOS+10*40
-	test_mmc $13,REGENPOS+11*40
-	test_mmc $14,REGENPOS+12*40
-	test_mmc $15,REGENPOS+13*40
-	test_mmc $16,REGENPOS+14*40
-	test_mmc $17,REGENPOS+15*40
-	test_mmc $10,REGENPOS+16*40
-	test_mmc $11,REGENPOS+17*40
-	test_mmc $12,REGENPOS+18*40
-	test_mmc $13,REGENPOS+19*40
+	; both sprites at exact same position
+	sta	$D000 + (spriteAnum * 2)
+	sta	$D000 + (spriteBnum * 2)
+
+	test_mmc $10,VRAM+ 0*40
+	test_mmc $11,VRAM+ 1*40
+	test_mmc $12,VRAM+ 2*40
+	test_mmc $13,VRAM+ 3*40
+	test_mmc $14,VRAM+ 4*40
+	test_mmc $15,VRAM+ 5*40
+	test_mmc $16,VRAM+ 6*40
+	test_mmc $17,VRAM+ 7*40
+
+	test_mmc $10,VRAM+ 8*40
+	test_mmc $11,VRAM+ 9*40
+	test_mmc $12,VRAM+10*40
+	test_mmc $13,VRAM+11*40
+	test_mmc $14,VRAM+12*40
+	test_mmc $15,VRAM+13*40
+	test_mmc $16,VRAM+14*40
+	test_mmc $17,VRAM+15*40
+
+	test_mmc $10,VRAM+16*40
+	test_mmc $11,VRAM+17*40
+	test_mmc $12,VRAM+18*40
+	test_mmc $13,VRAM+19*40
 	
 	lda	#$00
-	sta	EC
-	sta	BC0
+	sta	$d020
+	sta	$d021
 	
 	lda cycle_nrs,x
-	sta	REGENPOS+20*40,x
-	
-;	lda	#$1
-;	sta	YSCROLL
-	
+	sta	VRAM+20*40,x
 	
 	ldx	test_pos
 	inx
 	cpx	#40
 	beq	verify
+verify_end:
 	stx	test_pos
+
+rescolor=*+1
+	lda	#$00
+	sta	$d020
 
 	; ========= Lower  Border =========
 	; Use $D011 register to detect start of new frame
@@ -190,64 +179,105 @@ raster_begin:
 	and	#$80
 	bne	raster_begin
 
+	lda	#$00
+	sta	$d020
+	sta	$d021
+
 	jmp	main_loop
+
+;--------------------------------
 	
 verify:
-	ldx #$00
-verify_loop:
+
+    lda $d020
+    pha
+    lda #$0b
+    sta $d020
+
+verify_state=*+1
+    lda #0
+    bne verify2
+
+    ; we need to check 20 lines, 5 lines per "packet"
+	ldx #0
+	stx rescolor
+	stx passfail
+
+verify_loop1:
 	lda #$05
-	sta $D800,x	
-	sta $D900,x	
-	sta $DA00,x	
-	sta $DA20,x	
-	lda REGENPOS,x
-	cmp expected_result,x
+	sta $D800+(0*5*40),x
+	lda VRAM+(0*5*40),x
+	cmp expected_result+(0*5*40),x
 	beq verify_ok0
 	lda #$02
-	sta $D800,x
+	sta $D800+(0*5*40),x
 	lda #$ff
 	sta passfail
 verify_ok0:
-	lda REGENPOS+$0100,x
-	cmp expected_result+$0100,x
+
+	lda #$05
+	sta $D800+(1*5*40),x
+	lda VRAM+(1*5*40),x
+	cmp expected_result+(1*5*40),x
 	beq verify_ok1
 	lda #$02
-	sta $D900,x
+	sta $D800+(1*5*40),x
 	lda #$ff
 	sta passfail
 verify_ok1:
-	lda REGENPOS+$0200,x
-	cmp expected_result+$0200,x
+
+	inx
+	cpx #(5*40)
+	bne verify_loop1
+
+	; Output results
+	ldx #$0b
+	lda passfail
+	beq noerror2
+	ldx #$0a
+noerror2:
+	stx rescolor
+
+    pla
+    sta $d020
+    ldx #1
+    stx verify_state
+    ldx #39
+    jmp verify_end
+
+verify2:
+	ldx #0
+verify_loop2:
+
+	lda #$05
+	sta $D800+(2*5*40),x
+	lda VRAM+(2*5*40),x
+	cmp expected_result+(2*5*40),x
 	beq verify_ok2
 	lda #$02
-	sta $DA00,x
+	sta $D800+(2*5*40),x
 	lda #$ff
 	sta passfail
 verify_ok2:
-	lda REGENPOS+$0220,x
-	cmp expected_result+$0220,x
+
+	lda #$05
+	sta $D800+(3*5*40),x
+	lda VRAM+(3*5*40),x
+	cmp expected_result+(3*5*40),x
 	beq verify_ok_last
 	lda #$02
-	sta $DA20,x
+	sta $D800+(3*5*40),x
 	lda #$ff
 	sta passfail
+
 verify_ok_last:
 	inx
-	bne verify_loop
+	cpx #(5*40)
+	bne verify_loop2
 	
-; 	; Restore yscroll value
-; 	lda #$1B
-; 	sta YSCROLL
-; 	
-; 	; Disable sprites
-; 	lda #$00
-; 	sta ME
-; 	
-; 	; Position cursor
-; 	clc
-; 	ldx #20
-; 	ldy #0
-; 	jsr $E50A
+
+    pla
+    sta $d020
 
 	; Output results
 	ldx #$05
@@ -256,13 +286,11 @@ verify_ok_last:
 	beq noerror
 	ldx #$02
 noerror:
-	stx $d020
+	stx rescolor
 
-	jmp	testagain
-	
-	; Return to basic (or whatever called us)
-	sei
-	jmp *
+    ldx #0
+    stx verify_state
+    jmp verify_end
 
 test_pos:
 	.byte	$00
@@ -276,6 +304,7 @@ cycle_nrs:
 	.byte	$30,$31,$32,$33,$34,$35,$36,$37,$38,$39
 	.byte	$30,$31,$32,$33,$34,$35,$36,$37,$38,$39
 	
+; sprite data, diagonal bar (\)
 sprite_bytes:
 	.byte	$80,$00,$00
 	.byte	$40,$00,$00
