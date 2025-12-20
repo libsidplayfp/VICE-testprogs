@@ -36,6 +36,42 @@ function frodo_get_options
 #                exitoptions=""
                 new_cia_enabled=1
             ;;
+        "vicii-pal")
+#                exitoptions="-vic-6569R3"
+                testprogvideotype="PAL"
+            ;;
+        "vicii-ntsc")
+#                exitoptions="-vic-6567R8"
+                testprogvideotype="NTSC"
+            ;;
+        "vicii-ntscold")
+#                exitoptions="-vic-6567R56A"
+                testprogvideotype="NTSCOLD"
+            ;;
+        "vicii-old")
+                if [ x"$testprogvideotype"x == x"PAL"x ]; then
+                    # "old" PAL
+#                    exitoptions="-vic-6569R3"
+                    testprogvideosubtype="6569"
+                fi
+                if [ x"$testprogvideotype"x == x"NTSC"x ]; then
+                    # "old" NTSC
+#                    exitoptions="-vic-6567R8"
+                    testprogvideosubtype="6567"
+                fi
+            ;;
+        "vicii-new")
+                if [ x"$testprogvideotype"x == x"PAL"x ]; then
+                    # "new" PAL
+#                    exitoptions="-vic-8565"
+                    testprogvideosubtype="8565"
+                fi
+                if [ x"$testprogvideotype"x == x"NTSC"x ]; then
+                    # "new" NTSC
+#                    exitoptions="-vic-8562"
+                    testprogvideosubtype="8562"
+                fi
+            ;;
         "sid-old")
                 exitoptions="SIDType=6581"
                 new_sid_enabled=0

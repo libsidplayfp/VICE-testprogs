@@ -846,34 +846,56 @@
 #FIXME: check tests on NTSCOLD
 #FIXME: fix test for NTSC, dump reference data
 ../VICII/split-tests/bascan/,bascan.prg,exitcode,100000000,vicii-pal
-../VICII/split-tests/fetchsplit/,fetchsplit.prg,screenshot,20000000,vicii-pal,warn:vicfetch
+../VICII/split-tests/fetchsplit/,fetchsplit.prg,screenshot,20000000,vicii-pal,vicii-old,warn:vicfetch,comment:unsafe reference
+../VICII/split-tests/fetchsplit/,fetchsplit.prg,screenshot,20000000,vicii-pal,vicii-new,warn:vicfetch,comment:unsafe reference
 #FIXME: assemble seperate tests per VIC type
 ../VICII/split-tests/lightpen/,lightpen.prg,exitcode,1000000000
 #FIXME: apparently fails randomly, perhaps uninitialized memory is shown
-../VICII/split-tests/modesplit/,modesplit.prg,screenshot,20000000
+../VICII/split-tests/modesplit/,modesplit.prg,screenshot,20000000,vicii-pal,vicii-old
+../VICII/split-tests/modesplit/,modesplit.prg,screenshot,20000000,vicii-pal,vicii-new
+../VICII/split-tests/modesplit/,modesplit.prg,screenshot,20000000,vicii-ntsc
 #FIXME: port to NTSC/dump reference data
 ../VICII/split-tests/spritescan/,spritescan.prg,exitcode,1000000000,vicii-pal
 #TODO: add "drean" support to testbench
-../VICII/vicii_timing/,vicii_reg_timing.prg,screenshot,35000000,vicii-pal,warn:vicfetch
-../VICII/vicii_timing/,vicii_reg_timing-a5.prg,screenshot,35000000,vicii-pal,warn:vicfetch
-../VICII/vicii_timing/,vicii_reg_timing-ff.prg,screenshot,35000000,vicii-pal,warn:vicfetch
-../VICII/videomode/,rmwtest.prg,screenshot,10000000,vicii-pal
-../VICII/videomode/,rmwtest_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/videomode/,videomode1.prg,screenshot,10000000,vicii-pal
-../VICII/videomode/,videomode2.prg,screenshot,10000000,vicii-pal
-../VICII/videomode/,videomode-v.prg,screenshot,10000000,vicii-pal
-../VICII/videomode/,videomode-w.prg,screenshot,10000000,vicii-pal
-../VICII/videomode/,videomode-x.prg,screenshot,10000000,vicii-pal
-../VICII/videomode/,videomode-y.prg,screenshot,10000000,vicii-pal
-../VICII/videomode/,videomode-z.prg,screenshot,10000000,vicii-pal
+../VICII/vicii_timing/,vicii_reg_timing.prg,screenshot,35000000,vicii-pal,vicii-old,warn:vicfetch,comment:unsafe reference
+../VICII/vicii_timing/,vicii_reg_timing-a5.prg,screenshot,35000000,vicii-pal,vicii-old,warn:vicfetch,comment:unsafe reference
+../VICII/vicii_timing/,vicii_reg_timing-ff.prg,screenshot,35000000,vicii-pal,vicii-old,warn:vicfetch,comment:unsafe reference
+../VICII/vicii_timing/,vicii_reg_timing.prg,screenshot,35000000,vicii-pal,vicii-new,warn:vicfetch,comment:unsafe reference
+../VICII/vicii_timing/,vicii_reg_timing-a5.prg,screenshot,35000000,vicii-pal,vicii-new,warn:vicfetch,comment:unsafe reference
+../VICII/vicii_timing/,vicii_reg_timing-ff.prg,screenshot,35000000,vicii-pal,vicii-new,warn:vicfetch,comment:unsafe reference
+../VICII/videomode/,rmwtest.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/videomode/,rmwtest.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/videomode/,rmwtest_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-old
+../VICII/videomode/,rmwtest_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-new
+../VICII/videomode/,videomode1.prg,screenshot,10000000,vicii-pal,vicii-old,comment:unsafe reference
+../VICII/videomode/,videomode2.prg,screenshot,10000000,vicii-pal,vicii-old,comment:unsafe reference
+../VICII/videomode/,videomode-v.prg,screenshot,10000000,vicii-pal,vicii-old,comment:unsafe reference
+../VICII/videomode/,videomode-w.prg,screenshot,10000000,vicii-pal,vicii-old,comment:unsafe reference
+../VICII/videomode/,videomode-x.prg,screenshot,10000000,vicii-pal,vicii-old,comment:unsafe reference
+../VICII/videomode/,videomode-y.prg,screenshot,10000000,vicii-pal,vicii-old,comment:unsafe reference
+../VICII/videomode/,videomode-z.prg,screenshot,10000000,vicii-pal,vicii-old,comment:unsafe reference
+../VICII/videomode/,videomode1.prg,screenshot,10000000,vicii-pal,vicii-new,comment:unsafe reference
+../VICII/videomode/,videomode2.prg,screenshot,10000000,vicii-pal,vicii-new,comment:unsafe reference
+../VICII/videomode/,videomode-v.prg,screenshot,10000000,vicii-pal,vicii-new,comment:unsafe reference
+../VICII/videomode/,videomode-w.prg,screenshot,10000000,vicii-pal,vicii-new,comment:unsafe reference
+../VICII/videomode/,videomode-x.prg,screenshot,10000000,vicii-pal,vicii-new,comment:unsafe reference
+../VICII/videomode/,videomode-y.prg,screenshot,10000000,vicii-pal,vicii-new,comment:unsafe reference
+../VICII/videomode/,videomode-z.prg,screenshot,10000000,vicii-pal,vicii-new,comment:unsafe reference
 #FIXME: VICE output doesnt match my C64 (better captures needed)
-../VICII/videomode/,videomode-v_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/videomode/,videomode-w_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/videomode/,videomode-x_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/videomode/,videomode-y_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/videomode/,videomode-z_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/videomode/,videomode2_ntsc.prg,screenshot,10000000,vicii-ntsc
-../VICII/videomode/,videomode1_ntsc.prg,screenshot,10000000,vicii-ntsc
+../VICII/videomode/,videomode-v_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-old,comment:unsafe reference
+../VICII/videomode/,videomode-w_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-old,comment:unsafe reference
+../VICII/videomode/,videomode-x_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-old,comment:unsafe reference
+../VICII/videomode/,videomode-y_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-old,comment:unsafe reference
+../VICII/videomode/,videomode-z_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-old,comment:unsafe reference
+../VICII/videomode/,videomode2_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-old,comment:unsafe reference
+../VICII/videomode/,videomode1_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-old,comment:unsafe reference
+../VICII/videomode/,videomode-v_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-new,comment:unsafe reference
+../VICII/videomode/,videomode-w_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-new,comment:unsafe reference
+../VICII/videomode/,videomode-x_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-new,comment:unsafe reference
+../VICII/videomode/,videomode-y_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-new,comment:unsafe reference
+../VICII/videomode/,videomode-z_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-new,comment:unsafe reference
+../VICII/videomode/,videomode2_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-new,comment:unsafe reference
+../VICII/videomode/,videomode1_ntsc.prg,screenshot,10000000,vicii-ntsc,vicii-new,comment:unsafe reference
 #FIXME: check on NTSCOLD (better captures needed)
 ../VICII/vspbug/,lft-safe-vsp.prg,interactive,0,vicii-pal
 ../VICII/vspbug/,vsp_bug.prg,exitcode,13000000
@@ -943,23 +965,40 @@
 ../VICII/spritepriorities/,test1.prg,screenshot,20000000
 ../VICII/spriterestart/,spriterestart.prg,exitcode,9000000,vicii-pal
 #FIXME: port tests to NTSC and make reference screenshots
-../VICII/spritesplit/,ss-exp-unexp-hires.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-exp-unexp-mc.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-hires-color.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-hires-mc-exp.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-hires-mc.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-mc-color0.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-mc-color1.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-mc-color2.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-mc-hires-exp.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-mc-hires.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-pri-exp.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-pri-mc-exp.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-pri-mc.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-pri.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-unexp-exp-hires.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-unexp-exp-mc.prg,screenshot,10000000,vicii-pal
-../VICII/spritesplit/,ss-xpos.prg,screenshot,10000000,vicii-pal
+../VICII/spritesplit/,ss-exp-unexp-hires.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-exp-unexp-hires.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-exp-unexp-mc.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-exp-unexp-mc.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-hires-color.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-hires-color.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-hires-mc-exp.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-hires-mc-exp.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-hires-mc.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-hires-mc.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-mc-color0.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-mc-color0.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-mc-color1.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-mc-color1.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-mc-color2.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-mc-color2.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-mc-hires-exp.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-mc-hires-exp.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-mc-hires.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-mc-hires.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-pri-exp.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-pri-exp.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-pri-mc-exp.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-pri-mc-exp.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-pri-mc.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-pri-mc.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-pri.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-pri.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-unexp-exp-hires.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-unexp-exp-hires.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-unexp-exp-mc.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-unexp-exp-mc.prg,screenshot,10000000,vicii-pal,vicii-new
+../VICII/spritesplit/,ss-xpos.prg,screenshot,10000000,vicii-pal,vicii-old
+../VICII/spritesplit/,ss-xpos.prg,screenshot,10000000,vicii-pal,vicii-new
 ../VICII/spritesteal/,spritesteal.prg,exitcode,100000000,vicii-pal
 ../VICII/spritesteal/,spritesteal_ntsc.prg,exitcode,100000000,vicii-ntsc
 ../VICII/spritevssprite/,spritevssprite.prg,exitcode,32000000,vicii-pal

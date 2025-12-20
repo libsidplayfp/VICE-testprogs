@@ -58,7 +58,7 @@ KERNAL64VIC20LASTSTRING=1.8.6_b1
 U64LAST=145
 U64LASTSTRING="1.45"
 
-# checked 20/11/2023
+# checked 9/12/2025
 MICRO64LAST=20180316
 MICRO64LASTSTRING="1.00.2018.03.16 (build 719)"
 
@@ -68,7 +68,8 @@ EMU64HEAD=20251205
 YACEHEAD=2-2-0-47
 
 CHAMSTANDALONELAST=9q
-CHAMCARTRIDGELAST=9q
+# checked 12/12/2025
+CHAMCARTRIDGELAST=9r
 
 CHAM20LAST=20201130
 
@@ -79,6 +80,11 @@ FRODOHEAD:=20251205
 VIRTUALC64LAST=20241010
 VIRTUALC64LASTSTRING="unknown"
 
+ifeq ($(V), 1)
+VERBOSE=--verbose
+VERBOSESHORT=-v
+endif
+
 ###############################################################################
 
 include Makefile.config
@@ -87,16 +93,19 @@ include Makefile.config
 
 all: prereq
 #	12345678901234567890123456789012345678901234567890123456789012345678901234567890
-	echo "to run the tests use the following targets:"
+	echo "To run the tests use the following targets:"
 	echo ""
 	echo "testall           - run all VICE tests"
+	echo "testlist          - build individual test lists from <testlist.in>"
 	echo ""
-	echo "to run individual tests:"
+	echo "To run tests for individual emulators:"
 	echo ""
 	echo "testx64, testx64sc, testx128c64, testx128, testxscpu64, testx64dtv,"
 	echo "testxpet, testxcbm2, testxcbm5x0, testxvic, testxplus4, testvsid"
 	echo ""
-	echo "to check for differences in last results against latest results in the"
+	echo "Add FILTER=\"<testname>\" to run individual tests."
+	echo ""
+	echo "To check for differences in last results against latest results in the"
 	echo "repository, use:"
 	echo ""
 	echo "checkx64, checkx64sc, checkx128c64, checkx128, checkxscpu64, checkx64dtv,"
@@ -104,16 +113,25 @@ all: prereq
 	echo "or checkall"
 	echo ""
 	echo "allresults - update all result tables (html)"
+	echo "results    - produce output .html files"
+	echo "results0   - output results to stdout (text)"
 	echo ""
 	echo "for wiki table use something like: make resultswiki | xclip -selection clipboard"
 	echo ""
 	echo "to run chameleon tests:"
-	echo "testchameleon, testcham20"
+	echo "testchameleoncartold (cartridge), testchameleoncart (cartridge)"
+	echo "testchameleon (standalone), testcham20 (vic20 standalone)"
 	echo ""
-#	echo "testhoxs64"
-#	echo "testmicro64"
-#	echo "testemu64"
-#	echo "testyace"
+	echo "to run ultimate64 tests:"
+	echo "testu64"
+	echo ""
+	echo "to run tests for other supported emulators:"
+	echo ""
+	echo "testhoxs64, testmicro64, testyace, testdenise, testemu64, testfrodo"
+	echo "testvirtualc64"
+	echo "testz64k, testz64kc64, testz64kc128c64, testz64kc128, testz64kvic20"
+	echo "testkernal64, testkernal64c64, testkernal64c128c64, testkernal64c128c128"
+	echo "testkernal64scpu64, testkernal64cbm2, testkernal64vic20"
 
 ################################################################################
 prereq: revertfiles testlist cmpscreens maketable prereq-chameleon
@@ -121,27 +139,29 @@ prereq: revertfiles testlist cmpscreens maketable prereq-chameleon
 .PHONY: testlist selftest prereq revertfiles
 
 revertfiles:
-	-svn revert ../drive/format/format.d64
-	-make -C ../drive/format/ clean all --no-print-dir --silent > /dev/null
-	-svn revert ../C64/carts/tamtest/tamtest.crt
-	-make -C ../C64/carts/tamtest/ clean all --no-print-dir --silent > /dev/null
-	-svn revert ../drive/rpm/rpm.g64
-	-svn revert ../drive/rpm/rpm.p64
-	-svn revert ../drive/rpm/rpm.d64
-	-make -C ../drive/rpm/ clean all --no-print-dir --silent > /dev/null
+	-svn revert ../drive/format/format.d64 > /dev/null
+	-make --no-print-directory -C ../drive/format/ clean all --no-print-dir --silent > /dev/null
+	-svn revert ../C64/carts/tamtest/tamtest.crt > /dev/null
+	-make --no-print-directory -C ../C64/carts/tamtest/ clean all --no-print-dir --silent > /dev/null
+	-svn revert ../drive/rpm/rpm.g64 > /dev/null
+	-svn revert ../drive/rpm/rpm.p64 > /dev/null
+	-svn revert ../drive/rpm/rpm.d64 > /dev/null
+	-make --no-print-directory -C ../drive/rpm/ clean all --no-print-dir --silent > /dev/null
+	-svn revert ../C64/carts/ef-eapi/test-eapi.crt
+	-svn revert ../C64/autostart/defaults/test.crt
 
 selftest:
-	make -s -C selftest --no-print-dir --silent
-	./testbench.sh x64sc selftest
-	./testbench.sh x128 selftest
-	./testbench.sh xscpu64 selftest
-	./testbench.sh x64dtv selftest
-	./testbench.sh xvic selftest
-	./testbench.sh xplus4 selftest
-	./testbench.sh xpet selftest
-	./testbench.sh xcbm2 selftest
-	./testbench.sh xcbm5x0 selftest
-	./testbench.sh vsid selftest
+	make --no-print-directory -s -C selftest --no-print-dir --silent
+	./testbench.sh x64sc selftest $(VERBOSE)
+	./testbench.sh x128 selftest $(VERBOSE)
+	./testbench.sh xscpu64 selftest $(VERBOSE)
+	./testbench.sh x64dtv selftest $(VERBOSE)
+	./testbench.sh xvic selftest $(VERBOSE)
+	./testbench.sh xplus4 selftest $(VERBOSE)
+	./testbench.sh xpet selftest $(VERBOSE)
+	./testbench.sh xcbm2 selftest $(VERBOSE)
+	./testbench.sh xcbm5x0 selftest $(VERBOSE)
+	./testbench.sh vsid selftest $(VERBOSE)
 
 cmpscreens: cmpscreens.c
 	$(CC) -W -Wall -O3 -o cmpscreens cmpscreens.c -lm
@@ -696,98 +716,100 @@ testall: \
 	testxcbm5x0 \
 	testvsid
 	
-	make checkall
+	make checkall FILTER=$(FILTER)
 
 testx64: prereq
-	EMUDIR="$(VICEDIR)" ./testbench.sh x64
+	EMUDIR="$(VICEDIR)" ./testbench.sh x64 $(FILTER) $(VERBOSE)
 
 testx64sc: prereq
-	EMUDIR="$(VICEDIR)" ./testbench.sh x64sc
+	EMUDIR="$(VICEDIR)" ./testbench.sh x64sc $(FILTER) $(VERBOSE)
 
 testx128c64: prereq
-	EMUDIR="$(VICEDIR)" ./testbench.sh x128c64
+#	EMUDIR="$(VICEDIR)" ./testbench.sh x128c64 $(FILTER) --verbose
+	EMUDIR="$(VICEDIR)" ./testbench.sh x128c64 $(FILTER) $(VERBOSE)
 
 testx128: prereq
-	EMUDIR="$(VICEDIR)" ./testbench.sh x128
+	EMUDIR="$(VICEDIR)" ./testbench.sh x128 $(FILTER) $(VERBOSE)
 
 testxscpu64: prereq
-	EMUDIR="$(VICEDIR)" ./testbench.sh xscpu64
+	EMUDIR="$(VICEDIR)" ./testbench.sh xscpu64 $(FILTER) $(VERBOSE)
 
 testx64dtv: prereq
-	EMUDIR="$(VICEDIR)" ./testbench.sh x64dtv
+	EMUDIR="$(VICEDIR)" ./testbench.sh x64dtv $(FILTER) $(VERBOSE)
 
 testxplus4: prereq
-	EMUDIR="$(VICEDIR)" ./testbench.sh xplus4
+	EMUDIR="$(VICEDIR)" ./testbench.sh xplus4 $(FILTER) $(VERBOSE)
 
 testxvic: prereq
-	EMUDIR="$(VICEDIR)" ./testbench.sh xvic
+	EMUDIR="$(VICEDIR)" ./testbench.sh xvic $(FILTER) $(VERBOSE)
 
 testxpet: prereq
-	EMUDIR="$(VICEDIR)" ./testbench.sh xpet
+	EMUDIR="$(VICEDIR)" ./testbench.sh xpet $(FILTER) $(VERBOSE)
 
 testxcbm2: prereq
-	EMUDIR="$(VICEDIR)" ./testbench.sh xcbm2
+	EMUDIR="$(VICEDIR)" ./testbench.sh xcbm2 $(FILTER) $(VERBOSE)
 
 testxcbm5x0: prereq
-	EMUDIR="$(VICEDIR)" ./testbench.sh xcbm5x0
+	EMUDIR="$(VICEDIR)" ./testbench.sh xcbm5x0 $(FILTER) $(VERBOSE)
 
 testvsid: prereq
-	EMUDIR="$(VICEDIR)" ./testbench.sh vsid
+	EMUDIR="$(VICEDIR)" ./testbench.sh vsid $(FILTER) $(VERBOSE)
 
 ##############################################################################
 	
 testhoxs64: prereq	
-	EMUDIR="$(HOXS64DIR)" ./testbench.sh hoxs64 --pal --cianew --8580 --8565early
+#	EMUDIR="$(HOXS64DIR)" ./testbench.sh hoxs64 --pal --cianew --8580 --8565early --verbose $(FILTER)
+	EMUDIR="$(HOXS64DIR)" ./testbench.sh hoxs64 --pal --cianew --8580 --8565early $(FILTER) $(VERBOSE)
 testmicro64: prereq
-	EMUDIR="$(MICRO64DIR)" ./testbench.sh micro64 --resume
+	EMUDIR="$(MICRO64DIR)" ./testbench.sh micro64 --resume $(FILTER) $(VERBOSE)
 
 testz64k: testz64kc64 testz64kc128c64 testz64kc128 testz64kvic20
 testz64kc64: prereq
-	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc64 --resume
-#	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc64
+	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc64 --resume $(FILTER) $(VERBOSE)
+#	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc64 $(FILTER) $(VERBOSE)
 testz64kc128c64: prereq
-	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc128c64 --resume
+	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc128c64 --resume $(FILTER) $(VERBOSE)
 testz64kc128: prereq
-	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc128 --resume
+	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kc128 --resume $(FILTER) $(VERBOSE)
 testz64kvic20: prereq
-	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kvic20 --resume
+	EMUDIR="$(Z64KDIR)" ./testbench.sh z64kvic20 --resume $(FILTER) $(VERBOSE)
 
 testyace: prereq
-#	EMUDIR="$(YACEDIR)" ./testbench.sh yace --verbose
-	EMUDIR="$(YACEDIR)" ./testbench.sh yace
+#	EMUDIR="$(YACEDIR)" ./testbench.sh yace --verbose $(FILTER)
+	EMUDIR="$(YACEDIR)" ./testbench.sh yace $(FILTER) $(VERBOSE)
 testdenise: prereq
-#	EMUDIR="$(DENISEDIR)" ./testbench.sh denise --resume
-	EMUDIR="$(DENISEDIR)" ./testbench.sh denise
+#	EMUDIR="$(DENISEDIR)" ./testbench.sh denise --resume $(FILTER) $(VERBOSE)
+	EMUDIR="$(DENISEDIR)" ./testbench.sh denise $(FILTER) $(VERBOSE)
 testemu64: prereq
 # FIXME: unclear what CIA type
-#	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --verbose --resume
-	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --ciaold --resume
+#	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --verbose --resume $(FILTER) $(VERBOSE)
+	EMUDIR="$(EMU64DIR)" ./testbench.sh emu64 --ciaold --resume $(FILTER) $(VERBOSE)
 testfrodo: prereq
-#	EMUDIR="$(FRODODIR)" ./testbench.sh frodo --ciaold --verbose
-	EMUDIR="$(FRODODIR)" ./testbench.sh frodo --ciaold
+#	EMUDIR="$(FRODODIR)" ./testbench.sh frodo --ciaold --verbose $(FILTER)
+	EMUDIR="$(FRODODIR)" ./testbench.sh frodo --ciaold $(FILTER) $(VERBOSE)
 
 testkernal64: testkernal64c64 testkernal64c128c64 testkernal64c128c128 testkernal64scpu64 testkernal64cbm2 testkernal64vic20
 testkernal64c64: prereq
-#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --verbose
-	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --resume
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --verbose $(FILTER)
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c64 --resume $(FILTER) $(VERBOSE)
 testkernal64c128c64: prereq
-#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c64 --verbose
-	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c64 --resume
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c64 --verbose $(FILTER)
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c64 --resume $(FILTER) $(VERBOSE)
 testkernal64c128c128: prereq
-#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c128 --verbose
-	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c128 --resume
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c128 --verbose $(FILTER)
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64c128c128 --resume $(FILTER) $(VERBOSE)
 testkernal64scpu64: prereq
-#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64scpu64 --verbose
-	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64scpu64 --resume
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64scpu64 --verbose $(FILTER)
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64scpu64 --resume $(FILTER) $(VERBOSE)
 testkernal64cbm2: prereq
-#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64cbm2 --verbose
-	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64cbm2 --resume
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64cbm2 --verbose $(FILTER)
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64cbm2 --resume $(FILTER) $(VERBOSE)
 testkernal64vic20: prereq
-#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64vic20 --verbose
-	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64vic20 --resume
+#	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64vic20 --verbose $(FILTER)
+	EMUDIR="$(KERNAL64DIR)" ./testbench.sh kernal64vic20 --resume $(FILTER) $(VERBOSE)
 
 testvirtualc64: prereq
-	EMUDIR="$(VIRTUALC64DIR)" ./testbench.sh virtualc64
+	EMUDIR="$(VIRTUALC64DIR)" ./testbench.sh virtualc64 $(FILTER)
 
 ##############################################################################
 
@@ -806,21 +828,25 @@ chameleon-crtoff.prg: chameleon-crtoff.asm
 chameleon-driveinit.prg: chameleon-driveinit.bas
 	petcat -w2 -o chameleon-driveinit.prg -- chameleon-driveinit.bas
 	
+# for testing standalone mode
 testchameleon: chameleon-helper.prg prereq
-	./testbench.sh chameleon --8565early
-# for testing in cartridge mode on "new" c64 / PAL
+	./testbench.sh chameleon --8565early $(FILTER) $(VERBOSE)
+# for testing in cartridge mode on "new" C64 / PAL (M7)
 testchameleoncart: chameleon-helper.prg prereq
-	./testbench.sh chameleon --pal --8565early --cianew --8580
+	./testbench.sh chameleon --pal --8565early --cianew --8580 $(FILTER) $(VERBOSE)
+# TODO: for testing in cartridge mode on "old" C64/PAL (M2)
+testchameleoncartold: chameleon-helper.prg prereq
+	./testbench.sh chameleon --pal --6569 --ciaold --6581 $(FILTER) $(VERBOSE)
 
 testcham20: chameleon-helper.prg prereq
-	./testbench.sh cham20 --8k
+	./testbench.sh cham20 --8k $(FILTER) $(VERBOSE)
 
 ##############################################################################
 # OLD cia
 # 6581 bus interface with 8580 alike sounds.
 # VIC 6567 and 6569, no gray dots.	
 testu64: prereq
-	./testbench.sh u64 --resume --ciaold --6581 --pal
+	./testbench.sh u64 --resume --ciaold --6581 --pal $(FILTER) $(VERBOSE)
 
 ################################################################################
 # the following must be manually updated to use the right files
@@ -905,10 +931,28 @@ checkvsid: maketable
 		--results results/vsid-$(VSIDHEAD)-result.txt "$(VSIDHEAD)" \
 		--diff
 
+checkfrodo: maketable
+	echo "checking frodo:"
+	./maketable --list c64-testlist.in \
+		--results frodo-result.txt "new" \
+		--results results/frodo-$(FRODOHEAD)-result.txt "$(FRODOHEAD)" \
+		--diff
+
+checkchameleon: maketable
+	echo "checking chameleon (standalone):"
+	./maketable --list c64-testlist.in \
+		--results chameleon-result.txt "new" \
+		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "$(CHAMSTANDALONELAST)" \
+		--diff
+
+################################################################################
+
 .PHONY: results0 results resultswiki
 
+# results in text format (go to terminal)
 results0: maketable
-	./maketable --list c64-testlist.in \
+#	./maketable --omit-clean --omit-all-na --list c64-testlist.in
+	./maketable --omit-interactive --omit-all-na --omit-all-ok --list c64-testlist.in \
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
 		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
@@ -917,69 +961,71 @@ results0: maketable
 		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
 		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
 		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
+		--page \
+		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING) \
 		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
-		--results results/micro64-$(MICRO64LAST)-result.txt "micro64 "$(MICRO64STRING)"" \
 		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
-		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING) \
+		--results results/frodo-$(FRODOHEAD)-result.txt "frodo "$(FRODOHEAD)"" \
+		--results results/micro64-$(MICRO64LAST)-result.txt "micro64 "$(MICRO64STRING)"" \
 		--results results/yace-$(YACEHEAD)-result.txt "yace "$(YACEHEAD)"" \
-		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
-		--results results/frodo-$(FRODOHEAD)-result.txt "frodo "$(FRODOHEAD)""
+		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)""
 
-	./maketable --list vic20-testlist.in \
+	./maketable --omit-interactive --omit-all-na --omit-all-ok --list vic20-testlist.in \
 		--results results/xvic-$(XVICHEAD)-result.txt "xvic "$(XVICHEAD)"" \
 		--results results/z64kvic20-$(Z64KVIC20LAST)-result.txt "z64k (vic20) "$(Z64KVIC20LASTSTRING)"" \
 		--results results/kernal64vic20-$(KERNAL64VIC20LAST)-result.txt "kernal64 (vic20) "$(KERNAL64VIC20LASTSTRING)"" \
 		--results results/cham20-$(CHAM20LAST)-result.txt "cham20 "$(CHAM20LAST)""
 
-	./maketable --list c128-testlist.in \
+	./maketable --omit-interactive --omit-all-na --omit-all-ok --list c128-testlist.in \
 		--results results/x128-$(X128HEAD)-result.txt "x128 "$(X128HEAD)"" \
 		--results results/z64kc128-$(Z64KC128LAST)-result.txt "z64k (c128) "$(Z64KC128LASTSTRING)"" \
 		--results results/kernal64c128c128-$(KERNAL64C128C128LAST)-result.txt "kernal64 (c128) "$(KERNAL64C128C128LASTSTRING)""
 
-	./maketable --list plus4-testlist.in \
+	./maketable --omit-interactive --omit-all-na --omit-all-ok --list plus4-testlist.in \
 		--results results/xplus4-$(XPLUS4HEAD)-result.txt "xplus4 "$(XPLUS4HEAD)""
 
-	./maketable --list pet-testlist.in \
+	./maketable --omit-interactive --omit-all-na --omit-all-ok --list pet-testlist.in \
 		--results results/xpet-$(XPETHEAD)-result.txt "xpet "$(XPETHEAD)""
 
-	./maketable --list dtv-testlist.in \
+	./maketable --omit-interactive --omit-all-na --omit-all-ok --list dtv-testlist.in \
 		--results results/x64dtv-$(X64DTVHEAD)-result.txt "x64dtv "$(X64DTVHEAD)""
 
-	./maketable --list scpu-testlist.in \
+	./maketable --omit-interactive --omit-all-na --omit-all-ok --list scpu-testlist.in \
 		--results results/xscpu64-$(XSCPU64HEAD)-result.txt "xscpu64 "$(XSCPU64HEAD)"" \
 		--results results/kernal64scpu64-$(KERNAL64SCPU64LAST)-result.txt "kernal64 (scpu64) "$(KERNAL64SCPU64LASTSTRING)""
 		
-	./maketable --list cbm510-testlist.in \
+	./maketable --omit-interactive --omit-all-na --omit-all-ok --list cbm510-testlist.in \
 		--results results/xcbm5x0-$(XCBM5X0HEAD)-result.txt "xcbm5x0 "$(XCBM5X0HEAD)""
 		
-	./maketable --list cbm610-testlist.in \
+	./maketable --omit-interactive --omit-all-na --omit-all-ok --list cbm610-testlist.in \
 		--results results/xcbm2-$(XCBM2HEAD)-result.txt "xcbm2 "$(XCBM2HEAD)""
 
-	./maketable  --list vsid-testlist.in \
+	./maketable --omit-interactive --omit-all-na --omit-all-ok --list vsid-testlist.in \
 		--results results/vsid-$(VSIDHEAD)-result.txt "vsid "$(VSIDHEAD)""
 
 .PHONY: resultsc64
 
 resultsc64: maketable
-	./maketable --omit-clean --omit-all-na --html --list c64-testlist.in \
+#	./maketable --omit-clean --omit-all-na --html --list c64-testlist.in
+	./maketable --omit-all-na --omit-all-ok --html --list c64-testlist.in \
 		--ranking "<small><hr>%d%%<br>%d of %d<small>" \
 		--percentages "<small><hr>%d%%<br>%d of %d<small>" \
 		--results results/denise-$(DENISELAST)-result.txt "denise "$(DENISELASTSTRING)"" \
 		--results results/x64sc-$(X64SCHEAD)-result.txt "x64sc "$(X64SCHEAD)"" \
- 		--results results/z64kc64-$(Z64KC64LAST)-result.txt "z64k (c64) "$(Z64KC64LASTSTRING)"" \
 		--results results/hoxs64-$(HOXS64LAST)-result.txt "hoxs64 "$(HOXS64LASTSTRING)"" \
+ 		--results results/z64kc64-$(Z64KC64LAST)-result.txt "z64k (c64) "$(Z64KC64LASTSTRING)"" \
 		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST)" (cartridge)" \
  		--results results/z64kc128c64-$(Z64KC128C64LAST)-result.txt "z64k (c128/c64) "$(Z64KC128C64LASTSTRING)"" \
-		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
 		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
+		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
 		--page \
+		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING) \
 		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
-		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING) \
+		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/frodo-$(FRODOHEAD)-result.txt "frodo "$(FRODOHEAD)"" \
 		--results results/micro64-$(MICRO64LAST)-result.txt "micro64 "$(MICRO64LASTSTRING)"" \
-		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
 		--results results/yace-$(YACEHEAD)-result.txt "yace "$(YACEHEAD)"" \
 		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)"" \
 		\
@@ -1073,11 +1119,11 @@ resultswiki: maketable
 		--results results/x128c64-$(X128C64HEAD)-result.txt "x128 (c64) "$(X128C64HEAD)"" \
 		--results results/x64-$(X64HEAD)-result.txt "x64 "$(X64HEAD)"" \
 		--page \
+		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING) \
 		--results results/kernal64c64-$(KERNAL64C64LAST)-result.txt "kernal64 (c64) "$(KERNAL64C64LASTSTRING)"" \
 		--results results/kernal64c128c64-$(KERNAL64C128C64LAST)-result.txt "kernal64 (c128/c64) "$(KERNAL64C128C64LASTSTRING)"" \
-		--results results/u64-$(U64LAST)-result.txt "U64 "$(U64LASTSTRING) \
-		--results results/frodo-$(FRODOHEAD)-result.txt "frodo "$(FRODOHEAD)"" \
 		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST)" (standalone)" \
+		--results results/frodo-$(FRODOHEAD)-result.txt "frodo "$(FRODOHEAD)"" \
 		--results results/micro64-$(MICRO64LAST)-result.txt "micro64 "$(MICRO64LASTSTRING)"" \
 		--results results/yace-$(YACEHEAD)-result.txt "yace "$(YACEHEAD)"" \
 		--results results/emu64-$(EMU64HEAD)-result.txt "emu64 "$(EMU64HEAD)""
@@ -1474,6 +1520,7 @@ resultscham: maketable chameleon-testlist.txt
 		--warnvicefail "<small><b>fails on VICE</b></small>" \
 		--warnvicfetch "<small><b>VIC may be wrong!</b></small>" \
 		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST) \
+		--results results/chameleon-9q-cartridge-result.txt "TC64 9q" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i" \
 		\
@@ -1504,6 +1551,7 @@ resultschamwiki: maketable chameleon-testlist.txt
 		--warnvicefail "{{BREAKSEMU}}" \
 		--warnvicfetch "{{BREAKSVIC}}" \
 		--results results/chameleon-$(CHAMCARTRIDGELAST)-cartridge-result.txt "TC64 "$(CHAMCARTRIDGELAST)" (cartridge)" \
+		--results results/chameleon-9q-cartridge-result.txt "TC64 9q (cartridge)" \
 		--results results/chameleon-9j-cartridge-result.txt "TC64 9j (cartridge)" \
 		--results results/chameleon-9i-cartridge-result.txt "TC64 9i (cartridge)"
 
@@ -1560,13 +1608,18 @@ resultsu64: maketable u64-testlist.txt
 		
 ################################################################################
 .PHONY: allresults
-allresults: results resultsx64 resultsx64sc resultsx128 resultsx128c64 resultsxcbm2 resultsxcbm5x0 resultsx64dtv \
+allresults: results \
+		resultsx64 resultsx64sc resultsx128 resultsx128c64 resultsxcbm2 resultsxcbm5x0 resultsx64dtv \
 		resultsxpet resultsxplus4 resultsxscpu64 resultsxvic resultsvsid \
+		\
+		resultshoxs64 resultsdenise resultsmicro64 resultsyace resultsemu64 resultsfrodo \
+		\
 		resultsz64kc64 resultsz64kc128 resultsz64kc128c64 resultsz64kvic20 \
-		resultshoxs64 resultsdenise resultsmicro64 resultsyace resultsemu64 \
 		resultskernal64c64 resultskernal64c128c64 resultskernal64c128c128 resultskernal64scpu64 resultskernal64cbm2 resultskernal64vic20 \
-		resultsfrodo \
+		\
 		resultscham resultscham20 resultsu64 
+
+################################################################################
 
 .PHONY: clean zap
 clean:

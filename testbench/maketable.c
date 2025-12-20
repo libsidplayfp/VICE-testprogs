@@ -13,12 +13,28 @@ int numpages = 0;
 int pages[MAXPAGES];
 int thispage = 0;
 
-#define BLUE    "\033[1;34m"
-#define YELLOW  "\033[1;33m"
-#define GREEN   "\033[1;32m"
-#define RED     "\033[1;31m"
-#define GREY    "\033[1;30m"
-#define WHITE   "\033[1;29m"
+//#define WHITE  "\033[0;29m"
+// 30-37 are the classic 8 foreground colors
+#define BLACK  "\033[0;30m"
+#define RED    "\033[0;31m"
+#define GREEN  "\033[0;32m"
+#define YELLOW "\033[0;33m"
+#define BLUE   "\033[0;34m"
+#define VIOLET "\033[0;35m"
+#define CYAN   "\033[0;36m"
+#define WHITE  "\033[0;37m"
+
+//#define WHITE   "\033[1;29m"
+
+#define GREY     "\033[1;30m"   /* light black */
+#define LRED     "\033[1;31m"
+#define LGREEN   "\033[1;32m"
+#define LYELLOW  "\033[1;33m"
+#define LBLUE    "\033[1;34m"
+#define LVIOLET  "\033[1;35m"
+#define LCYAN    "\033[1;36m"
+#define LWHITE   "\033[1;37m"
+
 #define NC      "\033[0m"
 
 #define FORMAT_TEXT 0
@@ -29,6 +45,9 @@ int verbose = 0;
 int format = 0;
 int omit2ok = 0;
 int omitallna = 0;
+int omitallok = 0;
+int omitokandna = 0;
+int omitmanual = 0;
 int errormode = 0;
 int cleanmode = 0;
 int diffmode = 0;
@@ -48,9 +67,9 @@ char *infilename[MAXLISTS];
 int numfiles = 0;
 char *headline[MAXLISTS];
 
-#define RESULT_ERROR    0
-#define RESULT_OK       1
-#define RESULT_TIMEOUT  2
+#define RESULT_ERROR     0
+#define RESULT_OK        1
+#define RESULT_TIMEOUT   2
 #define RESULT_NA       -1
 
 #define TYPE_EXITCODE       0
@@ -78,6 +97,10 @@ char *headline[MAXLISTS];
 #define VIDEOTYPE_NTSCOLD  2
 #define VIDEOTYPE_DREAN    3
 
+#define VIDEOSUBTYPE_UNSET      0
+#define VIDEOSUBTYPE_6569       1
+#define VIDEOSUBTYPE_8565       2
+
 typedef struct
 {
     char path[MAXPATHLEN];
@@ -90,6 +113,7 @@ typedef struct
     int ciatype;
     int sidtype;
     int videotype;
+    int videosubtype;
     char *comment;
     int warnvicfetch;
     int warnvicefail;
@@ -111,7 +135,7 @@ void dumplist(TEST *list, int num)
     int i;
     fprintf(stderr, "dumping %d tests:\n", num);
     for(i = 0; i < num; i++) {
-        fprintf(stderr, "%s,%s,%d,%d,%s,%d,%d,%d,%d\n",
+        fprintf(stderr, "%s,%s,%d,%d,%s,%d,%d,%d,%d,%d\n",
             list[i].path,
             list[i].prog,
             list[i].result,
@@ -120,7 +144,8 @@ void dumplist(TEST *list, int num)
             list[i].mediatype,
             list[i].ciatype,
             list[i].sidtype,
-            list[i].videotype
+            list[i].videotype,
+            list[i].videosubtype
         );
     }
 }
@@ -137,7 +162,19 @@ char *copytocomma(char *dest, char *src)
     return src;
 }
 
-void splitline(char *line, char *a1, char *a2, char *a3, char *a4, char *a5, char *a6, char *a7, char *a8, char *a9, char *a10)
+static void splitline(char *line,
+               char *a1,
+               char *a2,
+               char *a3,
+               char *a4,
+               char *a5,
+               char *a6,
+               char *a7,
+               char *a8,
+               char *a9,
+               char *a10,
+               char *a11
+               )
 {
     line = copytocomma(a1, line);
     line = copytocomma(a2, line);
@@ -149,11 +186,12 @@ void splitline(char *line, char *a1, char *a2, char *a3, char *a4, char *a5, cha
     line = copytocomma(a8, line);
     line = copytocomma(a9, line);
     line = copytocomma(a10, line);
+    line = copytocomma(a11, line);
 }
 
 //------------------------------------------------------------------------------
 
-#define MAXOPTIONS  6
+#define MAXOPTIONS  7
 
 int readlist(TEST *list, char *name, int isresultfile)
 {
@@ -186,9 +224,19 @@ int readlist(TEST *list, char *name, int isresultfile)
             continue; // skip comment lines
         }
         if (isresultfile) {
-            splitline(line, list->path, list->prog, result, type, opt[0], opt[1], opt[2], opt[3], opt[4], opt[5]);
+            splitline(line,
+                      list->path,
+                      list->prog,
+                      result,
+                      type,
+                      opt[0], opt[1], opt[2], opt[3], opt[4], opt[5], opt[6]);
         } else {
-            splitline(line, list->path, list->prog, type, timeout, opt[0], opt[1], opt[2], opt[3], opt[4], opt[5]);
+            splitline(line,
+                      list->path,
+                      list->prog,
+                      type,
+                      timeout,
+                      opt[0], opt[1], opt[2], opt[3], opt[4], opt[5], opt[6]);
         }
         // check error status
         if (!strcmp(result, "error")) {
@@ -219,6 +267,7 @@ int readlist(TEST *list, char *name, int isresultfile)
         list->ciatype = CIATYPE_UNSET;
         list->sidtype = SIDTYPE_UNSET;
         list->videotype = VIDEOTYPE_UNSET;
+        list->videosubtype = VIDEOSUBTYPE_UNSET;
         list->comment = NULL;
         list->warnvicfetch = 0;
         list->warnvicefail = 0;
@@ -263,7 +312,16 @@ int readlist(TEST *list, char *name, int isresultfile)
             } else if (!strcmp(opt[5], "DREAN")) {
                 list->videotype = VIDEOTYPE_DREAN;
             }
+            // 6) video sub type
+            if (!strcmp(opt[6], "6569")) {
+                list->videosubtype = VIDEOSUBTYPE_6569;
+            } else if (!strcmp(opt[6], "8565")) {
+                list->videosubtype = VIDEOSUBTYPE_8565;
+            } else if (!strcmp(opt[6], "8565early")) {
+                list->videosubtype = VIDEOSUBTYPE_8565;
+            }
         } else {
+            // read a test list
             for (i = 0; i < MAXOPTIONS; i++) {
                 if (!strcmp(opt[i], "cia-old")) {
                     list->ciatype = CIATYPE_OLD;
@@ -285,6 +343,14 @@ int readlist(TEST *list, char *name, int isresultfile)
                     list->videotype = VIDEOTYPE_NTSCOLD;
                 } else if (!strcmp(opt[i], "vicii-drean")) {
                     list->videotype = VIDEOTYPE_DREAN;
+                }
+
+                // video sub type
+                // FIXME: PAL vs NTSC?
+                if (!strcmp(opt[i], "vicii-old")) {
+                    list->videosubtype = VIDEOSUBTYPE_6569;
+                } else if (!strcmp(opt[i], "vicii-new")) {
+                    list->videosubtype = VIDEOSUBTYPE_8565;
                 }
 
                 if (!strncmp(opt[i], "mountd64:", 9) || !strncmp(opt[i], "mountd71:", 9)) {
@@ -343,6 +409,7 @@ TEST *findresultitem(TEST *list, TEST *item)
            ((item->ciatype == CIATYPE_UNSET) || (list->ciatype == item->ciatype)) &&
            ((item->sidtype == SIDTYPE_UNSET) || (list->sidtype == item->sidtype)) &&
            ((item->videotype == VIDEOTYPE_UNSET) || (list->videotype == item->videotype)) &&
+           ((item->videosubtype == VIDEOSUBTYPE_UNSET) || (list->videosubtype == item->videosubtype)) &&
            (list->mediatype == item->mediatype)
           ) {
             return list;
@@ -365,6 +432,7 @@ int findresult(TEST *list, TEST *item)
            ((item->ciatype == CIATYPE_UNSET) || (list->ciatype == item->ciatype)) &&
            ((item->sidtype == SIDTYPE_UNSET) || (list->sidtype == item->sidtype)) &&
            ((item->videotype == VIDEOTYPE_UNSET) || (list->videotype == item->videotype)) &&
+           ((item->videosubtype == VIDEOSUBTYPE_UNSET) || (list->videosubtype == item->videosubtype)) &&
            (list->mediatype == item->mediatype)
           ) {
             return list->result;
@@ -637,8 +705,15 @@ void printheader(void)
         num = testnum[i]; pass = testnum[i] - testfailed[i];
         switch (format) {
             case FORMAT_TEXT: 
-                strcpy(tmp, headline[i]); tmp[8] = 0;
-                printf(WHITE "%-8s" NC, tmp); 
+                int lc;
+                strcpy(tmp, headline[i]);
+                lc = tmp[7] ? tmp[7] : ' ';
+                tmp[7] = 0;
+                if (i % 2) {
+                    printf(LWHITE "%-7s" GREY "%c" NC, tmp, lc);
+                } else {
+                    printf("%-7s" GREY "%c" NC, tmp, lc);
+                }
                 break;
             case FORMAT_HTML:
                 if (firstrowispercent) {
@@ -782,6 +857,10 @@ void printrowtesttype(int row)
                 case VIDEOTYPE_NTSCOLD: printf("NTSCOLD "); break;
                 case VIDEOTYPE_DREAN: printf("DREAN "); break;
             }
+            switch (reflist[row].videosubtype) {
+                case VIDEOSUBTYPE_6569: printf("6569 "); break;
+                case VIDEOSUBTYPE_8565: printf("8565 "); break;
+            }
             switch (reflist[row].ciatype) {
                 case CIATYPE_OLD: printf("6526 "); break;
                 case CIATYPE_NEW: printf("8521 "); break;
@@ -811,6 +890,10 @@ void printrowtesttype(int row)
                 case VIDEOTYPE_NTSCOLD: printf("NTSCOLD "); break;
                 case VIDEOTYPE_DREAN: printf("DREAN "); break;
             }
+            switch (reflist[row].videosubtype) {
+                case VIDEOSUBTYPE_6569: printf("6569 "); break;
+                case VIDEOSUBTYPE_8565: printf("8565 "); break;
+            }
             switch (reflist[row].ciatype) {
                 case CIATYPE_OLD: printf("6526 "); break;
                 case CIATYPE_NEW: printf("8521 "); break;
@@ -835,10 +918,28 @@ void printrowtestresult(int row, int res)
     switch (format) {
         case FORMAT_TEXT:
             switch (res) {
-                case RESULT_ERROR:  printf(RED "fail    " NC); break;
-                case RESULT_OK:  printf(GREEN "ok      " NC); break;
-                case RESULT_TIMEOUT:  printf(BLUE "timeout " NC); break;
-                case RESULT_NA: 
+                case RESULT_ERROR:
+                    if (reflist[row].expect == RESULT_ERROR) {
+                        printf(LGREEN "fail/ok " NC);
+                    } else {
+                        printf(LRED "fail    " NC);
+                    }
+                    break;
+                case RESULT_OK:
+                    if (reflist[row].expect != RESULT_OK) {
+                        printf(LRED "ok/fail " NC);
+                    } else {
+                        printf(LGREEN "ok      " NC);
+                    }
+                    break;
+                case RESULT_TIMEOUT:
+                    if (reflist[row].expect == RESULT_TIMEOUT) {
+                        printf(LGREEN "time/ok " NC);
+                    } else {
+                        printf(LBLUE "timeout " NC);
+                    }
+                     break;
+                case RESULT_NA:
                     if (reflist[row].type == TYPE_INTERACTIVE) {
                         printf(GREY "manual  " NC);
                     } else {
@@ -973,7 +1074,7 @@ void printrow(int row, int *res)
 
 void printtable(void)
 {
-    int i, ii, iserror, isdiff, isclean, is2ok, isallna, isnacnt;
+    int i, ii, iserror, isdiff, isclean, is2ok, isallna, isnacnt, isallok, isokcnt, ismanual;
     int res[MAXLISTS];
     int skipped = 0;
 
@@ -988,15 +1089,19 @@ void printtable(void)
         isclean = 1;
         is2ok = 0;
         isallna = 0;
+        isallok = 0;
+        ismanual = 0;
 
         if (numpages == 0) {
             // loop over all result files (left to right)
             res[0] = findresult(testlist[0], &reflist[i]);
             isnacnt = 0;
+            isokcnt = 0;
             for (ii = (firstcolisref ? 1 : 0); ii < numfiles; ii++) {
                 res[ii] = findresult(testlist[ii], &reflist[i]);
                 if (res[ii] == RESULT_ERROR) {
                     iserror = 1;
+                    // if error was NOT expected, mark row dirty
                     if (reflist[i].expect != RESULT_ERROR) {
                         isclean = 0;
                     }
@@ -1007,8 +1112,25 @@ void printtable(void)
                         isallna = 1;
                     }
                 }
-                if (res[ii] != res[(firstcolisref ? 1 : 0)]) { isdiff = 1; isclean = 0; }
+                if (((res[ii] == RESULT_OK) && (reflist[i].expect == RESULT_OK)) ||
+                    ((res[ii] == RESULT_ERROR) && (reflist[i].expect == RESULT_ERROR)) ||
+                    ((res[ii] == RESULT_TIMEOUT) && (reflist[i].expect == RESULT_TIMEOUT))
+                   ){
+                    isokcnt++;
+                    if (isokcnt >= (numfiles)) {
+                        isallok = 1;
+                    }
+                }
+                // if row is different to first row containing data, mark as diff */
+                if (res[ii] != res[(firstcolisref ? 1 : 0)]) {
+                    isdiff = 1;
+                    // mark dirty, if neiter first nor current row is "n/a"
+                    if ((res[ii] != RESULT_NA) && (res[(firstcolisref ? 1 : 0)] != RESULT_NA)) {
+                        isclean = 0;
+                    }
+                }
                 if (res[ii] == RESULT_TIMEOUT) {
+                    // if timeout was NOT expected, mark row dirty
                     if (reflist[i].expect != RESULT_TIMEOUT) {
                         isclean = 0;
                     }
@@ -1027,10 +1149,13 @@ void printtable(void)
 
             res[0] = findresult(testlist[0], &reflist[i]);
             isnacnt = 0;
+            isokcnt = 0;
             for (ii = (firstcolisref ? first+1 : first+0); ii < pagefiles; ii++) {
                 res[ii] = findresult(testlist[ii], &reflist[i]);
+                // printf("(ii:%d res:%d isclean:%d|\n",ii,res[ii],isclean);
                 if (res[ii] == RESULT_ERROR) {
                     iserror = 1;
+                    // if error was NOT expected, mark row dirty
                     if (reflist[i].expect != RESULT_ERROR) {
                         isclean = 0;
                     }
@@ -1041,12 +1166,33 @@ void printtable(void)
                         isallna = 1;
                     }
                 }
-                if (res[ii] != res[(firstcolisref ? 1 : 0)]) { isdiff = 1; isclean = 0; }
+                if (((res[ii] == RESULT_OK) && (reflist[i].expect == RESULT_OK)) ||
+                    ((res[ii] == RESULT_ERROR) && (reflist[i].expect == RESULT_ERROR)) ||
+                    ((res[ii] == RESULT_TIMEOUT) && (reflist[i].expect == RESULT_TIMEOUT))
+                   ){
+                    isokcnt++;
+                    if (isokcnt >= (pagefiles - first)) {
+                        isallok = 1;
+                    }
+                }
+                // if row is different to first row containing data, mark as diff */
+                if (res[ii] != res[(firstcolisref ? first+1 : first+0)]) {
+                    isdiff = 1;
+                    // mark dirty, if neiter first nor current row is "n/a"
+                    if ((res[ii] != RESULT_NA) && (res[(firstcolisref ? first+1 : first+0)] != RESULT_NA))  {
+                        isclean = 0;
+                    }
+                }
                 if (res[ii] == RESULT_TIMEOUT) {
+                    // if timeout was NOT expected, mark row dirty
                     if (reflist[i].expect != RESULT_TIMEOUT) {
                         isclean = 0;
                     }
                 }
+                // printf("(iserror:%d isdiff:%d isclean:%d)\n",iserror,isdiff,isclean);
+                // if(ii==(pagefiles-1)) {
+                //     printf("<br>");
+                // };
             }
 //            thispage++;
         }
@@ -1061,14 +1207,25 @@ void printtable(void)
             }
         }
 
+        if ((reflist[i].type == TYPE_INTERACTIVE) ||
+            (reflist[i].type == TYPE_ANALYZER)) {
+            ismanual = 1;
+        }
+
+        // skip this line if we only want to see automatic tests
+        if (omitmanual && ismanual) { skipped++; continue; }
         // skip this line if we only want to see errors
         if (errormode && !iserror) { skipped++; continue; }
-        // skip this line if we only want to see errors
+        // skip this line if we only want to see "non clean" lines
         if (cleanmode && isclean) { skipped++; continue; }
         // skip this line if we only want to see diffs
         if (diffmode && !isdiff) { skipped++; continue; }
+        // skip this like if first two columns show "ok"
         if (omit2ok && is2ok) { skipped++; continue; }
+        // skip this line if all columns show "na"
         if (omitallna && isallna) { skipped++; continue; }
+        // skip this line if all columns show "ok"
+        if (omitallok && isallok) { skipped++; continue; }
         // skip this line if we dont want to see results for ntscold
         if (filterntscold && (reflist[i].videotype == VIDEOTYPE_NTSCOLD)) { skipped++; continue; }
 
@@ -1100,6 +1257,9 @@ void usage(char *name)
     "  --errors                     output only rows that contain errors\n"
     "  --omit-clean                 output only rows that are not \"clean\"\n"
     "  --omit-two-ok                omit row when leftmost two columns are ok\n"
+    "  --omit-all-ok                omit row when all columns are ok\n"
+    "  --omit-all-na                omit row when all columns are n/a\n"
+    "  --omit-interactive           filter out interactive tests\n"
     "  --verbose                    be more verbose\n", name, name
     );
 }
@@ -1129,6 +1289,10 @@ int main(int argc, char *argv[])
             omit2ok = 1;
         } else if(!strcmp(argv[i], "--omit-all-na")) {
             omitallna = 1;
+        } else if(!strcmp(argv[i], "--omit-all-ok")) {
+            omitallok = 1;
+        } else if(!strcmp(argv[i], "--omit-interactive")) {
+            omitmanual = 1;
         } else if(!strcmp(argv[i], "--filter-ntscold")) {
             filterntscold = 1;
         } else if(!strcmp(argv[i], "--html")) {
@@ -1237,7 +1401,14 @@ int main(int argc, char *argv[])
         while (thispage < numpages) {
             thispage++;
 //            printf("thispage:%d\n", thispage);
-            printf("<p></p>\n");
+            // insert a paragraph/page break
+            if (format == FORMAT_TEXT) {
+                printf("\n");
+            } else if (format == FORMAT_HTML) {
+                printf("<p></p>\n");
+            } else if (format == FORMAT_WIKI) {
+                printf("<p></p>\n");
+            }
             // output the table
             printtable();
         }

@@ -220,11 +220,24 @@ function denise_run_screenshot
     fi
 
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$screenshottest"-denise.png
-    if [ $verbose == "1" ]; then
-        echo $DENISE $DENISEOPTS $DENISEOPTSSCREENSHOT ${@:5} "-limitcycles""$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-denise.png "$4"
+    DENISESCREENSHOTNAME="$1"/.testbench/"$screenshottest"-denise
+    if [ ${testprogvideotype} != "" ]; then
+    if [ ${testprogvideotype} != "-1" ]; then
+        DENISESCREENSHOTNAME+=-${testprogvideotype}
     fi
-    $DENISE $DENISEOPTS $DENISEOPTSSCREENSHOT ${@:5} "-limitcycles""$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-denise.png "$4" 1> /dev/null
+    fi
+    if [ ${testprogvideosubtype} != "" ]; then
+    if [ ${testprogvideosubtype} != "-1" ]; then
+        DENISESCREENSHOTNAME+=-${testprogvideosubtype}
+    fi
+    fi
+    DENISESCREENSHOTNAME+=.png
+    rm -f "$DENISESCREENSHOTNAME"
+
+    if [ $verbose == "1" ]; then
+        echo $DENISE $DENISEOPTS $DENISEOPTSSCREENSHOT ${@:5} "-limitcycles""$3" "-exitscreenshot" "$DENISESCREENSHOTNAME" "$4"
+    fi
+    $DENISE $DENISEOPTS $DENISEOPTSSCREENSHOT ${@:5} "-limitcycles""$3" "-exitscreenshot" "$DENISESCREENSHOTNAME" "$4" 1> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -249,9 +262,9 @@ function denise_run_screenshot
         #FIXME: NTSC
     
         if [ $verbose == "1" ]; then
-            echo ./cmpscreens "$refscreenshotname" "$DENISEREFSXO" "$DENISEREFSYO" "$1"/.testbench/"$screenshottest"-denise.png "$DENISESXO" "$DENISESYO"
+            echo ./cmpscreens "$refscreenshotname" "$DENISEREFSXO" "$DENISEREFSYO" "$DENISESCREENSHOTNAME" "$DENISESXO" "$DENISESYO"
         fi
-        ./cmpscreens "$refscreenshotname" "$DENISEREFSXO" "$DENISEREFSYO" "$1"/.testbench/"$screenshottest"-denise.png "$DENISESXO" "$DENISESYO"
+        ./cmpscreens "$refscreenshotname" "$DENISEREFSXO" "$DENISEREFSYO" "$DENISESCREENSHOTNAME" "$DENISESXO" "$DENISESYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

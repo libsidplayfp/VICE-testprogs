@@ -215,15 +215,17 @@ function getscreenshotname
     refscreenshottest=""
     refscreenshotname=""
     screenshot_videosubtype=""
-    
-#    echo "getscreenshotname - videosubtype: "$videosubtype" - testprogvideotype: "$testprogvideotype
-    
+
+#    echo "getscreenshotname - cmdline videosubtype: "$videosubtype
+#    echo "getscreenshotname - testprogvideotype: "$testprogvideotype
+#    echo "getscreenshotname - testprogvideosubtype: "$testprogvideosubtype
+
     if [ "$2" == "" ] ; then
         refscreenshottest="$3"
     else
         refscreenshottest="$2"
     fi
-    
+
     if [ "$videosubtype" != "" ] ; then
         # if a subtype was given on cmdline, use that
         screenshot_videosubtype=$videosubtype
@@ -233,6 +235,15 @@ function getscreenshotname
             # if the default is a specific type, use that for the screenshot
             screenshot_videosubtype=$emu_default_videosubtype
         fi
+    fi
+#    echo "getscreenshotname - default screenshot_videosubtype "$screenshot_videosubtype
+
+    # if the testprog explicitly tests a sub type, use the respective type for the screenshot
+    if [ "$testprogvideosubtype" == "6569" ]; then
+        screenshot_videosubtype="6569"
+    fi
+    if [ "$testprogvideosubtype" == "8565" ]; then
+        screenshot_videosubtype="8565"
     fi
 
     # if the testprog is NTSC, and either the default or the cmdline is a PAL chip, change
@@ -267,6 +278,11 @@ function getscreenshotname
         fi
     fi
 
+    # finally construct a filename, like <path>/references/<testname>-<videotype>.png
+#    echo "getscreenshotname - screenshot_videosubtype: "$screenshot_videosubtype
+#    echo "getscreenshotname - testprogvideotype: "$testprogvideotype
+
+    # first try to fine a specific reference, based on $screenshot_videosubtype
     if [ "$screenshot_videosubtype" != "" ] ; then
         if [ -f "$1"/references/"$refscreenshottest"-"$screenshot_videosubtype".png ]
         then
@@ -291,6 +307,7 @@ function getscreenshotname
         fi
     fi
 
+    # as fallback, try a generic reference, based on $testprogvideotype
     if [ "$testprogvideotype" == "NTSC" ] && [ -f "$1"/references/"$refscreenshottest"-ntsc.png ]
     then
         refscreenshotname="$1"/references/"$refscreenshottest"-ntsc.png
@@ -329,7 +346,13 @@ function getresultsfortarget
 #    echo "reading list of tests for" "$1".
 # readarray does only work on bash4 (not in mingw)
 #    readarray -t resultlist < "$1"-results.txt
-        IFS=$'\n' read -d '' -r -a resultlist < "$1"-result.txt
+        if [ -f "$1"-result.txt ]
+        then
+            IFS=$'\n' read -d '' -r -a resultlist < "$1"-result.txt
+            echo ""$1"-result.txt used for resume."
+        else
+            echo "warning: "$1"-result.txt not found."
+        fi
     fi
 }
 
@@ -368,17 +391,20 @@ function resetflags
 
 ###############################################################################
 
-# the results file is a simple comma-seperated list
+# the results file is a simple comma-separated list
 #
-# 1) path of the test
-# 2) executable name of the test
-# 3) exit status (0:ok, $ff:error, 1:timeout, noref)
-# 4) type of the test (exitstatus,screenshot,interactive,analyzer)
-# 5) mounted d64/d71/d81 etc (if any)
-# 6) mounted g64/g71 etc (if any)
-# 7) mounted crt (if any)
-# 8) CIA type flag
-# 9) SID type flag
+#  1) path of the test
+#  2) executable name of the test
+#  3) exit status (0:ok, $ff:error, 1:timeout, noref)
+#  4) type of the test (exitstatus,screenshot,interactive,analyzer)
+#
+#  5) $mounted_d64          mounted d64/d71/d81 etc (if any)
+#  6) $mounted_g64          mounted g64/g71 etc (if any)
+#  7) $mounted_crt          mounted crt (if any)
+#  8) $new_cia_enabled      CIA type flag
+#  9) $new_sid_enabled      SID type flag
+# 10) $testprogvideotype
+# 11) $testprogvideosubtype
 
 function resultstartlog
 {
@@ -393,11 +419,13 @@ function resultstartlog
 # $2 - exe name
 # $3 - status
 # $4 - test type
+#
+# (see above)
 
 #FIXME: p64 is not included
 function resultprintline
 {
-    echo "$1","$2","$3","$4","$mounted_d64","$mounted_g64","$mounted_crt","${new_cia_enabled}","${new_sid_enabled}","${testprogvideotype}" >> "$RESULT_LOG_NAME"
+    echo "$1","$2","$3","$4","$mounted_d64","$mounted_g64","$mounted_crt","${new_cia_enabled}","${new_sid_enabled}","${testprogvideotype}","${testprogvideosubtype}" >> "$RESULT_LOG_NAME"
 }
 
 function resultstoplog
@@ -425,7 +453,8 @@ function resultfind
                [ x"$4"x == x"${rarray[3]}"x ] && [ x"$mounted_d64"x == x"${rarray[4]}"x ] &&
                [ x"$mounted_g64"x == x"${rarray[5]}"x ] && [ x"$mounted_crt"x == x"${rarray[6]}"x ] &&
                [ x"${new_cia_enabled}"x == x"${rarray[7]}"x ] && [ x"${new_sid_enabled}"x == x"${rarray[8]}"x ] &&
-               [ x"${testprogvideotype}"x == x"${rarray[9]}"x ]
+               [ x"${testprogvideotype}"x == x"${rarray[9]}"x ] &&
+               [ x"${testprogvideosubtype}"x == x"${rarray[10]}"x ]
             then
 #                echo "found:""${rarray[0]}","${rarray[1]}","${rarray[2]}","${rarray[3]}","${rarray[4]}","${rarray[5]}","${rarray[6]}","${rarray[7]}","${rarray[8]}","${rarray[9]}"
                 return 1
@@ -506,7 +535,14 @@ function runprogsfortarget
 #                    echo "exitoptions: $exitoptions"
 #                    echo "ciatype (cmdline) ${ciatype}"
 #                    echo "new_cia_enabled (test): ${new_cia_enabled}"
-#                    echo "testprogvideotype: ${testprogvideotype}"
+                    if [ $verbose == "1" ]; then
+                    echo -ne "["
+                    echo -ne "videotype: "${videotype}" "
+                    echo -ne "videosubtype: "${videosubtype}" "
+                    echo -ne "testprogvideotype: "${testprogvideotype}" "
+                    echo -ne "testprogvideosubtype: "${testprogvideosubtype}
+                    echo -ne "] "
+                    fi
 #                    echo "memoryexpansion:"  "${memoryexpansion}"
                     testoptions+="${exitoptions} "
                     # skip test if videomode was given on commandline and it does
@@ -527,6 +563,23 @@ function runprogsfortarget
                         if [ "${testprogvideotype}" == "NTSC" ] || [ "${testprogvideotype}" == "PAL" ]; then
                             echo "$testpath" "$testprog" "- " "not" "${videotype}" "(skipped)"
                             skiptest=1
+                        fi
+                    fi
+                    if [ "${videosubtype}" == "8565" ] || [ "${videosubtype}" == "8565early" ] ; then
+                        if [ "${testprogvideosubtype}" == "6569" ]; then
+                            echo "$testpath" "$testprog" "- " "${testprogvideosubtype}" "does not match" "${videosubtype}" "(skipped)"
+                            skiptest=1
+                        fi
+                    fi
+                    if [ "${videosubtype}" == "6569" ]; then
+                        if [ "${testprogvideosubtype}" == "8565" ] || [ "${testprogvideosubtype}" == "8565early" ]; then
+                            echo "$testpath" "$testprog" "- " "${testprogvideosubtype}" "does not match" "${videosubtype}" "(skipped)"
+                            skiptest=1
+                        fi
+                    fi
+                    if [ "${videosubtype}" == "8565early" ]; then
+                        if [ "${testprogvideosubtype}" == "8565" ]; then
+                            testprogvideosubtype="8565early"
                         fi
                     fi
                     # skip test if SID type was given on commandline and it does not match
@@ -627,7 +680,22 @@ function runprogsfortarget
             fi
             if [ "${skiptest}" == "0" ]; then
 #                if [ "$2" == "" ] || [ "${testpath#*$2}" != "$testpath" ]; then
-                    echo -ne "$testpath" "$testprog" "- "
+                    echo -ne "$testpath" "$testprog"
+                    if [ "${testprogvideotype}" != "-1" ] || [ "${testprogvideosubtype}" != "-1" ]; then
+                        echo -ne " ["
+                        if [ "${testprogvideotype}" != "" ]; then
+                        if [ "${testprogvideotype}" != "-1" ]; then
+                            echo -ne "${testprogvideotype}"
+                        fi
+                        fi
+                        if [ "${testprogvideosubtype}" != "" ]; then
+                        if [ "${testprogvideosubtype}" != "-1" ]; then
+                            echo -ne "${testprogvideosubtype}"
+                        fi
+                        fi
+                        echo -ne "]"
+                    fi
+                    echo -ne " - "
                     if [ "${verbose}" == "1" ]; then
                         echo -ne ["${testtype}"]
                     fi
@@ -925,7 +993,7 @@ else
     echo "running tests for" "$target" "(""$filter"")"":"
 fi
 
-make prereq
+make --no-print-directory -s prereq
 
 SECONDS=0
 

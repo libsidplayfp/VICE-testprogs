@@ -200,11 +200,25 @@ function hoxs64_run_screenshot
     fi
 
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$screenshottest"-hoxs64.png
-    if [ $verbose == "1" ]; then
-        echo $HOXS64 $HOXS64OPTS $HOXS64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-hoxs64.png "-autoload" "$4"
+
+    HOXS64SCREENSHOTNAME="$1"/.testbench/"$screenshottest"-hoxs64
+    if [ ${testprogvideotype} != "" ]; then
+    if [ ${testprogvideotype} != "-1" ]; then
+        HOXS64SCREENSHOTNAME+=-${testprogvideotype}
     fi
-    $HOXS64 $HOXS64OPTS $HOXS64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-hoxs64.png "-autoload" "$4" 2> /dev/null
+    fi
+    if [ ${testprogvideosubtype} != "" ]; then
+    if [ ${testprogvideosubtype} != "-1" ]; then
+        HOXS64SCREENSHOTNAME+=-${testprogvideosubtype}
+    fi
+    fi
+    HOXS64SCREENSHOTNAME+=.png
+    rm -f "$HOXS64SCREENSHOTNAME"
+
+    if [ $verbose == "1" ]; then
+        echo $HOXS64 $HOXS64OPTS $HOXS64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$HOXS64SCREENSHOTNAME" "-autoload" "$4"
+    fi
+    $HOXS64 $HOXS64OPTS $HOXS64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$HOXS64SCREENSHOTNAME" "-autoload" "$4" 2> /dev/null
     exitcode=$?
     if [ $exitcode -ne 0 ]
     then
@@ -235,9 +249,11 @@ function hoxs64_run_screenshot
 # hoxs64 cant do NTSC
     
         if [ $verbose == "1" ]; then
-            echo ./cmpscreens "$refscreenshotname" "$HOXS64REFSXO" "$HOXS64REFSYO" "$1"/.testbench/"$screenshottest"-hoxs64.png "$HOXS64SXO" "$HOXS64SYO"
+            echo ./cmpscreens "$refscreenshotname" "$HOXS64REFSXO" "$HOXS64REFSYO" "$HOXS64SCREENSHOTNAME" "$HOXS64SXO" "$HOXS64SYO"
+            ./cmpscreens -v "$refscreenshotname" "$HOXS64REFSXO" "$HOXS64REFSYO" "$HOXS64SCREENSHOTNAME" "$HOXS64SXO" "$HOXS64SYO"
+        else
+            ./cmpscreens "$refscreenshotname" "$HOXS64REFSXO" "$HOXS64REFSYO" "$HOXS64SCREENSHOTNAME" "$HOXS64SXO" "$HOXS64SYO"
         fi
-        ./cmpscreens "$refscreenshotname" "$HOXS64REFSXO" "$HOXS64REFSYO" "$1"/.testbench/"$screenshottest"-hoxs64.png "$HOXS64SXO" "$HOXS64SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

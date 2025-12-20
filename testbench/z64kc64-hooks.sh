@@ -68,25 +68,25 @@ function z64kc64_get_options
             ;;
         "vicii-old") 
                 if [ x"$testprogvideotype"x == x"PAL"x ]; then
-                    # "old" PAL
-#                    exitoptions="-VICIImodel 6569"
+                    # FIXME: "old" PAL
+                    exitoptions="-pal"
                     testprogvideosubtype="6569"
                 fi
                 if [ x"$testprogvideotype"x == x"NTSC"x ]; then
-                    # "old" NTSC
-#                    exitoptions="-VICIImodel 6567"
+                    # FIXME: "old" NTSC
+                    exitoptions="-ntsc"
                     testprogvideosubtype="6567"
                 fi
             ;;
         "vicii-new") 
                 if [ x"$testprogvideotype"x == x"PAL"x ]; then
-                    # "new" PAL
-#                    exitoptions="-VICIImodel 8565"
+                    # FIXME: "new" PAL
+                    exitoptions="-pal"
                     testprogvideosubtype="8565early"
                 fi
                 if [ x"$testprogvideotype"x == x"NTSC"x ]; then
-                    # "new" NTSC
-#                    exitoptions="-VICIImodel 8562"
+                    # FIXME: "new" NTSC
+                    exitoptions="-ntsc"
                     testprogvideosubtype="8562early"
                 fi
             ;;
@@ -200,15 +200,15 @@ function z64kc64_get_cmdline_options
         "NTSCOLD")
                 exitoptions="-ntscold"
             ;;
-#        "6569") # "old" PAL
-#                exitoptions="-VICIImodel 6569"
-#            ;;
-#        "8565") # "new" PAL
-#                exitoptions="-VICIImodel 8565"
-#            ;;
-#        "8562") # "new" NTSC
-#                exitoptions="-VICIImodel 8562"
-#            ;;
+        "6569") # FIXME: "old" PAL
+                exitoptions="-pal"
+            ;;
+        "8565") # FIXME: "new" PAL
+                exitoptions="-pal"
+            ;;
+        "8562") # FIXME: "new" NTSC
+                exitoptions="-ntsc"
+            ;;
     esac
 }
 
@@ -239,11 +239,24 @@ function z64kc64_run_screenshot
     fi
 
     mkdir -p "$1"/".testbench"
-    rm -f "$1"/.testbench/"$screenshottest"-z64kc64.png
-    if [ $verbose == "1" ]; then
-        echo "RUN: "$Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-z64kc64.png "$4"
+    Z64KC64SCREENSHOTNAME="$1"/.testbench/"$screenshottest"-z64kc64
+    if [ ${testprogvideotype} != "" ]; then
+    if [ ${testprogvideotype} != "-1" ]; then
+        Z64KC64SCREENSHOTNAME+=-${testprogvideotype}
     fi
-    $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$1"/.testbench/"$screenshottest"-z64kc64.png "$4" 1> /dev/null 2> /dev/null
+    fi
+    if [ ${testprogvideosubtype} != "" ]; then
+    if [ ${testprogvideosubtype} != "-1" ]; then
+        Z64KC64SCREENSHOTNAME+=-${testprogvideosubtype}
+    fi
+    fi
+    Z64KC64SCREENSHOTNAME+=.png
+    rm -f "$Z64KC64SCREENSHOTNAME"
+
+    if [ $verbose == "1" ]; then
+        echo "RUN: "$Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$Z64KC64SCREENSHOTNAME" "$4"
+    fi
+    $Z64KC64 $Z64KC64OPTS $Z64KC64OPTSSCREENSHOT ${@:5} "-limitcycles" "$3" "-exitscreenshot" "$Z64KC64SCREENSHOTNAME" "$4" 1> /dev/null 2> /dev/null
     exitcode=$?
 #    echo exitcode:$exitcode
     if [ $exitcode -ne 0 ]
@@ -280,13 +293,17 @@ function z64kc64_run_screenshot
 
 #        echo "refscreenshotvideotype:" ${refscreenshotvideotype}
 #        echo "refscreenshotname:" $refscreenshotname
-#        echo "screenshotname": "$1"/.testbench/"$screenshottest"-z64kc64.png
+#        echo "screenshotname": "$Z64KC64SCREENSHOTNAME"
 #        echo "Z64KC64SXO:"$Z64KC64SXO
 #        echo "Z64KC64SYO:"$Z64KC64SYO
 #        echo "Z64KC64REFSXO:"$Z64KC64REFSXO
 #        echo "Z64KC64REFSYO:"$Z64KC64REFSYO
         
-        ./cmpscreens "$refscreenshotname" "$Z64KC64REFSXO" "$Z64KC64REFSYO" "$1"/.testbench/"$screenshottest"-z64kc64.png "$Z64KC64SXO" "$Z64KC64SYO"
+        if [ $verbose == "1" ]; then
+            echo ./cmpscreens "$refscreenshotname" "$Z64KC64REFSXO" "$Z64KC64REFSYO" "$Z64KC64SCREENSHOTNAME" "$Z64KC64SXO" "$Z64KC64SYO"
+        fi
+
+        ./cmpscreens "$refscreenshotname" "$Z64KC64REFSXO" "$Z64KC64REFSYO" "$Z64KC64SCREENSHOTNAME" "$Z64KC64SXO" "$Z64KC64SYO"
         exitcode=$?
     else
         echo -ne "reference screenshot missing - "

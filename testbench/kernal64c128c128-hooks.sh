@@ -45,6 +45,30 @@ function kernal64c128c128_get_options
               exitoptions="--ntsc true --screen-dim 1"
               testprogvideotype="NTSC"
             ;;
+        "vicii-old")
+                if [ x"$testprogvideotype"x == x"PAL"x ]; then
+                    # "old" PAL
+#                    exitoptions="-VICIImodel 6569"
+                    testprogvideosubtype="6569"
+                fi
+                if [ x"$testprogvideotype"x == x"NTSC"x ]; then
+                    # "old" NTSC
+#                    exitoptions="-VICIImodel 6567"
+                    testprogvideosubtype="6567"
+                fi
+            ;;
+        "vicii-new")
+                if [ x"$testprogvideotype"x == x"PAL"x ]; then
+                    # "new" PAL
+#                    exitoptions="-VICIImodel 8565"
+                    testprogvideosubtype="8565"
+                fi
+                if [ x"$testprogvideotype"x == x"NTSC"x ]; then
+                    # "new" NTSC
+#                    exitoptions="-VICIImodel 8562"
+                    testprogvideosubtype="8562"
+                fi
+            ;;
         "sid-old")
                 new_sid_enabled=0
             ;;
