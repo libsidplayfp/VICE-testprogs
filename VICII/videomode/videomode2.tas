@@ -172,7 +172,7 @@ irq2:
   stx $d019     ; acknowledge the raster interrupt
 
 
-; start action here
+; start action here (->Hires Text)
 
   ldx #50
 preloop:
@@ -186,14 +186,16 @@ preloop:
   pha
   lda $d016
   pha
+
   lda $d016
-  ora #$10  ; MC an
-  sta $d016 
+  ora #$10  ; enable Multicolor (->Multicolor Text)
+  sta $d016
+
   lda $d011
-  ora #$20  ; Bitmap an
+  ora #$20  ; enable Bitmap (->Multicolor Bitmap)
   sta $d011
 
-  ora #$40  ; ECM(illegal) an
+  ora #$40  ; enable ECM (->illegal)
   sta $d011
 
   ldx #60
@@ -201,7 +203,7 @@ inloop1:
   dex
   bne inloop1
 
-  and #$bf
+  and #$bf  ; disable ECM (->Multicolor Bitmap)
   sta $d011
 
   ldx #25
@@ -213,7 +215,7 @@ postloop:
   nop
 
   pla
-  sta $d016 ; VICE wie CCS, HOXS durchgehend weiss (Farbe greift schon)
+  sta $d016 ; (->Hires Bitmap)
 
   ldx #24
 inloop2:
@@ -221,7 +223,7 @@ inloop2:
   bne inloop2
 
   pla
-  sta $d011 ; VICE einen zu spät
+  sta $d011 ; (->Hires Text)
 
   jmp endirq
 
@@ -258,9 +260,16 @@ nmi = * + 1
   sty cnmi+1    ; restore original NMI vector (although it won't be used)
   rts
 
+bitmap = $8000
+charset = $8000
+vram = $8400
+bank = 1 ; $8000-$bfff
+
 fill:
 
-  lda #0
+  ; fill bitmap with pattern
+  lda #%00110011
+;  lda #0
   sta $02
 
   ldy #$20
@@ -269,15 +278,15 @@ fill3b:
 fill3a:
   lda $02
 fill3h1:
-  sta $4000,x
-  txa
-  and #%00111111
-  cmp #%00111111
-  bne fill3sk
-  lda $02
-  eor #$ff
-  sta $02
-fill3sk:
+  sta bitmap,x
+;  txa
+;  and #%00111111
+;  cmp #%00111111
+;  bne fill3sk
+;  lda $02
+;  eor #$ff
+;  sta $02
+;fill3sk:
   inx
   bne fill3a
   inc fill3h1+2
@@ -287,21 +296,58 @@ fill3sk:
   ldx #0
 fill3:
   lda #$20
-  sta $4400,x
-  sta $4500,x
-  sta $4600,x
-  sta $4700,x
-  lda #$0e
+  sta vram+$0000,x
+  sta vram+$0100,x
+  sta vram+$0200,x
+  sta vram+$02e8,x
+  lda #$0e      ; $0e or $06 in multicolor
   sta $d800,x
   sta $d900,x
   sta $da00,x
-  sta $db00,x
+  sta $dae8,x
   dex
   bne fill3
 
-  lda #$02
+  ; one row of numbers
+  lda #48
+  ldx #00
+fill0:
+  sta vram+$00f0,x
+  tay
+  iny
+  tya
+  cmp #58
+  bne nonull
+  lda #48
+nonull:
+  inx
+  cpx #40
+  bne fill0
+
+  ; row(s) of #
+  lda #$23
+  ldx #00
+fill1:
+  sta vram+$0118,x
+  inx
+  cpx #40*4
+  bne fill1
+
+  ; use video bank $8000-$bfff
+  lda #$01
   sta $dd00
+  lda #$17  ; vram x400, bitmap 0000
+  sta $d018
   
+  lda #$0e
+  sta $d020
+  lda #$06
+  sta $d021
+
+  lda #$07
+  sta $d022
+  lda #$05
+  sta $d023
   rts
   
   

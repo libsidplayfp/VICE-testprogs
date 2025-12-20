@@ -1,12 +1,15 @@
 #! /bin/bash
 
-convert -colors 16 $1 -alpha remove -filter point -resize 165%x200% -background none -flatten temp1.png
-convert $2 temp2.png
-convert -delay 50 -loop 0 -dispose Background -page +0+14 temp2.png -page +34+0 temp1.png $3.gif
+# $1 reference picture
+# $2 screenshot
+# $3 output prefix
 
-convert -crop 634x480+0+14 temp1.png temp1.png
-convert -crop 634x480+34+0 temp2.png temp2.png
-apngasm $3.apng temp1.png 1 2 
-#> /dev/null
+magick $1 -colors 16 -alpha remove -filter point -resize 165%x200% -page +34-14 -background none -flatten temp1.png
+magick $2 temp2.png
+magick -delay 50 -loop 0 -dispose Background -page +0+0 temp2.png -page +0+0 temp1.png $3.gif
+
+magick temp1.png -crop 634x480+0+0 temp1.png
+magick temp2.png -crop 634x480+0+0 temp2.png
+apngasm -F -o $3.apng -d 1000 temp1.png  temp2.png > /dev/null
 
 rm temp1.png temp2.png

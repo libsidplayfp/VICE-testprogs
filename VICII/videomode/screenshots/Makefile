@@ -6,6 +6,7 @@
 all: unseen-grid unseen-greydot unseen-nogreydot \
 	zerox-8565r2 zerox-6569r1 zerox-6569r5_1886_s \
 	encore-6567r8 encore-6567r56a
+	./anim4all.sh
 
 unseen-grid:
 	./anim4unseen.sh ../../../crtemulation/grid/grid.png    ./unseen-grid/unseen-grid.png           ./unseen-grid/unseen-grid

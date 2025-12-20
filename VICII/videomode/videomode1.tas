@@ -172,7 +172,7 @@ irq2:
   stx $d019     ; acknowledge the raster interrupt
 
 
-; start action here
+; start action here (->Hires Text)
 
   ldx #50
 preloop:
@@ -186,11 +186,13 @@ preloop:
   pha
   lda $d016
   pha
+
   lda $d016
-  ora #$10
+  ora #$10  ; enable Multicolor (->Multicolor Text)
   sta $d016
+
   lda $d011
-  ora #$40
+  ora #$40  ; enable ECM (->illegal)
   sta $d011
 
   ldx #45
@@ -202,9 +204,9 @@ postloop:
   nop
 
   pla
-  sta $d016
+  sta $d016 ; disable Multicolor (->ECM Text)
   pla
-  sta $d011
+  sta $d011 ; (->Hires Text)
 
   jmp endirq
 
@@ -241,20 +243,68 @@ nmi = * + 1
   sty cnmi+1    ; restore original NMI vector (although it won't be used)
   rts
 
+bitmap = $0000
+charset = $1800
+vram = $0400
+bank = 3 ; $0000-$3fff
+
 fill:
+
   ldx #0
 fill3:
   lda #$20
-  sta $0400,x
-  sta $0500,x
-  sta $0600,x
-  sta $0700,x
-  lda #$0e
+  sta vram+$0000,x
+  sta vram+$0100,x
+  sta vram+$0200,x
+  sta vram+$02e8,x
+  lda #$0e      ; $0e or $06 in multicolor
   sta $d800,x
   sta $d900,x
   sta $da00,x
-  sta $db00,x
+  sta $dae8,x
   dex
   bne fill3
+
+  ; one row of numbers
+  lda #48
+  ldx #00
+fill0:
+  sta vram+$0050,x
+  tay
+  iny
+  tya
+  cmp #58
+  bne nonull
+  lda #48
+nonull:
+  inx
+  cpx #40
+  bne fill0
+
+  ; row(s) of #
+  lda #$23
+  ldx #00
+fill1:
+  sta vram+$0000,x
+  inx
+  cpx #40*2
+  bne fill1
+
+  ; use video bank $8000-$bfff
+;  lda #$01
+;  sta $dd00
+;  lda #$17  ; vram x400, bitmap 0000
+;  sta $d018
+
+  lda #$0e
+  sta $d020
+  lda #$06
+  sta $d021
+
+  lda #$07
+  sta $d022
+  lda #$05
+  sta $d023
   rts
-  
+
+

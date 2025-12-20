@@ -171,7 +171,7 @@ irq2:
   stx $d019     ; acknowledge the raster interrupt
 
 
-; start action here
+; start action here (->Hires Text)
 
   ldx #52
 preloop:
@@ -182,15 +182,15 @@ preloop:
   nop
 
   lda $d011
-  ora #$20  ; Bitmap an
+  ora #$20  ; enable Bitmap (->Hires Bitmap)
   sta $d011
 
   lda $d016
-  ora #$10  ; MC an
+  ora #$10  ; enable Multicolor (->Multicolor Bitmap)
   sta $d016 
 
   lda $d011
-  and #$df  ; Bitmap aus
+  and #$df  ; disable Bitmap (->Multicolor Text)
   sta $d011
 
   ldx #58
@@ -199,29 +199,31 @@ inloop1:
   bne inloop1
 
   lda $d011
-  ora #$40  ; ECM(illegal) an
+  ora #$40  ; enable ECM (->illegal)
   sta $d011
 
   lda $d011
-  and #$bf  ; ECM aus
+  and #$bf  ; disable ECM (->Multicolor Text)
   sta $d011
 
   lda $d016
-  and #$ef  ; MC aus
+  and #$ef  ; disable Multicolor (->Hires Text)
   sta $d016
 
   jmp endirq
 
 
+vram = $0400
+
 fill:
   ldx #0
 fill3:
   lda #$20
-  sta $0400,x
-  sta $0500,x
-  sta $0600,x
-  sta $0700,x
-  lda #$0e
+  sta vram+$0000,x
+  sta vram+$0100,x
+  sta vram+$0200,x
+  sta vram+$02e8,x
+  lda #$0e      ; $0e or $06 in multicolor
   sta $d800,x
   sta $d900,x
   sta $da00,x
@@ -244,7 +246,8 @@ nonull:
   cpx #40
   bne fill0
 
-  lda #35
+  ; row(s) of #
+  lda #$23
   ldx #00
 fill1:
   sta $0540,x
@@ -262,6 +265,16 @@ fill2:
   inc fill2+2
   dey
   bne fill2
+
+  lda #$0e
+  sta $d020
+  lda #$06
+  sta $d021
+
+  lda #$07
+  sta $d022
+  lda #$05
+  sta $d023
   rts
 
 endirq:
