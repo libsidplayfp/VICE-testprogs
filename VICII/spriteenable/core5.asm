@@ -52,6 +52,10 @@ basic:
 !by $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00
 
 start:
+    ; restore border color
+    lda #0
+    sta $d020
+
     jsr setup
     jsr install
     jmp mainloop
@@ -239,15 +243,6 @@ test_start:
 
     ; fix it back
     dec $d007
-
-    lda #$80
-postloop:
-    cmp $d012
-    bne postloop
-endirq:
-    ; restore border color
-    lda #0
-    sta $d020
 
     dec framecount
     bne +
