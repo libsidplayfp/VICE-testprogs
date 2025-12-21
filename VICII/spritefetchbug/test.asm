@@ -38,7 +38,10 @@ lp2:
                 sta $0400,x
                 dex
                 bpl lp2
-                
+
+                ldx #%00000001
+                stx $3fff
+
                 lda #NUMLINES
                 sta numlines
 
@@ -106,7 +109,7 @@ vicregtab:
 		!byte <(XPOS7)
 		!byte $38
 
-		!byte XPOSMSB
+		!byte XPOSMSB     ; d010
 		!byte $1B
 		!byte	0
 		!byte	0
@@ -115,7 +118,7 @@ vicregtab:
 		!byte $C8
 		!byte $FF
 		
-		!byte $17
+		!byte $17         ; d018
 		!byte $70
 		!byte $F1
 		!byte	0
@@ -124,7 +127,7 @@ vicregtab:
 		!byte $C8
 		!byte	0
 		
-		!byte $FD
+		!byte $FD         ; d020
 		!byte $FB
 		!byte $F1
 		!byte $F2
@@ -211,8 +214,19 @@ loc_2053:
 		LDA	#$1B
 		STA	$D011
 
-                ; check keys
+keydelay=*+1
+        lda #0
+        and #1
+        bne sk1
+
+
+        ; check keys
 		LDA	$DC01
+		cmp #%11111111
+		beq nopressed
+
+		inc keydelay
+
 		LSR
 		BCC	incspritepos    ; 1
 		LSR
@@ -232,8 +246,13 @@ loc_208C:
                 BCS     sk1             ; not space
                 jmp     init
 sk1:
+		inc keydelay
 		JMP	printsprpos
 
+nopressed:
+        lda #0
+        sta keydelay
+		jmp	printsprpos
 ; ---------------------------------------------------------------------------
 incspritepos:
 		LDA	$D010
