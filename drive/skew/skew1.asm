@@ -10,7 +10,6 @@
 
         !convtab pet
         !cpu 6510
-        !to "skew1.prg", cbm
 
 ;-------------------------------------------------------------------------------
 
@@ -502,8 +501,15 @@ finished:
         inx
         bne -
 
-+       lda .fmt
++
+!if ALIGNED = 1 {
+        lda .align
+        eor #$ff
+        and .fmt
+} else {
+        lda .fmt
         and .align
+}
         asl
         ldx #$27
 -       lda #$00
