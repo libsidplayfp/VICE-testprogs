@@ -233,8 +233,8 @@ theend0:
 
             ldy #0
 ll2         ldx #0
-ll1         
-            ;jsr delay
+ll1
+            jsr delay
             dex
             bne ll1
             dey
@@ -243,11 +243,11 @@ ll1
             lda #0
             sta DEBUGREG
             jmp *
-            
+
 delay:
             txa
             pha
-            ldx #0
+            ldx #5
 ll3         dex
             bne ll3
             pla
