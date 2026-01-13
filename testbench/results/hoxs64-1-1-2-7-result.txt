@@ -710,7 +710,7 @@
 ../VICII/spriteenable/,spriteenable3.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/spriteenable/,spriteenable4.prg,ok,screenshot,,,,-1,-1,PAL
 ../VICII/spriteenable/,spriteenable5.prg,ok,screenshot,,,,-1,-1,PAL
-../VICII/spritefetchbug/,test-136-2a.prg,error,screenshot,,,,-1,-1,PAL
+../VICII/spritefetchbug/,test-136-2a.prg,ok,screenshot,,,,-1,-1,PAL,8565early
 ../VICII/spritegap/,spritegap2.prg,ok,exitcode,,,,-1,-1,-1
 ../VICII/spritegap/,spritegap3.prg,ok,exitcode,,,,-1,-1,-1
 ../VICII/spritepriorities/,test1.prg,ok,screenshot,,,,-1,-1,-1
@@ -971,8 +971,8 @@
 ../drive/scanner/,scanner35.prg,ok,exitcode,,scan35.g64,,-1,-1,-1
 ../drive/scanner/,scanner40.prg,ok,exitcode,,scan40.g64,,-1,-1,-1
 ../drive/scanner/,scanner42.prg,ok,exitcode,,scan42.g64,,-1,-1,-1
-../drive/skew/,skew1.prg,ok,exitcode,skew.d64,,,-1,-1,-1
-../drive/skew/,skew1.prg,error,exitcode,,skew.g64,,-1,-1,-1
+../drive/skew/,skew1.prg,ok,exitcode,skew.d64,,,-1,-1,-1,-1
+../drive/skew/,skew2.prg,ok,exitcode,,skew.g64,,-1,-1,-1,-1
 ../drive/selftest/,selftest.prg,ok,exitcode,,,,-1,-1,-1
 ../drive/openbus/,openbus.prg,ok,exitcode,,,,-1,-1,-1
 ../drive/openbus/,openbus2.prg,ok,exitcode,,,,-1,-1,-1

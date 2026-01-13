@@ -147,6 +147,9 @@ function xpet_run_screenshot
     then
         if [ -f "$refscreenshotname" ]
         then
+            if [ $verbose == "1" ]; then
+                echo ./cmpscreens "$refscreenshotname" "$XPETREFSXO" "$XPETREFSYO" "$1"/.testbench/"$screenshottest"-xpet.png "$XPETSXO" "$XPETSYO"
+            fi
             ./cmpscreens "$refscreenshotname" "$XPETREFSXO" "$XPETREFSYO" "$1"/.testbench/"$screenshottest"-xpet.png "$XPETSXO" "$XPETSYO"
             exitcode=$?
             if [ $verbose == "1" ] && [ $exitcode -ne 0 ]; then

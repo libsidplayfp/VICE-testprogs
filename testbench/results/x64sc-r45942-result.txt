@@ -800,7 +800,7 @@
 ../VICII/screenpos/,screenpos_ntscold.prg,noref,screenshot,,,,-1,-1,NTSCOLD,-1
 ../VICII/split-tests/bascan/,bascan.prg,ok,exitcode,,,,-1,-1,PAL,-1
 ../VICII/split-tests/fetchsplit/,fetchsplit.prg,error,screenshot,,,,-1,-1,PAL,6569
-../VICII/split-tests/fetchsplit/,fetchsplit.prg,ok,screenshot,,,,-1,-1,PAL,8565
+../VICII/split-tests/fetchsplit/,fetchsplit.prg,error,screenshot,,,,-1,-1,PAL,8565
 ../VICII/split-tests/lightpen/,lightpen.prg,ok,exitcode,,,,-1,-1,-1,-1
 ../VICII/split-tests/modesplit/,modesplit.prg,error,screenshot,,,,-1,-1,PAL,6569
 ../VICII/split-tests/modesplit/,modesplit.prg,error,screenshot,,,,-1,-1,PAL,8565
@@ -1121,7 +1121,7 @@
 ../SID/writedelay/,writedelay.prg,ok,exitcode,,,,-1,-1,-1,-1
 ../SID/wf12nsr/,wf12nsr.prg,ok,exitcode,,,,-1,0,-1,-1
 ../SID/wf12nsr/,wf12nsr-8580.prg,error,exitcode,,,,-1,1,-1,-1
-../C64/autostart/defaults/,,error,exitcode,,,test.crt,-1,-1,-1,-1
+../C64/autostart/defaults/,,ok,exitcode,,,test.crt,-1,-1,-1,-1
 ../C64/carts/aracidtest/,test-ramdetect-ar.prg,ok,exitcode,,,ardummy.crt,-1,-1,-1,-1
 ../C64/carts/aracidtest/,test-ramsizedetect-ar.prg,ok,exitcode,,,ardummy.crt,-1,-1,-1,-1
 ../C64/carts/aracidtest/,test-ariotest1-ar.prg,ok,exitcode,,,ardummy.crt,-1,-1,-1,-1
@@ -1352,4 +1352,4 @@
 ../memory-expansions/,c64-ram-emd.prg,ok,exitcode,,,,-1,-1,-1,-1
 ../memory-expansions/,c64-ramcart-emd.prg,ok,exitcode,,,,-1,-1,-1,-1
 ../memory-expansions/,c64-isepic-emd.prg,ok,exitcode,,,,-1,-1,-1,-1
-# 110 minutes and 53 seconds elapsed.
+# 142 minutes and 31 seconds elapsed.

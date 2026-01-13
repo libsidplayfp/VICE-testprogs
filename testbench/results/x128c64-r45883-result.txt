@@ -781,9 +781,12 @@
 ../VICII/split-tests/modesplit/,modesplit.prg,error,screenshot,,,,-1,-1,PAL,8565early
 ../VICII/split-tests/modesplit/,modesplit.prg,error,screenshot,,,,-1,-1,NTSC,-1
 ../VICII/split-tests/spritescan/,spritescan.prg,error,exitcode,,,,-1,-1,PAL,-1
-../VICII/vicii_timing/,vicii_reg_timing.prg,error,screenshot,,,,-1,-1,PAL,-1
-../VICII/vicii_timing/,vicii_reg_timing-a5.prg,error,screenshot,,,,-1,-1,PAL,-1
-../VICII/vicii_timing/,vicii_reg_timing-ff.prg,error,screenshot,,,,-1,-1,PAL,-1
+../VICII/vicii_timing/,vicii_reg_timing.prg,error,screenshot,,,,-1,-1,PAL,6569
+../VICII/vicii_timing/,vicii_reg_timing-a5.prg,error,screenshot,,,,-1,-1,PAL,6569
+../VICII/vicii_timing/,vicii_reg_timing-ff.prg,error,screenshot,,,,-1,-1,PAL,6569
+../VICII/vicii_timing/,vicii_reg_timing.prg,error,screenshot,,,,-1,-1,PAL,8565early
+../VICII/vicii_timing/,vicii_reg_timing-a5.prg,error,screenshot,,,,-1,-1,PAL,8565early
+../VICII/vicii_timing/,vicii_reg_timing-ff.prg,error,screenshot,,,,-1,-1,PAL,8565early
 ../VICII/videomode/,rmwtest.prg,error,screenshot,,,,-1,-1,PAL,6569
 ../VICII/videomode/,rmwtest.prg,ok,screenshot,,,,-1,-1,PAL,8565early
 ../VICII/videomode/,rmwtest_ntsc.prg,ok,screenshot,,,,-1,-1,NTSC,6567
@@ -1276,7 +1279,7 @@
 ../drive/scanner/,scanner40.prg,ok,exitcode,,scan40.g64,,-1,-1,-1,-1
 ../drive/scanner/,scanner42.prg,ok,exitcode,,scan42.g64,,-1,-1,-1,-1
 ../drive/skew/,skew1.prg,ok,exitcode,skew.d64,,,-1,-1,-1,-1
-../drive/skew/,skew1.prg,error,exitcode,,skew.g64,,-1,-1,-1,-1
+../drive/skew/,skew2.prg,ok,exitcode,,skew.g64,,-1,-1,-1,-1
 ../drive/selftest/,selftest.prg,ok,exitcode,,,,-1,-1,-1,-1
 ../drive/openbus/,openbus.prg,error,exitcode,,,,-1,-1,-1,-1
 ../drive/openbus/,openbus2.prg,error,exitcode,,,,-1,-1,-1,-1
