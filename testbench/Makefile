@@ -67,7 +67,8 @@ EMU64HEAD=20251205
 
 YACEHEAD=2-2-0-47
 
-CHAMSTANDALONELAST=9q
+# checked 13/1/2026
+CHAMSTANDALONELAST=9r
 # checked 12/12/2025
 CHAMCARTRIDGELAST=9r
 
@@ -1505,6 +1506,7 @@ resultscham: maketable chameleon-testlist.txt
 		--warnvicefail "<small><b>fails on VICE</b></small>" \
 		--warnvicfetch "<small><b>VIC may be wrong!</b></small>" \
 		--results results/chameleon-$(CHAMSTANDALONELAST)-standalone-result.txt "TC64 "$(CHAMSTANDALONELAST) \
+		--results results/chameleon-9q-standalone-result.txt "TC64 9q" \
 		--results results/chameleon-9l-standalone-result.txt "TC64 9l" \
 		--results results/chameleon-9k-standalone-result.txt "TC64 9k" \
 		--results results/chameleon-9j-standalone-result.txt "TC64 9j" \
