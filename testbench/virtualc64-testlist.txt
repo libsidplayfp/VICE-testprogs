@@ -666,6 +666,8 @@
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-3.prg,exitcode,16000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-39.prg,exitcode,16000000
 ../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-generic-4_7f.prg,exitcode,121000000
+../CIA/shiftregister/cia-sdr-icr/,cia1-sdr-icr-test2-0_7f.prg,exitcode,125000000
+../CIA/shiftregister/cia-sdr-icr/,cia2-sdr-icr-test2-0_7f.prg,exitcode,125000000
 ../CIA/shiftregister/,cia-sp-test-continues-new.prg,exitcode,50000000,cia-new
 ../CIA/shiftregister/,cia-sp-test-continues-old.prg,exitcode,50000000,cia-old
 ../CIA/shiftregister/,cia-sp-test-oneshot-new.prg,exitcode,50000000,cia-new

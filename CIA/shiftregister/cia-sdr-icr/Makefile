@@ -27,6 +27,7 @@ TESTS=\
         cia1-sdr-icr-generic-3.prg \
         cia1-sdr-icr-generic-19.prg \
         cia1-sdr-icr-generic-39.prg \
+        cia1-sdr-icr-test2-0_7f.prg \
         \
 	cia2-sdr-icr-0_7f.prg \
 	cia2-sdr-icr-1_7f.prg \
@@ -41,7 +42,7 @@ TESTS=\
         cia2-sdr-icr-4485-0.prg \
         cia2-sdr-icr-4485-3.prg \
         cia2-sdr-icr-4485-19.prg \
-  	cia2-sdr-icr-4485-39.prg \
+	cia2-sdr-icr-4485-39.prg \
 	cia2-sdr-icr-generic-0_7f.prg \
 	cia2-sdr-icr-generic-1_7f.prg \
 	cia2-sdr-icr-generic-4_7f.prg \
@@ -49,6 +50,7 @@ TESTS=\
         cia2-sdr-icr-generic-3.prg \
         cia2-sdr-icr-generic-19.prg \
         cia2-sdr-icr-generic-39.prg \
+	cia2-sdr-icr-test2-0_7f.prg \
 
 all: $(TESTS)
 
@@ -109,6 +111,8 @@ cia1-sdr-icr-generic-19.prg: cia-sdr-icr-v3.asm
 cia1-sdr-icr-generic-39.prg: cia-sdr-icr-v3.asm
 	acme -f cbm -DCIA=1 -DCIATYPE=2 -DBAUDRATE=39 -DINTERACTIVEMODE=1 -o cia1-sdr-icr-generic-39.prg cia-sdr-icr-v3.asm
 
+cia1-sdr-icr-test2-0_7f.prg: cia-sdr-icr-test2.asm
+	acme -f cbm -DCIA=1 -DCIATYPE=1 -DBAUDRATE=0 -DINTERACTIVEMODE=0 -o cia1-sdr-icr-test2-0_7f.prg cia-sdr-icr-test2.asm
 
 
 cia2-sdr-icr-0_7f.prg: cia-sdr-icr-v3.asm
@@ -157,12 +161,18 @@ cia2-sdr-icr-generic-19.prg: cia-sdr-icr-v3.asm
 cia2-sdr-icr-generic-39.prg: cia-sdr-icr-v3.asm
 	acme -f cbm -DCIA=2 -DCIATYPE=2 -DBAUDRATE=39 -DINTERACTIVEMODE=1 -o cia2-sdr-icr-generic-39.prg cia-sdr-icr-v3.asm
 
-generate:
+cia2-sdr-icr-test2-0_7f.prg: cia-sdr-icr-test2.asm
+	acme -f cbm -DCIA=2 -DCIATYPE=1 -DBAUDRATE=0 -DINTERACTIVEMODE=0 -o cia2-sdr-icr-test2-0_7f.prg cia-sdr-icr-test2.asm
+
+generate: generate.c
 	cc generate.c -o generate
 
-	
+generate-test2: generate-test2.c
+	cc generate-test2.c -o generate-test2
+
+
 rename: all
 	rename sdr-icr- "" *.prg
 
 clean:
-	rm -f *.prg generate
+	rm -f *.prg generate generate-test2
