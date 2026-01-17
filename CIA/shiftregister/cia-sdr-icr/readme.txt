@@ -91,5 +91,9 @@ then NOT pass the equivalent tests without -4485.
 
 -generic tests will pass on all CIAs, as they skip the differences.
 
+Just to be clear: except for the 4485 tests, all the tests should pass on both
+"old" and "new" CIA!
+
 To confirm the above, please make sure to really run ALL programs and tell which 
 fail and which do not.
+
