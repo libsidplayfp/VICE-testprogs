@@ -185,10 +185,10 @@ function denise_get_cmdline_options
                 exitoptions="-vic-8562"
             ;;
         "6526") # "old" CIA
-                exitoptions="-CIA6526"
+                exitoptions="-cia-6526"
             ;;
         "6526A") # "new" CIA
-                exitoptions="-CIA6526A"
+                exitoptions="-cia-6526a"
             ;;
     esac
 }
