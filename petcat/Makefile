@@ -1,13 +1,21 @@
 .SILENT:
 
-#PETCAT=~/Desktop/vice/vice-emu/trunk/vice/src/petcat
-PETCAT=petcat
+PETCAT=../../trunk/vice/src/tools/petcat/petcat
+#PETCAT=petcat
 
 all: test
 
 # all valid basic v2 tokens in a "basic program"
 tokensv2.prg: tokensv2.s
 	acme -Wno-old-for tokensv2.s
+
+# all codes - outside quotes - in a basic program, one per line
+unquoted.prg: unquoted.s
+	acme -Wno-old-for unquoted.s
+
+# all codes - in quotes - in a basic program, one per line
+quoted.prg: quoted.s
+	acme -Wno-old-for quoted.s
 
 # all character codes (0-255)
 petscii.bin: petscii.s
@@ -185,23 +193,23 @@ keywordsv2handy.prg: keywordsv2handy.s
 keywordsv65.prg: keywordsv65.s
 	acme -Wno-old-for keywordsv65.s
 
-.PHONY: test test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
+.PHONY: test test1 test2 test3 test4 test4a test4b test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
 	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30 \
 	test31 test32 test33 test34 test35 test36 test37 test38 test39 test40 \
 	test41 test41a test42 test43 test44 test45 test46 test47
 
-test:	test1 test2 test3 test4 test5 test6 test7 test8 test9 test10 \
+test:	test1 test2 test3 test4 test4a test4b test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
 	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30 \
 	test31 test32 test33 test34 test35 test36 test37 test38 test39 test40 \
 	test41 test41a test42 test43 test44 test45 test46 test47
 
-#verify that petscii -> ascii -> petscii produces consistant and reversible results
+#verify that petscii -> ascii -> petscii produces consistent and reversible results
 test1: petscii.bin
 	@echo -----
 	@echo test1 - full petscii range
-# convert text from petscii to ascii
+# convert text from petscii to ascii (all codes, 0...ff)
 	$(PETCAT) -text -nh -c -o toasc.out petscii.bin
 # convert text from ascii to petscii
 	$(PETCAT) -text -w2 -c -o topet.out toasc.out
@@ -213,7 +221,7 @@ test1: petscii.bin
 	$(PETCAT) -text -w2 -c -o topet.out toasc.out
 	diff  -q -s petscii.bin topet.out
 
-#verify that basic -> ascii -> basic produces consistant and reversible results
+#verify that basic -> ascii -> basic produces consistent and reversible results
 test2:
 	@echo -----
 	@echo test2 - real basic program that contains all characters
@@ -221,11 +229,13 @@ test2:
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
 	diff  -q -s pi.prg tobas.prg
 
+# (output ctrl codes as decimal)
+	@echo "test2 - real basic program that contains all characters (decimal codes)"
 	$(PETCAT) -nh -c -d -o toasc.out pi.prg
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
 	diff  -q -s pi.prg tobas.prg
 
-#verify that basic -> ascii -> basic produces consistant and reversible results
+#verify that basic -> ascii -> basic produces consistent and reversible results
 test3: tokensv2.prg
 	@echo -----
 	@echo test3 - synthetic test program
@@ -233,7 +243,8 @@ test3: tokensv2.prg
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
 	diff  -q -s tokensv2.prg tobas.prg
 
-	$(PETCAT) -nh -c -o toasc.out tokensv2.prg
+# (output ctrl codes as decimal)
+	$(PETCAT) -nh -c -d -o toasc.out tokensv2.prg
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
 	diff  -q -s tokensv2.prg tobas.prg
 
@@ -245,7 +256,32 @@ test4: ctrlcodes.bas
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
 	diff  -q -s ctrlcodes.prg tobas.prg
 
-#verify that basic -> ascii -> basic produces consistant and reversible results
+test4a: unquoted.prg
+	@echo -----
+	@echo "test4a - check all codes (unquoted)"
+
+	$(PETCAT) -2 -nh -c -o toasc.out unquoted.prg
+	$(PETCAT) -w2 -c -o tobas.prg toasc.out
+	$(PETCAT) -2 -nh -c -o toasc2.out tobas.prg
+	diff  -q -s unquoted.prg tobas.prg
+# (output ctrl codes as decimal)
+	$(PETCAT) -2 -nh -c -d -o toasc.out unquoted.prg
+	$(PETCAT) -w2 -c -o tobas.prg toasc.out
+	diff  -q -s unquoted.prg tobas.prg
+
+test4b: quoted.prg
+	@echo -----
+	@echo "test4b - check all codes (quoted)"
+
+	$(PETCAT) -2 -nh -c -o toasc.out quoted.prg
+	$(PETCAT) -w2 -c -o tobas.prg toasc.out
+	diff  -q -s quoted.prg tobas.prg
+# (output ctrl codes as decimal)
+	$(PETCAT) -2 -nh -c -d -o toasc.out quoted.prg
+	$(PETCAT) -w2 -c -o tobas.prg toasc.out
+	diff  -q -s quoted.prg tobas.prg
+
+#verify that basic -> ascii -> basic produces consistent and reversible results
 test5: keywordsv1.prg
 	@echo -----
 	@echo test5 - basic v1 keywords test program
@@ -253,7 +289,7 @@ test5: keywordsv1.prg
 	$(PETCAT) -w1p -c -o tobas.prg toasc.out
 	diff  -q -s keywordsv1.prg tobas.prg
 
-#verify that basic -> ascii -> basic produces consistant and reversible results
+#verify that basic -> ascii -> basic produces consistent and reversible results
 test6: keywordsv2.prg
 	@echo -----
 	@echo test6 - basic v2 keywords test program
@@ -566,3 +602,4 @@ clean:
 	rm -f toasc.out
 	rm -f ctrlcodes.prg
 	rm -f ctrlcodes35.prg
+	rm -f unquoted.prg
