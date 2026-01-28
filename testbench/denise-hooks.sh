@@ -2,8 +2,8 @@
 # FIXME: set default config, old c64, pepto palette
 DENISEOPTS+=" -no-driver"
 DENISEOPTS+=" -debugcart"
-DENISEOPTS+=" -ane-magic 0xef"
-DENISEOPTS+=" -lax-magic 0xee"
+# DENISEOPTS+=" -ane-magic 0xef"
+# DENISEOPTS+=" -lax-magic 0xee"
 DENISEOPTS+=" -autostart-prg 2"
 #DENISEOPTS+=" -fast-testbench"
 
@@ -82,7 +82,7 @@ function denise_get_options
                 new_cia_enabled=0
             ;;
         "cia-new")
-                exitoptions="-cia-6526a"
+                exitoptions="-cia-8521"
                 new_cia_enabled=1
             ;;
         "sid-old")
@@ -188,7 +188,7 @@ function denise_get_cmdline_options
                 exitoptions="-cia-6526"
             ;;
         "6526A") # "new" CIA
-                exitoptions="-cia-6526a"
+                exitoptions="-cia-8521"
             ;;
     esac
 }
