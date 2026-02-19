@@ -28,7 +28,7 @@ line2:
         !word line3 ; ptr to next line
         !word 2     ; line nr
 
-        !pet "3 spaces at end of line"
+        !pet "3 spaces:"
         !byte $20, $20, $20
         !byte 0 ; end of line
 line3:

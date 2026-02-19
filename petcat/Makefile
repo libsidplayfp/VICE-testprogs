@@ -21,6 +21,10 @@ quoted.prg: quoted.s
 spaces.prg: spaces.s
 	acme -Wno-old-for spaces.s
 
+# chars that would tokenize are contained as literals
+tokens-as-literals.prg: tokens-as-literals.s
+	acme -Wno-old-for tokens-as-literals.s
+
 # all character codes (0-255)
 petscii.bin: petscii.s
 	acme -Wno-old-for petscii.s
@@ -197,13 +201,13 @@ keywordsv2handy.prg: keywordsv2handy.s
 keywordsv65.prg: keywordsv65.s
 	acme -Wno-old-for keywordsv65.s
 
-.PHONY: test test1 test2 test3 test4 test4a test4b test5 test6 test7 test8 test9 test10 \
+.PHONY: test test1 test2 test3 test4 test4a test4b test4c test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
 	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30 \
 	test31 test32 test33 test34 test35 test36 test37 test38 test39 test40 \
 	test41 test41a test42 test43 test44 test45 test46 test47
 
-test:	test1 test2 test3 test4 test4a test4b test5 test6 test7 test8 test9 test10 \
+test:	test1 test2 test3 test4 test4a test4b test4c test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
 	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30 \
 	test31 test32 test33 test34 test35 test36 test37 test38 test39 test40 \
@@ -291,6 +295,13 @@ test4c: spaces.prg
 	$(PETCAT) -2 -nh -c -o toasc.out spaces.prg
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
 	diff  -q -s spaces.prg tobas.prg
+
+test4d: tokens-as-literals.prg
+	@echo -----
+	@echo "test4d - tokens as literals"
+	$(PETCAT) -2 -nh -c -o toasc.out tokens-as-literals.prg
+	$(PETCAT) -w2 -c -o tobas.prg toasc.out
+	diff  -q -s tokens-as-literals.prg tobas.prg
 
 #verify that basic -> ascii -> basic produces consistent and reversible results
 test5: keywordsv1.prg
