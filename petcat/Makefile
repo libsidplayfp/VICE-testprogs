@@ -17,6 +17,10 @@ unquoted.prg: unquoted.s
 quoted.prg: quoted.s
 	acme -Wno-old-for quoted.s
 
+# extra spaces
+spaces.prg: spaces.s
+	acme -Wno-old-for spaces.s
+
 # all character codes (0-255)
 petscii.bin: petscii.s
 	acme -Wno-old-for petscii.s
@@ -208,7 +212,7 @@ test:	test1 test2 test3 test4 test4a test4b test5 test6 test7 test8 test9 test10
 #verify that petscii -> ascii -> petscii produces consistent and reversible results
 test1: petscii.bin
 	@echo -----
-	@echo test1 - full petscii range
+	@echo "test1 - full petscii range"
 # convert text from petscii to ascii (all codes, 0...ff)
 	$(PETCAT) -text -nh -c -o toasc.out petscii.bin
 # convert text from ascii to petscii
@@ -224,7 +228,7 @@ test1: petscii.bin
 #verify that basic -> ascii -> basic produces consistent and reversible results
 test2:
 	@echo -----
-	@echo test2 - real basic program that contains all characters
+	@echo "test2 - real basic program that contains all characters"
 	$(PETCAT) -nh -c -o toasc.out pi.prg
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
 	diff  -q -s pi.prg tobas.prg
@@ -238,7 +242,7 @@ test2:
 #verify that basic -> ascii -> basic produces consistent and reversible results
 test3: tokensv2.prg
 	@echo -----
-	@echo test3 - synthetic test program
+	@echo "test3 - synthetic test program"
 	$(PETCAT) -nh -c -o toasc.out tokensv2.prg
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
 	diff  -q -s tokensv2.prg tobas.prg
@@ -250,7 +254,7 @@ test3: tokensv2.prg
 
 test4: ctrlcodes.bas
 	@echo -----
-	@echo ctrlcodes - check if various control codes work
+	@echo "ctrlcodes - check if various control codes work"
 	$(PETCAT) -w2 -o ctrlcodes.prg ctrlcodes.bas
 	$(PETCAT) -nh -c -o toasc.out ctrlcodes.prg
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
@@ -280,6 +284,13 @@ test4b: quoted.prg
 	$(PETCAT) -2 -nh -c -d -o toasc.out quoted.prg
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
 	diff  -q -s quoted.prg tobas.prg
+
+test4c: spaces.prg
+	@echo -----
+	@echo "test4c - check extra spaces"
+	$(PETCAT) -2 -nh -c -o toasc.out spaces.prg
+	$(PETCAT) -w2 -c -o tobas.prg toasc.out
+	diff  -q -s spaces.prg tobas.prg
 
 #verify that basic -> ascii -> basic produces consistent and reversible results
 test5: keywordsv1.prg
