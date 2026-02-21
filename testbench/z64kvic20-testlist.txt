@@ -82,6 +82,10 @@
 ../VIC20/via_sr/,viasr1ciex.prg,exitcode,10000000,vic20-8k
 ../VIC20/via_mapping/,bugvicevia1.prg,exitcode,100000000,vic20-8k
 ../VIC20/via_mapping/,bugvicevia2.prg,exitcode,100000000,vic20-8k
+../VIC20/via_wrap/,via_wrap2.prg,exitcode,7000000,vic20-8k
+../VIC20/via_wrap/,via_wrap2a.prg,exitcode,7000000,vic20-8k
+../VIC20/via_wrap/,via_T2wrap2.prg,exitcode,7000000,vic20-8k
+../VIC20/via_wrap/,via_T2wrap2a.prg,exitcode,7000000,vic20-8k
 #TODO:
 #../VIC20/via_wrap/via_wrap_pal.prg
 #../VIC20/via_wrap/via_wrap2.prg
