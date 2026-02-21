@@ -5,9 +5,13 @@ expanded=1
 
 ;-------------------------------------------------------------------------------
 
-viabase = $9110
-;viabase = $9120
+USEVIA=1
 
+!if USEVIA=1 {
+viabase = $9110
+}else {
+viabase = $9120
+}
 
 charsperline = 22+2
 numrows = 23+2

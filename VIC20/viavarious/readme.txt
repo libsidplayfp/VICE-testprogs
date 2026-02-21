@@ -23,6 +23,12 @@ to save the measured data from $2000 to $2fff, you can use this basic line:
 poke43,0:poke44,32:poke45,0:poke46,48:poke55,255:poke56,255:save"mem",8,1
 
 --------------------------------------------------------------------------------
+VIC20 notes:
+
+- PB7 goes to joystick/keyboard (VIA1) or userport (VIA2) and is "open" in
+  normal operation, so making separate tests for both makes no sense
+
+--------------------------------------------------------------------------------
 
        (r31270)
 
