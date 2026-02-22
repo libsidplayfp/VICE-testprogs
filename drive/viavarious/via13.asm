@@ -25,15 +25,15 @@ TESTSLOC
 !macro  TEST .DDRB,.PRB,.CR,.TIMER,.THIFL {
 .test
         lda #.DDRB
-        sta $1802                       ; port B ddr input
+        sta viabase+2                       ; port B ddr input
         lda #.PRB
-        sta $1800                       ; port B data
+        sta viabase+0                       ; port B data
         lda #1
-        sta $1804+(.TIMER*4)+.THIFL
+        sta viabase+4+(.TIMER*4)+.THIFL
         lda #.CR                        ; control reg
-        sta $180b+.TIMER
+        sta viabase+$b+.TIMER
         ldx #0
-.t1b    lda $1800                       ; port B data
+.t1b    lda viabase+0                       ; port B data
         sta DTMP,x
         inx
         bne .t1b
@@ -57,5 +57,9 @@ NEXTNAME ;!pet "via14"
 NEXTNAME_END
 
 DATA
+    !if USEVIA=1 {
         !bin "via13ref.bin", NUMTESTS * $0100, 2
+    } else {
+        !bin "via13ref2.bin", NUMTESTS * $0100, 2
+    }
 ERRBUF

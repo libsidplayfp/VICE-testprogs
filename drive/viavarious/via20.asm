@@ -13,7 +13,6 @@ TESTLEN =        $40
 NUMTESTS =       16 - 4
 
 DTMP   = $0700          ; measured data on drive side
-viabase = $1800
 
         !src "common.asm"
 

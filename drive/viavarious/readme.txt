@@ -20,6 +20,12 @@ see the data recieved from the drive, in the middle the reference data, and at
 the bottom both XORed so you can spot bit errors easily.
 
 --------------------------------------------------------------------------------
+1541 note:
+
+- PB7 is connected to either ATN IN (VIA1) or SYNC (VIA2)
+
+
+--------------------------------------------------------------------------------
 
       (r32779)
 

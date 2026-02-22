@@ -15,12 +15,21 @@ PROGS = \
 	via13.prg \
 	via14.prg \
 	via20.prg \
-	via21.prg
+	via21.prg \
+	\
+	via10-2.prg \
+	via11-2.prg \
+	via12-2.prg \
+	via13-2.prg \
+	via14-2.prg
 
 all: $(PROGS) disk
 
+%-2.prg:%.asm $(COMMON) %ref.bin
+	acme -f cbm -DUSEVIA=2 -o $*-2.prg $*.asm
+
 %.prg:%.asm $(COMMON) %ref.bin
-	acme $*.asm
+	acme -f cbm -DUSEVIA=1 -o $*.prg $*.asm
 
 test: all
 	x64sc -drive8truedrive -autostartprgmode 2 via20.prg
@@ -41,7 +50,16 @@ disk: $(PROGS)
 		-write via14.prg via14 \
 		-write via20.prg via20 \
 		-write via21.prg via21
+
+	c1541 -format "viavarious2,00" d64 viavarious2.d64 \
+		-write via10-2.prg via10-2 \
+		-write via11-2.prg via11-2 \
+		-write via12-2.prg via12-2 \
+		-write via13-2.prg via13-2 \
+		-write via14-2.prg via14-2
+
 clean:
 	rm -f *~
 	rm -f $(PROGS)
 	rm -f viavarious.d64
+	rm -f viavarious2.d64

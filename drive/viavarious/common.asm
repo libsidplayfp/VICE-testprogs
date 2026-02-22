@@ -1,6 +1,15 @@
         !convtab pet
         !cpu 6510
 
+
+;USEVIA=1
+
+!if USEVIA=1 {
+viabase=$1800
+} else {
+viabase=$1c00
+}
+
 ;-------------------------------------------------------------------------------
 
 drivecode_start = $0300
