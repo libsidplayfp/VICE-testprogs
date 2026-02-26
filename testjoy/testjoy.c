@@ -81,7 +81,7 @@
 #endif
 
 /* c64 CIA1 addresses */
-#define C64_CIA1_PRA          0xDC00
+#define C64_CIA1_PRA          0xDC00    /* bit 7-6 select paddle port */
 #define C64_CIA1_PRB          0xDC01
 #define C64_CIA1_DDRA         0xDC02
 #define C64_CIA1_DDRB         0xDC03
@@ -739,6 +739,14 @@ static void read_protopad_c64_joy2(void)
     snes_status[0] |= (b3 & 0x01) ? 0x0800 : 0x0000;
 }
 
+static void delay_512_cycles(void)
+{
+    asm("ldx #0\n"
+        "nop\n"
+        "dex\n"
+        "bne *-2\n");
+}
+
 static unsigned char read_native_c64_joy1(void)
 {
     unsigned char retval;
@@ -746,11 +754,12 @@ static unsigned char read_native_c64_joy1(void)
     retval = PEEK(C64_CIA1_PRB);
     POKE(C64_CIA1_DDRA, 0xff);
     POKE(C64_CIA1_PRA, 0x40);
+    delay_512_cycles();
     retval &= 0x1F;
-    if (PEEK(POTX_DATA)) {
+    if (PEEK(POTX_DATA) & 0x80) {
         retval |= 0x20;
     }
-    if (PEEK(POTY_DATA)) {
+    if (PEEK(POTY_DATA) & 0x80) {
         retval |= 0x40;
     }
     retval ^= 0x7F;
@@ -767,10 +776,11 @@ static unsigned char read_native_c64_joy2(void)
     retval &= 0x1F;
     POKE(C64_CIA1_DDRA, 0xFF);
     POKE(C64_CIA1_PRA, 0x80);
-    if (PEEK(POTX_DATA)) {
+    delay_512_cycles();
+    if (PEEK(POTX_DATA) & 0x80) {
         retval |= 0x20;
     }
-    if (PEEK(POTY_DATA)) {
+    if (PEEK(POTY_DATA) & 0x80) {
         retval |= 0x40;
     }
     POKE(C64_CIA1_DDRA, temp);
@@ -1629,6 +1639,8 @@ void main(void)
     bordercolor(COLOR_BLACK);
     textcolor(COLOR_WHITE);
     clrscr();
+     /* disable kernal keyboard scanner, else it will get in the way with
+        reading the paddles */
     SEI();
     while (1)
     {
