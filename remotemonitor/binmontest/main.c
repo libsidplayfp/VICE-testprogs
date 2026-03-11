@@ -745,14 +745,14 @@ void execute_until_return_works(CuTest *tc) {
     };
 
     unsigned char keyboard_command[] = { 
-        "\x02\x02"
-        "\xff\xff\xff\xff"
-        "\xad\xe5\x30\x45"
+        0x02, API_VERSION,
+        0xff, 0xff, 0xff, 0xff,
+        0xad, 0xe5, 0x30, 0x45,
 
-        "\x72"
+        0x72,
 
-        "\x0a"
-        "sys 2061\\n"
+        0x09,
+        'S', 'Y', 'S', ' ', '2', '0', '6', '1', 0x0d    /* PETSCII! */
     };
 
     unsigned char exec_command[] = {
@@ -790,6 +790,7 @@ void execute_until_return_works(CuTest *tc) {
     };
 
     // set mem
+    printf("set mem\n");
 
     connection_setup(tc);
 
@@ -810,6 +811,7 @@ void execute_until_return_works(CuTest *tc) {
     CuAssertIntEquals(tc, 0x02, response[RESPONSE_TYPE]);
 
     // break
+    printf("break\n");
 
     send_command(brk_command);
 
@@ -818,6 +820,7 @@ void execute_until_return_works(CuTest *tc) {
     CuAssertIntEquals(tc, 0x11, response[RESPONSE_TYPE]);
 
     // keyboard
+    printf("keyboard\n");
 
     send_command(keyboard_command);
 
@@ -826,6 +829,7 @@ void execute_until_return_works(CuTest *tc) {
     CuAssertIntEquals(tc, 0x72, response[RESPONSE_TYPE]);
 
     // continue
+    printf("continue\n");
 
     send_command(exit_command);
 
@@ -842,6 +846,7 @@ void execute_until_return_works(CuTest *tc) {
     CuAssertIntEquals(tc, 0x62, response[RESPONSE_TYPE]);
 
     // exec
+    printf("exec\n");
 
     send_command(exec_command);
 
@@ -1223,6 +1228,10 @@ void userport_set_works(CuTest *tc) {
 
 void display_get_works(CuTest *tc) {
     int length;
+    int bodylength;
+    int calculatedsize;
+    int displaysize;
+    int expectedsize;
     unsigned char *cursor;
 
     unsigned char command[] = {
@@ -1241,10 +1250,38 @@ void display_get_works(CuTest *tc) {
     send_command(command);
 
     length = wait_for_response_id(tc, command);
+/*
+    1 byte 0: 0x02 (STX)
+    1 byte 1: API version ID (currently 0x02)
+    4 byte 2-5: response body length. Does not include any header fields
+    1 byte 6: response type
+    1 byte 7: error code
+    4 byte 8-11: request ID
+*/
+    bodylength = length - (1 + 1 + 4 + 1 + 1 + 4);
+    printf("Length of the response: %d\n", length);
+    printf("Length of the response body: %d\n", bodylength);
 
     CuAssertIntEquals(tc, 0x84, response[RESPONSE_TYPE]);
 
-    printf("Length of the fields before the display buffer: %d\n", little_endian_to_uint32(&response[HEADER_LENGTH]));
+/*
+    4 FL: 4 bytes: Length of the fields before the display buffer (DW...BP)
+
+    2 DW: 2 bytes: Debug width of display buffer (uncropped) The largest width the screen gets.
+    2 DH: 2 bytes: Debug height of display buffer (uncropped) Rhe largest height the screen gets.
+    2 XO: 2 bytes: X offset  X offset to the inner part of the screen.
+    2 YO: 2 bytes: Y offset  Y offset to the inner part of the screen.
+    2 IW: 2 bytes: Width of the inner part of the screen.
+    2 IH: 2 bytes: Height of the inner part of the screen.
+    1 BP: 1 byte: Bits per pixel of display buffer (=8)
+
+    4 BL: 4 bytes: Length of display buffer
+    followed by display buffer, debug width * debug height bytes
+*/
+    printf("Length of the fields before the display buffer (HEADER_LENGTH): %d (expected: %d)\n",
+           little_endian_to_uint32(&response[HEADER_LENGTH]), (2 + 2 + 2 + 2 + 2 + 2 + 1));
+    expectedsize = bodylength - (little_endian_to_uint32(&response[HEADER_LENGTH]) + 4 + 4);
+    printf("Length of the display buffer: %d\n", expectedsize);
 
     printf("Debug width of display buffer (uncropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 4]));
     printf("Debug height of display buffer (uncropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 4 + 2]));
@@ -1252,18 +1289,19 @@ void display_get_works(CuTest *tc) {
     printf("Y offset to the inner part of the screen: %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 4 + 6]));
     printf("width of display buffer (cropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 4 + 8]));
     printf("height of display buffer (cropped): %d\n", little_endian_to_uint16(&response[HEADER_LENGTH + 4 + 10]));
+    calculatedsize = little_endian_to_uint16(&response[HEADER_LENGTH + 4]) *
+                     little_endian_to_uint16(&response[HEADER_LENGTH + 4 + 2]);
     printf("Bits per pixel of display buffer: %d\n", response[HEADER_LENGTH + 4 + 12]);
-
-    printf("Length of display buffer: %d\n", little_endian_to_uint32(&response[HEADER_LENGTH + 4 + 13]));
+    displaysize = little_endian_to_uint32(&response[HEADER_LENGTH + 4 + 13]);
+    printf("Length of display buffer: %d calculated: %d expected: %d\n", displaysize, calculatedsize, expectedsize);
 
     CuAssertIntEquals(tc, 13, little_endian_to_uint32(&response[HEADER_LENGTH]));
-    CuAssertIntEquals(tc, little_endian_to_uint32(&response[HEADER_LENGTH + 4 + 13]),
-            little_endian_to_uint16(&response[HEADER_LENGTH + 4]) *
-            little_endian_to_uint16(&response[HEADER_LENGTH + 4 + 2]));
+    CuAssertIntEquals(tc, displaysize, calculatedsize);
+    CuAssertIntEquals(tc, displaysize, expectedsize);
 }
 
 void vice_info_works(CuTest *tc) {
-    int length, misc_fields_length;
+    int length, misc_fields_length, bodylength;
     unsigned char *cursor;
 
     unsigned char command[] = {
@@ -1280,11 +1318,31 @@ void vice_info_works(CuTest *tc) {
 
     length = wait_for_response_id(tc, command);
 
+/*
+    1 byte 0: 0x02 (STX)
+    1 byte 1: API version ID (currently 0x02)
+    4 byte 2-5: response body length. Does not include any header fields
+    1 byte 6: response type
+    1 byte 7: error code
+    4 byte 8-11: request ID
+*/
+    bodylength = length - (1 + 1 + 4 + 1 + 1 + 4);
+    printf("Length of the response: %d\n", length);
+    printf("Length of the response body: %d\n", bodylength);
+
     CuAssertIntEquals(tc, 0x85, response[RESPONSE_TYPE]);
+    CuAssertTrue(tc, bodylength == 10);
+
+/*  1  ML: 1 byte: Length of main version
+    4  MV: ML bytes: Main version In linear format. For example 0x03, 0x05, 0x00, 0x00 for 3.5.0.0
+    1  SL: 1 byte: Length of SVN revision
+    4  SV: SL bytes: SVN revision In little endian format. Returns zero if it’s not an SVN build
+*/
 
     /* VICE Version */
-    CuAssertIntEquals(tc, 4, response[HEADER_LENGTH]);
+    CuAssertIntEquals(tc, 4, response[HEADER_LENGTH + 0]);
     CuAssertTrue(tc, response[HEADER_LENGTH + 1] >= 3);
+    printf("VICE Version Length: %d\n", response[HEADER_LENGTH + 0]);
     printf("VICE Version: %d.%d.%d.%d\n",
         response[HEADER_LENGTH + 1],
         response[HEADER_LENGTH + 2],
@@ -1294,6 +1352,7 @@ void vice_info_works(CuTest *tc) {
 
     /* SVN Version */
     CuAssertIntEquals(tc, 4, response[HEADER_LENGTH + 5]);
+    printf("VICE Version Length: %d\n", response[HEADER_LENGTH + 5]);
     printf("SVN Version: %d\n", little_endian_to_uint32(&response[HEADER_LENGTH + 6]));
     CuAssertTrue(tc, little_endian_to_uint32(&response[HEADER_LENGTH + 6]) > 38911);
 }
