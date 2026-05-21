@@ -59,11 +59,13 @@ function vsid_get_options
                 new_cia_enabled=1
             ;;
         "sid-old")
-                exitoptions="-sidenginemodel 256"
+#                exitoptions="-sidenginemodel 256"
+                exitoptions="-sidenginemodel 2048"
                 new_sid_enabled=0
             ;;
         "sid-new")
-                exitoptions="-sidenginemodel 257"
+#                exitoptions="-sidenginemodel 257"
+                exitoptions="-sidenginemodel 2049"
                 new_sid_enabled=1
             ;;
         *)
