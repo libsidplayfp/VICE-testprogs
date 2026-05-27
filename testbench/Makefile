@@ -860,7 +860,7 @@ checkall: checkx64 checkx64sc checkx128c64 checkx128 checkxscpu64 checkx64dtv \
 	checkxpet checkxcbm2 checkxcbm5x0 checkxvic checkxplus4 checkvsid
 	
 checkx64: maketable
-	echo "checking x64:"
+	echo "checking x64: (vs "$(X64HEAD)")"
 	./maketable --list c64-testlist.in \
 		--results x64-result.txt "new" \
 		--results results/x64-$(X64HEAD)-result.txt "$(X64HEAD)" \

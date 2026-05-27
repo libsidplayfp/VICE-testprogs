@@ -931,6 +931,7 @@
 ../VICII/spritecollisions/,sprite-gfx-mc-hi.prg,exitcode,10000000
 ../VICII/spritecollisions/,sprite-gfx-hi-mc.prg,exitcode,10000000
 ../VICII/spritecollisions/,sprite-gfx-mc-mc.prg,exitcode,10000000
+../VICII/spritecollclear/,bug2135.prg,exitcode,10000000
 #FIXME: tests are broken on NTSC
 #../VICII/spritecollisions/,sprite-gfx-collision-cycle_ntsc.prg,exitcode,10000000,vicii-ntsc
 #../VICII/spritecollisions/,sprite-sprite-collision-cycle_ntsc.prg,exitcode,10000000,vicii-ntsc
