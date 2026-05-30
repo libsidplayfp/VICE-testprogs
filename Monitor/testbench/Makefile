@@ -23,6 +23,7 @@ RESULTS0=\
 	goonbreak.log \
 	goonbreak-2.log \
 	radix-binary.log \
+	bug942.log \
 	bug2025.log \
 	bug2025-2.log \
 	bug2025-2b.log \
@@ -42,7 +43,6 @@ PROGSTODO=\
 
 
 RESULTS0TODO=\
-	todo/bug942.log \
 	todo/bug1488.log \
 	todo/bug1836.log \
 	todo/bug1984.log \
