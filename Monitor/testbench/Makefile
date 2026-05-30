@@ -1,60 +1,101 @@
 
+#EMU=x64sc
 EMU=../../../trunk/vice/src/x64sc
-EMUOPT=-default -warp -silent -minimized -console -initbreak ready
 
-#EMU=WINEDEBUG=-all wine /home/groepaz/Desktop/vice/vice-oldversions/SDL2VICE-3.8-win64/x64sc.exe
+EMUOPT=-default
+EMUOPT+=-warp -silent -minimized -console
+EMUOPT+=-initbreak ready
+
+#EMU=WINEDEBUG=-all wine /vice-oldversions/SDL2VICE-3.8-win64/x64sc.exe
 #EMUOPT=-default -warp -silent -minimized -initbreak ready
 
 NULLDIRECT=1> /dev/null 2> /dev/null
+STDOUTNULL=1> /dev/null
+
+CD = cd
 
 .SILENT:
 
 PROGS=\
-	 bug2024.prg
+
 
 RESULTS0=\
-	 goonbreak.log \
-	 goonbreak-2.log \
-	 radix-binary.log \
-	 bug942.log \
-	 bug1488.log \
-	 bug1836.log \
-	 bug1984.log \
-	 bug1984-2.log \
-	 bug2024.log \
-	 bug2025.log \
-	 bug2025-2.log \
-	 bug2025-2b.log \
-	 bug2025-3.log \
-	 bug2025-4.log \
-	 bug2025-4b.log \
-	 bug2025-4c.log \
-	 bug2178.log \
-	 bug2178-2.log
+	goonbreak.log \
+	goonbreak-2.log \
+	radix-binary.log \
+	bug2025.log \
+	bug2025-2.log \
+	bug2025-2b.log \
+	bug2025-3.log \
+	bug2025-4.log \
+	bug2025-4b.log \
+	bug2025-4c.log \
+	bug2178.log \
+	bug2178-2.log \
+	bug2221.log \
+	bug2221-1.log \
 
-all: helper tests
+
+PROGSTODO=\
+	todo/bug2024.prg \
+	todo/bugX.prg
+
+
+RESULTS0TODO=\
+	todo/bug942.log \
+	todo/bug1488.log \
+	todo/bug1836.log \
+	todo/bug1984.log \
+	todo/bug1984-2.log \
+	todo/bug2024.log \
+	todo/bugX.log
+
+all:
+	$(RM) $(RESULTS0)
+	$(RM) $(RESULTS0TODO)
+	@make --no-print-dir tests
+
+todo/%.prg: todo/%.asm
+	acme -f cbm --vicelabels todo/$*.lbl -o todo/$*.prg todo/$*.asm $(STDOUTNULL)
+
+todo/%.log: todo/%.mon $(PROGSTODO)
+#	echo "----------------------------------------"
+	$(RM) todo/$*.log
+#	echo "1:$*.log:"
+	$(CD) todo ; ../$(EMU) $(EMUOPT) -moncommands $*.mon $(NULLDIRECT)
+#	cat $*.log
+	echo -ne "TODO: "
+	-./cmplogs.sh todo/$*.log todo/$*.ref
 
 %.prg: %.asm
-	acme -f cbm -o $*.prg $*.asm
+	acme -f cbm --vicelabels $*.lbl -o $*.prg $*.asm $(STDOUTNULL)
 
 %.log: %.mon
 #	echo "----------------------------------------"
 	$(RM) $*.log
+#	echo "2:$*.log:"
 	$(EMU) $(EMUOPT) -moncommands $*.mon $(NULLDIRECT)
-#	echo "$*.log:"
 #	cat $*.log
-	-./cmplogs.sh $*.log $*.ref
+	./cmplogs.sh $*.log $*.ref
 
-helper: $(PROGS)
+.PHONY: helper tests
+
+helper: $(PROGS) $(PROGSTODO)
 #	echo "----------------------------------------"
 #	echo "helper .prg ready."
 
-tests: helper $(RESULTS0)
+tests: helper $(RESULTS0) $(RESULTS0TODO)
 #	echo "----------------------------------------"
 #	echo "tests ready."
 
+.PHONY: clean
+
 clean:
 	$(RM) $(RESULTS0)
+	$(RM) $(RESULTS0TODO)
 	$(RM) $(PROGS)
+	$(RM) $(PROGSTODO)
 	$(RM) *.log.tmp
 	$(RM) *.ref.tmp
+	$(RM) *.lbl
+	$(RM) todo/*.lbl

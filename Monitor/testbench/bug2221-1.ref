@@ -1,0 +1,13 @@
+Stopwatch reset to 0.
+WATCH: 1  C:$2000-$9fff  (Stop on load store)
+Setting checkpoint 1 condition to: ( PC >= $1000 ) && ( PC <= $1003 )
+Stepping through the next 98304 instruction(s).
+#1 (Stop on  load 6002)    0/$000,  17/$11
+.C:1003  60          RTS            - A:00 X:00 Y:0A SP:f3 ..-B..Z.         15
+WATCH: 1  C:$2000-$9fff  (Stop on load store)
+	Condition: ( PC >= $1000 ) && ( PC <= $1003 )
+.C:e5d4  F0 F7       BEQ $E5CD      A:00 X:00 Y:0a SP:f3 ..-B..Z.      2142500
+.C:e5cd  A5 C6       LDA $C6        A:00 X:00 Y:0a SP:f3 ..-B..Z.      2142503
+.C:1000  4C 00 60    JMP $6000      A:00 X:00 Y:0a SP:f3 ..-B..Z.      2142506
+.C:6000  20 03 10    JSR $1003      A:00 X:00 Y:0a SP:f3 ..-B..Z.      2142509
+.C:1003  60          RTS            A:00 X:00 Y:0a SP:f1 ..-B..Z.      2142515

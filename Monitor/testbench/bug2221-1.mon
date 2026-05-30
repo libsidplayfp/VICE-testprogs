@@ -1,0 +1,25 @@
+; bug #2221 - The monitor thinks that loading the address high byte from $6002 happens when PC == $1003:
+; #1 (Stop on  load 6002)   12/$00c,  11/$0b
+; .C:6000  20 03 10    JSR $1003      - A:00 X:00 Y:0A SP:f1 ..-...Z.    5013047
+
+logname "bug2221-1.log"
+log on
+
+a 1000 jmp $6000
+rts
+
+a 6000 jsr $1003
+jmp $1000
+
+sw reset
+r pc = 1000
+watch 2000 9fff if (pc >= $1000) && (pc <= $1003)
+;we expect the watchpoint to not trigger at all, so explicitly
+;run for a couple frames
+;x
+z 18000
+
+break
+chis 5
+
+q

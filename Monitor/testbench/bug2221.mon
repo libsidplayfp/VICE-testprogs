@@ -1,0 +1,33 @@
+; bug #2221 - watchpoint is triggered even though the program counter is below $3000
+
+logname "bug2221.log"
+log on
+
+a 1000 sei
+lda #$00
+sta $d012
+lda #$01
+sta $d01a
+lda #$00
+sta $0314
+lda #$30
+sta $0315
+cli
+inc $2000
+jmp $1016
+
+a 3000 inc $d019
+jmp $ea31
+
+sw reset
+r pc = 1000
+watch 2000 if (pc >= $3000)
+;we expect the watchpoint to not trigger at all, so explicitly
+;run for a couple frames
+;x
+z 18000
+
+break
+chis 5
+
+q

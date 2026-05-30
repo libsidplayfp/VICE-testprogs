@@ -1,0 +1,28 @@
+
+logname "bugX.log"
+log on
+
+load "bugX.prg" 0
+ll "bugX.lbl"
+
+; runUntil("start", "break")
+break exec .firstbp
+g 1000
+delete 1
+
+; waitRasterline(0xFE)
+break exec 0000 FFFF if RL == $01
+x
+delete 1
+
+; printMemory(0xD019, 0xD019)
+m D019 D019
+
+; runUntil("otherCode", "break")
+break exec .firstbp
+g .otherCode
+delete 1
+
+chis 20
+
+q
