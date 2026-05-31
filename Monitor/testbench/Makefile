@@ -31,6 +31,7 @@ RESULTS0=\
 	bug2025-4.log \
 	bug2025-4b.log \
 	bug2025-4c.log \
+	bug2063.log \
 	bug2178.log \
 	bug2178-2.log \
 	bug2221.log \
@@ -48,6 +49,9 @@ RESULTS0TODO=\
 	todo/bug1984.log \
 	todo/bug1984-2.log \
 	todo/bug2024.log \
+	todo/bug2179.log \
+	todo/bug2179-2.log \
+	todo/bug2220.log \
 	todo/bugX.log
 
 all:

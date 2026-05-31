@@ -1,0 +1,10 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/2063/
+; "bt" does not work correctly on non-"dev c:"
+
+logname "bug2063.log"
+log on
+
+dev 8:
+bt
+
+q

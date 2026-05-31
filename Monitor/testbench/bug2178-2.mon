@@ -1,4 +1,5 @@
 ; related to https://sourceforge.net/p/vice-emu/bugs/2178/
+; Breakpoint check is flawed
 logname "bug2178-2.log"
 log on
 

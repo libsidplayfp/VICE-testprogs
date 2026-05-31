@@ -1,0 +1,39 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/2179/
+; Instruction is shown twice when singlestepping on a break point
+logname "bug2179-2.log"
+log on
+
+>1000 2000 0
+
+a 1000 nop
+inc 1010
+jmp 1000
+
+break 1001
+
+sw reset
+g 1000
+
+m 1010 1010
+
+z
+
+m 1010 1010
+
+z
+
+m 1010 1010
+
+z
+
+m 1010 1010
+
+z
+
+m 1010 1010
+
+z
+
+m 1010 1010
+
+q

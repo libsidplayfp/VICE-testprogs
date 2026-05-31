@@ -9,6 +9,8 @@ OFF="\e[0m"
 
 if [ ! -f "$2" ]; then
     echo -e $MAGENTA"Warning:"$OFF "no reference file given" for $1
+    cat $1
+    echo ""
     exit 0;
 fi
 
@@ -41,6 +43,7 @@ diff -q $1.tmp $2.tmp > /dev/null
 if [ $? -eq 1 ]; then
     echo -e "[" $RED"Error"$OFF "]"
     diff $1.tmp $2.tmp
+    echo ""
 else
     echo -e "[" $GREEN"OK"$OFF "]"
 fi

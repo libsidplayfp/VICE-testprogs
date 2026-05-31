@@ -1,3 +1,9 @@
+
+; related to https://sourceforge.net/p/vice-emu/bugs/2025/
+
+; The assign registers command (r) somehow repeats the current
+; instruction when the command is used
+
 logname "bug2025-4c.log"
 log on
 
@@ -11,6 +17,8 @@ brk
 
 keybuf sys4096\n
 x
+
+; here, INC $1004 is executed twice when using the assign registers command:
 
 r pc = 1003
 x

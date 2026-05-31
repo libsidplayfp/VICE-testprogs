@@ -41,7 +41,7 @@ if any of the regular tests fail, the testbench will abort with an error. note t
 this is NOT true for the tests in ./todo/
 
 If you made any of the tests in ./todo/ work, make sure to move the respective test(s)
-out of ./todo/ :)
+out of ./todo/ (remember to move the description further below as well :))
 
 
 you can run individual tests manually without the help of the scripts like this:
@@ -51,19 +51,23 @@ x64sc -default -moncommands foo.mon
 
 To add a (working!) new test:
 
-- in Makefile add "foo.log" to the RESULTS0 list
-- if the test uses an external .asm file, add "foo.prg" to the PROGS list
+- in Makefile:
+  - add "foo.log" to the RESULTS0 list
+  - if the test uses an external .asm file, add "foo.prg" to the PROGS list
 
 To add a (non working!) new test:
 
-- in Makefile add "todo/foo.log" to the RESULTS0TODO list
-- if the test uses an external .asm file, add "todo/foo.prg" to the PROGSTODO list
+- in Makefile:
+  - add "todo/foo.log" to the RESULTS0TODO list
+  - if the test uses an external .asm file, add "todo/foo.prg" to the PROGSTODO
+    list
 
 
 -------------------------------------------------------------------------------
 The individual tests:
 -------------------------------------------------------------------------------
 
+What follows are brief descriptions of each test (or group of tests)
 
 -------------------------------------------------------------------------------
 TODO!
@@ -99,22 +103,27 @@ not stable, it can not work
 
 https://sourceforge.net/p/vice-emu/bugs/2024/
 
+
+bug2179.mon
+bug2179-2.mon
+
+Instruction is shown twice when singlestepping on a break point
+
+https://sourceforge.net/p/vice-emu/bugs/2179/
+
+
+bug2220.mon
+
+Checkpoints for non-default devices are unreliable
+
+https://sourceforge.net/p/vice-emu/bugs/2220/
+
+
 -------------------------------------------------------------------------------
 Working
 -------------------------------------------------------------------------------
 
-comparing bug2025.log and bug2025.ref... [ OK ]
-comparing bug2025-3.log and bug2025-3.ref... [ OK ]
-comparing bug2025-4.log and bug2025-4.ref... [ OK ]
-comparing bug2025-4b.log and bug2025-4b.ref... [ OK ]
-comparing bug2025-4c.log and bug2025-4c.ref... [ OK ]
-comparing bug2178.log and bug2178.ref... [ OK ]
-comparing bug2178-2.log and bug2178-2.ref... [ OK ]
-comparing bug2221.log and bug2221.ref... [ OK ]
-comparing bug2221-1.log and bug2221-1.ref... [ OK ]
-
-
-radix-binary.mom
+radix-binary.mon
 
 binary number without % prefix is/was incorrectly recognized as octal
 
@@ -135,17 +144,44 @@ time!
 #2024 - it works in 3.8)
 
 
+bug2025.mon
+bug2025-3.mon
+bug2025-4.mon
+bug2025-4b.mon
+bug2025-4c.mon
+
+The assign registers command (r) somehow repeats the current instruction when
+the command is used.
+
+https://sourceforge.net/p/vice-emu/bugs/2025/
+
+
 bug2025-2.mon
 bug2025-2b.mon
 
 the instruction on that a breakpoint hit is/was repeated
 
-(bug exists in 3.8, fixed in trunk)
-
 https://sourceforge.net/p/vice-emu/bugs/2025/
 
 
+bug2063.mon
+
+"bt" does not work correctly on non-"dev c:"
+
+https://sourceforge.net/p/vice-emu/bugs/2063/
 
 
+bug2178.mon
+bug2178-2.mon
+
+Breakpoint check is flawed
+
+https://sourceforge.net/p/vice-emu/bugs/2178/
 
 
+bug2221.mon
+bug2221-1.mon
+
+watchpoint is triggered even though the program counter is below $3000
+
+https://sourceforge.net/p/vice-emu/bugs/2221/

@@ -1,6 +1,14 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/2025/
+
+; The assign registers command (r) somehow repeats the current
+; instruction when the command is used
+
 logname "bug2025-3.log"
 log on
+
 break $ea31
+
 r a = ff
 reset
+
 q
