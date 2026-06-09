@@ -10,19 +10,34 @@ dev 8:
 watch 0600 0700
 a 0300 sei
 sta $0600
-jmp $0300
+jmp $0301
 
 sw reset
 r pc = 0300
 x
 
-; this code should trigger a watchpoint every 9 cycles:
+; this code should trigger a watchpoint every 7 cycles:
 
 ; #2 (Stop on store 0600)
 ; .8:0301  8D 00 06    STA $0600      - A:FF X:06 Y:FF SP:45 ..-..I.C    2629402
 
 ; However, the watchpoint is triggered at intervals of many thousands of cycles
 ; and sometimes even garbage instructions (EOR $06) are displayed.
+
+dev c:
+x
+
+dev c:
+x
+
+dev c:
+x
+
+dev c:
+x
+
+dev c:
+x
 
 dev c:
 x

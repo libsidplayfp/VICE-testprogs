@@ -1,0 +1,46 @@
+WATCH: 1  C:$0800-$9fff  (Stop on load store)
+Setting default device to `Disk8'
+WATCH: 2  8:$0600-$0700  (Stop on load store)
+Stopwatch reset to 0.
+#2 (Stop on store 0600) 
+.8:0301  8D 00 06    STA $0600      - A:0C X:FF Y:FF SP:41 ..-..I.C          6
+Setting default device to `Computer'
+#2 (Stop on store 0600) 
+.8:0301  8D 00 06    STA $0600      - A:0C X:FF Y:FF SP:41 ..-..I.C         13
+Setting default device to `Computer'
+#2 (Stop on store 0600) 
+.8:0301  8D 00 06    STA $0600      - A:0C X:FF Y:FF SP:41 ..-..I.C         20
+Setting default device to `Computer'
+#2 (Stop on store 0600) 
+.8:0301  8D 00 06    STA $0600      - A:0C X:FF Y:FF SP:41 ..-..I.C         27
+Setting default device to `Computer'
+#2 (Stop on store 0600) 
+.8:0301  8D 00 06    STA $0600      - A:0C X:FF Y:FF SP:41 ..-..I.C         34
+Setting default device to `Computer'
+#2 (Stop on store 0600) 
+.8:0301  8D 00 06    STA $0600      - A:0C X:FF Y:FF SP:41 ..-..I.C         41
+Setting default device to `Computer'
+#2 (Stop on store 0600) 
+.8:0301  8D 00 06    STA $0600      - A:0C X:FF Y:FF SP:41 ..-..I.C         48
+Setting default device to `Computer'
+#2 (Stop on store 0600) 
+.8:0301  8D 00 06    STA $0600      - A:0C X:FF Y:FF SP:41 ..-..I.C         55
+Setting default device to `Computer'
+#2 (Stop on store 0600) 
+.8:0301  8D 00 06    STA $0600      - A:0C X:FF Y:FF SP:41 ..-..I.C         62
+Setting default device to `Computer'
+#2 (Stop on store 0600) 
+.8:0301  8D 00 06    STA $0600      - A:0C X:FF Y:FF SP:41 ..-..I.C         69
+Setting default device to `Computer'
+#2 (Stop on store 0600) 
+.8:0301  8D 00 06    STA $0600      - A:0C X:FF Y:FF SP:41 ..-..I.C         76
+.8:0304  4C 01 03    JMP $0301      A:0c X:ff Y:ff SP:41 ..-..I.C      2174612
+.8:0301  8D 00 06    STA $0600      A:0c X:ff Y:ff SP:41 ..-..I.C      2174615
+.8:0304  4C 01 03    JMP $0301      A:0c X:ff Y:ff SP:41 ..-..I.C      2174619
+.8:0301  8D 00 06    STA $0600      A:0c X:ff Y:ff SP:41 ..-..I.C      2174622
+.8:0304  4C 01 03    JMP $0301      A:0c X:ff Y:ff SP:41 ..-..I.C      2174626
+.8:0301  8D 00 06    STA $0600      A:0c X:ff Y:ff SP:41 ..-..I.C      2174629
+.8:0304  4C 01 03    JMP $0301      A:0c X:ff Y:ff SP:41 ..-..I.C      2174633
+.8:0301  8D 00 06    STA $0600      A:0c X:ff Y:ff SP:41 ..-..I.C      2174636
+.8:0304  4C 01 03    JMP $0301      A:0c X:ff Y:ff SP:41 ..-..I.C      2174640
+.8:0301  8D 00 06    STA $0600      A:0c X:ff Y:ff SP:41 ..-..I.C      2174643

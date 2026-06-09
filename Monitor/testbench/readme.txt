@@ -40,6 +40,10 @@ is also required :). make -j will work to some extend, but the output will be ga
 if any of the regular tests fail, the testbench will abort with an error. note that
 this is NOT true for the tests in ./todo/
 
+You can run just the tests in todo using
+
+$ make todo
+
 If you made any of the tests in ./todo/ work, make sure to move the respective test(s)
 out of ./todo/ (remember to move the description further below as well :))
 
@@ -69,14 +73,10 @@ The individual tests:
 
 What follows are brief descriptions of each test (or group of tests)
 
+
 -------------------------------------------------------------------------------
 TODO!
 -------------------------------------------------------------------------------
-
-bug942.mon
-
-https://sourceforge.net/p/vice-emu/bugs/942/
-
 
 bug1488.log
 bug1836.log
@@ -101,6 +101,10 @@ bug2024.mon
 attempt at making a test from the original bug report. however, since this is
 not stable, it can not work
 
+bugX.mon
+
+second attempt, using a stable raster
+
 https://sourceforge.net/p/vice-emu/bugs/2024/
 
 
@@ -112,13 +116,6 @@ Instruction is shown twice when singlestepping on a break point
 https://sourceforge.net/p/vice-emu/bugs/2179/
 
 
-bug2220.mon
-
-Checkpoints for non-default devices are unreliable
-
-https://sourceforge.net/p/vice-emu/bugs/2220/
-
-
 -------------------------------------------------------------------------------
 Working
 -------------------------------------------------------------------------------
@@ -126,8 +123,6 @@ Working
 radix-binary.mon
 
 binary number without % prefix is/was incorrectly recognized as octal
-
-(fixed in r42582)
 
 https://sourceforge.net/p/vice-emu/bugs/1488/
 
@@ -140,8 +135,10 @@ monitor, this would currently NOT trigger the breakpoint (and re-enter the
 monitor) the first time that instruction is executed, but only on the second
 time!
 
-(goonbreak-2.mon failing is a regression caused by the fixes done for #2025,
-#2024 - it works in 3.8)
+
+bug942.mon
+
+https://sourceforge.net/p/vice-emu/bugs/942/
 
 
 bug2025.mon
@@ -185,3 +182,12 @@ bug2221-1.mon
 watchpoint is triggered even though the program counter is below $3000
 
 https://sourceforge.net/p/vice-emu/bugs/2221/
+
+
+bug2220.mon
+bug2220-1.mon
+bug2220-2.mon
+
+Checkpoints for non-default devices are unreliable
+
+https://sourceforge.net/p/vice-emu/bugs/2220/

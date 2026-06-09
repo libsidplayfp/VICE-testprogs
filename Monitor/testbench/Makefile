@@ -5,6 +5,7 @@ EMU=../../../trunk/vice/src/x64sc
 EMUOPT=-default
 EMUOPT+=-warp -silent -minimized -console
 EMUOPT+=-initbreak ready
+EMUOPT+=-limitcycles 10000000
 
 #EMU=WINEDEBUG=-all wine /vice-oldversions/SDL2VICE-3.8-win64/x64sc.exe
 #EMUOPT=-default -warp -silent -minimized -initbreak ready
@@ -32,8 +33,13 @@ RESULTS0=\
 	bug2025-4b.log \
 	bug2025-4c.log \
 	bug2063.log \
+	bug2126.log \
+	bug2126-2.log \
 	bug2178.log \
 	bug2178-2.log \
+	bug2220.log \
+	bug2220-1.log \
+	bug2220-2.log \
 	bug2221.log \
 	bug2221-1.log \
 
@@ -49,15 +55,23 @@ RESULTS0TODO=\
 	todo/bug1984.log \
 	todo/bug1984-2.log \
 	todo/bug2024.log \
+	todo/bug2126-3.log \
+	todo/bug2126-4.log \
+	todo/bug2126-5.log \
 	todo/bug2179.log \
 	todo/bug2179-2.log \
-	todo/bug2220.log \
 	todo/bugX.log
 
 all:
 	$(RM) $(RESULTS0)
 	$(RM) $(RESULTS0TODO)
 	@make --no-print-dir tests
+
+.PHONY: todo
+
+todo:
+	$(RM) $(RESULTS0TODO)
+	@make --no-print-dir helper $(RESULTS0TODO)
 
 todo/%.prg: todo/%.asm
 	acme -f cbm --vicelabels todo/$*.lbl -o todo/$*.prg todo/$*.asm $(STDOUTNULL)
@@ -66,7 +80,7 @@ todo/%.log: todo/%.mon $(PROGSTODO)
 #	echo "----------------------------------------"
 	$(RM) todo/$*.log
 #	echo "1:$*.log:"
-	$(CD) todo ; ../$(EMU) $(EMUOPT) -moncommands $*.mon $(NULLDIRECT)
+	-$(CD) todo ; ../$(EMU) $(EMUOPT) -moncommands $*.mon $(NULLDIRECT)
 #	cat $*.log
 	echo -ne "TODO: "
 	-./cmplogs.sh todo/$*.log todo/$*.ref
@@ -103,3 +117,7 @@ clean:
 	$(RM) *.ref.tmp
 	$(RM) *.lbl
 	$(RM) todo/*.lbl
+	$(RM) *.vsf
+	$(RM) todo/*.vsf
+	$(RM) *.log
+	$(RM) todo/*.log

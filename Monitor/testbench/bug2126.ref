@@ -1,0 +1,5 @@
+Stopwatch reset to 0.
+BREAK: 1  C:$1000  (Stop on exec)
+BREAK: 1  C:$1000  (Stop on exec)
+#1 (Stop on  exec 1000)    0/$000,   2/$02
+.C:1000  78          SEI            - A:00 X:00 Y:0A SP:f3 ..-B..Z.          0

@@ -1,0 +1,57 @@
+
+; Breakpoints are broken by snapshots
+
+logname "bug2126.log"
+log on
+
+; 2. >1000 ea 4c 00 10
+a 1000 sei
+nop
+jmp 1000
+
+sw reset
+
+; 3. Close the monitor
+; 4. Snapshot > Quicksave snapshot
+dump "bug2126.vsf"
+
+; 5. Open the monitor
+; 6. break 1000
+break 1000
+
+; 8. Snapshot > Quickload snapshot
+; 9. Open the monitor
+undump "bug2126.vsf"
+
+; 10. Verify that the breakpoint is still set:
+break
+
+; 11. g 1000 (or quit the monitor and SYS 4096)
+
+
+; Result: No breakpoint triggered.
+
+; hangs (does not trigger)
+keybuf sys4096\n
+x
+
+; hangs (does not trigger)
+;r pc = 1000
+;x
+
+
+; Expected result: Breakpoint triggered.
+
+;g 1000
+
+;keybuf sys4096\n
+;z 18000
+
+; breaks, but at $1001
+;r pc = 1000
+;z
+
+
+;chis 5
+
+q

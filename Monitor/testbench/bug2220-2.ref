@@ -1,0 +1,21 @@
+Setting default device to `Computer'
+WATCH: 1  C:$0800-$9fff  (Stop on load store)
+WATCH: 2  C:$0600-$0700  (Stop on load store)
+Stopwatch reset to 0.
+#2 (Stop on store 0600)    0/$000,   8/$08
+.C:0301  8D 00 06    STA $0600      - A:00 X:00 Y:0A SP:f3 ..-B.IZ.          6
+#2 (Stop on store 0600)    0/$000,  15/$0f
+.C:0301  8D 00 06    STA $0600      - A:00 X:00 Y:0A SP:f3 ..-B.IZ.         13
+#2 (Stop on store 0600)    0/$000,  22/$16
+.C:0301  8D 00 06    STA $0600      - A:00 X:00 Y:0A SP:f3 ..-B.IZ.         20
+#2 (Stop on store 0600)    0/$000,  29/$1d
+.C:0301  8D 00 06    STA $0600      - A:00 X:00 Y:0A SP:f3 ..-B.IZ.         27
+#2 (Stop on store 0600)    0/$000,  36/$24
+.C:0301  8D 00 06    STA $0600      - A:00 X:00 Y:0A SP:f3 ..-B.IZ.         34
+#2 (Stop on store 0600)    0/$000,  43/$2b
+.C:0301  8D 00 06    STA $0600      - A:00 X:00 Y:0A SP:f3 ..-B.IZ.         41
+.C:0301  8D 00 06    STA $0600      A:00 X:00 Y:0a SP:f3 ..-B.IZ.      2142529
+.C:0304  4C 01 03    JMP $0301      A:00 X:00 Y:0a SP:f3 ..-B.IZ.      2142533
+.C:0301  8D 00 06    STA $0600      A:00 X:00 Y:0a SP:f3 ..-B.IZ.      2142536
+.C:0304  4C 01 03    JMP $0301      A:00 X:00 Y:0a SP:f3 ..-B.IZ.      2142540
+.C:0301  8D 00 06    STA $0600      A:00 X:00 Y:0a SP:f3 ..-B.IZ.      2142543

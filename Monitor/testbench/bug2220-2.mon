@@ -1,0 +1,40 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/2220/
+; Checkpoints for non-default devices are unreliable
+
+; test if breaking every 7 cycle even works just on the main cpu
+
+logname "bug2220-2.log"
+log on
+
+dev c:
+watch 0800 9fff
+watch 0600 0700
+
+a 0300 sei
+sta $0600
+jmp $0301
+
+sw reset
+r pc = 0300
+x
+
+; this code should trigger a watchpoint every 7 cycles:
+
+; #2 (Stop on store 0600)    0/$000,   8/$08
+; .C:0301  8D 00 06    STA $0600      - A:00 X:00 Y:0A SP:f3 ..-B.IZ.          6
+; #2 (Stop on store 0600)    0/$000,  15/$0f
+; .C:0301  8D 00 06    STA $0600      - A:00 X:00 Y:0A SP:f3 ..-B.IZ.         13
+
+x
+
+x
+
+x
+
+x
+
+x
+
+chis 5
+
+q

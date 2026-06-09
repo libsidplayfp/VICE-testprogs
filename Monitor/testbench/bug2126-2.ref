@@ -1,0 +1,6 @@
+Stopwatch reset to 0.
+BREAK: 1  C:$1000  (Stop on exec)
+BREAK: 1  C:$1000  (Stop on exec)
+Stepping through the next 98304 instruction(s).
+#1 (Stop on  exec 1000)  296/$128,  47/$2f
+.C:1000  78          SEI            - A:00 X:00 Y:00 SP:f7 ..-.....      18693

@@ -6,20 +6,19 @@ YELLOW="\e[93;40m"
 MAGENTA="\e[95;40m"
 OFF="\e[0m"
 
+if [ ! -f "$1" ]; then
+    echo -e $RED"Error:"$OFF "file does not exist:" $1
+    exit -1
+fi
 
 if [ ! -f "$2" ]; then
     echo -e $MAGENTA"Warning:"$OFF "no reference file given" for $1
     cat $1
     echo ""
-    exit 0;
+    exit -1
 fi
 
-if [ ! -f "$1" ]; then
-    echo -e $RED"Error:"$OFF "no file given at all"
-    exit -1;
-fi
-
-echo -ne "comparing $1 and $2... "
+echo -ne "comparing $1 and $2 ... "
 
 cat $1 | \
     sed -e 's:\(^#[0-9]* (.*)\).*:\1:g' | \
@@ -44,6 +43,9 @@ if [ $? -eq 1 ]; then
     echo -e "[" $RED"Error"$OFF "]"
     diff $1.tmp $2.tmp
     echo ""
+    rm -f $1.tmp
+    rm -f $2.tmp
+    exit -1
 else
     echo -e "[" $GREEN"OK"$OFF "]"
 fi
@@ -51,4 +53,4 @@ fi
 rm -f $1.tmp
 rm -f $2.tmp
 
-exit 0;
+exit 0
