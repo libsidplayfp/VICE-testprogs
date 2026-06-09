@@ -4,7 +4,7 @@
         !cpu 6502
         !to "quoted.prg", cbm
 
-; all codes, outside quotes, one per line
+; all codes, inside quotes, one per line
 
         *= $0801
 
@@ -15,21 +15,21 @@
             !byte 0         ; end of line
         }
 
-; all codes after DATA, outside quotes, one per line
+; all codes after DATA, inside quotes, one per line
         !for i, 255 {
             !word * + 9         ; ptr to next line
             !word 1000 + i      ; line nr
             !byte $83           ; DATA
-            !byte $22, i, $22   ; space, value
+            !byte $22, i, $22   ; quote, value, quote
             !byte 0             ; end of line
         }
 
-; all codes after REM, outside quotes, one per line
+; all codes after REM, inside quotes, one per line
         !for i, 255 {
             !word * + 9         ; ptr to next line
             !word 2000 + i      ; line nr
             !byte $8f           ; REM
-            !byte $22, i, $22   ; space, value
+            !byte $22, i, $22   ; quote, value, quote
             !byte 0             ; end of line
         }
 
