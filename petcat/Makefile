@@ -211,7 +211,7 @@ keywordsv65.prg: keywordsv65.s
 	test31 test32 test33 test34 test35 test36 test37 test38 test39 test40 \
 	test41 test41a test42 test43 test44 test45 test46 test47
 
-test:	test1 test2 test3 test4 test4a test4b test4c test4d test5 test6 test7 test8 test9 test10 \
+test:	test1 test2 test3 test4 test4a test4b test4c test4d test4e test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
 	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30 \
 	test31 test32 test33 test34 test35 test36 test37 test38 test39 test40 \
@@ -242,7 +242,7 @@ test2:
 	diff  -q -s pi.prg tobas.prg
 
 # (output ctrl codes as decimal)
-	@echo "test2 - real basic program that contains all characters (decimal codes)"
+	@echo "test2 - real basic program that contains all characters (output decimal codes)"
 	$(PETCAT) -nh -c -d -o toasc.out pi.prg
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
 	diff  -q -s pi.prg tobas.prg
@@ -300,19 +300,20 @@ test4c: spaces.prg
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
 	diff  -q -s spaces.prg tobas.prg
 
-#test4d: tokens-as-literals.prg
-#	@echo -----
-#	@echo "test4d - tokens as literals"
-#	$(PETCAT) -2 -nh -c -o toasc.out tokens-as-literals.prg
-#	$(PETCAT) -w2 -c -o tobas.prg toasc.out
-#	diff  -q -s tokens-as-literals.prg tobas.prg
-
 test4d: remdata.prg
 	@echo -----
 	@echo "test4d - REM and DATA"
 	$(PETCAT) -2 -nh -c -o toasc.out remdata.prg
 	$(PETCAT) -w2 -c -o tobas.prg toasc.out
 	diff  -q -s remdata.prg tobas.prg
+
+test4e: tokens-as-literals.prg
+	@echo -----
+	@echo "test4e - tokens as literals"
+	$(PETCAT) -2 -nh -c -o toasc.out tokens-as-literals.prg
+	$(PETCAT) -w2 -c -o tobas.prg toasc.out
+	diff  -q -s tokens-as-literals.prg tobas.prg
+
 
 #verify that basic -> ascii -> basic produces consistent and reversible results
 test5: keywordsv1.prg
