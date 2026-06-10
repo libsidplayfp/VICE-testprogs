@@ -6,6 +6,7 @@ inc $c006
 jmp $c000
 brk
 
+sw reset
 break exec $c000
 keybuf sys49152\n
 x

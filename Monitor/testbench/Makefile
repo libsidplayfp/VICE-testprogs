@@ -37,11 +37,9 @@ RESULTS0=\
 	bug2126-2.log \
 	bug2178.log \
 	bug2178-2.log \
-	bug2220.log \
-	bug2220-1.log \
 	bug2220-2.log \
 	bug2221.log \
-	bug2221-1.log \
+	bug2221-1.log
 
 
 PROGSTODO=\
@@ -60,6 +58,8 @@ RESULTS0TODO=\
 	todo/bug2126-5.log \
 	todo/bug2179.log \
 	todo/bug2179-2.log \
+	todo/bug2220.log \
+	todo/bug2220-1.log \
 	todo/bugX.log
 
 all:

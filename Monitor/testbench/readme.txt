@@ -116,6 +116,14 @@ Instruction is shown twice when singlestepping on a break point
 https://sourceforge.net/p/vice-emu/bugs/2179/
 
 
+bug2220.mon
+bug2220-1.mon
+
+Checkpoints for non-default devices are unreliable
+
+https://sourceforge.net/p/vice-emu/bugs/2220/
+
+
 -------------------------------------------------------------------------------
 Working
 -------------------------------------------------------------------------------
@@ -184,8 +192,6 @@ watchpoint is triggered even though the program counter is below $3000
 https://sourceforge.net/p/vice-emu/bugs/2221/
 
 
-bug2220.mon
-bug2220-1.mon
 bug2220-2.mon
 
 Checkpoints for non-default devices are unreliable

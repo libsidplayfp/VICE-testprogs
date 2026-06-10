@@ -17,6 +17,7 @@ iny
 nop
 jmp $1007
 
+sw reset
 break $1005
 break $1007
 

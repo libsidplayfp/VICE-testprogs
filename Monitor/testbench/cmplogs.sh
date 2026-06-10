@@ -6,6 +6,8 @@ YELLOW="\e[93;40m"
 MAGENTA="\e[95;40m"
 OFF="\e[0m"
 
+ERROR=0
+
 if [ ! -f "$1" ]; then
     echo -e $RED"Error:"$OFF "file does not exist:" $1
     exit -1
@@ -20,6 +22,18 @@ fi
 
 echo -ne "comparing $1 and $2 ... "
 
+# compare unmodified log and ref
+diff -q $1 $2 > /dev/null
+if [ $? -eq 1 ]; then
+    echo -ne "[" $RED"Error"$OFF "]"
+    ERROR=1
+else
+    echo -ne "[" $GREEN"OK"$OFF "]"
+fi
+
+if [ "$ERROR" -eq "1" ]; then
+
+# filter timing related stuff from the logs
 cat $1 | \
     sed -e 's:\(^#[0-9]* (.*)\).*:\1:g' | \
     sed -e 's:[0-9]*$::g' | \
@@ -40,17 +54,20 @@ cat $2 | \
 
 diff -q $1.tmp $2.tmp > /dev/null
 if [ $? -eq 1 ]; then
-    echo -e "[" $RED"Error"$OFF "]"
-    diff $1.tmp $2.tmp
-    echo ""
-    rm -f $1.tmp
-    rm -f $2.tmp
-    exit -1
+    echo -e ""
 else
-    echo -e "[" $GREEN"OK"$OFF "]"
+    echo -e " Without timing: [" $GREEN"OK"$OFF "]"
+fi
+    diff $1 $2
+    echo ""
+
+else
+    echo ""
 fi
 
 rm -f $1.tmp
 rm -f $2.tmp
 
-exit 0
+if [ "$ERROR" -eq "1" ]; then
+    exit -1
+fi
