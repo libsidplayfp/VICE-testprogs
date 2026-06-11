@@ -1,7 +1,7 @@
 
 ; Breakpoints are broken by snapshots
 
-logname "bug2126.log"
+logname "bug2126-5.log"
 log on
 
 ; 2. >1000 ea 4c 00 10

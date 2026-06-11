@@ -80,7 +80,7 @@ todo/%.log: todo/%.mon $(PROGSTODO)
 #	echo "----------------------------------------"
 	$(RM) todo/$*.log
 #	echo "1:$*.log:"
-	-$(CD) todo ; ../$(EMU) $(EMUOPT) -moncommands $*.mon $(NULLDIRECT)
+	-$(CD) todo ; ../$(EMU) $(EMUOPT) -moncommands $*.mon $(NULLDIRECT) || echo -e "TODO: \e[91;40mError:\e[0m todo/"$*".mon exited with timeout."
 #	cat $*.log
 	echo -ne "TODO: "
 	-./cmplogs.sh todo/$*.log todo/$*.ref
