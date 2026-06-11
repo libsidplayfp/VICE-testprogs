@@ -49,6 +49,7 @@ run_test
 	lda #CLR
 	jsr CHROUT
 
+	; init source buffer ($ff..$00)
 	ldx #255
 	ldy #0
 	lda #0
@@ -58,6 +59,7 @@ run_test
 	iny
 	bne -
 
+	; init target buffer ($ff)
 	ldy #0
 	lda #255
 -	sta target_buf,y
@@ -72,6 +74,8 @@ run_test
 	sta source_colors+$0300,y
 	dey
 	bne -
+
+	; transfer source -> REU
 
 	lda #<source_buf
 	sta expansion_transfer_local_addr
@@ -92,6 +96,8 @@ run_test
 
 	jsr reu_stash_block
 
+	; transfer REU -> target
+
 	lda #<target_buf
 	sta expansion_transfer_local_addr
 	lda #>target_buf
@@ -99,6 +105,9 @@ run_test
 
 	jsr reu_fetch_block
 
+	; copy target buffer to readback buffer, this fails
+	; if the DMA only ended up in C64 RAM, ie the CPU can
+	; not read the previously written values.
 	ldy #0
 -	lda target_buf,y
 	sta readback_buf,y
