@@ -3,9 +3,9 @@
 	
 	!initmem 	fillvalue
 	!cpu 6502
-	!to "keywordsv4c64.prg", cbm
+	!to "keywordsv4cbm2.prg", cbm
 
-        *= $0801
+        *= $0003
 
         ; 0x80 - 0xcb  common CBM Basic Keywords
 line0:
@@ -110,28 +110,47 @@ line10:
             !byte $d0 + i
         }
         !byte 0 ; end of line
+
 line11:
-
-        ; 0xdf - 0xe7 4.0 C64 extra
-
         !word line12 ; ptr to next line
         !word 12 ; line nr
         !byte $d8
-        !for i, $7 {
+        !for i, $2 {
             !byte ":"
             !byte $d8 + i
         }
+        !byte ":"
+        !byte $ff
         !byte 0 ; end of line
 line12:
+
+        ; 0xdb - 0xe8 4.0 CBM2 extra
+
         !word line13 ; ptr to next line
         !word 13 ; line nr
+        !byte $db
+        !for i, $4 {
+            !byte ":"
+            !byte $db + i
+        }
+        !byte 0 ; end of line
+line13:
+
+        !word line15 ; ptr to next line
+        !word 15 ; line nr
         !byte $e0
         !for i, $7 {
             !byte ":"
             !byte $e0 + i
         }
-        !byte ":"
-        !byte $ff
         !byte 0 ; end of line
-line13:
+line15:
+
+        !word line16 ; ptr to next line
+        !word 16 ; line nr
+        !byte $e8
+
+        !byte 0 ; end of line
+line16:
+
         !word 0 ; basic end

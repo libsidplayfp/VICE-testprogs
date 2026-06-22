@@ -6,6 +6,8 @@
 	!to "keywordsv4.prg", cbm
 
         *= $0401
+
+        ; 0x80 - 0xcb  common CBM Basic Keywords
 line0:
         !word line1 ; ptr to next line
         !word 1 ; line nr
@@ -88,6 +90,9 @@ line8:
         }
         !byte 0 ; end of line
 line9:
+
+        ; Basic v4.0 (PET) -- TOKENS 0xCC - 0xDA
+
         !word line10 ; ptr to next line
         !word 10 ; line nr
         !byte $c8
