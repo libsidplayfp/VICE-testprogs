@@ -209,17 +209,25 @@ keywordsv2handy.prg: keywordsv2handy.s
 keywordsv65.prg: keywordsv65.s
 	acme -Wno-old-for keywordsv65.s
 
+# all basic v2 + MDBASIC keywords in a "basic program"
+keywordsv2mdbasic.prg: keywordsv2mdbasic.s
+	acme -Wno-old-for keywordsv2mdbasic.s
+
+# MDBASIC: apostrophe (') as an alternate REM
+mdbasicapos.prg: mdbasicapos.s
+	acme -Wno-old-for mdbasicapos.s
+
 .PHONY: test test1 test2 test3 test4 test4a test4b test4c test4d test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
 	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30 \
 	test31 test32 test33 test34 test35 test36 test37 test37a test38 test39 test40 \
-	test41 test41a test42 test43 test44 test45 test46 test47
+	test41 test41a test42 test43 test44 test45 test46 test47 test48 test49
 
 test:	test1 test2 test3 test4 test4a test4b test4c test4d test4e test5 test6 test7 test8 test9 test10 \
 	test11 test12 test13 test14 test15 test16 test17 test18 test19 test20 \
 	test21 test22 test23 test24 test25 test26 test27 test28 test29 test30 \
 	test31 test32 test33 test34 test35 test36 test37 test37a test38 test39 test40 \
-	test41 test41a test42 test43 test44 test45 test46 test47
+	test41 test41a test42 test43 test44 test45 test46 test47 test48 test49
 
 #verify that petscii -> ascii -> petscii produces consistent and reversible results
 test1: petscii.bin
@@ -637,10 +645,25 @@ test47: keywordsv65.prg
 	$(PETCAT) -w65 -c -o tobas.prg toasc.out
 	diff  -q -s keywordsv65.prg tobas.prg
 
+test48: keywordsv2mdbasic.prg
+	@echo -----
+	@echo test48 - basic v2 + MDBASIC keywords test program
+	$(PETCAT) -nh -mdbasic -o toasc.out keywordsv2mdbasic.prg
+	$(PETCAT) -wmdbasic -c -o tobas.prg toasc.out
+	diff  -q -s keywordsv2mdbasic.prg tobas.prg
+
+test49: mdbasicapos.prg
+	@echo -----
+	@echo test49 - MDBASIC apostrophe as alternate REM
+	$(PETCAT) -nh -mdbasic -o toasc.out mdbasicapos.prg
+	$(PETCAT) -wmdbasic -c -o tobas.prg toasc.out
+	diff  -q -s mdbasicapos.prg tobas.prg
+
 clean:
 	rm -f *~
 	rm -f tokensv2.prg
 	rm -f keywords*.prg
+	rm -f mdbasicapos.prg
 	rm -f petscii.bin
 	rm -f tobas.prg
 	rm -f topet.out
