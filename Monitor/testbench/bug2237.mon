@@ -1,0 +1,20 @@
+; related to https://sourceforge.net/p/vice-emu/bugs/2237/
+logname "bug2237.log"
+log on
+
+> 0400 11
+watch ffff
+command 1 "m 0400 0400"
+
+dev 8:
+> 0400 42
+watch ffff
+command 2 "m 0400 0400"
+
+dev c:
+
+x
+
+x
+
+q

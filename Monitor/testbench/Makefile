@@ -39,7 +39,8 @@ RESULTS0=\
 	bug2178-2.log \
 	bug2220-2.log \
 	bug2221.log \
-	bug2221-1.log
+	bug2221-1.log \
+	bug2237.log
 
 
 PROGSTODO=\

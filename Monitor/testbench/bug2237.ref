@@ -1,0 +1,14 @@
+WATCH: 1  C:$ffff  (Stop on load store)
+Setting checkpoint 1 command to: m 0400 0400
+Setting default device to `Disk8'
+WATCH: 2  8:$ffff  (Stop on load store)
+Setting checkpoint 2 command to: m 0400 0400
+Setting default device to `Computer'
+#1 (Stop on  load ffff)    0/$000,  29/$1d
+.C:e5d1  8D 92 02    STA $0292      - A:00 X:00 Y:0A SP:f0 ..-..IZ.    2142533
+Executing: m 0400 0400
+>C:0400  11            
+#2 (Stop on  load ffff) 
+.8:ec19  F0 10       BEQ $EC2B      - A:FF X:09 Y:FF SP:42 ..-..IZC    2189373
+Executing: m 0400 0400
+>8:0400  42            B
