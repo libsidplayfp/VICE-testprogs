@@ -1,4 +1,8 @@
 
+.SILENT:
+
+PETCAT=petcat
+
 TARGETS=\
 	autostart-c64-none.prg \
 	autostart-c64-tde.prg \
@@ -166,7 +170,9 @@ TARGETS=\
 	autostart-cbm610-tde-image.d82 \
 	autostart-cbm610-vdrive-image.d82
 
-all: $(TARGETS)
+all: test
+
+########################################################################ääää
 
 autostart-c64-none.prg: autostart.bas
 	cpp -DEXPECT_TDE=0 -DEXPECT_VDRIVE=0 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=0 -DEXPECT_DISKIMAGE=0 -DDEBUGREG=55295 -DBORDERCOLOR=53280 -DBGCOLOR=53281 -E $< | grep -v "^#" | petcat -w2 -o $@
@@ -272,24 +278,24 @@ autostart-c128-vfs.t64: autostart-c128-vfs.prg
 	t64fix -c autostart-c128-vfs.t64 autostart-c128-vfs.prg
 
 autostart-vic20-none.prg: autostart.bas
-	cpp -DEXPECT_TDE=0 -DEXPECT_VDRIVE=0 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=0 -DEXPECT_DISKIMAGE=0 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
+	cpp -DVIC20 -DEXPECT_TDE=0 -DEXPECT_VDRIVE=0 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=0 -DEXPECT_DISKIMAGE=0 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
 autostart-vic20-tde.prg: autostart.bas
-	cpp -DEXPECT_TDE=1 -DEXPECT_VDRIVE=0 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=0 -DEXPECT_DISKIMAGE=0 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
+	cpp -DVIC20 -DEXPECT_TDE=1 -DEXPECT_VDRIVE=0 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=0 -DEXPECT_DISKIMAGE=0 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
 autostart-vic20-vdrive.prg: autostart.bas
-	cpp -DEXPECT_TDE=0 -DEXPECT_VDRIVE=1 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=0 -DEXPECT_DISKIMAGE=0 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
+	cpp -DVIC20 -DEXPECT_TDE=0 -DEXPECT_VDRIVE=1 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=0 -DEXPECT_DISKIMAGE=0 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
 autostart-vic20-vfs.prg: autostart.bas
-	cpp -DEXPECT_TDE=0 -DEXPECT_VDRIVE=0 -DEXPECT_VFS=1 -DEXPECT_AUTOSTART_DISK=0 -DEXPECT_DISKIMAGE=0 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
+	cpp -DVIC20 -DEXPECT_TDE=0 -DEXPECT_VDRIVE=0 -DEXPECT_VFS=1 -DEXPECT_AUTOSTART_DISK=0 -DEXPECT_DISKIMAGE=0 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
 autostart-vic20-tde-disk.prg: autostart.bas
-	cpp -DEXPECT_TDE=1 -DEXPECT_VDRIVE=0 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=1 -DEXPECT_DISKIMAGE=0 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
+	cpp -DVIC20 -DEXPECT_TDE=1 -DEXPECT_VDRIVE=0 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=1 -DEXPECT_DISKIMAGE=0 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
 autostart-vic20-vdrive-disk.prg: autostart.bas
-	cpp -DEXPECT_TDE=0 -DEXPECT_VDRIVE=1 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=1 -DEXPECT_DISKIMAGE=0 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
+	cpp -DVIC20 -DEXPECT_TDE=0 -DEXPECT_VDRIVE=1 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=1 -DEXPECT_DISKIMAGE=0 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
 
 autostart-vic20-none-image.prg: autostart.bas
-	cpp -DEXPECT_TDE=0 -DEXPECT_VDRIVE=0 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=0 -DEXPECT_DISKIMAGE=0 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
+	cpp -DVIC20 -DEXPECT_TDE=0 -DEXPECT_VDRIVE=0 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=0 -DEXPECT_DISKIMAGE=0 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
 autostart-vic20-tde-image.prg: autostart.bas
-	cpp -DEXPECT_TDE=1 -DEXPECT_VDRIVE=0 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=0 -DEXPECT_DISKIMAGE=1 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
+	cpp -DVIC20 -DEXPECT_TDE=1 -DEXPECT_VDRIVE=0 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=0 -DEXPECT_DISKIMAGE=1 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
 autostart-vic20-vdrive-image.prg: autostart.bas
-	cpp -DEXPECT_TDE=0 -DEXPECT_VDRIVE=1 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=0 -DEXPECT_DISKIMAGE=1 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
+	cpp -DVIC20 -DEXPECT_TDE=0 -DEXPECT_VDRIVE=1 -DEXPECT_VFS=0 -DEXPECT_AUTOSTART_DISK=0 -DEXPECT_DISKIMAGE=1 -DDEBUGREG=37135 -DBORDERCOLOR=36879 -DBGCOLOR=36879 -E $< | grep -v "^#" | petcat -l 1201 -w2 -o $@
 
 autostart-vic20-none.d64: autostart-vic20-none.prg
 	c1541 -format "testdisk,00" d64 $@ -write $< "test"
@@ -505,13 +511,78 @@ autostart-cbm610-vdrive-image.d82: autostart-cbm610-vdrive-image.prg
 #autostart-cbm610-vfs.t64: autostart-cbm610-vfs.prg
 #	t64fix -c autostart-cbm610-vfs.t64 autostart-cbm610-vfs.prg
 
-.PHONY: test clean
+
+DRIVEMEM=\
+	drivemem-c64-odd.prg \
+	drivemem-c64-even.prg \
+	drivemem-vic20-odd.prg \
+	drivemem-vic20-even.prg \
+	drivemem-pet-odd.prg \
+	drivemem-pet-even.prg \
+	drivemem-plus4-odd.prg \
+	drivemem-plus4-even.prg
+
+drivemem-c64-even.prg: drivemem.bas drivemem.asm
+	cpp -E -P -DEXTRABUFFERS=1 -DBUFFER1=4 -DBUFFER2=5 -DC64=1 -DDEBUGREG=55295 -DBORDERCOLOR=53280 drivemem.bas | $(PETCAT) -w2 -o testmem.tmp
+	acme -D EXTRABUFFERS=1 -f plain -o drivemem-c64-even.prg drivemem.asm
+	$(RM) testmem.tmp
+
+drivemem-c64-odd.prg: drivemem.bas drivemem.asm
+	cpp -E -P -DEXTRABUFFERS=2 -DBUFFER1=5 -DBUFFER2=4 -DC64=1 -DDEBUGREG=55295 -DBORDERCOLOR=53280 drivemem.bas | $(PETCAT) -w2 -o testmem.tmp
+	acme -D EXTRABUFFERS=2 -f plain -o drivemem-c64-odd.prg drivemem.asm
+	$(RM) testmem.tmp
+
+drivemem-vic20-even.prg: drivemem.bas drivemem.asm
+	cpp -E -P -DEXTRABUFFERS=1 -DBUFFER1=4 -DBUFFER2=5 -DVIC20=1 -DDEBUGREG=37135 -DBORDERCOLOR=36879 drivemem.bas | $(PETCAT) -l 1201 -w2 -o testmem.tmp
+	acme -D EXTRABUFFERS=1 -f plain -o drivemem-vic20-even.prg drivemem.asm
+	$(RM) testmem.tmp
+
+drivemem-vic20-odd.prg: drivemem.bas drivemem.asm
+	cpp -E -P -DEXTRABUFFERS=2 -DBUFFER1=5 -DBUFFER2=4 -DVIC20=1 -DDEBUGREG=37135 -DBORDERCOLOR=36879 drivemem.bas | $(PETCAT) -l 1201 -w2 -o testmem.tmp
+	acme -D EXTRABUFFERS=2 -f plain -o drivemem-vic20-odd.prg drivemem.asm
+	$(RM) testmem.tmp
+
+drivemem-pet-even.prg: drivemem.bas drivemem.asm
+	cpp -E -P -DEXTRABUFFERS=1 -DBUFFER1=4 -DBUFFER2=5 -DPET=1 -DDEBUGREG=35839 -DBORDERCOLOR=255 drivemem.bas | $(PETCAT) -l 0401 -w2 -o testmem.tmp
+	acme -D EXTRABUFFERS=1 -f plain -o drivemem-pet-even.prg drivemem.asm
+	$(RM) testmem.tmp
+
+drivemem-pet-odd.prg: drivemem.bas drivemem.asm
+	cpp -E -P -DEXTRABUFFERS=2 -DBUFFER1=5 -DBUFFER2=4 -DPET=1 -DDEBUGREG=35839 -DBORDERCOLOR=255 drivemem.bas | $(PETCAT) -l 0401 -w2 -o testmem.tmp
+	acme -D EXTRABUFFERS=2 -f plain -o drivemem-pet-odd.prg drivemem.asm
+	$(RM) testmem.tmp
+
+drivemem-plus4-even.prg: drivemem.bas drivemem.asm
+	cpp -E -P -DEXTRABUFFERS=1 -DBUFFER1=5 -DBUFFER2=6 -DPLUS4=1 -DDEBUGREG=64975 -DBORDERCOLOR=65305 drivemem.bas | $(PETCAT) -l 1001 -w2 -o testmem.tmp
+	acme -D EXTRABUFFERS=1 -f plain -o drivemem-plus4-even.prg drivemem.asm
+	$(RM) testmem.tmp
+
+drivemem-plus4-odd.prg: drivemem.bas drivemem.asm
+	cpp -E -P -DEXTRABUFFERS=2 -DBUFFER1=6 -DBUFFER2=5 -DPLUS4=1 -DDEBUGREG=64975 -DBORDERCOLOR=65305 drivemem.bas | $(PETCAT) -l 1001 -w2 -o testmem.tmp
+	acme -D EXTRABUFFERS=2 -f plain -o drivemem-plus4-odd.prg drivemem.asm
+	$(RM) testmem.tmp
+
+
+.PHONY: test test-verbose test-resources test-drivemem clean
 	
-test: $(TARGETS)
-	./autostart.sh all
-testverbose: $(TARGETS)
+test-resources:	$(TARGETS)
+	./autostart-resources.sh all
+
+test-drivemem: $(DRIVEMEM)
+	./autostart-drivemem.sh all
+
+test: $(TARGETS) $(DRIVEMEM)
+	./autostart-resources.sh all
+	./autostart-drivemem.sh all
+	./autostart.sh all all
+
+test-verbose: $(TARGETS) $(DRIVEMEM)
+	./autostart-resources.sh --verbose all
+	./autostart-drivemem.sh --verbose all
 	./autostart.sh --verbose all
 
 clean:
 	$(RM) *.prg
 	$(RM) *.t64
+	$(RM) *.d64
+	$(RM) *.d82

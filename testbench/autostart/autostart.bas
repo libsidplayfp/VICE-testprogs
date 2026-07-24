@@ -26,16 +26,22 @@ open 1,8,0:close 1: if (st and 128) = 128 then e = 1
 
 #endif
 
+#ifdef VIC20
+poke 646,17
+#endif
 
 print "{clr}vice autostart test":print
 
 print "expecting:"
-print "tde:"; EXPECT_TDE ;
-print "vdrive:"; EXPECT_VDRIVE ;
-print "vfs:"; EXPECT_VFS
-print "autostart disk:"; EXPECT_AUTOSTART_DISK
-print "disk image:"; EXPECT_DISKIMAGE
+print
+print "tde"; EXPECT_TDE ; "{left}{left}{left}:{right}{right}" ;
+print "vdrive"; EXPECT_VDRIVE ; "{left}{left}{left}:{right}{right}" ;
+print "vfs"; EXPECT_VFS ; "{left}{left}{left}:{right}{right}"
+print "autostart disk"; EXPECT_AUTOSTART_DISK ; "{left}{left}{left}:{right}{right}"
+print "disk image"; EXPECT_DISKIMAGE ; "{left}{left}{left}:{right}{right}"
 
+print
+print "results:"
 print
 
 if e = 1 then goto 90
@@ -54,7 +60,7 @@ gosub 4000
 if f = 0 then poke DEBUGREG , 0: poke BORDERCOLOR, 5: print "all ok"
 if f <> 0 then poke DEBUGREG , 255: poke BORDERCOLOR, 2: print "failed"
 
-end
+999 goto 999
 
 1000 rem * get powerup message from drive
 open 15,8,15,"ui"
@@ -82,11 +88,11 @@ if left$(di$, 9)  = "autostart" and id$ <> " #8:0" then ad = 1 : rem using autos
 if left$(di$, 8)  = "testdisk" then d = 1 : rem using regular disk image
 
 print
-print "tde:"; td ;
-print "vdrive:"; vd ;
-print "vfs:"; fs
-print "autostart disk:"; ad
-print "disk image:"; d
+print "tde"; td ; "{left}{left}{left}:{right}{right}" ;
+print "vdrive"; vd ; "{left}{left}{left}:{right}{right}" ;
+print "vfs"; fs ; "{left}{left}{left}:{right}{right}"
+print "autostart disk"; ad ; "{left}{left}{left}:{right}{right}"
+print "disk image"; d ; "{left}{left}{left}:{right}{right}"
 
 return
 

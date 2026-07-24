@@ -1,0 +1,22 @@
+logname "test1.log"
+log on
+
+al $e564 ._values_are_incorrect_here
+al $c7ae ._values_are_correct_here
+
+bk ._values_are_correct_here
+command 1 "delete 1 ; resget \"AutostartHandleTrueDriveEmulation\" ; resget \"TrapDevice8\" ; resget \"BusDevice8\" ; resget \"Drive8TrueEmulation\" "
+
+bk ._values_are_incorrect_here
+command 2 "delete 2 ; resget \"AutostartHandleTrueDriveEmulation\" ; resget \"TrapDevice8\" ; resget \"BusDevice8\" ; resget \"Drive8TrueEmulation\" "
+
+resget "AutostartHandleTrueDriveEmulation"
+resget "TrapDevice8"
+resget "BusDevice8"
+resget "Drive8TrueEmulation"
+
+x
+
+x
+
+q
