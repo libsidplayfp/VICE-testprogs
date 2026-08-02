@@ -1,8 +1,10 @@
 
+ultimax.bin
+ultimax-maxbasic.bin
 ultimax-rr.bin
 ultimax-ef.bin
 
-This test shows the memory mapping the CPU cycle.
+This test shows the memory mapping in the CPU cycle.
 
 It shows 16 lines, with each line mapped to a different vram:
 
@@ -23,6 +25,9 @@ It shows 16 lines, with each line mapped to a different vram:
 ....CBM80-E000-.    page e0
 -F000-..........    page f0
 
+The second block shows what can be read from the first 16 pages ($00..-$0f..)
+
+The third block shows what can be read from I/O pages $d0..-$df..
 
 -------------------------------------------------------------------------------
 
