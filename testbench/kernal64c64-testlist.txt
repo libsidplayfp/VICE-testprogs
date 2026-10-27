@@ -565,6 +565,7 @@
 # ../CIA/ runtime 2 minutes and 26 seconds (x64sc)
 # ../CIA/ runtime 15 minutes and 23 seconds (chameleon)
 ################################################################################
+../CIA/1581/,ciaflag.prg,exitcode,175000000,mountd81:ciaflag.d81
 ../CIA/CIA-AcountsB/,cia-b-counts-a.prg,exitcode,100000000,vicii-pal
 ../CIA/CIA-AcountsB/,cmp-b-counts-a-old.prg,exitcode,100000000,cia-old,vicii-pal
 ../CIA/CIA-AcountsB/,cmp-b-counts-a-new.prg,exitcode,100000000,cia-new,vicii-pal
@@ -1359,9 +1360,9 @@
 #TODO: make this automatic
 ../C64/carts/ultimax,ultimax-ef.crt,interactive,0
 ../C64/carts/ultimax,ultimax-rr.crt,interactive,0
-../C64/carts/ultimax,,screenshot,1000000,mountcrt:8k-vic-ef.crt,vicii-pal
-../C64/carts/ultimax,,screenshot,1000000,mountcrt:16k-vic-ef.crt,vicii-pal
-../C64/carts/ultimax,,screenshot,1000000,mountcrt:ultimax-vic-ef.crt,vicii-pal
+../C64/carts/ultimax,,screenshot,10000000,mountcrt:8k-vic-ef.crt,vicii-pal
+../C64/carts/ultimax,,screenshot,10000000,mountcrt:16k-vic-ef.crt,vicii-pal
+../C64/carts/ultimax,,screenshot,10000000,mountcrt:ultimax-vic-ef.crt,vicii-pal
 ../C64/freezer/ciairq,ciairq1t1.prg,interactive,0,comment:freeze and restart
 ../C64/freezer/ciairq,ciairq1t2.prg,interactive,0,comment:freeze and restart
 ../C64/freezer/ciairq,ciairq2t1.prg,interactive,0,comment:freeze and restart

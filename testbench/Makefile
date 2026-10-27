@@ -240,6 +240,7 @@ chameleon-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",vicii-ntscold" \
 		| grep -v ",vicii-drean" \
 		| grep -v ",mountp64" \
+		| grep -v ",mountd81" \
 		| grep -v ",plus60k" \
 		| grep -v ",plus256k" \
 		| grep -v ",isepic" \
@@ -363,6 +364,7 @@ emu64-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
 		| grep -v ",mountp64:" \
+		| grep -v ",mountd81:" \
 		>> emu64-testlist.txt
 
 # Frodo only supports simple 8K and 16K game cartridges
@@ -383,6 +385,7 @@ frodo-testlist.txt: c64-testlist.in Makefile
 		| grep -v ",dqbb" \
 		| grep -v ",ramcart128k" \
 		| grep -v ",mountp64:" \
+		| grep -v ",mountd81:" \
 		| grep -v "C64/carts/aracidtest" \
 		| grep -v "C64/carts/pagefox" \
 		| grep -v "C64/carts/ef" \

@@ -152,6 +152,11 @@ function xscpu64_get_options
                     mounted_d64="${1:9}"
                     echo -ne "(disk:${1:9}) "
                 fi
+                if [ "${1:0:9}" == "mountd81:" ]; then
+                    exitoptions="-drive8type 1581 -8 $2/${1:9}"
+                    mounted_d64="${1:9}"
+                    echo -ne "(disk:${1:9}) "
+                fi
                 if [ "${1:0:9}" == "mountg64:" ]; then
                     exitoptions="-8 $2/${1:9}"
                     mounted_g64="${1:9}"

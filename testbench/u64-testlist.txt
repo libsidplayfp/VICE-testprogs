@@ -530,6 +530,7 @@
 # ../CIA/ runtime 2 minutes and 26 seconds (x64sc)
 # ../CIA/ runtime 15 minutes and 23 seconds (chameleon)
 ################################################################################
+../CIA/1581/,ciaflag.prg,exitcode,175000000,mountd81:ciaflag.d81
 ../CIA/CIA-AcountsB/,cia-b-counts-a.prg,exitcode,100000000,vicii-pal
 ../CIA/CIA-AcountsB/,cmp-b-counts-a-old.prg,exitcode,100000000,cia-old,vicii-pal
 #FIXME: fix the following three tests also for NTSCOLD
