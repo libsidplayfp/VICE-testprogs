@@ -1,0 +1,26 @@
+ciaflag.prg: Test for bug 2267, reported and fixed by Mihai:
+
+Problem. ciacore_async_interrupt() moves the idle alarm to rclk + 1 only if
+(idleclk > rclk + 1). If the idle alarm is already due but has not run yet, it
+later runs with a clock older than ifr_clock, so ciacore_idle() skips
+cia_ifr_current() and the new flag raises no interrupt. It is only seen with
+the next event: two events, one interrupt.
+
+When. Every asynchronous flag pulls the idle alarm close, so only the first
+flag after CIA_MAX_IDLE_CYCLES (5000) quiet cycles can hit an alarm that is due
+but has not run (its time fell inside the CPU's last instruction before the
+event).
+
+Seen with a 1581 counting ATN edges by FLAG interrupt: now and then the first
+edge after a pause raised no interrupt. Only that case was tested; every
+ciacore_set_flag() and ciacore_set_sdr() caller shares the path. VIA signals
+are not affected.
+
+Fix. Reschedule unless the alarm is already set for the next cycle. With it: 8
+runs of 60 s clean, which without it failed within seconds.
+
+;     64tass -o ciaflag.prg ciaflag.s
+;     x64sc -debugcart -drive8type 1581 -drive8truedrive -autostartprgmode 1 -autostart ciaflag.prg
+
+Since we can't supply the 1581 drive via the testbench script, it is left
+out of that for now.
